@@ -64,24 +64,6 @@ Scenario: Nationwide apprenticeships are in closing date order
         | ResultsAreInClosingDateOrder | Equals | True  |
 
 @SmokeTests
-#TODO: replace it with integration tests?
-Scenario: Nationwide apprenticeships found by keyword are in best match order
-	Given I navigated to the ApprenticeshipSearchPage page
-	When I enter data
-		 | Field               | Value      |
-		 | Keywords            | Nationwide |
-		 | Location            | London     |
-		 | WithInDistance      | 40 miles   |
-		 | ApprenticeshipLevel | All levels |
-	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	When I choose NationwideLocationTypeLink
-	Then I am on the ApprenticeshipSearchResultPage page
-	And I see
-        | Field                           | Rule   | Value |
-        | ResultsAreInBestMatchScoreOrder | Equals | True  |
-
-@SmokeTests
 Scenario: Nationwide apprenticeships found by keyword can be ordered
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data

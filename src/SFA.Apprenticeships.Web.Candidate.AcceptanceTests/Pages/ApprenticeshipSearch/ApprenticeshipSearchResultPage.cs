@@ -264,9 +264,6 @@
         [ElementLocator(Class = "closing-date-value")]
         public IWebElement ClosingDate { get; set; }
 
-        [ElementLocator(Class = "best-match-score")]
-        public IWebElement BestMatchScore { get; set; }
-
         public override string Text
         {
             get { return VacancyId; }
