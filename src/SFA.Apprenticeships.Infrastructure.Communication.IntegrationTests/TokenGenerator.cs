@@ -102,7 +102,7 @@
         {
             return new[]
             {
-                    new CommunicationToken(CommunicationTokens.UserEmailAddress, "valtechnas@gmail.com"),
+                    new CommunicationToken(CommunicationTokens.UserEmailAddress, TestToEmail),
                     new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
                     new CommunicationToken(CommunicationTokens.UserEnquiry, "User enquiry"),
                     new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "User enquiry details")
