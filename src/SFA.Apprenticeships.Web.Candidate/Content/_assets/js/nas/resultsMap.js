@@ -16,7 +16,9 @@
         vacancy            = [],
         theMarkers         = [],
         markersFeature     = true,
-        mapCenter          = { lat: apprLatitude, lng: apprLongitude };
+        mapCenter          = { lat: apprLatitude, lng: apprLongitude },
+        bounds             = new google.maps.LatLngBounds(),
+        latLngList         = [];
 
     for (var i = 0; i < vacancyLinks.length; i++) {
         var lat = $(vacancyLinks[i]).attr('data-lat'),
@@ -89,6 +91,8 @@
             setMarkers(map, vacancies)
         }
 
+        map.fitBounds(bounds);
+
     }
 
     function setMarkers(map, locations) {
@@ -118,6 +122,9 @@
             });
 
             theMarkers.push(marker);
+            latLngList.push(myLatLng);
+
+            bounds.extend(latLngList[i]);
 
             var vacancyID = appship[3];
 
