@@ -28,11 +28,9 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - agree on and implement location search behaviour fix for prefix sorting on different servers
 - refactor: vacancy ETL process (simplify to process pages immediately? TBD. current approach facilitates multiple data sources)
 - additional mongo indexes for app status and date updated (TBC: not sure how effective this would be - re. Alan)
-- Multiple PreFetchCount values for each queue. Intetrnal processes should be able to have a much higher value than ones that talk to the gateway
 - Enums should be serialized to strings into mongo (rather than numeric enum values)
 - Remove AutoMapper from web service proxy layer
 - Worker role rationalisation (reduce number and clean shutdown of rabbit subscribers)
-- Review and increase heap allocation for elasticsearch. Production is 1Gb and we have 4Gb of free memory available.
 
 ## Cross cutting ##
 
@@ -72,6 +70,8 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - demo website should use separate configuration (e.g. databases, settings, etc.)
 - refactor: controllers should use providers to avoid containing orchestration logic
 - Razor view unit tests (Create example use)
+- Multiple PreFetchCount values for each queue. Intetrnal processes should be able to have a much higher value than ones that talk to the gateway- 
+- Review and increase heap allocation for elasticsearch. Production is 1Gb and we have 4Gb of free memory available.
 
 # Descoped #
 

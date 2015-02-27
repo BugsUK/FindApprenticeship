@@ -188,33 +188,6 @@
             }
         }
 
-        public string ResultsAreInBestMatchScoreOrder
-        {
-            get
-            {
-                bool result = true;
-                SearchResultItem previousItem = null;
-                for (int i = 0; i < SearchResultItems.Count(); i++)
-                {
-                    if (i > 0)
-                    {
-                        var currentItem = SearchResultItems.ElementAt(i);
-                        var currentClosing = double.Parse(currentItem.BestMatchScore.Text);
-                        var previousClosing = double.Parse(previousItem.BestMatchScore.Text);
-                        result = result & previousClosing >= currentClosing;
-                    }
-                    previousItem = SearchResultItems.ElementAt(i);
-
-                    if (previousItem.BestMatchScore == null)
-                    {
-                        return false.ToString();
-                    }
-                }
-
-                return result.ToString();
-            }
-        }
-
         public IWebElement FirstVacancyLink
         {
             get
@@ -263,9 +236,6 @@
 
         [ElementLocator(Class = "closing-date-value")]
         public IWebElement ClosingDate { get; set; }
-
-        [ElementLocator(Class = "best-match-score")]
-        public IWebElement BestMatchScore { get; set; }
 
         public override string Text
         {

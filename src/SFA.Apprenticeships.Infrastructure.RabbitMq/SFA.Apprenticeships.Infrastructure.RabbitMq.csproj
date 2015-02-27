@@ -112,6 +112,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\IRabbitMqHostConfiguration.cs" />
+    <Compile Include="Configuration\QueueWarningLimitCollection.cs" />
+    <Compile Include="Configuration\QueueWarningLimitConfiguration.cs" />
     <Compile Include="Configuration\RabbitMqHostConfiguration.cs" />
     <Compile Include="Configuration\RabbitMqHostsConfiguration.cs" />
     <Compile Include="Interfaces\IBootstrapSubcribers.cs" />

@@ -176,6 +176,25 @@
         }
 
         [Test]
+        public void IfTheLocationIsNationalAndThereAreKeywords_SortTypeShouldBeBestMatch()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Keywords = "Blah",
+                Location = ACityWithOneSuggestedLocation,
+                LocationType = ApprenticeshipLocationType.National,
+                SortType = VacancySearchSortType.Distance,
+                SearchAction = SearchAction.LocationTypeChanged
+            };
+
+            var response = Mediator.Results(searchViewModel);
+
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
+
+            response.ViewModel.VacancySearch.SortType.Should().Be(VacancySearchSortType.Relevancy);
+        }
+
+        [Test]
         public void ShouldShowAMessageIfAnErrorOccursWhileFindingSuggestedLocations()
         {
             var searchViewModel = new ApprenticeshipSearchViewModel

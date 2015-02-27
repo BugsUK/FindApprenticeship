@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
     using EasyNetQ;
@@ -77,14 +78,38 @@
             try
             {
                 var rabbitQueues = managementClient.GetQueues();
+                var defaultQueueWarningLimit = rabbitConfiguration.QueueWarningLimits.DefaultLimit;
+                var queueWarningLimits = rabbitConfiguration.QueueWarningLimits.ToList();
+                var checkedQueueWarningLimits = new List<IQueueWarningLimit>(queueWarningLimits.Count);
 
                 foreach (var rabbitQueue in rabbitQueues)
                 {
-                    if (rabbitQueue.Messages > rabbitConfiguration.QueueWarningLimit)
+                    var queueWarningLimit = queueWarningLimits.SingleOrDefault(qwl => rabbitQueue.Name.EndsWith(qwl.NameEndsWith));
+                    int messageLimit;
+                    if (queueWarningLimit == null)
+                    {
+                        messageLimit = defaultQueueWarningLimit;
+                    }
+                    else
+                    {
+                        messageLimit = queueWarningLimit.Limit;
+                        checkedQueueWarningLimits.Add(queueWarningLimit);
+                    }
+
+                    if (rabbitQueue.Messages > messageLimit)
                     {
                         _logger.Warn(
-                            "Queue '{0}' on node '{1}' has exceeded the queue item limit threshold of {2} and currrently has {3} messages queued, please check queue is processing as expected",
-                            rabbitQueue.Name, rabbitQueue.Node, rabbitConfiguration.QueueWarningLimit, rabbitQueue.Messages);
+                            "Queue '{0}' on node '{1}' has exceeded the queue item limit threshold of {2} and currently has {3} messages queued, please check queue is processing as expected",
+                            rabbitQueue.Name, rabbitQueue.Node, messageLimit, rabbitQueue.Messages);
+                    }
+                }
+
+                if (checkedQueueWarningLimits.Count != queueWarningLimits.Count)
+                {
+                    var missingQueues = queueWarningLimits.Except(checkedQueueWarningLimits);
+                    foreach (var missingQueue in missingQueues)
+                    {
+                        _logger.Error("Queue ending with '{0}' appears to be missing!", missingQueue.NameEndsWith);
                     }
                 }
             }
