@@ -4,18 +4,20 @@
 
     public class EmployerEnquiryViewModelBuilder
     {
+        private string _title;
         private string _firstname = "First";
         private string _lastname = "Last";
+        private string _email;
         private string _phoneNumber;
         private string _mobileNumber;
         private string _position;
         private string _companyName;
-        private string _title;
         private string _enquirySource;
-        private string _email;
         private string _employeeCount;
-        private string _enquiryDescription;
         private string _prevExp;
+        private string _enquiryDescription;
+        private AddressViewModel _addressViewModel;
+
 
         public EmployerEnquiryViewModelBuilder EnquiryDescription(string enquiryDescription)
         {
