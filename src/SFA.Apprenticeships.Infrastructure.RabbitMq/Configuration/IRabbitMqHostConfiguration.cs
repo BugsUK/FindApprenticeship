@@ -76,7 +76,7 @@
         /// <summary>
         /// The number items that can be listed on a queue before a warning is raised
         /// </summary>
-        int QueueWarningLimit { get; set; }
+        IQueueWarningLimits QueueWarningLimits { get; }
 
         /// <summary>
         /// Connection string to connect to RabbitMQ.

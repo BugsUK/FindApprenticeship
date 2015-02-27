@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Configuration
 {
+    using System.Collections.Generic;
     using System.Configuration;
 
     public class RabbitMqHostConfiguration : ConfigurationElement, IRabbitMqHostConfiguration
@@ -15,6 +16,7 @@
         private const string PreFetchCountConst = "PreFetchCount";
         private const string OutputEasyNetQLogsToNLogInternalConst = "OutputEasyNetQLogsToNLogInternal";
         private const string NodeCountConst = "NodeCount";
+        private const string QueueWarningLimitsConst = "QueueWarningLimits";
         private const string QueueWarningLimitConst = "QueueWarningLimit";
 
         [ConfigurationProperty(NameConst, IsRequired = true, IsKey = true)]
@@ -94,11 +96,17 @@
             set { this[NodeCountConst] = value; }
         }
 
-        [ConfigurationProperty(QueueWarningLimitConst, IsRequired = false, IsKey = false, DefaultValue = 500)]
-        public int QueueWarningLimit
+        [ConfigurationProperty(QueueWarningLimitsConst, IsRequired = false)]
+        [ConfigurationCollection(typeof(RabbitMqCollection), AddItemName = QueueWarningLimitConst)]
+        public QueueWarningLimitCollection QueueWarningLimitCollection
         {
-            get { return (int)this[QueueWarningLimitConst]; }
-            set { this[QueueWarningLimitConst] = value; }
+            get { return (QueueWarningLimitCollection)this[QueueWarningLimitsConst]; }
+            set { this[QueueWarningLimitsConst] = value; }
+        }
+
+        public IQueueWarningLimits QueueWarningLimits
+        {
+            get { return QueueWarningLimitCollection; }
         }
 
         public string ConnectionString
