@@ -53,17 +53,17 @@
                 return;
             }
 
-            var vacancySumaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
+            var vacancySummaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
 
-            foreach (var vacancySummaryPage in vacancySumaries)
+            foreach (var vacancySummaryPage in vacancySummaries)
             {
                 _messageBus.PublishMessage(vacancySummaryPage);
             }
-                
+
             // Only delete from queue once we have all vacancies from the service without error.
             _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
-            _logger.Info("Queued {0} vacancy summary pages", vacancySumaries.Count());
+            _logger.Info("Queued {0} vacancy summary pages", vacancySummaries.Count());
         }
       
         public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)

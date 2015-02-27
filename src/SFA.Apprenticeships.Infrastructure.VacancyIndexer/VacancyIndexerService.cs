@@ -10,7 +10,6 @@
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
-    using StructureMap.AutoMocking;
 
     public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
         where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
@@ -87,7 +86,7 @@
                 var snowballTokenFilter = new SnowballTokenFilter { Language = "English" };
                 indexSettings.Analysis.TokenFilters.Add("snowball", snowballTokenFilter);
 
-                var baseStopwords = GetStopwords("StopwordsBase");
+                var baseStopwords = GetStopwords("StopwordsBase").ToList();
                 var extendedStopwords = baseStopwords.Concat(GetStopwords("StopwordsExtended"));
 
                 var stopwordsBaseFilter = new StopTokenFilter { Stopwords = baseStopwords };

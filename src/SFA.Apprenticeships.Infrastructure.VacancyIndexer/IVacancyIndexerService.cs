@@ -25,7 +25,7 @@
         void CreateScheduledIndex(DateTime scheduledRefreshDateTime);
 
         /// <summary>
-        /// Swaps any existing aliases used for serving vacacny summary data
+        /// Swaps any existing aliases used for serving vacancy summary data
         /// to use the new index that contains the latest indexed data.
         /// </summary>
         /// <param name="scheduledRefreshDateTime"></param>

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
 {
     using System;
-    using System.ComponentModel;
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
@@ -51,8 +50,7 @@
                 .First(c => c.FullName == vacancySummaryToIndex.Sector).CodeName;
 
             if (categories.First(c => c.FullName == vacancySummaryToIndex.Sector)
-                .SubCategories.Any(sc => sc.FullName == vacancySummaryToIndex.Framework)
-                )
+                .SubCategories.Any(sc => sc.FullName == vacancySummaryToIndex.Framework))
             {
                 vacancySummaryToIndex.FrameworkCode = categories
                     .First(c => c.FullName == vacancySummaryToIndex.Sector)
@@ -61,10 +59,10 @@
                 return true;
             }
 
-            _logService.Warn("The vacancy with Id {0} has a mismatched Sector/Framework:{1} | {2}",
+            _logService.Warn("The vacancy with Id {0} has a mismatched Sector/Framework: {1} | {2}",
                 vacancySummaryToIndex.Id, vacancySummaryToIndex.Sector, vacancySummaryToIndex.Framework);
-            return false;
 
+            return false;
         }
     }
 }
