@@ -193,6 +193,20 @@
             VerifyNoErrorsLogged();
         }
 
+        [Test, Category("Integration")]
+        public void ShouldSendContactMessageContainingUnicodeCharacters()
+        {
+            var request = new EmailRequest
+            {
+                ToEmail = TestToEmail,
+                Tokens = TokenGenerator.CreateContactMessageTokensContainingUnicodeCharacters(),
+                MessageType = MessageTypes.CandidateContactMessage
+            };
+
+            _dispatcher.SendEmail(request);
+            VerifyNoErrorsLogged();
+        }
+
         #region Helpers
 
         private void VerifyNoErrorsLogged()

@@ -108,5 +108,16 @@
                     new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "User enquiry details")
             };
         }
+
+        public static IEnumerable<CommunicationToken> CreateContactMessageTokensContainingUnicodeCharacters()
+        {
+            return new[]
+            {
+                    new CommunicationToken(CommunicationTokens.UserEmailAddress, TestToEmail),
+                    new CommunicationToken(CommunicationTokens.UserFullName, "It’s my full name"),
+                    new CommunicationToken(CommunicationTokens.UserEnquiry, "I’ve forgotten my password unicode."),
+                    new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "I’ve has unicode.")
+            };
+        }
     }
 }
