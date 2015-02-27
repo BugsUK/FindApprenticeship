@@ -24,7 +24,7 @@
         {
             var candidateService = new Mock<ICandidateService>();
             new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build()
-                .GetOrCreateApplicationViewModel(Guid.NewGuid(), ValidVacancyId);
+                .CreateApplicationViewModel(Guid.NewGuid(), ValidVacancyId);
 
             candidateService.Verify(cs => cs.CreateApplication(It.IsAny<Guid>(), It.IsAny<int>()), Times.Once);
             candidateService.Verify(cs => cs.GetApplication(It.IsAny<Guid>(), It.IsAny<int>()), Times.Never);
@@ -43,7 +43,7 @@
 
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.Status.Should().Be(ApplicationStatuses.ExpiredOrWithdrawn);
@@ -62,7 +62,7 @@
             
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.Status.Should().Be(ApplicationStatuses.ExpiredOrWithdrawn);
@@ -80,7 +80,7 @@
             apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModel { VacancyStatus = VacancyStatuses.Live });
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.Status.Should().Be(ApplicationStatuses.Unknown);
@@ -98,7 +98,7 @@
             apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((VacancyDetailViewModel) null);
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.Status.Should().Be(ApplicationStatuses.ExpiredOrWithdrawn);
@@ -115,7 +115,7 @@
             candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Throws(new CustomException(ErrorCodes.EntityStateError));
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.ApplicationInIncorrectState);
@@ -133,7 +133,7 @@
             candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Throws(new CustomException(Application.Interfaces.Applications.ErrorCodes.ApplicationNotFoundError));
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
@@ -151,7 +151,7 @@
             candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Throws(new Exception());
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.ViewModelStatus.Should().Be(ApplicationViewModelStatus.Error);
@@ -171,7 +171,7 @@
             candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.Status.Should().Be(ApplicationStatuses.ExpiredOrWithdrawn);
@@ -190,7 +190,7 @@
             candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.Status.Should().Be(ApplicationStatuses.ExpiredOrWithdrawn);
@@ -209,7 +209,7 @@
             candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.Status.Should().Be(ApplicationStatuses.Unknown);
@@ -228,7 +228,7 @@
             candidateService.Setup(cs => cs.CreateApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail());
             var viewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyDetailProvider).Build()
-                .GetOrCreateApplicationViewModel(candidateId, ValidVacancyId);
+                .CreateApplicationViewModel(candidateId, ValidVacancyId);
 
             viewModel.Should().NotBeNull();
             viewModel.Status.Should().Be(ApplicationStatuses.Unknown);

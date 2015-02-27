@@ -200,6 +200,7 @@
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyQualificationRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ApplyTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipApplication\ApprenticeshipApplicationMediatorBuilder.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AutoSaveTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\PreviewAndSubmitTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\PreviewTests.cs" />
