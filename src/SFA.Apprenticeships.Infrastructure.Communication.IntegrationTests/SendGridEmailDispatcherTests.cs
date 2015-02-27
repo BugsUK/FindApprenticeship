@@ -200,6 +200,20 @@
             };
 
             _dispatcher.SendEmail(request);
+        [Test, Category("Integration")]
+        public void ShouldSendContactMessageContainingUnicodeCharacters()
+        {
+            var request = new EmailRequest
+            {
+                ToEmail = TestToEmail,
+                Tokens = TokenGenerator.CreateContactMessageTokensContainingUnicodeCharacters(),
+                MessageType = MessageTypes.CandidateContactMessage
+            };
+
+            _dispatcher.SendEmail(request);
+            VerifyNoErrorsLogged();
+        }
+
 
             _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
 

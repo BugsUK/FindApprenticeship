@@ -124,6 +124,7 @@
 
             var errorMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}",
                 templateName);
+
             _logger.Error(errorMessage);
 
             throw new ConfigurationErrorsException(errorMessage);
@@ -156,9 +157,11 @@
         private static string GetEmailLogMessage(EmailRequest request, SendGridMessage message)
         {
             var subject = string.IsNullOrWhiteSpace(message.Subject) ? "<from template>" : message.Subject;
-            var recipients = string.Join(", ", message.To.Select(a => a.Address));
+            var recipients = string.Join(", ", message.To.Select(address => address.Address));
+            var tokens = string.Join(", ", request.Tokens.Select(token => string.Format("'{0}'='{1}'", token.Key, token.Value)));
 
-            return string.Format("type='{0}', subject='{1}', recipients='{2}'", request.MessageType, subject, recipients);
+            return string.Format("type='{0}', subject='{1}', from='{2}', to='{3}', tokens='{4}'",
+                request.MessageType, subject, message.From.Address, recipients, tokens);
         }
     }
 }
