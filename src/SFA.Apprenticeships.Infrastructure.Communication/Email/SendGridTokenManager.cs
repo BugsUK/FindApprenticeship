@@ -70,7 +70,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                     emailTemplateToken = "User.EnquiryDetails";
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("key");
+                    throw new ArgumentOutOfRangeException("key", key, "Unknown communication token.");
             }
 
             return string.Format("{0}{1}{0}", TemplateTokenDelimiter, emailTemplateToken);
