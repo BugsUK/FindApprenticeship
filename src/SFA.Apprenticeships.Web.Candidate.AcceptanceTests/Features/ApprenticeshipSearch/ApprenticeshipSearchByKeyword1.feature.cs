@@ -508,10 +508,6 @@ this.FeatureBackground();
                         "Greater Than",
                         "0"});
             table17.AddRow(new string[] {
-                        "SortOrderingDropDown",
-                        "Equals",
-                        "Best match"});
-            table17.AddRow(new string[] {
                         "NationwideLocationTypeLink",
                         "Exists",
                         ""});
@@ -528,11 +524,11 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find apprenticeships by keyword and change ordering to distance", new string[] {
                         "SmokeTests"});
-#line 141
+#line 140
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 142
+#line 141
  testRunner.Given("I navigated to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
@@ -550,11 +546,11 @@ this.FeatureBackground();
             table18.AddRow(new string[] {
                         "ApprenticeshipLevel",
                         "All levels"});
-#line 143
+#line 142
  testRunner.When("I enter data", ((string)(null)), table18, "When ");
-#line 149
+#line 148
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 150
+#line 149
  testRunner.And("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
@@ -565,7 +561,7 @@ this.FeatureBackground();
                         "SearchResultItemsCount",
                         "Equals",
                         "5"});
-#line 151
+#line 150
  testRunner.Then("I see", ((string)(null)), table19, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
@@ -574,9 +570,9 @@ this.FeatureBackground();
             table20.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Distance"});
-#line 154
+#line 153
  testRunner.And("I enter data", ((string)(null)), table20, "And ");
-#line 157
+#line 156
  testRunner.And("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
@@ -591,7 +587,7 @@ this.FeatureBackground();
                         "ResultsAreInDistanceOrder",
                         "Equals",
                         "True"});
-#line 158
+#line 157
  testRunner.And("I see", ((string)(null)), table21, "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -604,11 +600,11 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find apprenticeships by keyword and change ordering to closing date", new string[] {
                         "SmokeTests"});
-#line 164
+#line 163
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 165
+#line 164
  testRunner.Given("I navigated to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
@@ -626,11 +622,11 @@ this.FeatureBackground();
             table22.AddRow(new string[] {
                         "ApprenticeshipLevel",
                         "All levels"});
-#line 166
+#line 165
  testRunner.When("I enter data", ((string)(null)), table22, "When ");
-#line 172
+#line 171
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 173
+#line 172
  testRunner.And("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
@@ -641,7 +637,7 @@ this.FeatureBackground();
                         "SearchResultItemsCount",
                         "Equals",
                         "5"});
-#line 174
+#line 173
  testRunner.Then("I see", ((string)(null)), table23, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
@@ -650,9 +646,9 @@ this.FeatureBackground();
             table24.AddRow(new string[] {
                         "SortOrderingDropDown",
                         "Closing date"});
-#line 177
+#line 176
  testRunner.And("I enter data", ((string)(null)), table24, "And ");
-#line 180
+#line 179
  testRunner.And("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
@@ -667,7 +663,7 @@ this.FeatureBackground();
                         "ResultsAreInClosingDateOrder",
                         "Equals",
                         "True"});
-#line 181
+#line 180
  testRunner.And("I see", ((string)(null)), table25, "And ");
 #line hidden
             this.ScenarioCleanup();

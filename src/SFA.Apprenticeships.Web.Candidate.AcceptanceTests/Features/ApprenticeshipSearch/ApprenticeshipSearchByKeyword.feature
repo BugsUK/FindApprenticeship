@@ -134,7 +134,6 @@ Scenario: Nationwide apprenticeships are included in keyword search results
 	Then I see 
         | Field                      | Rule         | Value      |
         | SearchResultItemsCount     | Greater Than | 0          |
-        | SortOrderingDropDown       | Equals       | Best match |
         | NationwideLocationTypeLink | Exists       |            |
 
 @SmokeTests
