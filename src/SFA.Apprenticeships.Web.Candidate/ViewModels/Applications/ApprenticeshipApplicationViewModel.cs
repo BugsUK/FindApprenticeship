@@ -42,5 +42,10 @@
         {
             return Status == ApplicationStatuses.ExpiredOrWithdrawn || VacancyDetail.VacancyStatus != VacancyStatuses.Live;
         }
+
+        public bool IsNotFound()
+        {
+            return ViewModelStatus == ApplicationViewModelStatus.ApplicationNotFound;
+        }
     }
 }

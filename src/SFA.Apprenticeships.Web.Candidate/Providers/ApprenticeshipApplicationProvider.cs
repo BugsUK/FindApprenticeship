@@ -39,7 +39,6 @@
             _logger = logger;
         }
 
-        //TODO: Move all usages of GetOrCreateApplicationViewModel to this method
         public ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
@@ -90,7 +89,7 @@
             }
         }
 
-        public ApprenticeshipApplicationViewModel GetOrCreateApplicationViewModel(Guid candidateId, int vacancyId)
+        public ApprenticeshipApplicationViewModel CreateApplicationViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -225,7 +224,7 @@
 
             try
             {
-                model = GetOrCreateApplicationViewModel(candidateId, vacancyId);
+                model = GetApplicationViewModel(candidateId, vacancyId);
 
                 if (model.HasError())
                 {

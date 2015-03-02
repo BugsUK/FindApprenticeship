@@ -8,7 +8,7 @@
     {
         ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId);
 
-        ApprenticeshipApplicationViewModel GetOrCreateApplicationViewModel(Guid candidateId, int vacancyId);
+        ApprenticeshipApplicationViewModel CreateApplicationViewModel(Guid candidateId, int vacancyId);
 
         ApprenticeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApprenticeshipApplicationViewModel savedModel, ApprenticeshipApplicationViewModel submittedModel);
 

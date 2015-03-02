@@ -31,7 +31,7 @@
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Resume(Guid candidateId, int vacancyId)
         {
-            var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+            var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (model.HasError())
             {
@@ -55,7 +55,11 @@
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound);
             }
 
-            var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+            var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            if (model == null || model.IsNotFound())
+            {
+                model = _apprenticeshipApplicationProvider.CreateApplicationViewModel(candidateId, vacancyId);
+            }
 
             if (model.HasError())
             {
@@ -81,7 +85,7 @@
         {
             viewModel = StripApplicationViewModelBeforeValidation(viewModel);
 
-            var savedModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+            var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (savedModel.HasError())
             {
@@ -123,7 +127,7 @@
         {
             viewModel = StripApplicationViewModelBeforeValidation(viewModel);
 
-            var savedModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+            var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
@@ -153,7 +157,7 @@
 
             _apprenticeshipApplicationProvider.SaveApplication(candidateId, vacancyId, viewModel);
 
-            viewModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+            viewModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
             viewModel.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Save.Ok, viewModel);
@@ -163,7 +167,7 @@
         {
             var autoSaveResult = new AutoSaveResultViewModel();
 
-            var savedModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+            var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (savedModel.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
@@ -188,7 +192,7 @@
 
             _apprenticeshipApplicationProvider.SaveApplication(candidateId, vacancyId, viewModel);
 
-            viewModel = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+            viewModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
             viewModel.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
 
             autoSaveResult.Status = "succeeded";
@@ -265,7 +269,7 @@
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Preview(Guid candidateId, int vacancyId)
         {
-            var model = _apprenticeshipApplicationProvider.GetOrCreateApplicationViewModel(candidateId, vacancyId);
+            var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
 
             if (model.HasError())
             {
