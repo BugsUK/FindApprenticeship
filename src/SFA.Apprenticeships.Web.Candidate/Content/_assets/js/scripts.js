@@ -314,6 +314,16 @@ $(function() {
       }
   });
 
+    //------- Inline details toggle
+
+  $('.summary-style').on('click', function () {
+      $this = $(this);
+
+      $this.toggleClass('open');
+
+      $this.next('.detail-content').toggle();
+  });
+
 
 });;/*
  *  jQuery Password Strength - v0.0.1

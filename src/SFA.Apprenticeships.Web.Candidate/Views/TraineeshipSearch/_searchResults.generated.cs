@@ -181,32 +181,77 @@ WriteLiteral("</p>\r\n                </div>\r\n                <p>");
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                <ul");
+WriteLiteral("</p>\r\n                <div");
+
+WriteLiteral(" class=\"grid-wrapper\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"grid grid-2-3\"");
+
+WriteLiteral(">\r\n                        <ul");
 
 WriteLiteral(" class=\"list-text no-btm-margin\"");
 
-WriteLiteral(">\r\n                    <li><b>Distance:</b> <span");
+WriteLiteral(">\r\n                            <li>\r\n                                <b>Distance:" +
+"</b> <span");
 
 WriteLiteral(" class=\"distance-value\"");
 
 WriteLiteral(">");
 
             
-            #line 33 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                                                 Write(vacancy.DistanceAsString);
+            #line 36 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                                                         Write(vacancy.DistanceAsString);
 
             
             #line default
             #line hidden
-WriteLiteral("</span> miles</li>\r\n                    <li><b>Closing date:</b> <span");
+WriteLiteral("</span> miles<span");
+
+WriteLiteral(" class=\"summary-style fake-link hide-nojs\"");
+
+WriteLiteral(">Journey time</span>\r\n                                <div");
+
+WriteLiteral(" class=\"detail-content toggle-content hide-nojs\"");
+
+WriteLiteral(">\r\n                                    <select");
+
+WriteLiteral(" class=\"select-mode\"");
+
+WriteLiteral(" name=\"\"");
+
+WriteLiteral(">\r\n                                        <option");
+
+WriteLiteral(" value=\"DRIVING\"");
+
+WriteLiteral(">Driving</option>\r\n                                        <option");
+
+WriteLiteral(" value=\"TRANSIT\"");
+
+WriteLiteral(">Bus/Train</option>\r\n                                        <option");
+
+WriteLiteral(" value=\"WALKING\"");
+
+WriteLiteral(">Walking</option>\r\n                                        <option");
+
+WriteLiteral(" value=\"BICYCLING\"");
+
+WriteLiteral(">Cycling</option>\r\n                                    </select>\r\n\r\n             " +
+"                       <span");
+
+WriteLiteral(" class=\"journey-time\"");
+
+WriteLiteral("></span>\r\n                                </div>\r\n                            </l" +
+"i>\r\n                            <li><b>Closing date:</b> <span");
 
 WriteLiteral(" class=\"closing-date-value\"");
 
 WriteLiteral(" data-date=\"");
 
             
-            #line 34 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                                                                    Write(vacancy.ClosingDate.ToString("u"));
+            #line 48 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                                                                            Write(vacancy.ClosingDate.ToString("u"));
 
             
             #line default
@@ -216,29 +261,38 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 34 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                                                                                                        Write(vacancy.ClosingDate.ToFriendlyClosingWeek());
+            #line 48 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                                                                                                                Write(vacancy.ClosingDate.ToFriendlyClosingWeek());
 
             
             #line default
             #line hidden
-WriteLiteral("</span></li>\r\n                    <li><b>Possible start date:</b> <span");
+WriteLiteral("</span></li>\r\n                            <li><b>Possible start date:</b> <span");
 
 WriteLiteral(" class=\"start-date-value\"");
 
 WriteLiteral(">");
 
             
-            #line 35 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                                                              Write(Html.DisplayFor(m => vacancy.StartDate, "Date"));
+            #line 49 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                                                                      Write(Html.DisplayFor(m => vacancy.StartDate, "Date"));
 
             
             #line default
             #line hidden
-WriteLiteral("</span></li>\r\n                </ul>\r\n            </li>\r\n");
+WriteLiteral("</span></li>\r\n                        </ul>\r\n                    </div>\r\n        " +
+"            <div");
+
+WriteLiteral(" class=\"grid grid-1-3 map-container hide-nojs small-btm-margin\"");
+
+WriteLiteral(">\r\n                        <div");
+
+WriteLiteral(" class=\"map\"");
+
+WriteLiteral("></div>\r\n                    </div>\r\n                </div>\r\n            </li>\r\n");
 
             
-            #line 38 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 57 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
             itemPosition++;
         }
     }
@@ -249,7 +303,7 @@ WriteLiteral("</span></li>\r\n                </ul>\r\n            </li>\r\n");
 WriteLiteral("</ul>\r\n\r\n");
 
             
-            #line 43 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 62 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
    Html.RenderPartial("_pagination", Model); 
             
             #line default
@@ -257,7 +311,7 @@ WriteLiteral("</ul>\r\n\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 45 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 64 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
  if (Model.TotalHits > 5)
 {
 
@@ -279,7 +333,7 @@ WriteLiteral(">Display results</label>\r\n");
 WriteLiteral("    ");
 
             
-            #line 49 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 68 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
 Write(Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" }));
 
             
@@ -296,7 +350,7 @@ WriteLiteral(" value=\"ResultsPerPage\"");
 WriteLiteral(">View</button>\r\n    </noscript>\r\n</div>\r\n");
 
             
-            #line 54 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 73 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
 }
             
             #line default

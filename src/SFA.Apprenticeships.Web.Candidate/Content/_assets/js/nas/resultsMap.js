@@ -15,9 +15,12 @@
         vacancies          = [],
         vacancy            = [],
         theMarkers         = [],
-        markersFeature     = true,
+        theMaps            = [],
+        directionsDisplay  = [],
+        directionsService  = [],
         mapCenter          = { lat: apprLatitude, lng: apprLongitude },
         bounds             = new google.maps.LatLngBounds(),
+        originLocation = new google.maps.LatLng(apprLatitude, apprLongitude),
         latLngList         = [];
 
     for (var i = 0; i < vacancyLinks.length; i++) {
@@ -27,31 +30,9 @@
             id = $(vacancyLinks[i]).attr('data-vacancy-id');
 
         vacancies[i] = [lat, longi, title, id];
-    }
 
-    if (apprMiles <= 40) {
-        apprZoom = 7;
-    }
-
-    if (apprMiles <= 30) {
-        apprZoom = 8;
-    }
-
-    if (apprMiles < 20) {
-        apprZoom = 9;
-    }
-
-    if (apprMiles < 10) {
-        apprZoom = 10;
-    }
-
-    if (apprMiles < 5) {
-        apprZoom = 11;
-    }
-
-    if (apprMiles == 0) {
-        mapCenter = { lat: 52.56192833333333, lng: -1.464853888888889 };
-        apprZoom = 5;
+        directionsDisplay[i] = new google.maps.DirectionsRenderer({ suppressMarkers: true });
+        directionsService[i] = new google.maps.DirectionsService();
     }
 
     if (apprLatitude == 0 || apprLongitude == 0) {
@@ -87,9 +68,7 @@
 
         radiusCircle = new google.maps.Circle(distanceCircle);
 
-        if (markersFeature) {
-            setMarkers(map, vacancies)
-        }
+        setMarkers(map, vacancies)
 
         map.fitBounds(bounds);
 
@@ -108,7 +87,6 @@
                         null, /* origin is 0,0 */
                         null, /* anchor is bottom center of the scaled image */
                         new google.maps.Size(20, 32));
-
 
         for (var i = 0; i < locations.length; i++) {
             var appship = locations[i];
@@ -140,16 +118,12 @@
         google.maps.event.addListener(marker, 'mouseover', function () {
             marker.setIcon(image2);
             marker.setZIndex(1000);
-            $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', '#E5E5E5').addClass('map-hover');
-            $('.vacancy-link').not('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', 'none').removeClass('map-hover');
         });
 
         google.maps.event.addListener(marker, 'click', function () {
             marker.setIcon(image2);
             marker.setZIndex(1000);
             $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item')[0].scrollIntoView();
-            $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', '#E5E5E5').addClass('map-hover');
-            $('.vacancy-link').not('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item').css('background', 'none').removeClass('map-hover');
         });
 
         google.maps.event.addListener(marker, 'mouseout', function () {
@@ -158,22 +132,11 @@
         });
     }
 
-    google.maps.event.addDomListener(window, 'load', initialize);
-
-    $(document).click(function (event) {
-        if (!$(event.target).closest('#map-canvas').length) {
-            if ($('.search-results__item').hasClass("map-hover")) {
-                $('.search-results__item').removeClass('map-hover').css('background', 'none');
-            }
-        }
-    });
-
     function itemHover(image1, image2) {
         $('.search-results__item').mouseover(function () {
             var thisPosition = $(this).index();
             theMarkers[thisPosition].setIcon(image2);
             theMarkers[thisPosition].setZIndex(1000);
-            $(this).css('background', '#E5E5E5').addClass('map-hover');
 
         });
 
@@ -181,11 +144,98 @@
             var thisPosition = $(this).index();
             theMarkers[thisPosition].setIcon(image1);
             theMarkers[thisPosition].setZIndex(0);
-
-            $(this).css('background', 'none').removeClass('map-hover');
         });
 
     }
+
+    $('.vacancy-link').each(function () {
+
+        var vacancyMap = $(this).closest('.search-results__item').find('.map')[0],
+            vacancyLat = $(this).attr('data-lat'),
+            vacancyLon = $(this).attr('data-lon'),
+            latlng = new google.maps.LatLng(vacancyLat, vacancyLon);
+
+        var myOptions = {
+            zoom: 10,
+            center: latlng,
+            mapTypeControl: false,
+            overviewMapControl: false,
+            panControl: false,
+            scaleControl: false,
+            scrollwheel: false,
+            streetViewControl: false,
+            zoomControl: true,
+            zoomControlOptions: {
+                style: google.maps.ZoomControlStyle.SMALL
+            }
+        };
+        var maps = new google.maps.Map(vacancyMap, myOptions);
+
+        theMaps.push(maps);
+
+        var markerIcon = new google.maps.MarkerImage(
+                      '/Content/_assets/img/icon-location.png',
+                      null, /* size is determined at runtime */
+                      null, /* origin is 0,0 */
+                      null, /* anchor is bottom center of the scaled image */
+                      new google.maps.Size(20, 32));
+
+        var marker = new google.maps.Marker({
+            icon: markerIcon,
+            position: latlng,
+            map: maps
+        });
+
+    });
+
+    function calcRoute(transportMode, latLong, journeyTime, mapNumber) {
+
+        directionsDisplay[mapNumber].setMap(theMaps[mapNumber]);
+
+        var request = {
+            origin: originLocation,
+            destination: latLong,
+            travelMode: google.maps.TravelMode[transportMode]
+        };
+        directionsService[mapNumber].route(request, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+
+                $(journeyTime).text(response.routes[0].legs[0].duration.text);
+
+                directionsDisplay[mapNumber].setDirections(response);
+            }
+        });
+    }
+
+    $('.select-mode').on('change', function () {
+        var $this = $(this),
+            $thisVal = $this.val(),
+            $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
+            $thisLat = $thisVacLink.attr('data-lat'),
+            $thisLong = $thisVacLink.attr('data-lon'),
+            $thisLatLong = new google.maps.LatLng($thisLat, $thisLong),
+            $durationElement = $this.next('.journey-time'),
+            $mapNumber = $this.closest('.search-results__item').index();
+
+        calcRoute($thisVal, $thisLatLong, $durationElement, $mapNumber);
+    });
+
+    $('.search-results__item .summary-style').on('click', function (originLocation) {
+        var $this = $(this),
+            $thisVal = $this.next('.detail-content').find('.select-mode option:selected').val(),
+            $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
+            $thisMap = $this.closest('.search-results__item').find('.map'),
+            $thisLat = $thisVacLink.attr('data-lat'),
+            $thisLong = $thisVacLink.attr('data-lon'),
+            $thisLatLong = new google.maps.LatLng($thisLat, $thisLong),
+            $durationElement = $this.next('.detail-content').find('.journey-time'),
+            $mapNumber = $this.closest('.search-results__item').index();
+
+        calcRoute($thisVal, $thisLatLong, $durationElement, $mapNumber);
+
+    });
+
+    google.maps.event.addDomListener(window, 'load', initialize);
 
     $('#editSearchToggle').on('click', function () {
         initialize();
