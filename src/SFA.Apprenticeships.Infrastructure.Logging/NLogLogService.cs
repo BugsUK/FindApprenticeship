@@ -75,14 +75,15 @@
                 LoggerName = _logger.Name,
                 Level = logLevel,
                 Exception = e,
-                Message = logMessage
+                Message = logMessage,
             };
+
+            logEvent.Properties["Date"] = DateTime.UtcNow;
+            logEvent.Properties["Ticks"] = DateTime.UtcNow.Ticks;
 
             if (e is CustomException)
             {
                 logEvent.Properties["ErrorCode"] = (e as CustomException).Code;
-                logEvent.Properties["Date"] = DateTime.UtcNow;
-                logEvent.Properties["Ticks"] = DateTime.UtcNow.Ticks;
             }
 
             _logger.Log(logEvent);
