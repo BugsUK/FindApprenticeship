@@ -3,7 +3,6 @@
     using System;
     using Application.ApplicationUpdate;
     using Application.ApplicationUpdate.Entities;
-    using Application.VacancyEtl.Entities;
     using Consumers;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
@@ -34,7 +33,7 @@
 
             var appStatusSummary = new ApplicationStatusSummary
             {
-                ApplicationId = Guid.NewGuid(),
+                ApplicationId = Guid.Empty,
                 LegacyVacancyId = 101,
                 ApplicationStatus = ApplicationStatuses.Submitted,
                 VacancyStatus = VacancyStatuses.Live,
@@ -54,7 +53,6 @@
                             v =>
                                 v.LegacyVacancyId == appStatusSummary.LegacyVacancyId &&
                                 v.ClosingDate == appStatusSummary.ClosingDate &&
-                                v.DateTime < DateTime.Now &&
                                 v.VacancyStatus == appStatusSummary.VacancyStatus)));
 
         }

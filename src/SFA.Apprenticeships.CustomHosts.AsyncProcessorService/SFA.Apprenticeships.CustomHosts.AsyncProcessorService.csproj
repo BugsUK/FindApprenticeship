@@ -101,12 +101,13 @@
     <StartupObject>SFA.Apprenticeships.CustomHosts.AsyncProcessorService.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EasyNetQ">
-      <HintPath>..\packages\EasyNetQ.0.39.5.339\lib\net40\EasyNetQ.dll</HintPath>
+    <Reference Include="EasyNetQ, Version=0.45.0.364, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EasyNetQ.0.45.0.364\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.4.0\lib\net35\RabbitMQ.Client.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RabbitMQ.Client, Version=3.4.3.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RabbitMQ.Client.3.4.3\lib\net35\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>

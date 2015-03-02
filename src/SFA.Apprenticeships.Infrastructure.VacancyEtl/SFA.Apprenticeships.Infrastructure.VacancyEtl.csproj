@@ -78,33 +78,33 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AutoMapper, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.dll</HintPath>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
-    <Reference Include="AutoMapper.Net4, Version=3.3.0.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AutoMapper.3.3.0\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
     </Reference>
-    <Reference Include="EasyNetQ, Version=0.39.5.339, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="EasyNetQ, Version=0.45.0.364, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EasyNetQ.0.39.5.339\lib\net40\EasyNetQ.dll</HintPath>
+      <HintPath>..\packages\EasyNetQ.0.45.0.364\lib\net40\EasyNetQ.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationServer.Caching.AzureClientHelper, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.0.0\lib\net40-full\Microsoft.ApplicationServer.Caching.AzureClientHelper.dll</HintPath>
+      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.1.0\lib\net40-full\Microsoft.ApplicationServer.Caching.AzureClientHelper.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationServer.Caching.AzureCommon, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.0.0\lib\net40-full\Microsoft.ApplicationServer.Caching.AzureCommon.dll</HintPath>
+      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.1.0\lib\net40-full\Microsoft.ApplicationServer.Caching.AzureCommon.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationServer.Caching.Client, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.0.0\lib\net40-full\Microsoft.ApplicationServer.Caching.Client.dll</HintPath>
+      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.1.0\lib\net40-full\Microsoft.ApplicationServer.Caching.Client.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.ApplicationServer.Caching.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.0.0\lib\net40-full\Microsoft.ApplicationServer.Caching.Core.dll</HintPath>
+      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.1.0\lib\net40-full\Microsoft.ApplicationServer.Caching.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Edm">
       <HintPath>..\packages\Microsoft.Data.Edm.5.6.3\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -120,7 +120,7 @@
     </Reference>
     <Reference Include="Microsoft.Web.DistributedCache, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.0.0\lib\net40-full\Microsoft.Web.DistributedCache.dll</HintPath>
+      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.1.0\lib\net40-full\Microsoft.Web.DistributedCache.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -142,19 +142,19 @@
     </Reference>
     <Reference Include="Microsoft.WindowsFabric.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.0.0\lib\net40-full\Microsoft.WindowsFabric.Common.dll</HintPath>
+      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.1.0\lib\net40-full\Microsoft.WindowsFabric.Common.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.WindowsFabric.Data.Common, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.0.0\lib\net40-full\Microsoft.WindowsFabric.Data.Common.dll</HintPath>
+      <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.1.0\lib\net40-full\Microsoft.WindowsFabric.Data.Common.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.7\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RabbitMQ.Client">
-      <HintPath>..\packages\RabbitMQ.Client.3.4.0\lib\net35\RabbitMQ.Client.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="RabbitMQ.Client, Version=3.4.3.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RabbitMQ.Client.3.4.3\lib\net35\RabbitMQ.Client.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.0.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -198,14 +198,14 @@
     <Compile Include="Mappers\VacancyEtlMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="App.config">
       <SubType>Designer</SubType>
       <TransformOnBuild>true</TransformOnBuild>
@@ -356,5 +356,5 @@
       </AppConfigWithTargetPath>
     </ItemGroup>
   </Target>
-  <Import Project="..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.0\tools\AutoMapper.targets')" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
 </Project>

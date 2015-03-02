@@ -97,8 +97,9 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="Twilio.Api">
-      <HintPath>..\packages\Twilio.3.6.25\lib\3.5\Twilio.Api.dll</HintPath>
+    <Reference Include="Twilio.Api, Version=3.4.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Twilio.3.6.27\lib\3.5\Twilio.Api.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
