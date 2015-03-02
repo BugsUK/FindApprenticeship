@@ -101,6 +101,7 @@
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.VacancyNotFound);
             }
+
             if (savedModel.Status != ApplicationStatuses.Draft)
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState);

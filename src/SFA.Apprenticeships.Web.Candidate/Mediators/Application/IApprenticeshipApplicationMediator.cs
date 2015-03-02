@@ -5,11 +5,9 @@
 
     public interface IApprenticeshipApplicationMediator
     {
-        MediatorResponse<ApprenticeshipApplicationViewModel> Resume(Guid candidateId, int vacancyId);
-
         MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString);
 
-        MediatorResponse<ApprenticeshipApplicationViewModel> PreviewAndSubmit(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel);
+        MediatorResponse<ApprenticeshipApplicationViewModel> Resume(Guid candidateId, int vacancyId);
 
         MediatorResponse<ApprenticeshipApplicationViewModel> Save(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel);
 
@@ -18,6 +16,8 @@
         MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyQualificationRows(ApprenticeshipApplicationViewModel viewModel);
 
         MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyWorkExperienceRows(ApprenticeshipApplicationViewModel viewModel);
+
+        MediatorResponse<ApprenticeshipApplicationViewModel> PreviewAndSubmit(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel);
 
         MediatorResponse<ApprenticeshipApplicationViewModel> Preview(Guid candidateId, int vacancyId);
 
