@@ -68,7 +68,7 @@ Scenario: Nationwide apprenticeships found by keyword can be ordered
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
-		 | Keywords            | Nationwide |
+		 | Keywords            | ambitious  |
 		 | Location            | London     |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
