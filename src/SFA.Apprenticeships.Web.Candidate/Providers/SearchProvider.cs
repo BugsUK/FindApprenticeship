@@ -153,7 +153,9 @@
                     if (nonNationalResults.Total == 0 && nationalResults.Total > 0)
                     {
                         nonNationlResponse.Vacancies = nationalResponse.Vacancies;
-                        nonNationlResponse.VacancySearch.SortType = VacancySearchSortType.ClosingDate;
+                        //Why would this need to change ordering? Commented out to fix tests = KB 02/03/2015
+                        //If no other tests fail, these 3 commented lines can be removed
+                        //nonNationlResponse.VacancySearch.SortType = VacancySearchSortType.ClosingDate;
                         nonNationlResponse.VacancySearch.LocationType = ApprenticeshipLocationType.National;
                         SetAggregationResults(nonNationlResponse, nationalResults.AggregationResults);
                     }
