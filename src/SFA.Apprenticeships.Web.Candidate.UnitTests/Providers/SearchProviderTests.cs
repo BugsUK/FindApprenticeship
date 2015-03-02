@@ -120,8 +120,8 @@
             var vacancies = searchProvider.FindVacancies(search);
 
             vacancies.VacancySearch.LocationType.Should().Be(ApprenticeshipLocationType.National);
-            vacancies.VacancySearch.SortType.Should().NotBe(VacancySearchSortType.Distance);
-            vacancies.VacancySearch.SortType.Should().Be(VacancySearchSortType.ClosingDate);
+            vacancies.VacancySearch.SortType.Should().NotBe(VacancySearchSortType.ClosingDate);
+            vacancies.VacancySearch.SortType.Should().Be(VacancySearchSortType.Distance);
         }
 
         [Test]
