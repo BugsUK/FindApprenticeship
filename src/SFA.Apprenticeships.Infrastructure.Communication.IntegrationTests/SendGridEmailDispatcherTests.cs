@@ -200,6 +200,8 @@
             };
 
             _dispatcher.SendEmail(request);
+        }
+
         [Test, Category("Integration")]
         public void ShouldSendContactMessageContainingUnicodeCharacters()
         {
@@ -214,9 +216,9 @@
             VerifyNoErrorsLogged();
         }
 
-
+        private void VerifyNoErrorsLogged()
+        {
             _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
-
         }
     }
 }
