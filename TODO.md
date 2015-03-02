@@ -22,6 +22,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Infrastructure layer ##
 
+- add a "contact message" collection to the communication repository
 - log request/response payloads for nas gateway calls
 - change to entity repos (re. Mark). E.g. Consider renaming GenericMongoClient to MongoRepositoryBase; move MongoDB code out of into new MongoClient class; MongoRepositoryBase (and other future repos that may not be based on Domain EntityBase) would consume MongoClient (via IoC).
 - wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
