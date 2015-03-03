@@ -4,7 +4,7 @@
     using Exceptions;
     using System.Linq;
 
-    public static class ApprenticeshipApplicationHelper
+    public static class ApprenticeshipApplicationDetailHelper
     {
         public static void AssertState(this ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, string errorMessage, params ApplicationStatuses[] allowedUserStatuses)
         {

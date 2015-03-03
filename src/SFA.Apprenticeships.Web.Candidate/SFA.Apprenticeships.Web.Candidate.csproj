@@ -906,6 +906,7 @@
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipSearchResponseViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\ApprenticeshipVacancySummaryViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModelStatuses.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\Account\Index.generated.cs">
       <AutoGen>True</AutoGen>

@@ -23,6 +23,10 @@
 
         MediatorResponse<ApprenticeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId);
 
-        MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle); 
-    }
+        MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle);
+        
+        MediatorResponse SaveVacancy(Guid candidateId, int vacancyId);
+
+        MediatorResponse DeleteSavedVacancy(Guid candidateId, int vacancyId);
+   }
 }

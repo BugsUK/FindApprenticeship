@@ -76,5 +76,13 @@
             public const string HasError = "ApprenticeshipApplication.AutoSave.HasError";
             public const string Ok = "ApprenticeshipApplication.AutoSave.Ok";
         }
+
+        public class SaveVacancy
+        {
+            public const string Saved = "ApprenticeshipApplication.ToggleSaveVacancy.Saved";
+            public const string Unsaved = "ApprenticeshipApplication.ToggleSaveVacancy.Unsaved";
+            public const string Draft = "ApprenticeshipApplication.ToggleSaveVacancy.Draft";
+            public const string Applied = "ApprenticeshipApplication.ToggleSaveVacancy.Applied";
+        }
     }
 }

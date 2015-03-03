@@ -55,6 +55,12 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Candidate.Helpers;
+    
+    #line 4 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+    using SFA.Apprenticeships.Web.Candidate.Mediators.Application;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Candidate.ViewModels;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Locations;
@@ -162,13 +168,14 @@ WriteLiteral("\r\n    <meta");
 
 WriteLiteral(" name=\"WT.oss_r\"");
 
-WriteAttribute("content", Tuple.Create(" content=\"", 3669), Tuple.Create("\"", 3700)
+WriteAttribute("content", Tuple.Create(" content=\"", 3622), Tuple.Create("\"", 3653)
             
             #line 83 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 3679), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
+, Tuple.Create(Tuple.Create("", 3632), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
             
             #line default
             #line hidden
+, 3632), false)
 , 3679), false)
 );
 
@@ -457,63 +464,107 @@ Write(Scripts.Render("~/bundles/nas/locationsearch"));
             
             #line default
             #line hidden
-WriteLiteral("\r\n    <script");
+WriteLiteral("\r\n\r\n    <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n        $(function () {\r\n            $(\"#Location\").locationMatch({\r\n         " +
-"       url: \'");
+WriteLiteral(">\r\n        $(function() {\r\n            $(\"#Location\").locationMatch({\r\n          " +
+"      url: \'");
 
             
+            #line 155 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
             #line 154 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 153 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                  Write(Url.Action("location", "Location"));
 
             
             #line default
             #line hidden
+WriteLiteral("\',\r\n                longitude: \'#Longitude\',\r\n                latitude: \'#Latitud" +
+"e\',\r\n                latlonhash: \'#Hash\'\r\n            });\r\n\r\n            $(\'#sor" +
+"t-results\').change(function() {\r\n                $(\'#SearchAction\').val(\"Sort\");" +
+"\r\n                $(\"form\").submit();\r\n            });\r\n\r\n            $(\'#result" +
+"s-per-page\').change(function() {\r\n                $(\'#SearchAction\').val(\"Sort\")" +
+";\r\n                $(\"form\").submit();\r\n            });\r\n\r\n            $(\'#searc" +
+"h-button\').click(function() {\r\n                $(\'#LocationType\').val(\"NonNation" +
+"al\");\r\n            });\r\n            $(\"#search-tab-control\").click(function() {\r" +
+"\n                $(\"#SearchMode\").val(\"Keyword\");\r\n            });\r\n\r\n          " +
+"  $(\"#browse-tab-control\").click(function() {\r\n                $(\"#SearchMode\")." +
+"val(\"Category\");\r\n            });\r\n\r\n            var savedVacancyStatuses = {\r\n " +
+"               none: \"None\",\r\n                saved: \"Saved\",\r\n                u" +
+"nsaved: \"Unsaved\",\r\n                draft: \"Draft\",\r\n                applied: \"A" +
+"pplied\"\r\n            };\r\n\r\n            // Initialise saved vacancy / resume appl" +
+"ication links.\r\n            $(\".save-vacancy-link\").each(function () {\r\n        " +
+"        setSaveVacancyLink.call(this);\r\n            });\r\n\r\n            $(\".resum" +
+"e-application-link\").each(setResumeApplicationLink);\r\n\r\n            // Save / un" +
+"save vacancy.\r\n            function setSaveVacancyLink (vacancyStatus) {\r\n      " +
+"          var $self = $(this);\r\n                var $icon = $self.children(\"i\");" +
+"\r\n\r\n                if (vacancyStatus) {\r\n                    $self.data(\"vacanc" +
+"y-status\", vacancyStatus);\r\n                } else {\r\n                    vacanc" +
+"yStatus = $self.data(\"vacancy-status\");\r\n                }\r\n\r\n                if" +
+" (vacancyStatus !== savedVacancyStatuses.saved && vacancyStatus !== savedVacancy" +
+"Statuses.unsaved) {\r\n                    $self.addClass(\"hidden\");\r\n            " +
+"        return;\r\n                }\r\n\r\n                var saved = vacancyStatus " +
+"=== savedVacancyStatuses.saved;\r\n\r\n                $icon.toggleClass(\"fa-star\", " +
+"saved);\r\n                $icon.toggleClass(\"fa-star-o\", !saved);\r\n\r\n            " +
+"    $self.attr(\"title\", saved ? \"Remove from saved\" : \"Add to saved\");\r\n        " +
+"        $self.data(\"vacancy-status\", saved ? savedVacancyStatuses.saved : savedV" +
+"acancyStatuses.unsaved);\r\n                $self.removeClass(\"hidden\");\r\n        " +
+"    };\r\n\r\n            function setResumeApplicationLink () {\r\n            };\r\n\r\n" +
+"            // Handle save / unsave vacancy link click.\r\n            $(\".save-va" +
+"cancy-link\").on(\"click\", function (e) {\r\n                e.preventDefault();\r\n\r\n" +
+"                var $self = $(this);\r\n                var save = $self.data(\"vac" +
+"ancy-status\") == savedVacancyStatuses.unsaved;\r\n\r\n                var vacancyId " +
+"= parseInt($self.data(\"vacancy-id\"));\r\n                var options = {\r\n        " +
+"            type: save ? \"POST\" : \"DELETE\",\r\n                    url: save ? \'");
+
+            
+            #line 236 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+                            Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\' : \'");
+
+            
+            #line 236 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+                                                                                        Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral(@"',
-                longitude: '#Longitude',
-                latitude: '#Latitude',
-                latlonhash: '#Hash'
-            });
+                    data: {
+                        id: vacancyId
+                    }
+                };
 
-            $('#sort-results').change(function () {
-
-                $('#SearchAction').val(""Sort"");
-                $(""form"").submit();
-            });
-
-            $('#results-per-page').change(function () {
-                $('#SearchAction').val(""Sort"");
-                $(""form"").submit();
-            });
-
-            $('#search-button').click(function () {
-                $('#LocationType').val(""NonNational"");
-            });
-            $(""#search-tab-control"").click(function () {
-                $(""#SearchMode"").val(""Keyword"");
-            });
-
-            $(""#browse-tab-control"").click(function () {
-                $(""#SearchMode"").val(""Category"");
+                $.ajax(options)
+                    .done(function (result) {
+                        console.log(""ajax::done -> vacancyStatus"", result.status);
+                        setSaveVacancyLink.call($self, result.status);
+                    })
+                    .fail(function (error) {
+                        console.error(""Failed to save vacancy:"");
+                        console.dir(error);
+                    });
             });
         });
     </script>
-
 
 ");
 
 WriteLiteral("    ");
 
             
-            #line 185 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 255 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/resultsMap"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
+WriteLiteral("\r\n");
 
 });
 

@@ -1,8 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
     using System;
+    using System.Collections.Generic;
+    using System.Drawing.Printing;
     using System.Linq;
     using System.Web.Security;
+    using System.Web.UI.WebControls;
     using Common.Constants;
     using Common.Models.Application;
     using Common.Providers;
@@ -14,6 +17,7 @@
     using Providers;
     using Validators;
     using ViewModels.Applications;
+    using ViewModels.VacancySearch;
 
     public class ApprenticeshipApplicationMediator : ApplicationMediatorBase, IApprenticeshipApplicationMediator
     {
@@ -315,6 +319,44 @@
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 
+        public MediatorResponse SaveVacancy(Guid candidateId, int vacancyId)
+        {
+            var status = _apprenticeshipApplicationProvider.SaveVacancy(candidateId, vacancyId);
+            var responseCode = ResponseCodeFromVacancySummaryViewModelStatus(status);
+
+            return GetMediatorResponse(responseCode);
+        }
+
+        public MediatorResponse DeleteSavedVacancy(Guid candidateId, int vacancyId)
+        {
+            var status = _apprenticeshipApplicationProvider.DeleteSavedVacancy(candidateId, vacancyId);
+            var responseCode = ResponseCodeFromVacancySummaryViewModelStatus(status);
+
+            return GetMediatorResponse(responseCode);
+        }
+
+        #region Helpers
+
+        private static string ResponseCodeFromVacancySummaryViewModelStatus(VacancySummaryViewModelStatuses status)
+        {
+            var map = new Dictionary<VacancySummaryViewModelStatuses, string>
+            {
+                { VacancySummaryViewModelStatuses.Unsaved, ApprenticeshipApplicationMediatorCodes.SaveVacancy.Unsaved },
+                { VacancySummaryViewModelStatuses.Saved, ApprenticeshipApplicationMediatorCodes.SaveVacancy.Saved },
+                { VacancySummaryViewModelStatuses.Draft, ApprenticeshipApplicationMediatorCodes.SaveVacancy.Draft },
+                { VacancySummaryViewModelStatuses.Applied, ApprenticeshipApplicationMediatorCodes.SaveVacancy.Applied }
+            };
+
+            string responseCode;
+
+            if (!map.TryGetValue(status, out responseCode))
+            {
+                // TODO: AG: US65: handle failure to map with message.
+                throw new NotImplementedException();
+            }
+            return responseCode;
+        }
+
         private static ApprenticeshipApplicationViewModel StripApplicationViewModelBeforeValidation(ApprenticeshipApplicationViewModel model)
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
@@ -333,5 +375,7 @@
 
             return model;
         }
+
+        #endregion
     }
 }
