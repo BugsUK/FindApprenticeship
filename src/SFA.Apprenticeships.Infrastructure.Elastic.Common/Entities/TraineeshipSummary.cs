@@ -18,7 +18,7 @@
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public DateTime ClosingDate { get; set; }
 
-        [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "keywordlowercase")]
+        [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "keywordLowercase")]
         public string EmployerName { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]

@@ -99,7 +99,7 @@
                 indexSettings.Analysis.Analyzers.Add("snowballStopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter", "snowball" } });
                 indexSettings.Analysis.Analyzers.Add("snowballStopwordsExtended", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsExtendedFilter", "snowball" } });
                 //Matches whole phrases ignoring case
-                indexSettings.Analysis.Analyzers.Add("keywordlowercase", new CustomAnalyzer {Tokenizer = "keyword", Filter = new[] {"lowercase"}});
+                indexSettings.Analysis.Analyzers.Add("keywordLowercase", new CustomAnalyzer {Tokenizer = "keyword", Filter = new[] {"lowercase"}});
 
                 client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
 
@@ -119,7 +119,7 @@
 
             if (!File.Exists(filePath))
             {
-                _logger.Warn("Elasticsearch stopword file '{0}' does not exist.", filePath);
+                _logger.Warn("ElasticSearch stopword file '{0}' does not exist.", filePath);
                 return Enumerable.Empty<string>();
             }
 
