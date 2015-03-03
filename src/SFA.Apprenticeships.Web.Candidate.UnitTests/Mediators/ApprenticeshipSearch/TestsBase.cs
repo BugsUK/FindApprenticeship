@@ -27,6 +27,7 @@
         [SetUp]
         public virtual void Setup()
         {
+            CandidateServiceProvider = new Mock<ICandidateServiceProvider>();
             ApprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
             ConfigurationManager = new Mock<IConfigurationManager>();
             ConfigurationManager.Setup(cm => cm.GetAppSetting<int>("VacancyResultsPerPage")).Returns(5);
