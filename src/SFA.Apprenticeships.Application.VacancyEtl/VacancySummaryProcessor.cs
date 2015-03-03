@@ -74,7 +74,11 @@
             var apprenticeshipsExtended = _mapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryUpdate>>(vacancies.ApprenticeshipSummaries).ToList();
             var traineeshipsExtended = _mapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSummaryUpdate>>(vacancies.TraineeshipSummaries).ToList();
 
-            _logger.Info("Retrieved vacancy search page number: {0}/{1} with {2} apprenticeships and {3} traineeships", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages, apprenticeshipsExtended.Count(), traineeshipsExtended.Count());
+            _logger.Info("Retrieved vacancy search page number: {0}/{1} with {2} apprenticeships and {3} traineeships", 
+                vacancySummaryPage.PageNumber, 
+                vacancySummaryPage.TotalPages, 
+                apprenticeshipsExtended.Count(), 
+                traineeshipsExtended.Count());
 
             Parallel.ForEach(
                 apprenticeshipsExtended,

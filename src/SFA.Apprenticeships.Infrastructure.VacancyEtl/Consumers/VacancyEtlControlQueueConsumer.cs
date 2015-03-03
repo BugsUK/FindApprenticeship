@@ -11,20 +11,21 @@
 
     public class VacancyEtlControlQueueConsumer : AzureControlQueueConsumer
     {
-        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _apprenticeshipIndexer;
-        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipIndexer;
-        private readonly ILogService _logger;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _apprenticeshipVacancyIndexerService;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _traineeshipVacancyIndexerService;
+        private readonly ILogService _logger;
 
         public VacancyEtlControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
             IVacancySummaryProcessor vacancySummaryProcessor,
-            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer,
-            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipIndexer, ILogService logger)
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipVacancyIndexerService,
+            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> traineeshipVacancyIndexerService, 
+            ILogService logger)
             : base(messageService, logger, "Vacancy ETL")
         {
             _vacancySummaryProcessor = vacancySummaryProcessor;
-            _apprenticeshipIndexer = apprenticeshipIndexer;
-            _trainseeshipIndexer = trainseeshipIndexer;
+            _apprenticeshipVacancyIndexerService = apprenticeshipVacancyIndexerService;
+            _traineeshipVacancyIndexerService = traineeshipVacancyIndexerService;
             _logger = logger;
         }
 
@@ -42,8 +43,8 @@
 
                 _logger.Info("Calling vacancy indexer service to create scheduled index");
 
-                _apprenticeshipIndexer.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
-                _trainseeshipIndexer.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
+                _apprenticeshipVacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
+                _traineeshipVacancyIndexerService.CreateScheduledIndex(latestScheduledMessage.ExpectedExecutionTime);
 
                 _logger.Info("Calling vacancy summary processor to queue vacancy pages");
                 
