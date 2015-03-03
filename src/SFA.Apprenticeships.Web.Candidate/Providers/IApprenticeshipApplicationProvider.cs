@@ -3,6 +3,7 @@
     using System;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
+    using ViewModels.VacancySearch;
 
     public interface IApprenticeshipApplicationProvider
     {
@@ -27,5 +28,9 @@
         ApprenticeshipApplicationViewModel DeleteApplication(Guid candidateId, int vacancyId);
 
         TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId);
+
+        VacancySummaryViewModelStatuses SaveVacancy(Guid candidateId, int vacancyId);
+
+        VacancySummaryViewModelStatuses DeleteSavedVacancy(Guid candidateId, int vacancyId);
     }
 }

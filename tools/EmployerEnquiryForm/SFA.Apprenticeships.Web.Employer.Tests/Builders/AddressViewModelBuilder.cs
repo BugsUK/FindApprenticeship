@@ -13,26 +13,31 @@
         public AddressViewModelBuilder AddressLine2(string addressLine2)
         {
             _addressLine2 = addressLine2;
+            return this;
         }
 
         public AddressViewModelBuilder AddressLine3(string addressLine3)
         {
             _addressLine3 = addressLine3;
+            return this;
         }
 
         public AddressViewModelBuilder City(string city)
         {
             _city = city;
+            return this;
         }
 
         public AddressViewModelBuilder Postcode(string postcode)
         {
             _postcode = postcode;
+            return this;
         }
 
         public AddressViewModelBuilder AddressLine1(string addressLine1)
         {
             _addressLine1 = addressLine1;
+            return this;
         }
 
         public AddressViewModel Build()

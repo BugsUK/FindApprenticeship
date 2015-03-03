@@ -4,14 +4,12 @@
     using AutoMapper;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Vacancies;
     using Vacancy;
 
-    public class CreateApprenticeshipApplicationStrategy : ICreateApprenticeshipApplicationStrategy
+    public class CreateApprenticeshipApplicationStrategy : ICreateApprenticeshipApplicationStrategy, ISaveApprenticeshipVacancyStrategy
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
@@ -50,6 +48,20 @@
             return applicationDetail;
         }
 
+        public ApprenticeshipApplicationDetail SaveVacancy(Guid candidateId, int vacancyId)
+        {
+            var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
+
+            if (applicationDetail != null)
+            {
+                return applicationDetail;
+            }
+
+            return CreateNewApplication(candidateId, vacancyId, true);
+        }
+
+        #region
+
         private ApprenticeshipApplicationDetail UnarchiveApplication(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
             apprenticeshipApplicationDetail.IsArchived = false;
@@ -58,16 +70,27 @@
             return _apprenticeshipApplicationReadRepository.Get(apprenticeshipApplicationDetail.EntityId);
         }
 
-        private ApprenticeshipApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId)
+        private ApprenticeshipApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId, bool saveVacancyOnly = false)
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
             if (vacancyDetails == null) return null;
             
             var candidate = _candidateReadRepository.Get(candidateId);
-            var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails);
 
-            if (vacancyDetails.ApplyViaEmployerWebsite)
+            var applicationTemplate = saveVacancyOnly
+                ? null
+                : new ApplicationTemplate
+                {
+                    EducationHistory = candidate.ApplicationTemplate.EducationHistory,
+                    Qualifications = candidate.ApplicationTemplate.Qualifications,
+                    WorkExperience = candidate.ApplicationTemplate.WorkExperience,
+                    AboutYou = candidate.ApplicationTemplate.AboutYou
+                };
+
+            var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails, applicationTemplate);
+
+            if (vacancyDetails.ApplyViaEmployerWebsite && !saveVacancyOnly)
             {
                 return applicationDetail;
             }
@@ -77,7 +100,8 @@
             return applicationDetail;
         }
 
-        private static ApprenticeshipApplicationDetail CreateApplicationDetail(Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails)
+        private static ApprenticeshipApplicationDetail CreateApplicationDetail(
+            Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails, ApplicationTemplate applicationTemplate)
         {
             return new ApprenticeshipApplicationDetail
             {
@@ -100,14 +124,10 @@
                     VacancyLocationType = vacancyDetails.VacancyLocationType
                 },
                 // Populate apprenticeshipApplication template with candidate's most recent information.
-                CandidateInformation = new ApplicationTemplate
-                {
-                    EducationHistory = candidate.ApplicationTemplate.EducationHistory,
-                    Qualifications = candidate.ApplicationTemplate.Qualifications,
-                    WorkExperience = candidate.ApplicationTemplate.WorkExperience,
-                    AboutYou = candidate.ApplicationTemplate.AboutYou
-                },
+                CandidateInformation = applicationTemplate
             };
         }
+
+        #endregion
     }
 }

@@ -121,11 +121,13 @@
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ICreateApprenticeshipApplicationStrategy>().Use<CreateApprenticeshipApplicationStrategy>();
+            For<ISaveApprenticeshipVacancyStrategy>().Use<CreateApprenticeshipApplicationStrategy>();
             For<ICreateTraineeshipApplicationStrategy>().Use<CreateTraineeshipApplicationStrategy>();
             For<ISaveApprenticeshipApplicationStrategy>().Use<SaveApprenticeshipApplicationStrategy>();
             For<ISaveTraineeshipApplicationStrategy>().Use<SaveTraineeshipApplicationStrategy>();
             For<IArchiveApplicationStrategy>().Use<ArchiveApprenticeshipApplicationStrategy>();
             For<IDeleteApplicationStrategy>().Use<DeleteApprenticeshipApplicationStrategy>();
+            For<IDeleteSavedApprenticeshipVacancyStrategy>().Use<DeleteSavedApprenticeshipApprenticeshipVacancyStrategy>();
             For<IAuthenticateCandidateStrategy>().Use<AuthenticateCandidateStrategy>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
             For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();

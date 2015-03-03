@@ -14,6 +14,7 @@
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using Common.Models.Application;
+    using ViewModels.VacancySearch;
     using ErrorCodes = Domain.Entities.ErrorCodes;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
@@ -498,6 +499,54 @@
             }
         }
 
+        public VacancySummaryViewModelStatuses SaveVacancy(Guid candidateId, int vacancyId)
+        {
+            var applicationDetail = _candidateService.SaveVacancy(candidateId, vacancyId);
+
+            // TODO: AG: US65: de-duplicate.
+            if (applicationDetail == null)
+            {
+                return VacancySummaryViewModelStatuses.Unsaved;
+            }
+
+            if (applicationDetail.IsSavedVacancy())
+            {
+                return VacancySummaryViewModelStatuses.Saved;
+            }
+
+            if (applicationDetail.Status == ApplicationStatuses.Draft)
+            {
+                return VacancySummaryViewModelStatuses.Draft;
+            }
+
+            return VacancySummaryViewModelStatuses.Applied;
+        }
+
+        public VacancySummaryViewModelStatuses DeleteSavedVacancy(Guid candidateId, int vacancyId)
+        {
+            var applicationDetail = _candidateService.DeleteSavedVacancy(candidateId, vacancyId);
+
+            // TODO: AG: US65: de-duplicate.
+            if (applicationDetail == null)
+            {
+                return VacancySummaryViewModelStatuses.Unsaved;
+            }
+
+            if (applicationDetail.IsSavedVacancy())
+            {
+                return VacancySummaryViewModelStatuses.Saved;
+            }
+
+            if (applicationDetail.Status == ApplicationStatuses.Draft)
+            {
+                return VacancySummaryViewModelStatuses.Draft;
+            }
+
+            return VacancySummaryViewModelStatuses.Applied;
+        }
+
+        #region Helpers
+
         private TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId, IList<ApprenticeshipApplicationSummary> apprenticeshipApplicationSummaries, IList<TraineeshipApplicationSummary> traineeshipApplicationSummaries)
         {
             var candididate = _candidateService.GetCandidate(candidateId);
@@ -517,8 +566,6 @@
 
             return viewModel;
         }
-
-        #region Helpers
 
         private ApprenticeshipApplicationViewModel FailedApplicationViewModel(
             int vacancyId,

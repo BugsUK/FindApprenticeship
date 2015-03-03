@@ -2,6 +2,7 @@
 {
     using System.Net;
     using System.Net.Mail;
+    using Application.Interfaces;
     using Application.Interfaces.Communications;
     using Common.AppSettings;
     using Domain.Entities;
@@ -9,31 +10,39 @@
 
     public class SendGridEmailDispatcher : IEmailDispatcher
     {
-
-        public SendGridEmailDispatcher()
+        private readonly ILogService _logger;
+        public SendGridEmailDispatcher(ILogService logger)
         {
-            
+            _logger = logger;
         }
 
         public void SendEmail(EmailRequest request)
         {
-            // Create the email object first, then add the properties.
-            SendGridMessage myMessage = new SendGridMessage();
-            myMessage.AddTo(request.ToEmail);
-            myMessage.From = new MailAddress(request.FromEmail, request.FromName);
-            myMessage.Subject = request.Subject;
-            myMessage.Text = request.EmailContent;
+            try
+            {
+                _logger.Debug("Dispatching email To:{0} with subject: {1}", request.ToEmail, request.Subject);
+                // Create the email object first, then add the properties.
+                SendGridMessage myMessage = new SendGridMessage();
+                myMessage.AddTo(request.ToEmail);
+                myMessage.From = new MailAddress(request.FromEmail, request.FromName);
+                myMessage.Subject = request.Subject;
+                myMessage.Text = request.EmailContent;
 
-            // Create credentials, specifying your network user name and password.
-            string networkUsername = BaseAppSettingValues.NetworkUsername;
-            string networkPassword = BaseAppSettingValues.NetworkPassword;
-            var credentials = new NetworkCredential(networkUsername, networkPassword);
+                // Create credentials, specifying your network user name and password.
+                string networkUsername = BaseAppSettingValues.NetworkUsername;
+                string networkPassword = BaseAppSettingValues.NetworkPassword;
+                var credentials = new NetworkCredential(networkUsername, networkPassword);
 
-            // Create an Web transport for sending email.
-            var transportWeb = new Web(credentials);
+                // Create an Web transport for sending email.
+                var transportWeb = new Web(credentials);
 
-            // Send the email.
-            transportWeb.Deliver(myMessage);
+                // Send the email.
+                transportWeb.Deliver(myMessage);
+            }
+            catch (System.Exception exception)
+            {
+                _logger.Error("Error sending email", exception);
+            }
         }
     }
 }

@@ -97,6 +97,9 @@
     <Compile Include="CandidateService.cs" />
     <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\ArchiveApprenticeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\DeleteSavedApprenticeshipApprenticeshipVacancyStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\IDeleteSavedApprenticeshipVacancyStrategy.cs" />
+    <Compile Include="Strategies\Apprenticeships\ISaveApprenticeshipVacancyStrategy.cs" />
     <Compile Include="Strategies\ILegacyGetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="Strategies\ISubmitContactMessageStrategy.cs" />
     <Compile Include="Strategies\ISendMobileVerificationCodeStrategy.cs" />

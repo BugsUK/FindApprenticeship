@@ -61,7 +61,7 @@
             builder.AppendLine(string.Format("Address : postcode - {0}", enquiryData.ApplicantAddress.Postcode));
             builder.AppendLine(string.Format("Total no of employees : {0}", enquiryData.EmployeesCount));
             builder.AppendLine(string.Format("Industry sector : {0}", enquiryData.WorkSector));
-            builder.AppendLine(string.Format("previous experience with Apprenticeships/Traineeships? : {0}", enquiryData.PreviousExperienceType));
+            builder.AppendLine(string.Format("Previous experience with Apprenticeships/Traineeships? : {0}", enquiryData.PreviousExperienceType));
             builder.AppendLine(string.Format("What prompted to make enquiry : {0}", enquiryData.EnquirySource));
             builder.AppendLine(string.Format("Nature of query : {0}", enquiryData.EnquiryDescription.ToFirstCharToUpper()));
             #endregion

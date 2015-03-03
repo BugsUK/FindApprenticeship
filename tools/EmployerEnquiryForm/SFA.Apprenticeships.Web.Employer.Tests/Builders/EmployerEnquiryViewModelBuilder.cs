@@ -17,7 +17,7 @@
         private string _prevExp;
         private string _enquiryDescription;
         private AddressViewModel _addressViewModel;
-
+        private string _workSector;
 
         public EmployerEnquiryViewModelBuilder EnquiryDescription(string enquiryDescription)
         {
@@ -57,6 +57,12 @@
         public EmployerEnquiryViewModelBuilder Email(string email)
         {
             _email = email;
+            return this;
+        }
+
+        public EmployerEnquiryViewModelBuilder Address(AddressViewModel addressViewModel)
+        {
+            _addressViewModel= addressViewModel;
             return this;
         }
         public EmployerEnquiryViewModelBuilder EmployeeCount(string employeeCount)
@@ -100,10 +106,18 @@
                 Email = _email,
                 EmployeesCount = _employeeCount,
                 EnquiryDescription = _enquiryDescription,
-                PreviousExperienceType = _prevExp
+                PreviousExperienceType = _prevExp,
+                Address = _addressViewModel,
+                WorkSector = _workSector
             };
 
             return model;
+        }
+
+        public EmployerEnquiryViewModelBuilder WorkSector(string workSector)
+        {
+            _workSector = workSector;
+            return this;
         }
     }
 }

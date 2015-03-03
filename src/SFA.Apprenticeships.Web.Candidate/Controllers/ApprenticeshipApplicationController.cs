@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
@@ -13,6 +14,7 @@
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Application;
+    using Microsoft.SqlServer.Server;
     using ViewModels.Applications;
 
     [UserJourneyContext(UserJourney.Apprenticeship, Order = 2)]
@@ -63,7 +65,7 @@
                 switch (response.Code)
                 {
                     case ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy:
-                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new {id});
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
                     case ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.Apply.HasError:
@@ -117,7 +119,7 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
+        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = " ")]
         [ApplyWebTrends]
         [ValidateInput(false)]
         [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
@@ -316,6 +318,62 @@
 
                 throw new InvalidMediatorCodeException(response.Code);
             });
+        }
+
+        [HttpPost]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ValidateInput(false)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        public async Task<JsonResult> SaveVacancy(int id)
+        {
+            return await Task.Run(() =>
+            {
+                var response = _apprenticeshipApplicationMediator.SaveVacancy(UserContext.CandidateId, id);
+
+                return JsonResultFromSaveVacancyResponseCode(response.Code);
+            });
+        }
+
+        [HttpDelete]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ValidateInput(false)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        public async Task<JsonResult> DeleteSavedVacancy(int id)
+        {
+            return await Task.Run(() =>
+            {
+                var response = _apprenticeshipApplicationMediator.DeleteSavedVacancy(UserContext.CandidateId, id);
+
+                return JsonResultFromSaveVacancyResponseCode(response.Code);
+            });
+        }
+
+        private static JsonResult JsonResultFromSaveVacancyResponseCode(string responseCode)
+        {
+            var map = new Dictionary<string, string>
+            {
+                { ApprenticeshipApplicationMediatorCodes.SaveVacancy.Saved, "Saved" },
+                { ApprenticeshipApplicationMediatorCodes.SaveVacancy.Unsaved, "Unsaved" },
+                { ApprenticeshipApplicationMediatorCodes.SaveVacancy.Draft, "Draft" },
+                { ApprenticeshipApplicationMediatorCodes.SaveVacancy.Applied, "Applied" }
+            };
+
+            string result;
+
+            if (!map.TryGetValue(responseCode, out result))
+            {
+                throw new InvalidMediatorCodeException(responseCode);
+            }
+
+            return new JsonResult
+            {
+                Data = new
+                {
+                    status = result
+                }
+            };
         }
     }
 }

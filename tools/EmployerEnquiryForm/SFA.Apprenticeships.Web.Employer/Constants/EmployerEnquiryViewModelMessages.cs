@@ -85,8 +85,7 @@
 
         public static class PreviousExperienceTypeMessages
         {
-            public const string LabelText = "Previous experience";
-            public const string HintText = "Have you had any previous experience with Apprenticeships / Traineeships?";
+            public const string LabelText = "Have you had any previous experience with Apprenticeships / Traineeships?";
             public const string RequiredErrorText = "Please select previous experience (Yes/No/Don't Know)";
         }
 
@@ -99,7 +98,7 @@
 
         public static class EnquirySourceMessages
         {
-            public const string LabelText = "What has prompted you to make an enquiry?";
+            public const string LabelText = "What prompted you to make an enquiry?";
             public const string RequiredErrorText = "Please select what has prompted you to make an enquiry?";
         }
 

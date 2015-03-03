@@ -11,7 +11,7 @@
     using Mappers.Interfaces;
     using ViewModels;
 
-    internal class EmployerEnquiryProvider : IEmployerEnquiryProvider
+    public class EmployerEnquiryProvider : IEmployerEnquiryProvider
     {
 
         private ICommunciationService _communciationService;
@@ -64,7 +64,6 @@
             {
                 //todo: log error using preferred logging mechanism
                 return SubmitQueryStatus.Error;
-                //todo: add other cases if there are any
             }
         }
     }

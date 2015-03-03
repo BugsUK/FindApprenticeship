@@ -30,6 +30,8 @@
         private readonly IGetCandidateApprenticeshipApplicationsStrategy _getCandidateApprenticeshipApplicationsStrategy;
         private readonly IGetCandidateTraineeshipApplicationsStrategy _getCandidateTraineeshipApplicationsStrategy;
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
+        private readonly ISaveApprenticeshipVacancyStrategy _saveVacancyStrategy;
+        private readonly IDeleteSavedApprenticeshipVacancyStrategy _deleteSavedApprenticeshipVacancyStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
         private readonly ISaveApprenticeshipApplicationStrategy _saveApplicationStrategy;
         private readonly ISaveTraineeshipApplicationStrategy _saveTraineeshipApplicationStrategy;
@@ -52,6 +54,8 @@
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
             ISubmitApprenticeshipApplicationStrategy submitApprenticeshipApplicationStrategy,
             IRegisterCandidateStrategy registerCandidateStrategy,
+            ISaveApprenticeshipVacancyStrategy saveVacancyStrategy,
+            IDeleteSavedApprenticeshipVacancyStrategy deleteSavedApprenticeshipVacancyStrategy,
             ICreateApprenticeshipApplicationStrategy createApplicationStrategy,
             ICreateTraineeshipApplicationStrategy createTraineeshipApplicationStrategy,
             IGetCandidateApprenticeshipApplicationsStrategy getCandidateApprenticeshipApplicationsStrategy,
@@ -76,6 +80,8 @@
             _authenticateCandidateStrategy = authenticateCandidateStrategy;
             _submitApprenticeshipApplicationStrategy = submitApprenticeshipApplicationStrategy;
             _registerCandidateStrategy = registerCandidateStrategy;
+            _saveVacancyStrategy = saveVacancyStrategy;
+            _deleteSavedApprenticeshipVacancyStrategy = deleteSavedApprenticeshipVacancyStrategy;
             _createApplicationStrategy = createApplicationStrategy;
             _createTraineeshipApplicationStrategy = createTraineeshipApplicationStrategy;
             _getCandidateApprenticeshipApplicationsStrategy = getCandidateApprenticeshipApplicationsStrategy;
@@ -180,7 +186,7 @@
             Condition.Requires(candidateId);
 
             _logger.Debug(
-                "Calling CandidateService to create an apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to create an apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             return _createApplicationStrategy.CreateApplication(candidateId, vacancyId);
@@ -191,7 +197,7 @@
             Condition.Requires(candidateId);
 
             _logger.Debug(
-                "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             return _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
@@ -202,7 +208,7 @@
             Condition.Requires(candidateId);
 
             _logger.Debug(
-                "Calling CandidateService to create a traineeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to create a traineeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, traineeshipVacancyId);
 
             return _createTraineeshipApplicationStrategy.CreateApplication(candidateId, traineeshipVacancyId);
@@ -213,7 +219,7 @@
             Condition.Requires(candidateId);
 
             _logger.Debug(
-                "Calling CandidateService to archive the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to archive the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             _archiveApplicationStrategy.ArchiveApplication(candidateId, vacancyId);
@@ -224,7 +230,7 @@
             Condition.Requires(candidateId);
 
             _logger.Info(
-                "Calling CandidateService to unarchive the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to unarchive the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             _archiveApplicationStrategy.UnarchiveApplication(candidateId, vacancyId);
@@ -235,7 +241,7 @@
             Condition.Requires(candidateId);
 
             _logger.Info(
-                "Calling CandidateService to delete the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to delete the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             _deleteApplicationStrategy.DeleteApplication(candidateId, vacancyId);
@@ -246,7 +252,7 @@
             Condition.Requires(candidateId);
 
             _logger.Debug(
-                "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to get the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             return _traineeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
@@ -257,7 +263,7 @@
             Condition.Requires(apprenticeshipApplication);
 
             _logger.Debug(
-                "Calling CandidateService to save the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to save the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             _saveApplicationStrategy.SaveApplication(candidateId, vacancyId, apprenticeshipApplication);
@@ -279,7 +285,7 @@
             Condition.Requires(candidateId);
 
             _logger.Debug(
-                "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
@@ -291,7 +297,7 @@
             Condition.Requires(candidateId);
 
             _logger.Debug(
-                "Calling CandidateService to submit the traineeship application of the user with Id={0} to the apprenticeshipApplication with Id={1}.",
+                "Calling CandidateService to submit the traineeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
             var traineeshipDetails = _saveTraineeshipApplicationStrategy.SaveApplication(traineeshipApplicationDetail);
@@ -355,6 +361,26 @@
             _logger.Info("Calling CandidateService to send a contact message.");
 
             _submitContactMessageStrategy.SubmitMessage(contactMessage);
+        }
+
+        public ApplicationDetail SaveVacancy(Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(candidateId);
+            Condition.Requires(vacancyId).IsGreaterThan(0);
+
+            _logger.Info("Calling CandidateService to save vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
+
+            return _saveVacancyStrategy.SaveVacancy(candidateId, vacancyId);
+        }
+
+        public ApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(candidateId);
+            Condition.Requires(vacancyId).IsGreaterThan(0);
+
+            _logger.Info("Calling CandidateService to delete saved vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
+
+            return _deleteSavedApprenticeshipVacancyStrategy.DeletedSavedVacancy(candidateId, vacancyId);
         }
     }
 }

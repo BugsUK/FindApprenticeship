@@ -62,5 +62,9 @@
         void VerifyMobileCode(Guid candidateId, string verificationCode);
 
         void SubmitContactMessage(ContactMessage contactMessage);
+
+        ApplicationDetail SaveVacancy(Guid candidateId, int vacancyId);
+
+        ApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId);
     }
 }

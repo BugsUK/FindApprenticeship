@@ -35,7 +35,7 @@
         [Display(Name = EmployerEnquiryViewModelMessages.WorkSectorMessages.LabelText)]
         public string WorkSector { get; set; }
         public SelectList WorkSectorList { get; set; }
-        [Display(Name = EmployerEnquiryViewModelMessages.PreviousExperienceTypeMessages.LabelText, Description = EmployerEnquiryViewModelMessages.PreviousExperienceTypeMessages.HintText)]
+        [Display(Name = EmployerEnquiryViewModelMessages.PreviousExperienceTypeMessages.LabelText)]
         public string PreviousExperienceType { get; set; }
         public SelectList PreviousExperienceTypeList { get; set; }
         [Display(Name = EmployerEnquiryViewModelMessages.EnquiryDescriptionMessages.LabelText)]

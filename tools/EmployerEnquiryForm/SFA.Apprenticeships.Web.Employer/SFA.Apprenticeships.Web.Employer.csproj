@@ -168,7 +168,6 @@
     <Compile Include="Framework\Binders\TrimModelBinder.cs" />
     <Compile Include="Framework\HtmlExtensions.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
-    <Compile Include="Framework\Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\SpanLabelExtensions.cs" />
     <Compile Include="Framework\UrlHelperExtensions.cs" />

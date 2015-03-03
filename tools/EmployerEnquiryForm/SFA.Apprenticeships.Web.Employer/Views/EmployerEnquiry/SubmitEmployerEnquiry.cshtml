@@ -75,15 +75,17 @@
             @Html.ValidationMessageFor(model => model.WorkSector)
         </div>
         <legend class="heading-large">Your enquiry</legend>
+        @Html.FormTextAreaFor(
+            m => m.EnquiryDescription,
+             controlHtmlAttributes: new { @class = "form-control", @rows = 7 })
+        
+        <legend class="heading-large">Additional questions</legend>
+
         <div class="form-group">
             @Html.FormLabelFor(m => m.PreviousExperienceType)
             @Html.DropDownListFor(m => m.PreviousExperienceType, Model.PreviousExperienceTypeList)
             @Html.ValidationMessageFor(model => model.PreviousExperienceType)
         </div>
-
-        @Html.FormTextAreaFor(
-            m => m.EnquiryDescription,
-             controlHtmlAttributes: new { @class = "form-control", @rows = 7 })
         <div class="form-group">
             @Html.FormLabelFor(m => m.EnquirySource)
             @Html.DropDownListFor(m => m.EnquirySource, Model.EnquirySourceList)
