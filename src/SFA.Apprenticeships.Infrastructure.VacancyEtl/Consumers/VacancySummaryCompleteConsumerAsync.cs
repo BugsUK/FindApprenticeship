@@ -9,18 +9,16 @@
 
     public class VacancySummaryCompleteConsumerAsync : IConsumeAsync<VacancySummaryUpdateComplete>
     {
-        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>
-            _apprenticeshipIndexer;
-
-        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipIndexer;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _apprenticeshipVacancyIndexerService;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipVacancyIndexerService;
         private readonly ILogService _logger;
 
         public VacancySummaryCompleteConsumerAsync(
-            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipIndexer,
-            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipIndexer, ILogService logger)
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipVacancyIndexerService,
+            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipVacancyIndexerService, ILogService logger)
         {
-            _apprenticeshipIndexer = apprenticeshipIndexer;
-            _trainseeshipIndexer = trainseeshipIndexer;
+            _apprenticeshipVacancyIndexerService = apprenticeshipVacancyIndexerService;
+            _trainseeshipVacancyIndexerService = trainseeshipVacancyIndexerService;
             _logger = logger;
         }
 
@@ -32,10 +30,10 @@
 
             return Task.Run(() =>
             {
-                if (_apprenticeshipIndexer.IsIndexCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
+                if (_apprenticeshipVacancyIndexerService.IsIndexCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
                 {
                     _logger.Info("Swapping apprenticeship index alias after vacancy summary update completed");
-                    _apprenticeshipIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
+                    _apprenticeshipVacancyIndexerService.SwapIndex(updateComplete.ScheduledRefreshDateTime);
                     _logger.Info("Index apprenticeship swapped after vacancy summary update completed");
                 }
                 else
@@ -43,10 +41,10 @@
                     _logger.Error("The new apprenticeship index is not correctly created. Aborting swap.");
                 }
 
-                if (_trainseeshipIndexer.IsIndexCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
+                if (_trainseeshipVacancyIndexerService.IsIndexCorrectlyCreated(updateComplete.ScheduledRefreshDateTime))
                 {
                     _logger.Info("Swapping traineeship index alias after vacancy summary update completed");
-                    _trainseeshipIndexer.SwapIndex(updateComplete.ScheduledRefreshDateTime);
+                    _trainseeshipVacancyIndexerService.SwapIndex(updateComplete.ScheduledRefreshDateTime);
                     _logger.Info("Index traineeship swapped after vacancy summary update completed");
                 }
                 else
