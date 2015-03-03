@@ -1,6 +1,7 @@
 ﻿@using SFA.Apprenticeships.Application.Interfaces.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+@using SFA.Apprenticeships.Web.Candidate.Extensions
 
 @model ApprenticeshipSearchResponseViewModel
 
@@ -8,7 +9,7 @@
     ViewBag.Title = "Results - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
-    var locationTypeLink = Model.VacancySearch.LocationType == ApprenticeshipLocationType.National ? Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1 }) : Url.Action("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, SortType = VacancySearchSortType.Distance, PageNumber = 1 });
+    var locationTypeLink = Model.VacancySearch.LocationType == ApprenticeshipLocationType.National ? Url.ApprenticeshipSearchViewModelAction("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1 }) : Url.ApprenticeshipSearchViewModelAction("results", new ApprenticeshipSearchViewModel(Model.VacancySearch) { LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, SortType = VacancySearchSortType.Distance, PageNumber = 1 });
 
     string resultMessage;
     string nationalResultsMessage;
