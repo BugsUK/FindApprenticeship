@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="ApplicationStatusProcessor.cs" />
     <Compile Include="ApplicationStatusUpdater.cs" />
+    <Compile Include="Entities\ApplicationStatusChanged.cs" />
     <Compile Include="Entities\ApplicationStatusSummary.cs" />
     <Compile Include="Entities\ApplicationUpdatePage.cs" />
     <Compile Include="Entities\VacancyStatusSummary.cs" />

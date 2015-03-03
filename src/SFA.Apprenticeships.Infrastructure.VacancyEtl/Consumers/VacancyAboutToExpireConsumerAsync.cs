@@ -11,7 +11,7 @@
     using EasyNetQ.AutoSubscribe;
     using Application.VacancyEtl.Entities;
 
-    //todo: move this class to async project
+    //todo: move this class to async project?
     public class VacancyAboutToExpireConsumerAsync : IConsumeAsync<VacancyAboutToExpire>
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
