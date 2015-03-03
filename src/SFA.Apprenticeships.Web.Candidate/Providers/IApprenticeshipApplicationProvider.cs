@@ -29,8 +29,8 @@
 
         TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId);
 
-        VacancySummaryViewModelStatuses SaveVacancy(Guid candidateId, int vacancyId);
+        SavedVacancyViewModelStatuses SaveVacancy(Guid candidateId, int vacancyId);
 
-        VacancySummaryViewModelStatuses DeleteSavedVacancy(Guid candidateId, int vacancyId);
+        SavedVacancyViewModelStatuses DeleteSavedVacancy(Guid candidateId, int vacancyId);
     }
 }

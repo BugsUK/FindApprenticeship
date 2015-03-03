@@ -5,5 +5,7 @@
     public class ApprenticeshipVacancySummaryViewModel : VacancySummaryViewModel
     {
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
+        
+        public SavedVacancyViewModelStatuses SavedVacancyStatus { get; set; }
     }
 }

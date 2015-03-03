@@ -11,12 +11,13 @@
 
     public abstract class TestsBase
     {
-        protected static IApprenticeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, IUserDataProvider userDataProvider, IReferenceDataService referenceDataService)
+        protected static IApprenticeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, ICandidateServiceProvider candidateServiceProvider, IUserDataProvider userDataProvider, IReferenceDataService referenceDataService)
         {
-            return new ApprenticeshipSearchMediator(configurationManager, searchProvider, apprenticeshipVacancyDetailProvider, userDataProvider, referenceDataService, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
+            return new ApprenticeshipSearchMediator(configurationManager, searchProvider, apprenticeshipVacancyDetailProvider, candidateServiceProvider, userDataProvider, referenceDataService, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
         }
 
         protected Mock<IApprenticeshipVacancyDetailProvider> ApprenticeshipVacancyDetailProvider;
+        protected Mock<ICandidateServiceProvider> CandidateServiceProvider;
         protected Mock<IConfigurationManager> ConfigurationManager;
         protected Mock<IUserDataProvider> UserDataProvider;
         protected Mock<ISearchProvider> SearchProvider;
@@ -33,7 +34,7 @@
             UserDataProvider = new Mock<IUserDataProvider>();
             SearchProvider = new Mock<ISearchProvider>();
             ReferenceDataService = new Mock<IReferenceDataService>();
-            Mediator = new ApprenticeshipSearchMediator(ConfigurationManager.Object, SearchProvider.Object, ApprenticeshipVacancyDetailProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
+            Mediator = new ApprenticeshipSearchMediator(ConfigurationManager.Object, SearchProvider.Object, ApprenticeshipVacancyDetailProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
         }
     }
 }

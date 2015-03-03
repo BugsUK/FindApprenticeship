@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web;
     using Application.Interfaces.Logging;
@@ -475,6 +476,11 @@
                 _logger.Error("Error updating terms and conditions version", ex);
                 return false;
             }
+        }
+
+        public IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true)
+        {
+            return _candidateService.GetApprenticeshipApplications(candidateId, refresh);
         }
 
         #region Helpers

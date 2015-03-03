@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Globalization;
     using System.Threading.Tasks;
     using System.Web.Mvc;
@@ -73,7 +74,8 @@
             {
                 ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
 
-                var response = _apprenticeshipSearchMediator.Results(model);
+                var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
+                var response = _apprenticeshipSearchMediator.Results(candidateId, model);
 
                 switch (response.Code)
                 {

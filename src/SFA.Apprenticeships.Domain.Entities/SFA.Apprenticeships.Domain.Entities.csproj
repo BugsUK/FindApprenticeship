@@ -81,7 +81,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Applications\ApplicationDetailHelper.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationDetailHelper.cs" />
     <Compile Include="Applications\TraineeshipApplicationSummary.cs" />
     <Compile Include="Applications\ApplicationSummary.cs" />

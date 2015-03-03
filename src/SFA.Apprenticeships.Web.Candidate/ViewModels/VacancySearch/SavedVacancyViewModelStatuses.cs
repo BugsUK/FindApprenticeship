@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
-    // TODO: AG: US65: need a better name. SavedVacancyViewModelStatuses?
-    public enum VacancySummaryViewModelStatuses
+    public enum SavedVacancyViewModelStatuses
     {
         None = 0,
         Saved = 1,

@@ -3,6 +3,7 @@
     public enum ApplicationStatuses
     {
         Unknown = 0,
+        Saved = 5,                  // saved for later
         Draft = 10,                 // created but not yet submitted
         ExpiredOrWithdrawn = 15,    // draft that passed the vacancy closing date or has been withdrawn
         Submitting = 20,            // user has submitted to be processed

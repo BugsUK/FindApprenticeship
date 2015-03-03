@@ -70,7 +70,7 @@
             return _apprenticeshipApplicationReadRepository.Get(apprenticeshipApplicationDetail.EntityId);
         }
 
-        private ApprenticeshipApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId, bool saveVacancyOnly = false)
+        private ApprenticeshipApplicationDetail CreateNewApplication(Guid candidateId, int vacancyId, bool saveVacancy = false)
         {
             var vacancyDetails = _vacancyDataProvider.GetVacancyDetails(vacancyId);
 
@@ -78,7 +78,7 @@
             
             var candidate = _candidateReadRepository.Get(candidateId);
 
-            var applicationTemplate = saveVacancyOnly
+            var applicationTemplate = saveVacancy
                 ? null
                 : new ApplicationTemplate
                 {
@@ -88,9 +88,10 @@
                     AboutYou = candidate.ApplicationTemplate.AboutYou
                 };
 
-            var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails, applicationTemplate);
+            var applicationStatus = saveVacancy ? ApplicationStatuses.Saved : ApplicationStatuses.Draft;
+            var applicationDetail = CreateApplicationDetail(candidate, vacancyDetails, applicationStatus, applicationTemplate);
 
-            if (vacancyDetails.ApplyViaEmployerWebsite && !saveVacancyOnly)
+            if (vacancyDetails.ApplyViaEmployerWebsite && !saveVacancy)
             {
                 return applicationDetail;
             }
@@ -101,12 +102,12 @@
         }
 
         private static ApprenticeshipApplicationDetail CreateApplicationDetail(
-            Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails, ApplicationTemplate applicationTemplate)
+            Candidate candidate, ApprenticeshipVacancyDetail vacancyDetails, ApplicationStatuses applicationStatus, ApplicationTemplate applicationTemplate)
         {
             return new ApprenticeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
-                Status = ApplicationStatuses.Draft,
+                Status = applicationStatus,
                 DateCreated = DateTime.Now,
                 CandidateId = candidate.EntityId,
                 CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),

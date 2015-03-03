@@ -499,50 +499,18 @@
             }
         }
 
-        public VacancySummaryViewModelStatuses SaveVacancy(Guid candidateId, int vacancyId)
+        public SavedVacancyViewModelStatuses SaveVacancy(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _candidateService.SaveVacancy(candidateId, vacancyId);
 
-            // TODO: AG: US65: de-duplicate.
-            if (applicationDetail == null)
-            {
-                return VacancySummaryViewModelStatuses.Unsaved;
-            }
-
-            if (applicationDetail.IsSavedVacancy())
-            {
-                return VacancySummaryViewModelStatuses.Saved;
-            }
-
-            if (applicationDetail.Status == ApplicationStatuses.Draft)
-            {
-                return VacancySummaryViewModelStatuses.Draft;
-            }
-
-            return VacancySummaryViewModelStatuses.Applied;
+            return SavedVacancyStatusFromApplicationDetail(applicationDetail);
         }
 
-        public VacancySummaryViewModelStatuses DeleteSavedVacancy(Guid candidateId, int vacancyId)
+        public SavedVacancyViewModelStatuses DeleteSavedVacancy(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _candidateService.DeleteSavedVacancy(candidateId, vacancyId);
 
-            // TODO: AG: US65: de-duplicate.
-            if (applicationDetail == null)
-            {
-                return VacancySummaryViewModelStatuses.Unsaved;
-            }
-
-            if (applicationDetail.IsSavedVacancy())
-            {
-                return VacancySummaryViewModelStatuses.Saved;
-            }
-
-            if (applicationDetail.Status == ApplicationStatuses.Draft)
-            {
-                return VacancySummaryViewModelStatuses.Draft;
-            }
-
-            return VacancySummaryViewModelStatuses.Applied;
+            return SavedVacancyStatusFromApplicationDetail(applicationDetail);
         }
 
         #region Helpers
@@ -604,6 +572,26 @@
             apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
 
             return apprenticeshipApplicationViewModel;
+        }
+
+        private static SavedVacancyViewModelStatuses SavedVacancyStatusFromApplicationDetail(ApplicationDetail applicationDetail)
+        {
+            // TODO: AG: US65: de-duplicate.
+            if (applicationDetail == null)
+            {
+                return SavedVacancyViewModelStatuses.Unsaved;
+            }
+
+            // TODO: US65: revisit this mapping. Still required?
+            switch (applicationDetail.Status)
+            {
+                case ApplicationStatuses.Saved:
+                    return SavedVacancyViewModelStatuses.Saved;
+                case ApplicationStatuses.Draft:
+                    return SavedVacancyViewModelStatuses.Draft;
+            }
+
+            return SavedVacancyViewModelStatuses.Applied;
         }
 
         #endregion

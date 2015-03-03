@@ -8,7 +8,7 @@
     {
         public int Id { get; set; }
 
-        public VacancySummaryViewModelStatuses Status { get; set; }
+        public SavedVacancyViewModelStatuses Status { get; set; }
 
         public string Title { get; set; }
 

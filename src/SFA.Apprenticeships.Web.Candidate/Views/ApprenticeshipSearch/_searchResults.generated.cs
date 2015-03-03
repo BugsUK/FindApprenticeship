@@ -233,7 +233,16 @@ WriteLiteral(" data-vacancy-id=\"");
             #line hidden
 WriteLiteral("\"");
 
-WriteLiteral(" data-vacancy-status=\"Unsaved\"");
+WriteLiteral(" data-vacancy-status=\"");
+
+            
+            #line 40 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+                                                                                                                                                                                                Write(vacancy.SavedVacancyStatus);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\"");
 
 WriteLiteral("><i");
 
@@ -263,14 +272,14 @@ WriteLiteral(" class=\"grid-wrapper\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2898), Tuple.Create("\"", 3001)
+WriteAttribute("class", Tuple.Create(" class=\"", 2918), Tuple.Create("\"", 3021)
             
             #line 45 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 2906), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : ""
+, Tuple.Create(Tuple.Create("", 2926), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : ""
             
             #line default
             #line hidden
-, 2906), false)
+, 2926), false)
 );
 
 WriteLiteral(">\r\n                        <ul");
@@ -438,24 +447,24 @@ WriteLiteral(" class=\"grid grid-1-3 map-container hide-nojs small-btm-margin\""
 
 WriteLiteral(">\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5125), Tuple.Create("\"", 5235)
-, Tuple.Create(Tuple.Create("", 5132), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5132), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 5145), Tuple.Create("\"", 5255)
+, Tuple.Create(Tuple.Create("", 5152), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5152), true)
             
             #line 79 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-     , Tuple.Create(Tuple.Create("", 5180), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+     , Tuple.Create(Tuple.Create("", 5200), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 5180), false)
-, Tuple.Create(Tuple.Create("", 5206), Tuple.Create(",", 5206), true)
+, 5200), false)
+, Tuple.Create(Tuple.Create("", 5226), Tuple.Create(",", 5226), true)
             
             #line 79 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                , Tuple.Create(Tuple.Create("", 5207), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                , Tuple.Create(Tuple.Create("", 5227), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 5207), false)
-, Tuple.Create(Tuple.Create("", 5234), Tuple.Create("\'", 5234), true)
+, 5227), false)
+, Tuple.Create(Tuple.Create("", 5254), Tuple.Create("\'", 5254), true)
 );
 
 WriteLiteral(" target=\"_blank\"");

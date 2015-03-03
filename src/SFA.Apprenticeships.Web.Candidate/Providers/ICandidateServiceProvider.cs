@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using ViewModels;
@@ -38,5 +39,7 @@
         bool AcceptTermsAndConditions(Guid candidateId, string currentVersion);
 
         //TODO: 1.6: void SendContactMessage(ContactMessageViewModel model);
+
+        IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
     }
 }

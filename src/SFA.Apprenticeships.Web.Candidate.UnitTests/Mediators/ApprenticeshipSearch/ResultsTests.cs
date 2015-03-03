@@ -50,7 +50,7 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -71,7 +71,7 @@
                 ApprenticeshipLevel = "Higher"
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -92,7 +92,7 @@
                 Location = "Middle of Nowhere"
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -110,7 +110,7 @@
                 Location = string.Empty
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.Results.ValidationError, true);
         }
@@ -123,7 +123,7 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -144,7 +144,7 @@
                 Keywords = "Sales"
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -168,7 +168,7 @@
                 SearchAction = SearchAction.LocationTypeChanged
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -187,7 +187,7 @@
                 SearchAction = SearchAction.LocationTypeChanged
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -205,7 +205,7 @@
             SearchProvider.Setup(sp => sp.FindLocation(ACityWithMoreThanOneSuggestedLocation))
                 .Returns(() => new LocationsViewModel{ViewModelMessage = SomeErrorMessage});
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertMessage(ApprenticeshipSearchMediatorCodes.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
         }
@@ -222,7 +222,7 @@
             SearchProvider.Setup(sp => sp.FindLocation(ACityWithMoreThanOneSuggestedLocation))
                 .Returns(() => new LocationsViewModel(Enumerable.Range(1, numberOfSuggestedLocations + 1).Select(e => new LocationViewModel { Name = Convert.ToString(e) })));
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
             response.ViewModel.LocationSearches.Should().HaveCount(numberOfSuggestedLocations);
@@ -239,7 +239,7 @@
             SearchProvider.Setup(sp => sp.FindLocation(ACityWithoutSuggestedLocations))
                 .Returns(() => new LocationsViewModel());
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
             response.ViewModel.VacancySearch.Should().Be(searchViewModel);
@@ -259,7 +259,7 @@
                     ViewModelMessage = SomeErrorMessage
                 });
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertMessage(ApprenticeshipSearchMediatorCodes.Results.HasError, SomeErrorMessage, UserMessageLevel.Warning, true);
         }
@@ -279,7 +279,7 @@
                     VacancySearch = searchViewModel
                 });
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
             response.ViewModel.VacancySearch.LocationType = ApprenticeshipLocationType.NonNational;
@@ -307,7 +307,7 @@
                     }
                 });
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.ExactMatchFound, false, true);
         }
@@ -324,7 +324,7 @@
                 Keywords = AKeyword
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -345,7 +345,7 @@
                 Keywords = AKeyword
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -366,7 +366,7 @@
                 Keywords = AKeyword
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -386,7 +386,7 @@
                 SearchAction = SearchAction.LocationTypeChanged
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -407,7 +407,7 @@
                 Keywords = AKeyword
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -427,7 +427,7 @@
                 SearchAction = SearchAction.LocationTypeChanged
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -478,7 +478,7 @@
                 SearchMode = ApprenticeshipSearchMode.Category
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -552,7 +552,7 @@
                 SearchMode = ApprenticeshipSearchMode.Keyword
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -600,7 +600,7 @@
                 SearchMode = ApprenticeshipSearchMode.Category
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Results.Ok, true);
 
@@ -615,7 +615,7 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            var response = Mediator.Results(searchViewModel);
+            var response = Mediator.Results(null, searchViewModel);
 
             
             var viewModel = response.ViewModel;

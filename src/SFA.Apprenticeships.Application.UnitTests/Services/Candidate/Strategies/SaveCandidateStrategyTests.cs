@@ -38,7 +38,7 @@
             };
 
             _candidateReadRepository.Setup(crr => crr.Get(It.IsAny<Guid>())).Returns(new Candidate{RegistrationDetails = newRegistrationDetails});
-            _getCandidateApplicationsStrategy.Setup(gca => gca.GetApplications(It.IsAny<Guid>()))
+            _getCandidateApplicationsStrategy.Setup(gca => gca.GetApplications(It.IsAny<Guid>(), false))
                 .Returns(new[] {new ApprenticeshipApplicationSummary {Status = ApplicationStatuses.Draft}});
             _apprenticeshipApplicationReadRepository.Setup(
                 aprr => aprr.GetForCandidate(It.IsAny<Guid>(), It.IsAny<int>(),false))
@@ -65,7 +65,7 @@
             };
 
             _candidateReadRepository.Setup(crr => crr.Get(It.IsAny<Guid>())).Returns(new Candidate { RegistrationDetails = newRegistrationDetails });
-            _getCandidateApplicationsStrategy.Setup(gca => gca.GetApplications(It.IsAny<Guid>()))
+            _getCandidateApplicationsStrategy.Setup(gca => gca.GetApplications(It.IsAny<Guid>(), false))
                 .Returns(new[]
                 {
                     new ApprenticeshipApplicationSummary { Status = ApplicationStatuses.Successful },
@@ -120,7 +120,7 @@
             var codeGenerator = new Mock<ICodeGenerator>();
             const string mobileVerificationCode = "1234";
             codeGenerator.Setup(cg => cg.GenerateNumeric(4)).Returns(mobileVerificationCode);
-            _getCandidateApplicationsStrategy.Setup(gca => gca.GetApplications(candidateId)).Returns(new ApprenticeshipApplicationSummary[0]);
+            _getCandidateApplicationsStrategy.Setup(gca => gca.GetApplications(candidateId, false)).Returns(new ApprenticeshipApplicationSummary[0]);
             var communicationService = new Mock<ICommunicationService>();
             IEnumerable<CommunicationToken> communicationTokens = new List<CommunicationToken>(0);
             communicationService.Setup(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>())).Callback<Guid, MessageTypes, IEnumerable<CommunicationToken>>((cid, mt, ct) => { communicationTokens = ct; });
