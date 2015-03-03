@@ -10,6 +10,7 @@
     public class DailyDigestSmsRequestBuilder
     {
         private List<ExpiringApprenticeshipApplicationDraft> _expiringDrafts;
+        private List<ApplicationStatusAlert> _applicationStatusAlerts;
 
         public DailyDigestSmsRequestBuilder()
         {
@@ -22,11 +23,17 @@
             return this;
         }
 
+        public DailyDigestSmsRequestBuilder WithApplicationStatusAlerts(List<ApplicationStatusAlert> applicationStatusAlerts)
+        {
+            _applicationStatusAlerts = applicationStatusAlerts;
+            return this;
+        }
+
         public SmsRequest Build()
         {
             var candidateId = Guid.NewGuid();
             var candidate = new CandidateBuilder(candidateId).Build();
-            var communicationRequest = CommunicationRequestFactory.GetCommunicationMessage(candidate, _expiringDrafts);
+            var communicationRequest = CommunicationRequestFactory.GetCommunicationMessage(candidate, _expiringDrafts, _applicationStatusAlerts);
             var smsRequest = new SmsRequestBuilder().WithMessageType(MessageTypes.DailyDigest).WithTokens(communicationRequest.Tokens).Build();
             return smsRequest;
         } 

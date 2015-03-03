@@ -9,6 +9,7 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
 
     public class ApplicationStatusAlertRepository : CommunicationRepository<ApplicationStatusAlert>, IApplicationStatusAlertRepository
@@ -35,6 +36,15 @@
             Collection.Save(mongoAlert);
         }
 
+        public void Delete(ApplicationStatusAlert alert)
+        {
+            _logger.Debug("Calling repository to delete application status alert with Id={0}", alert.EntityId);
+
+            Collection.Remove(Query.EQ("_id", alert.EntityId));
+
+            _logger.Debug("Deleted application status alert with Id={0}", alert.EntityId);
+        }
+
         public List<ApplicationStatusAlert> Get(Guid applicationId)
         {
             _logger.Debug("Calling repository to get all application status alerts for ApplicationId={0}", applicationId);
@@ -45,6 +55,19 @@
             _logger.Debug("Found {0} application status alerts for ApplicationId={1}", alerts.Count, applicationId);
 
             return alerts;
+        }
+
+        public Dictionary<Guid, List<ApplicationStatusAlert>> GetCandidatesDailyDigest()
+        {
+            _logger.Debug("Calling repository to get all candidates application status alerts for their daily digest");
+
+            var mongoAlerts = Collection.FindAs<MongoApplicationStatusAlert>(Query.EQ("BatchId", BsonNull.Value));
+            var alerts = _mapper.Map<IEnumerable<MongoApplicationStatusAlert>, IEnumerable<ApplicationStatusAlert>>(mongoAlerts);
+            var candidatesDailyDigest = alerts.GroupBy(x => x.CandidateId).ToDictionary(grp => grp.Key, grp => grp.ToList());
+
+            _logger.Debug("Found application status alerts for {0} candidates", candidatesDailyDigest.Count);
+
+            return candidatesDailyDigest;
         }
     }
 }

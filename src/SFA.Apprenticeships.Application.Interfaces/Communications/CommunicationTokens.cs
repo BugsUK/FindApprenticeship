@@ -19,11 +19,11 @@
         ProviderContact,
         RecipientEmailAddress,
         CandidateMobileNumber,
-        ExpiringDraftsCount,
         ExpiringDrafts,
         UserFullName,
         UserEnquiry,
         UserEnquiryDetails,
-        UserEmailAddress
+        UserEmailAddress,
+        ApplicationStatusAlerts
     }
 }

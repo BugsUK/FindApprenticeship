@@ -118,6 +118,8 @@
     <Compile Include="Candidate\Strategies\VerifyMobileStrategy\VerifyMobileStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\VerifyMobileStrategy\VerifyMobileStrategyTests.cs" />
     <Compile Include="CodeGeneratorTests.cs" />
+    <Compile Include="Communications\ApplicationStatusAlertCommunicationProcessorTests.cs" />
+    <Compile Include="Communications\CommunicationProcessorBuilder.cs" />
     <Compile Include="Communications\CommunicationProcessorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Candidate\Strategies\AuthenticateCandidateStrategyTests\AuthenticateCandidateStrategyTests.cs" />

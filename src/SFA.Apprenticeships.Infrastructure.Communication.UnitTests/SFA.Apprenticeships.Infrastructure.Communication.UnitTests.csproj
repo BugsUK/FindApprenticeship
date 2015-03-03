@@ -88,6 +88,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Moq.4.2.1502.0911\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
@@ -114,15 +118,20 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Builder\ApplicationStatusAlertsBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\DailyDigestEmailRequestBuilder.cs" />
     <Compile Include="Builder\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
-    <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Email\EmailMessageFormatters\ApplicationStatusAlertEmailDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterTestsBase.cs" />
+    <Compile Include="Email\EmailMessageFormatters\ExpiringDraftEmailDailyDigestMessageFormatterTests.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailRequestBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\SendGridMessageSubstitution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\ApplicationStatusAlertSmsDailyDigestMessageFormatterTests.cs" />
     <Compile Include="Sms\SmsMessageFormatters\DailyDigestSmsRequestBuilder.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />
-    <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\ExpiringDraftSmsDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTestsBase.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
   </ItemGroup>
   <ItemGroup>

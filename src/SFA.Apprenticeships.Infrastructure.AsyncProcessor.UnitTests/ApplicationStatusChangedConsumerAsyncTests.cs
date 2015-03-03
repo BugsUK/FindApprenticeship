@@ -45,6 +45,7 @@
             var statusAlertRepository = new Mock<IApplicationStatusAlertRepository>();
             ApplicationStatusAlert applicationStatusAlert = null;
             statusAlertRepository.Setup(r => r.Save(It.IsAny<ApplicationStatusAlert>())).Callback<ApplicationStatusAlert>(asa => { applicationStatusAlert = asa; });
+            statusAlertRepository.Setup(r => r.Get(It.IsAny<Guid>())).Returns(new List<ApplicationStatusAlert>());
             var consumer = new ApplicationStatusChangedConsumerAsyncBuilder().With(applicationReadRepository).With(statusAlertRepository).Build();
             var applicationStatusChanged = new Fixture().Build<ApplicationStatusChanged>()
                 .With(asc => asc.LegacyApplicationId, legacyApplicationId)

@@ -10,7 +10,7 @@
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
 
-    public class ApplicationStatusChangedConsumerAsync
+    public class ApplicationStatusChangedConsumerAsync : IConsumeAsync<ApplicationStatusChanged>
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApplicationStatusAlertRepository _applicationStatusAlertRepository;
@@ -41,7 +41,7 @@
                 }
 
                 var applicationStatusAlerts = _applicationStatusAlertRepository.Get(application.EntityId);
-                var applicationStatusAlert = applicationStatusAlerts == null || applicationStatusAlerts.Count == 0 ? null : applicationStatusAlerts.FirstOrDefault(asa => asa.BatchId == null);
+                var applicationStatusAlert = applicationStatusAlerts.FirstOrDefault(asa => asa.BatchId == null);
                 if (applicationStatusAlert == null)
                 {
                     applicationStatusAlert = _mapper.Map<ApprenticeshipApplicationDetail, ApplicationStatusAlert>(application);

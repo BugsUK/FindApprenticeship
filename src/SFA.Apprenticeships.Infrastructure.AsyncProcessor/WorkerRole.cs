@@ -22,6 +22,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
+    using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
 
@@ -89,6 +90,7 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
+                x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();

@@ -7,16 +7,12 @@
     using Builder;
     using Domain.Entities.Communication;
     using FluentAssertions;
+    using Newtonsoft.Json;
     using NUnit.Framework;
 
     [TestFixture]
-    public class SmsDailyDigestMessageFormatterTests
+    public class ExpiringDraftSmsDailyDigestMessageFormatterTests : SmsDailyDigestMessageFormatterTestsBase
     {
-        private const string MessageTemplate = "You've {0} saved applications for apprenticeships that are due to close soon. They are:\n{1}\nYou can check the status of all your applications in the my applications section of your account.";
-        private const char Pipe = '|';
-        private const char Tilda = '~';
-        private const int MaxDraftCount = 3;
-
         [Test]
         public void GivenSingleExpiringDraft()
         {
@@ -28,7 +24,9 @@
 
             int draftCount;
             int draftLineCount;
-            var expectedMessage = GetExpectedMessage(expiringDrafts, out draftCount, out draftLineCount);
+            int alertCount;
+            int alertLineCount;
+            var expectedMessage = GetExpectedMessage(expiringDrafts, null, out draftCount, out draftLineCount, out alertCount, out alertLineCount);
             message.Should().Be(expectedMessage);
             draftCount.Should().Be(1);
             draftLineCount.Should().Be(1);
@@ -47,7 +45,9 @@
 
             int draftCount;
             int draftLineCount;
-            var expectedMessage = GetExpectedMessage(expiringDrafts, out draftCount, out draftLineCount);
+            int alertCount;
+            int alertLineCount;
+            var expectedMessage = GetExpectedMessage(expiringDrafts, null, out draftCount, out draftLineCount, out alertCount, out alertLineCount);
             message.Should().Be(expectedMessage);
             draftCount.Should().Be(noOfDrafts);
             draftLineCount.Should().BeLessOrEqualTo(MaxDraftCount);
@@ -66,7 +66,9 @@
 
             int draftCount;
             int draftLineCount;
-            var expectedMessage = GetExpectedMessage(expiringDrafts, out draftCount, out draftLineCount);
+            int alertCount;
+            int alertLineCount;
+            var expectedMessage = GetExpectedMessage(expiringDrafts, null, out draftCount, out draftLineCount, out alertCount, out alertLineCount);
             message.Should().Be(expectedMessage);
             draftCount.Should().Be(noOfDrafts);
             draftLineCount.Should().BeLessOrEqualTo(MaxDraftCount);
@@ -81,47 +83,9 @@
             expiringDrafts[2].ClosingDate = new DateTime(2015, 04, 01);
             var smsRequest = new DailyDigestSmsRequestBuilder().WithExpiringDrafts(expiringDrafts).Build();
 
-            //Assert the ascending ordering by ClosingDate of apprenticeships about to expire
-            if (smsRequest.Tokens.Count() > 1)
-            {
-                var orderedList = ConvertToExpiringApprenticeshipApplicationDraftModel(smsRequest);
-
-                Assert.That(orderedList, Is.Ordered.By("ClosingDate"));
-            }
-        }
-
-        private static List<ExpiringApprenticeshipApplicationDraft> ConvertToExpiringApprenticeshipApplicationDraftModel(SmsRequest request)
-        {
-            var drafts = request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
-
-            var list = new List<ExpiringApprenticeshipApplicationDraft>();
-            foreach (var draft in drafts.Split(Tilda))
-            {
-                var closingDate = draft.Split(Pipe)[3];
-                list.Add(new ExpiringApprenticeshipApplicationDraft { ClosingDate = Convert.ToDateTime(closingDate) });
-            }
-
-            return list;
-        }
-
-        private static string GetExpectedMessage(IEnumerable<ExpiringApprenticeshipApplicationDraft> expiringDrafts, out int draftCount, out int draftLineCount)
-        {
-            var lineItems = new List<string>();
-            draftCount = 0;
-            draftLineCount = 0;
-            foreach (var expiringDraft in expiringDrafts)
-            {
-                draftCount++;
-                if (draftCount <= MaxDraftCount)
-                {
-                    draftLineCount++;
-                    var lineItem = string.Format("{0}) With {1}, closing date {2}", draftCount, expiringDraft.EmployerName, expiringDraft.ClosingDate.ToLongDateString());
-                    lineItems.Add(lineItem);
-                }
-            }
-
-            var expiringDraftsMessage = string.Join("\n", lineItems);
-            return string.Format(MessageTemplate, draftCount, expiringDraftsMessage);
+            var draftsJson = smsRequest.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
+            var drafts = JsonConvert.DeserializeObject<List<ExpiringApprenticeshipApplicationDraft>>(draftsJson);
+            Assert.That(drafts, Is.Ordered.By("ClosingDate"));
         }
     }
 }

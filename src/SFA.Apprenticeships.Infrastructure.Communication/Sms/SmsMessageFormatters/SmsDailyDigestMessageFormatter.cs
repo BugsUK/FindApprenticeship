@@ -2,17 +2,17 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
-    using System.Text;
     using Application.Interfaces.Communications;
+    using Domain.Entities.Communication;
+    using Newtonsoft.Json;
 
     public class SmsDailyDigestMessageFormatter : SmsMessageFormatter
     {
         public const string TemplateName = "MessageTypes.DailyDigest";
 
+        private const string AlertsSummaryFormat = "{0}) With {1}";
         private const string ExpiringDraftSummaryFormat = "{0}) With {1}, closing date {2}";
-        private const char Pipe = '|';
-        private const char Tilda = '~';
+        private const int MaxAlertCount = 3;
         private const int MaxDraftCount = 3;
 
         public SmsDailyDigestMessageFormatter(ITwillioConfiguration configuration)
@@ -25,34 +25,60 @@
         {
             var tokens = communicationTokens as IList<CommunicationToken> ?? communicationTokens.ToList();
 
-            var expiringDraftsCount = tokens.First(t => t.Key == CommunicationTokens.ExpiringDraftsCount).Value;
             var expiringDraftsString = tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
+            var expiringDrafts = JsonConvert.DeserializeObject<List<ExpiringApprenticeshipApplicationDraft>>(expiringDraftsString);
 
-            var sb = new StringBuilder();
+            var alertsJson = tokens.First(t => t.Key == CommunicationTokens.ApplicationStatusAlerts).Value;
+            var alerts = JsonConvert.DeserializeObject<List<ApplicationStatusAlert>>(alertsJson);
 
-            var expiringDrafts = expiringDraftsString.Split(Tilda);
-            for (var i = 0; i < expiringDrafts.Length && i < MaxDraftCount; i++)
+            return GetMessage(expiringDrafts, alerts);
+        }
+
+        private string GetMessage(IEnumerable<ExpiringApprenticeshipApplicationDraft> expiringDrafts, IEnumerable<ApplicationStatusAlert> alerts)
+        {
+            var messageTemplateSections = Message.Split('|');
+
+            var alertsMessage = string.Empty;
+            var alertsLineItems = new List<string>();
+            var alertCount = 0;
+            if (alerts != null)
             {
-                var expiringDraft = expiringDrafts[i];
-
-                var expiringDraftSummary = GetExpiringDraftSummary(i + 1, expiringDraft);
-
-                sb.Append(expiringDraftSummary);
-                if (i < expiringDrafts.Length - 1 && i < MaxDraftCount - 1)
+                foreach (var alert in alerts)
                 {
-                    sb.Append("\n");
+                    alertCount++;
+                    if (alertCount <= MaxAlertCount)
+                    {
+                        var lineItem = string.Format(AlertsSummaryFormat, alertCount, alert.EmployerName);
+                        alertsLineItems.Add(lineItem);
+                    }
+                }
+                if (alertCount > 0)
+                {
+                    alertsMessage = string.Format(messageTemplateSections[0], string.Join("\n", alertsLineItems));
                 }
             }
 
-            return string.Format(Message, expiringDraftsCount, sb);
-        }
+            var expiringDraftsMessage = string.Empty;
+            var expiringDraftsLineItems = new List<string>();
+            var draftCount = 0;
+            if (expiringDrafts != null)
+            {
+                foreach (var expiringDraft in expiringDrafts)
+                {
+                    draftCount++;
+                    if (draftCount <= MaxDraftCount)
+                    {
+                        var lineItem = string.Format(ExpiringDraftSummaryFormat, draftCount, expiringDraft.EmployerName, expiringDraft.ClosingDate.ToLongDateString());
+                        expiringDraftsLineItems.Add(lineItem);
+                    }
+                }
+                if (draftCount > 0)
+                {
+                    expiringDraftsMessage = string.Format(messageTemplateSections[1], draftCount, string.Join("\n", expiringDraftsLineItems));
+                }
+            }
 
-        private string GetExpiringDraftSummary(int count, string expiringDraft)
-        {
-            var expiringDraftComponents = expiringDraft.Split(Pipe);
-            var companyName = WebUtility.UrlDecode(expiringDraftComponents[2]);
-            var closingDate = expiringDraftComponents[3];
-            return string.Format(ExpiringDraftSummaryFormat, count, companyName, closingDate);
+            return alertsMessage + expiringDraftsMessage;
         }
     }
 }
