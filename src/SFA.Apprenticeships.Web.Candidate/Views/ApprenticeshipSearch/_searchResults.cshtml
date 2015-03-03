@@ -36,7 +36,7 @@
                 </div>
                 <p>@vacancy.Description</p>
                 <div class="grid-wrapper">
-                    <div class="grid grid-2-3">
+                    <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : "")">
                         <ul class="list-text no-btm-margin inner-block-padr">
 
                             @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)

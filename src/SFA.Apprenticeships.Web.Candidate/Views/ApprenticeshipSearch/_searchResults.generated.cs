@@ -198,7 +198,15 @@ WriteLiteral(" class=\"grid-wrapper\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteLiteral(" class=\"grid grid-2-3\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 2443), Tuple.Create("\"", 2546)
+            
+            #line 39 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+, Tuple.Create(Tuple.Create("", 2451), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : ""
+            
+            #line default
+            #line hidden
+, 2451), false)
+);
 
 WriteLiteral(">\r\n                        <ul");
 
