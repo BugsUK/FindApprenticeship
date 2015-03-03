@@ -56,8 +56,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
 
                 // service layer
                 x.AddRegistry<AzureCacheRegistry>();
-                //x.AddRegistry<MemoryCacheRegistry>();
-
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));

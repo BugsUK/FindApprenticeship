@@ -93,7 +93,6 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AzureCacheRegistry>();
-                x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<AsyncProcessorRegistry>();
             });
