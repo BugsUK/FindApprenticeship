@@ -15,14 +15,14 @@
     {
         private readonly IReferenceDataService _referenceDataService;
         private readonly ILogService _logService;
-        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _vacancyIndexer;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _vacancyIndexerService;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
         public ApprenticeshipSummaryUpdateConsumerAsync(
-            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> vacancyIndexer,
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> vacancyIndexerService,
             IVacancySummaryProcessor vacancySummaryProcessor, IReferenceDataService referenceDataService, ILogService logService)
         {
-            _vacancyIndexer = vacancyIndexer;
+            _vacancyIndexerService = vacancyIndexerService;
             _vacancySummaryProcessor = vacancySummaryProcessor;
             _referenceDataService = referenceDataService;
             _logService = logService;
@@ -36,7 +36,7 @@
             {
                 if (PopulateCategoriesCodes(vacancySummaryToIndex))
                 {
-                    _vacancyIndexer.Index(vacancySummaryToIndex);
+                    _vacancyIndexerService.Index(vacancySummaryToIndex);
                     _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex);
                 }
             });
@@ -47,15 +47,18 @@
             var categories = _referenceDataService.GetCategories().ToArray();
 
             vacancySummaryToIndex.SectorCode = categories
-                .First(c => c.FullName == vacancySummaryToIndex.Sector).CodeName;
+                .First(c => c.FullName == vacancySummaryToIndex.Sector)
+                .CodeName;
 
             if (categories.First(c => c.FullName == vacancySummaryToIndex.Sector)
-                .SubCategories.Any(sc => sc.FullName == vacancySummaryToIndex.Framework))
+                          .SubCategories
+                          .Any(sc => sc.FullName == vacancySummaryToIndex.Framework))
             {
                 vacancySummaryToIndex.FrameworkCode = categories
                     .First(c => c.FullName == vacancySummaryToIndex.Sector)
                     .SubCategories.First(sc => sc.FullName == vacancySummaryToIndex.Framework)
                     .CodeName;
+
                 return true;
             }
 
