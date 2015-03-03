@@ -9,18 +9,18 @@
 
     public class TraineeshipsSummaryUpdateConsumerAsync : IConsumeAsync<TraineeshipSummaryUpdate>
     {
-        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _vacancyIndexer;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _vacancyIndexerService;
 
-        public TraineeshipsSummaryUpdateConsumerAsync(IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> vacancyIndexer)
+        public TraineeshipsSummaryUpdateConsumerAsync(IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> vacancyIndexerService)
         {
-            _vacancyIndexer = vacancyIndexer;
+            _vacancyIndexerService = vacancyIndexerService;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]
         [AutoSubscriberConsumer(SubscriptionId = "TraineeshipsSummaryUpdateConsumerAsync")]
         public Task Consume(TraineeshipSummaryUpdate vacancySummaryToIndex)
         {
-            return Task.Run(() => _vacancyIndexer.Index(vacancySummaryToIndex));
+            return Task.Run(() => _vacancyIndexerService.Index(vacancySummaryToIndex));
         }
     }
 }
