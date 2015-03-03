@@ -3,10 +3,13 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Constants;
+    using Constants.Pages;
+    using Extensions;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Application;
@@ -16,10 +19,12 @@
     public class ApprenticeshipApplicationController : CandidateControllerBase
     {
         private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;
+        private readonly ILogService _logService;
 
-        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator)
+        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator, ILogService logService)
         {
             _apprenticeshipApplicationMediator = apprenticeshipApplicationMediator;
+            _logService = logService;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.None)]
@@ -120,6 +125,15 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
+                if (model.Candidate == null)
+                {
+                    var requestDebugString = Request.ToDebugString();
+                    _logService.Error("Error when saving apprenticeship application. Candidate was null: {0}", requestDebugString);
+                    ModelState.Clear();
+                    SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
+                    return View("Apply", model);
+                }
+
                 var response = _apprenticeshipApplicationMediator.Save(UserContext.CandidateId, id, model);
 
                 switch (response.Code)
@@ -154,6 +168,14 @@
         {
             return await Task.Run(() =>
             {
+                if (model.Candidate == null)
+                {
+                    var requestDebugString = Request.ToDebugString();
+                    _logService.Error("Error when auto saving apprenticeship application. Candidate was null: {0}", requestDebugString);
+                    ModelState.Clear();
+                    return new JsonResult {Data = new AutoSaveResultViewModel()};
+                }
+
                 var response = _apprenticeshipApplicationMediator.AutoSave(UserContext.CandidateId, id, model);
 
                 switch (response.Code)
