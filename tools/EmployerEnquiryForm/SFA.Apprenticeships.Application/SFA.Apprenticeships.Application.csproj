@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\ILogService.cs" />
     <Compile Include="Services\CommunicationService\CommunciationService.cs" />
     <Compile Include="Interfaces\Communications\ICommunciationService.cs" />
     <Compile Include="Services\ConfigReferenceDataService\ConfigReferenceDataService.cs" />

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Tests.Builders
+﻿namespace SFA.Apprenticeships.Web.Employer.AcceptanceTests.Builders
 {
     using ViewModels;
 

@@ -127,7 +127,13 @@
   <ItemGroup>
     <Compile Include="Builders\AddressViewModelBuilder.cs" />
     <Compile Include="Builders\EmployerEnquiryViewModelBuilder.cs" />
+    <Compile Include="Infrastructure\EmailContentGenerator.cs" />
+    <Compile Include="Infrastructure\SendGrifEmailDispatcherTests.cs" />
+    <Compile Include="Mediators\EmployerEnquiryMediatorBuilder.cs" />
+    <Compile Include="Mediators\EmployerEnquiryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\EmployerEnquiryProviderBuilder.cs" />
+    <Compile Include="Providers\EmployerEnquiryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -136,14 +142,28 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application\SFA.Apprenticeships.Application.csproj">
+      <Project>{2ed09346-a2ed-433e-90d6-1809c99a175a}</Project>
+      <Name>SFA.Apprenticeships.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Common\SFA.Apprenticeships.Common.csproj">
+      <Project>{1bedebbc-1489-49d8-a472-7a56c0835e4e}</Project>
+      <Name>SFA.Apprenticeships.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain\SFA.Apprenticeships.Domain.csproj">
+      <Project>{4d8b35fc-5eef-4bdd-9520-a74f70edf821}</Project>
+      <Name>SFA.Apprenticeships.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure\SFA.Apprenticeships.Infrastructure.csproj">
+      <Project>{c5ade22f-853f-4c99-8b71-cbdf98854651}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Employer\SFA.Apprenticeships.Web.Employer.csproj">
       <Project>{D9246563-2874-47DA-9EE6-690C54F3EB03}</Project>
       <Name>SFA.Apprenticeships.Web.Employer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Mediators\" />
-    <Folder Include="Providers\" />
     <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

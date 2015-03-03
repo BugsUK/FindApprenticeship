@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Employer.DependencyResolution
 {
     using System.CodeDom.Compiler;
     using System.Web;
+    using System.Web.Mvc;
     using Ioc;
     using StructureMap;
 

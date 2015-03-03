@@ -1,0 +1,47 @@
+﻿namespace SFA.Apprenticeships.Web.Employer.Tests.Providers
+{
+    using Application.Interfaces;
+    using Application.Interfaces.Communications;
+    using Domain.Entities;
+    using Employer.Providers;
+    using Mappers.Interfaces;
+    using Moq;
+    using ViewModels;
+
+    public class EmployerEnquiryProviderBuilder
+    {
+        Mock<ICommunciationService> _communciationServiceMock = new Mock<ICommunciationService>();
+        Mock<IReferenceDataService> _referenceDataMock = new Mock<IReferenceDataService>();
+        private Mock<IDomainToViewModelMapper<ReferenceData, ReferenceDataViewModel>> _referenceDataDtoVMapper = new Mock<IDomainToViewModelMapper<ReferenceData, ReferenceDataViewModel>>();
+        private Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>> _employerEnquiryVtoDMapper= new Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>>();
+
+        public EmployerEnquiryProviderBuilder With( Mock<IReferenceDataService> mock)
+        {
+            _referenceDataMock = mock;
+            return this;
+        }
+        
+        public EmployerEnquiryProviderBuilder With(Mock<IDomainToViewModelMapper<ReferenceData, ReferenceDataViewModel>> mock)
+        {
+            _referenceDataDtoVMapper = mock;
+            return this;
+        }
+
+        public EmployerEnquiryProviderBuilder With(Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>> mock)
+        {
+            _employerEnquiryVtoDMapper = mock;
+            return this;
+        }
+
+        public EmployerEnquiryProviderBuilder With(Mock<ICommunciationService>  mock)
+        {
+            _communciationServiceMock = mock;
+            return this;
+        }
+
+        public EmployerEnquiryProvider Build()
+        {
+            return new EmployerEnquiryProvider(_communciationServiceMock.Object, _referenceDataMock.Object, _referenceDataDtoVMapper.Object, _employerEnquiryVtoDMapper.Object);
+        }
+    }
+}

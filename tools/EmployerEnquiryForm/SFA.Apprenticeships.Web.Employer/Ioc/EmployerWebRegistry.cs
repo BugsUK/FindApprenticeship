@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Employer.Ioc
 {
+    using System;
     using System.Web;
     using Application.Interfaces;
     using Application.Interfaces.Communications;
@@ -9,6 +10,7 @@
     using Common.AppSettings;
     using Domain.Entities;
     using Infrastructure.Communication.Email;
+    using Infrastructure.Logging;
     using Mappers;
     using Mappers.Interfaces;
     using Mediators.EmployerEnquiry;
@@ -36,6 +38,7 @@
 
         private void RegisterServices()
         {
+            For<ILogService>().AlwaysUnique().Use<NLogLogService>().Ctor<Type>().Is(c => c.ParentType ?? c.RootType);
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Name = "SendGridEmailDispatcher";
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
             For<ILocationSearchService>().Use<LocationSearchService>();

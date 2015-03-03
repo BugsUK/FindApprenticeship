@@ -14,7 +14,8 @@
         private IEmployerEnquiryProvider _employerEnquiryProvider;
         private EmployerEnquiryViewModelServerValidators _validators;
 
-        public EmployerEnquiryMediator(IEmployerEnquiryProvider employerEnquiryProvider, EmployerEnquiryViewModelServerValidators validators)
+        public EmployerEnquiryMediator(IEmployerEnquiryProvider employerEnquiryProvider, 
+                                        EmployerEnquiryViewModelServerValidators validators)
         {
             _employerEnquiryProvider = employerEnquiryProvider;
             _validators = validators;
