@@ -371,14 +371,42 @@ WriteLiteral("                        <div");
 
 WriteLiteral(" class=\"grid grid-1-3 map-container hide-nojs small-btm-margin\"");
 
-WriteLiteral(">\r\n                            <div");
+WriteLiteral(">\r\n                            <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 4670), Tuple.Create("\"", 4780)
+, Tuple.Create(Tuple.Create("", 4677), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 4677), true)
+            
+            #line 73 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+     , Tuple.Create(Tuple.Create("", 4725), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+            
+            #line default
+            #line hidden
+, 4725), false)
+, Tuple.Create(Tuple.Create("", 4751), Tuple.Create(",", 4751), true)
+            
+            #line 73 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+                                , Tuple.Create(Tuple.Create("", 4752), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+            
+            #line default
+            #line hidden
+, 4752), false)
+, Tuple.Create(Tuple.Create("", 4779), Tuple.Create("\'", 4779), true)
+);
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(" class=\"map-links fake-link font-xxsmall view-googlemaps\"");
+
+WriteLiteral(">Open map</a>\r\n                            <div");
 
 WriteLiteral(" class=\"map\"");
 
 WriteLiteral("></div>\r\n                        </div>\r\n");
 
             
-            #line 75 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+            #line 76 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
                     }
 
             
@@ -387,7 +415,7 @@ WriteLiteral("></div>\r\n                        </div>\r\n");
 WriteLiteral("                </div>\r\n                \r\n            </li>\r\n");
 
             
-            #line 79 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+            #line 80 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
             itemPosition++;
         }
     }
@@ -398,7 +426,7 @@ WriteLiteral("                </div>\r\n                \r\n            </li>\r\
 WriteLiteral("</ul>\r\n\r\n");
 
             
-            #line 84 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+            #line 85 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
    Html.RenderPartial("_pagination", Model); 
             
             #line default
@@ -406,7 +434,7 @@ WriteLiteral("</ul>\r\n\r\n");
 WriteLiteral("\r\n\r\n");
 
             
-            #line 86 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+            #line 87 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
  if (Model.TotalLocalHits > 5 || Model.TotalNationalHits > 5)
 {
 
@@ -428,7 +456,7 @@ WriteLiteral(">Display results</label>\r\n");
 WriteLiteral("    ");
 
             
-            #line 90 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+            #line 91 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
 Write(Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" }));
 
             
@@ -445,7 +473,7 @@ WriteLiteral(" value=\"ResultsPerPage\"");
 WriteLiteral(">View</button>\r\n    </noscript>\r\n</div>\r\n");
 
             
-            #line 95 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+            #line 96 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
 }
 
             

@@ -21,7 +21,15 @@
         mapCenter          = { lat: apprLatitude, lng: apprLongitude },
         bounds             = new google.maps.LatLngBounds(),
         originLocation = new google.maps.LatLng(apprLatitude, apprLongitude),
-        latLngList         = [];
+        latLngList         = [],
+        theLatLon          = apprLatitude + ',' + apprLongitude;
+
+    $('.map-links').each(function(){
+        var $this = $(this),
+        aHref = $this.attr('href');
+
+        $this.attr('href', aHref.replace('LocationLatLon', theLatLon));
+    });
 
     for (var i = 0; i < vacancyLinks.length; i++) {
         var lat = $(vacancyLinks[i]).attr('data-lat'),
