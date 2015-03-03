@@ -1,10 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.ApplicationUpdate.Entities
 {
-    using System;
+    using Domain.Entities.Applications;
 
     public class ApplicationStatusChanged
     {
-        //todo: 1.7: add minimal properties (identifiers) to allow this to be processed later (in AsyncProcessor)
-        //similar in role/purpose to VacancyAboutToExpire
+        public int LegacyApplicationId { get; set; }
+
+        public ApplicationStatuses ApplicationStatus { get; set; }
+
+        public string UnsuccessfulReason { get; set; }
     }
 }

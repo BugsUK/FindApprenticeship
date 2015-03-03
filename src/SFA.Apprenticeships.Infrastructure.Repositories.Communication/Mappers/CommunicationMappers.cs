@@ -15,6 +15,9 @@
         {
             Mapper.CreateMap<ExpiringApprenticeshipApplicationDraft, MongoApprenticeshipApplicationExpiringDraft>();
             Mapper.CreateMap<MongoApprenticeshipApplicationExpiringDraft, ExpiringApprenticeshipApplicationDraft>();
+
+            Mapper.CreateMap<ApplicationStatusAlert, MongoApplicationStatusAlert>();
+            Mapper.CreateMap<MongoApplicationStatusAlert, ApplicationStatusAlert>();
         }
     }
 }
