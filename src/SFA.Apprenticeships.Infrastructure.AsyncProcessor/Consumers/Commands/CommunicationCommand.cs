@@ -14,7 +14,7 @@
             _messageBus = messageBus;
         }
 
-        protected void SendEmailMessage(CommunicationRequest message)
+        protected void QueueEmailMessage(CommunicationRequest message)
         {
             var toEmail = message.Tokens.First(t => t.Key == CommunicationTokens.RecipientEmailAddress).Value;
             var request = new EmailRequest
@@ -27,7 +27,7 @@
             _messageBus.PublishMessage(request);
         }
 
-        protected void SendSmsMessage(CommunicationRequest message)
+        protected void QueueSmsMessage(CommunicationRequest message)
         {
             var toMobile = message.Tokens.First(t => t.Key == CommunicationTokens.CandidateMobileNumber).Value;
             var request = new SmsRequest

@@ -17,7 +17,7 @@
 
         public override void Handle(CommunicationRequest message)
         {
-            SendEmailMessage(message);
+            QueueEmailMessage(message);
         }
     }
 }

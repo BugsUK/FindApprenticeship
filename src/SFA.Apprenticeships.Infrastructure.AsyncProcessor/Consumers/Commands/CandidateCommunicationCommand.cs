@@ -34,12 +34,12 @@
 
             if ((!isOptionalMessageType || candidate.CommunicationPreferences.AllowEmail) && !isSmsOnly)
             {
-                SendEmailMessage(message);
+                QueueEmailMessage(message);
             }
 
             if (!isOptionalMessageType || candidate.CommunicationPreferences.AllowMobile)
             {
-                SendSmsMessage(message);
+                QueueSmsMessage(message);
             }
         }
     }
