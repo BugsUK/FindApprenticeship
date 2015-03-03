@@ -91,8 +91,9 @@
     <Compile Include="Applications\ApplicationStatuses.cs" />
     <Compile Include="Candidates\CandidateHelper.cs" />
     <Compile Include="Candidates\CommunicationPreferences.cs" />
+    <Compile Include="Communication\SavedSearchAlert.cs" />
     <Compile Include="Communication\ContactMessage.cs" />
-    <Compile Include="Communication\UpdatedApprenticeshipApplication.cs" />
+    <Compile Include="Communication\ApplicationStatusAlert.cs" />
     <Compile Include="Communication\ExpiringApprenticeshipApplicationDraft.cs" />
     <Compile Include="Exceptions\BoundaryException.cs" />
     <Compile Include="Exceptions\CustomException.cs" />

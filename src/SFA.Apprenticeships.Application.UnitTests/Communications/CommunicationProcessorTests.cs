@@ -38,7 +38,7 @@
             _candidateReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(GetCandidate(false));
 
             var batchId = Guid.NewGuid();
-            _communicationProcessor.SendDailyDigests(batchId);
+            _communicationProcessor.SendDailyCommunications(batchId);
 
             _expiringDraftRepository.Verify(x => x.GetCandidatesDailyDigest(), Times.Once);
             _candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
@@ -55,7 +55,7 @@
             _bus.Setup(x => x.PublishMessage(It.IsAny<CommunicationRequest>()));
 
             var batchId = Guid.NewGuid();
-            _communicationProcessor.SendDailyDigests(batchId);
+            _communicationProcessor.SendDailyCommunications(batchId);
 
             _expiringDraftRepository.Verify(x => x.GetCandidatesDailyDigest(), Times.Once);
             _candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));

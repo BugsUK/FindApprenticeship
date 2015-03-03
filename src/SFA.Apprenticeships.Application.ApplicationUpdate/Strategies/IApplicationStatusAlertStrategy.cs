@@ -3,7 +3,7 @@
     using System;
     using Entities;
 
-    public interface IApplicationStatusChangedStrategy
+    public interface IApplicationStatusAlertStrategy
     {
         void Send(ApplicationStatusSummary applicationStatusSummary);
     }

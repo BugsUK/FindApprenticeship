@@ -6,7 +6,6 @@
     using Entities;
     using Extensions;
     using Interfaces.Logging;
-    using Strategies;
 
     public class ApplicationStatusUpdater : IApplicationStatusUpdater
     {
@@ -16,21 +15,18 @@
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
-        private readonly IApplicationStatusChangedStrategy _applicationStatusChangedStrategy;
 
         public ApplicationStatusUpdater(
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            IApplicationStatusChangedStrategy applicationStatusChangedStrategy, 
             ILogService logger)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
-            _applicationStatusChangedStrategy = applicationStatusChangedStrategy;
             _logger = logger;
         }
 
@@ -50,7 +46,6 @@
                     if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
                     {
                         _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-                        _applicationStatusChangedStrategy.Send(applicationStatusSummary);
                     }
                     return;
                 }

@@ -5,7 +5,6 @@
     using System.Threading.Tasks;
     using Application.ApplicationUpdate;
     using Application.ApplicationUpdate.Entities;
-    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
 
@@ -14,14 +13,14 @@
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _applicationStatusSummaryConsumerResetEvent = new ManualResetEvent(true);
-        private readonly IMessageBus _bus;
+        private readonly IMessageBus _messageBus;
 
         private CancellationToken CancellationToken { get { return _cancellationTokenSource.Token; } }
 
-        public ApplicationStatusSummaryConsumerAsync(IApplicationStatusProcessor applicationStatusProcessor, IMessageBus bus)
+        public ApplicationStatusSummaryConsumerAsync(IApplicationStatusProcessor applicationStatusProcessor, IMessageBus messageBus)
         {
             _applicationStatusProcessor = applicationStatusProcessor;
-            _bus = bus;
+            _messageBus = messageBus;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]
@@ -54,7 +53,7 @@
                             ClosingDate = applicationStatusSummaryToProcess.ClosingDate
                         };
 
-                        _bus.PublishMessage(vacancyStatusSummary);
+                        _messageBus.PublishMessage(vacancyStatusSummary);
                     }
                 }
                 finally

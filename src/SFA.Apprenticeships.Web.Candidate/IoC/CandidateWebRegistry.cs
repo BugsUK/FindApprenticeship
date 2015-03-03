@@ -130,7 +130,7 @@
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
             For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
             For<ISendContactMessageStrategy>().Use<QueueContactMessageStrategy>();
-            For<IApplicationStatusChangedStrategy>().Use<ApplicationStatusChangedStrategy>();
+            For<IApplicationStatusAlertStrategy>().Use<ApplicationStatusAlertStrategy>();
         }
 
         private void RegisterMediators()

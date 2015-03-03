@@ -12,17 +12,17 @@
 
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
-        private readonly IApplicationStatusChangedStrategy _applicationStatusChangedStrategy;
+        private readonly IApplicationStatusAlertStrategy _applicationStatusAlertStrategy;
 
         public ApplicationStatusUpdateStrategy(
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
-            IApplicationStatusChangedStrategy applicationStatusChangedStrategy,
+            IApplicationStatusAlertStrategy applicationStatusAlertStrategy,
             ILogService logger)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
-            _applicationStatusChangedStrategy = applicationStatusChangedStrategy;
+            _applicationStatusAlertStrategy = applicationStatusAlertStrategy;
             _logger = logger;
         }
 
@@ -67,7 +67,7 @@
                     applicationStatusSummary.UnsuccessfulReason); // 12
 
                 _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-                _applicationStatusChangedStrategy.Send(applicationStatusSummary);
+                _applicationStatusAlertStrategy.Send(applicationStatusSummary);
             }
         }
 
