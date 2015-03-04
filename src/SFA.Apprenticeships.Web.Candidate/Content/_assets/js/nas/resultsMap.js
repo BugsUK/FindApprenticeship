@@ -20,7 +20,7 @@
         directionsService  = [],
         mapCenter          = { lat: apprLatitude, lng: apprLongitude },
         bounds             = new google.maps.LatLngBounds(),
-        originLocation = new google.maps.LatLng(apprLatitude, apprLongitude),
+        originLocation     = new google.maps.LatLng(apprLatitude, apprLongitude),
         latLngList         = [],
         theLatLon          = apprLatitude + ',' + apprLongitude;
 
@@ -76,9 +76,31 @@
 
         radiusCircle = new google.maps.Circle(distanceCircle);
 
+        var radiusBounds = radiusCircle.getBounds();
+
+        var theZoom = null;
+
         setMarkers(map, vacancies)
 
-        map.fitBounds(bounds);
+        if (latLngList.length > 1) {
+            map.fitBounds(bounds);
+        } else if (apprMiles > 0) {
+            map.fitBounds(radiusBounds);
+
+            zoomChangeBoundsListener =
+                google.maps.event.addListenerOnce(map, 'bounds_changed', function (event) {
+                    if (this.getZoom()) {
+                        theZoom = this.getZoom();
+
+                        this.setZoom(theZoom + 1);
+                    }
+                });
+
+            setTimeout(function () { google.maps.event.removeListener(zoomChangeBoundsListener) }, 2000);
+
+        } else if (apprMiles == 0) {
+            map.setZoom(5);
+        }
 
     }
 
