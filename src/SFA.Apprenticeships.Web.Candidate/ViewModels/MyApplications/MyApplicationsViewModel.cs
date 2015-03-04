@@ -64,6 +64,7 @@
                 return AllApprenticeshipApplications
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Draft ||
+                        each.ApplicationStatus == ApplicationStatuses.Saved ||
                         (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && !each.DateApplied.HasValue))
                      .OrderBy(app => app.ClosingDate);
             }
