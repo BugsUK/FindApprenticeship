@@ -75,6 +75,10 @@
             {
                 throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
             }
+            catch (EndpointNotFoundException e)
+            {
+                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+            }
             catch (CommunicationException e)
             {
                 throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
