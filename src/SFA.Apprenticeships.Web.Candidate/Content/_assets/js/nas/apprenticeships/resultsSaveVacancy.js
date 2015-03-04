@@ -89,6 +89,8 @@
             .fail(function (error) {
                 console.error("Failed to save vacancy:", error);
             });
+
+        $self.blur();
     });
 
     // Initialise saved vacancy / resume application links.
