@@ -181,7 +181,6 @@
             });
 
             var savedVacancyStatuses = {
-                none: "None",
                 saved: "Saved",
                 unsaved: "Unsaved",
                 draft: "Draft",
@@ -190,38 +189,41 @@
 
             // Initialise saved vacancy / resume application links.
             $(".save-vacancy-link").each(function () {
-                setSaveVacancyLink.call(this);
+                setSavedVacancyView.call(this);
             });
 
-            $(".resume-application-link").each(setResumeApplicationLink);
-
             // Save / unsave vacancy.
-            function setSaveVacancyLink (vacancyStatus) {
-                var $self = $(this);
-                var $icon = $self.children("i");
+            function setSavedVacancyView (vacancyStatus) {
+                var $saveLink = $(this);
+                var $resumeLink = $saveLink.siblings(".resume-link");
+                var $appliedLabel = $saveLink.siblings(".applied-label");
 
                 if (vacancyStatus) {
-                    $self.data("vacancy-status", vacancyStatus);
+                    $saveLink.data("vacancy-status", vacancyStatus);
                 } else {
-                    vacancyStatus = $self.data("vacancy-status");
+                    vacancyStatus = $saveLink.data("vacancy-status");
                 }
 
-                if (vacancyStatus !== savedVacancyStatuses.saved && vacancyStatus !== savedVacancyStatuses.unsaved) {
-                    $self.addClass("hidden");
+                var isExistingApplication = vacancyStatus === savedVacancyStatuses.draft || vacancyStatus === savedVacancyStatuses.applied;
+
+                $saveLink.toggleClass("hidden", isExistingApplication);
+                $resumeLink.toggleClass("hidden", vacancyStatus !== savedVacancyStatuses.draft);
+                $appliedLabel.toggleClass("hidden", vacancyStatus !== savedVacancyStatuses.applied);
+
+                if (isExistingApplication) {
                     return;
                 }
 
                 var saved = vacancyStatus === savedVacancyStatuses.saved;
 
+                var $icon = $saveLink.children("i");
+
                 $icon.toggleClass("fa-star", saved);
                 $icon.toggleClass("fa-star-o", !saved);
 
-                $self.attr("title", saved ? "Remove from saved" : "Add to saved");
-                $self.data("vacancy-status", saved ? savedVacancyStatuses.saved : savedVacancyStatuses.unsaved);
-                $self.removeClass("hidden");
-            };
-
-            function setResumeApplicationLink () {
+                $saveLink.attr("title", saved ? "Remove from saved" : "Add to saved");
+                $saveLink.data("vacancy-status", saved ? savedVacancyStatuses.saved : savedVacancyStatuses.unsaved);
+                $saveLink.removeClass("hidden");
             };
 
             // Handle save / unsave vacancy link click.
@@ -243,7 +245,7 @@
                 $.ajax(options)
                     .done(function (result) {
                         console.log("ajax::done -> vacancyStatus", result.status);
-                        setSaveVacancyLink.call($self, result.status);
+                        setSavedVacancyView.call($self, result.status);
                     })
                     .fail(function (error) {
                         console.error("Failed to save vacancy:");

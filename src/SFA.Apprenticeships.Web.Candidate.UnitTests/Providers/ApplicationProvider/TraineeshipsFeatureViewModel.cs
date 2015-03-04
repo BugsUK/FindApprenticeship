@@ -45,7 +45,7 @@
             _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
                 .Returns(new Candidate());
             
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), false)).
                 Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
@@ -68,7 +68,7 @@
 
             var apprenticeshipApplicationSummaries = GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications);
             apprenticeshipApplicationSummaries.AddRange(GetSuccessfulApplicationSummaries(1));
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), false)).
                 Returns(apprenticeshipApplicationSummaries);
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
@@ -95,7 +95,7 @@
                     }
                 });
 
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>())).
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), false)).
                 Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
@@ -118,7 +118,7 @@
             _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
                 .Returns(new Candidate());
 
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), false))
                 .Returns(GetUnsuccessfulApplicationSummaries(unsuccessfulApplicationsThreshold));
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
@@ -139,7 +139,7 @@
             _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
                 .Returns(new Candidate());
 
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), false))
                 .Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
             
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
@@ -157,13 +157,13 @@
         public void GivenException_ThenExceptionIsRethrown()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>()))
+            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), false))
                 .Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
             _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).Throws<Exception>();
 
             //Act
-            Action action = () => { _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid()); };
+            Action action = () => _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());
 
             //Assert
             action.ShouldThrow<Exception>();

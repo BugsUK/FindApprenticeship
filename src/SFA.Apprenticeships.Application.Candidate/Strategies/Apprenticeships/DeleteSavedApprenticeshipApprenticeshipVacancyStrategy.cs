@@ -21,17 +21,13 @@
         {
             var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
 
-            if (applicationDetail != null)
-            {
-                if (applicationDetail.IsSavedVacancy())
-                {
-                    // Only actually delete a saved vacancy.
-                    _apprenticeshipApplicationWriteRepository.Delete(applicationDetail.EntityId);
-                    return null;
-                }
-            }
+            if (applicationDetail == null) return null;
 
-            return applicationDetail;
+            if (applicationDetail.Status != ApplicationStatuses.Saved) return applicationDetail;
+
+            // Only actually delete a saved vacancy.
+            _apprenticeshipApplicationWriteRepository.Delete(applicationDetail.EntityId);
+            return null;
         }
     }
 }

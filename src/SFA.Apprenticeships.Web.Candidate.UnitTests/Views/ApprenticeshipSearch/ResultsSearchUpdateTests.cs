@@ -15,7 +15,7 @@
             var searchUpdate = new searchUpdate();
 
             var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Keyword).ViewModel;
-            var searchResultsViewModel = Mediator.Results(searchViewModel).ViewModel;
+            var searchResultsViewModel = Mediator.Results(null, searchViewModel).ViewModel;
             var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
@@ -49,7 +49,7 @@
             var searchUpdate = new searchUpdate();
 
             var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
-            var searchResultsViewModel = Mediator.Results(searchViewModel).ViewModel;
+            var searchResultsViewModel = Mediator.Results(null, searchViewModel).ViewModel;
             var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 
             view.GetElementbyId("validation-summary").Should().BeNull();
@@ -88,7 +88,7 @@
             var searchUpdate = new searchUpdate();
 
             var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
-            var searchResultsViewModel = Mediator.Results(searchViewModel).ViewModel;
+            var searchResultsViewModel = Mediator.Results(null, searchViewModel).ViewModel;
             var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();

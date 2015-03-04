@@ -95,6 +95,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.3.24.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -104,7 +107,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyBuilder.cs" />
+    <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyTests.cs" />
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
+    <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
     <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyBuilder.cs" />

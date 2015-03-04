@@ -18,7 +18,7 @@
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
 
-            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId)).Throws<Exception>();
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, false)).Throws<Exception>();
 
             Action action = () => new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).Build()
@@ -33,7 +33,7 @@
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
 
-            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId)).Returns(new ApprenticeshipApplicationSummary[0]);
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, false)).Returns(new ApprenticeshipApplicationSummary[0]);
             candidateService.Setup(cs => cs.GetTraineeshipApplications(candidateId)).Returns(new TraineeshipApplicationSummary[0]);
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build());
 

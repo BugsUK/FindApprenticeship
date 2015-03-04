@@ -14,6 +14,10 @@
                 .Use<ExpiringApprenticeshipApplicationDraftRepository>()
                 .Ctor<CommunicationMappers>()
                 .Named("CommunicationMappers");
+            For<IApplicationStatusAlertRepository>()
+                .Use<ApplicationStatusAlertRepository>()
+                .Ctor<CommunicationMappers>()
+                .Named("CommunicationMappers");
         }
     }
 }

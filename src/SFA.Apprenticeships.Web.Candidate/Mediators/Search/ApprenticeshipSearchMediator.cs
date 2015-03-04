@@ -5,11 +5,13 @@
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
+    using System.Web.Security;
     using Apprenticeships.Application.Interfaces.ReferenceData;
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
     using Constants;
+    using Domain.Entities.Applications;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -22,21 +24,25 @@
     {
         private readonly ISearchProvider _searchProvider;
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
+        private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly IReferenceDataService _referenceDataService;
         private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
+
         private readonly string[] _blacklistedCategoryCodes;
 
         public ApprenticeshipSearchMediator(
             IConfigurationManager configManager,
             ISearchProvider searchProvider,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
+            ICandidateServiceProvider candidateServiceProvider,
             IUserDataProvider userDataProvider,
             IReferenceDataService referenceDataService,
             ApprenticeshipSearchViewModelServerValidator searchRequestValidator,
             ApprenticeshipSearchViewModelLocationValidator searchLocationValidator)
             : base(configManager, userDataProvider)
         {
+            _candidateServiceProvider = candidateServiceProvider;
             _searchProvider = searchProvider;
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _referenceDataService = referenceDataService;
@@ -116,7 +122,7 @@
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SearchValidation.Ok, model);
         }
 
-        public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(ApprenticeshipSearchViewModel model)
+        public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(Guid? candidateId, ApprenticeshipSearchViewModel model)
         {
             UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
 
@@ -203,15 +209,21 @@
             }
 
             RemoveInvalidSubCategories(model);
+
             var searchModel = GetSearchModel(model);
+
             PopulateSortType(searchModel);
+
             model.SortType = searchModel.SortType;
+
             var results = _searchProvider.FindVacancies(searchModel);
+
             if (results.VacancySearch != null)
             {
                 model.SortType = results.VacancySearch.SortType;
                 model.LocationType = results.VacancySearch.LocationType;
             }
+
             results.VacancySearch = model;
 
             if (results.HasError())
@@ -233,6 +245,11 @@
             var isLocalLocationType = results.VacancySearch.LocationType != ApprenticeshipLocationType.National;
 
             results.VacancySearch.SortTypes = GetSortTypes(model.SortType, model.Keywords, isLocalLocationType);
+
+            if (candidateId.HasValue)
+            {
+                SetSavedVacancyStatuses(candidateId.Value, results);
+            }
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
         }
@@ -346,6 +363,38 @@
             UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
+        }
+
+        private void SetSavedVacancyStatuses(Guid candidateId, ApprenticeshipSearchResponseViewModel results)
+        {
+            var apprenticeshipApplications = _candidateServiceProvider.GetApprenticeshipApplications(candidateId, false).ToList();
+
+            foreach (var result in results.Vacancies)
+            {
+                var apprenticeshipApplication = apprenticeshipApplications
+                    .SingleOrDefault(each => each.LegacyVacancyId == result.Id);
+
+                result.SavedVacancyStatus = SavedVacancyStatusFromApprenticeshipApplication(apprenticeshipApplication);
+            }
+        }
+
+        private static SavedVacancyViewModelStatuses SavedVacancyStatusFromApprenticeshipApplication(ApprenticeshipApplicationSummary apprenticeshipApplication)
+        {
+            if (apprenticeshipApplication == null)
+            {
+                return SavedVacancyViewModelStatuses.Unsaved;
+            }
+
+            // TODO: US65: revisit this mapping. Still required?
+            switch (apprenticeshipApplication.Status)
+            {
+                case ApplicationStatuses.Saved:
+                    return SavedVacancyViewModelStatuses.Saved;
+                case ApplicationStatuses.Draft:
+                    return SavedVacancyViewModelStatuses.Draft;
+            }
+
+            return SavedVacancyViewModelStatuses.Applied;
         }
     }
 }

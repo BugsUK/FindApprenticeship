@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -269,7 +270,7 @@
             _saveApplicationStrategy.SaveApplication(candidateId, vacancyId, apprenticeshipApplication);
         }
 
-        public IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId)
+        public IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true)
         {
             Condition.Requires(candidateId);
 
@@ -277,7 +278,7 @@
                 "Calling CandidateService to get the apprenticeship applications of the user with Id={0}.",
                 candidateId);
 
-            return _getCandidateApprenticeshipApplicationsStrategy.GetApplications(candidateId);
+            return _getCandidateApprenticeshipApplicationsStrategy.GetApplications(candidateId, refresh);
         }
 
         public void SubmitApplication(Guid candidateId, int vacancyId)

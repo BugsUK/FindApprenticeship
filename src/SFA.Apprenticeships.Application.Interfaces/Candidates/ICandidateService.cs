@@ -35,7 +35,7 @@
 
         void SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication);
 
-        IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId);
+        IList<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
 
         void SubmitApplication(Guid candidateId, int vacancyId);
 

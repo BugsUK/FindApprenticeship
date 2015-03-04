@@ -6,6 +6,6 @@
 
     public interface IGetCandidateApprenticeshipApplicationsStrategy
     {
-        IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId);
+        IList<ApprenticeshipApplicationSummary> GetApplications(Guid candidateId, bool refresh = true);
     }
 }

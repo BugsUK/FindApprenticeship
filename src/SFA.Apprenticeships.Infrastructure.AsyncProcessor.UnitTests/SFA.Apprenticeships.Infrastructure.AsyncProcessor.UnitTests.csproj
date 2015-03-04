@@ -98,6 +98,9 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.3.24.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.4.3.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RabbitMQ.Client.3.4.3\lib\net35\RabbitMQ.Client.dll</HintPath>
@@ -111,6 +114,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationStatusChangedConsumerAsyncTests.cs" />
+    <Compile Include="Builders\ApplicationStatusChangedConsumerAsyncBuilder.cs" />
     <Compile Include="VacancyStatusSummaryConsumerAsyncTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\SharedAssemblyInfo.cs" />
@@ -123,6 +128,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ApplicationUpdate\SFA.Apprenticeships.Application.ApplicationUpdate.csproj">
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
       <Name>SFA.Apprenticeships.Application.ApplicationUpdate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
@@ -143,6 +152,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\SFA.Apprenticeships.Infrastructure.AsyncProcessor.csproj">
       <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.AsyncProcessor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

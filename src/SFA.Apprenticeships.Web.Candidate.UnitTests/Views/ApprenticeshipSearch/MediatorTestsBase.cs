@@ -14,6 +14,7 @@
     public abstract class MediatorTestsBase : ViewUnitTest
     {
         protected Mock<IApprenticeshipVacancyDetailProvider> ApprenticeshipVacancyDetailProvider;
+        protected Mock<ICandidateServiceProvider> CandidateServiceProvider;
         protected Mock<IConfigurationManager> ConfigurationManager;
         protected Mock<IUserDataProvider> UserDataProvider;
         protected Mock<ISearchProvider> SearchProvider;
@@ -32,7 +33,7 @@
             SearchProvider = new Mock<ISearchProvider>();
             ReferenceDataService = new Mock<IReferenceDataService>();
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(GetCategories);
-            Mediator = new ApprenticeshipSearchMediator(ConfigurationManager.Object, SearchProvider.Object, ApprenticeshipVacancyDetailProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
+            Mediator = new ApprenticeshipSearchMediator(ConfigurationManager.Object, SearchProvider.Object, ApprenticeshipVacancyDetailProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
         }
 
         private static IEnumerable<Category> GetCategories()
