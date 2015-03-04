@@ -144,7 +144,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateVacanciesAboutToExpireTokens(2),
+                Tokens = TokenGenerator.CreateDailyDigestTokens(2),
                 MessageType = MessageTypes.DailyDigest
             };
 

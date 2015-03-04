@@ -171,7 +171,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = TokenGenerator.CreateVacanciesAboutToExpireTokens(4),
+                Tokens = TokenGenerator.CreateDailyDigestTokens(4),
                 MessageType = MessageTypes.DailyDigest
             };
 

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
@@ -38,7 +37,7 @@
             var sendgridToken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ApplicationStatusAlerts);
 
             var alertsJson = request.Tokens.First(t => t.Key == CommunicationTokens.ApplicationStatusAlerts).Value;
-            var alerts = JsonConvert.DeserializeObject<List<ApplicationStatusAlert>>(alertsJson);
+            var alerts = JsonConvert.DeserializeObject<List<ApplicationStatusAlert>>(alertsJson) ?? new List<ApplicationStatusAlert>();
 
             var substitutionText = GetApplicationStatusAlertsInfoSubstitution(alerts);
 
@@ -73,7 +72,7 @@
             var stringBuilder = new StringBuilder();
 
             var draftsJson = request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
-            var drafts = JsonConvert.DeserializeObject<List<ExpiringApprenticeshipApplicationDraft>>(draftsJson);
+            var drafts = JsonConvert.DeserializeObject<List<ExpiringApprenticeshipApplicationDraft>>(draftsJson) ?? new List<ExpiringApprenticeshipApplicationDraft>();
 
             stringBuilder.Append(GetExpiringDraftsItemCountData(drafts));
 

@@ -86,12 +86,14 @@
             };
         }
 
-        public static IEnumerable<CommunicationToken> CreateVacanciesAboutToExpireTokens(int numOfVacancies)
+        public static IEnumerable<CommunicationToken> CreateDailyDigestTokens(int numOfVacancies)
         {
             var tokens = new List<CommunicationToken>
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
             };
+
+            tokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, string.Empty));
 
             var drafts = new Fixture().Build<ExpiringApprenticeshipApplicationDraft>()
                 .CreateMany(numOfVacancies)
