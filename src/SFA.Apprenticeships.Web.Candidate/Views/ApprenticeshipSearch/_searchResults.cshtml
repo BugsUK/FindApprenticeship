@@ -39,7 +39,7 @@
                     <div class="top-align ta-right width-all-1-4">
                         <a title="Add to saved" href="#" class="hidden fake-link link-unimp save-vacancy-link" data-vacancy-id="@vacancy.Id" data-vacancy-status="@vacancy.SavedVacancyStatus"><i class="fa fa-star-o"></i></a>
                         @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = vacancy.Id }, new { @class = "hidden resume-link" })
-                        <p class="hidden applied-label">Applied</p>
+                        <p class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
                     </div>
                 }
                 <p>@vacancy.Description</p>
