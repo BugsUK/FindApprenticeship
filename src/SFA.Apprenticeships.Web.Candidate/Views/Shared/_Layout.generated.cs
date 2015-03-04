@@ -202,12 +202,74 @@ WriteAttribute("href", Tuple.Create(" href=\"", 1566), Tuple.Create("\"", 1628)
 
 WriteLiteral(" type=\"image/x-icon\"");
 
+WriteLiteral(">\r\n    <link");
+
+WriteLiteral(" rel=\"apple-touch-icon-precomposed\"");
+
+WriteLiteral(" sizes=\"152x152\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1712), Tuple.Create("\"", 1791)
+            
+            #line 28 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 1719), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-152x152.png", "~/Content/_assets")
+            
+            #line default
+            #line hidden
+, 1719), false)
+);
+
+WriteLiteral(">\r\n    <link");
+
+WriteLiteral(" rel=\"apple-touch-icon-precomposed\"");
+
+WriteLiteral(" sizes=\"120x120\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1855), Tuple.Create("\"", 1934)
+            
+            #line 29 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 1862), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-120x120.png", "~/Content/_assets")
+            
+            #line default
+            #line hidden
+, 1862), false)
+);
+
+WriteLiteral(">\r\n    <link");
+
+WriteLiteral(" rel=\"apple-touch-icon-precomposed\"");
+
+WriteLiteral(" sizes=\"76x76\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1996), Tuple.Create("\"", 2073)
+            
+            #line 30 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 2003), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-76x76.png", "~/Content/_assets")
+            
+            #line default
+            #line hidden
+, 2003), false)
+);
+
+WriteLiteral(">\r\n    <link");
+
+WriteLiteral(" rel=\"apple-touch-icon-precomposed\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 2121), Tuple.Create("\"", 2198)
+            
+            #line 31 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 2128), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-60x60.png", "~/Content/_assets")
+            
+            #line default
+            #line hidden
+, 2128), false)
+);
+
 WriteLiteral(">\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 28 "..\..\Views\Shared\_Layout.cshtml"
+            #line 32 "..\..\Views\Shared\_Layout.cshtml"
 Write(Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", "~/Content/_assets")));
 
             
@@ -218,7 +280,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 29 "..\..\Views\Shared\_Layout.cshtml"
+            #line 33 "..\..\Views\Shared\_Layout.cshtml"
 Write(Html.Partial("_Scripts"));
 
             
@@ -227,13 +289,13 @@ Write(Html.Partial("_Scripts"));
 WriteLiteral("\r\n</head>\r\n<body>\r\n");
 
             
-            #line 32 "..\..\Views\Shared\_Layout.cshtml"
+            #line 36 "..\..\Views\Shared\_Layout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\Shared\_Layout.cshtml"
+            #line 36 "..\..\Views\Shared\_Layout.cshtml"
      if (ViewBag.ShowEuCookieDirective == true)
     {
 
@@ -258,20 +320,20 @@ WriteLiteral(" class=\"copy-16\"");
 
 WriteLiteral(">GOV.UK uses cookies to make the site simpler. <a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 2066), Tuple.Create("\'", 2115)
+WriteAttribute("href", Tuple.Create(" href=\'", 2616), Tuple.Create("\'", 2665)
             
-            #line 36 "..\..\Views\Shared\_Layout.cshtml"
-             , Tuple.Create(Tuple.Create("", 2073), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
+            #line 40 "..\..\Views\Shared\_Layout.cshtml"
+             , Tuple.Create(Tuple.Create("", 2623), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
             
             #line default
             #line hidden
-, 2073), false)
+, 2623), false)
 );
 
 WriteLiteral(">Find out more about cookies</a></span>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 39 "..\..\Views\Shared\_Layout.cshtml"
+            #line 43 "..\..\Views\Shared\_Layout.cshtml"
     }
 
             
@@ -280,13 +342,13 @@ WriteLiteral(">Find out more about cookies</a></span>\r\n            </div>\r\n 
 WriteLiteral("\r\n");
 
             
-            #line 41 "..\..\Views\Shared\_Layout.cshtml"
+            #line 45 "..\..\Views\Shared\_Layout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 41 "..\..\Views\Shared\_Layout.cshtml"
+            #line 45 "..\..\Views\Shared\_Layout.cshtml"
      if (!string.IsNullOrEmpty(ViewBag.PlannedOutageMessage))
     {
 
@@ -312,7 +374,7 @@ WriteLiteral(" class=\"font-xsmall maintenance-content\"");
 WriteLiteral(">\r\n                    <div>");
 
             
-            #line 46 "..\..\Views\Shared\_Layout.cshtml"
+            #line 50 "..\..\Views\Shared\_Layout.cshtml"
                     Write(Html.Raw(ViewBag.PlannedOutageMessage));
 
             
@@ -320,14 +382,14 @@ WriteLiteral(">\r\n                    <div>");
             #line hidden
 WriteLiteral("</div>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2557), Tuple.Create("\"", 2647)
+WriteAttribute("href", Tuple.Create(" href=\"", 3107), Tuple.Create("\"", 3197)
             
-            #line 47 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 2564), Tuple.Create<System.Object, System.Int32>(Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = false })
+            #line 51 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 3114), Tuple.Create<System.Object, System.Int32>(Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = false })
             
             #line default
             #line hidden
-, 2564), false)
+, 3114), false)
 );
 
 WriteLiteral(" class=\"maintenance-close\"");
@@ -342,7 +404,7 @@ WriteLiteral("></i>\r\n                    </a>\r\n                </div>\r\n   
 "    </div>\r\n");
 
             
-            #line 53 "..\..\Views\Shared\_Layout.cshtml"
+            #line 57 "..\..\Views\Shared\_Layout.cshtml"
     }
 
             
@@ -382,14 +444,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3277), Tuple.Create("\"", 3352)
+WriteAttribute("src", Tuple.Create(" src=\"", 3827), Tuple.Create("\"", 3902)
             
-            #line 64 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 3283), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+            #line 68 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 3833), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 3283), false)
+, 3833), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -399,13 +461,13 @@ WriteLiteral(">\r\n                GOV.UK\r\n            </a>\r\n        </div>\
 WriteLiteral("\r\n");
 
             
-            #line 69 "..\..\Views\Shared\_Layout.cshtml"
+            #line 73 "..\..\Views\Shared\_Layout.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 69 "..\..\Views\Shared\_Layout.cshtml"
+            #line 73 "..\..\Views\Shared\_Layout.cshtml"
          if (ViewBag.UserJourney == UserJourney.Apprenticeship)
         {
 
@@ -424,20 +486,20 @@ WriteLiteral(" class=\"global-header__title\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3672), Tuple.Create("\"", 3734)
+WriteAttribute("href", Tuple.Create(" href=\"", 4222), Tuple.Create("\"", 4284)
             
-            #line 72 "..\..\Views\Shared\_Layout.cshtml"
-    , Tuple.Create(Tuple.Create("", 3679), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+            #line 76 "..\..\Views\Shared\_Layout.cshtml"
+    , Tuple.Create(Tuple.Create("", 4229), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 3679), false)
+, 4229), false)
 );
 
 WriteLiteral(">Find an apprenticeship</a></div>\r\n            </div>\r\n");
 
             
-            #line 74 "..\..\Views\Shared\_Layout.cshtml"
+            #line 78 "..\..\Views\Shared\_Layout.cshtml"
         }
         else if (ViewBag.UserJourney == UserJourney.Traineeship)
         {
@@ -457,20 +519,20 @@ WriteLiteral(" class=\"global-header__title\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4001), Tuple.Create("\"", 4060)
+WriteAttribute("href", Tuple.Create(" href=\"", 4551), Tuple.Create("\"", 4610)
             
-            #line 78 "..\..\Views\Shared\_Layout.cshtml"
-    , Tuple.Create(Tuple.Create("", 4008), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+            #line 82 "..\..\Views\Shared\_Layout.cshtml"
+    , Tuple.Create(Tuple.Create("", 4558), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 4008), false)
+, 4558), false)
 );
 
 WriteLiteral(">Find a traineeship</a></div>\r\n            </div>\r\n");
 
             
-            #line 80 "..\..\Views\Shared\_Layout.cshtml"
+            #line 84 "..\..\Views\Shared\_Layout.cshtml"
         }
 
             
@@ -505,7 +567,7 @@ WriteLiteral(">feedback</a> will help to improve it.</span>\r\n            </div
 WriteLiteral("            ");
 
             
-            #line 88 "..\..\Views\Shared\_Layout.cshtml"
+            #line 92 "..\..\Views\Shared\_Layout.cshtml"
        Write(Html.Partial("_LoginPartial"));
 
             
@@ -520,13 +582,13 @@ WriteLiteral(" id=\"main\"");
 WriteLiteral(">\r\n");
 
             
-            #line 91 "..\..\Views\Shared\_Layout.cshtml"
+            #line 95 "..\..\Views\Shared\_Layout.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 91 "..\..\Views\Shared\_Layout.cshtml"
+            #line 95 "..\..\Views\Shared\_Layout.cshtml"
               
                 var controller = ViewContext.Controller as CandidateControllerBase;
 
@@ -556,7 +618,7 @@ WriteLiteral(" id=\"InfoMessageText\"");
 WriteLiteral(">");
 
             
-            #line 104 "..\..\Views\Shared\_Layout.cshtml"
+            #line 108 "..\..\Views\Shared\_Layout.cshtml"
                                                Write(Html.Raw(infoMessage));
 
             
@@ -565,7 +627,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                        </div>\r\n");
 
             
-            #line 106 "..\..\Views\Shared\_Layout.cshtml"
+            #line 110 "..\..\Views\Shared\_Layout.cshtml"
                     }
                     if (successMessage != null)
                     {
@@ -590,7 +652,7 @@ WriteLiteral(" class=\"fa fa-check\"");
 WriteLiteral("></i>");
 
             
-            #line 110 "..\..\Views\Shared\_Layout.cshtml"
+            #line 114 "..\..\Views\Shared\_Layout.cshtml"
                                                                              Write(Html.Raw(successMessage));
 
             
@@ -599,7 +661,7 @@ WriteLiteral("></i>");
 WriteLiteral("</p>\r\n                        </div>\r\n");
 
             
-            #line 112 "..\..\Views\Shared\_Layout.cshtml"
+            #line 116 "..\..\Views\Shared\_Layout.cshtml"
                     }
                     if (warningMessage != null)
                     {
@@ -620,7 +682,7 @@ WriteLiteral(" id=\"WarningMessageText\"");
 WriteLiteral(">");
 
             
-            #line 116 "..\..\Views\Shared\_Layout.cshtml"
+            #line 120 "..\..\Views\Shared\_Layout.cshtml"
                                                   Write(Html.Raw(warningMessage));
 
             
@@ -629,7 +691,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                        </div>\r\n");
 
             
-            #line 118 "..\..\Views\Shared\_Layout.cshtml"
+            #line 122 "..\..\Views\Shared\_Layout.cshtml"
                     }
                     if (errorMessage != null)
                     {
@@ -650,7 +712,7 @@ WriteLiteral(" id=\"ErrorMessageText\"");
 WriteLiteral(">");
 
             
-            #line 122 "..\..\Views\Shared\_Layout.cshtml"
+            #line 126 "..\..\Views\Shared\_Layout.cshtml"
                                                 Write(Html.Raw(errorMessage));
 
             
@@ -659,7 +721,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                        </div>\r\n");
 
             
-            #line 124 "..\..\Views\Shared\_Layout.cshtml"
+            #line 128 "..\..\Views\Shared\_Layout.cshtml"
                     }
                 }
             
@@ -671,7 +733,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 127 "..\..\Views\Shared\_Layout.cshtml"
+            #line 131 "..\..\Views\Shared\_Layout.cshtml"
        Write(RenderBody());
 
             
@@ -680,13 +742,13 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </main>\r\n");
 
             
-            #line 129 "..\..\Views\Shared\_Layout.cshtml"
+            #line 133 "..\..\Views\Shared\_Layout.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 129 "..\..\Views\Shared\_Layout.cshtml"
+            #line 133 "..\..\Views\Shared\_Layout.cshtml"
          if (ViewBag.EnableWebTrends == true)
         {
 
@@ -703,30 +765,30 @@ WriteLiteral(" width=\"1\"");
 
 WriteLiteral(" height=\"1\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6541), Tuple.Create("\"", 6703)
-, Tuple.Create(Tuple.Create("", 6547), Tuple.Create("//stats.matraxis.net/", 6547), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 7091), Tuple.Create("\"", 7253)
+, Tuple.Create(Tuple.Create("", 7097), Tuple.Create("//stats.matraxis.net/", 7097), true)
             
-            #line 132 "..\..\Views\Shared\_Layout.cshtml"
-             , Tuple.Create(Tuple.Create("", 6568), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDscId
-            
-            #line default
-            #line hidden
-, 6568), false)
-, Tuple.Create(Tuple.Create("", 6591), Tuple.Create("/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcss" +
-"ip=", 6591), true)
-            
-            #line 132 "..\..\Views\Shared\_Layout.cshtml"
-                                                                                                                        , Tuple.Create(Tuple.Create("", 6675), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDomainName
+            #line 136 "..\..\Views\Shared\_Layout.cshtml"
+             , Tuple.Create(Tuple.Create("", 7118), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDscId
             
             #line default
             #line hidden
-, 6675), false)
+, 7118), false)
+, Tuple.Create(Tuple.Create("", 7141), Tuple.Create("/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcss" +
+"ip=", 7141), true)
+            
+            #line 136 "..\..\Views\Shared\_Layout.cshtml"
+                                                                                                                        , Tuple.Create(Tuple.Create("", 7225), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDomainName
+            
+            #line default
+            #line hidden
+, 7225), false)
 );
 
 WriteLiteral(" />\r\n            </noscript>\r\n");
 
             
-            #line 134 "..\..\Views\Shared\_Layout.cshtml"
+            #line 138 "..\..\Views\Shared\_Layout.cshtml"
         }
 
             
@@ -758,14 +820,14 @@ WriteLiteral("><a");
 
 WriteLiteral(" class=\"bold-medium\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 7003), Tuple.Create("\'", 7053)
+WriteAttribute("href", Tuple.Create(" href=\'", 7553), Tuple.Create("\'", 7603)
             
-            #line 141 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 7010), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+            #line 145 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 7560), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 7010), false)
+, 7560), false)
 );
 
 WriteLiteral(">Contact us</a></li>\r\n                    <li");
@@ -774,14 +836,14 @@ WriteLiteral(" class=\"footer__link\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 7123), Tuple.Create("\'", 7172)
+WriteAttribute("href", Tuple.Create(" href=\'", 7673), Tuple.Create("\'", 7722)
             
-            #line 142 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 7130), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
+            #line 146 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 7680), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
             
             #line default
             #line hidden
-, 7130), false)
+, 7680), false)
 );
 
 WriteLiteral(">Privacy and cookies</a></li>\r\n                    <li");
@@ -790,14 +852,14 @@ WriteLiteral(" class=\"footer__link\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 7251), Tuple.Create("\'", 7298)
+WriteAttribute("href", Tuple.Create(" href=\'", 7801), Tuple.Create("\'", 7848)
             
-            #line 143 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 7258), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
+            #line 147 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 7808), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
             
             #line default
             #line hidden
-, 7258), false)
+, 7808), false)
 );
 
 WriteLiteral(">Terms and conditions</a></li>\r\n                    <li");
@@ -836,14 +898,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 8015), Tuple.Create("\"", 8083)
+WriteAttribute("src", Tuple.Create(" src=\"", 8565), Tuple.Create("\"", 8633)
             
-            #line 148 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 8021), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+            #line 152 "..\..\Views\Shared\_Layout.cshtml"
+, Tuple.Create(Tuple.Create("", 8571), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 8021), false)
+, 8571), false)
 );
 
 WriteLiteral(" width=\"125\"");
@@ -856,13 +918,13 @@ WriteLiteral(">\r\n                    <p>&copy; Crown copyright</p>\r\n        
 "       </div>\r\n        </div>\r\n    </footer>\r\n\r\n");
 
             
-            #line 155 "..\..\Views\Shared\_Layout.cshtml"
+            #line 159 "..\..\Views\Shared\_Layout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 155 "..\..\Views\Shared\_Layout.cshtml"
+            #line 159 "..\..\Views\Shared\_Layout.cshtml"
      if (ViewBag.ShowAbout != null && ViewBag.ShowAbout == true)
     {
         Html.RenderPartial("_about");
@@ -876,7 +938,7 @@ WriteLiteral("\r\n    <!-- Placed at the end of the document so the pages load f
 WriteLiteral("    ");
 
             
-            #line 161 "..\..\Views\Shared\_Layout.cshtml"
+            #line 165 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/jquery"));
 
             
@@ -887,7 +949,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 162 "..\..\Views\Shared\_Layout.cshtml"
+            #line 166 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/fastclick"));
 
             
@@ -898,7 +960,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 163 "..\..\Views\Shared\_Layout.cshtml"
+            #line 167 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/underscore"));
 
             
@@ -912,7 +974,7 @@ WriteLiteral(">\r\n        if (typeof jQuery === \'undefined\') {\r\n           
 "ateElement(\"script\");\r\n\r\n            e.src = \'");
 
             
-            #line 169 "..\..\Views\Shared\_Layout.cshtml"
+            #line 173 "..\..\Views\Shared\_Layout.cshtml"
                 Write(Url.Content("~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
             
@@ -933,7 +995,7 @@ WriteLiteral(@"';
                     url: '");
 
             
-            #line 181 "..\..\Views\Shared\_Layout.cshtml"
+            #line 185 "..\..\Views\Shared\_Layout.cshtml"
                      Write(Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = true }));
 
             
@@ -946,7 +1008,7 @@ WriteLiteral("\'\r\n                });\r\n\r\n                request.done(func
 WriteLiteral("    ");
 
             
-            #line 193 "..\..\Views\Shared\_Layout.cshtml"
+            #line 197 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/nascript"));
 
             
@@ -957,7 +1019,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 194 "..\..\Views\Shared\_Layout.cshtml"
+            #line 198 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/vendor"));
 
             
@@ -968,7 +1030,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 195 "..\..\Views\Shared\_Layout.cshtml"
+            #line 199 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/nas"));
 
             
@@ -979,7 +1041,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 197 "..\..\Views\Shared\_Layout.cshtml"
+            #line 201 "..\..\Views\Shared\_Layout.cshtml"
 Write(RenderSection("scripts", required: false));
 
             
