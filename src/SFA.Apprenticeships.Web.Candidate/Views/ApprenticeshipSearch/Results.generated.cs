@@ -471,8 +471,8 @@ WriteLiteral(";\r\n\r\n    <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n    $(function() {\r\n        $(\"#Location\").locationMatch({\r\n            url: \'" +
-"");
+WriteLiteral(">\r\n    $(function () {\r\n        $(\"#Location\").locationMatch({\r\n            url: " +
+"\'");
 
             
             #line 155 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
@@ -482,58 +482,57 @@ WriteLiteral(">\r\n    $(function() {\r\n        $(\"#Location\").locationMatch(
             #line default
             #line hidden
 WriteLiteral(@"',
-                longitude: '#Longitude',
-                latitude: '#Latitude',
-                latlonhash: '#Hash'
-            });
-
-            $('#sort-results').change(function() {
-                $('#SearchAction').val(""Sort"");
-                $(""form"").submit();
-            });
-
-            $('#results-per-page').change(function() {
-                $('#SearchAction').val(""Sort"");
-                $(""form"").submit();
-            });
-
-            $('#search-button').click(function() {
-                $('#LocationType').val(""NonNational"");
-            });
-            $(""#search-tab-control"").click(function() {
-                $(""#SearchMode"").val(""Keyword"");
-            });
-
-            $(""#browse-tab-control"").click(function() {
-                $(""#SearchMode"").val(""Category"");
-            });
+            longitude: '#Longitude',
+            latitude: '#Latitude',
+            latlonhash: '#Hash'
         });
 
-        initSavedVacancies(
-            '");
+        $('#sort-results').change(function () {
+            $('#SearchAction').val(""Sort"");
+            $(""form"").submit();
+        });
+
+        $('#results-per-page').change(function () {
+            $('#SearchAction').val(""Sort"");
+            $(""form"").submit();
+        });
+
+        $('#search-button').click(function () {
+            $('#LocationType').val(""NonNational"");
+        });
+        $(""#search-tab-control"").click(function () {
+            $(""#SearchMode"").val(""Keyword"");
+        });
+
+        $(""#browse-tab-control"").click(function () {
+            $(""#SearchMode"").val(""Category"");
+        });
+
+        initSavedVacancies({
+            saveUrl: '");
+
+            
+            #line 183 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+                 Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\',\r\n            deleteUrl: \'");
 
             
             #line 184 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-        Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
+                   Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n            \'");
-
-            
-            #line 185 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-        Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\'\r\n        );\r\n    </script>\r\n\r\n");
+WriteLiteral("\',\r\n            title: true\r\n        });\r\n    });\r\n    </script>\r\n\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 189 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 190 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/resultsMap"));
 
             

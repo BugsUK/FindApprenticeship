@@ -150,40 +150,41 @@
     @Scripts.Render("~/bundles/nas/apprenticeships/results");
 
     <script type="text/javascript">
-    $(function() {
+    $(function () {
         $("#Location").locationMatch({
             url: '@Url.Action("location", "Location")',
-                longitude: '#Longitude',
-                latitude: '#Latitude',
-                latlonhash: '#Hash'
-            });
-
-            $('#sort-results').change(function() {
-                $('#SearchAction').val("Sort");
-                $("form").submit();
-            });
-
-            $('#results-per-page').change(function() {
-                $('#SearchAction').val("Sort");
-                $("form").submit();
-            });
-
-            $('#search-button').click(function() {
-                $('#LocationType').val("NonNational");
-            });
-            $("#search-tab-control").click(function() {
-                $("#SearchMode").val("Keyword");
-            });
-
-            $("#browse-tab-control").click(function() {
-                $("#SearchMode").val("Category");
-            });
+            longitude: '#Longitude',
+            latitude: '#Latitude',
+            latlonhash: '#Hash'
         });
 
-        initSavedVacancies(
-            '@Url.Action("SaveVacancy", "ApprenticeshipApplication")',
-            '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")'
-        );
+        $('#sort-results').change(function () {
+            $('#SearchAction').val("Sort");
+            $("form").submit();
+        });
+
+        $('#results-per-page').change(function () {
+            $('#SearchAction').val("Sort");
+            $("form").submit();
+        });
+
+        $('#search-button').click(function () {
+            $('#LocationType').val("NonNational");
+        });
+        $("#search-tab-control").click(function () {
+            $("#SearchMode").val("Keyword");
+        });
+
+        $("#browse-tab-control").click(function () {
+            $("#SearchMode").val("Category");
+        });
+
+        initSavedVacancies({
+            saveUrl: '@Url.Action("SaveVacancy", "ApprenticeshipApplication")',
+            deleteUrl: '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")',
+            title: true
+        });
+    });
     </script>
 
     @Scripts.Render("~/bundles/nas/resultsMap")

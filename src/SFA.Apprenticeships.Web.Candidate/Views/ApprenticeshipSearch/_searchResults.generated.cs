@@ -239,7 +239,7 @@ WriteLiteral("\"");
 
 WriteLiteral("><i");
 
-WriteLiteral(" class=\"fa fa-star-o\"");
+WriteLiteral(" class=\"fa\"");
 
 WriteLiteral("></i></a>\r\n");
 
@@ -284,14 +284,14 @@ WriteLiteral(" class=\"grid-wrapper\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3352), Tuple.Create("\"", 3455)
+WriteAttribute("class", Tuple.Create(" class=\"", 3342), Tuple.Create("\"", 3445)
             
             #line 52 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 3360), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : ""
+, Tuple.Create(Tuple.Create("", 3350), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : ""
             
             #line default
             #line hidden
-, 3360), false)
+, 3350), false)
 );
 
 WriteLiteral(">\r\n                        <ul");
@@ -459,24 +459,24 @@ WriteLiteral(" class=\"grid grid-1-3 map-container hide-nojs small-btm-margin\""
 
 WriteLiteral(">\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5579), Tuple.Create("\"", 5689)
-, Tuple.Create(Tuple.Create("", 5586), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5586), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 5569), Tuple.Create("\"", 5679)
+, Tuple.Create(Tuple.Create("", 5576), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5576), true)
             
             #line 86 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-     , Tuple.Create(Tuple.Create("", 5634), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+     , Tuple.Create(Tuple.Create("", 5624), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 5634), false)
-, Tuple.Create(Tuple.Create("", 5660), Tuple.Create(",", 5660), true)
+, 5624), false)
+, Tuple.Create(Tuple.Create("", 5650), Tuple.Create(",", 5650), true)
             
             #line 86 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                , Tuple.Create(Tuple.Create("", 5661), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                , Tuple.Create(Tuple.Create("", 5651), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 5661), false)
-, Tuple.Create(Tuple.Create("", 5688), Tuple.Create("\'", 5688), true)
+, 5651), false)
+, Tuple.Create(Tuple.Create("", 5678), Tuple.Create("\'", 5678), true)
 );
 
 WriteLiteral(" target=\"_blank\"");

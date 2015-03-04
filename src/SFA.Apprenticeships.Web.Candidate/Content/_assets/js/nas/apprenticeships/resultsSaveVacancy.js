@@ -1,4 +1,4 @@
-﻿function initSavedVacancies (saveUrl, deleteUrl) {
+﻿function initSavedVacancies (options) {
     var vacancyStatuses = {
         Unsaved: {
             unsaved: true
@@ -29,7 +29,6 @@
         }
     };
 
-    // Save / unsave vacancy.
     function setSavedVacancyView (applicationStatus) {
         var $saveLink = $(this);
         var $resumeLink = $saveLink.siblings(".resume-link");
@@ -56,13 +55,20 @@
 
         var $icon = $saveLink.children("i");
 
-        $icon.toggleClass("fa-star", vacancyStatus.saved);
-        $icon.toggleClass("fa-star-o", vacancyStatus.unsaved);
+        $icon.toggleClass("fa-star", !vacancyStatus.unsaved);
+        $icon.toggleClass("fa-star-o", !vacancyStatus.saved);
 
-        $saveLink.attr("title", vacancyStatus.saved ? "Remove from saved" : "Add to saved");
+        var text = vacancyStatus.saved ? "Remove from saved" : "Save for later";
+
+        if (options.title) {
+            $saveLink.attr("title", text);
+        } else {
+            var label = $saveLink.children(".save-vacancy-link-text");
+            
+            label.text(text);
+        }
     };
 
-    // Handle save / unsave vacancy link click.
     $(".save-vacancy-link").on("click", function (e) {
         e.preventDefault();
 
@@ -73,15 +79,15 @@
         console.log("setSavedVacancyView: data-application-status", $self.data("application-status"));
         console.log("setSavedVacancyView: vacancyId", vacancyId);
 
-        var options = {
+        var ajaxOptions = {
             type: save ? "POST" : "DELETE",
-            url: save ? saveUrl : deleteUrl,
+            url: save ? options.saveUrl : options.deleteUrl,
             data: {
                 id: vacancyId
             }
         };
 
-        $.ajax(options)
+        $.ajax(ajaxOptions)
             .done(function (result) {
                 console.log("ajax: result.applicationStatus", result.applicationStatus);
                 setSavedVacancyView.call($self, result.applicationStatus || "Unsaved");
