@@ -481,41 +481,39 @@ WriteLiteral("\',\r\n                longitude: \'#Longitude\',\r\n             
 "al\");\r\n            });\r\n            $(\"#search-tab-control\").click(function() {\r" +
 "\n                $(\"#SearchMode\").val(\"Keyword\");\r\n            });\r\n\r\n          " +
 "  $(\"#browse-tab-control\").click(function() {\r\n                $(\"#SearchMode\")." +
-"val(\"Category\");\r\n            });\r\n\r\n            var savedVacancyStatuses = {\r\n " +
-"               saved: \"Saved\",\r\n                unsaved: \"Unsaved\",\r\n           " +
-"     draft: \"Draft\",\r\n                applied: \"Applied\"\r\n            };\r\n\r\n    " +
-"        // Initialise saved vacancy / resume application links.\r\n            $(\"" +
-".save-vacancy-link\").each(function () {\r\n                setSavedVacancyView.cal" +
-"l(this);\r\n            });\r\n\r\n            // Save / unsave vacancy.\r\n            " +
-"function setSavedVacancyView (vacancyStatus) {\r\n                var $saveLink = " +
-"$(this);\r\n                var $resumeLink = $saveLink.siblings(\".resume-link\");\r" +
-"\n                var $appliedLabel = $saveLink.siblings(\".applied-label\");\r\n\r\n  " +
-"              if (vacancyStatus) {\r\n                    $saveLink.data(\"vacancy-" +
-"status\", vacancyStatus);\r\n                } else {\r\n                    vacancyS" +
-"tatus = $saveLink.data(\"vacancy-status\");\r\n                }\r\n\r\n                " +
-"var existingApplication = vacancyStatus === savedVacancyStatuses.draft || vacanc" +
-"yStatus === savedVacancyStatuses.applied;\r\n\r\n                $saveLink.toggleCla" +
-"ss(\"hidden\", existingApplication);\r\n                $resumeLink.toggleClass(\"hid" +
-"den\", vacancyStatus !== savedVacancyStatuses.draft);\r\n                $appliedLa" +
-"bel.toggleClass(\"hidden\", vacancyStatus !== savedVacancyStatuses.applied);\r\n\r\n  " +
-"              if (existingApplication) {\r\n                    return;\r\n         " +
-"       }\r\n\r\n                var saved = vacancyStatus === savedVacancyStatuses.s" +
-"aved;\r\n\r\n                var $icon = $saveLink.children(\"i\");\r\n\r\n               " +
-" $icon.toggleClass(\"fa-star\", saved);\r\n                $icon.toggleClass(\"fa-sta" +
-"r-o\", !saved);\r\n\r\n                $saveLink.attr(\"title\", saved ? \"Remove from s" +
-"aved\" : \"Add to saved\");\r\n                $saveLink.data(\"vacancy-status\", saved" +
-" ? savedVacancyStatuses.saved : savedVacancyStatuses.unsaved);\r\n            };\r\n" +
-"\r\n            // Handle save / unsave vacancy link click.\r\n            $(\".save-" +
-"vacancy-link\").on(\"click\", function (e) {\r\n                e.preventDefault();\r\n" +
-"\r\n                var $self = $(this);\r\n                var save = $self.data(\"v" +
-"acancy-status\") == savedVacancyStatuses.unsaved;\r\n\r\n                var vacancyI" +
-"d = parseInt($self.data(\"vacancy-id\"));\r\n                var options = {\r\n      " +
-"              type: save ? \"POST\" : \"DELETE\",\r\n                    url: save ? \'" +
+"val(\"Category\");\r\n            });\r\n\r\n        });\r\n        var savedVacancyStatus" +
+"es = {\r\n            saved: \"Saved\",\r\n            unsaved: \"Unsaved\",\r\n          " +
+"  draft: \"Draft\",\r\n            applied: \"Applied\"\r\n        };\r\n\r\n        // Init" +
+"ialise saved vacancy / resume application links.\r\n        $(\".save-vacancy-link\"" +
+").each(function () {\r\n            setSavedVacancyView.call(this);\r\n        });\r\n" +
+"\r\n        // Save / unsave vacancy.\r\n        function setSavedVacancyView(vacanc" +
+"yStatus) {\r\n            var $saveLink = $(this);\r\n            var $resumeLink = " +
+"$saveLink.siblings(\".resume-link\");\r\n            var $appliedLabel = $saveLink.s" +
+"iblings(\".applied-label\");\r\n\r\n            if (vacancyStatus) {\r\n                " +
+"$saveLink.data(\"vacancy-status\", vacancyStatus);\r\n            } else {\r\n        " +
+"        vacancyStatus = $saveLink.data(\"vacancy-status\");\r\n            }\r\n\r\n    " +
+"        var existingApplication = vacancyStatus === savedVacancyStatuses.draft |" +
+"| vacancyStatus === savedVacancyStatuses.applied;\r\n\r\n            $saveLink.toggl" +
+"eClass(\"hidden\", existingApplication);\r\n            $resumeLink.toggleClass(\"hid" +
+"den\", vacancyStatus !== savedVacancyStatuses.draft);\r\n            $appliedLabel." +
+"toggleClass(\"hidden\", vacancyStatus !== savedVacancyStatuses.applied);\r\n\r\n      " +
+"      if (existingApplication) {\r\n                return;\r\n            }\r\n\r\n    " +
+"        var saved = vacancyStatus === savedVacancyStatuses.saved;\r\n\r\n           " +
+" var $icon = $saveLink.children(\"i\");\r\n\r\n            $icon.toggleClass(\"fa-star\"" +
+", saved);\r\n            $icon.toggleClass(\"fa-star-o\", !saved);\r\n\r\n            $s" +
+"aveLink.attr(\"title\", saved ? \"Remove from saved\" : \"Add to saved\");\r\n          " +
+"  $saveLink.data(\"vacancy-status\", saved ? savedVacancyStatuses.saved : savedVac" +
+"ancyStatuses.unsaved);\r\n        };\r\n\r\n        // Handle save / unsave vacancy li" +
+"nk click.\r\n        $(\".save-vacancy-link\").on(\"click\", function (e) {\r\n         " +
+"   e.preventDefault();\r\n\r\n            var $self = $(this);\r\n            var save" +
+" = $self.data(\"vacancy-status\") == savedVacancyStatuses.unsaved;\r\n\r\n            " +
+"var vacancyId = parseInt($self.data(\"vacancy-id\"));\r\n            var options = {" +
+"\r\n                type: save ? \"POST\" : \"DELETE\",\r\n                url: save ? \'" +
 "");
 
             
-            #line 237 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                            Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
+            #line 238 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+                        Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
 
             
             #line default
@@ -523,28 +521,27 @@ WriteLiteral("\',\r\n                longitude: \'#Longitude\',\r\n             
 WriteLiteral("\' : \'");
 
             
-            #line 237 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                                                                                        Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
+            #line 238 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+                                                                                    Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
 
             
             #line default
             #line hidden
 WriteLiteral(@"',
-                    data: {
-                        id: vacancyId
-                    }
-                };
+                data: {
+                    id: vacancyId
+                }
+            };
 
-                $.ajax(options)
-                    .done(function (result) {
-                        console.log(""ajax::done -> vacancyStatus"", result.status);
-                        setSavedVacancyView.call($self, result.status);
-                    })
-                    .fail(function (error) {
-                        console.error(""Failed to save vacancy:"");
-                        console.dir(error);
-                    });
-            });
+            $.ajax(options)
+                .done(function (result) {
+                    console.log(""ajax::done -> vacancyStatus"", result.status);
+                    setSavedVacancyView.call($self, result.status);
+                })
+                .fail(function (error) {
+                    console.error(""Failed to save vacancy:"");
+                    console.dir(error);
+                });
         });
     </script>
 
@@ -554,12 +551,23 @@ WriteLiteral("    ");
 
             
             #line 256 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-Write(Scripts.Render("~/bundles/nas/resultsMap"));
+Write(Scripts.Render("~/bundles/nas/results"));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 257 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+Write(Scripts.Render("~/bundles/nas/apprenticeships/results"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(";\r\n");
 
 });
 
