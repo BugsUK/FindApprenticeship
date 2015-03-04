@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
+    using System.Web.Optimization;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Applications;
@@ -77,7 +78,9 @@
                 .ForMember(d => d.SearchReturnUrl,
                     opt => opt.Ignore());
 
-            Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>();
+            Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>()
+                .ForMember(d => d.SavedVacancyStatus,
+                    opt => opt.Ignore());
             
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<AddressViewModel, Address>();

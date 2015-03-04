@@ -2,7 +2,6 @@
 @using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
 @using SFA.Apprenticeships.Web.Candidate.Extensions
-@using SFA.Apprenticeships.Web.Candidate.Mediators.Application
 
 @model ApprenticeshipSearchResponseViewModel
 
@@ -204,13 +203,13 @@
                     vacancyStatus = $saveLink.data("vacancy-status");
                 }
 
-                var isExistingApplication = vacancyStatus === savedVacancyStatuses.draft || vacancyStatus === savedVacancyStatuses.applied;
+                var existingApplication = vacancyStatus === savedVacancyStatuses.draft || vacancyStatus === savedVacancyStatuses.applied;
 
-                $saveLink.toggleClass("hidden", isExistingApplication);
+                $saveLink.toggleClass("hidden", existingApplication);
                 $resumeLink.toggleClass("hidden", vacancyStatus !== savedVacancyStatuses.draft);
                 $appliedLabel.toggleClass("hidden", vacancyStatus !== savedVacancyStatuses.applied);
 
-                if (isExistingApplication) {
+                if (existingApplication) {
                     return;
                 }
 
@@ -223,7 +222,6 @@
 
                 $saveLink.attr("title", saved ? "Remove from saved" : "Add to saved");
                 $saveLink.data("vacancy-status", saved ? savedVacancyStatuses.saved : savedVacancyStatuses.unsaved);
-                $saveLink.removeClass("hidden");
             };
 
             // Handle save / unsave vacancy link click.
