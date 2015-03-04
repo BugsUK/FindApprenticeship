@@ -319,43 +319,21 @@
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 
-        public MediatorResponse SaveVacancy(Guid candidateId, int vacancyId)
+        public MediatorResponse<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId)
         {
-            var status = _apprenticeshipApplicationProvider.SaveVacancy(candidateId, vacancyId);
-            var responseCode = ResponseCodeFromSavedVacancyViewModelStatus(status);
+            var viewModel = _apprenticeshipApplicationProvider.SaveVacancy(candidateId, vacancyId);
 
-            return GetMediatorResponse(responseCode);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SaveVacancy.Ok, viewModel);
         }
 
-        public MediatorResponse DeleteSavedVacancy(Guid candidateId, int vacancyId)
+        public MediatorResponse<SavedVacancyViewModel> DeleteSavedVacancy(Guid candidateId, int vacancyId)
         {
-            var status = _apprenticeshipApplicationProvider.DeleteSavedVacancy(candidateId, vacancyId);
-            var responseCode = ResponseCodeFromSavedVacancyViewModelStatus(status);
+            var viewModel = _apprenticeshipApplicationProvider.DeleteSavedVacancy(candidateId, vacancyId);
 
-            return GetMediatorResponse(responseCode);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.DeleteSavedVacancy.Ok, viewModel);
         }
 
         #region Helpers
-
-        private static string ResponseCodeFromSavedVacancyViewModelStatus(SavedVacancyViewModelStatuses savedVacancyViewModelStatus)
-        {
-            var map = new Dictionary<SavedVacancyViewModelStatuses, string>
-            {
-                { SavedVacancyViewModelStatuses.Unsaved, ApprenticeshipApplicationMediatorCodes.SaveVacancy.Unsaved },
-                { SavedVacancyViewModelStatuses.Saved, ApprenticeshipApplicationMediatorCodes.SaveVacancy.Saved },
-                { SavedVacancyViewModelStatuses.Draft, ApprenticeshipApplicationMediatorCodes.SaveVacancy.Draft },
-                { SavedVacancyViewModelStatuses.Applied, ApprenticeshipApplicationMediatorCodes.SaveVacancy.Applied }
-            };
-
-            string responseCode;
-
-            if (!map.TryGetValue(savedVacancyViewModelStatus, out responseCode))
-            {
-                // TODO: AG: US65: handle failure to map with message.
-                throw new NotImplementedException();
-            }
-            return responseCode;
-        }
 
         private static ApprenticeshipApplicationViewModel StripApplicationViewModelBeforeValidation(ApprenticeshipApplicationViewModel model)
         {

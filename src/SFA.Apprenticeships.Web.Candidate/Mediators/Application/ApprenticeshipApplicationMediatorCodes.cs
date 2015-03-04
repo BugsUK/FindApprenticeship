@@ -79,10 +79,12 @@
 
         public class SaveVacancy
         {
-            public const string Saved = "ApprenticeshipApplication.ToggleSaveVacancy.Saved";
-            public const string Unsaved = "ApprenticeshipApplication.ToggleSaveVacancy.Unsaved";
-            public const string Draft = "ApprenticeshipApplication.ToggleSaveVacancy.Draft";
-            public const string Applied = "ApprenticeshipApplication.ToggleSaveVacancy.Applied";
+            public const string Ok = "ApprenticeshipApplication.SaveVacancy.Ok";
+        }
+
+        public class DeleteSavedVacancy
+        {
+            public const string Ok = "ApprenticeshipApplication.DeleteSavedVacancy.Ok";
         }
     }
 }

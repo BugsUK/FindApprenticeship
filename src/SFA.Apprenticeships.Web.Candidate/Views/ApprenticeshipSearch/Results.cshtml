@@ -20,7 +20,6 @@
     }
     else if (Model.TotalLocalHits == 1)
     {
-
         if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.National)
         {
             resultMessage = "We've found <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">apprenticeship in your selected area</a>.";
@@ -148,11 +147,12 @@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3&client=gme-skillsfundingagency"></script>
 
     @Scripts.Render("~/bundles/nas/locationsearch")
+    @Scripts.Render("~/bundles/nas/apprenticeships/results");
 
     <script type="text/javascript">
-        $(function() {
-            $("#Location").locationMatch({
-                url: '@Url.Action("location", "Location")',
+    $(function() {
+        $("#Location").locationMatch({
+            url: '@Url.Action("location", "Location")',
                 longitude: '#Longitude',
                 latitude: '#Latitude',
                 latlonhash: '#Hash'
@@ -178,81 +178,13 @@
             $("#browse-tab-control").click(function() {
                 $("#SearchMode").val("Category");
             });
-
-        });
-        var savedVacancyStatuses = {
-            saved: "Saved",
-            unsaved: "Unsaved",
-            draft: "Draft",
-            applied: "Applied"
-        };
-
-        // Initialise saved vacancy / resume application links.
-        $(".save-vacancy-link").each(function () {
-            setSavedVacancyView.call(this);
         });
 
-        // Save / unsave vacancy.
-        function setSavedVacancyView(vacancyStatus) {
-            var $saveLink = $(this);
-            var $resumeLink = $saveLink.siblings(".resume-link");
-            var $appliedLabel = $saveLink.siblings(".applied-label");
-
-            if (vacancyStatus) {
-                $saveLink.data("vacancy-status", vacancyStatus);
-            } else {
-                vacancyStatus = $saveLink.data("vacancy-status");
-            }
-
-            var existingApplication = vacancyStatus === savedVacancyStatuses.draft || vacancyStatus === savedVacancyStatuses.applied;
-
-            $saveLink.toggleClass("hidden", existingApplication);
-            $resumeLink.toggleClass("hidden", vacancyStatus !== savedVacancyStatuses.draft);
-            $appliedLabel.toggleClass("hidden", vacancyStatus !== savedVacancyStatuses.applied);
-
-            if (existingApplication) {
-                return;
-            }
-
-            var saved = vacancyStatus === savedVacancyStatuses.saved;
-
-            var $icon = $saveLink.children("i");
-
-            $icon.toggleClass("fa-star", saved);
-            $icon.toggleClass("fa-star-o", !saved);
-
-            $saveLink.attr("title", saved ? "Remove from saved" : "Add to saved");
-            $saveLink.data("vacancy-status", saved ? savedVacancyStatuses.saved : savedVacancyStatuses.unsaved);
-        };
-
-        // Handle save / unsave vacancy link click.
-        $(".save-vacancy-link").on("click", function (e) {
-            e.preventDefault();
-
-            var $self = $(this);
-            var save = $self.data("vacancy-status") == savedVacancyStatuses.unsaved;
-
-            var vacancyId = parseInt($self.data("vacancy-id"));
-            var options = {
-                type: save ? "POST" : "DELETE",
-                url: save ? '@Url.Action("SaveVacancy", "ApprenticeshipApplication")' : '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")',
-                data: {
-                    id: vacancyId
-                }
-            };
-
-            $.ajax(options)
-                .done(function (result) {
-                    console.log("ajax::done -> vacancyStatus", result.status);
-                    setSavedVacancyView.call($self, result.status);
-                })
-                .fail(function (error) {
-                    console.error("Failed to save vacancy:");
-                    console.dir(error);
-                });
-        });
+        initSavedVacancies(
+            '@Url.Action("SaveVacancy", "ApprenticeshipApplication")',
+            '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")'
+        );
     </script>
 
     @Scripts.Render("~/bundles/nas/resultsMap")
-    @Scripts.Render("~/bundles/nas/apprenticeships/results");
 }

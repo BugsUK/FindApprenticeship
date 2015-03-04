@@ -79,7 +79,7 @@
                     opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>()
-                .ForMember(d => d.SavedVacancyStatus,
+                .ForMember(d => d.CandidateApplicationStatus,
                     opt => opt.Ignore());
             
             Mapper.CreateMap<Address, AddressViewModel>();

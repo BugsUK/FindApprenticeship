@@ -374,27 +374,10 @@
                 var apprenticeshipApplication = apprenticeshipApplications
                     .SingleOrDefault(each => each.LegacyVacancyId == result.Id);
 
-                result.SavedVacancyStatus = SavedVacancyStatusFromApprenticeshipApplication(apprenticeshipApplication);
+                result.CandidateApplicationStatus = apprenticeshipApplication == null
+                    ? default(ApplicationStatuses?)
+                    : apprenticeshipApplication.Status;
             }
-        }
-
-        private static SavedVacancyViewModelStatuses SavedVacancyStatusFromApprenticeshipApplication(ApprenticeshipApplicationSummary apprenticeshipApplication)
-        {
-            if (apprenticeshipApplication == null)
-            {
-                return SavedVacancyViewModelStatuses.Unsaved;
-            }
-
-            // TODO: US65: revisit this mapping. Still required?
-            switch (apprenticeshipApplication.Status)
-            {
-                case ApplicationStatuses.Saved:
-                    return SavedVacancyViewModelStatuses.Saved;
-                case ApplicationStatuses.Draft:
-                    return SavedVacancyViewModelStatuses.Draft;
-            }
-
-            return SavedVacancyViewModelStatuses.Applied;
         }
     }
 }

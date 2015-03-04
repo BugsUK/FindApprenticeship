@@ -499,18 +499,24 @@
             }
         }
 
-        public SavedVacancyViewModelStatuses SaveVacancy(Guid candidateId, int vacancyId)
+        public SavedVacancyViewModel SaveVacancy(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _candidateService.SaveVacancy(candidateId, vacancyId);
 
-            return SavedVacancyStatusFromApplicationDetail(applicationDetail);
+            return new SavedVacancyViewModel
+            {
+                ApplicationStatus = applicationDetail == null ? default(ApplicationStatuses?) : applicationDetail.Status
+            };
         }
 
-        public SavedVacancyViewModelStatuses DeleteSavedVacancy(Guid candidateId, int vacancyId)
+        public SavedVacancyViewModel DeleteSavedVacancy(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _candidateService.DeleteSavedVacancy(candidateId, vacancyId);
 
-            return SavedVacancyStatusFromApplicationDetail(applicationDetail);
+            return new SavedVacancyViewModel
+            {
+                ApplicationStatus = applicationDetail == null ? default(ApplicationStatuses?) : applicationDetail.Status
+            };
         }
 
         #region Helpers
@@ -572,26 +578,6 @@
             apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
 
             return apprenticeshipApplicationViewModel;
-        }
-
-        private static SavedVacancyViewModelStatuses SavedVacancyStatusFromApplicationDetail(ApplicationDetail applicationDetail)
-        {
-            // TODO: AG: US65: de-duplicate.
-            if (applicationDetail == null)
-            {
-                return SavedVacancyViewModelStatuses.Unsaved;
-            }
-
-            // TODO: US65: revisit this mapping. Still required?
-            switch (applicationDetail.Status)
-            {
-                case ApplicationStatuses.Saved:
-                    return SavedVacancyViewModelStatuses.Saved;
-                case ApplicationStatuses.Draft:
-                    return SavedVacancyViewModelStatuses.Draft;
-            }
-
-            return SavedVacancyViewModelStatuses.Applied;
         }
 
         #endregion
