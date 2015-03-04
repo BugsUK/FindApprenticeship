@@ -46,7 +46,7 @@ window.googleMapsScriptLoaded = function()
 			};
 		},
 
-		apiScriptLoaded	 = false,
+		apiScriptLoaded	 = true,
 		apiScriptLoading = false,
 		$containers		 = $([]),
 
