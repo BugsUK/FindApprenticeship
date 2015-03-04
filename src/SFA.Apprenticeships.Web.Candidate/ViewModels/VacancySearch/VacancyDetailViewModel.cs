@@ -50,7 +50,7 @@
 
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
 
-        //TODO: Remove once NAS gatway service updated to return correct vacancy address with multi-location vacancies
+        //TODO: Remove once NAS gateway service updated to return correct vacancy address with multi-location vacancies. RIA
         public bool IsMultiLocation { get; set; }
 
         [UIHint("Date")]
