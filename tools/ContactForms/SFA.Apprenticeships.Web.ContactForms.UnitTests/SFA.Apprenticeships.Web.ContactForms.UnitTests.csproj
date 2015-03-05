@@ -158,9 +158,9 @@
       <Project>{c5ade22f-853f-4c99-8b71-cbdf98854651}</Project>
       <Name>SFA.Apprenticeships.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Web.Employer\SFA.Apprenticeships.Web.Employer.csproj">
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.ContactForms\SFA.Apprenticeships.Web.ContactForms.csproj">
       <Project>{D9246563-2874-47DA-9EE6-690C54F3EB03}</Project>
-      <Name>SFA.Apprenticeships.Web.Employer</Name>
+      <Name>SFA.Apprenticeships.Web.ContactForms</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

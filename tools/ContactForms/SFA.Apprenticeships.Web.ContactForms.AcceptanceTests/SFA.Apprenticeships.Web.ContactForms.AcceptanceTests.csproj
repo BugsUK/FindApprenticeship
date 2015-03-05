@@ -125,9 +125,9 @@
     <Folder Include="Bindings\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Web.Employer\SFA.Apprenticeships.Web.Employer.csproj">
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.ContactForms\SFA.Apprenticeships.Web.ContactForms.csproj">
       <Project>{d9246563-2874-47da-9ee6-690c54f3eb03}</Project>
-      <Name>SFA.Apprenticeships.Web.Employer</Name>
+      <Name>SFA.Apprenticeships.Web.ContactForms</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
