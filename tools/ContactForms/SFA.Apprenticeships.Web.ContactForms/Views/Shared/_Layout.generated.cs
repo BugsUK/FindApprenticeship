@@ -27,22 +27,22 @@ namespace ASP
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
-    using SFA.Apprenticeships.Web.Employer;
+    using SFA.Apprenticeships.Web.ContactForms;
     
     #line 1 "..\..\Views\Shared\_Layout.cshtml"
-    using SFA.Apprenticeships.Web.Employer.Constants;
+    using SFA.Apprenticeships.Web.ContactForms.Constants;
     
     #line default
     #line hidden
     
     #line 2 "..\..\Views\Shared\_Layout.cshtml"
-    using SFA.Apprenticeships.Web.Employer.Controllers;
+    using SFA.Apprenticeships.Web.ContactForms.Controllers;
     
     #line default
     #line hidden
     
     #line 3 "..\..\Views\Shared\_Layout.cshtml"
-    using SFA.Apprenticeships.Web.Employer.Framework;
+    using SFA.Apprenticeships.Web.ContactForms.Framework;
     
     #line default
     #line hidden
@@ -165,14 +165,14 @@ WriteLiteral("<!--<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1482), Tuple.Create("\"", 1544)
+WriteAttribute("href", Tuple.Create(" href=\"", 1494), Tuple.Create("\"", 1556)
             
             #line 26 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 1489), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 1501), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1489), false)
+, 1501), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
@@ -188,17 +188,8 @@ Write(Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n    ");
 
-WriteLiteral("    ");
-
-            
-            #line 28 "..\..\Views\Shared\_Layout.cshtml"
-Write(Html.Partial("_Scripts"));
-
-            
-            #line default
-            #line hidden
 WriteLiteral("\r\n</head>\r\n<body>\r\n\r\n");
 
             
@@ -296,14 +287,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2729), Tuple.Create("\"", 2804)
+WriteAttribute("src", Tuple.Create(" src=\"", 2745), Tuple.Create("\"", 2820)
             
             #line 55 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 2735), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 2751), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 2735), false)
+, 2751), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -587,14 +578,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6868), Tuple.Create("\"", 6936)
+WriteAttribute("src", Tuple.Create(" src=\"", 6884), Tuple.Create("\"", 6952)
             
             #line 130 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 6874), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 6890), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 6874), false)
+, 6890), false)
 );
 
 WriteLiteral(" width=\"125\"");

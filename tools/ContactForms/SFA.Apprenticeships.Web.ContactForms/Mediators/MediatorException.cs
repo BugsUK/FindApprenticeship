@@ -1,7 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mediators
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators
 {
     using System;
-
 
     public class InvalidMediatorCodeException : Exception
     {

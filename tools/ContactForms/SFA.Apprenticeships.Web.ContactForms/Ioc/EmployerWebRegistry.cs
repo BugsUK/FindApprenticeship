@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Ioc
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Ioc
 {
     using System;
     using System.Web;

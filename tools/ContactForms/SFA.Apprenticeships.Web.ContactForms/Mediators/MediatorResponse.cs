@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mediators
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators
 {
     using FluentValidation.Results;
 

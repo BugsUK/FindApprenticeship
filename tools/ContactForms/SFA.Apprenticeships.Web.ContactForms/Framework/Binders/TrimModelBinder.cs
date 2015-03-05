@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Framework.Binders
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Framework.Binders
 {
     using System.ComponentModel;
     using System.Web.Mvc;

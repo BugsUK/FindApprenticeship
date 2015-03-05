@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mediators.EmployerEnquiry
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators.EmployerEnquiry
 {
     public class EmployerEnquiryMediatorCodes
     {

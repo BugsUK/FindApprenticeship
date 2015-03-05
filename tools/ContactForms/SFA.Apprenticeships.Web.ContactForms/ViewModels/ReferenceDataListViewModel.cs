@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.ViewModels
+﻿namespace SFA.Apprenticeships.Web.ContactForms.ViewModels
 {
     using System.Collections.Generic;
 

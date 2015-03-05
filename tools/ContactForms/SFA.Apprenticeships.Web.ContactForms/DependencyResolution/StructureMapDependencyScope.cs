@@ -15,16 +15,14 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Employer.DependencyResolution {
+namespace SFA.Apprenticeships.Web.ContactForms.DependencyResolution {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
-
     using Microsoft.Practices.ServiceLocation;
-
     using StructureMap;
-	
+
     /// <summary>
     /// The structure map dependency scope.
     /// </summary>

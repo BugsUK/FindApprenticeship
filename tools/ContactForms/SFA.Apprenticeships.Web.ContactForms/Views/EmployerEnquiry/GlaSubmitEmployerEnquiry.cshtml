@@ -2,7 +2,7 @@
 @model SFA.Apprenticeships.Web.ContactForms.ViewModels.EmployerEnquiryViewModel
 
 @{
-    ViewBag.Title = "Employer - Enquiry form";
+    ViewBag.Title = "GLA Employer - Enquiry form";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -14,7 +14,15 @@
 
 
 <p class="text">
-    If you are interested in finding out more about employing apprentices please complete the following form.
+    If you are a London business and interested in taking on an apprentice or finding out more, please complete the form below.
+</p>
+
+<p class="text">
+    The data you enter in the form below is supplied directly to our partner, the National Apprenticeship Service who will contact you within 2 working days to provide you with information you need. Read NAS’ privacy policy.
+</p>
+
+<p>
+    <b>If you need more immediate advice, please call NAS on 08000 150 600.</b>
 </p>
 
 <p>
@@ -22,7 +30,7 @@
 </p>
 
 
-@using (Html.BeginForm("SubmitEmployerEnquiry", "EmployerEnquiry", FormMethod.Post))
+@using (Html.BeginForm("GlaSubmitEmployerEnquiry", "EmployerEnquiry", FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
@@ -45,7 +53,7 @@
         @Html.FormTextFor(
             m => m.Position,
             controlHtmlAttributes: new { @class = "form-control" })
-        
+
         @Html.FormTextFor(
             m => m.WorkPhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" })
 
@@ -78,7 +86,7 @@
         @Html.FormTextAreaFor(
             m => m.EnquiryDescription,
              controlHtmlAttributes: new { @class = "form-control", @rows = 7 })
-        
+
         <legend class="heading-large">Additional questions</legend>
 
         <div class="form-group">
@@ -96,7 +104,7 @@
     <br />
     <div class="form-group">
         <p>
-            <button class="button" id="submit-query-button" type="submit" name="EmployerEnquiryAction:SubmitEnquiry">Send Enquiry</button>
+            <button class="button" id="submit-query-button" type="submit" >Send Enquiry</button>
         </p>
     </div>
 }

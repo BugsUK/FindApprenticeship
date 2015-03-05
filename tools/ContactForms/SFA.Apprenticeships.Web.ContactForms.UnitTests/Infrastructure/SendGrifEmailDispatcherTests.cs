@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Tests.Infrastructure
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Infrastructure
 {
     using System;
     using Application.Interfaces;

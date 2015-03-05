@@ -27,17 +27,17 @@ namespace ASP
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
-    using SFA.Apprenticeships.Web.Employer;
+    using SFA.Apprenticeships.Web.ContactForms;
     
     #line 1 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-    using SFA.Apprenticeships.Web.Employer.Framework;
+    using SFA.Apprenticeships.Web.ContactForms.Framework;
     
     #line default
     #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/AddressViewModel.cshtml")]
-    public partial class _Views_Shared_EditorTemplates_AddressViewModel_cshtml_ : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Employer.ViewModels.AddressViewModel>
+    public partial class _Views_Shared_EditorTemplates_AddressViewModel_cshtml_ : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.ContactForms.ViewModels.AddressViewModel>
     {
         public _Views_Shared_EditorTemplates_AddressViewModel_cshtml_()
         {

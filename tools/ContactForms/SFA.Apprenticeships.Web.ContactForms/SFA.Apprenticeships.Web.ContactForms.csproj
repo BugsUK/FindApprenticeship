@@ -58,9 +58,9 @@
     <Reference Include="NLog">
       <HintPath>..\packages\NLog.3.2.0.0\lib\net45\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="RazorGenerator.Mvc">
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RazorGenerator.Mvc.2.2.3\lib\net40\RazorGenerator.Mvc.dll</HintPath>
-      <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.1.134\lib\net40\StructureMap.dll</HintPath>
@@ -206,6 +206,11 @@
     <Compile Include="ViewModels\ReferenceDataViewModel.cs" />
     <Compile Include="ViewModels\SubmitQueryStatus.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\EmployerEnquiry\GlaSubmitEmployerEnquiry.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GlaSubmitEmployerEnquiry.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EmployerEnquiry\SubmitEmployerEnquiry.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -215,16 +220,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ThankYou.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Error\InternalServerError.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>InternalServerError.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Error\NotFound.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>NotFound.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\EditorTemplates\AddressViewModel.generated.cs">
       <AutoGen>True</AutoGen>
@@ -365,14 +360,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>SubmitEmployerEnquiry.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Error\InternalServerError.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>InternalServerError.generated.cs</LastGenOutput>
-    </Content>
-    <Content Include="Views\Error\NotFound.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>NotFound.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\Shared\ValidationSummary.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ValidationSummary.generated.cs</LastGenOutput>
@@ -381,15 +368,17 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>AddressViewModel.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\_Scripts.cshtml" />
     <Content Include="Views\EmployerEnquiry\ThankYou.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ThankYou.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\EmployerEnquiry\GlaSubmitEmployerEnquiry.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>GlaSubmitEmployerEnquiry.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Configs\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -433,7 +422,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56051</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56051/</IISUrl>
+          <IISUrl>http://localhost:12345/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

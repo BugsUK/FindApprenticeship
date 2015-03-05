@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Routing;
-
-namespace SFA.Apprenticeships.Web.Employer
+﻿namespace SFA.Apprenticeships.Web.ContactForms
 {
+    using System.Web.Mvc;
+    using System.Web.Routing;
     using Constants;
 
     public class RouteConfig
@@ -23,6 +18,12 @@ namespace SFA.Apprenticeships.Web.Employer
                 url: "employerenquiry",
                 defaults: new { controller = "EmployerEnquiry", action = "SubmitEmployerEnquiry" }
                 );
+
+            routes.MapRoute(
+               name: EmployerRouteNames.GlaSubmitEmployerEnquiry,
+               url: "gla-employerenquiry",
+               defaults: new { controller = "EmployerEnquiry", action = "GlaSubmitEmployerEnquiry" }
+               );
 
             routes.MapRoute(
                 name: EmployerRouteNames.ThankYou,

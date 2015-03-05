@@ -1,15 +1,15 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Tests.Mediators
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Mediators
 {
     using Builders;
-    using Constants;
-    using Constants.Pages;
+    using ContactForms.Constants;
+    using ContactForms.Constants.Pages;
+    using ContactForms.Mediators.EmployerEnquiry;
+    using ContactForms.Providers.Interfaces;
+    using ContactForms.ViewModels;
     using Domain.Enums;
-    using Employer.Mediators.EmployerEnquiry;
-    using Employer.Providers.Interfaces;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using ViewModels;
 
     public class EmployerEnquiryTests
     {

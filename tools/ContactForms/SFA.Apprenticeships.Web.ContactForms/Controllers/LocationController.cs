@@ -1,13 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Controllers
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Controllers
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Mediators.Interfaces;
-    using Providers.Interfaces;
-    using ViewModels;
 
     public class LocationController : Controller
     {

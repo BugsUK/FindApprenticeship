@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
-
-namespace SFA.Apprenticeships.Web.Employer
+﻿namespace SFA.Apprenticeships.Web.ContactForms
 {
+    using System.Web.Mvc;
+    using System.Web.Optimization;
+    using System.Web.Routing;
     using FluentValidation.Mvc;
     using FluentValidation.Validators;
-    using SFA.Apprenticeships.Web.Employer.Framework.Binders;
-    using SFA.Apprenticeships.Web.Employer.Framework.Validations;
+    using Framework.Binders;
+    using Framework.Validations;
 
     public class MvcApplication : System.Web.HttpApplication
     {

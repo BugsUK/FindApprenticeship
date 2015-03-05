@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mediators
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators
 {
+    using ContactForms.Constants;
     using FluentValidation.Results;
-    using Constants;
 
     public abstract class MediatorBase
     {

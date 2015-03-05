@@ -1,13 +1,13 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Tests.Providers
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Providers
 {
     using System;
     using Application.Interfaces.Communications;
     using Builders;
+    using ContactForms.ViewModels;
     using Domain.Entities;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using ViewModels;
 
     [TestFixture]
     public class EmployerEnquiryTests

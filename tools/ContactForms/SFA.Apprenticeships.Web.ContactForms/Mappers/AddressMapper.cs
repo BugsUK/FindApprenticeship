@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mappers
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mappers
 {
     using Common.Extensions;
     using Domain.Entities;

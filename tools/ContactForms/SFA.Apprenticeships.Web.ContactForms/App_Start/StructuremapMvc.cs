@@ -15,23 +15,19 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-using SFA.Apprenticeships.Web.Employer.App_Start;
-
+using SFA.Apprenticeships.Web.ContactForms;
 using WebActivatorEx;
 
 [assembly: PreApplicationStartMethod(typeof(StructuremapMvc), "Start")]
 [assembly: ApplicationShutdownMethod(typeof(StructuremapMvc), "End")]
 
-namespace SFA.Apprenticeships.Web.Employer.App_Start {
-	using System.Web.Mvc;
-
+namespace SFA.Apprenticeships.Web.ContactForms {
+    using System.Web.Mvc;
+    using DependencyResolution;
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-	using SFA.Apprenticeships.Web.Employer.DependencyResolution;
-
     using StructureMap;
-    
-	public static class StructuremapMvc {
+
+    public static class StructuremapMvc {
         #region Public Properties
 
         public static StructureMapDependencyScope StructureMapDependencyScope { get; set; }

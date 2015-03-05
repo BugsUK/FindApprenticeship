@@ -1,7 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Constants.Pages
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Constants.Pages
 {
-    using FluentValidation.Results;
-
     public class EmployerEnquiryPageMessages
     {
         public const string ErrorWhileQuerySubmission = "Your query could not be submitted due a internal error, please try again or contact support team.";

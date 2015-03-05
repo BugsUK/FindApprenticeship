@@ -1,6 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mediators.Interfaces
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators.Interfaces
 {
-    using System.Collections.Generic;
     using Domain.Enums;
     using ViewModels;
 

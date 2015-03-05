@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Constants
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Constants
 {
     public class CommonConstants
     {

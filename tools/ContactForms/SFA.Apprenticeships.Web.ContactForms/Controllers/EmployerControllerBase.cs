@@ -1,13 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Controllers
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Controllers
 {
-    using Constants;
-    using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Constants;
-    using Constants.Pages;
-    using Mediators;
-    using Mediators.Interfaces;
-    using ViewModels;
+    using ContactForms.Constants;
 
     public class EmployerControllerBase : Controller
     {

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Providers.Interfaces
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Providers.Interfaces
 {
     using ViewModels;
 

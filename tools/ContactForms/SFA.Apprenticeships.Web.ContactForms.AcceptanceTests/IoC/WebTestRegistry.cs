@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.AcceptanceTests.IoC
+﻿namespace SFA.Apprenticeships.Web.ContactForms.AcceptanceTests.IoC
 {
-    using Ioc;
-    using TechTalk.SpecFlow;
+    using ContactForms.Ioc;
     using StructureMap;
+    using TechTalk.SpecFlow;
 
     public class WebTestRegistry
     {

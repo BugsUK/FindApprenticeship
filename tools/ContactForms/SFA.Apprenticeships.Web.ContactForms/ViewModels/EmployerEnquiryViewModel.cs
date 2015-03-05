@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.ViewModels
+﻿namespace SFA.Apprenticeships.Web.ContactForms.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
-    using Constants;
-    using Constants.Pages;
+    using ContactForms.Constants;
     using FluentValidation.Attributes;
     using Validators;
 

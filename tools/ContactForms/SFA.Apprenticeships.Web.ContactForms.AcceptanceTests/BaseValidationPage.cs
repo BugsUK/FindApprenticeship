@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.AcceptanceTests
+﻿namespace SFA.Apprenticeships.Web.ContactForms.AcceptanceTests
 {
     using System.Linq;
-    using global::SpecBind.Pages;
-    using global::SpecBind.Selenium;
     using OpenQA.Selenium;
+    using SpecBind.Pages;
+    using SpecBind.Selenium;
 
     public class BaseValidationPage : BasePage
     {

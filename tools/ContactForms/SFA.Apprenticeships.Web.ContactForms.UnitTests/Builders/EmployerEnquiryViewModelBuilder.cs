@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Tests.Builders
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Builders
 {
-    using ViewModels;
+    using ContactForms.ViewModels;
 
     public class EmployerEnquiryViewModelBuilder
     {

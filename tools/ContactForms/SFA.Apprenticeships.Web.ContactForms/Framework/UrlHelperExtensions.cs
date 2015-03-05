@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Framework
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Framework
 {
     using System;
     using System.Configuration;

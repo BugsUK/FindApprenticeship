@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Tests.Mediators
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Mediators
 {
-    using Employer.Mediators.EmployerEnquiry;
-    using Employer.Providers.Interfaces;
+    using ContactForms.Mediators.EmployerEnquiry;
+    using ContactForms.Providers.Interfaces;
+    using ContactForms.Validators;
     using Moq;
-    using Validators;
 
     internal class EmployerEnquiryMediatorBuilder
     {

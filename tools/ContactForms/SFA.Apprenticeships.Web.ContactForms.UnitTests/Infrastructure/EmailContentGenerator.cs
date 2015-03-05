@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Tests.Infrastructure
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Infrastructure
 {
     using System.Text;
     using Builders;
     using Common.Extensions;
-    using Domain.Entities;
 
     public static class EmailContentGenerator
     {

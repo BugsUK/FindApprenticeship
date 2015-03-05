@@ -15,10 +15,9 @@
 // </copyright>
 // --------------------------------------------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Employer.DependencyResolution {
+namespace SFA.Apprenticeships.Web.ContactForms.DependencyResolution {
     using System;
     using System.Web.Mvc;
-
     using StructureMap.Configuration.DSL;
     using StructureMap.Graph;
     using StructureMap.Pipeline;

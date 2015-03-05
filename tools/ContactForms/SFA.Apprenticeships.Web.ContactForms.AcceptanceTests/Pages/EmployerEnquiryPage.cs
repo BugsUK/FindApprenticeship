@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.AcceptanceTests.Pages
+﻿namespace SFA.Apprenticeships.Web.ContactForms.AcceptanceTests.Pages
 {
-    using global::SpecBind.Pages;
-    using global::SpecBind.Selenium;
     using OpenQA.Selenium;
+    using SpecBind.Pages;
+    using SpecBind.Selenium;
     using Templates.EditorFor;
 
     [PageNavigation("/employerenquiry")]

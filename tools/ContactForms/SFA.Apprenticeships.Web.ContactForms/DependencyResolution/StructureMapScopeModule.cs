@@ -1,8 +1,5 @@
-namespace SFA.Apprenticeships.Web.Employer.DependencyResolution {
+namespace SFA.Apprenticeships.Web.ContactForms.DependencyResolution {
     using System.Web;
-
-    using SFA.Apprenticeships.Web.Employer.App_Start;
-
     using StructureMap.Web.Pipeline;
 
     public class StructureMapScopeModule : IHttpModule {

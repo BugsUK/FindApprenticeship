@@ -4,7 +4,7 @@
  * http://stackoverflow.com/questions/9808794/validate-checkbox-on-the-client-with-fluentvalidation-mvc-3
  * http://pastebin.com/7uzUJz71
  */
-namespace SFA.Apprenticeships.Web.Employer.Framework.Validations
+namespace SFA.Apprenticeships.Web.ContactForms.Framework.Validations
 {
     using System.Collections.Generic;
     using System.Web.Mvc;

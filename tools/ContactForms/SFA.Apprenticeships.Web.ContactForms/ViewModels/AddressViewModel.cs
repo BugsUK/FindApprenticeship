@@ -1,11 +1,10 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.ViewModels
+﻿namespace SFA.Apprenticeships.Web.ContactForms.ViewModels
 {
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
-    using Constants;
+    using ContactForms.Constants;
     using FluentValidation.Attributes;
     using Validators;
-    
+
     [Validator(typeof(AddressViewModelValidators))]
     public class AddressViewModel
     {

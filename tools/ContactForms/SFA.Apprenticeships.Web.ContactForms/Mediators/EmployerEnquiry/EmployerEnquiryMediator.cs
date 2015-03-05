@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mediators.EmployerEnquiry
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators.EmployerEnquiry
 {
     using System.Web.Mvc;
-    using Constants;
-    using Constants.Pages;
+    using ContactForms.Constants;
+    using ContactForms.Constants.Pages;
     using Domain.Enums;
     using Interfaces;
     using Providers.Interfaces;

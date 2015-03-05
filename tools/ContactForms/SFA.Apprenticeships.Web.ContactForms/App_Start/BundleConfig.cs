@@ -1,8 +1,7 @@
-﻿using System.Web;
-using System.Web.Optimization;
-
-namespace SFA.Apprenticeships.Web.Employer
+﻿namespace SFA.Apprenticeships.Web.ContactForms
 {
+    using System.Web.Optimization;
+
     public class BundleConfig
     {
         /// <summary>

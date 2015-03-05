@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.AcceptanceTests
+﻿namespace SFA.Apprenticeships.Web.ContactForms.AcceptanceTests
 {
     using OpenQA.Selenium;
     using SpecBind.Pages;

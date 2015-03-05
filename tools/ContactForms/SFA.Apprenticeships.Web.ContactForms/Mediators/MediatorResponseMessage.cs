@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mediators
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators
 {
-    using Constants;
+    using ContactForms.Constants;
 
     public class MediatorResponseMessage
     {

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.Mediators.Location
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators.Location
 {
     using EmployerEnquiry;
     using Interfaces;

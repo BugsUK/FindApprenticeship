@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Employer.AcceptanceTests.Templates.EditorFor
+﻿namespace SFA.Apprenticeships.Web.ContactForms.AcceptanceTests.Templates.EditorFor
 {
     using OpenQA.Selenium;
     using SpecBind.Pages;
