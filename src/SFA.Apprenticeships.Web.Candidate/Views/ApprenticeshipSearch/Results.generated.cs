@@ -500,6 +500,7 @@ WriteLiteral(@"',
         $('#search-button').click(function () {
             $('#LocationType').val(""NonNational"");
         });
+
         $(""#search-tab-control"").click(function () {
             $(""#SearchMode"").val(""Keyword"");
         });
@@ -512,7 +513,7 @@ WriteLiteral(@"',
             saveUrl: '");
 
             
-            #line 183 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 184 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                  Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
 
             
@@ -521,18 +522,18 @@ WriteLiteral(@"',
 WriteLiteral("\',\r\n            deleteUrl: \'");
 
             
-            #line 184 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 185 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                    Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n            title: true\r\n        });\r\n    });\r\n    </script>\r\n\r\n");
+WriteLiteral("\',\r\n            title: true\r\n       });\r\n    });\r\n    </script>\r\n\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 190 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 191 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/resultsMap"));
 
             

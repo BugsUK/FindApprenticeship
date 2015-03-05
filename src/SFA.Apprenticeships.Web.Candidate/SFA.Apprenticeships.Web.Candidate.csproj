@@ -265,7 +265,7 @@
     <None Include="Microsoft.WindowsAzure.Caching\PerformanceCounters.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Content\_assets\js\nas\apprenticeships\resultsSaveVacancy.js" />
+    <Content Include="Content\_assets\js\nas\apprenticeships\saveVacancy.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="TraineeshipNotFound.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />

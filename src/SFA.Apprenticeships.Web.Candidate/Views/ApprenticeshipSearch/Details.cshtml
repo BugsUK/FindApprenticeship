@@ -36,7 +36,7 @@
 
             @if (Request.IsAuthenticated)
             {
-                <a title="" href="#" class="fake-link page-link save-vacancy-link" data-vacancy-id="@Model.Id" data-application-status="@applicationStatus"><i class="fa"></i><span class="save-vacancy-link-text"></span></a>
+                <a title="" href="#" class="hidden fake-link page-link save-vacancy-link" data-vacancy-id="@Model.Id" data-application-status="@applicationStatus"><i class="fa"></i><span class="save-vacancy-link-text"></span></a>
             }
         </div>
     </div>
@@ -249,11 +249,11 @@
     @Scripts.Render("~/bundles/nas/apprenticeships/results");
 
     <script>
-        $(function () {
-            initSavedVacancies({
-                saveUrl: '@Url.Action("SaveVacancy", "ApprenticeshipApplication")',
-                deleteUrl: '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")'
-            });
+    $(function () {
+        initSavedVacancies({
+            saveUrl: '@Url.Action("SaveVacancy", "ApprenticeshipApplication")',
+            deleteUrl: '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")'    
         });
+    });
     </script>
 }

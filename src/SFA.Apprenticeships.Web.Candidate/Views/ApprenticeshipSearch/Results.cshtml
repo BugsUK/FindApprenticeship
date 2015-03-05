@@ -171,6 +171,7 @@
         $('#search-button').click(function () {
             $('#LocationType').val("NonNational");
         });
+
         $("#search-tab-control").click(function () {
             $("#SearchMode").val("Keyword");
         });
@@ -183,7 +184,7 @@
             saveUrl: '@Url.Action("SaveVacancy", "ApprenticeshipApplication")',
             deleteUrl: '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")',
             title: true
-        });
+       });
     });
     </script>
 

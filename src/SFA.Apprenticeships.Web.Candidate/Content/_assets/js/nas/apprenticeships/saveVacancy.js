@@ -1,5 +1,5 @@
 ﻿function initSavedVacancies (options) {
-    var vacancyStatuses = {
+    var applicationStatuses = {
         Unsaved: {
             unsaved: true
         },
@@ -8,9 +8,6 @@
         },
         Draft: {
             draft: true
-        },
-        ExpiredOrWithdrawn: {
-            applied: true
         },
         Submitting: {
             applied: true
@@ -29,13 +26,10 @@
         }
     };
 
-    function setSavedVacancyView (applicationStatus) {
+    function updateSaveVacancyView (applicationStatus) {
         var $saveLink = $(this);
         var $resumeLink = $saveLink.siblings(".resume-link");
         var $appliedLabel = $saveLink.siblings(".applied-label");
-
-        console.log("setSavedVacancyView: applicationStatus", applicationStatus);
-        console.log("setSavedVacancyView: data-application-status", $saveLink.data("application-status"));
 
         if (applicationStatus) {
             $saveLink.data("application-status", applicationStatus);
@@ -43,7 +37,11 @@
             applicationStatus = $saveLink.data("application-status");
         }
 
-        var vacancyStatus = vacancyStatuses[applicationStatus];
+        var vacancyStatus = applicationStatuses[applicationStatus];
+
+        if (!vacancyStatus) {
+            return;
+        }
 
         $saveLink.toggleClass("hidden", !(vacancyStatus.unsaved || vacancyStatus.saved));
         $resumeLink.toggleClass("hidden", !vacancyStatus.draft);
@@ -63,9 +61,9 @@
         if (options.title) {
             $saveLink.attr("title", text);
         } else {
-            var label = $saveLink.children(".save-vacancy-link-text");
+            var $label = $saveLink.children(".save-vacancy-link-text");
             
-            label.text(text);
+            $label.text(text);
         }
     };
 
@@ -75,9 +73,6 @@
         var $self = $(this);
         var save = $self.data("application-status") === "Unsaved";
         var vacancyId = parseInt($self.data("vacancy-id"));
-
-        console.log("setSavedVacancyView: data-application-status", $self.data("application-status"));
-        console.log("setSavedVacancyView: vacancyId", vacancyId);
 
         var ajaxOptions = {
             type: save ? "POST" : "DELETE",
@@ -89,11 +84,9 @@
 
         $.ajax(ajaxOptions)
             .done(function (result) {
-                console.log("ajax: result.applicationStatus", result.applicationStatus);
-                setSavedVacancyView.call($self, result.applicationStatus || "Unsaved");
+                updateSaveVacancyView.call($self, result.applicationStatus);
             })
-            .fail(function (error) {
-                console.error("Failed to save vacancy:", error);
+            .fail(function () {
             });
 
         $self.blur();
@@ -101,6 +94,6 @@
 
     // Initialise saved vacancy / resume application links.
     $(".save-vacancy-link").each(function () {
-        setSavedVacancyView.call(this);
+        updateSaveVacancyView.call(this);
     });
 };

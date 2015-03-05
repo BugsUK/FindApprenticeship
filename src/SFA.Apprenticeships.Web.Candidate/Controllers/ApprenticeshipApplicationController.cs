@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
@@ -14,7 +13,6 @@
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Application;
-    using Microsoft.SqlServer.Server;
     using ViewModels.Applications;
     using ViewModels.VacancySearch;
 

@@ -241,13 +241,13 @@ WriteLiteral(" title=\"\"");
 
 WriteLiteral(" href=\"#\"");
 
-WriteLiteral(" class=\"fake-link page-link save-vacancy-link\"");
+WriteLiteral(" class=\"hidden fake-link page-link save-vacancy-link\"");
 
 WriteLiteral(" data-vacancy-id=\"");
 
             
             #line 39 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                               Write(Model.Id);
+                                                                                                      Write(Model.Id);
 
             
             #line default
@@ -258,7 +258,7 @@ WriteLiteral(" data-application-status=\"");
 
             
             #line 39 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                                                                   Write(applicationStatus);
+                                                                                                                                          Write(applicationStatus);
 
             
             #line default
@@ -771,14 +771,14 @@ WriteLiteral(">Employer</h3>\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6493), Tuple.Create("\"", 6563)
+WriteAttribute("class", Tuple.Create(" class=\"", 6500), Tuple.Create("\"", 6570)
             
             #line 131 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 6501), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
+, Tuple.Create(Tuple.Create("", 6508), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
             
             #line default
             #line hidden
-, 6501), false)
+, 6508), false)
 );
 
 WriteLiteral(">");
@@ -810,29 +810,29 @@ WriteLiteral("                            <p><a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6733), Tuple.Create("\"", 6762)
+WriteAttribute("href", Tuple.Create(" href=\"", 6740), Tuple.Create("\"", 6769)
             
             #line 134 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 6740), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
+, Tuple.Create(Tuple.Create("", 6747), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
             
             #line default
             #line hidden
-, 6740), false)
+, 6747), false)
 );
 
 WriteLiteral(" id=\"vacancy-employer-website\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 6809), Tuple.Create("\"", 6844)
+WriteAttribute("title", Tuple.Create(" title=\"", 6816), Tuple.Create("\"", 6851)
             
             #line 134 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 6817), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
+                                                    , Tuple.Create(Tuple.Create("", 6824), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
             
             #line default
             #line hidden
-, 6817), false)
-, Tuple.Create(Tuple.Create(" ", 6836), Tuple.Create("Website", 6837), true)
+, 6824), false)
+, Tuple.Create(Tuple.Create(" ", 6843), Tuple.Create("Website", 6844), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -1028,16 +1028,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 8705), Tuple.Create("\"", 8860)
-, Tuple.Create(Tuple.Create("", 8711), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 8711), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 8712), Tuple.Create("\"", 8867)
+, Tuple.Create(Tuple.Create("", 8718), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 8718), true)
             
             #line 160 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                         , Tuple.Create(Tuple.Create("", 8756), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
+                                                                         , Tuple.Create(Tuple.Create("", 8763), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
             
             #line default
             #line hidden
-, 8756), false)
-, Tuple.Create(Tuple.Create("", 8796), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 8796), true)
+, 8763), false)
+, Tuple.Create(Tuple.Create("", 8803), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 8803), true)
 );
 
 WriteLiteral("></iframe>\r\n                            <p");
@@ -1465,26 +1465,26 @@ Write(Scripts.Render("~/bundles/nas/apprenticeships/results"));
             
             #line default
             #line hidden
-WriteLiteral(";\r\n\r\n    <script>\r\n        $(function () {\r\n            initSavedVacancies({\r\n   " +
-"             saveUrl: \'");
+WriteLiteral(";\r\n\r\n    <script>\r\n    $(function () {\r\n        initSavedVacancies({\r\n           " +
+" saveUrl: \'");
 
             
             #line 254 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                     Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
+                 Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n                deleteUrl: \'");
+WriteLiteral("\',\r\n            deleteUrl: \'");
 
             
             #line 255 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                       Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
+                   Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
 
             
             #line default
             #line hidden
-WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n");
+WriteLiteral("\'    \r\n        });\r\n    });\r\n    </script>\r\n");
 
 });
 

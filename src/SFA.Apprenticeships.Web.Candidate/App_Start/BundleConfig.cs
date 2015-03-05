@@ -53,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 "~/Content/_assets/js/nas/resultsMap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/apprenticeships/results").Include(
-                "~/Content/_assets/js/nas/apprenticeships/resultsSaveVacancy.js"));
+                "~/Content/_assets/js/nas/apprenticeships/saveVacancy.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/geoLocater").Include(
                 "~/Content/_assets/js/nas/geoLocater.js"));
