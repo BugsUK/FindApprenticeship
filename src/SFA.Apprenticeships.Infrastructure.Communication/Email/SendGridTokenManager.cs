@@ -54,11 +54,8 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.ProviderContact:
                     emailTemplateToken = "Provider.Contact";
                     break;
-                case CommunicationTokens.ExpiringDraftsCount:
-                    emailTemplateToken = "Expiry.Vacancies.Count";
-                    break;
                 case CommunicationTokens.ExpiringDrafts:
-                    emailTemplateToken = "Expiry.Vacancies.Info";
+                    emailTemplateToken = "Expiring.Drafts";
                     break;
                 case CommunicationTokens.UserEmailAddress:
                     emailTemplateToken = "User.EmailAddress";
@@ -71,6 +68,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                     break;
                 case CommunicationTokens.UserEnquiryDetails:
                     emailTemplateToken = "User.EnquiryDetails";
+                    break;
+                case CommunicationTokens.ApplicationStatusAlerts:
+                    emailTemplateToken = "Application.Status.Alert";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException("key", key, string.Format("Unknown communication token '{0}'.", key));

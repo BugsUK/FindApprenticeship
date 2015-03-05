@@ -26,6 +26,7 @@
         {
             //Use the mediator so that we get an accurate view model for testing
             ApprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
+            CandidateServiceProvider = new Mock<ICandidateServiceProvider>();
             ConfigurationManager = new Mock<IConfigurationManager>();
             ConfigurationManager.Setup(cm => cm.GetAppSetting<int>("VacancyResultsPerPage")).Returns(5);
             ConfigurationManager.Setup(cm => cm.GetAppSetting("BlacklistedCategoryCodes")).Returns("00,99");

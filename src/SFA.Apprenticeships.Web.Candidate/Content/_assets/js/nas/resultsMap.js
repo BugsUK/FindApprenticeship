@@ -20,9 +20,10 @@
         directionsService  = [],
         mapCenter          = { lat: apprLatitude, lng: apprLongitude },
         bounds             = new google.maps.LatLngBounds(),
-        originLocation = new google.maps.LatLng(apprLatitude, apprLongitude),
+        originLocation     = new google.maps.LatLng(apprLatitude, apprLongitude),
         latLngList         = [],
-        theLatLon          = apprLatitude + ',' + apprLongitude;
+        theLatLon          = apprLatitude + ',' + apprLongitude,
+        markerIcon         = new google.maps.MarkerImage('/Content/_assets/img/icon-location.png', null, null, null, new google.maps.Size(20, 32));
 
     $('.map-links').each(function(){
         var $this = $(this),
@@ -76,9 +77,31 @@
 
         radiusCircle = new google.maps.Circle(distanceCircle);
 
+        var radiusBounds = radiusCircle.getBounds();
+
+        var theZoom = null;
+
         setMarkers(map, vacancies)
 
-        map.fitBounds(bounds);
+        if (latLngList.length > 1) {
+            map.fitBounds(bounds);
+        } else if (apprMiles > 0) {
+            map.fitBounds(radiusBounds);
+
+            zoomChangeBoundsListener =
+                google.maps.event.addListenerOnce(map, 'bounds_changed', function (event) {
+                    if (this.getZoom()) {
+                        theZoom = this.getZoom();
+
+                        this.setZoom(theZoom + 1);
+                    }
+                });
+
+            setTimeout(function () { google.maps.event.removeListener(zoomChangeBoundsListener) }, 2000);
+
+        } else if (apprMiles == 0) {
+            map.setZoom(5);
+        }
 
     }
 
@@ -156,45 +179,41 @@
 
     }
 
-    $('.vacancy-link').each(function () {
+    ( function( $, window, document, undefined )
+    {
+    $('.map').lazyLoadGoogleMaps(
+        {
+            callback: function (container, lazyMap) {
+                var $container = $(container),
+                    vacancyLink = $container.closest('.search-results__item').find('.vacancy-link'),
+                    vacancyLat = vacancyLink.attr('data-lat'),
+                    vacancyLon = vacancyLink.attr('data-lon'),
+                    latlng = new google.maps.LatLng(vacancyLat, vacancyLon);
 
-        var vacancyMap = $(this).closest('.search-results__item').find('.map')[0],
-            vacancyLat = $(this).attr('data-lat'),
-            vacancyLon = $(this).attr('data-lon'),
-            latlng = new google.maps.LatLng(vacancyLat, vacancyLon);
+                var lazyOptions = {
+                    zoom: 10,
+                    center: latlng,
+                    mapTypeControl: false,
+                    overviewMapControl: false,
+                    panControl: false,
+                    scaleControl: false,
+                    scrollwheel: false,
+                    streetViewControl: false,
+                    zoomControl: true,
+                    zoomControlOptions: {
+                        style: google.maps.ZoomControlStyle.SMALL
+                    }
+                };
 
-        var myOptions = {
-            zoom: 10,
-            center: latlng,
-            mapTypeControl: false,
-            overviewMapControl: false,
-            panControl: false,
-            scaleControl: false,
-            scrollwheel: false,
-            streetViewControl: false,
-            zoomControl: true,
-            zoomControlOptions: {
-                style: google.maps.ZoomControlStyle.SMALL
+                lazyMap.setOptions(lazyOptions);
+
+                new google.maps.Marker({ position: latlng, map: lazyMap, icon: markerIcon });
+
+                theMaps.push(lazyMap);
+
             }
-        };
-        var maps = new google.maps.Map(vacancyMap, myOptions);
-
-        theMaps.push(maps);
-
-        var markerIcon = new google.maps.MarkerImage(
-                      '/Content/_assets/img/icon-location.png',
-                      null, /* size is determined at runtime */
-                      null, /* origin is 0,0 */
-                      null, /* anchor is bottom center of the scaled image */
-                      new google.maps.Size(20, 32));
-
-        var marker = new google.maps.Marker({
-            icon: markerIcon,
-            position: latlng,
-            map: maps
         });
-
-    });
+    })(jQuery, window, document);
 
     function calcRoute(transportMode, latLong, journeyTime, mapNumber) {
 

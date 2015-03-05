@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Collections.Generic;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
@@ -14,8 +13,8 @@
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Application;
-    using Microsoft.SqlServer.Server;
     using ViewModels.Applications;
+    using ViewModels.VacancySearch;
 
     [UserJourneyContext(UserJourney.Apprenticeship, Order = 2)]
     public class ApprenticeshipApplicationController : CandidateControllerBase
@@ -175,7 +174,7 @@
                     var requestDebugString = Request.ToDebugString();
                     _logService.Error("Error when auto saving apprenticeship application. Candidate was null: {0}", requestDebugString);
                     ModelState.Clear();
-                    return new JsonResult {Data = new AutoSaveResultViewModel()};
+                    return new JsonResult { Data = new AutoSaveResultViewModel() };
                 }
 
                 var response = _apprenticeshipApplicationMediator.AutoSave(UserContext.CandidateId, id, model);
@@ -331,7 +330,7 @@
             {
                 var response = _apprenticeshipApplicationMediator.SaveVacancy(UserContext.CandidateId, id);
 
-                return JsonResultFromSaveVacancyResponseCode(response.Code);
+                return SavedVacancyResultFromViewModel(response);
             });
         }
 
@@ -346,34 +345,25 @@
             {
                 var response = _apprenticeshipApplicationMediator.DeleteSavedVacancy(UserContext.CandidateId, id);
 
-                return JsonResultFromSaveVacancyResponseCode(response.Code);
+                return SavedVacancyResultFromViewModel(response);
             });
         }
 
-        private static JsonResult JsonResultFromSaveVacancyResponseCode(string responseCode)
+        #region Helpers
+
+        private static JsonResult SavedVacancyResultFromViewModel(MediatorResponse<SavedVacancyViewModel> response)
         {
-            var map = new Dictionary<string, string>
-            {
-                { ApprenticeshipApplicationMediatorCodes.SaveVacancy.Saved, "Saved" },
-                { ApprenticeshipApplicationMediatorCodes.SaveVacancy.Unsaved, "Unsaved" },
-                { ApprenticeshipApplicationMediatorCodes.SaveVacancy.Draft, "Draft" },
-                { ApprenticeshipApplicationMediatorCodes.SaveVacancy.Applied, "Applied" }
-            };
-
-            string result;
-
-            if (!map.TryGetValue(responseCode, out result))
-            {
-                throw new InvalidMediatorCodeException(responseCode);
-            }
-
             return new JsonResult
             {
                 Data = new
                 {
-                    status = result
+                    applicationStatus = response.ViewModel.ApplicationStatus.HasValue
+                        ? response.ViewModel.ApplicationStatus.ToString()
+                        : "Unsaved"
                 }
             };
         }
+
+        #endregion
     }
 }

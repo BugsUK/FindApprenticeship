@@ -12,11 +12,11 @@
             For<IMapper>().Use<CommunicationMappers>().Name = "CommunicationMappers";
             For<IExpiringApprenticeshipApplicationDraftRepository>()
                 .Use<ExpiringApprenticeshipApplicationDraftRepository>()
-                .Ctor<CommunicationMappers>()
+                .Ctor<IMapper>()
                 .Named("CommunicationMappers");
             For<IApplicationStatusAlertRepository>()
                 .Use<ApplicationStatusAlertRepository>()
-                .Ctor<CommunicationMappers>()
+                .Ctor<IMapper>()
                 .Named("CommunicationMappers");
         }
     }

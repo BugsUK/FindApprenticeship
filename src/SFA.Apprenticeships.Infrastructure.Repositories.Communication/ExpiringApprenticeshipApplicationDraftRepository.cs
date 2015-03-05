@@ -39,7 +39,7 @@
 
         public void Delete(ExpiringApprenticeshipApplicationDraft expiringDraft)
         {
-            _logger.Debug("Calling repository to expiring draft with Id={0}", expiringDraft.EntityId);
+            _logger.Debug("Calling repository to delete expiring draft with Id={0}", expiringDraft.EntityId);
 
             Collection.Remove(Query.EQ("_id", expiringDraft.EntityId));
 

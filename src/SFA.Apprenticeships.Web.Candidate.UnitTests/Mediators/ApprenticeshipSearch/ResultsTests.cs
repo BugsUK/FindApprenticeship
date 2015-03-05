@@ -36,6 +36,7 @@
             {
                 new ApprenticeshipVacancySummaryViewModel {Description = "A London Vacancy"}
             };
+
             var emptyVacancies = new ApprenticeshipVacancySummaryViewModel[0];
             //This order is important. Moq will run though all matches and pick the last one
             SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm }).Callback<ApprenticeshipSearchViewModel>(svm => { _searchSentToSearchProvider = svm; });

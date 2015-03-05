@@ -4,6 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Domain.Entities.Communication;
+    using Newtonsoft.Json;
+    using Ploeh.AutoFixture;
 
     public static class TokenGenerator
     {
@@ -83,17 +86,22 @@
             };
         }
 
-        public static IEnumerable<CommunicationToken> CreateVacanciesAboutToExpireTokens(int numOfVacancies)
+        public static IEnumerable<CommunicationToken> CreateDailyDigestTokens(int numOfVacancies)
         {
             var tokens = new List<CommunicationToken>
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
-                new CommunicationToken(CommunicationTokens.ExpiringDraftsCount, Convert.ToString(numOfVacancies))
             };
 
-            var drafts = string.Join("~", Enumerable.Range(1, numOfVacancies).Select(i => string.Format("{0}|Application Vacancy Title {0}|Employer name {0}|15 Jan 15", i)));
+            tokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, string.Empty));
 
-            tokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, drafts));
+            var drafts = new Fixture().Build<ExpiringApprenticeshipApplicationDraft>()
+                .CreateMany(numOfVacancies)
+                .ToList();
+
+            var draftsJson = JsonConvert.SerializeObject(drafts);
+
+            tokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, draftsJson));
 
             return tokens;
         }

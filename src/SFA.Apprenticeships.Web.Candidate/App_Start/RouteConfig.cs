@@ -117,6 +117,18 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipSaveVacancy,
+                url: "apprenticeship/savevacancy/{id}",
+                defaults: new { controller = "ApprenticeshipApplication", action = "SaveVacancy" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipDeleteSavedVacancy,
+                url: "apprenticeship/deletesavedvacancy/{id}",
+                defaults: new { controller = "ApprenticeshipApplication", action = "DeleteSavedVacancy" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.TraineeshipOverview,
                 url: "traineeships/about",
                 defaults: new {controller = "TraineeshipSearch", action = "Overview"}

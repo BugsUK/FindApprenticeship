@@ -17,6 +17,7 @@
     public class CommunicationProcessorTests
     {
         private Mock<IExpiringApprenticeshipApplicationDraftRepository> _expiringDraftRepository;
+        private Mock<IApplicationStatusAlertRepository> _applicationStatusAlertRepository;
         private Mock<ICandidateReadRepository> _candidateReadRepository;
         private Mock<IMessageBus> _bus;
         private CommunicationProcessor _communicationProcessor;
@@ -25,9 +26,11 @@
         public void SetUp()
         {
             _expiringDraftRepository = new Mock<IExpiringApprenticeshipApplicationDraftRepository>();
+            _applicationStatusAlertRepository = new Mock<IApplicationStatusAlertRepository>();
+            _applicationStatusAlertRepository.Setup(r => r.GetCandidatesDailyDigest()).Returns(new Dictionary<Guid, List<ApplicationStatusAlert>>());
             _candidateReadRepository = new Mock<ICandidateReadRepository>();
             _bus = new Mock<IMessageBus>();
-            _communicationProcessor = new CommunicationProcessor(_expiringDraftRepository.Object, _candidateReadRepository.Object, _bus.Object);
+            _communicationProcessor = new CommunicationProcessor(_expiringDraftRepository.Object, _applicationStatusAlertRepository.Object, _candidateReadRepository.Object, _bus.Object);
         }
 
         [Test]

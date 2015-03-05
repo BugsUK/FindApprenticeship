@@ -1,11 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
-    public enum SavedVacancyViewModelStatuses
+    using Domain.Entities.Applications;
+
+    public class SavedVacancyViewModel
     {
-        None = 0,
-        Saved = 1,
-        Unsaved = 2,
-        Draft = 3,
-        Applied = 4
+        public ApplicationStatuses? ApplicationStatus { get; set; }
     }
 }

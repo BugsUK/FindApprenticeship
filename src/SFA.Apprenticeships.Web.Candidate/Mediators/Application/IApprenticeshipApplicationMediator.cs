@@ -2,6 +2,7 @@
 {
     using System;
     using ViewModels.Applications;
+    using ViewModels.VacancySearch;
 
     public interface IApprenticeshipApplicationMediator
     {
@@ -24,9 +25,9 @@
         MediatorResponse<ApprenticeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId);
 
         MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle);
-        
-        MediatorResponse SaveVacancy(Guid candidateId, int vacancyId);
 
-        MediatorResponse DeleteSavedVacancy(Guid candidateId, int vacancyId);
+        MediatorResponse<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId);
+
+        MediatorResponse<SavedVacancyViewModel> DeleteSavedVacancy(Guid candidateId, int vacancyId);
    }
 }

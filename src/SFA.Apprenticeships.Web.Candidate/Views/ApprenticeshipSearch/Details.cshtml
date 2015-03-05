@@ -27,6 +27,17 @@
             {
                 @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @id="lnk-find-apprenticeship", @class = "page-link" })
             }
+
+            @{
+                var applicationStatus = Model.CandidateApplicationStatus.HasValue
+                    ? Model.CandidateApplicationStatus.ToString()
+                    : "Unsaved";
+            }
+
+            @if (Request.IsAuthenticated)
+            {
+                <a title="" href="#" class="hidden fake-link page-link save-vacancy-link" data-vacancy-id="@Model.Id" data-application-status="@applicationStatus"><i class="fa"></i><span class="save-vacancy-link-text"></span></a>
+            }
         </div>
     </div>
 
@@ -117,15 +128,15 @@
                 <div class="grid grid-1-2">
                     <div class="inner-block-padr">
                         <h3 class="bold-small">Employer</h3>
-                            <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
-                            @if (Model.IsWellFormedEmployerWebsiteUrl)
-                            {
-                                <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
-                            }
-                            else
-                            {
-                                <p>@Model.EmployerWebsite</p>
-                            }
+                        <p id="vacancy-employer-name" class="@(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : "")">@Model.EmployerName</p>
+                        @if (Model.IsWellFormedEmployerWebsiteUrl)
+                        {
+                            <p><a itemprop="url" href="@Model.EmployerWebsite" id="vacancy-employer-website" target="_blank" title="@Model.EmployerName Website" rel="external">@Model.EmployerWebsite</a></p>
+                        }
+                        else
+                        {
+                            <p>@Model.EmployerWebsite</p>
+                        }
                         @if (Model.VacancyLocationType != ApprenticeshipLocationType.National && !Model.IsMultiLocation)
                         {
                             <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -183,7 +194,7 @@
                 
                     @if (!Model.IsRecruitmentAgencyAnonymous && !string.IsNullOrWhiteSpace(Model.RecruitmentAgency))
                     {
-                       <p id="recruitment-agency-name">Applications for this apprenticeship are being processed by @Model.RecruitmentAgency</p>
+                        <p id="recruitment-agency-name">Applications for this apprenticeship are being processed by @Model.RecruitmentAgency</p>
                     }
 
                     @if (!string.IsNullOrWhiteSpace(Model.Contact))
@@ -232,3 +243,17 @@
         </section>
     }
 </div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/nas/apprenticeships/results");
+
+    <script>
+    $(function () {
+        initSavedVacancies({
+            saveUrl: '@Url.Action("SaveVacancy", "ApprenticeshipApplication")',
+            deleteUrl: '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")'    
+        });
+    });
+    </script>
+}

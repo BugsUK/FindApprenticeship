@@ -1,52 +1,85 @@
 ﻿namespace SFA.Apprenticeships.Application.Communications
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using Domain.Entities.Communication;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
     public class CommunicationProcessor : ICommunicationProcessor
     {
         private readonly IExpiringApprenticeshipApplicationDraftRepository _expiringDraftRepository;
+        private readonly IApplicationStatusAlertRepository _applicationStatusAlertRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IMessageBus _messageBus;
 
         public CommunicationProcessor(IExpiringApprenticeshipApplicationDraftRepository expiringDraftRepository, 
+            IApplicationStatusAlertRepository applicationStatusAlertRepository,
             ICandidateReadRepository candidateReadRepository, 
             IMessageBus messageBus)
         {
             _expiringDraftRepository = expiringDraftRepository;
+            _applicationStatusAlertRepository = applicationStatusAlertRepository;
             _candidateReadRepository = candidateReadRepository;
             _messageBus = messageBus;
         }
 
         public void SendDailyCommunications(Guid batchId)
         {
-            //todo: 1.7: this should also accommodate application status alerts. needs discussion as must queue 2 comm request messages to cover 3 message types
             var candidatesExpiringDrafts = _expiringDraftRepository.GetCandidatesDailyDigest();
-            //var candidatesApplicationStatusAlerts = _applicationStatusAlertRepository.GetCandidatesDailyDigest();
+            var candidatesApplicationStatusAlerts = _applicationStatusAlertRepository.GetCandidatesDailyDigest();
             //var candidatesSavedSearchAlerts = _savedSearchAlertRepository.GetCandidatesDailyDigest();
 
-            foreach (var candidateDailyDigest in candidatesExpiringDrafts)
+            var candidateIds = candidatesExpiringDrafts.Keys.Union(candidatesApplicationStatusAlerts.Keys);
+
+            foreach (var candidateId in candidateIds)
             {
-                var candidate = _candidateReadRepository.Get(candidateDailyDigest.Key);
+                var candidate = _candidateReadRepository.Get(candidateId);
+
+                List<ExpiringApprenticeshipApplicationDraft> candidateExpiringDraftsDailyDigest;
+                var candidateHasExpiringDrafts = candidatesExpiringDrafts.TryGetValue(candidateId, out candidateExpiringDraftsDailyDigest);
+
+                List<ApplicationStatusAlert> candidateApplicationStatusAlertsDailyDigest;
+                var candidateHasApplicationStatusAlerts = candidatesApplicationStatusAlerts.TryGetValue(candidateId, out candidateApplicationStatusAlertsDailyDigest);
 
                 if (candidate.CommunicationPreferences.AllowEmail || candidate.CommunicationPreferences.AllowMobile)
                 {
-                    var communicationMessage = CommunicationRequestFactory.GetCommunicationMessage(candidate, candidateDailyDigest.Value);
+                    var communicationMessage = CommunicationRequestFactory.GetCommunicationMessage(candidate, candidateExpiringDraftsDailyDigest, candidateApplicationStatusAlertsDailyDigest);
                     _messageBus.PublishMessage(communicationMessage);
 
-                    // Update candidates expiring drafts to sent
-                    candidateDailyDigest.Value.ToList().ForEach(dd =>
+                    if (candidateHasExpiringDrafts)
                     {
-                        dd.BatchId = batchId;
-                        _expiringDraftRepository.Save(dd);
-                    });
+                        // Update candidates expiring drafts to sent
+                        candidateExpiringDraftsDailyDigest.ToList().ForEach(dd =>
+                        {
+                            dd.BatchId = batchId;
+                            _expiringDraftRepository.Save(dd);
+                        });
+                    }
+
+                    if (candidateHasApplicationStatusAlerts)
+                    {
+                        // Update candidates application status alerts to sent
+                        candidateApplicationStatusAlertsDailyDigest.ToList().ForEach(dd =>
+                        {
+                            dd.BatchId = batchId;
+                            _applicationStatusAlertRepository.Save(dd);
+                        });
+                    }
                 }
                 else
                 {
-                    // Delete candidates expiring drafts
-                    candidateDailyDigest.Value.ToList().ForEach(_expiringDraftRepository.Delete);
+                    if (candidateHasExpiringDrafts)
+                    {
+                        // Delete candidates expiring drafts
+                        candidateExpiringDraftsDailyDigest.ToList().ForEach(_expiringDraftRepository.Delete);
+                    }
+                    if (candidateHasApplicationStatusAlerts)
+                    {
+                        // Delete candidates application status alerts
+                        candidateApplicationStatusAlertsDailyDigest.ToList().ForEach(_applicationStatusAlertRepository.Delete);
+                    }
                 }
             }
         }

@@ -1,27 +1,26 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Net;
+    using System.Text;
     using Application.Interfaces.Communications;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Communication;
+    using Newtonsoft.Json;
     using SendGrid;
 
     public class EmailDailyDigestMessageFormatter : EmailMessageFormatter
     {
-        private const string Pipe = "|";
-        private const char Tilda = '~';
-
-        public const string OneSavedApplicationAboutToExpire = "You've saved an application for an apprenticeship that is due to expire soon.";
-        public const string MoreThanOneSaveApplicationAboutToExpire = "You've saved applications for apprenticeships that are due to close soon.";
+        public const string OneSavedApplicationAboutToExpire = "<p>You've saved an application for an apprenticeship that is due to expire soon.</p>";
+        public const string MoreThanOneSaveApplicationAboutToExpire = "<p>You've saved applications for apprenticeships that are due to close soon.</p>";
 
         public override void PopulateMessage(EmailRequest request, ISendGrid message)
         {
             PopulateCandidateName(request, message);
 
-            PopulateItemCountData(request, message);
+            PopulateApplicationStatusAlerts(request, message);
 
-            PopulateHtmlData(request, message);
+            PopulateExpiringDrafts(request, message);
         }
 
         private static void PopulateCandidateName(EmailRequest request, ISendGrid message)
@@ -33,67 +32,90 @@
             AddSubstitutionTo(message, candidateFirstNameToken, substitutionText);
         }
 
-        private static void PopulateItemCountData(EmailRequest request, ISendGrid message)
+        private static void PopulateApplicationStatusAlerts(EmailRequest request, ISendGrid message)
         {
-            var itemCountToken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ExpiringDraftsCount);
+            var sendgridToken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ApplicationStatusAlerts);
 
-            var itemCount = Convert.ToInt32(request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDraftsCount).Value);
+            var alertsJson = request.Tokens.First(t => t.Key == CommunicationTokens.ApplicationStatusAlerts).Value;
+            var alerts = JsonConvert.DeserializeObject<List<ApplicationStatusAlert>>(alertsJson) ?? new List<ApplicationStatusAlert>();
 
-            var substitutionText = itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire;
+            var substitutionText = GetApplicationStatusAlertsInfoSubstitution(alerts);
 
-            AddSubstitutionTo(message, itemCountToken, substitutionText);
+            AddSubstitutionTo(message, sendgridToken, substitutionText);
         }
 
-        private static void PopulateHtmlData(EmailRequest request, ISendGrid message)
+        protected static string GetApplicationStatusAlertsInfoSubstitution(IList<ApplicationStatusAlert> alerts)
         {
-            var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ExpiringDrafts);
-            AddVacanciesDataSubstitution(request, message, sendgridtoken);
-        }
+            if (alerts == null || alerts.Count == 0) return string.Empty;
 
-        private static void AddVacanciesDataSubstitution(EmailRequest request, ISendGrid message, string sendgridtoken)
-        {
-            var substitutionText = "<ul>";
+            var stringBuilder = new StringBuilder("<p>You have received outcomes on some of your applications</p>");
 
-            var drafts = request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
-
-            foreach (var draft in drafts.Split(Tilda))
+            if (alerts.Any(a => a.Status == ApplicationStatuses.Successful))
             {
-                substitutionText += FormatHtmlListElement(draft);
+                stringBuilder.AppendLine("<b><a href=\"https://www.findapprenticeship.service.gov.uk/myapplications#dashSuccessful\">Applications made Successful</a></b>");
+                var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful).Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
+                stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", successfulLineItems)));
             }
 
-            substitutionText += "</ul>";
+            if (alerts.Any(a => a.Status == ApplicationStatuses.Unsuccessful))
+            {
+                stringBuilder.AppendLine("<b><a href=\"https://www.findapprenticeship.service.gov.uk/myapplications#dashUnsuccessful\">Applications made Unsuccessful</a></b>");
+                var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}<br/><b>Reason: </b>{2}</li>", d.Title, d.EmployerName, d.UnsuccessfulReason));
+                stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", unsuccessfulLineItems)));
+            }
 
-            AddSubstitutionTo(message, sendgridtoken, substitutionText);
+            return stringBuilder.ToString();
+        }
+
+        private void PopulateExpiringDrafts(EmailRequest request, ISendGrid message)
+        {
+            var stringBuilder = new StringBuilder();
+
+            var draftsJson = request.Tokens.First(t => t.Key == CommunicationTokens.ExpiringDrafts).Value;
+            var drafts = JsonConvert.DeserializeObject<List<ExpiringApprenticeshipApplicationDraft>>(draftsJson) ?? new List<ExpiringApprenticeshipApplicationDraft>();
+
+            stringBuilder.Append(GetExpiringDraftsItemCountData(drafts));
+
+            PopulateVacanciesDataSubstitution(drafts, stringBuilder);
+
+            var sendgridToken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ExpiringDrafts);
+            
+            var substitutionText = stringBuilder.ToString();
+
+            AddSubstitutionTo(message, sendgridToken, substitutionText);
+        }
+
+        private static string GetExpiringDraftsItemCountData(List<ExpiringApprenticeshipApplicationDraft> drafts)
+        {
+            var itemCount = drafts.Count;
+
+            var substitutionText = string.Empty;
+            if (itemCount > 0)
+            {
+                substitutionText = itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire;
+            }
+
+            return substitutionText;
+        }
+
+        private static void PopulateVacanciesDataSubstitution(List<ExpiringApprenticeshipApplicationDraft> drafts, StringBuilder stringBuilder)
+        {
+            if (drafts == null || drafts.Count == 0) return;
+
+            stringBuilder.Append("<ul>");
+
+            foreach (var draft in drafts)
+            {
+                var draftListElement = string.Format("<li><a href=\"https://www.findapprenticeship.service.gov.uk/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>", draft.VacancyId, draft.Title, draft.EmployerName, draft.ClosingDate.ToLongDateString());
+                stringBuilder.Append(draftListElement);
+            }
+
+            stringBuilder.Append("</ul>");
         }
 
         private static void AddSubstitutionTo(ISendGrid message, string sendgridtoken, string substitutionText)
         {
-            message.AddSubstitution(
-                sendgridtoken,
-                new List<string>
-                {
-                    substitutionText
-                });
-        }
-
-        private static string FormatHtmlListElement(string line)
-        {
-            string apprenticeshipName;
-            string companyName;
-            string closingDate;
-            int vacancyId = 0;
-            ExtractVacancyDataFrom(line,out vacancyId, out apprenticeshipName, out companyName, out closingDate);
-
-            return string.Format("<li><a href=\"https://www.findapprenticeship.service.gov.uk/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>",vacancyId, apprenticeshipName, companyName,
-                closingDate);
-        }
-
-        private static void ExtractVacancyDataFrom(string line, out int vacancyId, out string apprenticeshipName, out string companyName, out string closingDate)
-        {
-            vacancyId = Convert.ToInt32(line.Split(new[] { Pipe }, StringSplitOptions.RemoveEmptyEntries)[0]);
-            apprenticeshipName = WebUtility.UrlDecode(line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[1]);
-            companyName = WebUtility.UrlDecode(line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[2]);
-            closingDate = line.Split(new[] {Pipe}, StringSplitOptions.RemoveEmptyEntries)[3];
+            message.AddSubstitution(sendgridtoken, new List<string> {substitutionText});
         }
     }
 }
