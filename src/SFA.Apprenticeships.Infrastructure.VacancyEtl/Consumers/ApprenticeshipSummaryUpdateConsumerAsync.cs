@@ -7,6 +7,7 @@
     using Application.Interfaces.ReferenceData;
     using Application.VacancyEtl;
     using Application.VacancyEtl.Entities;
+    using Domain.Entities.ReferenceData;
     using EasyNetQ.AutoSubscribe;
     using Elastic.Common.Entities;
     using VacancyIndexer;
@@ -46,24 +47,31 @@
         {
             var categories = _referenceDataService.GetCategories().ToArray();
 
-            vacancySummaryToIndex.SectorCode = categories
-                .First(c => c.FullName == vacancySummaryToIndex.Sector)
-                .CodeName;
+            var category = categories.FirstOrDefault(c => c.FullName == vacancySummaryToIndex.Sector);
 
-            if (categories.First(c => c.FullName == vacancySummaryToIndex.Sector)
-                          .SubCategories
-                          .Any(sc => sc.FullName == vacancySummaryToIndex.Framework))
+            if (category == null)
             {
-                vacancySummaryToIndex.FrameworkCode = categories
-                    .First(c => c.FullName == vacancySummaryToIndex.Sector)
-                    .SubCategories.First(sc => sc.FullName == vacancySummaryToIndex.Framework)
-                    .CodeName;
-
-                return true;
+                vacancySummaryToIndex.SectorCode = "Unknown";
+                vacancySummaryToIndex.FrameworkCode = "Unknown";
+                _logService.Warn("The vacancy with Id {0} has an unknown Sector and Framework: {1} | {2}. It is likely these were deprecated", vacancySummaryToIndex.Id, vacancySummaryToIndex.Sector, vacancySummaryToIndex.Framework);
             }
+            else
+            {
+                vacancySummaryToIndex.SectorCode = category.CodeName;
 
-            _logService.Warn("The vacancy with Id {0} has a mismatched Sector/Framework: {1} | {2}",
-                vacancySummaryToIndex.Id, vacancySummaryToIndex.Sector, vacancySummaryToIndex.Framework);
+                var subCategory = category.SubCategories.FirstOrDefault(sc => sc.FullName == vacancySummaryToIndex.Framework);
+
+                if (subCategory == null)
+                {
+                    vacancySummaryToIndex.FrameworkCode = "Unknown";
+                    _logService.Warn("The vacancy with Id {0} has a mismatched Sector/Framework: {1} | {2}", vacancySummaryToIndex.Id, vacancySummaryToIndex.Sector, vacancySummaryToIndex.Framework);
+                }
+                else
+                {
+                    vacancySummaryToIndex.FrameworkCode = subCategory.CodeName;
+                    return true;
+                }
+            }
 
             return false;
         }
