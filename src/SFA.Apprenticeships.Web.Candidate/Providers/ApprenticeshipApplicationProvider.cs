@@ -55,6 +55,11 @@
                     return new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationNotFound, ApplicationViewModelStatus.ApplicationNotFound);
                 }
 
+                if (applicationDetails.Status == ApplicationStatuses.Saved)
+                {
+                    applicationDetails = _candidateService.CreateDraftFromSavedVacancy(candidateId, vacancyId);
+                }
+
                 var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
@@ -140,6 +145,14 @@
                         ApplicationViewModelStatus.Error);
             }
         }
+
+        //public ApprenticeshipApplicationViewModel CreateDraftApplicationFromSavedVacancy(Guid candidateId, int vacancyId)
+        //{
+        //    _logger.Debug("Calling ApprenticeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.", candidateId, vacancyId);
+        //    var applicationDetail = _candidateService.CreateDraftFromSavedVacancy(candidateId, vacancyId);
+        //    var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetail);
+        //    return applicationViewModel;
+        //}
 
         public ApprenticeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId,
             ApprenticeshipApplicationViewModel savedModel, ApprenticeshipApplicationViewModel submittedModel)

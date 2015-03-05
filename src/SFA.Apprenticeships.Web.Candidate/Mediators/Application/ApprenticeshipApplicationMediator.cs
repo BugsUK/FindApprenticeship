@@ -1,11 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
     using System;
-    using System.Collections.Generic;
-    using System.Drawing.Printing;
     using System.Linq;
     using System.Web.Security;
-    using System.Web.UI.WebControls;
     using Common.Constants;
     using Common.Models.Application;
     using Common.Providers;
@@ -49,6 +46,32 @@
 
             return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.Ok, parameters: new { id = vacancyId });
         }
+
+        //public MediatorResponse SavedToDraft(Guid candidateId, string vacancyIdString)
+        //{
+        //    int vacancyId;
+
+        //    if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+        //    {
+        //        return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SavedToDraft.InvalidVacancyId);
+        //    }
+
+        //    try
+        //    {
+        //        var application = _apprenticeshipApplicationProvider.CreateDraftApplicationFromSavedVacancy(candidateId, vacancyId);
+
+        //        if (application == null || application.Status != ApplicationStatuses.Draft)
+        //        {
+        //            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SavedToDraft.InvalidVacancy);
+        //        }
+        //    }
+        //    catch
+        //    {
+        //        return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SavedToDraft.HasError);
+        //    }
+
+        //    return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SavedToDraft.Ok);
+        //}
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString)
         {

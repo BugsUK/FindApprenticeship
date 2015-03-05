@@ -11,6 +11,8 @@
 
         ApprenticeshipApplicationViewModel CreateApplicationViewModel(Guid candidateId, int vacancyId);
 
+        //ApprenticeshipApplicationViewModel CreateDraftApplicationFromSavedVacancy(Guid candidateId, int vacancyId);
+
         ApprenticeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId, ApprenticeshipApplicationViewModel savedModel, ApprenticeshipApplicationViewModel submittedModel);
 
         MyApplicationsViewModel GetMyApplications(Guid candidateId);

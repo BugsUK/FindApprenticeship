@@ -77,6 +77,29 @@
             });
         }
 
+        //[OutputCache(CacheProfile = CacheProfiles.None)]
+        //[AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        //[ApplyWebTrends]
+        //[ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        //public async Task<ActionResult> SavedToDraft(string id)
+        //{
+        //    return await Task.Run<ActionResult>(() =>
+        //    {
+        //        var response = _apprenticeshipApplicationMediator.SavedToDraft(UserContext.CandidateId, id);
+
+        //        switch (response.Code)
+        //        {
+        //            case ApprenticeshipApplicationMediatorCodes.SavedToDraft.Ok:
+        //                return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, new { id });
+        //            case ApprenticeshipApplicationMediatorCodes.SavedToDraft.HasError:
+        //            case ApprenticeshipApplicationMediatorCodes.SavedToDraft.InvalidVacancyId:
+        //                return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
+        //        }
+
+        //        throw new InvalidMediatorCodeException(response.Code);
+        //    });
+        //}
+
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]

@@ -66,5 +66,7 @@
         ApplicationDetail SaveVacancy(Guid candidateId, int vacancyId);
 
         ApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId);
+
+        ApprenticeshipApplicationDetail CreateDraftFromSavedVacancy(Guid candidateId, int vacancyId);
     }
 }

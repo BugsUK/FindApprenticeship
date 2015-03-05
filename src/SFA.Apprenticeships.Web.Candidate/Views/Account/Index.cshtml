@@ -296,7 +296,7 @@ else
                                         }
                                         else if (application.ApplicationStatus == ApplicationStatuses.Saved && application.VacancyStatus == VacancyStatuses.Live)
                                         {
-                                            @Html.ActionLink("Apply", "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "resume-link" })
+                                            @Html.RouteLink("Apply", CandidateRouteNames.ApprenticeshipDetails, new { id = application.VacancyId }, new { @class = "resume-link" })
                                         }
                                         else
                                         {

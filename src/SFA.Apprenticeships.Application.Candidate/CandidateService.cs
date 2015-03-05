@@ -33,6 +33,7 @@
         private readonly IRegisterCandidateStrategy _registerCandidateStrategy;
         private readonly ISaveApprenticeshipVacancyStrategy _saveVacancyStrategy;
         private readonly IDeleteSavedApprenticeshipVacancyStrategy _deleteSavedApprenticeshipVacancyStrategy;
+        private readonly ICreateDraftApprenticeshipFromSavedVacancyStrategy _createDraftApprenticeshipFromSavedVacancyStrategy;
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
         private readonly ISaveApprenticeshipApplicationStrategy _saveApplicationStrategy;
         private readonly ISaveTraineeshipApplicationStrategy _saveTraineeshipApplicationStrategy;
@@ -57,6 +58,7 @@
             IRegisterCandidateStrategy registerCandidateStrategy,
             ISaveApprenticeshipVacancyStrategy saveVacancyStrategy,
             IDeleteSavedApprenticeshipVacancyStrategy deleteSavedApprenticeshipVacancyStrategy,
+            ICreateDraftApprenticeshipFromSavedVacancyStrategy createDraftApprenticeshipFromSavedVacancyStrategy,
             ICreateApprenticeshipApplicationStrategy createApplicationStrategy,
             ICreateTraineeshipApplicationStrategy createTraineeshipApplicationStrategy,
             IGetCandidateApprenticeshipApplicationsStrategy getCandidateApprenticeshipApplicationsStrategy,
@@ -83,6 +85,7 @@
             _registerCandidateStrategy = registerCandidateStrategy;
             _saveVacancyStrategy = saveVacancyStrategy;
             _deleteSavedApprenticeshipVacancyStrategy = deleteSavedApprenticeshipVacancyStrategy;
+            _createDraftApprenticeshipFromSavedVacancyStrategy = createDraftApprenticeshipFromSavedVacancyStrategy;
             _createApplicationStrategy = createApplicationStrategy;
             _createTraineeshipApplicationStrategy = createTraineeshipApplicationStrategy;
             _getCandidateApprenticeshipApplicationsStrategy = getCandidateApprenticeshipApplicationsStrategy;
@@ -382,6 +385,16 @@
             _logger.Info("Calling CandidateService to delete saved vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
             return _deleteSavedApprenticeshipVacancyStrategy.DeletedSavedVacancy(candidateId, vacancyId);
+        }
+
+        public ApprenticeshipApplicationDetail CreateDraftFromSavedVacancy(Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(candidateId);
+            Condition.Requires(vacancyId).IsGreaterThan(0);
+
+            _logger.Info("Calling CandidateService to create draft from saved vacancy, vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
+
+            return _createDraftApprenticeshipFromSavedVacancyStrategy.CreateDraft(candidateId, vacancyId);            
         }
     }
 }
