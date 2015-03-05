@@ -171,5 +171,28 @@
             viewModel.ViewModelMessage.Should().BeNullOrEmpty();
             viewModel.HasError().Should().BeFalse();
         }
+
+        [Test]
+        public void ConvertSavedVacancyToDraftApplication()
+        {
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModel());
+            candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail() { Status = ApplicationStatuses.Saved } );
+            candidateService.Setup(cs => cs.CreateDraftFromSavedVacancy(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetail() { Status = ApplicationStatuses.Draft });
+
+            var viewModel = new ApprenticeshipApplicationProviderBuilder()
+                .With(candidateService)
+                .With(apprenticeshipVacancyDetailProvider)
+                .Build()
+                .GetApplicationViewModel(candidateId, ValidVacancyId);
+
+            viewModel.Should().NotBeNull();
+            viewModel.ViewModelMessage.Should().BeNullOrEmpty();
+            viewModel.Status.Should().Be(ApplicationStatuses.Draft);
+            viewModel.HasError().Should().BeFalse();
+            candidateService.Verify(x => x.CreateDraftFromSavedVacancy(candidateId, ValidVacancyId), Times.Once);
+        }
     }
 }
