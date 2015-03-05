@@ -55,11 +55,13 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"grid grid-1-2\"");
 
-WriteLiteral(">\r\n        <h1");
+WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Thank You</h1>\r\n    </div>\r\n</div>\r\n");
+WriteLiteral(" id=\"ThankYouLabel\"");
+
+WriteLiteral(">Thank You</label>\r\n    </div>\r\n</div>\r\n");
 
         }
     }

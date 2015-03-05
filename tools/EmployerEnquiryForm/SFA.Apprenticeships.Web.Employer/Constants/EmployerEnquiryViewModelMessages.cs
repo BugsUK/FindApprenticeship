@@ -80,7 +80,7 @@
         {
             public const string LabelText = "Industry sector";
             public const string HintText = "What industry sector do you operate in?";
-            public const string RequiredErrorText = "Please select your company sector";
+            public const string RequiredErrorText = "Please select your industry sector";
         }
 
         public static class PreviousExperienceTypeMessages

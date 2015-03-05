@@ -11,6 +11,9 @@
     {
         private IElementList<IWebElement, AddressDropdownItem> _addressDropdown;
         private IElementList<IWebElement, EmployeeCountDropdownItem> _employeeCountDropdown;
+        private IElementList<IWebElement, EnquirySourceDropdownItem> _enquirySourceDropdown;
+        private IElementList<IWebElement, PrevExperienceDropdownItem> _prevExperienceDropdown;
+        private IElementList<IWebElement, WorkSectorDropdownItem> _workSectorDropdown;
 
         public EmployerEnquiryPage(ISearchContext context)
             : base(context)
@@ -106,12 +109,60 @@
             get { return _employeeCountDropdown; }
             set { _employeeCountDropdown = value; }
         }
+
+        [ElementLocator(Id = "EnquirySource")]
+        public IElementList<IWebElement, EnquirySourceDropdownItem> EnquirySourceDropdown
+        {
+            get { return _enquirySourceDropdown; }
+            set { _enquirySourceDropdown = value; }
+        }
+
+        [ElementLocator(Id = "PreviousExperienceType")]
+        public IElementList<IWebElement, PrevExperienceDropdownItem> PrevExperienceDropdown
+        {
+            get { return _prevExperienceDropdown; }
+            set { _prevExperienceDropdown = value; }
+        }
+
+        [ElementLocator(Id = "WorkSector")]
+        public IElementList<IWebElement, WorkSectorDropdownItem> WorkSectorDropdown
+        {
+            get { return _workSectorDropdown; }
+            set { _workSectorDropdown = value; }
+        }
     }
 
     [ElementLocator(TagName = "option")]
     public class EmployeeCountDropdownItem : WebElement
     {
         protected internal EmployeeCountDropdownItem(ISearchContext searchContext) : base(searchContext)
+        {
+        }
+    }
+
+    [ElementLocator(TagName = "option")]
+    public class EnquirySourceDropdownItem : WebElement
+    {
+        protected internal EnquirySourceDropdownItem(ISearchContext searchContext)
+            : base(searchContext)
+        {
+        }
+    }
+
+    [ElementLocator(TagName = "option")]
+    public class PrevExperienceDropdownItem : WebElement
+    {
+        protected internal PrevExperienceDropdownItem(ISearchContext searchContext)
+            : base(searchContext)
+        {
+        }
+    }
+
+    [ElementLocator(TagName = "option")]
+    public class WorkSectorDropdownItem : WebElement
+    {
+        protected internal WorkSectorDropdownItem(ISearchContext searchContext)
+            : base(searchContext)
         {
         }
     }
