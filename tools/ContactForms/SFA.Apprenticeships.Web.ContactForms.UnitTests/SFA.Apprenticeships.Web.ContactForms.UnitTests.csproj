@@ -9,8 +9,8 @@
     <ProjectGuid>{EEE2663C-AEB9-48EF-8096-8A2D61EA811F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Web.Employer.Tests</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Web.Employer.Tests</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Web.ContactForms.Tests</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Web.ContactForms.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
