@@ -18,14 +18,15 @@
         public void SubmitMessage(ContactMessage message)
         {
             var helpdeskAddress = _configurationManager.GetAppSetting<string>("HelpdeskEmailAddress");
-
+            var details = string.IsNullOrWhiteSpace(message.Details) ? string.Empty : message.Details;
+                
             _communicationService.SendContactMessage(message.UserId, MessageTypes.CandidateContactMessage, new[]
             {
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, helpdeskAddress),
                 new CommunicationToken(CommunicationTokens.UserEmailAddress, message.Email),
                 new CommunicationToken(CommunicationTokens.UserFullName, message.Name),
                 new CommunicationToken(CommunicationTokens.UserEnquiry, message.Enquiry),
-                new CommunicationToken(CommunicationTokens.UserEnquiryDetails, message.Details)
+                new CommunicationToken(CommunicationTokens.UserEnquiryDetails, details)
             });
         }
     }
