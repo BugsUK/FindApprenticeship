@@ -315,36 +315,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 94
  testRunner.When("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 95
- testRunner.And("I wait to see Firstname", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 96
- testRunner.And("I wait to see Lastname", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 97
- testRunner.And("I wait to see EmailAddress", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 98
- testRunner.And("I wait to see WorkPhoneNumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 99
- testRunner.And("I wait to see Companyname", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 100
- testRunner.And("I wait to see Position", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 101
- testRunner.And("I wait to see EmployeesCount", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 102
- testRunner.And("I wait to see WorkSector", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 103
- testRunner.And("I wait to see EnquiryDescription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 104
- testRunner.And("I wait to see PreviousExperienceType", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 105
- testRunner.And("I wait to see EnquirySource", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 106
- testRunner.And("I wait to see AddressLine1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 107
- testRunner.And("I wait to see City", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 108
- testRunner.And("I wait to see Postcode", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 109
  testRunner.And("I choose SendEmployerEnquiryButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 110
+#line 96
  testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -355,7 +327,7 @@ this.ScenarioSetup(scenarioInfo);
                         "ValidationSummaryCount",
                         "Equals",
                         "14"});
-#line 111
+#line 97
  testRunner.Then("I see", ((string)(null)), table13, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -370,9 +342,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#firstname"});
-#line 114
+#line 100
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table14, "And ");
-#line 118
+#line 104
  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
@@ -387,9 +359,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#lastname"});
-#line 119
+#line 105
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table15, "And ");
-#line 123
+#line 109
   testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
@@ -403,11 +375,11 @@ this.ScenarioSetup(scenarioInfo);
             table16.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#EmailAddress"});
-#line 124
+                        "#email"});
+#line 110
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table16, "And ");
-#line 128
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 114
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -420,11 +392,11 @@ this.ScenarioSetup(scenarioInfo);
             table17.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#WorkPhoneNumber"});
-#line 129
+                        "#workPhoneNumber"});
+#line 115
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table17, "And ");
-#line 133
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 119
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -437,11 +409,11 @@ this.ScenarioSetup(scenarioInfo);
             table18.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#Companyname"});
-#line 134
+                        "#companyname"});
+#line 120
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table18, "And ");
-#line 138
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 124
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -455,10 +427,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#Position"});
-#line 139
+#line 125
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table19, "And ");
-#line 143
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 129
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -473,10 +445,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#EmployeesCount"});
-#line 144
+#line 130
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table20, "And ");
-#line 148
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 134
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -490,10 +462,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#WorkSector"});
-#line 149
+#line 135
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table21, "And ");
-#line 153
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 139
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -507,10 +479,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#EnquiryDescription"});
-#line 154
+#line 140
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table22, "And ");
-#line 158
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 144
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -524,10 +496,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#PreviousExperienceType"});
-#line 159
+#line 145
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table23, "And ");
-#line 163
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 149
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -541,10 +513,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#EnquirySource"});
-#line 164
+#line 150
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table24, "And ");
-#line 168
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 154
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -557,11 +529,11 @@ this.ScenarioSetup(scenarioInfo);
             table25.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#AddressLine1"});
-#line 169
+                        "#Address_AddressLine1"});
+#line 155
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table25, "And ");
-#line 173
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 159
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -574,11 +546,11 @@ this.ScenarioSetup(scenarioInfo);
             table26.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#City"});
-#line 174
+                        "#Address_City"});
+#line 160
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table26, "And ");
-#line 178
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 164
+ testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -591,8 +563,8 @@ this.ScenarioSetup(scenarioInfo);
             table27.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#Postcode"});
-#line 179
+                        "#Address_Postcode"});
+#line 165
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table27, "And ");
 #line hidden
             this.ScenarioCleanup();

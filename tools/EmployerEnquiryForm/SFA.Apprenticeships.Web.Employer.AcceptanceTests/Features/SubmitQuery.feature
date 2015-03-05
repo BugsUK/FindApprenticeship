@@ -88,24 +88,10 @@ Scenario: As a employer I am on the employer contact page
 	
 
 
-	@SmokeTest
+@SmokeTest
 Scenario: As a employer I am on the employer contact page and all required fields are present and all validators show correct validation messages	
 	Given I navigated to the EmployerEnquiryPage page	
-	When I am on the EmployerEnquiryPage page
-	And I wait to see Firstname
-	And I wait to see Lastname	
-	And I wait to see EmailAddress
-	And I wait to see WorkPhoneNumber
-	And I wait to see Companyname
-	And I wait to see Position
-	And I wait to see EmployeesCount
-	And I wait to see WorkSector
-	And I wait to see EnquiryDescription
-	And I wait to see PreviousExperienceType
-	And I wait to see EnquirySource
-	And I wait to see AddressLine1
-	And I wait to see City
-	And I wait to see Postcode
+	When I am on the EmployerEnquiryPage page	
 	And I choose SendEmployerEnquiryButton
 	And I wait to see ValidationSummary
 	Then I see
@@ -124,61 +110,61 @@ Scenario: As a employer I am on the employer contact page and all required field
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                      |
 		| Text  | Equals | Please enter email address |
-		| Href  | Equals | #EmailAddress              |
-		And I am on the EmployerEnquiryPage page
+		| Href  | Equals | #email                     |
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                          |
 		| Text  | Equals | Please enter work phone number |
-		| Href  | Equals | #WorkPhoneNumber               |	
-		And I am on the EmployerEnquiryPage page
+		| Href  | Equals | #workPhoneNumber               |	
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                          |
 		| Text  | Equals | Please enter your company name |
-		| Href  | Equals | #Companyname                   |	
-		And I am on the EmployerEnquiryPage page
+		| Href  | Equals | #companyname                   |	
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                            |
 		| Text  | Equals | Please enter position at company |
 		| Href  | Equals | #Position                        |	
-		And I am on the EmployerEnquiryPage page
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                                                                                      |
 		| Text  | Equals | Please select total number of employees or if you don't know then please select don't know |
 		| Href  | Equals | #EmployeesCount                                                                            |	
-		And I am on the EmployerEnquiryPage page
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                              |
 		| Text  | Equals | Please select your industry sector |
 		| Href  | Equals | #WorkSector                        |	
-		And I am on the EmployerEnquiryPage page
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                                   |
 		| Text  | Equals | Please tell us the nature of your query |
 		| Href  | Equals | #EnquiryDescription                     |	
-		And I am on the EmployerEnquiryPage page
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                                                 |
 		| Text  | Equals | Please select previous experience (Yes/No/Don't Know) |
 		| Href  | Equals | #PreviousExperienceType                               |	
-		And I am on the EmployerEnquiryPage page
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                                                   |
 		| Text  | Equals | Please select what has prompted you to make an enquiry? |
 		| Href  | Equals | #EnquirySource                                          |	
-		And I am on the EmployerEnquiryPage page
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                                   |
 		| Text  | Equals | Please enter your first line of address |
-		| Href  | Equals | #AddressLine1                           |
-		And I am on the EmployerEnquiryPage page
+		| Href  | Equals | #Address_AddressLine1                   |
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                  |
 		| Text  | Equals | Please enter your city |
-		| Href  | Equals | #City                  |
-		And I am on the EmployerEnquiryPage page
+		| Href  | Equals | #Address_City          |
+	And I am on the EmployerEnquiryPage page
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                      |
 		| Text  | Equals | Please enter your postcode |
-		| Href  | Equals | #Postcode                  |	
+		| Href  | Equals | #Address_Postcode          |
 	
 	
