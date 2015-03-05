@@ -8,8 +8,6 @@
     {
         MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString);
 
-        //MediatorResponse SavedToDraft(Guid candidateId, string vacancyIdString);
-
         MediatorResponse<ApprenticeshipApplicationViewModel> Resume(Guid candidateId, int vacancyId);
 
         MediatorResponse<ApprenticeshipApplicationViewModel> Save(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel);

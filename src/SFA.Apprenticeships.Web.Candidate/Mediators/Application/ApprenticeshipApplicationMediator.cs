@@ -47,32 +47,6 @@
             return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.Ok, parameters: new { id = vacancyId });
         }
 
-        //public MediatorResponse SavedToDraft(Guid candidateId, string vacancyIdString)
-        //{
-        //    int vacancyId;
-
-        //    if (!TryParseVacancyId(vacancyIdString, out vacancyId))
-        //    {
-        //        return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SavedToDraft.InvalidVacancyId);
-        //    }
-
-        //    try
-        //    {
-        //        var application = _apprenticeshipApplicationProvider.CreateDraftApplicationFromSavedVacancy(candidateId, vacancyId);
-
-        //        if (application == null || application.Status != ApplicationStatuses.Draft)
-        //        {
-        //            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SavedToDraft.InvalidVacancy);
-        //        }
-        //    }
-        //    catch
-        //    {
-        //        return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SavedToDraft.HasError);
-        //    }
-
-        //    return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SavedToDraft.Ok);
-        //}
-
         public MediatorResponse<ApprenticeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString)
         {
             int vacancyId;

@@ -10,14 +10,6 @@
             public const string OfflineVacancy = "ApprenticeshipApplication.Apply.OfflineVacancy";
         }
 
-        public class SavedToDraft
-        {
-            public const string Ok = "ApprenticeshipApplication.SavedToDraft.Ok";
-            public const string InvalidVacancyId = "ApprenticeshipApplication.SavedToDraft.InvalidVacancyId";
-            public const string InvalidVacancy = "ApprenticeshipApplication.SavedToDraft.InvalidVacancy";
-            public const string HasError = "ApprenticeshipApplication.SavedToDraft.HasError";            
-        }
-
         public class Submit
         {
             public const string VacancyNotFound = "ApprenticeshipApplication.Submit.VacancyNotFound";
