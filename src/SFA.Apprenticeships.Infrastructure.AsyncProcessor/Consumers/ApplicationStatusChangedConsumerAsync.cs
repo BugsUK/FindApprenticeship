@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
+    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Application.ApplicationUpdate.Entities;
@@ -14,16 +15,14 @@
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApplicationStatusAlertRepository _applicationStatusAlertRepository;
-        private readonly IMapper _mapper;
         private readonly ILogService _logService;
 
         public static string ApplicationNotFoundMessageFormat = "Unable to find apprenticeship application with legacy application ID '{0}'";
 
-        public ApplicationStatusChangedConsumerAsync(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IApplicationStatusAlertRepository applicationStatusAlertRepository, IMapper mapper, ILogService logService)
+        public ApplicationStatusChangedConsumerAsync(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IApplicationStatusAlertRepository applicationStatusAlertRepository, ILogService logService)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _applicationStatusAlertRepository = applicationStatusAlertRepository;
-            _mapper = mapper;
             _logService = logService;
         }
 
@@ -44,7 +43,17 @@
                 var applicationStatusAlert = applicationStatusAlerts.FirstOrDefault(asa => asa.BatchId == null);
                 if (applicationStatusAlert == null)
                 {
-                    applicationStatusAlert = _mapper.Map<ApprenticeshipApplicationDetail, ApplicationStatusAlert>(application);
+                    applicationStatusAlert = new ApplicationStatusAlert
+                    {
+                        CandidateId = application.CandidateId,
+                        ApplicationId = application.EntityId,
+                        VacancyId = application.Vacancy.Id,
+                        Title = application.Vacancy.Title,
+                        EmployerName = application.Vacancy.EmployerName,
+                        Status = application.Status,
+                        UnsuccessfulReason = application.UnsuccessfulReason,
+                        DateApplied = application.DateApplied ?? new DateTime()
+                    };
                 }
                 applicationStatusAlert.Status = applicationStatusChanged.ApplicationStatus;
                 applicationStatusAlert.UnsuccessfulReason = applicationStatusChanged.UnsuccessfulReason;

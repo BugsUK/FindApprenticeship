@@ -3,7 +3,6 @@
     using Application.Interfaces.Logging;
     using Consumers;
     using Domain.Interfaces.Repositories;
-    using Mappers;
     using Moq;
 
     public class ApplicationStatusChangedConsumerAsyncBuilder
@@ -32,7 +31,7 @@
 
         public ApplicationStatusChangedConsumerAsync Build()
         {
-            var consumer = new ApplicationStatusChangedConsumerAsync(_apprenticeshipApplicationReadRepository.Object, _applicationStatusAlertRepository.Object, new AsyncProcessorMapper(), _logService.Object);
+            var consumer = new ApplicationStatusChangedConsumerAsync(_apprenticeshipApplicationReadRepository.Object, _applicationStatusAlertRepository.Object, _logService.Object);
             return consumer;
         }
     }
