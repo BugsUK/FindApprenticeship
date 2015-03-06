@@ -5,7 +5,6 @@
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
-    using System.Web.Security;
     using Apprenticeships.Application.Interfaces.ReferenceData;
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
