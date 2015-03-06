@@ -126,6 +126,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
+                //TODO: Remove once the cause of the null candidate objects is fixed
                 if (model.Candidate == null)
                 {
                     var requestDebugString = Request.ToDebugString();
@@ -169,6 +170,7 @@
         {
             return await Task.Run(() =>
             {
+                //TODO: Remove once the cause of the null candidate objects is fixed
                 if (model.Candidate == null)
                 {
                     var requestDebugString = Request.ToDebugString();
