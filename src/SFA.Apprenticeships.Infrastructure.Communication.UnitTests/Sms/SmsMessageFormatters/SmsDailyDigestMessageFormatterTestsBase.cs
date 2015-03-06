@@ -5,7 +5,7 @@
 
     public abstract class SmsDailyDigestMessageFormatterTestsBase
     {
-        protected const string MessageTemplate = "You have received outcomes on some of your applications:\n{0}\n|You have {0} saved applications for apprenticeships that are due to close soon:\n{1}\nYou can check the status of your applications in the ‘My applications’ section of your account.";
+        protected const string MessageTemplate = "There has been a decision on the following applications:\n{0}\n|You have {0} saved applications for apprenticeships that are due to close soon:\n{1}\nYou can check the status of your applications in the ‘My applications’ section of your account.";
         protected const int MaxAlertCount = 3;
         protected const int MaxDraftCount = 3;
 

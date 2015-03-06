@@ -73,6 +73,7 @@
             // Apprenticeship applications.
             sb.Append("Apprenticeships:\n");
             sb.AppendFormat(" - Total number of applications: {0}\n", _apprenticeshipMetricsRepository.GetApplicationCount());
+            sb.AppendFormat("   - Saved: {0}\n", _apprenticeshipMetricsRepository.GetApplicationStateCount(ApplicationStatuses.Saved));
             sb.AppendFormat("   - Draft: {0}\n", _apprenticeshipMetricsRepository.GetApplicationStateCount(ApplicationStatuses.Draft));
             sb.AppendFormat("   - Submitted: {0}\n", _apprenticeshipMetricsRepository.GetApplicationStateCount(ApplicationStatuses.Submitted));
             sb.AppendFormat("   - Expired or Withdrawn: {0}\n", _apprenticeshipMetricsRepository.GetApplicationStateCount(ApplicationStatuses.ExpiredOrWithdrawn));

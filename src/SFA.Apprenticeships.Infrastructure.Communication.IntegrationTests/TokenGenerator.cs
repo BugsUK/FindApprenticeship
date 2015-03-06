@@ -106,25 +106,14 @@
             return tokens;
         }
 
-        public static IEnumerable<CommunicationToken> CreateContactMessageTokens()
+        public static IEnumerable<CommunicationToken> CreateContactMessageTokensWithDetails(string details)
         {
             return new[]
             {
                     new CommunicationToken(CommunicationTokens.UserEmailAddress, TestToEmail),
                     new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
                     new CommunicationToken(CommunicationTokens.UserEnquiry, "User enquiry"),
-                    new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "User enquiry details")
-            };
-        }
-
-        public static IEnumerable<CommunicationToken> CreateContactMessageTokensContainingUnicodeCharacters()
-        {
-            return new[]
-            {
-                    new CommunicationToken(CommunicationTokens.UserEmailAddress, TestToEmail),
-                    new CommunicationToken(CommunicationTokens.UserFullName, "It’s my full name"),
-                    new CommunicationToken(CommunicationTokens.UserEnquiry, "I’ve forgotten my password unicode."),
-                    new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "I’ve has unicode.")
+                    new CommunicationToken(CommunicationTokens.UserEnquiryDetails, details)
             };
         }
     }

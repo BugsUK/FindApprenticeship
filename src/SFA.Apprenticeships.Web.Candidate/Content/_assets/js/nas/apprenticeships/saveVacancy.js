@@ -1,30 +1,23 @@
 ﻿function initSavedVacancies (options) {
     var applicationStatuses = {
-        Unsaved: {
-            unsaved: true
-        },
-        Saved: {
-            saved: true
-        },
-        Draft: {
-            draft: true
-        },
-        Submitting: {
-            applied: true
-        },
-        Submitted: {
-            applied: true
-        },
-        InProgress: {
-            applied: true
-        },
-        Successful: {
-            applied: true
-        },
-        Unsuccessful: {
-            applied: true
-        }
+        Indeterminate: { },
+        Unsaved: { unsaved: true, },
+        Saved: { saved: true, },
+        Draft: { draft: true },
+        Submitting: { applied: true },
+        Submitted: { applied: true },
+        InProgress: { applied: true },
+        Successful: { applied: true },
+        Unsuccessful: { applied: true }
     };
+
+    function updateSaveVacancyIcon($saveLink, vacancyStatus) {
+        var $icon = $saveLink.children("i");
+
+        $icon.toggleClass("fa-spinner fa-spin", !(vacancyStatus.unsaved || vacancyStatus.saved));
+        $icon.toggleClass("fa-star", !vacancyStatus.unsaved);
+        $icon.toggleClass("fa-star-o", !vacancyStatus.saved);
+    }
 
     function updateSaveVacancyView (applicationStatus) {
         var $saveLink = $(this);
@@ -51,10 +44,7 @@
             return;
         }
 
-        var $icon = $saveLink.children("i");
-
-        $icon.toggleClass("fa-star", !vacancyStatus.unsaved);
-        $icon.toggleClass("fa-star-o", !vacancyStatus.saved);
+        updateSaveVacancyIcon($saveLink, vacancyStatus);
 
         var text = vacancyStatus.saved ? "Remove from saved" : "Save for later";
 
@@ -70,26 +60,36 @@
     $(".save-vacancy-link").on("click", function (e) {
         e.preventDefault();
 
-        var $self = $(this);
-        var save = $self.data("application-status") === "Unsaved";
-        var vacancyId = parseInt($self.data("vacancy-id"));
+        var $saveLink = $(this);
+        var applicationStatus = $saveLink.data("application-status");
+        var vacancyStatus = applicationStatuses[applicationStatus];
+
+        if (!vacancyStatus) {
+            return;
+        }
+
+        var vacancyId = parseInt($saveLink.data("vacancy-id"));
 
         var ajaxOptions = {
-            type: save ? "POST" : "DELETE",
-            url: save ? options.saveUrl : options.deleteUrl,
+            type: vacancyStatus.unsaved ? "POST" : "DELETE",
+            url: vacancyStatus.unsaved ? options.saveUrl : options.deleteUrl,
             data: {
                 id: vacancyId
             }
         };
 
+        updateSaveVacancyIcon($saveLink, applicationStatuses.Indeterminate);
+
         $.ajax(ajaxOptions)
             .done(function (result) {
-                updateSaveVacancyView.call($self, result.applicationStatus);
+                updateSaveVacancyView.call($saveLink, result.applicationStatus);
             })
             .fail(function () {
+                // Best efforts: revert application status.
+                updateSaveVacancyView.call($saveLink, applicationStatus);
             });
 
-        $self.blur();
+        $saveLink.blur();
     });
 
     // Initialise saved vacancy / resume application links.

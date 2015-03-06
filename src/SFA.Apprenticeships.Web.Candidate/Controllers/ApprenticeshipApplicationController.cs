@@ -118,7 +118,7 @@
         [HttpPost]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = " ")]
+        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
         [ApplyWebTrends]
         [ValidateInput(false)]
         [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]

@@ -34,10 +34,10 @@
         {
             return Task.Run(() =>
             {
-                //Get draft applications for expiring vacancy
+                //Get saved and draft applications for expiring vacancy
                 var expiringApplications = _apprenticeshipApplicationReadRepository
                     .GetApplicationSummaries(vacancy.Id)
-                    .Where(v => v.Status == ApplicationStatuses.Draft)
+                    .Where(v => v.Status == ApplicationStatuses.Saved || v.Status == ApplicationStatuses.Draft)
                     .ToList();
 
                 if (!expiringApplications.Any())

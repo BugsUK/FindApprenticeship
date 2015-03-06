@@ -10,7 +10,7 @@
 
 @if (Model.DeletedVacancyId != null && Model.DeletedVacancyTitle != null)
 {
-    const string deleteMessage = "You’ve successfully deleted your draft for the <a id='vacancyDeletedLink' href={0}>{1}</a> apprenticeship";
+    const string deleteMessage = "You've successfully removed the <a id='vacancyDeletedLink' href={0}>{1}</a> apprenticeship";
     var deletedMessageWithLink = string.Format(deleteMessage, Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.DeletedVacancyId }), Model.DeletedVacancyTitle);
      
     <div role="alert" aria-live="assertive" class="panel-info">
