@@ -176,9 +176,17 @@ else
                                             }
                                         </td>
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
-                                        <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
+                                        <td class="ta-center">
+                                            @{
+                                                var dateApplied = application.DateApplied;
+                                                if (dateApplied.HasValue)
+                                                {
+                                                    @Html.DisplayFor(m => dateApplied)
+                                                }
+                                            }
+                                        </td>
                                     </tr>
-                                    }
+                                }
                             </tbody>
                             <tbody class="tbody-expandrows">
                                 <tr class="no-btm-border">
@@ -296,7 +304,7 @@ else
                                         }
                                         else if (application.ApplicationStatus == ApplicationStatuses.Saved && application.VacancyStatus == VacancyStatuses.Live)
                                         {
-                                            @Html.ActionLink("Apply", "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "resume-link" })
+                                            @Html.RouteLink("Apply", CandidateRouteNames.ApprenticeshipDetails, new { id = application.VacancyId }, new { @class = "resume-link" })
                                         }
                                         else
                                         {

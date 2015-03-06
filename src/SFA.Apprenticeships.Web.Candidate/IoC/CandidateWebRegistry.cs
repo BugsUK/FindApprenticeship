@@ -121,6 +121,7 @@
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ICreateApprenticeshipApplicationStrategy>().Use<CreateApprenticeshipApplicationStrategy>();
+            For<ICreateDraftApprenticeshipFromSavedVacancyStrategy>().Use<CreateDraftApprenticeshipFromSavedVacancyStrategy>();
             For<ISaveApprenticeshipVacancyStrategy>().Use<CreateApprenticeshipApplicationStrategy>();
             For<ICreateTraineeshipApplicationStrategy>().Use<CreateTraineeshipApplicationStrategy>();
             For<ISaveApprenticeshipApplicationStrategy>().Use<SaveApprenticeshipApplicationStrategy>();

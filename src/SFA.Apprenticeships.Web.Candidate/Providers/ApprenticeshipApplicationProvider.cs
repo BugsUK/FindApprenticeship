@@ -55,6 +55,11 @@
                     return new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationNotFound, ApplicationViewModelStatus.ApplicationNotFound);
                 }
 
+                if (applicationDetails.Status == ApplicationStatuses.Saved)
+                {
+                    applicationDetails = _candidateService.CreateDraftFromSavedVacancy(candidateId, vacancyId);
+                }
+
                 var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);

@@ -1,11 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
     using System;
-    using System.Collections.Generic;
-    using System.Drawing.Printing;
     using System.Linq;
     using System.Web.Security;
-    using System.Web.UI.WebControls;
     using Common.Constants;
     using Common.Models.Application;
     using Common.Providers;

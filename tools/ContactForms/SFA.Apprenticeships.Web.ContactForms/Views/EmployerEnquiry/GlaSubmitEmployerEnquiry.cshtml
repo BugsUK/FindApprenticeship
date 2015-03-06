@@ -1,0 +1,122 @@
+﻿@using SFA.Apprenticeships.Web.ContactForms.Framework
+@model SFA.Apprenticeships.Web.ContactForms.ViewModels.EmployerEnquiryViewModel
+
+@{
+    ViewBag.Title = "GLA Employer - Enquiry form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <h1 class="heading-xlarge">Enquiry form</h1>
+    </div>
+</div>
+
+
+<p class="text">
+    If you are a London business and interested in taking on an apprentice or finding out more, please complete the form below.
+</p>
+
+<p class="text">
+    The data you enter in the form below is supplied directly to our partner, the National Apprenticeship Service who will contact you within 2 working days to provide you with information you need. Read NAS’ privacy policy.
+</p>
+
+<p>
+    <b>If you need more immediate advice, please call NAS on 08000 150 600.</b>
+</p>
+
+<p>
+    Different organisations deal with apprenticeships in <a href="http://www.mappit.org.uk/" rel="external">Scotland</a>, <a href="http://www.nidirect.gov.uk/index/information-and-services/education-and-learning/14-19/starter-skills-16-18/apprenticeships.htm" rel="external">Northern Ireland</a> and <a href="https://ams.careerswales.com/Public/Default.aspx?mode=vacancy&type=ams" rel="external">Wales</a>
+</p>
+
+
+@using (Html.BeginForm("GlaSubmitEmployerEnquiry", "EmployerEnquiry", FormMethod.Post))
+{
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <fieldset>
+        <legend class="heading-large">Your details</legend>
+
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.Title)
+            @Html.DropDownListFor(m => m.Title, Model.TitleList)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+        @Html.FormTextFor(
+            m => m.Firstname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.Lastname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.Position,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.WorkPhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" })
+
+        @Html.FormTextFor(
+            m => m.MobileNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" })
+
+        @Html.FormTextFor(
+            m => m.Email,
+            controlHtmlAttributes: new { @class = "form-control", type = "email" })
+
+        <legend class="heading-large">Company details</legend>
+
+        @Html.FormTextFor(
+            m => m.Companyname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.EditorFor(a => a.Address)
+
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.EmployeesCount)
+            @Html.DropDownListFor(m => m.EmployeesCount, Model.EmployeesCountList)
+            @Html.ValidationMessageFor(model => model.EmployeesCount)
+        </div>
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.WorkSector)
+            @Html.DropDownListFor(m => m.WorkSector, Model.WorkSectorList)
+            @Html.ValidationMessageFor(model => model.WorkSector)
+        </div>
+        <legend class="heading-large">Your enquiry</legend>
+        @Html.FormTextAreaFor(
+            m => m.EnquiryDescription,
+             controlHtmlAttributes: new { @class = "form-control", @rows = 7 })
+
+        <legend class="heading-large">Additional questions</legend>
+
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.PreviousExperienceType)
+            @Html.DropDownListFor(m => m.PreviousExperienceType, Model.PreviousExperienceTypeList)
+            @Html.ValidationMessageFor(model => model.PreviousExperienceType)
+        </div>
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.EnquirySource)
+            @Html.DropDownListFor(m => m.EnquirySource, Model.EnquirySourceList)
+            @Html.ValidationMessageFor(model => model.EnquirySource)
+        </div>
+        <div class="hidden"><strong>@Html.Honeypot("UserName")</strong></div>
+    </fieldset>
+    <br />
+    <div class="form-group">
+        <p>
+            <button class="button" id="submit-query-button" type="submit" >Send Enquiry</button>
+        </p>
+    </div>
+}
+@section scripts
+{
+    <script>
+        $(function () {
+
+            $("#find-addresses").addressLookup({
+                url: '@Url.Action("Addresses", "Location")',
+                selectlist: '#address-select'
+            });
+        });
+    </script>
+}

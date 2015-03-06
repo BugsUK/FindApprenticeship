@@ -1,0 +1,14 @@
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Mediators.Interfaces
+{
+    using Domain.Enums;
+    using ViewModels;
+
+    public interface IEmployerEnquiryMediator
+    {
+        MediatorResponse<ReferenceDataListViewModel> GetReferenceData(ReferenceDataTypes type);
+
+        MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry(EmployerEnquiryViewModel message);
+
+        MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry();
+    }
+}

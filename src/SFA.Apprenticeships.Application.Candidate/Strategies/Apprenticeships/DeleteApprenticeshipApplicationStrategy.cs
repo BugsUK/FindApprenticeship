@@ -22,7 +22,7 @@
 
             if (applicationDetail != null)
             {
-                applicationDetail.AssertState("Delete application", ApplicationStatuses.Draft, ApplicationStatuses.ExpiredOrWithdrawn);
+                applicationDetail.AssertState("Delete application", ApplicationStatuses.Saved, ApplicationStatuses.Draft, ApplicationStatuses.ExpiredOrWithdrawn);
 
                 _apprenticeshipApplicationWriteRepository.Delete(applicationDetail.EntityId);
             }
