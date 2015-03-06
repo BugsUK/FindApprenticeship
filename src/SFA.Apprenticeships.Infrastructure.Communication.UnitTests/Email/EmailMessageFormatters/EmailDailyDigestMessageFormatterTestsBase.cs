@@ -46,7 +46,7 @@
         {
             if (alerts == null || alerts.Count == 0) return string.Empty;
 
-            var stringBuilder = new StringBuilder("<p>There has been a decision on the following applications:</p>");
+            var stringBuilder = new StringBuilder("<p>There has been an update on the following applications:</p>");
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Successful))
             {
