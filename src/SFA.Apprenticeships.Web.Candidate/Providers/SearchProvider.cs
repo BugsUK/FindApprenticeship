@@ -153,10 +153,12 @@
                     if (nonNationalResults.Total == 0 && nationalResults.Total > 0)
                     {
                         nonNationlResponse.Vacancies = nationalResponse.Vacancies;
-                        //Why would this need to change ordering? Commented out to fix tests = KB 02/03/2015
-                        //If no other tests fail, these 3 commented lines can be removed
-                        //nonNationlResponse.VacancySearch.SortType = VacancySearchSortType.ClosingDate;
-                        nonNationlResponse.VacancySearch.LocationType = ApprenticeshipLocationType.National;
+                        var vacancySearch = nonNationlResponse.VacancySearch;
+                        if (vacancySearch.SearchAction == SearchAction.Search || vacancySearch.SortType == VacancySearchSortType.Distance)
+                        {
+                            vacancySearch.SortType = string.IsNullOrWhiteSpace(vacancySearch.Keywords) ? VacancySearchSortType.ClosingDate : VacancySearchSortType.Relevancy;
+                        }
+                        vacancySearch.LocationType = ApprenticeshipLocationType.National;
                         SetAggregationResults(nonNationlResponse, nationalResults.AggregationResults);
                     }
                     else
