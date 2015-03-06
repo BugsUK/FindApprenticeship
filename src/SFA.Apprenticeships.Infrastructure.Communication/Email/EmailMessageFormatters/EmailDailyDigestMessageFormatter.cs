@@ -93,7 +93,7 @@
             var substitutionText = string.Empty;
             if (itemCount > 0)
             {
-                substitutionText = "<p>Saved applications due to expire</p>" + (itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire);
+                substitutionText = "<p><b>Saved applications due to expire</b></p>" + (itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire);
             }
 
             return substitutionText;
