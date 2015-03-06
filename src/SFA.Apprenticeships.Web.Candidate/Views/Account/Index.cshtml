@@ -176,9 +176,17 @@ else
                                             }
                                         </td>
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
-                                        <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
+                                        <td class="ta-center">
+                                            @{
+                                                var dateApplied = application.DateApplied;
+                                                if (dateApplied.HasValue)
+                                                {
+                                                    @Html.DisplayFor(m => dateApplied)
+                                                }
+                                            }
+                                        </td>
                                     </tr>
-                                    }
+                                }
                             </tbody>
                             <tbody class="tbody-expandrows">
                                 <tr class="no-btm-border">

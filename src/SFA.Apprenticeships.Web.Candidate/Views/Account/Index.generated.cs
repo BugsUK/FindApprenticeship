@@ -926,20 +926,45 @@ WriteLiteral("</td>\r\n                                        <td");
 
 WriteLiteral(" class=\"ta-center\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
 
             
-            #line 179 "..\..\Views\Account\Index.cshtml"
-                                                         Write(Html.DisplayFor(m => application.DateApplied));
+            #line 180 "..\..\Views\Account\Index.cshtml"
+                                            
+            
+            #line default
+            #line hidden
+            
+            #line 180 "..\..\Views\Account\Index.cshtml"
+                                              
+                                                var dateApplied = application.DateApplied;
+                                                if (dateApplied.HasValue)
+                                                {
+                                                    
+            
+            #line default
+            #line hidden
+            
+            #line 184 "..\..\Views\Account\Index.cshtml"
+                                               Write(Html.DisplayFor(m => dateApplied));
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                                    </tr>\r\n");
+            
+            #line 184 "..\..\Views\Account\Index.cshtml"
+                                                                                      
+                                                }
+                                            
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                                        </td>\r\n                                " +
+"    </tr>\r\n");
 
             
-            #line 181 "..\..\Views\Account\Index.cshtml"
-                                    }
+            #line 189 "..\..\Views\Account\Index.cshtml"
+                                }
 
             
             #line default
@@ -977,7 +1002,7 @@ WriteLiteral("></i>More</a>\r\n                                    </td>\r\n    
 "table>\r\n");
 
             
-            #line 192 "..\..\Views\Account\Index.cshtml"
+            #line 200 "..\..\Views\Account\Index.cshtml"
                         }
 
             
@@ -986,13 +1011,13 @@ WriteLiteral("></i>More</a>\r\n                                    </td>\r\n    
 WriteLiteral("\r\n");
 
             
-            #line 194 "..\..\Views\Account\Index.cshtml"
+            #line 202 "..\..\Views\Account\Index.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 194 "..\..\Views\Account\Index.cshtml"
+            #line 202 "..\..\Views\Account\Index.cshtml"
                      if (Model.UnsuccessfulApplications.Any())
                     {
 
@@ -1008,7 +1033,7 @@ WriteLiteral(" id=\"dashUnsuccessful\"");
 WriteLiteral(">Unsuccessful</h2>\r\n");
 
             
-            #line 197 "..\..\Views\Account\Index.cshtml"
+            #line 205 "..\..\Views\Account\Index.cshtml"
                             if (Model.UnsuccessfulApplications.Any(a => a.ApplicationStatus == ApplicationStatuses.Unsuccessful))
                             {
 
@@ -1035,7 +1060,7 @@ WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/pages/home.as
 WriteLiteral(">National Careers Service</a>.</p>\r\n                                </div>\r\n");
 
             
-            #line 203 "..\..\Views\Account\Index.cshtml"
+            #line 211 "..\..\Views\Account\Index.cshtml"
                             }
 
             
@@ -1066,13 +1091,13 @@ WriteLiteral(" class=\"tbody-3rows tbody-withReasons\"");
 WriteLiteral(">\r\n");
 
             
-            #line 212 "..\..\Views\Account\Index.cshtml"
+            #line 220 "..\..\Views\Account\Index.cshtml"
                                     
             
             #line default
             #line hidden
             
-            #line 212 "..\..\Views\Account\Index.cshtml"
+            #line 220 "..\..\Views\Account\Index.cshtml"
                                      foreach (var application in @Model.UnsuccessfulApplications)
                                     {
 
@@ -1083,13 +1108,13 @@ WriteLiteral("                                        <tr>\r\n                  
 "         <td>\r\n");
 
             
-            #line 216 "..\..\Views\Account\Index.cshtml"
+            #line 224 "..\..\Views\Account\Index.cshtml"
                                                 
             
             #line default
             #line hidden
             
-            #line 216 "..\..\Views\Account\Index.cshtml"
+            #line 224 "..\..\Views\Account\Index.cshtml"
                                                  if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                                 {
                                                     
@@ -1097,7 +1122,7 @@ WriteLiteral("                                        <tr>\r\n                  
             #line default
             #line hidden
             
-            #line 218 "..\..\Views\Account\Index.cshtml"
+            #line 226 "..\..\Views\Account\Index.cshtml"
                                                Write(application.Title);
 
             
@@ -1108,7 +1133,7 @@ WriteLiteral(" ");
 WriteLiteral("with ");
 
             
-            #line 218 "..\..\Views\Account\Index.cshtml"
+            #line 226 "..\..\Views\Account\Index.cshtml"
                                                                          Write(application.EmployerName);
 
             
@@ -1117,7 +1142,7 @@ WriteLiteral("with ");
 WriteLiteral("\r\n");
 
             
-            #line 219 "..\..\Views\Account\Index.cshtml"
+            #line 227 "..\..\Views\Account\Index.cshtml"
                                                 }
                                                 else
                                                 {
@@ -1126,14 +1151,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 222 "..\..\Views\Account\Index.cshtml"
+            #line 230 "..\..\Views\Account\Index.cshtml"
                                                Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
-            #line 222 "..\..\Views\Account\Index.cshtml"
+            #line 230 "..\..\Views\Account\Index.cshtml"
                                                                                                                                                                                                                                             
                                                 }
 
@@ -1150,7 +1175,7 @@ WriteLiteral(" class=\"ta-center\"");
 WriteLiteral(">");
 
             
-            #line 225 "..\..\Views\Account\Index.cshtml"
+            #line 233 "..\..\Views\Account\Index.cshtml"
                                                                                                  Write(application.ApplicationStatusDescription);
 
             
@@ -1166,14 +1191,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black archive-unsuccessful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13153), Tuple.Create("\"", 13229)
+WriteAttribute("href", Tuple.Create(" href=\"", 13597), Tuple.Create("\"", 13673)
             
-            #line 227 "..\..\Views\Account\Index.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 13160), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
+            #line 235 "..\..\Views\Account\Index.cshtml"
+                                                    , Tuple.Create(Tuple.Create("", 13604), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 13160), false)
+, 13604), false)
 );
 
 WriteLiteral("><i");
@@ -1188,7 +1213,7 @@ WriteLiteral(">Remove from my applications</span></a>\r\n                       
 "    </td>\r\n                                        </tr>\r\n");
 
             
-            #line 230 "..\..\Views\Account\Index.cshtml"
+            #line 238 "..\..\Views\Account\Index.cshtml"
 
                                         if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
                                         {
@@ -1204,7 +1229,7 @@ WriteLiteral(" colspan=\"3\"");
 WriteLiteral(">\r\n                                                    <b>Reason:</b> ");
 
             
-            #line 235 "..\..\Views\Account\Index.cshtml"
+            #line 243 "..\..\Views\Account\Index.cshtml"
                                                               Write(application.UnsuccessfulReason);
 
             
@@ -1214,7 +1239,7 @@ WriteLiteral("\r\n                                                </td>\r\n     
 "                    </tr>\r\n");
 
             
-            #line 238 "..\..\Views\Account\Index.cshtml"
+            #line 246 "..\..\Views\Account\Index.cshtml"
                                         }
                                     }
 
@@ -1254,7 +1279,7 @@ WriteLiteral("></i>More</a>\r\n                                        </td>\r\n
 "              </table>\r\n");
 
             
-            #line 250 "..\..\Views\Account\Index.cshtml"
+            #line 258 "..\..\Views\Account\Index.cshtml"
                         }
 
             
@@ -1263,7 +1288,7 @@ WriteLiteral("></i>More</a>\r\n                                        </td>\r\n
 WriteLiteral("                </section>\r\n            </div>\r\n        </div>\r\n");
 
             
-            #line 254 "..\..\Views\Account\Index.cshtml"
+            #line 262 "..\..\Views\Account\Index.cshtml"
         }
 
             
@@ -1272,13 +1297,13 @@ WriteLiteral("                </section>\r\n            </div>\r\n        </div>
 WriteLiteral("\r\n");
 
             
-            #line 256 "..\..\Views\Account\Index.cshtml"
+            #line 264 "..\..\Views\Account\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 256 "..\..\Views\Account\Index.cshtml"
+            #line 264 "..\..\Views\Account\Index.cshtml"
      if (
             Model.DraftApprenticeshipApplications.Any() ||
             Model.TraineeshipApplications.Any())
@@ -1298,13 +1323,13 @@ WriteLiteral(" class=\"clearfix\"");
 WriteLiteral(">\r\n");
 
             
-            #line 262 "..\..\Views\Account\Index.cshtml"
+            #line 270 "..\..\Views\Account\Index.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 262 "..\..\Views\Account\Index.cshtml"
+            #line 270 "..\..\Views\Account\Index.cshtml"
                  if (Model.DraftApprenticeshipApplications.Any())
                 {
 
@@ -1339,13 +1364,13 @@ WriteLiteral(">\r\n                            <col>\r\n                        
 "                  <tbody>\r\n");
 
             
-            #line 273 "..\..\Views\Account\Index.cshtml"
+            #line 281 "..\..\Views\Account\Index.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 273 "..\..\Views\Account\Index.cshtml"
+            #line 281 "..\..\Views\Account\Index.cshtml"
                              foreach (var application in @Model.DraftApprenticeshipApplications)
                             {
 
@@ -1355,13 +1380,13 @@ WriteLiteral(">\r\n                            <col>\r\n                        
 WriteLiteral("                                <tr>\r\n                                    <td>\r\n");
 
             
-            #line 277 "..\..\Views\Account\Index.cshtml"
+            #line 285 "..\..\Views\Account\Index.cshtml"
                                         
             
             #line default
             #line hidden
             
-            #line 277 "..\..\Views\Account\Index.cshtml"
+            #line 285 "..\..\Views\Account\Index.cshtml"
                                          if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                         {
                                             
@@ -1369,7 +1394,7 @@ WriteLiteral("                                <tr>\r\n                          
             #line default
             #line hidden
             
-            #line 279 "..\..\Views\Account\Index.cshtml"
+            #line 287 "..\..\Views\Account\Index.cshtml"
                                        Write(application.Title);
 
             
@@ -1380,7 +1405,7 @@ WriteLiteral(" ");
 WriteLiteral("with ");
 
             
-            #line 279 "..\..\Views\Account\Index.cshtml"
+            #line 287 "..\..\Views\Account\Index.cshtml"
                                                                  Write(application.EmployerName);
 
             
@@ -1389,7 +1414,7 @@ WriteLiteral("with ");
 WriteLiteral("\r\n");
 
             
-            #line 280 "..\..\Views\Account\Index.cshtml"
+            #line 288 "..\..\Views\Account\Index.cshtml"
                                         }
                                         else
                                         {
@@ -1398,14 +1423,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 283 "..\..\Views\Account\Index.cshtml"
+            #line 291 "..\..\Views\Account\Index.cshtml"
                                        Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
-            #line 283 "..\..\Views\Account\Index.cshtml"
+            #line 291 "..\..\Views\Account\Index.cshtml"
                                                                                                                                                                                                                                     
 
                                             if (application.VacancyStatus == VacancyStatuses.Live)
@@ -1419,20 +1444,20 @@ WriteLiteral("                                                <br />\r\n");
 WriteLiteral("                                                <strong>Closing date:</strong> ");
 
             
-            #line 288 "..\..\Views\Account\Index.cshtml"
+            #line 296 "..\..\Views\Account\Index.cshtml"
                                                                                
             
             #line default
             #line hidden
             
-            #line 288 "..\..\Views\Account\Index.cshtml"
+            #line 296 "..\..\Views\Account\Index.cshtml"
                                                                           Write(application.ClosingDate.ToFriendlyClosingWeek());
 
             
             #line default
             #line hidden
             
-            #line 288 "..\..\Views\Account\Index.cshtml"
+            #line 296 "..\..\Views\Account\Index.cshtml"
                                                                                                                                
                                             }
                                         }
@@ -1448,13 +1473,13 @@ WriteLiteral(" class=\"ta-center\"");
 WriteLiteral(">\r\n");
 
             
-            #line 293 "..\..\Views\Account\Index.cshtml"
+            #line 301 "..\..\Views\Account\Index.cshtml"
                                         
             
             #line default
             #line hidden
             
-            #line 293 "..\..\Views\Account\Index.cshtml"
+            #line 301 "..\..\Views\Account\Index.cshtml"
                                          if (application.ApplicationStatus == ApplicationStatuses.Draft && application.VacancyStatus == VacancyStatuses.Live)
                                         {
                                             
@@ -1462,14 +1487,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 295 "..\..\Views\Account\Index.cshtml"
+            #line 303 "..\..\Views\Account\Index.cshtml"
                                        Write(Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" }));
 
             
             #line default
             #line hidden
             
-            #line 295 "..\..\Views\Account\Index.cshtml"
+            #line 303 "..\..\Views\Account\Index.cshtml"
                                                                                                                                                                                  
                                         }
                                         else if (application.ApplicationStatus == ApplicationStatuses.Saved && application.VacancyStatus == VacancyStatuses.Live)
@@ -1479,14 +1504,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 299 "..\..\Views\Account\Index.cshtml"
+            #line 307 "..\..\Views\Account\Index.cshtml"
                                        Write(Html.RouteLink("Apply", CandidateRouteNames.ApprenticeshipDetails, new { id = application.VacancyId }, new { @class = "resume-link" }));
 
             
             #line default
             #line hidden
             
-            #line 299 "..\..\Views\Account\Index.cshtml"
+            #line 307 "..\..\Views\Account\Index.cshtml"
                                                                                                                                                                                    
                                         }
                                         else
@@ -1503,7 +1528,7 @@ WriteLiteral("                                                    ");
 WriteLiteral("Apprenticeship closed\r\n");
 
             
-            #line 307 "..\..\Views\Account\Index.cshtml"
+            #line 315 "..\..\Views\Account\Index.cshtml"
                                                     break;
                                                 case VacancyStatuses.Unavailable:
 
@@ -1515,7 +1540,7 @@ WriteLiteral("                                                    ");
 WriteLiteral("Apprenticeship no longer available\r\n");
 
             
-            #line 310 "..\..\Views\Account\Index.cshtml"
+            #line 318 "..\..\Views\Account\Index.cshtml"
                                                     break;
                                             }
                                         }
@@ -1534,14 +1559,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 18592), Tuple.Create("\"", 18667)
+WriteAttribute("href", Tuple.Create(" href=\"", 19036), Tuple.Create("\"", 19111)
             
-            #line 315 "..\..\Views\Account\Index.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 18599), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
+            #line 323 "..\..\Views\Account\Index.cshtml"
+                                    , Tuple.Create(Tuple.Create("", 19043), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 18599), false)
+, 19043), false)
 );
 
 WriteLiteral("><i");
@@ -1556,7 +1581,7 @@ WriteLiteral(">Remove from my applications</span></a>\r\n                       
 ">\r\n                                </tr>\r\n");
 
             
-            #line 318 "..\..\Views\Account\Index.cshtml"
+            #line 326 "..\..\Views\Account\Index.cshtml"
                             }
 
             
@@ -1565,7 +1590,7 @@ WriteLiteral(">Remove from my applications</span></a>\r\n                       
 WriteLiteral("                        </tbody>\r\n                    </table>\r\n");
 
             
-            #line 321 "..\..\Views\Account\Index.cshtml"
+            #line 329 "..\..\Views\Account\Index.cshtml"
                 }
 
             
@@ -1574,13 +1599,13 @@ WriteLiteral("                        </tbody>\r\n                    </table>\r
 WriteLiteral("\r\n");
 
             
-            #line 323 "..\..\Views\Account\Index.cshtml"
+            #line 331 "..\..\Views\Account\Index.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 323 "..\..\Views\Account\Index.cshtml"
+            #line 331 "..\..\Views\Account\Index.cshtml"
                  if (Model.TraineeshipApplications.Any())
                 {
 
@@ -1621,13 +1646,13 @@ WriteLiteral(" class=\"tbody-3rows\"");
 WriteLiteral(">\r\n");
 
             
-            #line 334 "..\..\Views\Account\Index.cshtml"
+            #line 342 "..\..\Views\Account\Index.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 334 "..\..\Views\Account\Index.cshtml"
+            #line 342 "..\..\Views\Account\Index.cshtml"
                              foreach (var application in @Model.TraineeshipApplications)
                             {
 
@@ -1641,13 +1666,13 @@ WriteLiteral(" class=\"traineeship-table-row\"");
 WriteLiteral(">\r\n                                    <td>\r\n");
 
             
-            #line 338 "..\..\Views\Account\Index.cshtml"
+            #line 346 "..\..\Views\Account\Index.cshtml"
                                         
             
             #line default
             #line hidden
             
-            #line 338 "..\..\Views\Account\Index.cshtml"
+            #line 346 "..\..\Views\Account\Index.cshtml"
                                          if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                         {
                                             
@@ -1655,7 +1680,7 @@ WriteLiteral(">\r\n                                    <td>\r\n");
             #line default
             #line hidden
             
-            #line 340 "..\..\Views\Account\Index.cshtml"
+            #line 348 "..\..\Views\Account\Index.cshtml"
                                        Write(application.Title);
 
             
@@ -1666,7 +1691,7 @@ WriteLiteral(" ");
 WriteLiteral("with ");
 
             
-            #line 340 "..\..\Views\Account\Index.cshtml"
+            #line 348 "..\..\Views\Account\Index.cshtml"
                                                                  Write(application.EmployerName);
 
             
@@ -1675,7 +1700,7 @@ WriteLiteral("with ");
 WriteLiteral("\r\n");
 
             
-            #line 341 "..\..\Views\Account\Index.cshtml"
+            #line 349 "..\..\Views\Account\Index.cshtml"
                                         }
                                         else
                                         {
@@ -1684,14 +1709,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 344 "..\..\Views\Account\Index.cshtml"
+            #line 352 "..\..\Views\Account\Index.cshtml"
                                        Write(Html.ActionLink(application.Title + " with " + @application.EmployerName, "TraineeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" }));
 
             
             #line default
             #line hidden
             
-            #line 344 "..\..\Views\Account\Index.cshtml"
+            #line 352 "..\..\Views\Account\Index.cshtml"
                                                                                                                                                                                                                                  
                                         }
 
@@ -1710,7 +1735,7 @@ WriteLiteral(" class=\"ta-center\"");
 WriteLiteral(">");
 
             
-            #line 348 "..\..\Views\Account\Index.cshtml"
+            #line 356 "..\..\Views\Account\Index.cshtml"
                                                      Write(Html.DisplayFor(m => application.DateApplied));
 
             
@@ -1719,7 +1744,7 @@ WriteLiteral(">");
 WriteLiteral("</td>\r\n                                </tr>\r\n");
 
             
-            #line 350 "..\..\Views\Account\Index.cshtml"
+            #line 358 "..\..\Views\Account\Index.cshtml"
                             }
 
             
@@ -1757,7 +1782,7 @@ WriteLiteral("></i>More</a>\r\n                                </td>\r\n        
 " </tr>\r\n                        </tbody>\r\n                    </table>\r\n");
 
             
-            #line 361 "..\..\Views\Account\Index.cshtml"
+            #line 369 "..\..\Views\Account\Index.cshtml"
                 }
 
             
@@ -1766,7 +1791,7 @@ WriteLiteral("></i>More</a>\r\n                                </td>\r\n        
 WriteLiteral("            </section>\r\n        </div>\r\n");
 
             
-            #line 364 "..\..\Views\Account\Index.cshtml"
+            #line 372 "..\..\Views\Account\Index.cshtml"
         }
 
             
@@ -1775,7 +1800,7 @@ WriteLiteral("            </section>\r\n        </div>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 366 "..\..\Views\Account\Index.cshtml"
+            #line 374 "..\..\Views\Account\Index.cshtml"
 }
 
             
