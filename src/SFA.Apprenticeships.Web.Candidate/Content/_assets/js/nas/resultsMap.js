@@ -83,9 +83,9 @@
 
         setMarkers(map, vacancies)
 
-        if (latLngList.length > 1) {
+        if (latLngList.length > 1 && $('#LocationType').val() == 'NonNational') {
             map.fitBounds(bounds);
-        } else if (apprMiles > 0) {
+        } else if (apprMiles > 0 && $('#LocationType').val() == 'NonNational') {
             map.fitBounds(radiusBounds);
 
             zoomChangeBoundsListener =
@@ -101,6 +101,10 @@
 
         } else if (apprMiles == 0) {
             map.setZoom(5);
+        }
+
+        if (apprMiles > 0 && $('#LocationType').val() == 'National') {
+            map.fitBounds(radiusBounds);
         }
 
     }
