@@ -52,7 +52,7 @@
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index(ApprenticeshipSearchMode searchMode)
         {
-            var distances = GetDistances();
+            var distances = GetDistances(true);
             var sortTypes = GetSortTypes();
             var resultsPerPage = GetResultsPerPage();
             var apprenticeshipLevels = GetApprenticeshipLevels();
@@ -110,7 +110,7 @@
 
             if (!clientResult.IsValid)
             {
-                model.Distances = GetDistances();
+                model.Distances = GetDistances(true);
                 model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
                 model.Categories = GetCategories();
@@ -145,8 +145,8 @@
             }
 
             PopulateSortType(model);
-            
-            model.Distances = GetDistances();
+
+            model.Distances = GetDistances(true);
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
             model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
             model.Categories = GetCategories();

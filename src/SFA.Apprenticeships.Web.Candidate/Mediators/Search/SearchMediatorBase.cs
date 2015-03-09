@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
     using System.Collections;
+    using System.Collections.Generic;
     using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Apprenticeships.Application.Interfaces.Vacancies;
@@ -24,20 +25,26 @@
             UserDataProvider = userDataProvider;
         }
 
-        protected static SelectList GetDistances()
+        protected static SelectList GetDistances(bool includeEngland)
         {
+            var distanceOptions = new List<object>
+            {
+                new {WithinDistance = 2, Name = "2 miles"},
+                new {WithinDistance = 5, Name = "5 miles"},
+                new {WithinDistance = 10, Name = "10 miles"},
+                new {WithinDistance = 15, Name = "15 miles"},
+                new {WithinDistance = 20, Name = "20 miles"},
+                new {WithinDistance = 30, Name = "30 miles"},
+                new {WithinDistance = 40, Name = "40 miles"}
+            };
+
+            if (includeEngland)
+            {
+                distanceOptions.Add(new { WithinDistance = 0, Name = "England" });
+            }
+
             var distances = new SelectList(
-                new[]
-                {
-                    new {WithinDistance = 2, Name = "2 miles"},
-                    new {WithinDistance = 5, Name = "5 miles"},
-                    new {WithinDistance = 10, Name = "10 miles"},
-                    new {WithinDistance = 15, Name = "15 miles"},
-                    new {WithinDistance = 20, Name = "20 miles"},
-                    new {WithinDistance = 30, Name = "30 miles"},
-                    new {WithinDistance = 40, Name = "40 miles"},
-                    new {WithinDistance = 0, Name = "England"}
-                },
+                distanceOptions.ToArray(),
                 "WithinDistance",
                 "Name"
                 );

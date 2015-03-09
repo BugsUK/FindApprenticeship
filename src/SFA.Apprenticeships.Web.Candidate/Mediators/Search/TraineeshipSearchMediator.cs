@@ -40,7 +40,7 @@
             var traineeshipSearchViewModel = new TraineeshipSearchViewModel
             {
                 WithinDistance = 40,
-                Distances = GetDistances(),
+                Distances = GetDistances(false),
                 SortTypes = GetSortTypes(),
                 SortType = VacancySearchSortType.Distance,
                 ResultsPerPage = GetResultsPerPage()
@@ -60,7 +60,7 @@
 
             UserDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
 
-            model.Distances = GetDistances();
+            model.Distances = GetDistances(false);
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
 
             var clientResult = _searchRequestValidator.Validate(model);
