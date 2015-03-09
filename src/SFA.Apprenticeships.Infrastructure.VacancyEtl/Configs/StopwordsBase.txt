@@ -1,4 +1,8 @@
-﻿apprenticeship
-apprenticeships
+﻿apprenticeships
+apprenticeship
 traineeship
 traineeships
+apprentice
+trainee
+all
+any
