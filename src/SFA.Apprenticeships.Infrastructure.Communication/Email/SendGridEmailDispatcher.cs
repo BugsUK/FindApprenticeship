@@ -17,9 +17,9 @@
     {
         private readonly ILogService _logger;
 
+        private readonly string _userName;
         private readonly string _password;
         private readonly SendGridTemplateConfiguration[] _templates;
-        private readonly string _userName;
         private readonly IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> _messageFormatters;
         private readonly IEnumerable<IEmailFromResolver> _emailFromResolvers;
 
@@ -84,7 +84,7 @@
         private void PopulateTemplate(EmailRequest request, SendGridMessage message)
         {
             // NOTE: https://sendgrid.com/docs/API_Reference/SMTP_API/substitution_tags.html.
-            if (!_messageFormatters.Any(mf => mf.Key == request.MessageType))
+            if (_messageFormatters.All(mf => mf.Key != request.MessageType))
             {
                 var errorMessage = string.Format("Populate template: No message formatter exists for MessageType name: {0}", request.MessageType);
                 _logger.Error(errorMessage);
