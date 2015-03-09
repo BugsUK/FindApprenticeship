@@ -24,7 +24,11 @@
                 <div class="tabbed-content active">
 
                     @Html.Partial("_categoriesAndSubCategories", Model)
-                    @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new { @class = "tabbed-element tab1" + searchTabControlClass })
+                    
+                    @Html.Partial("_refineSearch", Model)
+
+                    @Html.FormTextFor(m => m.Keywords, hintText: "", containerHtmlAttributes: new { @class = "tabbed-element tab1" + searchTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
+
                     @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "tabbed-element tab1" + categoriesTabClass + elementControlClass})
 
                     @if (Model.LocationSearches != null && Model.LocationSearches.Length > 0)

@@ -1,10 +1,10 @@
-﻿using System.Linq;
-using OpenQA.Selenium;
-using SpecBind.Pages;
-using SpecBind.Selenium;
-
-namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.ApprenticeshipSearch
 {
+    using System.Linq;
+    using OpenQA.Selenium;
+    using SpecBind.Pages;
+    using SpecBind.Selenium;
+
     [ElementLocator(Class = "search-results__item")]
     public class ApprenticeshipSearchResultsItem : WebElement
     {

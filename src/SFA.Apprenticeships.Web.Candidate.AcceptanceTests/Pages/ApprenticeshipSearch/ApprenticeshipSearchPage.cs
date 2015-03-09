@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.ApprenticeshipSearch
 {
     using System.Linq;
-    using ApprenticeshipSearch;
-    using global::SpecBind.Pages;
     using OpenQA.Selenium;
+    using SpecBind.Pages;
 
     [PageNavigation("/apprenticeshipsearch")]
     [PageAlias("ApprenticeshipSearchPage")]
@@ -14,6 +13,18 @@
         public ApprenticeshipSearchPage(ISearchContext context) : base(context)
         {
         }
+
+        [ElementLocator(Id = "refine-search")]
+        public IWebElement RefineSearchLink { get; set; }
+
+        [ElementLocator(Id = "refine-controls")]
+        public IWebElement RefineControls { get; set; }
+
+        [ElementLocator(Id = "refine_all")]
+        public IWebElement RefineControlAll { get; set; }
+
+        [ElementLocator(Id = "refine-jobtitle")]
+        public IWebElement RefineControlJobTitle { get; set; }
 
         [ElementLocator(Id = "Keywords")]
         public IWebElement Keywords { get; set; }

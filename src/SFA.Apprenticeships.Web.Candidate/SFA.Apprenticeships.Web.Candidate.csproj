@@ -266,6 +266,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <Content Include="Content\_assets\js\nas\apprenticeships\saveVacancy.js" />
+    <Content Include="Content\_assets\js\nas\refineSearch.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="TraineeshipNotFound.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />
@@ -636,6 +637,10 @@
     <Content Include="Startup\DisableSslv3.ps1" />
     <Content Include="Startup\startup.cmd" />
     <Content Include="Startup\startup.ps1" />
+    <Content Include="Views\ApprenticeshipSearch\_refineSearch.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_refineSearch.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1034,6 +1039,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_pagination.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_refineSearch.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_refineSearch.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApprenticeshipSearch\_searchResults.generated.cs">
       <AutoGen>True</AutoGen>

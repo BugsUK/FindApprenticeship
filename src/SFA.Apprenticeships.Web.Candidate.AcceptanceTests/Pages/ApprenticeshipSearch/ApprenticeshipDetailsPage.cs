@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.ApprenticeshipSearch
 {
-    using global::SpecBind.Pages;
     using OpenQA.Selenium;
+    using SpecBind.Pages;
 
     [PageNavigation("/apprenticeship/[0-9]+", UrlTemplate = "/apprenticeship/{VacancyId}")]
     [PageAlias("ApprenticeshipDetailsPage")]

@@ -12,6 +12,9 @@
     [Validator(typeof (ApprenticeshipSearchViewModelClientValidator))]
     public class ApprenticeshipSearchViewModel : VacancySearchViewModel
     {
+
+        private string _searchField;
+
         public ApprenticeshipSearchViewModel()
         {
         }
@@ -24,6 +27,7 @@
             Category = viewModel.Category;
             SubCategories = viewModel.SubCategories;
             SearchMode = viewModel.SearchMode;
+            SearchField = viewModel.SearchField;
         }
 
         [Display(Name = ApprenticeshipSearchViewModelMessages.KeywordMessages.LabelText, Description = ApprenticeshipSearchViewModelMessages.KeywordMessages.HintText)]
@@ -44,10 +48,24 @@
         {
             get
             {
-                //TODO: wire up to UI once agreed
-                return "All";
+                return string.IsNullOrEmpty(_searchField) ? "All" : _searchField;
             }
-            set { }
+            set
+            {
+                switch (value)
+                {
+                    case "All":
+                    case "JobTitle":
+                    case "Description":
+                    case "Employer":
+                    case "Reference":
+                        _searchField = value;
+                        break;
+                    default:
+                        _searchField = "All";
+                        break;
+                }
+            }
         }
 
         public IList<Category> Categories { get; set; }
