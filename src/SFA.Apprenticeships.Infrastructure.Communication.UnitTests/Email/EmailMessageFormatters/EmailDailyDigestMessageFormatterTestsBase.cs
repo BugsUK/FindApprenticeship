@@ -35,7 +35,7 @@
 
             var stringBuilder = new StringBuilder();
 
-            stringBuilder.Append("<p><b>Saved applications due to expire</b></p>");
+            stringBuilder.Append("<p><b><a href=\"https://" + SiteDomainName + "/myapplications#dashDrafts\">Saved applications due to expire</a></b></p>");
             stringBuilder.Append(expiringDrafts.Count == 1 ? EmailDailyDigestMessageFormatter.OneSavedApplicationAboutToExpire : EmailDailyDigestMessageFormatter.MoreThanOneSaveApplicationAboutToExpire);
             
             var lineItems = expiringDrafts.Select(d => string.Format("<li><a href=\"https://" + SiteDomainName + "/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>", d.VacancyId, d.Title, d.EmployerName, d.ClosingDate.ToLongDateString()));

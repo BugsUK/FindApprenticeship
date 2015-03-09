@@ -96,14 +96,15 @@
             AddSubstitutionTo(message, sendgridToken, substitutionText);
         }
 
-        private static string GetExpiringDraftsItemCountData(List<ExpiringApprenticeshipApplicationDraft> drafts)
+        private string GetExpiringDraftsItemCountData(List<ExpiringApprenticeshipApplicationDraft> drafts)
         {
             var itemCount = drafts.Count;
 
             var substitutionText = string.Empty;
             if (itemCount > 0)
             {
-                substitutionText = "<p><b>Saved applications due to expire</b></p>" + (itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire);
+                var itemCountSubstitution = itemCount == 1 ? OneSavedApplicationAboutToExpire : MoreThanOneSaveApplicationAboutToExpire;
+                substitutionText = string.Format("<p><b><a href=\"https://{0}/myapplications#dashDrafts\">Saved applications due to expire</a></b></p>{1}", _siteDomainName, itemCountSubstitution);
             }
 
             return substitutionText;
