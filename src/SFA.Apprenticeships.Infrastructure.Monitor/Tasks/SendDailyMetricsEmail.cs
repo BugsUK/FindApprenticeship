@@ -19,7 +19,8 @@
         private readonly IUserMetricsRepository _userMetricsRepository;
         private readonly IApprenticeshipMetricsRepository _apprenticeshipMetricsRepository;
         private readonly ITraineeshipMetricsRepository _traineeshipMetricsRepository;
-        private readonly ICommunicationMetricsRepository _communicationsMetricsRepository;
+        private readonly IExpiringDraftsMetricsRepository _expiringDraftsMetricsRepository;
+        private readonly IApplicationStatusAlertsMetricsRepository _applicationStatusAlertsMetricsRepository;
 
         public SendDailyMetricsEmail(
             IConfigurationManager configurationManager,
@@ -27,14 +28,16 @@
             IApprenticeshipMetricsRepository apprenticeshipMetricsRepository,
             ITraineeshipMetricsRepository traineeshipMetricsRepository,
             IUserMetricsRepository userMetricsRepository,
-            ICommunicationMetricsRepository communicationsMetricsRepository)
+            IExpiringDraftsMetricsRepository expiringDraftsMetricsRepository,
+            IApplicationStatusAlertsMetricsRepository applicationStatusAlertsMetricsRepository)
         {
             _logger = logger;
             _configurationManager = configurationManager;
             _apprenticeshipMetricsRepository = apprenticeshipMetricsRepository;
             _traineeshipMetricsRepository = traineeshipMetricsRepository;
             _userMetricsRepository = userMetricsRepository;
-            _communicationsMetricsRepository = communicationsMetricsRepository;
+            _expiringDraftsMetricsRepository = expiringDraftsMetricsRepository;
+            _applicationStatusAlertsMetricsRepository = applicationStatusAlertsMetricsRepository;
         }
 
         public string TaskName
@@ -104,7 +107,8 @@
 
             // Communications.
             sb.Append("Communications:\n");
-            sb.AppendFormat(" - Expiring draft applications emails sent today: {0}\n", _communicationsMetricsRepository.GetDraftApplicationEmailsSentToday());
+            sb.AppendFormat(" - Expiring draft applications emails sent today: {0}\n", _expiringDraftsMetricsRepository.GetDraftApplicationEmailsSentToday());
+            sb.AppendFormat(" - Application status alert emails sent today: {0}\n", _applicationStatusAlertsMetricsRepository.GetApplicationStatusAlertEmailsSentToday());
 
             return sb.ToString();
         }

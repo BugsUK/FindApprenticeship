@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
-    public interface ICommunicationMetricsRepository
+    public interface IExpiringDraftsMetricsRepository
     {
         int GetDraftApplicationEmailsSentToday();
     }

@@ -43,7 +43,8 @@
 
             For<IMongoAdminClient>().Use<MongoAdminClient>();
             For<IApprenticeshipMetricsRepository>().Use<ApprenticeshipMetricsRepository>();
-            For<ICommunicationMetricsRepository>().Use<CommunicationMetricsRepository>();
+            For<IExpiringDraftsMetricsRepository>().Use<ExpiringDraftsMetricsRepository>();
+            For<IApplicationStatusAlertsMetricsRepository>().Use<ApplicationStatusAlertsMetricsRepository>();
             For<ITraineeshipMetricsRepository>().Use<TraineeshipMetricsRepository>();
             For<IUserMetricsRepository>().Use<UserMetricsRepository>();
         }

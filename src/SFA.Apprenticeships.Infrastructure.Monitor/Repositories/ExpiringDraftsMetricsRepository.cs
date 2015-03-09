@@ -7,9 +7,9 @@
     using Mongo.Common;
     using MongoDB.Driver.Linq;
 
-    public class CommunicationMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationExpiringDraft>, ICommunicationMetricsRepository
+    public class ExpiringDraftsMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationExpiringDraft>, IExpiringDraftsMetricsRepository
     {
-        public CommunicationMetricsRepository(IConfigurationManager configurationManager)
+        public ExpiringDraftsMetricsRepository(IConfigurationManager configurationManager)
             : base(configurationManager, "Communications.mongoDB", "expiringdraftapplications")
         {
         }

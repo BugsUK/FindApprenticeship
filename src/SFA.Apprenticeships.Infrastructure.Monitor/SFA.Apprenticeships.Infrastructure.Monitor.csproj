@@ -194,9 +194,11 @@
     </Compile>
     <Compile Include="Consumers\DailyMetricsControlQueueConsumer.cs" />
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
-    <Compile Include="Repositories\CommunicationMetricsRepository.cs" />
+    <Compile Include="Repositories\ApplicationStatusAlertsMetricsRepository.cs" />
+    <Compile Include="Repositories\ExpiringDraftsMetricsRepository.cs" />
     <Compile Include="Repositories\IApprenticeshipMetricsRepository.cs" />
-    <Compile Include="Repositories\ICommunicationMetricsRepository.cs" />
+    <Compile Include="Repositories\IApplicationStatusAlertsMetricsRepository.cs" />
+    <Compile Include="Repositories\IExpiringDraftsMetricsRepository.cs" />
     <Compile Include="Repositories\IUserMetricsRepository.cs" />
     <Compile Include="Repositories\ITraineeshipMetricsRepository.cs" />
     <Compile Include="Repositories\ApprenticeshipMetricsRepository.cs" />
