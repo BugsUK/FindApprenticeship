@@ -5,6 +5,7 @@
     using Application.Interfaces.Logging;
     using Common.IoC;
     using Email;
+    using FluentAssertions;
     using IoC;
     using Moq;
     using NUnit.Framework;
@@ -62,7 +63,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
@@ -77,7 +78,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
@@ -92,7 +93,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
@@ -106,7 +107,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
@@ -120,7 +121,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
@@ -134,7 +135,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
@@ -148,7 +149,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
@@ -162,7 +163,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
@@ -176,7 +177,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
@@ -185,33 +186,47 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = TokenGenerator.CreateContactMessageTokens(),
+                Tokens = TokenGenerator.CreateContactMessageTokensWithDetails("UserEnquiryDetails"),
                 MessageType = MessageTypes.CandidateContactMessage
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
         }
 
         [Test, Category("Integration")]
-        public void ShouldSendContactMessageContainingUnicodeCharacters()
+        public void ShouldNotSendContactMessageWithBlankEnquiryDetails()
         {
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = TokenGenerator.CreateContactMessageTokensContainingUnicodeCharacters(),
+                Tokens = TokenGenerator.CreateContactMessageTokensWithDetails(string.Empty),
                 MessageType = MessageTypes.CandidateContactMessage
             };
 
             _dispatcher.SendEmail(request);
-            VerifyNoErrorsLogged();
+            VerifyErrorsLogged(Times.Never());
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldNotSendContactMessageWithNullEnquiryDetails()
+        {
+            var request = new EmailRequest
+            {
+                ToEmail = TestToEmail,
+                Tokens = TokenGenerator.CreateContactMessageTokensWithDetails(null),
+                MessageType = MessageTypes.CandidateContactMessage
+            };
+
+            _dispatcher.SendEmail(request);
+            VerifyErrorsLogged(Times.Once());
         }
 
         #region Helpers
 
-        private void VerifyNoErrorsLogged()
+        private void VerifyErrorsLogged(Times times)
         {
-            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Never);
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), times);
         }
 
         #endregion

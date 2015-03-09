@@ -7,7 +7,6 @@
     using Microsoft.WindowsAzure;
     using Consumers;
     using Domain.Interfaces.Mapping;
-    using Mappers;
     using StructureMap.Configuration.DSL;
 
     public class AsyncProcessorRegistry : Registry
@@ -17,15 +16,12 @@
             var emailDispatcher = CloudConfigurationManager.GetSetting("EmailDispatcher");
             var smsDispatcher = CloudConfigurationManager.GetSetting("SmsDispatcher");
 
-            const string asyncProcessorMapper = "AsyncProcessorMapper";
-            For<IMapper>().Singleton().Use<AsyncProcessorMapper>().Name = asyncProcessorMapper;
-
             For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(emailDispatcher);
             For<SmsRequestConsumerAsync>().Use<SmsRequestConsumerAsync>().Ctor<ISmsDispatcher>().Named(smsDispatcher);
             For<SubmitApprenticeshipApplicationRequestConsumerAsync>().Use<SubmitApprenticeshipApplicationRequestConsumerAsync>();
             For<SubmitTraineeshipApplicationRequestConsumerAsync>().Use<SubmitTraineeshipApplicationRequestConsumerAsync>();
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
-            For<ApplicationStatusChangedConsumerAsync>().Use<ApplicationStatusChangedConsumerAsync>().Ctor<IMapper>().Named(asyncProcessorMapper);
+            For<ApplicationStatusChangedConsumerAsync>().Use<ApplicationStatusChangedConsumerAsync>();
 
             For<CommunicationCommand>().Use<CandidateCommunicationCommand>();
             For<CommunicationCommand>().Use<HelpDeskCommunicationCommand>();
