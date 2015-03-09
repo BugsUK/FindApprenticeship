@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Application.Interfaces.Communications;
+    using Common.Configuration;
     using Email;
     using Email.EmailFromResolvers;
     using Email.EmailMessageFormatters;
@@ -21,7 +22,7 @@
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.PasswordChanged, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter(new ConfigurationManager())),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactMessage, new EmailSimpleMessageFormatter()),
             };
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Named("SendGridEmailDispatcher")

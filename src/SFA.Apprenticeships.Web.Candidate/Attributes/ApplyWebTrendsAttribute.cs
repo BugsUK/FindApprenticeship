@@ -20,7 +20,7 @@
             if (viewResult.ViewBag.EnableWebTrends == true)
             {
                 viewResult.ViewBag.WebTrendsDscId = ConfigurationManager.GetAppSetting<string>("WebTrendsDscId");
-                viewResult.ViewBag.WebTrendsDomainName = ConfigurationManager.GetAppSetting<string>("WebTrendsDomainName");            
+                viewResult.ViewBag.WebTrendsDomainName = ConfigurationManager.GetAppSetting<string>("SiteDomainName");
             }
 
             base.OnActionExecuted(filterContext);

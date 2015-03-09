@@ -6,6 +6,7 @@
     using Application.Interfaces.Communications;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
+    using Domain.Interfaces.Configuration;
     using Newtonsoft.Json;
     using SendGrid;
 
@@ -13,6 +14,13 @@
     {
         public const string OneSavedApplicationAboutToExpire = "<p>You've saved an application for an apprenticeship that is due to expire soon.</p>";
         public const string MoreThanOneSaveApplicationAboutToExpire = "<p>You've saved applications for apprenticeships that are due to close soon.</p>";
+
+        private string _siteDomainName;
+
+        public EmailDailyDigestMessageFormatter(IConfigurationManager configurationManager)
+        {
+            _siteDomainName = configurationManager.GetAppSetting<string>("SiteDomainName");
+        }
 
         public override void PopulateMessage(EmailRequest request, ISendGrid message)
         {
@@ -32,7 +40,7 @@
             AddSubstitutionTo(message, candidateFirstNameToken, substitutionText);
         }
 
-        private static void PopulateApplicationStatusAlerts(EmailRequest request, ISendGrid message)
+        private void PopulateApplicationStatusAlerts(EmailRequest request, ISendGrid message)
         {
             var sendgridToken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.ApplicationStatusAlerts);
 
@@ -44,7 +52,7 @@
             AddSubstitutionTo(message, sendgridToken, substitutionText);
         }
 
-        protected static string GetApplicationStatusAlertsInfoSubstitution(IList<ApplicationStatusAlert> alerts)
+        protected string GetApplicationStatusAlertsInfoSubstitution(IList<ApplicationStatusAlert> alerts)
         {
             if (alerts == null || alerts.Count == 0) return string.Empty;
 
@@ -52,14 +60,16 @@
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Successful))
             {
-                stringBuilder.AppendLine("<b><a href=\"https://www.findapprenticeship.service.gov.uk/myapplications#dashSuccessful\">Successful applications</a></b>");
+                stringBuilder.AppendFormat("<b><a href=\"https://{0}/myapplications#dashSuccessful\">Successful applications</a></b>", _siteDomainName);
+                stringBuilder.AppendLine();
                 var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful).Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", successfulLineItems)));
             }
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Unsuccessful))
             {
-                stringBuilder.AppendLine("<b><a href=\"https://www.findapprenticeship.service.gov.uk/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>");
+                stringBuilder.AppendFormat("<b><a href=\"https://{0}/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>", _siteDomainName);
+                stringBuilder.AppendLine();
                 var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}<br/><b>Reason: </b>{2}</li>", d.Title, d.EmployerName, d.UnsuccessfulReason));
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", unsuccessfulLineItems)));
                 stringBuilder.AppendLine("<p>For unsuccessful applications please contact the training provider for further information.</p><p>For careers advice and support contact the <a href=\"https://nationalcareersservice.direct.gov.uk/pages/home.aspx\">National Careers Service</a></p>");
@@ -99,7 +109,7 @@
             return substitutionText;
         }
 
-        private static void PopulateVacanciesDataSubstitution(List<ExpiringApprenticeshipApplicationDraft> drafts, StringBuilder stringBuilder)
+        private void PopulateVacanciesDataSubstitution(List<ExpiringApprenticeshipApplicationDraft> drafts, StringBuilder stringBuilder)
         {
             if (drafts == null || drafts.Count == 0) return;
 
@@ -107,7 +117,7 @@
 
             foreach (var draft in drafts)
             {
-                var draftListElement = string.Format("<li><a href=\"https://www.findapprenticeship.service.gov.uk/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>", draft.VacancyId, draft.Title, draft.EmployerName, draft.ClosingDate.ToLongDateString());
+                var draftListElement = string.Format("<li><a href=\"https://{4}/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>", draft.VacancyId, draft.Title, draft.EmployerName, draft.ClosingDate.ToLongDateString(), _siteDomainName);
                 stringBuilder.Append(draftListElement);
             }
 

@@ -24,7 +24,7 @@
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatterBuilder().Build();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             var applicationStatusAlertTagSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ApplicationStatusAlertTag);
@@ -41,7 +41,7 @@
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatterBuilder().Build();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             var applicationStatusAlertTagSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ApplicationStatusAlertTag);
@@ -59,7 +59,7 @@
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatterBuilder().Build();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             var applicationStatusAlertTagSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ApplicationStatusAlertTag);

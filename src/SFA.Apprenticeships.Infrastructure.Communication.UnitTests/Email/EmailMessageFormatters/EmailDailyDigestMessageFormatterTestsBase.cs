@@ -15,6 +15,8 @@
         protected const string ApplicationStatusAlertTag = "-Application.Status.Alert-";
         protected const string ExpiringDraftsTag = "-Expiring.Drafts-";
 
+        protected const string SiteDomainName = "test.findapprenticeship.service.gov.uk";
+
         protected static Mock<ISendGrid> GetSendGridMessage(out List<SendGridMessageSubstitution> sendGridMessageSubstitutions)
         {
             var sendGridMessage = new Mock<ISendGrid>();
@@ -36,7 +38,7 @@
             stringBuilder.Append("<p><b>Saved applications due to expire</b></p>");
             stringBuilder.Append(expiringDrafts.Count == 1 ? EmailDailyDigestMessageFormatter.OneSavedApplicationAboutToExpire : EmailDailyDigestMessageFormatter.MoreThanOneSaveApplicationAboutToExpire);
             
-            var lineItems = expiringDrafts.Select(d => string.Format("<li><a href=\"https://www.findapprenticeship.service.gov.uk/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>", d.VacancyId, d.Title, d.EmployerName, d.ClosingDate.ToLongDateString()));
+            var lineItems = expiringDrafts.Select(d => string.Format("<li><a href=\"https://" + SiteDomainName + "/account/apprenticeshipvacancydetails/{0}\">{1} with {2}</a><br>Closing date: {3}</li>", d.VacancyId, d.Title, d.EmployerName, d.ClosingDate.ToLongDateString()));
             stringBuilder.Append(string.Format("<ul>{0}</ul>", string.Join("", lineItems)));
 
             return stringBuilder.ToString();
@@ -50,14 +52,14 @@
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Successful))
             {
-                stringBuilder.AppendLine("<b><a href=\"https://www.findapprenticeship.service.gov.uk/myapplications#dashSuccessful\">Successful applications</a></b>");
+                stringBuilder.AppendLine("<b><a href=\"https://" + SiteDomainName + "/myapplications#dashSuccessful\">Successful applications</a></b>");
                 var successfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Successful).Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", successfulLineItems)));
             }
 
             if (alerts.Any(a => a.Status == ApplicationStatuses.Unsuccessful))
             {
-                stringBuilder.AppendLine("<b><a href=\"https://www.findapprenticeship.service.gov.uk/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>");
+                stringBuilder.AppendLine("<b><a href=\"https://" + SiteDomainName + "/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>");
                 var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}<br/><b>Reason: </b>{2}</li>", d.Title, d.EmployerName, d.UnsuccessfulReason));
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", unsuccessfulLineItems)));
                 stringBuilder.AppendLine("<p>For unsuccessful applications please contact the training provider for further information.</p><p>For careers advice and support contact the <a href=\"https://nationalcareersservice.direct.gov.uk/pages/home.aspx\">National Careers Service</a></p>");

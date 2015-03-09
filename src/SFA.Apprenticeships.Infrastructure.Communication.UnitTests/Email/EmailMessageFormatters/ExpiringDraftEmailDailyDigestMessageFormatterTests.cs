@@ -7,7 +7,9 @@
     using Builder;
     using Communication.Email.EmailMessageFormatters;
     using Domain.Entities.Communication;
+    using Domain.Interfaces.Configuration;
     using FluentAssertions;
+    using Moq;
     using Newtonsoft.Json;
     using NUnit.Framework;
 
@@ -22,7 +24,7 @@
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatterBuilder().Build();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiringDraftsTag).Should().Be(1);
@@ -40,7 +42,7 @@
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatterBuilder().Build();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiringDraftsTag).Should().Be(1);
@@ -58,7 +60,7 @@
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatterBuilder().Build();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             sendGridMessageSubstitutions.Count(s => s.ReplacementTag == ExpiringDraftsTag).Should().Be(1);
@@ -75,7 +77,7 @@
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
-            var emailMessageFormatter = new EmailDailyDigestMessageFormatter();
+            var emailMessageFormatter = new EmailDailyDigestMessageFormatterBuilder().Build();
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             sendGridMessageSubstitutions.Any(s => s.ReplacementTag == CandidateFirstNameTag).Should().BeTrue();

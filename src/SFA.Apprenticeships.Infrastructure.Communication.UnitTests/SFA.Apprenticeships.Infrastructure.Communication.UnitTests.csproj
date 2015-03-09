@@ -122,6 +122,7 @@
     <Compile Include="Email\EmailMessageFormatters\DailyDigestEmailRequestBuilder.cs" />
     <Compile Include="Builder\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\ApplicationStatusAlertEmailDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterTestsBase.cs" />
     <Compile Include="Email\EmailMessageFormatters\ExpiringDraftEmailDailyDigestMessageFormatterTests.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailRequestBuilder.cs" />
