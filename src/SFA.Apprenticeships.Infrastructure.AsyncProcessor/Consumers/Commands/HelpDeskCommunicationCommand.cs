@@ -17,7 +17,6 @@
 
         public override void Handle(CommunicationRequest message)
         {
-            //todo: write contact message to comms repo
             QueueEmailMessage(message);
         }
     }

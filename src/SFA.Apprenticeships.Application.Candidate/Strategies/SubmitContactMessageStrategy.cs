@@ -19,6 +19,8 @@
         {
             var helpdeskAddress = _configurationManager.GetAppSetting<string>("HelpdeskEmailAddress");
             var details = string.IsNullOrWhiteSpace(message.Details) ? string.Empty : message.Details;
+
+            //todo: write contact message to comms repo
                 
             _communicationService.SendContactMessage(message.UserId, MessageTypes.CandidateContactMessage, new[]
             {
