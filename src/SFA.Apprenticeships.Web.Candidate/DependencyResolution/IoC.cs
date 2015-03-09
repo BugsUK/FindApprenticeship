@@ -36,6 +36,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Authentication.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
+    using Infrastructure.Repositories.Communication.IoC;
     using Infrastructure.Repositories.Users.IoC;
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
@@ -66,6 +67,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<AuthenticationRepositoryRegistry>();
+                x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AddressRegistry>();
