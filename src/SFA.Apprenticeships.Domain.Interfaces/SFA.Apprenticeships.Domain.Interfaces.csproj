@@ -93,6 +93,7 @@
     <Compile Include="Caching\ICacheService.cs" />
     <Compile Include="Mapping\IMapper.cs" />
     <Compile Include="Repositories\IApplicationStatusAlertRepository.cs" />
+    <Compile Include="Repositories\IContactMessageRepository.cs" />
     <Compile Include="Repositories\ITraineeshipApplicationRepository.cs" />
     <Compile Include="Repositories\IApprenticeshipApplicationRepository.cs" />
     <Compile Include="Repositories\IAuthenticationRepository.cs" />
