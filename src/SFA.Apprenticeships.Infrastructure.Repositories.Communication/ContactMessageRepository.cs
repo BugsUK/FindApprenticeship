@@ -26,17 +26,17 @@
                 ? contactMessage.UserId.ToString()
                 : "<null>";
 
-            var args = new object[] { contactMessage.EntityId, userId, contactMessage.Name, contactMessage.Email, contactMessage.Enquiry, contactMessage.Details };
-
-            _logger.Debug("Calling repository to save contact message with Id='{0}', UserId='{1}', Name='{2}', Email='{3}', Enquiry='{4}', Details='{5}'", args);
+            _logger.Debug("Calling repository to save contact message with UserId='{0}', Name='{1}', Email='{2}', Enquiry='{3}', Details='{4}'",
+                userId, contactMessage.Name, contactMessage.Email, contactMessage.Enquiry, contactMessage.Details);
 
             var mongoEntity = _mapper.Map<ContactMessage, MongoContactMessage>(contactMessage);
 
             UpdateEntityTimestamps(mongoEntity);
 
-            _logger.Debug("Saved contact message to repository with Id='{0}', UserId='{1}', Name='{2}', Email='{3}', Enquiry='{4}', Details='{5}'", args);
-
             Collection.Save(mongoEntity);
+
+            _logger.Debug("Saved contact message to repository with Id='{0}', UserId='{1}', Name='{2}', Email='{3}', Enquiry='{4}', Details='{5}'", 
+                mongoEntity.EntityId, userId, contactMessage.Name, contactMessage.Email, contactMessage.Enquiry, contactMessage.Details);
 
             return _mapper.Map<MongoContactMessage, ContactMessage>(mongoEntity);
         }
