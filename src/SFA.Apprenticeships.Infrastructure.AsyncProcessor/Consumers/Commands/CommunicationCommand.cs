@@ -5,6 +5,7 @@
     using Application.Interfaces.Communications;
     using Domain.Interfaces.Messaging;
 
+    //todo: move to comms process project?
     public abstract class CommunicationCommand
     {
         private readonly IMessageBus _messageBus;

@@ -3,6 +3,7 @@
     using Application.Interfaces.Communications;
     using Domain.Interfaces.Messaging;
 
+    //todo: move to comms process project?
     public class HelpDeskCommunicationCommand : CommunicationCommand
     {
         public HelpDeskCommunicationCommand(IMessageBus messageBus)

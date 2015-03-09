@@ -4,6 +4,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
+    //todo: move to comms process project?
     public class CandidateCommunicationCommand : CommunicationCommand
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
