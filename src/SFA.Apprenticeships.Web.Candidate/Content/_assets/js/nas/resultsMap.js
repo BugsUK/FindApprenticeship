@@ -183,41 +183,82 @@
 
     }
 
-    ( function( $, window, document, undefined )
-    {
-    $('.map').lazyLoadGoogleMaps(
-        {
-            callback: function (container, lazyMap) {
-                var $container = $(container),
-                    vacancyLink = $container.closest('.search-results__item').find('.vacancy-link'),
-                    vacancyLat = vacancyLink.attr('data-lat'),
-                    vacancyLon = vacancyLink.attr('data-lon'),
-                    latlng = new google.maps.LatLng(vacancyLat, vacancyLon);
+    if($('.content-container').css('font-size') !== '16px') {
+        (function ($, window, document, undefined) {
+            $('.map').lazyLoadGoogleMaps(
+                {
+                    callback: function (container, lazyMap) {
+                        var $container = $(container),
+                            vacancyLink = $container.closest('.search-results__item').find('.vacancy-link'),
+                            vacancyLat = vacancyLink.attr('data-lat'),
+                            vacancyLon = vacancyLink.attr('data-lon'),
+                            latlng = new google.maps.LatLng(vacancyLat, vacancyLon);
 
-                var lazyOptions = {
-                    zoom: 10,
-                    center: latlng,
-                    mapTypeControl: false,
-                    overviewMapControl: false,
-                    panControl: false,
-                    scaleControl: false,
-                    scrollwheel: false,
-                    streetViewControl: false,
-                    zoomControl: true,
-                    zoomControlOptions: {
-                        style: google.maps.ZoomControlStyle.SMALL
+                        var lazyOptions = {
+                            zoom: 10,
+                            center: latlng,
+                            mapTypeControl: false,
+                            overviewMapControl: false,
+                            panControl: false,
+                            scaleControl: false,
+                            scrollwheel: false,
+                            streetViewControl: false,
+                            zoomControl: true,
+                            zoomControlOptions: {
+                                style: google.maps.ZoomControlStyle.SMALL
+                            }
+                        };
+
+                        lazyMap.setOptions(lazyOptions);
+
+                        new google.maps.Marker({ position: latlng, map: lazyMap, icon: markerIcon });
+
+                        theMaps.push(lazyMap);
+
                     }
-                };
+                });
+        })(jQuery, window, document);
+    } else {
+        $('.mob-map-trigger.map-closed').on('click', function () {
 
-                lazyMap.setOptions(lazyOptions);
+            var $this = $(this),
+                mobVacancyLink = $this.closest('.search-results__item').find('.vacancy-link'),
+                mobVacancyLat = mobVacancyLink.attr('data-lat'),
+                mobVacancyLon = mobVacancyLink.attr('data-lon'),
+                mobLatlng = new google.maps.LatLng(mobVacancyLat, mobVacancyLon),
+                mobMap = $this.next('.map-container').find('.map')[0],
+                $mapNumber = $this.closest('.search-results__item').index();
 
-                new google.maps.Marker({ position: latlng, map: lazyMap, icon: markerIcon });
+            $this.toggleClass('map-closed');
 
-                theMaps.push(lazyMap);
+            var mobMapOptions = {
+                zoom: 10,
+                center: mobLatlng,
+                mapTypeControl: false,
+                overviewMapControl: false,
+                panControl: false,
+                scaleControl: false,
+                scrollwheel: false,
+                streetViewControl: false,
+                zoomControl: true,
+                zoomControlOptions: {
+                    style: google.maps.ZoomControlStyle.SMALL
+                }
+            };
 
-            }
+            var theMobMap = new google.maps.Map(mobMap, mobMapOptions);
+
+            new google.maps.Marker({ position: mobLatlng, map: theMobMap, icon: markerIcon });
+
+            theMaps[$mapNumber] = theMobMap;
+
+            setTimeout(function () {
+                google.maps.event.trigger(theMobMap, 'resize');
+                theMobMap.setCenter(mobLatlng);
+                console.log(theMaps);
+            }, 300);
         });
-    })(jQuery, window, document);
+    }
 
     function calcRoute(transportMode, latLong, journeyTime, mapNumber) {
 
@@ -266,7 +307,9 @@
 
     });
 
-    google.maps.event.addDomListener(window, 'load', initialize);
+    if ($('#editSearchPanel').is(':visible')) {
+        google.maps.event.addDomListener(window, 'load', initialize);
+    }
 
     $('#editSearchToggle').on('click', function () {
         initialize();
