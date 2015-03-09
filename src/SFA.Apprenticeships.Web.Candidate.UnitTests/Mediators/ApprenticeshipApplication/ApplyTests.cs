@@ -6,6 +6,7 @@
     using Candidate.Providers;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Constants;
     using Common.Models.Application;
     using Constants.Pages;
     using Domain.Entities.Applications;
@@ -80,6 +81,18 @@
             var response = mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString());
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound, false);
+        }
+
+        [Test]
+        public void IncorrectState()
+        {
+            var apprenticeshipApplicationProvider = new Mock<IApprenticeshipApplicationProvider>();
+            apprenticeshipApplicationProvider.Setup(p => p.CreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModelBuilder().WithStatus(ApplicationStatuses.Submitted).Build());
+            var mediator = new ApprenticeshipApplicationMediatorBuilder().With(apprenticeshipApplicationProvider).Build();
+
+            var response = mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString());
+
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Apply.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning, false);
         }
 
         [Test]

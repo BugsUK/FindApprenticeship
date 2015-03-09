@@ -8,6 +8,7 @@
             public const string HasError = "ApprenticeshipApplication.Apply.HasError";
             public const string VacancyNotFound = "ApprenticeshipApplication.Apply.VacancyNotFound";
             public const string OfflineVacancy = "ApprenticeshipApplication.Apply.OfflineVacancy";
+            public const string IncorrectState = "ApprenticeshipApplication.Apply.IncorrectState";
         }
 
         public class Submit
@@ -40,6 +41,7 @@
         {
             public const string Ok = "ApprenticeshipApplication.Resume.Ok";
             public const string HasError = "ApprenticeshipApplication.Resume.HasError";
+            public const string IncorrectState = "ApprenticeshipApplication.Resume.IncorrectState";
         }
 
         public class PreviewAndSubmit
@@ -56,6 +58,7 @@
         {
             public const string Ok = "ApprenticeshipApplication.Preview.Ok";
             public const string HasError = "ApprenticeshipApplication.Preview.HasError";
+            public const string IncorrectState = "ApprenticeshipApplication.Preview.IncorrectState";
             public const string VacancyNotFound = "ApprenticeshipApplication.Preview.VacancyNotFound";
             public const string OfflineVacancy = "ApprenticeshipApplication.Preview.OfflineVacancy";
         }

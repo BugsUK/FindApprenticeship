@@ -44,6 +44,11 @@
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.HasError, null, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning);
             }
 
+            if (model.Status != ApplicationStatuses.Draft)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.IncorrectState, null, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning);
+            }
+
             return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Resume.Ok, parameters: new { id = vacancyId });
         }
 
@@ -67,14 +72,19 @@
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.HasError);
             }
 
-            if (model.VacancyDetail.ApplyViaEmployerWebsite)
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy);
-            }
-
             if (model.IsExpiredOrWithdrawn())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound);
+            }
+
+            if (model.Status != ApplicationStatuses.Draft)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.IncorrectState, null, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning);
+            }
+
+            if (model.VacancyDetail.ApplyViaEmployerWebsite)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy);
             }
 
             model.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
@@ -105,7 +115,7 @@
 
             if (savedModel.Status != ApplicationStatuses.Draft)
             {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState);
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState, null, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning);
             }
 
             viewModel.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
@@ -286,6 +296,11 @@
             if (model.IsExpiredOrWithdrawn())
             {
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound);
+            }
+
+            if (model.Status != ApplicationStatuses.Draft)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.IncorrectState, null, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning);
             }
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Preview.Ok, model);

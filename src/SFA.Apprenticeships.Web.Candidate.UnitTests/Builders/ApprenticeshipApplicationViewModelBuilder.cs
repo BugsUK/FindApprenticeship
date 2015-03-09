@@ -12,10 +12,10 @@
     {
         private bool _requiresSupportForInterview;
         private string _anythingWeCanDoToSupportYourInterview;
-        private ApplicationStatuses _status;
+        private ApplicationStatuses _status = ApplicationStatuses.Draft;
         private string _viewModelMessage;
         private bool _applyViaEmployerWebsite;
-        private VacancyStatuses _vacancyStatus;
+        private VacancyStatuses _vacancyStatus = VacancyStatuses.Live;
         private ApplicationViewModelStatus _viewModelStatus;
 
         public ApprenticeshipApplicationViewModelBuilder RequiresSupportForInterview()
@@ -65,6 +65,12 @@
         public ApprenticeshipApplicationViewModelBuilder WithVacancyStatus(VacancyStatuses vacancyStatus)
         {
             _vacancyStatus = vacancyStatus;
+            return this;
+        }
+
+        public ApprenticeshipApplicationViewModelBuilder WithStatus(ApplicationStatuses status)
+        {
+            _status = status;
             return this;
         }
 

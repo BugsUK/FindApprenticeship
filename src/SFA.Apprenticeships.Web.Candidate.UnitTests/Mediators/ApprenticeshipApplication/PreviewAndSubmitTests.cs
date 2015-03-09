@@ -47,7 +47,7 @@
             
             var response = Mediator.PreviewAndSubmit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning, false);
         }
 
         [Test]

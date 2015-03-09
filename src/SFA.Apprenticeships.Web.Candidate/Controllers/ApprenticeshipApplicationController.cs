@@ -43,6 +43,9 @@
                     case ApprenticeshipApplicationMediatorCodes.Resume.HasError:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case ApprenticeshipApplicationMediatorCodes.Resume.IncorrectState:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.Resume.Ok:
                         return RedirectToAction("Apply", response.Parameters);
                 }
@@ -68,6 +71,9 @@
                     case ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.Apply.HasError:
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case ApprenticeshipApplicationMediatorCodes.Apply.IncorrectState:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.Apply.Ok:
                         return View(response.ViewModel);
@@ -256,6 +262,9 @@
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.Preview.HasError:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case ApprenticeshipApplicationMediatorCodes.Preview.IncorrectState:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.Preview.Ok:
                         // ViewBag.VacancyId is used to provide 'Amend Details' backlinks to the Apply view.
                         ViewBag.VacancyId = id;
@@ -285,6 +294,7 @@
                     case ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.Submit.Error:
                         ModelState.Clear();

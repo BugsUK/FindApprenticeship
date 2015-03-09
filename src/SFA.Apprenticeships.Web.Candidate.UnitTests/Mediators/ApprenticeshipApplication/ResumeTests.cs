@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
 {
     using System;
+    using Builders;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.VacancySearch;
@@ -28,15 +29,19 @@
         }
 
         [Test]
+        public void IncorrectState()
+        {
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModelBuilder().WithStatus(ApplicationStatuses.Submitted).Build);
+
+            var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
+
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Resume.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning, false);
+        }
+
+        [Test]
         public void Ok()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
-            {
-                VacancyDetail = new VacancyDetailViewModel
-                {
-                    VacancyStatus = VacancyStatuses.Live
-                }
-            });
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModelBuilder().WithVacancyStatus(VacancyStatuses.Live).Build);
             
             var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
 
