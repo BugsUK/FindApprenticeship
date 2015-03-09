@@ -226,10 +226,12 @@
                 mobVacancyLat = mobVacancyLink.attr('data-lat'),
                 mobVacancyLon = mobVacancyLink.attr('data-lon'),
                 mobLatlng = new google.maps.LatLng(mobVacancyLat, mobVacancyLon),
-                mobMap = $this.next('.map-container').find('.map')[0],
+                mapContainer = $this.closest('.search-results__item').find('.map-container'),
+                mobMap = mapContainer.find('.map')[0],
                 $mapNumber = $this.closest('.search-results__item').index();
 
             $this.toggleClass('map-closed');
+            mapContainer.toggle();
 
             var mobMapOptions = {
                 zoom: 10,
@@ -255,7 +257,6 @@
             setTimeout(function () {
                 google.maps.event.trigger(theMobMap, 'resize');
                 theMobMap.setCenter(mobLatlng);
-                console.log(theMaps);
             }, 300);
         });
     }
@@ -292,7 +293,7 @@
         calcRoute($thisVal, $thisLatLong, $durationElement, $mapNumber);
     });
 
-    $('.search-results__item .summary-style').on('click', function (originLocation) {
+    $('.journey-trigger').on('click', function (originLocation) {
         var $this = $(this),
             $thisVal = $this.next('.detail-content').find('.select-mode option:selected').val(),
             $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
