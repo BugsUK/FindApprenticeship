@@ -3,10 +3,9 @@
     using Application.Applications;
     using Application.Applications.Strategies;
     using Application.Interfaces.Communications;
-    using Consumers.Commands;
+    using Communications.Commands;
     using Microsoft.WindowsAzure;
     using Consumers;
-    using Domain.Interfaces.Mapping;
     using StructureMap.Configuration.DSL;
 
     public class AsyncProcessorRegistry : Registry

@@ -183,9 +183,6 @@
     </Compile>
     <Compile Include="Consumers\ApplicationStatusChangedConsumerAsync.cs" />
     <Compile Include="Consumers\CandidateSavedSearchesConsumerAsync.cs" />
-    <Compile Include="Consumers\Commands\CandidateCommunicationCommand.cs" />
-    <Compile Include="Consumers\Commands\CommunicationCommand.cs" />
-    <Compile Include="Consumers\Commands\HelpDeskCommunicationCommand.cs" />
     <Compile Include="Consumers\CommunicationRequestConsumerAsync.cs" />
     <Compile Include="Consumers\CreateCandidateRequestConsumerAsync.cs" />
     <Compile Include="Consumers\SmsRequestConsumerAsync.cs" />
@@ -298,6 +295,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communications\SFA.Apprenticeships.Infrastructure.Communications.csproj">
+      <Project>{E3E6531A-0B3B-4AFB-9ECB-3A25B3C616F8}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Communications</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communication\SFA.Apprenticeships.Infrastructure.Communication.csproj">
       <Project>{d34d27d3-79a9-407e-86ef-af3ac0ea024b}</Project>

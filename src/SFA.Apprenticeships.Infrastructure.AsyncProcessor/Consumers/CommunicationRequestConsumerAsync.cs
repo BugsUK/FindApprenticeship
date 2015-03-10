@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Communications;
-    using Commands;
+    using Communications.Commands;
     using EasyNetQ.AutoSubscribe;
 
     public class CommunicationRequestConsumerAsync : IConsumeAsync<CommunicationRequest>
@@ -20,7 +20,9 @@
         [AutoSubscriberConsumer(SubscriptionId = "CommunicationRequestConsumerAsync")]
         public Task Consume(CommunicationRequest message)
         {
-            return Task.Run(() => _communicationCommands.First(cc => cc.CanHandle(message)).Handle(message));
+            return Task.Run(() => _communicationCommands
+                .First(communicationCommand => communicationCommand.CanHandle(message))
+                .Handle(message));
         }
     }
 }

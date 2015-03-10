@@ -2,15 +2,15 @@
 {
     public enum MessageTypes
     {
-        SendActivationCode,
-        SendPasswordResetCode,
-        SendAccountUnlockCode,
-        SendMobileVerificationCode,
-        ApprenticeshipApplicationSubmitted,
-        TraineeshipApplicationSubmitted,
-        PasswordChanged,
-        DailyDigest,
-        CandidateContactMessage,
+        SendActivationCode = 0,
+        SendPasswordResetCode = 1,
+        SendAccountUnlockCode = 2,
+        SendMobileVerificationCode = 3,
+        ApprenticeshipApplicationSubmitted = 4,
+        TraineeshipApplicationSubmitted = 5,
+        PasswordChanged = 6,
+        DailyDigest = 7,
+        CandidateContactMessage = 8,
         //EmployerContactMessage
     }
 }

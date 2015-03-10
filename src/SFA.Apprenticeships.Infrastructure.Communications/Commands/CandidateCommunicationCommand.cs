@@ -1,10 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers.Commands
+﻿namespace SFA.Apprenticeships.Infrastructure.Communications.Commands
 {
     using Application.Interfaces.Communications;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
-    //todo: move to comms process project?
     public class CandidateCommunicationCommand : CommunicationCommand
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
@@ -15,32 +14,31 @@
             _candidateReadRepository = candidateReadRepository;
         }
 
-        public override bool CanHandle(CommunicationRequest message)
+        public override bool CanHandle(CommunicationRequest communicationRequest)
         {
-            return message.MessageType != MessageTypes.CandidateContactMessage;
+            return communicationRequest.MessageType != MessageTypes.CandidateContactMessage;
         }
 
-        public override void Handle(CommunicationRequest message)
+        public override void Handle(CommunicationRequest communicationRequest)
         {
-            var candidateId = message.EntityId.Value;
-
+            var candidateId = communicationRequest.EntityId.Value;
             var candidate = _candidateReadRepository.Get(candidateId);
 
             // note, some messages are mandatory - determined by type
-            var isOptionalMessageType = message.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
-                                        message.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted;
+            var isOptionalMessageType = communicationRequest.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
+                                        communicationRequest.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted;
 
             // note, some messages are channel specific
-            var isSmsOnly = message.MessageType == MessageTypes.SendMobileVerificationCode;
+            var isSmsOnly = communicationRequest.MessageType == MessageTypes.SendMobileVerificationCode;
 
             if ((!isOptionalMessageType || candidate.CommunicationPreferences.AllowEmail) && !isSmsOnly)
             {
-                QueueEmailMessage(message);
+                QueueEmailMessage(communicationRequest);
             }
 
             if (!isOptionalMessageType || candidate.CommunicationPreferences.AllowMobile)
             {
-                QueueSmsMessage(message);
+                QueueSmsMessage(communicationRequest);
             }
         }
     }

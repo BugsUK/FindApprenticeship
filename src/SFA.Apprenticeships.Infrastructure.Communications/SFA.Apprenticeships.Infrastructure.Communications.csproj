@@ -173,6 +173,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Commands\CandidateCommunicationCommand.cs" />
+    <Compile Include="Commands\CommunicationCommand.cs" />
+    <Compile Include="Commands\HelpDeskCommunicationCommand.cs" />
     <Compile Include="Consumers\CommunicationsControlQueueConsumer.cs" />
     <Compile Include="IoC\CommunicationsRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
