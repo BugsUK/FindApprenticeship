@@ -17,13 +17,20 @@
 
         private readonly IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> _messageFormatters;
         private readonly IReachSmsConfiguration _reachConfiguration;
+        private readonly ISmsNumberFormatter _smsNumberFormatter;
         private readonly IRestClient _restClient;
 
-        public ReachSmsDispatcher(ILogService logger, IReachSmsConfiguration reachConfiguration, IRestClient restClient, IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> messageFormatters)
+        public ReachSmsDispatcher(
+            ILogService logger,
+            IRestClient restClient,
+            IReachSmsConfiguration reachConfiguration,
+            ISmsNumberFormatter smsNumberFormatter,
+            IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> messageFormatters)
         {
             _logger = logger;
-            _reachConfiguration = reachConfiguration;
             _restClient = restClient;
+            _reachConfiguration = reachConfiguration;
+            _smsNumberFormatter = smsNumberFormatter;
             _messageFormatters = messageFormatters;
         }
 
@@ -81,11 +88,9 @@
         private RestRequest CreateRestRequest(SmsRequest smsRequest, string smsMessage)
         {
             var restRequest = new RestRequest(Method.POST);
-            var smsNumberFormatter = new SmsNumberFormatter();
-
             restRequest.AddParameter("username", _reachConfiguration.Username);
             restRequest.AddParameter("password", _reachConfiguration.Password);
-            restRequest.AddParameter("msisdn", smsNumberFormatter.Format(smsRequest.ToNumber));
+            restRequest.AddParameter("msisdn", _smsNumberFormatter.Format(smsRequest.ToNumber));
             restRequest.AddParameter("message", smsMessage);
             restRequest.AddParameter("originator", _reachConfiguration.Originator);
             restRequest.AddParameter("callbackurl", _reachConfiguration.CallbackUrl);

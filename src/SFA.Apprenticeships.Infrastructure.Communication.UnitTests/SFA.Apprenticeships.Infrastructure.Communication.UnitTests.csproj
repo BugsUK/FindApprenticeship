@@ -133,7 +133,7 @@
     <Compile Include="Email\EmailMessageFormatters\SendGridMessageSubstitution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sms\Reach\ReachSmsDispatcherTests.cs" />
-    <Compile Include="Sms\Reach\SmsNumberFormatterTests.cs" />
+    <Compile Include="Sms\Reach\ReachSmsNumberFormatterTests.cs" />
     <Compile Include="Sms\SmsMessageFormatters\ApplicationStatusAlertSmsDailyDigestMessageFormatterTests.cs" />
     <Compile Include="Sms\SmsMessageFormatters\DailyDigestSmsRequestBuilder.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />

@@ -10,6 +10,7 @@
     using RestSharp;
     using Sms;
     using Sms.SmsMessageFormatters;
+    using StructureMap.Building;
     using StructureMap.Configuration.DSL;
 
     public class CommunicationRegistry : Registry
@@ -52,7 +53,8 @@
 
             For<ISmsDispatcher>().Use<ReachSmsDispatcher>().Named("ReachSmsDispatcher")
                 .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(smsMessageFormatters)
-                .Ctor<IRestClient>().Is(new RestClient());
+                .Ctor<IRestClient>().Is(new RestClient())
+                .Ctor<ISmsNumberFormatter>().Is<ReachSmsNumberFormatter>();
         }
     }
 }

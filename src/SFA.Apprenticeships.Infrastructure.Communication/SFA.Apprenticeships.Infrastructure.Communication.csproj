@@ -120,6 +120,7 @@
     <Compile Include="Email\EmailFromResolvers\IEmailFromResolver.cs" />
     <Compile Include="Sms\IReachSmsConfiguration.cs" />
     <Compile Include="Sms\ITwillioConfiguration.cs" />
+    <Compile Include="Sms\ISmsNumberFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsSendMobileVerificationCodeFormatter.cs" />
@@ -129,7 +130,7 @@
     <Compile Include="Sms\SmsMessageFormatters\SmsPasswordChangedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsPasswordResetCodeMessageFormatter.cs" />
     <Compile Include="Sms\ReachSmsConfiguration.cs" />
-    <Compile Include="Sms\SmsNumberFormatter.cs" />
+    <Compile Include="Sms\ReachSmsNumberFormatter.cs" />
     <Compile Include="Sms\SmsTemplateConfigurationCollection.cs" />
     <Compile Include="Sms\SmsTemplateConfiguration.cs" />
     <Compile Include="Sms\TwilioConfiguration.cs" />
