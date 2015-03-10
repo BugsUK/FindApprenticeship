@@ -23,7 +23,9 @@
         originLocation     = new google.maps.LatLng(apprLatitude, apprLongitude),
         latLngList         = [],
         theLatLon          = apprLatitude + ',' + apprLongitude,
-        markerIcon         = new google.maps.MarkerImage('/Content/_assets/img/icon-location.png', null, null, null, new google.maps.Size(20, 32));
+        markerIcon         = new google.maps.MarkerImage('/Content/_assets/img/icon-location.png', null, null, null, new google.maps.Size(20, 32)),
+        selectedIcon       = new google.maps.MarkerImage('/Content/_assets/img/icon-location-selected.png', null, null, null, new google.maps.Size(20, 32));
+
 
     $('.map-links').each(function(){
         var $this = $(this),
@@ -110,18 +112,6 @@
     }
 
     function setMarkers(map, locations) {
-        var image1 = new google.maps.MarkerImage(
-                        '/Content/_assets/img/icon-location.png',
-                        null, /* size is determined at runtime */
-                        null, /* origin is 0,0 */
-                        null, /* anchor is bottom center of the scaled image */
-                        new google.maps.Size(20, 32));
-        var image2 = new google.maps.MarkerImage(
-                        '/Content/_assets/img/icon-location-selected.png',
-                        null, /* size is determined at runtime */
-                        null, /* origin is 0,0 */
-                        null, /* anchor is bottom center of the scaled image */
-                        new google.maps.Size(20, 32));
 
         for (var i = 0; i < locations.length; i++) {
             var appship = locations[i];
@@ -130,7 +120,7 @@
                 position: myLatLng,
                 map: map,
                 animation: google.maps.Animation.DROP,
-                icon: image1,
+                icon: markerIcon,
                 title: appship[2]
             });
 
@@ -141,43 +131,43 @@
 
             var vacancyID = appship[3];
 
-            bindMarkerClick(marker, map, vacancyID, image1, image2);
+            bindMarkerClick(marker, map, vacancyID, markerIcon, selectedIcon);
 
-            itemHover(image1, image2);
+            itemHover(markerIcon, selectedIcon);
 
         }
 
     }
 
-    function bindMarkerClick(marker, map, vacancyID, image1, image2) {
+    function bindMarkerClick(marker, map, vacancyID, markerIcon, selectedIcon) {
         google.maps.event.addListener(marker, 'mouseover', function () {
-            marker.setIcon(image2);
+            marker.setIcon(selectedIcon);
             marker.setZIndex(1000);
         });
 
         google.maps.event.addListener(marker, 'click', function () {
-            marker.setIcon(image2);
+            marker.setIcon(selectedIcon);
             marker.setZIndex(1000);
             $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item')[0].scrollIntoView();
         });
 
         google.maps.event.addListener(marker, 'mouseout', function () {
-            marker.setIcon(image1);
+            marker.setIcon(markerIcon);
             marker.setZIndex(0);
         });
     }
 
-    function itemHover(image1, image2) {
+    function itemHover(markerIcon, selectedIcon) {
         $('.search-results__item').mouseover(function () {
             var thisPosition = $(this).index();
-            theMarkers[thisPosition].setIcon(image2);
+            theMarkers[thisPosition].setIcon(selectedIcon);
             theMarkers[thisPosition].setZIndex(1000);
 
         });
 
         $('.search-results__item').mouseleave(function () {
             var thisPosition = $(this).index();
-            theMarkers[thisPosition].setIcon(image1);
+            theMarkers[thisPosition].setIcon(markerIcon);
             theMarkers[thisPosition].setZIndex(0);
         });
 
