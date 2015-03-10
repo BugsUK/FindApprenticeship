@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Application.Vacancies.Entities;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
-    using Application.VacancyEtl.Entities;
 
     //todo: move this class to async project?
     public class VacancyAboutToExpireConsumerAsync : IConsumeAsync<VacancyAboutToExpire>

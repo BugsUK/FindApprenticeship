@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
-    using Application.VacancyEtl;
+    using Application.Vacancies;
     using Caching.Memory.IoC;
     using Common.IoC;
     using FluentAssertions;

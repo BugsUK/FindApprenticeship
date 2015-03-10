@@ -147,9 +147,9 @@
     <Compile Include="SubmitTraineeshipApplicationRequest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.ApplicationUpdate\SFA.Apprenticeships.Application.ApplicationUpdate.csproj">
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
-      <Name>SFA.Apprenticeships.Application.ApplicationUpdate</Name>
+      <Name>SFA.Apprenticeships.Application.Applications</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
@@ -158,10 +158,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyEtl\SFA.Apprenticeships.Application.VacancyEtl.csproj">
-      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
-      <Name>SFA.Apprenticeships.Application.VacancyEtl</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>

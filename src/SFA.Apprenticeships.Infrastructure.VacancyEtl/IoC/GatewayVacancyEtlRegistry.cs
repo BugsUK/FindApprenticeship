@@ -2,7 +2,7 @@
 {
     using Application.Interfaces.ReferenceData;
     using Application.ReferenceData;
-    using Application.VacancyEtl;
+    using Application.Vacancies;
     using Consumers;
     using Domain.Interfaces.Mapping;
     using Mappers;

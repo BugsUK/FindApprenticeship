@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
-    using ApplicationUpdate;
-    using ApplicationUpdate.Entities;
+    using Applications;
+    using Applications.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;

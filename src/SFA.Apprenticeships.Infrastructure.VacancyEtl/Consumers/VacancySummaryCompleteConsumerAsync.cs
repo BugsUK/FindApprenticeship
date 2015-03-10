@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies.Entities;
     using EasyNetQ.AutoSubscribe;
     using Elastic.Common.Entities;
     using VacancyIndexer;

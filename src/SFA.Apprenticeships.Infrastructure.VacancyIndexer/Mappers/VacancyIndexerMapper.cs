@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.Mappers
 {
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies.Entities;
     using Common.Mappers;
     using Elastic.Common.Entities;
 

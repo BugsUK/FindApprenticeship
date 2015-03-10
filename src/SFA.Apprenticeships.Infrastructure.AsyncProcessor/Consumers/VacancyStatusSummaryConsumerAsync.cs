@@ -2,8 +2,8 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Application.ApplicationUpdate;
-    using Application.ApplicationUpdate.Entities;
+    using Application.Applications;
+    using Application.Applications.Entities;
     using Domain.Interfaces.Caching;
     using Domain.Interfaces.Configuration;
     using EasyNetQ.AutoSubscribe;

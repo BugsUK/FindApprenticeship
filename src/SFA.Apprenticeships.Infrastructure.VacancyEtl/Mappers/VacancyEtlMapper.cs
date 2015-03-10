@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Mappers
 {
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies.Entities;
     using Common.Mappers;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;

@@ -5,8 +5,8 @@
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
     using Application.Interfaces.ReferenceData;
-    using Application.VacancyEtl;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Domain.Entities.ReferenceData;
     using EasyNetQ.AutoSubscribe;
     using Elastic.Common.Entities;

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.IoC
 {
-    using Application.ApplicationUpdate;
-    using Application.ApplicationUpdate.Strategies;
+    using Application.Applications;
+    using Application.Applications.Strategies;
     using Application.Interfaces.Communications;
     using Consumers.Commands;
     using Microsoft.WindowsAzure;

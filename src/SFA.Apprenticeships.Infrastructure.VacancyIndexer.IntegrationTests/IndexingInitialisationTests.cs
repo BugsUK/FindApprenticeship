@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.IntegrationTests
 {
     using System;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies.Entities;
     using Elastic.Common.IoC;
     using FluentAssertions;
     using IoC;
@@ -54,12 +54,12 @@
         [TearDown]
         public void TearDown()
         {
-            foreach (
-                IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
+            foreach (var elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
             {
                 if (elasticsearchIndexConfiguration.Name.EndsWith("_integration_test"))
                 {
-                    _elasticClient.DeleteIndex(i => i.Index(elasticsearchIndexConfiguration.Name));
+                    var configuration = elasticsearchIndexConfiguration;
+                    _elasticClient.DeleteIndex(i => i.Index(configuration.Name));
                 }
             }
         }

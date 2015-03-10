@@ -3,8 +3,8 @@
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Application.ApplicationUpdate;
-    using Application.ApplicationUpdate.Entities;
+    using Application.Applications;
+    using Application.Applications.Entities;
     using EasyNetQ.AutoSubscribe;
 
     public class ApplicationStatusSummaryPageConsumerAsync : IConsumeAsync<ApplicationUpdatePage>

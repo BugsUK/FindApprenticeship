@@ -2,9 +2,9 @@
 {
     using System;
     using System.Linq;
-    using ApplicationUpdate;
-    using ApplicationUpdate.Entities;
-    using ApplicationUpdate.Strategies;
+    using Application.Applications;
+    using Application.Applications.Entities;
+    using Application.Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;

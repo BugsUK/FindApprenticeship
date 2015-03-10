@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer
 {
     using System;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies.Entities;
     using Domain.Entities.Vacancies;
     using Elastic.Common.Entities;
 

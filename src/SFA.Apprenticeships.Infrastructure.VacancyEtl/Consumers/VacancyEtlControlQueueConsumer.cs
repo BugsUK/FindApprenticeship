@@ -2,8 +2,8 @@
 {
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
-    using Application.VacancyEtl;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
     using Elastic.Common.Entities;

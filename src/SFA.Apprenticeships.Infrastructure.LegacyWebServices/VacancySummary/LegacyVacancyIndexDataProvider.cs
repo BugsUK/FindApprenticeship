@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
-    using Application.VacancyEtl;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;

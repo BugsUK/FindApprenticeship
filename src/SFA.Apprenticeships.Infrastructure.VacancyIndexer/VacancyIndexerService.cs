@@ -5,7 +5,7 @@
     using System.IO;
     using System.Linq;
     using Application.Interfaces.Logging;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies.Entities;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;

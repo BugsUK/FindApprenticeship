@@ -3,8 +3,8 @@
     using System.Runtime.InteropServices;
     using Application.Interfaces.Logging;
     using Application.Interfaces.ReferenceData;
-    using Application.VacancyEtl;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Consumers;
     using Domain.Entities.ReferenceData;
     using Elastic.Common.Entities;

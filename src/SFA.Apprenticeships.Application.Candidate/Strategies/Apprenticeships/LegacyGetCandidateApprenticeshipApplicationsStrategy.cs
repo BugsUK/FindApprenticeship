@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using ApplicationUpdate;
+    using Applications;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Interfaces.Logging;

@@ -2,10 +2,10 @@
 {
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
-    using Application.VacancyEtl;
-    using Application.VacancyEtl.Entities;
 
     public class VacancySummaryPageConsumerAsync : IConsumeAsync<VacancySummaryPage>
     {

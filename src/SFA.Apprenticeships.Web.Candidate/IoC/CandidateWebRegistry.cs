@@ -2,8 +2,8 @@
 {
     using System.Web;
     using Application.Address;
-    using Application.ApplicationUpdate;
-    using Application.ApplicationUpdate.Strategies;
+    using Application.Applications;
+    using Application.Applications.Strategies;
     using Application.Authentication;
     using Application.Candidate;
     using Application.Candidate.Strategies;

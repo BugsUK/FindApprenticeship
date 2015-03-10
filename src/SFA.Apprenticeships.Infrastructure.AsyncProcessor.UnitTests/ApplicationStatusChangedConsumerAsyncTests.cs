@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.ApplicationUpdate.Entities;
+    using Application.Applications.Entities;
     using Application.Interfaces.Logging;
     using Builders;
     using Consumers;

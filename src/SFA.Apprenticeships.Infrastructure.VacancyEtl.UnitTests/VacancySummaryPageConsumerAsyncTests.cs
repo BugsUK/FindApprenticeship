@@ -2,11 +2,11 @@
 {
     using System;
     using Application.Interfaces.Logging;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Domain.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
-    using Application.VacancyEtl;
-    using Application.VacancyEtl.Entities;
     using Consumers;
 
     [TestFixture]

@@ -2,8 +2,8 @@
 {
     using System;
     using System.Threading.Tasks;
+    using Application.Vacancies.Entities;
     using EasyNetQ.AutoSubscribe;
-    using Application.VacancyEtl.Entities;
     using Elastic.Common.Entities;
     using VacancyIndexer;
 

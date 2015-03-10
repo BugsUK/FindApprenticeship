@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl.UnitTests
 {
     using System;
-    using Application.ApplicationUpdate;
-    using Application.ApplicationUpdate.Entities;
+    using Application.Applications;
+    using Application.Applications.Entities;
     using Consumers;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;

@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Globalization;
     using Application.Interfaces.Logging;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Domain.Interfaces.Messaging;
     using Elastic.Common.Entities;
     using Moq;
     using NUnit.Framework;
-    using Application.VacancyEtl;
-    using Application.VacancyEtl.Entities;
     using Consumers;
     using VacancyIndexer;
 

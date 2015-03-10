@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl.Consumers
 {
     using System.Threading.Tasks;
-    using Application.ApplicationUpdate;
+    using Application.Applications;
     using Application.Interfaces.Logging;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;

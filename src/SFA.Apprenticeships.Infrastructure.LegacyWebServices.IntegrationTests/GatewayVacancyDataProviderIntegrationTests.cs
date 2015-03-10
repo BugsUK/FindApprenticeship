@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IntegrationTests
 {
     using System.Linq;
+    using Application.Vacancies;
     using FluentAssertions;
     using Logging.IoC;
     using NUnit.Framework;
     using Application.Vacancy;
-    using Application.VacancyEtl;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Common.IoC;
     using IoC;

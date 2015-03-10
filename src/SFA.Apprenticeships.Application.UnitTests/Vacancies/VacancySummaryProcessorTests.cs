@@ -4,6 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Configuration;
@@ -12,8 +14,6 @@
     using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
-    using VacancyEtl;
-    using VacancyEtl.Entities;
 
     [TestFixture]
     public class VacancySummaryProcessorTests

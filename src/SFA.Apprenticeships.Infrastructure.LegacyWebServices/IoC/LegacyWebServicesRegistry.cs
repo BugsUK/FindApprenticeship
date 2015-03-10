@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
-    using Application.ApplicationUpdate;
+    using Application.Applications;
     using Application.Candidate;
     using Application.ReferenceData;
+    using Application.Vacancies;
     using Application.Vacancy;
-    using Application.VacancyEtl;
     using Configuration;
     using CreateApplication;
     using CreateCandidate;

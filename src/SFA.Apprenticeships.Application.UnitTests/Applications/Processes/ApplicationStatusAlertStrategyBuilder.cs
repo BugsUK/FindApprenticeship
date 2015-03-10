@@ -1,6 +1,6 @@
 namespace SFA.Apprenticeships.Application.UnitTests.Applications.Processes
 {
-    using ApplicationUpdate.Strategies;
+    using Application.Applications.Strategies;
     using Domain.Interfaces.Messaging;
     using Interfaces.Logging;
     using Moq;

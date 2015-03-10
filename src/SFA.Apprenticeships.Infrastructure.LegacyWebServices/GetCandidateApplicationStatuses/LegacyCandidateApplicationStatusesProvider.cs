@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.ApplicationUpdate;
-    using Application.ApplicationUpdate.Entities;
+    using Application.Applications;
+    using Application.Applications.Entities;
     using Application.Interfaces.Logging;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;

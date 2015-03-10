@@ -3,7 +3,7 @@
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-    using Application.ApplicationUpdate.Entities;
+    using Application.Applications.Entities;
     using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;

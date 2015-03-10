@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
+    using Application.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Application.Vacancy;
-    using Application.VacancyEtl;
 
     public class CheckNasGateway : IMonitorTask
     {
