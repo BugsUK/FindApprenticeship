@@ -37,7 +37,9 @@
 
             foreach (var application in applicationsToRequeue)
             {
-                _logger.Info("Re-queuing create traineeship application message for application id: {0}", application.EntityId);
+                var requeueingMessage = string.Format("Re-queuing create traineeship application message for application id: {0}", application.EntityId);
+                _logger.Info(requeueingMessage);
+                sb.AppendLine(requeueingMessage);
 
                 var message = new SubmitTraineeshipApplicationRequest
                 {

@@ -31,9 +31,6 @@
 
         public void Run()
         {
-            var sb = new StringBuilder("The following actions were taken to resolve issues with traineeship applications:");
-            sb.AppendLine();
-
             var applicationsToCheck = _applicationDiagnosticsRepository.GetSubmittedApplicationsWithUnsetLegacyId().ToList();
 
             foreach (var application in applicationsToCheck)
@@ -55,7 +52,7 @@
                 else
                 {
                     _applicationDiagnosticsRepository.UpdateLegacyApplicationId(applicationDetail, applicationStatusSummary.LegacyApplicationId);
-                    _logger.Info("Patching traineeship application id: {0} with legacy id: {1}", applicationDetail.EntityId, applicationStatusSummary.LegacyApplicationId);
+                    _logger.Warn("Patching traineeship application id: {0} with legacy id: {1}", applicationDetail.EntityId, applicationStatusSummary.LegacyApplicationId);
                 }
             }
         }

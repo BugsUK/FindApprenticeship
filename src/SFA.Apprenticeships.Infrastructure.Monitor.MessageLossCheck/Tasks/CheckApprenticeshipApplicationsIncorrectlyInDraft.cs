@@ -32,9 +32,6 @@
 
         public void Run()
         {
-            var sb = new StringBuilder("The following actions were taken to resolve issues with apprenticeship applications:");
-            sb.AppendLine();
-
             var applicationsToCheck = _applicationDiagnosticsRepository.GetDraftApplicationsWithAppliedDate().ToList();
 
             foreach (var application in applicationsToCheck)
@@ -65,7 +62,7 @@
                         _applicationDiagnosticsRepository.UpdateApplicationStatus(applicationDetail, ApplicationStatuses.Submitted);
                     }
                     _applicationDiagnosticsRepository.UpdateLegacyApplicationId(applicationDetail, applicationStatusSummary.LegacyApplicationId);
-                    _logger.Info("Patching apprenticeship application id: {0} with legacy id: {1}", applicationDetail.EntityId, applicationStatusSummary.LegacyApplicationId);
+                    _logger.Warn("Patching apprenticeship application id: {0} with legacy id: {1}", applicationDetail.EntityId, applicationStatusSummary.LegacyApplicationId);
                 }
             }
         }

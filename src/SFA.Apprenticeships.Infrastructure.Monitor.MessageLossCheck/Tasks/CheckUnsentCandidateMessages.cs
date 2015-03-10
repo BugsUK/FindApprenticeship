@@ -37,7 +37,9 @@
             
             foreach (var candidate in candidatesToRequeue)
             {
-                _logger.Info("Re-queuing create candidate message for candidate id: {0}", candidate.EntityId);
+                var requeueingMessage = string.Format("Re-queuing create candidate message for candidate id: {0}", candidate.EntityId);
+                _logger.Info(requeueingMessage);
+                sb.AppendLine(requeueingMessage);
 
                 var message = new CreateCandidateRequest
                 {
