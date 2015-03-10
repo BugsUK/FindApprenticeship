@@ -182,6 +182,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\ApplicationStatusChangedConsumerAsync.cs" />
+    <Compile Include="Consumers\CandidateSavedSearchesConsumerAsync.cs" />
     <Compile Include="Consumers\Commands\CandidateCommunicationCommand.cs" />
     <Compile Include="Consumers\Commands\CommunicationCommand.cs" />
     <Compile Include="Consumers\Commands\HelpDeskCommunicationCommand.cs" />
@@ -269,6 +270,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancies</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>

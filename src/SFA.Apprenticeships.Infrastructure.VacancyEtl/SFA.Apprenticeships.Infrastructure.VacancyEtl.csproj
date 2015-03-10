@@ -188,6 +188,7 @@
     <Content Include="Configs\StopwordsBase.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Compile Include="Consumers\SavedSearchControlQueueConsumer.cs" />
     <Compile Include="Consumers\TraineeshipsSummaryUpdateConsumerAsync.cs" />
     <Compile Include="Consumers\VacancyEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\VacancyAboutToExpireConsumerAsync.cs" />
