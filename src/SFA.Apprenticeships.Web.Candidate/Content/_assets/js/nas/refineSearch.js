@@ -15,4 +15,8 @@ $(document).ready(function() {
         $("#refine-controls").toggle();
         $("#keyword-hint").toggle();
     });
+
+    if ($('#refine-controls').is(':visible')) {
+        $('#refine-search').addClass('open');
+    }
 });
