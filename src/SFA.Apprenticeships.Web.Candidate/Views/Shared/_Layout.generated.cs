@@ -154,7 +154,7 @@ WriteLiteral("\r\n    <!--[if gt IE 8]><!-->");
 
             
             #line 23 "..\..\Views\Shared\_Layout.cshtml"
-                     Write(Styles.Render(Url.CdnContent("css/main-1.6.0.1147.css", "~/Content/_assets")));
+                     Write(Styles.Render(Url.CdnContent("css/main-1.8.0.1350.css", "~/Content/_assets")));
 
             
             #line default
@@ -163,7 +163,7 @@ WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
             #line 24 "..\..\Views\Shared\_Layout.cshtml"
-                 Write(Styles.Render(Url.CdnContent("css/main-ie8-1.6.0.1147.css", "~/Content/_assets")));
+                 Write(Styles.Render(Url.CdnContent("css/main-ie8-1.8.0.1350.css", "~/Content/_assets")));
 
             
             #line default
