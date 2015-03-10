@@ -5,9 +5,7 @@
     using System.Threading.Tasks;
     using Application.Applications.Entities;
     using Application.Interfaces.Logging;
-    using Domain.Entities.Applications;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
 
