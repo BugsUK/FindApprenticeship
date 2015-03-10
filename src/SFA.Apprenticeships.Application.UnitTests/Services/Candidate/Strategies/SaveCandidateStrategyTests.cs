@@ -92,13 +92,11 @@
 
         }
 
-        [TestCase(true, true, false)]
-        [TestCase(true, false, true)]
-        [TestCase(true, true, true)]
-        [TestCase(false, true, false)]
-        [TestCase(false, false, true)]
-        [TestCase(false, true, true)]
-        public void ShouldAssignAndSendMobileUserCodeIfVerificationIsRequired(bool verifiedMobile, bool allowMobile, bool allowMobileMarketing)
+        [TestCase(true, false)]
+        [TestCase(true, true)]
+        [TestCase(false, false)]
+        [TestCase(false, true)]
+        public void ShouldAssignAndSendMobileUserCodeIfVerificationIsRequired(bool verifiedMobile, bool allowMobile)
         {
             var candidateId = Guid.NewGuid();
             const string phoneNumber = "0123456789";
@@ -112,8 +110,7 @@
                 CommunicationPreferences = new CommunicationPreferences
                 {
                     AllowMobile = allowMobile,
-                    VerifiedMobile = verifiedMobile,
-                    AllowMobileMarketing = allowMobileMarketing
+                    VerifiedMobile = verifiedMobile
                 }
             };
 
@@ -130,7 +127,7 @@
 
             saveCandidateStrategy.SaveCandidate(candidate);
 
-            if (verifiedMobile)
+            if (verifiedMobile || !allowMobile)
             {
                 candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
                 communicationService.Verify(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Never);

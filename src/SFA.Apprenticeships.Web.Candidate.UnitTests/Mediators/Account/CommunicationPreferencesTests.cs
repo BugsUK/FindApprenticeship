@@ -58,7 +58,7 @@
             var candidate = new CandidateBuilder(candidateId).PhoneNumber("0123456789").VerifiedMobile(verifiedMobile).Build();
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidate);
-            var viewModel = new SettingsViewModelBuilder().PhoneNumber(newPhoneNumber).AllowSmsMarketing(allowSmsMarketing).Build();
+            var viewModel = new SettingsViewModelBuilder().PhoneNumber(newPhoneNumber).AllowSmsComms(allowSmsMarketing).Build();
             var accountProvider = new AccountProviderBuilder().With(candidateService).Build();
             var mediator = new AccountMediatorBuilder().With(accountProvider).Build();
 

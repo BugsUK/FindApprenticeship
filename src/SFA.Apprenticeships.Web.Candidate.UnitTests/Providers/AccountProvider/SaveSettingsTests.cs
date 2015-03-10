@@ -44,12 +44,12 @@
         [TestCase(true, false)]
         [TestCase(false, true)]
         [TestCase(true, true)]
-        public void MarketingMappingTest(bool allowEmailMarketing, bool allowSmsMarketing)
+        public void MarketingMappingTest(bool allowEmailComms, bool allowSmsComms)
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
-            var viewModel = new SettingsViewModelBuilder().AllowEmailMarketing(allowEmailMarketing).AllowSmsMarketing(allowSmsMarketing).Build();
+            var viewModel = new SettingsViewModelBuilder().AllowEmailComms(allowEmailComms).AllowSmsComms(allowSmsComms).Build();
             var provider = new AccountProviderBuilder().With(candidateService).Build();
 
             Candidate candidate;
@@ -58,8 +58,8 @@
             result.Should().BeTrue();
             candidate.RegistrationDetails.Should().NotBeNull();
             candidate.CommunicationPreferences.Should().NotBeNull();
-            candidate.CommunicationPreferences.AllowEmailMarketing.Should().Be(allowEmailMarketing);
-            candidate.CommunicationPreferences.AllowMobileMarketing.Should().Be(allowSmsMarketing);
+            candidate.CommunicationPreferences.AllowEmail.Should().Be(allowEmailComms);
+            candidate.CommunicationPreferences.AllowMobile.Should().Be(allowSmsComms);
         }
 
         [TestCase("0123456789", false, false, false)]

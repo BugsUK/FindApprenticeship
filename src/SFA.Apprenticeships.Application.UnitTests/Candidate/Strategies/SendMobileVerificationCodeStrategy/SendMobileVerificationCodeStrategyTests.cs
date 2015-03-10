@@ -25,7 +25,7 @@
         public void MobileVerificationNotRequired(bool verifiedMobile, bool allowMobile, bool allowMobileMarketing)
         {
             var candidateId = Guid.NewGuid();
-            var candidate = new CandidateBuilder(candidateId).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).AllowMobileMarketing(allowMobileMarketing).Build();
+            var candidate = new CandidateBuilder(candidateId).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).Build();
             var strategy = new SendMobileVerificationCodeStrategyBuilder().Build();
 
             Action action = () => { strategy.SendMobileVerificationCode(candidate); };

@@ -43,8 +43,7 @@
 
             candidate.Should().NotBeNull();
             candidate.CommunicationPreferences.Should().NotBeNull();
-            candidate.CommunicationPreferences.AllowEmailMarketing.Should().BeTrue();
-            candidate.CommunicationPreferences.AllowMobileMarketing.Should().BeFalse();
+            candidate.CommunicationPreferences.SendMarketingCommunications.Should().BeTrue();
             candidate.CommunicationPreferences.VerifiedMobile.Should().BeFalse();
             candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
             registered.Should().BeTrue();
@@ -63,8 +62,7 @@
 
             candidate.Should().NotBeNull();
             candidate.CommunicationPreferences.Should().NotBeNull();
-            candidate.CommunicationPreferences.AllowEmailMarketing.Should().BeFalse();
-            candidate.CommunicationPreferences.AllowMobileMarketing.Should().BeFalse();
+            candidate.CommunicationPreferences.SendMarketingCommunications.Should().BeFalse();
             registered.Should().BeTrue();
         }
     }

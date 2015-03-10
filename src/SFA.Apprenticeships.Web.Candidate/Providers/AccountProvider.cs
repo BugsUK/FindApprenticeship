@@ -37,12 +37,18 @@
                 
                 var candidate = _candidateService.GetCandidate(candidateId);
                 var settings = _mapper.Map<RegistrationDetails, SettingsViewModel>(candidate.RegistrationDetails);
+                
                 settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
                 settings.AllowSmsComms = candidate.CommunicationPreferences.AllowMobile;
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
                 settings.SmsEnabled = _featureToggle.IsActive(Feature.Sms);
-                settings.AllowEmailMarketing = candidate.CommunicationPreferences.AllowEmailMarketing;
-                settings.AllowSmsMarketing = candidate.CommunicationPreferences.AllowMobileMarketing;
+
+                settings.SendApplicationSubmitted = candidate.CommunicationPreferences.SendApplicationSubmitted;
+                settings.SendApplicationStatusChanges = candidate.CommunicationPreferences.SendApplicationStatusChanges;
+                settings.SendApprenticeshipApplicationsExpiring = candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring;
+                settings.SendSavedSearchAlerts = candidate.CommunicationPreferences.SendSavedSearchAlerts;
+                settings.SendMarketingCommunications = candidate.CommunicationPreferences.SendMarketingCommunications;
+
                 return settings;
             }
             catch (Exception e)
@@ -65,12 +71,17 @@
 
                 candidate.CommunicationPreferences.AllowEmail = model.AllowEmailComms;
                 candidate.CommunicationPreferences.AllowMobile = model.AllowSmsComms;
+                
                 if (candidate.RegistrationDetails.PhoneNumber != model.PhoneNumber)
                 {
                     candidate.CommunicationPreferences.VerifiedMobile = false;
                 }
-                candidate.CommunicationPreferences.AllowEmailMarketing = model.AllowEmailMarketing;
-                candidate.CommunicationPreferences.AllowMobileMarketing = model.AllowSmsMarketing;
+
+                candidate.CommunicationPreferences.SendApplicationSubmitted = model.SendApplicationSubmitted;
+                candidate.CommunicationPreferences.SendApplicationStatusChanges = model.SendApplicationStatusChanges;
+                candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring = model.SendApprenticeshipApplicationsExpiring;
+                candidate.CommunicationPreferences.SendSavedSearchAlerts = model.SendSavedSearchAlerts;
+                candidate.CommunicationPreferences.SendMarketingCommunications = model.SendMarketingCommunications;
                 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);

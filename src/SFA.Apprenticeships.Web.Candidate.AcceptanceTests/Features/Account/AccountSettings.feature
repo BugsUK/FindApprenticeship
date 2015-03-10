@@ -43,7 +43,14 @@ Scenario: As a candidate I can change my personal settings
 	And I wait to see Postcode
 
 	And I wait to see AllowEmailComms
-
+	And I wait to see AllowSmsComms
+	
+	And I wait to see SendApplicationSubmitted
+	And I wait to see SendApplicationStatusChanges
+	And I wait to see SendApprenticeshipApplicationsExpiring
+	And I wait to see SendSavedSearchAlerts
+	And I wait to see SendMarketingCommunications
+	
 	And I wait to see UpdateDetailsButton
 
 	Then I see
@@ -204,13 +211,20 @@ Scenario: As a candidate I can opt into marketing messages
 	Given I navigated to the SettingsPage page
 	Then I am on the SettingsPage page
 	And I see
-	| Field                 | Rule           | Value |
-	| VerifyContainer       | Does Not Exist |       |
-	| IsAllowEmailMarketing | Equals         | True  |
-	| IsAllowSmsMarketing   | Equals         | False |
-	And I wait to see AllowEmailMarketing
-	When I choose AllowEmailMarketing
-	When I choose AllowSmsMarketing
+	| Field                                    | Rule           | Value |
+	| VerifyContainer                          | Does Not Exist |       |
+	| IsAllowSmsComms                          | Equals         | False |
+	| IsSendApplicationSubmitted               | Equals         | True  |
+	| IsSendApplicationStatusChanges           | Equals         | True  |
+	| IsSendApprenticeshipApplicationsExpiring | Equals         | True  |
+	| IsSendSavedSearchAlerts                  | Equals         | True  |
+	| IsSendMarketingCommunications            | Equals         | True  |
+	When I choose AllowSmsComms
+	And I choose SendApplicationSubmitted
+	And I choose SendApplicationStatusChanges
+	And I choose SendApprenticeshipApplicationsExpiring
+	And I choose SendSavedSearchAlerts
+	And I choose SendMarketingCommunications
 	And I choose UpdateDetailsButton
 	Then I am on the VerifyMobile page
 	When I get my mobile verification code
@@ -220,7 +234,9 @@ Scenario: As a candidate I can opt into marketing messages
 	And I choose VerifyNumberButton
 	Then I am on the SettingsPage page
 	And I see
-	| Field                 | Rule   | Value |
-	| VerifyContainer       | Exists |       |
-	| IsAllowEmailMarketing | Equals | False |
-	| IsAllowSmsMarketing   | Equals | True  |
+	| Field                                    | Rule   | Value |
+	| VerifyContainer                          | Exists |       |
+	| IsSendApplicationSubmitted               | Equals | False |
+	| IsSendApprenticeshipApplicationsExpiring | Equals | False |
+	| IsSendSavedSearchAlerts                  | Equals | False |
+	| IsSendMarketingCommunications            | Equals | False |

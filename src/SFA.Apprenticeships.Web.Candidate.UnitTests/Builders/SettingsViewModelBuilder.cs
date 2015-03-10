@@ -15,8 +15,12 @@
         private bool _showTraineeshipsLink;
         private bool _showTraineeshipsPrompt;
         private bool _smsEnabled;
-        private bool _allowEmailMarketing;
-        private bool _allowSmsMarketing;
+
+        private bool _sendApplicationSubmitted;
+        private bool _sendApplicationStatusChanges;
+        private bool _sendApprenticeshipApplicationsExpiring;
+        private bool _sendSavedSearchAlerts;
+        private bool _sendMarketingComms;
 
         public SettingsViewModelBuilder Firstname(string firstname)
         {
@@ -72,15 +76,33 @@
             return this;
         }
 
-        public SettingsViewModelBuilder AllowEmailMarketing(bool allowEmailMarketing)
+        public SettingsViewModelBuilder SendApplicationSubmitted(bool sendApplicationSubmitted)
         {
-            _allowEmailMarketing = allowEmailMarketing;
+            _sendApplicationSubmitted = sendApplicationSubmitted;
             return this;
         }
 
-        public SettingsViewModelBuilder AllowSmsMarketing(bool allowSmsMarketing)
+        public SettingsViewModelBuilder SendApplicationStatusChanges(bool sendApplicationStatusChanges)
         {
-            _allowSmsMarketing = allowSmsMarketing;
+            _sendApplicationStatusChanges = sendApplicationStatusChanges;
+            return this;
+        }
+
+        public SettingsViewModelBuilder SendApprenticeshipApplicationsExpiring(bool sendApprenticeshipApplicationsExpiring)
+        {
+            _sendApprenticeshipApplicationsExpiring = sendApprenticeshipApplicationsExpiring;
+            return this;
+        }
+
+        public SettingsViewModelBuilder SendSavedSearchAlerts(bool sendSavedSearchAlerts)
+        {
+            _sendSavedSearchAlerts = sendSavedSearchAlerts;
+            return this;
+        }
+
+        public SettingsViewModelBuilder SendMarketingComms(bool sendMarketingComms)
+        {
+            _sendMarketingComms = sendMarketingComms;
             return this;
         }
 
@@ -106,8 +128,12 @@
                     ShowTraineeshipsPrompt = _showTraineeshipsPrompt
                 },
                 SmsEnabled = _smsEnabled,
-                AllowEmailMarketing = _allowEmailMarketing,
-                AllowSmsMarketing = _allowSmsMarketing
+
+                SendApplicationSubmitted = _sendApplicationSubmitted,
+                SendApplicationStatusChanges = _sendApplicationStatusChanges,
+                SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
+                SendSavedSearchAlerts = _sendSavedSearchAlerts,
+                SendMarketingCommunications = _sendMarketingComms
             };
 
             return model;

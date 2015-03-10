@@ -12,9 +12,14 @@
         private bool _allowEmail;
         private bool _allowMobile;
         private bool _verifiedMobile;
-        private bool _allowEmailMarketing;
-        private bool _allowSmsMarketing;
+        private bool _allowTraineeshipPrompts;
 
+        private bool _sendApplicationSubmitted;
+        private bool _sendApplicationStatusChanges;
+        private bool _sendApprenticeshipApplicationsExpiring;
+        private bool _sendSavedSearchAlerts;
+        private bool _sendMarketingComms;
+        
         public CandidateBuilder(Guid candidateId)
         {
             _candidateId = candidateId;
@@ -50,15 +55,39 @@
             return this;
         }
 
-        public CandidateBuilder AllowEmailMarketing(bool allowEmailMarketing)
+        public CandidateBuilder AllowTraineeshipPrompts(bool allowTraineeshipPrompts)
         {
-            _allowEmailMarketing = allowEmailMarketing;
+            _allowTraineeshipPrompts = allowTraineeshipPrompts;
             return this;
         }
 
-        public CandidateBuilder AllowMobileMarketing(bool allowSmsMarketing)
+        public CandidateBuilder SendApplicationSubmitted(bool sendApplicationSubmitted)
         {
-            _allowSmsMarketing = allowSmsMarketing;
+            _sendApplicationSubmitted = sendApplicationSubmitted;
+            return this;
+        }
+
+        public CandidateBuilder SendApplicationStatusChanges(bool sendApplicationStatusChanges)
+        {
+            _sendApplicationStatusChanges = sendApplicationStatusChanges;
+            return this;
+        }
+
+        public CandidateBuilder SendApprenticeshipApplicationsExpiring(bool sendApprenticeshipApplicationsExpiring)
+        {
+            _sendApprenticeshipApplicationsExpiring = sendApprenticeshipApplicationsExpiring;
+            return this;
+        }
+
+        public CandidateBuilder SendSavedSearchAlerts(bool sendSavedSearchAlerts)
+        {
+            _sendSavedSearchAlerts = sendSavedSearchAlerts;
+            return this;
+        }
+
+        public CandidateBuilder SendMarketingComms(bool sendMarketingComms)
+        {
+            _sendMarketingComms = sendMarketingComms;
             return this;
         }
 
@@ -77,8 +106,13 @@
                     AllowMobile = _allowMobile,
                     VerifiedMobile = _verifiedMobile,
                     MobileVerificationCode = _mobileVerificationCode,
-                    AllowEmailMarketing = _allowEmailMarketing,
-                    AllowMobileMarketing = _allowSmsMarketing
+                    AllowTraineeshipPrompts = _allowTraineeshipPrompts,
+
+                    SendApplicationSubmitted = _sendApplicationSubmitted,
+                    SendApplicationStatusChanges = _sendApplicationStatusChanges,
+                    SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
+                    SendSavedSearchAlerts = _sendSavedSearchAlerts,
+                    SendMarketingCommunications = _sendMarketingComms
                 }
             };
 

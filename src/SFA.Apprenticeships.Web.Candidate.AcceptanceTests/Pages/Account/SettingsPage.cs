@@ -125,25 +125,58 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
             }
         }
 
-        [ElementLocator(Id = "AllowEmailMarketing")]
-        public IWebElement AllowEmailMarketing { get; set; }
+        [ElementLocator(Id = "SendApplicationSubmitted")]
+        public IWebElement SendApplicationSubmitted { get; set; }
 
-        [ElementLocator(Id = "AllowSmsMarketing")]
-        public IWebElement AllowSmsMarketing { get; set; }
+        [ElementLocator(Id = "SendApplicationStatusChanges")]
+        public IWebElement SendApplicationStatusChanges { get; set; }
 
-        public string IsAllowEmailMarketing
+        [ElementLocator(Id = "SendApprenticeshipApplicationsExpiring")]
+        public IWebElement SendApprenticeshipApplicationsExpiring { get; set; }
+
+        [ElementLocator(Id = "SendSavedSearchAlerts")]
+        public IWebElement SendSavedSearchAlerts { get; set; }
+
+        [ElementLocator(Id = "SendMarketingCommunications")]
+        public IWebElement SendMarketingCommunications { get; set; }
+
+        public string IsSendApplicationSubmitted
         {
             get
             {
-                return AllowEmailMarketing.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
+                return SendApplicationSubmitted.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
             }
         }
 
-        public string IsAllowSmsMarketing
+        public string IsSendApplicationStatusChanges
         {
             get
             {
-                return AllowSmsMarketing.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
+                return SendApplicationStatusChanges.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
+            }
+        }
+
+        public string IsSendApprenticeshipApplicationsExpiring
+        {
+            get
+            {
+                return SendApprenticeshipApplicationsExpiring.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
+            }
+        }
+
+        public string IsSendSavedSearchAlerts
+        {
+            get
+            {
+                return SendSavedSearchAlerts.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
+            }
+        }
+
+        public string IsSendMarketingCommunications
+        {
+            get
+            {
+                return SendMarketingCommunications.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
             }
         }
 

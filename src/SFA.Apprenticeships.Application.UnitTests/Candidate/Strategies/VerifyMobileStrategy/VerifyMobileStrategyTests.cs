@@ -53,7 +53,7 @@
             Guid candidateId = Guid.NewGuid();
             string verificationCode = string.Empty;
 
-            Candidate candidate = new CandidateBuilder(candidateId).MobileVerificationCode(verificationCode).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).AllowMobileMarketing(allowMobileMarketing).Build();
+            Candidate candidate = new CandidateBuilder(candidateId).MobileVerificationCode(verificationCode).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).Build();
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(candidate);
 

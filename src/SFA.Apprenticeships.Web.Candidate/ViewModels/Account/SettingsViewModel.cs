@@ -35,10 +35,19 @@
 
         public bool SmsEnabled { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.AllowEmailMessages.LabelText)]
-        public bool AllowEmailMarketing { get; set; }
+        [Display(Name = SettingsViewModelMessages.SubmitApplicationForm.LabelText)]
+        public bool SendApplicationSubmitted { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.AllowSmsMessages.LabelText)]
-        public bool AllowSmsMarketing { get; set; }
+        [Display(Name = SettingsViewModelMessages.ApplicationStatusChange.LabelText)]
+        public bool SendApplicationStatusChanges { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.ApplicationExpiring.LabelText)]
+        public bool SendApprenticeshipApplicationsExpiring { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.SavedSearchAlert.LabelText)]
+        public bool SendSavedSearchAlerts { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.MarketingComms.LabelText)]
+        public bool SendMarketingCommunications { get; set; }
     }
 }

@@ -7,24 +7,34 @@
             AllowMobile = false;
             AllowEmail = true;
             VerifiedMobile = false;
-            AllowTraineeshipPrompts = true;
             MobileVerificationCode = string.Empty;
-            AllowEmailMarketing = true;
-            AllowMobileMarketing = false;
+            AllowTraineeshipPrompts = true;
+
+            SendApplicationSubmitted = true;
+            SendApplicationStatusChanges = true;
+            SendApprenticeshipApplicationsExpiring = true;
+            SendSavedSearchAlerts = true;
+            SendMarketingCommunications = true;
         }
 
         public bool AllowEmail { get; set; }
 
         public bool AllowMobile { get; set; }
 
-        public string MobileVerificationCode { get; set; }
-
         public bool VerifiedMobile { get; set; }
 
-        public bool AllowEmailMarketing { get; set; }
-        
-        public bool AllowMobileMarketing { get; set; }
+        public string MobileVerificationCode { get; set; }
 
         public bool AllowTraineeshipPrompts { get; set; }
+
+        public bool SendApplicationSubmitted { get; set; }
+
+        public bool SendApplicationStatusChanges { get; set; }
+
+        public bool SendApprenticeshipApplicationsExpiring { get; set; }
+
+        public bool SendSavedSearchAlerts { get; set; }
+
+        public bool SendMarketingCommunications { get; set; }
     }
 }

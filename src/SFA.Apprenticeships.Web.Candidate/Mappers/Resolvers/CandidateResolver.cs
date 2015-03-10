@@ -40,7 +40,7 @@
                 },
                 CommunicationPreferences = new CommunicationPreferences
                 {
-                    AllowEmailMarketing = viewModel.AcceptUpdates
+                    SendMarketingCommunications = viewModel.AcceptUpdates
                 }
             };
 

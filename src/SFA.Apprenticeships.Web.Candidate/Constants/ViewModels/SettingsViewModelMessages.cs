@@ -40,5 +40,30 @@
         {
             public const string LabelText = "Text";
         }
+
+        public static class SubmitApplicationForm
+        {
+            public const string LabelText = "you submit an application form";
+        }
+
+        public static class ApplicationStatusChange
+        {
+            public const string LabelText = "the status of one of your applications changes";
+        }
+
+        public static class ApplicationExpiring
+        {
+            public const string LabelText = "an apprenticeship is approaching its closing date";
+        }
+
+        public static class SavedSearchAlert
+        {
+            public const string LabelText = "you have a saved search alert";
+        }
+
+        public static class MarketingComms
+        {
+            public const string LabelText = "we send you updates on news and information";
+        }
     }
 }
