@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using System.Text;
-    using Application.ApplicationUpdate;
+    using Application.Applications;
     using Application.Candidate;
     using Application.Interfaces.Logging;
     using Domain.Entities.Applications;

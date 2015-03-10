@@ -142,6 +142,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
       <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
       <Name>SFA.Apprenticeships.Application.Candidate</Name>
