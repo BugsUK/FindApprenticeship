@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
 {
-    using System;
     using System.Threading.Tasks;
     using Application.Interfaces.Communications;
     using EasyNetQ.AutoSubscribe;

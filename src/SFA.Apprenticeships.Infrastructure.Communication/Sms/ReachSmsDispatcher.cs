@@ -38,13 +38,15 @@
         {
             var context = new
             {
-                toNumber = smsRequest.MessageType,
+                toNumber = smsRequest.ToNumber,
                 messageType = smsRequest.MessageType
             };
 
+            var logMessage = FormatLogMessage(smsRequest);
+
             try
             {
-                _logger.Debug("Dispatching SMS: {0}", FormatLogMessage(smsRequest));
+                _logger.Debug("Dispatching SMS: {0}", logMessage);
 
                 var smsMessage = FormatSmsMessage(smsRequest);
                 var restRequest = CreateRestRequest(smsRequest, smsMessage);
@@ -54,11 +56,11 @@
                 var restResponse = _restClient.Execute(restRequest);
                 var smsMessageId = ParseRestResponse(restResponse);
 
-                _logger.Info("Dispatched SMS: id='{0}' message='{1}' to='{2}' {3}", smsMessageId, smsMessage, smsRequest.ToNumber, FormatLogMessage(smsRequest));
+                _logger.Info("Dispatched SMS: id='{0}' message='{1}' {2}", smsMessageId, smsMessage, logMessage);
             }
             catch (Exception e)
             {
-                _logger.Error("Failed to dispatch SMS: {0}", FormatLogMessage(smsRequest));
+                _logger.Error("Failed to dispatch SMS: {0}", logMessage);
 
                 throw new DomainException(ErrorCodes.SmsError, e, context);
             }
@@ -88,6 +90,7 @@
         private RestRequest CreateRestRequest(SmsRequest smsRequest, string smsMessage)
         {
             var restRequest = new RestRequest(Method.POST);
+
             restRequest.AddParameter("username", _reachConfiguration.Username);
             restRequest.AddParameter("password", _reachConfiguration.Password);
             restRequest.AddParameter("msisdn", _smsNumberFormatter.Format(smsRequest.ToNumber));
