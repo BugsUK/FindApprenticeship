@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
+    using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -47,8 +48,11 @@
                     if (user.LoginIncorrectAttempts > 0)
                     {
                         user.SetStateActive();
-                        _userWriteRepository.Save(user);
                     }
+
+                    user.LastLogin = DateTime.UtcNow;
+
+                    _userWriteRepository.Save(user);
 
                     return candidate;
                 }

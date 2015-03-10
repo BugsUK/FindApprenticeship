@@ -4,6 +4,11 @@
 
     public class User : BaseEntity
     {
+        public User()
+        {
+            LastActivity = DateTime.UtcNow;
+        }
+
         private string _username;
 
         public string Username
@@ -42,5 +47,9 @@
         public string AccountUnlockCode { get; set; }
 
         public DateTime? AccountUnlockCodeExpiry { get; set; }
+
+        public DateTime? LastLogin { get; set; }
+
+        public DateTime LastActivity { get; set; }
     }
 }
