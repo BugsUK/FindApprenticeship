@@ -170,6 +170,13 @@
 
             try
             {
+                var candidate = _candidateService.GetCandidate(candidateId);
+                if (candidate.RegistrationDetails.EmailAddress != model.EmailAddress)
+                {
+                    _logger.Error("Candidate email address {0} does not match supplied email address {1}", candidate.RegistrationDetails.EmailAddress, model.EmailAddress);
+                    return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error, ActivationPageMessages.ActivationFailed);
+                }
+
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
                 _authenticationTicketService.SetAuthenticationCookie(_httpContext.Response.Cookies,
                     candidateId.ToString(),
