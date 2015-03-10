@@ -46,7 +46,7 @@
 
             try
             {
-                _logger.Debug("Dispatching SMS: {0}", logMessage);
+                _logger.Debug("Sending SMS: {0}", logMessage);
 
                 var smsMessage = FormatSmsMessage(smsRequest);
                 var restRequest = CreateRestRequest(smsRequest, smsMessage);
@@ -56,11 +56,11 @@
                 var restResponse = _restClient.Execute(restRequest);
                 var smsMessageId = ParseRestResponse(restResponse);
 
-                _logger.Info("Dispatched SMS: id='{0}' message='{1}' {2}", smsMessageId, smsMessage, logMessage);
+                _logger.Info("Sent SMS: id='{0}' message='{1}' {2}", smsMessageId, smsMessage, logMessage);
             }
             catch (Exception e)
             {
-                _logger.Error("Failed to dispatch SMS: {0}", logMessage);
+                _logger.Error("Failed to send SMS: {0}", logMessage);
 
                 throw new DomainException(ErrorCodes.SmsError, e, context);
             }

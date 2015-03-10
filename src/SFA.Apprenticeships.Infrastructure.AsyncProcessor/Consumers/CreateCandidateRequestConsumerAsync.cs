@@ -23,7 +23,8 @@
             IUserReadRepository userReadRepository,
             ILegacyCandidateProvider legacyCandidateProvider,
             ICandidateWriteRepository candidateWriteRepository,
-            IMessageBus messageBus, ILogService logger)
+            IMessageBus messageBus,
+            ILogService logger)
         {
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
