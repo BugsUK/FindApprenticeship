@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.IoC
 {
-    using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Monitor.Tasks;
+    using Repositories;
     using Repository;
     using StructureMap.Configuration.DSL;
     using Tasks;

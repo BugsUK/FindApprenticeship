@@ -195,15 +195,18 @@
     <Compile Include="Consumers\DailyMetricsControlQueueConsumer.cs" />
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
     <Compile Include="Repositories\ApplicationStatusAlertsMetricsRepository.cs" />
+    <Compile Include="Repositories\CandidateDiagnosticsRepository.cs" />
     <Compile Include="Repositories\ExpiringDraftsMetricsRepository.cs" />
     <Compile Include="Repositories\IApprenticeshipMetricsRepository.cs" />
     <Compile Include="Repositories\IApplicationStatusAlertsMetricsRepository.cs" />
+    <Compile Include="Repositories\ICandidateDiagnosticsRepository.cs" />
     <Compile Include="Repositories\IExpiringDraftsMetricsRepository.cs" />
     <Compile Include="Repositories\IUserMetricsRepository.cs" />
     <Compile Include="Repositories\ITraineeshipMetricsRepository.cs" />
     <Compile Include="Repositories\ApprenticeshipMetricsRepository.cs" />
     <Compile Include="Repositories\UserMetricsRepository.cs" />
     <Compile Include="Repositories\TraineeshipMetricsRepository.cs" />
+    <Compile Include="Tasks\CheckUnsentCandidateMessages.cs" />
     <Compile Include="Tasks\SendDailyMetricsEmail.cs" />
     <Compile Include="Tasks\CheckTraineeshipApplicationRepository.cs" />
     <Compile Include="Tasks\CheckUserDirectory.cs" />
@@ -298,6 +301,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj">
       <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
       <Name>SFA.Apprenticeships.Application.Authentication</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
+      <Project>{984f8cd2-61b3-48a4-b0cc-5d05e235983d}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidate</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>

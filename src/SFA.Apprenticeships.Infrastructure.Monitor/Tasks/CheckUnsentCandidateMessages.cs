@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.Tasks
+﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
     using System.Linq;
@@ -7,8 +7,7 @@
     using Application.Candidate;
     using Application.Interfaces.Logging;
     using Domain.Interfaces.Messaging;
-    using Monitor.Tasks;
-    using Repository;
+    using Repositories;
 
     public class CheckUnsentCandidateMessages : IMonitorTask
     {

@@ -35,6 +35,7 @@
                     x.Type<CheckElasticsearchCluster>();
                     x.Type<CheckElasticsearchAliases>();
                     x.Type<CheckLogstashLogs>();
+                    x.Type<CheckUnsentCandidateMessages>();
                 });
 
             For<IDailyMetricsTasksRunner>().Use<DailyMetricsTasksRunner>()
@@ -47,6 +48,7 @@
             For<IApplicationStatusAlertsMetricsRepository>().Use<ApplicationStatusAlertsMetricsRepository>();
             For<ITraineeshipMetricsRepository>().Use<TraineeshipMetricsRepository>();
             For<IUserMetricsRepository>().Use<UserMetricsRepository>();
+            For<ICandidateDiagnosticsRepository>().Use<CandidateDiagnosticsRepository>();
         }
     }
 }

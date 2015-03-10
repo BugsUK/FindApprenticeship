@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.Repository
+﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
     using System;
     using System.Collections.Generic;
