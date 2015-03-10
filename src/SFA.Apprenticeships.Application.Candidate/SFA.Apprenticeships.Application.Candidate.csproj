@@ -96,6 +96,12 @@
     </Compile>
     <Compile Include="CandidateService.cs" />
     <Compile Include="CreateCandidateRequest.cs" />
+    <Compile Include="Strategies\SavedSearches\CreateSavedSearchStrategy.cs" />
+    <Compile Include="Strategies\SavedSearches\DeleteSavedSearchStrategy.cs" />
+    <Compile Include="Strategies\SavedSearches\ICreateSavedSearchStrategy.cs" />
+    <Compile Include="Strategies\SavedSearches\IDeleteSavedSearchStrategy.cs" />
+    <Compile Include="Strategies\SavedSearches\IRetrieveSavedSearchesStrategy.cs" />
+    <Compile Include="Strategies\SavedSearches\IUpdateSavedSearchStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\ArchiveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\CreateDraftApprenticeshipFromSavedVacancyStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\DeleteSavedApprenticeshipApprenticeshipVacancyStrategy.cs" />
@@ -109,6 +115,8 @@
     <Compile Include="Strategies\LegacyGetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\LegacySubmitApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\ISubmitTraineeshipApplicationStrategy.cs" />
+    <Compile Include="Strategies\SavedSearches\RetrieveSavedSearchesStrategy.cs" />
+    <Compile Include="Strategies\SavedSearches\UpdateSavedSearchStrategy.cs" />
     <Compile Include="Strategies\SubmitContactMessageStrategy.cs" />
     <Compile Include="Strategies\SendMobileVerificationCodeStrategy.cs" />
     <Compile Include="Strategies\Traineeships\CreateTraineeshipApplicationStrategy.cs" />

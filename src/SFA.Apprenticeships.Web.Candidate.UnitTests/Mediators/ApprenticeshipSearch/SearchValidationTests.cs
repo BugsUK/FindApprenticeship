@@ -2,6 +2,7 @@
 {
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using NUnit.Framework;
 
     [TestFixture]

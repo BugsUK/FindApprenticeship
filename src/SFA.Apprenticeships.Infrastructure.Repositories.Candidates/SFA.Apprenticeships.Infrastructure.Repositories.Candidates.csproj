@@ -109,6 +109,7 @@
     </Compile>
     <Compile Include="CandidateRepository.cs" />
     <Compile Include="Entities\MongoCandidate.cs" />
+    <Compile Include="Entities\MongoSavedSearch.cs" />
     <Compile Include="IoC\CandidateRepositoryRegistry.cs" />
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

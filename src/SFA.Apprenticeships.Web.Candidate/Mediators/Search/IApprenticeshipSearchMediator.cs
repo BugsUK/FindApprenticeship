@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
     using System;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using ViewModels.VacancySearch;
 
     public interface IApprenticeshipSearchMediator

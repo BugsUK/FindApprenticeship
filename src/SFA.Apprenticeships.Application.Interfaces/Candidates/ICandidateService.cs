@@ -68,5 +68,13 @@
         ApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId);
 
         ApprenticeshipApplicationDetail CreateDraftFromSavedVacancy(Guid candidateId, int vacancyId);
+
+        SavedSearch CreateSavedSearch(SavedSearch savedSearch);
+
+        IList<SavedSearch> RetrieveSavedSearches(Guid candidateId);  
+
+        SavedSearch UpdateSavedSearch(SavedSearch savedSearch);
+
+        SavedSearch DeleteSavedSearch(Guid savedSearchId);
     }
 }

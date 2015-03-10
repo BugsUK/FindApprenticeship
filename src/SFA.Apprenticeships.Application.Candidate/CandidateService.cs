@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -14,6 +13,7 @@
     using Interfaces.Logging;
     using Strategies;
     using Strategies.Apprenticeships;
+    using Strategies.SavedSearches;
     using Strategies.Traineeships;
     using UserAccount.Strategies;
 
@@ -48,6 +48,10 @@
         private readonly ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy;
         private readonly IVerifyMobileStrategy _verifyMobileStrategy;
         private readonly ISubmitContactMessageStrategy _submitContactMessageStrategy;
+        private readonly ICreateSavedSearchStrategy _createSavedSearchStrategy;
+        private readonly IRetrieveSavedSearchesStrategy _retrieveSavedSearchesStrategy;
+        private readonly IUpdateSavedSearchStrategy _updateSavedSearchStrategy;
+        private readonly IDeleteSavedSearchStrategy _deleteSavedSearchStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -75,8 +79,13 @@
             ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> candidateApprenticeshipVacancyDetailStrategy,
             ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy,
             ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
-            ILogService logService, IVerifyMobileStrategy verifyMobileStrategy, 
-            ISubmitContactMessageStrategy submitContactMessageStrategy)
+            ILogService logService,
+            IVerifyMobileStrategy verifyMobileStrategy, 
+            ISubmitContactMessageStrategy submitContactMessageStrategy,
+            ICreateSavedSearchStrategy createSavedSearchStrategy,
+            IRetrieveSavedSearchesStrategy retrieveSavedSearchesStrategy,
+            IUpdateSavedSearchStrategy updateSavedSearchStrategy,
+            IDeleteSavedSearchStrategy deleteSavedSearchStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -106,6 +115,10 @@
             _logger = logService;
             _verifyMobileStrategy = verifyMobileStrategy;
             _submitContactMessageStrategy = submitContactMessageStrategy;
+            _createSavedSearchStrategy = createSavedSearchStrategy;
+            _retrieveSavedSearchesStrategy = retrieveSavedSearchesStrategy;
+            _updateSavedSearchStrategy = updateSavedSearchStrategy;
+            _deleteSavedSearchStrategy = deleteSavedSearchStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -395,6 +408,46 @@
             _logger.Info("Calling CandidateService to create draft from saved vacancy, vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
             return _createDraftApprenticeshipFromSavedVacancyStrategy.CreateDraft(candidateId, vacancyId);            
+        }
+
+        public SavedSearch CreateSavedSearch(SavedSearch savedSearch)
+        {
+            Condition.Requires(savedSearch);
+
+            _logger.Info("Calling CandidateService to create saved search for candidate='{0}'.", savedSearch.CandidateId);
+
+            var createdSavedSearch = _createSavedSearchStrategy.CreateSavedSearch(savedSearch);
+            return createdSavedSearch;
+        }
+
+        public IList<SavedSearch> RetrieveSavedSearches(Guid candidateId)
+        {
+            Condition.Requires(candidateId);
+
+            _logger.Info("Calling CandidateService to retrieve saved searches for candidate='{0}'.", candidateId);
+
+            var savedSearches = _retrieveSavedSearchesStrategy.RetrieveSavedSearches(candidateId);
+            return savedSearches;
+        }
+
+        public SavedSearch UpdateSavedSearch(SavedSearch savedSearch)
+        {
+            Condition.Requires(savedSearch);
+
+            _logger.Info("Calling CandidateService to update saved search with id='{0}' for candidate='{1}'.", savedSearch.EntityId, savedSearch.CandidateId);
+
+            var updatedSavedSearch = _updateSavedSearchStrategy.UpdateSavedSearch(savedSearch);
+            return updatedSavedSearch;
+        }
+
+        public SavedSearch DeleteSavedSearch(Guid savedSearchId)
+        {
+            Condition.Requires(savedSearchId);
+
+            _logger.Info("Calling CandidateService to delete saved search with id='{0}'.", savedSearchId);
+
+            var deletedSavedSearch = _deleteSavedSearchStrategy.DeleteSavedSearch(savedSearchId);
+            return deletedSavedSearch;
         }
     }
 }

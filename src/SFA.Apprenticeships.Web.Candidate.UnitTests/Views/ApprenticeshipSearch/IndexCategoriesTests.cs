@@ -3,6 +3,7 @@
     using System.Linq;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;

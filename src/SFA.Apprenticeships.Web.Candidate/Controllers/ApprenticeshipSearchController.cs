@@ -7,6 +7,7 @@
     using ActionResults;
     using Attributes;
     using Constants;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Search;

@@ -11,6 +11,9 @@
         {
             Mapper.CreateMap<Candidate, MongoCandidate>();
             Mapper.CreateMap<MongoCandidate, Candidate>();
+
+            Mapper.CreateMap<SavedSearch, MongoSavedSearch>();
+            Mapper.CreateMap<MongoSavedSearch, SavedSearch>();
         }
     }
 }

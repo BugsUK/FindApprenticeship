@@ -8,6 +8,7 @@
     using Application.Candidate;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Candidate.Strategies.SavedSearches;
     using Application.Candidate.Strategies.Traineeships;
     using Application.Communication;
     using Application.Communication.Strategies;
@@ -134,6 +135,10 @@
             For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
             For<ISendContactMessageStrategy>().Use<QueueContactMessageStrategy>();
             For<IApplicationStatusAlertStrategy>().Use<ApplicationStatusAlertStrategy>();
+            For<ICreateSavedSearchStrategy>().Use<CreateSavedSearchStrategy>();
+            For<IRetrieveSavedSearchesStrategy>().Use<RetrieveSavedSearchesStrategy>();
+            For<IUpdateSavedSearchStrategy>().Use<UpdateSavedSearchStrategy>();
+            For<IDeleteSavedSearchStrategy>().Use<DeleteSavedSearchStrategy>();
         }
 
         private void RegisterMediators()

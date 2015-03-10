@@ -1,10 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using Entities.Candidates;
 
-    //todo: 1.8: repo for candidate's saved searches
-    public interface ISavedSearchReadRepository : IReadRepository<SavedSearch> {}
+    public interface ISavedSearchReadRepository : IReadRepository<SavedSearch> {
+        IList<SavedSearch> GetForCandidate(Guid candidateId);
+    }
 
     public interface ISavedSearchWriteRepository : IWriteRepository<SavedSearch> {}
 }
