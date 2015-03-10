@@ -4,7 +4,7 @@
 
     public class VoidSmsDispatcher : ISmsDispatcher
     {
-        public void SendSms(SmsRequest request)
+        public void SendSms(SmsRequest smsRequest)
         {
             // We don't want to send anything
         }

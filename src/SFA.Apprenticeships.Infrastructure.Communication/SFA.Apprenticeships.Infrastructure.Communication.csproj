@@ -101,6 +101,8 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Twilio.Api, Version=3.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Twilio.3.6.27\lib\3.5\Twilio.Api.dll</HintPath>
@@ -116,6 +118,7 @@
     <Compile Include="Email\EmailMessageFormatters\EmailSimpleMessageFormatter.cs" />
     <Compile Include="Email\EmailFromResolvers\HelpDeskMessageEmailFromResolver.cs" />
     <Compile Include="Email\EmailFromResolvers\IEmailFromResolver.cs" />
+    <Compile Include="Sms\IReachSmsConfiguration.cs" />
     <Compile Include="Sms\ITwillioConfiguration.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatter.cs" />
@@ -125,13 +128,16 @@
     <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationSubmittedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsPasswordChangedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsPasswordResetCodeMessageFormatter.cs" />
-    <Compile Include="Sms\TwilioTemplateConfigurationCollection.cs" />
-    <Compile Include="Sms\TwilioTemplateConfiguration.cs" />
+    <Compile Include="Sms\ReachSmsConfiguration.cs" />
+    <Compile Include="Sms\SmsNumberFormatter.cs" />
+    <Compile Include="Sms\SmsTemplateConfigurationCollection.cs" />
+    <Compile Include="Sms\SmsTemplateConfiguration.cs" />
     <Compile Include="Sms\TwilioConfiguration.cs" />
     <Compile Include="Email\SendGridConfiguration.cs" />
     <Compile Include="Email\SendGridTemplateConfiguration.cs" />
     <Compile Include="Email\SendGridTemplateConfigurationCollection.cs" />
     <Compile Include="Email\SendGridTokenManager.cs" />
+    <Compile Include="Sms\ReachSmsDispatcher.cs" />
     <Compile Include="Sms\VoidSmsDispatcher.cs" />
     <Compile Include="Sms\TwilioSmsDispatcher.cs" />
     <Compile Include="Email\SendGridEmailDispatcher.cs" />

@@ -119,9 +119,12 @@
     </Compile>
     <Compile Include="TokenGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReachConfigurationTests.cs" />
     <Compile Include="TwilioConfigurationTests.cs" />
     <Compile Include="SendGridConfigurationTests.cs" />
     <Compile Include="SendGridEmailDispatcherTests.cs" />
+    <Compile Include="ReachSmsDispatcherTests.cs" />
+    <Compile Include="VoidSmsDispatcherTests.cs" />
     <Compile Include="TwilioSmsDispatcherTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -5,8 +5,8 @@
 
     public class SmsPasswordChangedMessageFormatter : SmsMessageFormatter
     {
-        public SmsPasswordChangedMessageFormatter(ITwillioConfiguration configuration)
-            : base(configuration)
+        public SmsPasswordChangedMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
+            : base(templateConfigurations)
         {
             Message = GetTemplateConfiguration("MessageTypes.PasswordChanged").Message;
         }

@@ -15,8 +15,8 @@
         private const int MaxAlertCount = 3;
         private const int MaxDraftCount = 3;
 
-        public SmsDailyDigestMessageFormatter(ITwillioConfiguration configuration)
-            : base(configuration)
+        public SmsDailyDigestMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
+            : base(templateConfigurations)
         {
             Message = GetTemplateConfiguration(TemplateName).Message;
         }
@@ -61,6 +61,7 @@
             var expiringDraftsMessage = string.Empty;
             var expiringDraftsLineItems = new List<string>();
             var draftCount = 0;
+
             if (expiringDrafts != null)
             {
                 foreach (var expiringDraft in expiringDrafts)

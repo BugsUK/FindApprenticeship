@@ -29,22 +29,22 @@
             _logger = logger;
         }
 
-        public void SendSms(SmsRequest request)
+        public void SendSms(SmsRequest smsRequest)
         {
             try
             {
                 var twilio = new TwilioRestClient(_accountSid, _authToken);
 
-                var message = GetMessageFrom(request);
+                var message = GetMessageFrom(smsRequest);
 
-                _logger.Debug("Dispatching sms: {0}", LogTwilioMessage(request));
-                var response = twilio.SendMessage(_mobileNumberFrom, request.ToNumber, message);
+                _logger.Debug("Dispatching sms: {0}", LogTwilioMessage(smsRequest));
+                var response = twilio.SendMessage(_mobileNumberFrom, smsRequest.ToNumber, message);
                 if (response.RestException != null)
                 {
                     _logger.Error("Failed to dispatch sms: {0}", response.RestException.Message);
                     throw new CustomException(GetExceptionMessage(response.RestException), ErrorCodes.SmsError);
                 }
-                _logger.Info("Dispatched sms: {0} to {1}", message, request.ToNumber);
+                _logger.Info("Dispatched sms: {0} to {1}", message, smsRequest.ToNumber);
             }
             catch (Exception e)
             {

@@ -6,8 +6,8 @@
 
     public class SmsAccountUnlockCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsAccountUnlockCodeMessageFormatter(ITwillioConfiguration configuration)
-            : base(configuration)
+        public SmsAccountUnlockCodeMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
+            : base(templateConfigurations)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendAccountUnlockCode").Message;
         }

@@ -7,17 +7,18 @@
 
     public abstract class SmsMessageFormatter
     {
-        private readonly ITwillioConfiguration _configuration;
         protected string Message;
 
-        protected SmsMessageFormatter(ITwillioConfiguration configuration)
+        private readonly IEnumerable<SmsTemplateConfiguration> _templateConfigurations;
+
+        protected SmsMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
         {
-            _configuration = configuration;
+            _templateConfigurations = templateConfigurations;
         }
 
-        protected TwilioTemplateConfiguration GetTemplateConfiguration(string templateName)
+        protected SmsTemplateConfiguration GetTemplateConfiguration(string templateName)
         {
-            var template = _configuration.Templates.FirstOrDefault(each => each.Name == templateName);
+            var template = _templateConfigurations.FirstOrDefault(each => each.Name == templateName);
 
             if (template != null)
             {

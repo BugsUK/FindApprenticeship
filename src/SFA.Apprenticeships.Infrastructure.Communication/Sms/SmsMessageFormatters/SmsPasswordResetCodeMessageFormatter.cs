@@ -6,8 +6,8 @@
 
     public class SmsPasswordResetCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsPasswordResetCodeMessageFormatter(ITwillioConfiguration configuration)
-            : base(configuration)
+        public SmsPasswordResetCodeMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
+            : base(templateConfigurations)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendPasswordResetCode").Message;
         }

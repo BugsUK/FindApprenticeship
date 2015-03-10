@@ -5,31 +5,42 @@
     using Sms;
 
     [TestFixture]
-    [Ignore("Twilio is superseded by Reach Interactive SMS")]
-    public class TwilioConfigurationTests
+    public class ReachConfigurationTests
     {
         [Test, Category("Integration"), Category("SmokeTests")]
-        public void ShouldGetAccountSidConfiguration()
+        public void ShouldGetUsernameConfiguration()
         {
-            Assert.IsNotNull(TwilioConfiguration.Instance.AccountSid);
+            Assert.IsNotNullOrEmpty(ReachSmsConfiguration.Instance.Username);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
-        public void ShouldGetAuthTokenConfiguration()
+        public void ShouldGetPasswordConfiguration()
         {
-            Assert.IsNotNull(TwilioConfiguration.Instance.AuthToken);
+            Assert.IsNotNullOrEmpty(ReachSmsConfiguration.Instance.Password);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
-        public void ShouldGetMobileNumberFromConfiguration()
+        public void ShouldGetOriginatorFromConfiguration()
         {
-            Assert.IsNotNull(TwilioConfiguration.Instance.MobileNumberFrom);
+            Assert.IsNotNullOrEmpty(ReachSmsConfiguration.Instance.Originator);
+        }
+
+        [Test, Category("Integration"), Category("SmokeTests")]
+        public void ShouldGetUrlFromConfiguration()
+        {
+            Assert.IsNotNullOrEmpty(ReachSmsConfiguration.Instance.Url);
+        }
+
+        [Test, Category("Integration"), Category("SmokeTests")]
+        public void ShouldGetCallbackUrlFromConfiguration()
+        {
+            Assert.IsNotNull(ReachSmsConfiguration.Instance.CallbackUrl);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetMultipleTemplates()
         {
-            var templates = TwilioConfiguration.Instance.TemplateCollection;
+            var templates = ReachSmsConfiguration.Instance.TemplateCollection;
 
             Assert.IsNotNull(templates);
             Assert.IsTrue(templates.Count > 1);
@@ -39,11 +50,11 @@
         [TestCase(1), Category("Integration"), Category("SmokeTests")]
         public void ShouldGetMultipleTemplateConfiguration(int index)
         {
-            var template = TwilioConfiguration.Instance.Templates.ElementAt(index);
+            var template = ReachSmsConfiguration.Instance.Templates.ElementAt(index);
 
             Assert.IsNotNull(template);
-            Assert.IsNotNull(template.Name);
-            Assert.IsNotNull(template.Message);
+            Assert.IsNotNullOrEmpty(template.Name);
+            Assert.IsNotNullOrEmpty(template.Message);
         }
 
         [Test, Category("IntegrationProd"), Category("SmokeTests")]
@@ -52,7 +63,7 @@
             const int templateIndex = 0;
             const string expectedName = "MessageTypes.SendPasswordResetCode";
 
-            var template = TwilioConfiguration.Instance.Templates.ElementAt(templateIndex);
+            var template = ReachSmsConfiguration.Instance.Templates.ElementAt(templateIndex);
 
             Assert.AreEqual(expectedName, template.Name);
         }

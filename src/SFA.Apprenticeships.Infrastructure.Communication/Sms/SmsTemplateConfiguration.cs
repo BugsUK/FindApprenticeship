@@ -2,7 +2,7 @@
 {
     using System.Configuration;
 
-    public class TwilioTemplateConfiguration : ConfigurationElement
+    public class SmsTemplateConfiguration : ConfigurationElement
     {
         private const string NameConstant = "Name";
         private const string MessageConstant = "Message";

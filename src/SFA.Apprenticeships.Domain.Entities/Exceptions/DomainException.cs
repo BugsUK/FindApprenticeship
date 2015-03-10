@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Exceptions
 {
+    using System;
+
     public class DomainException : CustomException
     {
         public DomainException(string code)
@@ -14,7 +16,8 @@
             this.AddData(data);
         }
 
-        public DomainException(string code, BoundaryException innerException, object data) : base(code, innerException, code)
+        public DomainException(string code, Exception innerException, object data)
+            : base(code, innerException, code)
         {
             Code = code;
             this.AddData(data);

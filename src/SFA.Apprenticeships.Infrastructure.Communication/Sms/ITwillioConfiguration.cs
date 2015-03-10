@@ -10,6 +10,6 @@
 
         string MobileNumberFrom { get; }
 
-        IEnumerable<TwilioTemplateConfiguration> Templates { get; }
+        IEnumerable<SmsTemplateConfiguration> Templates { get; }
     }
 }

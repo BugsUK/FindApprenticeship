@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
+    using System;
     using Application.Interfaces.Communications;
+    using FluentAssertions;
     using Logging.IoC;
     using NUnit.Framework;
     using Domain.Entities.Exceptions;
@@ -10,13 +12,11 @@
     using StructureMap;
 
     [TestFixture]
-    [Ignore("Twilio is superseded by Reach Interactive SMS")]
-    public class TwilioSmsDispatcherTests
+    public class ReachSmsDispatcherTests
     {
         private ISmsDispatcher _dispatcher;
-
-        private const string InvalidTestToNumber = "+15005550001";
-        private const string TestToNumber = "+14108675309";
+        private const string InvalidTestToNumber = "X";
+        private const string TestToNumber = "447876546700";
 
         [SetUp]
         public void SetUp()
@@ -28,16 +28,14 @@
                 x.AddRegistry<CommunicationRegistry>();
             });
 
-            TwilioConfiguration.Instance.MobileNumberFrom = "+15005550006";
-
-            _dispatcher = container.GetInstance<ISmsDispatcher>("TwilioSmsDispatcher");
+            _dispatcher = container.GetInstance<ISmsDispatcher>("ReachSmsDispatcher");
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
-        public void ShoudConstructTwillioEmailDispatcher()
+        public void ShoudConstructReachEmailDispatcher()
         {
             Assert.IsNotNull(_dispatcher);
-            Assert.IsInstanceOf<TwilioSmsDispatcher>(_dispatcher);
+            Assert.IsInstanceOf<ReachSmsDispatcher>(_dispatcher);
         }
 
         [Test, Category("Integration")]
@@ -144,9 +142,10 @@
             _dispatcher.SendSms(request);
         }
 
-        [Test, Category("Integration"), ExpectedException(typeof(CustomException))]
-        public void ShouldGetExceptionIfSomethingHappens()
+        [Test, Category("Integration")]
+        public void ShouldThrowIfRequestIsInvalid()
         {
+            // Arrange.
             var request = new SmsRequest
             {
                 ToNumber = InvalidTestToNumber,
@@ -154,7 +153,11 @@
                 MessageType = MessageTypes.PasswordChanged
             };
 
-            _dispatcher.SendSms(request);
+            // Act.
+            Action action = () => _dispatcher.SendSms(request);
+
+            // Assert.
+            action.ShouldThrow<DomainException>();
         }
     }
 }

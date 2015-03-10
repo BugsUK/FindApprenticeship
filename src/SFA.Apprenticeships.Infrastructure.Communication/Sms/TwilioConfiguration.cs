@@ -36,16 +36,16 @@
             set { this[MobileNumberFromConstant] = value; }
         }
 
-        public IEnumerable<TwilioTemplateConfiguration> Templates
+        public IEnumerable<SmsTemplateConfiguration> Templates
         {
             get { return TemplateCollection; }
         }
 
         [ConfigurationProperty("", IsDefaultCollection = true)]
-        [ConfigurationCollection(typeof(TwilioTemplateConfigurationCollection), AddItemName = "Template")]
-        public TwilioTemplateConfigurationCollection TemplateCollection
+        [ConfigurationCollection(typeof(SmsTemplateConfigurationCollection), AddItemName = "Template")]
+        public SmsTemplateConfigurationCollection TemplateCollection
         {
-            get { return (TwilioTemplateConfigurationCollection)this[""]; }
+            get { return (SmsTemplateConfigurationCollection)this[""]; }
         }
     }
 }

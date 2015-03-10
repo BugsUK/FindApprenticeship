@@ -6,8 +6,8 @@
 
     public class SmsTraineeshipApplicationSubmittedMessageFormatter : SmsMessageFormatter
     {
-        public SmsTraineeshipApplicationSubmittedMessageFormatter(ITwillioConfiguration configuration)
-            : base(configuration)
+        public SmsTraineeshipApplicationSubmittedMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
+            : base(templateConfigurations)
         {
             Message = GetTemplateConfiguration("MessageTypes.TraineeshipApplicationSubmitted").Message;
         }
@@ -17,6 +17,7 @@
             var commTokens = communicationTokens as IList<CommunicationToken> ?? communicationTokens.ToList();
             var vacancyTitle = commTokens.First(ct => ct.Key == CommunicationTokens.ApplicationVacancyTitle).Value;
             var employerName = commTokens.First(ct => ct.Key == CommunicationTokens.ApplicationVacancyEmployerName).Value;
+
             return string.Format(Message, vacancyTitle, employerName);
         }
     }

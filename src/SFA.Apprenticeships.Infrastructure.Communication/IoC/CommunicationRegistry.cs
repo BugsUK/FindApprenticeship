@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
 {
     using System.Collections.Generic;
+    using System.Runtime.ExceptionServices;
     using Application.Interfaces.Communications;
     using Common.Configuration;
     using Email;
     using Email.EmailFromResolvers;
     using Email.EmailMessageFormatters;
+    using RestSharp;
     using Sms;
     using Sms.SmsMessageFormatters;
     using StructureMap.Configuration.DSL;
@@ -25,6 +27,7 @@
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter(new ConfigurationManager())),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactMessage, new EmailSimpleMessageFormatter()),
             };
+
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Named("SendGridEmailDispatcher")
                 .Ctor<IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>>>().Is(emailMessageFormatters);
 
@@ -34,21 +37,22 @@
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
             For<ISmsDispatcher>().Use<VoidSmsDispatcher>().Name = "VoidSmsDispatcher";
             For<SendGridConfiguration>().Singleton().Use(SendGridConfiguration.Instance);
-            For<ITwillioConfiguration>().Singleton().Use(TwilioConfiguration.Instance);
+            For<IReachSmsConfiguration>().Singleton().Use(ReachSmsConfiguration.Instance);
 
             IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> smsMessageFormatters = new[]
             {
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendAccountUnlockCode, new SmsAccountUnlockCodeMessageFormatter(TwilioConfiguration.Instance)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendPasswordResetCode, new SmsPasswordResetCodeMessageFormatter(TwilioConfiguration.Instance)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.PasswordChanged, new SmsPasswordChangedMessageFormatter(TwilioConfiguration.Instance)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageFormatter(TwilioConfiguration.Instance)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(TwilioConfiguration.Instance)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.DailyDigest, new SmsDailyDigestMessageFormatter(TwilioConfiguration.Instance)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeFormatter(TwilioConfiguration.Instance))
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendAccountUnlockCode, new SmsAccountUnlockCodeMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendPasswordResetCode, new SmsPasswordResetCodeMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.PasswordChanged, new SmsPasswordChangedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.DailyDigest, new SmsDailyDigestMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeFormatter(ReachSmsConfiguration.Instance.Templates))
             };
 
-            For<ISmsDispatcher>().Use<TwilioSmsDispatcher>().Named("TwilioSmsDispatcher")
-                .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(smsMessageFormatters);
+            For<ISmsDispatcher>().Use<ReachSmsDispatcher>().Named("ReachSmsDispatcher")
+                .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(smsMessageFormatters)
+                .Ctor<IRestClient>().Is(new RestClient());
         }
     }
 }

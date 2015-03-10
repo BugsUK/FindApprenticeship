@@ -6,8 +6,8 @@
 
     public class SmsSendMobileVerificationCodeFormatter : SmsMessageFormatter
     {
-        public SmsSendMobileVerificationCodeFormatter(ITwillioConfiguration configuration)
-            : base(configuration)
+        public SmsSendMobileVerificationCodeFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
+            : base(templateConfigurations)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendMobileVerificationCode").Message;
         }

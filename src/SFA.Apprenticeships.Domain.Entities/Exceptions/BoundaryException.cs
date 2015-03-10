@@ -22,5 +22,12 @@
         {
             Code = code;
         }
+
+        public BoundaryException(string code, Exception innerException, object data)
+            : base(code, innerException, code)
+        {
+            Code = code;
+            this.AddData(data);
+        }
     }
 }
