@@ -21,11 +21,11 @@
         {
             return Task.Run(() =>
             {
-                var scheduleerNotification = GetLatestQueueMessage();
-                if (scheduleerNotification != null)
+                var schedulerNotification = GetLatestQueueMessage();
+                if (schedulerNotification != null)
                 {
-                    _communicationProcessor.SendDailyCommunications(scheduleerNotification.ClientRequestId);
-                    MessageService.DeleteMessage(scheduleerNotification.MessageId, scheduleerNotification.PopReceipt);
+                    _communicationProcessor.SendDailyCommunications(schedulerNotification.ClientRequestId);
+                    MessageService.DeleteMessage(schedulerNotification.MessageId, schedulerNotification.PopReceipt);
                 }
             });
         }

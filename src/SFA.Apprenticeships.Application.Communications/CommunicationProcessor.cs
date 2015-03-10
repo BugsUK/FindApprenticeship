@@ -43,6 +43,7 @@
                 List<ApplicationStatusAlert> candidateApplicationStatusAlertsDailyDigest;
                 var candidateHasApplicationStatusAlerts = candidatesApplicationStatusAlerts.TryGetValue(candidateId, out candidateApplicationStatusAlertsDailyDigest);
 
+                //todo: 1.8: ensure check user status as well as prefs as may not be active (e.g. dormant/inactive/etc.)
                 if (candidate.CommunicationPreferences.AllowEmail || candidate.CommunicationPreferences.AllowMobile)
                 {
                     var communicationMessage = CommunicationRequestFactory.GetCommunicationMessage(candidate, candidateExpiringDraftsDailyDigest, candidateApplicationStatusAlertsDailyDigest);
