@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
+    using System;
     using System.Linq;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Users.Entities;
@@ -23,6 +24,13 @@
             return Collection
                 .AsQueryable()
                 .Count(each => each.ActivationCode == null);
+        }
+
+        public long GetActiveUserCount(DateTime activeFrom)
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.LastLogin != null && each.LastLogin >= activeFrom);
         }
     }
 }

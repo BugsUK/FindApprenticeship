@@ -22,6 +22,8 @@
         private readonly IExpiringDraftsMetricsRepository _expiringDraftsMetricsRepository;
         private readonly IApplicationStatusAlertsMetricsRepository _applicationStatusAlertsMetricsRepository;
 
+        private readonly int _validNumberOfDaysSinceUserActivity;
+
         public SendDailyMetricsEmail(
             IConfigurationManager configurationManager,
             ILogService logger,
@@ -38,6 +40,8 @@
             _userMetricsRepository = userMetricsRepository;
             _expiringDraftsMetricsRepository = expiringDraftsMetricsRepository;
             _applicationStatusAlertsMetricsRepository = applicationStatusAlertsMetricsRepository;
+
+            _validNumberOfDaysSinceUserActivity = _configurationManager.GetCloudAppSetting<int>("ValidNumberOfDaysSinceUserActivity");
         }
 
         public string TaskName
@@ -72,6 +76,19 @@
             sb.Append("General:\n");
             sb.AppendFormat(" - Total number of candidates registered: {0}\n", _userMetricsRepository.GetRegisteredUserCount());
             sb.AppendFormat(" - Total number of candidates registered and activated: {0}\n", _userMetricsRepository.GetRegisteredAndActivatedUserCount());
+
+            sb.AppendFormat(" - Total number of candidates registered and activated: {0}\n", _userMetricsRepository.GetRegisteredAndActivatedUserCount());
+            sb.AppendFormat(" - Total number of candidates registered and activated: {0}\n", _userMetricsRepository.GetRegisteredAndActivatedUserCount());
+
+            var oneWeekAgo = DateTime.UtcNow.AddDays(-7);
+            var fourWeeksAgo = DateTime.UtcNow.AddDays(-28);
+            var customDaysAgo = DateTime.UtcNow.AddDays(-_validNumberOfDaysSinceUserActivity);
+            //sb.AppendFormat(" - Total number of candidates active in the last week: {0}\n", _userMetricsRepository.GetActiveUserCount(oneWeekAgo));
+            //sb.AppendFormat(" - Total number of candidates active in the last four weeks: {0}\n", _userMetricsRepository.GetActiveUserCount(fourWeeksAgo));
+            //sb.AppendFormat(" - Total number of candidates active in the last {1} days: {0}\n", _userMetricsRepository.GetActiveUserCount(customDaysAgo), _validNumberOfDaysSinceUserActivity);
+            sb.AppendFormat(" - Total number of candidates active in the last week: {0}\n", _apprenticeshipMetricsRepository.GetActiveUserCount(oneWeekAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last four weeks: {0}\n", _apprenticeshipMetricsRepository.GetActiveUserCount(fourWeeksAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last {1} days: {0}\n", _apprenticeshipMetricsRepository.GetActiveUserCount(customDaysAgo), _validNumberOfDaysSinceUserActivity);
 
             // Apprenticeship applications.
             sb.Append("Apprenticeships:\n");

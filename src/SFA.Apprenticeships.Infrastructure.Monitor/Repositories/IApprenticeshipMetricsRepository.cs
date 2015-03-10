@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
+    using System;
     using Domain.Entities.Applications;
 
     public interface IApprenticeshipMetricsRepository
@@ -8,5 +9,6 @@
         int GetApplicationStateCount(ApplicationStatuses applicationStatus);
         int GetApplicationCountPerCandidate();
         int GetApplicationStateCountPerCandidate(ApplicationStatuses applicationStatus);
+        long GetActiveUserCount(DateTime activeFrom);
     }
 }

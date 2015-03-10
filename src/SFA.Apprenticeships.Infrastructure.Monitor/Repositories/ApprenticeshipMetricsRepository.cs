@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
+    using System;
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
@@ -36,6 +37,17 @@
             return Collection
                 .AsQueryable()
                 .Where(each => each.Status == applicationStatus)
+                .Select(each => each.CandidateId)
+                .Distinct()
+                .ToList()
+                .Count;
+        }
+
+        public long GetActiveUserCount(DateTime activeFrom)
+        {
+            return Collection
+                .AsQueryable()
+                .Where(each => each.DateCreated >= activeFrom || each.DateUpdated >= activeFrom)
                 .Select(each => each.CandidateId)
                 .Distinct()
                 .ToList()
