@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
@@ -114,6 +113,14 @@
                     new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
                     new CommunicationToken(CommunicationTokens.UserEnquiry, "User enquiry"),
                     new CommunicationToken(CommunicationTokens.UserEnquiryDetails, details)
+            };
+        }
+
+        public static IEnumerable<CommunicationToken> CreateSavedSearchAlertTokens(string url)
+        {
+            return new[]
+            {
+                    new CommunicationToken(CommunicationTokens.SavedSearchAlertUrl, url)
             };
         }
     }

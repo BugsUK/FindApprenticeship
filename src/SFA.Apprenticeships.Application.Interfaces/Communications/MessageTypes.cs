@@ -11,6 +11,7 @@
         PasswordChanged = 6,
         DailyDigest = 7,
         CandidateContactMessage = 8,
+        SavedSearchAlert = 9
         //EmployerContactMessage
     }
 }

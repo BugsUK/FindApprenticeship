@@ -78,6 +78,19 @@
         }
 
         [Test, Category("Integration")]
+        public void ShoudSendSavedSearchAlertSms()
+        {
+            var request = new SmsRequest
+            {
+                ToNumber = TestToNumber,
+                Tokens = TokenGenerator.CreateSavedSearchAlertTokens("http://www.example.com"),
+                MessageType = MessageTypes.SavedSearchAlert
+            };
+
+            _dispatcher.SendSms(request);
+        }
+
+        [Test, Category("Integration")]
         public void ShouldThrowIfRequestIsInvalid()
         {
             // Arrange.

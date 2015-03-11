@@ -5,7 +5,6 @@
     using Application.Interfaces.Logging;
     using Common.IoC;
     using Email;
-    using FluentAssertions;
     using IoC;
     using Moq;
     using NUnit.Framework;

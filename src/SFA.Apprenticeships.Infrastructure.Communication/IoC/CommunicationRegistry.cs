@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
 {
     using System.Collections.Generic;
-    using System.Runtime.ExceptionServices;
     using Application.Interfaces.Communications;
     using Common.Configuration;
     using Email;
@@ -10,7 +9,6 @@
     using RestSharp;
     using Sms;
     using Sms.SmsMessageFormatters;
-    using StructureMap.Building;
     using StructureMap.Configuration.DSL;
 
     public class CommunicationRegistry : Registry
@@ -26,7 +24,7 @@
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter(new ConfigurationManager())),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactMessage, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactMessage, new EmailSimpleMessageFormatter())
             };
 
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Named("SendGridEmailDispatcher")
@@ -45,13 +43,14 @@
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.DailyDigest, new SmsDailyDigestMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeFormatter(ReachSmsConfiguration.Instance.Templates))
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SavedSearchAlert, new SmsSavedSearchAlertMessageFormatter(ReachSmsConfiguration.Instance.Templates))
             };
 
             For<ISmsDispatcher>().Use<ReachSmsDispatcher>().Named("ReachSmsDispatcher")
                 .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(smsMessageFormatters)
                 .Ctor<IRestClient>().Is(new RestClient())
-                .Ctor<ISmsNumberFormatter>().Is<ReachSmsNumberFormatter>();
+                .Ctor<ISmsNumberFormatter>().Is(new ReachSmsNumberFormatter());
         }
     }
 }

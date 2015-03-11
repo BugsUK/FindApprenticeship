@@ -4,9 +4,9 @@
     using System.Linq;
     using Application.Interfaces.Communications;
 
-    public class SmsSendMobileVerificationCodeFormatter : SmsMessageFormatter
+    public class SmsSendMobileVerificationCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsSendMobileVerificationCodeFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
+        public SmsSendMobileVerificationCodeMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
             : base(templateConfigurations)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendMobileVerificationCode").Message;

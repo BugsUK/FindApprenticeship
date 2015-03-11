@@ -123,7 +123,8 @@
     <Compile Include="Sms\ISmsNumberFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatter.cs" />
-    <Compile Include="Sms\SmsMessageFormatters\SmsSendMobileVerificationCodeFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsSavedSearchAlertMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsSendMobileVerificationCodeMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsTraineeshipApplicationSubmittedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsAccountUnlockCodeMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationSubmittedMessageFormatter.cs" />
