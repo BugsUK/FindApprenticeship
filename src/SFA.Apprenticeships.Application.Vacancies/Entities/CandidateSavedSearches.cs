@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Domain.Entities.Candidates;
 
+    //todo: 1.8: move to Candidates? TBC
     //todo: 1.8: DTO for a single candidate, contains their saved searches to be processed
     public class CandidateSavedSearches
     {

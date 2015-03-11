@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
     using System;
     using System.Linq;

@@ -7,6 +7,8 @@
     using Infrastructure.Communication.IoC;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Logging.IoC;
+    using Infrastructure.Processes.Communications;
+    using Infrastructure.Processes.IoC;
     using Infrastructure.RabbitMq.Interfaces;
     using Infrastructure.RabbitMq.IoC;
     using Infrastructure.Repositories.Applications.IoC;
@@ -15,8 +17,6 @@
     using System.Reflection;
     using System.ServiceProcess;
     using Infrastructure.Repositories.Users.IoC;
-    using Infrastructure.AsyncProcessor.Consumers;
-    using Infrastructure.AsyncProcessor.IoC;
     using Infrastructure.Caching.Memory.IoC;
     using StructureMap;
 

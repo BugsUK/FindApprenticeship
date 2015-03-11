@@ -3,6 +3,7 @@
     using System;
     using Entities;
 
+    //todo: 1.8: move to Candidates? TBC
     public class SavedSearchProcessor : ISavedSearchProcessor
     {
         public void QueueCandidateSavedSearches()

@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-[assembly: AssemblyTitle("SFA.Apprenticeships.Infrastructure.AsyncProcessor")]
+[assembly: AssemblyTitle("SFA.Apprenticeships.Infrastructure.Processes")]
 [assembly: AssemblyDescription("")]
 // Version information for an assembly consists of the following four values:
 //

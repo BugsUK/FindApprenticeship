@@ -1,18 +1,15 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
     using System;
     using System.Threading.Tasks;
     using Application.Candidate;
+    using Application.Interfaces.Applications;
     using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
-    using ApplicationsErrorCodes = Application.Interfaces.Applications.ErrorCodes;
-    using CandidatesErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
-    using CommonErrorCodes = Domain.Entities.ErrorCodes;
-    using VacanciesErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
 
     public class SubmitApprenticeshipApplicationRequestConsumerAsync : IConsumeAsync<SubmitApprenticeshipApplicationRequest>
     {
@@ -102,25 +99,25 @@
         {
             switch (ex.Code)
             {
-                case ApplicationsErrorCodes.ApplicationDuplicatedError:
+                case ErrorCodes.ApplicationDuplicatedError:
                     _logger.Info("Apprenticeship application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
                     SetApplicationStateSubmitted(apprenticeshipApplication);
                     break;
 
-                case CandidatesErrorCodes.CandidateStateError:
+                case Application.Interfaces.Candidates.ErrorCodes.CandidateStateError:
                     _logger.Error("Legacy candidate is in an invalid state. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case CandidatesErrorCodes.CandidateNotFoundError:
+                case Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError:
                     _logger.Error("Legacy candidate was not found. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case VacanciesErrorCodes.LegacyVacancyStateError:
+                case Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError:
                     _logger.Info("Legacy vacancy was in an invalid state. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     SetStateExpiredOrWithdrawn(apprenticeshipApplication);
                     break;
 
-                case CommonErrorCodes.EntityStateError:
+                case Domain.Entities.ErrorCodes.EntityStateError:
                     _logger.Error(string.Format("Apprenticeship application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), ex);
                     break;
 

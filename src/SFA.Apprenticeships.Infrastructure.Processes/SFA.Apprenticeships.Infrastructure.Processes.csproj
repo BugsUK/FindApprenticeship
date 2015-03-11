@@ -8,8 +8,8 @@
     <ProjectGuid>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Infrastructure.AsyncProcessor</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Infrastructure.AsyncProcessor</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Infrastructure.Processes</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Infrastructure.Processes</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RoleType>Worker</RoleType>
@@ -181,15 +181,15 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Consumers\ApplicationStatusChangedConsumerAsync.cs" />
-    <Compile Include="Consumers\CandidateSavedSearchesConsumerAsync.cs" />
-    <Compile Include="Consumers\CommunicationRequestConsumerAsync.cs" />
-    <Compile Include="Consumers\CreateCandidateRequestConsumerAsync.cs" />
-    <Compile Include="Consumers\SmsRequestConsumerAsync.cs" />
-    <Compile Include="Consumers\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
-    <Compile Include="Consumers\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
-    <Compile Include="Consumers\EmailRequestConsumerAsync.cs" />
-    <Compile Include="Consumers\VacancyStatusSummaryConsumerAsync.cs" />
+    <Compile Include="Applications\ApplicationStatusChangedConsumerAsync.cs" />
+    <Compile Include="Candidates\CandidateSavedSearchesConsumerAsync.cs" />
+    <Compile Include="Communications\CommunicationRequestConsumerAsync.cs" />
+    <Compile Include="Candidates\CreateCandidateRequestConsumerAsync.cs" />
+    <Compile Include="Communications\SmsRequestConsumerAsync.cs" />
+    <Compile Include="Applications\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
+    <Compile Include="Applications\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
+    <Compile Include="Communications\EmailRequestConsumerAsync.cs" />
+    <Compile Include="Vacancies\VacancyStatusSummaryConsumerAsync.cs" />
     <Compile Include="Extensions\VacancyStatusSummaryExtensions.cs" />
     <Compile Include="IoC\AsyncProcessorRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -344,6 +344,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

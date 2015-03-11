@@ -128,8 +128,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.UserDirectory", "SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj", "{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.AsyncProcessor", "SFA.Apprenticeships.Infrastructure.AsyncProcessor\SFA.Apprenticeships.Infrastructure.AsyncProcessor.csproj", "{D1BC4A28-A7AB-475E-B73E-5564897550BA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.UserDirectory.UnitTests", "SFA.Apprenticeships.Infrastructure.UserDirectory.UnitTests\SFA.Apprenticeships.Infrastructure.UserDirectory.UnitTests.csproj", "{64BB68D9-4F1A-4724-9DF0-3E5E20BBDF58}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.UserDirectory.IntegrationTests", "SFA.Apprenticeships.Infrastructure.UserDirectory.IntegrationTests\SFA.Apprenticeships.Infrastructure.UserDirectory.IntegrationTests.csproj", "{AC61A264-5D06-4FF3-BF54-99C9B525E360}"
@@ -191,6 +189,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Applications", "SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj", "{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Candidates", "SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj", "{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Processes", "SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj", "{D1BC4A28-A7AB-475E-B73E-5564897550BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -778,18 +778,6 @@ Global
 		{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}.Sit|Any CPU.Build.0 = Sit|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Demo|Any CPU.Build.0 = Demo|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Dev|Any CPU.Build.0 = Dev|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Local|Any CPU.ActiveCfg = Local|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Local|Any CPU.Build.0 = Local|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Pre|Any CPU.Build.0 = Pre|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Prod|Any CPU.Build.0 = Prod|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Sit|Any CPU.Build.0 = Sit|Any CPU
 		{64BB68D9-4F1A-4724-9DF0-3E5E20BBDF58}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
 		{64BB68D9-4F1A-4724-9DF0-3E5E20BBDF58}.Demo|Any CPU.Build.0 = Demo|Any CPU
 		{64BB68D9-4F1A-4724-9DF0-3E5E20BBDF58}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
@@ -1085,6 +1073,18 @@ Global
 		{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Local|Any CPU.Build.0 = Local|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1145,7 +1145,6 @@ Global
 		{2752E3B6-358D-4C06-A31F-867304CAC53D} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 		{C6AB7681-98BD-4EF5-8A3B-9607A59FFF44} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 		{3FD05F32-F39C-4ACF-8B3B-571B2D20899E} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
-		{D1BC4A28-A7AB-475E-B73E-5564897550BA} = {18D67FE8-091F-4873-871A-8B81E455DA79}
 		{64BB68D9-4F1A-4724-9DF0-3E5E20BBDF58} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 		{AC61A264-5D06-4FF3-BF54-99C9B525E360} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 		{F01914FA-A911-4345-ACD4-FD80ADE21A8C} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
@@ -1176,5 +1175,6 @@ Global
 		{04796403-0EDF-4A8D-B725-180A9F83D958} = {99003A13-CC36-4274-9CC2-9F6350B31492}
 		{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1} = {99003A13-CC36-4274-9CC2-9F6350B31492}
 		{297A98C9-78DE-4E2E-BD6A-3998C3C9238B} = {99003A13-CC36-4274-9CC2-9F6350B31492}
+		{D1BC4A28-A7AB-475E-B73E-5564897550BA} = {18D67FE8-091F-4873-871A-8B81E455DA79}
 	EndGlobalSection
 EndGlobal

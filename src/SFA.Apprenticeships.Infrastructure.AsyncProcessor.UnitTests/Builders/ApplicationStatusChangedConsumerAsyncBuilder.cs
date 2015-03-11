@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.UnitTests.Builders
 {
     using Application.Interfaces.Logging;
-    using Consumers;
     using Domain.Interfaces.Repositories;
     using Moq;
+    using Processes.Applications;
 
     public class ApplicationStatusChangedConsumerAsyncBuilder
     {

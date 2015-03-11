@@ -145,13 +145,13 @@
       <Project>{238A2637-CA77-4460-9C11-F7549287A152}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.ApplicationEtl</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.AsyncProcessor\SFA.Apprenticeships.Infrastructure.AsyncProcessor.csproj">
-      <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.AsyncProcessor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
+      <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

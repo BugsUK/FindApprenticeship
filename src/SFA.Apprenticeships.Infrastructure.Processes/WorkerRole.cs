@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
+namespace SFA.Apprenticeships.Infrastructure.Processes
 {
     using System;
     using System.Net;
@@ -7,11 +7,10 @@ namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor
     using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Caching.Azure.IoC;
-    using Caching.Memory.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
-    using Consumers;
+    using Communications;
     using EasyNetQ;
     using IoC;
     using LegacyWebServices.IoC;

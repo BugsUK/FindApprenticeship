@@ -1,17 +1,14 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
     using System;
     using System.Threading.Tasks;
     using Application.Candidate;
     using Application.Interfaces.Logging;
-    using Domain.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
-    using ApplicationsErrorCodes = Application.Interfaces.Applications.ErrorCodes;
-    using CandidatesErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
-    using VacanciesErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
+    using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     public class SubmitTraineeshipApplicationRequestConsumerAsync : IConsumeAsync<SubmitTraineeshipApplicationRequest>
     {
@@ -99,23 +96,23 @@
         {
             switch (ex.Code)
             {
-                case ApplicationsErrorCodes.ApplicationDuplicatedError:
+                case ErrorCodes.ApplicationDuplicatedError:
                     _logger.Warn("Traineeship application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case CandidatesErrorCodes.CandidateStateError:
+                case Application.Interfaces.Candidates.ErrorCodes.CandidateStateError:
                     _logger.Error("Legacy candidate is in an invalid state. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case CandidatesErrorCodes.CandidateNotFoundError:
+                case Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError:
                     _logger.Error("Legacy candidate was not found. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case VacanciesErrorCodes.LegacyVacancyStateError:
+                case Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError:
                     _logger.Warn("Legacy Vacancy was in an invalid state. Traineeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
-                case ErrorCodes.EntityStateError:
+                case Domain.Entities.ErrorCodes.EntityStateError:
                     _logger.Error(string.Format("Traineeship application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), ex);
                     break;
 

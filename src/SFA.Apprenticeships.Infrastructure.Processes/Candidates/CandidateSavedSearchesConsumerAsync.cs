@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Candidates
 {
     using System;
     using System.Threading.Tasks;

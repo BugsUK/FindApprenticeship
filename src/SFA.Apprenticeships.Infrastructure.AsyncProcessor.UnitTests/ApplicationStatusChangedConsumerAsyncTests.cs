@@ -5,7 +5,6 @@
     using Application.Applications.Entities;
     using Application.Interfaces.Logging;
     using Builders;
-    using Consumers;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Repositories;
@@ -13,6 +12,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using Processes.Applications;
 
     [TestFixture]
     public class ApplicationStatusChangedConsumerAsyncTests

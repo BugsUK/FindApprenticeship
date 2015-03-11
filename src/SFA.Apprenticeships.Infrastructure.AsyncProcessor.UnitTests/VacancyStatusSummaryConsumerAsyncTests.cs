@@ -3,13 +3,13 @@
     using System;
     using Application.Applications;
     using Application.Applications.Entities;
-    using Consumers;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
     using Domain.Interfaces.Configuration;
-    using Extensions;
     using Moq;
     using NUnit.Framework;
+    using Processes.Extensions;
+    using Processes.Vacancies;
 
     [TestFixture]
     public class VacancyStatusSummaryConsumerAsyncTests

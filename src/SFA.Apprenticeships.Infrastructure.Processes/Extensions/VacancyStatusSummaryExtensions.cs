@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Extensions
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Extensions
 {
     using Application.Applications.Entities;
     using Domain.Interfaces.Caching;

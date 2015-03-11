@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.AsyncProcessor.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Communications
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Communications;
-    using Communications.Commands;
     using EasyNetQ.AutoSubscribe;
+    using Infrastructure.Communications.Commands;
 
     public class CommunicationRequestConsumerAsync : IConsumeAsync<CommunicationRequest>
     {
