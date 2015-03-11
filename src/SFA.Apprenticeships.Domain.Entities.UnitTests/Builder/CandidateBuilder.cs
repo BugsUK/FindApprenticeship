@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.UnitTests.Builder
 {
     using System;
-    using Candidates;
+    using Entities.Candidates;
     using Users;
 
     public class CandidateBuilder

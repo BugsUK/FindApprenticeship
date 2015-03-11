@@ -10,6 +10,7 @@
     using Common.Constants;
     using Common.Providers;
     using Constants;
+    using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
@@ -253,6 +254,61 @@
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
         }
 
+        public MediatorResponse<ApprenticeshipSearchViewModel> SaveSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel)
+        {
+            viewModel = _candidateServiceProvider.CreateSavedSearch(candidateId, viewModel);
+
+            if (viewModel.HasError())
+            {
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SaveSearch.HasError, viewModel, viewModel.ViewModelMessage, UserMessageLevel.Error);
+            }
+
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SaveSearch.Ok, viewModel, VacancySearchResultsPageMessages.SaveSearchSuccess, UserMessageLevel.Info);
+        }
+
+        public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
+        {
+            int vacancyId;
+
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+            }
+
+            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+
+            if (vacancyDetailViewModel == null)
+            {
+                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+            }
+
+            if (vacancyDetailViewModel.HasError())
+            {
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            if ((!vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
+                (vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
+            {
+                // Candidate has no application for the vacancy and the vacancy is no longer live OR
+                // candidate has an application (at least a draft) but the vacancy is no longer available.
+                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+            }
+
+            var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
+            var lastVacancyId = UserDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
+
+            if (HasToPopulateDistance(vacancyId, distance, lastVacancyId))
+            {
+                vacancyDetailViewModel.Distance = distance;
+                UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
+            }
+
+            UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
+
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
+        }
+
         private static ApprenticeshipSearchViewModel GetSearchModel(ApprenticeshipSearchViewModel model)
         {
             //Create a new search view model based on the search mode and user data
@@ -319,49 +375,6 @@
                     model.SortType = VacancySearchSortType.Distance;
                 }
             }
-        }
-
-        public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
-        {
-            int vacancyId;
-
-            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
-            {
-                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
-            }
-
-            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
-
-            if (vacancyDetailViewModel == null)
-            {
-                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
-            }
-
-            if (vacancyDetailViewModel.HasError())
-            {
-                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
-            }
-
-            if ((!vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
-                (vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
-            {
-                // Candidate has no application for the vacancy and the vacancy is no longer live OR
-                // candidate has an application (at least a draft) but the vacancy is no longer available.
-                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
-            }
-
-            var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
-            var lastVacancyId = UserDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
-
-            if (HasToPopulateDistance(vacancyId, distance, lastVacancyId))
-            {
-                vacancyDetailViewModel.Distance = distance;
-                UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
-            }
-
-            UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
-
-            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
 
         private void SetSavedVacancyStatuses(Guid candidateId, ApprenticeshipSearchResponseViewModel results)

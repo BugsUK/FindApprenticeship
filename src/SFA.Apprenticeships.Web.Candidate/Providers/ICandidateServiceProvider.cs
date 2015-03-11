@@ -7,6 +7,7 @@
     using ViewModels;
     using ViewModels.Login;
     using ViewModels.Register;
+    using ViewModels.VacancySearch;
 
     public interface ICandidateServiceProvider
     {
@@ -41,5 +42,7 @@
         //TODO: 1.6: void SendContactMessage(ContactMessageViewModel model);
 
         IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
+
+        ApprenticeshipSearchViewModel CreateSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel);
     }
 }

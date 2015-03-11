@@ -21,6 +21,7 @@
     using ViewModels.Register;
     using Common.Constants;
     using Common.Services;
+    using ViewModels.VacancySearch;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
     using UserErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
@@ -488,6 +489,33 @@
         public IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true)
         {
             return _candidateService.GetApprenticeshipApplications(candidateId, refresh);
+        }
+
+        public ApprenticeshipSearchViewModel CreateSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel)
+        {
+            var savedSearch = new SavedSearch
+            {
+                CandidateId = candidateId,
+                SearchMode = viewModel.SearchMode,
+                Keywords = viewModel.Keywords,
+                Location = viewModel.Location,
+                WithinDistance = viewModel.WithinDistance,
+                ApprenticeshipLevel = viewModel.ApprenticeshipLevel,
+                Category = viewModel.Category,
+                SubCategories = viewModel.SubCategories
+            };
+
+            try
+            {
+                _candidateService.CreateSavedSearch(savedSearch);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error creating saved search", ex);
+                viewModel.ViewModelMessage = VacancySearchResultsPageMessages.SaveSearchFailed;
+            }
+
+            return viewModel;
         }
 
         #region Helpers

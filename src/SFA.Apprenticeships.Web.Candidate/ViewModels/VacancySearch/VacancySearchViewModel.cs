@@ -10,7 +10,7 @@
         LocationTypeChanged
     }
 
-    public abstract class VacancySearchViewModel
+    public abstract class VacancySearchViewModel : ViewModelBase
     {
         private int _pageNumber = 1;
 

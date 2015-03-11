@@ -21,6 +21,12 @@
             public const string ExactMatchFound = "ApprenticeshipSearch.Results.ExactMatchFound";
         }
 
+        public class SaveSearch
+        {
+            public const string HasError = "ApprenticeshipSearch.SaveSearch.HasError";
+            public const string Ok = "ApprenticeshipSearch.SaveSearch.Ok";
+        }
+
         public class Details
         {
             public const string VacancyNotFound = "ApprenticeshipSearch.Details.VacancyNotFound";

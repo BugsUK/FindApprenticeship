@@ -92,6 +92,7 @@
     <Compile Include="Candidates\CandidateHelper.cs" />
     <Compile Include="Candidates\CommunicationPreferences.cs" />
     <Compile Include="Candidates\SavedSearch.cs" />
+    <Compile Include="Candidates\SavedSearchHelper.cs" />
     <Compile Include="Communication\SavedSearchAlert.cs" />
     <Compile Include="Communication\ContactMessage.cs" />
     <Compile Include="Communication\ApplicationStatusAlert.cs" />

@@ -88,6 +88,9 @@
         <div id="vacancy-result-summary">
             <p id="result-message" class="small-btm-margin">@Html.Raw(resultMessage)</p>
             <p id="national-results-message">@Html.Raw(nationalResultsMessage)</p>
+            <p class="small-btm-margin">
+                <a id="receiveSaveSearchAlert" href="@Url.ApprenticeshipSearchViewModelAction("savesearch", new ApprenticeshipSearchViewModel(Model.VacancySearch))"><i class="fa fa-bell-o"></i>Receive alerts for this search</a>
+            </p>
         </div>
     </div>
 

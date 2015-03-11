@@ -212,9 +212,11 @@
     <Compile Include="Mediators\ApprenticeshipApplication\SubmitTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\TestsBase.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\WhatHappensNextTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipSearch\ApprenticeshipSearchMediatorBuilder.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\DetailsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\IndexTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\ResultsTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipSearch\SaveSearchTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\SearchValidationTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\TestsBase.cs" />
     <Compile Include="Mediators\Home\HomeMediatorTests.cs" />
@@ -261,6 +263,7 @@
     <Compile Include="Providers\ApprenticeshipVacancyDetailProvider\ApprenticeshipVacancyDetailProviderBuilder.cs" />
     <Compile Include="Providers\ApprenticeshipVacancyDetailProvider\GetVacancyDetailViewModelTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\CandidateServiceProviderBuilder.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\CreateSavedSearchTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\LoginTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RegisterTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestAccountUnlockCodeTests.cs" />

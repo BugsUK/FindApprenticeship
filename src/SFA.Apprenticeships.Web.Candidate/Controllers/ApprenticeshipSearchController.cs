@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using ActionResults;
     using Attributes;
+    using Common.Constants;
     using Constants;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentValidation.Mvc;
@@ -97,6 +98,32 @@
                         ModelState.Remove("Longitude");
                         ModelState.Remove("SortType");
                         return View(response.ViewModel);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+            });
+        }
+
+        [HttpGet]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        public async Task<ActionResult> SaveSearch(ApprenticeshipSearchViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var candidateId = UserContext.CandidateId;
+                var response = _apprenticeshipSearchMediator.SaveSearch(candidateId, model);
+
+                switch (response.Code)
+                {
+                    case ApprenticeshipSearchMediatorCodes.SaveSearch.HasError:
+                        ModelState.Clear();
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToAction("Results", model);
+                    case ApprenticeshipSearchMediatorCodes.SaveSearch.Ok:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToAction("Results", model);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
