@@ -11,7 +11,6 @@
 
     @using (Html.BeginForm("HelpDesk", "Home", FormMethod.Post))
     {
-            <h2 class="heading-medium">Contact form</h2>
             @Html.FormTextFor(
                 m => m.Name,
                 containerHtmlAttributes: new { @class = "form-group-compound" },
