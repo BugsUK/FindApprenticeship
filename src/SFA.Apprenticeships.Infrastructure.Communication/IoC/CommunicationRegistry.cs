@@ -42,9 +42,6 @@
 
             IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> smsMessageFormatters = new[]
             {
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendAccountUnlockCode, new SmsAccountUnlockCodeMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendPasswordResetCode, new SmsPasswordResetCodeMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.PasswordChanged, new SmsPasswordChangedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.DailyDigest, new SmsDailyDigestMessageFormatter(ReachSmsConfiguration.Instance.Templates)),

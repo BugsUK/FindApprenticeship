@@ -39,45 +39,6 @@
         }
 
         [Test, Category("Integration")]
-        public void ShoudSendSms()
-        {
-            var request = new SmsRequest
-            {
-                ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateAccountUnlockCodeTokens(),
-                MessageType = MessageTypes.SendAccountUnlockCode
-            };
-
-            _dispatcher.SendSms(request);
-        }
-
-        [Test, Category("Integration")]
-        public void ShoudSendSmsWithFromEmailInTemplateConfiguration()
-        {
-            var request = new SmsRequest
-            {
-                ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateAccountUnlockCodeTokens(),
-                MessageType = MessageTypes.SendAccountUnlockCode
-            };
-
-            _dispatcher.SendSms(request);
-        }
-
-        [Test, Category("Integration")]
-        public void ShouldSendAccountUnlockCode()
-        {
-            var request = new SmsRequest
-            {
-                ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateAccountUnlockCodeTokens(),
-                MessageType = MessageTypes.SendAccountUnlockCode
-            };
-
-            _dispatcher.SendSms(request);
-        }
-
-        [Test, Category("Integration")]
         public void ShouldSendApprenticeshipApplicationSubmittedSms()
         {
             var request = new SmsRequest
@@ -98,32 +59,6 @@
                 ToNumber = TestToNumber,
                 Tokens = TokenGenerator.CreateTraineeshipApplicationSubmittedTokens(),
                 MessageType = MessageTypes.TraineeshipApplicationSubmitted
-            };
-
-            _dispatcher.SendSms(request);
-        }
-
-        [Test, Category("Integration")]
-        public void ShouldSendPasswordResetCodeSms()
-        {
-            var request = new SmsRequest
-            {
-                ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreatePasswordResetTokens(),
-                MessageType = MessageTypes.SendPasswordResetCode
-            };
-
-            _dispatcher.SendSms(request);
-        }
-
-        [Test, Category("Integration")]
-        public void ShouldSendPasswordResetConfirmationSms()
-        {
-            var request = new SmsRequest
-            {
-                ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreatePasswordResetConfirmationTokens(),
-                MessageType = MessageTypes.PasswordChanged
             };
 
             _dispatcher.SendSms(request);
