@@ -8,6 +8,7 @@
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
 
+    //todo: 1.8: move to async processor
     public class ApplicationStatusSummaryConsumerAsync : IConsumeAsync<ApplicationStatusSummary>
     {
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;

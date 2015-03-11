@@ -8,6 +8,7 @@
     /// </summary>
     public class ApprenticeshipSummaryUpdate : ApprenticeshipSummary, IVacancyUpdate
     {
+        //todo: 1.8: consider removing this property (and therefore this class)
         public DateTime ScheduledRefreshDateTime { get; set; }
     }
 }

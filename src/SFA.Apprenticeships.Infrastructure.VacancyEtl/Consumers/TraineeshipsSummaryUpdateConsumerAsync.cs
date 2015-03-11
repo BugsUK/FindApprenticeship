@@ -7,6 +7,7 @@
     using Elastic.Common.Entities;
     using VacancyIndexer;
 
+    //todo: 1.8: move to async processor
     public class TraineeshipsSummaryUpdateConsumerAsync : IConsumeAsync<TraineeshipSummaryUpdate>
     {
         private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _vacancyIndexerService;

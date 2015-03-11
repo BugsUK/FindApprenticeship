@@ -5,6 +5,7 @@
     using Application.Interfaces.Communications;
     using Domain.Interfaces.Messaging;
 
+    //todo: 1.8: move to async processor
     public abstract class CommunicationCommand
     {
         private readonly IMessageBus _messageBus;

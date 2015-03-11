@@ -7,11 +7,11 @@
     using Application.Interfaces.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
-    using Domain.Entities.ReferenceData;
     using EasyNetQ.AutoSubscribe;
     using Elastic.Common.Entities;
     using VacancyIndexer;
 
+    //todo: 1.8: move to async processor
     public class ApprenticeshipSummaryUpdateConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>
     {
         private readonly IReferenceDataService _referenceDataService;

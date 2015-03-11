@@ -11,7 +11,7 @@
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
 
-    //todo: move this class to async project?
+    //todo: 1.8: move to async processor
     public class VacancyAboutToExpireConsumerAsync : IConsumeAsync<VacancyAboutToExpire>
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;

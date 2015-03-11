@@ -7,6 +7,7 @@
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
 
+    //todo: 1.8: move to async processor
     public class VacancySummaryPageConsumerAsync : IConsumeAsync<VacancySummaryPage>
     {
         private readonly IMessageBus _messageBus;

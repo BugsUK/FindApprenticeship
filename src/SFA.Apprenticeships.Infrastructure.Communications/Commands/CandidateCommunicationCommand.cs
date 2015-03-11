@@ -4,6 +4,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
+    //todo: 1.8: move to async processor
     public class CandidateCommunicationCommand : CommunicationCommand
     {
         private readonly ICandidateReadRepository _candidateReadRepository;

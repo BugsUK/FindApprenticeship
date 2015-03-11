@@ -7,6 +7,7 @@
     using Application.Applications.Entities;
     using EasyNetQ.AutoSubscribe;
 
+    //todo: 1.8: move to async processor
     public class ApplicationStatusSummaryPageConsumerAsync : IConsumeAsync<ApplicationUpdatePage>
     {
         // http://www.mariuszwojcik.com/2014/05/10/how-to-allow-easynetq-finish-processing-message-on-application-stop/
