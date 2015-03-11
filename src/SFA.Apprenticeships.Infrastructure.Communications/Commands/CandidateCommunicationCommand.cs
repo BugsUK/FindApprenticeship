@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communications.Commands
 {
+    using System;
     using Application.Interfaces.Communications;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
@@ -8,11 +10,16 @@
     public class CandidateCommunicationCommand : CommunicationCommand
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly IUserReadRepository _userReadRepository;
 
-        public CandidateCommunicationCommand(IMessageBus messageBus, ICandidateReadRepository candidateReadRepository)
+        public CandidateCommunicationCommand(
+            IMessageBus messageBus,
+            ICandidateReadRepository candidateReadRepository,
+            IUserReadRepository userReadRepository)
             : base(messageBus)
         {
             _candidateReadRepository = candidateReadRepository;
+            _userReadRepository = userReadRepository;
         }
 
         public override bool CanHandle(CommunicationRequest communicationRequest)
@@ -22,25 +29,55 @@
 
         public override void Handle(CommunicationRequest communicationRequest)
         {
-            var candidateId = communicationRequest.EntityId.Value;
+            var candidateId = GetCandidateId(communicationRequest.EntityId);
+            var user = _userReadRepository.Get(candidateId);
+
+            if (user.Status == UserStatuses.Inactive || user.Status == UserStatuses.Dormant)
+            {
+                return;
+            }
+
             var candidate = _candidateReadRepository.Get(candidateId);
 
-            // note, some messages are mandatory - determined by type
-            var isOptionalMessageType = communicationRequest.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
-                                        communicationRequest.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted;
+            // Some messages are mandatory.
+            var isMandatoryMessageType =
+                !(communicationRequest.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
+                communicationRequest.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted);
 
-            // note, some messages are channel specific
-            var isSmsOnly = communicationRequest.MessageType == MessageTypes.SendMobileVerificationCode;
+            var isSmsMessageType =
+                !(communicationRequest.MessageType == MessageTypes.SendActivationCode ||
+                communicationRequest.MessageType == MessageTypes.SendPasswordResetCode ||
+                communicationRequest.MessageType == MessageTypes.PasswordChanged ||
+                communicationRequest.MessageType == MessageTypes.SendAccountUnlockCode);
 
-            if ((!isOptionalMessageType || candidate.CommunicationPreferences.AllowEmail) && !isSmsOnly)
+            // Some messages are channel-specific.
+            var isSmsOnlyMessageType = communicationRequest.MessageType == MessageTypes.SendMobileVerificationCode;
+
+            if ((isMandatoryMessageType || candidate.CommunicationPreferences.AllowEmail) && !isSmsOnlyMessageType)
             {
                 QueueEmailMessage(communicationRequest);
             }
 
-            if (!isOptionalMessageType || candidate.CommunicationPreferences.AllowMobile)
+            if (isSmsMessageType &&
+                (isMandatoryMessageType || candidate.CommunicationPreferences.AllowMobile) &&
+                (isSmsOnlyMessageType || candidate.CommunicationPreferences.VerifiedMobile))
             {
                 QueueSmsMessage(communicationRequest);
             }
         }
+
+        #region Helpers
+
+        public Guid GetCandidateId(Guid? candidateId)
+        {
+            if (!candidateId.HasValue)
+            {
+                throw new ArgumentNullException("candidateId");
+            }
+
+            return candidateId.Value;
+        }
+
+        #endregion
     }
 }

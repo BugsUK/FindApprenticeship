@@ -123,6 +123,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Builder\ApplicationStatusAlertsBuilder.cs" />
+    <Compile Include="Commands\CandidateCommunicationCommandTests.cs" />
     <Compile Include="Commands\HelpDeskCommunicationCommandTests.cs" />
     <Compile Include="Email\EmailMessageFormatters\DailyDigestEmailRequestBuilder.cs" />
     <Compile Include="Builder\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
@@ -180,6 +181,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
