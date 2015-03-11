@@ -93,6 +93,14 @@
       <RoleName>SFA.Apprenticeships.Infrastructure.Monitor</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
+      <Project>{d1bc4a28-a7ab-475e-b73e-5564897550ba}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>SFA.Apprenticeships.Infrastructure.Processes</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\SFA.Apprenticeships.Infrastructure.VacancyEtl.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl</Name>
       <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
