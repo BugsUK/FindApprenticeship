@@ -32,7 +32,7 @@
             {
                 var verb = httpContext.Request.HttpMethod;
                 
-                var exceptionMessage = string.Format("Error while performing action {0}/{1} of controller {2} ({3}): {4}",
+                var exceptionMessage = string.Format("Error while executing action {0}/{1} of controller {2} ({3}): {4}",
                     currentAction, verb, currentController, httpContext.Request.Url, exception.Message);
 
                 Logger.Error(exceptionMessage, exception);
