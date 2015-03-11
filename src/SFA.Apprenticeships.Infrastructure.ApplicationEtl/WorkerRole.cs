@@ -8,7 +8,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Caching.Azure.IoC;
-    using Caching.Memory.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Consumers;
