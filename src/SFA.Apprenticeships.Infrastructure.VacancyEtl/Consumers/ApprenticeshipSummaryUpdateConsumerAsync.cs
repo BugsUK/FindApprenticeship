@@ -35,15 +35,13 @@
         {
             return Task.Run(() =>
             {
-                if (PopulateCategoriesCodes(vacancySummaryToIndex))
-                {
-                    _vacancyIndexerService.Index(vacancySummaryToIndex);
-                    _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex);
-                }
+                PopulateCategoriesCodes(vacancySummaryToIndex);
+                _vacancyIndexerService.Index(vacancySummaryToIndex);
+                _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex);
             });
         }
 
-        private bool PopulateCategoriesCodes(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
+        private void PopulateCategoriesCodes(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
         {
             var categories = _referenceDataService.GetCategories().ToArray();
 
@@ -63,17 +61,15 @@
 
                 if (subCategory == null)
                 {
+                    vacancySummaryToIndex.SectorCode = "Unknown";
                     vacancySummaryToIndex.FrameworkCode = "Unknown";
                     _logService.Warn("The vacancy with Id {0} has a mismatched Sector/Framework: {1} | {2}", vacancySummaryToIndex.Id, vacancySummaryToIndex.Sector, vacancySummaryToIndex.Framework);
                 }
                 else
                 {
                     vacancySummaryToIndex.FrameworkCode = subCategory.CodeName;
-                    return true;
                 }
             }
-
-            return false;
         }
     }
 }

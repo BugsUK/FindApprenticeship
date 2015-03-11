@@ -45,7 +45,7 @@
                 Framework = AnotherSubcategory
             }).Wait();
 
-            _vacancyIndexer.Verify(vi => vi.Index(It.IsAny<ApprenticeshipSummaryUpdate>()), Times.Never);
+            _vacancyIndexer.Verify(vi => vi.Index(It.IsAny<ApprenticeshipSummaryUpdate>()), Times.Once);
             _logService.Verify(ls => ls.Warn(It.IsAny<string>(), It.IsAny<object[]>()));
         }
 
