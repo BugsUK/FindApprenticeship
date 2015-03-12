@@ -21,6 +21,11 @@
                 .Ctor<IMapper>()
                 .Named("CommunicationMappers");
 
+            For<ISavedSearchAlertRepository>()
+                .Use<SavedSearchAlertRepository>()
+                .Ctor<IMapper>()
+                .Named("CommunicationMappers");
+
             For<IContactMessageRepository>()
                 .Use<ContactMessageRepository>()
                 .Ctor<IMapper>()

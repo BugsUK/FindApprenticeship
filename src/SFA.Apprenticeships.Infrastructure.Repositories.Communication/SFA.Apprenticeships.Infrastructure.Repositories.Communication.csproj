@@ -112,6 +112,7 @@
     <Compile Include="Entities\MongoApplicationStatusAlert.cs" />
     <Compile Include="Entities\MongoContactMessage.cs" />
     <Compile Include="Entities\MongoApprenticeshipApplicationExpiringDraft.cs" />
+    <Compile Include="Entities\MongoSavedSearchAlert.cs" />
     <Compile Include="ExpiringApprenticeshipApplicationDraftRepository.cs" />
     <Compile Include="IoC\CommunicationRepositoryRegistry.cs" />
     <Compile Include="CommunicationRepository.cs" />

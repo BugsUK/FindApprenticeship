@@ -19,6 +19,9 @@
             Mapper.CreateMap<ApplicationStatusAlert, MongoApplicationStatusAlert>();
             Mapper.CreateMap<MongoApplicationStatusAlert, ApplicationStatusAlert>();
 
+            Mapper.CreateMap<SavedSearchAlert, MongoSavedSearchAlert>();
+            Mapper.CreateMap<MongoSavedSearchAlert, SavedSearchAlert>();
+
             Mapper.CreateMap<ContactMessage, MongoContactMessage>();
             Mapper.CreateMap<MongoContactMessage, ContactMessage>();
         }
