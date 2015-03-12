@@ -39,10 +39,10 @@
                         output.value = myPostcode;
 
                     } else {
-                        alert('No results found');
+                        output.value = 'No location found';
                     }
                 } else {
-                    alert('Geocoder failed due to: ' + status);
+                    output.value = 'No location found';
                 }
             });
         };
