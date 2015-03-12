@@ -256,6 +256,8 @@
 
         public MediatorResponse<ApprenticeshipSearchViewModel> SaveSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel)
         {
+            viewModel.Categories = GetCategories();
+
             viewModel = _candidateServiceProvider.CreateSavedSearch(candidateId, viewModel);
 
             if (viewModel.HasError())

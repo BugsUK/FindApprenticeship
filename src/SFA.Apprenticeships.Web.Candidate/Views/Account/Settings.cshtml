@@ -36,20 +36,20 @@
         @Html.EditorFor(r => r.DateOfBirth)
         @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/settings/findaddress" })
         @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" }, verified: Model.VerifiedMobile)
-        
+
         <div id="accountSettings2">
             <h3 class="heading-large">How we contact you</h3>
 
             <div class="form-group form-group-compound">
                 <p class="form-label">Receive notifications?</p>
                 <span class="form-hint">If you don't select an option you won't receive notifications</span>
-                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label" })
+                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new {@class = "block-label"})
                 @if (Model.SmsEnabled)
                 {
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label" })
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new {@class = "block-label"})
                 }
             </div>
-            
+
             <div class="text para-btm-margin">
                 <p class="small-btm-margin">Choose to be notified when:</p>
                 <ul class="list-text list-checkradio">
@@ -70,6 +70,48 @@
                     </li>
                 </ul>
             </div>
+        </div>
+
+        <div class="form-group" id="savedSearch">
+            <h2 class="heading-large" id="savedSearchHeading">Saved apprenticeship searches</h2>
+            @if (Model.SavedSearches == null || Model.SavedSearches.Count == 0)
+            {
+                <p class="savedInitalText text" id="noSavedSearchesText">
+                    You currently don't have any active saved searches, <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">use the search</a> and you can receive alerts when we find an apprenticeship that matches your criteria.
+                </p>
+            }
+            else
+            {
+                <div id="savedSearches" class="toggle-content text" style="display: block;">
+                @for (var i = 0; i < Model.SavedSearches.Count; i++)
+                {
+                    var savedSearch = Model.SavedSearches[i];
+                    var checkedListItemClass = savedSearch.AlertsEnabled ? "class=\"selected\"" : "";
+                    
+                    <div class="para-btm-margin">
+                        <a href="@Html.Raw(savedSearch.SearchUrl.Value)" title="Run search">@savedSearch.Name</a>
+                        <ul class="list-text">
+                            <li @Html.Raw(checkedListItemClass)>
+                                @{
+                                    var index = i;
+                                }
+                                @Html.HiddenFor(m => m.SavedSearches[index].Id)
+                                @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new { @class = "no-left-margin" })
+                            </li>
+                        @if (savedSearch.ApprenticeshipLevel != "All")
+                        {
+                            <li><b>Apprenticeship level:</b> @savedSearch.ApprenticeshipLevel</li>
+                        }
+                            <li>
+                                <a href="@Url.Action("DeleteSavedSearch", new { id = savedSearch.Id })" class="link-unimp icon-black">
+                                    <fa class="fa fa-times-circle"></fa>Delete saved search
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+                </div>
+            }
         </div>
 
     </fieldset>

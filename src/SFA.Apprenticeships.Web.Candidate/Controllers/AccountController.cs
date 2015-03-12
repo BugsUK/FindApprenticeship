@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Globalization;
     using System.Net;
     using System.Threading.Tasks;
@@ -75,6 +76,28 @@
                         UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
                         SetUserMessage(AccountPageMessages.SettingsUpdated);
                         return RedirectToRoute(CandidateRouteNames.Settings);
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+        }
+
+        [HttpGet]
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> DeleteSavedSearch(Guid id)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.DeleteSavedSearch(id);
+
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.DeleteSavedSearch.Ok:
+                        return Redirect(Url.Action("Settings") + "#savedSearch");
+                    case AccountMediatorCodes.DeleteSavedSearch.HasError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return Redirect(Url.Action("Settings") + "#savedSearch");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }

@@ -71,5 +71,11 @@
             public const string ResendNotRequired = "AccountMediator.Resend.Failed";
             public const string Error = "AccountMediator.Resend.Error";
         }
+
+        public class DeleteSavedSearch
+        {
+            public const string Ok = "AccountMediator.DeleteSavedSearch.Ok";
+            public const string HasError = "AccountMediator.DeleteSavedSearch.HasError";
+        }
     }
 }

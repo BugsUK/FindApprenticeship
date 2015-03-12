@@ -99,6 +99,7 @@
     <Compile Include="Builder\SavedSearchBuilder.cs" />
     <Compile Include="Builder\UserBuilder.cs" />
     <Compile Include="Candidates\SavedSearchHelperTests.cs" />
+    <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Location\LocationHelperPartialPostcodeTests.cs" />
     <Compile Include="Location\LocationHelperFullPostcodeTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

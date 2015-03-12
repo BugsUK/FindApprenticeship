@@ -1,13 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.AccountProvider
 {
     using System;
+    using System.Linq;
     using Application.Interfaces.Candidates;
     using Builders;
+    using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using NUnit.Framework.Constraints;
+    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class GetSettingsViewModelTests
@@ -67,6 +70,39 @@
             viewModel.SendApprenticeshipApplicationsExpiring.Should().Be(sendApprenticeshipApplicationsExpiring);
             viewModel.SendSavedSearchAlerts.Should().Be(sendSavedSearchAlerts);
             viewModel.SendMarketingCommunications.Should().Be(sendMarketingCommunications);
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void TestSavedSearchMappings(bool alertsEnabled)
+        {
+            var candidateId = Guid.NewGuid();
+            var candidate = new CandidateBuilder(candidateId).Build();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidate);
+            var savedSearches = new Fixture().Build<SavedSearch>()
+                .With(s => s.AlertsEnabled, alertsEnabled)
+                .With(s => s.Keywords, string.Empty)
+                .With(s => s.ApprenticeshipLevel, "All")
+                .With(s => s.Location, "CV1 2WT")
+                .With(s => s.WithinDistance, 5)
+                .CreateMany(1).ToList();
+            candidateService.Setup(cs => cs.RetrieveSavedSearches(candidateId)).Returns(savedSearches);
+            var provider = new AccountProviderBuilder().With(candidateService).Build();
+
+            var viewModel = provider.GetSettingsViewModel(candidateId);
+
+            candidateService.Verify(cs => cs.RetrieveSavedSearches(candidateId), Times.Once);
+
+            viewModel.Should().NotBeNull();
+            viewModel.SavedSearches.Count.Should().Be(1);
+            var savedSearch = viewModel.SavedSearches[0];
+            savedSearch.Id.Should().Be(savedSearches[0].EntityId);
+            savedSearch.Name.Should().Be("Within 5 miles of CV1 2WT");
+            savedSearch.SearchUrl.Should().NotBeNull();
+            savedSearch.SearchUrl.Value.Should().NotBeNullOrEmpty();
+            savedSearch.AlertsEnabled.Should().Be(alertsEnabled);
+            savedSearch.ApprenticeshipLevel.Should().Be("All");
         }
     }
 }

@@ -114,6 +114,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="Ploeh.AutoFixture">
+      <HintPath>..\packages\AutoFixture.3.24.3\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+    </Reference>
     <Reference Include="RazorGenerator.Testing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RazorGenerator.Testing.2.3.2\lib\net40\RazorGenerator.Testing.dll</HintPath>
@@ -181,7 +184,6 @@
     <Compile Include="Builders\VacancyDetailViewModelBuilder.cs" />
     <Compile Include="Builders\VerifyMobileViewModelBuilder.cs" />
     <Compile Include="Builders\WorkExperienceViewModelBuilder.cs" />
-    <Compile Include="Extensions\CollectionExtensionsTests.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
     <Compile Include="Helpers\FullNameFormatterTests.cs" />
@@ -191,6 +193,7 @@
     <Compile Include="Mediators\Account\ApprenticeshipVacancyDetailsTests.cs" />
     <Compile Include="Mediators\Account\ArchiveTests.cs" />
     <Compile Include="Mediators\Account\CommunicationPreferencesTests.cs" />
+    <Compile Include="Mediators\Account\DeleteSavedSearchTests.cs" />
     <Compile Include="Mediators\Account\DeleteTests.cs" />
     <Compile Include="Mediators\Account\DismissTests.cs" />
     <Compile Include="Mediators\Account\IndexTests.cs" />
@@ -264,6 +267,7 @@
     <Compile Include="Providers\ApprenticeshipVacancyDetailProvider\GetVacancyDetailViewModelTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\CandidateServiceProviderBuilder.cs" />
     <Compile Include="Providers\CandidateServiceProvider\CreateSavedSearchTests.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\DeleteSavedSearchTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\LoginTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RegisterTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestAccountUnlockCodeTests.cs" />
@@ -305,6 +309,7 @@
     <Compile Include="Views\Register\MarketingOptInConsent.cs" />
     <Compile Include="Views\Settings\CommunicationsPreferencesTests.cs" />
     <Compile Include="Views\Settings\MarketingOptInTests.cs" />
+    <Compile Include="Views\Settings\SavedSearchTests.cs" />
     <Compile Include="Views\Settings\SettingsTests.cs" />
     <Compile Include="Views\Settings\SettingsViewBuilder.cs" />
     <Compile Include="Views\TraineeshipSearch\ApplyPartialTests.cs" />

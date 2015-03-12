@@ -61,7 +61,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             return this;
         }
 
-        public AccountMediator Build()
+        public IAccountMediator Build()
         {
             return new AccountMediator(_accountProvider,
                 _candidateServiceProviderMock.Object,

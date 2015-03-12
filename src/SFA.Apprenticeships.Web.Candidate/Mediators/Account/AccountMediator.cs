@@ -273,5 +273,17 @@
                     return GetMediatorResponse(AccountMediatorCodes.Resend.Error, verifyMobileViewModel, VerifyMobilePageMessages.MobileVerificationCodeResendFailed, UserMessageLevel.Error);
             }
         }
+
+        public MediatorResponse<SavedSearchViewModel> DeleteSavedSearch(Guid id)
+        {
+            var viewModel = _candidateServiceProvider.DeleteSavedSearch(id);
+
+            if (viewModel.HasError())
+            {
+                return GetMediatorResponse(AccountMediatorCodes.DeleteSavedSearch.HasError, viewModel, AccountPageMessages.DeleteSavedSearchFailed, UserMessageLevel.Error);
+            }
+
+            return GetMediatorResponse(AccountMediatorCodes.DeleteSavedSearch.Ok, viewModel);
+        }
     }
 }

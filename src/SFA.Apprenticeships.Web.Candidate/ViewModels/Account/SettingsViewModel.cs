@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Account
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Applications;
     using Constants.ViewModels;
@@ -49,5 +50,7 @@
 
         [Display(Name = SettingsViewModelMessages.MarketingComms.LabelText)]
         public bool SendMarketingCommunications { get; set; }
+
+        public IList<SavedSearchViewModel> SavedSearches { get; set; }
     }
 }

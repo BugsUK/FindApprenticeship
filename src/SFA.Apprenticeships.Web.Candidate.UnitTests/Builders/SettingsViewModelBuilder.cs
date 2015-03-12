@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
+    using System.Collections.Generic;
     using Candidate.ViewModels;
     using Candidate.ViewModels.Account;
     using Candidate.ViewModels.Applications;
@@ -21,6 +22,8 @@
         private bool _sendApprenticeshipApplicationsExpiring;
         private bool _sendSavedSearchAlerts;
         private bool _sendMarketingComms;
+
+        private IList<SavedSearchViewModel> _savedSearches;
 
         public SettingsViewModelBuilder Firstname(string firstname)
         {
@@ -106,6 +109,12 @@
             return this;
         }
 
+        public SettingsViewModelBuilder WithSavedSearchViewModels(IList<SavedSearchViewModel> savedSearches)
+        {
+            _savedSearches = savedSearches;
+            return this;
+        }
+
         public SettingsViewModel Build()
         {
             var model = new SettingsViewModel
@@ -133,7 +142,9 @@
                 SendApplicationStatusChanges = _sendApplicationStatusChanges,
                 SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
                 SendSavedSearchAlerts = _sendSavedSearchAlerts,
-                SendMarketingCommunications = _sendMarketingComms
+                SendMarketingCommunications = _sendMarketingComms,
+
+                SavedSearches = _savedSearches
             };
 
             return model;

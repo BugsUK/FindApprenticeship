@@ -65,5 +65,10 @@
         {
             public const string LabelText = "we send you updates on news and information";
         }
+
+        public static class SavedSearch
+        {
+            public const string AlertsEnabledLabelText = "Alert me for this search";
+        }
     }
 }

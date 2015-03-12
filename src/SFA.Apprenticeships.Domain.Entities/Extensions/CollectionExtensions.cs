@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Extensions
+﻿namespace SFA.Apprenticeships.Domain.Entities.Extensions
 {
     public static class CollectionExtensions
     {

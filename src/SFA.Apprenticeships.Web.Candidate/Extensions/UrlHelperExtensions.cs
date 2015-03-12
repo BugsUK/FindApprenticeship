@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Extensions
 {
     using System.Web.Mvc;
+    using Domain.Entities.Extensions;
     using ViewModels.VacancySearch;
 
     public static class UrlHelperExtensions

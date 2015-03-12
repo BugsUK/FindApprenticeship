@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
     using Configuration;
@@ -9,6 +11,7 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Interfaces.Mapping;
+    using Mappers;
     using ViewModels.Account;
     using ViewModels.Locations;
 
@@ -36,6 +39,7 @@
                 _logger.Debug("Calling AccountProvider to get Settings View Model for candidate with Id={0}", candidateId);
                 
                 var candidate = _candidateService.GetCandidate(candidateId);
+                var savedSearches = _candidateService.RetrieveSavedSearches(candidateId);
                 var settings = _mapper.Map<RegistrationDetails, SettingsViewModel>(candidate.RegistrationDetails);
                 
                 settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
@@ -48,6 +52,10 @@
                 settings.SendApprenticeshipApplicationsExpiring = candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring;
                 settings.SendSavedSearchAlerts = candidate.CommunicationPreferences.SendSavedSearchAlerts;
                 settings.SendMarketingCommunications = candidate.CommunicationPreferences.SendMarketingCommunications;
+
+                var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel()).ToList();
+
+                settings.SavedSearches = savedSeachViewModels;
 
                 return settings;
             }
@@ -85,6 +93,21 @@
                 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);
+
+                if (model.SavedSearches != null && model.SavedSearches.Count > 0)
+                {
+                    var savedSearches = _candidateService.RetrieveSavedSearches(candidateId);
+                    foreach (var updatedSavedSearch in model.SavedSearches)
+                    {
+                        var savedSearch = savedSearches.SingleOrDefault(s => s.EntityId == updatedSavedSearch.Id);
+                        if (savedSearch != null && savedSearch.AlertsEnabled != updatedSavedSearch.AlertsEnabled)
+                        {
+                            savedSearch.AlertsEnabled = updatedSavedSearch.AlertsEnabled;
+                            _candidateService.UpdateSavedSearch(savedSearch);
+                        }
+                    }
+                }
+
                 _logger.Debug("Settings saved for candidate with Id={0}", candidateId);
 
                 return true;

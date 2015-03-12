@@ -2,7 +2,6 @@
 {
     using System;
     using ViewModels.Account;
-    using ViewModels.Login;
     using ViewModels.MyApplications;
 
     public interface IAccountMediator
@@ -32,5 +31,7 @@
         MediatorResponse<VerifyMobileViewModel> VerifyMobile(Guid candidateId, VerifyMobileViewModel verifyMobileViewModel);
 
         MediatorResponse<VerifyMobileViewModel> Resend(Guid candidateId, VerifyMobileViewModel model);
+
+        MediatorResponse<SavedSearchViewModel> DeleteSavedSearch(Guid id);
     }
 }

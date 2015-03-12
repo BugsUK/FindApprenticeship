@@ -102,6 +102,7 @@
     <Compile Include="ErrorCodes.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchMode.cs" />

@@ -9,9 +9,10 @@
         private string _keywords;
         private string _location;
         private int _withinDistance;
-        private string _apprenticeshipLevel;
+        private string _apprenticeshipLevel = "All";
         private string _category;
         private string[] _subCategories;
+        private string _categoryFullName;
 
         public SavedSearch Build()
         {
@@ -23,6 +24,7 @@
                 WithinDistance = _withinDistance,
                 ApprenticeshipLevel = _apprenticeshipLevel,
                 Category = _category,
+                CategoryFullName = _categoryFullName,
                 SubCategories = _subCategories
             };
 
@@ -68,6 +70,12 @@
         public SavedSearchBuilder WithSubCategories(string[] subCategories)
         {
             _subCategories = subCategories;
+            return this;
+        }
+
+        public SavedSearchBuilder WithCategoryFullName(string categoryFullName)
+        {
+            _categoryFullName = categoryFullName;
             return this;
         }
     }

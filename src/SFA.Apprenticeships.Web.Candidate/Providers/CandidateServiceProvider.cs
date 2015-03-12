@@ -21,6 +21,8 @@
     using ViewModels.Register;
     using Common.Constants;
     using Common.Services;
+    using Mappers;
+    using ViewModels.Account;
     using ViewModels.VacancySearch;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
     using UserErrorCodes = Application.Interfaces.Users.ErrorCodes;
@@ -493,6 +495,12 @@
 
         public ApprenticeshipSearchViewModel CreateSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel)
         {
+            var categoryFullName = viewModel.Category;
+            if (!string.IsNullOrEmpty(viewModel.Category))
+            {
+                categoryFullName = viewModel.Categories.Single(c => c.CodeName == viewModel.Category).FullName;
+            }
+
             var savedSearch = new SavedSearch
             {
                 CandidateId = candidateId,
@@ -502,7 +510,9 @@
                 WithinDistance = viewModel.WithinDistance,
                 ApprenticeshipLevel = viewModel.ApprenticeshipLevel,
                 Category = viewModel.Category,
-                SubCategories = viewModel.SubCategories
+                CategoryFullName = categoryFullName,
+                SubCategories = viewModel.SubCategories,
+                SearchField = viewModel.SearchField
             };
 
             try
@@ -511,11 +521,22 @@
                 
                 _candidateService.CreateSavedSearch(savedSearch);
 
-                if (!candidate.CommunicationPreferences.AllowEmail || !candidate.CommunicationPreferences.SendSavedSearchAlerts)
+                var saveCandidate = false;
+
+                if (!candidate.CommunicationPreferences.SendSavedSearchAlerts)
+                {
+                    candidate.CommunicationPreferences.SendSavedSearchAlerts = true;
+                    saveCandidate = true;
+                }
+
+                if (!candidate.CommunicationPreferences.AllowEmail && !candidate.CommunicationPreferences.AllowMobile)
                 {
                     candidate.CommunicationPreferences.AllowEmail = true;
-                    candidate.CommunicationPreferences.SendSavedSearchAlerts = true;
+                    saveCandidate = true;
+                }
 
+                if (saveCandidate)
+                {
                     _candidateService.SaveCandidate(candidate);
                 }
             }
@@ -526,6 +547,23 @@
             }
 
             return viewModel;
+        }
+
+        public SavedSearchViewModel DeleteSavedSearch(Guid savedSearchId)
+        {
+            try
+            {
+                var deletedSavedSearch = _candidateService.DeleteSavedSearch(savedSearchId);
+
+                var viewModel = deletedSavedSearch.ToViewModel();
+
+                return viewModel;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error deleting saved search", ex);
+                return new SavedSearchViewModel { ViewModelMessage = AccountPageMessages.DeleteSavedSearchFailed };
+            }
         }
 
         #region Helpers

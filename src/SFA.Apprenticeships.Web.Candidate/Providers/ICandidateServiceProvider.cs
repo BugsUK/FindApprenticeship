@@ -5,6 +5,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using ViewModels;
+    using ViewModels.Account;
     using ViewModels.Login;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
@@ -44,5 +45,7 @@
         IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
 
         ApprenticeshipSearchViewModel CreateSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel);
+
+        SavedSearchViewModel DeleteSavedSearch(Guid savedSearchId);
     }
 }

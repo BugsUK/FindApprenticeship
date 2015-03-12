@@ -1,15 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.CandidateServiceProvider
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Candidates;
     using Builders;
     using Constants.Pages;
     using Domain.Entities.Candidates;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class CreateSavedSearchTests
@@ -55,8 +59,19 @@
             const string location = "Warwick";
             const int withinDistance = 15;
             const string apprenticeshipLevel = "Advanced";
-            const string category = "Engineering";
-            var subCategories = new[] {"Mechanical", "Civil"};
+            const string category = "MFP";
+            const string categoryFullName = "Engineering and Manufacturing Technologies";
+            var subCategories = new[] { "513", "540" };
+            const string searchField = "JobTitle";
+
+            var categories = new List<Category>
+            {
+                new Category
+                {
+                    CodeName = category,
+                    FullName = categoryFullName
+                }
+            };
 
             SavedSearch savedSearch = null;
             var candidateService = new Mock<ICandidateService>();
@@ -70,6 +85,8 @@
                 .WithApprenticeshipLevel(apprenticeshipLevel)
                 .WithCategory(category)
                 .WithSubCategories(subCategories)
+                .WithSearchField(searchField)
+                .WithCategories(categories)
                 .Build();
 
             var response = provider.CreateSavedSearch(candidateId, viewModel);
@@ -86,7 +103,9 @@
             savedSearch.WithinDistance.Should().Be(withinDistance);
             savedSearch.ApprenticeshipLevel.Should().Be(apprenticeshipLevel);
             savedSearch.Category.Should().Be(category);
+            savedSearch.CategoryFullName.Should().Be(categoryFullName);
             savedSearch.SubCategories.Should().BeEquivalentTo(subCategories);
+            savedSearch.SearchField.Should().Be(searchField);
             savedSearch.LastResultsHash.Should().BeNull();
             savedSearch.DateProcessed.Should().Be(null);
         }

@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
+    using System.Collections.Generic;
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
 
     public class ApprenticeshipSearchViewModelBuilder
@@ -10,10 +12,12 @@
         private string _keywords;
         private string _location;
         private int _withinDistance;
-        private string _apprenticeshipLevel;
+        private string _apprenticeshipLevel = "All";
         private string _category;
         private string[] _subCategories;
         private string _viewModelMessage;
+        private string _searchField = "All";
+        private List<Category> _categories;
 
         public ApprenticeshipSearchViewModel Build()
         {
@@ -26,9 +30,11 @@
                 ApprenticeshipLevel = _apprenticeshipLevel,
                 Category = _category,
                 SubCategories = _subCategories,
+                SearchField = _searchField,
 
                 SortTypes = SearchMediatorBase.GetSortTypes(),
                 ResultsPerPageSelectList = SearchMediatorBase.GetResultsPerPageSelectList(5),
+                Categories = _categories,
                 ViewModelMessage = _viewModelMessage
             };
             return viewModel;
@@ -76,9 +82,21 @@
             return this;
         }
 
+        public ApprenticeshipSearchViewModelBuilder WithSearchField(string searchField)
+        {
+            _searchField = searchField;
+            return this;
+        }
+
         public ApprenticeshipSearchViewModelBuilder WithMessage(string viewModelMessage)
         {
             _viewModelMessage = viewModelMessage;
+            return this;
+        }
+
+        public ApprenticeshipSearchViewModelBuilder WithCategories(List<Category> categories)
+        {
+            _categories = categories;
             return this;
         }
     }

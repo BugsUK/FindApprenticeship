@@ -8,6 +8,8 @@
         public SavedSearch()
         {
             AlertsEnabled = true;
+            ApprenticeshipLevel = "All";
+            SearchField = "All";
         }
 
         public Guid CandidateId { get; set; }
@@ -16,9 +18,9 @@
 
         public ApprenticeshipSearchMode SearchMode { get; set; }
 
-        public string Keywords { get; set; }
-
         public string Location { get; set; }
+
+        public string Keywords { get; set; }
 
         //TODO: Verify that we are not saving this search parameter
         //public ApprenticeshipLocationType LocationType { get; set; }
@@ -29,7 +31,11 @@
 
         public string Category { get; set; }
 
+        public string CategoryFullName { get; set; }
+
         public string[] SubCategories { get; set; }
+
+        public string SearchField { get; set; }
 
         public string LastResultsHash { get; set; }
 
