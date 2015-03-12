@@ -163,33 +163,33 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 20 "..\..\Views\Shared\_LoginPartial.cshtml"
-         if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null) 
-        {            
+         if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
+        {
 
             
             #line default
             #line hidden
 WriteLiteral("            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 990), Tuple.Create("\"", 1075)
+WriteAttribute("href", Tuple.Create(" href=\"", 977), Tuple.Create("\"", 1062)
             
             #line 22 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 997), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn, new { ReturnUrl = Request.Url.PathAndQuery })
+, Tuple.Create(Tuple.Create("", 984), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn, new { ReturnUrl = Request.Url.PathAndQuery })
             
             #line default
             #line hidden
-, 997), false)
+, 984), false)
 );
 
 WriteLiteral(" id=\"loginLink\"");
 
-WriteLiteral(" title=\"Sign in\"");
+WriteLiteral(" title=\"Sign in / Create account\"");
 
 WriteLiteral("><i");
 
 WriteLiteral(" class=\"fa fa-sign-in\"");
 
-WriteLiteral("></i>Sign in</a>\r\n");
+WriteLiteral("></i>Sign in / Create account</a>\r\n");
 
             
             #line 23 "..\..\Views\Shared\_LoginPartial.cshtml"
@@ -202,25 +202,25 @@ WriteLiteral("></i>Sign in</a>\r\n");
             #line hidden
 WriteLiteral("            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1200), Tuple.Create("\"", 1239)
+WriteAttribute("href", Tuple.Create(" href=\"", 1221), Tuple.Create("\"", 1260)
             
             #line 26 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 1207), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn)
+, Tuple.Create(Tuple.Create("", 1228), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignIn)
             
             #line default
             #line hidden
-, 1207), false)
+, 1228), false)
 );
 
 WriteLiteral(" id=\"loginLink\"");
 
-WriteLiteral(" title=\"Sign in\"");
+WriteLiteral(" title=\"Sign in / Create account\"");
 
 WriteLiteral("><i");
 
 WriteLiteral(" class=\"fa fa-sign-in\"");
 
-WriteLiteral("></i>Sign in</a>\r\n");
+WriteLiteral("></i>Sign in / Create account</a>\r\n");
 
             
             #line 27 "..\..\Views\Shared\_LoginPartial.cshtml"

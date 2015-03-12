@@ -17,13 +17,13 @@
 else
 {
     <div class="account-info" id="bannerSignedOut">
-        @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null) 
-        {            
-            <a href="@Url.RouteUrl(RouteNames.SignIn, new { ReturnUrl = Request.Url.PathAndQuery })" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
+        @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
+        {
+            <a href="@Url.RouteUrl(RouteNames.SignIn, new { ReturnUrl = Request.Url.PathAndQuery })" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
         }
         else
         {
-            <a href="@Url.RouteUrl(RouteNames.SignIn)" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
+            <a href="@Url.RouteUrl(RouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
         }
     </div>
 }
