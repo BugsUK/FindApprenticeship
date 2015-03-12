@@ -122,5 +122,15 @@
             view.GetElementbyId("search-no-results-reference-number").Should().BeNull();
             view.GetElementbyId("search-no-results-keywords").Should().NotBeNull();
         }
+
+        [Test]
+        public void SaveSearchAvailableNotLoggedIn()
+        {
+            var result = new ResultsViewBuilder().Render();
+
+            var receiveSaveSearchAlert = result.GetElementbyId("receiveSaveSearchAlert");
+
+            receiveSaveSearchAlert.Should().NotBeNull();
+        }
     }
 }

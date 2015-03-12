@@ -5,7 +5,14 @@
 
     public class SavedSearch : BaseEntity
     {
+        public SavedSearch()
+        {
+            AlertsEnabled = true;
+        }
+
         public Guid CandidateId { get; set; }
+
+        public bool AlertsEnabled { get; set; }
 
         public ApprenticeshipSearchMode SearchMode { get; set; }
 

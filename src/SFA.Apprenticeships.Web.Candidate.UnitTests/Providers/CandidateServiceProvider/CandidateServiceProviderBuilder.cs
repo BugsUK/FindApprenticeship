@@ -34,7 +34,7 @@
             Logger = new Mock<ILogService>();
         }
 
-        public CandidateServiceProvider Build()
+        public ICandidateServiceProvider Build()
         {
             CandidateServiceProvider = new CandidateServiceProvider(CandidateService.Object, UserAccountService.Object, UserDataProvider.Object, AuthenticationTicketService.Object, new ApprenticeshipCandidateWebMappers(), HttpContext.Object, ConfigurationManager.Object, Logger.Object);
             return CandidateServiceProvider;

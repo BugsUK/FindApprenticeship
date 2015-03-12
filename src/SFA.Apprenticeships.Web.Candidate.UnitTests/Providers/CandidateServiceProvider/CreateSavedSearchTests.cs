@@ -5,6 +5,7 @@
     using Builders;
     using Constants.Pages;
     using Domain.Entities.Candidates;
+    using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
@@ -28,6 +29,21 @@
             response.Should().NotBeNull();
             candidateService.Verify(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>()), Times.Once);
             savedSearch.Should().NotBeNull();
+        }
+
+        [Test]
+        public void AlertsEnabled()
+        {
+            var candidateId = Guid.NewGuid();
+            SavedSearch savedSearch = null;
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>())).Callback<SavedSearch>(ss => { savedSearch = ss; });
+            var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
+            var viewModel = new ApprenticeshipSearchViewModelBuilder().Build();
+
+            provider.CreateSavedSearch(candidateId, viewModel);
+
+            savedSearch.AlertsEnabled.Should().BeTrue();
         }
 
         [Test]
@@ -90,6 +106,26 @@
             candidateService.Verify(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>()), Times.Once);
             response.HasError().Should().BeTrue();
             response.ViewModelMessage.Should().Be(VacancySearchResultsPageMessages.SaveSearchFailed);
+        }
+
+        [Test]
+        public void CommunicationPreferences()
+        {
+            var candidateId = Guid.NewGuid();
+            Candidate candidate = null;
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(false).SendSavedSearchAlerts(false).Build());
+            candidateService.Setup(cs => cs.SaveCandidate(It.IsAny<Candidate>())).Callback<Candidate>(c => { candidate = c; });
+            var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
+            var viewModel = new ApprenticeshipSearchViewModelBuilder().Build();
+
+            provider.CreateSavedSearch(candidateId, viewModel);
+
+            candidateService.Verify(cs => cs.GetCandidate(candidateId), Times.Once);
+            candidateService.Verify(cs => cs.SaveCandidate(candidate), Times.Once);
+            candidate.Should().NotBeNull();
+            candidate.CommunicationPreferences.AllowEmail.Should().BeTrue();
+            candidate.CommunicationPreferences.SendSavedSearchAlerts.Should().BeTrue();
         }
     }
 }

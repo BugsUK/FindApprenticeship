@@ -291,6 +291,7 @@
     <Compile Include="Views\ApprenticeshipSearch\IndexTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\MediatorTestsBase.cs" />
     <Compile Include="Views\ApprenticeshipSearch\NationwideResultsTests.cs" />
+    <Compile Include="Views\ApprenticeshipSearch\ResultsViewBuilder.cs" />
     <Compile Include="Views\ApprenticeshipSearch\SearchResultsViewBuilder.cs" />
     <Compile Include="Views\ApprenticeshipSearch\SearchResultsTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\ResultsSearchUpdateTests.cs" />

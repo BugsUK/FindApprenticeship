@@ -507,7 +507,17 @@
 
             try
             {
+                var candidate = _candidateService.GetCandidate(candidateId);
+                
                 _candidateService.CreateSavedSearch(savedSearch);
+
+                if (!candidate.CommunicationPreferences.AllowEmail || !candidate.CommunicationPreferences.SendSavedSearchAlerts)
+                {
+                    candidate.CommunicationPreferences.AllowEmail = true;
+                    candidate.CommunicationPreferences.SendSavedSearchAlerts = true;
+
+                    _candidateService.SaveCandidate(candidate);
+                }
             }
             catch (Exception ex)
             {
