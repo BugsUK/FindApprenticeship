@@ -35,7 +35,7 @@
 
             var response = Mediator.Resume(Guid.NewGuid(), ValidVacancyId);
 
-            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Resume.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Resume.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info, false);
         }
 
         [Test]

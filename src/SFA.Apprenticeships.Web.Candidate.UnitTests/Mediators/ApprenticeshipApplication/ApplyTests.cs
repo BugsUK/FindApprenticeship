@@ -92,7 +92,7 @@
 
             var response = mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString());
 
-            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Apply.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Warning, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Apply.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info, false);
         }
 
         [Test]
