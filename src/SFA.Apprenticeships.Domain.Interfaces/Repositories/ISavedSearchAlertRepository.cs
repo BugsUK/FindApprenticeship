@@ -1,9 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
     using System;
+    using System.Collections.Generic;
+    using Entities.Communication;
 
     public interface ISavedSearchAlertRepository
     {
-        //todo: 1.8: comms repo for saved search alerts
+        void Save(SavedSearchAlert savedSearchAlert);
+
+        void Delete(SavedSearchAlert savedSearchAlert);
+
+        Dictionary<Guid, List<SavedSearchAlert>> GetCandidatesSavedSearchAlerts();
     }
 }

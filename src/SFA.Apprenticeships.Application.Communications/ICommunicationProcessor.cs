@@ -4,6 +4,8 @@
 
     public interface ICommunicationProcessor
     {
-        void SendDailyCommunications(Guid batchId);
+        void SendDailyDigests(Guid batchId);
+
+        void SendSavedSearchAlerts(Guid batchId);
     }
 }

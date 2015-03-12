@@ -25,6 +25,6 @@
         UserEnquiryDetails,
         UserEmailAddress,
         ApplicationStatusAlerts,
-        SavedSearchAlertUrl
+        SavedSearchAlerts
     }
 }

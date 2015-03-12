@@ -22,11 +22,13 @@
             return Task.Run(() =>
             {
                 var schedulerNotification = GetLatestQueueMessage();
-                if (schedulerNotification != null)
-                {
-                    _communicationProcessor.SendDailyCommunications(schedulerNotification.ClientRequestId);
-                    MessageService.DeleteMessage(schedulerNotification.MessageId, schedulerNotification.PopReceipt);
-                }
+
+                if (schedulerNotification == null) return;
+
+                _communicationProcessor.SendDailyDigests(schedulerNotification.ClientRequestId);
+                _communicationProcessor.SendSavedSearchAlerts(schedulerNotification.ClientRequestId);
+
+                MessageService.DeleteMessage(schedulerNotification.MessageId, schedulerNotification.PopReceipt);
             });
         }
     }

@@ -3,7 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
@@ -11,27 +13,34 @@
     {
         private readonly IExpiringApprenticeshipApplicationDraftRepository _expiringDraftRepository;
         private readonly IApplicationStatusAlertRepository _applicationStatusAlertRepository;
+        private readonly ISavedSearchAlertRepository _savedSearchAlertRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly IUserReadRepository _userReadRepository;
         private readonly IMessageBus _messageBus;
 
-        public CommunicationProcessor(IExpiringApprenticeshipApplicationDraftRepository expiringDraftRepository, 
+        public CommunicationProcessor(
+            IExpiringApprenticeshipApplicationDraftRepository expiringDraftRepository,
             IApplicationStatusAlertRepository applicationStatusAlertRepository,
-            ICandidateReadRepository candidateReadRepository, 
+            ISavedSearchAlertRepository savedSearchAlertRepository,
+            ICandidateReadRepository candidateReadRepository,
+            IUserReadRepository userReadRepository,
             IMessageBus messageBus)
         {
             _expiringDraftRepository = expiringDraftRepository;
             _applicationStatusAlertRepository = applicationStatusAlertRepository;
+            _savedSearchAlertRepository = savedSearchAlertRepository;
             _candidateReadRepository = candidateReadRepository;
+            _userReadRepository = userReadRepository;
             _messageBus = messageBus;
         }
 
-        public void SendDailyCommunications(Guid batchId)
+        public void SendDailyDigests(Guid batchId)
         {
             var candidatesExpiringDrafts = _expiringDraftRepository.GetCandidatesDailyDigest();
             var candidatesApplicationStatusAlerts = _applicationStatusAlertRepository.GetCandidatesDailyDigest();
-            //var candidatesSavedSearchAlerts = _savedSearchAlertRepository.GetCandidatesDailyDigest();
 
-            var candidateIds = candidatesExpiringDrafts.Keys.Union(candidatesApplicationStatusAlerts.Keys);
+            var candidateIds = candidatesExpiringDrafts.Keys
+                .Union(candidatesApplicationStatusAlerts.Keys);
 
             foreach (var candidateId in candidateIds)
             {
@@ -43,31 +52,31 @@
                 List<ApplicationStatusAlert> candidateApplicationStatusAlertsDailyDigest;
                 var candidateHasApplicationStatusAlerts = candidatesApplicationStatusAlerts.TryGetValue(candidateId, out candidateApplicationStatusAlertsDailyDigest);
 
-                //todo: 1.8: ensure check user status as well as prefs as may not be active (e.g. dormant/inactive/etc.)
-                if (candidate.CommunicationPreferences.AllowEmail || candidate.CommunicationPreferences.AllowMobile)
+                if (ShouldCommunicateWithCandidate(candidate))
                 {
-                    var communicationMessage = CommunicationRequestFactory.GetCommunicationMessage(candidate, candidateExpiringDraftsDailyDigest, candidateApplicationStatusAlertsDailyDigest);
-                    _messageBus.PublishMessage(communicationMessage);
+                        var communicationRequest = CommunicationRequestFactory.GetDailyDigestCommunicationRequest(candidate, candidateExpiringDraftsDailyDigest, candidateApplicationStatusAlertsDailyDigest);
 
-                    if (candidateHasExpiringDrafts)
-                    {
-                        // Update candidates expiring drafts to sent
-                        candidateExpiringDraftsDailyDigest.ToList().ForEach(dd =>
-                        {
-                            dd.BatchId = batchId;
-                            _expiringDraftRepository.Save(dd);
-                        });
-                    }
+                        _messageBus.PublishMessage(communicationRequest);
 
-                    if (candidateHasApplicationStatusAlerts)
-                    {
-                        // Update candidates application status alerts to sent
-                        candidateApplicationStatusAlertsDailyDigest.ToList().ForEach(dd =>
+                        if (candidateHasExpiringDrafts)
                         {
-                            dd.BatchId = batchId;
-                            _applicationStatusAlertRepository.Save(dd);
-                        });
-                    }
+                            // Update candidates expiring drafts to sent
+                            candidateExpiringDraftsDailyDigest.ToList().ForEach(dd =>
+                            {
+                                dd.BatchId = batchId;
+                                _expiringDraftRepository.Save(dd);
+                            });
+                        }
+
+                        if (candidateHasApplicationStatusAlerts)
+                        {
+                            // Update candidates application status alerts to sent
+                            candidateApplicationStatusAlertsDailyDigest.ToList().ForEach(dd =>
+                            {
+                                dd.BatchId = batchId;
+                                _applicationStatusAlertRepository.Save(dd);
+                            });
+                        }
                 }
                 else
                 {
@@ -76,6 +85,7 @@
                         // Delete candidates expiring drafts
                         candidateExpiringDraftsDailyDigest.ToList().ForEach(_expiringDraftRepository.Delete);
                     }
+
                     if (candidateHasApplicationStatusAlerts)
                     {
                         // Delete candidates application status alerts
@@ -83,6 +93,53 @@
                     }
                 }
             }
+        }
+
+        public void SendSavedSearchAlerts(Guid batchId)
+        {
+            var candidatesSavedSearchAlerts = _savedSearchAlertRepository.GetCandidatesSavedSearchAlerts();
+            var candidateIds = candidatesSavedSearchAlerts.Keys;
+
+            foreach (var candidateId in candidateIds)
+            {
+                var candidate = _candidateReadRepository.Get(candidateId);
+
+                List<SavedSearchAlert> candidateSavedSearchAlerts;
+                var candidateHasSavedSearchAlerts = candidatesSavedSearchAlerts.TryGetValue(candidateId, out candidateSavedSearchAlerts);
+
+                if (ShouldCommunicateWithCandidate(candidate))
+                {
+                    if (candidateHasSavedSearchAlerts)
+                    {
+                        var communicationRequest = CommunicationRequestFactory.GetSavedSearchAlertCommunicationRequest(candidate, candidateSavedSearchAlerts);
+
+                        _messageBus.PublishMessage(communicationRequest);
+
+                        // Update candidates saved search alerts to sent
+                        candidateSavedSearchAlerts.ToList().ForEach(dd =>
+                        {
+                            dd.BatchId = batchId;
+                            _savedSearchAlertRepository.Save(dd);
+                        });
+                    }
+                }
+                else
+                {
+                    if (candidateHasSavedSearchAlerts)
+                    {
+                        // Delete candidates saved search status alerts
+                        candidateSavedSearchAlerts.ToList().ForEach(_savedSearchAlertRepository.Delete);
+                    }
+                }
+            }
+        }
+
+        private bool ShouldCommunicateWithCandidate(Candidate candidate)
+        {
+            var user = _userReadRepository.Get(candidate.EntityId);
+
+            return (candidate.CommunicationPreferences.AllowEmail || candidate.CommunicationPreferences.AllowMobile) &&
+                (user.Status != UserStatuses.Dormant && user.Status != UserStatuses.Inactive);
         }
     }
 }

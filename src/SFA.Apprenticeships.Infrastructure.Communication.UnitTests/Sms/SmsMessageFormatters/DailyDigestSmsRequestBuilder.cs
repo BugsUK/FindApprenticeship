@@ -33,7 +33,7 @@
         {
             var candidateId = Guid.NewGuid();
             var candidate = new CandidateBuilder(candidateId).Build();
-            var communicationRequest = CommunicationRequestFactory.GetCommunicationMessage(candidate, _expiringDrafts, _applicationStatusAlerts);
+            var communicationRequest = CommunicationRequestFactory.GetDailyDigestCommunicationRequest(candidate, _expiringDrafts, _applicationStatusAlerts);
             var smsRequest = new SmsRequestBuilder().WithMessageType(MessageTypes.DailyDigest).WithTokens(communicationRequest.Tokens).Build();
             return smsRequest;
         } 

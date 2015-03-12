@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Communication
 {
     using System;
+    using System.Collections.Generic;
     using Application.Interfaces.Logging;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Configuration;
@@ -17,6 +18,21 @@
         {
             _mapper = mapper;
             _logger = logger;
+        }
+
+        public void Save(SavedSearchAlert savedSearchAlert)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Delete(SavedSearchAlert savedSearchAlert)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<Guid, List<SavedSearchAlert>> GetCandidatesSavedSearchAlerts()
+        {
+            throw new NotImplementedException();
         }
     }
 }

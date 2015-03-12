@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Communications
 {
     using System.Collections.Generic;
-    using System.Globalization;
     using System.Linq;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
@@ -10,17 +9,12 @@
 
     public class CommunicationRequestFactory
     {
-        public static CommunicationRequest GetCommunicationMessage(Candidate candidate, List<ExpiringApprenticeshipApplicationDraft> candidateExpiringDraftsDailyDigest, List<ApplicationStatusAlert> candidateApplicationStatusAlertsDailyDigest)
+        public static CommunicationRequest GetDailyDigestCommunicationRequest(
+            Candidate candidate,
+            List<ExpiringApprenticeshipApplicationDraft> candidateExpiringDraftsDailyDigest,
+            List<ApplicationStatusAlert> candidateApplicationStatusAlertsDailyDigest)
         {
-            var communicationMessage = new CommunicationRequest
-            {
-                EntityId = candidate.EntityId,
-                MessageType = MessageTypes.DailyDigest
-            };
-
-            var candidateDailyDigestCount = candidateExpiringDraftsDailyDigest == null ? 0 : candidateExpiringDraftsDailyDigest.Count();
-
-            var commTokens = new List<CommunicationToken>
+            var communicationTokens = new List<CommunicationToken>
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, candidate.RegistrationDetails.EmailAddress),
@@ -28,14 +22,43 @@
             };
 
             var draftsJson = candidateExpiringDraftsDailyDigest == null ? string.Empty : JsonConvert.SerializeObject(candidateExpiringDraftsDailyDigest.OrderBy(d => d.ClosingDate));
-            commTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, draftsJson));
+
+            communicationTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, draftsJson));
 
             var alertsJson = candidateApplicationStatusAlertsDailyDigest == null ? string.Empty : JsonConvert.SerializeObject(candidateApplicationStatusAlertsDailyDigest.OrderBy(d => d.DateUpdated));
-            commTokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, alertsJson));
 
-            communicationMessage.Tokens = commTokens;
+            communicationTokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, alertsJson));
 
-            return communicationMessage;
-        } 
+            return new CommunicationRequest
+            {
+                EntityId = candidate.EntityId,
+                MessageType = MessageTypes.DailyDigest,
+                Tokens = communicationTokens
+            };
+        }
+
+        public static CommunicationRequest GetSavedSearchAlertCommunicationRequest(
+            Candidate candidate,
+            List<SavedSearchAlert> candidateSavedSearchAlerts)
+        {
+            var communicationTokens = new List<CommunicationToken>
+            {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
+                new CommunicationToken(CommunicationTokens.RecipientEmailAddress, candidate.RegistrationDetails.EmailAddress),
+                new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber),
+            };
+
+            // TODO: AG: ordering of saved search alerts.
+            var savedSearchAlertsJson = candidateSavedSearchAlerts == null ? string.Empty : JsonConvert.SerializeObject(candidateSavedSearchAlerts);
+
+            communicationTokens.Add(new CommunicationToken(CommunicationTokens.SavedSearchAlerts, savedSearchAlertsJson));
+
+            return new CommunicationRequest
+            {
+                EntityId = candidate.EntityId,
+                MessageType = MessageTypes.SavedSearchAlert,
+                Tokens = communicationTokens
+            };
+        }
     }
 }

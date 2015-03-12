@@ -83,7 +83,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateSavedSearchAlertTokens("http://www.example.com"),
+                Tokens = TokenGenerator.CreateSavedSearchAlertTokens(5),
                 MessageType = MessageTypes.SavedSearchAlert
             };
 

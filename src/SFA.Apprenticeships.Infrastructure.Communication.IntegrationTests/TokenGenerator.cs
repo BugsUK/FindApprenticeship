@@ -116,12 +116,22 @@
             };
         }
 
-        public static IEnumerable<CommunicationToken> CreateSavedSearchAlertTokens(string url)
+        public static IEnumerable<CommunicationToken> CreateSavedSearchAlertTokens(int noOfAlerts)
         {
-            return new[]
+            var tokens = new List<CommunicationToken>
             {
-                    new CommunicationToken(CommunicationTokens.SavedSearchAlertUrl, url)
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName")
             };
-        }
+
+            var savedSearchAlerts = new Fixture().Build<SavedSearchAlert>()
+                .CreateMany(noOfAlerts)
+                .ToList();
+
+            var savedSearchAlertsJson = JsonConvert.SerializeObject(savedSearchAlerts);
+
+            tokens.Add(new CommunicationToken(CommunicationTokens.SavedSearchAlerts, savedSearchAlertsJson));
+
+            return tokens;
+       }
     }
 }
