@@ -19,7 +19,7 @@
             var viewModel = new EmployerEnquiryViewModelBuilder().Build();
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
-            serviceMock.Setup(cs => cs.SubmitEnquiry(It.IsAny<EmployerEnquiry>())).Throws(new Exception());
+            serviceMock.Setup(cs => cs.SendMessageToHelpdesk(It.IsAny<EmployerEnquiry>())).Throws(new Exception());
             var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
 
             //Act
@@ -62,7 +62,7 @@
             
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
-            serviceMock.Setup(cs => cs.SubmitEnquiry(It.IsAny<EmployerEnquiry>()));
+            serviceMock.Setup(cs => cs.SendMessageToHelpdesk(It.IsAny<EmployerEnquiry>()));
             var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
 
             //Act

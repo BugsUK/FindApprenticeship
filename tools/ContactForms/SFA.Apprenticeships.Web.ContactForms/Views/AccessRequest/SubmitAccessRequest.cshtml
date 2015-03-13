@@ -1,0 +1,177 @@
+﻿@using MvcCheckBoxList.Model
+@using SFA.Apprenticeships.Web.ContactForms.Framework
+@model SFA.Apprenticeships.Web.ContactForms.ViewModels.AccessRequestViewModel
+
+
+@{
+    ViewBag.Title = "Access request form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <h1 class="heading-xlarge">Access request form</h1>
+    </div>
+</div>
+
+
+<p class="text">
+    Please complete the form below if you wish to access Apprenticeship vacancies in order to track vacancies and/or use the web services now available.
+</p>
+<p><b>Before completing the form:</b></p>
+<p> <a href="https://www.gov.uk/government/collections/apprenticeship-vacancies">View more information for on viewing/tracking vacancies and using the web services</a> </p>
+<p>Please note that the 4th section (Your system details) is only required if you wish to use the web services interface.</p>
+
+<p> If you only wish to access the system to view and track vacancies, then first 3 sections & then select 'Submit Request' at the bottom of the form.</p>
+
+
+@using (Html.BeginForm("SubmitAccessRequest", "AccessRequest", FormMethod.Post))
+{
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <fieldset>
+        <legend class="heading-large">Your details</legend>
+
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.UserType)
+            @Html.DropDownListFor(m => m.UserType, Model.UserTypeList)
+            @Html.ValidationMessageFor(model => model.UserType)
+        </div>
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.Title)
+            @Html.DropDownListFor(m => m.Title, Model.TitleList)
+            @Html.ValidationMessageFor(model => model.Title)
+        </div>
+        @Html.FormTextFor(
+            m => m.Firstname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.Lastname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.Position,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.WorkPhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" })
+
+        @Html.FormTextFor(
+            m => m.MobileNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" })
+
+        @Html.FormTextFor(
+            m => m.Email,
+            controlHtmlAttributes: new { @class = "form-control", type = "email" })
+
+        @Html.FormTextFor(
+            m => m.ConfirmEmail,
+             controlHtmlAttributes: new { @class = "form-control", type = "email", autocorrect = "off" })
+
+        <legend class="heading-large">Company details</legend>
+
+        @Html.FormTextFor(
+            m => m.Companyname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.EditorFor(a => a.Address)
+
+        <legend class="heading-large">Advertising details</legend>
+
+        <p>
+            If you are currently advertising on Apprenticeship vacancies you may already be registered on the system and
+            able to view your vacancies and relevant information, but may not be aware of this.
+        </p>
+        <p>
+            Please indicate below if you have vacancies on Apprenticeship vacancies, as this will help us provide the
+            right support to ensure you can view and track your vacancies.
+        </p>
+        <div class="form-group inline clearfix">
+            <label for="HasVacanciesAdvertised-yes" class="block-label">
+                @Html.RadioButtonFor(m => m.HasVacanciesAdvertised, false, new
+                   {
+                       id = "HasVacanciesAdvertised-yes",
+                       aria_expanded = "false",
+                       aria_labelledby = "HasVacanciesAdvertised"
+                   })
+                Yes
+
+            </label>
+            <label for="HasVacanciesAdvertised-no" class="block-label">
+                @Html.RadioButtonFor(m => m.HasVacanciesAdvertised, false, new
+                    {
+                        id = "HasVacanciesAdvertised-no",
+                        aria_labelledby = "HasVacanciesAdvertised"
+                    })
+                No
+            </label>
+        </div>
+
+
+        <legend class="heading-large">Your system details</legend>
+        <p class="text">
+            If you wish to utilise the range of web services available, please complete the fields below.
+        </p>
+
+        <p>
+            Please note that your system/website will need to be registered in order for the transmission of information from
+            Apprenticeship vacancies to your system/website to be recognised and permitted.
+        </p>
+        <p>
+            More technical information regarding the web services can be found in our
+            <a rel="external" href="http://nas.apprenticeships.org.uk/~/media/CDCAA67106724CE1AE4A8822D8F1903C.ashx">Service Interface Guide (PDF)</a>
+        </p>
+        <p>
+            For further enquiries regarding the web services contact the NAS Helpdesk by
+            emailing <a href="mailto:nationalhelpdesk@apprenticeships.gov.uk">nationalhelpdesk@apprenticeships.gov.uk</a>  or calling <b> 024 76 82 6482</b>.
+        </p>
+
+        @Html.FormTextFor(
+            m => m.Contactname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.AdditionalMobileNumber,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.AdditionalEmail,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        @Html.FormTextFor(
+            m => m.Systemname,
+            controlHtmlAttributes: new { @class = "form-control" })
+
+        <div class="form-group">
+            @Html.FormLabelFor(m => m.ServiceTypes)
+            @Html.CheckBoxListFor(x => x.ServiceTypes.PostedServiceIds,     // checkbox list name, 'PostedServices.ServiceIds' in this case
+                x => x.ServiceTypes.AvailableServices,  // List<AccessRequestServiceTypes>()
+                x => x.Id,            // AccessRequestServiceTypes.Id
+                x => x.Description,   // Service.Description
+        //x => (Model.ServiceTypes.PostedServiceIds != null && Model.ServiceTypes.PostedServiceIds.Contains(x.Id)),
+                x => x.ServiceTypes.SelectedServices,
+                Position.Vertical)
+            @Html.ValidationMessageFor(model => model.ServiceTypes)
+        </div>
+
+        <div class="hidden"><strong>@Html.Honeypot("UserName")</strong></div>
+    </fieldset>
+    <br />
+    <div class="form-group">
+        <p>
+            <button class="button" id="submit-query-button" type="submit" name="EmployerEnquiryAction:SubmitEnquiry">Submit Request</button>
+        </p>
+    </div>
+}
+@section scripts
+{
+    <script>
+        $(function () {
+
+            $("#find-addresses").addressLookup({
+                url: '@Url.Action("Addresses", "Location")',
+                selectlist: '#address-select'
+            });
+        });
+    </script>
+}

@@ -75,4 +75,16 @@
     <item id="Word of mouth" value="Word of mouth" />
     <item id="Other" value="Other" />
   </data>
+  <data key="AccessRequestServiceTypes">
+    <item id="Summary Vacancy Feed" value="Summary Vacancy Feed" />
+    <item id="Full vacancy detail feed" value="Full vacancy detail feed" />
+    <item id="Reference data file" value="Reference data file" />
+    <item id="Bulk vacancy upload" value="Bulk vacancy upload" />
+    <item id="Application tracking" value="Application tracking" />
+  </data>
+<data key="AccessRequestAreaTypes">
+    <item id="" value="Please select" />
+    <item id="Employer" value="Employer" />
+    <item id="Provider/Stakeholder" value="Provider/Stakeholder" />
+  </data>
 </referenceData>

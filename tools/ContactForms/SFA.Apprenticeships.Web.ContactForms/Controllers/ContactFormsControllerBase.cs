@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.ContactForms.Controllers
 {
     using System.Web.Mvc;
-    using ContactForms.Constants;
+    using Constants;
 
-    public class EmployerControllerBase : Controller
+    public class ContactFormsControllerBase : Controller
     {
         protected void SetPageMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
         {

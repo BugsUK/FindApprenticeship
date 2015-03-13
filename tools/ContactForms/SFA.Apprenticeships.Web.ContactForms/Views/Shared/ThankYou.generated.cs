@@ -30,18 +30,18 @@ namespace ASP
     using SFA.Apprenticeships.Web.ContactForms;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/EmployerEnquiry/ThankYou.cshtml")]
-    public partial class _Views_EmployerEnquiry_ThankYou_cshtml : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/ThankYou.cshtml")]
+    public partial class _Views_Shared_ThankYou_cshtml : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public _Views_EmployerEnquiry_ThankYou_cshtml()
+        public _Views_Shared_ThankYou_cshtml()
         {
         }
         public override void Execute()
         {
             
-            #line 1 "..\..\Views\EmployerEnquiry\ThankYou.cshtml"
+            #line 1 "..\..\Views\Shared\ThankYou.cshtml"
   
-    ViewBag.Title = "Employer - Thank You";
+    ViewBag.Title = ViewBag.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 
             

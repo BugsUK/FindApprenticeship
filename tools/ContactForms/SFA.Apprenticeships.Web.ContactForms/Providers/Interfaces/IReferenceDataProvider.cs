@@ -3,8 +3,8 @@
     using Domain.Enums;
     using ViewModels;
 
-    public interface IEmployerEnquiryProvider
+    public interface IReferenceDataProvider
     {
-        SubmitQueryStatus SubmitEnquiry(EmployerEnquiryViewModel message);
+        ReferenceDataListViewModel GetReferenceData(ReferenceDataTypes type);
     }
 }

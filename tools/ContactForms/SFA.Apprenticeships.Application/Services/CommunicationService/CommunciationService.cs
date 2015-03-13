@@ -15,7 +15,7 @@
             _emailDispatcher = emailDispatcher;
         }
 
-        public void SubmitEnquiry(EmployerEnquiry enquiryData)
+        public void SendMessageToHelpdesk(EmployerEnquiry enquiryData)
         {
             string toEmailAddress = BaseAppSettingValues.ToEmailAddress;
             string fromEmailAddress = enquiryData.Email;

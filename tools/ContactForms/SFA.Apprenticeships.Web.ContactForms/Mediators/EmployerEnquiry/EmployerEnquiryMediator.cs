@@ -11,22 +11,18 @@
 
     public class EmployerEnquiryMediator : MediatorBase, IEmployerEnquiryMediator
     {
-        private IEmployerEnquiryProvider _employerEnquiryProvider;
-        private EmployerEnquiryViewModelServerValidators _validators;
-
+        private readonly IEmployerEnquiryProvider _employerEnquiryProvider;
+        private readonly EmployerEnquiryViewModelServerValidator _validator;
+        private readonly IReferenceDataMediator _referenceDataMediator;
         public EmployerEnquiryMediator(IEmployerEnquiryProvider employerEnquiryProvider, 
-                                        EmployerEnquiryViewModelServerValidators validators)
+                                        EmployerEnquiryViewModelServerValidator validator, 
+                                    IReferenceDataMediator referenceDataMediator)
         {
             _employerEnquiryProvider = employerEnquiryProvider;
-            _validators = validators;
+            _validator = validator;
+            _referenceDataMediator = referenceDataMediator;
         }
-
-        public MediatorResponse<ReferenceDataListViewModel> GetReferenceData(ReferenceDataTypes type)
-        {
-            var result = _employerEnquiryProvider.GetReferenceData(type);
-            return GetMediatorResponse(EmployerEnquiryMediatorCodes.ReferenceData.Success, result);
-        }
-
+        
         public MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry()
         {
             var model = new EmployerEnquiryViewModel
@@ -43,22 +39,18 @@
 
         public MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry(EmployerEnquiryViewModel viewModel)
         {
-            var validationResult = _validators.Validate(viewModel);
+            var validationResult = _validator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {
+                viewModel = PopulateStaticData(viewModel);
                 return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.ValidationError, viewModel, validationResult);
             }
 
             //todo: add other cases..
             SubmitQueryStatus resultStatus = _employerEnquiryProvider.SubmitEnquiry(viewModel);
             //populate reference data
-            viewModel.EmployeesCountList = GetEmployeeCountTypes();
-            viewModel.WorkSectorList = GetWorkSectorTypes();
-            viewModel.PreviousExperienceTypeList = GetPreviousExperienceTypes();
-            viewModel.EnquirySourceList = GetEnquirySourceTypes();
-            viewModel.EmployeesCountList = GetEmployeeCountTypes();
-            viewModel.TitleList = GetTitleTypes();
+            viewModel = PopulateStaticData(viewModel);
 
             switch (resultStatus)
             {
@@ -69,35 +61,48 @@
             }
         }
 
+        private EmployerEnquiryViewModel PopulateStaticData(EmployerEnquiryViewModel viewModel)
+        {
+            viewModel.EmployeesCountList = GetEmployeeCountTypes();
+            viewModel.WorkSectorList = GetWorkSectorTypes();
+            viewModel.PreviousExperienceTypeList = GetPreviousExperienceTypes();
+            viewModel.EnquirySourceList = GetEnquirySourceTypes();
+            viewModel.EmployeesCountList = GetEmployeeCountTypes();
+            viewModel.TitleList = GetTitleTypes();
+            return viewModel;
+        }
+
+        #region Helper Methods
 
         private SelectList GetTitleTypes()
         {
-            var employeeCountKeyValuePair = GetReferenceData(ReferenceDataTypes.Titles).ViewModel.ReferenceData;
+            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.Titles).ViewModel.ReferenceData;
             return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         }
 
         private SelectList GetEmployeeCountTypes()
         {
-            var employeeCountKeyValuePair = GetReferenceData(ReferenceDataTypes.EmployeeCountTypes).ViewModel.ReferenceData;
+            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.EmployeeCountTypes).ViewModel.ReferenceData;
             return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         }
 
         private SelectList GetWorkSectorTypes()
         {
-            var employeeCountKeyValuePair = GetReferenceData(ReferenceDataTypes.WorkSectorTypes).ViewModel.ReferenceData;
+            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.WorkSectorTypes).ViewModel.ReferenceData;
             return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         }
 
         private SelectList GetPreviousExperienceTypes()
         {
-            var employeeCountKeyValuePair = GetReferenceData(ReferenceDataTypes.PreviousExperienceTypes).ViewModel.ReferenceData;
+            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.PreviousExperienceTypes).ViewModel.ReferenceData;
             return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         }
 
         private SelectList GetEnquirySourceTypes()
         {
-            var employeeCountKeyValuePair = GetReferenceData(ReferenceDataTypes.EnquirySourceTypes).ViewModel.ReferenceData;
+            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.EnquirySourceTypes).ViewModel.ReferenceData;
             return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
-        }
+        } 
+        #endregion
     }
 }

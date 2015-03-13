@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
-    using ContactForms.Constants;
+    using Constants;
     using FluentValidation.Attributes;
     using Validators;
 

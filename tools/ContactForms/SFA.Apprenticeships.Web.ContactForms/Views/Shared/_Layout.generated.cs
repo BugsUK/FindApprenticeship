@@ -188,8 +188,17 @@ Write(Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", 
             
             #line default
             #line hidden
-WriteLiteral("\r\n    ");
+WriteLiteral("\r\n");
 
+WriteLiteral("    ");
+
+            
+            #line 28 "..\..\Views\Shared\_Layout.cshtml"
+Write(Html.Partial("_Scripts"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n</head>\r\n<body>\r\n\r\n");
 
             
@@ -287,14 +296,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2745), Tuple.Create("\"", 2820)
+WriteAttribute("src", Tuple.Create(" src=\"", 2741), Tuple.Create("\"", 2816)
             
             #line 55 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 2751), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 2747), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 2751), false)
+, 2747), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -310,7 +319,11 @@ WriteLiteral(" class=\"global-header__title\"");
 
 WriteLiteral("><a");
 
-WriteLiteral(" href=\"#\"");
+WriteLiteral(" rel=\"external\"");
+
+WriteLiteral("  target=\"_blank\"");
+
+WriteLiteral(" href=\"https://www.gov.uk/apply-apprenticeship\"");
 
 WriteLiteral(">Apprenticeships</a></div>\r\n            </div>\r\n        </div>\r\n    </header>\r\n  " +
 "  <div");
@@ -355,7 +368,7 @@ WriteLiteral(">\r\n");
             
             #line 71 "..\..\Views\Shared\_Layout.cshtml"
               
-                var controller = ViewContext.Controller as EmployerControllerBase;
+                var controller = ViewContext.Controller as ContactFormsControllerBase;
 
                 if (controller != null && ViewBag.UserMessageLevel != null)
                 {
@@ -578,14 +591,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6884), Tuple.Create("\"", 6952)
+WriteAttribute("src", Tuple.Create(" src=\"", 6954), Tuple.Create("\"", 7022)
             
             #line 130 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 6890), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 6960), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 6890), false)
+, 6960), false)
 );
 
 WriteLiteral(" width=\"125\"");

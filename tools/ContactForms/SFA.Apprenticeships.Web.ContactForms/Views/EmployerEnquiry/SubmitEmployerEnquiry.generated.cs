@@ -47,7 +47,7 @@ namespace ASP
             
             #line 4 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
   
-    ViewBag.Title = "Employer - Enquiry form";
+    ViewBag.Title = "Employer Enquiry form";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
             

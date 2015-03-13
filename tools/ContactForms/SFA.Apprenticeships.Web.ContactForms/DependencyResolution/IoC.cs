@@ -28,7 +28,7 @@ namespace SFA.Apprenticeships.Web.ContactForms.DependencyResolution
             return new Container(delegate(ConfigurationExpression x)
             {
                 //Web Application Layer
-                x.AddRegistry<EmployerWebRegistry>();
+                x.AddRegistry<ContactFormsWebRegistry>();
             });
         }
     }

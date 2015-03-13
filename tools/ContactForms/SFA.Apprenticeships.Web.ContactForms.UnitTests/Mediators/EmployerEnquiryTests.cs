@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Mediators
 {
     using Builders;
-    using ContactForms.Constants;
-    using ContactForms.Constants.Pages;
+    using Constants;
+    using Constants.Pages;
     using ContactForms.Mediators.EmployerEnquiry;
     using ContactForms.Providers.Interfaces;
-    using ContactForms.ViewModels;
-    using Domain.Enums;
+    using ViewModels;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -47,7 +46,6 @@
 
             var employerProviderMock = new Mock<IEmployerEnquiryProvider>();
             employerProviderMock.Setup(x => x.SubmitEnquiry(It.IsAny<EmployerEnquiryViewModel>())).Returns(submitQueryStatus);
-            employerProviderMock.Setup(x => x.GetReferenceData(It.IsAny<ReferenceDataTypes>())).Returns(new ReferenceDataListViewModel());
 
             var mediator = new EmployerEnquiryMediatorBuilder().With(employerProviderMock).Build();
 

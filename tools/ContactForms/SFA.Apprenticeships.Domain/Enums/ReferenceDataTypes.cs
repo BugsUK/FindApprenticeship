@@ -6,6 +6,8 @@
         EmployeeCountTypes,
         WorkSectorTypes,
         PreviousExperienceTypes,
-        EnquirySourceTypes
+        EnquirySourceTypes,
+        AccessRequestServiceTypes,
+        AccessRequestAreaTypes
     }
 }

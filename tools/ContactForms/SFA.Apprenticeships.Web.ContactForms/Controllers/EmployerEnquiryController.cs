@@ -2,8 +2,6 @@
 {
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using ContactForms.Constants;
-    using ContactForms.Constants.Pages;
     using FluentValidation.Mvc;
     using Framework.Attributes;
     using Mediators;
@@ -11,7 +9,7 @@
     using Mediators.Interfaces;
     using ViewModels;
 
-    public class EmployerEnquiryController : EmployerControllerBase
+    public class EmployerEnquiryController : ContactFormsControllerBase
     {
         private IEmployerEnquiryMediator _employerEnquiryMediator;
 
@@ -45,10 +43,11 @@
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(model);
                     case EmployerEnquiryMediatorCodes.SubmitEnquiry.Error:
-                        SetPageMessage(EmployerEnquiryPageMessages.ErrorWhileQuerySubmission, UserMessageLevel.Error);
+                        SetPageMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case EmployerEnquiryMediatorCodes.SubmitEnquiry.Success:
-                        SetPageMessage(EmployerEnquiryPageMessages.QueryHasBeenSubmittedSuccessfully);
+                        SetPageMessage(response.Message.Text, response.Message.Level);
+                        ViewBag.Title = "Employer enquiry-Thank You";
                         return View("ThankYou");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
@@ -82,10 +81,11 @@
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View(model);
                     case EmployerEnquiryMediatorCodes.SubmitEnquiry.Error:
-                        SetPageMessage(EmployerEnquiryPageMessages.ErrorWhileQuerySubmission, UserMessageLevel.Error);
+                        SetPageMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case EmployerEnquiryMediatorCodes.SubmitEnquiry.Success:
-                        SetPageMessage(EmployerEnquiryPageMessages.QueryHasBeenSubmittedSuccessfully);
+                        SetPageMessage(response.Message.Text, response.Message.Level);
+                        ViewBag.Title = "Gla Employer enquiry-Thank You";
                         return View("ThankYou");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);

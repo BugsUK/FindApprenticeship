@@ -5,8 +5,6 @@
 
     public interface IEmployerEnquiryMediator
     {
-        MediatorResponse<ReferenceDataListViewModel> GetReferenceData(ReferenceDataTypes type);
-
         MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry(EmployerEnquiryViewModel message);
 
         MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry();

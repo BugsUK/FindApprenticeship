@@ -11,8 +11,8 @@
 
     public class LocationProvider : ILocationProvider
     {
-        private ILocationSearchService _locationSearchService;
-        private IDomainToViewModelMapper<Location, LocationViewModel> _locationDomainToViewModelMapper;
+        private readonly ILocationSearchService _locationSearchService;
+        private readonly IDomainToViewModelMapper<Location, LocationViewModel> _locationDomainToViewModelMapper;
 
         public LocationProvider(ILocationSearchService locationSearchService, IDomainToViewModelMapper<Location, LocationViewModel> locationDomainToViewModelMapper)
         {

@@ -25,7 +25,7 @@
     <!--[if gte IE 9]><!-->@Styles.Render(Url.CdnContent("css/fonts.css", "~/Content/_assets"))<!--<![endif]-->
     <link rel="shortcut icon" href="@Url.CdnContent("img/favicon.ico", "~/Content/_assets")" type="image/x-icon">
     @Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", "~/Content/_assets"))
-    @*@Html.Partial("_Scripts")*@
+    @Html.Partial("_Scripts")
 </head>
 <body>
 
@@ -57,7 +57,7 @@
                 </a>
             </div>
             <div class="global-header__nav">
-                <div class="global-header__title"><a href="#">Apprenticeships</a></div>
+                <div class="global-header__title"><a rel="external"  target="_blank" href="https://www.gov.uk/apply-apprenticeship">Apprenticeships</a></div>
             </div>
         </div>
     </header>
@@ -69,7 +69,7 @@
         </div>
         <main role="main" id="main">
             @{
-                var controller = ViewContext.Controller as EmployerControllerBase;
+                var controller = ViewContext.Controller as ContactFormsControllerBase;
 
                 if (controller != null && ViewBag.UserMessageLevel != null)
                 {

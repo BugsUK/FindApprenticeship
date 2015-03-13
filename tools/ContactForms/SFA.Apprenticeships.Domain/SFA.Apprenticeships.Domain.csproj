@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\AccessRequest.cs" />
     <Compile Include="Entities\Address.cs" />
     <Compile Include="Entities\EmailRequest.cs" />
     <Compile Include="Entities\EmployerEnquiry.cs" />

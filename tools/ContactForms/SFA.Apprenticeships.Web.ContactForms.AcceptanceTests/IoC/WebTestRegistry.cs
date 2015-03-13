@@ -14,7 +14,7 @@
         {
             Container = new Container(x =>
             {
-                x.AddRegistry<EmployerWebRegistry>();
+                x.AddRegistry<ContactFormsWebRegistry>();
             });
         }
     }

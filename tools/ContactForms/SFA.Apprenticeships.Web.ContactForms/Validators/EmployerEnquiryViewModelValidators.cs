@@ -4,9 +4,9 @@
     using FluentValidation;
     using ViewModels;
 
-    public class EmployerEnquiryViewModelServerValidators : AbstractValidator<EmployerEnquiryViewModel>
+    public class EmployerEnquiryViewModelServerValidator : AbstractValidator<EmployerEnquiryViewModel>
     {
-        public EmployerEnquiryViewModelServerValidators()
+        public EmployerEnquiryViewModelServerValidator()
         {
             this.AddCommonRules();
             this.AddServerRules();

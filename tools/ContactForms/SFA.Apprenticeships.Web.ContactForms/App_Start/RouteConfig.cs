@@ -26,10 +26,10 @@
                );
 
             routes.MapRoute(
-                name: EmployerRouteNames.ThankYou,
-                url: "employerenquiry-thankyou",
-                defaults: new { controller = "EmployerEnquiry", action = "ThankYou" }
-                );
+               name: EmployerRouteNames.AccessRequest,
+               url: "access-request",
+               defaults: new { controller = "AccessRequest", action = "SubmitAccessRequest" }
+               );
 
             routes.MapRoute(
                 name: "Default",

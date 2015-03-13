@@ -4,6 +4,7 @@
     {
         public const string SubmitEmployerEnquiry = "SubmitEmployerEnquiry";
         public const string GlaSubmitEmployerEnquiry = "GlaSubmitEmployerEnquiry";
+        public const string AccessRequest = "AccessRequest";
         public const string ThankYou = "ThankYou";
         public const string Helpdesk = "Helpdesk";
         public const string Maintenance = "Maintenance";

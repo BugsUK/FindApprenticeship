@@ -47,7 +47,7 @@ namespace ASP
             
             #line 4 "..\..\Views\EmployerEnquiry\GlaSubmitEmployerEnquiry.cshtml"
   
-    ViewBag.Title = "GLA Employer - Enquiry form";
+    ViewBag.Title = "GLA employer enquiry form";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
             
@@ -74,8 +74,14 @@ WriteLiteral(">\r\n    If you are a London business and interested in taking on 
 
 WriteLiteral(" class=\"text\"");
 
-WriteLiteral(@">
-    The data you enter in the form below is supplied directly to our partner, the National Apprenticeship Service who will contact you within 2 working days to provide you with information you need. Read NAS’ privacy policy.
+WriteLiteral(">\r\n    The data you enter in the form below is supplied directly to our partner, " +
+"the <a");
+
+WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(" href=\"https://www.gov.uk/further-education-skills/apprenticeships\"");
+
+WriteLiteral(@">National Apprenticeship Service </a> who will contact you within 2 working days to provide you with information you need.
 </p>
 
 <p>

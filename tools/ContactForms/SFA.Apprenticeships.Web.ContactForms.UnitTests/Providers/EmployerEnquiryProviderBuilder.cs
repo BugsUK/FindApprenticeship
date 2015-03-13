@@ -41,7 +41,8 @@
 
         public EmployerEnquiryProvider Build()
         {
-            return new EmployerEnquiryProvider(_communciationServiceMock.Object, _referenceDataMock.Object, _referenceDataDtoVMapper.Object, _employerEnquiryVtoDMapper.Object);
+            return new EmployerEnquiryProvider(_communciationServiceMock.Object, 
+                _employerEnquiryVtoDMapper.Object);
         }
     }
 }

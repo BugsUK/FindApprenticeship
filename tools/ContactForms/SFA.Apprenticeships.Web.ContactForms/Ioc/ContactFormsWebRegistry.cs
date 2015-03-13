@@ -13,17 +13,19 @@
     using Infrastructure.Logging;
     using Mappers;
     using Mappers.Interfaces;
+    using Mediators.AccessRequest;
     using Mediators.EmployerEnquiry;
     using Mediators.Interfaces;
     using Mediators.Location;
+    using Mediators.ReferenceData;
     using Providers;
     using Providers.Interfaces;
     using StructureMap.Configuration.DSL;
     using ViewModels;
 
-    public class EmployerWebRegistry : Registry
+    public class ContactFormsWebRegistry : Registry
     {
-        public EmployerWebRegistry()
+        public ContactFormsWebRegistry()
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
 
@@ -49,19 +51,26 @@
         private void RegisterProviders()
         {
             For<IEmployerEnquiryProvider>().Use<EmployerEnquiryProvider>();
+            For<IAccessRequestProvider>().Use<AccessRequestProvider>();
             For<ILocationProvider>().Use<LocationProvider>();
+            For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
         }
 
         private void RegisterMediators()
         {
             For<IEmployerEnquiryMediator>().Use<EmployerEnquiryMediator>();
+            For<IAccessRequestMediator>().Use<AccessRequestMediator>();
             For<ILocationMediator>().Use<LocationMediator>();
+            For<IReferenceDataMediator>().Use<ReferenceDataMediator>();
         }
 
         private void RegisterMappers()
         {
             For<IDomainToViewModelMapper<Address, AddressViewModel>>().Use<AddressMapper>();
             For<IViewModelToDomainMapper<AddressViewModel, Address>>().Use<AddressMapper>();
+
+            For<IDomainToViewModelMapper<AccessRequest, AccessRequestViewModel>>().Use<AccessRequestMapper>();
+            For<IViewModelToDomainMapper<AccessRequestViewModel, AccessRequest>>().Use<AccessRequestMapper>();
 
             For<IDomainToViewModelMapper<EmployerEnquiry, EmployerEnquiryViewModel>>().Use<EmployerEnquiryMapper>();
             For<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>>().Use<EmployerEnquiryMapper>();
