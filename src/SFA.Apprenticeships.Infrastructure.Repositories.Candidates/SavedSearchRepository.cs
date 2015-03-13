@@ -11,6 +11,7 @@
     using Entities;
     using Mongo.Common;
     using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
 
     public class SavedSearchRepository : GenericMongoClient<MongoSavedSearch>, ISavedSearchReadRepository, ISavedSearchWriteRepository
     {
@@ -50,6 +51,17 @@
             _logger.Debug("Found {0} saved searches for CandidateId={1}", entities.Count, candidateId);
 
             return entities;
+        }
+
+        public IEnumerable<Guid> GetCandidateIds()
+        {
+            _logger.Debug("Calling repository to get the ids for all candidates that have saved searches with alerts enabled");
+
+            var candidateIds = Collection.AsQueryable().Where(s => s.AlertsEnabled).Select(s => s.CandidateId).Distinct();
+
+            _logger.Debug("Called repository to get the ids for all candidates that have saved searches with alerts enabled");
+
+            return candidateIds;
         }
 
         public void Delete(Guid id)

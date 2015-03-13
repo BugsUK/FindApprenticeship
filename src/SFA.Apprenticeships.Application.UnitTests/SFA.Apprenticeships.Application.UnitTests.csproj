@@ -128,6 +128,9 @@
     <Compile Include="Services\Location\LocationSearchServiceTests.cs" />
     <Compile Include="UserAccount\SendAccountUnlockTests.cs" />
     <Compile Include="UserAccount\UnlockAccountStrategyTests.cs" />
+    <Compile Include="Vacancies\SavedSearchProcessorTests\SavedSearchProcessorBuilder.cs" />
+    <Compile Include="Vacancies\SavedSearchProcessorTests\ProcessCandidateSavedSearchesTests.cs" />
+    <Compile Include="Vacancies\SavedSearchProcessorTests\QueueCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\VacancySummaryProcessorTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -26,7 +26,7 @@
             savedSearchAlertRepository.Setup(x => x.GetCandidatesSavedSearchAlerts()).Returns(GetSavedSearchAlerts(2, 2));
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            var candidate = new CandidateBuilder(Guid.NewGuid()).AllowEmail(allowEmail).AllowMobile(allowMobile).Build();
+            var candidate = new CandidateBuilder(Guid.NewGuid()).AllowEmail(allowEmail).AllowMobile(allowMobile).VerifiedMobile(allowMobile).Build();
 
             candidateReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(candidate);
 

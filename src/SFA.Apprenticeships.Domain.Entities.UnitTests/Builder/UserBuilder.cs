@@ -13,19 +13,27 @@
             _userId = userId;
         }
 
+        public User Build()
+        {
+            var user = new User
+            {
+                EntityId = _userId,
+                Status = _userStatus
+            };
+
+            return user;
+        }
+
         public UserBuilder WithStatus(UserStatuses userStatus)
         {
             _userStatus = userStatus;
             return this;
         }
 
-        public User Build()
+        public UserBuilder Activated(bool activated)
         {
-            return new User
-            {
-                EntityId = _userId,
-                Status = _userStatus
-            };
+            _userStatus = activated ? UserStatuses.Active : UserStatuses.Inactive;
+            return this;
         }
     }
 }

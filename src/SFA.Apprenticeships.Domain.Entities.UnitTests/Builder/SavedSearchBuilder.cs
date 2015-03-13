@@ -13,6 +13,7 @@
         private string _category;
         private string[] _subCategories;
         private string _categoryFullName;
+        private bool _alertsEnabled = true;
 
         public SavedSearch Build()
         {
@@ -25,7 +26,8 @@
                 ApprenticeshipLevel = _apprenticeshipLevel,
                 Category = _category,
                 CategoryFullName = _categoryFullName,
-                SubCategories = _subCategories
+                SubCategories = _subCategories,
+                AlertsEnabled = _alertsEnabled
             };
 
             return savedSearch;
@@ -76,6 +78,12 @@
         public SavedSearchBuilder WithCategoryFullName(string categoryFullName)
         {
             _categoryFullName = categoryFullName;
+            return this;
+        }
+
+        public SavedSearchBuilder WithAlertsEnabled(bool alertsEnabled)
+        {
+            _alertsEnabled = alertsEnabled;
             return this;
         }
     }

@@ -6,6 +6,8 @@
 
     public interface ISavedSearchReadRepository : IReadRepository<SavedSearch> {
         IList<SavedSearch> GetForCandidate(Guid candidateId);
+
+        IEnumerable<Guid> GetCandidateIds();
     }
 
     public interface ISavedSearchWriteRepository : IWriteRepository<SavedSearch> {}

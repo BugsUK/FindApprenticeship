@@ -52,6 +52,11 @@
             }
         }
 
+        public static bool IsActive(this User user)
+        {
+            return user.Status == UserStatuses.Active || user.Status == UserStatuses.Locked;
+        }
+
         private static void ClearNonRelatedToLockStateUserStateAttributes(User user)
         {
             user.ActivationCode = null;

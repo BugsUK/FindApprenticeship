@@ -138,8 +138,7 @@
         {
             var user = _userReadRepository.Get(candidate.EntityId);
 
-            return (candidate.CommunicationPreferences.AllowEmail || candidate.CommunicationPreferences.AllowMobile) &&
-                (user.Status != UserStatuses.Dormant && user.Status != UserStatuses.Inactive);
+            return candidate.ShouldCommunicateWithCandidate() && user.IsActive();
         }
     }
 }

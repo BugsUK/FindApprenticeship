@@ -58,6 +58,7 @@
             var candidate = new CandidateBuilder(Guid.NewGuid())
                 .AllowEmail(allowEmail)
                 .AllowMobile(allowMobile)
+                .VerifiedMobile(allowMobile)
                 .Build();
 
             var user = new UserBuilder(candidate.EntityId)
