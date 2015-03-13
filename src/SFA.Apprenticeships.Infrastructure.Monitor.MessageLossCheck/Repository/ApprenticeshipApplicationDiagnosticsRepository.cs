@@ -36,7 +36,7 @@
 
             //Message queue back off strategy is to wait 30 seconds before initial retry then 5 minutes for each subsequent retry
             //6 Minutes provides enough time for three attempts
-            var outsideLikelyUpdateTime = DateTime.Now.AddMinutes(60);
+            var outsideLikelyUpdateTime = DateTime.Now.AddMinutes(-6);
 
             var applicationWithUnsetLegacyId = Collection.AsQueryable().Where(a => a.Status == ApplicationStatuses.Submitting && a.DateUpdated < outsideLikelyUpdateTime && a.LegacyApplicationId == 0);
 
