@@ -41,6 +41,7 @@
 
             var noSavedSearchesText = result.GetElementbyId("noSavedSearchesText");
             noSavedSearchesText.Should().NotBeNull();
+            noSavedSearchesText.Attributes.Any(a => a.Name == "style").Should().BeFalse();
             noSavedSearchesText.InnerText.Should().Contain("You currently don't have any active saved searches");
             var savedSearchesDiv = result.GetElementbyId("savedSearches");
             savedSearchesDiv.Should().BeNull();
@@ -71,7 +72,8 @@
             savedSearchesHeading.Should().NotBeNull();
 
             var noSavedSearchesText = result.GetElementbyId("noSavedSearchesText");
-            noSavedSearchesText.Should().BeNull();
+            noSavedSearchesText.Should().NotBeNull();
+            noSavedSearchesText.GetAttributeValue("style", string.Empty).Should().Be("display: none");
             var savedSearchesDiv = result.GetElementbyId("savedSearches");
             savedSearchesDiv.Should().NotBeNull();
 

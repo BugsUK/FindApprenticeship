@@ -82,14 +82,23 @@
             });
         }
 
-        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public async Task<ActionResult> DeleteSavedSearch(Guid id)
+        [ApplyWebTrends]
+        public async Task<ActionResult> DeleteSavedSearch(Guid id, bool isJavascript)
         {
             return await Task.Run<ActionResult>(() =>
             {
                 var response = _accountMediator.DeleteSavedSearch(id);
+
+                if (isJavascript)
+                {
+                    if (response.Code == AccountMediatorCodes.DeleteSavedSearch.Ok)
+                    {
+                        return new HttpStatusCodeResult(HttpStatusCode.OK);
+                    }
+                    return new HttpStatusCodeResult(HttpStatusCode.InternalServerError);
+                }
 
                 switch (response.Code)
                 {
