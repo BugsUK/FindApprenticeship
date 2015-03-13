@@ -183,6 +183,9 @@
     </Compile>
     <Compile Include="Applications\ApplicationStatusChangedConsumerAsync.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesConsumerAsync.cs" />
+    <Compile Include="Communications\Commands\CandidateCommunicationCommand.cs" />
+    <Compile Include="Communications\Commands\CommunicationCommand.cs" />
+    <Compile Include="Communications\Commands\HelpDeskCommunicationCommand.cs" />
     <Compile Include="Communications\CommunicationRequestConsumerAsync.cs" />
     <Compile Include="Candidates\CreateCandidateRequestConsumerAsync.cs" />
     <Compile Include="Communications\SmsRequestConsumerAsync.cs" />

@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communications.Commands
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Communications.Commands
 {
     using Application.Interfaces.Communications;
     using Domain.Interfaces.Messaging;
 
-    //todo: 1.8: move to async processor
     public class HelpDeskCommunicationCommand : CommunicationCommand
     {
         public HelpDeskCommunicationCommand(IMessageBus messageBus)

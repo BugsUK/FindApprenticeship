@@ -4,8 +4,8 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Communications;
+    using Commands;
     using EasyNetQ.AutoSubscribe;
-    using Infrastructure.Communications.Commands;
 
     public class CommunicationRequestConsumerAsync : IConsumeAsync<CommunicationRequest>
     {

@@ -6,7 +6,7 @@
     using Applications;
     using Candidates;
     using Communications;
-    using Infrastructure.Communications.Commands;
+    using Communications.Commands;
     using Microsoft.WindowsAzure;
     using StructureMap.Configuration.DSL;
     using Vacancies;

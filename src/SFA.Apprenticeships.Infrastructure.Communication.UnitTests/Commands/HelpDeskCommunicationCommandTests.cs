@@ -2,11 +2,11 @@
 {
     using System.Linq;
     using Application.Interfaces.Communications;
-    using Communications.Commands;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Processes.Communications.Commands;
 
     [TestFixture]
     public class HelpDeskCommunicationCommandTests

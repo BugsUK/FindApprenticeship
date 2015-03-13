@@ -3,7 +3,6 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Communications;
-    using Communications.Commands;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
@@ -12,6 +11,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Processes.Communications.Commands;
 
     [TestFixture]
     public class CandidateCommunicationCommandTests

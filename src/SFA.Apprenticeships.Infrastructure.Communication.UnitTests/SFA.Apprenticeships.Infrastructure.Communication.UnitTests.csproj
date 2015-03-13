@@ -179,6 +179,10 @@
       <Project>{D34D27D3-79A9-407E-86EF-AF3AC0EA024B}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
+      <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

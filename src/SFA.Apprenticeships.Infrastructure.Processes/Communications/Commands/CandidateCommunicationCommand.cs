@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communications.Commands
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Communications.Commands
 {
     using System;
     using Application.Interfaces.Communications;
@@ -6,7 +6,6 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
-    //todo: 1.8: move to async processor
     public class CandidateCommunicationCommand : CommunicationCommand
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
