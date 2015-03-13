@@ -30,27 +30,20 @@
 
         public void Run()
         {
-            try
+            var summaries = _vacancyIndexDataProvider.GetVacancySummaries(1);
+
+            var apprenticeshipSummaries = summaries as IList<ApprenticeshipSummary> ?? summaries.ApprenticeshipSummaries.ToList();
+            var traineeshipSummaries = summaries as IList<TraineeshipSummary> ?? summaries.TraineeshipSummaries;
+
+            var summary = apprenticeshipSummaries.ToList().FirstOrDefault();
+
+            if (summary != null)
             {
-                var summaries = _vacancyIndexDataProvider.GetVacancySummaries(1);
-
-                var apprenticeshipSummaries = summaries as IList<ApprenticeshipSummary> ?? summaries.ApprenticeshipSummaries;
-                var traineeshipSummaries = summaries as IList<TraineeshipSummary> ?? summaries.TraineeshipSummaries;
-
-                var summary = apprenticeshipSummaries.ToList().FirstOrDefault();
-
-                if (summary != null)
-                {
-                    var apprenticeshipDetail = _vacancyDataProvider.GetVacancyDetails(summary.Id);
-                }
-                else
-                {
-                    _logger.Error("Monitor get vacancy summary returned {0} records", apprenticeshipSummaries.Count() + traineeshipSummaries.Count());
-                }
+                _vacancyDataProvider.GetVacancyDetails(summary.Id);
             }
-            catch (Exception exception)
+            else
             {
-                _logger.Error("Error connecting to NAS Gateway vacancy index", exception);
+                _logger.Error("Monitor get vacancy summary returned {0} records", apprenticeshipSummaries.Count() + traineeshipSummaries.Count());
             }
         }
     }
