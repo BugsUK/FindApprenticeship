@@ -67,18 +67,6 @@ Scenario: Find traineeships and test paging
         | Field        | Rule     | Value |
         | NextPage     | Contains | 3 of  |
         | PreviousPage | Contains | 1 of  |
-	When I choose NextPage
-	And I am on the TraineeshipSearchResultPage page
-	Then I see
-        | Field        | Rule     | Value |
-        | NextPage     | Contains | 4 of  |
-        | PreviousPage | Contains | 2 of  |
-	When I choose PreviousPage
-	And I am on the TraineeshipSearchResultPage page
-	Then I see
-        | Field        | Rule     | Value |
-        | NextPage     | Contains | 3 of  |
-        | PreviousPage | Contains | 1 of  |
 	When I choose PreviousPage
 	And I am on the TraineeshipSearchResultPage page
 	And I wait to not see PreviousPage
