@@ -34,7 +34,7 @@
             //6 Minutes provides enough time for three attempts
             var outsideLikelyUpdateTime = DateTime.Now.AddMinutes(-6);
 
-            var candidatesWithUnsetLegacyId = Collection.AsQueryable().Where(c => ((c.DateUpdated == null && c.DateCreated < outsideLikelyUpdateTime) || c.DateUpdated < outsideLikelyUpdateTime) && c.LegacyCandidateId == 0);
+            var candidatesWithUnsetLegacyId = Collection.AsQueryable().Where(c => c.DateUpdated < outsideLikelyUpdateTime && c.LegacyCandidateId == 0);
             
             foreach (var mongoCandidate in candidatesWithUnsetLegacyId)
             {
