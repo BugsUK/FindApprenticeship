@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using RabbitMq.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
+    using Repositories.Users.IoC;
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -125,6 +126,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
                 x.AddRegistry<CommunicationsRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
+                x.AddRegistry<UserRepositoryRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();
