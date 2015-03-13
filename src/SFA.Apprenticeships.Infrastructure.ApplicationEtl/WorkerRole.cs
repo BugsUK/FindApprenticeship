@@ -2,7 +2,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
 {
     using System;
     using System.Net;
-    using System.Reflection;
     using System.ServiceModel;
     using System.Threading;
     using Application.Interfaces.Logging;
@@ -11,14 +10,11 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using Common.Configuration;
     using Common.IoC;
     using Consumers;
-    using EasyNetQ;
     using IoC;
     using LegacyWebServices.IoC;
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using Processes.Applications;
-    using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
@@ -29,7 +25,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
         private static ILogService _logger;
         private const string ProcessName = "Application Processor";
         private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
-        private StructureMap.IContainer _container;
+        private IContainer _container;
 
         public override void Run()
         {
@@ -69,21 +65,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             return base.OnStart();
         }
 
-        public override void OnStop()
-        {
-            // Stop consumers
-            _container.GetInstance<ApplicationStatusSummaryPageConsumerAsync>().Stop();
-            _container.GetInstance<ApplicationStatusSummaryConsumerAsync>().Stop();
-
-            // Kill the bus which will kill any subscriptions
-            _container.GetInstance<IBus>().Advanced.Dispose();
-
-            // Give it 5 seconds to finish processing any in flight subscriptions.
-            Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            base.OnStop();
-        }
-
         private void Initialise()
         {
             VersionLogging.SetVersion();
@@ -91,7 +72,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             try
             {
                 InitializeIoC();
-                InitialiseRabbitMQSubscribers();
             }
             catch (Exception ex)
             {
@@ -122,18 +102,6 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
             });
 
             _logger = _container.GetInstance<ILogService>();
-        }
-
-        private void InitialiseRabbitMQSubscribers()
-        {
-            var bootstrapper = _container.GetInstance<IBootstrapSubcribers>();
-
-            _logger.Debug("RabbitMQ initialising");
-
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(ApplicationStatusSummaryConsumerAsync)), "ApplicationEtl", _container);
-
-            _logger.Debug("RabbitMQ initialised");
-
             _applicationEtlControlQueueConsumer = _container.GetInstance<ApplicationEtlControlQueueConsumer>();
         }
     }

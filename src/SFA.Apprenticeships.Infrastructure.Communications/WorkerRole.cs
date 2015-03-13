@@ -7,11 +7,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Caching.Azure.IoC;
-    using Caching.Memory.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Consumers;
-    using EasyNetQ;
     using IoC;
     using LegacyWebServices.IoC;
     using Logging;
@@ -21,7 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
     using RabbitMq.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
-    using Repositories.Users.IoC;
+    using Repositories.Users.IoC;   
     using StructureMap;
 
     public class WorkerRole : RoleEntryPoint
@@ -29,7 +27,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
         private static ILogService _logger;
         private const string ProcessName = "Communications Process";
         private CommunicationsControlQueueConsumer _communicationsControlQueueConsumer;
-        private StructureMap.IContainer _container;
+        private IContainer _container;
 
         public override void Run()
         {
@@ -80,17 +78,6 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
             return base.OnStart();
         }
 
-        public override void OnStop()
-        {
-            // Kill the bus which will kill any subscriptions
-            _container.GetInstance<IBus>().Advanced.Dispose();
-
-            // Give it 5 seconds to finish processing any in flight subscriptions.
-            Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            base.OnStop();
-        }
-
         private void Initialise()
         {
             VersionLogging.SetVersion();
@@ -98,7 +85,6 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
             try
             {
                 InitializeIoC();
-                InitialiseRabbitMQSubscribers();
             }
             catch (Exception ex)
             {
@@ -119,21 +105,16 @@ namespace SFA.Apprenticeships.Infrastructure.Communications
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
-                x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<AzureCacheRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
-                x.AddRegistry<RabbitMqRegistry>();
-                x.AddRegistry<CommunicationsRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<CommunicationsRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();
-        }
-
-        private void InitialiseRabbitMQSubscribers()
-        {
             _communicationsControlQueueConsumer = _container.GetInstance<CommunicationsControlQueueConsumer>();
         }
     }

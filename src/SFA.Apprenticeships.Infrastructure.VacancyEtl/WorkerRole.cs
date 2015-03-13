@@ -2,7 +2,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
 {
     using System;
     using System.Net;
-    using System.Reflection;
     using System.ServiceModel;
     using System.Threading;
     using Application.Interfaces.Logging;
@@ -11,15 +10,12 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using Common.Configuration;
     using Common.IoC;
     using Consumers;
-    using EasyNetQ;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
-    using Processes.Vacancies;
-    using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Communication.IoC;
@@ -31,7 +27,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
         private static ILogService _logger;
         private const string ProcessName = "Vacancy Processor";
         private VacancyEtlControlQueueConsumer _vacancyEtlControlQueueConsumer;
-        private StructureMap.IContainer _container; 
+        private IContainer _container; 
 
         public override void Run()
         {
@@ -71,17 +67,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             return base.OnStart();
         }
 
-        public override void OnStop()
-        {
-            // Kill the bus which will kill any subscriptions
-            _container.GetInstance<IBus>().Advanced.Dispose();
-            
-            // Give it 5 seconds to finish processing any in flight subscriptions.
-            Thread.Sleep(TimeSpan.FromSeconds(5));
-
-            base.OnStop();
-        }
-
         private void Initialise()
         {
             VersionLogging.SetVersion();
@@ -89,7 +74,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             try
             {
                 InitializeIoC();
-                InitialiseRabbitMQSubscribers();
             }
             catch (Exception ex)
             {
@@ -121,18 +105,6 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
             });
 
             _logger = _container.GetInstance<ILogService>();
-        }
-
-        private void InitialiseRabbitMQSubscribers()
-        {
-            var bootstrapper = _container.GetInstance<IBootstrapSubcribers>();
-
-            _logger.Debug("RabbitMQ initialising");
-
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof (VacancySummaryPageConsumerAsync)), "VacancyEtl", _container);
-
-            _logger.Debug("RabbitMQ initialised");
-
             _vacancyEtlControlQueueConsumer = _container.GetInstance<VacancyEtlControlQueueConsumer>();
         }
     }
