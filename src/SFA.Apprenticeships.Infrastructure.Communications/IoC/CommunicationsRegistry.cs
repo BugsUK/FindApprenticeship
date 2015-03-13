@@ -8,8 +8,8 @@
     {
         public CommunicationsRegistry()
         {
-            For<ICommunicationProcessor>().Use<CommunicationProcessor>();
             For<CommunicationsControlQueueConsumer>().Use<CommunicationsControlQueueConsumer>();
+            For<ICommunicationProcessor>().Use<CommunicationProcessor>();
         }
     }
 }

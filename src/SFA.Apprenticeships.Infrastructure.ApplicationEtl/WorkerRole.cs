@@ -116,9 +116,9 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
                 x.AddRegistry<AzureCacheRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<RabbitMqRegistry>();
-                x.AddRegistry<ApplicationEtlRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
+                x.AddRegistry<ApplicationEtlRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

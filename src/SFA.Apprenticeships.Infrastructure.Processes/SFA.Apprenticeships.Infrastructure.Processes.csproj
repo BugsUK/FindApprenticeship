@@ -196,7 +196,7 @@
     <Compile Include="Communications\EmailRequestConsumerAsync.cs" />
     <Compile Include="Vacancies\VacancyStatusSummaryConsumerAsync.cs" />
     <Compile Include="Extensions\VacancyStatusSummaryExtensions.cs" />
-    <Compile Include="IoC\AsyncProcessorRegistry.cs" />
+    <Compile Include="IoC\ProcessesRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>

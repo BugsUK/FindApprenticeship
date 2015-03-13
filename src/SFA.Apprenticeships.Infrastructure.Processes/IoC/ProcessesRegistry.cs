@@ -11,9 +11,9 @@
     using StructureMap.Configuration.DSL;
     using Vacancies;
 
-    public class AsyncProcessorRegistry : Registry
+    public class ProcessesRegistry : Registry
     {
-        public AsyncProcessorRegistry()
+        public ProcessesRegistry()
         {
             // communications
             var emailDispatcher = CloudConfigurationManager.GetSetting("EmailDispatcher");

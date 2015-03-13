@@ -95,7 +95,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AzureCacheRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
-                x.AddRegistry<AsyncProcessorRegistry>();
+                x.AddRegistry<ProcessesRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

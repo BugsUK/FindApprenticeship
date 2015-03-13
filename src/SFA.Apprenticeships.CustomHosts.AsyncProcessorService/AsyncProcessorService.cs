@@ -74,7 +74,7 @@
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
-                x.AddRegistry<AsyncProcessorRegistry>();
+                x.AddRegistry<ProcessesRegistry>();
             });
         }
 

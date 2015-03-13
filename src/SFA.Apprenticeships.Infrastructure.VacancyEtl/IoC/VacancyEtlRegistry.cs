@@ -8,12 +8,13 @@
     using Mappers;
     using StructureMap.Configuration.DSL;
 
-    public class GatewayVacancyEtlRegistry : Registry
+    public class VacancyEtlRegistry : Registry
     {
-        public GatewayVacancyEtlRegistry()
+        public VacancyEtlRegistry()
         {
             For<ApprenticeshipSummaryUpdateConsumerAsync>().Use<ApprenticeshipSummaryUpdateConsumerAsync>();
             For<TraineeshipsSummaryUpdateConsumerAsync>().Use<TraineeshipsSummaryUpdateConsumerAsync>();
+
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";
             For<IVacancySummaryProcessor>()
                 .Use<VacancySummaryProcessor>()
