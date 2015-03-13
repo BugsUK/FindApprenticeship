@@ -164,7 +164,7 @@
             Condition.Requires(username).IsNotNullOrEmpty();
             Condition.Requires(profileDetails);
 
-            //todo: allow update of name, DOB, address, contact number (not email address as new addresses must be confirmed)
+            //todo: 1.9: allow update of name, DOB, address, contact number (not email address as new addresses must be confirmed)
 
             throw new NotImplementedException();
         }
