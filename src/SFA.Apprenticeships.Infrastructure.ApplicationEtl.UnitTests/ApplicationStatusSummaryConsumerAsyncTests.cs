@@ -3,12 +3,12 @@
     using System;
     using Application.Applications;
     using Application.Applications.Entities;
-    using Consumers;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
+    using Processes.Applications;
 
     [TestFixture]
     public class ApplicationStatusSummaryConsumerAsyncTests

@@ -174,8 +174,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Consumers\ApplicationEtlControlQueueConsumer.cs" />
-    <Compile Include="Consumers\ApplicationStatusSummaryConsumerAsync.cs" />
-    <Compile Include="Consumers\ApplicationStatusSummaryPageConsumerAsync.cs" />
     <Compile Include="IoC\ApplicationEtlRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
@@ -276,6 +274,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{a2d82061-bcbd-4030-9eb4-5148aee79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
+      <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
       <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>

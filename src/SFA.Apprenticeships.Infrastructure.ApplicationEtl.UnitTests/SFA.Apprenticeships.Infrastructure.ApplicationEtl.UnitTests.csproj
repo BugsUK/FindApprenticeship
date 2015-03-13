@@ -133,6 +133,10 @@
       <Project>{238A2637-CA77-4460-9C11-F7549287A152}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.ApplicationEtl</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
+      <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

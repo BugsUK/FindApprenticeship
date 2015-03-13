@@ -10,7 +10,6 @@
         public ApplicationEtlRegistry()
         {
             For<ApplicationEtlControlQueueConsumer>().Use<ApplicationEtlControlQueueConsumer>();
-            For<ApplicationStatusSummaryConsumerAsync>().Use<ApplicationStatusSummaryConsumerAsync>();
             For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
             For<IApplicationStatusAlertStrategy>().Use<ApplicationStatusAlertStrategy>();

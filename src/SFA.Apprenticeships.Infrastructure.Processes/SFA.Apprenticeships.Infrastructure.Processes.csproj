@@ -182,6 +182,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Applications\ApplicationStatusChangedConsumerAsync.cs" />
+    <Compile Include="Applications\ApplicationStatusSummaryConsumerAsync.cs" />
+    <Compile Include="Applications\ApplicationStatusSummaryPageConsumerAsync.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesConsumerAsync.cs" />
     <Compile Include="Communications\Commands\CandidateCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CommunicationCommand.cs" />

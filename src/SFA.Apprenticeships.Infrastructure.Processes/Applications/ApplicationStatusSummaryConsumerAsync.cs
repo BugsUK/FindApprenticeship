@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
     using System;
     using System.Threading;
@@ -8,7 +8,6 @@
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
 
-    //todo: 1.8: move to async processor
     public class ApplicationStatusSummaryConsumerAsync : IConsumeAsync<ApplicationStatusSummary>
     {
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;

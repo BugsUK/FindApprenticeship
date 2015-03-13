@@ -17,6 +17,7 @@ namespace SFA.Apprenticeships.Infrastructure.ApplicationEtl
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
+    using Processes.Applications;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
