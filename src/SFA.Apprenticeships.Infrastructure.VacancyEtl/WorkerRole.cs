@@ -18,6 +18,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
+    using Processes.Vacancies;
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
@@ -113,10 +114,10 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<AzureCacheRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
-                x.AddRegistry<VacancyEtlRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
+                x.AddRegistry<VacancyEtlRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

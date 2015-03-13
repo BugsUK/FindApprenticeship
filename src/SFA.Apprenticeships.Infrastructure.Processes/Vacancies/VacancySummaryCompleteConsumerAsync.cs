@@ -1,22 +1,21 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
     using Application.Vacancies.Entities;
     using EasyNetQ.AutoSubscribe;
-    using Elastic.Common.Entities;
     using VacancyIndexer;
+    using Elastic = Elastic.Common.Entities;
 
-    //todo: 1.8: move to async processor
     public class VacancySummaryCompleteConsumerAsync : IConsumeAsync<VacancySummaryUpdateComplete>
     {
-        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _apprenticeshipVacancyIndexerService;
-        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _trainseeshipVacancyIndexerService;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _apprenticeshipVacancyIndexerService;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, Elastic.TraineeshipSummary> _trainseeshipVacancyIndexerService;
         private readonly ILogService _logger;
 
         public VacancySummaryCompleteConsumerAsync(
-            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> apprenticeshipVacancyIndexerService,
-            IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> trainseeshipVacancyIndexerService, ILogService logger)
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> apprenticeshipVacancyIndexerService,
+            IVacancyIndexerService<TraineeshipSummaryUpdate, Elastic.TraineeshipSummary> trainseeshipVacancyIndexerService, ILogService logger)
         {
             _apprenticeshipVacancyIndexerService = apprenticeshipVacancyIndexerService;
             _trainseeshipVacancyIndexerService = trainseeshipVacancyIndexerService;

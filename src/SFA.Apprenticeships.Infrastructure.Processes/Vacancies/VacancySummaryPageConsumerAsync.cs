@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
@@ -7,7 +7,6 @@
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
 
-    //todo: 1.8: move to async processor
     public class VacancySummaryPageConsumerAsync : IConsumeAsync<VacancySummaryPage>
     {
         private readonly IMessageBus _messageBus;

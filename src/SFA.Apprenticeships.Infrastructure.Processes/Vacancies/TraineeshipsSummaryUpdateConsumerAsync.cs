@@ -1,18 +1,17 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
     using System;
     using System.Threading.Tasks;
     using Application.Vacancies.Entities;
     using EasyNetQ.AutoSubscribe;
-    using Elastic.Common.Entities;
     using VacancyIndexer;
+    using Elastic = Elastic.Common.Entities;
 
-    //todo: 1.8: move to async processor
     public class TraineeshipsSummaryUpdateConsumerAsync : IConsumeAsync<TraineeshipSummaryUpdate>
     {
-        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> _vacancyIndexerService;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, Elastic.TraineeshipSummary> _vacancyIndexerService;
 
-        public TraineeshipsSummaryUpdateConsumerAsync(IVacancyIndexerService<TraineeshipSummaryUpdate, TraineeshipSummary> vacancyIndexerService)
+        public TraineeshipsSummaryUpdateConsumerAsync(IVacancyIndexerService<TraineeshipSummaryUpdate, Elastic.TraineeshipSummary> vacancyIndexerService)
         {
             _vacancyIndexerService = vacancyIndexerService;
         }

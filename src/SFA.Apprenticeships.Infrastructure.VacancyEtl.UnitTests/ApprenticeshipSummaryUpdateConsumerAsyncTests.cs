@@ -1,15 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.UnitTests
 {
-    using System.Runtime.InteropServices;
     using Application.Interfaces.Logging;
     using Application.Interfaces.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
-    using Consumers;
     using Domain.Entities.ReferenceData;
     using Elastic.Common.Entities;
     using Moq;
     using NUnit.Framework;
+    using Processes.Vacancies;
     using VacancyIndexer;
 
     [TestFixture]

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
     using System;
     using System.Linq;
@@ -8,19 +8,18 @@
     using Application.Vacancies;
     using Application.Vacancies.Entities;
     using EasyNetQ.AutoSubscribe;
-    using Elastic.Common.Entities;
     using VacancyIndexer;
+    using Elastic = Elastic.Common.Entities;
 
-    //todo: 1.8: move to async processor
     public class ApprenticeshipSummaryUpdateConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>
     {
         private readonly IReferenceDataService _referenceDataService;
         private readonly ILogService _logService;
-        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> _vacancyIndexerService;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _vacancyIndexerService;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
 
         public ApprenticeshipSummaryUpdateConsumerAsync(
-            IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary> vacancyIndexerService,
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> vacancyIndexerService,
             IVacancySummaryProcessor vacancySummaryProcessor, IReferenceDataService referenceDataService, ILogService logService)
         {
             _vacancyIndexerService = vacancyIndexerService;

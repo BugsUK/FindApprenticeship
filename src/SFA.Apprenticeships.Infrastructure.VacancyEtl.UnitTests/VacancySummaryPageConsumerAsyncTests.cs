@@ -7,7 +7,7 @@
     using Domain.Interfaces.Messaging;
     using Moq;
     using NUnit.Framework;
-    using Consumers;
+    using Processes.Vacancies;
 
     [TestFixture]
     public class VacancySummaryPageConsumerAsyncTests
@@ -31,7 +31,7 @@
         public void ShouldAlwaysQueueVacancySummariesAndOnlyCallCompleteOnLastPage(int pageNumber, int totalPages)
         {
             var scheduledRefreshDate = new DateTime(2001, 1, 1);
-            var vacancySummaryPage = new VacancySummaryPage()
+            var vacancySummaryPage = new VacancySummaryPage
             {
                 PageNumber = pageNumber,
                 TotalPages = totalPages,

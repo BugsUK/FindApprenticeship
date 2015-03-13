@@ -143,6 +143,10 @@
       <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
+      <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\SFA.Apprenticeships.Infrastructure.VacancyEtl.csproj">
       <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl</Name>

@@ -3,10 +3,14 @@
     using Application.Applications;
     using Application.Applications.Strategies;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.ReferenceData;
+    using Application.ReferenceData;
+    using Application.Vacancies;
     using Applications;
     using Candidates;
     using Communications;
     using Communications.Commands;
+    using Domain.Interfaces.Mapping;
     using Microsoft.WindowsAzure;
     using StructureMap.Configuration.DSL;
     using Vacancies;
@@ -34,6 +38,14 @@
 
             // vacancies
             For<VacancyStatusSummaryConsumerAsync>().Use<VacancyStatusSummaryConsumerAsync>();
+            For<ApprenticeshipSummaryUpdateConsumerAsync>().Use<ApprenticeshipSummaryUpdateConsumerAsync>();
+            For<TraineeshipsSummaryUpdateConsumerAsync>().Use<TraineeshipsSummaryUpdateConsumerAsync>();
+
+            For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";//todo: remove
+            For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");
+            For<VacancyAboutToExpireConsumerAsync>().Use<VacancyAboutToExpireConsumerAsync>().Ctor<IMapper>().Named("VacancyEtlMapper");
+
+            For<IReferenceDataService>().Use<ReferenceDataService>();
 
             // candidates
             For<CandidateSavedSearchesConsumerAsync>().Use<CandidateSavedSearchesConsumerAsync>();

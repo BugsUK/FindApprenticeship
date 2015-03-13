@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.VacancyEtl.Consumers
+﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,6 @@
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
 
-    //todo: 1.8: move to async processor
     public class VacancyAboutToExpireConsumerAsync : IConsumeAsync<VacancyAboutToExpire>
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;

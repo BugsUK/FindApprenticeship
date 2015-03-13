@@ -194,6 +194,10 @@
     <Compile Include="Applications\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Applications\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Communications\EmailRequestConsumerAsync.cs" />
+    <Compile Include="Vacancies\ApprenticeshipSummaryUpdateConsumerAsync.cs" />
+    <Compile Include="Vacancies\TraineeshipsSummaryUpdateConsumerAsync.cs" />
+    <Compile Include="Vacancies\VacancyAboutToExpireConsumerAsync.cs" />
+    <Compile Include="Vacancies\VacancyEtlMapper.cs" />
     <Compile Include="Vacancies\VacancyStatusSummaryConsumerAsync.cs" />
     <Compile Include="Extensions\VacancyStatusSummaryExtensions.cs" />
     <Compile Include="IoC\ProcessesRegistry.cs" />
@@ -203,6 +207,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Vacancies\VacancySummaryCompleteConsumerAsync.cs" />
+    <Compile Include="Vacancies\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -273,6 +279,10 @@
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
+      <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancies</Name>
@@ -309,6 +319,10 @@
       <Project>{d34d27d3-79a9-407e-86ef-af3ac0ea024b}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
+      <Project>{f75b0c62-89b5-473d-af2d-366a5a6722ac}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
@@ -336,6 +350,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
       <Project>{4696d786-2f3c-4a12-bd6b-38e2981d6df1}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyIndexer\SFA.Apprenticeships.Infrastructure.VacancyIndexer.csproj">
+      <Project>{02D19199-A4BB-484A-AA48-208C7B6D819F}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
