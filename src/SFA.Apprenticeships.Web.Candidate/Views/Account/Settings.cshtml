@@ -96,8 +96,12 @@
                                     var index = i;
                                 }
                                 @Html.HiddenFor(m => m.SavedSearches[index].Id)
-                                @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new { @class = "no-left-margin" })
+                                @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new {@class = "no-left-margin"})
                             </li>
+                        @if (!string.IsNullOrEmpty(savedSearch.SubCategoriesFullNames))
+                        {
+                            <li><b>Sub-categories:</b> @savedSearch.SubCategoriesFullNames</li>
+                        }
                         @if (savedSearch.ApprenticeshipLevel != "All")
                         {
                             <li><b>Apprenticeship level:</b> @savedSearch.ApprenticeshipLevel</li>

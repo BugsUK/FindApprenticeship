@@ -17,5 +17,7 @@
         public bool AlertsEnabled { get; set; }
         
         public string ApprenticeshipLevel { get; set; }
+
+        public string SubCategoriesFullNames { get; set; }
     }
 }

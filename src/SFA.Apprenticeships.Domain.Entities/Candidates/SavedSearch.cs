@@ -35,6 +35,8 @@
 
         public string[] SubCategories { get; set; }
 
+        public string SubCategoriesFullName { get; set; }
+
         public string SearchField { get; set; }
 
         public string LastResultsHash { get; set; }

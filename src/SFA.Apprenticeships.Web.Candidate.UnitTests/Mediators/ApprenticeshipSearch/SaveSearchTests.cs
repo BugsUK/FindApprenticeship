@@ -24,7 +24,7 @@
 
             var response = mediator.SaveSearch(candidateId, viewModel);
 
-            response.AssertMessage(ApprenticeshipSearchMediatorCodes.SaveSearch.Ok, VacancySearchResultsPageMessages.SaveSearchSuccess, UserMessageLevel.Info, true);
+            response.AssertMessage(ApprenticeshipSearchMediatorCodes.SaveSearch.Ok, VacancySearchResultsPageMessages.SaveSearchSuccess, UserMessageLevel.Success, true);
             candidateServiceProvider.Verify(p => p.CreateSavedSearch(candidateId, viewModel), Times.Once);
         }
 

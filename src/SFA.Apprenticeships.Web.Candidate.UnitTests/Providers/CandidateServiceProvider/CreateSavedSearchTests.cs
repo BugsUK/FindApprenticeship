@@ -62,6 +62,7 @@
             const string category = "MFP";
             const string categoryFullName = "Engineering and Manufacturing Technologies";
             var subCategories = new[] { "513", "540" };
+            const string subCategoriesFullNames = "Surveying, Construction Civil Engineering";
             const string searchField = "JobTitle";
 
             var categories = new List<Category>
@@ -69,7 +70,20 @@
                 new Category
                 {
                     CodeName = category,
-                    FullName = categoryFullName
+                    FullName = categoryFullName,
+                    SubCategories = new []
+                    {
+                        new Category
+                        {
+                            CodeName = "513",
+                            FullName = "Surveying"
+                        },
+                        new Category
+                        {
+                            CodeName = "540",
+                            FullName = "Construction Civil Engineering"
+                        }
+                    }
                 }
             };
 
@@ -96,7 +110,6 @@
             savedSearch.Should().NotBeNull();
 
             savedSearch.CandidateId.Should().Be(candidateId);
-            //savedSearch.Name.Should().Be();
             savedSearch.SearchMode.Should().Be(searchMode);
             savedSearch.Keywords.Should().Be(keywords);
             savedSearch.Location.Should().Be(location);
@@ -105,6 +118,7 @@
             savedSearch.Category.Should().Be(category);
             savedSearch.CategoryFullName.Should().Be(categoryFullName);
             savedSearch.SubCategories.Should().BeEquivalentTo(subCategories);
+            savedSearch.SubCategoriesFullName.Should().Be(subCategoriesFullNames);
             savedSearch.SearchField.Should().Be(searchField);
             savedSearch.LastResultsHash.Should().BeNull();
             savedSearch.DateProcessed.Should().Be(null);

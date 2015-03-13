@@ -13,7 +13,8 @@
                 Name = savedSearch.Name(),
                 SearchUrl = savedSearch.SearchUrl(),
                 AlertsEnabled = savedSearch.AlertsEnabled,
-                ApprenticeshipLevel = savedSearch.ApprenticeshipLevel
+                ApprenticeshipLevel = savedSearch.ApprenticeshipLevel,
+                SubCategoriesFullNames = savedSearch.SubCategoriesFullName
             };
 
             return viewModel;

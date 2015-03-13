@@ -86,6 +86,7 @@
                 .With(s => s.ApprenticeshipLevel, "All")
                 .With(s => s.Location, "CV1 2WT")
                 .With(s => s.WithinDistance, 5)
+                .With(s => s.SubCategoriesFullName, "Surveying, Construction Civil Engineering")
                 .CreateMany(1).ToList();
             candidateService.Setup(cs => cs.RetrieveSavedSearches(candidateId)).Returns(savedSearches);
             var provider = new AccountProviderBuilder().With(candidateService).Build();
@@ -103,6 +104,7 @@
             savedSearch.SearchUrl.Value.Should().NotBeNullOrEmpty();
             savedSearch.AlertsEnabled.Should().Be(alertsEnabled);
             savedSearch.ApprenticeshipLevel.Should().Be("All");
+            savedSearch.SubCategoriesFullNames.Should().Be("Surveying, Construction Civil Engineering");
         }
     }
 }

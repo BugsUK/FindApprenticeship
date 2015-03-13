@@ -21,6 +21,8 @@
     using ViewModels.Register;
     using Common.Constants;
     using Common.Services;
+    using Domain.Entities.ReferenceData;
+    using Helpers;
     using Mappers;
     using ViewModels.Account;
     using ViewModels.VacancySearch;
@@ -495,10 +497,21 @@
 
         public ApprenticeshipSearchViewModel CreateSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel)
         {
-            var categoryFullName = viewModel.Category;
+            var categoryFullName = default(string);
+            var subCategoriesFullName = default(string);
             if (!string.IsNullOrEmpty(viewModel.Category))
             {
-                categoryFullName = viewModel.Categories.Single(c => c.CodeName == viewModel.Category).FullName;
+                var category = viewModel.Categories.SingleOrDefault(c => c.CodeName == viewModel.Category);
+                if (category != null)
+                {
+                    categoryFullName = FullNameFormatter.Format(category.FullName);
+
+                    if (viewModel.SubCategories != null && viewModel.SubCategories.Length > 0)
+                    {
+                        var subCategoryFullNames = category.SubCategories.Where(sc => viewModel.SubCategories.Contains(sc.CodeName)).Select(sc => FullNameFormatter.Format(sc.FullName));
+                        subCategoriesFullName = string.Join(", ", subCategoryFullNames);
+                    }
+                }
             }
 
             var savedSearch = new SavedSearch
@@ -512,6 +525,7 @@
                 Category = viewModel.Category,
                 CategoryFullName = categoryFullName,
                 SubCategories = viewModel.SubCategories,
+                SubCategoriesFullName = subCategoriesFullName,
                 SearchField = viewModel.SearchField
             };
 

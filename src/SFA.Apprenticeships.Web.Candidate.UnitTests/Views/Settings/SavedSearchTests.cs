@@ -59,6 +59,7 @@
                 .With(s => s.SearchUrl, new Url(searchUrl))
                 .With(s => s.AlertsEnabled, alertEnabled)
                 .With(s => s.ApprenticeshipLevel, apprenticeshipLevel)
+                .With(s => s.SubCategoriesFullNames, string.Empty)
                 .CreateMany(1).ToList();
             var viewModel = new SettingsViewModelBuilder().WithSavedSearchViewModels(savedSearchViewModels).Build();
 
@@ -94,6 +95,32 @@
             }
 
             savedSearchProperties.Last().ChildNodes.First(n => n.Name == "a").InnerText.Should().Contain("Delete saved search");
+        }
+
+        [Test]
+        public void OneSavedSearchWithSubCategories()
+        {
+            const string subCategoriesFullName = "Surveying, Construction Civil Engineering";
+            var savedSearchViewModels = new Fixture().Build<SavedSearchViewModel>()
+                .With(s => s.ApprenticeshipLevel, "All")
+                .With(s => s.SubCategoriesFullNames, subCategoriesFullName)
+                .CreateMany(1).ToList();
+            var viewModel = new SettingsViewModelBuilder().WithSavedSearchViewModels(savedSearchViewModels).Build();
+
+            var result = new SettingsViewBuilder().With(viewModel).Render();
+
+            var savedSearchesDiv = result.GetElementbyId("savedSearches");
+            savedSearchesDiv.Should().NotBeNull();
+
+            var savedSearchElement = savedSearchesDiv.ChildNodes.First(n => n.Name == "div");
+            savedSearchElement.Should().NotBeNull();
+
+            var savedSearchPropertyList = savedSearchElement.ChildNodes.First(n => n.Name == "ul");
+            var savedSearchProperties = savedSearchPropertyList.ChildNodes.Where(n => n.Name == "li").ToList();
+
+            savedSearchProperties.Count.Should().Be(3);
+
+            savedSearchProperties[1].InnerText.Should().Be(string.Format("Sub-categories: {0}", subCategoriesFullName));
         }
 
         [TestCase(2)]

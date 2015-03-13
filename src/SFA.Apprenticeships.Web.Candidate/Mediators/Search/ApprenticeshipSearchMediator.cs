@@ -265,7 +265,7 @@
                 return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SaveSearch.HasError, viewModel, viewModel.ViewModelMessage, UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SaveSearch.Ok, viewModel, VacancySearchResultsPageMessages.SaveSearchSuccess, UserMessageLevel.Info);
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SaveSearch.Ok, viewModel, VacancySearchResultsPageMessages.SaveSearchSuccess, UserMessageLevel.Success);
         }
 
         public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
