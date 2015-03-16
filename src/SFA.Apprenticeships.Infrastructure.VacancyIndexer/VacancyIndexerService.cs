@@ -98,13 +98,12 @@
                 //Analysers
                 indexSettings.Analysis.Analyzers.Add("snowballStopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter", "snowball" } });
                 indexSettings.Analysis.Analyzers.Add("snowballStopwordsExtended", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsExtendedFilter", "snowball" } });
-                //Matches whole phrases ignoring case
-                indexSettings.Analysis.Analyzers.Add("keywordLowercase", new CustomAnalyzer {Tokenizer = "keyword", Filter = new[] {"lowercase"}});
 
                 client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
 
-                client.Map<TDestinationSummary>(p => p.Index(newIndexName).MapFromAttributes().Properties(prop =>
-                    prop.GeoPoint(g => g.Name(n => n.Location))));
+                client.Map<TDestinationSummary>(p => p.Index(newIndexName)
+                    .MapFromAttributes()
+                    .Properties(prop => prop.GeoPoint(g => g.Name(n => n.Location))));
                 _logger.Info("Created new vacancy search index named: {0}", newIndexName);
             }
             else
