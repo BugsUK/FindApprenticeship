@@ -24,6 +24,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
+    using VacancySearch.IoC;
 
     public class WorkerRole : RoleEntryPoint
     {
@@ -96,6 +97,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<AzureCacheRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<ProcessesRegistry>();
+                x.AddRegistry<VacancySearchRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

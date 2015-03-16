@@ -14,6 +14,7 @@
             For<SavedSearchControlQueueConsumer>().Use<SavedSearchControlQueueConsumer>();
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");
+            For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
         }
     }
 }

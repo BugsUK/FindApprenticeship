@@ -61,7 +61,7 @@
             });
 
             stopwatch.Stop();
-            var message = string.Format("Queuing {0} candidate saved searches took {1}", counter, stopwatch);
+            var message = string.Format("Queuing {0} candidate saved searches took {1}", counter, stopwatch.Elapsed);
             if (stopwatch.ElapsedMilliseconds > 10000)
             {
                 _logService.Warn(message);
@@ -85,8 +85,7 @@
             var savedSearches = _savedSearchReadRepository.GetForCandidate(candidateId);
             if (savedSearches == null || !savedSearches.Any(s => s.AlertsEnabled)) return;
 
-            //todo: Should we run searches for all saved searches or just active ones?
-            foreach (var savedSearch in savedSearches.Where(s => s.AlertsEnabled))
+            foreach (var savedSearch in savedSearches)
             {
                 var searchParameters = SearchParametersFactory.Create(savedSearch);
                 var searchResults = _vacancySearchProvider.FindVacancies(searchParameters);
@@ -101,10 +100,13 @@
                     savedSearch.DateProcessed = DateTime.UtcNow;
                     _savedSearchWriteRepository.Save(savedSearch);
 
-                    var savedSearchAlert = _savedSearchAlertRepository.GetUnsentSavedSearchAlert(savedSearch) ?? new SavedSearchAlert { Parameters = savedSearch };
-                    savedSearchAlert.Results = results;
+                    if (savedSearch.AlertsEnabled)
+                    {
+                        var savedSearchAlert = _savedSearchAlertRepository.GetUnsentSavedSearchAlert(savedSearch) ?? new SavedSearchAlert {Parameters = savedSearch};
+                        savedSearchAlert.Results = results;
 
-                    _savedSearchAlertRepository.Save(savedSearchAlert);
+                        _savedSearchAlertRepository.Save(savedSearchAlert);
+                    }
                 }
             }
         }

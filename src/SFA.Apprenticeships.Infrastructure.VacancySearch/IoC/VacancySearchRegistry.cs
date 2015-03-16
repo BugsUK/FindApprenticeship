@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.IoC
 {
-    using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;

@@ -9,6 +9,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
+    using Entities;
     using MongoDB.Driver.Linq;
 
     //todo: 1.8: comms repo for saved search alerts
@@ -27,23 +28,30 @@
         {
             _logger.Debug("Calling repository to get unsent saved search alert for saved search Id={0}", savedSearch.EntityId);
 
-            var alert = Collection.AsQueryable().SingleOrDefault(a => a.BatchId == null && a.Parameters.EntityId == savedSearch.EntityId);
+            var mongoAlert = Collection.AsQueryable<MongoSavedSearchAlert>().SingleOrDefault(a => a.BatchId == null && a.Parameters.EntityId == savedSearch.EntityId);
 
-            if (alert == null)
+            if (mongoAlert == null)
             {
                 _logger.Debug("Did not find unsent saved search alert for saved search Id={0}", savedSearch.EntityId);
+                return null;
             }
-            else
-            {
-                _logger.Debug("Found unsent saved search alert for saved search Id={0}", savedSearch.EntityId);
-            }
-
+            
+            _logger.Debug("Found unsent saved search alert for saved search Id={0}", savedSearch.EntityId);
+            var alert = _mapper.Map<MongoSavedSearchAlert, SavedSearchAlert>(mongoAlert);
             return alert;
         }
 
         public void Save(SavedSearchAlert savedSearchAlert)
         {
-            throw new NotImplementedException();
+            _logger.Debug("Calling repository to save saved search alert with Id={0} for saved search with Id={1} and CandidateId={2}", savedSearchAlert.EntityId, savedSearchAlert.Parameters.CandidateId);
+
+            var mongoAlert = _mapper.Map<SavedSearchAlert, MongoSavedSearchAlert>(savedSearchAlert);
+            UpdateEntityTimestamps(mongoAlert);
+            mongoAlert.SentDateTime = mongoAlert.BatchId.HasValue ? mongoAlert.DateUpdated : null;
+
+            Collection.Save(mongoAlert);
+
+            _logger.Debug("Saved saved search alert with Id={0} for saved search with Id={1} and CandidateId={2}", savedSearchAlert.EntityId, savedSearchAlert.Parameters.CandidateId);
         }
 
         public void Delete(SavedSearchAlert savedSearchAlert)

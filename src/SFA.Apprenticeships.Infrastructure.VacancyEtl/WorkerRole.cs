@@ -18,15 +18,19 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
     using Microsoft.WindowsAzure.ServiceRuntime;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
+    using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
+    using Repositories.Users.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
+    using VacancySearch.IoC;
 
     public class WorkerRole : RoleEntryPoint
     {
         private static ILogService _logger;
         private const string ProcessName = "Vacancy Processor";
         private VacancyEtlControlQueueConsumer _vacancyEtlControlQueueConsumer;
+        private SavedSearchControlQueueConsumer _savedSearchControlQueueConsumer;
         private IContainer _container; 
 
         public override void Run()
@@ -38,6 +42,7 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 try
                 {
                     _vacancyEtlControlQueueConsumer.CheckScheduleQueue().Wait();
+                    _savedSearchControlQueueConsumer.CheckScheduleQueue().Wait();
                 }
                 catch (FaultException fe)
                 {
@@ -102,10 +107,14 @@ namespace SFA.Apprenticeships.Infrastructure.VacancyEtl
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<VacancyEtlRegistry>();
+                x.AddRegistry<CandidateRepositoryRegistry>();
+                x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<VacancySearchRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();
             _vacancyEtlControlQueueConsumer = _container.GetInstance<VacancyEtlControlQueueConsumer>();
+            _savedSearchControlQueueConsumer = _container.GetInstance<SavedSearchControlQueueConsumer>();
         }
     }
 }

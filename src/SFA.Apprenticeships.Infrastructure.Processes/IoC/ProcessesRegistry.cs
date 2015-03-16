@@ -50,6 +50,8 @@
             // candidates
             For<CandidateSavedSearchesConsumerAsync>().Use<CandidateSavedSearchesConsumerAsync>();
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
+
+            For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
         }
     }
 }
