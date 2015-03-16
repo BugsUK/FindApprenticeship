@@ -26,7 +26,7 @@
                 if (schedulerNotification == null) return;
 
                 _communicationProcessor.SendDailyDigests(schedulerNotification.ClientRequestId);
-                _communicationProcessor.SendSavedSearchAlerts(schedulerNotification.ClientRequestId);
+                //todo: 1.8: _communicationProcessor.SendSavedSearchAlerts(schedulerNotification.ClientRequestId);
 
                 MessageService.DeleteMessage(schedulerNotification.MessageId, schedulerNotification.PopReceipt);
             });
