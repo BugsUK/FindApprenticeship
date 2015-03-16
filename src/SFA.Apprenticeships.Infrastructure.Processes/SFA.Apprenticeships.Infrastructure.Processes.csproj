@@ -355,6 +355,10 @@
       <Project>{02D19199-A4BB-484A-AA48-208C7B6D819F}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
+      <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\readme.txt">
