@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
@@ -57,7 +58,7 @@
                     CandidateId = candidateId
                 };
                 _messageBus.PublishMessage(candidateSavedSearches);
-                counter++;
+                Interlocked.Increment(ref counter);
             });
 
             stopwatch.Stop();
