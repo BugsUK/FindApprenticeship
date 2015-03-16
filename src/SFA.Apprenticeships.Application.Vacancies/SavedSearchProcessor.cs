@@ -1,14 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
+    using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.Users;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
+    using Extensions;
+    using Factories;
     using Interfaces.Logging;
     using Interfaces.Vacancies;
     using Vacancy;
@@ -22,9 +27,10 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> _vacancySearchProvider;
         private readonly ISavedSearchAlertRepository _savedSearchAlertRepository;
+        private readonly ISavedSearchWriteRepository _savedSearchWriteRepository;
         private readonly ILogService _logService;
 
-        public SavedSearchProcessor(ISavedSearchReadRepository savedSearchReadRepository, IMessageBus messageBus, IUserReadRepository userReadRepository, ICandidateReadRepository candidateReadRepository, IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> vacancySearchProvider, ISavedSearchAlertRepository savedSearchAlertRepository, ILogService logService)
+        public SavedSearchProcessor(ISavedSearchReadRepository savedSearchReadRepository, IMessageBus messageBus, IUserReadRepository userReadRepository, ICandidateReadRepository candidateReadRepository, IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> vacancySearchProvider, ISavedSearchAlertRepository savedSearchAlertRepository, ISavedSearchWriteRepository savedSearchWriteRepository, ILogService logService)
         {
             _savedSearchReadRepository = savedSearchReadRepository;
             _messageBus = messageBus;
@@ -32,6 +38,7 @@
             _candidateReadRepository = candidateReadRepository;
             _vacancySearchProvider = vacancySearchProvider;
             _savedSearchAlertRepository = savedSearchAlertRepository;
+            _savedSearchWriteRepository = savedSearchWriteRepository;
             _logService = logService;
         }
 
@@ -81,24 +88,25 @@
             //todo: Should we run searches for all saved searches or just active ones?
             foreach (var savedSearch in savedSearches.Where(s => s.AlertsEnabled))
             {
-                var results = _vacancySearchProvider.FindVacancies(null);
+                var searchParameters = SearchParametersFactory.Create(savedSearch);
+                var searchResults = _vacancySearchProvider.FindVacancies(searchParameters);
+                var results = searchResults.Results.Select(r => new ApprenticeshipSummary(r)).ToList();
+                var resultsHash = results.GetResultsHash();
 
-                var savedSearchAlert = new SavedSearchAlert
+                if (savedSearch.LastResultsHash != resultsHash)
                 {
-                    Parameters = savedSearch
-                };
+                    //Results are new
+                    savedSearch.LastResultsHash = resultsHash;
+                    //todo: once we have the vacancy posted date (March 2015) we may store this instead of the processed date
+                    savedSearch.DateProcessed = DateTime.UtcNow;
+                    _savedSearchWriteRepository.Save(savedSearch);
 
-                _savedSearchAlertRepository.Save(savedSearchAlert);
+                    var savedSearchAlert = _savedSearchAlertRepository.GetUnsentSavedSearchAlert(savedSearch) ?? new SavedSearchAlert { Parameters = savedSearch };
+                    savedSearchAlert.Results = results;
+
+                    _savedSearchAlertRepository.Save(savedSearchAlert);
+                }
             }
-
-
-            //todo: 1.8: retrieve top 5 most recent search results for each saved search (use IVacancySearchProvider to execute)
-            // write results to SavedSearchAlerts repo, upsert based on candidate+savedsearch+date (assuming for now only runs once per day)
-            // note: should not write if no new results (check LastResultsHash if any) since last *sent* search
-            // note: update SavedSearch.LastResultsHash to ensure alerts are only triggered if there are new results
-            // note: update SavedSearch.DateProcessed with datetime processed (if changes)
-
-            //todo: once we have the vacancy posted date (March 2015) we may store this instead of the processed date
         }
     }
 }

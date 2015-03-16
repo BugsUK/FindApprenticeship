@@ -14,6 +14,7 @@
         private string[] _subCategories;
         private string _categoryFullName;
         private bool _alertsEnabled = true;
+        private string _searchField = "All";
 
         public SavedSearch Build()
         {
@@ -27,6 +28,7 @@
                 Category = _category,
                 CategoryFullName = _categoryFullName,
                 SubCategories = _subCategories,
+                SearchField = _searchField,
                 AlertsEnabled = _alertsEnabled
             };
 
@@ -84,6 +86,12 @@
         public SavedSearchBuilder WithAlertsEnabled(bool alertsEnabled)
         {
             _alertsEnabled = alertsEnabled;
+            return this;
+        }
+
+        public SavedSearchBuilder WithSearchField(string searchField)
+        {
+            _searchField = searchField;
             return this;
         }
     }

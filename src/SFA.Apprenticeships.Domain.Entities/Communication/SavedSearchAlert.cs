@@ -11,7 +11,7 @@
         //todo: don't automap entity properties!
         public SavedSearch Parameters { get; set; }
 
-        public IEnumerable<ApprenticeshipSummary> Results { get; set; }
+        public IList<ApprenticeshipSummary> Results { get; set; }
 
         public Guid? BatchId { get; set; }
 

@@ -111,6 +111,7 @@
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyTests.cs" />
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
     <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
+    <Compile Include="Builders\ApprenticeshipSearchResultsBuilder.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
     <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyBuilder.cs" />
@@ -128,6 +129,8 @@
     <Compile Include="Services\Location\LocationSearchServiceTests.cs" />
     <Compile Include="UserAccount\SendAccountUnlockTests.cs" />
     <Compile Include="UserAccount\UnlockAccountStrategyTests.cs" />
+    <Compile Include="Vacancies\Extensions\ApprenticeshipSummaryExtensionsTests.cs" />
+    <Compile Include="Vacancies\Factories\SearchParametersFactoryTests.cs" />
     <Compile Include="Vacancies\SavedSearchProcessorTests\SavedSearchProcessorBuilder.cs" />
     <Compile Include="Vacancies\SavedSearchProcessorTests\ProcessCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SavedSearchProcessorTests\QueueCandidateSavedSearchesTests.cs" />

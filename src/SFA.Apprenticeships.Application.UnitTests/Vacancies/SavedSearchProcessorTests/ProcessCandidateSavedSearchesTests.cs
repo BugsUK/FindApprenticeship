@@ -1,12 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.SavedSearchProcessorTests
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Application.Vacancies.Entities;
+    using Application.Vacancies.Extensions;
+    using Builders;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.UnitTests.Builder;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
+    using FluentAssertions;
+    using Interfaces.Search;
     using Interfaces.Vacancies;
     using Moq;
     using NUnit.Framework;
@@ -83,6 +89,10 @@
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(true).SendSavedSearchAlerts(true).Build);
             var vacancySearchProvider = new Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
+            ApprenticeshipSearchParameters searchParameters = null;
+            vacancySearchProvider.Setup(p => p.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()))
+                .Returns(new ApprenticeshipSearchResultsBuilder().WithResultCount(3).Build)
+                .Callback<ApprenticeshipSearchParameters>(p => { searchParameters = p; });
             var processor = new SavedSearchProcessorBuilder().With(savedSearchReadRepository).With(userReadRepository).With(candidateReadRepository).With(vacancySearchProvider).Build();
 
             processor.ProcessCandidateSavedSearches(candidateSavedSearch);
@@ -90,11 +100,46 @@
             if (alertsEnabled)
             {
                 vacancySearchProvider.Verify(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()), Times.Exactly(3));
+                searchParameters.Should().NotBeNull();
             }
             else
             {
                 vacancySearchProvider.Verify(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()), Times.Never);
+                searchParameters.Should().BeNull();
             }
+        }
+
+        [Test]
+        public void ExistingResults()
+        {
+            var candidateId = Guid.NewGuid();
+            var candidateSavedSearch = new CandidateSavedSearches { CandidateId = candidateId };
+
+            var searchResults = new ApprenticeshipSearchResultsBuilder().WithResultCount(3).Build();
+
+            var savedSearches = new Fixture().Build<SavedSearch>()
+                .With(s => s.AlertsEnabled, true)
+                .With(s => s.LastResultsHash, searchResults.Results.GetResultsHash())
+                .With(s => s.DateProcessed, new DateTime(2015, 01, 01))
+                .CreateMany(1).ToList();
+
+            var savedSearchReadRepository = new Mock<ISavedSearchReadRepository>();
+            savedSearchReadRepository.Setup(r => r.GetForCandidate(candidateId)).Returns(savedSearches);
+            var userReadRepository = new Mock<IUserReadRepository>();
+            userReadRepository.Setup(r => r.Get(candidateId)).Returns(new UserBuilder(candidateId).Activated(true).Build);
+            var candidateReadRepository = new Mock<ICandidateReadRepository>();
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(true).SendSavedSearchAlerts(true).Build);
+            var vacancySearchProvider = new Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
+            vacancySearchProvider.Setup(p => p.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>())).Returns(searchResults);
+            var savedSearchAlertRepository = new Mock<ISavedSearchAlertRepository>();
+            var savedSearchWriteRepository = new Mock<ISavedSearchWriteRepository>();
+            var processor = new SavedSearchProcessorBuilder().With(savedSearchReadRepository).With(userReadRepository).With(candidateReadRepository).With(vacancySearchProvider).With(savedSearchAlertRepository).With(savedSearchWriteRepository).Build();
+
+            processor.ProcessCandidateSavedSearches(candidateSavedSearch);
+
+            savedSearchWriteRepository.Verify(r => r.Save(It.IsAny<SavedSearch>()), Times.Never);
+            savedSearchAlertRepository.Verify(r => r.GetUnsentSavedSearchAlert(It.IsAny<SavedSearch>()), Times.Never);
+            savedSearchAlertRepository.Verify(r => r.Save(It.IsAny<SavedSearchAlert>()), Times.Never);
         }
 
         [Test]
@@ -103,19 +148,47 @@
             var candidateId = Guid.NewGuid();
             var candidateSavedSearch = new CandidateSavedSearches { CandidateId = candidateId };
 
+            var existingSearchResults = new ApprenticeshipSearchResultsBuilder().WithResultCount(2).Build();
+            var dateProcessed = new DateTime(2015, 01, 01);
+            var savedSearches = new Fixture().Build<SavedSearch>()
+                .With(s => s.AlertsEnabled, true)
+                .With(s => s.LastResultsHash, existingSearchResults.Results.GetResultsHash())
+                .With(s => s.DateProcessed, dateProcessed)
+                .CreateMany(1).ToList();
+
             var savedSearchReadRepository = new Mock<ISavedSearchReadRepository>();
-            savedSearchReadRepository.Setup(r => r.GetForCandidate(candidateId)).Returns(new Fixture().Build<SavedSearch>().With(s => s.AlertsEnabled, true).CreateMany(1).ToList());
+            savedSearchReadRepository.Setup(r => r.GetForCandidate(candidateId)).Returns(savedSearches);
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(candidateId)).Returns(new UserBuilder(candidateId).Activated(true).Build);
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(true).SendSavedSearchAlerts(true).Build);
             var vacancySearchProvider = new Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
+            vacancySearchProvider.Setup(p => p.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>())).Returns(new ApprenticeshipSearchResultsBuilder().WithResultCount(3).Build);
             var savedSearchAlertRepository = new Mock<ISavedSearchAlertRepository>();
-            var processor = new SavedSearchProcessorBuilder().With(savedSearchReadRepository).With(userReadRepository).With(candidateReadRepository).With(vacancySearchProvider).With(savedSearchAlertRepository).Build();
+            SavedSearchAlert savedSearchAlert = null;
+            savedSearchAlertRepository.Setup(r => r.Save(It.IsAny<SavedSearchAlert>())).Callback<SavedSearchAlert>(a => { savedSearchAlert = a; });
+            var savedSearchWriteRepository = new Mock<ISavedSearchWriteRepository>();
+            SavedSearch savedSearch = null;
+            savedSearchWriteRepository.Setup(r => r.Save(It.IsAny<SavedSearch>())).Callback<SavedSearch>(s => { savedSearch = s; });
+            var processor = new SavedSearchProcessorBuilder().With(savedSearchReadRepository).With(userReadRepository).With(candidateReadRepository).With(vacancySearchProvider).With(savedSearchAlertRepository).With(savedSearchWriteRepository).Build();
 
             processor.ProcessCandidateSavedSearches(candidateSavedSearch);
 
+            savedSearchWriteRepository.Verify(r => r.Save(It.IsAny<SavedSearch>()), Times.Once);
+            savedSearch.Should().NotBeNull();
+            savedSearch.LastResultsHash.Should().NotBeNullOrEmpty();
+            savedSearch.DateProcessed.HasValue.Should().BeTrue();
+            savedSearch.DateProcessed.Should().BeAfter(dateProcessed);
+            savedSearchAlertRepository.Verify(r => r.GetUnsentSavedSearchAlert(It.IsAny<SavedSearch>()), Times.Once);
             savedSearchAlertRepository.Verify(r => r.Save(It.IsAny<SavedSearchAlert>()), Times.Once);
+            savedSearchAlert.Should().NotBeNull();
+            savedSearchAlert.Parameters.Should().Be(savedSearches.First());
+            savedSearchAlert.Results.Should().NotBeNull();
+            var results = savedSearchAlert.Results.ToList();
+            results.Count.Should().Be(3);
+            results[0].GetType().Should().Be(typeof (ApprenticeshipSummary));
+            savedSearchAlert.BatchId.HasValue.Should().BeFalse();
+            savedSearchAlert.SentDateTime.HasValue.Should().BeFalse();
         }
     }
 }

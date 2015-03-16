@@ -16,11 +16,12 @@
         private Mock<ICandidateReadRepository> _candidateReadRepository = new Mock<ICandidateReadRepository>();
         private Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>> _vacancySearchProvider = new Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
         private Mock<ISavedSearchAlertRepository> _savedSearchAlertRepository = new Mock<ISavedSearchAlertRepository>();
+        private Mock<ISavedSearchWriteRepository> _savedSearchWriteRepository = new Mock<ISavedSearchWriteRepository>();
         private Mock<ILogService> _logService = new Mock<ILogService>();
 
         public ISavedSearchProcessor Build()
         {
-            var processor = new SavedSearchProcessor(_savedSearchReadRepository.Object, _messageBus.Object, _userReadRepository.Object, _candidateReadRepository.Object, _vacancySearchProvider.Object, _savedSearchAlertRepository.Object, _logService.Object);
+            var processor = new SavedSearchProcessor(_savedSearchReadRepository.Object, _messageBus.Object, _userReadRepository.Object, _candidateReadRepository.Object, _vacancySearchProvider.Object, _savedSearchAlertRepository.Object, _savedSearchWriteRepository.Object, _logService.Object);
             return processor;
         }
 
@@ -57,6 +58,12 @@
         public SavedSearchProcessorBuilder With(Mock<ISavedSearchAlertRepository> savedSearchAlertRepository)
         {
             _savedSearchAlertRepository = savedSearchAlertRepository;
+            return this;
+        }
+
+        public SavedSearchProcessorBuilder With(Mock<ISavedSearchWriteRepository> savedSearchWriteRepository)
+        {
+            _savedSearchWriteRepository = savedSearchWriteRepository;
             return this;
         }
 

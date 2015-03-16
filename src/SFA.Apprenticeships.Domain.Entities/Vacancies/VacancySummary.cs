@@ -5,6 +5,27 @@
 
     public abstract class VacancySummary
     {
+        protected VacancySummary()
+        {
+            
+        }
+
+        protected VacancySummary(VacancySummary vacancySummary)
+        {
+            Id = vacancySummary.Id;
+            VacancyReference = vacancySummary.VacancyReference;
+            Title = vacancySummary.Title;
+            StartDate = vacancySummary.StartDate;
+            ClosingDate = vacancySummary.ClosingDate;
+            Description = vacancySummary.Description;
+            EmployerName = vacancySummary.EmployerName;
+            Location = vacancySummary.Location;
+            Sector = vacancySummary.Sector;
+            SectorCode = vacancySummary.SectorCode;
+            Framework = vacancySummary.Framework;
+            FrameworkCode = vacancySummary.FrameworkCode;
+        }
+
         public int Id { get; set; }
 
         public string VacancyReference { get; set; }
