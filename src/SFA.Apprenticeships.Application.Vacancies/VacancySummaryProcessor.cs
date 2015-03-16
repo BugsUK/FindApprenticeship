@@ -22,18 +22,18 @@
         private readonly IMessageBus _messageBus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMapper _mapper;
-        private readonly IProcessControlQueue<StorageQueueMessage> _processControlQueue;
+        private readonly IJobControlQueue<StorageQueueMessage> _jobControlQueue;
 
         public VacancySummaryProcessor(IMessageBus messageBus,
                                        IVacancyIndexDataProvider vacancyIndexDataProvider,
                                        IMapper mapper,
-                                       IProcessControlQueue<StorageQueueMessage> processControlQueue, 
+                                       IJobControlQueue<StorageQueueMessage> jobControlQueue, 
                                        IConfigurationManager configurationManager, ILogService logger)
         {
             _messageBus = messageBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
-            _processControlQueue = processControlQueue;
+            _jobControlQueue = jobControlQueue;
             _logger = logger;
             _vacancyAboutToExpireNotificationHours = configurationManager.GetAppSetting<int>(VacancyAboutToExpireNotificationHours);
         }
@@ -49,7 +49,7 @@
             if (vacancyPageCount == 0)
             {
                 _logger.Warn("Expected vacancy page count to be greater than zero. Indexes will not be created successfully");
-                _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
+                _jobControlQueue.DeleteMessage(ScheduledJobQueues.VacancyEtl, scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
                 return;
             }
 
@@ -61,7 +61,7 @@
             }
 
             // Only delete from queue once we have all vacancies from the service without error.
-            _processControlQueue.DeleteMessage(scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
+            _jobControlQueue.DeleteMessage(ScheduledJobQueues.VacancyEtl, scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
             _logger.Info("Queued {0} vacancy summary pages", vacancySummaries.Count());
         }

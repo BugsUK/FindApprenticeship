@@ -9,17 +9,15 @@
 
     public class DailyMetricsControlQueueConsumer : AzureControlQueueConsumer
     {
-        private const string QueueName = "dailymetricsscheduler";
-
         private readonly IDailyMetricsTasksRunner _dailyMetricsTasksRunner;
         private readonly IConfigurationManager _configurationManager;
 
         public DailyMetricsControlQueueConsumer(
-            IProcessControlQueue<StorageQueueMessage> messageService,
+            IJobControlQueue<StorageQueueMessage> messageService,
             IDailyMetricsTasksRunner dailyMetricsTasksRunner,
             IConfigurationManager configurationManager,
             ILogService logger)
-            : base(messageService, logger, "DailyMetrics", QueueName)
+            : base(messageService, logger, "DailyMetrics", ScheduledJobQueues.DailyMetrics)
         {
             _dailyMetricsTasksRunner = dailyMetricsTasksRunner;
             _configurationManager = configurationManager;
@@ -38,7 +36,7 @@
                         _dailyMetricsTasksRunner.RunDailyMetricsTasks();
                     }
 
-                    MessageService.DeleteMessage(monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt, QueueName);
+                    MessageService.DeleteMessage(ScheduledJobQueues.DailyMetrics, monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
                 }
             });
         }

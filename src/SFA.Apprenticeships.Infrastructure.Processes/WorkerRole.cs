@@ -5,6 +5,8 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using System.Reflection;
     using System.Threading;
     using Application.Interfaces.Logging;
+    using Application.ReferenceData;
+    using Application.Vacancies.Entities;
     using Azure.Common.IoC;
     using Caching.Azure.IoC;
     using Common.Configuration;
@@ -12,6 +14,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Communication.IoC;
     using Communications;
     using EasyNetQ;
+    using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using Logging;
@@ -24,6 +27,8 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
+    using VacancyIndexer;
+    using VacancyIndexer.IoC;
     using VacancySearch.IoC;
 
     public class WorkerRole : RoleEntryPoint
@@ -91,6 +96,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
+                x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
@@ -98,6 +104,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
+                x.AddRegistry<VacancyIndexerRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

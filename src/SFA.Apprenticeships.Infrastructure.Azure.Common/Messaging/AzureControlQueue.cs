@@ -1,27 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common.Messaging
 {
-    using System;
     using Application.Interfaces.Logging;
-    using Configuration;
     using Domain.Interfaces.Messaging;
 
-    public class AzureControlQueue : IProcessControlQueue<StorageQueueMessage>
+    public class AzureControlQueue : IJobControlQueue<StorageQueueMessage>
     {
         private readonly ILogService _logger;
         private readonly IAzureCloudClient _azureCloudClient;
-        private readonly IAzureCloudConfig _azureCloudConfig;
 
-        public AzureControlQueue(IAzureCloudClient azureCloud, IAzureCloudConfig cloudConfig, ILogService logger)
+        public AzureControlQueue(IAzureCloudClient azureCloud, ILogService logger)
         {
             _azureCloudClient = azureCloud;
-            _azureCloudConfig = cloudConfig;
             _logger = logger;
         }
 
         public StorageQueueMessage GetMessage(string queueName)
         {
-            queueName = DefaultQueueName(queueName);
-
             _logger.Debug("Checking Azure control queue for control message: '{0}'", queueName);
 
             // If queue name is not specified, get it from configuration.
@@ -45,21 +39,13 @@
             return storageMessage;
         }
 
-        public void DeleteMessage(string messageId, string popReceipt, string queueName)
+        public void DeleteMessage(string queueName, string messageId, string popReceipt)
         {
-            queueName = DefaultQueueName(queueName);
-
             _logger.Debug("Deleting Azure control queue item: '{0}'", queueName);
 
             _azureCloudClient.DeleteMessage(queueName, messageId, popReceipt);
 
             _logger.Debug("Deleted Azure control queue item: '{0}'", queueName);
-        }
-
-        private string DefaultQueueName(string queueName)
-        {
-            // Queue name can be overridden by callers but defaults to cloud configuration.
-            return queueName ?? _azureCloudConfig.QueueName;
         }
     }
 }

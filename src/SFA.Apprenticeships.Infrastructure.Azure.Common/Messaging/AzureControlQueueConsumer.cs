@@ -6,27 +6,27 @@
     public abstract class AzureControlQueueConsumer
     {
         private readonly ILogService _logger;
-        protected readonly IProcessControlQueue<StorageQueueMessage> MessageService;
-        private readonly string _processName;
+        protected readonly IJobControlQueue<StorageQueueMessage> MessageService;
+        private readonly string _jobName;
         private readonly string _queueName;
 
-        protected AzureControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService, ILogService logger, string processName, string queueName = null)
+        protected AzureControlQueueConsumer(IJobControlQueue<StorageQueueMessage> messageService, ILogService logger, string jobName, string queueName)
         {
             MessageService = messageService;
-            _processName = processName;
+            _jobName = jobName;
             _queueName = queueName;
             _logger = logger;
         }
 
         protected StorageQueueMessage GetLatestQueueMessage()
         {
-            _logger.Debug("Checking control queue for " + _processName + " process");
+            _logger.Debug("Checking control queue '" + _queueName + "' for '" + _jobName + "' job");
 
             var queueMessage = MessageService.GetMessage(_queueName);
 
             if (queueMessage == null)
             {
-                _logger.Debug("No control message found for " + _processName);
+                _logger.Debug("No control message found on queue '" + _queueName + " for '" + _jobName + "' job");
                 return null;
             }
 
@@ -42,19 +42,24 @@
                     break;
                 }
 
-                MessageService.DeleteMessage(queueMessage.MessageId, queueMessage.PopReceipt, _queueName);
+                MessageService.DeleteMessage(_queueName, queueMessage.MessageId, queueMessage.PopReceipt);
                 queueMessage = nextQueueMessage;
                 foundSurplusMessages = true;
             }
 
             if (foundSurplusMessages)
             {
-                _logger.Warn("Found more than 1 control message for " + _processName + " process");
+                _logger.Warn("Found more than 1 control message found on queue '" + _queueName + " for '" + _jobName + "' job");
             }
 
-            _logger.Info("Found valid control message to start " + _processName + " process");
+            _logger.Info("Found valid control message on queue '" + _queueName + " for '" + _jobName + "' job");
 
             return queueMessage;
+        }
+
+        protected void DeleteMessage(string messageId, string popReceipt)
+        {
+            MessageService.DeleteMessage(_queueName, messageId, popReceipt);
         }
     }
 }

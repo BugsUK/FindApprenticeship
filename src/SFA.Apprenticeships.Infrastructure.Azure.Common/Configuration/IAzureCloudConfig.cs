@@ -3,7 +3,5 @@
     public interface IAzureCloudConfig
     {
         string StorageConnectionString { get; }
-
-        string QueueName { get; }
     }
 }

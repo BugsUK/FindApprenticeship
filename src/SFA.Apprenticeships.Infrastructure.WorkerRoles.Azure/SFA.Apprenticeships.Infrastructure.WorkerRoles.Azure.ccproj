@@ -69,22 +69,6 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.ApplicationEtl\SFA.Apprenticeships.Infrastructure.ApplicationEtl.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.ApplicationEtl</Name>
-      <Project>{238a2637-ca77-4460-9c11-f7549287a152}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.ApplicationEtl</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communications\SFA.Apprenticeships.Infrastructure.Communications.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.Communications</Name>
-      <Project>{e3e6531a-0b3b-4afb-9ecb-3a25b3c616f8}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.Communications</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
       <Project>{61619f66-5f17-4ef7-a8cf-ba720bea3ad3}</Project>
@@ -101,29 +85,25 @@
       <RoleName>SFA.Apprenticeships.Infrastructure.Processes</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\SFA.Apprenticeships.Infrastructure.VacancyEtl.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.VacancyEtl</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.ScheduledJobs\SFA.Apprenticeships.Infrastructure.ScheduledJobs.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.ScheduledJobs</Name>
       <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.VacancyEtl</RoleName>
+      <RoleName>SFA.Apprenticeships.Infrastructure.ScheduledJobs</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Profiles" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.ApplicationEtlContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.ProcessesContent" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.CommunicationsContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.MonitorContent\" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent\" />
+    <Folder Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\" />
   </ItemGroup>
   <ItemGroup>
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ApplicationEtlContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ProcessesContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.CommunicationsContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.VacancyEtlContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
@@ -140,10 +120,8 @@
     <PreBuildEvent>xcopy /E /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)</PreBuildEvent>
   </PropertyGroup>
   <Target Name="CopyWorkerRoleConfigurations" BeforeTargets="AfterPackageComputeService">
-    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.VacancyEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.VacancyEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.VacancyEtl" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ScheduledJobs\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ScheduledJobs.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ScheduledJobs" OverwriteReadOnlyFiles="true" />
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Monitor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Monitor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Monitor" OverwriteReadOnlyFiles="true" />
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Processes\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Processes.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Processes" OverwriteReadOnlyFiles="true" />
-    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ApplicationEtl\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ApplicationEtl.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ApplicationEtl" OverwriteReadOnlyFiles="true" />
-    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Communications\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Communications.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Communications" OverwriteReadOnlyFiles="true" />
   </Target>
 </Project>

@@ -22,7 +22,7 @@
         public void SetUp()
         {
             _busMock = new Mock<IMessageBus>();
-            _messagingServiceMock = new Mock<IProcessControlQueue<StorageQueueMessage>>();
+            _messagingServiceMock = new Mock<IJobControlQueue<StorageQueueMessage>>();
             _mapperMock = new Mock<IMapper>();
             _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
             _configurationManagerMock = new Mock<IConfigurationManager>();
@@ -30,7 +30,7 @@
         }
 
         private Mock<IMessageBus> _busMock;
-        private Mock<IProcessControlQueue<StorageQueueMessage>> _messagingServiceMock;
+        private Mock<IJobControlQueue<StorageQueueMessage>> _messagingServiceMock;
         private Mock<IMapper> _mapperMock;
         private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
         private Mock<IConfigurationManager> _configurationManagerMock;
@@ -59,8 +59,8 @@
 
             _messagingServiceMock.Verify(
                 x =>
-                    x.DeleteMessage(It.Is<string>(mid => mid == scheduledMessage.MessageId),
-                        It.Is<string>(pr => pr == scheduledMessage.PopReceipt), null), Times.Once);
+                    x.DeleteMessage(It.Is<string>(queueName => queueName == ScheduledJobQueues.VacancyEtl), It.Is<string>(mid => mid == scheduledMessage.MessageId),
+                        It.Is<string>(pr => pr == scheduledMessage.PopReceipt)), Times.Once);
             _busMock.Verify(x => x.PublishMessage(It.IsAny<VacancySummaryPage>()), Times.Exactly(vancanyPages));
         }
 

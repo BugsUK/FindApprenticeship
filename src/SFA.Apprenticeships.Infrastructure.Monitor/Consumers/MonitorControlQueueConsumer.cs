@@ -12,9 +12,9 @@
         private readonly IMonitorTasksRunner _monitorTasksRunner;
         private readonly IConfigurationManager _configurationManager;
 
-        public MonitorControlQueueConsumer(IProcessControlQueue<StorageQueueMessage> messageService,
+        public MonitorControlQueueConsumer(IJobControlQueue<StorageQueueMessage> messageService,
             IMonitorTasksRunner monitorTasksRunner, IConfigurationManager configurationManager, ILogService logger)
-            : base(messageService, logger, "Monitor")
+            : base(messageService, logger, "Monitor", ScheduledJobQueues.Monitor)
         {
             _monitorTasksRunner = monitorTasksRunner;
             _configurationManager = configurationManager;
@@ -33,7 +33,7 @@
                         _monitorTasksRunner.RunMonitorTasks();
                     }
 
-                    MessageService.DeleteMessage(monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
+                    MessageService.DeleteMessage(ScheduledJobQueues.Monitor, monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
                 }
             });
         }
