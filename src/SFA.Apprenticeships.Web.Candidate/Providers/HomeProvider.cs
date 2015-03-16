@@ -19,6 +19,7 @@
 
         public bool SendContactMessage(Guid? candidateId, ContactMessageViewModel viewModel)
         {
+            //todo: 1.8: should be implemented in CandidateServiceProvider. remove this interface and class
             try
             {
                 var candidate = _mapper.Map<ContactMessageViewModel, ContactMessage>(viewModel);

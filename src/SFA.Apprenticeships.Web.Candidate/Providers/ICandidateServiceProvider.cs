@@ -6,6 +6,7 @@
     using Domain.Entities.Candidates;
     using ViewModels;
     using ViewModels.Account;
+    using ViewModels.Home;
     using ViewModels.Login;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
@@ -40,7 +41,7 @@
 
         bool AcceptTermsAndConditions(Guid candidateId, string currentVersion);
 
-        //TODO: 1.6: void SendContactMessage(ContactMessageViewModel model);
+        void SendContactMessage(Guid? candidateId, ContactMessageViewModel viewModel);
 
         IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
 

@@ -17,11 +17,11 @@
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
     using ViewModels;
+    using ViewModels.Home;
     using ViewModels.Login;
     using ViewModels.Register;
     using Common.Constants;
     using Common.Services;
-    using Domain.Entities.ReferenceData;
     using Helpers;
     using Mappers;
     using ViewModels.Account;
@@ -488,6 +488,11 @@
                 _logger.Error("Error updating terms and conditions version", ex);
                 return false;
             }
+        }
+
+        public void SendContactMessage(Guid? candidateId, ContactMessageViewModel viewModel)
+        {
+            //todo: should be used instead of current implementation which uses IHomeProvider
         }
 
         public IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true)
