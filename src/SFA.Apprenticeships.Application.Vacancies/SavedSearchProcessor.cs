@@ -117,7 +117,7 @@
 
                 var searchParameters = SearchParametersFactory.Create(savedSearch);
                 var searchResults = _vacancySearchProvider.FindVacancies(searchParameters);
-                var results = searchResults.Results.Select(r => new ApprenticeshipSummary(r)).ToList();
+                var results = searchResults.Results.ToList();
                 var resultsHash = results.GetResultsHash();
 
                 if (savedSearch.LastResultsHash != resultsHash)
@@ -126,7 +126,6 @@
                     savedSearch.LastResultsHash = resultsHash;
                     //todo: once we have the vacancy posted date (March 2015) we may store this instead of the processed date
                     savedSearch.DateProcessed = DateTime.UtcNow;
-                    _savedSearchWriteRepository.Save(savedSearch);
 
                     if (savedSearch.AlertsEnabled)
                     {
@@ -135,6 +134,8 @@
 
                         _savedSearchAlertRepository.Save(savedSearchAlert);
                     }
+
+                    _savedSearchWriteRepository.Save(savedSearch);
                 }
             }
         }

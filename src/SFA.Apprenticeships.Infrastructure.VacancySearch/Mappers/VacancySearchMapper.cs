@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using Application.Interfaces.Vacancies;
     using Common.Mappers;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Elastic.Common.Entities;
+    using ApprenticeshipSummary = Elastic.Common.Entities.ApprenticeshipSummary;
 
     public class VacancySearchMapper : MapperEngine
     {

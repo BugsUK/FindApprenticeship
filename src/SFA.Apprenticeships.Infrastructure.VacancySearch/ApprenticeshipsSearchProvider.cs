@@ -8,11 +8,12 @@
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
-    using Elastic.Common.Entities;
     using Nest;
     using Newtonsoft.Json.Linq;
+    using ApprenticeshipSummary = Elastic.Common.Entities.ApprenticeshipSummary;
 
     public class ApprenticeshipsSearchProvider : IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>
     {

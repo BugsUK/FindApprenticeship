@@ -106,6 +106,7 @@
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchMode.cs" />
+    <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchResponse.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\VacancyDetail.cs" />

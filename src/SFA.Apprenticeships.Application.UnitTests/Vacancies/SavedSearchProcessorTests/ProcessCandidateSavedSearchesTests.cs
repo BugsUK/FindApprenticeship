@@ -256,7 +256,6 @@
             savedSearchAlert.Results.Should().NotBeNull();
             var results = savedSearchAlert.Results.ToList();
             results.Count.Should().Be(3);
-            results[0].GetType().Should().Be(typeof (ApprenticeshipSummary));
             savedSearchAlert.BatchId.HasValue.Should().BeFalse();
             savedSearchAlert.SentDateTime.HasValue.Should().BeFalse();
         }

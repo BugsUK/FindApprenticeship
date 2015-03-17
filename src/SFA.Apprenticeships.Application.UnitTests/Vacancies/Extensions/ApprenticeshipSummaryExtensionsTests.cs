@@ -3,6 +3,7 @@
     using System.Linq;
     using Application.Vacancies.Extensions;
     using Builders;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Interfaces.Vacancies;
     using NUnit.Framework;

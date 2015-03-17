@@ -3,6 +3,7 @@
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using StructureMap.Configuration.DSL;

@@ -92,5 +92,16 @@
             parameters.Frameworks.Should().BeEquivalentTo(subCategories);
             parameters.SearchField.Should().Be(ApprenticeshipSearchField.All);
         }
+
+        [Test]
+        public void LatLongTest()
+        {
+            var savedSearch = new SavedSearchBuilder().WithLatLong(1.1, 2.1).Build();
+            var parameters = SearchParametersFactory.Create(savedSearch);
+            parameters.Location.Should().NotBeNull();
+            parameters.Location.GeoPoint.Should().NotBeNull();
+            parameters.Location.GeoPoint.Latitude.Should().Be(1.1);
+            parameters.Location.GeoPoint.Longitude.Should().Be(2.1);
+        }
     }
 }

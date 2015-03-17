@@ -16,12 +16,28 @@
                 searchField = ApprenticeshipSearchField.All;
             }
 
+            var location = new Location
+            {
+                Name = savedSearch.Location
+            };
+
+            if (savedSearch.HasGeoPoint())
+            {
+                location.GeoPoint = new GeoPoint
+                {
+                    // ReSharper disable PossibleInvalidOperationException HasGeoPoint() checks for this
+                    Latitude = savedSearch.Latitude.Value,
+                    Longitude = savedSearch.Longitude.Value
+                    // ReSharper restore PossibleInvalidOperationException
+                };
+            }
+
             var parameters = new ApprenticeshipSearchParameters
             {
                 PageNumber = 1,
                 PageSize = 5,
 
-                Location = new Location {Name = savedSearch.Location},
+                Location = location,
                 SearchRadius = savedSearch.WithinDistance,
                 SortType = VacancySearchSortType.RecentlyAdded,
                 ApprenticeshipLevel = savedSearch.ApprenticeshipLevel,

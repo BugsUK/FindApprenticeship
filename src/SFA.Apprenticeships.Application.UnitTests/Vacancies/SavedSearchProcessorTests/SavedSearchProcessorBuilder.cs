@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.SavedSearchProcessorTests
 {
     using Application.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Locations;

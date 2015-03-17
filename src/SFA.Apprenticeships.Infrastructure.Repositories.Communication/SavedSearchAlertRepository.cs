@@ -43,7 +43,7 @@
 
         public void Save(SavedSearchAlert savedSearchAlert)
         {
-            _logger.Debug("Calling repository to save saved search alert with Id={0} for saved search with Id={1} and CandidateId={2}", savedSearchAlert.EntityId, savedSearchAlert.Parameters.CandidateId);
+            _logger.Debug("Calling repository to save saved search alert with Id={0} for saved search with Id={1} and CandidateId={2}", savedSearchAlert.EntityId, savedSearchAlert.Parameters.EntityId, savedSearchAlert.Parameters.CandidateId);
 
             var mongoAlert = _mapper.Map<SavedSearchAlert, MongoSavedSearchAlert>(savedSearchAlert);
             UpdateEntityTimestamps(mongoAlert);
@@ -51,7 +51,7 @@
 
             Collection.Save(mongoAlert);
 
-            _logger.Debug("Saved saved search alert with Id={0} for saved search with Id={1} and CandidateId={2}", savedSearchAlert.EntityId, savedSearchAlert.Parameters.CandidateId);
+            _logger.Debug("Saved saved search alert with Id={0} for saved search with Id={1} and CandidateId={2}", savedSearchAlert.EntityId, savedSearchAlert.Parameters.EntityId, savedSearchAlert.Parameters.CandidateId);
         }
 
         public void Delete(SavedSearchAlert savedSearchAlert)

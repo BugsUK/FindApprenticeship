@@ -4,6 +4,7 @@
     using AutoMapper;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using ViewModels.VacancySearch;
 
     internal class ApprenticeshipSearchResultsResolver : ITypeConverter<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>
