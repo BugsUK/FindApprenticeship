@@ -78,7 +78,7 @@
             var searchUrl = savedSearch.SearchUrl();
 
             searchUrl.Should().NotBeNull();
-            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=Coventry&Longitude=2.1&Latitude=1.1&Hash=-1434161545&WithinDistance=10&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
+            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=Coventry&Longitude=2.1&Latitude=1.1&Hash=-94534883&WithinDistance=10&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
         }
 
         [Test]
