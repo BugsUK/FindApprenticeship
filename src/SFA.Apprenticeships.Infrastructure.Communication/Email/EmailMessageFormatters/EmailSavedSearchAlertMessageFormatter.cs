@@ -104,7 +104,7 @@
                     employerName = result.EmployerName,
                     description = result.Description,
                     closingDate = FormatDate(result.ClosingDate),
-                    distance = 42 // TODO: AG: US638: map to real value
+                    distance = result.Distance
                 })
             });
         }
@@ -124,9 +124,9 @@
             return string.Format("{0}{1}/{2}", HttpsScheme, _siteDomainName, savedSearchAlert.Parameters.SearchUrl().Value);
         }
 
-        private string FormatVacancyDetailsUrl(ApprenticeshipSummary apprenticeshipSummary)
+        private string FormatVacancyDetailsUrl(ApprenticeshipSearchResponse apprenticeshipSearchResponse)
         {
-            return string.Format("{0}{1}/apprenticeship/{2}", HttpsScheme, _siteDomainName, apprenticeshipSummary.Id);
+            return string.Format("{0}{1}/apprenticeship/{2}", HttpsScheme, _siteDomainName, apprenticeshipSearchResponse.Id);
         }
 
         private void PopulateCandidateName(EmailRequest request, ISendGrid message)
