@@ -5,11 +5,10 @@
     using System.Linq;
     using Application.Interfaces.Communications;
     using Builder;
-    using Communication.Email.EmailMessageFormatters;
+    using Builders;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Configuration;
     using FluentAssertions;
-    using Moq;
+    using Helpers;
     using Newtonsoft.Json;
     using NUnit.Framework;
 

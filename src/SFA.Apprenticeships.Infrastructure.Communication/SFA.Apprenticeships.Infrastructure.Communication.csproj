@@ -76,6 +76,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -114,6 +115,7 @@
     </Compile>
     <Compile Include="Email\EmailFromResolvers\CandidateMessageEmailFromResolver.cs" />
     <Compile Include="Email\EmailMessageFormatter.cs" />
+    <Compile Include="Email\EmailMessageFormatters\EmailSavedSearchAlertMessageFormatter.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatter.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailSimpleMessageFormatter.cs" />
     <Compile Include="Email\EmailFromResolvers\HelpDeskMessageEmailFromResolver.cs" />
@@ -168,7 +170,12 @@
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Email\EmailTemplates\SavedSearchAlertsEmail.xslt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -15,7 +15,7 @@
         public const string OneSavedApplicationAboutToExpire = "<p>You've saved an application for an apprenticeship that is due to expire soon.</p>";
         public const string MoreThanOneSaveApplicationAboutToExpire = "<p>You've saved applications for apprenticeships that are due to close soon.</p>";
 
-        private string _siteDomainName;
+        private readonly string _siteDomainName;
 
         public EmailDailyDigestMessageFormatter(IConfigurationManager configurationManager)
         {

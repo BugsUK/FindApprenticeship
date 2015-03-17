@@ -123,16 +123,20 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Builder\ApplicationStatusAlertsBuilder.cs" />
+    <Compile Include="Builder\SavedSearchAlertsBuilder.cs" />
     <Compile Include="Commands\CandidateCommunicationCommandTests.cs" />
     <Compile Include="Commands\HelpDeskCommunicationCommandTests.cs" />
-    <Compile Include="Email\EmailMessageFormatters\DailyDigestEmailRequestBuilder.cs" />
+    <Compile Include="Email\EmailMessageFormatters\Builders\SavedSearchAlertEmailRequestBuilder.cs" />
+    <Compile Include="Email\EmailMessageFormatters\Builders\DailyDigestEmailRequestBuilder.cs" />
     <Compile Include="Builder\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\ApplicationStatusAlertEmailDailyDigestMessageFormatterTests.cs" />
-    <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterBuilder.cs" />
+    <Compile Include="Email\EmailMessageFormatters\Builders\EmailSavedSearchAlertMessageFormatterBuilder.cs" />
+    <Compile Include="Email\EmailMessageFormatters\Builders\EmailDailyDigestMessageFormatterBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterTestsBase.cs" />
+    <Compile Include="Email\EmailMessageFormatters\SavedSearchAlertEmailMessageFormatterTests.cs" />
     <Compile Include="Email\EmailMessageFormatters\ExpiringDraftEmailDailyDigestMessageFormatterTests.cs" />
-    <Compile Include="Email\EmailMessageFormatters\EmailRequestBuilder.cs" />
-    <Compile Include="Email\EmailMessageFormatters\SendGridMessageSubstitution.cs" />
+    <Compile Include="Email\EmailMessageFormatters\Builders\EmailRequestBuilder.cs" />
+    <Compile Include="Email\EmailMessageFormatters\Helpers\SendGridMessageSubstitution.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sms\Reach\ReachSmsDispatcherTests.cs" />
     <Compile Include="Sms\Reach\ReachSmsNumberFormatterTests.cs" />

@@ -6,6 +6,7 @@
     using Communication.Email.EmailMessageFormatters;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
+    using Helpers;
     using Moq;
     using SendGrid;
 

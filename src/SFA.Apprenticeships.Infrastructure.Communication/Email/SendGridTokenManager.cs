@@ -72,6 +72,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.ApplicationStatusAlerts:
                     emailTemplateToken = "Application.Status.Alert";
                     break;
+                case CommunicationTokens.SavedSearchAlerts:
+                    emailTemplateToken = "Saved.Search.Alerts";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("key", key, string.Format("Unknown communication token '{0}'.", key));
             }
