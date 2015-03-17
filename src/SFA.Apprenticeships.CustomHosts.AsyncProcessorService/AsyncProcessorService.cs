@@ -3,8 +3,11 @@
     using System.Net;
     using System.Threading;
     using EasyNetQ;
+    using Infrastructure.Azure.Common.IoC;
+    using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Communication.IoC;
+    using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Processes.Communications;
@@ -16,8 +19,11 @@
     using System;
     using System.Reflection;
     using System.ServiceProcess;
+    using Infrastructure.Repositories.Communication.IoC;
     using Infrastructure.Repositories.Users.IoC;
     using Infrastructure.Caching.Memory.IoC;
+    using Infrastructure.VacancyIndexer.IoC;
+    using Infrastructure.VacancySearch.IoC;
     using StructureMap;
 
     public partial class AsyncProcessorService : ServiceBase
@@ -63,18 +69,28 @@
 
         private void InitializeIoC()
         {
+            var config = new ConfigurationManager();
+            var useCacheSetting = config.TryGetAppSetting("UseCaching");
+            bool useCache;
+            bool.TryParse(useCacheSetting, out useCache);
+
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
+                x.AddRegistry<CommunicationRepositoryRegistry>();
+                x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(useCache));
                 x.AddRegistry<ProcessesRegistry>();
+                x.AddRegistry<VacancySearchRegistry>();
+                x.AddRegistry<VacancyIndexerRegistry>();
             });
         }
 
