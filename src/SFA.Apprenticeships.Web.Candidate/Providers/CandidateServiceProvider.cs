@@ -525,6 +525,8 @@
                 SearchMode = viewModel.SearchMode,
                 Keywords = viewModel.Keywords,
                 Location = viewModel.Location,
+                Latitude = viewModel.Latitude,
+                Longitude = viewModel.Longitude,
                 WithinDistance = viewModel.WithinDistance,
                 ApprenticeshipLevel = viewModel.ApprenticeshipLevel,
                 Category = viewModel.Category,

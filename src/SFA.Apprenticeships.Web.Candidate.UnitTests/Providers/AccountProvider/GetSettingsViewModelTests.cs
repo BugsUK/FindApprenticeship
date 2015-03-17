@@ -85,6 +85,8 @@
                 .With(s => s.Keywords, string.Empty)
                 .With(s => s.ApprenticeshipLevel, "All")
                 .With(s => s.Location, "CV1 2WT")
+                .With(s => s.Latitude, 1.1)
+                .With(s => s.Longitude, 2.1)
                 .With(s => s.WithinDistance, 5)
                 .With(s => s.SubCategoriesFullName, "Surveying, Construction Civil Engineering")
                 .CreateMany(1).ToList();

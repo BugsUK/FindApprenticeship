@@ -71,6 +71,17 @@
         }
 
         [Test]
+        public void LocationLatLongSearchUrl()
+        {
+            var savedSearch = new SavedSearchBuilder().WithinDistance(10).WithLocation("Coventry").WithLatLong(1.1d, 2.1d).Build();
+
+            var searchUrl = savedSearch.SearchUrl();
+
+            searchUrl.Should().NotBeNull();
+            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=Coventry&Longitude=2.1&Latitude=1.1&WithinDistance=10&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
+        }
+
+        [Test]
         public void KeywordSearchUrl()
         {
             var savedSearch = new SavedSearchBuilder().WithKeywords("engineering").WithinDistance(5).WithLocation("CV1 2WT").Build();

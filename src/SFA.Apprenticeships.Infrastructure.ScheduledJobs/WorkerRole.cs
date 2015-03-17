@@ -15,10 +15,12 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
+    using LocationLookup.IoC;
     using Logging;
     using Logging.IoC;
     using Microsoft.WindowsAzure;
     using Microsoft.WindowsAzure.ServiceRuntime;
+    using Postcode.IoC;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
@@ -137,6 +139,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<JobsRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
+                x.AddRegistry<LocationLookupRegistry>();
+                x.AddRegistry<PostcodeRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

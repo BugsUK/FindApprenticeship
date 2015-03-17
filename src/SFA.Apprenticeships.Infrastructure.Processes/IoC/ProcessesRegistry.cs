@@ -3,7 +3,9 @@
     using Application.Applications;
     using Application.Applications.Strategies;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Locations;
     using Application.Interfaces.ReferenceData;
+    using Application.Location;
     using Application.ReferenceData;
     using Application.Vacancies;
     using Applications;
@@ -51,6 +53,7 @@
             For<CandidateSavedSearchesConsumerAsync>().Use<CandidateSavedSearchesConsumerAsync>();
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
 
+            For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
         }
     }

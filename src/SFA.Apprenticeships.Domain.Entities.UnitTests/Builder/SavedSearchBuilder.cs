@@ -15,6 +15,8 @@
         private string _categoryFullName;
         private bool _alertsEnabled = true;
         private string _searchField = "All";
+        private double? _latitude;
+        private double? _longitude;
 
         public SavedSearch Build()
         {
@@ -23,6 +25,8 @@
                 SearchMode = _searchMode,
                 Keywords = _keywords,
                 Location = _location,
+                Latitude = _latitude,
+                Longitude = _longitude,
                 WithinDistance = _withinDistance,
                 ApprenticeshipLevel = _apprenticeshipLevel,
                 Category = _category,
@@ -92,6 +96,13 @@
         public SavedSearchBuilder WithSearchField(string searchField)
         {
             _searchField = searchField;
+            return this;
+        }
+
+        public SavedSearchBuilder WithLatLong(double latitude, double longitude)
+        {
+            _latitude = latitude;
+            _longitude = longitude;
             return this;
         }
     }

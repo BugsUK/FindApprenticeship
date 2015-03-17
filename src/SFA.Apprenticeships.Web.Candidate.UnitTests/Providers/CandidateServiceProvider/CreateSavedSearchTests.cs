@@ -57,6 +57,8 @@
             const ApprenticeshipSearchMode searchMode = ApprenticeshipSearchMode.Category;
             const string keywords = "chef";
             const string location = "Warwick";
+            const double latitude = 1.1;
+            const double longitude = 2.1;
             const int withinDistance = 15;
             const string apprenticeshipLevel = "Advanced";
             const string category = "MFP";
@@ -95,6 +97,7 @@
                 .WithSearchMode(searchMode)
                 .WithKeywords(keywords)
                 .WithLocation(location)
+                .WithLatLong(latitude, longitude)
                 .WithinDistance(withinDistance)
                 .WithApprenticeshipLevel(apprenticeshipLevel)
                 .WithCategory(category)
@@ -113,6 +116,8 @@
             savedSearch.SearchMode.Should().Be(searchMode);
             savedSearch.Keywords.Should().Be(keywords);
             savedSearch.Location.Should().Be(location);
+            savedSearch.Latitude.Should().Be(latitude);
+            savedSearch.Longitude.Should().Be(longitude);
             savedSearch.WithinDistance.Should().Be(withinDistance);
             savedSearch.ApprenticeshipLevel.Should().Be(apprenticeshipLevel);
             savedSearch.Category.Should().Be(category);
