@@ -41,11 +41,11 @@
 
         public void DeleteMessage(string queueName, string messageId, string popReceipt)
         {
-            _logger.Debug("Deleting Azure control queue item: '{0}'", queueName);
+            _logger.Info("Deleting Azure control queue message id: '{0}' from queue: '{1}", messageId, queueName);
 
             _azureCloudClient.DeleteMessage(queueName, messageId, popReceipt);
 
-            _logger.Debug("Deleted Azure control queue item: '{0}'", queueName);
+            _logger.Info("Deleted Azure control queue message id: '{0}' from queue: '{1}", messageId, queueName);
         }
     }
 }

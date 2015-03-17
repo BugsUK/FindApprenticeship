@@ -52,7 +52,7 @@
                 _logger.Warn("Found more than 1 control message found on queue '" + _queueName + " for '" + _jobName + "' job");
             }
 
-            _logger.Info("Found valid control message on queue '" + _queueName + " for '" + _jobName + "' job");
+            _logger.Info("Found valid control message on queue: '{0}' for job: '{1}' with message id: {2}", _queueName, _jobName, queueMessage.MessageId);
 
             return queueMessage;
         }
