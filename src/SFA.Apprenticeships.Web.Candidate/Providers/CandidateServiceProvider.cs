@@ -504,6 +504,7 @@
         {
             var categoryFullName = default(string);
             var subCategoriesFullName = default(string);
+            string[] subCategories = null;
             if (!string.IsNullOrEmpty(viewModel.Category))
             {
                 var category = viewModel.Categories.SingleOrDefault(c => c.CodeName == viewModel.Category);
@@ -513,7 +514,9 @@
 
                     if (viewModel.SubCategories != null && viewModel.SubCategories.Length > 0)
                     {
-                        var subCategoryFullNames = category.SubCategories.Where(sc => viewModel.SubCategories.Contains(sc.CodeName)).Select(sc => FullNameFormatter.Format(sc.FullName));
+                        var selectedSubCategories = category.SubCategories.Where(sc => viewModel.SubCategories.Contains(sc.CodeName)).ToList();
+                        subCategories = selectedSubCategories.Select(sc => sc.CodeName).ToArray();
+                        var subCategoryFullNames = selectedSubCategories.Select(sc => FullNameFormatter.Format(sc.FullName));
                         subCategoriesFullName = string.Join(", ", subCategoryFullNames);
                     }
                 }
@@ -532,7 +535,7 @@
                 ApprenticeshipLevel = viewModel.ApprenticeshipLevel,
                 Category = viewModel.Category,
                 CategoryFullName = categoryFullName,
-                SubCategories = viewModel.SubCategories,
+                SubCategories = subCategories,
                 SubCategoriesFullName = subCategoriesFullName,
                 SearchField = viewModel.SearchField
             };

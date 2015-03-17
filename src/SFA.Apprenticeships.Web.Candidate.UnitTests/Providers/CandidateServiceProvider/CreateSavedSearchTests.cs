@@ -131,6 +131,70 @@
         }
 
         [Test]
+        public void SubCategoriesMustBelongToCategory()
+        {
+            var candidateId = Guid.NewGuid();
+            const string category = "MFP";
+            var subCategories = new[] { "513", "540", "600" };
+            const string subCategoriesFullNames = "Surveying, Construction Civil Engineering";
+
+            var categories = new List<Category>
+            {
+                new Category
+                {
+                    CodeName = category,
+                    SubCategories = new []
+                    {
+                        new Category
+                        {
+                            CodeName = "513",
+                            FullName = "Surveying"
+                        },
+                        new Category
+                        {
+                            CodeName = "540",
+                            FullName = "Construction Civil Engineering"
+                        }
+                    }
+                },
+                new Category
+                {
+                    CodeName = "OTHER",
+                    SubCategories = new[]
+                    {
+                        new Category
+                        {
+                            CodeName = "600",
+                            FullName = "Should not be included"
+                        }
+                    }
+                }
+            };
+
+            SavedSearch savedSearch = null;
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>())).Callback<SavedSearch>(ss => { savedSearch = ss; });
+            var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
+            var viewModel = new ApprenticeshipSearchViewModelBuilder()
+                .WithCategory(category)
+                .WithSubCategories(subCategories)
+                .WithCategories(categories)
+                .Build();
+
+            var response = provider.CreateSavedSearch(candidateId, viewModel);
+
+            response.Should().NotBeNull();
+            candidateService.Verify(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>()), Times.Once);
+            savedSearch.Should().NotBeNull();
+
+            savedSearch.CandidateId.Should().Be(candidateId);
+            savedSearch.Category.Should().Be(category);
+            savedSearch.SubCategories.Length.Should().Be(2);
+            savedSearch.SubCategories.Should().NotContain("600");
+            savedSearch.SubCategoriesFullName.Should().Be(subCategoriesFullNames);
+        }
+
+        [Test]
         public void Error()
         {
             var candidateId = Guid.NewGuid();
