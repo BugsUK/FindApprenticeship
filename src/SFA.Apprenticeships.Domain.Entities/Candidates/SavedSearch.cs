@@ -24,6 +24,8 @@
 
         public double? Latitude { get; set; }
 
+        public int Hash { get; set; }
+
         public string Keywords { get; set; }
 
         //TODO: Verify that we are not saving this search parameter

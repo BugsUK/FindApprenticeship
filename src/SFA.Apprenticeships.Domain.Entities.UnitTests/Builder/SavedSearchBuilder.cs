@@ -36,6 +36,11 @@
                 AlertsEnabled = _alertsEnabled
             };
 
+            if (savedSearch.HasGeoPoint())
+            {
+                savedSearch.Hash = savedSearch.GetLatLonLocHash();
+            }
+
             return savedSearch;
         }
 

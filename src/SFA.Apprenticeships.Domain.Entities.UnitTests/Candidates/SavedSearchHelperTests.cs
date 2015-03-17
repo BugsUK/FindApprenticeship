@@ -67,7 +67,7 @@
             var searchUrl = savedSearch.SearchUrl();
 
             searchUrl.Should().NotBeNull();
-            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=Coventry&WithinDistance=10&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
+            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=Coventry&Hash=0&WithinDistance=10&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
         }
 
         [Test]
@@ -78,7 +78,7 @@
             var searchUrl = savedSearch.SearchUrl();
 
             searchUrl.Should().NotBeNull();
-            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=Coventry&Longitude=2.1&Latitude=1.1&WithinDistance=10&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
+            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=Coventry&Longitude=2.1&Latitude=1.1&Hash=-1434161545&WithinDistance=10&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
         }
 
         [Test]
@@ -89,7 +89,7 @@
             var searchUrl = savedSearch.SearchUrl();
 
             searchUrl.Should().NotBeNull();
-            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=CV1+2WT&Keywords=engineering&WithinDistance=5&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
+            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=CV1+2WT&Hash=0&Keywords=engineering&WithinDistance=5&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
         }
 
         [Test]
@@ -100,7 +100,7 @@
             var searchUrl = savedSearch.SearchUrl();
 
             searchUrl.Should().NotBeNull();
-            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=CV1+2WT&Keywords=engineering&WithinDistance=0&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
+            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Keyword&Location=CV1+2WT&Hash=0&Keywords=engineering&WithinDistance=0&ApprenticeshipLevel=All&SearchField=All&SearchAction=Search&LocationType=NonNational");
         }
 
         [Test]
@@ -111,7 +111,7 @@
             var searchUrl = savedSearch.SearchUrl();
 
             searchUrl.Should().NotBeNull();
-            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Category&WithinDistance=0&ApprenticeshipLevel=All&Category=CST&SearchField=All&SearchAction=Search&LocationType=NonNational");
+            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Category&Hash=0&WithinDistance=0&ApprenticeshipLevel=All&Category=CST&SearchField=All&SearchAction=Search&LocationType=NonNational");
         }
 
         [Test]
@@ -122,7 +122,7 @@
             var searchUrl = savedSearch.SearchUrl();
 
             searchUrl.Should().NotBeNull();
-            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Category&Location=CV1+2WT&WithinDistance=10&ApprenticeshipLevel=All&Category=CST&SearchField=All&SearchAction=Search&LocationType=NonNational&SubCategories=522&SubCategories=532");
+            searchUrl.Value.Should().Be("/apprenticeships?SearchMode=Category&Location=CV1+2WT&Hash=0&WithinDistance=10&ApprenticeshipLevel=All&Category=CST&SearchField=All&SearchAction=Search&LocationType=NonNational&SubCategories=522&SubCategories=532");
         }
     }
 }

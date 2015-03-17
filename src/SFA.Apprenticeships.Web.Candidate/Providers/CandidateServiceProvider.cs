@@ -527,6 +527,7 @@
                 Location = viewModel.Location,
                 Latitude = viewModel.Latitude,
                 Longitude = viewModel.Longitude,
+                Hash = viewModel.Hash,
                 WithinDistance = viewModel.WithinDistance,
                 ApprenticeshipLevel = viewModel.ApprenticeshipLevel,
                 Category = viewModel.Category,

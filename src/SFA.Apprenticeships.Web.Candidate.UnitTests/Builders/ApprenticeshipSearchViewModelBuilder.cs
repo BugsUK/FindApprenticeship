@@ -41,6 +41,12 @@
                 Categories = _categories,
                 ViewModelMessage = _viewModelMessage
             };
+
+            if (viewModel.Latitude.HasValue && viewModel.Longitude.HasValue)
+            {
+                viewModel.Hash = viewModel.LatLonLocHash();
+            }
+
             return viewModel;
         }
 

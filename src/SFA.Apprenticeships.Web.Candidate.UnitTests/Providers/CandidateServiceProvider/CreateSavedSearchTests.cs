@@ -118,6 +118,7 @@
             savedSearch.Location.Should().Be(location);
             savedSearch.Latitude.Should().Be(latitude);
             savedSearch.Longitude.Should().Be(longitude);
+            savedSearch.Hash.Should().Be(string.Format("{0}{1}{2}", longitude, latitude, location).GetHashCode());
             savedSearch.WithinDistance.Should().Be(withinDistance);
             savedSearch.ApprenticeshipLevel.Should().Be(apprenticeshipLevel);
             savedSearch.Category.Should().Be(category);

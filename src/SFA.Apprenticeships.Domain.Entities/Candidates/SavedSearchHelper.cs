@@ -75,5 +75,10 @@
         {
             return savedSearch.Latitude.HasValue && savedSearch.Longitude.HasValue;
         }
+
+        public static int GetLatLonLocHash(this SavedSearch savedSearch)
+        {
+            return string.Format("{0}{1}{2}", savedSearch.Longitude, savedSearch.Latitude, savedSearch.Location).GetHashCode();
+        }
     }
 }

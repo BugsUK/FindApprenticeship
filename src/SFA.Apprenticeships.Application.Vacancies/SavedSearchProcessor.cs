@@ -104,8 +104,9 @@
                         savedSearch.Location = location.Name;
                         savedSearch.Latitude = location.GeoPoint.Latitude;
                         savedSearch.Longitude = location.GeoPoint.Longitude;
+                        savedSearch.Hash = savedSearch.GetLatLonLocHash();
 
-                        //Update saved search now we know the lat/long
+                        //Update saved search now we know the lat/long/hash
                         _savedSearchWriteRepository.Save(savedSearch);
                     }
                     else
