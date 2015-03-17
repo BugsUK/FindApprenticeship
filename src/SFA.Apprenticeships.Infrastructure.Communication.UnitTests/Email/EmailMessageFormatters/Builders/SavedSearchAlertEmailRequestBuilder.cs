@@ -25,7 +25,11 @@
         public EmailRequest Build()
         {
             var candidateId = Guid.NewGuid();
-            var candidate = new CandidateBuilder(candidateId).Build();
+ 
+            var candidate = new CandidateBuilder(candidateId)
+                .FirstName("Jane Doe")
+                .Build();
+ 
             var communicationRequest = CommunicationRequestFactory.GetSavedSearchAlertCommunicationRequest(candidate, _savedSearchAlerts);
             var emailRequest = new EmailRequestBuilder().WithMessageType(MessageTypes.SavedSearchAlert).WithTokens(communicationRequest.Tokens).Build();
 

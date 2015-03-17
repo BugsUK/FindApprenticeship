@@ -40,11 +40,6 @@
             var json = TransformTokenValueToJson(value);
             var html = TransformJsonToHtml(json);
 
-            // TODO: AG: US638: remove this hack.
-            html = html.Replace("&amp;", "&");
-
-            // TODO: AG: US638: remove debugging aid.
-            Console.WriteLine(html);
             AddSubstitutionTo(message, token, html);
         }
 
@@ -124,6 +119,7 @@
             return string.Format("{0}{1}/{2}", HttpsScheme, _siteDomainName, savedSearchAlert.Parameters.SearchUrl().Value);
         }
 
+        // TODO: AG: US638: move to helper class as per SavedSearchHelper::SearchUrl().
         private string FormatVacancyDetailsUrl(ApprenticeshipSearchResponse apprenticeshipSearchResponse)
         {
             return string.Format("{0}{1}/apprenticeship/{2}", HttpsScheme, _siteDomainName, apprenticeshipSearchResponse.Id);

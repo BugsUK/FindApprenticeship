@@ -7,6 +7,7 @@
     public class CandidateBuilder
     {
         private readonly Guid _candidateId;
+        private string _firstName;
         private string _phoneNumber;
         private string _mobileVerificationCode;
         private bool _allowEmail;
@@ -19,10 +20,16 @@
         private bool _sendApprenticeshipApplicationsExpiring;
         private bool _sendSavedSearchAlerts;
         private bool _sendMarketingComms;
-        
+
         public CandidateBuilder(Guid candidateId)
         {
             _candidateId = candidateId;
+        }
+
+        public CandidateBuilder FirstName(string firstName)
+        {
+            _firstName = firstName;
+            return this;
         }
 
         public CandidateBuilder PhoneNumber(string phoneNumber)
@@ -98,6 +105,7 @@
                 EntityId = _candidateId,
                 RegistrationDetails = new RegistrationDetails
                 {
+                    FirstName = _firstName,
                     PhoneNumber = _phoneNumber
                 },
                 CommunicationPreferences = new CommunicationPreferences

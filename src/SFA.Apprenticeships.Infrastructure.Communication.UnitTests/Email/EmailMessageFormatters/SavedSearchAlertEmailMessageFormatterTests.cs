@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Email.EmailMessageFormatters
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Builder;
@@ -24,7 +25,8 @@
         {
             // Arrange.
             var savedSearchAlerts = new SavedSearchAlertsBuilder().Build();
-            var request = new SavedSearchAlertEmailRequestBuilder().WithSavedSearchAlerts(savedSearchAlerts).Build();
+            var request = new SavedSearchAlertEmailRequestBuilder()
+                .WithSavedSearchAlerts(savedSearchAlerts).Build();
 
             List<SendGridMessageSubstitution> substitutions;
 
@@ -40,29 +42,11 @@
             substitution.Should().NotBeNull();
             // ReSharper disable once PossibleNullReferenceException
             substitution.SubstitutionValues.Count.Should().Be(1);
-        }
 
-        [Test]
-        public void ShouldSubsituteSavedSearchAlerts()
-        {
-            // Arrange.
-            var savedSearchAlerts = new SavedSearchAlertsBuilder().Build();
-            var emailRequest = new SavedSearchAlertEmailRequestBuilder().WithSavedSearchAlerts(savedSearchAlerts).Build();
+            var substitutionValue = substitution.SubstitutionValues.First();
 
-            List<SendGridMessageSubstitution> substitutions;
-
-            var message = GetMockSendGridMessage(out substitutions);
-            var formatter = new EmailSavedSearchAlertMessageFormatterBuilder().Build();
-
-            // Act.
-            formatter.PopulateMessage(emailRequest, message.Object);
-
-            // Assert.
-            var substitution = substitutions.FirstOrDefault(s => s.ReplacementTag == SavedSearchAlertsTag);
-
-            substitution.Should().NotBeNull();
-            // ReSharper disable once PossibleNullReferenceException
-            substitution.SubstitutionValues.Count.Should().Be(1);
+            substitutionValue.Should().NotBeEmpty();
+            Console.WriteLine(substitutionValue);
         }
 
         [Test]
@@ -93,9 +77,10 @@
             // ReSharper disable once PossibleNullReferenceException
             substitution.SubstitutionValues.Count.Should().Be(1);
 
-            var fragment = substitution.SubstitutionValues.First();
+            var substitutionValue = substitution.SubstitutionValues.First();
 
-            fragment.Should().NotBeEmpty();
+            substitutionValue.Should().NotBeEmpty();
+            Console.WriteLine(substitutionValue);
         }
 
         [Test]
@@ -126,9 +111,10 @@
             // ReSharper disable once PossibleNullReferenceException
             substitution.SubstitutionValues.Count.Should().Be(1);
 
-            var fragment = substitution.SubstitutionValues.First();
+            var substitutionValue = substitution.SubstitutionValues.First();
 
-            fragment.Should().NotBeEmpty();
+            substitutionValue.Should().NotBeEmpty();
+            Console.WriteLine(substitutionValue);
         }
 
         #region Helpers
