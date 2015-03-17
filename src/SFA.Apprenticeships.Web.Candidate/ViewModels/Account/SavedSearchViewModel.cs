@@ -19,5 +19,7 @@
         public string ApprenticeshipLevel { get; set; }
 
         public string SubCategoriesFullNames { get; set; }
+
+        public DateTime? DateProcessed { get; set; }
     }
 }

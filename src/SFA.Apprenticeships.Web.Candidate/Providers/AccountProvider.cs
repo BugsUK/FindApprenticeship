@@ -50,8 +50,10 @@
                 settings.SendApplicationSubmitted = candidate.CommunicationPreferences.SendApplicationSubmitted;
                 settings.SendApplicationStatusChanges = candidate.CommunicationPreferences.SendApplicationStatusChanges;
                 settings.SendApprenticeshipApplicationsExpiring = candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring;
-                settings.SendSavedSearchAlerts = candidate.CommunicationPreferences.SendSavedSearchAlerts;
                 settings.SendMarketingCommunications = candidate.CommunicationPreferences.SendMarketingCommunications;
+
+                settings.SendSavedSearchAlertsViaEmail = candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail;
+                settings.SendSavedSearchAlertsViaText = candidate.CommunicationPreferences.SendSavedSearchAlertsViaText;
 
                 var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel()).ToList();
 
@@ -88,9 +90,11 @@
                 candidate.CommunicationPreferences.SendApplicationSubmitted = model.SendApplicationSubmitted;
                 candidate.CommunicationPreferences.SendApplicationStatusChanges = model.SendApplicationStatusChanges;
                 candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring = model.SendApprenticeshipApplicationsExpiring;
-                candidate.CommunicationPreferences.SendSavedSearchAlerts = model.SendSavedSearchAlerts;
                 candidate.CommunicationPreferences.SendMarketingCommunications = model.SendMarketingCommunications;
-                
+
+                candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail = model.SendSavedSearchAlertsViaEmail;
+                candidate.CommunicationPreferences.SendSavedSearchAlertsViaText = model.SendSavedSearchAlertsViaText;
+
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
                 _candidateService.SaveCandidate(candidate);
 

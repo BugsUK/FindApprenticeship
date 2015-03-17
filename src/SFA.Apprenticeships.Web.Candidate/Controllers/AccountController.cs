@@ -42,11 +42,11 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
-        public async Task<ActionResult> Settings()
+        public async Task<ActionResult> Settings(SettingsViewModel.SettingsMode mode = SettingsViewModel.SettingsMode.YourAccount)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Settings(UserContext.CandidateId);
+                var response = _accountMediator.Settings(UserContext.CandidateId, mode);
                 return View(response.ViewModel);
             });
         }
@@ -75,7 +75,7 @@
                     case AccountMediatorCodes.Settings.Success:
                         UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
                         SetUserMessage(AccountPageMessages.SettingsUpdated);
-                        return RedirectToRoute(CandidateRouteNames.Settings);
+                        return RedirectToRoute(CandidateRouteNames.Settings, new { mode = response.ViewModel.Mode });
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }

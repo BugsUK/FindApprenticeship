@@ -548,15 +548,9 @@
 
                 var saveCandidate = false;
 
-                if (!candidate.CommunicationPreferences.SendSavedSearchAlerts)
+                if (!candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail && !candidate.CommunicationPreferences.SendSavedSearchAlertsViaText)
                 {
-                    candidate.CommunicationPreferences.SendSavedSearchAlerts = true;
-                    saveCandidate = true;
-                }
-
-                if (!candidate.CommunicationPreferences.AllowEmail && !candidate.CommunicationPreferences.AllowMobile)
-                {
-                    candidate.CommunicationPreferences.AllowEmail = true;
+                    candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail = true;
                     saveCandidate = true;
                 }
 

@@ -14,5 +14,11 @@
 
             return communicationPreferences.AllowEmail || (communicationPreferences.AllowMobile && communicationPreferences.VerifiedMobile);
         }
+
+        public static bool ShouldSendSavedSearchAlerts(this Candidate candidate)
+        {
+            var communicationPreferences = candidate.CommunicationPreferences;
+            return communicationPreferences.SendSavedSearchAlertsViaEmail || (communicationPreferences.SendSavedSearchAlertsViaText && communicationPreferences.AllowMobile && communicationPreferences.VerifiedMobile);
+        }
     }
 }

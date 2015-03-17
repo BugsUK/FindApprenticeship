@@ -20,8 +20,10 @@
         private bool _sendApplicationSubmitted;
         private bool _sendApplicationStatusChanges;
         private bool _sendApprenticeshipApplicationsExpiring;
-        private bool _sendSavedSearchAlerts;
         private bool _sendMarketingComms;
+
+        private bool _sendSavedSearchAlertsViaEmail;
+        private bool _sendSavedSearchAlertsViaText;
 
         private IList<SavedSearchViewModel> _savedSearches;
 
@@ -97,15 +99,21 @@
             return this;
         }
 
-        public SettingsViewModelBuilder SendSavedSearchAlerts(bool sendSavedSearchAlerts)
-        {
-            _sendSavedSearchAlerts = sendSavedSearchAlerts;
-            return this;
-        }
-
         public SettingsViewModelBuilder SendMarketingComms(bool sendMarketingComms)
         {
             _sendMarketingComms = sendMarketingComms;
+            return this;
+        }
+
+        public SettingsViewModelBuilder SendSavedSearchAlertsViaEmail(bool sendSavedSearchAlertsViaEmail)
+        {
+            _sendSavedSearchAlertsViaEmail = sendSavedSearchAlertsViaEmail;
+            return this;
+        }
+
+        public SettingsViewModelBuilder SendSavedSearchAlertsViaText(bool sendSavedSearchAlertsViaText)
+        {
+            _sendSavedSearchAlertsViaText = sendSavedSearchAlertsViaText;
             return this;
         }
 
@@ -141,8 +149,10 @@
                 SendApplicationSubmitted = _sendApplicationSubmitted,
                 SendApplicationStatusChanges = _sendApplicationStatusChanges,
                 SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
-                SendSavedSearchAlerts = _sendSavedSearchAlerts,
                 SendMarketingCommunications = _sendMarketingComms,
+
+                SendSavedSearchAlertsViaEmail = _sendSavedSearchAlertsViaEmail,
+                SendSavedSearchAlertsViaText = _sendSavedSearchAlertsViaText,
 
                 SavedSearches = _savedSearches
             };

@@ -11,6 +11,14 @@
     [Validator(typeof(SettingsViewModelClientValidator))]
     public class SettingsViewModel
     {
+        public enum SettingsMode
+        {
+            YourAccount,
+            SavedSearches
+        }
+
+        public SettingsMode Mode { get; set; }
+
         [Display(Name = SettingsViewModelMessages.FirstnameMessages.LabelText)]
         public string Firstname { get; set; }
 
@@ -45,11 +53,14 @@
         [Display(Name = SettingsViewModelMessages.ApplicationExpiring.LabelText)]
         public bool SendApprenticeshipApplicationsExpiring { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.SavedSearchAlert.LabelText)]
-        public bool SendSavedSearchAlerts { get; set; }
-
         [Display(Name = SettingsViewModelMessages.MarketingComms.LabelText)]
         public bool SendMarketingCommunications { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.SavedSearch.SendSavedSearchAlertsViaEmailLabelText)]
+        public bool SendSavedSearchAlertsViaEmail { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.SavedSearch.SendSavedSearchAlertsViaTextLabelText)]
+        public bool SendSavedSearchAlertsViaText { get; set; }
 
         public IList<SavedSearchViewModel> SavedSearches { get; set; }
     }

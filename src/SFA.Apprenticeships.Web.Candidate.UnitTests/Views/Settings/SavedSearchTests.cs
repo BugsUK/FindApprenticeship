@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Settings
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Policy;
@@ -84,6 +85,10 @@
             link.GetAttributeValue("href", string.Empty).Should().Be(searchUrl);
             link.InnerText.Should().Be(name);
 
+            //Last alert span should not be present
+            var lastAlertSpanPresent = savedSearchElement.ChildNodes.All(n => n.Name != "span");
+            lastAlertSpanPresent.Should().BeFalse();
+
             var savedSearchPropertyList = savedSearchElement.ChildNodes.First(n => n.Name == "ul");
             var savedSearchProperties = savedSearchPropertyList.ChildNodes.Where(n => n.Name == "li").ToList();
 
@@ -123,6 +128,26 @@
             savedSearchProperties.Count.Should().Be(3);
 
             savedSearchProperties[1].InnerText.Should().Be(string.Format("Sub-categories: {0}", subCategoriesFullName));
+        }
+
+        [Test]
+        public void OneSavedSearchWithDateProcessed()
+        {
+            var savedSearchViewModels = new Fixture().Build<SavedSearchViewModel>()
+                .With(s => s.DateProcessed, DateTime.UtcNow)
+                .CreateMany(1).ToList();
+            var viewModel = new SettingsViewModelBuilder().WithSavedSearchViewModels(savedSearchViewModels).Build();
+
+            var result = new SettingsViewBuilder().With(viewModel).Render();
+
+            var savedSearchesDiv = result.GetElementbyId("savedSearches");
+            savedSearchesDiv.Should().NotBeNull();
+
+            var savedSearchElement = savedSearchesDiv.ChildNodes.First(n => n.Name == "div");
+            savedSearchElement.Should().NotBeNull();
+
+            var lastAlertSpan = savedSearchElement.ChildNodes.First(n => n.Name == "span");
+            lastAlertSpan.InnerText.Should().Be("(Last alert: today)");
         }
 
         [TestCase(2)]

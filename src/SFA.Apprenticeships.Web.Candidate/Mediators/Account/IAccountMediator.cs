@@ -14,7 +14,7 @@
 
         MediatorResponse DismissTraineeshipPrompts(Guid candidateId);
 
-        MediatorResponse<SettingsViewModel> Settings(Guid candidateId);
+        MediatorResponse<SettingsViewModel> Settings(Guid candidateId, SettingsViewModel.SettingsMode mode);
 
         MediatorResponse<SettingsViewModel> SaveSettings(Guid candidateId, SettingsViewModel settingsViewModel);
 

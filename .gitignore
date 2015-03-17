@@ -152,6 +152,9 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 
+# NCrunch
+_NCrunch*/
+
 # =========================
 # Windows detritus
 # =========================

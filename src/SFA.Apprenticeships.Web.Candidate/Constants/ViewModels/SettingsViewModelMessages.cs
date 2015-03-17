@@ -56,11 +56,6 @@
             public const string LabelText = "an apprenticeship is approaching its closing date";
         }
 
-        public static class SavedSearchAlert
-        {
-            public const string LabelText = "you have a saved search alert";
-        }
-
         public static class MarketingComms
         {
             public const string LabelText = "we send you updates on news and information";
@@ -68,6 +63,8 @@
 
         public static class SavedSearch
         {
+            public const string SendSavedSearchAlertsViaEmailLabelText = "Email";
+            public const string SendSavedSearchAlertsViaTextLabelText = "Text";
             public const string AlertsEnabledLabelText = "Alert me for this search";
         }
     }

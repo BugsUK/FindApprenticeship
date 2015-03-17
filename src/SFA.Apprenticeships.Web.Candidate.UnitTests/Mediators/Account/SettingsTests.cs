@@ -17,7 +17,7 @@
             accountProviderMock.Setup(x => x.GetSettingsViewModel(It.IsAny<Guid>())).Returns(new SettingsViewModel());
             var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
 
-            var response = accountMediator.Settings(Guid.NewGuid());
+            var response = accountMediator.Settings(Guid.NewGuid(), SettingsViewModel.SettingsMode.YourAccount);
             response.AssertCode(AccountMediatorCodes.Settings.Success);
         }
     }

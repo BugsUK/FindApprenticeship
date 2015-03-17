@@ -3,13 +3,11 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Candidates;
-    using Builders;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using NUnit.Framework.Constraints;
     using Ploeh.AutoFixture;
 
     [TestFixture]
@@ -48,14 +46,14 @@
         [TestCase(true, true, true, true, true)]
         [TestCase(false, true, false, true, false)]
         [TestCase(true, false, true, false, true)]
-        public void TestMarketingMappings(bool sendApplicationSubmitted, bool sendApplicationStatusChanges, bool sendApprenticeshipApplicationsExpiring, bool sendSavedSearchAlerts, bool sendMarketingCommunications)
+        public void TestMarketingMappings(bool sendApplicationSubmitted, bool sendApplicationStatusChanges, bool sendApprenticeshipApplicationsExpiring, bool sendSavedSearchAlertsViaEmail, bool sendMarketingCommunications)
         {
             var candidateId = Guid.NewGuid();
             var candidate = new CandidateBuilder(candidateId)
                 .SendApplicationSubmitted(sendApplicationSubmitted)
                 .SendApplicationStatusChanges(sendApplicationStatusChanges)
                 .SendApprenticeshipApplicationsExpiring(sendApprenticeshipApplicationsExpiring)
-                .SendSavedSearchAlerts(sendSavedSearchAlerts)
+                .SendSavedSearchAlerts(sendSavedSearchAlertsViaEmail)
                 .SendMarketingComms(sendMarketingCommunications)
                 .Build();
             var candidateService = new Mock<ICandidateService>();
@@ -68,8 +66,9 @@
             viewModel.SendApplicationSubmitted.Should().Be(sendApplicationSubmitted);
             viewModel.SendApplicationStatusChanges.Should().Be(sendApplicationStatusChanges);
             viewModel.SendApprenticeshipApplicationsExpiring.Should().Be(sendApprenticeshipApplicationsExpiring);
-            viewModel.SendSavedSearchAlerts.Should().Be(sendSavedSearchAlerts);
             viewModel.SendMarketingCommunications.Should().Be(sendMarketingCommunications);
+
+            viewModel.SendSavedSearchAlertsViaEmail.Should().Be(sendSavedSearchAlertsViaEmail);
         }
 
         [TestCase(true)]
@@ -89,6 +88,7 @@
                 .With(s => s.Longitude, 2.1)
                 .With(s => s.WithinDistance, 5)
                 .With(s => s.SubCategoriesFullName, "Surveying, Construction Civil Engineering")
+                .With(s => s.DateProcessed, new DateTime(2015, 01, 01))
                 .CreateMany(1).ToList();
             candidateService.Setup(cs => cs.RetrieveSavedSearches(candidateId)).Returns(savedSearches);
             var provider = new AccountProviderBuilder().With(candidateService).Build();
@@ -107,6 +107,8 @@
             savedSearch.AlertsEnabled.Should().Be(alertsEnabled);
             savedSearch.ApprenticeshipLevel.Should().Be("All");
             savedSearch.SubCategoriesFullNames.Should().Be("Surveying, Construction Civil Engineering");
+            savedSearch.DateProcessed.HasValue.Should().BeTrue();
+            savedSearch.DateProcessed.Should().Be(new DateTime(2015, 01, 01));
         }
     }
 }

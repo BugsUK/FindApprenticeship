@@ -2,6 +2,7 @@
 {
     using System;
     using Common.Framework;
+    using FluentAssertions;
     using NUnit.Framework;
 
     [TestFixture]
@@ -48,6 +49,29 @@
             var closingDate = DateTime.Now.Date.AddDays(daysToClosing);
             var friendlyClosingDate = closingDate.ToFriendlyClosingToday();
             Assert.AreEqual(friendlyClosingDate, showToday ? "today" : closingDate.ToString("dd MMM yyyy"));
+        }
+
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(7)]
+        [TestCase(28)]
+        public void ToFriendlyDaysAgo(int daysAgo)
+        {
+            var dateProcessed = DateTime.UtcNow.AddDays(daysAgo);
+            var friendlyDaysAgo = dateProcessed.ToFriendlyDaysAgo();
+            if (daysAgo == 0)
+            {
+                friendlyDaysAgo.Should().Be("today");
+            }
+            else if (daysAgo == 1)
+            {
+                friendlyDaysAgo.Should().Be("yesterday");
+            }
+            else
+            {
+                friendlyDaysAgo.Should().Be(daysAgo + " days ago");
+            }
         }
     }
 }

@@ -13,8 +13,9 @@
             SendApplicationSubmitted = true;
             SendApplicationStatusChanges = true;
             SendApprenticeshipApplicationsExpiring = true;
-            SendSavedSearchAlerts = true;
             SendMarketingCommunications = true;
+            SendSavedSearchAlertsViaEmail = true;
+            SendSavedSearchAlertsViaText = false;
         }
 
         public bool AllowEmail { get; set; }
@@ -33,8 +34,10 @@
 
         public bool SendApprenticeshipApplicationsExpiring { get; set; }
 
-        public bool SendSavedSearchAlerts { get; set; }
-
         public bool SendMarketingCommunications { get; set; }
+
+        public bool SendSavedSearchAlertsViaEmail { get; set; }
+
+        public bool SendSavedSearchAlertsViaText { get; set; }
     }
 }

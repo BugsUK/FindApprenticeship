@@ -227,8 +227,8 @@
             candidateService.Verify(cs => cs.GetCandidate(candidateId), Times.Once);
             candidateService.Verify(cs => cs.SaveCandidate(candidate), Times.Once);
             candidate.Should().NotBeNull();
-            candidate.CommunicationPreferences.AllowEmail.Should().BeTrue();
-            candidate.CommunicationPreferences.SendSavedSearchAlerts.Should().BeTrue();
+            candidate.CommunicationPreferences.AllowEmail.Should().BeFalse();
+            candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail.Should().BeTrue();
         }
     }
 }

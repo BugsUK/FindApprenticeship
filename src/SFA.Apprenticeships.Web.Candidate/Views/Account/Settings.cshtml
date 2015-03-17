@@ -1,4 +1,5 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Account.SettingsViewModel
+﻿@using SFA.Apprenticeships.Web.Candidate.ViewModels.Account
+@model SettingsViewModel
 
 @{
     ViewBag.Title = "Settings - Find an apprenticeship";
@@ -21,108 +22,144 @@
     </div>
 </div>
 
-<div class="panel-indent">
-    <p class="text">Your changes will be seen on any draft or new applications. Submitted applications will continue to show your old details.</p>
-</div>
-
 @using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <fieldset>
-        <legend class="heading-large">Personal details</legend>
-        @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
-        @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
-        @Html.EditorFor(r => r.DateOfBirth)
-        @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/settings/findaddress" })
-        @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" }, verified: Model.VerifiedMobile)
 
-        <div id="accountSettings2">
-            <h3 class="heading-large">How we contact you</h3>
+        @{
+            var yourAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.YourAccount ? " active" : "";
+            var savedSearchesTabClass = Model.Mode == SettingsViewModel.SettingsMode.SavedSearches ? " active" : "";
+        }
+
+        <nav class="tabbed-nav">
+            @Html.RouteLink("Your account", CandidateRouteNames.Settings, new {mode = SettingsViewModel.SettingsMode.YourAccount}, new {@id = "your-account-tab-control", @class = "tabbed-tab no-js" + yourAccountTabClass, tab = "#tab1"})
+            @Html.RouteLink("Saved searches", CandidateRouteNames.Settings, new {mode = SettingsViewModel.SettingsMode.SavedSearches}, new {@id = "saved-searches-tab-control", @class = "tabbed-tab no-js" + savedSearchesTabClass, tab = "#tab2"})
+        </nav>
+        
+        @Html.HiddenFor(m => m.Mode)
+
+        <div class="tabbed-content @yourAccountTabClass">
+
+            <legend class="heading-large">Personal details</legend>
+
+            <div class="panel-indent">
+                <p class="text">Your changes will be seen on any draft or new applications. Submitted applications will continue to show your old details.</p>
+            </div>
+
+            @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new {@class = "form-group-compound"}, controlHtmlAttributes: new {type = "text", autocorrect = "off"})
+            @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new {type = "text", autocorrect = "off"})
+            @Html.EditorFor(r => r.DateOfBirth)
+            @Html.EditorFor(a => a.Address, new {AnalyticsDSCUri = "/settings/findaddress"})
+            @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new {@class = "form-control", type = "tel"}, verified: Model.VerifiedMobile)
+
+            <div id="accountSettings2">
+
+                <h3 class="heading-large">How we contact you</h3>
+
+                <div class="form-group form-group-compound">
+                    <p class="form-label">Receive notifications?</p>
+                    <span class="form-hint">If you don't select an option you won't receive notifications</span>
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new {@class = "block-label"})
+                    @if (Model.SmsEnabled)
+                    {
+                        @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new {@class = "block-label"})
+                    }
+                </div>
+
+                <div class="text para-btm-margin">
+                    <p class="small-btm-margin">Choose to be notified when:</p>
+                    <ul class="list-text list-checkradio">
+                        <li>
+                            @Html.FormUnvalidatedCheckBoxFor(m => m.SendApplicationSubmitted)
+                        </li>
+                        <li>
+                            @Html.FormUnvalidatedCheckBoxFor(m => m.SendApplicationStatusChanges)
+                        </li>
+                        <li>
+                            @Html.FormUnvalidatedCheckBoxFor(m => m.SendApprenticeshipApplicationsExpiring)
+                        </li>
+                        <li>
+                            @Html.FormUnvalidatedCheckBoxFor(m => m.SendMarketingCommunications)
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button id="update-details-button" class="button">Update details</button>
+            </div>
+        </div>
+
+        <div class="tabbed-content @savedSearchesTabClass">
 
             <div class="form-group form-group-compound">
                 <p class="form-label">Receive notifications?</p>
                 <span class="form-hint">If you don't select an option you won't receive notifications</span>
-                @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new {@class = "block-label"})
+                @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label" })
                 @if (Model.SmsEnabled)
                 {
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new {@class = "block-label"})
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label" })
                 }
             </div>
 
-            <div class="text para-btm-margin">
-                <p class="small-btm-margin">Choose to be notified when:</p>
-                <ul class="list-text list-checkradio">
-                    <li>
-                        @Html.FormUnvalidatedCheckBoxFor(m => m.SendApplicationSubmitted)
-                    </li>
-                    <li>
-                        @Html.FormUnvalidatedCheckBoxFor(m => m.SendApplicationStatusChanges)
-                    </li>
-                    <li>
-                        @Html.FormUnvalidatedCheckBoxFor(m => m.SendApprenticeshipApplicationsExpiring)
-                    </li>
-                    <li>
-                        @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlerts)
-                    </li>
-                    <li>
-                        @Html.FormUnvalidatedCheckBoxFor(m => m.SendMarketingCommunications)
-                    </li>
-                </ul>
-            </div>
-        </div>
+            <div class="form-group" id="savedSearch">
+                <h2 class="heading-large" id="savedSearchHeading">Saved apprenticeship searches</h2>
+                @{
+                    var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
+                }
+                <p class="savedInitalText text" id="noSavedSearchesText" @Html.Raw(noSavedSearchesTextStyle)>
+                    You currently don't have any active saved searches, <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">use the search</a> and you can receive alerts when we find an apprenticeship that matches your criteria.
+                </p>
+                @if (Model.SavedSearches != null)
+                {
+                    <div id="savedSearches" class="toggle-content text" style="display: block;">
+                        @for (var i = 0; i < Model.SavedSearches.Count; i++)
+                        {
+                            var savedSearch = Model.SavedSearches[i];
+                            var checkedListItemClass = savedSearch.AlertsEnabled ? "class=\"selected\"" : "";
 
-        <div class="form-group" id="savedSearch">
-            <h2 class="heading-large" id="savedSearchHeading">Saved apprenticeship searches</h2>
-            @{
-                var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
-            }
-            <p class="savedInitalText text" id="noSavedSearchesText" @Html.Raw(noSavedSearchesTextStyle)>
-                You currently don't have any active saved searches, <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">use the search</a> and you can receive alerts when we find an apprenticeship that matches your criteria.
-            </p>
-        @if(Model.SavedSearches != null)
-        {
-            <div id="savedSearches" class="toggle-content text" style="display: block;">
-            @for (var i = 0; i < Model.SavedSearches.Count; i++)
-            {
-                var savedSearch = Model.SavedSearches[i];
-                var checkedListItemClass = savedSearch.AlertsEnabled ? "class=\"selected\"" : "";
-                    
-                <div class="para-btm-margin saved-search" id="@savedSearch.Id">
-                    <a href="@Html.Raw(savedSearch.SearchUrl.Value)" title="Run search">@savedSearch.Name</a>
-                    <ul class="list-text">
-                        <li @Html.Raw(checkedListItemClass)>
-                            @{
-                                var index = i;
-                            }
-                            @Html.HiddenFor(m => m.SavedSearches[index].Id)
-                            @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new {@class = "no-left-margin"})
-                        </li>
-                    @if (!string.IsNullOrEmpty(savedSearch.SubCategoriesFullNames))
-                    {
-                        <li><b>Sub-categories:</b> @savedSearch.SubCategoriesFullNames</li>
-                    }
-                    @if (savedSearch.ApprenticeshipLevel != "All")
-                    {
-                        <li><b>Apprenticeship level:</b> @savedSearch.ApprenticeshipLevel</li>
-                    }
-                        <li>
-                            <a href="@Url.Action("DeleteSavedSearch", new { id = savedSearch.Id, isJavascript = false })" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
-                                <fa class="fa fa-times-circle"></fa>Delete saved search
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            }
+                            <div class="para-btm-margin saved-search" id="@savedSearch.Id">
+                                <a href="@Html.Raw(savedSearch.SearchUrl.Value)" title="Run search">@savedSearch.Name</a>
+                                @if (savedSearch.DateProcessed.HasValue)
+                                {
+                                    <span class="inl-block font-xsmall">(Last alert: @savedSearch.DateProcessed.Value.ToFriendlyDaysAgo())</span>
+                                }
+                                <ul class="list-text">
+                                    <li @Html.Raw(checkedListItemClass)>
+                                        @{
+                                            var index = i;
+                                        }
+                                        @Html.HiddenFor(m => m.SavedSearches[index].Id)
+                                        @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new {@class = "no-left-margin"})
+                                    </li>
+                                    @if (!string.IsNullOrEmpty(savedSearch.SubCategoriesFullNames))
+                                    {
+                                        <li><b>Sub-categories:</b> @savedSearch.SubCategoriesFullNames</li>
+                                    }
+                                    @if (savedSearch.ApprenticeshipLevel != "All")
+                                    {
+                                        <li><b>Apprenticeship level:</b> @savedSearch.ApprenticeshipLevel</li>
+                                    }
+                                    <li>
+                                        <a href="@Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
+                                            <fa class="fa fa-times-circle"></fa>Delete saved search
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                }
             </div>
-        }
+
+            <div class="form-group">
+                <button id="update-details-button" class="button">Update details</button>
+            </div>
         </div>
 
     </fieldset>
-
-    <div class="form-group">
-        <button id="update-details-button" class="button">Update details</button>
-    </div>
 }
 
 @section scripts

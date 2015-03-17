@@ -100,9 +100,10 @@
             return GetMediatorResponse(AccountMediatorCodes.DismissTraineeshipPrompts.ErrorDismissing, MyApplicationsPageMessages.DismissTraineeshipPromptsFailed, UserMessageLevel.Error);
         }
 
-        public MediatorResponse<SettingsViewModel> Settings(Guid candidateId)
+        public MediatorResponse<SettingsViewModel> Settings(Guid candidateId, SettingsViewModel.SettingsMode mode)
         {
             var model = _accountProvider.GetSettingsViewModel(candidateId);
+            model.Mode = mode;
             var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
             model.TraineeshipFeature = traineeshipFeature;
             return GetMediatorResponse(AccountMediatorCodes.Settings.Success, model);

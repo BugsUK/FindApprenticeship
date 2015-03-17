@@ -111,7 +111,7 @@
                     SendApplicationSubmitted = _sendApplicationSubmitted,
                     SendApplicationStatusChanges = _sendApplicationStatusChanges,
                     SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
-                    SendSavedSearchAlerts = _sendSavedSearchAlerts,
+                    SendSavedSearchAlertsViaEmail = _sendSavedSearchAlerts,
                     SendMarketingCommunications = _sendMarketingComms
                 }
             };

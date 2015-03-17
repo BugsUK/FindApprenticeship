@@ -27,6 +27,24 @@
             }
         }
 
+        public static string ToFriendlyDaysAgo(this DateTime closingDate)
+        {
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+            var dateTimeByZoneId = TimeZoneInfo.ConvertTime(closingDate.ToUniversalTime(), timeZoneInfo);
+
+            var daysLeft = (int)(dateTimeByZoneId - DateTime.Now.Date).TotalDays;
+
+            switch (daysLeft)
+            {
+                case 0:
+                    return "today";
+                case 1:
+                    return "yesterday";
+                default:
+                    return daysLeft + " days ago";
+            }
+        }
+
         public static string ToFriendlyClosingToday(this DateTime closingDate)
         {
             var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
