@@ -109,6 +109,7 @@
                     break;
 
                 case Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError:
+                    //TODO: This can happen when a user requests that their account should be deleted. We need to work out what to do in that case. Probably set the candidate's status to inactive and the application's status to draft
                     _logger.Error("Legacy candidate was not found. Apprenticeship application cannot be processed: Application Id: \"{0}\"", request.ApplicationId);
                     break;
 
