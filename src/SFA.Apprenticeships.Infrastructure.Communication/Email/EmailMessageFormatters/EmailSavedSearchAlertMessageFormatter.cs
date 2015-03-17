@@ -5,10 +5,10 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
-    using System.Text;
     using System.Xml;
     using System.Xml.Xsl;
     using Application.Interfaces.Communications;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
@@ -17,6 +17,8 @@
 
     public class EmailSavedSearchAlertMessageFormatter : EmailMessageFormatter
     {
+        private const string HttpsScheme = "https://";
+
         private readonly string _siteDomainName;
 
         public EmailSavedSearchAlertMessageFormatter(IConfigurationManager configurationManager)
@@ -86,12 +88,12 @@
                 resultsCount = savedSearchAlert.Results.Count(),
                 parameters = new
                 {
+                    name = savedSearchAlert.Parameters.Name(),
                     url = FormatSearchUrl(savedSearchAlert),
                     searchMode = GetSearchModeName(savedSearchAlert.Parameters.SearchMode),
                     keywords = savedSearchAlert.Parameters.Keywords,
-                    category = savedSearchAlert.Parameters.Category,
-                    subCategories = FormatSubCategories(savedSearchAlert),
-                    withinDistance = savedSearchAlert.Parameters.WithinDistance,
+                    category = savedSearchAlert.Parameters.CategoryFullName,
+                    subCategories = savedSearchAlert.Parameters.SubCategoriesFullName,
                     location = savedSearchAlert.Parameters.Location,
                     apprenticeshipLevel = savedSearchAlert.Parameters.ApprenticeshipLevel,
                 },
@@ -101,7 +103,8 @@
                     title = result.Title,
                     employerName = result.EmployerName,
                     description = result.Description,
-                    closingDate = FormatDate(result.ClosingDate)
+                    closingDate = FormatDate(result.ClosingDate),
+                    distance = 42 // TODO: AG: US638: map to real value
                 })
             });
         }
@@ -111,17 +114,6 @@
             return dateTime.ToString("d MMM yyyy");
         }
 
-        private string FormatSubCategories(SavedSearchAlert savedSearchAlert)
-        {
-            if (savedSearchAlert.Parameters.SubCategories == null ||
-                savedSearchAlert.Parameters.SubCategories.Length == 0)
-            {
-                return string.Empty;
-            }
-
-            return string.Join(", ", savedSearchAlert.Parameters.SubCategories);
-        }
-
         private string GetSearchModeName(ApprenticeshipSearchMode searchMode)
         {
             return searchMode == ApprenticeshipSearchMode.Keyword ? "keyword" : "category";
@@ -129,133 +121,12 @@
 
         private string FormatSearchUrl(SavedSearchAlert savedSearchAlert)
         {
-
-            switch (savedSearchAlert.Parameters.SearchMode)
-            {
-                case ApprenticeshipSearchMode.Category:
-                    return FormatCategorySearchUrl(savedSearchAlert);
-
-                case ApprenticeshipSearchMode.Keyword:
-                    return FormatKeywordSearchUrl(savedSearchAlert);
-
-                default:
-                    return _siteDomainName;
-            }
-        }
-
-        private string FormatKeywordSearchUrl(SavedSearchAlert savedSearchAlert)
-        {
-            const string locationType = "NonNational";
-            const string searchField = "All";
-            const string searchMode = "Search";
-            const string sortType = "RecentlyAdded";
-            const string searchAction = "Search";
-
-            const int hash = 0; // TODO: AG: US638: compute / get location hash
-            const int pageNumber = 1;
-            const int resultsPerPage = 5;
-
-            var format = new[]
-            {
-                "https://{0}/apprenticeships?",
-                "Keywords={1}&",
-                "Location={2}&",
-                "LocationType={3}&",
-                "ApprenticeshipLevel={4}&",
-                "SearchField={5}&",
-                "SearchMode={6}&",
-                "Hash={7}&",
-                "WithinDistance={8}&",
-                "SortType={9}&",
-                "PageNumber={10}&",
-                "SearchAction={11}&",
-                "ResultsPerPage={12}"  
-            };
-
-            return string.Format(string.Join(string.Empty, format),
-                _siteDomainName,
-                savedSearchAlert.Parameters.Keywords,
-                savedSearchAlert.Parameters.Location,
-                locationType,
-                savedSearchAlert.Parameters.ApprenticeshipLevel,
-                searchField,
-                searchMode,
-                hash,
-                savedSearchAlert.Parameters.WithinDistance,
-                sortType,
-                pageNumber,
-                searchAction,
-                resultsPerPage);
-        }
-
-        private string FormatCategorySearchUrl(SavedSearchAlert savedSearchAlert)
-        {
-            const string searchAction = "Search";
-            const string searchMode = "Category";
-            const string locationType = "NonNational";
-            const string sortType = "RecentlyAdded";
-
-            const int hash = 0; // TODO: AG: US638: compute / get location hash
-            const int pageNumber = 1;
-            const int resultsPerPage = 5;
-
-            var format = new[]
-            {
-                "https://{0}/apprenticeships?",
-                "Category={1}&",
-                "{2}&",
-                "Location={3}&",
-                "WithinDistance={4}&",
-                "ApprenticeshipLevel={5}&",
-                "Hash={6}&",
-                "SearchMode={7}&",
-                "LocationType={8}&",
-                "sortType={9}&",
-                "SearchAction={10}&",
-                "PageNumber={11}&",
-                "resultsPerPage={12}"
-            };
-
-            return string.Format(string.Join(string.Empty, format),
-                _siteDomainName,
-                savedSearchAlert.Parameters.Category,
-                FormatCategorySearchUrlSubCategories(savedSearchAlert),
-                savedSearchAlert.Parameters.Location,
-                savedSearchAlert.Parameters.WithinDistance,
-                savedSearchAlert.Parameters.ApprenticeshipLevel,
-                hash,
-                searchMode,
-                locationType,
-                sortType,
-                searchAction,
-                pageNumber,
-                resultsPerPage);
-        }
-
-        private string FormatCategorySearchUrlSubCategories(SavedSearchAlert savedSearchAlert)
-        {
-            if (savedSearchAlert.Parameters.SubCategories == null ||
-                savedSearchAlert.Parameters.SubCategories.Length == 0)
-            {
-                return string.Empty;
-            }
-
-            const string format = "SubCategories={0}&";
-            var sb = new StringBuilder();
-
-            foreach (var subCategory in savedSearchAlert.Parameters.SubCategories)
-            {
-                sb.AppendFormat(format, subCategory);
-            }
-
-            return sb.ToString();
+            return string.Format("{0}{1}/{2}", HttpsScheme, _siteDomainName, savedSearchAlert.Parameters.SearchUrl().Value);
         }
 
         private string FormatVacancyDetailsUrl(ApprenticeshipSummary apprenticeshipSummary)
         {
-            const string format = "https://{0}/apprenticeship/{1}";
-
-            return string.Format(format, _siteDomainName, apprenticeshipSummary.Id);
+            return string.Format("{0}{1}/apprenticeship/{2}", HttpsScheme, _siteDomainName, apprenticeshipSummary.Id);
         }
 
         private void PopulateCandidateName(EmailRequest request, ISendGrid message)

@@ -18,29 +18,11 @@
               </span> result(s) matching your search:
             </h2>
             <p>
-              <xsl:if test="parameters/searchMode = 'keyword'">
-                <b>Keywords: </b>
-                <xsl:value-of select="parameters/keywords"/>
-              </xsl:if>
-              <xsl:if test="parameters/searchMode = 'category'">
-                <b>Category: </b>
-                <xsl:value-of select="parameters/category"/>
-                <br />
-                <b>Sub-categories: </b>
-                <xsl:value-of select="parameters/subCategories"/>
-              </xsl:if>
-              <br />
-              within
-              <span>
-                <xsl:value-of select="parameters/withinDistance"/>
-              </span> mile(s) of <span>
-                <xsl:value-of select="parameters/location"/>
-              </span>
+              <xsl:value-of select="parameters/name"/>
               <br />
               <b>Apprenticeship level: </b>
               <xsl:value-of select="parameters/apprenticeshipLevel"/>
             </p>
-            <br/>
             <br/>
           </td>
           <td border="0" cellpadding="0" cellspacing="0" style="font-family: Helvetica, Arial, sans-serif;" valign="top">

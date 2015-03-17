@@ -96,7 +96,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldSendAccountUnlockCode()
+        public void ShouldSendAccountUnlockCodeEmail()
         {
             var request = new EmailRequest
             {
@@ -180,7 +180,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldSendContactMessage()
+        public void ShouldSendContactMessageEmail()
         {
             var request = new EmailRequest
             {
@@ -194,7 +194,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldNotSendContactMessageWithBlankEnquiryDetails()
+        public void ShouldNotSendContactMessageEmailWithBlankEnquiryDetails()
         {
             var request = new EmailRequest
             {
@@ -208,7 +208,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldNotSendContactMessageWithNullEnquiryDetails()
+        public void ShouldNotSendContactMessageEmailWithNullEnquiryDetails()
         {
             var request = new EmailRequest
             {
@@ -223,7 +223,7 @@
 
 
         [Test, Category("Integration")]
-        public void ShouldSendSavedSearchAlerts()
+        public void ShouldSendSavedSearchAlertsEmail()
         {
             var request = new EmailRequest
             {
