@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Communications;
+    using Builders;
     using Domain.Entities.Communication;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
@@ -15,7 +16,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ExpiringDraftsCommunicationProcessorTests
+    public class ExpiringDraftCommunicationTests
     {
         private Mock<IExpiringApprenticeshipApplicationDraftRepository> _expiringDraftRepository;
         private Mock<IApplicationStatusAlertRepository> _applicationStatusAlertRepository;
@@ -41,9 +42,16 @@
             _candidateReadRepository = new Mock<ICandidateReadRepository>();
             _userReadRepository = new Mock<IUserReadRepository>();
             _bus = new Mock<IMessageBus>();
-            
-            _communicationProcessor = new CommunicationProcessor(
-                _expiringDraftRepository.Object, _applicationStatusAlertRepository.Object, _savedSearchAlertRepository.Object, _candidateReadRepository.Object, _userReadRepository.Object, _bus.Object);
+
+            var sendDailyDigestsStrategy = new SendDailyDigestsStrategyBuilder()
+                .With(_applicationStatusAlertRepository)
+                .With(_expiringDraftRepository)
+                .With(_candidateReadRepository)
+                .With(_userReadRepository)
+                .With(_bus)
+                .Build();
+
+            _communicationProcessor = new CommunicationProcessor(sendDailyDigestsStrategy, null);
         }
 
         [TestCase(false, true)]
@@ -71,6 +79,7 @@
             _bus.Setup(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()));
 
             var batchId = Guid.NewGuid();
+
             _communicationProcessor.SendDailyDigests(batchId);
 
             _candidateReadRepository.Verify(mock => mock.Get(It.IsAny<Guid>()), Times.Exactly(2));

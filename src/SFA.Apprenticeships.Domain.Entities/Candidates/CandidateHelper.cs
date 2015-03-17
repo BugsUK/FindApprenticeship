@@ -11,6 +11,7 @@
         public static bool ShouldCommunicateWithCandidate(this Candidate candidate)
         {
             var communicationPreferences = candidate.CommunicationPreferences;
+
             return communicationPreferences.AllowEmail || (communicationPreferences.AllowMobile && communicationPreferences.VerifiedMobile);
         }
     }

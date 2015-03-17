@@ -38,7 +38,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
         private SavedSearchControlQueueConsumer _savedSearchControlQueueConsumer;
         private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
         private DailyDigestControlQueueConsumer _dailyDigestControlQueueConsumer;
-        private IContainer _container; 
+        private IContainer _container;
 
         public override void Run()
         {
@@ -86,6 +86,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
             }
+
+            // ReSharper disable once FunctionNeverReturns
         }
 
         public override bool OnStart()

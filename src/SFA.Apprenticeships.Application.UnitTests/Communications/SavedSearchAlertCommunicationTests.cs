@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Communications;
+    using Builders;
     using Domain.Entities.Communication;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
@@ -14,7 +16,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
-    public class SavedSearchAlertCommunicationProcessorTests
+    public class SavedSearchAlertCommunicationTests
     {
         [TestCase(false, true)]
         [TestCase(true, false)]
@@ -37,15 +39,17 @@
 
             var messageBus = new Mock<IMessageBus>();
 
-            var processor = new CommunicationProcessorBuilder()
-                .With(savedSearchAlertRepository)
+            var sendSavedSearchAlertsStrategy = new SendSavedSearchAlertsStrategyBuilder()
                 .With(candidateReadRepository)
                 .With(userReadRepository)
-                .With(messageBus).Build();
+                .With(savedSearchAlertRepository)
+                .With(messageBus)
+                .Build();
 
+            var communicationProcessor = new CommunicationProcessor(null, sendSavedSearchAlertsStrategy);
             var batchId = Guid.NewGuid();
 
-            processor.SendSavedSearchAlerts(batchId);
+            communicationProcessor.SendSavedSearchAlerts(batchId);
 
             savedSearchAlertRepository.Verify(x => x.GetCandidatesSavedSearchAlerts(), Times.Once);
             candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
@@ -72,11 +76,15 @@
 
             userReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(user);
 
-            var processor = new CommunicationProcessorBuilder()
-                .With(savedSearchAlertRepository).With(candidateReadRepository).With(userReadRepository).Build();
+            var sendSavedSearchAlertsStrategy = new SendSavedSearchAlertsStrategyBuilder()
+                .With(savedSearchAlertRepository)
+                .With(candidateReadRepository)
+                .With(userReadRepository).Build();
+
+            var communicationProcessor = new CommunicationProcessor(null, sendSavedSearchAlertsStrategy);
             var batchId = Guid.NewGuid();
 
-            processor.SendSavedSearchAlerts(batchId);
+            communicationProcessor.SendSavedSearchAlerts(batchId);
 
             savedSearchAlertRepository.Verify(x => x.GetCandidatesSavedSearchAlerts(), Times.Once);
             candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));

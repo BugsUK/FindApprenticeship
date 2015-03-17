@@ -3,6 +3,7 @@
     using Application.Applications;
     using Application.Applications.Strategies;
     using Application.Communications;
+    using Application.Communications.Strategies;
     using Application.Interfaces.Locations;
     using Application.Location;
     using Application.Vacancies;
@@ -31,6 +32,8 @@
             //Communications
             For<DailyDigestControlQueueConsumer>().Use<DailyDigestControlQueueConsumer>();
             For<ICommunicationProcessor>().Use<CommunicationProcessor>();
+            For<ISendDailyDigestsStrategy>().Use<SendDailyDigestsStrategy>();
+            For<ISendSavedSearchAlertsStrategy>().Use<SendSavedSearchAlertsStrategy>();
 
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
