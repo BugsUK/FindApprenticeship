@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Text;
     using System.Xml;
     using System.Xml.Xsl;
@@ -61,11 +62,19 @@
             using (var sw = new StringWriter())
             using (var xw = XmlWriter.Create(sw, settings))
             {
-                transform.Load("./Email/EmailTemplates/SavedSearchAlertsEmail.xslt");
+                transform.Load(GetStylesheetUri());
                 transform.Transform(xml, xw);
 
                 return sw.ToString();
             }
+        }
+
+        private static string GetStylesheetUri()
+        {
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+
+            // ReSharper disable once AssignNullToNotNullAttribute
+            return Path.Combine(path, "Email", "EmailTemplates", "SavedSearchAlertsEmail.xslt");
         }
 
         private dynamic TransformTokenValueToJson(string value)
@@ -171,7 +180,7 @@
                 savedSearchAlert.Parameters.ApprenticeshipLevel,
                 searchField,
                 searchMode,
-                hash, 
+                hash,
                 savedSearchAlert.Parameters.WithinDistance,
                 sortType,
                 pageNumber,

@@ -24,6 +24,7 @@
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter(new ConfigurationManager())),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SavedSearchAlert, new EmailSavedSearchAlertMessageFormatter(new ConfigurationManager())),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactMessage, new EmailSimpleMessageFormatter())
             };
 
