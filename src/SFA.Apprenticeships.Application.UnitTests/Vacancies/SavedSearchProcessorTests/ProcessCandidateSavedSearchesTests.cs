@@ -8,11 +8,12 @@
     using Builders;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
+    using Domain.Entities.Locations;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Interfaces.Search;
+    using Interfaces.Locations;
     using Interfaces.Vacancies;
     using Moq;
     using NUnit.Framework;
@@ -106,6 +107,75 @@
             {
                 vacancySearchProvider.Verify(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()), Times.Never);
                 searchParameters.Should().BeNull();
+            }
+        }
+
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public void FindLocation(bool latLongSpecified, bool locationFound)
+        {
+            var candidateId = Guid.NewGuid();
+            var candidateSavedSearch = new CandidateSavedSearches { CandidateId = candidateId };
+
+            var savedSearchReadRepository = new Mock<ISavedSearchReadRepository>();
+            List<SavedSearch> savedSearches;
+            if (latLongSpecified)
+            {
+                savedSearches = new Fixture().Build<SavedSearch>().With(s => s.AlertsEnabled, true).CreateMany(3).ToList();
+            }
+            else
+            {
+                savedSearches = new Fixture().Build<SavedSearch>()
+                    .With(s => s.Latitude, null)
+                    .With(s => s.Longitude, null)
+                    .With(s => s.AlertsEnabled, true)
+                    .CreateMany(3).ToList();
+            }
+            savedSearchReadRepository.Setup(r => r.GetForCandidate(candidateId)).Returns(savedSearches);
+            var userReadRepository = new Mock<IUserReadRepository>();
+            userReadRepository.Setup(r => r.Get(candidateId)).Returns(new UserBuilder(candidateId).Activated(true).Build);
+            var candidateReadRepository = new Mock<ICandidateReadRepository>();
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(true).SendSavedSearchAlerts(true).Build);
+            var locationSearchService = new Mock<ILocationSearchService>();
+            if (locationFound)
+            {
+                locationSearchService.Setup(s => s.FindLocation(It.IsAny<string>())).Returns(new Fixture().Build<Location>().CreateMany(3));
+            }
+            var vacancySearchProvider = new Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
+            ApprenticeshipSearchParameters searchParameters = null;
+            vacancySearchProvider.Setup(p => p.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()))
+                .Returns(new ApprenticeshipSearchResultsBuilder().WithResultCount(3).Build)
+                .Callback<ApprenticeshipSearchParameters>(p => { searchParameters = p; });
+            var savedSearchWriteRepository = new Mock<ISavedSearchWriteRepository>();
+            var processor = new SavedSearchProcessorBuilder().With(savedSearchReadRepository).With(userReadRepository).With(candidateReadRepository).With(locationSearchService).With(vacancySearchProvider).With(savedSearchWriteRepository).Build();
+
+            processor.ProcessCandidateSavedSearches(candidateSavedSearch);
+
+            if (latLongSpecified)
+            {
+                locationSearchService.Verify(l => l.FindLocation(It.IsAny<string>()), Times.Never);
+                savedSearchWriteRepository.Verify(p => p.Save(It.IsAny<SavedSearch>()), Times.Exactly(3));
+                searchParameters.Should().NotBeNull();
+                vacancySearchProvider.Verify(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()), Times.Exactly(3));
+            }
+            else
+            {
+                locationSearchService.Verify(l => l.FindLocation(It.IsAny<string>()), Times.Exactly(3));
+                if (locationFound)
+                {
+                    //One save to update lat/long and one for the new results. 3 searches x 2 = 6 
+                    savedSearchWriteRepository.Verify(p => p.Save(It.IsAny<SavedSearch>()), Times.Exactly(6));
+                    searchParameters.Should().NotBeNull();
+                    vacancySearchProvider.Verify(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()), Times.Exactly(3));
+                }
+                else
+                {
+                    savedSearchWriteRepository.Verify(p => p.Save(It.IsAny<SavedSearch>()), Times.Never);
+                    searchParameters.Should().BeNull();
+                    vacancySearchProvider.Verify(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()), Times.Never);
+                }
             }
         }
 

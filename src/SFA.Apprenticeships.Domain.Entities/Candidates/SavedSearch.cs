@@ -20,6 +20,10 @@
 
         public string Location { get; set; }
 
+        public double? Longitude { get; set; }
+
+        public double? Latitude { get; set; }
+
         public string Keywords { get; set; }
 
         //TODO: Verify that we are not saving this search parameter

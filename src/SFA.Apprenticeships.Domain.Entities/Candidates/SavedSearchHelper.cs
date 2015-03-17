@@ -70,5 +70,10 @@
             
             return new Url(urlSb.ToString());
         }
+
+        public static bool HasGeoPoint(this SavedSearch savedSearch)
+        {
+            return savedSearch.Latitude.HasValue && savedSearch.Longitude.HasValue;
+        }
     }
 }

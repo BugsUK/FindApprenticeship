@@ -29,6 +29,8 @@
             //Communications
             For<DailyDigestControlQueueConsumer>().Use<DailyDigestControlQueueConsumer>();
             For<ICommunicationProcessor>().Use<CommunicationProcessor>();
+
+            For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
         }
     }
 }
