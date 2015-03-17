@@ -25,8 +25,9 @@
 
                 if (schedulerNotification == null) return;
 
+                // TODO: AG: US638: put in separate try / catch blocks, implement in separate classes.
                 _communicationProcessor.SendDailyDigests(schedulerNotification.ClientRequestId);
-                //todo: 1.8: _communicationProcessor.SendSavedSearchAlerts(schedulerNotification.ClientRequestId);
+                _communicationProcessor.SendSavedSearchAlerts(schedulerNotification.ClientRequestId);
 
                 MessageService.DeleteMessage(ScheduledJobQueues.DailyDigest, schedulerNotification.MessageId, schedulerNotification.PopReceipt);
             });
