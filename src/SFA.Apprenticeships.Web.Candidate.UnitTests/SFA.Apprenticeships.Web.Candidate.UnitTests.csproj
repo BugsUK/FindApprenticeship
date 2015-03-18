@@ -317,6 +317,7 @@
     <Compile Include="Views\ApprenticeshipSearch\DetailsTests.cs" />
     <Compile Include="Views\VerifyMobile\VerifyMobileViewBuilder.cs" />
     <Compile Include="Views\VerifyMobile\VerifyMobileTests.cs" />
+    <Compile Include="Views\ViewBuilderBase.cs" />
     <Compile Include="Views\ViewUnitTest.cs" />
   </ItemGroup>
   <ItemGroup>

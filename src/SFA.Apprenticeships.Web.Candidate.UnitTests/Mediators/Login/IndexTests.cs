@@ -63,7 +63,7 @@
         {
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
-            const string returnUrl = "http://return.url.com";
+            const string returnUrl = "/localallowedurl";
             var userDataProvider = new Mock<IUserDataProvider>();
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.SessionReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
@@ -77,7 +77,43 @@
         }
 
         [Test]
+        public void SessionReturnUrlNotAllowed()
+        {
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            const string returnUrl = "http://notallowedurl.com/";
+            var userDataProvider = new Mock<IUserDataProvider>();
+            userDataProvider.Setup(p => p.Pop(UserDataItemNames.SessionReturnUrl)).Returns(returnUrl);
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
+
+            var response = mediator.Index(viewModel);
+
+            response.AssertCode(LoginMediatorCodes.Index.Ok, true);
+            response.Parameters.Should().BeNull();
+        }
+
+        [Test]
         public void ReturnUrl()
+        {
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            const string returnUrl = "/localUrl/";
+            var userDataProvider = new Mock<IUserDataProvider>();
+            userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
+
+            var response = mediator.Index(viewModel);
+
+            response.AssertCode(LoginMediatorCodes.Index.ReturnUrl, true, true);
+            response.Parameters.Should().Be(returnUrl);
+        }
+
+        [Test]
+        public void ReturnUrlNotAllowed()
         {
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
@@ -90,8 +126,8 @@
 
             var response = mediator.Index(viewModel);
 
-            response.AssertCode(LoginMediatorCodes.Index.ReturnUrl, true, true);
-            response.Parameters.Should().Be(returnUrl);
+            response.AssertCode(LoginMediatorCodes.Index.Ok, true);
+            response.Parameters.Should().BeNull();
         }
 
         [Test]
@@ -170,7 +206,7 @@
         {
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
-            const string returnUrl = "http://return.url.com";
+            const string returnUrl = "/allowedasolutoepath";
             var configurationManager = new Mock<IConfigurationManager>();
             configurationManager.Setup(x => x.GetAppSetting<string>(It.IsAny<string>())).Returns("2");
             var userDataProvider = new Mock<IUserDataProvider>();

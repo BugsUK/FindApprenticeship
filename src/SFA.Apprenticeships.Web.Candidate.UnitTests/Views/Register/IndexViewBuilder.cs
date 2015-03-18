@@ -1,20 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Register
 {
-    using System.Web.Routing;
     using Candidate.ViewModels.Register;
     using Candidate.Views.Register;
     using HtmlAgilityPack;
     using RazorGenerator.Testing;
 
-    public class IndexViewBuilder
+    public class IndexViewBuilder : ViewBuilderBase
     {
         private RegisterViewModel _viewModel;
 
-        public IndexViewBuilder()
-        {
-            RouteTable.Routes.Clear();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
 
         public IndexViewBuilder With(RegisterViewModel viewModel)
         {

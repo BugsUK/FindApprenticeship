@@ -17,7 +17,6 @@
         protected Mock<IUserAccountService> UserAccountService;
         protected Mock<IUserDataProvider> UserDataProvider;
         protected Mock<IAuthenticationTicketService> AuthenticationTicketService;
-        protected Mock<HttpContextBase> HttpContext;
         protected Mock<IConfigurationManager> ConfigurationManager;
         protected Mock<ILogService> Logger;
         protected CandidateServiceProvider CandidateServiceProvider;
@@ -28,15 +27,15 @@
             UserAccountService = new Mock<IUserAccountService>();
             UserDataProvider = new Mock<IUserDataProvider>();
             AuthenticationTicketService = new Mock<IAuthenticationTicketService>();
-            HttpContext = new Mock<HttpContextBase>();
-            HttpContext.Setup(h => h.Response).Returns(new Mock<HttpResponseBase>().Object);
             ConfigurationManager = new Mock<IConfigurationManager>();
             Logger = new Mock<ILogService>();
         }
 
         public ICandidateServiceProvider Build()
         {
-            CandidateServiceProvider = new CandidateServiceProvider(CandidateService.Object, UserAccountService.Object, UserDataProvider.Object, AuthenticationTicketService.Object, new ApprenticeshipCandidateWebMappers(), HttpContext.Object, ConfigurationManager.Object, Logger.Object);
+            CandidateServiceProvider = new CandidateServiceProvider(CandidateService.Object, UserAccountService.Object,
+                UserDataProvider.Object, AuthenticationTicketService.Object,
+                new ApprenticeshipCandidateWebMappers(), ConfigurationManager.Object, Logger.Object);
             return CandidateServiceProvider;
         }
 

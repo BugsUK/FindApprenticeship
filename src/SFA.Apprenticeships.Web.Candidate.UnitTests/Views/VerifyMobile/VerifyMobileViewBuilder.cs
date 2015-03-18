@@ -1,29 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.VerifyMobile
 {
-    using System.Web.Routing;
     using Candidate.ViewModels.Account;
     using Candidate.Views.Account;
     using HtmlAgilityPack;
     using RazorGenerator.Testing;
-    using VerifyMobile;
 
-    public class VerifyMobileViewBuilder
+    public class VerifyMobileViewBuilder : ViewBuilderBase
     {
          private VerifyMobileViewModel _viewModel;
 
-         public VerifyMobileViewBuilder()
-        {
-            RouteTable.Routes.Clear();
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-        }
-
-         public VerifyMobileViewBuilder With(VerifyMobileViewModel viewModel)
+        public VerifyMobileViewBuilder With(VerifyMobileViewModel viewModel)
         {
             _viewModel = viewModel;
             return this;
         }
 
-         public VerifyMobile Build()
+        public VerifyMobile Build()
         {
             var view = new VerifyMobile { ViewData = { Model = _viewModel } };
             return view;

@@ -1,9 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
+    using System;
     using Candidate.Mediators.Register;
     using Candidate.ViewModels.Register;
     using Common.Constants;
     using Constants.Pages;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Moq;
     using NUnit.Framework;
@@ -68,10 +70,10 @@
             var resetPasswordViewModel = GetValidPasswordResetViewModel();
 
             _candidateServiceProvider.Setup(csp => csp.VerifyPasswordReset(It.IsAny<PasswordResetViewModel>()))
-                .Returns(new PasswordResetViewModel
-                {
-                    IsPasswordResetCodeValid = true
-                });
+                .Returns(new PasswordResetViewModel { IsPasswordResetCodeValid = true });
+
+            _candidateServiceProvider.Setup(gc => gc.GetCandidate(It.IsAny<string>()))
+                .Returns(new Candidate() {EntityId = Guid.NewGuid()});
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
@@ -114,11 +116,10 @@
             var resetPasswordViewModel = GetValidPasswordResetViewModel();
 
             _candidateServiceProvider.Setup(csp => csp.VerifyPasswordReset(It.IsAny<PasswordResetViewModel>()))
-                .Returns(new PasswordResetViewModel
-                {
-                    UserStatus = UserStatuses.PendingActivation,
-                    IsPasswordResetCodeValid = true
-                });
+                .Returns(new PasswordResetViewModel { UserStatus = UserStatuses.PendingActivation, IsPasswordResetCodeValid = true });
+
+            _candidateServiceProvider.Setup(gc => gc.GetCandidate(It.IsAny<string>()))
+                .Returns(new Candidate() { EntityId = Guid.NewGuid() });
 
             var response = _registerMediator.ResetPassword(resetPasswordViewModel);
 
