@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Reflection;
@@ -99,9 +100,18 @@
                     employerName = result.EmployerName,
                     description = result.Description,
                     closingDate = FormatDate(result.ClosingDate),
-                    distance = result.Distance
+                    distance = FormatDistance(result.Distance)
                 })
             });
+        }
+
+        #region Helpers
+
+        // TODO: US638: most of these functions are all candidates to be moved elsewhere with supporting tests.
+
+        private string FormatDistance(double distance)
+        {
+            return Math.Round(distance, 1, MidpointRounding.AwayFromZero).ToString(CultureInfo.InvariantCulture);
         }
 
         private string FormatDate(DateTime dateTime)
@@ -119,7 +129,6 @@
             return string.Format("{0}{1}/{2}", HttpsScheme, _siteDomainName, savedSearchAlert.Parameters.SearchUrl().Value);
         }
 
-        // TODO: AG: US638: move to helper class as per SavedSearchHelper::SearchUrl().
         private string FormatVacancyDetailsUrl(ApprenticeshipSearchResponse apprenticeshipSearchResponse)
         {
             return string.Format("{0}{1}/apprenticeship/{2}", HttpsScheme, _siteDomainName, apprenticeshipSearchResponse.Id);
@@ -137,5 +146,7 @@
         {
             message.AddSubstitution(replacementTag, new List<string> { value });
         }
+
+        #endregion
     }
 }
