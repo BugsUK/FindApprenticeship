@@ -22,6 +22,8 @@
         private readonly ITraineeshipMetricsRepository _traineeshipMetricsRepository;
         private readonly IExpiringDraftsMetricsRepository _expiringDraftsMetricsRepository;
         private readonly IApplicationStatusAlertsMetricsRepository _applicationStatusAlertsMetricsRepository;
+        private readonly ISavedSearchAlertMetricsRepository _savedSearchAlertMetricsRepository;
+        private readonly IContactMessagesMetricsRepository _contactMessagesMetricsRepository;
 
         private readonly int _validNumberOfDaysSinceUserActivity;
 
@@ -32,7 +34,9 @@
             ITraineeshipMetricsRepository traineeshipMetricsRepository,
             IUserMetricsRepository userMetricsRepository,
             IExpiringDraftsMetricsRepository expiringDraftsMetricsRepository,
-            IApplicationStatusAlertsMetricsRepository applicationStatusAlertsMetricsRepository)
+            IApplicationStatusAlertsMetricsRepository applicationStatusAlertsMetricsRepository,
+            ISavedSearchAlertMetricsRepository savedSearchAlertMetricsRepository,
+            IContactMessagesMetricsRepository contactMessagesMetricsRepository)
         {
             _logger = logger;
             _configurationManager = configurationManager;
@@ -41,6 +45,8 @@
             _userMetricsRepository = userMetricsRepository;
             _expiringDraftsMetricsRepository = expiringDraftsMetricsRepository;
             _applicationStatusAlertsMetricsRepository = applicationStatusAlertsMetricsRepository;
+            _savedSearchAlertMetricsRepository = savedSearchAlertMetricsRepository;
+            _contactMessagesMetricsRepository = contactMessagesMetricsRepository;
 
             _validNumberOfDaysSinceUserActivity = _configurationManager.GetCloudAppSetting<int>("ValidNumberOfDaysSinceUserActivity");
         }
@@ -77,6 +83,8 @@
             sb.Append("General:\n");
             sb.AppendFormat(" - Total number of candidates registered: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredUserCount));
             sb.AppendFormat(" - Total number of candidates registered and activated: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredAndActivatedUserCount));
+            sb.AppendFormat(" - Total number of unactivated candidates: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetUnactivatedUserCount));
+            sb.AppendFormat(" - Total number of unactivated candidates with expired activation codes: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetUnactivatedExpiredCodeUserCount));
 
             var oneWeekAgo = DateTime.UtcNow.AddDays(-7);
             var fourWeeksAgo = DateTime.UtcNow.AddDays(-28);
@@ -119,8 +127,10 @@
 
             // Communications.
             sb.Append("Communications:\n");
-            sb.AppendFormat(" - Expiring draft applications emails sent today: {0} ({1}ms)\n", TimedMongoCall(_expiringDraftsMetricsRepository.GetDraftApplicationEmailsSentToday));
-            sb.AppendFormat(" - Application status alert emails sent today: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusAlertEmailsSentToday));
+            sb.AppendFormat(" - Number of expiring draft applications processed today: {0} ({1}ms)\n", TimedMongoCall(_expiringDraftsMetricsRepository.GetDraftApplicationsProcessedToday));
+            sb.AppendFormat(" - Number of application status alerts processed today: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusAlertsProcessedToday));
+            sb.AppendFormat(" - Number of saved search alerts processed today: {0} ({1}ms)\n", TimedMongoCall(_savedSearchAlertMetricsRepository.GetSavedSearchAlertsProcessedToday));
+            sb.AppendFormat(" - Number of contact us emails sent today: {0} ({1}ms)\n", TimedMongoCall(_contactMessagesMetricsRepository.GetContactMessagesSentToday));
 
             return sb.ToString();
         }

@@ -14,7 +14,7 @@
         {
         }
 
-        public int GetApplicationStatusAlertEmailsSentToday()
+        public int GetApplicationStatusAlertsProcessedToday()
         {
             var today = DateTime.Today;
             var tomorrow = DateTime.Today.AddDays(1);

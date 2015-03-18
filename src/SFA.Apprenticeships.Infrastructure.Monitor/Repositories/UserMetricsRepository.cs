@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Users.Entities;
     using Mongo.Common;
@@ -24,6 +25,22 @@
             return Collection
                 .AsQueryable()
                 .Count(each => each.ActivationCode == null);
+        }
+
+        public long GetUnactivatedUserCount()
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.Status == UserStatuses.PendingActivation);
+        }
+
+        public long GetUnactivatedExpiredCodeUserCount()
+        {
+            var oldestValidCodeDate = DateTime.UtcNow.AddDays(-30);
+
+            return Collection
+                .AsQueryable()
+                .Count(each => each.Status == UserStatuses.PendingActivation && each.ActivateCodeExpiry < oldestValidCodeDate);
         }
 
         public long GetActiveUserCount(DateTime activeFrom)

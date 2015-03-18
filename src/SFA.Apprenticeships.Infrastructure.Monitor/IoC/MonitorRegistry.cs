@@ -49,6 +49,8 @@
             For<ITraineeshipMetricsRepository>().Use<TraineeshipMetricsRepository>();
             For<IUserMetricsRepository>().Use<UserMetricsRepository>();
             For<ICandidateDiagnosticsRepository>().Use<CandidateDiagnosticsRepository>();
+            For<ISavedSearchAlertMetricsRepository>().Use<SavedSearchAlertMetricsRepository>();
+            For<IContactMessagesMetricsRepository>().Use<ContactMessagesMetricsRepository>();
         }
     }
 }

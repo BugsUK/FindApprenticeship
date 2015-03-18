@@ -7,14 +7,14 @@
     using Mongo.Common;
     using MongoDB.Driver.Linq;
 
-    public class ExpiringDraftsMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationExpiringDraft>, IExpiringDraftsMetricsRepository
+    public class SavedSearchAlertMetricsRepository : GenericMongoClient<MongoSavedSearchAlert>, ISavedSearchAlertMetricsRepository
     {
-        public ExpiringDraftsMetricsRepository(IConfigurationManager configurationManager)
-            : base(configurationManager, "Communications.mongoDB", "expiringdraftapplications")
+        public SavedSearchAlertMetricsRepository(IConfigurationManager configurationManager)
+            : base(configurationManager, "Communications.mongoDB", "savedsearchalerts")
         {
         }
 
-        public int GetDraftApplicationsProcessedToday()
+        public int GetSavedSearchAlertsProcessedToday()
         {
             var today = DateTime.Today;
             var tomorrow = DateTime.Today.AddDays(1);

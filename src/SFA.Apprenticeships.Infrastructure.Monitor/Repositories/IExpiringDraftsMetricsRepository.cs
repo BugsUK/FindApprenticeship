@@ -2,6 +2,6 @@
 {
     public interface IExpiringDraftsMetricsRepository
     {
-        int GetDraftApplicationEmailsSentToday();
+        int GetDraftApplicationsProcessedToday();
     }
 }

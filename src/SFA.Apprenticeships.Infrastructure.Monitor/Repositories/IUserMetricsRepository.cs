@@ -6,6 +6,8 @@
     {
         long GetRegisteredUserCount();
         long GetRegisteredAndActivatedUserCount();
+        long GetUnactivatedUserCount();
+        long GetUnactivatedExpiredCodeUserCount();
         long GetActiveUserCount(DateTime activeFrom);
     }
 }
