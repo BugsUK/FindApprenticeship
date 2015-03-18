@@ -46,7 +46,7 @@
             _logger.Debug("Calling repository to get all saved searches for CandidateId={0}", candidateId);
 
             var mongoEntities = Collection.FindAs<MongoSavedSearch>(Query.EQ("CandidateId", candidateId));
-            var entities = _mapper.Map<IEnumerable<MongoSavedSearch>, IEnumerable<SavedSearch>>(mongoEntities).ToList();
+            var entities = _mapper.Map<IEnumerable<MongoSavedSearch>, IEnumerable<SavedSearch>>(mongoEntities).OrderByDescending(e => e.DateCreated).ToList();
 
             _logger.Debug("Found {0} saved searches for CandidateId={1}", entities.Count, candidateId);
 

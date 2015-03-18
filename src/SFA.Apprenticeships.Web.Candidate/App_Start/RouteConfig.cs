@@ -33,6 +33,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.SavedSearchesSettings,
+                url: "savedsearchessettings",
+                defaults: new { controller = "Account", action = "SavedSearchesSettings" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.VerifyMobile,
                 url: "verifymobile",
                 defaults: new { controller = "Account", action = "VerifyMobile" }

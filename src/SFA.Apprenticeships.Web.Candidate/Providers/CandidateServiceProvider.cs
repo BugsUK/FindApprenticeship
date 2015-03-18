@@ -543,8 +543,14 @@
             try
             {
                 var candidate = _candidateService.GetCandidate(candidateId);
-                
-                _candidateService.CreateSavedSearch(savedSearch);
+
+                var searchHash = savedSearch.GetSearchHash();
+                var existingSavedSearches = _candidateService.RetrieveSavedSearches(candidateId);
+
+                if (existingSavedSearches == null || !existingSavedSearches.Select(s => s.GetSearchHash()).Contains(searchHash))
+                {
+                    _candidateService.CreateSavedSearch(savedSearch);
+                }
 
                 var saveCandidate = false;
 

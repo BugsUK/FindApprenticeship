@@ -5,7 +5,7 @@
         public static bool MobileVerificationRequired(this Candidate candidate)
         {
             var communicationPreferences = candidate.CommunicationPreferences;
-            return communicationPreferences.AllowMobile && !communicationPreferences.VerifiedMobile;
+            return !communicationPreferences.VerifiedMobile && (communicationPreferences.AllowMobile || communicationPreferences.SendSavedSearchAlertsViaText);
         }
 
         public static bool ShouldCommunicateWithCandidate(this Candidate candidate)

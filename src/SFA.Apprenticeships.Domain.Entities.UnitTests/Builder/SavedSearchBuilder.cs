@@ -17,6 +17,7 @@
         private string _searchField = "All";
         private double? _latitude;
         private double? _longitude;
+        private string _subCategoriesFullNames;
 
         public SavedSearch Build()
         {
@@ -32,6 +33,7 @@
                 Category = _category,
                 CategoryFullName = _categoryFullName,
                 SubCategories = _subCategories,
+                SubCategoriesFullName = _subCategoriesFullNames,
                 SearchField = _searchField,
                 AlertsEnabled = _alertsEnabled
             };
@@ -108,6 +110,12 @@
         {
             _latitude = latitude;
             _longitude = longitude;
+            return this;
+        }
+
+        public SavedSearchBuilder WithSubCategoriesFullNames(string subCategoriesFullNames)
+        {
+            _subCategoriesFullNames = subCategoriesFullNames;
             return this;
         }
     }

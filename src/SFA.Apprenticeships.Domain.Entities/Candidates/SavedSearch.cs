@@ -28,9 +28,6 @@
 
         public string Keywords { get; set; }
 
-        //TODO: Verify that we are not saving this search parameter
-        //public ApprenticeshipLocationType LocationType { get; set; }
-
         public int WithinDistance { get; set; }
 
         public string ApprenticeshipLevel { get; set; }

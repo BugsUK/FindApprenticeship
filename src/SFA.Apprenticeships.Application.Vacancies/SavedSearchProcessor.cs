@@ -82,7 +82,7 @@
             if (!user.IsActive()) return;
 
             var candidate = _candidateReadRepository.Get(candidateId);
-            if (!candidate.ShouldCommunicateWithCandidate() || !candidate.ShouldSendSavedSearchAlerts()) return;
+            if (!candidate.ShouldSendSavedSearchAlerts()) return;
 
             var savedSearches = _savedSearchReadRepository.GetForCandidate(candidateId);
             if (savedSearches == null || !savedSearches.Any(s => s.AlertsEnabled)) return;

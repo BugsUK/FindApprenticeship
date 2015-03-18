@@ -3,6 +3,7 @@
     public class CandidateRouteNames
     {
         public const string Settings = "Settings";
+        public const string SavedSearchesSettings = "SavedSearchesSettings";
         public const string VerifyMobile = "VerifyMobile";
         public const string Privacy = "Privacy";
         public const string Helpdesk = "Helpdesk";

@@ -180,7 +180,7 @@ WriteLiteral("            ");
 
             
             #line 37 "..\..\Views\Account\Settings.cshtml"
-       Write(Html.RouteLink("Your account", CandidateRouteNames.Settings, new {mode = SettingsViewModel.SettingsMode.YourAccount}, new {@id = "your-account-tab-control", @class = "tabbed-tab no-js" + yourAccountTabClass, tab = "#tab1"}));
+       Write(Html.RouteLink("Your account", CandidateRouteNames.Settings, null, new {@id = "your-account-tab-control", @class = "tabbed-tab no-js" + yourAccountTabClass, tab = "#tab1"}));
 
             
             #line default
@@ -191,7 +191,7 @@ WriteLiteral("            ");
 
             
             #line 38 "..\..\Views\Account\Settings.cshtml"
-       Write(Html.RouteLink("Saved searches", CandidateRouteNames.Settings, new {mode = SettingsViewModel.SettingsMode.SavedSearches}, new {@id = "saved-searches-tab-control", @class = "tabbed-tab no-js" + savedSearchesTabClass, tab = "#tab2"}));
+       Write(Html.RouteLink("Saved searches", CandidateRouteNames.SavedSearchesSettings, null, new { @id = "saved-searches-tab-control", @class = "tabbed-tab no-js" + savedSearchesTabClass, tab = "#tab2" }));
 
             
             #line default
@@ -209,15 +209,15 @@ WriteLiteral("        ");
             #line hidden
 WriteLiteral("\r\n\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1853), Tuple.Create("\"", 1896)
-, Tuple.Create(Tuple.Create("", 1861), Tuple.Create("tabbed-content", 1861), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1764), Tuple.Create("\"", 1807)
+, Tuple.Create(Tuple.Create("", 1772), Tuple.Create("tabbed-content", 1772), true)
             
             #line 43 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1875), Tuple.Create<System.Object, System.Int32>(yourAccountTabClass
+, Tuple.Create(Tuple.Create(" ", 1786), Tuple.Create<System.Object, System.Int32>(yourAccountTabClass
             
             #line default
             #line hidden
-, 1876), false)
+, 1787), false)
 );
 
 WriteLiteral(">\r\n\r\n            <legend");
@@ -417,17 +417,17 @@ WriteLiteral(" id=\"update-details-button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Update details</button>\r\n            </div>\r\n        </div>\r\n\r\n        <div");
+WriteLiteral(">Save Settings</button>\r\n            </div>\r\n        </div>\r\n\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4605), Tuple.Create("\"", 4650)
-, Tuple.Create(Tuple.Create("", 4613), Tuple.Create("tabbed-content", 4613), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4515), Tuple.Create("\"", 4560)
+, Tuple.Create(Tuple.Create("", 4523), Tuple.Create("tabbed-content", 4523), true)
             
             #line 95 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4627), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
+, Tuple.Create(Tuple.Create(" ", 4537), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
             
             #line default
             #line hidden
-, 4628), false)
+, 4538), false)
 );
 
 WriteLiteral(">\r\n\r\n            <div");
@@ -529,14 +529,14 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral(">\r\n                    You currently don\'t have any active saved searches, <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5805), Tuple.Create("\"", 5867)
+WriteAttribute("href", Tuple.Create(" href=\"", 5715), Tuple.Create("\"", 5777)
             
             #line 113 "..\..\Views\Account\Settings.cshtml"
- , Tuple.Create(Tuple.Create("", 5812), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+ , Tuple.Create(Tuple.Create("", 5722), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 5812), false)
+, 5722), false)
 );
 
 WriteLiteral(">use the search</a> and you can receive alerts when we find an apprenticeship tha" +
@@ -587,26 +587,26 @@ WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"para-btm-margin saved-search\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 6523), Tuple.Create("\"", 6543)
+WriteAttribute("id", Tuple.Create(" id=\"", 6433), Tuple.Create("\"", 6453)
             
             #line 123 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 6528), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+, Tuple.Create(Tuple.Create("", 6438), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 6528), false)
+, 6438), false)
 );
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6581), Tuple.Create("\"", 6626)
+WriteAttribute("href", Tuple.Create(" href=\"", 6491), Tuple.Create("\"", 6536)
             
             #line 124 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 6588), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
+, Tuple.Create(Tuple.Create("", 6498), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
             
             #line default
             #line hidden
-, 6588), false)
+, 6498), false)
 );
 
 WriteLiteral(" title=\"Run search\"");
@@ -774,24 +774,24 @@ WriteLiteral("</li>\r\n");
 WriteLiteral("                                    <li>\r\n                                       " +
 " <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8189), Tuple.Create("\"", 8277)
+WriteAttribute("href", Tuple.Create(" href=\"", 8099), Tuple.Create("\"", 8187)
             
             #line 146 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 8196), Tuple.Create<System.Object, System.Int32>(Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})
+, Tuple.Create(Tuple.Create("", 8106), Tuple.Create<System.Object, System.Int32>(Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})
             
             #line default
             #line hidden
-, 8196), false)
+, 8106), false)
 );
 
-WriteAttribute("id", Tuple.Create(" id=\"", 8278), Tuple.Create("\"", 8298)
+WriteAttribute("id", Tuple.Create(" id=\"", 8188), Tuple.Create("\"", 8208)
             
             #line 146 "..\..\Views\Account\Settings.cshtml"
-                                                        , Tuple.Create(Tuple.Create("", 8283), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                                                        , Tuple.Create(Tuple.Create("", 8193), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 8283), false)
+, 8193), false)
 );
 
 WriteLiteral(" class=\"link-unimp icon-black delete-saved-search-link\"");
@@ -830,8 +830,7 @@ WriteLiteral(" id=\"update-details-button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Update details</button>\r\n            </div>\r\n        </div>\r\n\r\n    </fieldset>\r\n" +
-"");
+WriteLiteral(">Save Settings</button>\r\n            </div>\r\n        </div>\r\n\r\n    </fieldset>\r\n");
 
             
             #line 163 "..\..\Views\Account\Settings.cshtml"

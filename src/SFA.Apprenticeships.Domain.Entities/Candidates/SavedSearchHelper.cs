@@ -80,5 +80,26 @@
         {
             return string.Format("{0}{1}{2}", savedSearch.Longitude, savedSearch.Latitude, savedSearch.Location).GetHashCode();
         }
+
+        public static string GetSearchHash(this SavedSearch savedSearch)
+        {
+            var sb = new StringBuilder();
+
+            sb.Append(savedSearch.SearchMode);
+            sb.Append(savedSearch.Location);
+            sb.Append(savedSearch.Longitude);
+            sb.Append(savedSearch.Latitude);
+            sb.Append(savedSearch.Keywords);
+            sb.Append(savedSearch.WithinDistance);
+            sb.Append(savedSearch.ApprenticeshipLevel);
+            sb.Append(savedSearch.Category);
+            if (savedSearch.SubCategories != null)
+            {
+                sb.Append(string.Join("", savedSearch.SubCategories));
+            }
+            sb.Append(savedSearch.SearchField);
+
+            return sb.ToString().ToLower();
+        }
     }
 }

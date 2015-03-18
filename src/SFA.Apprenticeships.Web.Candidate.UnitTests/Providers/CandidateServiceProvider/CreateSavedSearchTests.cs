@@ -91,6 +91,7 @@
 
             SavedSearch savedSearch = null;
             var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.RetrieveSavedSearches(candidateId)).Returns(new List<SavedSearch> { new SavedSearchBuilder().WithLocation("Different Location").Build() });
             candidateService.Setup(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>())).Callback<SavedSearch>(ss => { savedSearch = ss; });
             var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
             var viewModel = new ApprenticeshipSearchViewModelBuilder()
@@ -229,6 +230,84 @@
             candidate.Should().NotBeNull();
             candidate.CommunicationPreferences.AllowEmail.Should().BeFalse();
             candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail.Should().BeTrue();
+        }
+
+        [Test]
+        public void DuplicatesAreReplaced()
+        {
+            var candidateId = Guid.NewGuid();
+            const ApprenticeshipSearchMode searchMode = ApprenticeshipSearchMode.Category;
+            const string keywords = "chef";
+            const string location = "Warwick";
+            const double latitude = 1.1;
+            const double longitude = 2.1;
+            const int withinDistance = 15;
+            const string apprenticeshipLevel = "Advanced";
+            const string category = "MFP";
+            const string categoryFullName = "Engineering and Manufacturing Technologies";
+            var subCategories = new[] { "513", "540" };
+            const string subCategoriesFullNames = "Surveying, Construction Civil Engineering";
+            const string searchField = "JobTitle";
+
+            var categories = new List<Category>
+            {
+                new Category
+                {
+                    CodeName = category,
+                    FullName = categoryFullName,
+                    SubCategories = new []
+                    {
+                        new Category
+                        {
+                            CodeName = "513",
+                            FullName = "Surveying"
+                        },
+                        new Category
+                        {
+                            CodeName = "540",
+                            FullName = "Construction Civil Engineering"
+                        }
+                    }
+                }
+            };
+
+            var existingSavedSearch = new SavedSearchBuilder()
+                .WithSearchMode(searchMode)
+                .WithKeywords(keywords)
+                .WithLocation(location)
+                .WithLatLong(latitude, longitude)
+                .WithinDistance(withinDistance)
+                .WithApprenticeshipLevel(apprenticeshipLevel)
+                .WithCategory(category)
+                .WithCategoryFullName(categoryFullName)
+                .WithSubCategories(subCategories)
+                .WithSubCategoriesFullNames(subCategoriesFullNames)
+                .WithSearchField(searchField)
+                .Build();
+
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.RetrieveSavedSearches(candidateId)).Returns(new List<SavedSearch> {existingSavedSearch});
+            var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
+            var viewModel = new ApprenticeshipSearchViewModelBuilder()
+                .WithSearchMode(searchMode)
+                .WithKeywords(keywords)
+                .WithLocation(location)
+                .WithLatLong(latitude, longitude)
+                .WithinDistance(withinDistance)
+                .WithApprenticeshipLevel(apprenticeshipLevel)
+                .WithCategory(category)
+                .WithSubCategories(subCategories)
+                .WithSearchField(searchField)
+                .WithCategories(categories)
+                .Build();
+
+            var response = provider.CreateSavedSearch(candidateId, viewModel);
+
+            response.Should().NotBeNull();
+            candidateService.Verify(cs => cs.RetrieveSavedSearches(candidateId), Times.Once);
+
+            //Should only replace search if it is new
+            candidateService.Verify(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>()), Times.Never);
         }
     }
 }

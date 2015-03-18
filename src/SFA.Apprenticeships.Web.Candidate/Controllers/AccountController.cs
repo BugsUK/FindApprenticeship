@@ -42,12 +42,24 @@
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
-        public async Task<ActionResult> Settings(SettingsViewModel.SettingsMode mode = SettingsViewModel.SettingsMode.YourAccount)
+        public async Task<ActionResult> Settings()
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Settings(UserContext.CandidateId, mode);
+                var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.YourAccount);
                 return View(response.ViewModel);
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [ApplyWebTrends]
+        public async Task<ActionResult> SavedSearchesSettings()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.SavedSearches);
+                return View("Settings", response.ViewModel);
             });
         }
 
@@ -75,7 +87,7 @@
                     case AccountMediatorCodes.Settings.Success:
                         UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
                         SetUserMessage(AccountPageMessages.SettingsUpdated);
-                        return RedirectToRoute(CandidateRouteNames.Settings, new { mode = response.ViewModel.Mode });
+                        return RedirectToRoute(response.ViewModel.Mode == SettingsViewModel.SettingsMode.SavedSearches ? CandidateRouteNames.SavedSearchesSettings : CandidateRouteNames.Settings);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
