@@ -42,7 +42,7 @@
                     return RedirectToRoute(CandidateRouteNames.MyApplications);
                 }
 
-                _authenticationTicketService.Clear(HttpContext.Request.Cookies);
+                _authenticationTicketService.Clear();
 
                 if (returnUrl.IsValidReturnUrl())
                 {

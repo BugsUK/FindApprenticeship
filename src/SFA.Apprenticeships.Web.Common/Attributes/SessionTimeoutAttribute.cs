@@ -32,7 +32,7 @@
                 AddMetaRefreshTimeout(filterContext);
 
                 // And refresh authentication ticket if required
-                controller.AuthenticationTicketService.RefreshTicket(httpContext);
+                controller.AuthenticationTicketService.RefreshTicket();
             }
             else
             {

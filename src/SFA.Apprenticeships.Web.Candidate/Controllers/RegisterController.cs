@@ -107,7 +107,7 @@
                 {
                     case RegisterMediatorCodes.Activate.SuccessfullyActivated:
                         SetUserMessage(response.Message.Text);
-                        return SetAuthenticationCookieAndRedirectToAction(model.EmailAddress);
+                        return SetUserContextAndRedirectToAction(model.EmailAddress);
                     case RegisterMediatorCodes.Activate.InvalidActivationCode:
                     case RegisterMediatorCodes.Activate.FailedValidation:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
@@ -219,7 +219,7 @@
 
                     case RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword:
                         SetUserMessage(response.Message.Text);
-                        return SetAuthenticationCookieAndRedirectToAction(model.EmailAddress);
+                        return SetUserContextAndRedirectToAction(model.EmailAddress);
 
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
@@ -286,12 +286,11 @@
 
         #region Helpers
 
-        private ActionResult SetAuthenticationCookieAndRedirectToAction(string candidateEmail)
+        private ActionResult SetUserContextAndRedirectToAction(string candidateEmail)
         {
             var candidate = _candidateServiceProvider.GetCandidate(candidateEmail);
             //todo: refactor - similar to stuff in login controller... move to ILoginServiceProvider
             //todo: test this
-            _authenticationTicketService.SetAuthenticationCookie(HttpContext.Response.Cookies, candidate.EntityId.ToString(), UserRoleNames.Activated);
             UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress,
                 candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
                 candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion);

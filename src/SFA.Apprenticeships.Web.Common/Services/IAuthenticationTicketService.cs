@@ -6,15 +6,15 @@
 
     public interface IAuthenticationTicketService
     {
-        FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies);
+        FormsAuthenticationTicket GetTicket();
 
-        void RefreshTicket(HttpContextBase httpContext);
+        void RefreshTicket();
 
         string[] GetClaims(FormsAuthenticationTicket ticket);
 
-        void Clear(HttpCookieCollection cookies);
+        void Clear();
 
-        void SetAuthenticationCookie(HttpCookieCollection cookies, string userName, params string[] claims);
+        void SetAuthenticationCookie(string userId, params string[] claims);
 
         DateTime GetExpirationTimeFrom(FormsAuthenticationTicket ticket);
     }

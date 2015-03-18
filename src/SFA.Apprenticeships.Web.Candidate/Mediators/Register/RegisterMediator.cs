@@ -2,6 +2,7 @@
 {
     using System;
     using Common.Constants;
+    using Common.Services;
     using Constants.Pages;
     using Domain.Entities.Users;
     using Providers;
@@ -12,6 +13,7 @@
     public class RegisterMediator : MediatorBase, IRegisterMediator
     {
         private readonly ICandidateServiceProvider _candidateServiceProvider;
+        private readonly IAuthenticationTicketService _authenticationTicketService;
 
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
@@ -19,12 +21,14 @@
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterMediator(ICandidateServiceProvider candidateServiceProvider,
+            IAuthenticationTicketService authenticationTicketService,
             RegisterViewModelServerValidator registerViewModelServerValidator,
             ActivationViewModelServerValidator activationViewModelServerValidator,
             ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator,
             PasswordResetViewModelServerValidator passwordResetViewModelServerValidator)
         {
             _candidateServiceProvider = candidateServiceProvider;
+            _authenticationTicketService = authenticationTicketService;
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
             _forgottenPasswordViewModelServerValidator = forgottenPasswordViewModelServerValidator;
@@ -145,7 +149,8 @@
                 return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.InvalidResetCode, resetViewModel, validationResult);
             }
 
-            //_candidateServiceProvider.SetAuthenticationCookie(candidate.EntityId, UserRoleNames.Activated);
+            var candidate = _candidateServiceProvider.GetCandidate(resetViewModel.EmailAddress);
+            _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Activated);
 
             return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
         }

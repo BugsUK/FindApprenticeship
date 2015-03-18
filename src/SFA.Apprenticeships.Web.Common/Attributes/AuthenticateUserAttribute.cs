@@ -18,8 +18,8 @@
         {
             var httpContext = filterContext.RequestContext.HttpContext;
 
-            var service = new AuthenticationTicketService();
-            var ticket = service.GetTicket(httpContext.Request.Cookies);
+            var service = new AuthenticationTicketService(httpContext);
+            var ticket = service.GetTicket();
 
             if (ticket == null)
             {

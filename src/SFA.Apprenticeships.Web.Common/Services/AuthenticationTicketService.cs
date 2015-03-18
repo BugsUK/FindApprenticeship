@@ -9,10 +9,18 @@
 
     public class AuthenticationTicketService : IAuthenticationTicketService
     {
+        private readonly HttpContextBase _httpContext;
         private static readonly string CookieName = FormsAuthentication.FormsCookieName;
 
-        public FormsAuthenticationTicket GetTicket(HttpCookieCollection cookies)
+        public AuthenticationTicketService(HttpContextBase httpContext)
         {
+            _httpContext = httpContext;
+        }
+
+        public FormsAuthenticationTicket GetTicket()
+        {
+
+            var cookies = _httpContext.Request.Cookies;
             try
             {
                 if (!cookies.AllKeys.Contains(CookieName))
@@ -55,13 +63,13 @@
             }
         }
 
-        public void RefreshTicket(HttpContextBase httpContext)
+        public void RefreshTicket()
         {
             //Only extend the ticket if the cookie has not been set by a prior action or attribute
-            if (httpContext.Response.Cookies.AllKeys.Contains(CookieName))
+            if (_httpContext.Response.Cookies.AllKeys.Contains(CookieName))
                 return;
 
-            var ticket = GetTicket(httpContext.Request.Cookies);
+            var ticket = GetTicket();
 
             if (ticket == null)
             {
@@ -80,7 +88,7 @@
 
             var newTicket = CreateTicket(ticket.Name, ArrayifyClaims(ticket));
 
-            AddTicket(httpContext.Response.Cookies, newTicket);
+            AddTicket(_httpContext.Response.Cookies, newTicket);
 
             //Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s", ticket.Name, timeToExpiry, (FormsAuthentication.Timeout.TotalSeconds / 2));
         }
@@ -90,21 +98,21 @@
             return ArrayifyClaims(ticket);
         }
 
-        public void Clear(HttpCookieCollection cookies)
+        public void Clear()
         {
-            if (!cookies.AllKeys.Contains(CookieName))
+            if (!_httpContext.Request.Cookies.AllKeys.Contains(CookieName))
             {
                 return;
             }
 
-            cookies.Remove(CookieName);
+            _httpContext.Request.Cookies.Remove(CookieName);
         }
 
-        public void SetAuthenticationCookie(HttpCookieCollection cookies, string userName, params string[] claims)
+        public void SetAuthenticationCookie(string userId, params string[] claims)
         {
-            var ticket = CreateTicket(userName, claims);
+            var ticket = CreateTicket(userId, claims);
 
-            AddTicket(cookies, ticket);
+            AddTicket(_httpContext.Response.Cookies, ticket);
         }
 
         #region Helpers

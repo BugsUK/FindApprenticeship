@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web;
     using Application.Interfaces.Logging;
     using Common.Providers;
+    using Common.Services;
     using Constants;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
@@ -21,7 +21,6 @@
     using ViewModels.Login;
     using ViewModels.Register;
     using Common.Constants;
-    using Common.Services;
     using Helpers;
     using Mappers;
     using ViewModels.Account;
@@ -32,13 +31,12 @@
     public class CandidateServiceProvider : ICandidateServiceProvider
     {
         private readonly ILogService _logger;
-        private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ICandidateService _candidateService;
         private readonly IConfigurationManager _configurationManager;
-        private readonly HttpContextBase _httpContext;
         private readonly IMapper _mapper;
         private readonly IUserAccountService _userAccountService;
         private readonly IUserDataProvider _userDataProvider;
+        private readonly IAuthenticationTicketService _authenticationTicketService;
 
         public CandidateServiceProvider(
             ICandidateService candidateService,
@@ -46,7 +44,6 @@
             IUserDataProvider userDataProvider,
             IAuthenticationTicketService authenticationTicketService,
             IMapper mapper,
-            HttpContextBase httpContext,
             IConfigurationManager configurationManager, ILogService logger)
         {
             _candidateService = candidateService;
@@ -54,7 +51,6 @@
             _userDataProvider = userDataProvider;
             _authenticationTicketService = authenticationTicketService;
             _mapper = mapper;
-            _httpContext = httpContext;
             _configurationManager = configurationManager;
             _logger = logger;
         }
@@ -141,8 +137,7 @@
                 candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion);
 
                 _candidateService.Register(candidate, model.Password);
-
-                SetUserCookies(candidate, UserRoleNames.Unactivated);
+                _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Unactivated);
 
                 return true;
             }
@@ -183,9 +178,7 @@
                 }
 
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);
-                _authenticationTicketService.SetAuthenticationCookie(_httpContext.Response.Cookies,
-                    candidateId.ToString(),
-                    UserRoleNames.Activated);
+                _authenticationTicketService.SetAuthenticationCookie(candidateId.ToString(), UserRoleNames.Activated);
 
                 return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Activated);
             }
@@ -230,7 +223,7 @@
                     if (candidate != null)
                     {
                         // User is authentic.
-                        SetUserCookies(candidate, _userAccountService.GetRoleNames(model.EmailAddress));
+                        _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), _userAccountService.GetRoleNames(model.EmailAddress));
 
                         return new LoginResultViewModel
                         {
@@ -591,12 +584,7 @@
             }
         }
 
-        #region Helpers
-
-        private void SetUserCookies(Candidate candidate, params string[] roles)
-        {
-            _authenticationTicketService.SetAuthenticationCookie(_httpContext.Response.Cookies, candidate.EntityId.ToString(), roles);
-        }
+        #region Helper
 
 
         private static LoginResultViewModel GetLoginResultViewModel(LoginViewModel model, UserStatuses userStatus)
