@@ -48,7 +48,6 @@ Scenario: As a candidate I can change my personal settings
 	And I wait to see SendApplicationSubmitted
 	And I wait to see SendApplicationStatusChanges
 	And I wait to see SendApprenticeshipApplicationsExpiring
-	And I wait to see SendSavedSearchAlerts
 	And I wait to see SendMarketingCommunications
 	
 	And I wait to see UpdateDetailsButton
@@ -217,13 +216,11 @@ Scenario: As a candidate I can opt into marketing messages
 	| IsSendApplicationSubmitted               | Equals         | True  |
 	| IsSendApplicationStatusChanges           | Equals         | True  |
 	| IsSendApprenticeshipApplicationsExpiring | Equals         | True  |
-	| IsSendSavedSearchAlerts                  | Equals         | True  |
 	| IsSendMarketingCommunications            | Equals         | True  |
 	When I choose AllowSmsComms
 	And I choose SendApplicationSubmitted
 	And I choose SendApplicationStatusChanges
 	And I choose SendApprenticeshipApplicationsExpiring
-	And I choose SendSavedSearchAlerts
 	And I choose SendMarketingCommunications
 	And I choose UpdateDetailsButton
 	Then I am on the VerifyMobile page
@@ -238,5 +235,4 @@ Scenario: As a candidate I can opt into marketing messages
 	| VerifyContainer                          | Exists |       |
 	| IsSendApplicationSubmitted               | Equals | False |
 	| IsSendApprenticeshipApplicationsExpiring | Equals | False |
-	| IsSendSavedSearchAlerts                  | Equals | False |
 	| IsSendMarketingCommunications            | Equals | False |
