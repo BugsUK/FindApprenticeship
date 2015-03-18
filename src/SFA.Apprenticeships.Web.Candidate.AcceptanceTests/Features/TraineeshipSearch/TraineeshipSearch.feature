@@ -14,8 +14,8 @@ Background:
 Scenario: Find traineeships and test ordering
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field    | Value    |
-		 | Location | Coventry |
+		 | Field    | Value  |
+		 | Location | London |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
@@ -55,8 +55,8 @@ Scenario: Find traineeships and change distance
 Scenario: Find traineeships and test paging
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field    | Value  |
-		 | Location | London |
+		 | Field    | Value    |
+		 | Location | Coventry |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	And I wait to not see PreviousPage
