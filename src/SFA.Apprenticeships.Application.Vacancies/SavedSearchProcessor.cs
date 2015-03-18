@@ -117,10 +117,19 @@
                 var searchParameters = SearchParametersFactory.Create(savedSearch);
                 var searchResults = _vacancySearchProvider.FindVacancies(searchParameters);
                 var results = searchResults.Results.ToList();
+
+                if (results.Count == 0)
+                {
+                    _logService.Info("Saved search with id {0} returned no results", savedSearch.EntityId);
+                    continue;
+                }
+
                 var resultsHash = results.GetResultsHash();
 
                 if (savedSearch.LastResultsHash != resultsHash)
                 {
+                    _logService.Info("Saved search with id {0} returned new results", savedSearch.EntityId);
+
                     //Results are new
                     savedSearch.LastResultsHash = resultsHash;
                     //todo: once we have the vacancy posted date (March 2015) we may store this instead of the processed date

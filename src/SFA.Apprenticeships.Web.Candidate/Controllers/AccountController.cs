@@ -115,10 +115,10 @@
                 switch (response.Code)
                 {
                     case AccountMediatorCodes.DeleteSavedSearch.Ok:
-                        return Redirect(Url.Action("Settings") + "#savedSearch");
+                        return RedirectToRoute(SettingsViewModel.SettingsMode.SavedSearches);
                     case AccountMediatorCodes.DeleteSavedSearch.HasError:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return Redirect(Url.Action("Settings") + "#savedSearch");
+                        return RedirectToRoute(SettingsViewModel.SettingsMode.SavedSearches);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
