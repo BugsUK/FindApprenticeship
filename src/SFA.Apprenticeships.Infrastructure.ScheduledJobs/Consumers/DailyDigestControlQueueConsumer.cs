@@ -1,5 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.Consumers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Application.Communications;
     using Application.Interfaces.Logging;
@@ -25,9 +28,14 @@
 
                 if (schedulerNotification == null) return;
 
-                // TODO: AG: US638: put in separate try / catch blocks, implement in separate classes.
-                _communicationProcessor.SendDailyDigests(schedulerNotification.ClientRequestId);
-                _communicationProcessor.SendSavedSearchAlerts(schedulerNotification.ClientRequestId);
+                var tasks = new List<Task>
+                {
+                    new Task(() => _communicationProcessor.SendDailyDigests(schedulerNotification.ClientRequestId)),
+                    new Task(() => _communicationProcessor.SendSavedSearchAlerts(schedulerNotification.ClientRequestId))
+                };
+
+                tasks.ForEach(t => t.Start());
+                Task.WaitAll(tasks.ToArray());
 
                 MessageService.DeleteMessage(ScheduledJobQueues.DailyDigest, schedulerNotification.MessageId, schedulerNotification.PopReceipt);
             });
