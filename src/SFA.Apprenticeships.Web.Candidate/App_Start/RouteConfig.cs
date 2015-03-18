@@ -34,7 +34,7 @@
 
             routes.MapRoute(
                 name: CandidateRouteNames.SavedSearchesSettings,
-                url: "savedsearchessettings",
+                url: "savedsearches",
                 defaults: new { controller = "Account", action = "SavedSearchesSettings" }
                 );
 
