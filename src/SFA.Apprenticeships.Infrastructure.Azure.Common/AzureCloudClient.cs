@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common
 {
+    using System;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Queue;
     using Configuration;
@@ -16,7 +17,7 @@
 
         public CloudQueueMessage GetMessage(string queueName)
         {
-            return _cloudQueueClient.GetQueueReference(queueName).GetMessage();    
+            return _cloudQueueClient.GetQueueReference(queueName).GetMessage(TimeSpan.FromMinutes(1));    
         }
 
         public void DeleteMessage(string queueName, string id, string popReceipt)
