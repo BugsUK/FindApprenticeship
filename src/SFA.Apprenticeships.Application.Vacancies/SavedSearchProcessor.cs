@@ -19,7 +19,6 @@
     using Interfaces.Vacancies;
     using Vacancy;
 
-    //todo: 1.8: move to Candidates? TBC
     public class SavedSearchProcessor : ISavedSearchProcessor
     {
         private readonly ISavedSearchReadRepository _savedSearchReadRepository;
