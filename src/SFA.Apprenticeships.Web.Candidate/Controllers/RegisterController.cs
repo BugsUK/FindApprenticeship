@@ -43,6 +43,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
         [ValidateInput(false)]
@@ -92,6 +93,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
         [ApplyWebTrends]
@@ -140,6 +142,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
         public async Task<ActionResult> ForgottenPassword(ForgottenPasswordViewModel model)
@@ -188,6 +191,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
         [ApplyWebTrends]

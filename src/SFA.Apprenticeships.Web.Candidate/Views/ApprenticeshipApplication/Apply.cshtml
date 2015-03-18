@@ -14,6 +14,7 @@
 
 @using (Html.BeginForm(null, "ApprenticeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form" }))
 {
+    @Html.AntiForgeryToken()
     <h1 class="heading-xlarge">Application form</h1>
     <section class="section-border">
         <div class="text">

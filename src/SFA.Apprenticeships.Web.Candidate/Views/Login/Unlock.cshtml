@@ -12,6 +12,7 @@
 
 @using (Html.BeginForm("Unlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))
 {
+    @Html.AntiForgeryToken();
     <div class="form-group">
         @Html.FormTextFor(
                 m => m.EmailAddress,

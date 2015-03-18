@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using Framework;
     using Providers;
 
     public class CookiesEnabledAttribute : ActionFilterAttribute
@@ -13,10 +14,8 @@
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             if (!CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext) &&
-                !filterContext.ActionDescriptor.ActionName.Equals("Cookies",
-                    StringComparison.CurrentCultureIgnoreCase) &&
-                !filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.Equals("Home",
-                    StringComparison.CurrentCultureIgnoreCase))
+                !filterContext.ActionDescriptor.ActionName.Equals("Cookies", StringComparison.CurrentCultureIgnoreCase) &&
+                !filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.Equals("Home", StringComparison.CurrentCultureIgnoreCase))
             {
                 CookieDetectionProvider.SetCookie(filterContext.HttpContext);
 
@@ -32,18 +31,14 @@
 
             if (CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext))
             {
-                if (filterContext.ActionDescriptor.ActionName.Equals("Cookies",
-                    StringComparison.CurrentCultureIgnoreCase)
-                    &&
-                    filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.Equals("Home",
-                        StringComparison.CurrentCultureIgnoreCase))
+                if (filterContext.ActionDescriptor.ActionName.Equals("Cookies", StringComparison.CurrentCultureIgnoreCase) && 
+                    filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.Equals("Home", StringComparison.CurrentCultureIgnoreCase))
                 {
                     var url = filterContext.HttpContext.Request.QueryString.Get("returnUrl");
 
-                    if (!string.IsNullOrEmpty(url))
+                    if (url.IsValidReturnUrl())
                     {
-                        filterContext.Result =
-                            new RedirectResult(url);
+                        filterContext.Result = new RedirectResult(url);
                         return;
                     }
                 }

@@ -145,6 +145,8 @@
                 return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.InvalidResetCode, resetViewModel, validationResult);
             }
 
+            //_candidateServiceProvider.SetAuthenticationCookie(candidate.EntityId, UserRoleNames.Activated);
+
             return GetMediatorResponse(RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
         }
     }

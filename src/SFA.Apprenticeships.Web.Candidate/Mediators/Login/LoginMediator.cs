@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
 {
     using Common.Constants;
+    using Common.Framework;
     using Common.Providers;
     using Constants;
     using Constants.Pages;
@@ -70,12 +71,12 @@
 
                     if (result.AcceptedTermsAndConditionsVersion != _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
                     {
-                        return !string.IsNullOrEmpty(returnUrl)
+                        return returnUrl.IsValidReturnUrl()
                             ? GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, result, parameters: returnUrl)
                             : GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, result);
                     }
 
-                    if (!string.IsNullOrWhiteSpace(returnUrl))
+                    if (returnUrl.IsValidReturnUrl())
                     {
                         return GetMediatorResponse(LoginMediatorCodes.Index.ReturnUrl, result, parameters: returnUrl);
                     }

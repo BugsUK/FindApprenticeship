@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Attributes;
+    using Common.Framework;
     using Constants;
     using FluentValidation.Mvc;
     using Mediators;
@@ -37,7 +38,7 @@
         [ApplyWebTrends]
         public async Task<ActionResult> Cookies(string returnUrl)
         {
-            ViewBag.ReturnUrl = returnUrl;
+            ViewBag.ReturnUrl = returnUrl.IsValidReturnUrl() ? returnUrl : "/";
             return await Task.Run<ActionResult>(() => View());
         }
 
@@ -54,6 +55,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
         public async Task<ActionResult> Helpdesk(ContactMessageViewModel model)

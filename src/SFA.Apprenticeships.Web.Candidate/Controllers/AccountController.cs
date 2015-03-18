@@ -8,6 +8,7 @@
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
+    using Common.Framework;
     using Common.Providers;
     using Constants;
     using Constants.Pages;
@@ -64,6 +65,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ApplyWebTrends]
@@ -154,6 +156,7 @@
         }
         
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "VerifyMobile")]
@@ -182,11 +185,11 @@
                         return View(response.ViewModel);
                     case AccountMediatorCodes.VerifyMobile.Success:
                         SetUserMessage(VerifyMobilePageMessages.MobileVerificationSuccessText);
-                        if (string.IsNullOrEmpty(model.ReturnUrl))
+                        if (model.ReturnUrl.IsValidReturnUrl())
                         {
-                            return RedirectToRoute(CandidateRouteNames.Settings);
+                            return Redirect(model.ReturnUrl);                            
                         }
-                        return Redirect(model.ReturnUrl);
+                        return RedirectToRoute(CandidateRouteNames.Settings);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -349,7 +352,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                if (!string.IsNullOrEmpty(returnUrl))
+                if (returnUrl.IsValidReturnUrl())
                 {
                     var routeValueDictionary = new { ReturnUrl = returnUrl };
                     return View("Terms", routeValueDictionary);
@@ -385,7 +388,7 @@
                         throw new InvalidMediatorCodeException(response.Code);
                 }
 
-                if (!string.IsNullOrWhiteSpace(returnUrl))
+                if (returnUrl.IsValidReturnUrl())
                 {
                     return Redirect(returnUrl);
                 }
@@ -403,7 +406,7 @@
             {
                 SetUserMessage(SignOutPageMessages.MustAcceptUpdatedTermsAndConditions, UserMessageLevel.Warning);
 
-                return !string.IsNullOrEmpty(returnUrl)
+                return returnUrl.IsValidReturnUrl()
                     ? RedirectToRoute(RouteNames.SignOut, new { ReturnUrl = returnUrl })
                     : RedirectToRoute(RouteNames.SignOut);
             });

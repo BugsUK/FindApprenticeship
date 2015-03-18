@@ -44,6 +44,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Submit")]

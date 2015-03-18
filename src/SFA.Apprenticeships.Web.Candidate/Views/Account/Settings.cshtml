@@ -24,6 +24,7 @@
 
 @using (Html.BeginRouteForm(CandidateRouteNames.Settings, FormMethod.Post))
 {
+    @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <fieldset>

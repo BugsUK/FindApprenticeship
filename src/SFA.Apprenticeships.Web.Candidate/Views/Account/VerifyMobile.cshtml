@@ -27,6 +27,7 @@
 
 @using (Html.BeginRouteForm(CandidateRouteNames.VerifyMobile, FormMethod.Post, new { @id = "verify-mobile-form" }))
 {
+    @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <fieldset>

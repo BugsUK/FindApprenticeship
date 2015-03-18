@@ -8,6 +8,7 @@
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
+    using Common.Framework;
     using Common.Services;
     using Constants;
     using Constants.Pages;
@@ -43,7 +44,7 @@
 
                 _authenticationTicketService.Clear(HttpContext.Request.Cookies);
 
-                if (!string.IsNullOrWhiteSpace(returnUrl))
+                if (returnUrl.IsValidReturnUrl())
                 {
                     UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
                 }
@@ -53,6 +54,7 @@
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [ApplyWebTrends]
         public async Task<ActionResult> Index(LoginViewModel model)
@@ -135,6 +137,7 @@
 
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         [MultipleFormActionsButton(Name = "LoginAction", Argument = "Unlock")]
         [ApplyWebTrends]
@@ -230,7 +233,7 @@
 
             UserData.Push(userJourneyKey, userJourneyValue);
 
-            return !string.IsNullOrEmpty(returnUrl)
+            return returnUrl.IsValidReturnUrl()
                 ? RedirectToRoute(RouteNames.SignIn, new { ReturnUrl = returnUrl })
                 : RedirectToRoute(RouteNames.SignIn);
         }
@@ -257,7 +260,7 @@
                 SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
             }
 
-            if (!string.IsNullOrWhiteSpace(returnUrl))
+            if (returnUrl.IsValidReturnUrl())
             {
                 UserData.Push(UserDataItemNames.SessionReturnUrl, Server.UrlEncode(returnUrl));
             }

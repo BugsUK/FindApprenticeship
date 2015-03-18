@@ -11,6 +11,7 @@
     <div class="grid grid-1-2">
         @using (Html.BeginRouteForm(RouteNames.SignIn, FormMethod.Post))
         {
+            @Html.AntiForgeryToken();
             <h1 class="heading-large">Sign in</h1>
             <p>
                 Sign in or
