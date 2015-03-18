@@ -6,26 +6,24 @@
 
     public class SendGridConfiguration : SecureConfigurationSection<SendGridConfiguration>
     {
-        private const string UserNameConstant = "UserName";
-        private const string PasswordConstant = "Password";
+        private const string UserNameConstant = "NetworkUsername";
+        private const string PasswordConstant = "NetworkPassword";
 
         public SendGridConfiguration()
             : base("SendGridConfiguration")
         {
         }
 
-        [ConfigurationProperty(UserNameConstant, IsRequired = true)]
+        //[ConfigurationProperty(UserNameConstant, IsRequired = true)]
         public string UserName
         {
-            get { return (string)this[UserNameConstant]; }
-            set { this[UserNameConstant] = value; }
+            get { return BaseAppSettingValues.NetworkUsername; }
         }
 
-        [ConfigurationProperty(PasswordConstant, IsRequired = true)]
+        //[ConfigurationProperty(PasswordConstant, IsRequired = true)]
         public string Password
         {
-            get { return (string)this[PasswordConstant]; }
-            set { this[PasswordConstant] = value; }
+            get { return BaseAppSettingValues.NetworkPassword; }
         }
 
         [ConfigurationProperty("", IsDefaultCollection = true)]

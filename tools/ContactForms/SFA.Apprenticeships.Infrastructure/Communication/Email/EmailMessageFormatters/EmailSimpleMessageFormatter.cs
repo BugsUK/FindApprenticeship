@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
+﻿using SFA.Apprenticeships.Common.Extensions;
+
+namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
 {
     using System.Collections.Generic;
     using Application.Interfaces.Communications;
@@ -14,7 +16,7 @@
                 message.AddSubstitution(sendgridtoken,
                     new List<string>
                     {
-                        token.Value
+                        token.Value.ToFirstCharToUpper()
                     });
             }
         }

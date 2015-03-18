@@ -7,6 +7,8 @@
         Email,
         Firstname,
         Lastname,
+        FullName,
+        FullAddress,
         Companyname,
         Position,
         WorkPhoneNumber,
@@ -35,6 +37,8 @@
         ServiceTypeIds,
         AdditionalPhoneNumber,
         AdditionalEmail,
+
+
     }
 
 

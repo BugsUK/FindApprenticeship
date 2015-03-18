@@ -9,6 +9,8 @@
     {
         public string ToEmail { get; set; }
 
+        public string Subject { get; set; }
+
         public MessageTypes MessageType { get; set; }
 
         public IEnumerable<CommunicationToken> Tokens { get; set; }

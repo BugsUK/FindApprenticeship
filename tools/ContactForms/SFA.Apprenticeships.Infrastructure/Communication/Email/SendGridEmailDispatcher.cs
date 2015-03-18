@@ -21,7 +21,7 @@
         private readonly string _userName;
         private readonly IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> _messageFormatters;
 
-        public SendGridEmailDispatcher(SendGridConfiguration configuration, IEnumerable<KeyValuePair<MessageTypes, 
+        public SendGridEmailDispatcher(SendGridConfiguration configuration, IEnumerable<KeyValuePair<MessageTypes,
             EmailMessageFormatter>> messageFormatters,
             ILogService logger)
         {
@@ -62,7 +62,7 @@
         {
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
-            const string subject = " ";
+            var subject = request.Subject;
 
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage

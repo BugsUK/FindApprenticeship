@@ -15,13 +15,13 @@
 
             routes.MapRoute(
                 name: EmployerRouteNames.SubmitEmployerEnquiry,
-                url: "employerenquiry",
+                url: "employer-enquiry",
                 defaults: new { controller = "EmployerEnquiry", action = "SubmitEmployerEnquiry" }
                 );
 
             routes.MapRoute(
                name: EmployerRouteNames.GlaSubmitEmployerEnquiry,
-               url: "gla-employerenquiry",
+               url: "gla-employer-enquiry",
                defaults: new { controller = "EmployerEnquiry", action = "GlaSubmitEmployerEnquiry" }
                );
 

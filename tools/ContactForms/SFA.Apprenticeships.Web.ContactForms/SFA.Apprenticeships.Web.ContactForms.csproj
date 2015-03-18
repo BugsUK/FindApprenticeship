@@ -267,6 +267,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\ReferenceData\Lookups.xml" />
+    <Content Include="Configs\SendGridSettings.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\_assets\css\fonts-ie8.css" />
@@ -314,10 +318,6 @@
     <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery.cookie.js" />
     <Compile Include="Constants\ValidatorConstants.cs" />
-    <Content Include="Configs\settings.config">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Configs\emailSettings.config" />
     <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.min.js" />
@@ -353,6 +353,13 @@
     <Content Include="Content\_assets\fonts\NTATabularNumbers-Bold.woff" />
     <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.eot" />
     <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.woff" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\PublishProfiles\contactforms-sfa.pubxml" />
     <None Include="Properties\PublishProfiles\EmployerEnquiry.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
