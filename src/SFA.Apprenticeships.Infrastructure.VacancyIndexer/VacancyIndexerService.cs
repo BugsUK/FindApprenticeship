@@ -20,8 +20,8 @@
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
         private const int PageSize = 5;
-        private const double LondonLatitude = 51;
-        private const double LondonLongitude = -0.1;
+        private const double LondonLatitude = 51.51713;
+        private const double LondonLongitude = -0.10619;
         private const int SearchRadius = 30;
 
         public VacancyIndexerService(IElasticsearchClientFactory elasticsearchClientFactory, IMapper mapper, ILogService logger)
