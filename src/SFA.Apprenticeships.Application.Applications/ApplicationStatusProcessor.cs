@@ -123,7 +123,6 @@
 
         public void ProcessApplicationStatuses(VacancyStatusSummary vacancyStatusSummary)
         {
-            //TODO: 1.6: extract to strategy
             // propagate current vacancy state to all draft applications for the vacancy
             var applicationSummaries = _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyStatusSummary.LegacyVacancyId);
 
