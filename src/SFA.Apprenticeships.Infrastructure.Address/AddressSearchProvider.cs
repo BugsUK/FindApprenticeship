@@ -44,7 +44,6 @@
                 return s;
             });
 
-            //TODO: vga: refactor in a new ElasticClient class
             if (ThereWasAnErrorWhileSearching(search))
             {
                 throw search.ConnectionStatus.OriginalException;

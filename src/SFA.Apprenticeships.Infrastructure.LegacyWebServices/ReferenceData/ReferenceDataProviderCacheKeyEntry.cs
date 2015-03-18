@@ -15,7 +15,7 @@
         {
             get
             {
-                //TODO: Update to use config value for cache duration
+                //TODO: Update to use config value for cache duration. consider specifying the duration in the calling code not as a property of the cache key
                 return CacheDuration.OneDay;
             }
         }
