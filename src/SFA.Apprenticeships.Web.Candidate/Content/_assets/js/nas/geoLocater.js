@@ -12,7 +12,7 @@
 
 
         if (!navigator.geolocation) {
-            output.value = "Geolocation is not supported by your browser";
+            output.placeholder = "Geolocation is not supported by your browser";
             return;
         }
 
@@ -39,19 +39,19 @@
                         output.value = myPostcode;
 
                     } else {
-                        output.value = 'No location found';
+                        output.placeholder = 'No location found';
                     }
                 } else {
-                    output.value = 'No location found';
+                    output.placeholder = 'No location found';
                 }
             });
         };
 
         function error() {
-            output.value = "Unable to retrieve your location";
+            output.placeholder = "Unable to retrieve your location";
         };
 
-        output.value = "Locating…";
+        output.placeholder = "Locating…";
 
         navigator.geolocation.getCurrentPosition(success, error, { maximumAge: 600000 });
 
