@@ -1,15 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.ContactForms.Ioc
 {
     using System;
+    using System.Collections.Generic;
     using System.Web;
     using Application.Interfaces;
     using Application.Interfaces.Communications;
-    using Application.Services.CommunicationService;
+    using Application.Services.Communication;
     using Application.Services.ConfigReferenceDataService;
     using Application.Services.LocationSearchService;
     using Common.AppSettings;
     using Domain.Entities;
     using Infrastructure.Communication.Email;
+    using Infrastructure.Communication.Email.EmailMessageFormatters;
     using Infrastructure.Logging;
     using Mappers;
     using Mappers.Interfaces;
@@ -22,12 +24,17 @@
     using Providers.Interfaces;
     using StructureMap.Configuration.DSL;
     using ViewModels;
+    using SFA.Apprenticeships.Application.Services.Communication.Strategies.Interfaces;
+    using SFA.Apprenticeships.Application.Services.Communication.Strategies;
 
     public class ContactFormsWebRegistry : Registry
     {
         public ContactFormsWebRegistry()
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
+            For<ILogService>().AlwaysUnique().Use<NLogLogService>().Ctor<Type>().Is(c => c.ParentType ?? c.RootType);
+
+            RegisterStrategis();
 
             RegisterServices();
 
@@ -38,13 +45,29 @@
             RegisterMediators();
         }
 
-        private void RegisterServices()
+        private void RegisterStrategis()
         {
-            For<ILogService>().AlwaysUnique().Use<NLogLogService>().Ctor<Type>().Is(c => c.ParentType ?? c.RootType);
-            For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Name = "SendGridEmailDispatcher";
+            For<ISendAccessRequestStrategy>().Use<SendAccessRequestStrategy>().Ctor<IEmailDispatcher>().Named(BaseAppSettingValues.EmailDispatcher);
+            For<ISendEmployerEnquiryStrategy>().Use<SendEmployerEnquiryStrategy>().Ctor<IEmailDispatcher>().Named(BaseAppSettingValues.EmailDispatcher);
+            For<ISendGlaEmployerEnquiryStrategy>().Use<SendGlaEmployerEnquiryStrategy>().Ctor<IEmailDispatcher>().Named(BaseAppSettingValues.EmailDispatcher);
+        }
+
+        private void RegisterServices()
+        {            
+            IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> emailMessageFormatters = new[]
+            {
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendEmployerEnquiry, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendGlaEmployerEnquiry, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendWebAccessRequest, new EmailSimpleMessageFormatter())
+            };
+
+            For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Named("SendGridEmailDispatcher")
+                .Ctor<IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>>>().Is(emailMessageFormatters);
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
+            
+            For<SendGridConfiguration>().Singleton().Use(SendGridConfiguration.Instance);            
             For<ILocationSearchService>().Use<LocationSearchService>();
-            For<ICommunciationService>().Use<CommunciationService>().Ctor<IEmailDispatcher>().Named(BaseAppSettingValues.EmailDispatcher);
+            For<ICommunciationService>().Use<CommunciationService>();
             For<IReferenceDataService>().Use<ConfigReferenceDataService>();
         }
 

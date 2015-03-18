@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using Application.Interfaces.Communications;
-    using Domain.Entities;
     using SendGrid;
 
     public class EmailSimpleMessageFormatter : EmailMessageFormatter

@@ -43,6 +43,9 @@
     <Compile Include="AppSettings\AppConfiguration.cs" />
     <Compile Include="AppSettings\BaseAppSettingKeys.cs" />
     <Compile Include="AppSettings\BaseAppSettingValues.cs" />
+    <Compile Include="Configuration\ConfigurationManager.cs" />
+    <Compile Include="Configuration\IConfigurationManager.cs" />
+    <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="Extensions\HelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

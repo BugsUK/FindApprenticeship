@@ -87,21 +87,21 @@
             right support to ensure you can view and track your vacancies.
         </p>
         <div class="form-group inline clearfix">
-            <label for="HasVacanciesAdvertised-yes" class="block-label">
-                @Html.RadioButtonFor(m => m.HasVacanciesAdvertised, false, new
+            <label for="HasApprenticeshipVacancies-yes" class="block-label">
+                @Html.RadioButtonFor(m => m.HasApprenticeshipVacancies, false, new
                    {
-                       id = "HasVacanciesAdvertised-yes",
+                       id = "HasApprenticeshipVacancies-yes",
                        aria_expanded = "false",
-                       aria_labelledby = "HasVacanciesAdvertised"
+                       aria_labelledby = "HasApprenticeshipVacancies"
                    })
                 Yes
 
             </label>
-            <label for="HasVacanciesAdvertised-no" class="block-label">
-                @Html.RadioButtonFor(m => m.HasVacanciesAdvertised, false, new
+            <label for="HasApprenticeshipVacancies-no" class="block-label">
+                @Html.RadioButtonFor(m => m.HasApprenticeshipVacancies, false, new
                     {
-                        id = "HasVacanciesAdvertised-no",
-                        aria_labelledby = "HasVacanciesAdvertised"
+                        id = "HasApprenticeshipVacancies-no",
+                        aria_labelledby = "HasApprenticeshipVacancies"
                     })
                 No
             </label>
@@ -131,7 +131,7 @@
             controlHtmlAttributes: new { @class = "form-control" })
 
         @Html.FormTextFor(
-            m => m.AdditionalMobileNumber,
+             m => m.AdditionalPhoneNumber,
             controlHtmlAttributes: new { @class = "form-control" })
 
         @Html.FormTextFor(

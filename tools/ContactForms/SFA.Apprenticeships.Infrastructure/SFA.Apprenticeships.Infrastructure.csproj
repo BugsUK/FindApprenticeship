@@ -55,9 +55,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Communication\Email\SendGridEmailDispatcher.cs">
+    <Compile Include="Communication\Email\EmailMessageFormatter.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\EmailSimpleMessageFormatter.cs" />
+    <Compile Include="Communication\Email\SendGridConfiguration.cs" />
+    <Compile Include="Communication\Email\SendGridEmailDispatcher.cs" />
+    <Compile Include="Communication\Email\SendGridEmailDispatcher_.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Communication\Email\SendGridTemplateConfiguration.cs" />
+    <Compile Include="Communication\Email\SendGridTemplateConfigurationCollection.cs" />
+    <Compile Include="Communication\Email\SendGridTokenManager.cs" />
     <Compile Include="Communication\Email\VoidEmailDispatcher.cs" />
     <Compile Include="Logging\NLogLogService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

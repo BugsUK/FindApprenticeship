@@ -40,9 +40,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\Communications\CommunicationRequest.cs" />
+    <Compile Include="Interfaces\Communications\CommunicationToken.cs" />
+    <Compile Include="Interfaces\Communications\CommunicationTokens.cs" />
+    <Compile Include="Interfaces\Communications\EmailRequest.cs" />
+    <Compile Include="Interfaces\Communications\ErrorCodes.cs" />
+    <Compile Include="Interfaces\Communications\MessageTypes.cs" />
     <Compile Include="Interfaces\ILogService.cs" />
-    <Compile Include="Services\CommunicationService\CommunciationService.cs" />
+    <Compile Include="Services\Communication\CommunciationService.cs" />
     <Compile Include="Interfaces\Communications\ICommunciationService.cs" />
+    <Compile Include="Services\Communication\Strategies\Interfaces\ISendAccessRequestStrategy.cs" />
+    <Compile Include="Services\Communication\Strategies\Interfaces\ISendGlaEmployerEnquiryStrategy.cs" />
+    <Compile Include="Services\Communication\Strategies\SendAccessRequestStrategy.cs" />
+    <Compile Include="Services\Communication\Strategies\SendEmployerEnquiryStrategy.cs" />
+    <Compile Include="Services\Communication\Strategies\Interfaces\ISendEmployerEnquiryStrategy.cs" />
+    <Compile Include="Services\Communication\Strategies\SendGlaEmployerEnquiryStrategy.cs" />
     <Compile Include="Services\ConfigReferenceDataService\ConfigReferenceDataService.cs" />
     <Compile Include="Interfaces\IReferenceDataService.cs" />
     <Compile Include="Interfaces\Communications\IEmailDispatcher.cs" />

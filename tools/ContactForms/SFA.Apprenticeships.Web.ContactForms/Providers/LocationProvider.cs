@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces;
+    using Common.Extensions;
     using Domain.Entities;
-    using Domain.Extensions;
     using Interfaces;
     using Mappers.Interfaces;
     using ViewModels;

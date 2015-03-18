@@ -5,7 +5,7 @@
     using System.Web.Mvc;
     using Mediators.Interfaces;
 
-    public class LocationController : Controller
+    public class LocationController : ContactFormsControllerBase
     {
         private readonly ILocationMediator _locationMediator;
 

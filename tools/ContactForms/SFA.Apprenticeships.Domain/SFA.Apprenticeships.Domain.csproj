@@ -41,12 +41,11 @@
   <ItemGroup>
     <Compile Include="Entities\AccessRequest.cs" />
     <Compile Include="Entities\Address.cs" />
-    <Compile Include="Entities\EmailRequest.cs" />
     <Compile Include="Entities\EmployerEnquiry.cs" />
     <Compile Include="Entities\Location.cs" />
     <Compile Include="Entities\ReferenceData.cs" />
     <Compile Include="Enums\ReferenceDataTypes.cs" />
-    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Exceptions\CustomException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

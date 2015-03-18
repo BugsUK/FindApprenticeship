@@ -23,7 +23,7 @@
 
             return new EmployerEnquiryViewModel()
             {
-                Address = _addressDomainToViewModelMapper.ConvertToViewModel(domain.ApplicantAddress),
+                Address = _addressDomainToViewModelMapper.ConvertToViewModel(domain.Address),
                 Email = domain.Email,
                 EmployeesCount = domain.EmployeesCount,
                 EnquiryDescription = domain.EnquiryDescription,
@@ -46,7 +46,7 @@
 
             return new EmployerEnquiry()
             {
-                ApplicantAddress = _addressViewModelToDomainMapper.ConvertToDomain(viewModel.Address),
+                Address = _addressViewModelToDomainMapper.ConvertToDomain(viewModel.Address),
                 Email = viewModel.Email,
                 EmployeesCount = viewModel.EmployeesCount,
                 EnquiryDescription = viewModel.EnquiryDescription,

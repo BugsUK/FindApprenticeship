@@ -11,7 +11,7 @@
         public string WorkPhoneNumber { get; set; }
         public string MobileNumber { get; set; }
         public string EmployeesCount { get; set; }
-        public Address ApplicantAddress { get; set; }
+        public Address Address { get; set; }
         public string WorkSector { get; set; }
         public string PreviousExperienceType { get; set; }
         public string EnquiryDescription { get; set; }

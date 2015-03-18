@@ -32,14 +32,14 @@
         [Display(Name = AccessRequestViewModelMessages.MobileNumberMessages.LabelText)]
         public string MobileNumber { get; set; }
         [Display(Name = AccessRequestViewModelMessages.HasVacanciesAdvertisedMessages.LabelText)]
-        public bool HasVacanciesAdvertised { get; set; }
+        public bool HasApprenticeshipVacancies { get; set; }
         public AddressViewModel Address { get; set; }
         [Display(Name = AccessRequestViewModelMessages.AccessRequestServicesMessages.LabelText)]
         public AccessRequestServicesViewModel ServiceTypes { get; set; }
         [Display(Name = AccessRequestViewModelMessages.ContactnameMessages.LabelText)]
         public string Contactname { get; set; }
         [Display(Name = AccessRequestViewModelMessages.AdditionalMobileNumberMessages.LabelText)]
-        public string AdditionalMobileNumber { get; set; }
+        public string AdditionalPhoneNumber { get; set; }
         [Display(Name = AccessRequestViewModelMessages.AdditionalEmailEmailMessages.LabelText)]
         public string AdditionalEmail { get; set; }
         [Display(Name = AccessRequestViewModelMessages.SystemnameMessages.LabelText)]

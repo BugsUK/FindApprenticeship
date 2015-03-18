@@ -176,3 +176,4 @@ $RECYCLE.BIN/
 [Ww]sdl
 
 *.dgml
+tools/ContactForms/SFA.Apprenticeships.Infrastructure/Communication/Email/SendGridEmailDispatcher_.cs

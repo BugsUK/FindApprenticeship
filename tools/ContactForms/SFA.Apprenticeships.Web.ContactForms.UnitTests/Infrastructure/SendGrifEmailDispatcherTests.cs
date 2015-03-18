@@ -25,7 +25,7 @@
         {
             var container = new Container(x =>
             {
-                x.For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Name = "SendGridEmailDispatcher";
+                x.For<IEmailDispatcher>().Use<SendGridEmailDispatcher_>().Name = "SendGridEmailDispatcher";
                 x.For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
             });
 
@@ -39,7 +39,7 @@
         public void ShoudConstructSendGridEmailDispatcher()
         {
             Assert.IsNotNull(_dispatcher);
-            Assert.IsInstanceOf<SendGridEmailDispatcher>(_dispatcher);
+            Assert.IsInstanceOf<SendGridEmailDispatcher_>(_dispatcher);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
@@ -56,7 +56,7 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                EmailContent= EmailContentGenerator.CreateContactForm()
+                //EmailContent= EmailContentGenerator.CreateContactForm()
             };
 
             _voidEmailDispatcher.SendEmail(request);
