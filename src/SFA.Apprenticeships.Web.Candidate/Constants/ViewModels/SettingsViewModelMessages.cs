@@ -65,7 +65,7 @@
         {
             public const string SendSavedSearchAlertsViaEmailLabelText = "Email";
             public const string SendSavedSearchAlertsViaTextLabelText = "Text";
-            public const string AlertsEnabledLabelText = "Alert me for this search";
+            public const string AlertsEnabledLabelText = "Receive alerts for this search";
         }
     }
 }

@@ -7,7 +7,7 @@
 }
 <div class="grid-wrapper">
     <div class="grid grid-1-2">
-        <h1 class="heading-xlarge">Your account settings</h1>
+        <h1 class="heading-xlarge">Settings</h1>
     </div>
     <div class="grid grid-1-2">
         <p>
@@ -46,7 +46,7 @@
             <legend class="heading-large">Personal details</legend>
 
             <div class="panel-indent">
-                <p class="text">Your changes will be seen on any draft or new applications. Submitted applications will continue to show your old details.</p>
+                <p class="text">Any changes you make will be seen on draft or new applications. Submitted applications will continue to show your old details.</p>
             </div>
 
             @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new {@class = "form-group-compound"}, controlHtmlAttributes: new {type = "text", autocorrect = "off"})
@@ -89,12 +89,12 @@
             </div>
 
             <div class="form-group">
-                <button id="update-details-button" class="button">Save Settings</button>
+                <button id="update-details-button" class="button">Save settings</button>
             </div>
         </div>
 
         <div class="tabbed-content @savedSearchesTabClass">
-
+            <h2 class="heading-large" id="savedSearchHeading">Saved searches</h2>
             <div class="form-group form-group-compound">
                 <p class="form-label">Receive notifications?</p>
                 <span class="form-hint">If you don't select an option you won't receive notifications</span>
@@ -106,7 +106,7 @@
             </div>
 
             <div class="form-group" id="savedSearch">
-                <h2 class="heading-large" id="savedSearchHeading">Saved apprenticeship searches</h2>
+                
                 @{
                     var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
                 }
@@ -156,7 +156,7 @@
             </div>
 
             <div class="form-group">
-                <button id="update-details-button" class="button">Save Settings</button>
+                <button id="update-details-button" class="button">Save settings</button>
             </div>
         </div>
 
