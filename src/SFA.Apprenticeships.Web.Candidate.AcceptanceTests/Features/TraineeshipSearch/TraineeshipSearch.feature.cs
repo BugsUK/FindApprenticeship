@@ -100,7 +100,7 @@ this.FeatureBackground();
                         "Value"});
             table1.AddRow(new string[] {
                         "Location",
-                        "London"});
+                        "Coventry"});
 #line 16
  testRunner.When("I enter data", ((string)(null)), table1, "When ");
 #line 19

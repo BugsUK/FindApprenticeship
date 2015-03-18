@@ -14,8 +14,8 @@ Background:
 Scenario: Find traineeships and test ordering
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field    | Value  |
-		 | Location | London |
+		 | Field    | Value    |
+		 | Location | Coventry |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
