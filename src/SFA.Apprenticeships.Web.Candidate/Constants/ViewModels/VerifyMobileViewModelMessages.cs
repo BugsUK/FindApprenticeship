@@ -6,7 +6,7 @@
         {
             public const string LabelText = "Enter code";
             public const string RequiredErrorText = "Please enter mobile verification code";
-            public const string LengthErrorText = "Verification code must be 4 characters";
+            public const string LengthErrorText = "Verification code must be 4 digits";
         }
 
         public static class MobileNumberCodeMessages
