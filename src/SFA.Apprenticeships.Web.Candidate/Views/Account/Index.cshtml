@@ -178,10 +178,9 @@ else
                                         <td class="ta-center">@application.ApplicationStatusDescription</td>
                                         <td class="ta-center">
                                             @{
-                                                var dateApplied = application.DateApplied;
-                                                if (dateApplied.HasValue)
+                                                if (application.DateApplied.HasValue)
                                                 {
-                                                    @Html.DisplayFor(m => dateApplied)
+                                                    @Html.DisplayFor(m => application.DateApplied)
                                                 }
                                             }
                                         </td>
