@@ -204,10 +204,12 @@
     <Compile Include="Repositories\IContactMessagesMetricsRepository.cs" />
     <Compile Include="Repositories\IExpiringDraftsMetricsRepository.cs" />
     <Compile Include="Repositories\ISavedSearchAlertMetricsRepository.cs" />
+    <Compile Include="Repositories\ISavedSearchesMetricsRepository.cs" />
     <Compile Include="Repositories\IUserMetricsRepository.cs" />
     <Compile Include="Repositories\ITraineeshipMetricsRepository.cs" />
     <Compile Include="Repositories\ApprenticeshipMetricsRepository.cs" />
     <Compile Include="Repositories\SavedSearchAlertMetricsRepository.cs" />
+    <Compile Include="Repositories\SavedSearchesMetricsRepository.cs" />
     <Compile Include="Repositories\UserMetricsRepository.cs" />
     <Compile Include="Repositories\TraineeshipMetricsRepository.cs" />
     <Compile Include="Tasks\CheckUnsentCandidateMessages.cs" />

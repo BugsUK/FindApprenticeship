@@ -24,6 +24,7 @@
         private readonly IApplicationStatusAlertsMetricsRepository _applicationStatusAlertsMetricsRepository;
         private readonly ISavedSearchAlertMetricsRepository _savedSearchAlertMetricsRepository;
         private readonly IContactMessagesMetricsRepository _contactMessagesMetricsRepository;
+        private readonly ISavedSearchesMetricsRepository _savedSearchesMetricsRepository;
 
         private readonly int _validNumberOfDaysSinceUserActivity;
 
@@ -36,7 +37,8 @@
             IExpiringDraftsMetricsRepository expiringDraftsMetricsRepository,
             IApplicationStatusAlertsMetricsRepository applicationStatusAlertsMetricsRepository,
             ISavedSearchAlertMetricsRepository savedSearchAlertMetricsRepository,
-            IContactMessagesMetricsRepository contactMessagesMetricsRepository)
+            IContactMessagesMetricsRepository contactMessagesMetricsRepository,
+            ISavedSearchesMetricsRepository savedSearchesMetricsRepository)
         {
             _logger = logger;
             _configurationManager = configurationManager;
@@ -47,6 +49,7 @@
             _applicationStatusAlertsMetricsRepository = applicationStatusAlertsMetricsRepository;
             _savedSearchAlertMetricsRepository = savedSearchAlertMetricsRepository;
             _contactMessagesMetricsRepository = contactMessagesMetricsRepository;
+            _savedSearchesMetricsRepository = savedSearchesMetricsRepository;
 
             _validNumberOfDaysSinceUserActivity = _configurationManager.GetCloudAppSetting<int>("ValidNumberOfDaysSinceUserActivity");
         }
@@ -98,6 +101,8 @@
             p1[1] = result[1];
             p1[2] = _validNumberOfDaysSinceUserActivity;
             sb.AppendFormat(" - Total number of candidates active in the last {2} days: {0} ({1}ms)\n", p1);
+
+            sb.AppendFormat(" - Total number of saved searches: {0} ({1}ms)\n", TimedMongoCall(_savedSearchesMetricsRepository.GetSavedSearchesCount));
 
             // Apprenticeship applications.
             sb.Append("Apprenticeships:\n");
