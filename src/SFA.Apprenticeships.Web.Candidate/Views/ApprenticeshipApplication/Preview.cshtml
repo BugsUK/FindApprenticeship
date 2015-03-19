@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Preview your application - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var AnalyticsTag = "Webtrends.multiTrack({{ element: this, argsa: ['DCS.dcsuri', '/apprenticeship/preview/" + Model.VacancyId + "', 'WT.dl', '99', 'WT.ti', 'Apprenticeship – Submit Preview', 'DCSext.buttonPos', '{0}'] }});";
 }
 
 @if (Model.DateUpdated.HasValue)
@@ -19,7 +20,7 @@
     @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
     <p class="para-btm-margin">Before you submit your application, please check your details are correct and your answers are relevant to the apprenticeship: <b class="inl-block">@Model.VacancyDetail.Title with @Model.VacancyDetail.EmployerName</b>.</p>
     <div class="form-group">
-        @Html.ActionLink("Submit application", "SubmitApplication", new { id = Model.VacancyId }, new { @class = "button", id = "submit-application_initial" })
+        @Html.ActionLink("Submit application", "SubmitApplication", new { id = Model.VacancyId }, new { @class = "button", id = "submit-application_initial", onclick = string.Format(AnalyticsTag, "TopButton") })
         <p><a title="Return to application form" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.VacancyId })">Return to application form</a></p>
     </div>
 </div>
@@ -192,7 +193,7 @@
     </ul>
 </div>
 <div class="form-group">
-    @Html.ActionLink("Submit application", "SubmitApplication", new {id = Model.VacancyId}, new {@class = "button", id = "submit-application"})
+    @Html.ActionLink("Submit application", "SubmitApplication", new { id = Model.VacancyId }, new { @class = "button", id = "submit-application", onclick = string.Format(AnalyticsTag, "BottomButton") })
 
     @if (Model.DateUpdated.HasValue)
     {
