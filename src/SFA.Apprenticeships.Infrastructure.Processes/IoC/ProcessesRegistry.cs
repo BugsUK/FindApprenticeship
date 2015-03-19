@@ -24,10 +24,14 @@
             // communications
             var emailDispatcher = CloudConfigurationManager.GetSetting("EmailDispatcher");
             var smsDispatcher = CloudConfigurationManager.GetSetting("SmsDispatcher");
+            
             For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(emailDispatcher);
             For<SmsRequestConsumerAsync>().Use<SmsRequestConsumerAsync>().Ctor<ISmsDispatcher>().Named(smsDispatcher);
+
             For<CommunicationCommand>().Use<CandidateCommunicationCommand>();
+            For<CommunicationCommand>().Use<CandidateDailyDigestCommunicationCommand>();
             For<CommunicationCommand>().Use<HelpDeskCommunicationCommand>();
+
             For<CommunicationRequestConsumerAsync>().Use<CommunicationRequestConsumerAsync>();
 
             // applications

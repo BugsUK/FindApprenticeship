@@ -23,58 +23,75 @@
 
         public override bool CanHandle(CommunicationRequest communicationRequest)
         {
-            return communicationRequest.MessageType != MessageTypes.CandidateContactMessage;
+            // TODO: AG: inclusive test here.
+            return communicationRequest.MessageType != MessageTypes.CandidateContactMessage &&
+                   communicationRequest.MessageType != MessageTypes.DailyDigest;
         }
 
         public override void Handle(CommunicationRequest communicationRequest)
         {
-            var candidateId = GetCandidateId(communicationRequest.EntityId);
+            var candidateId = GetCandidateId(communicationRequest);
             var user = _userReadRepository.Get(candidateId);
+            var candidate = _candidateReadRepository.Get(candidateId);
 
-            if (user.Status == UserStatuses.Inactive || user.Status == UserStatuses.Dormant)
+            if (!ShouldCommunicateWithCandidate(user))
             {
                 return;
             }
 
-            var candidate = _candidateReadRepository.Get(candidateId);
-
-            // Some messages are mandatory.
-            var isMandatoryMessageType =
-                !(communicationRequest.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
-                communicationRequest.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted);
-
-            var isSmsMessageType =
-                !(communicationRequest.MessageType == MessageTypes.SendActivationCode ||
-                communicationRequest.MessageType == MessageTypes.SendPasswordResetCode ||
-                communicationRequest.MessageType == MessageTypes.PasswordChanged ||
-                communicationRequest.MessageType == MessageTypes.SendAccountUnlockCode);
-
-            // Some messages are channel-specific.
-            var isSmsOnlyMessageType = communicationRequest.MessageType == MessageTypes.SendMobileVerificationCode;
-
-            if ((isMandatoryMessageType || candidate.CommunicationPreferences.AllowEmail) && !isSmsOnlyMessageType)
+            if ((IsMandatoryMessageType(communicationRequest) || candidate.CommunicationPreferences.AllowEmail) &&
+                !IsSmsOnlyMessageType(communicationRequest))
             {
                 QueueEmailMessage(communicationRequest);
             }
 
-            if (isSmsMessageType &&
-                (isMandatoryMessageType || candidate.CommunicationPreferences.AllowMobile) &&
-                (isSmsOnlyMessageType || candidate.CommunicationPreferences.VerifiedMobile))
+            if (IsSmsMessageType(communicationRequest) &&
+                (IsMandatoryMessageType(communicationRequest) || candidate.CommunicationPreferences.AllowMobile) &&
+                (IsSmsOnlyMessageType(communicationRequest) || candidate.CommunicationPreferences.VerifiedMobile))
             {
-                QueueSmsMessage(communicationRequest);
+                QueueSmsMessages(communicationRequest);
             }
+        }
+
+        protected virtual void QueueSmsMessages(CommunicationRequest communicationRequest)
+        {
+            QueueSmsMessage(communicationRequest);
         }
 
         #region Helpers
 
-        public Guid GetCandidateId(Guid? candidateId)
+        private static Guid GetCandidateId(CommunicationRequest communicationRequest)
         {
-            if (!candidateId.HasValue)
+            if (!communicationRequest.EntityId.HasValue)
             {
-                throw new ArgumentNullException("candidateId");
+                throw new InvalidOperationException("Candidate Id is null.");
             }
 
-            return candidateId.Value;
+            return communicationRequest.EntityId.Value;
+        }
+
+        private static bool ShouldCommunicateWithCandidate(User user)
+        {
+            return user.IsActive() || user.Status == UserStatuses.PendingActivation;
+        }
+
+        private static bool IsSmsOnlyMessageType(CommunicationRequest communicationRequest)
+        {
+            return communicationRequest.MessageType == MessageTypes.SendMobileVerificationCode;
+        }
+
+        private static bool IsSmsMessageType(CommunicationRequest communicationRequest)
+        {
+            return !(communicationRequest.MessageType == MessageTypes.SendActivationCode ||
+                     communicationRequest.MessageType == MessageTypes.SendPasswordResetCode ||
+                     communicationRequest.MessageType == MessageTypes.PasswordChanged ||
+                     communicationRequest.MessageType == MessageTypes.SendAccountUnlockCode);
+        }
+
+        private static bool IsMandatoryMessageType(CommunicationRequest communicationRequest)
+        {
+            return !(communicationRequest.MessageType == MessageTypes.TraineeshipApplicationSubmitted ||
+                     communicationRequest.MessageType == MessageTypes.ApprenticeshipApplicationSubmitted);
         }
 
         #endregion

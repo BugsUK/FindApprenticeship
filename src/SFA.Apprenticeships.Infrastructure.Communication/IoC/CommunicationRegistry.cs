@@ -45,6 +45,11 @@
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.DailyDigest, new SmsDailyDigestMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSuccessful, new SmsApprenticeshipApplicationSuccessfulMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationUnsuccessful, new SmsApprenticeshipApplicationUnsuccessfulMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, new SmsApprenticeshipApplicationsUnsuccessfulSummaryMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationExpiringDraft, new SmsApprenticeshipApplicationExpiringDraftMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary, new SmsApprenticeshipApplicationExpiringDraftsSummaryMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SavedSearchAlert, new SmsSavedSearchAlertMessageFormatter(ReachSmsConfiguration.Instance.Templates))
             };
 

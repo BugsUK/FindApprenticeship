@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
-    using Builder;
+    using Builders;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using FluentAssertions;

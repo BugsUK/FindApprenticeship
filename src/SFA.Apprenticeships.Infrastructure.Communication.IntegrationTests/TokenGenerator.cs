@@ -18,7 +18,7 @@
         {
             return new[]
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.ActivationCode, TestActivationCode),
                 new CommunicationToken(CommunicationTokens.Username, TestToEmail),
                 new CommunicationToken(CommunicationTokens.ActivationCodeExpiryDays, " 30 days")
@@ -29,7 +29,7 @@
         {
             return new[]
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.Username, TestToEmail),
                 new CommunicationToken(CommunicationTokens.AccountUnlockCode, TestActivationCode),
                 new CommunicationToken(CommunicationTokens.AccountUnlockCodeExpiryDays, " 1 day")
@@ -40,7 +40,7 @@
         {
             return new[]
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.Username, TestToEmail)
             };
         }
@@ -49,7 +49,7 @@
         {
             return new[]
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.Username, TestToEmail),
                 new CommunicationToken(CommunicationTokens.PasswordResetCode, TestActivationCode),
                 new CommunicationToken(CommunicationTokens.PasswordResetCodeExpiryDays, "1 day")
@@ -60,7 +60,7 @@
         {
             return new[]
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle,
                     "Application Vacancy Title"),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyReference,
@@ -74,7 +74,7 @@
         {
             return new[]
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle,
                     "Application Vacancy Title"),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyReference,
@@ -90,7 +90,7 @@
         {
             var tokens = new List<CommunicationToken>
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName"),
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
             };
 
             tokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, string.Empty));
@@ -121,7 +121,7 @@
         {
             var tokens = new List<CommunicationToken>
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName")
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane")
             };
 
             var savedSearchAlerts = new Fixture()
@@ -137,5 +137,71 @@
 
             return tokens;
        }
+
+        public static IEnumerable<CommunicationToken> CreateApprenticeshipApplicationStatusAlertTokens()
+        {
+            var tokens = new List<CommunicationToken>
+            {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
+            };
+
+            var applicationStatusAlert = new Fixture().Build<ApplicationStatusAlert>().Create();
+            var json = JsonConvert.SerializeObject(applicationStatusAlert);
+
+            tokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlert, json));
+
+            return tokens;
+        }
+
+        public static IEnumerable<CommunicationToken> CreateApprenticeshipApplicationStatusAlertsTokens(int count)
+        {
+            var tokens = new List<CommunicationToken>
+            {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
+            };
+
+            var applicationStatusAlerts = new Fixture()
+                .Build<ApplicationStatusAlert>()
+                .CreateMany(count);
+
+            var json = JsonConvert.SerializeObject(applicationStatusAlerts);
+
+            tokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, json));
+
+            return tokens;
+        }
+
+        public static IEnumerable<CommunicationToken> CreateApprenticeshipApplicationExpiringDraftTokens()
+        {
+            var tokens = new List<CommunicationToken>
+            {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
+            };
+
+            var expiringDraft = new Fixture().Build<ExpiringApprenticeshipApplicationDraft>().Create();
+            var json = JsonConvert.SerializeObject(expiringDraft);
+
+            tokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDraft, json));
+
+            return tokens;
+        }
+
+        public static IEnumerable<CommunicationToken> CreateApprenticeshipApplicationExpiringDraftsTokens(int count)
+        {
+            var tokens = new List<CommunicationToken>
+            {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
+            };
+
+            var expiringDrafts = new Fixture()
+                .Build<ExpiringApprenticeshipApplicationDraft>()
+                .CreateMany(count);
+
+            var json = JsonConvert.SerializeObject(expiringDrafts);
+
+            tokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, json));
+
+            return tokens;
+        }
     }
 }

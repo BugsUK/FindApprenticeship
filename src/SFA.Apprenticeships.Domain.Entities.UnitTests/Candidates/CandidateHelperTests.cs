@@ -23,7 +23,7 @@
                 .VerifiedMobile(verifiedMobile)
                 .Build();
 
-            candidate.ShouldCommunicateWithCandidate().Should().Be(expected);
+            candidate.AllowsCommunication().Should().Be(expected);
         }
     }
 }

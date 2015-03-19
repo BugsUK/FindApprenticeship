@@ -1,0 +1,119 @@
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands.CandidateDailyDigestCommunicationCommandTests
+{
+    using System;
+    using Application.Interfaces.Communications;
+    using Builders;
+    using Domain.Entities.UnitTests.Builder;
+    using FluentAssertions;
+    using Moq;
+    using Newtonsoft.Json;
+    using NUnit.Framework;
+    using Processes.Communications.Commands;
+
+    [TestFixture]
+    public class ExpiringDraftTests : CandidateCommunicationCommandTestsBase
+    {
+        [SetUp]
+        public void SetUp()
+        {
+            var command = new CandidateDailyDigestCommunicationCommand(
+                MessageBus.Object, CandidateRepository.Object, UserRepository.Object);
+
+            base.SetUp(command);
+        }
+
+        [Test]
+        public void ShouldHandleCandidateDailyDigestContainingOneOrMoreExpiringDraft()
+        {
+            // Arrange.
+            var candidate = new CandidateBuilder(Guid.NewGuid())
+                .AllowEmail(true)
+                .AllowMobile(true)
+                .VerifiedMobile(true)
+                .Build();
+
+            AddCandidate(candidate);
+
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder()
+                .WithExpiringDrafts(1)
+                .Build();
+
+            var json = JsonConvert.SerializeObject(expiringDrafts);
+
+            var communicationRequest = new CommunicationRequestBuilder(MessageTypes.DailyDigest, candidate.EntityId)
+                .WithToken(CommunicationTokens.ExpiringDrafts, json)
+                .WithToken(CommunicationTokens.ApplicationStatusAlerts, null)
+                .Build();
+
+            // Act.
+            var canHandle = Command.CanHandle(communicationRequest);
+
+            // Assert.
+            canHandle.Should().BeTrue();
+        }
+
+        [TestCase(1)]
+        [TestCase(5)]
+        public void ShouldQueueOneEmailForMultipleExpiringDrafts(int expiringDraftCount)
+        {
+            // Arrange.
+            var candidate = new CandidateBuilder(Guid.NewGuid())
+                .AllowEmail(true)
+                .AllowMobile(true)
+                .VerifiedMobile(true)
+                .Build();
+
+            AddCandidate(candidate);
+
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder()
+                .WithExpiringDrafts(expiringDraftCount)
+                .Build();
+
+            var json = JsonConvert.SerializeObject(expiringDrafts);
+
+            var communicationRequest = new CommunicationRequestBuilder(MessageTypes.DailyDigest, candidate.EntityId)
+                .WithToken(CommunicationTokens.ExpiringDrafts, json)
+                .WithToken(CommunicationTokens.ApplicationStatusAlerts, null)
+                .Build();
+
+            // Act.
+            Command.Handle(communicationRequest);
+
+            // Assert.
+            ShouldQueueEmail(MessageTypes.DailyDigest, Times.Once());
+        }
+
+        [TestCase(1, MessageTypes.ApprenticeshipApplicationExpiringDraft)]
+        [TestCase(2, MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary)]
+        [TestCase(5, MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary)]
+        public void ShouldQueueOneSmsForOneOrMoreExpiringDrafts(
+            int expiringDraftCount, MessageTypes expectedMessageType)
+        {
+            // Arrange.
+            var candidate = new CandidateBuilder(Guid.NewGuid())
+                .AllowEmail(true)
+                .AllowMobile(true)
+                .VerifiedMobile(true)
+                .Build();
+
+            AddCandidate(candidate);
+
+            var expiringDrafts = new ExpiringApprenticeshipApplicationDraftsBuilder()
+                .WithExpiringDrafts(expiringDraftCount)
+                .Build();
+
+            var json = JsonConvert.SerializeObject(expiringDrafts);
+
+            var communicationRequest = new CommunicationRequestBuilder(MessageTypes.DailyDigest, candidate.EntityId)
+                .WithToken(CommunicationTokens.ExpiringDrafts, json)
+                .WithToken(CommunicationTokens.ApplicationStatusAlerts, null)
+                .Build();
+
+            // Act.
+            Command.Handle(communicationRequest);
+
+            // Assert.
+            ShouldQueueSms(expectedMessageType, Times.Once());
+        }
+   }
+}

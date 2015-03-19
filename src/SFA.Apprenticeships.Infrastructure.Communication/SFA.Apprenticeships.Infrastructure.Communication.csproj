@@ -124,6 +124,11 @@
     <Compile Include="Sms\ITwillioConfiguration.cs" />
     <Compile Include="Sms\ISmsNumberFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationExpiringDraftMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationExpiringDraftsSummaryMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationSuccessfulMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationsUnsuccessfulSummaryMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationUnsuccessfulMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsSavedSearchAlertMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsSendMobileVerificationCodeMessageFormatter.cs" />

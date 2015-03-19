@@ -8,7 +8,7 @@
             return !communicationPreferences.VerifiedMobile && (communicationPreferences.AllowMobile || communicationPreferences.SendSavedSearchAlertsViaText);
         }
 
-        public static bool ShouldCommunicateWithCandidate(this Candidate candidate)
+        public static bool AllowsCommunication(this Candidate candidate)
         {
             var communicationPreferences = candidate.CommunicationPreferences;
 

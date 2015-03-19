@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Builder
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Builders
 {
     using System;
     using System.Collections.Generic;

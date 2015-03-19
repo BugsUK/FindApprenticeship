@@ -4,13 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
-    using Builder;
     using Builders;
     using Domain.Entities.Communication;
     using FluentAssertions;
     using Helpers;
     using Newtonsoft.Json;
     using NUnit.Framework;
+    using UnitTests.Builders;
 
     [TestFixture]
     public class ExpiringDraftEmailDailyDigestMessageFormatterTests : EmailDailyDigestMessageFormatterTestsBase

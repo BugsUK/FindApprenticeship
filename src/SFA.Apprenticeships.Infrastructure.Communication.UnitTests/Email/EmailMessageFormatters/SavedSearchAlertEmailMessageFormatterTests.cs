@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Builder;
     using Builders;
     using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -13,6 +12,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using SendGrid;
+    using UnitTests.Builders;
 
     [TestFixture]
     public class SavedSearchAlertEmailMessageFormatterTests

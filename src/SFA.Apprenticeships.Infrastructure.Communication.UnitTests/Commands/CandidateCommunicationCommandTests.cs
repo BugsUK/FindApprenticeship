@@ -1,60 +1,41 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands
 {
     using System;
-    using System.Linq;
     using Application.Interfaces.Communications;
-    using Domain.Entities.Candidates;
+    using Builders;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Messaging;
-    using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Processes.Communications.Commands;
 
     [TestFixture]
-    public class CandidateCommunicationCommandTests
+    public class CandidateCommunicationCommandTests : CandidateCommunicationCommandTestsBase
     {
-        private const string TestEmailAddress = "jane.doe@example.com";
-        private const string TestMobileNumber = "07999999999";
-
-        private Mock<IMessageBus> _messageBus;
-        private CandidateCommunicationCommand _command;
-        private Mock<ICandidateReadRepository> _candidateRepository;
-        private Mock<IUserReadRepository> _userRepository;
-
         [SetUp]
         public void SetUp()
         {
-            _messageBus = new Mock<IMessageBus>();
-            _userRepository = new Mock<IUserReadRepository>();
-            _candidateRepository = new Mock<ICandidateReadRepository>();
-            _command = new CandidateCommunicationCommand(_messageBus.Object, _candidateRepository.Object, _userRepository.Object);
+            var command = new CandidateCommunicationCommand(
+                MessageBus.Object, CandidateRepository.Object, UserRepository.Object);
+
+            base.SetUp(command);
         }
 
         [TestCase(MessageTypes.ApprenticeshipApplicationSubmitted)]
-        [TestCase(MessageTypes.DailyDigest)]
         [TestCase(MessageTypes.PasswordChanged)]
         [TestCase(MessageTypes.SendAccountUnlockCode)]
         [TestCase(MessageTypes.SendActivationCode)]
         [TestCase(MessageTypes.SendMobileVerificationCode)]
         [TestCase(MessageTypes.SendPasswordResetCode)]
         [TestCase(MessageTypes.TraineeshipApplicationSubmitted)]
-        public void ShouldHandleCandidateCommunicationMessagesTypes(MessageTypes messageType)
+        public void ShouldHandleMostCandidateMessagesTypes(MessageTypes messageType)
         {
             // Arrange.
-            var communicationRequest = new CommunicationRequest
-            {
-                MessageType = messageType,
-                Tokens = new[]
-                {
-                    new CommunicationToken(CommunicationTokens.RecipientEmailAddress, TestEmailAddress)
-                }
-            };
+            var communicationRequest = new CommunicationRequestBuilder(messageType, Guid.NewGuid()).Build();
 
             // Act.
-            var canHandle = _command.CanHandle(communicationRequest);
+            var canHandle = Command.CanHandle(communicationRequest);
 
             // Assert.
             canHandle.Should().BeTrue();
@@ -70,23 +51,21 @@
             };
 
             // Act.
-            Action action = () => _command.Handle(communicationRequest);
+            Action action = () => Command.Handle(communicationRequest);
 
             // Assert.
-            action.ShouldThrowExactly<ArgumentNullException>();
+            action.ShouldThrowExactly<InvalidOperationException>();
         }
 
         [TestCase(MessageTypes.CandidateContactMessage)]
-        public void ShouldNotBeAbleToHandleNonCandidateCommunicationMessageTypes(MessageTypes messageType)
+        [TestCase(MessageTypes.DailyDigest)]
+        public void ShouldNotBeAbleToHandleOtherMessageTypes(MessageTypes messageType)
         {
             // Arrange.
-            var communicationRequest = new CommunicationRequest
-            {
-                MessageType = messageType
-            };
+            var communicationRequest = new CommunicationRequestBuilder(messageType, Guid.NewGuid()).Build();
 
             // Act.
-            var canHandle = _command.CanHandle(communicationRequest);
+            var canHandle = Command.CanHandle(communicationRequest);
 
             // Assert.
             canHandle.Should().BeFalse();
@@ -94,9 +73,9 @@
 
         [TestCase(MessageTypes.ApprenticeshipApplicationSubmitted, UserStatuses.Active)]
         [TestCase(MessageTypes.TraineeshipApplicationSubmitted, UserStatuses.Active)]
-        [TestCase(MessageTypes.DailyDigest, UserStatuses.Active)]
-        [TestCase(MessageTypes.DailyDigest, UserStatuses.Locked)]
-        [TestCase(MessageTypes.DailyDigest, UserStatuses.PendingActivation)]
+        [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Active)]
+        [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Locked)]
+        [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.PendingActivation)]
         public void ShouldQueueEmailAndSmsForActiveCandidate(MessageTypes messageType, UserStatuses userStatus)
         {
             // Arrange.
@@ -111,15 +90,15 @@
             var communicationRequest = new CommunicationRequestBuilder(messageType, candidate.EntityId).Build();
 
             // Act.
-            _command.Handle(communicationRequest);
+            Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(communicationRequest, Times.Once());
-            ShouldQueueSms(communicationRequest, Times.Once());
+            ShouldQueueEmail(messageType, Times.Once());
+            ShouldQueueSms(messageType, Times.Once());
         }
 
-        [TestCase(MessageTypes.DailyDigest, UserStatuses.Inactive)]
-        [TestCase(MessageTypes.DailyDigest, UserStatuses.Dormant)]
+        [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Inactive)]
+        [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Dormant)]
         public void ShouldNotQueueEmailOrSmsForInactiveCandidate(MessageTypes messageType, UserStatuses userStatus)
         {
             // Arrange.
@@ -134,14 +113,14 @@
             var communicationRequest = new CommunicationRequestBuilder(messageType, candidate.EntityId).Build();
 
             // Act.
-            _command.Handle(communicationRequest);
+            Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(communicationRequest, Times.Never());
-            ShouldQueueSms(communicationRequest, Times.Never());
+            ShouldQueueEmail(messageType, Times.Never());
+            ShouldQueueSms(messageType, Times.Never());
         }
 
-        [TestCase(MessageTypes.DailyDigest)]
+        [TestCase(MessageTypes.SavedSearchAlert)]
         public void ShouldNotQueueSmsIfUnverifiedMobile(MessageTypes messageType)
         {
             // Arrange.
@@ -156,11 +135,11 @@
             var communicationRequest = new CommunicationRequestBuilder(messageType, candidate.EntityId).Build();
 
             // Act.
-            _command.Handle(communicationRequest);
+            Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(communicationRequest, Times.Once());
-            ShouldQueueSms(communicationRequest, Times.Never());
+            ShouldQueueEmail(messageType, Times.Once());
+            ShouldQueueSms(messageType, Times.Never());
         }
 
         [TestCase(MessageTypes.SendMobileVerificationCode, true)]
@@ -179,11 +158,11 @@
             var communicationRequest = new CommunicationRequestBuilder(messageType, candidate.EntityId).Build();
 
             // Act.
-            _command.Handle(communicationRequest);
+            Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(communicationRequest, Times.Never());
-            ShouldQueueSms(communicationRequest, Times.Once());
+            ShouldQueueEmail(messageType, Times.Never());
+            ShouldQueueSms(messageType, Times.Once());
         }
 
         [TestCase(MessageTypes.PasswordChanged)]
@@ -204,75 +183,11 @@
             var communicationRequest = new CommunicationRequestBuilder(messageType, candidate.EntityId).Build();
 
             // Act.
-            _command.Handle(communicationRequest);
+            Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(communicationRequest, Times.Once());
-            ShouldQueueSms(communicationRequest, Times.Never());
+            ShouldQueueEmail(messageType, Times.Once());
+            ShouldQueueSms(messageType, Times.Never());
         }
-
-        #region Helpers
-
-        private void ShouldQueueSms(CommunicationRequest communicationRequest, Times times)
-        {
-            _messageBus.Verify(mock => mock.PublishMessage(
-                It.Is<SmsRequest>(smsRequest =>
-                    smsRequest.MessageType == communicationRequest.MessageType &&
-                    smsRequest.ToNumber == TestMobileNumber &&
-                    !smsRequest.Tokens.Any())),
-                times);
-        }
-
-        private void ShouldQueueEmail(CommunicationRequest communicationRequest, Times times)
-        {
-            _messageBus.Verify(mock => mock.PublishMessage(
-                It.Is<EmailRequest>(emailRequest =>
-                    emailRequest.MessageType == communicationRequest.MessageType &&
-                    !emailRequest.Tokens.Any())),
-                times);
-        }
-
-        private void AddCandidate(Candidate candidate, UserStatuses userStatus = UserStatuses.Active)
-        {
-            var user = new UserBuilder(candidate.EntityId)
-                .WithStatus(userStatus)
-                .Build();
-
-            _candidateRepository
-                .Setup(mock => mock.Get(candidate.EntityId))
-                .Returns(candidate);
-
-            _userRepository
-                .Setup(mock => mock.Get(candidate.EntityId))
-                .Returns(user);
-        }
-
-        private class CommunicationRequestBuilder
-        {
-            private readonly MessageTypes _messageType;
-            private readonly Guid _candidateId;
-
-            public CommunicationRequestBuilder(MessageTypes messageType, Guid candidateId)
-            {
-                _messageType = messageType;
-                _candidateId = candidateId;
-            }
-
-            public CommunicationRequest Build()
-            {
-                return new CommunicationRequest
-                {
-                    MessageType = _messageType,
-                    Tokens = new[]
-                    {
-                        new CommunicationToken(CommunicationTokens.RecipientEmailAddress, TestEmailAddress),
-                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, TestMobileNumber)
-                    },
-                    EntityId = _candidateId
-                };
-            }
-        }
-
-        #endregion
     }
 }

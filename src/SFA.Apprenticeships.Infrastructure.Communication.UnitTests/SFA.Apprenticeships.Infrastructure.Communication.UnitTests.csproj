@@ -122,13 +122,18 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Builder\ApplicationStatusAlertsBuilder.cs" />
-    <Compile Include="Builder\SavedSearchAlertsBuilder.cs" />
+    <Compile Include="Builders\ApplicationStatusAlertsBuilder.cs" />
+    <Compile Include="Builders\CommunicationRequestBuilder.cs" />
+    <Compile Include="Builders\SavedSearchAlertsBuilder.cs" />
+    <Compile Include="Commands\CandidateDailyDigestCommunicationCommandTests\CommonTests.cs" />
+    <Compile Include="Commands\CandidateDailyDigestCommunicationCommandTests\ExpiringDraftTests.cs" />
     <Compile Include="Commands\CandidateCommunicationCommandTests.cs" />
+    <Compile Include="Commands\CandidateDailyDigestCommunicationCommandTests\ApplicationStatusAlertTests.cs" />
     <Compile Include="Commands\HelpDeskCommunicationCommandTests.cs" />
+    <Compile Include="Commands\CandidateCommunicationCommandTestsBase.cs" />
     <Compile Include="Email\EmailMessageFormatters\Builders\SavedSearchAlertEmailRequestBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\Builders\DailyDigestEmailRequestBuilder.cs" />
-    <Compile Include="Builder\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
+    <Compile Include="Builders\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\ApplicationStatusAlertEmailDailyDigestMessageFormatterTests.cs" />
     <Compile Include="Email\EmailMessageFormatters\Builders\EmailSavedSearchAlertMessageFormatterBuilder.cs" />
     <Compile Include="Email\EmailMessageFormatters\Builders\EmailDailyDigestMessageFormatterBuilder.cs" />

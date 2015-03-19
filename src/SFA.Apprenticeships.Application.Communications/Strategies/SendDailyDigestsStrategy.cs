@@ -50,7 +50,7 @@
                 List<ApplicationStatusAlert> candidateApplicationStatusAlertsDailyDigest;
                 var candidateHasApplicationStatusAlerts = candidatesApplicationStatusAlerts.TryGetValue(candidateId, out candidateApplicationStatusAlertsDailyDigest);
 
-                if (candidate.ShouldCommunicateWithCandidate() && user.IsActive())
+                if (candidate.AllowsCommunication() && user.IsActive())
                 {
                     var communicationRequest = CommunicationRequestFactory.GetDailyDigestCommunicationRequest(candidate, candidateExpiringDraftsDailyDigest, candidateApplicationStatusAlertsDailyDigest);
 

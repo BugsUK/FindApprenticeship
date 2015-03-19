@@ -14,9 +14,10 @@
     [TestFixture]
     public class ReachSmsDispatcherTests
     {
-        private ISmsDispatcher _dispatcher;
-        private const string InvalidTestToNumber = "X";
+        private const string BadToNumber = "0677878788978";
         private const string TestToNumber = "447876546700";
+
+        private ISmsDispatcher _dispatcher;
 
         [SetUp]
         public void SetUp()
@@ -36,6 +37,42 @@
         {
             Assert.IsNotNull(_dispatcher);
             Assert.IsInstanceOf<ReachSmsDispatcher>(_dispatcher);
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldThrowIfRequestIsInvalid()
+        {
+            // Arrange.
+            var request = new SmsRequest
+            {
+                ToNumber = "X",
+                Tokens = TokenGenerator.CreatePasswordResetConfirmationTokens(),
+                MessageType = MessageTypes.PasswordChanged
+            };
+
+            // Act.
+            Action action = () => _dispatcher.SendSms(request);
+
+            // Assert.
+            action.ShouldThrow<DomainException>();
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldThrowIfToNumberIsBad()
+        {
+            // Arrange.
+            var request = new SmsRequest
+            {
+                ToNumber = BadToNumber,
+                Tokens = TokenGenerator.CreatePasswordResetConfirmationTokens(),
+                MessageType = MessageTypes.PasswordChanged
+            };
+
+            // Act.
+            Action action = () => _dispatcher.SendSms(request);
+
+            // Assert.
+            action.ShouldThrow<DomainException>();
         }
 
         [Test, Category("Integration")]
@@ -91,21 +128,68 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldThrowIfRequestIsInvalid()
+        public void ShoudSendApprenticeshipApplicationSuccessfulSms()
         {
-            // Arrange.
             var request = new SmsRequest
             {
-                ToNumber = InvalidTestToNumber,
-                Tokens = TokenGenerator.CreatePasswordResetConfirmationTokens(),
-                MessageType = MessageTypes.PasswordChanged
+                ToNumber = TestToNumber,
+                Tokens = TokenGenerator.CreateApprenticeshipApplicationStatusAlertTokens(),
+                MessageType = MessageTypes.ApprenticeshipApplicationSuccessful
             };
 
-            // Act.
-            Action action = () => _dispatcher.SendSms(request);
+            _dispatcher.SendSms(request);
+        }
 
-            // Assert.
-            action.ShouldThrow<DomainException>();
+        [Test, Category("Integration")]
+        public void ShoudSendApprenticeshipApplicationUnsuccessfulSms()
+        {
+            var request = new SmsRequest
+            {
+                ToNumber = TestToNumber,
+                Tokens = TokenGenerator.CreateApprenticeshipApplicationStatusAlertTokens(),
+                MessageType = MessageTypes.ApprenticeshipApplicationUnsuccessful
+            };
+
+            _dispatcher.SendSms(request);
+        }
+
+        [Test, Category("Integration")]
+        public void ShoudSendApprenticeshipApplicationsUnsuccessfulSummarySms()
+        {
+            var request = new SmsRequest
+            {
+                ToNumber = TestToNumber,
+                Tokens = TokenGenerator.CreateApprenticeshipApplicationStatusAlertsTokens(42),
+                MessageType = MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary
+            };
+
+            _dispatcher.SendSms(request);
+        }
+
+        [Test, Category("Integration")]
+        public void ShoudSendApprenticeshipApplicationExpiringDraftSms()
+        {
+            var request = new SmsRequest
+            {
+                ToNumber = TestToNumber,
+                Tokens = TokenGenerator.CreateApprenticeshipApplicationExpiringDraftTokens(),
+                MessageType = MessageTypes.ApprenticeshipApplicationExpiringDraft
+            };
+
+            _dispatcher.SendSms(request);
+        }
+
+        [Test, Category("Integration")]
+        public void ShoudSendApprenticeshipApplicationExpiringDraftsSummarySms()
+        {
+            var request = new SmsRequest
+            {
+                ToNumber = TestToNumber,
+                Tokens = TokenGenerator.CreateApprenticeshipApplicationExpiringDraftsTokens(42),
+                MessageType = MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary
+            };
+
+            _dispatcher.SendSms(request);
         }
     }
 }

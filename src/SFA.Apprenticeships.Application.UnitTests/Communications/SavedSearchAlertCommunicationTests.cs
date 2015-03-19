@@ -79,7 +79,8 @@
             var sendSavedSearchAlertsStrategy = new SendSavedSearchAlertsStrategyBuilder()
                 .With(savedSearchAlertRepository)
                 .With(candidateReadRepository)
-                .With(userReadRepository).Build();
+                .With(userReadRepository)
+                .Build();
 
             var communicationProcessor = new CommunicationProcessor(null, sendSavedSearchAlertsStrategy);
             var batchId = Guid.NewGuid();

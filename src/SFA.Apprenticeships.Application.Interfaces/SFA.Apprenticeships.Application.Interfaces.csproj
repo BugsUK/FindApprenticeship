@@ -83,6 +83,7 @@
     </Compile>
     <Compile Include="Applications\ErrorCodes.cs" />
     <Compile Include="Candidates\ErrorCodes.cs" />
+    <Compile Include="Communications\CommunicationRequestHelpers.cs" />
     <Compile Include="Communications\ErrorCodes.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Logging\ILogService.cs" />
