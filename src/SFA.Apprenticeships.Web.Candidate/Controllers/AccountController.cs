@@ -87,8 +87,12 @@
                     case AccountMediatorCodes.Settings.MobileVerificationRequired:
                         return RedirectToAction("VerifyMobile");
                     case AccountMediatorCodes.Settings.Success:
+                    case AccountMediatorCodes.Settings.SuccessWithWarning:
                         UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
-                        SetUserMessage(AccountPageMessages.SettingsUpdated);
+                        if (response.Code == AccountMediatorCodes.Settings.SuccessWithWarning)
+                            SetUserMessage(response.Message.Text, response.Message.Level);
+                        else
+                            SetUserMessage(AccountPageMessages.SettingsUpdated);
                         return RedirectToRoute(response.ViewModel.Mode == SettingsViewModel.SettingsMode.SavedSearches ? CandidateRouteNames.SavedSearchesSettings : CandidateRouteNames.Settings);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);

@@ -24,6 +24,7 @@
         public class Settings
         {
             public const string Success = "AccountMediator.Settings.Success";
+            public const string SuccessWithWarning = "AccountMediator.Settings.SuccessWithWarning";
             public const string ValidationError = "AccountMediator.Settings.ValidationError";
             public const string SaveError = "AccountMediator.Settings.SaveError";
             public const string MobileVerificationRequired = "AccountMediator.Settings.MobileVerificationRequired";

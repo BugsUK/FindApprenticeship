@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 {
     using System;
+    using System.Linq;
     using Common.Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
@@ -128,6 +129,11 @@
                 if (candidate.MobileVerificationRequired())
                 {
                     return GetMediatorResponse(AccountMediatorCodes.Settings.MobileVerificationRequired, settingsViewModel, AccountPageMessages.MobileVerificationRequired, UserMessageLevel.Success);
+                }
+
+                if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.SavedSearches && (settingsViewModel.SendSavedSearchAlertsViaEmail || settingsViewModel.SendSavedSearchAlertsViaText) && settingsViewModel.SavedSearches.All(s => !s.AlertsEnabled))
+                {
+                    return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedSavedSearchesAlertWarning, UserMessageLevel.Info);
                 }
 
                 return GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);

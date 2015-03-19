@@ -180,7 +180,7 @@
             // Arrange.
             var request = new SmsRequest
             {
-                ToNumber = "0677878788978",
+                ToNumber = BadToNumber,
                 Tokens = TokenGenerator.CreateMobileVerificationCodeTokens(),
                 MessageType = MessageTypes.SendMobileVerificationCode
             };

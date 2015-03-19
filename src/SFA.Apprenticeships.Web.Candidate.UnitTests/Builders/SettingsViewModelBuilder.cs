@@ -9,7 +9,7 @@
     {
         private string _firstname = "First";
         private string _lastname = "Last";
-        private string _phoneNumber;
+        private string _phoneNumber = "0123456789";
         private bool _verifiedMobile;
         private bool _allowEmailComms;
         private bool _allowSmsComms;

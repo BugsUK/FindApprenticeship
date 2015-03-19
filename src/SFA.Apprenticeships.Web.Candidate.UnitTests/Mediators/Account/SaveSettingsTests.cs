@@ -1,6 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
     using System;
+    using System.Linq;
+    using System.Security.Policy;
+    using Builders;
     using Domain.Entities.Candidates;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
@@ -12,6 +15,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class SaveSettingsTests
@@ -57,6 +61,25 @@
             var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
             response.Code.Should().Be(AccountMediatorCodes.Settings.Success);
             response.ViewModel.Should().Be(settingsViewModel);
+        }
+
+        [Test]
+        public void SaveSearchesSettingsSuccessWithWarning()
+        {
+            var savedSearchViewModels = new Fixture().Build<SavedSearchViewModel>().With(s => s.AlertsEnabled, false).CreateMany(1).ToList();
+            var settingsViewModel = new SettingsViewModelBuilder().SendSavedSearchAlertsViaEmail(true).SendSavedSearchAlertsViaText(true).WithSavedSearchViewModels(savedSearchViewModels).Build();
+            settingsViewModel.Mode = SettingsViewModel.SettingsMode.SavedSearches;
+
+            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
+            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
+            var candidate = new Candidate();
+            var accountProviderMock = new Mock<IAccountProvider>();
+            accountProviderMock.Setup(x => x.TrySaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>(), out candidate)).Returns(true);
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(accountProviderMock.Object).Build();
+
+            var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
+
+            response.AssertMessage(AccountMediatorCodes.Settings.SuccessWithWarning, AccountPageMessages.SettingsUpdatedSavedSearchesAlertWarning, UserMessageLevel.Warning, true);
         }
 
         [Test]
