@@ -25,7 +25,7 @@
             savedSearchDiv.Should().NotBeNull();
             var savedSearchesHeading = result.GetElementbyId("savedSearchHeading");
             savedSearchesHeading.Should().NotBeNull();
-            savedSearchesHeading.InnerText.Should().Contain("Saved apprenticeship searches");
+            savedSearchesHeading.InnerText.Should().Contain("Saved searches");
         }
         
         [Test]
