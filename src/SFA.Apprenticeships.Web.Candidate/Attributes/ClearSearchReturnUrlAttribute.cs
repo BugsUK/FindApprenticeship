@@ -9,7 +9,7 @@
 
         public ClearSearchReturnUrlAttribute(bool clearSearchReturnUrl = true)
         {
-            ClearSearchReturnUrl = true;
+            ClearSearchReturnUrl = clearSearchReturnUrl;
         }
 
         public bool ClearSearchReturnUrl { get; private set; }
