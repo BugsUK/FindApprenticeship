@@ -79,7 +79,7 @@
 
             var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
 
-            response.AssertMessage(AccountMediatorCodes.Settings.SuccessWithWarning, AccountPageMessages.SettingsUpdatedSavedSearchesAlertWarning, UserMessageLevel.Warning, true);
+            response.AssertMessage(AccountMediatorCodes.Settings.SuccessWithWarning, AccountPageMessages.SettingsUpdatedSavedSearchesAlertWarning, UserMessageLevel.Info, true);
         }
 
         [Test]
