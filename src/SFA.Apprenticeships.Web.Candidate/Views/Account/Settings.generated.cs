@@ -455,11 +455,12 @@ WriteLiteral(">\r\n                <p");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">Receive notifications?</p>\r\n                <span");
+WriteLiteral(">Receive saved search alerts?</p>\r\n                <span");
 
-WriteLiteral(" class=\"form-hint\"");
+WriteLiteral(" class=\"form-hint text\"");
 
-WriteLiteral(">If you don\'t select an option you won\'t receive notifications</span>\r\n");
+WriteLiteral(">If you don\'t select an option you won\'t receive alerts when we find new apprenti" +
+"ceships matching your saved searches.</span>\r\n");
 
 WriteLiteral("                ");
 
@@ -540,14 +541,14 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral(">\r\n                    You currently don\'t have any active saved searches, <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5770), Tuple.Create("\"", 5832)
+WriteAttribute("href", Tuple.Create(" href=\"", 5837), Tuple.Create("\"", 5899)
             
             #line 111 "..\..\Views\Account\Settings.cshtml"
- , Tuple.Create(Tuple.Create("", 5777), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+ , Tuple.Create(Tuple.Create("", 5844), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 5777), false)
+, 5844), false)
 );
 
 WriteLiteral(">use the search</a> and you can receive alerts when we find an apprenticeship tha" +
@@ -598,26 +599,26 @@ WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"para-btm-margin saved-search\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 6488), Tuple.Create("\"", 6508)
+WriteAttribute("id", Tuple.Create(" id=\"", 6555), Tuple.Create("\"", 6575)
             
             #line 121 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 6493), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+, Tuple.Create(Tuple.Create("", 6560), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 6493), false)
+, 6560), false)
 );
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6546), Tuple.Create("\"", 6591)
+WriteAttribute("href", Tuple.Create(" href=\"", 6613), Tuple.Create("\"", 6658)
             
             #line 122 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 6553), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
+, Tuple.Create(Tuple.Create("", 6620), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
             
             #line default
             #line hidden
-, 6553), false)
+, 6620), false)
 );
 
 WriteLiteral(" title=\"Run search\"");
@@ -785,24 +786,24 @@ WriteLiteral("</li>\r\n");
 WriteLiteral("                                    <li>\r\n                                       " +
 " <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8140), Tuple.Create("\"", 8228)
+WriteAttribute("href", Tuple.Create(" href=\"", 8207), Tuple.Create("\"", 8295)
             
             #line 144 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 8147), Tuple.Create<System.Object, System.Int32>(Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})
+, Tuple.Create(Tuple.Create("", 8214), Tuple.Create<System.Object, System.Int32>(Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})
             
             #line default
             #line hidden
-, 8147), false)
+, 8214), false)
 );
 
-WriteAttribute("id", Tuple.Create(" id=\"", 8229), Tuple.Create("\"", 8249)
+WriteAttribute("id", Tuple.Create(" id=\"", 8296), Tuple.Create("\"", 8316)
             
             #line 144 "..\..\Views\Account\Settings.cshtml"
-                                                        , Tuple.Create(Tuple.Create("", 8234), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                                                        , Tuple.Create(Tuple.Create("", 8301), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 8234), false)
+, 8301), false)
 );
 
 WriteLiteral(" class=\"link-unimp icon-black delete-saved-search-link\"");
@@ -877,20 +878,20 @@ WriteLiteral("\',\r\n                selectlist: \'#address-select\'\r\n        
 "            }\r\n                });\r\n\r\n                return false;\r\n           " +
 " });\r\n\r\n            function disableCommsChecks() {\r\n                if (!$(\'#Al" +
 "lowEmailComms\').is(\':checked\') && !$(\'#AllowSmsComms\').is(\':checked\')) {\r\n      " +
-"              $(\'#notificationPrefs\').find(\'input[type=\"checkbox\"]\').attr(\'disab" +
-"led\', true);\r\n                } else {\r\n                    $(\'#notificationPref" +
-"s\').find(\'input[type=\"checkbox\"]\').removeAttr(\'disabled\');\r\n                }\r\n " +
-"           }\r\n\r\n            function disableSavedCommsChecks() {\r\n              " +
-"  if (!$(\'#SendSavedSearchAlertsViaEmail\').is(\':checked\') && !$(\'#SendSavedSearc" +
-"hAlertsViaText\').is(\':checked\')) {\r\n                    $(\'#savedSearches\').find" +
-"(\'input[type=\"checkbox\"]\').attr(\'disabled\', true);\r\n                } else {\r\n  " +
-"                  $(\'#savedSearches\').find(\'input[type=\"checkbox\"]\').removeAttr(" +
-"\'disabled\');\r\n                }\r\n            }\r\n\r\n            $(\'.allowCommsChec" +
-"k\').on(\'click\', function () {\r\n                disableCommsChecks();\r\n          " +
-"  });\r\n\r\n            $(\'.allowSavedComms\').on(\'click\', function () {\r\n          " +
-"      disableSavedCommsChecks();\r\n            });\r\n\r\n            disableCommsChe" +
-"cks();\r\n            disableSavedCommsChecks();\r\n\r\n\r\n        });\r\n\r\n        \r\n\r\n\r" +
-"\n    </script>\r\n");
+"              $(\'#notificationPrefs\').find(\'input[type=\"checkbox\"]\').parent().ad" +
+"dClass(\'disabled\');\r\n                } else {\r\n                    $(\'#notificat" +
+"ionPrefs\').find(\'input[type=\"checkbox\"]\').parent().removeClass(\'disabled\');\r\n   " +
+"             }\r\n            }\r\n\r\n            function disableSavedCommsChecks() " +
+"{\r\n                if (!$(\'#SendSavedSearchAlertsViaEmail\').is(\':checked\') && !$" +
+"(\'#SendSavedSearchAlertsViaText\').is(\':checked\')) {\r\n                    $(\'#sav" +
+"edSearches\').find(\'input[type=\"checkbox\"]\').parent().addClass(\'disabled\');\r\n    " +
+"            } else {\r\n                    $(\'#savedSearches\').find(\'input[type=\"" +
+"checkbox\"]\').parent().removeClass(\'disabled\');\r\n                }\r\n            }" +
+"\r\n\r\n            $(\'.allowCommsCheck\').on(\'click\', function () {\r\n               " +
+" disableCommsChecks();\r\n            });\r\n\r\n            $(\'.allowSavedComms\').on(" +
+"\'click\', function () {\r\n                disableSavedCommsChecks();\r\n            " +
+"});\r\n\r\n            disableCommsChecks();\r\n            disableSavedCommsChecks();" +
+"\r\n\r\n\r\n        });\r\n\r\n        \r\n\r\n\r\n    </script>\r\n");
 
 });
 

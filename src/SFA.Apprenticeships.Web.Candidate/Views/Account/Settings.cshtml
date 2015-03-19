@@ -93,8 +93,8 @@
         <div class="tabbed-content @savedSearchesTabClass">
             <h2 class="heading-large" id="savedSearchHeading">Saved searches</h2>
             <div class="form-group form-group-compound">
-                <p class="form-label">Receive notifications?</p>
-                <span class="form-hint">If you don't select an option you won't receive notifications</span>
+                <p class="form-label">Receive saved search alerts?</p>
+                <span class="form-hint text">If you don't select an option you won't receive alerts when we find new apprenticeships matching your saved searches.</span>
                 @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
                 @if (Model.SmsEnabled)
                 {
@@ -193,17 +193,17 @@
 
             function disableCommsChecks() {
                 if (!$('#AllowEmailComms').is(':checked') && !$('#AllowSmsComms').is(':checked')) {
-                    $('#notificationPrefs').find('input[type="checkbox"]').attr('disabled', true);
+                    $('#notificationPrefs').find('input[type="checkbox"]').parent().addClass('disabled');
                 } else {
-                    $('#notificationPrefs').find('input[type="checkbox"]').removeAttr('disabled');
+                    $('#notificationPrefs').find('input[type="checkbox"]').parent().removeClass('disabled');
                 }
             }
 
             function disableSavedCommsChecks() {
                 if (!$('#SendSavedSearchAlertsViaEmail').is(':checked') && !$('#SendSavedSearchAlertsViaText').is(':checked')) {
-                    $('#savedSearches').find('input[type="checkbox"]').attr('disabled', true);
+                    $('#savedSearches').find('input[type="checkbox"]').parent().addClass('disabled');
                 } else {
-                    $('#savedSearches').find('input[type="checkbox"]').removeAttr('disabled');
+                    $('#savedSearches').find('input[type="checkbox"]').parent().removeClass('disabled');
                 }
             }
 
