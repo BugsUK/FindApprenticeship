@@ -84,19 +84,6 @@
         }
 
         [Test, Category("Integration")]
-        public void ShoudSendDailyDigestSms()
-        {
-            var request = new SmsRequest
-            {
-                ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateDailyDigestTokens(2),
-                MessageType = MessageTypes.DailyDigest
-            };
-
-            _dispatcher.SendSms(request);
-        }
-
-        [Test, Category("Integration")]
         public void ShoudSendSavedSearchAlertSms()
         {
             var request = new SmsRequest

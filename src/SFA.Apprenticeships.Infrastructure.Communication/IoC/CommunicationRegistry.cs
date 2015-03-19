@@ -43,7 +43,6 @@
             {
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.DailyDigest, new SmsDailyDigestMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSuccessful, new SmsApprenticeshipApplicationSuccessfulMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationUnsuccessful, new SmsApprenticeshipApplicationUnsuccessfulMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
