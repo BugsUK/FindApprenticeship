@@ -4,5 +4,6 @@
     {
         public const string EmailError = "Communication.EmailError";
         public const string SmsError = "Communication.SmsError";
+        public const string SmsErrorInvalidMobileNumber = "Communication.SmsError.InvalidMobileNumber";
     }
 }

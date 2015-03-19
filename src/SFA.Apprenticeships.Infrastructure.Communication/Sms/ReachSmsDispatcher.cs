@@ -58,6 +58,19 @@
 
                 _logger.Info("Sent SMS: id='{0}' message='{1}' {2}", smsMessageId, smsMessage, logMessage);
             }
+            catch (BoundaryException e)
+            {
+                if (e.Code == ErrorCodes.SmsErrorInvalidMobileNumber)
+                {
+                    _logger.Info("Failed to send SMS. The number was invalid. This is an unrecoverable error and should not be re-queued: {0}", logMessage);
+                }
+                else
+                {
+                    _logger.Error("Failed to send SMS: {0}", logMessage);
+
+                    throw new DomainException(ErrorCodes.SmsError, e, context);
+                }
+            }
             catch (Exception e)
             {
                 _logger.Error("Failed to send SMS: {0}", logMessage);
@@ -122,13 +135,22 @@
                 var messageIdNode = xml.Element("MessageId");
                 var messageResultNode = xml.Element("MessageResult");
 
-                if (messageIdNode != null && messageResultNode != null && messageResultNode.Value == "Success")
+                if (messageIdNode != null && messageResultNode != null)
                 {
-                    Guid messageId;
-
-                    if (Guid.TryParse(messageIdNode.Value, out messageId))
+                    var value = messageResultNode.Value;
+                    if (value == "Success")
                     {
-                        return messageId;
+                        Guid messageId;
+
+                        if (Guid.TryParse(messageIdNode.Value, out messageId))
+                        {
+                            return messageId;
+                        }
+                    }
+
+                    if (value == "Failure : Bad To Number")
+                    {
+                        throw new BoundaryException(ErrorCodes.SmsErrorInvalidMobileNumber, new { content });
                     }
                 }
 

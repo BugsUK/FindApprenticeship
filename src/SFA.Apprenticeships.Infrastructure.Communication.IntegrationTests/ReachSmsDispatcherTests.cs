@@ -58,24 +58,6 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldThrowIfToNumberIsBad()
-        {
-            // Arrange.
-            var request = new SmsRequest
-            {
-                ToNumber = BadToNumber,
-                Tokens = TokenGenerator.CreatePasswordResetConfirmationTokens(),
-                MessageType = MessageTypes.PasswordChanged
-            };
-
-            // Act.
-            Action action = () => _dispatcher.SendSms(request);
-
-            // Assert.
-            action.ShouldThrow<DomainException>();
-        }
-
-        [Test, Category("Integration")]
         public void ShouldSendApprenticeshipApplicationSubmittedSms()
         {
             var request = new SmsRequest
@@ -190,6 +172,24 @@
             };
 
             _dispatcher.SendSms(request);
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldNotThrowIfToNumberIsBad()
+        {
+            // Arrange.
+            var request = new SmsRequest
+            {
+                ToNumber = "0677878788978",
+                Tokens = TokenGenerator.CreateMobileVerificationCodeTokens(),
+                MessageType = MessageTypes.SendMobileVerificationCode
+            };
+
+            // Act.
+            Action action = () => _dispatcher.SendSms(request);
+
+            // Assert.
+            action.ShouldNotThrow();
         }
     }
 }

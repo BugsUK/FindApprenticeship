@@ -12,6 +12,7 @@
     {
 
         private const string TestActivationCode = "ABC123";
+        private const string TestMobileVerificationCode = "1234";
         private const string TestToEmail = "valtechnas@gmail.com";
 
         public static IEnumerable<CommunicationToken> CreateActivationEmailTokens()
@@ -202,6 +203,15 @@
             tokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, json));
 
             return tokens;
+        }
+
+        public static IEnumerable<CommunicationToken> CreateMobileVerificationCodeTokens()
+        {
+            return new[]
+            {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
+                new CommunicationToken(CommunicationTokens.MobileVerificationCode, TestMobileVerificationCode)
+            };
         }
     }
 }

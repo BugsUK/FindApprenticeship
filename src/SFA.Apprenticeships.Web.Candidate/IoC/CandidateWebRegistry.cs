@@ -116,8 +116,8 @@
             For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ISendAccountUnlockCodeStrategy>().Use<SendAccountUnlockCodeStrategy>();
-            For<ISaveCandidateStrategy>().Use<SaveCandidateStrategy>();
-            For<ISendMobileVerificationCodeStrategy>().Use<SendMobileVerificationCodeStrategy>();
+            For<ISaveCandidateStrategy>().Use<SaveCandidateStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
+            For<ISendMobileVerificationCodeStrategy>().Use<SendMobileVerificationCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IVerifyMobileStrategy>().Use<VerifyMobileStrategy>();
             For<ILockAccountStrategy>().Use<LockAccountStrategy>();
             For<ILockUserStrategy>().Use<LockUserStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
