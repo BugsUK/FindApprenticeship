@@ -76,10 +76,8 @@
                 Level = logLevel,
                 Exception = e,
                 Message = logMessage,
+                TimeStamp = DateTime.UtcNow
             };
-
-            logEvent.Properties["Date"] = DateTime.UtcNow;
-            logEvent.Properties["Ticks"] = DateTime.UtcNow.Ticks;
 
             if (e is CustomException)
             {
