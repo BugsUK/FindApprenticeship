@@ -172,7 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Email\EmailTemplates\SavedSearchAlertsEmail.xslt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
   </ItemGroup>

@@ -4,6 +4,7 @@
     using System.Linq;
     using Application.Interfaces.Communications;
     using Domain.Entities.Communication;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
 
@@ -123,9 +124,12 @@
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "FirstName")
             };
 
-            var savedSearchAlerts = new Fixture().Build<SavedSearchAlert>()
+            var savedSearchAlerts = new Fixture()
+                .Build<SavedSearchAlert>()
                 .CreateMany(noOfAlerts)
                 .ToList();
+
+            savedSearchAlerts.ForEach(x => x.Parameters.ApprenticeshipLevel = ApprenticeshipLevel.Advanced.ToString());
 
             var savedSearchAlertsJson = JsonConvert.SerializeObject(savedSearchAlerts);
 

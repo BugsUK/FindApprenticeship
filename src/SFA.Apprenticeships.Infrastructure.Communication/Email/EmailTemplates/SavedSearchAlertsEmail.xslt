@@ -7,22 +7,14 @@
   </xsl:template>
 
   <xsl:template match="savedSearchAlert">
+    <br/>
     <table align="center" border="0" cellpadding="0" cellspacing="0" width="580">
       <tbody>
         <tr>
-          <td border="0" cellpadding="0" cellspacing="0" style="font-family: Helvetica, Arial, sans-serif;color:#0b0c0c;" valign="top">
+          <td border="0" width="400" cellpadding="0" cellspacing="0" style="font-family: Helvetica, Arial, sans-serif;color:#0b0c0c;" valign="top">
             <h2 style="font-size: 18px; margin: 0; padding: 0;">
-              Top
-              <span>
-                <xsl:value-of select="resultsCount"/>
-              </span> result(s) matching your search:
+              Top <span><xsl:value-of select="resultsCount"/></span> result(s) matching your search:qq
             </h2>
-            <p>
-              <xsl:value-of select="parameters/name"/>
-              <br />
-              <b>Apprenticeship level: </b>
-              <xsl:value-of select="parameters/apprenticeshipLevel"/>
-            </p>
             <br/>
           </td>
           <td border="0" cellpadding="0" cellspacing="0" style="font-family: Helvetica, Arial, sans-serif;" valign="top">
@@ -38,6 +30,17 @@
     </table>
     <table align="center" border="0" cellpadding="0" cellspacing="0" width="580">
       <tbody>
+        <tr>
+          <td border="0" cellpadding="0" cellspacing="0" style="font-family: Helvetica, Arial, sans-serif;color:#0b0c0c;" valign="top">
+            <p>
+              <xsl:value-of select="parameters/name"/>
+              <br />
+              <b>Apprenticeship level: </b>
+              <xsl:value-of select="parameters/apprenticeshipLevel"/>
+            </p>
+            <br/>
+          </td>
+        </tr>
         <xsl:apply-templates select="results"/>
       </tbody>
     </table>
@@ -46,7 +49,6 @@
   <xsl:template match="results">
     <tr>
       <td border="0" cellpadding="0" cellspacing="0" style="font-family: Helvetica, Arial, sans-serif;color:#0b0c0c; border-bottom: 1px solid #BFC1C3;" valign="top">
-        <br/>
         <xsl:element name="a">
           <xsl:attribute name="href">
             <xsl:value-of select="url"/>
@@ -75,5 +77,6 @@
         <br/>
       </td>
     </tr>
+    <tr><td><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;</td></tr>
   </xsl:template>
 </xsl:stylesheet>
