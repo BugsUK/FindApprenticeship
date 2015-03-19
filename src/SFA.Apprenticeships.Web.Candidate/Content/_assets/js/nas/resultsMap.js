@@ -8,6 +8,8 @@
         resultsPage        = $('#results-per-page').val(),
         numberOfResults    = $('.vacancy-link').length,
         distanceOfLast     = $('.search-results__item:last-child .distance-value').html(),
+        firstLat           = $('.vacancy-link:first-of-type').attr('data-lat'),
+        firstLon           = $('.vacancy-link:first-of-type').attr('data-lon'),
         sortResultsControl = $('#sort-results').val(),
         apprZoom           = 9,
         radiusCircle,
@@ -24,7 +26,8 @@
         latLngList         = [],
         theLatLon          = apprLatitude + ',' + apprLongitude,
         markerIcon         = new google.maps.MarkerImage('/Content/_assets/img/icon-location.png', null, null, null, new google.maps.Size(20, 32)),
-        selectedIcon       = new google.maps.MarkerImage('/Content/_assets/img/icon-location-selected.png', null, null, null, new google.maps.Size(20, 32));
+        selectedIcon       = new google.maps.MarkerImage('/Content/_assets/img/icon-location-selected.png', null, null, null, new google.maps.Size(20, 32)),
+        vacanciesSame      = true;
 
 
     $('.map-links').each(function(){
@@ -44,6 +47,10 @@
 
         directionsDisplay[i] = new google.maps.DirectionsRenderer({ suppressMarkers: true });
         directionsService[i] = new google.maps.DirectionsService();
+
+        if (lat != firstLat && longi != firstLon) {
+            vacanciesSame = false;
+        }
     }
 
     if (apprLatitude == 0 || apprLongitude == 0) {
@@ -85,7 +92,7 @@
 
         setMarkers(map, vacancies)
 
-        if (latLngList.length > 1 && $('#LocationType').val() == 'NonNational') {
+        if (!vacanciesSame && $('#LocationType').val() == 'NonNational') {
             map.fitBounds(bounds);
         } else if (apprMiles > 0 && $('#LocationType').val() == 'NonNational') {
             map.fitBounds(radiusBounds);
