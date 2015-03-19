@@ -7,12 +7,12 @@
     {
         const string SearchReturnUrlKey = "SearchReturnUrl";
 
-        public ClearSearchReturnUrlAttribute()
+        public ClearSearchReturnUrlAttribute(bool clearSearchReturnUrl = true)
         {
             ClearSearchReturnUrl = true;
         }
 
-        public bool ClearSearchReturnUrl { get; set; }
+        public bool ClearSearchReturnUrl { get; private set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {

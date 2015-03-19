@@ -21,10 +21,8 @@
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Apply(string id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -45,12 +43,10 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Submit")]
-        [ApplyWebTrends]
         [ValidateInput(false)]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Apply(int id, TraineeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -74,12 +70,10 @@
         }
 
         [HttpPost]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
-        [ApplyWebTrends]
         [ValidateInput(false)]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> AddEmptyQualificationRows(int id, TraineeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -93,12 +87,10 @@
         }
 
         [HttpPost]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
-        [ApplyWebTrends]
         [ValidateInput(false)]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, TraineeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -111,9 +103,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
             return await Task.Run<ActionResult>(() =>

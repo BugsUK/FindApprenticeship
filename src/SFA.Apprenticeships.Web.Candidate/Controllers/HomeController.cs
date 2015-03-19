@@ -20,7 +20,6 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        [ApplyWebTrends]
         [SiteRootRedirect]
         public async Task<ActionResult> Index()
         {
@@ -28,14 +27,12 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Privacy()
         {
             return await Task.Run<ActionResult>(() => View());
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Cookies(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl.IsValidReturnUrl() ? returnUrl : "/";
@@ -43,7 +40,6 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Helpdesk()
         {
             return await Task.Run<ActionResult>(() =>
@@ -56,8 +52,6 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Helpdesk(ContactMessageViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -86,7 +80,6 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Terms()
         {
             return await Task.Run<ActionResult>(() => View());

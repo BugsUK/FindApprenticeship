@@ -7,8 +7,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - refactor providers (not quite right)
 - refactor: configuration service - use mongo collection with JSON fallback. This should periodically check for updates to allow in-situ config updates to running applications.
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
-- usernamecheck should use remote validator
-- review ApplyWebTrends attribute - use on controller or apply globally  
+- usernamecheck should use remote validator 
 - increase the HSTS header to months or years in line with GDS recommendations when we're confident it works https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains#transport-layer-security
 - CDN changes:
     - fix links to CDN to use "assets" sub-domain in production
@@ -73,6 +72,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - Razor view unit tests (Create example use)
 - Multiple PreFetchCount values for each queue. Intetrnal processes should be able to have a much higher value than ones that talk to the gateway- 
 - Review and increase heap allocation for elasticsearch. Production is 1Gb and we have 4Gb of free memory available.
+- review ApplyWebTrends attribute - use on controller or apply globally (reviewed all attribute usage)
 
 # Descoped #
 

@@ -22,16 +22,12 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Overview()
         {
             return await Task.Run<ActionResult>(() => View());
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Index()
         {
             return await Task.Run<ActionResult>(() =>
@@ -43,9 +39,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Results(TraineeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -79,8 +73,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> DetailsWithDistance(int id, string distance)
         {
             return await Task.Run<ActionResult>(() =>
@@ -93,9 +86,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Details(string id)
         {
             return await Task.Run<ActionResult>(() =>

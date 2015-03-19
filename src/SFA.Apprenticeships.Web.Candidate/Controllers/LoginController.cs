@@ -30,9 +30,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Index(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -55,8 +53,6 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Index(LoginViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -123,9 +119,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Unlock()
         {
             return await Task.Run(() =>
@@ -138,9 +132,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [MultipleFormActionsButton(Name = "LoginAction", Argument = "Unlock")]
-        [ApplyWebTrends]
         public async Task<ActionResult> Unlock(AccountUnlockViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -181,10 +173,8 @@
         }
 
         [HttpPost]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
         [MultipleFormActionsButton(Name = "LoginAction", Argument = "Resend")]
-        [ApplyWebTrends]
         public async Task<ActionResult> Resend(AccountUnlockViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -211,9 +201,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         public ActionResult SignOut(string returnUrl)
         {
             const string userJourneyKey = "UserJourney";
@@ -238,9 +226,7 @@
                 : RedirectToRoute(RouteNames.SignIn);
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         public ActionResult SessionTimeout(string returnUrl)
         {
             const string userJourneyKey = "UserJourney";

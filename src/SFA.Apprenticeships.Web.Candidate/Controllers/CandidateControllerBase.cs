@@ -7,11 +7,13 @@
     using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
+    using Constants;
     using Infrastructure.Logging;
     using NLog;
     using Providers;
 
-    [SessionTimeout, CookiesEnabled, AllowReturnUrl(Allow = true), ClearSearchReturnUrl, PlannedOutageMessage, UserJourneyContext(UserJourney.None, Order = 1)]
+    [ApplyWebTrends, SessionTimeout, CookiesEnabled, OutputCache(CacheProfile = CacheProfiles.None), 
+    AllowReturnUrl(Allow = true), ClearSearchReturnUrl, PlannedOutageMessage, UserJourneyContext(UserJourney.None, Order = 1)]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)

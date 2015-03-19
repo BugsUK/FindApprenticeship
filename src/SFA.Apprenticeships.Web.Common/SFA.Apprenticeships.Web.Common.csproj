@@ -172,7 +172,6 @@
     <Compile Include="Attributes\MultipleFormActionsButtonAttribute.cs" />
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
     <Compile Include="Attributes\CookiesEnabledAttribute.cs" />
-    <Compile Include="Attributes\NoCacheAttribute.cs" />
     <Compile Include="Attributes\PlannedOutageMessageAttribute.cs" />
     <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
     <Compile Include="Attributes\AllowReturnUrlAttribute.cs" />

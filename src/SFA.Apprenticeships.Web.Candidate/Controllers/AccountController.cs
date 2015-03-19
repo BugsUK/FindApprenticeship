@@ -28,9 +28,7 @@
             _dismissPlannedOutageMessageCookieProvider = dismissPlannedOutageMessageCookieProvider;
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Index()
         {
             return await Task.Run<ActionResult>(() =>
@@ -40,9 +38,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Settings()
         {
             return await Task.Run<ActionResult>(() =>
@@ -52,9 +48,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> SavedSearchesSettings()
         {
             return await Task.Run<ActionResult>(() =>
@@ -66,9 +60,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Settings(SettingsViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -100,9 +92,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> DeleteSavedSearch(Guid id, bool isJavascript)
         {
             return await Task.Run<ActionResult>(() =>
@@ -130,11 +120,9 @@
                 }
             });
         }
-        
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
+
         [SmsEnabledToggle]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> VerifyMobile(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -160,12 +148,10 @@
         }
         
         [HttpPost]
+        [SmsEnabledToggle]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "VerifyMobile")]
-        [ApplyWebTrends]
-        [SmsEnabledToggle]
         public async Task<ActionResult> VerifyMobile(VerifyMobileViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -201,11 +187,9 @@
         }
 
         [HttpPost]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
+        [SmsEnabledToggle]
         [AllowReturnUrl(Allow = false)]
         [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "Resend")]
-        [ApplyWebTrends]
-        [SmsEnabledToggle]
         public async Task<ActionResult> Resend(VerifyMobileViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -226,9 +210,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Archive(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -251,9 +233,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Delete(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -279,8 +259,6 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> DismissPlannedOutageMessage(bool isJavascript)
         {
             return await Task.Run<ActionResult>(() =>
@@ -301,9 +279,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> DismissTraineeshipPrompts()
         {
             return await Task.Run<ActionResult>(() =>
@@ -325,10 +301,7 @@
             });
         }
 
-
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Track(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -349,9 +322,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> UpdatedTermsAndConditions(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -366,8 +337,6 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> AcceptTermsAndConditions(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -401,9 +370,6 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
-
         public async Task<ActionResult> DeclineTermsAndConditions(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -416,9 +382,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> ApprenticeshipVacancyDetails(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -443,9 +407,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> TraineeshipVacancyDetails(int id)
         {
             return await Task.Run<ActionResult>(() =>

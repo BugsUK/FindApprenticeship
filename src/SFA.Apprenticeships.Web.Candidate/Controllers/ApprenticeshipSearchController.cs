@@ -25,8 +25,6 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Index(ApprenticeshipSearchMode searchMode = ApprenticeshipSearchMode.Keyword)
         {
             return await Task.Run<ActionResult>(() =>
@@ -41,9 +39,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> SearchValidation(ApprenticeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -67,9 +63,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Results(ApprenticeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -105,9 +99,8 @@
         }
 
         [HttpGet]
+        [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
         public async Task<ActionResult> SaveSearch(ApprenticeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -131,8 +124,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> DetailsWithDistance(int id, string distance)
         {
             return await Task.Run<ActionResult>(() =>
@@ -145,9 +137,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
-        [ClearSearchReturnUrl(ClearSearchReturnUrl = false)]
+        [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Details(string id)
         {
             return await Task.Run<ActionResult>(() =>

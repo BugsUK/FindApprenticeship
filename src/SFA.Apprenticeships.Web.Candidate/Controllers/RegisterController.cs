@@ -35,7 +35,6 @@
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        [ApplyWebTrends]
         [AllowReturnUrl(Allow = false)]
         public async Task<ActionResult> Index()
         {
@@ -44,8 +43,6 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         [ValidateInput(false)]
         public async Task<ActionResult> Index(RegisterViewModel model)
         {
@@ -74,9 +71,7 @@
 
         [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Activation(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -94,9 +89,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Activate(ActivationViewModel model)
         {
             return await Task.Run(() =>
@@ -123,10 +116,8 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [ApplyWebTrends]
         public async Task<ActionResult> Complete()
         {
             return await Task.Run(() => View(UserContext.UserName));
@@ -135,7 +126,6 @@
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        [ApplyWebTrends]
         public async Task<ActionResult> ForgottenPassword()
         {
             return await Task.Run(() => View());
@@ -143,8 +133,6 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
-        [ApplyWebTrends]
         public async Task<ActionResult> ForgottenPassword(ForgottenPasswordViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -171,9 +159,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         public async Task<ActionResult> ResetPassword()
         {
             return await Task.Run<ActionResult>(() =>
@@ -192,9 +178,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         [ValidateInput(false)]
         public async Task<ActionResult> ResetPassword(PasswordResetViewModel model)
         {
@@ -229,9 +213,7 @@
         }
 
         [HttpGet]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         public async Task<ActionResult> ResendPasswordResetCode(string emailAddress)
         {
             return await Task.Run(() =>
@@ -253,9 +235,7 @@
             });
         }
 
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         [AllowReturnUrl(Allow = false)]
-        [ApplyWebTrends]
         public async Task<ActionResult> ResendActivationCode(string emailAddress)
         {
             return await Task.Run(() =>
@@ -273,7 +253,6 @@
         }
 
         [AllowCrossSiteJson]
-        [OutputCache(CacheProfile = CacheProfiles.None)]
         public async Task<ActionResult> CheckUsername(string username)
         {
             return await Task.Run(() =>
