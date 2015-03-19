@@ -18,10 +18,7 @@
         [AutoSubscriberConsumer(SubscriptionId = "CandidateSavedSearchesConsumerAsync")]
         public Task Consume(CandidateSavedSearches candidateSavedSearches)
         {
-            return Task.Run(() =>
-            {
-                _savedSearchProcessor.ProcessCandidateSavedSearches(candidateSavedSearches);
-            });
+            return Task.Run(() => _savedSearchProcessor.ProcessCandidateSavedSearches(candidateSavedSearches));
         }
     }
 }

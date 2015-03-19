@@ -89,30 +89,7 @@
 
             foreach (var savedSearch in savedSearches)
             {
-                if (!savedSearch.HasGeoPoint())
-                {
-                    var locations = _locationSearchService.FindLocation(savedSearch.Location).ToList();
-
-                    if (locations.Any())
-                    {
-                        var location = locations.First();
-
-                        _logService.Info("Location {0} specified in saved search with id {1} was identified as {2}", savedSearch.Location, savedSearch.EntityId, location.Name);
-
-                        savedSearch.Location = location.Name;
-                        savedSearch.Latitude = location.GeoPoint.Latitude;
-                        savedSearch.Longitude = location.GeoPoint.Longitude;
-                        savedSearch.Hash = savedSearch.GetLatLonLocHash();
-
-                        //Update saved search now we know the lat/long/hash
-                        _savedSearchWriteRepository.Save(savedSearch);
-                    }
-                    else
-                    {
-                        _logService.Info("Location {0} specified in saved search with id {1} could not be found", savedSearch.Location, savedSearch.EntityId);
-                        continue;
-                    }
-                }
+                if (!HasGeoLocation(savedSearch)) { continue; }
 
                 var searchParameters = SearchParametersFactory.Create(savedSearch);
                 var searchResults = _vacancySearchProvider.FindVacancies(searchParameters);
@@ -146,6 +123,36 @@
                     _savedSearchWriteRepository.Save(savedSearch);
                 }
             }
+        }
+
+        private bool HasGeoLocation(SavedSearch savedSearch)
+        {
+            if (!savedSearch.HasGeoPoint())
+            {
+                var locations = _locationSearchService.FindLocation(savedSearch.Location).ToList();
+
+                if (locations.Any())
+                {
+                    var location = locations.First();
+
+                    _logService.Info("Location {0} specified in saved search with id {1} was identified as {2}", savedSearch.Location, savedSearch.EntityId, location.Name);
+
+                    savedSearch.Location = location.Name;
+                    savedSearch.Latitude = location.GeoPoint.Latitude;
+                    savedSearch.Longitude = location.GeoPoint.Longitude;
+                    savedSearch.Hash = savedSearch.GetLatLonLocHash();
+
+                    //Update saved search now we know the lat/long/hash
+                    _savedSearchWriteRepository.Save(savedSearch);
+                }
+                else
+                {
+                    _logService.Info("Location {0} specified in saved search with id {1} could not be found", savedSearch.Location, savedSearch.EntityId);
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

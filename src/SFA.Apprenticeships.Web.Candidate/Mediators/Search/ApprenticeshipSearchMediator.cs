@@ -258,6 +258,13 @@
         {
             viewModel.Categories = GetCategories();
 
+            if (!viewModel.Longitude.HasValue || !viewModel.Latitude.HasValue)
+            {
+                //todo: should we fail to save the search if we don't have a location?
+                //todo: or we could try work out the geo location from the location name, that way we can filter
+                //todo: searches without geo loctions from any saved search emailing?
+            }
+
             viewModel = _candidateServiceProvider.CreateSavedSearch(candidateId, viewModel);
 
             if (viewModel.HasError())

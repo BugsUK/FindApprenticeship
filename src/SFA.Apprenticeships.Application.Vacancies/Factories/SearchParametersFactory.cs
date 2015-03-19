@@ -16,10 +16,7 @@
                 searchField = ApprenticeshipSearchField.All;
             }
 
-            var location = new Location
-            {
-                Name = savedSearch.Location
-            };
+            var location = new Location { Name = savedSearch.Location };
 
             if (savedSearch.HasGeoPoint())
             {

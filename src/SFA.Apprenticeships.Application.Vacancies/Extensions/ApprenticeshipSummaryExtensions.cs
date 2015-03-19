@@ -14,13 +14,13 @@
             {
                 var resultIds = string.Join(",", apprenticeshipSummaries.Select(s => s.Id));
 
-                var hashData = md5Hash.ComputeHash(Encoding.ASCII.GetBytes(resultIds));
+                var hashIds = md5Hash.ComputeHash(Encoding.ASCII.GetBytes(resultIds));
 
                 var sb = new StringBuilder();
 
-                for (var i = 0; i < hashData.Length; i++)
+                foreach (byte hashId in hashIds)
                 {
-                    sb.Append(hashData[i].ToString("X2"));
+                    sb.Append(hashId.ToString("X2"));
                 }
 
                 var hash = sb.ToString();
