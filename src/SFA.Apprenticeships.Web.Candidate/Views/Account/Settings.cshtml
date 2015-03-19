@@ -59,16 +59,16 @@
                 <div class="form-group form-group-compound">
                     <p class="form-label">Receive notifications?</p>
                     <span class="form-hint">If you don't select an option you won't receive notifications</span>
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label" })
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label allowCommsCheck" })
                     @if (Model.SmsEnabled)
                     {
-                        @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label" })
+                        @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label allowCommsCheck" })
                     }
                 </div>
 
                 <div class="text para-btm-margin">
                     <p class="small-btm-margin">Choose to be notified when:</p>
-                    <ul class="list-text list-checkradio">
+                    <ul class="list-text list-checkradio" id="notificationPrefs">
                         <li>
                             @Html.FormUnvalidatedCheckBoxFor(m => m.SendApplicationSubmitted)
                         </li>
@@ -95,10 +95,10 @@
             <div class="form-group form-group-compound">
                 <p class="form-label">Receive notifications?</p>
                 <span class="form-hint">If you don't select an option you won't receive notifications</span>
-                @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label" })
+                @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
                 @if (Model.SmsEnabled)
                 {
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label" })
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
                 }
             </div>
 
@@ -142,7 +142,7 @@
                                     }
                                     <li>
                                         <a href="@Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
-                                            <fa class="fa fa-times-circle"></fa>Delete saved search
+                                            <i class="fa fa-times-circle"></i>Delete saved search
                                         </a>
                                     </li>
                                 </ul>
@@ -168,28 +168,61 @@
                 url: '@Url.Action("Addresses", "Location")',
                 selectlist: '#address-select'
             });
-        });
 
-        $(".delete-saved-search-link").on('click', function () {
-            var $this = $(this),
-                $href = $this.attr('href').replace("isJavascript=False", "isJavascript=true").replace("isJavascript=false", "isJavascript=true"),
-                $id = $this.attr('id');
+            $(".delete-saved-search-link").on('click', function () {
+                var $this = $(this),
+                    $href = $this.attr('href').replace("isJavascript=False", "isJavascript=true").replace("isJavascript=false", "isJavascript=true"),
+                    $id = $this.attr('id');
 
-            $.ajax({
-                url: $href,
-                complete: function (result) {
+                $.ajax({
+                    url: $href,
+                    complete: function (result) {
 
-                    if (result.status == 200) {
-                        $("#" + $id).hide();
+                        if (result.status == 200) {
+                            $("#" + $id).hide();
 
-                        if ($(".saved-search:visible").length == 0) {
-                            $("#noSavedSearchesText").show();
+                            if ($(".saved-search:visible").length == 0) {
+                                $("#noSavedSearchesText").show();
+                            }
                         }
                     }
-                }
+                });
+
+                return false;
             });
 
-            return false;
+            function disableCommsChecks() {
+                if (!$('#AllowEmailComms').is(':checked') && !$('#AllowSmsComms').is(':checked')) {
+                    $('#notificationPrefs').find('input[type="checkbox"]').attr('disabled', true);
+                } else {
+                    $('#notificationPrefs').find('input[type="checkbox"]').removeAttr('disabled');
+                }
+            }
+
+            function disableSavedCommsChecks() {
+                if (!$('#SendSavedSearchAlertsViaEmail').is(':checked') && !$('#SendSavedSearchAlertsViaText').is(':checked')) {
+                    $('#savedSearches').find('input[type="checkbox"]').attr('disabled', true);
+                } else {
+                    $('#savedSearches').find('input[type="checkbox"]').removeAttr('disabled');
+                }
+            }
+
+            $('.allowCommsCheck').on('click', function () {
+                disableCommsChecks();
+            });
+
+            $('.allowSavedComms').on('click', function () {
+                disableSavedCommsChecks();
+            });
+
+            disableCommsChecks();
+            disableSavedCommsChecks();
+
+
         });
+
+        
+
+
     </script>
 }
