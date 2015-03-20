@@ -41,7 +41,6 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 - Configure remote powershell from Build Servers to Deployment Server to use Certificates over file system stored encrypted user details.   
 - Merge build and management networks (See Simon)
-- Upgrade TeamCity
 
 
 ----------
@@ -73,6 +72,8 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - Multiple PreFetchCount values for each queue. Intetrnal processes should be able to have a much higher value than ones that talk to the gateway- 
 - Review and increase heap allocation for elasticsearch. Production is 1Gb and we have 4Gb of free memory available.
 - review ApplyWebTrends attribute - use on controller or apply globally (reviewed all attribute usage)
+- Upgrade TeamCity
+
 
 # Descoped #
 
