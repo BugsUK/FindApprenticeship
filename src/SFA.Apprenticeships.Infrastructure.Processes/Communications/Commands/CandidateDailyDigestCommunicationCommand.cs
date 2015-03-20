@@ -28,13 +28,16 @@
         {
             var candidateMobileNumber = communicationRequest.GetToken(CommunicationTokens.CandidateMobileNumber);
 
+            // Expiring drafts.
             var expiringDraftsJson = communicationRequest.GetToken(CommunicationTokens.ExpiringDrafts);
             var expiringDrafts = string.IsNullOrWhiteSpace(expiringDraftsJson) ? new List<ExpiringApprenticeshipApplicationDraft>() : JsonConvert.DeserializeObject<List<ExpiringApprenticeshipApplicationDraft>>(expiringDraftsJson);
 
+            QueueExpiringDraftSmsMessages(candidateMobileNumber, expiringDrafts);
+
+            // Application status alerts.
             var applicationStatusAlertsJson = communicationRequest.GetToken(CommunicationTokens.ApplicationStatusAlerts);
             var applicationStatusAlerts = string.IsNullOrWhiteSpace(applicationStatusAlertsJson) ? new List<ApplicationStatusAlert>() : JsonConvert.DeserializeObject<List<ApplicationStatusAlert>>(applicationStatusAlertsJson);
 
-            QueueExpiringDraftSmsMessages(candidateMobileNumber, expiringDrafts);
             QueueApplicationStatusAlertSmsMessages(candidateMobileNumber, applicationStatusAlerts);
         }
 
@@ -45,7 +48,7 @@
             {
                 QueueApplicationExpiringDraftSmsMessage(candidateMobileNumber, expiringDrafts.First());
             }
-            else
+            else if (expiringDrafts.Count > 1)
             {
                 QueueApplicationExpiringDraftsSummarySmsMessage(candidateMobileNumber, expiringDrafts);
             }
@@ -82,6 +85,7 @@
         private void QueueApplicationStatusAlertSmsMessages(
             string candidateMobileNumber, List<ApplicationStatusAlert> applicationStatusAlerts)
         {
+            // Successful application status alerts.
             var successfulApplicationStatusAlerts = applicationStatusAlerts
                 .Where(each => each.Status == ApplicationStatuses.Successful)
                 .ToArray();
@@ -92,14 +96,15 @@
                     MessageTypes.ApprenticeshipApplicationSuccessful, candidateMobileNumber, applicationStatusAlert);
             }
 
+            // Other (unsuccessful) application status alerts.
             var otherApplicationStatusAlerts = applicationStatusAlerts
                 .Where(each => each.Status != ApplicationStatuses.Successful)
                 .ToArray();
 
             if (otherApplicationStatusAlerts.Length == 1)
             {
-                QueueSummaryApplicationStatusAlertSmsMessage(
-                    MessageTypes.ApprenticeshipApplicationUnsuccessful, candidateMobileNumber, otherApplicationStatusAlerts);
+                QueueApplicationStatusAlertSmsMessage(
+                    MessageTypes.ApprenticeshipApplicationUnsuccessful, candidateMobileNumber, otherApplicationStatusAlerts.First());
             }
             else if (otherApplicationStatusAlerts.Length > 1)
             {

@@ -147,5 +147,30 @@
             // Assert.
             ShouldQueueSms(expectedMessageType, Times.Once());
         }
-   }
+
+        [TestCase(MessageTypes.ApprenticeshipApplicationUnsuccessful)]
+        [TestCase(MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary)]
+        public void ShouldNotQueueSmsWhenNoApplicationStatusUpdates(MessageTypes expectedMessageType)
+        {
+            // Arrange.
+            var candidate = new CandidateBuilder(Guid.NewGuid())
+                .AllowEmail(true)
+                .AllowMobile(true)
+                .VerifiedMobile(true)
+                .Build();
+
+            AddCandidate(candidate);
+
+            var communicationRequest = new CommunicationRequestBuilder(MessageTypes.DailyDigest, candidate.EntityId)
+                .WithToken(CommunicationTokens.ExpiringDrafts, null)
+                .WithToken(CommunicationTokens.ApplicationStatusAlerts, null)
+                .Build();
+
+            // Act.
+            Command.Handle(communicationRequest);
+
+            // Assert.
+            ShouldQueueSms(expectedMessageType, Times.Never());
+        }
+    }
 }

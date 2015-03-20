@@ -55,6 +55,7 @@
 
         protected virtual void QueueSmsMessages(CommunicationRequest communicationRequest)
         {
+            // Some candidate communication requests may result in more than one SMS, by default we send one.
             QueueSmsMessage(communicationRequest);
         }
 
