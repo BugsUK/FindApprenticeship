@@ -118,6 +118,7 @@
         [TestCase(1, MessageTypes.ApprenticeshipApplicationUnsuccessful)]
         [TestCase(2, MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary)]
         [TestCase(5, MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary)]
+        [Ignore]
         public void ShouldQueueOneSmsForOneOrMoreUnsuccessfulApplicationStatusUpdates(
             int unsuccessfulApplicationCount, MessageTypes expectedMessageType)
         {

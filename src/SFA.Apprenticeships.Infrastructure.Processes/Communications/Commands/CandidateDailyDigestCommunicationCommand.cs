@@ -96,6 +96,8 @@
                     MessageTypes.ApprenticeshipApplicationSuccessful, candidateMobileNumber, applicationStatusAlert);
             }
 
+            // TODO: 1.9: reinstate unsuccessful SMS messages when 'next steps' link is available.
+            /*
             // Other (unsuccessful) application status alerts.
             var otherApplicationStatusAlerts = applicationStatusAlerts
                 .Where(each => each.Status != ApplicationStatuses.Successful)
@@ -111,6 +113,7 @@
                 QueueSummaryApplicationStatusAlertSmsMessage(
                     MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, candidateMobileNumber, otherApplicationStatusAlerts);
             }
+            */
         }
 
         private void QueueSummaryApplicationStatusAlertSmsMessage(
