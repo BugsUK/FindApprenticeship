@@ -83,15 +83,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\IElasticsearchConfiguration.cs" />
-    <Compile Include="Configuration\IRabbitConfiguration.cs" />
-    <Compile Include="Configuration\ISendGridConfiguration.cs" />
-    <Compile Include="Configuration\IReachSmsConfiguration.cs" />
-    <Compile Include="Configuration\ISearchFactorConfiguration.cs" />
-    <Compile Include="Configuration\ISettingsConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\IConfigurationService.cs" />
-    <Compile Include="Configuration\IMongoConfiguration.cs" />
     <Compile Include="Messaging\IMessageBus.cs" />
     <Compile Include="Messaging\IJobControlQueue.cs" />
     <Compile Include="Messaging\ScheduledJobQueues.cs" />

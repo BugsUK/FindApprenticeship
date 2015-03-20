@@ -1,25 +1,27 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Configuration
 {
+    using Entities.Configuration;
+
     public interface IConfigurationService
     {
         void ReloadConfiguration();
 
-        ISettingsConfiguration GetSettingsConfiguration();
+        SettingsConfiguration GetSettingsConfiguration();
 
         //DISCUSS: May just need GetSettingsConfiguration above.
 
-        IMongoConfiguration GetMongoConfiguration();
+        MongoConfiguration GetMongoConfiguration();
 
-        IRabbitConfiguration GetRabbitConfiguration();
+        RabbitConfiguration GetRabbitConfiguration();
 
-        IElasticsearchConfiguration GetSearchConfiguration();
+        ElasticsearchConfiguration GetSearchConfiguration();
 
-        ISearchFactorConfiguration GetSearchFactorConfiguration();
+        SearchFactorConfiguration GetSearchFactorConfiguration();
 
-        IElasticsearchConfiguration GetLogstashConfiguration();
+        ElasticsearchConfiguration GetLogstashConfiguration();
 
-        IReachSmsConfiguration GetSmsConfiguration();
+        ReachSmsConfiguration GetSmsConfiguration();
 
-        ISendGridConfiguration GetEmailConfiguration();
+        SendGridConfiguration GetEmailConfiguration();
     }
 }
