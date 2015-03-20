@@ -98,6 +98,19 @@
             return this;
         }
 
+        public CandidateBuilder AllowAllCommunications()
+        {
+            AllowEmail(true);
+            AllowMobile(true);
+            VerifiedMobile(true);
+            SendApplicationSubmitted(true);
+            SendApplicationStatusChanges(true);
+            SendApprenticeshipApplicationsExpiring(true);
+            SendSavedSearchAlerts(true);
+
+            return this;
+        }
+
         public Candidate Build()
         {
             var candidate = new Candidate

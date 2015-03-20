@@ -1,17 +1,16 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands.CandidateDailyDigestCommunicationCommandTests
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands.CandidateCommunication.DailyDigest
 {
     using System;
     using Application.Interfaces.Communications;
     using Builders;
     using Domain.Entities.UnitTests.Builder;
     using FluentAssertions;
-    using Moq;
     using Newtonsoft.Json;
     using NUnit.Framework;
     using Processes.Communications.Commands;
 
     [TestFixture]
-    public class ExpiringDraftTests : CandidateCommunicationCommandTestsBase
+    public class ExpiringDraftTests : CommandTestsBase
     {
         [SetUp]
         public void SetUp()
@@ -27,9 +26,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
-                .VerifiedMobile(true)
+                .AllowAllCommunications()
                 .Build();
 
             AddCandidate(candidate);
@@ -58,9 +55,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
-                .VerifiedMobile(true)
+                .AllowAllCommunications()
                 .Build();
 
             AddCandidate(candidate);
@@ -80,7 +75,7 @@
             Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(MessageTypes.DailyDigest, Times.Once());
+            ShouldQueueEmail(MessageTypes.DailyDigest, 1);
         }
 
         [TestCase(1, MessageTypes.ApprenticeshipApplicationExpiringDraft)]
@@ -91,9 +86,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
-                .VerifiedMobile(true)
+                .AllowAllCommunications()
                 .Build();
 
             AddCandidate(candidate);
@@ -113,7 +106,7 @@
             Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueSms(expectedMessageType, Times.Once());
+            ShouldQueueSms(expectedMessageType, 1);
         }
 
         [TestCase(MessageTypes.ApprenticeshipApplicationExpiringDraft)]
@@ -122,9 +115,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
-                .VerifiedMobile(true)
+                .AllowAllCommunications()
                 .Build();
 
             AddCandidate(candidate);
@@ -138,7 +129,7 @@
             Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueSms(expectedMessageType, Times.Never());
+            ShouldQueueSms(expectedMessageType, 0);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands.HelpDeskCommunication
 {
     using System.Linq;
     using Application.Interfaces.Communications;
@@ -9,7 +9,7 @@
     using Processes.Communications.Commands;
 
     [TestFixture]
-    public class HelpDeskCommunicationCommandTests
+    public class CommandTests
     {
         private const string TestEmailAddress = "jane.doe@example.com";
 

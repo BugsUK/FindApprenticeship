@@ -66,14 +66,14 @@
                 }
                 else
                 {
-                    _logger.Error("Failed to send SMS: {0}", logMessage);
+                    _logger.Error("Failed to send SMS: {0}", e, logMessage);
 
                     throw new DomainException(ErrorCodes.SmsError, e, context);
                 }
             }
             catch (Exception e)
             {
-                _logger.Error("Failed to send SMS: {0}", logMessage);
+                _logger.Error("Failed to send SMS: {0}", e, logMessage);
 
                 throw new DomainException(ErrorCodes.SmsError, e, context);
             }
@@ -85,7 +85,7 @@
         {
             if (_messageFormatters.All(mf => mf.Key != request.MessageType))
             {
-                var errorMessage = string.Format("GetMessageFrom: No message formatter exists for MessageType: '{0}'", request.MessageType);
+                var errorMessage = string.Format("FormatSmsMessage: No message formatter exists for MessageType: '{0}'", request.MessageType);
 
                 _logger.Error(errorMessage);
 
