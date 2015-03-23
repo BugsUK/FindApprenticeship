@@ -53,6 +53,8 @@
 
             if (!ShouldCommunicateWithUser(user))
             {
+                _logService.Info("Will NOT send any messages to user '{0}' email '{1}' in state '{2}'",
+                    user.EntityId, user.Username, user.Status);
                 return;
             }
 
@@ -68,19 +70,19 @@
 
             if (sendMessage)
             {
-                QueueEmailMessage(communicationRequest);                
+                QueueEmailMessage(communicationRequest);
             }
         }
 
         protected virtual void HandleSmsMessage(Candidate candidate, CommunicationRequest communicationRequest)
         {
             var sendMessage = candidate.ShouldSendMessageViaChannel(CommunicationChannels.Sms, communicationRequest.MessageType);
-            
+
             LogSendMessageResult(sendMessage, CommunicationChannels.Sms, candidate, communicationRequest);
 
             if (sendMessage)
             {
-                QueueSmsMessage(communicationRequest);                
+                QueueSmsMessage(communicationRequest);
             }
         }
 
@@ -89,8 +91,14 @@
         private void LogSendMessageResult(bool sendMessage, CommunicationChannels communicationChannel, Candidate candidate, CommunicationRequest communicationRequest)
         {
             _logService.Info(
-                "{0} send message type '{1}' via channel '{2}' to candidate '{3}' with preferences '{4}'",
-                sendMessage ? "Will" : "Will not", communicationRequest.MessageType, communicationChannel, candidate.EntityId, JsonConvert.SerializeObject(candidate.CommunicationPreferences));
+                "{0} send message type '{1}' via channel '{2}' to candidate '{3}' email '{4}' mobile number '{5}' with preferences '{6}'",
+                sendMessage ? "Will" : "Will NOT",
+                communicationRequest.MessageType,
+                communicationChannel,
+                candidate.EntityId,
+                candidate.RegistrationDetails.EmailAddress,
+                candidate.RegistrationDetails.PhoneNumber,
+                JsonConvert.SerializeObject(candidate.CommunicationPreferences));
         }
 
         private static Guid GetCandidateId(CommunicationRequest communicationRequest)
