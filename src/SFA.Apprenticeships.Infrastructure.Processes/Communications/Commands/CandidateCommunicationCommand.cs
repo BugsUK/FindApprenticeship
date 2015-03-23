@@ -3,22 +3,27 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Newtonsoft.Json;
 
     public class CandidateCommunicationCommand : CommunicationCommand
     {
+        private readonly ILogService _logService;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
 
         public CandidateCommunicationCommand(
+            ILogService logService,
             IMessageBus messageBus,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository)
             : base(messageBus)
         {
+            _logService = logService;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
         }
@@ -51,27 +56,42 @@
                 return;
             }
 
-            HandleEmailMessages(candidate, communicationRequest);
-            HandleSmsMessages(candidate, communicationRequest);
+            HandleEmailMessage(candidate, communicationRequest);
+            HandleSmsMessage(candidate, communicationRequest);
         }
 
-        protected virtual void HandleEmailMessages(Candidate candidate, CommunicationRequest communicationRequest)
+        protected virtual void HandleEmailMessage(Candidate candidate, CommunicationRequest communicationRequest)
         {
-            if (candidate.ShouldSendMessageViaChannel(CommunicationChannels.Email, communicationRequest.MessageType))
+            var sendMessage = candidate.ShouldSendMessageViaChannel(CommunicationChannels.Email, communicationRequest.MessageType);
+
+            LogSendMessageResult(sendMessage, CommunicationChannels.Email, candidate, communicationRequest);
+
+            if (sendMessage)
             {
-                QueueEmailMessage(communicationRequest);
+                QueueEmailMessage(communicationRequest);                
             }
         }
 
-        protected virtual void HandleSmsMessages(Candidate candidate, CommunicationRequest communicationRequest)
+        protected virtual void HandleSmsMessage(Candidate candidate, CommunicationRequest communicationRequest)
         {
-            if (candidate.ShouldSendMessageViaChannel(CommunicationChannels.Sms, communicationRequest.MessageType))
+            var sendMessage = candidate.ShouldSendMessageViaChannel(CommunicationChannels.Sms, communicationRequest.MessageType);
+            
+            LogSendMessageResult(sendMessage, CommunicationChannels.Sms, candidate, communicationRequest);
+
+            if (sendMessage)
             {
-                QueueSmsMessage(communicationRequest);
+                QueueSmsMessage(communicationRequest);                
             }
         }
 
         #region Helpers
+
+        private void LogSendMessageResult(bool sendMessage, CommunicationChannels communicationChannel, Candidate candidate, CommunicationRequest communicationRequest)
+        {
+            _logService.Info(
+                "{0} send message via channel '{1}' to candidate '{2}' with preferences '{3}'",
+                sendMessage ? "Will" : "Will not", communicationChannel, candidate.EntityId, JsonConvert.SerializeObject(candidate.CommunicationPreferences));
+        }
 
         private static Guid GetCandidateId(CommunicationRequest communicationRequest)
         {

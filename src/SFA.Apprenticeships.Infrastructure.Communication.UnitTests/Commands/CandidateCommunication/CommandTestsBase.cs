@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands.CandidateCommunication
 {
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Logging;
     using Builders;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
@@ -12,6 +13,7 @@
 
     public abstract class CommandTestsBase
     {
+        protected Mock<ILogService> LogService;
         protected Mock<IMessageBus> MessageBus;
         protected Mock<ICandidateReadRepository> CandidateRepository;
         protected Mock<IUserReadRepository> UserRepository;
@@ -20,6 +22,7 @@
 
         protected CommandTestsBase()
         {
+            LogService = new Mock<ILogService>();
             MessageBus = new Mock<IMessageBus>();
             UserRepository = new Mock<IUserReadRepository>();
             CandidateRepository = new Mock<ICandidateReadRepository>();
@@ -29,6 +32,7 @@
         {
             Command = command;
 
+            LogService.ResetCalls();
             MessageBus.ResetCalls();
             UserRepository.ResetCalls();
             CandidateRepository.ResetCalls();

@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
@@ -13,10 +14,11 @@
     public class CandidateDailyDigestCommunicationCommand : CandidateCommunicationCommand
     {
         public CandidateDailyDigestCommunicationCommand(
+            ILogService logService,
             IMessageBus messageBus,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository)
-            : base(messageBus, candidateReadRepository, userReadRepository)
+            : base(logService, messageBus, candidateReadRepository, userReadRepository)
         {
         }
 
@@ -26,7 +28,7 @@
         }
 
 
-        protected override void HandleSmsMessages(Candidate candidate, CommunicationRequest communicationRequest)
+        protected override void HandleSmsMessage(Candidate candidate, CommunicationRequest communicationRequest)
         {
             var mobileNumber = communicationRequest.GetToken(CommunicationTokens.CandidateMobileNumber);
 
@@ -69,7 +71,7 @@
         private void QueueApplicationExpiringDraftSmsMessage(
             Candidate candidate, string mobileNumber, ExpiringApprenticeshipApplicationDraft expiringDraft)
         {
-            base.HandleSmsMessages(candidate, new CommunicationRequest
+            base.HandleSmsMessage(candidate, new CommunicationRequest
             {
                 MessageType = MessageTypes.ApprenticeshipApplicationExpiringDraft,
                 Tokens = new[]
@@ -83,7 +85,7 @@
         private void QueueApplicationExpiringDraftsSummarySmsMessage(
             Candidate candidate, string mobileNumber, IEnumerable<ExpiringApprenticeshipApplicationDraft> expiringDrafts)
         {
-            base.HandleSmsMessages(candidate, new CommunicationRequest
+            base.HandleSmsMessage(candidate, new CommunicationRequest
             {
                 MessageType = MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary,
                 Tokens = new[]
@@ -148,7 +150,7 @@
         private void QueueApplicationStatusAlertSmsMessage(
             Candidate candidate, string mobileNumber, MessageTypes messageType, ApplicationStatusAlert applicationStatusAlert)
         {
-            base.HandleSmsMessages(candidate, new CommunicationRequest
+            base.HandleSmsMessage(candidate, new CommunicationRequest
             {
                 MessageType = messageType,
                 Tokens = new[]
