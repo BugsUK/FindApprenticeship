@@ -15,16 +15,6 @@
 
 <h1 class="heading-xlarge">Preview your application</h1>
 
-<div class="text">
-    @Html.HiddenFor(m => m.VacancyDetail.Title)
-    @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
-    <p class="para-btm-margin">Before you submit your application, please check your details are correct and your answers are relevant to the apprenticeship: <b class="inl-block">@Model.VacancyDetail.Title with @Model.VacancyDetail.EmployerName</b>.</p>
-    <div class="form-group">
-        @Html.ActionLink("Submit application", "SubmitApplication", new { id = Model.VacancyId }, new { @class = "button", id = "submit-application_initial", onclick = string.Format(AnalyticsTag, "TopButton") })
-        <p><a title="Return to application form" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.VacancyId })">Return to application form</a></p>
-    </div>
-</div>
-
 @Html.DisplayFor(m => m.Candidate)
 @Html.DisplayFor(m => m.Candidate.Education)
 
