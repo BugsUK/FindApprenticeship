@@ -3,6 +3,7 @@
 	As a candidate apprentice
 	I want be able to select which fields to filter by
 
+@ignore
 Scenario: The refine search options should display correctly
 	Given I navigated to the ApprenticeshipSearchPage page
 	Then I see
@@ -25,6 +26,7 @@ Scenario: The refine search options should display correctly
         | RefineSearchLink | Exists |       |
         | RefineControls   | Exists |       |
 
+@ignore
 Scenario: The refine search options should display on results page if selected
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I choose RefineSearchLink
