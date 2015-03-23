@@ -10,6 +10,7 @@
     using Application.Interfaces.Logging;
     using Domain.Entities.Exceptions;
     using EmailFromResolvers;
+    using Exceptions;
     using SendGrid;
     using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
@@ -144,6 +145,13 @@
                 web.Deliver(message);
 
                 _logger.Info("Dispatched email: {0}", logMessage);
+            }
+            catch (InvalidApiRequestException e)
+            {
+                var errorMessage = string.Format("Failed to dispatch email: {0}. Errors: {1}", logMessage, string.Join(", ", e.Errors));
+
+                _logger.Error(errorMessage, e, logMessage);
+                throw new CustomException(errorMessage, e, ErrorCodes.EmailError);
             }
             catch (Exception e)
             {
