@@ -539,20 +539,21 @@ WriteLiteral(" ");
             
             #line default
             #line hidden
-WriteLiteral(">\r\n                    You currently don\'t have any active saved searches, <a");
+WriteLiteral(">\r\n                    You currently don\'t have any active saved searches. If you" +
+" <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5837), Tuple.Create("\"", 5899)
+WriteAttribute("href", Tuple.Create(" href=\"", 5844), Tuple.Create("\"", 5906)
             
             #line 111 "..\..\Views\Account\Settings.cshtml"
- , Tuple.Create(Tuple.Create("", 5844), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+        , Tuple.Create(Tuple.Create("", 5851), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 5844), false)
+, 5851), false)
 );
 
-WriteLiteral(">use the search</a> and you can receive alerts when we find an apprenticeship tha" +
-"t matches your criteria.\r\n                </p>\r\n");
+WriteLiteral(">set up a saved search</a> we can alert you when we find a suitable apprenticeshi" +
+"p.\r\n                </p>\r\n");
 
             
             #line 113 "..\..\Views\Account\Settings.cshtml"
@@ -599,26 +600,26 @@ WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"para-btm-margin saved-search\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 6555), Tuple.Create("\"", 6575)
+WriteAttribute("id", Tuple.Create(" id=\"", 6540), Tuple.Create("\"", 6560)
             
             #line 121 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 6560), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+, Tuple.Create(Tuple.Create("", 6545), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 6560), false)
+, 6545), false)
 );
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6613), Tuple.Create("\"", 6658)
+WriteAttribute("href", Tuple.Create(" href=\"", 6598), Tuple.Create("\"", 6643)
             
             #line 122 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 6620), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
+, Tuple.Create(Tuple.Create("", 6605), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
             
             #line default
             #line hidden
-, 6620), false)
+, 6605), false)
 );
 
 WriteLiteral(" title=\"Run search\"");
@@ -786,24 +787,24 @@ WriteLiteral("</li>\r\n");
 WriteLiteral("                                    <li>\r\n                                       " +
 " <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8207), Tuple.Create("\"", 8295)
+WriteAttribute("href", Tuple.Create(" href=\"", 8192), Tuple.Create("\"", 8280)
             
             #line 144 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 8214), Tuple.Create<System.Object, System.Int32>(Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})
+, Tuple.Create(Tuple.Create("", 8199), Tuple.Create<System.Object, System.Int32>(Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})
             
             #line default
             #line hidden
-, 8214), false)
+, 8199), false)
 );
 
-WriteAttribute("id", Tuple.Create(" id=\"", 8296), Tuple.Create("\"", 8316)
+WriteAttribute("id", Tuple.Create(" id=\"", 8281), Tuple.Create("\"", 8301)
             
             #line 144 "..\..\Views\Account\Settings.cshtml"
-                                                        , Tuple.Create(Tuple.Create("", 8301), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+                                                        , Tuple.Create(Tuple.Create("", 8286), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 8301), false)
+, 8286), false)
 );
 
 WriteLiteral(" class=\"link-unimp icon-black delete-saved-search-link\"");

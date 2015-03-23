@@ -108,7 +108,7 @@
     var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
                 }
                 <p class="savedInitalText text" id="noSavedSearchesText" @Html.Raw(noSavedSearchesTextStyle)>
-                    You currently don't have any active saved searches, <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">use the search</a> and you can receive alerts when we find an apprenticeship that matches your criteria.
+                    You currently don't have any active saved searches. If you <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">set up a saved search</a> we can alert you when we find a suitable apprenticeship.
                 </p>
                 @if (Model.SavedSearches != null)
                 {
