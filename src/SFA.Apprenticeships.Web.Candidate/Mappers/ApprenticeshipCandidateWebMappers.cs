@@ -5,6 +5,7 @@
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Communication;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -12,6 +13,7 @@
     using Resolvers;
     using ViewModels.Account;
     using ViewModels.Applications;
+    using ViewModels.Home;
     using ViewModels.Locations;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
@@ -99,6 +101,12 @@
 
             Mapper.CreateMap<RegistrationDetails, SettingsViewModel>()
                 .ConvertUsing<SettingsViewModelResolvers.RegistrationDetailsToSettingsViewModelResolver>();
+
+            Mapper.CreateMap<ContactMessageViewModel, ContactMessage>()
+                .ForMember(c => c.EntityId, opt => opt.Ignore())
+                .ForMember(c => c.UserId, opt => opt.Ignore())
+                .ForMember(c => c.DateCreated, opt => opt.Ignore())
+                .ForMember(c => c.DateUpdated, opt => opt.Ignore());
         }
     }
 }

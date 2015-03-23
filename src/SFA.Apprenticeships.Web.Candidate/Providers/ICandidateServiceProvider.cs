@@ -41,7 +41,7 @@
 
         bool AcceptTermsAndConditions(Guid candidateId, string currentVersion);
 
-        void SendContactMessage(Guid? candidateId, ContactMessageViewModel viewModel);
+        bool SendContactMessage(Guid? candidateId, ContactMessageViewModel viewModel);
 
         IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
 

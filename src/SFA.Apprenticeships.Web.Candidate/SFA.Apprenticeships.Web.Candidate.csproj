@@ -741,13 +741,10 @@
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\FullNameFormatter.cs" />
-    <Compile Include="Mappers\HomeWebMappers.cs" />
     <Compile Include="Mappers\SavedSearchViewModelMapper.cs" />
     <Compile Include="Mediators\Home\HomeMediator.cs" />
     <Compile Include="Mediators\Home\IHomeMediator.cs" />
     <Compile Include="Mediators\Home\HomeMediatorCodes.cs" />
-    <Compile Include="Providers\HomeProvider.cs" />
-    <Compile Include="Providers\IHomeProvider.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />

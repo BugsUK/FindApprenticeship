@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using Apprenticeships.Application.Interfaces.Logging;
     using Common.Constants;
     using Constants.Pages;
     using Providers;
@@ -11,16 +12,16 @@
     public class HomeMediator : MediatorBase, IHomeMediator
     {
         private readonly ICandidateServiceProvider _candidateServiceProvider;
-        private readonly IHomeProvider _homeProvider;
         private readonly ContactMessageServerViewModelValidator _contactMessageServerViewModelValidator;
+        private readonly ILogService _logService;
 
         public HomeMediator(ICandidateServiceProvider candidateServiceProvider, 
-            IHomeProvider homeProvider, 
-            ContactMessageServerViewModelValidator contactMessageServerViewModelValidator)
+            ContactMessageServerViewModelValidator contactMessageServerViewModelValidator,
+            ILogService logService)
         {
             _candidateServiceProvider = candidateServiceProvider;
-            _homeProvider = homeProvider;
             _contactMessageServerViewModelValidator = contactMessageServerViewModelValidator;
+            _logService = logService;
         }
 
         public MediatorResponse<ContactMessageViewModel> SendContactMessage(Guid? candidateId,
@@ -34,7 +35,7 @@
                 return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.ValidationError, contactMessageViewModel, validationResult);
             }
 
-            if (_homeProvider.SendContactMessage(candidateId, contactMessageViewModel))
+            if (_candidateServiceProvider.SendContactMessage(candidateId, contactMessageViewModel))
             {
                 var viewModel = GetViewModel(candidateId);
                 PopulateEnquiries(viewModel);
@@ -68,8 +69,9 @@
                     viewModel.Name = string.Format("{0} {1}", candidate.RegistrationDetails.FirstName,
                         candidate.RegistrationDetails.LastName);
                 }
-                catch
+                catch(Exception ex)
                 {
+                    _logService.Error("Failed to created view model", ex);
                 }
             }
 

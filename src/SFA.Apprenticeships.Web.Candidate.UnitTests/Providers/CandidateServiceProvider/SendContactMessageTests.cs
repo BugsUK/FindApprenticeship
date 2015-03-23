@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.Home
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.CandidateServiceProvider
 {
     using System;
     using Application.Interfaces.Candidates;
@@ -11,7 +11,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class HomeProviderTests
+    public class SendContactMessageTests
     {
         private Mock<ICandidateService> _candidateServiceMock;
         private readonly Mock<IMapper> _mapperMock = new Mock<IMapper>();
@@ -27,11 +27,11 @@
         {
             var candidateId = Guid.NewGuid();
 
-            var homeProvider = new HomeProvider(_candidateServiceMock.Object, _mapperMock.Object);
+            var candidateServiceProvider = new CandidateServiceProvider(_candidateServiceMock.Object, null, null, null, _mapperMock.Object, null, null);
             _mapperMock.Setup(m => m.Map<ContactMessageViewModel, ContactMessage>(It.IsAny<ContactMessageViewModel>()))
                 .Returns(new ContactMessage());
 
-            var result = homeProvider.SendContactMessage(candidateId, new ContactMessageViewModel());
+            var result = candidateServiceProvider.SendContactMessage(candidateId, new ContactMessageViewModel());
 
             result.Should().BeTrue();
             _candidateServiceMock.Verify(cs => cs.SubmitContactMessage(It.Is<ContactMessage>(cm => cm.UserId == candidateId)));
@@ -42,14 +42,14 @@
         {
             var candidateId = Guid.NewGuid();
 
-            var homeProvider = new HomeProvider(_candidateServiceMock.Object, _mapperMock.Object);
+            var candidateServiceProvider = new CandidateServiceProvider(_candidateServiceMock.Object, null, null, null, _mapperMock.Object, null, null);
             _mapperMock.Setup(m => m.Map<ContactMessageViewModel, ContactMessage>(It.IsAny<ContactMessageViewModel>()))
                 .Returns(new ContactMessage());
 
             _candidateServiceMock.Setup(cs => cs.SubmitContactMessage(It.IsAny<ContactMessage>()))
                 .Throws<ArgumentException>();
 
-            var result = homeProvider.SendContactMessage(candidateId, new ContactMessageViewModel());
+            var result = candidateServiceProvider.SendContactMessage(candidateId, new ContactMessageViewModel());
 
             result.Should().BeFalse();
         }

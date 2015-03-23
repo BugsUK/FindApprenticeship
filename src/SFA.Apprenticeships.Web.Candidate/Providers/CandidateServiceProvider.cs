@@ -21,6 +21,7 @@
     using ViewModels.Login;
     using ViewModels.Register;
     using Common.Constants;
+    using Domain.Entities.Communication;
     using Helpers;
     using Mappers;
     using ViewModels.Account;
@@ -483,9 +484,19 @@
             }
         }
 
-        public void SendContactMessage(Guid? candidateId, ContactMessageViewModel viewModel)
+        public bool SendContactMessage(Guid? candidateId, ContactMessageViewModel viewModel)
         {
-            //todo: should be used instead of current implementation which uses IHomeProvider
+            try
+            {
+                var candidate = _mapper.Map<ContactMessageViewModel, ContactMessage>(viewModel);
+                candidate.UserId = candidateId;
+                _candidateService.SubmitContactMessage(candidate);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true)
