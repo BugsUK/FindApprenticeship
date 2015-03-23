@@ -12,6 +12,7 @@
         [TestCase(CommunicationChannels.Email, false)]
         [TestCase(CommunicationChannels.Sms, true)]
         [TestCase(CommunicationChannels.Sms, false)]
+        [Ignore]
         public void ShouldHonourSendApplicationSubmittedCommunicationPreference(CommunicationChannels communicationChannel, bool sendApplicationSubmitted)
         {
             // Arrange.
