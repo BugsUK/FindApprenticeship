@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
@@ -125,17 +126,19 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                //TODO: Remove once the cause of the null candidate objects is fixed
-                if (model.Candidate == null)
-                {
-                    var requestDebugString = Request.ToDebugString();
-                    _logService.Error("Error when saving apprenticeship application. Candidate was null: {0}", requestDebugString);
-                    ModelState.Clear();
-                    SetUserMessage(ApplicationPageMessages.SaveFailed, UserMessageLevel.Warning);
-                    return View("Apply", model);
-                }
+                MediatorResponse<ApprenticeshipApplicationViewModel> response;
 
-                var response = _apprenticeshipApplicationMediator.Save(UserContext.CandidateId, id, model);
+                try
+                {
+                    response = _apprenticeshipApplicationMediator.Save(UserContext.CandidateId, id, model);
+                }
+                catch (Exception)
+                {
+                    //TODO: Remove once the cause of saving exceptions is fixed
+                    var requestDebugString = Request.ToDebugString();
+                    _logService.Error("Error when saving apprenticeship application. Request: {0}", requestDebugString);
+                    throw;
+                }
 
                 switch (response.Code)
                 {
@@ -168,16 +171,19 @@
         {
             return await Task.Run(() =>
             {
-                //TODO: Remove once the cause of the null candidate objects is fixed
-                if (model.Candidate == null)
-                {
-                    var requestDebugString = Request.ToDebugString();
-                    _logService.Error("Error when auto saving apprenticeship application. Candidate was null: {0}", requestDebugString);
-                    ModelState.Clear();
-                    return new JsonResult { Data = new AutoSaveResultViewModel() };
-                }
+                MediatorResponse<AutoSaveResultViewModel> response;
 
-                var response = _apprenticeshipApplicationMediator.AutoSave(UserContext.CandidateId, id, model);
+                try
+                {
+                    response = _apprenticeshipApplicationMediator.AutoSave(UserContext.CandidateId, id, model);
+                }
+                catch (Exception)
+                {
+                    //TODO: Remove once the cause of the null candidate objects is fixed
+                    var requestDebugString = Request.ToDebugString();
+                    _logService.Error("Error when auto saving apprenticeship application. Request: {0}", requestDebugString);
+                    throw;
+                }
 
                 switch (response.Code)
                 {
