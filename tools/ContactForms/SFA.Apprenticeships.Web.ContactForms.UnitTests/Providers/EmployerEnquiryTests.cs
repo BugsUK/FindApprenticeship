@@ -18,7 +18,7 @@
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
             //todo: fix this : 
-            //serviceMock.Setup(cs => cs.SendMessageToHelpdesk(It.IsAny<MessageTypes>()), ).Throws(new Exception());
+            //serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>()), ).Throws(new Exception());
             var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
 
             //Act
@@ -62,7 +62,7 @@
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
             
-            //serviceMock.Setup(cs => cs.SendMessageToHelpdesk(It.IsAny<EmployerEnquiry>()));
+            //serviceMock.Setup(cs => cs.SendMessage(It.IsAny<EmployerEnquiry>()));
             var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
 
             //Act

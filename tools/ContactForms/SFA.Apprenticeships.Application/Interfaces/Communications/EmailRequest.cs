@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Communications
+﻿using System.IO;
+
+namespace SFA.Apprenticeships.Application.Interfaces.Communications
 {
     using System.Collections.Generic;
 
@@ -8,11 +10,10 @@
     public class EmailRequest
     {
         public string ToEmail { get; set; }
-
         public string Subject { get; set; }
-
         public MessageTypes MessageType { get; set; }
-
         public IEnumerable<CommunicationToken> Tokens { get; set; }
+        public MemoryStream StreamedAttachment { get; set; }
+        public string StreamedAttachmentName { get; set; }
     }
 }

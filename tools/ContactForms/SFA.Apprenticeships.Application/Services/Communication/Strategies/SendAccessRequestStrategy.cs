@@ -30,9 +30,30 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
                 {
                     ToEmail = BaseAppSettingValues.ToEmailAddress,
                     Subject = String.Format("{0} at {1} on {2}",
-                                                tokens.First(a => a.Key == CommunicationTokens.FullName).Value.ToFirstCharToUpper(),
+                                                tokens.First(a => a.Key == CommunicationTokens.Fullname).Value.ToFirstCharToUpper(),
                                                 DateTime.Now.ToString("hh:mm tt"),
                                                 DateTime.Now.ToString("dd-MMM-yyyy")),
+                    MessageType = messageType,
+                    Tokens = tokens,
+                    //todo: attach file as an XML
+                    //Attachment = tokens.ToFileStream()
+                };
+
+                _emailDispatcher.SendEmail(request);
+            }
+            else
+            {
+                throw new CustomException(string.Format("No tokens found for messageType:{0}", messageType));
+            }
+        }
+
+        public void SendMessageToApplicant(MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
+        {
+            if (!tokens.IsNullOrEmpty())
+            {
+                var request = new EmailRequest
+                {
+                    ToEmail = tokens.First(a => a.Key == CommunicationTokens.Email).Value,
                     MessageType = messageType,
                     Tokens = tokens
                 };

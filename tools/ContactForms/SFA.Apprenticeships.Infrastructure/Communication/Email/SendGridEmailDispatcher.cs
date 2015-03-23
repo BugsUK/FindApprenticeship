@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email
+﻿
+namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
     using System;
     using System.Collections.Generic;
@@ -62,7 +63,7 @@
         {
             const string emptyHtml = "<span></span>";
             const string emptyText = "";
-            var subject = request.Subject;
+            var subject = request.Subject ?? " ";
 
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage
@@ -73,8 +74,15 @@
                     new MailAddress(request.ToEmail)
                 },
                 Text = emptyText,
-                Html = emptyHtml
+                Html = emptyHtml,
+
             };
+
+            //Append the attachment if any
+            if (!string.IsNullOrEmpty(request.StreamedAttachmentName))
+            {
+                message.AddAttachment(request.StreamedAttachmentName);
+            }
 
             return message;
         }

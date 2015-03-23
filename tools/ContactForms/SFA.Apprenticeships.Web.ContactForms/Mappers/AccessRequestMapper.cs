@@ -35,7 +35,7 @@
                 Contactname = domain.Contactname,
                 AdditionalEmail = domain.AdditionalEmail,
                 AdditionalPhoneNumber = domain.AdditionalPhoneNumber,
-                ServiceTypes = new AccessRequestServicesViewModel(){ PostedServiceIds = domain.ServiceTypeIds.Split(',') }
+                ServiceTypes = new AccessRequestServicesViewModel(){ PostedServiceIds = domain.SelectedServiceTypeIds.Split(',') }
             };
         }
 
@@ -60,7 +60,7 @@
                 Contactname= viewModel.Contactname,
                 AdditionalEmail= viewModel.AdditionalEmail,
                 AdditionalPhoneNumber= viewModel.AdditionalPhoneNumber,                
-                ServiceTypeIds = string.Join(",",viewModel.ServiceTypes.PostedServiceIds)
+                SelectedServiceTypeIds = string.Join(",",viewModel.ServiceTypes.PostedServiceIds)
             };
         }
     }

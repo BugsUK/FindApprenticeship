@@ -2,8 +2,11 @@
 {
     public enum MessageTypes
     {
-        SendEmployerEnquiry,
-        SendWebAccessRequest,
-        SendGlaEmployerEnquiry
+        EmployerEnquiry,
+        WebAccessRequest,
+        GlaEmployerEnquiry,
+        EmployerEnquiryConfirmation,
+        WebAccessRequestConfirmation,
+        GlaEmployerEnquiryConfirmation
     }
 }

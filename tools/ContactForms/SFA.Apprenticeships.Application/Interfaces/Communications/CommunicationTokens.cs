@@ -7,7 +7,7 @@
         Email,
         Firstname,
         Lastname,
-        FullName,
+        Fullname,
         FullAddress,
         Companyname,
         Position,
@@ -27,14 +27,11 @@
         EnquirySource,
 
         //Access request specific tokens
-        SystemName,
+        Systemname,
         HasApprenticeshipVacancies,
-        ContactName,
-        ContactPhoneNumber,
-        ContactEmail,
-        Services,
+        Contactname,
         UserType,
-        ServiceTypeIds,
+        SelectedServiceTypeIds,
         AdditionalPhoneNumber,
         AdditionalEmail,
 

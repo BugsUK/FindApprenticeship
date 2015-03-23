@@ -23,6 +23,12 @@ using SFA.Apprenticeships.Infrastructure.Logging;
                 case CommunicationTokens.Lastname:
                     emailTemplateToken = "Lastname";
                     break;
+                case CommunicationTokens.Fullname:
+                    emailTemplateToken = "Fullname";
+                    break;
+                case CommunicationTokens.FullAddress:
+                    emailTemplateToken = "FullAddress";
+                    break;
                 case CommunicationTokens.WorkPhoneNumber:
                     emailTemplateToken = "WorkPhoneNumber";
                     break;
@@ -74,18 +80,9 @@ using SFA.Apprenticeships.Infrastructure.Logging;
                 #endregion
 
                 #region Web Access Request specific tokens
-
-                case CommunicationTokens.ContactEmail:
-                    emailTemplateToken = "ContactEmail";
-                    break;
-                case CommunicationTokens.ContactName:
-                    emailTemplateToken = "ContactName";
-                    break;
-                case CommunicationTokens.ContactPhoneNumber:
-                    emailTemplateToken = "ContactPhoneNumber";
-                    break;
-                case CommunicationTokens.Services:
-                    emailTemplateToken = "Services";
+                    
+                case CommunicationTokens.Contactname:
+                    emailTemplateToken = "Contactname";
                     break;
                 case CommunicationTokens.UserType:
                     emailTemplateToken = "UserType";
@@ -93,11 +90,11 @@ using SFA.Apprenticeships.Infrastructure.Logging;
                 case CommunicationTokens.HasApprenticeshipVacancies:
                     emailTemplateToken = "HasApprenticeshipVacancies";
                     break;
-                case CommunicationTokens.SystemName:
-                    emailTemplateToken = "SystemName";
+                case CommunicationTokens.Systemname:
+                    emailTemplateToken = "Systemname";
                     break;
-                case CommunicationTokens.ServiceTypeIds:
-                    emailTemplateToken = "ServiceTypeIds";
+                case CommunicationTokens.SelectedServiceTypeIds:
+                    emailTemplateToken = "SelectedServiceTypeIds";
                     break;
                 case CommunicationTokens.AdditionalPhoneNumber:
                     emailTemplateToken = "AdditionalPhoneNumber";

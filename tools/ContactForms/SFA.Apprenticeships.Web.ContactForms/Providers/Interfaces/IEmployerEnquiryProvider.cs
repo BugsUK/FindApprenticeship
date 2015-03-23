@@ -6,5 +6,6 @@
     public interface IEmployerEnquiryProvider
     {
         SubmitQueryStatus SubmitEnquiry(EmployerEnquiryViewModel message);
+        SubmitQueryStatus SubmitGlaEnquiry(EmployerEnquiryViewModel message);
     }
 }

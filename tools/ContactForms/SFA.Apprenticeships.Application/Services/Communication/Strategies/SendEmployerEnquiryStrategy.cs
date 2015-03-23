@@ -1,11 +1,10 @@
-﻿using System;
-using System.Linq;
-using SFA.Apprenticeships.Common.AppSettings;
-using SFA.Apprenticeships.Common.Extensions;
-using SFA.Apprenticeships.Domain.Exceptions;
-
-namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
+﻿namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
 {
+    using System;
+    using System.Linq;
+    using Common.AppSettings;
+    using Common.Extensions;
+    using Domain.Exceptions;
     using System.Collections.Generic;
     using Application.Interfaces;
     using Application.Interfaces.Communications;
@@ -14,25 +13,48 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
     public class SendEmployerEnquiryStrategy : ISendEmployerEnquiryStrategy
     {
         private readonly IEmailDispatcher _emailDispatcher;
+        private readonly IXmlGenerator _xmlGenerator;
+
         private readonly ILogService _logger;
 
-        public SendEmployerEnquiryStrategy(IEmailDispatcher emailDispatcher, ILogService logger)
+        public SendEmployerEnquiryStrategy(IEmailDispatcher emailDispatcher, ILogService logger, IXmlGenerator xmlGenerator)
         {
             _emailDispatcher = emailDispatcher;
             _logger = logger;
+            _xmlGenerator = xmlGenerator;
         }
 
         public void Send(MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
             if (!tokens.IsNullOrEmpty())
             {
+                //get xml stream to attach in the email
+                var xmlAttachmentName = _xmlGenerator.SerializeToXmlFile(messageType, tokens);
+
                 var request = new EmailRequest
                 {
                     ToEmail = BaseAppSettingValues.ToEmailAddress,
-                    Subject = String.Format("{0} at {1} on {2}",
-                                                tokens.First(a => a.Key == CommunicationTokens.FullName).Value.ToFirstCharToUpper(),
-                                                DateTime.Now.ToString("hh:mm tt"),
-                                                DateTime.Now.ToString("dd-MMM-yyyy")),
+                    Subject = "Employer enquiry",
+                    MessageType = messageType,
+                    Tokens = tokens,
+                    StreamedAttachmentName = xmlAttachmentName//generate XML and attach to the email
+                };
+
+                _emailDispatcher.SendEmail(request);
+            }
+            else
+            {
+                throw new CustomException(string.Format("No tokens found for messageType:{0}", messageType));
+            }
+        }
+
+        public void SendMessageToApplicant(MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
+        {
+            if (!tokens.IsNullOrEmpty())
+            {
+                var request = new EmailRequest
+                {
+                    ToEmail = tokens.First(a => a.Key == CommunicationTokens.Email).Value,
                     MessageType = messageType,
                     Tokens = tokens
                 };
@@ -44,5 +66,10 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
                 throw new CustomException(string.Format("No tokens found for messageType:{0}", messageType));
             }
         }
+
+        #region Helper Methods
+
+        
+        #endregion
     }
 }

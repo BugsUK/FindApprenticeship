@@ -5,6 +5,7 @@
 
     public interface ISendAccessRequestStrategy
     {
-        void Send(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);  
+        void Send(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
+        void SendMessageToApplicant(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
     }
 }

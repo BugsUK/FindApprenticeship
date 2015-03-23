@@ -5,7 +5,7 @@
 
     public interface ICommunciationService
     {
-        void SendMessageToHelpdesk(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
+        void SendMessage(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
     }
 
 }

@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.ContactForms.Ioc
+﻿using SFA.Apprenticeships.Infrastructure.Xml;
+
+namespace SFA.Apprenticeships.Web.ContactForms.Ioc
 {
     using System;
     using System.Collections.Generic;
@@ -53,12 +55,17 @@
         }
 
         private void RegisterServices()
-        {            
+        {
+            For<IXmlGenerator>().Use<XmlGenerator>();
+
             IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> emailMessageFormatters = new[]
             {
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendEmployerEnquiry, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendGlaEmployerEnquiry, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendWebAccessRequest, new EmailSimpleMessageFormatter())
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.EmployerEnquiry, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.EmployerEnquiryConfirmation, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.GlaEmployerEnquiry, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.GlaEmployerEnquiryConfirmation, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.WebAccessRequest, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.WebAccessRequestConfirmation, new EmailSimpleMessageFormatter())
             };
 
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Named("SendGridEmailDispatcher")

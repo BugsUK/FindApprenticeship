@@ -13,7 +13,7 @@
         public string MobileNumber { get; set; }
         public bool HasApprenticeshipVacancies { get; set; }
         public Address Address { get; set; }
-        public string ServiceTypeIds { get; set; }
+        public string SelectedServiceTypeIds { get; set; }
         public string Contactname { get; set; }
         public string AdditionalPhoneNumber { get; set; }
         public string AdditionalEmail { get; set; }

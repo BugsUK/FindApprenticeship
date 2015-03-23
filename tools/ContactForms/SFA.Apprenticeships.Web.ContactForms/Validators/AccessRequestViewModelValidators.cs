@@ -88,6 +88,12 @@
                 .Matches(AccessRequestViewModelMessages.PositionMessages.WhiteListRegularExpression)
                 .WithMessage(AccessRequestViewModelMessages.PositionMessages.WhiteListErrorText);
 
+            validator.RuleFor(x => x.AdditionalEmail)
+                .Length(0, 100)
+                .WithMessage(AccessRequestViewModelMessages.EmailAddressMessages.TooLongErrorText)
+                .Matches(AccessRequestViewModelMessages.EmailAddressMessages.WhiteListRegularExpression)
+                .WithMessage(AccessRequestViewModelMessages.EmailAddressMessages.WhiteListErrorText);
+
             validator.RuleFor(x => x.Systemname)
                 .Length(0, 100)
                 .WithMessage(AccessRequestViewModelMessages.SystemnameMessages.TooLongErrorText)
