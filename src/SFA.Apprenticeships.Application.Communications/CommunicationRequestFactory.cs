@@ -21,11 +21,15 @@
                 new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber),
             };
 
-            var draftsJson = candidateExpiringDraftsDailyDigest == null ? string.Empty : JsonConvert.SerializeObject(candidateExpiringDraftsDailyDigest.OrderBy(d => d.ClosingDate));
+            var draftsJson = candidateExpiringDraftsDailyDigest == null
+                ? string.Empty
+                : JsonConvert.SerializeObject(candidateExpiringDraftsDailyDigest.OrderBy(d => d.ClosingDate));
 
             communicationTokens.Add(new CommunicationToken(CommunicationTokens.ExpiringDrafts, draftsJson));
 
-            var alertsJson = candidateApplicationStatusAlertsDailyDigest == null ? string.Empty : JsonConvert.SerializeObject(candidateApplicationStatusAlertsDailyDigest.OrderBy(d => d.DateUpdated));
+            var alertsJson = candidateApplicationStatusAlertsDailyDigest == null
+                ? string.Empty
+                : JsonConvert.SerializeObject(candidateApplicationStatusAlertsDailyDigest.OrderBy(d => d.DateUpdated));
 
             communicationTokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, alertsJson));
 
@@ -49,7 +53,9 @@
             };
 
             // TODO: AG: ordering of saved search alerts.
-            var savedSearchAlertsJson = candidateSavedSearchAlerts == null ? string.Empty : JsonConvert.SerializeObject(candidateSavedSearchAlerts);
+            var savedSearchAlertsJson = candidateSavedSearchAlerts == null
+                ? string.Empty
+                : JsonConvert.SerializeObject(candidateSavedSearchAlerts);
 
             communicationTokens.Add(new CommunicationToken(CommunicationTokens.SavedSearchAlerts, savedSearchAlertsJson));
 

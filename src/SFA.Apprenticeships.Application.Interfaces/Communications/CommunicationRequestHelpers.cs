@@ -2,7 +2,6 @@
 {
     using System.Linq;
 
-    // TODO: AG: no unit tests yet.
     public static class CommunicationRequestHelpers
     {
         public static string GetToken(this CommunicationRequest communicationRequest, CommunicationTokens communicationTokens)
