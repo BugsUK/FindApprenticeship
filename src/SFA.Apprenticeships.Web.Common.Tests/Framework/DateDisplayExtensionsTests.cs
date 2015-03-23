@@ -58,7 +58,7 @@
         [TestCase(28)]
         public void ToFriendlyDaysAgo(int daysAgo)
         {
-            var dateProcessed = DateTime.UtcNow.AddDays(daysAgo);
+            var dateProcessed = DateTime.UtcNow.AddDays(-daysAgo);
             var friendlyDaysAgo = dateProcessed.ToFriendlyDaysAgo();
             if (daysAgo == 0)
             {
