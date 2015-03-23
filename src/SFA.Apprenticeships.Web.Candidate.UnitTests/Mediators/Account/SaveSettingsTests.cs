@@ -64,6 +64,24 @@
         }
 
         [Test]
+        public void SaveNotificationsSettingsSuccessWithWarning()
+        {
+            var settingsViewModel = new SettingsViewModelBuilder().AllowEmailComms(true).AllowSmsComms(true).Build();
+            settingsViewModel.Mode = SettingsViewModel.SettingsMode.YourAccount;
+
+            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
+            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
+            var candidate = new Candidate();
+            var accountProviderMock = new Mock<IAccountProvider>();
+            accountProviderMock.Setup(x => x.TrySaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>(), out candidate)).Returns(true);
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(accountProviderMock.Object).Build();
+
+            var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
+
+            response.AssertMessage(AccountMediatorCodes.Settings.SuccessWithWarning, AccountPageMessages.SettingsUpdatedNotificationsAlertWarning, UserMessageLevel.Info, true);
+        }
+
+        [Test]
         public void SaveSearchesSettingsSuccessWithWarning()
         {
             var savedSearchViewModels = new Fixture().Build<SavedSearchViewModel>().With(s => s.AlertsEnabled, false).CreateMany(1).ToList();

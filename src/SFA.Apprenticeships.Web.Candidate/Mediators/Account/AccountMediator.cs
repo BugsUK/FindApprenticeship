@@ -131,6 +131,16 @@
                     return GetMediatorResponse(AccountMediatorCodes.Settings.MobileVerificationRequired, settingsViewModel, AccountPageMessages.MobileVerificationRequired, UserMessageLevel.Success);
                 }
 
+                if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.YourAccount)
+                {
+                    var shouldSendNotifications = settingsViewModel.AllowEmailComms || settingsViewModel.AllowSmsComms;
+                    var anyNotificationEnabled = settingsViewModel.SendApplicationSubmitted || settingsViewModel.SendApplicationStatusChanges || settingsViewModel.SendApprenticeshipApplicationsExpiring || settingsViewModel.SendMarketingCommunications;
+                    if (shouldSendNotifications && !anyNotificationEnabled)
+                    {
+                        return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedNotificationsAlertWarning, UserMessageLevel.Info);
+                    }
+                }
+
                 if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.SavedSearches)
                 {
                     var anySavedSearchAlertsEnabled = settingsViewModel.SavedSearches != null && settingsViewModel.SavedSearches.Any(s => s.AlertsEnabled);
