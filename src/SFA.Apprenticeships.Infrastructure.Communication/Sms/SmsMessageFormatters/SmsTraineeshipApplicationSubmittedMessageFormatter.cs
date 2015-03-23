@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class SmsTraineeshipApplicationSubmittedMessageFormatter : SmsMessageFormatter
     {
-        public SmsTraineeshipApplicationSubmittedMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsTraineeshipApplicationSubmittedMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration("MessageTypes.TraineeshipApplicationSubmitted").Message;
         }

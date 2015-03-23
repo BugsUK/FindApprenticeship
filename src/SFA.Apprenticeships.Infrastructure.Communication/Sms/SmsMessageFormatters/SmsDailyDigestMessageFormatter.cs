@@ -3,7 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Configuration;
     using Domain.Entities.Communication;
+    using Domain.Interfaces.Configuration;
     using Newtonsoft.Json;
 
     public class SmsDailyDigestMessageFormatter : SmsMessageFormatter
@@ -15,8 +17,8 @@
         private const int MaxAlertCount = 3;
         private const int MaxDraftCount = 3;
 
-        public SmsDailyDigestMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsDailyDigestMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration(TemplateName).Message;
         }

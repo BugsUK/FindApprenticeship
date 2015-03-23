@@ -50,9 +50,9 @@
 
         //public SearchFactorConfiguration SearchTermFactors { get; set; }
 
-        public ReachSmsConfiguration SmsConfiguration { get; set; }
+        //public ReachSmsConfiguration SmsConfiguration { get; set; }
 
-        public SendGridConfiguration EmailConfiguration { get; set; }
+        //public SendGridConfiguration EmailConfiguration { get; set; }
 
         #endregion
     }

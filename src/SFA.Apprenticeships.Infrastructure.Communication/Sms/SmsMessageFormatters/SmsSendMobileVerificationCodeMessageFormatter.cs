@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class SmsSendMobileVerificationCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsSendMobileVerificationCodeMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsSendMobileVerificationCodeMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendMobileVerificationCode").Message;
         }

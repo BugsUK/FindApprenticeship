@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Sms
 {
     using System.Collections.Generic;
+    using Configuration;
 
     public interface IReachSmsConfiguration
     {
@@ -14,6 +15,6 @@
 
         string CallbackUrl { get; }
 
-        IEnumerable<SmsTemplateConfiguration> Templates { get; }
+        IEnumerable<SmsTemplate> Templates { get; }
     }
 }

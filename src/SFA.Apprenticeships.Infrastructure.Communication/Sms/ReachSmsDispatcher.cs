@@ -8,7 +8,9 @@
     using System.Xml.Linq;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Logging;
+    using Configuration;
     using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Configuration;
     using RestSharp;
 
     public class ReachSmsDispatcher : ISmsDispatcher
@@ -16,20 +18,21 @@
         private readonly ILogService _logger;
 
         private readonly IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> _messageFormatters;
-        private readonly IReachSmsConfiguration _reachConfiguration;
+        private readonly ReachSmsConfiguration _reachConfiguration;
         private readonly ISmsNumberFormatter _smsNumberFormatter;
         private readonly IRestClient _restClient;
 
         public ReachSmsDispatcher(
             ILogService logger,
             IRestClient restClient,
-            IReachSmsConfiguration reachConfiguration,
+            IConfigurationService configurationService,
             ISmsNumberFormatter smsNumberFormatter,
-            IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> messageFormatters)
+            IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> messageFormatters
+            )
         {
             _logger = logger;
             _restClient = restClient;
-            _reachConfiguration = reachConfiguration;
+            _reachConfiguration = configurationService.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName);
             _smsNumberFormatter = smsNumberFormatter;
             _messageFormatters = messageFormatters;
         }

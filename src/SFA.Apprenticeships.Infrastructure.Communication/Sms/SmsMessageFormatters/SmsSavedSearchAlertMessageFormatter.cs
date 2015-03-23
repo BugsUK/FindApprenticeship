@@ -2,11 +2,13 @@
 {
     using System.Collections.Generic;
     using Application.Interfaces.Communications;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class SmsSavedSearchAlertMessageFormatter : SmsMessageFormatter
     {
-        public SmsSavedSearchAlertMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsSavedSearchAlertMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration("MessageTypes.SavedSearchAlert").Message;
         }

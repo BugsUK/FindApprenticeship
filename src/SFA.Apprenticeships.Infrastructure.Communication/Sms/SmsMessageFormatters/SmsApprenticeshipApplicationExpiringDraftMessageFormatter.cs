@@ -4,12 +4,13 @@
     using System.Linq;
     using Application.Interfaces.Communications;
     using Domain.Entities.Communication;
+    using Domain.Interfaces.Configuration;
     using Newtonsoft.Json;
 
     public class SmsApprenticeshipApplicationExpiringDraftMessageFormatter : SmsMessageFormatter
     {
-        public SmsApprenticeshipApplicationExpiringDraftMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsApprenticeshipApplicationExpiringDraftMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration("MessageTypes.ApprenticeshipApplicationExpiringDraft").Message;
         }

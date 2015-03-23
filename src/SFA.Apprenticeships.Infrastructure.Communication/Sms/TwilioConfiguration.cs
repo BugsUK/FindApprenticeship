@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using Common.Configuration;
+    using Configuration;
 
     public class TwilioConfiguration : SecureConfigurationSection<TwilioConfiguration>, ITwillioConfiguration
     {
@@ -36,7 +37,7 @@
             set { this[MobileNumberFromConstant] = value; }
         }
 
-        public IEnumerable<SmsTemplateConfiguration> Templates
+        public IEnumerable<SmsTemplate> Templates
         {
             get { return TemplateCollection; }
         }

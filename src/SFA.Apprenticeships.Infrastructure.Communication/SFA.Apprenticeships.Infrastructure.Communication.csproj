@@ -113,6 +113,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\ReachSmsConfiguration.cs" />
+    <Compile Include="Configuration\SendGridConfiguration.cs" />
     <Compile Include="Email\EmailFromResolvers\CandidateMessageEmailFromResolver.cs" />
     <Compile Include="Email\EmailMessageFormatter.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailSavedSearchAlertMessageFormatter.cs" />
@@ -120,8 +122,6 @@
     <Compile Include="Email\EmailMessageFormatters\EmailSimpleMessageFormatter.cs" />
     <Compile Include="Email\EmailFromResolvers\HelpDeskMessageEmailFromResolver.cs" />
     <Compile Include="Email\EmailFromResolvers\IEmailFromResolver.cs" />
-    <Compile Include="Sms\IReachSmsConfiguration.cs" />
-    <Compile Include="Sms\ITwillioConfiguration.cs" />
     <Compile Include="Sms\ISmsNumberFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationExpiringDraftMessageFormatter.cs" />
@@ -137,18 +137,10 @@
     <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationSubmittedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsPasswordChangedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsPasswordResetCodeMessageFormatter.cs" />
-    <Compile Include="Sms\ReachSmsConfiguration.cs" />
     <Compile Include="Sms\ReachSmsNumberFormatter.cs" />
-    <Compile Include="Sms\SmsTemplateConfigurationCollection.cs" />
-    <Compile Include="Sms\SmsTemplateConfiguration.cs" />
-    <Compile Include="Sms\TwilioConfiguration.cs" />
-    <Compile Include="Email\SendGridConfiguration.cs" />
-    <Compile Include="Email\SendGridTemplateConfiguration.cs" />
-    <Compile Include="Email\SendGridTemplateConfigurationCollection.cs" />
     <Compile Include="Email\SendGridTokenManager.cs" />
     <Compile Include="Sms\ReachSmsDispatcher.cs" />
     <Compile Include="Sms\VoidSmsDispatcher.cs" />
-    <Compile Include="Sms\TwilioSmsDispatcher.cs" />
     <Compile Include="Email\SendGridEmailDispatcher.cs" />
     <Compile Include="IoC\CommunicationRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

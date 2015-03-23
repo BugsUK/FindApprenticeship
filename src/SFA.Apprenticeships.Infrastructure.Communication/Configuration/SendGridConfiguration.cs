@@ -1,10 +1,12 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Configuration
 {
     using System;
     using System.Collections.Generic;
 
     public class SendGridConfiguration
     {
+        public static string EmailConfigurationName { get { return "EmailConfiguration"; } }
+
         public string Username { get; set; }
 
         public string Password { get; set; }

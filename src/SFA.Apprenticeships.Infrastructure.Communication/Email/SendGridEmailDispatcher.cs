@@ -8,7 +8,9 @@
     using System.Net.Mail;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Logging;
+    using Configuration;
     using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Configuration;
     using EmailFromResolvers;
     using Exceptions;
     using SendGrid;
@@ -20,20 +22,21 @@
 
         private readonly string _userName;
         private readonly string _password;
-        private readonly SendGridTemplateConfiguration[] _templates;
+        private readonly EmailTemplate[] _templates;
         private readonly IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> _messageFormatters;
         private readonly IEnumerable<IEmailFromResolver> _emailFromResolvers;
 
-        public SendGridEmailDispatcher(SendGridConfiguration configuration, 
+        public SendGridEmailDispatcher(IConfigurationService configuration, 
             IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> messageFormatters, 
             ILogService logger, IEnumerable<IEmailFromResolver> emailFromResolvers)
         {
             _messageFormatters = messageFormatters;
             _logger = logger;
             _emailFromResolvers = emailFromResolvers;
-            _userName = configuration.UserName;
-            _password = configuration.Password;
-            _templates = configuration.Templates.ToArray();
+            var config = configuration.Get<SendGridConfiguration>(SendGridConfiguration.EmailConfigurationName);
+            _userName = config.Username;
+            _password = config.Password;
+            _templates = config.Templates.ToArray();
         }
 
         public void SendEmail(EmailRequest request)
@@ -102,7 +105,7 @@
             var fromEmail = _emailFromResolvers.First(er => er.CanResolve(request.MessageType)).Resolve(request, template.FromEmail);
 
             message.From = new MailAddress(fromEmail);
-            message.EnableTemplateEngine(template.Id);
+            message.EnableTemplateEngine(template.Id.ToString());
         }
 
         private string GetTemplateName(Enum messageType)
@@ -114,7 +117,7 @@
             return templateName;
         }
 
-        private SendGridTemplateConfiguration GetTemplateConfiguration(string templateName)
+        private EmailTemplate GetTemplateConfiguration(string templateName)
         {
             var template = _templates.FirstOrDefault(each => each.Name == templateName);
 

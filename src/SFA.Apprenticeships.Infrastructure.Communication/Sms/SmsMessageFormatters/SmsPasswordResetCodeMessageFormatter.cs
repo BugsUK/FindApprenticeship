@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class SmsPasswordResetCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsPasswordResetCodeMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsPasswordResetCodeMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendPasswordResetCode").Message;
         }

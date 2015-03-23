@@ -1,18 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Sms.SmsMessageFormatters
 {
     using System.Collections.Generic;
-    using Communication.Sms;
     using Communication.Sms.SmsMessageFormatters;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
+    using Moq;
 
     public class SmsDailyDigestMessageFormatterBuilder
     {
-        private List<SmsTemplateConfiguration> _templates;
+        private List<SmsTemplate> _templates;
 
         public SmsDailyDigestMessageFormatterBuilder WithMessageTemplate(string messageTemplate)
         {
-            _templates = new List<SmsTemplateConfiguration>
+            _templates = new List<SmsTemplate>
             {
-                new SmsTemplateConfiguration
+                new SmsTemplate
                 {
                     Name = SmsDailyDigestMessageFormatter.TemplateName,
                     Message = messageTemplate
@@ -24,7 +26,11 @@
 
         public SmsDailyDigestMessageFormatter Build()
         {
-            return new SmsDailyDigestMessageFormatter(_templates);
+            var configService = new Mock<IConfigurationService>();
+            configService.Setup(x => x.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName))
+                .Returns(new ReachSmsConfiguration() {Templates = _templates});
+
+            return new SmsDailyDigestMessageFormatter(configService.Object);
         }
     }
 }

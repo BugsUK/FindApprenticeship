@@ -3,13 +3,15 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Configuration;
     using Domain.Entities.Communication;
+    using Domain.Interfaces.Configuration;
     using Newtonsoft.Json;
 
     public class SmsApprenticeshipApplicationSuccessfulMessageFormatter : SmsMessageFormatter
     {
-        public SmsApprenticeshipApplicationSuccessfulMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsApprenticeshipApplicationSuccessfulMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration("MessageTypes.ApprenticeshipApplicationSuccessful").Message;
         }

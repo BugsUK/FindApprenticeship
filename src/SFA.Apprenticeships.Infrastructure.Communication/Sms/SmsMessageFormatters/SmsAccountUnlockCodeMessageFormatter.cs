@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class SmsAccountUnlockCodeMessageFormatter : SmsMessageFormatter
     {
-        public SmsAccountUnlockCodeMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsAccountUnlockCodeMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration("MessageTypes.SendAccountUnlockCode").Message;
         }

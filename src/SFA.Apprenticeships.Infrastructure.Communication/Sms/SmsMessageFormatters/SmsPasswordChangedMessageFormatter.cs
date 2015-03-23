@@ -2,11 +2,13 @@
 {
     using System.Collections.Generic;
     using Application.Interfaces.Communications;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class SmsPasswordChangedMessageFormatter : SmsMessageFormatter
     {
-        public SmsPasswordChangedMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
-            : base(templateConfigurations)
+        public SmsPasswordChangedMessageFormatter(IConfigurationService configurationService)
+            : base(configurationService)
         {
             Message = GetTemplateConfiguration("MessageTypes.PasswordChanged").Message;
         }

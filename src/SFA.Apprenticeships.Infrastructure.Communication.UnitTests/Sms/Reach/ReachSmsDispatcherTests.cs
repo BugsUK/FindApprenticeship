@@ -7,7 +7,9 @@
     using Application.Interfaces.Logging;
     using Communication.Sms;
     using Communication.Sms.SmsMessageFormatters;
+    using Configuration;
     using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -29,9 +31,9 @@
         }
 
         private Mock<ILogService> _logService;
-        private Mock<IReachSmsConfiguration> _reachConfiguration;
+        private Mock<IConfigurationService> _configurationService;
         private ISmsNumberFormatter _smsNumberFormatter;
-        private SmsTemplateConfiguration[] _smsTemplateConfigurations;
+        private SmsTemplate[] _smsTemplateConfigurations;
         private IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> _smsMessageFormatters;
         private IEnumerable<CommunicationToken> _communicationTokens;
         private SmsRequest _smsRequest;
@@ -42,16 +44,29 @@
             _logService = new Mock<ILogService>();
 
             // Templates.
-            var smsTemplateConfiguration = new SmsTemplateConfiguration { Name = "MessageTypes.SendAccountUnlockCode", Message = "Your account has been locked due to suspicious activity. To unlock it please enter the following code: {0}." };
+            var smsTemplateConfiguration = new SmsTemplate { Name = "MessageTypes.SendAccountUnlockCode", Message = "Your account has been locked due to suspicious activity. To unlock it please enter the following code: {0}." };
+
 
             _smsTemplateConfigurations = new[] { smsTemplateConfiguration };
-            _smsMessageFormatters = new[] { new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendAccountUnlockCode, new SmsAccountUnlockCodeMessageFormatter(_smsTemplateConfigurations)) };
 
-            // Configuration.
-            _reachConfiguration = new Mock<IReachSmsConfiguration>();
+            var configService = new Mock<IConfigurationService>();
+            configService.Setup(x => x.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName))
+                .Returns(new ReachSmsConfiguration() { Templates = _smsTemplateConfigurations });
 
-            _reachConfiguration.SetupGet(mock => mock.Templates).Returns(_smsTemplateConfigurations);
-            _reachConfiguration.SetupGet(mock => mock.Url).Returns("https://www.example.com");
+            _smsMessageFormatters = new[]
+            {
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendAccountUnlockCode,
+                    new SmsAccountUnlockCodeMessageFormatter(configService.Object))
+            };
+
+            var smsConfig = new ReachSmsConfiguration()
+            {
+                Templates = _smsTemplateConfigurations,
+                Url = "https://www.example.com"
+            };
+
+            _configurationService = new Mock<IConfigurationService>();
+            _configurationService.Setup(x => x.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName)).Returns(smsConfig);
 
             _smsNumberFormatter = new ReachSmsNumberFormatter();
 
@@ -82,7 +97,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             // Act.
             dispatcher.SendSms(_smsRequest);
@@ -107,7 +122,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             // Act.
             Action action = () => dispatcher.SendSms(_smsRequest);
@@ -131,7 +146,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             // Act.
             Action action = () => dispatcher.SendSms(_smsRequest);
@@ -155,7 +170,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             // Act.
             Action action = () => dispatcher.SendSms(_smsRequest);
@@ -179,7 +194,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             // Act.
             Action action = () => dispatcher.SendSms(_smsRequest);
@@ -203,7 +218,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             // Act.
             Action action = () => dispatcher.SendSms(_smsRequest);
@@ -227,7 +242,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             // Act.
             Action action = () => dispatcher.SendSms(_smsRequest);
@@ -258,7 +273,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             // Act.
             Action action = () => dispatcher.SendSms(_smsRequest);
@@ -282,7 +297,7 @@
             restClient.Setup(mock => mock.Execute(It.IsAny<IRestRequest>())).Returns(restResponse);
 
             var dispatcher = new ReachSmsDispatcher(
-                _logService.Object, restClient.Object, _reachConfiguration.Object, _smsNumberFormatter, _smsMessageFormatters);
+                _logService.Object, restClient.Object, _configurationService.Object, _smsNumberFormatter, _smsMessageFormatters);
 
             _smsRequest = new SmsRequestBuilder()
                 .WithMessageType(MessageTypes.SendAccountUnlockCode)

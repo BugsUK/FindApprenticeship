@@ -4,19 +4,22 @@
     using System.Configuration;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
 
     public abstract class SmsMessageFormatter
     {
         protected string Message;
 
-        private readonly IEnumerable<SmsTemplateConfiguration> _templateConfigurations;
+        private readonly IEnumerable<SmsTemplate> _templateConfigurations;
 
-        protected SmsMessageFormatter(IEnumerable<SmsTemplateConfiguration> templateConfigurations)
+        protected SmsMessageFormatter(IConfigurationService configurationService)
         {
-            _templateConfigurations = templateConfigurations;
+            var config = configurationService.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName);
+            _templateConfigurations = config.Templates;
         }
 
-        protected SmsTemplateConfiguration GetTemplateConfiguration(string templateName)
+        protected SmsTemplate GetTemplateConfiguration(string templateName)
         {
             var template = _templateConfigurations.FirstOrDefault(each => each.Name == templateName);
 

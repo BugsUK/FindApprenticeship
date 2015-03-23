@@ -1,56 +1,78 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IntegrationTests
 {
     using System.Linq;
+    using Common.IoC;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
+    using IoC;
+    using Logging.IoC;
     using NUnit.Framework;
     using Sms;
+    using StructureMap;
 
     [TestFixture]
     public class ReachConfigurationTests
     {
+        private ReachSmsConfiguration _smsConfiguration = null;
+        [SetUp]
+        public void SetUp()
+        {
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<CommunicationRegistry>();
+            });
+
+            _smsConfiguration =
+                container.GetInstance<IConfigurationService>()
+                    .Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName);
+        }
+
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetUsernameConfiguration()
         {
-            Assert.IsNotNullOrEmpty(ReachSmsConfiguration.Instance.Username);
+            Assert.IsNotNullOrEmpty(_smsConfiguration.Username);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetPasswordConfiguration()
         {
-            Assert.IsNotNullOrEmpty(ReachSmsConfiguration.Instance.Password);
+            Assert.IsNotNullOrEmpty(_smsConfiguration.Password);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetOriginatorFromConfiguration()
         {
-            Assert.IsNotNullOrEmpty(ReachSmsConfiguration.Instance.Originator);
+            Assert.IsNotNullOrEmpty(_smsConfiguration.Originator);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetUrlFromConfiguration()
         {
-            Assert.IsNotNullOrEmpty(ReachSmsConfiguration.Instance.Url);
+            Assert.IsNotNullOrEmpty(_smsConfiguration.Url);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetCallbackUrlFromConfiguration()
         {
-            Assert.IsNotNull(ReachSmsConfiguration.Instance.CallbackUrl);
+            Assert.IsNotNull(_smsConfiguration.CallbackUrl);
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]
         public void ShouldGetMultipleTemplates()
         {
-            var templates = ReachSmsConfiguration.Instance.TemplateCollection;
+            var templates = _smsConfiguration.Templates;
 
             Assert.IsNotNull(templates);
-            Assert.IsTrue(templates.Count > 1);
+            Assert.IsTrue(templates.Count() > 1);
         }
 
         [TestCase(0), Category("Integration"), Category("SmokeTests")]
         [TestCase(1), Category("Integration"), Category("SmokeTests")]
         public void ShouldGetMultipleTemplateConfiguration(int index)
         {
-            var template = ReachSmsConfiguration.Instance.Templates.ElementAt(index);
+            var template = _smsConfiguration.Templates.ElementAt(index);
 
             Assert.IsNotNull(template);
             Assert.IsNotNullOrEmpty(template.Name);
@@ -63,7 +85,7 @@
             const int templateIndex = 0;
             const string expectedName = "MessageTypes.SendPasswordResetCode";
 
-            var template = ReachSmsConfiguration.Instance.Templates.ElementAt(templateIndex);
+            var template = _smsConfiguration.Templates.ElementAt(templateIndex);
 
             Assert.AreEqual(expectedName, template.Name);
         }

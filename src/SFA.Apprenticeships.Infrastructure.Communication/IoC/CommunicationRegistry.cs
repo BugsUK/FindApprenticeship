@@ -1,14 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
 {
     using System.Collections.Generic;
+    using System.Runtime.Remoting.Contexts;
     using Application.Interfaces.Communications;
     using Common.Configuration;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
     using Email;
     using Email.EmailFromResolvers;
     using Email.EmailMessageFormatters;
     using RestSharp;
     using Sms;
     using Sms.SmsMessageFormatters;
+    using StructureMap;
     using StructureMap.Configuration.DSL;
 
     public class CommunicationRegistry : Registry
@@ -36,26 +40,30 @@
 
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
             For<ISmsDispatcher>().Use<VoidSmsDispatcher>().Name = "VoidSmsDispatcher";
-            For<SendGridConfiguration>().Singleton().Use(SendGridConfiguration.Instance);
-            For<IReachSmsConfiguration>().Singleton().Use(ReachSmsConfiguration.Instance);
-
-            IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> smsMessageFormatters = new[]
-            {
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSuccessful, new SmsApprenticeshipApplicationSuccessfulMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationUnsuccessful, new SmsApprenticeshipApplicationUnsuccessfulMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, new SmsApprenticeshipApplicationsUnsuccessfulSummaryMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationExpiringDraft, new SmsApprenticeshipApplicationExpiringDraftMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary, new SmsApprenticeshipApplicationExpiringDraftsSummaryMessageFormatter(ReachSmsConfiguration.Instance.Templates)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SavedSearchAlert, new SmsSavedSearchAlertMessageFormatter(ReachSmsConfiguration.Instance.Templates))
-            };
 
             For<ISmsDispatcher>().Use<ReachSmsDispatcher>().Named("ReachSmsDispatcher")
-                .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(smsMessageFormatters)
+                .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(context => BuildFormatters(context))
                 .Ctor<IRestClient>().Is(new RestClient())
                 .Ctor<ISmsNumberFormatter>().Is(new ReachSmsNumberFormatter());
+        }
+
+        private IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> BuildFormatters(IContext context)
+        {
+            var configurationService = context.GetInstance<IConfigurationService>();
+            IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> smsMessageFormatters = new[]
+            {
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSuccessful, new SmsApprenticeshipApplicationSuccessfulMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationUnsuccessful, new SmsApprenticeshipApplicationUnsuccessfulMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, new SmsApprenticeshipApplicationsUnsuccessfulSummaryMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationExpiringDraft, new SmsApprenticeshipApplicationExpiringDraftMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary, new SmsApprenticeshipApplicationExpiringDraftsSummaryMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SavedSearchAlert, new SmsSavedSearchAlertMessageFormatter(configurationService))
+            };
+
+            return smsMessageFormatters;
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Sms
 {
     using System.Collections.Generic;
+    using Configuration;
 
     public interface ITwillioConfiguration
     {
@@ -10,6 +11,6 @@
 
         string MobileNumberFrom { get; }
 
-        IEnumerable<SmsTemplateConfiguration> Templates { get; }
+        IEnumerable<SmsTemplate> Templates { get; }
     }
 }
