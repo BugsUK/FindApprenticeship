@@ -89,8 +89,8 @@
         private void LogSendMessageResult(bool sendMessage, CommunicationChannels communicationChannel, Candidate candidate, CommunicationRequest communicationRequest)
         {
             _logService.Info(
-                "{0} send message via channel '{1}' to candidate '{2}' with preferences '{3}'",
-                sendMessage ? "Will" : "Will not", communicationChannel, candidate.EntityId, JsonConvert.SerializeObject(candidate.CommunicationPreferences));
+                "{0} send message type '{1}' via channel '{2}' to candidate '{3}' with preferences '{4}'",
+                sendMessage ? "Will" : "Will not", communicationRequest.MessageType, communicationChannel, candidate.EntityId, JsonConvert.SerializeObject(candidate.CommunicationPreferences));
         }
 
         private static Guid GetCandidateId(CommunicationRequest communicationRequest)
