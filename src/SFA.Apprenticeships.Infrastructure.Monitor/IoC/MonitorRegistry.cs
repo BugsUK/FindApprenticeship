@@ -52,6 +52,7 @@
             For<ISavedSearchAlertMetricsRepository>().Use<SavedSearchAlertMetricsRepository>();
             For<IContactMessagesMetricsRepository>().Use<ContactMessagesMetricsRepository>();
             For<ISavedSearchesMetricsRepository>().Use<SavedSearchesMetricsRepository>();
+            For<ICandidateMetricsRepository>().Use<CandidateMetricsRepository>();
         }
     }
 }

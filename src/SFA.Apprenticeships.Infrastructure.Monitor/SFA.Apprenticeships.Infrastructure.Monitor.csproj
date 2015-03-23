@@ -196,11 +196,13 @@
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
     <Compile Include="Repositories\ApplicationStatusAlertsMetricsRepository.cs" />
     <Compile Include="Repositories\CandidateDiagnosticsRepository.cs" />
+    <Compile Include="Repositories\CandidateMetricsRepository.cs" />
     <Compile Include="Repositories\ContactMessagesMetricsRepository.cs" />
     <Compile Include="Repositories\ExpiringDraftsMetricsRepository.cs" />
     <Compile Include="Repositories\IApprenticeshipMetricsRepository.cs" />
     <Compile Include="Repositories\IApplicationStatusAlertsMetricsRepository.cs" />
     <Compile Include="Repositories\ICandidateDiagnosticsRepository.cs" />
+    <Compile Include="Repositories\ICandidateMetricsRepository.cs" />
     <Compile Include="Repositories\IContactMessagesMetricsRepository.cs" />
     <Compile Include="Repositories\IExpiringDraftsMetricsRepository.cs" />
     <Compile Include="Repositories\ISavedSearchAlertMetricsRepository.cs" />
