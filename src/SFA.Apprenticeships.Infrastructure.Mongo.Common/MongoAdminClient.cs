@@ -1,24 +1,22 @@
-﻿using System;
-using MongoDB.Driver;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-
-namespace SFA.Apprenticeships.Infrastructure.Mongo.Common
+﻿namespace SFA.Apprenticeships.Infrastructure.Mongo.Common
 {
+    using System;
+    using MongoDB.Driver;
+    using Domain.Interfaces.Configuration;
     using Application.Interfaces.Logging;
+    using Configuration;
 
     public class MongoAdminClient : IMongoAdminClient
     {
         private readonly ILogService _logger;
-        private const string ConnectionStringAppSetting = "Admin.mongoDB";
         private readonly MongoDatabase _database;
 
-        public MongoAdminClient(IConfigurationManager configurationManager, ILogService logger)
+        public MongoAdminClient(IConfigurationService configurationService, ILogService logger)
         {
             _logger = logger;
-            var mongoConnectionString = configurationManager.GetAppSetting(ConnectionStringAppSetting);
-            var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
-
-            _database = new MongoClient(mongoConnectionString).GetServer().GetDatabase(mongoDbName);
+            var mongoConfig = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            var mongoDbName = MongoUrl.Create(mongoConfig.AdminDb).DatabaseName;
+            _database = new MongoClient(mongoConfig.AdminDb).GetServer().GetDatabase(mongoDbName);
         }
 
         public bool IsReplicaSet()
