@@ -95,6 +95,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ServiceStack.Text.4.0.38\lib\net40\ServiceStack.Text.dll</HintPath>
     </Reference>
+    <Reference Include="SFA.Apprenticeships.Infrastructure.Logging">
+      <HintPath>..\SFA.Apprenticeships.Web.Candidate\Bin\SFA.Apprenticeships.Infrastructure.Logging.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -111,11 +114,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\IRabbitMqHostConfiguration.cs" />
-    <Compile Include="Configuration\QueueWarningLimitCollection.cs" />
-    <Compile Include="Configuration\QueueWarningLimitConfiguration.cs" />
-    <Compile Include="Configuration\RabbitMqHostConfiguration.cs" />
-    <Compile Include="Configuration\RabbitMqHostsConfiguration.cs" />
+    <Compile Include="Configuration\RabbitConfiguration.cs" />
     <Compile Include="Interfaces\IBootstrapSubcribers.cs" />
     <Compile Include="Interfaces\IRabbitMqServiceProvider.cs" />
     <Compile Include="IoC\RabbitMqRegistry.cs" />

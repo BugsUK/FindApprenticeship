@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.RabbitMQ
 {
+    using Common.Configuration;
     using EasyNetQ;
     using Configuration;
     using Interfaces;
+    using Logging;
     using ServiceOverrides;
 
     internal class BusFactory
@@ -14,12 +16,14 @@
             CustomServiceProvider = new CustomServiceProvider();
         }
 
-        public static IBus CreateBus(string rabbitHost)
+        public static IBus CreateBus()
         {
-            var rabbitMqHostConfiguration = RabbitMqHostsConfiguration.Instance.RabbitHosts[rabbitHost];
+            //TODO: Figure out how to use IoC here.
+            var configurationService = new ConfigurationService(new ConfigurationManager(), new NLogLogService(typeof(BusFactory)));
+            var rabbitHost = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.RabbitConfigurationName).MessagingHost;
 
             var rabbitBus = RabbitHutch.CreateBus(
-                                    rabbitMqHostConfiguration.ConnectionString, 
+                                    rabbitHost.ConnectionString, 
                                     CustomServiceProvider.RegisterCustomServices());
             return rabbitBus;
         }

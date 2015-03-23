@@ -98,7 +98,6 @@
     <Compile Include="Communication\ApplicationStatusAlert.cs" />
     <Compile Include="Communication\ExpiringApprenticeshipApplicationDraft.cs" />
     <Compile Include="Configuration\ElasticsearchConfiguration.cs" />
-    <Compile Include="Configuration\RabbitConfiguration.cs" />
     <Compile Include="Configuration\ReachSmsConfiguration.cs" />
     <Compile Include="Configuration\SearchFactorConfiguration.cs" />
     <Compile Include="Configuration\SendGridConfiguration.cs" />

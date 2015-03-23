@@ -3,6 +3,8 @@
     using System;
     using System.Configuration;
     using System.Text;
+    using Common.Configuration;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using EasyNetQ.Topology;
     using Layouts;
@@ -10,6 +12,8 @@
     using NLog.Common;
     using NLog.Targets;
     using RabbitMq.Configuration;
+    using StructureMap;
+    using ConfigurationManager = Common.Configuration.ConfigurationManager;
 
     /// <summary>
     /// A RabbitMQ-target for NLog that must use a JsonLayout!
@@ -18,7 +22,7 @@
     public class RabbitMQTarget : TargetWithLayout
     {
         private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-        private static IRabbitMqHostConfiguration _rabbitMqHostHostConfig;
+        private static RabbitHost _rabbitMqHostHostConfig;
         private string _appId = "SFA.Apprenticeships.App";
         private IAdvancedBus _bus;
         private IExchange _exchange;
@@ -26,20 +30,17 @@
         private string _exchangeName = "app-logging";
         private string _exchangeType = EasyNetQ.Topology.ExchangeType.Topic;
         private string _queueName = "NLog";
-        private string _rabbitHost;
         private string _routingKeyConst = "{0}";
 
-        #region Target Configuration
-
-        public string RabbitHost
+        public RabbitMQTarget()
         {
-            get { return _rabbitHost; }
-            set
-            {
-                _rabbitMqHostHostConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts[value];
-                _rabbitHost = value;
-            }
+            //TODO: Can we use IoC anyway here?
+            var configService = new ConfigurationService(new ConfigurationManager(), new NLogLogService(typeof(RabbitMQTarget)));
+            var rabbitConfig = configService.Get<RabbitConfiguration>(RabbitConfiguration.RabbitConfigurationName);
+            _rabbitMqHostHostConfig = rabbitConfig.LoggingHost;
         }
+
+        #region Target Configuration
 
         public string QueueName
         {
@@ -85,7 +86,7 @@
             set { _appId = value; }
         }
 
-        public IAdvancedBus Bus
+        private IAdvancedBus Bus
         {
             get
             {

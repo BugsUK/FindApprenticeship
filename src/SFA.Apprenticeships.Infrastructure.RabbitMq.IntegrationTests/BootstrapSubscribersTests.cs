@@ -3,8 +3,10 @@
     using System.Linq;
     using System.Reflection;
     using System.Threading;
+    using Common.Configuration;
     using Common.IoC;
     using Configuration;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using EasyNetQ.Management.Client;
     using EasyNetQ.Management.Client.Model;
@@ -13,6 +15,7 @@
     using IoC;
     using Logging.IoC;
     using NUnit.Framework;
+    using RabbitMq.Configuration;
     using StructureMap;
     using Tests.Consumers;
 
@@ -35,10 +38,6 @@
         [TestFixtureSetUp]
         public void BeforeAllTests()
         {
-            var rabitConfig = RabbitMqHostsConfiguration.Instance.RabbitHosts["Messaging"]; //previously was test
-            _managementClient = new ManagementClient(string.Format("http://{0}", rabitConfig.HostName),
-                rabitConfig.UserName, rabitConfig.Password);
-
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -46,7 +45,12 @@
                 x.AddRegistry<RabbitMqRegistry>();
             });
 
+            var config = _container.GetInstance<IConfigurationService>();
             var bs = _container.GetInstance<IBootstrapSubcribers>();
+            var rabbitConfig = config.Get<RabbitConfiguration>(RabbitConfiguration.RabbitConfigurationName);
+
+            _managementClient = new ManagementClient(string.Format("http://{0}", rabbitConfig.MessagingHost.HostName),
+                rabbitConfig.MessagingHost.UserName, rabbitConfig.MessagingHost.Password);
 
             bs.LoadSubscribers(Assembly.GetExecutingAssembly(), "VacancyEtl", _container); //previously was test_app
         }

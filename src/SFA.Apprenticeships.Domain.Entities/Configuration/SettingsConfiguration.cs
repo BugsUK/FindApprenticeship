@@ -42,7 +42,7 @@
 
         //public MongoConfiguration MongoConfiguration { get; set; }
 
-        public RabbitConfiguration RabbitConfiguration { get; set; }
+        //public RabbitConfiguration RabbitConfiguration { get; set; }
 
         public ElasticsearchConfiguration SearchConfiguration { get; set; }
 

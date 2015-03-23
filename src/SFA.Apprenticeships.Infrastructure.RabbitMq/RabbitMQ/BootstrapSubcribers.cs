@@ -3,6 +3,7 @@
     using System.Reflection;
     using Application.Interfaces.Logging;
     using Configuration;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using EasyNetQ.AutoSubscribe;
     using Interfaces;
@@ -12,11 +13,11 @@
     {
         private readonly IBus _bus;
         private readonly ILogService _logService;
-        private readonly IRabbitMqHostConfiguration _defaultHostConfiguration;
+        private readonly RabbitHost _defaultHostConfiguration;
 
-        public BootstrapSubcribers(IBus bus, ILogService logService)
+        public BootstrapSubcribers(IBus bus, IConfigurationService configurationService, ILogService logService)
         {
-            _defaultHostConfiguration = RabbitMqHostsConfiguration.Instance.RabbitHosts[RabbitMqHostsConfiguration.Instance.DefaultHost];
+            _defaultHostConfiguration = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.RabbitConfigurationName).MessagingHost;
             _bus = bus;
             _logService = logService;
         }

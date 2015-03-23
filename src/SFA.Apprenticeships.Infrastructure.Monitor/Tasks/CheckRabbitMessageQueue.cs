@@ -4,15 +4,18 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using EasyNetQ.Management.Client;
     using RabbitMq.Configuration;
 
     public class CheckRabbitMessageQueue : IMonitorTask
     {
+        private readonly RabbitConfiguration _rabbitConfiguration;
         private readonly ILogService _logger;
-        public CheckRabbitMessageQueue(ILogService logger)
+        public CheckRabbitMessageQueue(IConfigurationService configurationService, ILogService logger)
         {
+            _rabbitConfiguration = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.RabbitConfigurationName);
             _logger = logger;
         }
 
@@ -23,13 +26,11 @@
 
         public void Run()
         {
-            foreach (IRabbitMqHostConfiguration rabbitHost in RabbitMqHostsConfiguration.Instance.RabbitHosts)
-            {
-                CheckRabbitHealth(rabbitHost);    
-            }            
+            CheckRabbitHealth(_rabbitConfiguration.MessagingHost);
+            CheckRabbitHealth(_rabbitConfiguration.LoggingHost);
         }
 
-        private void CheckRabbitHealth(IRabbitMqHostConfiguration rabbitConfiguration)
+        private void CheckRabbitHealth(RabbitHost rabbitConfiguration)
         {
             var rabbitClient = new ManagementClient(rabbitConfiguration.HostName, rabbitConfiguration.UserName, rabbitConfiguration.Password);
 
@@ -54,7 +55,7 @@
             }
         }
 
-        private void CheckRabbitNodeCount(ManagementClient managementClient, IRabbitMqHostConfiguration rabbitConfiguration)
+        private void CheckRabbitNodeCount(ManagementClient managementClient, RabbitHost rabbitConfiguration)
         {
             try
             {
@@ -73,14 +74,14 @@
             }
         }
 
-        private void CheckRabbitQueueWarningLimit(ManagementClient managementClient, IRabbitMqHostConfiguration rabbitConfiguration)
+        private void CheckRabbitQueueWarningLimit(ManagementClient managementClient, RabbitHost rabbitConfiguration)
         {
             try
             {
                 var rabbitQueues = managementClient.GetQueues();
-                var defaultQueueWarningLimit = rabbitConfiguration.QueueWarningLimits.DefaultLimit;
+                var defaultQueueWarningLimit = rabbitConfiguration.DefaultQueueWarningLimit;
                 var queueWarningLimits = rabbitConfiguration.QueueWarningLimits.ToList();
-                var checkedQueueWarningLimits = new List<IQueueWarningLimit>(queueWarningLimits.Count);
+                var checkedQueueWarningLimits = new List<QueueWarningLimit>(queueWarningLimits.Count);
 
                 foreach (var rabbitQueue in rabbitQueues)
                 {
