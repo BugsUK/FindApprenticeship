@@ -4,6 +4,7 @@
     using System.Linq;
     using Application.Interfaces.Communications;
     using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -24,66 +25,77 @@
             return communicationRequest.MessageType == MessageTypes.DailyDigest;
         }
 
-        protected override void QueueSmsMessages(CommunicationRequest communicationRequest)
+
+        protected override void HandleSmsMessages(Candidate candidate, CommunicationRequest communicationRequest)
         {
-            var candidateMobileNumber = communicationRequest.GetToken(CommunicationTokens.CandidateMobileNumber);
+            var mobileNumber = communicationRequest.GetToken(CommunicationTokens.CandidateMobileNumber);
 
-            // Expiring drafts.
-            var expiringDraftsJson = communicationRequest.GetToken(CommunicationTokens.ExpiringDrafts);
-            var expiringDrafts = string.IsNullOrWhiteSpace(expiringDraftsJson) ? new List<ExpiringApprenticeshipApplicationDraft>() : JsonConvert.DeserializeObject<List<ExpiringApprenticeshipApplicationDraft>>(expiringDraftsJson);
-
-            QueueExpiringDraftSmsMessages(candidateMobileNumber, expiringDrafts);
-
-            // Application status alerts.
-            var applicationStatusAlertsJson = communicationRequest.GetToken(CommunicationTokens.ApplicationStatusAlerts);
-            var applicationStatusAlerts = string.IsNullOrWhiteSpace(applicationStatusAlertsJson) ? new List<ApplicationStatusAlert>() : JsonConvert.DeserializeObject<List<ApplicationStatusAlert>>(applicationStatusAlertsJson);
-
-            QueueApplicationStatusAlertSmsMessages(candidateMobileNumber, applicationStatusAlerts);
+            HandleExpiringDraftSmsMessages(candidate, mobileNumber, communicationRequest);
+            HandleApplicationStatusAlertSmsMessages(candidate, mobileNumber, communicationRequest);
         }
 
-        private void QueueExpiringDraftSmsMessages(
-            string candidateMobileNumber, List<ExpiringApprenticeshipApplicationDraft> expiringDrafts)
+        #region Helpers
+
+        private void HandleExpiringDraftSmsMessages(
+            Candidate candidate, string mobileNumber, CommunicationRequest communicationRequest)
         {
+            var expiringDraftsJson = communicationRequest.GetToken(CommunicationTokens.ExpiringDrafts);
+            var expiringDrafts = string.IsNullOrWhiteSpace(expiringDraftsJson)
+                ? new List<ExpiringApprenticeshipApplicationDraft>()
+                : JsonConvert.DeserializeObject<List<ExpiringApprenticeshipApplicationDraft>>(expiringDraftsJson);
+
             if (expiringDrafts.Count == 1)
             {
-                QueueApplicationExpiringDraftSmsMessage(candidateMobileNumber, expiringDrafts.First());
+                QueueApplicationExpiringDraftSmsMessage(candidate, mobileNumber, expiringDrafts.First());
             }
             else if (expiringDrafts.Count > 1)
             {
-                QueueApplicationExpiringDraftsSummarySmsMessage(candidateMobileNumber, expiringDrafts);
+                QueueApplicationExpiringDraftsSummarySmsMessage(candidate, mobileNumber, expiringDrafts);
             }
         }
 
-        private void QueueApplicationExpiringDraftSmsMessage(
-            string candidateMobileNumber, ExpiringApprenticeshipApplicationDraft expiringDraft)
+        private void HandleApplicationStatusAlertSmsMessages(
+            Candidate candidate,  string mobileNumber, CommunicationRequest communicationRequest)
         {
-            QueueSmsMessage(new CommunicationRequest
+            var applicationStatusAlertsJson = communicationRequest.GetToken(CommunicationTokens.ApplicationStatusAlerts);
+
+            var applicationStatusAlerts = string.IsNullOrWhiteSpace(applicationStatusAlertsJson)
+                ? new List<ApplicationStatusAlert>()
+                : JsonConvert.DeserializeObject<List<ApplicationStatusAlert>>(applicationStatusAlertsJson);
+
+            QueueApplicationStatusAlertSmsMessages(candidate, mobileNumber, applicationStatusAlerts);
+        }
+
+        private void QueueApplicationExpiringDraftSmsMessage(
+            Candidate candidate, string mobileNumber, ExpiringApprenticeshipApplicationDraft expiringDraft)
+        {
+            base.HandleSmsMessages(candidate, new CommunicationRequest
             {
                 MessageType = MessageTypes.ApprenticeshipApplicationExpiringDraft,
                 Tokens = new[]
                     {
-                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidateMobileNumber),
+                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, mobileNumber),
                         new CommunicationToken(CommunicationTokens.ExpiringDraft, JsonConvert.SerializeObject(expiringDraft))
                     }
             });
         }
 
         private void QueueApplicationExpiringDraftsSummarySmsMessage(
-            string candidateMobileNumber, IEnumerable<ExpiringApprenticeshipApplicationDraft> expiringDrafts)
+            Candidate candidate, string mobileNumber, IEnumerable<ExpiringApprenticeshipApplicationDraft> expiringDrafts)
         {
-            QueueSmsMessage(new CommunicationRequest
+            base.HandleSmsMessages(candidate, new CommunicationRequest
             {
                 MessageType = MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary,
                 Tokens = new[]
                     {
-                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidateMobileNumber),
+                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, mobileNumber),
                         new CommunicationToken(CommunicationTokens.ExpiringDrafts, JsonConvert.SerializeObject(expiringDrafts))
                     }
             });
         }
 
         private void QueueApplicationStatusAlertSmsMessages(
-            string candidateMobileNumber, List<ApplicationStatusAlert> applicationStatusAlerts)
+            Candidate candidate, string mobileNumber, List<ApplicationStatusAlert> applicationStatusAlerts)
         {
             // Successful application status alerts.
             var successfulApplicationStatusAlerts = applicationStatusAlerts
@@ -93,7 +105,7 @@
             foreach (var applicationStatusAlert in successfulApplicationStatusAlerts)
             {
                 QueueApplicationStatusAlertSmsMessage(
-                    MessageTypes.ApprenticeshipApplicationSuccessful, candidateMobileNumber, applicationStatusAlert);
+                    candidate, mobileNumber, MessageTypes.ApprenticeshipApplicationSuccessful, applicationStatusAlert);
             }
 
             // TODO: 1.9: reinstate unsuccessful SMS messages when 'next steps' link is available.
@@ -106,42 +118,47 @@
             if (otherApplicationStatusAlerts.Length == 1)
             {
                 QueueApplicationStatusAlertSmsMessage(
-                    MessageTypes.ApprenticeshipApplicationUnsuccessful, candidateMobileNumber, otherApplicationStatusAlerts.First());
+                    candidate, mobileNumber, MessageTypes.ApprenticeshipApplicationUnsuccessful, otherApplicationStatusAlerts.First());
             }
             else if (otherApplicationStatusAlerts.Length > 1)
             {
                 QueueSummaryApplicationStatusAlertSmsMessage(
-                    MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, candidateMobileNumber, otherApplicationStatusAlerts);
+                    candidate, mobileNumber, MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, otherApplicationStatusAlerts);
             }
             */
         }
 
+        // TODO: 1.9: reinstate unsuccessful SMS messages when 'next steps' link is available.
+        /*
         private void QueueSummaryApplicationStatusAlertSmsMessage(
-            MessageTypes messageType, string candidateMobileNumber, IEnumerable<ApplicationStatusAlert> applicationStatusAlerts)
+            Candidate candidate, string mobileNumber, MessageTypes messageType, IEnumerable<ApplicationStatusAlert> applicationStatusAlerts)
         {
-            QueueSmsMessage(new CommunicationRequest
+            base.HandleSms(candidate, new CommunicationRequest
             {
                 MessageType = messageType,
                 Tokens = new[]
                     {
-                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidateMobileNumber),
+                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, mobileNumber),
                         new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, JsonConvert.SerializeObject(applicationStatusAlerts))
                     }
             });
         }
+        */
 
         private void QueueApplicationStatusAlertSmsMessage(
-            MessageTypes messageType, string candidateMobileNumber, ApplicationStatusAlert applicationStatusAlert)
+            Candidate candidate, string mobileNumber, MessageTypes messageType, ApplicationStatusAlert applicationStatusAlert)
         {
-            QueueSmsMessage(new CommunicationRequest
+            base.HandleSmsMessages(candidate, new CommunicationRequest
             {
                 MessageType = messageType,
                 Tokens = new[]
                     {
-                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidateMobileNumber),
+                        new CommunicationToken(CommunicationTokens.CandidateMobileNumber, mobileNumber),
                         new CommunicationToken(CommunicationTokens.ApplicationStatusAlert, JsonConvert.SerializeObject(applicationStatusAlert))
                     }
             });
         }
+
+        #endregion
     }
 }

@@ -125,6 +125,7 @@
     <Compile Include="Builders\ApplicationStatusAlertsBuilder.cs" />
     <Compile Include="Builders\CommunicationRequestBuilder.cs" />
     <Compile Include="Builders\SavedSearchAlertsBuilder.cs" />
+    <Compile Include="Candidate\CandidateCommunicationHelperTests.cs" />
     <Compile Include="Commands\CandidateCommunication\DailyDigest\CommonTests.cs" />
     <Compile Include="Commands\CandidateCommunication\DailyDigest\ExpiringDraftTests.cs" />
     <Compile Include="Commands\CandidateCommunication\CommandTests.cs" />

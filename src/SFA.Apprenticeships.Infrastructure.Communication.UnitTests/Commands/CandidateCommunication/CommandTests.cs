@@ -120,8 +120,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
+                .AllowAllCommunications()
                 .VerifiedMobile(false)
                 .Build();
 
@@ -143,8 +142,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
+                .AllowAllCommunications()
                 .VerifiedMobile(verifiedMobile)
                 .Build();
 
