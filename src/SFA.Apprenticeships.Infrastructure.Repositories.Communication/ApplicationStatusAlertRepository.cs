@@ -17,7 +17,8 @@
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
 
-        public ApplicationStatusAlertRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger) : base(configurationManager, "applicationstatusalerts")
+        public ApplicationStatusAlertRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
+            : base(configurationService, "applicationstatusalerts")
         {
             _mapper = mapper;
             _logger = logger;

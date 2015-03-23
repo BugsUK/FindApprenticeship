@@ -8,6 +8,7 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Builders;
     using Domain.Entities.Exceptions;
 
@@ -16,9 +17,10 @@
         private readonly ILogService _logger;
         private readonly IMapper _mapper;
 
-        public UserRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger)
-            : base(configurationManager, "Users.mongoDB", "users")
+        public UserRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.UsersDb, "users");
             _mapper = mapper;
             _logger = logger;
         }

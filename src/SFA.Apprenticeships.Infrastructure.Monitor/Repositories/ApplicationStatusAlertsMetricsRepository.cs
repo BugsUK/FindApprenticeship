@@ -5,13 +5,15 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Communication.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class ApplicationStatusAlertsMetricsRepository : GenericMongoClient<MongoApplicationStatusAlert>, IApplicationStatusAlertsMetricsRepository
     {
-        public ApplicationStatusAlertsMetricsRepository(IConfigurationManager configurationManager)
-            : base(configurationManager, "Communications.mongoDB", "applicationstatusalerts")
+        public ApplicationStatusAlertsMetricsRepository(IConfigurationService configurationService)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.CommunicationsDb, "applicationstatusalerts");
         }
 
         public int GetApplicationStatusAlertsProcessedToday()

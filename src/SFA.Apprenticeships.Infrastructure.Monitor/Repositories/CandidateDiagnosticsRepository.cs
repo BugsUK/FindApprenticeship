@@ -10,6 +10,7 @@
     using Domain.Interfaces.Repositories;
     using Infrastructure.Repositories.Candidates.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class CandidateDiagnosticsRepository : GenericMongoClient<MongoCandidate>, ICandidateDiagnosticsRepository
@@ -18,9 +19,10 @@
         private readonly IMapper _mapper;
         private readonly IUserReadRepository _userReadRepository;
 
-        public CandidateDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, IUserReadRepository userReadRepository, ILogService logger)
-            : base(configurationManager, "Candidates.mongoDB", "candidates")
+        public CandidateDiagnosticsRepository(IConfigurationService configurationService, IMapper mapper, IUserReadRepository userReadRepository, ILogService logger)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.CandidatesDb, "candidates");
             _mapper = mapper;
             _userReadRepository = userReadRepository;
             _logger = logger;

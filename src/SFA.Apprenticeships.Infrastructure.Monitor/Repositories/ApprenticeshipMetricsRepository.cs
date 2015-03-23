@@ -6,13 +6,15 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Applications.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class ApprenticeshipMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipMetricsRepository
     {
-        public ApprenticeshipMetricsRepository(IConfigurationManager configurationManager)
-            : base(configurationManager, "Applications.mongoDB", "apprenticeships")
+        public ApprenticeshipMetricsRepository(IConfigurationService configurationService)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.ApplicationsDb, "apprenticeships");
         }
 
         public int GetApplicationCount()

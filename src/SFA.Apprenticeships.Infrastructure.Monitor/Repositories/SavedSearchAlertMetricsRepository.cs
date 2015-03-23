@@ -5,13 +5,15 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Communication.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class SavedSearchAlertMetricsRepository : GenericMongoClient<MongoSavedSearchAlert>, ISavedSearchAlertMetricsRepository
     {
-        public SavedSearchAlertMetricsRepository(IConfigurationManager configurationManager)
-            : base(configurationManager, "Communications.mongoDB", "savedsearchalerts")
+        public SavedSearchAlertMetricsRepository(IConfigurationService configurationService)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.CommunicationsDb, "savedsearchalerts");
         }
 
         public int GetSavedSearchAlertsProcessedToday()

@@ -9,6 +9,7 @@
     using Entities;
     using Mongo.Common;
     using Domain.Entities.Exceptions;
+    using Mongo.Common.Configuration;
     using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class AuthenticationRepository : GenericMongoClient<MongoUserCredentials>, IAuthenticationRepository
@@ -16,11 +17,10 @@
         private readonly ILogService _logger;
         private readonly IMapper _mapper;
 
-        public AuthenticationRepository(
-            IConfigurationManager configurationManager,
-            IMapper mapper, ILogService logger)
-            : base(configurationManager, "Authentication.mongoDB", "userCredentials")
+        public AuthenticationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.AuthenticationDb, "userCredentials");
             _mapper = mapper;
             _logger = logger;
         }

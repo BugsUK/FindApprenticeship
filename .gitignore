@@ -111,6 +111,7 @@ csx
 *.cscfg
 *.csdef
 settings.config
+settings.json
 emailSettings.config
 *.azurePubxml
 diagnostics.wadcfg

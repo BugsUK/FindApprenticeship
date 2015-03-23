@@ -17,8 +17,8 @@
         private readonly ILogService _logger;
         private readonly IMapper _mapper;
 
-        public ExpiringApprenticeshipApplicationDraftRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger)
-            : base(configurationManager, "expiringdraftapplications")
+        public ExpiringApprenticeshipApplicationDraftRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
+            : base(configurationService, "expiringdraftapplications")
         {
             _mapper = mapper;
             _logger = logger;

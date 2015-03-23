@@ -9,6 +9,7 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Builders;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
@@ -18,9 +19,10 @@
         private readonly ILogService _logger;
         private readonly IMapper _mapper;
 
-        public CandidateRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger)
-            : base(configurationManager, "Candidates.mongoDB", "candidates")
+        public CandidateRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.CandidatesDb, "candidates");
             _mapper = mapper;
             _logger = logger;
         }

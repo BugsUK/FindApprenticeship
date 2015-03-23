@@ -11,6 +11,7 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
@@ -22,9 +23,10 @@
 
         private readonly IMapper _mapper;
 
-        public ApprenticeshipApplicationRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger)
-            : base(configurationManager, "Applications.mongoDB", "apprenticeships")
+        public ApprenticeshipApplicationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.ApplicationsDb, "apprenticeships");
             _mapper = mapper;
             _logger = logger;
         }

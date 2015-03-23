@@ -13,8 +13,8 @@
         private readonly ILogService _logger;
         private readonly IMapper _mapper;
 
-        public ContactMessageRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger)
-            : base(configurationManager, "contactmessages")
+        public ContactMessageRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
+            : base(configurationService, "contactmessages")
         {
             _mapper = mapper;
             _logger = logger;

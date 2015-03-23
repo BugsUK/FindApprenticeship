@@ -10,6 +10,7 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
 
@@ -18,9 +19,10 @@
         private readonly ILogService _logger;
         private readonly IMapper _mapper;
 
-        public SavedSearchRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger)
-            : base(configurationManager, "Candidates.mongoDB", "savedsearches")
+        public SavedSearchRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.CandidatesDb, "savedsearches");
             _mapper = mapper;
             _logger = logger;
         }

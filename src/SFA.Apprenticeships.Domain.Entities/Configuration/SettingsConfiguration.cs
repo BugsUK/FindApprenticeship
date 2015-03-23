@@ -20,11 +20,27 @@
 
         public bool UseCaching { get; set; }
 
+        public bool EnableWebTrends { get; set; }
+
+        public string WebTrendsDscId { get; set; }
+
+        public string SiteDomainName { get; set; }
+
+        public string UserDirectorySecretKey { get; set; }
+
+        public string SiteRootRedirectUrl { get; set; }
+
+        public int VacancyAboutToExpireNotificationHours { get; set; }
+
+        public string TermsAndConditionsVersion { get; set; }
+
+        public string HelpdeskEmailAddress { get; set; }
+
         #endregion
 
         #region Complex Settings
 
-        public MongoConfiguration MongoConfiguration { get; set; }
+        //public MongoConfiguration MongoConfiguration { get; set; }
 
         public RabbitConfiguration RabbitConfiguration { get; set; }
 
@@ -32,7 +48,7 @@
 
         public ElasticsearchConfiguration LogstashConfiguration { get; set; }
 
-        public SearchTermFactors SearchTermFactors { get; set; }
+        public SearchFactorConfiguration SearchTermFactors { get; set; }
 
         public ReachSmsConfiguration SmsConfiguration { get; set; }
 

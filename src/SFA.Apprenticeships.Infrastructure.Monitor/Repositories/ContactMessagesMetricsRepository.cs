@@ -5,13 +5,15 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Communication.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class ContactMessagesMetricsRepository : GenericMongoClient<MongoContactMessage>, IContactMessagesMetricsRepository
     {
-        public ContactMessagesMetricsRepository(IConfigurationManager configurationManager)
-            : base(configurationManager, "Communications.mongoDB", "contactmessages")
+        public ContactMessagesMetricsRepository(IConfigurationService configurationService)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.CommunicationsDb, "contactmessages");
         }
 
         public int GetContactMessagesSentToday()

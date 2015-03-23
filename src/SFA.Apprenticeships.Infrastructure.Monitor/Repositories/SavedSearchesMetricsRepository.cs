@@ -3,12 +3,14 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Candidates.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
 
     public class SavedSearchesMetricsRepository : GenericMongoClient<MongoSavedSearch>, ISavedSearchesMetricsRepository
     {
-        public SavedSearchesMetricsRepository(IConfigurationManager configurationManager)
-            : base(configurationManager, "Candidates.mongoDB", "savedsearches")
+        public SavedSearchesMetricsRepository(IConfigurationService configurationService)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.CandidatesDb, "savedsearches");
         }
 
         public int GetSavedSearchesCount()

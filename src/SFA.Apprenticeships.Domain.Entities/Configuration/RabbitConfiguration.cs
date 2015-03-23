@@ -11,8 +11,6 @@
 
     public class RabbitHost
     {
-        public string Name { get; set; }
-
         public string VirtualHost { get; set; }
 
         public string UserName { get; set; }

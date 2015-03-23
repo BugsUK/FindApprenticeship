@@ -19,8 +19,8 @@
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
 
-        public SavedSearchAlertRepository(IConfigurationManager configurationManager, IMapper mapper, ILogService logger)
-            : base(configurationManager, "savedsearchalerts")
+        public SavedSearchAlertRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
+            : base(configurationService, "savedsearchalerts")
         {
             _mapper = mapper;
             _logger = logger;

@@ -10,6 +10,7 @@
         public CommonRegistry()
         {
             For<IConfigurationManager>().Singleton().Use<ConfigurationManager>();
+            For<IConfigurationService>().Singleton().Use<ConfigurationService>();
         }
     }
 }

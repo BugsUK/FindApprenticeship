@@ -186,6 +186,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Processes", "SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj", "{D1BC4A28-A7AB-475E-B73E-5564897550BA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Configuration.IntegrationTests", "SFA.Apprenticeships.Infrastructure.Configuration.IntegrationTests\SFA.Apprenticeships.Infrastructure.Configuration.IntegrationTests.csproj", "{20ADF51E-8B36-40CF-B88C-BF0B6588E073}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1337,6 +1339,22 @@ Global
 		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Release|Any CPU.Build.0 = Sit|Any CPU
 		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{D1BC4A28-A7AB-475E-B73E-5564897550BA}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Local|Any CPU.Build.0 = Local|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1425,5 +1443,6 @@ Global
 		{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1} = {99003A13-CC36-4274-9CC2-9F6350B31492}
 		{297A98C9-78DE-4E2E-BD6A-3998C3C9238B} = {99003A13-CC36-4274-9CC2-9F6350B31492}
 		{D1BC4A28-A7AB-475E-B73E-5564897550BA} = {18D67FE8-091F-4873-871A-8B81E455DA79}
+		{20ADF51E-8B36-40CF-B88C-BF0B6588E073} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 	EndGlobalSection
 EndGlobal

@@ -18,6 +18,6 @@
     {
         public string Name { get; set; }
 
-        public Type MappingType { get; set; }
+        public string MappingType { get; set; }
     }
 }

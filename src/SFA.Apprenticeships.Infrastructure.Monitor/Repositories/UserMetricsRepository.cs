@@ -6,13 +6,15 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Users.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class UserMetricsRepository : GenericMongoClient<MongoUser>, IUserMetricsRepository
     {
-        public UserMetricsRepository(IConfigurationManager configurationManager)
-            : base(configurationManager, "Users.mongoDB", "users")
+        public UserMetricsRepository(IConfigurationService configurationService)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.UsersDb, "users");
         }
 
         public long GetRegisteredUserCount()

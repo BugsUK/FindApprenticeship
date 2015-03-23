@@ -4,24 +4,6 @@
 
     public interface IConfigurationService
     {
-        void ReloadConfiguration();
-
-        SettingsConfiguration GetSettingsConfiguration();
-
-        //DISCUSS: May just need GetSettingsConfiguration above.
-
-        MongoConfiguration GetMongoConfiguration();
-
-        RabbitConfiguration GetRabbitConfiguration();
-
-        ElasticsearchConfiguration GetSearchConfiguration();
-
-        SearchFactorConfiguration GetSearchFactorConfiguration();
-
-        ElasticsearchConfiguration GetLogstashConfiguration();
-
-        ReachSmsConfiguration GetSmsConfiguration();
-
-        SendGridConfiguration GetEmailConfiguration();
+        TSettings Get<TSettings>(string settingName) where TSettings : class;
     }
 }

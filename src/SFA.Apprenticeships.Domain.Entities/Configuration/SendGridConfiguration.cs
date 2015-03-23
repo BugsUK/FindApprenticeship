@@ -5,25 +5,25 @@
 
     public class SendGridConfiguration
     {
-        string Username { get; set; }
+        public string Username { get; set; }
 
-        string Password { get; set; }
+        public string Password { get; set; }
 
-        string Originator { get; set; }
+        public string Originator { get; set; }
 
-        string Url { get; set; }
+        public string Url { get; set; }
 
-        string CallbackUrl { get; set; }
+        public string CallbackUrl { get; set; }
 
-        IEnumerable<IEmailTemplate> Templates { get; set; } 
+        public IEnumerable<EmailTemplate> Templates { get; set; } 
     }
 
-    public interface IEmailTemplate
+    public class EmailTemplate
     {
-        Guid Id { get; set; }
+        public Guid Id { get; set; }
 
-        string Name { get; set; }
+        public string Name { get; set; }
 
-        string FromEmail { get; set; }
+        public string FromEmail { get; set; }
     }
 }

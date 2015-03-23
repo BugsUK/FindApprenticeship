@@ -1,35 +1,36 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Mongo.Common
 {
     using System;
+    using CuttingEdge.Conditions;
     using Domain.Entities;
-    using Domain.Interfaces.Configuration;
     using MongoDB.Driver;
 
     public class GenericMongoClient<T> where T : BaseEntity
     {
         private MongoCollection<T> _collection;
+        private MongoDatabase _database;
 
-        private readonly MongoDatabase _database;
-        private readonly string _mongoCollectionName;
+        protected string ConnectionString { get; set; }
+        protected string CollectionName { get; set; }
 
         protected MongoCollection<T> Collection
         {
             get
             {
-                return _collection ?? (_collection = _database.GetCollection<T>(_mongoCollectionName));
+                return _collection ?? (_collection = Database.GetCollection<T>(CollectionName));
             }
         }
 
-        protected GenericMongoClient(IConfigurationManager configurationManager, string mongoConnectionSettingName,
-            string mongoCollectionName)
+        private MongoDatabase Database
         {
-            _mongoCollectionName = mongoCollectionName;
-            var mongoConnectionString = configurationManager.GetAppSetting(mongoConnectionSettingName);
-            var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
-
-            _database = new MongoClient(mongoConnectionString)
-                .GetServer()
-                .GetDatabase(mongoDbName);
+            get
+            {
+                if (_database == null)
+                {
+                    Initialise(ConnectionString, CollectionName);
+                }
+                return _database;
+            }
         }
 
         protected void UpdateEntityTimestamps(T entity)
@@ -46,6 +47,18 @@
             }
         }
 
-        protected virtual void Initialise() {}
+        protected void Initialise(string connectionString, string collectionName)
+        {
+            Condition.Requires(connectionString);
+            Condition.Requires(collectionName);
+
+            CollectionName = collectionName;
+
+            var mongoDbName = MongoUrl.Create(connectionString).DatabaseName;
+
+            _database = new MongoClient(connectionString)
+                .GetServer()
+                .GetDatabase(mongoDbName);            
+        }
     }
 }

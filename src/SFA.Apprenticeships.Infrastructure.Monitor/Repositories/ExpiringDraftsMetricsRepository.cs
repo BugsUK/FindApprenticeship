@@ -5,13 +5,15 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Communication.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class ExpiringDraftsMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationExpiringDraft>, IExpiringDraftsMetricsRepository
     {
-        public ExpiringDraftsMetricsRepository(IConfigurationManager configurationManager)
-            : base(configurationManager, "Communications.mongoDB", "expiringdraftapplications")
+        public ExpiringDraftsMetricsRepository(IConfigurationService configurationService)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.CommunicationsDb, "expiringdraftapplications");
         }
 
         public int GetDraftApplicationsProcessedToday()

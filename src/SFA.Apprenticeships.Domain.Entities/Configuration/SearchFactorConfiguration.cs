@@ -21,6 +21,8 @@
 
         public bool MatchAllKeywords { get; set; }
 
+        public int PhraseProximity { get; set; }
+
         public string MinimumMatch { get; set; }
     }
 }
