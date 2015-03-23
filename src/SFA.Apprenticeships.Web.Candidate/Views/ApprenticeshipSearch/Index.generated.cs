@@ -531,19 +531,12 @@ WriteLiteral(@"'
             $(""#SearchMode"").val(""Category"");
         });
     </script>
-    <script");
-
-WriteLiteral(" type=\"text/javascript\"");
-
-WriteLiteral(" src=\"https://maps.googleapis.com/maps/api/js?v=3&client=gme-skillsfundingagency\"" +
-"");
-
-WriteLiteral("></script>\r\n");
+");
 
 WriteLiteral("    ");
 
             
-            #line 112 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 111 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/geoLocater"));
 
             
