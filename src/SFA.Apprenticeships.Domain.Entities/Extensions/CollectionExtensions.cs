@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Extensions
 {
+    //todo: move to web common
     public static class CollectionExtensions
     {
         public static string ToQueryString(this string[] collection, string parameterName)
