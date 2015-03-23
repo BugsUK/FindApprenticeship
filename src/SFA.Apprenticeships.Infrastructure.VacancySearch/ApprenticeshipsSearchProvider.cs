@@ -9,6 +9,7 @@
     using Application.Vacancy;
     using Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Nest;
@@ -20,16 +21,16 @@
         private readonly ILogService _logger;
         private readonly IMapper _vacancySearchMapper;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
-        private readonly SearchConfiguration _searchConfiguration;
+        private readonly SearchFactorConfiguration _searchConfiguration;
         private const string FrameworkAggregationName = "Frameworks";
 
         public ApprenticeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
             IMapper vacancySearchMapper,
-            SearchConfiguration searchConfiguration, ILogService logger)
+            IConfigurationService configurationService, ILogService logger)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _vacancySearchMapper = vacancySearchMapper;
-            _searchConfiguration = searchConfiguration;
+            _searchConfiguration = configurationService.Get<SearchFactorConfiguration>(SearchFactorConfiguration.SearchTermFactorsName);
             _logger = logger;
         }
 
@@ -127,39 +128,39 @@
                     QueryContainer queryVacancyLocation = null;
                     QueryContainer query = null;
 
-                    if (_searchConfiguration.SearchJobTitleField 
+                    if (_searchConfiguration.JobTitleFactors.Enabled
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.JobTitle))
                     {
                         var queryClause = q.Match(m =>
                         {
                             m.OnField(f => f.Title).Query(parameters.Keywords);
-                            BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.JobTitleFactors);
+                            BuildFieldQuery(m, _searchConfiguration.JobTitleFactors);
                         });
 
                         query = BuildContainer(null, queryClause);
                     }
 
-                    if (_searchConfiguration.SearchDescriptionField 
+                    if (_searchConfiguration.DescriptionFactors.Enabled 
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Description))
                     {
                         var queryClause = q.Match(m =>
                         {
                             m.OnField(f => f.Description).Query(parameters.Keywords);
-                            BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.DescriptionFactors);
+                            BuildFieldQuery(m, _searchConfiguration.DescriptionFactors);
                         });
                         query = BuildContainer(query, queryClause);
                     }
 
-                    if (_searchConfiguration.SearchEmployerNameField 
+                    if (_searchConfiguration.EmployerFactors.Enabled 
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Employer))
                     {
                         var exactMatchClause = q.Match(m =>
                         {
                             m.OnField(f => f.EmployerName).Query(parameters.Keywords);
-                            BuildFieldQuery(m, _searchConfiguration.SearchTermParameters.EmployerFactors);
+                            BuildFieldQuery(m, _searchConfiguration.EmployerFactors);
                         });
                         query = BuildContainer(query, exactMatchClause);
                     }
@@ -283,7 +284,7 @@
         }
 
         private static void BuildFieldQuery(MatchQueryDescriptor<ApprenticeshipSummary> queryDescriptor,
-            ISearchTermFactorsConfiguration searchFactors)
+            SearchTermFactors searchFactors)
         {
             if (searchFactors.Boost.HasValue)
             {

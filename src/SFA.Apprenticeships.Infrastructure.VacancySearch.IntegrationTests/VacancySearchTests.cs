@@ -3,14 +3,16 @@
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Vacancies;
-    using Configuration;
+    using Common.IoC;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.IoC;
     using FluentAssertions;
     using IoC;
+    using Logging.IoC;
     using Moq;
     using NUnit.Framework;
     using StructureMap;
@@ -20,6 +22,7 @@
     {
         private const string RetailAndCommercialEnterprise = "HBY"; //"Retail and Commercial Enterprise";
         private IElasticsearchClientFactory _elasticsearchClientFactory;
+        private IConfigurationService _configurationService;
         private IMapper _mapper;
         private Mock<ILogService> _logger = new Mock<ILogService>();
 
@@ -28,19 +31,21 @@
         {
             var container = new Container(x =>
             {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
             });
 
             _elasticsearchClientFactory = container.GetInstance<IElasticsearchClientFactory>();
+            _configurationService = container.GetInstance<IConfigurationService>();
             _mapper = container.GetInstance<IMapper>();
         }
 
         [Test, Category("Integration")]
         public void ShouldReturnFrameworksCount()
         {
-            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
-                SearchConfiguration.Instance, _logger.Object);
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
 
             var vacancies = vacancySearchProvider.FindVacancies(GetCommonSearchParameters());
 
@@ -51,8 +56,7 @@
         public void ShouldSearchBySector()
         {
 
-            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
-                SearchConfiguration.Instance, _logger.Object);
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
 
             var searchParameters = GetCommonSearchParameters();
             searchParameters.Sector = RetailAndCommercialEnterprise;
@@ -65,8 +69,7 @@
         [Test, Category("Integration")]
         public void ShouldSearchBySectorAndFramework()
         {
-            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
-                SearchConfiguration.Instance, _logger.Object);
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
 
             var searchParameters = GetCommonSearchParameters();
             searchParameters.Sector = RetailAndCommercialEnterprise;
@@ -81,8 +84,7 @@
         public void ShouldSearchAllEngland()
         {
             //TODO: this test could be too fragile
-            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
-                SearchConfiguration.Instance, _logger.Object);
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
 
             var searchParameters = GetEnglandSearchParameters("it");
 
@@ -94,8 +96,7 @@
         [Test, Category("Integration")]
         public void ShouldSortByPostedDate()
         {
-            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper,
-                SearchConfiguration.Instance, _logger.Object);
+            var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
 
             var searchParameters = GetPostedDateSearchParameters();
 

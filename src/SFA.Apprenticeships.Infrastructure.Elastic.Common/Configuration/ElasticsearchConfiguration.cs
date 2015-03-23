@@ -1,88 +1,26 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration
 {
-    using System;
     using System.Collections.Generic;
-    using System.Configuration;
-    using Infrastructure.Common.Configuration;
 
-    public class ElasticsearchConfiguration : SecureConfigurationSection<ElasticsearchConfiguration>
+    public class ElasticsearchConfiguration
     {
-        private const string DefaultHostConst = "DefaultHost";
-        private const string NodeCountConst = "NodeCount";
-        private const string TimeoutConst = "Timeout";
-        public ElasticsearchConfiguration() : base("ElasticsearchConfiguration")
-        {    
-        }
+        public static string SearchConfigurationName { get { return "SearchConfiguration"; } }
 
-        [ConfigurationProperty("", IsDefaultCollection = true)]
-        [ConfigurationCollection(typeof(ElasticsearchIndexCollection), AddItemName = "Index")]
-        public ElasticsearchIndexCollection Indexes
-        {
-            get { return (ElasticsearchIndexCollection)this[""]; }
-        }
+        public static string LogstashConfigurationName { get { return "LogstashConfiguration"; } }
 
-        [ConfigurationProperty(DefaultHostConst, IsRequired = true)]
-        public Uri DefaultHost
-        {
-            get { return (Uri)this[DefaultHostConst]; }
-            set { this[DefaultHostConst] = value; }
-        }
+        public string HostName { get; set; }
 
-        [ConfigurationProperty(NodeCountConst, IsRequired = true)]
-        public int NodeCount
-        {
-            get { return (int)this[NodeCountConst]; }
-            set { this[NodeCountConst] = value; }
-        }
+        public int NodeCount { get; set; }
 
-        [ConfigurationProperty(TimeoutConst, IsRequired = true)]
-        public int Timeout
-        {
-            get { return (int)this[TimeoutConst]; }
-            set { this[TimeoutConst] = value; }
-        }
+        public int Timeout { get; set; }
+
+        public IEnumerable<ElasticsearchIndex> Indexes { get; set; }
     }
 
-    public class ElasticsearchIndexCollection : ConfigurationElementCollection, IEnumerable<IElasticsearchIndexConfiguration>
+    public class ElasticsearchIndex
     {
-        private readonly List<IElasticsearchIndexConfiguration> _elements;
-        private readonly Dictionary<string, IElasticsearchIndexConfiguration> _elementDictionary;
+        public string Name { get; set; }
 
-        public ElasticsearchIndexCollection()
-        {
-            _elements = new List<IElasticsearchIndexConfiguration>();
-            _elementDictionary = new Dictionary<string, IElasticsearchIndexConfiguration>();
-        }
-
-        protected override ConfigurationElement CreateNewElement()
-        {
-            var element = new ElasticsearchIndexConfiguration();
-            _elements.Add(element);
-
-            return element;
-        }
-
-        protected override object GetElementKey(ConfigurationElement element)
-        {
-            string key = ((IElasticsearchIndexConfiguration)element).Name;
-            if (!_elementDictionary.ContainsKey(key))
-            {
-                _elementDictionary.Add(key, ((ElasticsearchIndexConfiguration)element));
-            }
-            return _elementDictionary[key];
-        }
-
-        public new IElasticsearchIndexConfiguration this[string name]
-        {
-            get
-            {
-                return _elementDictionary.ContainsKey(name) ? _elementDictionary[name] : null;
-            }
-        }
-
-        public new IEnumerator<IElasticsearchIndexConfiguration> GetEnumerator()
-        {
-            return _elements.GetEnumerator();
-        }
+        public string MappingType { get; set; }
     }
 }

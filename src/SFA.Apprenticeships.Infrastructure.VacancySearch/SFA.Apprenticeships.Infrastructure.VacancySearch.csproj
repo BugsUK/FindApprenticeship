@@ -112,9 +112,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\SearchConfiguration.cs" />
-    <Compile Include="Configuration\SearchTermFactorsConfiguration.cs" />
-    <Compile Include="Configuration\ISearchTermFactorsConfiguration.cs" />
+    <Compile Include="Configuration\SearchFactorConfiguration.cs" />
     <Compile Include="IoC\VacancySearchRegistry.cs" />
     <Compile Include="Mappers\GeoPointElasticToDomainResolver.cs" />
     <Compile Include="Mappers\VacancySearchMapper.cs" />

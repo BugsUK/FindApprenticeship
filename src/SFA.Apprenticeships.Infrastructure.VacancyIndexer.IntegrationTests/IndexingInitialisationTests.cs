@@ -2,6 +2,8 @@
 {
     using System;
     using Application.Vacancies.Entities;
+    using Common.IoC;
+    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using FluentAssertions;
     using IoC;
@@ -19,7 +21,7 @@
         private string _vacancyIndexAlias;
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private ElasticClient _elasticClient;
-        private readonly ElasticsearchConfiguration _elasticsearchConfiguration = ElasticsearchConfiguration.Instance;
+        private ElasticsearchConfiguration _elasticsearchConfiguration = null;
         private Container _container;
 
         [SetUp]
@@ -27,16 +29,17 @@
         {
             _container = new Container(x =>
             {
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
             });
 
-            var settings = new ConnectionSettings(_elasticsearchConfiguration.DefaultHost);
+            _elasticsearchConfiguration = _container.GetInstance<IConfigurationService>().Get<ElasticsearchConfiguration>(ElasticsearchConfiguration.SearchConfigurationName);
+            var settings = new ConnectionSettings(new Uri(_elasticsearchConfiguration.HostName));
             _elasticClient = new ElasticClient(settings);
 
-            foreach (
-                IElasticsearchIndexConfiguration elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
+            foreach (var elasticsearchIndexConfiguration in _elasticsearchConfiguration.Indexes)
             {
                 if (elasticsearchIndexConfiguration.Name.EndsWith("_integration_test"))
                 {

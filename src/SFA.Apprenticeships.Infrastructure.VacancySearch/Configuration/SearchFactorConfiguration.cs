@@ -1,7 +1,9 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.VacancySearch.Configuration
 {
     public class SearchFactorConfiguration
     {
+        public static string SearchTermFactorsName { get { return "SearchTermFactors"; } }
+
         public SearchTermFactors JobTitleFactors { get; set; }
 
         public SearchTermFactors EmployerFactors { get; set; }
@@ -13,15 +15,15 @@
     {
         public bool Enabled { get; set; }
 
-        public string Boost { get; set; }
+        public double? Boost { get; set; }
 
-        public int Fuzziness { get; set; }
+        public int? Fuzziness { get; set; }
 
-        public int FuzzyPrefix { get; set; }
+        public int? FuzzyPrefix { get; set; }
 
         public bool MatchAllKeywords { get; set; }
 
-        public int PhraseProximity { get; set; }
+        public int? PhraseProximity { get; set; }
 
         public string MinimumMatch { get; set; }
     }

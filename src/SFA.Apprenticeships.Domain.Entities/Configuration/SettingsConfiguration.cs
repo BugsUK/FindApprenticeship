@@ -44,11 +44,11 @@
 
         //public RabbitConfiguration RabbitConfiguration { get; set; }
 
-        public ElasticsearchConfiguration SearchConfiguration { get; set; }
+        //public ElasticsearchConfiguration SearchConfiguration { get; set; }
 
-        public ElasticsearchConfiguration LogstashConfiguration { get; set; }
+        //public ElasticsearchConfiguration LogstashConfiguration { get; set; }
 
-        public SearchFactorConfiguration SearchTermFactors { get; set; }
+        //public SearchFactorConfiguration SearchTermFactors { get; set; }
 
         public ReachSmsConfiguration SmsConfiguration { get; set; }
 

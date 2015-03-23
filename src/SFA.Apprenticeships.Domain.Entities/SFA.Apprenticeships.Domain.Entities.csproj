@@ -97,9 +97,7 @@
     <Compile Include="Communication\ContactMessage.cs" />
     <Compile Include="Communication\ApplicationStatusAlert.cs" />
     <Compile Include="Communication\ExpiringApprenticeshipApplicationDraft.cs" />
-    <Compile Include="Configuration\ElasticsearchConfiguration.cs" />
     <Compile Include="Configuration\ReachSmsConfiguration.cs" />
-    <Compile Include="Configuration\SearchFactorConfiguration.cs" />
     <Compile Include="Configuration\SendGridConfiguration.cs" />
     <Compile Include="Configuration\SettingsConfiguration.cs" />
     <Compile Include="Exceptions\BoundaryException.cs" />
