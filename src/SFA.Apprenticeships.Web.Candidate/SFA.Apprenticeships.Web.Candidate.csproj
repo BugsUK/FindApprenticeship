@@ -281,8 +281,8 @@
     <Content Include="Content\_assets\js\nas\resultsMap.js" />
     <Content Include="Content\_assets\js\nas\webTrendsInlineTrack.js" />
     <Content Include="Content\_assets\js\scripts.js" />
-    <Content Include="Content\_assets\js\vendor\fastclick-1.0.3.js" />
-    <Content Include="Content\_assets\js\vendor\fastclick-1.0.3.min.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.min.js" />
     <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
     <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.custom.js" />

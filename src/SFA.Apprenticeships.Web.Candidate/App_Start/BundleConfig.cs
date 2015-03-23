@@ -15,8 +15,8 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js").Include(
                 "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/fastclick", "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.3/fastclick.min.js").Include(
-                "~/Content/_assets/js/vendor/fastclick-1.0.3.js"));
+            bundles.Add(new ScriptBundle("~/bundles/fastclick", "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js").Include(
+                "~/Content/_assets/js/vendor/fastclick-1.0.6.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/underscore", "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js").Include(
                 "~/Content/_assets/js/vendor/underscore-1.7.0.js"));
