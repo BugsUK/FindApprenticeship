@@ -28,15 +28,6 @@ else
     </section>
 }
 
-@if (ViewBag.SearchReturnUrl != null)
-{
-    <section class="section-border">
-        <p class="text">
-            <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
-        </p>
-    </section>
-}
-
 <h2 class="heading-medium">What happens next</h2>
 <div class="text form-group">
     <p>
@@ -54,6 +45,14 @@ else
         <a href="https://www.surveymonkey.com/s/MFNR7NZ" rel="external" target="_blank">What did you think of the service?</a>
     </p>
 </div>
-<div class="form-group get-started">
+<div class="form-group form-group-compound get-started">
     <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)'>Find an apprenticeship</a>
+</div>
+<div class="form-group">
+    @if (ViewBag.SearchReturnUrl != null)
+    {
+        <p class="text">
+            <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
+        </p>
+    }
 </div>
