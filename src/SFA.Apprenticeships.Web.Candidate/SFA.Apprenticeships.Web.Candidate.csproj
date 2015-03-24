@@ -745,6 +745,10 @@
     <Compile Include="Mediators\Home\HomeMediator.cs" />
     <Compile Include="Mediators\Home\IHomeMediator.cs" />
     <Compile Include="Mediators\Home\HomeMediatorCodes.cs" />
+    <Compile Include="Providers\ApprenticeshipVacancyProvider.cs" />
+    <Compile Include="Providers\IApprenticeshipVacancyProvider.cs" />
+    <Compile Include="Providers\ITraineeshipVacancyProvider.cs" />
+    <Compile Include="Providers\TraineeshipVacancyProvider.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />

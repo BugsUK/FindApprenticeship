@@ -205,6 +205,13 @@
                 InvalidLocation)).
                 Returns<string>(l => new LocationsViewModel(new LocationViewModel[0]));
 
+            return searchProvider;
+        }
+
+        private static Mock<ITraineeshipVacancyProvider> GetTraineeshipVacancyProvider()
+        {
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
+
             var londonVacancies = new[]
             {
                 new TraineeshipVacancySummaryViewModel {Description = "A London Vacancy"}
@@ -213,10 +220,10 @@
             var emptyVacancies = new TraineeshipVacancySummaryViewModel[0];
 
             // This order is important. Moq will run though all matches and pick the last one.
-            searchProvider.Setup(sp => sp.FindVacancies(It.IsAny<TraineeshipSearchViewModel>())).Returns<TraineeshipSearchViewModel>(svm => new TraineeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
-            searchProvider.Setup(sp => sp.FindVacancies(It.Is<TraineeshipSearchViewModel>(svm => svm.Location == "London"))).Returns<TraineeshipSearchViewModel>(svm => new TraineeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
+            traineeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.IsAny<TraineeshipSearchViewModel>())).Returns<TraineeshipSearchViewModel>(svm => new TraineeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm });
+            traineeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.Is<TraineeshipSearchViewModel>(svm => svm.Location == "London"))).Returns<TraineeshipSearchViewModel>(svm => new TraineeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm });
 
-            return searchProvider;
+            return traineeshipVacancyProvider;
         }
 
         private Mock<IUserDataProvider> GetUserDataProvider()
@@ -237,17 +244,18 @@
         private ITraineeshipSearchMediator GetMediator()
         {
             var searchProvider = GetSearchProvider();
+            var traineeshipVacancyProvider = GetTraineeshipVacancyProvider();
 
-            return GetMediator(searchProvider.Object);
+            return GetMediator(searchProvider.Object, traineeshipVacancyProvider.Object);
         }
 
-        private ITraineeshipSearchMediator GetMediator(ISearchProvider searchProvider)
+        private ITraineeshipSearchMediator GetMediator(ISearchProvider searchProvider, ITraineeshipVacancyProvider traineeshipVacancyProvider)
         {
             var configurationManager = new Mock<IConfigurationManager>();
             var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
             var userDataProvider = GetUserDataProvider();
 
-            var mediator = GetMediator(configurationManager.Object, searchProvider, traineeshipVacancyDetailProvider.Object, userDataProvider.Object);
+            var mediator = GetMediator(configurationManager.Object, searchProvider, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider);
 
             return mediator;
         }

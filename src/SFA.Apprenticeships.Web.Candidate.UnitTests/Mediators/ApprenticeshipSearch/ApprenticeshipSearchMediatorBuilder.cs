@@ -16,6 +16,7 @@
         private Mock<ICandidateServiceProvider> _candidateServiceProvider;
         private readonly Mock<IUserDataProvider> _userDataProvider;
         private readonly Mock<IReferenceDataService> _referenceDataService;
+        private readonly Mock<IApprenticeshipVacancyProvider> _apprenticeshipVacancyProvider;
 
         public ApprenticeshipSearchMediatorBuilder()
         {
@@ -28,6 +29,7 @@
             _userDataProvider = new Mock<IUserDataProvider>();
             _searchProvider = new Mock<ISearchProvider>();
             _referenceDataService = new Mock<IReferenceDataService>();
+            _apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
         }
 
         public ApprenticeshipSearchMediatorBuilder With(Mock<ICandidateServiceProvider> candidateServiceProvider)
@@ -38,7 +40,7 @@
 
         public IApprenticeshipSearchMediator Build()
         {
-            var mediator = new ApprenticeshipSearchMediator(_configurationManager.Object, _searchProvider.Object, _apprenticeshipVacancyDetailProvider.Object, _candidateServiceProvider.Object, _userDataProvider.Object, _referenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
+            var mediator = new ApprenticeshipSearchMediator(_configurationManager.Object, _searchProvider.Object, _apprenticeshipVacancyDetailProvider.Object, _candidateServiceProvider.Object, _userDataProvider.Object, _referenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), _apprenticeshipVacancyProvider.Object);
             return mediator;
         }
     }

@@ -139,8 +139,9 @@
                 p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             var userDataProvider = GetUserDataProvider();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
 
-            return GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object);
+            return GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object);
         }
     }
 }

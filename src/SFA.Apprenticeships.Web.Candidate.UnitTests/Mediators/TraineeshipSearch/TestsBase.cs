@@ -10,15 +10,16 @@
 
     public abstract class TestsBase
     {
-        protected static ITraineeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider, IUserDataProvider userDataProvider)
+        protected static ITraineeshipSearchMediator GetMediator(IConfigurationManager configurationManager, ISearchProvider searchProvider, ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider, IUserDataProvider userDataProvider, ITraineeshipVacancyProvider traineeshipVacancyProvider)
         {
-            return new TraineeshipSearchMediator(configurationManager, searchProvider, traineeshipVacancyDetailProvider, userDataProvider, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator());
+            return new TraineeshipSearchMediator(configurationManager, searchProvider, traineeshipVacancyDetailProvider, userDataProvider, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator(), traineeshipVacancyProvider);
         }
 
         protected Mock<ITraineeshipVacancyDetailProvider> TraineeshipVacancyDetailProvider;
         protected Mock<IConfigurationManager> ConfigurationManager;
         protected Mock<IUserDataProvider> UserDataProvider;
         protected Mock<ISearchProvider> SearchProvider;
+        protected Mock<ITraineeshipVacancyProvider> TraineeshipVacancyProvider;
         protected ITraineeshipSearchMediator Mediator;
 
         [SetUp]
@@ -28,7 +29,8 @@
             ConfigurationManager = new Mock<IConfigurationManager>();
             UserDataProvider = new Mock<IUserDataProvider>();
             SearchProvider = new Mock<ISearchProvider>();
-            Mediator = new TraineeshipSearchMediator(ConfigurationManager.Object, SearchProvider.Object, TraineeshipVacancyDetailProvider.Object, UserDataProvider.Object, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator());
+            TraineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
+            Mediator = new TraineeshipSearchMediator(ConfigurationManager.Object, SearchProvider.Object, TraineeshipVacancyDetailProvider.Object, UserDataProvider.Object, new TraineeshipSearchViewModelServerValidator(), new TraineeshipSearchViewModelLocationValidator(), TraineeshipVacancyProvider.Object);
         }
     }
 }

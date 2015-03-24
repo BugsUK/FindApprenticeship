@@ -39,8 +39,8 @@
 
             var emptyVacancies = new ApprenticeshipVacancySummaryViewModel[0];
             //This order is important. Moq will run though all matches and pick the last one
-            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm }).Callback<ApprenticeshipSearchViewModel>(svm => { _searchSentToSearchProvider = svm; });
-            SearchProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == ACityWithOneSuggestedLocation))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm }).Callback<ApprenticeshipSearchViewModel>(svm => { _searchSentToSearchProvider = svm; });
+            ApprenticeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>())).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = emptyVacancies, VacancySearch = svm }).Callback<ApprenticeshipSearchViewModel>(svm => { _searchSentToSearchProvider = svm; });
+            ApprenticeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.Is<ApprenticeshipSearchViewModel>(svm => svm.Location == ACityWithOneSuggestedLocation))).Returns<ApprenticeshipSearchViewModel>(svm => new ApprenticeshipSearchResponseViewModel { Vacancies = londonVacancies, VacancySearch = svm }).Callback<ApprenticeshipSearchViewModel>(svm => { _searchSentToSearchProvider = svm; });
         }
 
         [Test]
@@ -254,7 +254,7 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
+            ApprenticeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
                 .Returns(new ApprenticeshipSearchResponseViewModel
                 {
                     ViewModelMessage = SomeErrorMessage
@@ -273,7 +273,7 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            SearchProvider.Setup(sp => sp.FindVacancies(searchViewModel))
+            ApprenticeshipVacancyProvider.Setup(sp => sp.FindVacancies(searchViewModel))
                 .Returns(new ApprenticeshipSearchResponseViewModel
                 {
                     TotalLocalHits = 1,
@@ -294,7 +294,7 @@
                 Keywords = "VAC000123456"
             };
 
-            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
+            ApprenticeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
                 .Returns(new ApprenticeshipSearchResponseViewModel
                 {
                     ExactMatchFound = true,
@@ -584,7 +584,7 @@
         [Test]
         public void LocationTypeShouldBeCopiedOver()
         {
-            SearchProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
+            ApprenticeshipVacancyProvider.Setup(sp => sp.FindVacancies(It.IsAny<ApprenticeshipSearchViewModel>()))
                 .Callback<ApprenticeshipSearchViewModel>(svm =>
                 {
                     svm.LocationType = ApprenticeshipLocationType.National;

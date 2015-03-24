@@ -44,8 +44,9 @@
             var searchProvider = new Mock<ISearchProvider>();
             var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
             var userDataProvider = new Mock<IUserDataProvider>();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
 
-            return GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object);
+            return GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object);
         }
     }
 }

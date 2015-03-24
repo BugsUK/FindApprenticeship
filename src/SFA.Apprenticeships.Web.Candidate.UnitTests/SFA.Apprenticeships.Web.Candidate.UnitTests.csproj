@@ -265,6 +265,7 @@
     <Compile Include="Providers\ApplicationProvider\UnarchiveApplicationTests.cs" />
     <Compile Include="Providers\ApprenticeshipVacancyDetailProvider\ApprenticeshipVacancyDetailProviderBuilder.cs" />
     <Compile Include="Providers\ApprenticeshipVacancyDetailProvider\GetVacancyDetailViewModelTests.cs" />
+    <Compile Include="Providers\ApprenticeshipVacancyProvider\FindVacanciesTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\CandidateServiceProviderBuilder.cs" />
     <Compile Include="Providers\CandidateServiceProvider\CreateSavedSearchTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\DeleteSavedSearchTests.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Providers\Traineeships\PatchApplicationViewModelTests.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderBuilder.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />
+    <Compile Include="Providers\TraineeshipVacancyProvider\FindVacanciesTests.cs" />
     <Compile Include="Validators\ActivationViewModelValidatorTests.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidatorTests.cs" />
     <Compile Include="Validators\ApprenticeshipSearchViewModelServerValidatorTests.cs" />

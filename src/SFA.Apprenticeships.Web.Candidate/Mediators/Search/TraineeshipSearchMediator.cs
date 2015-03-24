@@ -19,6 +19,7 @@
         private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
         private readonly TraineeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly TraineeshipSearchViewModelLocationValidator _searchLocationValidator;
+        private readonly ITraineeshipVacancyProvider _traineeshipVacancyProvider;
 
         public TraineeshipSearchMediator(
             IConfigurationManager configManager,
@@ -26,13 +27,15 @@
             ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
             IUserDataProvider userDataProvider,
             TraineeshipSearchViewModelServerValidator searchRequestValidator,
-            TraineeshipSearchViewModelLocationValidator searchLocationValidator)
+            TraineeshipSearchViewModelLocationValidator searchLocationValidator,
+            ITraineeshipVacancyProvider traineeshipVacancyProvider)
             : base(configManager, userDataProvider)
         {
             _searchProvider = searchProvider;
             _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
+            _traineeshipVacancyProvider = traineeshipVacancyProvider;
         }
 
         public MediatorResponse<TraineeshipSearchViewModel> Index()
@@ -115,7 +118,7 @@
                 return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, new TraineeshipSearchResponseViewModel { VacancySearch = model });
             }
 
-            var traineeshipSearchResponseViewModel = _searchProvider.FindVacancies(model);
+            var traineeshipSearchResponseViewModel = _traineeshipVacancyProvider.FindVacancies(model);
 
             traineeshipSearchResponseViewModel.VacancySearch.SortTypes = GetSortTypes(model.SortType);
 

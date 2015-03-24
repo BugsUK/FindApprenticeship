@@ -70,6 +70,8 @@
             For<ISearchProvider>().Use<SearchProvider>()
                 .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
                 .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers");
+            For<IApprenticeshipVacancyProvider>().Use<ApprenticeshipVacancyProvider>().Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers");
+            For<ITraineeshipVacancyProvider>().Use<TraineeshipVacancyProvider>().Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers");
             For<IApprenticeshipVacancyDetailProvider>().Use<ApprenticeshipVacancyDetailProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");

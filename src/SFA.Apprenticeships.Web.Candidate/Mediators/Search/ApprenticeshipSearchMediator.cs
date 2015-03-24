@@ -28,6 +28,7 @@
         private readonly IReferenceDataService _referenceDataService;
         private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly ApprenticeshipSearchViewModelLocationValidator _searchLocationValidator;
+        private readonly IApprenticeshipVacancyProvider _apprenticeshipVacancyProvider;
 
         private readonly string[] _blacklistedCategoryCodes;
 
@@ -39,7 +40,8 @@
             IUserDataProvider userDataProvider,
             IReferenceDataService referenceDataService,
             ApprenticeshipSearchViewModelServerValidator searchRequestValidator,
-            ApprenticeshipSearchViewModelLocationValidator searchLocationValidator)
+            ApprenticeshipSearchViewModelLocationValidator searchLocationValidator,
+            IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)
             : base(configManager, userDataProvider)
         {
             _candidateServiceProvider = candidateServiceProvider;
@@ -48,6 +50,7 @@
             _referenceDataService = referenceDataService;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
+            _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
             _blacklistedCategoryCodes = configManager.GetAppSetting("BlacklistedCategoryCodes").Split(',');
         }
 
@@ -216,7 +219,7 @@
 
             model.SortType = searchModel.SortType;
 
-            var results = _searchProvider.FindVacancies(searchModel);
+            var results = _apprenticeshipVacancyProvider.FindVacancies(searchModel);
 
             if (results.VacancySearch != null)
             {
