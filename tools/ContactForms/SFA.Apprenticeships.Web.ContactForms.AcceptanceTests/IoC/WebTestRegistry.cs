@@ -6,7 +6,6 @@
 
     public class WebTestRegistry
     {
-
         public static Container Container;
 
         [BeforeTestRun]

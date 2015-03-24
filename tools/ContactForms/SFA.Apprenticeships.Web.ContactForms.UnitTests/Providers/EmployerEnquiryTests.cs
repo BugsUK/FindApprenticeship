@@ -6,6 +6,9 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using System.Collections;
+    using System;
+    using System.Collections.Generic;
 
     [TestFixture]
     public class EmployerEnquiryTests
@@ -18,9 +21,9 @@
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
             //todo: fix this : 
-            //serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>()), ).Throws(new Exception());
+            serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>(), It.IsAny<IEnumerable<CommunicationToken>>())).Throws(new Exception());
             var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
-
+            
             //Act
             var result = provider.SubmitEnquiry(viewModel);
 
@@ -57,8 +60,7 @@
                 .EnquirySource(enquirySource).EnquiryDescription(enquiryDescription).EmployeeCount(employeeCount)
                 .Email(email).Companyname(companyname)
                 .Address(addressViewModelBuilder)
-                .Build();
-            
+                .Build();            
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
             

@@ -128,7 +128,7 @@
     <Compile Include="Builders\AddressViewModelBuilder.cs" />
     <Compile Include="Builders\EmployerEnquiryViewModelBuilder.cs" />
     <Compile Include="Infrastructure\EmailContentGenerator.cs" />
-    <Compile Include="Infrastructure\SendGrifEmailDispatcherTests.cs" />
+    <Compile Include="Infrastructure\SendGridEmailDispatcherTests.cs" />
     <Compile Include="Mediators\EmployerEnquiryMediatorBuilder.cs" />
     <Compile Include="Mediators\EmployerEnquiryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

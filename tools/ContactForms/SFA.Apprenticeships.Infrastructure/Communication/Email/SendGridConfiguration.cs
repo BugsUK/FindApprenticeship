@@ -13,14 +13,12 @@
             : base("SendGridConfiguration")
         {
         }
-
-        //[ConfigurationProperty(UserNameConstant, IsRequired = true)]
+                
         public string UserName
         {
             get { return BaseAppSettingValues.NetworkUsername; }
         }
-
-        //[ConfigurationProperty(PasswordConstant, IsRequired = true)]
+                
         public string Password
         {
             get { return BaseAppSettingValues.NetworkPassword; }
@@ -31,30 +29,6 @@
         public SendGridTemplateConfigurationCollection Templates
         {
             get { return (SendGridTemplateConfigurationCollection)this[""]; }
-        }
-        //private const string UserNameConstant = "NetworkUserName";
-        //private const string PasswordConstant = "NetworkPassword";
-
-        //public SendGridConfiguration()
-        //    : base("SendGridConfiguration")
-        //{
-        //}
-                
-        //public string UserName
-        //{
-        //    get { return BaseAppSettingValues.NetworkUsername; }
-        //}
-                
-        //public string Password
-        //{
-        //    get { return BaseAppSettingValues.NetworkPassword;}            
-        //}       
-
-        //[ConfigurationProperty("", IsDefaultCollection = true)]
-        //[ConfigurationCollection(typeof(SendGridTemplateConfigurationCollection), AddItemName = "Template")]
-        //public SendGridTemplateConfigurationCollection Templates
-        //{
-        //    get { return (SendGridTemplateConfigurationCollection)this[""]; }
-        //}
+        }        
     }
 }
