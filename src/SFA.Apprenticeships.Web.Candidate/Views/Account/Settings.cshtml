@@ -115,6 +115,7 @@
                     <div id="savedSearches" class="toggle-content text" style="display: block;">
                         @for (var i = 0; i < Model.SavedSearches.Count; i++)
                         {
+                            var index = i;
                             var savedSearch = Model.SavedSearches[i];
                             var checkedListItemClass = savedSearch.AlertsEnabled ? "class=\"selected\"" : "";
 
@@ -125,13 +126,6 @@
                                     <span class="inl-block font-xsmall">(Last alert: @savedSearch.DateProcessed.Value.ToFriendlyDaysAgo())</span>
                                 }
                                 <ul class="list-text">
-                                    <li @Html.Raw(checkedListItemClass)>
-                                        @{
-                            var index = i;
-                                        }
-                                        @Html.HiddenFor(m => m.SavedSearches[index].Id)
-                                        @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new { @class = "no-left-margin" })
-                                    </li>
                                     @if (!string.IsNullOrEmpty(savedSearch.SubCategoriesFullNames))
                                     {
                                         <li><b>Sub-categories:</b> @savedSearch.SubCategoriesFullNames</li>
@@ -140,6 +134,10 @@
                                     {
                                         <li><b>Apprenticeship level:</b> @savedSearch.ApprenticeshipLevel</li>
                                     }
+                                    <li @Html.Raw(checkedListItemClass)>
+                                        @Html.HiddenFor(m => m.SavedSearches[index].Id)
+                                        @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new { @class = "no-left-margin" })
+                                    </li>
                                     <li>
                                         <a href="@Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
                                             <i class="fa fa-times-circle"></i>Delete saved search
@@ -150,7 +148,6 @@
                         }
                     </div>
                 }
-            </div>
 
             <div class="form-group">
                 <button id="update-details-button" class="button">Save settings</button>
