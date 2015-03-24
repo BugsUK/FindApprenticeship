@@ -11,13 +11,9 @@ $(function () {
 
     $window.on('googleMapsScriptLoaded', function () {
         apiScriptLoaded = true;
-        loadGeoCoder();
-	    geoFindMe();
-	})
-
-    function loadGeoCoder() {
         geocoder = new google.maps.Geocoder();
-    }
+        geoFindMe();
+    });
 
     function geoFindMe() {
         var output = document.getElementById("Location"),
