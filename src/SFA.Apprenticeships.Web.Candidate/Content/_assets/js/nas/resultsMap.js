@@ -84,7 +84,7 @@ $(function () {
     function initialize() {
 
         if (!apiScriptLoaded && !apiScriptLoading) {
-            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency' + '"></script>');
+            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
             apiScriptLoading = true;
         }
 
@@ -253,7 +253,7 @@ $(function () {
 
     function loadScript() {
         if (!apiScriptLoaded && !apiScriptLoading) {
-            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency' + '"></script>');
+            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
             apiScriptLoading = true;
         }
 
@@ -320,7 +320,7 @@ $(function () {
         directionsDisplay[mapNumber].setMap(theMaps[mapNumber]);
 
         if (!apiScriptLoaded && !apiScriptLoading) {
-            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency' + '"></script>');
+            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
             apiScriptLoading = true;
         }
 
