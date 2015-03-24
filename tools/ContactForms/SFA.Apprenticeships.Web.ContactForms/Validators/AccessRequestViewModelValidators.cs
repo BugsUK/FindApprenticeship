@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.ContactForms.Validators
 {
-    using System.EnterpriseServices;
     using Constants;
     using FluentValidation;
     using ViewModels;

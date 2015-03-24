@@ -133,6 +133,7 @@
     <Compile Include="Mediators\EmployerEnquiryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\EmployerEnquiryProviderBuilder.cs" />
+    <Compile Include="Providers\GlaEmployerEnquiryTests.cs" />
     <Compile Include="Providers\EmployerEnquiryTests.cs" />
   </ItemGroup>
   <ItemGroup>
