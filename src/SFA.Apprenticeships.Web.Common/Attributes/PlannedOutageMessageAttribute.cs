@@ -8,7 +8,7 @@
     {
         private const string PlannedOutageMessageKey = "PlannedOutageMessage";
 
-        public IConfigurationManager ConfigurationManager { get; set; }
+        public IConfigurationService ConfigurationService { get; set; }
 
         public IDismissPlannedOutageMessageCookieProvider DismissPlannedOutageMessageCookieProvider { get; set; }
 
@@ -16,7 +16,7 @@
         {
             base.OnActionExecuted(filterContext);
 
-            var plannedOutageMessage = ConfigurationManager.GetCloudAppSetting<string>(PlannedOutageMessageKey);
+            var plannedOutageMessage = ConfigurationService.GetCloudAppSetting<string>(PlannedOutageMessageKey);
             if (!string.IsNullOrEmpty(plannedOutageMessage) && !DismissPlannedOutageMessageCookieProvider.IsCookiePresent(filterContext.HttpContext))
             {
                 filterContext.Controller.ViewBag.PlannedOutageMessage = plannedOutageMessage;

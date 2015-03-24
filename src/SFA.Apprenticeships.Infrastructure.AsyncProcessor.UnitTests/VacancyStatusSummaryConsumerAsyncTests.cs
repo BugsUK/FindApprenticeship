@@ -17,15 +17,15 @@
         private VacancyStatusSummaryConsumerAsync _vacancyStatusSummaryConsumerAsync;
         private Mock<ICacheService> _cacheServiceMock;
         private Mock<IApplicationStatusProcessor> _applicationStatusProcessor;
-        private Mock<IConfigurationManager> _configurationManagerMock;
+        private Mock<IConfigurationService> _configurationServiceMock;
 
         [SetUp]
         public void SetUp()
         {
             _cacheServiceMock = new Mock<ICacheService>();
             _applicationStatusProcessor = new Mock<IApplicationStatusProcessor>();
-            _configurationManagerMock = new Mock<IConfigurationManager>();
-            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object, _configurationManagerMock.Object);
+            _configurationServiceMock = new Mock<IConfigurationService>();
+            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object, _configurationServiceMock.Object);
         }
 
         [Test]
@@ -47,8 +47,8 @@
             var vacancyStatusSummary = new VacancyStatusSummary { LegacyVacancyId = 123, ClosingDate = DateTime.Now.AddMonths(-3), VacancyStatus = VacancyStatuses.Expired };
             _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()));
             _cacheServiceMock.Setup(x => x.PutObject(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<CacheDuration>()));
-            _configurationManagerMock.Setup(x => x.GetCloudAppSetting<bool>(It.Is<string>(s => s == "EnableVacancyStatusPropagation"))).Returns(true);
-            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object, _configurationManagerMock.Object);
+            _configurationServiceMock.Setup(x => x.GetCloudAppSetting<bool>(It.Is<string>(s => s == "EnableVacancyStatusPropagation"))).Returns(true);
+            _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object, _configurationServiceMock.Object);
 
             var task = _vacancyStatusSummaryConsumerAsync.Consume(vacancyStatusSummary);
             task.Wait();

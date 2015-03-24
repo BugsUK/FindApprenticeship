@@ -2,7 +2,7 @@
 {
     public class UserAccountConfiguration
     {
-        public const string UserAccountConfigurationName = "UserAccount";
+        public const string ConfigurationName = "UserAccount";
 
         public string UserDirectorySecretKey { get; set; }
 

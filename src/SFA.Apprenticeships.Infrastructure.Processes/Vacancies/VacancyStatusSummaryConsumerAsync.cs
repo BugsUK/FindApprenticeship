@@ -16,11 +16,11 @@
         private readonly bool _enableVacancyStatusPropagation;
 
         public VacancyStatusSummaryConsumerAsync(ICacheService cacheService, IApplicationStatusProcessor applicationStatusProcessor, 
-            IConfigurationManager configurationManager)
+            IConfigurationService configurationService)
         {
             _cacheService = cacheService;
             _applicationStatusProcessor = applicationStatusProcessor;
-            _enableVacancyStatusPropagation = configurationManager.GetCloudAppSetting<bool>("EnableVacancyStatusPropagation");
+            _enableVacancyStatusPropagation = configurationService.GetCloudAppSetting<bool>("EnableVacancyStatusPropagation");
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]

@@ -5,6 +5,7 @@
     using System.Net.Mail;
     using System.Text;
     using Application.Interfaces.Logging;
+    using Configuration;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Repositories;
@@ -14,7 +15,7 @@
         private const string DailyMetricsEmailFromSettingName = "Monitor.DailyMetrics.Email.From";
         private const string DailyMetricsEmailToSettingName = "Monitor.DailyMetrics.Email.To";
 
-        private readonly IConfigurationManager _configurationManager;
+        private readonly MonitorConfiguration _monitorConfiguration;
         private readonly ILogService _logger;
 
         private readonly IUserMetricsRepository _userMetricsRepository;
@@ -30,7 +31,7 @@
         private readonly int _validNumberOfDaysSinceUserActivity;
 
         public SendDailyMetricsEmail(
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationManager,
             ILogService logger,
             IApprenticeshipMetricsRepository apprenticeshipMetricsRepository,
             ITraineeshipMetricsRepository traineeshipMetricsRepository,
@@ -43,7 +44,6 @@
             ICandidateMetricsRepository candidateMetricsRepository)
         {
             _logger = logger;
-            _configurationManager = configurationManager;
             _apprenticeshipMetricsRepository = apprenticeshipMetricsRepository;
             _traineeshipMetricsRepository = traineeshipMetricsRepository;
             _userMetricsRepository = userMetricsRepository;
@@ -54,7 +54,8 @@
             _savedSearchesMetricsRepository = savedSearchesMetricsRepository;
             _candidateMetricsRepository = candidateMetricsRepository;
 
-            _validNumberOfDaysSinceUserActivity = _configurationManager.GetCloudAppSetting<int>("ValidNumberOfDaysSinceUserActivity");
+            _validNumberOfDaysSinceUserActivity = configurationManager.GetCloudAppSetting<int>("ValidNumberOfDaysSinceUserActivity");
+            _monitorConfiguration = configurationManager.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
         }
 
         public string TaskName
@@ -70,7 +71,7 @@
 
                 var body = ComposeBody();
 
-                SendEmail(From, To, body, GetSubject());
+                SendEmail(_monitorConfiguration.DailyMetricsFromEmailAddress, _monitorConfiguration.DailyMetricsToEmailAddress, body, GetSubject());
 
                 _logger.Debug("Sent daily metrics email");
             }
@@ -184,10 +185,6 @@
 
             client.Send(mailMessage);
         }
-
-        private string To { get { return _configurationManager.GetAppSetting<string>(DailyMetricsEmailToSettingName); } }
-        
-        private string From { get { return _configurationManager.GetAppSetting<string>(DailyMetricsEmailFromSettingName); } }
 
         #endregion
     }

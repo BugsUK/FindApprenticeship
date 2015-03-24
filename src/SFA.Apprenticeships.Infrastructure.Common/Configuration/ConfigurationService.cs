@@ -6,6 +6,7 @@
     using System.Linq;
     using Application.Interfaces.Logging;
     using Domain.Interfaces.Configuration;
+    using Microsoft.WindowsAzure;
     using MongoDB.Driver;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -63,6 +64,12 @@
             var tsetting = JsonConvert.DeserializeObject<TSettings>(elementJson);
 
             return tsetting;
+        }
+
+        public T GetCloudAppSetting<T>(string key)
+        {
+            var setting = CloudConfigurationManager.GetSetting(key);
+            return (T)Convert.ChangeType(setting, typeof(T));
         }
     }
 }

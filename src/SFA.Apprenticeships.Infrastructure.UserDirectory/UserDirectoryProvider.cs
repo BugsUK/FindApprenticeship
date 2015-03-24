@@ -105,7 +105,7 @@
         {
             get
             {
-                var config = _configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName);
+                var config = _configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName);
                 return config.UserDirectorySecretKey;
             }
         }

@@ -81,7 +81,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.For<ICookieDetectionProvider>().Use<CookieDetectionProvider>();
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
 
-                x.Policies.SetAllProperties(y => y.OfType<IConfigurationManager>());
+                x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<IFeatureToggle>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IEuCookieDirectiveProvider>());

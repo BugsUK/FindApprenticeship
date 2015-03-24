@@ -25,18 +25,18 @@
         private readonly IMapper _mapper;
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
         private readonly ICandidateService _candidateService;
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
 
         public ApprenticeshipApplicationProvider(
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ICandidateService candidateService,
             IMapper mapper,
-            IConfigurationManager configurationManager, ILogService logger)
+            IConfigurationService configurationService, ILogService logger)
         {
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _candidateService = candidateService;
             _mapper = mapper;
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
             _logger = logger;
         }
 
@@ -530,7 +530,7 @@
         {
             var candididate = _candidateService.GetCandidate(candidateId);
 
-            var unsuccessfulApplicationsToShowTraineeshipsPrompt = _configurationManager.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
+            var unsuccessfulApplicationsToShowTraineeshipsPrompt = _configurationService.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
             var allowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts;
 
             var sufficentUnsuccessfulApprenticeshipApplicationsToPrompt = apprenticeshipApplicationSummaries.Count(each => each.Status == ApplicationStatuses.Unsuccessful) >= unsuccessfulApplicationsToShowTraineeshipsPrompt;

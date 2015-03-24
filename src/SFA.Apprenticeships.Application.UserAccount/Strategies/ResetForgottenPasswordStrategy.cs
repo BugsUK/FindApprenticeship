@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _userReadRepository = userReadRepository;
             _authenticationService = authenticationService;
             _userWriteRepository = userWriteRepository;
-            _maximumPasswordAttemptsAllowed = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName).MaximumPasswordAttemptsAllowed;
+            _maximumPasswordAttemptsAllowed = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).MaximumPasswordAttemptsAllowed;
         }
 
         public void ResetForgottenPassword(string username, string passwordCode, string newPassword)

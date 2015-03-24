@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -13,12 +14,12 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly IUserWriteRepository _userWriteRepository;
 
         public RegisterUserStrategy(IUserWriteRepository userWriteRepository, 
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationService,
             IUserReadRepository userReadRepository)
         {
             _userWriteRepository = userWriteRepository;
             _userReadRepository = userReadRepository;
-            _activationCodeExpiryDays = configurationManager.GetAppSetting<int>("ActivationCodeExpiryDays");
+            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).ActivationCodeExpiryDays;
         }
 
         public void Register(string username, Guid userId, string activationCode, UserRoles roles)

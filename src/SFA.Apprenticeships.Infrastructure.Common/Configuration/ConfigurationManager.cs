@@ -71,12 +71,6 @@
             return (T) Convert.ChangeType(setting, typeof (T));
         }
 
-        public T GetCloudAppSetting<T>(string key)
-        {
-            var setting = CloudConfigurationManager.GetSetting(key);
-            return (T) Convert.ChangeType(setting, typeof (T));
-        }
-
         public ConfigurationSection GetSection(string sectionName)
         {
             return Configuration.GetSection(sectionName);

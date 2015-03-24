@@ -10,14 +10,14 @@
     public class MonitorControlQueueConsumer : AzureControlQueueConsumer
     {
         private readonly IMonitorTasksRunner _monitorTasksRunner;
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
 
         public MonitorControlQueueConsumer(IJobControlQueue<StorageQueueMessage> messageService,
-            IMonitorTasksRunner monitorTasksRunner, IConfigurationManager configurationManager, ILogService logger)
+            IMonitorTasksRunner monitorTasksRunner, IConfigurationService configurationService, ILogService logger)
             : base(messageService, logger, "Monitor", ScheduledJobQueues.Monitor)
         {
             _monitorTasksRunner = monitorTasksRunner;
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
         }
 
         public Task CheckScheduleQueue()
@@ -40,7 +40,7 @@
 
         private bool IsMonitorEnabled()
         {   
-            return _configurationManager.GetCloudAppSetting<bool>("MonitorEnabled");
+            return _configurationService.GetCloudAppSetting<bool>("MonitorEnabled");
         }
     }
 }

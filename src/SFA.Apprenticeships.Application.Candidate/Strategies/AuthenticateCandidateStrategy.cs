@@ -6,6 +6,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
+    using UserAccount.Configuration;
     using UserAccount.Strategies;
 
     public class AuthenticateCandidateStrategy : IAuthenticateCandidateStrategy
@@ -18,7 +19,7 @@
         private readonly int _maximumPasswordAttemptsAllowed;
 
         public AuthenticateCandidateStrategy(
-            IConfigurationManager configManager,
+            IConfigurationService configService,
             IAuthenticationService authenticationService,
             IUserReadRepository userReadRepository,
             IUserWriteRepository userWriteRepository,
@@ -30,7 +31,7 @@
             _userReadRepository = userReadRepository;
             _candidateReadRepository = candidateReadRepository;
             _lockAccountStrategy = lockAccountStrategy;
-            _maximumPasswordAttemptsAllowed = configManager.GetAppSetting<int>("MaximumPasswordAttemptsAllowed");
+            _maximumPasswordAttemptsAllowed = configService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).MaximumPasswordAttemptsAllowed;
         }
 
         public Candidate AuthenticateCandidate(string username, string password)

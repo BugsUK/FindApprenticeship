@@ -5,11 +5,11 @@
 
     public class FeatureToggle : IFeatureToggle
     {
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
 
-        public FeatureToggle(IConfigurationManager configurationManager)
+        public FeatureToggle(IConfigurationService configurationService)
         {
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
         }
 
         private readonly Dictionary<Feature, string> _featureToggleKeys = new Dictionary<Feature, string>
@@ -26,7 +26,7 @@
                     feature));
             }
 
-            return _configurationManager.GetCloudAppSetting<bool>(_featureToggleKeys[feature]);
+            return _configurationService.GetCloudAppSetting<bool>(_featureToggleKeys[feature]);
         }
     }
 }

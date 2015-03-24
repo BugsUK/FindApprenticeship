@@ -7,6 +7,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Interfaces.Users;
+    using UserAccount.Configuration;
 
     public class RegisterCandidateStrategy : IRegisterCandidateStrategy
     {
@@ -18,7 +19,7 @@
         private readonly ICommunicationService _communicationService;
         private readonly IUserReadRepository _userReadRepository;
 
-        public RegisterCandidateStrategy(IConfigurationManager configurationManager,
+        public RegisterCandidateStrategy(IConfigurationService configurationService,
             IUserAccountService userAccountService,
             IAuthenticationService authenticationService,
             ICandidateWriteRepository candidateWriteRepository,
@@ -32,7 +33,7 @@
             _communicationService = communicationService;
             _codeGenerator = codeGenerator;
             _userReadRepository = userReadRepository;
-            _activationCodeExpiryDays = configurationManager.GetAppSetting<int>("ActivationCodeExpiryDays");
+            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).ActivationCodeExpiryDays;
         }
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)

@@ -3,5 +3,7 @@
     public interface IConfigurationService
     {
         TSettings Get<TSettings>(string settingName) where TSettings : class;
+
+        T GetCloudAppSetting<T>(string key);
     }
 }

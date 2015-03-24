@@ -14,8 +14,6 @@
 
         T GetAppSetting<T>(string key);
 
-        T GetCloudAppSetting<T>(string key);
-
         string TryGetAppSetting(string key);
     }
 }

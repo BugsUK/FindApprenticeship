@@ -20,7 +20,7 @@
 
         private Mock<ILogService> _logService;
         private Mock<ICandidateService> _candidateService;
-        private Mock<IConfigurationManager> _configurationManager;
+        private Mock<IConfigurationService> _configurationService;
 
         private ApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
 
@@ -29,13 +29,13 @@
         {
             _logService = new Mock<ILogService>();
             _candidateService = new Mock<ICandidateService>();
-            _configurationManager = new Mock<IConfigurationManager>();
+            _configurationService = new Mock<IConfigurationService>();
 
-            _configurationManager.Setup(cm => cm.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"))
+            _configurationService.Setup(cm => cm.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"))
                 .Returns(UnsuccessfulApplications);
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
-                null, _configurationManager.Object, _logService.Object);
+                null, _configurationService.Object, _logService.Object);
         }
 
         [Test]

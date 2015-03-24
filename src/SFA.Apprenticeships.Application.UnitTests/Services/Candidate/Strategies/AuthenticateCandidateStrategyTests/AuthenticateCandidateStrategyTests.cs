@@ -2,6 +2,7 @@
 namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategies.AuthenticateCandidateStrategyTests
 {
     using System;
+    using Application.UserAccount.Configuration;
     using Application.UserAccount.Strategies;
     using Moq;
     using NUnit.Framework;
@@ -67,7 +68,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategie
 
     public class AuthenticateCandidateStrategyBuilder
     {
-        readonly Mock<IConfigurationManager> _configManager = new Mock<IConfigurationManager>();
+        readonly Mock<IConfigurationService> _configService = new Mock<IConfigurationService>();
         readonly Mock<IAuthenticationService> _authenticationService = new Mock<IAuthenticationService>();
         readonly Mock<IUserReadRepository> _userReadRepository = new Mock<IUserReadRepository>();
         readonly Mock<ICandidateReadRepository> _candidateReadRepository = new Mock<ICandidateReadRepository>();
@@ -97,8 +98,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategie
 
         public AuthenticateCandidateStrategy Build()
         {
-            _configManager.Setup(cm => cm.GetAppSetting<int>("MaximumPasswordAttemptsAllowed"))
-                .Returns(MaximumLoginAttemptsAllowed);
+            _configService.Setup(cm => cm.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName))
+                .Returns(new UserAccountConfiguration() {MaximumPasswordAttemptsAllowed = MaximumLoginAttemptsAllowed});
 
             var user = GetAnActiveUserWithSomeLoginIncorrectAttempt(CurrentLoginAttemptsDone);
 
@@ -109,7 +110,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategie
                 .Returns(_userAutheticatingCorrectly);
 
             return new AuthenticateCandidateStrategy(
-                _configManager.Object, _authenticationService.Object, _userReadRepository.Object,
+                _configService.Object, _authenticationService.Object, _userReadRepository.Object,
                 _userWriteRepository.Object, _candidateReadRepository.Object, _lockAccountStrategy.Object);
         }
 

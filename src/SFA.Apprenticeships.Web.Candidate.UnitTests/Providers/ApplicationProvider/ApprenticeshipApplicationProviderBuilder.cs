@@ -13,7 +13,7 @@
             new Mock<IApprenticeshipVacancyDetailProvider>();
 
         private Mock<ICandidateService> _candidateService = new Mock<ICandidateService>();
-        private readonly Mock<IConfigurationManager> _configurationManager = new Mock<IConfigurationManager>();
+        private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
 
         public ApprenticeshipApplicationProviderBuilder With(Mock<ICandidateService> candidateServiceMock)
@@ -32,7 +32,7 @@
         public ApprenticeshipApplicationProvider Build()
         {
             return new ApprenticeshipApplicationProvider(_apprenticeshipVacancyDetailProvider.Object,
-                _candidateService.Object, new ApprenticeshipCandidateWebMappers(), _configurationManager.Object,
+                _candidateService.Object, new ApprenticeshipCandidateWebMappers(), _configurationService.Object,
                 _logService.Object);
         }
     }

@@ -20,7 +20,7 @@
         {
             _userWriteRepository = userWriteRepository;
             _codeGenerator = codeGenerator;
-            _userAccountConfiguration = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName);
+            _userAccountConfiguration = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName);
         }
 
         public void LockUser(User user)

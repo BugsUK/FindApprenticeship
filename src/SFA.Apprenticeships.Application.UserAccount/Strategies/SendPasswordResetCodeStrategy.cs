@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _userWriteRepository = userWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _logger = logger;
-            _passwordResetCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName).PasswordResetCodeExpiryDays;
+            _passwordResetCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).PasswordResetCodeExpiryDays;
         }
 
         public void SendPasswordResetCode(string username)

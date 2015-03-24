@@ -14,7 +14,7 @@
     public class ApplicationStatusProcessor : IApplicationStatusProcessor
     {
         private readonly ILogService _logger;
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
 
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
@@ -29,7 +29,7 @@
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ICandidateReadRepository candidateReadRepository,
             IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy,
-            IMessageBus messageBus, ILogService logger, IConfigurationManager configurationManager)
+            IMessageBus messageBus, ILogService logger, IConfigurationService configurationService)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
@@ -38,7 +38,7 @@
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _messageBus = messageBus;
             _logger = logger;
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
         }
 
         private int ApplicationStatusExtractWindow
@@ -47,7 +47,7 @@
             {
                 if (!_applicationStatusExtractWindow.HasValue)
                 {
-                    _applicationStatusExtractWindow = _configurationManager.GetCloudAppSetting<int>("ApplicationStatusExtractWindow");
+                    _applicationStatusExtractWindow = _configurationService.GetCloudAppSetting<int>("ApplicationStatusExtractWindow");
                 }
 
                 return _applicationStatusExtractWindow.Value;

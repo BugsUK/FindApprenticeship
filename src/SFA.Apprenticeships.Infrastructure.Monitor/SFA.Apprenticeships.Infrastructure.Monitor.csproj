@@ -192,6 +192,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\MonitorConfiguration.cs" />
     <Compile Include="Consumers\DailyMetricsControlQueueConsumer.cs" />
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
     <Compile Include="Repositories\ApplicationStatusAlertsMetricsRepository.cs" />

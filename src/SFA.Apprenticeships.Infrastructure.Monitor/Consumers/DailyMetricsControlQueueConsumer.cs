@@ -10,17 +10,17 @@
     public class DailyMetricsControlQueueConsumer : AzureControlQueueConsumer
     {
         private readonly IDailyMetricsTasksRunner _dailyMetricsTasksRunner;
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
 
         public DailyMetricsControlQueueConsumer(
             IJobControlQueue<StorageQueueMessage> messageService,
             IDailyMetricsTasksRunner dailyMetricsTasksRunner,
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationService,
             ILogService logger)
             : base(messageService, logger, "DailyMetrics", ScheduledJobQueues.DailyMetrics)
         {
             _dailyMetricsTasksRunner = dailyMetricsTasksRunner;
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
         }
 
         public Task CheckScheduleQueue()
@@ -43,7 +43,7 @@
 
         private bool IsDailyMetricsEnabled()
         {   
-            return _configurationManager.GetCloudAppSetting<bool>("DailyMetricsEnabled");
+            return _configurationService.GetCloudAppSetting<bool>("DailyMetricsEnabled");
         }
     }
 }

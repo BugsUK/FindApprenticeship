@@ -5,7 +5,9 @@
     using System.Linq;
     using System.Net;
     using Application.Interfaces.Logging;
+    using Configuration;
     using Domain.Interfaces.Configuration;
+    using Elastic.Common.Configuration;
     using Elasticsearch.Net;
     using Nest;
     using Newtonsoft.Json;
@@ -18,13 +20,8 @@
     internal class CheckLogstashLogs : IMonitorTask
     {
         private readonly ILogService _logger;
-        private readonly IConfigurationManager _configurationManager;
-
-        private const string ExpectedLogCountSettingName = "Monitor.Logstash.ExpectedLogCount";
-        private const string ExpectedLogTimeframeInMinutesSettingName = "Monitor.Logstash.ExpectedLogTimeframeInMinutes";
-        private const string TimeoutSettingName = "Monitor.Logstash.Timeout";
-        private const string BaseUrlSettingName = "Monitor.Logstash.BaseUrl";
-        private const string NodeCountSettingName = "Monitor.Logstash.NodeCount";
+        private readonly MonitorConfiguration _monitorConfiguration;
+        private readonly ElasticsearchConfiguration _logstashConfiguration;
 
         public class DynamicJsonDeserializer : IDeserializer
         {
@@ -38,9 +35,10 @@
             }
         }
 
-        public CheckLogstashLogs(IConfigurationManager configurationManager, ILogService logger)
+        public CheckLogstashLogs(IConfigurationService configurationService, ILogService logger)
         {
-            _configurationManager = configurationManager;
+            _monitorConfiguration = configurationService.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
+            _logstashConfiguration = configurationService.Get<ElasticsearchConfiguration>(ElasticsearchConfiguration.LogstashConfigurationName);
             _logger = logger;
         }
 
@@ -59,22 +57,22 @@
 
         private void EnsureExpectedNumberOfMessagesLoggedInTimeframe()
         {
-            var timeframeStart = DateTime.Now.AddMinutes(-ExpectedTimeframeInMinutes);
+            var timeframeStart = DateTime.Now.AddMinutes(-_monitorConfiguration.ExpectedTimeframeInMinutes);
 
             var timestamps = GetRecentLogEntryTimestamps();
             var actualLogCount = timestamps.Count(timestamp => timestamp >= timeframeStart);
 
             _logger.Debug("Looking for {0} Logstash message(s) in last {1} minute(s), saw {2}.",
-                ExpectedMinimumLogCount, ExpectedTimeframeInMinutes, actualLogCount);
+                _monitorConfiguration.ExpectedMinimumLogCount, _monitorConfiguration.ExpectedTimeframeInMinutes, actualLogCount);
 
-            if (actualLogCount >= ExpectedMinimumLogCount)
+            if (actualLogCount >= _monitorConfiguration.ExpectedMinimumLogCount)
             {
                 return;
             }
 
             var message = string.Format(
                 "Expected {0} Logstash message(s) in last {1} minute(s), saw {2}.",
-                ExpectedMinimumLogCount, ExpectedTimeframeInMinutes, actualLogCount);
+                _monitorConfiguration.ExpectedMinimumLogCount, _monitorConfiguration.ExpectedTimeframeInMinutes, actualLogCount);
 
             throw new Exception(message);
         }
@@ -129,7 +127,7 @@
 
         private RestClient CreateRestClient()
         {
-            var client = new RestClient(BaseUrl);
+            var client = new RestClient(_logstashConfiguration.HostName);
 
             client.AddHandler("application/json", new DynamicJsonDeserializer());
 
@@ -141,7 +139,7 @@
             var request = new RestRequest(uri, Method.GET)
             {
                 RequestFormat = DataFormat.Json,
-                Timeout = Timeout * 1000
+                Timeout = _logstashConfiguration.Timeout * 1000
             };
 
             request.AddHeader("Accept", "application/json");
@@ -152,7 +150,7 @@
         private string BuildUri(DateTime indexDate)
         {
             const string format = "logstash-{0}/logstash/_search?sort=@timestamp:desc&fields=@timestamp&size={1}";
-            var uri = string.Format(format, indexDate.ToString("yyyy.MM.dd"), ExpectedMinimumLogCount);
+            var uri = string.Format(format, indexDate.ToString("yyyy.MM.dd"), _monitorConfiguration.ExpectedMinimumLogCount);
 
             return uri;
         }
@@ -176,15 +174,15 @@
                 return;
             }
 
-            var message = string.Format("Logstash elastic cluster health check timed out ({0}).", Timeout);
+            var message = string.Format("Logstash elastic cluster health check timed out ({0}).", _logstashConfiguration.Timeout);
 
             throw new Exception(message);
         }
 
         private void EnsureExpectedNumberOfNodes(IHealthResponse response)
         {
-            if (NodeCount == response.NumberOfNodes) { return; }
-            var message = string.Format("Expected {0} Elasticsearch node(s), saw {1}.", NodeCount, response.NumberOfNodes);
+            if (_logstashConfiguration.NodeCount == response.NumberOfNodes) { return; }
+            var message = string.Format("Expected {0} Elasticsearch node(s), saw {1}.", _logstashConfiguration.NodeCount, response.NumberOfNodes);
             throw new Exception(message);
         }
 
@@ -196,15 +194,15 @@
             }
 
             //Clusters with only one node allways have status of "yellow"
-            if ((health.Status == "yellow" && NodeCount > 1) || health.Status == "red")
+            if ((health.Status == "yellow" && _logstashConfiguration.NodeCount > 1) || health.Status == "red")
             {
                 var statusMessage = string.Format("Cluster is unhealthy: \"{0}\". Advise checking cluster if this message is logged again.", health.Status);
                 _logger.Warn(statusMessage);
             }
 
-            if (health.NumberOfNodes != NodeCount)
+            if (health.NumberOfNodes != _logstashConfiguration.NodeCount)
             {
-                var message = string.Format("Cluster should contain {0} nodes, but only has {1}.", NodeCount, health.NumberOfNodes);
+                var message = string.Format("Cluster should contain {0} nodes, but only has {1}.", _logstashConfiguration.NodeCount, health.NumberOfNodes);
                 _logger.Warn(message);
             }
         }
@@ -216,55 +214,11 @@
                 Level = Level.Cluster,
                 //http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/cluster-health.html
                 WaitForStatus = WaitForStatus.Yellow,
-                Timeout = Timeout.ToString()
+                Timeout = _logstashConfiguration.Timeout.ToString()
             };
 
-            var client = new ElasticClient(new ConnectionSettings(new Uri(BaseUrl)));
+            var client = new ElasticClient(new ConnectionSettings(new Uri(_logstashConfiguration.HostName)));
             return client.ClusterHealth(request);
-        }
-
-        #endregion
-
-        #region Settings
-
-        private int ExpectedMinimumLogCount
-        {
-            get
-            {
-                return _configurationManager.GetAppSetting<int>(ExpectedLogCountSettingName);
-            }
-        }
-
-        private int ExpectedTimeframeInMinutes
-        {
-            get
-            {
-                return _configurationManager.GetAppSetting<int>(ExpectedLogTimeframeInMinutesSettingName);
-            }
-        }
-
-        private int Timeout
-        {
-            get
-            {
-                return _configurationManager.GetAppSetting<int>(TimeoutSettingName);
-            }
-        }
-
-        private string BaseUrl
-        {
-            get
-            {
-                return _configurationManager.GetAppSetting(BaseUrlSettingName);
-            }
-        }
-
-        private int NodeCount
-        {
-            get
-            {
-                return _configurationManager.GetAppSetting<int>(NodeCountSettingName);
-            }
         }
 
         #endregion

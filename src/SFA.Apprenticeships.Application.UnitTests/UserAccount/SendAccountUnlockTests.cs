@@ -98,7 +98,7 @@
             });
 
             _configurationService.Setup(
-                x => x.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName))
+                x => x.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName))
                 .Returns(new UserAccountConfiguration() {UnlockCodeExpiryDays = 30});
 
             return new SendAccountUnlockCodeStrategy(_configurationService.Object, _userReadRepository.Object,
