@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.UserAccount.Configuration;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
@@ -16,13 +17,15 @@
         private const string HelpdeskEmailAddress = "helpdesk@gmail.com";
 
         private readonly Mock<ICommunicationService> _communicationService = new Mock<ICommunicationService>();
-        private readonly Mock<IConfigurationManager> _configurationManager = new Mock<IConfigurationManager>();
+        private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private readonly Mock<IContactMessageRepository> _contactMessageRepository = new Mock<IContactMessageRepository>();
 
         [SetUp]
         public void SetUp()
         {
-            _configurationManager.Setup(cm => cm.GetAppSetting<string>("HelpdeskEmailAddress")).Returns(HelpdeskEmailAddress);
+            _configurationService.Setup(
+                cm => cm.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName))
+                .Returns(new UserAccountConfiguration() {HelpdeskEmailAddress = HelpdeskEmailAddress});
         }
 
         [Test]
@@ -30,7 +33,7 @@
         {
             // Arrange.
             var strategy = new Application.Candidate.Strategies.SubmitContactMessageStrategy(
-                _communicationService.Object, _configurationManager.Object, _contactMessageRepository.Object);
+                _communicationService.Object, _configurationService.Object, _contactMessageRepository.Object);
 
             // Act.
             strategy.SubmitMessage(new ContactMessage());
@@ -47,7 +50,7 @@
         {
             // Arrange.
             var strategy = new Application.Candidate.Strategies.SubmitContactMessageStrategy(
-                _communicationService.Object, _configurationManager.Object, _contactMessageRepository.Object);
+                _communicationService.Object, _configurationService.Object, _contactMessageRepository.Object);
 
             var contactMessage = new ContactMessage
             {

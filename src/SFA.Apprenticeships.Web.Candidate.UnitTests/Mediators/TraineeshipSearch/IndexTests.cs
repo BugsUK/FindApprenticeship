@@ -7,6 +7,7 @@
     using Common.Providers;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
+    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -37,9 +38,10 @@
 
         private static ITraineeshipSearchMediator GetMediator()
         {
-            var configurationManager = new Mock<IConfigurationManager>();
+            var configurationService = new Mock<IConfigurationService>();
 
-            configurationManager.Setup(cm => cm.GetAppSetting<int>("VacancyResultsPerPage")).Returns(5);
+            configurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
 
             var searchProvider = new Mock<ISearchProvider>();
             var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
@@ -47,6 +49,7 @@
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
 
             return GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object);
+            return GetMediator(configurationService.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object);
         }
     }
 }

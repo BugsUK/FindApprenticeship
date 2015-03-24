@@ -16,7 +16,6 @@
         private const string CollectionName = "contactmessages";
         private static readonly Guid TestUserId = Guid.NewGuid();
 
-        private IConfigurationManager _configurationManager;
         private IContactMessageRepository _repository;
 
         private MongoDatabase _database;
@@ -26,10 +25,9 @@
         [SetUp]
         public void SetUp()
         {
-            _configurationManager = Container.GetInstance<IConfigurationManager>();
             _repository = Container.GetInstance<IContactMessageRepository>();
 
-            var mongoConnectionString = _configurationManager.GetAppSetting("Communications.mongoDB");
+            var mongoConnectionString = MongoConfiguration.CommunicationsDb;
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
 
             _database = new MongoClient(mongoConnectionString)

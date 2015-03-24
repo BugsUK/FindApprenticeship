@@ -5,18 +5,18 @@
     using Candidate.Validators;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
     using Moq;
 
     public class LoginMediatorBuilder
     {
         private Mock<IUserDataProvider> _userDataProvider;
         private Mock<ICandidateServiceProvider> _candidateServiceProvider;
-        private Mock<IConfigurationManager> _configurationManager;
+        private Mock<IConfigurationService> _configurationService;
 
         public LoginMediatorBuilder()
         {
             _userDataProvider = new Mock<IUserDataProvider>();
-            _configurationManager = new Mock<IConfigurationManager>();
             _candidateServiceProvider = new Mock<ICandidateServiceProvider>();
         }
 
@@ -32,15 +32,22 @@
             return this;
         }
 
-        public LoginMediatorBuilder With(Mock<IConfigurationManager> configurationManager)
+        public LoginMediatorBuilder With(Mock<IConfigurationService> configurationService)
         {
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
             return this;
         }
 
         public LoginMediator Build()
         {
-            var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationManager.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator());
+            if (_configurationService == null)
+            {
+                _configurationService = new Mock<IConfigurationService>();
+                _configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                    .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
+            }
+
+            var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationService.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator());
             return mediator;
         }
     }

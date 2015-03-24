@@ -98,6 +98,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\PostcodeConfiguration.cs" />
     <Compile Include="Entities\PostcodeInfo.cs" />
     <Compile Include="Entities\PostcodeInfoResult.cs" />
     <Compile Include="IoC\PostcodeRegistry.cs" />

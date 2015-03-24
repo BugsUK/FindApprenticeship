@@ -8,13 +8,14 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
     using Providers;
     using Validators;
     using ViewModels.Login;
 
     public class LoginMediator : MediatorBase, ILoginMediator
     {
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
         private readonly IUserDataProvider _userDataProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
@@ -23,14 +24,14 @@
 
         public LoginMediator(IUserDataProvider userDataProvider, 
             ICandidateServiceProvider candidateServiceProvider,
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationService,
             LoginViewModelServerValidator loginViewModelServerValidator, 
             AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
             ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator)
         {
             _userDataProvider = userDataProvider;
             _candidateServiceProvider = candidateServiceProvider;
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
             _resendAccountUnlockCodeViewModelServerValidator = resendAccountUnlockCodeViewModelServerValidator;
@@ -69,7 +70,7 @@
                     var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
                     result.ReturnUrl = returnUrl;
 
-                    if (result.AcceptedTermsAndConditionsVersion != _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
+                    if (result.AcceptedTermsAndConditionsVersion != _configurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).TermsAndConditionsVersion)
                     {
                         return returnUrl.IsValidReturnUrl()
                             ? GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, result, parameters: returnUrl)

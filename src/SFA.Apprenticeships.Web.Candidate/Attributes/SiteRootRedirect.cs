@@ -2,14 +2,15 @@
 {
     using System.Web.Mvc;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
 
     public class SiteRootRedirect : ActionFilterAttribute
     {
-        public IConfigurationManager ConfigurationManager { get; set; }
+        public IConfigurationService ConfigurationService { get; set; }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var redirectUrl = ConfigurationManager.TryGetAppSetting("SiteRootRedirectUrl");
+            var redirectUrl = ConfigurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).SiteRootRedirectUrl;
 
             if (!string.IsNullOrEmpty(redirectUrl))
             {

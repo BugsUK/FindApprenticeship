@@ -7,6 +7,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
+    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -24,10 +25,11 @@
 
             var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
             candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
-            var configurationManagerMock = new Mock<IConfigurationManager>();
-            configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
+            var configurationServiceMock = new Mock<IConfigurationService>();
+            configurationServiceMock.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() {TermsAndConditionsVersion = "1.1"});
             candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(true);
-            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationManagerMock).Build();
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationServiceMock).Build();
 
             var response = accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
@@ -44,10 +46,11 @@
 
             var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
             candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
-            var configurationManagerMock = new Mock<IConfigurationManager>();
-            configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
+            var configurationServiceMock = new Mock<IConfigurationService>();
+            configurationServiceMock.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() { TermsAndConditionsVersion = "1.1" });
             candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(true);
-            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationManagerMock).Build();
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationServiceMock).Build();
 
             var response = accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
@@ -64,10 +67,11 @@
 
             var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
             candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
-            var configurationManagerMock = new Mock<IConfigurationManager>();
-            configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
+            var configurationServiceMock = new Mock<IConfigurationService>();
+            configurationServiceMock.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() { TermsAndConditionsVersion = "1.1" });
             candidateServiceProviderMock.Setup(x => x.AcceptTermsAndConditions(It.IsAny<Guid>(), It.IsAny<string>())).Returns(false);
-            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationManagerMock).Build();
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationServiceMock).Build();
 
             var response = accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 
@@ -79,9 +83,10 @@
         {
             var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
             candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Throws<Exception>();
-            var configurationManagerMock = new Mock<IConfigurationManager>();
-            configurationManagerMock.Setup(x => x.GetAppSetting<string>("TermsAndConditionsVersion")).Returns("1.1");
-            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationManagerMock).Build();
+            var configurationServiceMock = new Mock<IConfigurationService>();
+            configurationServiceMock.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() { TermsAndConditionsVersion = "1.1" });
+            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(configurationServiceMock).Build();
 
             var response = accountMediator.AcceptTermsAndConditions(Guid.NewGuid());
 

@@ -11,6 +11,7 @@
     using Entities;
     using Infrastructure.Repositories.Applications.Entities;
     using Mongo.Common;
+    using Mongo.Common.Configuration;
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
@@ -22,9 +23,10 @@
         private readonly IMapper _mapper;
         private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public TraineeshipApplicationDiagnosticsRepository(IConfigurationManager configurationManager, IMapper mapper, ICandidateReadRepository candidateReadRepository, ILogService logger)
-            : base(configurationManager, "Applications.mongoDB", "traineeships")
+        public TraineeshipApplicationDiagnosticsRepository(IConfigurationService configurationService, IMapper mapper, ICandidateReadRepository candidateReadRepository, ILogService logger)
         {
+            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            Initialise(config.ApplicationsDb, "traineeships");
             _mapper = mapper;
             _candidateReadRepository = candidateReadRepository;
             _logger = logger;

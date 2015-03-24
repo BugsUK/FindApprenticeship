@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
@@ -19,7 +20,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly int _activationCodeExpiryDays;
 
-        public ResendActivationCodeStrategy(IConfigurationManager configurationManager,ICommunicationService communicationService,
+        public ResendActivationCodeStrategy(IConfigurationService configurationService,ICommunicationService communicationService,
             ICandidateReadRepository candidateReadRepository, ICodeGenerator codeGenerator,
             IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository)
         {
@@ -28,7 +29,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _codeGenerator = codeGenerator;
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
-            _activationCodeExpiryDays = configurationManager.GetAppSetting<int>("ActivationCodeExpiryDays");
+            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName).ActivationCodeExpiryDays;
         }
 
         public void ResendActivationCode(string username)

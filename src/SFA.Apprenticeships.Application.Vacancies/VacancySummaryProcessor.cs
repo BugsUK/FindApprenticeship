@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Configuration;
@@ -15,8 +16,6 @@
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {
         private readonly ILogService _logger;
-
-        private const string VacancyAboutToExpireNotificationHours = "VacancyAboutToExpireNotificationHours";
         private readonly int _vacancyAboutToExpireNotificationHours;
 
         private readonly IMessageBus _messageBus;
@@ -28,14 +27,14 @@
                                        IVacancyIndexDataProvider vacancyIndexDataProvider,
                                        IMapper mapper,
                                        IJobControlQueue<StorageQueueMessage> jobControlQueue, 
-                                       IConfigurationManager configurationManager, ILogService logger)
+                                       IConfigurationService configurationService, ILogService logger)
         {
             _messageBus = messageBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
             _jobControlQueue = jobControlQueue;
             _logger = logger;
-            _vacancyAboutToExpireNotificationHours = configurationManager.GetAppSetting<int>(VacancyAboutToExpireNotificationHours);
+            _vacancyAboutToExpireNotificationHours = configurationService.Get<ApplicationVacancyConfiguration>(ApplicationVacancyConfiguration.ConfigurationName).VacancyAboutToExpireNotificationHours;
         }
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)

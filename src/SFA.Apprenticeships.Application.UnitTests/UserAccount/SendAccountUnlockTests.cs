@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Application.UserAccount.Configuration;
     using Application.UserAccount.Strategies;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -58,7 +59,7 @@
 
     public class SendAccountUnlockCodeStrategyBuilder
     {
-        private readonly Mock<IConfigurationManager> _configurationManager = new Mock<IConfigurationManager>();
+        private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private readonly Mock<IUserReadRepository> _userReadRepository = new Mock<IUserReadRepository>();
         private readonly Mock<ICandidateReadRepository> _candidateReadRepository = new Mock<ICandidateReadRepository>();
         private Mock<ILockUserStrategy> _lockUserStrategy = new Mock<ILockUserStrategy>();
@@ -96,7 +97,11 @@
                 RegistrationDetails = new RegistrationDetails()
             });
 
-            return new SendAccountUnlockCodeStrategy(_configurationManager.Object, _userReadRepository.Object,
+            _configurationService.Setup(
+                x => x.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName))
+                .Returns(new UserAccountConfiguration() {UnlockCodeExpiryDays = 30});
+
+            return new SendAccountUnlockCodeStrategy(_configurationService.Object, _userReadRepository.Object,
                 _candidateReadRepository.Object, _lockUserStrategy.Object, _communicationService.Object);
         }
     }

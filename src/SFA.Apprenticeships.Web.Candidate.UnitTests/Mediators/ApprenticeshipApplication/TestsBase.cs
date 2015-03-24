@@ -5,13 +5,14 @@
     using Candidate.Validators;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
     public abstract class TestsBase
     {
         protected Mock<IApprenticeshipApplicationProvider> ApprenticeshipApplicationProvider;
-        protected Mock<IConfigurationManager> ConfigurationManager;
+        protected Mock<IConfigurationService> ConfigurationService;
         protected Mock<IUserDataProvider> UserDataProvider;
         protected IApprenticeshipApplicationMediator Mediator;
 
@@ -19,9 +20,11 @@
         public void Setup()
         {
             ApprenticeshipApplicationProvider = new Mock<IApprenticeshipApplicationProvider>();
-            ConfigurationManager = new Mock<IConfigurationManager>();
+            ConfigurationService = new Mock<IConfigurationService>();
+            ConfigurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() { VacancyResultsPerPage = 5 });
             UserDataProvider = new Mock<IUserDataProvider>();
-            Mediator = new ApprenticeshipApplicationMediator(ApprenticeshipApplicationProvider.Object, new ApprenticeshipApplicationViewModelServerValidator(), new ApprenticeshipApplicationViewModelSaveValidator(), ConfigurationManager.Object, UserDataProvider.Object);
+            Mediator = new ApprenticeshipApplicationMediator(ApprenticeshipApplicationProvider.Object, new ApprenticeshipApplicationViewModelServerValidator(), new ApprenticeshipApplicationViewModelSaveValidator(), ConfigurationService.Object, UserDataProvider.Object);
         }
     }
 }

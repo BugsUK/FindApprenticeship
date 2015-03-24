@@ -3,14 +3,21 @@
     using Candidate.Mediators.Search;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class SearchMediatorBaseTests : SearchMediatorBase
+    public class SearchMediatorBaseTests
     {
-        public SearchMediatorBaseTests() : base(new Mock<IConfigurationManager>().Object, new Mock<IUserDataProvider>().Object)
+        private readonly SearchMediatorBaseTestClass _testClass;
+
+        public SearchMediatorBaseTests()
         {
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName)).Returns(new WebConfiguration());
+            var userDataProvider = new Mock<IUserDataProvider>();
+            _testClass = new SearchMediatorBaseTestClass(configurationService.Object, userDataProvider.Object);
         }
 
         [TestCase(null, 0, false)]
@@ -34,9 +41,23 @@
         public void TryParseVacancyIdTests(string vacancyIdString, int expectedVacancyId, bool expectSuccess)
         {
             int vacancyId;
-            var success = TryParseVacancyId(vacancyIdString, out vacancyId);
+            var success = _testClass.TryParseVacancyIdForTest(vacancyIdString, out vacancyId);
             Assert.AreEqual(expectedVacancyId, vacancyId);
             Assert.AreEqual(expectSuccess, success);
         }
+        
+        private class SearchMediatorBaseTestClass : SearchMediatorBase 
+        {
+            public SearchMediatorBaseTestClass(IConfigurationService configurationService,
+                IUserDataProvider userDataProvider)
+                : base(configurationService, userDataProvider)
+            {
+            }
+                public bool TryParseVacancyIdForTest(string vacancyIdString, out int vacancyId)
+                {
+                    return TryParseVacancyId(vacancyIdString, out vacancyId);
+                }
+        }
+
     }
 }

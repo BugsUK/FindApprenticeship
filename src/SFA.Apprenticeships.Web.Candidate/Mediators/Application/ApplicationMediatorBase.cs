@@ -9,7 +9,8 @@
 
     public abstract class ApplicationMediatorBase : SearchMediatorBase
     {
-        protected ApplicationMediatorBase(IConfigurationManager configManager, IUserDataProvider userDataProvider) : base(configManager, userDataProvider)
+        protected ApplicationMediatorBase(IConfigurationService configService, IUserDataProvider userDataProvider)
+            : base(configService, userDataProvider)
         {
         }
 

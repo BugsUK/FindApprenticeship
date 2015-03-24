@@ -22,14 +22,14 @@
         private readonly ITraineeshipVacancyProvider _traineeshipVacancyProvider;
 
         public TraineeshipSearchMediator(
-            IConfigurationManager configManager,
+            IConfigurationService configService,
             ISearchProvider searchProvider,
             ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
             IUserDataProvider userDataProvider,
             TraineeshipSearchViewModelServerValidator searchRequestValidator,
             TraineeshipSearchViewModelLocationValidator searchLocationValidator,
             ITraineeshipVacancyProvider traineeshipVacancyProvider)
-            : base(configManager, userDataProvider)
+            : base(configService, userDataProvider)
         {
             _searchProvider = searchProvider;
             _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;

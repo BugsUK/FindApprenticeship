@@ -113,6 +113,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\CommunicationConfiguration.cs" />
     <Compile Include="Configuration\ReachSmsConfiguration.cs" />
     <Compile Include="Configuration\SendGridConfiguration.cs" />
     <Compile Include="Email\EmailFromResolvers\CandidateMessageEmailFromResolver.cs" />

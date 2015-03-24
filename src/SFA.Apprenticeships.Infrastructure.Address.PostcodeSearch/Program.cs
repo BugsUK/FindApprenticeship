@@ -6,6 +6,9 @@ using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
 
 namespace SFA.Apprenticeships.Infrastructure.Address.PostcodeSearch
 {
+    using Common.Configuration;
+    using Logging;
+
     class Program
     {
         static void Main(string[] args)
@@ -14,8 +17,9 @@ namespace SFA.Apprenticeships.Infrastructure.Address.PostcodeSearch
             var size = int.Parse(args[1]);
 
             Console.WriteLine("Scroll: {0}, Size {1}", scroll, size);
-            
-            var clientFactory = new ElasticsearchClientFactory(ElasticsearchConfiguration.Instance, false);
+
+            var configurationService = new ConfigurationService(new ConfigurationManager(), new NLogLogService(typeof (Program)));
+            var clientFactory = new ElasticsearchClientFactory(configurationService, new NLogLogService(typeof (ElasticsearchClientFactory)), false);
             var client = clientFactory.GetElasticClient();
 
             Console.WriteLine("Connected. Press any key to start");

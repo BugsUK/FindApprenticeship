@@ -12,6 +12,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
+    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -207,13 +208,14 @@
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
             const string returnUrl = "/allowedasolutoepath";
-            var configurationManager = new Mock<IConfigurationManager>();
-            configurationManager.Setup(x => x.GetAppSetting<string>(It.IsAny<string>())).Returns("2");
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() {TermsAndConditionsVersion = "2", VacancyResultsPerPage = 5});
             var userDataProvider = new Mock<IUserDataProvider>();
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().WithAcceptedTermsAndConditionsVersion("1").Build);
-            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).With(configurationManager).Build();
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).With(configurationService).Build();
 
             var response = mediator.Index(viewModel);
 

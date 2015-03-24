@@ -1,9 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.Location;
+    using Configuration;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Configuration;
@@ -14,9 +16,10 @@
     {
         private readonly ILogService _logger;
 
-        public PostcodeLookupProvider(IConfigurationManager configurationManager, ILogService logger) : 
-            base(configurationManager.GetAppSetting("PostcodeServiceEndpoint"))
+        public PostcodeLookupProvider(IConfigurationService configurationService, ILogService logger)
         {
+            var config = configurationService.Get<PostcodeConfiguration>(PostcodeConfiguration.PostcodeConfigurationName);
+            BaseUrl = new Uri(config.ServiceEndpoint);
             _logger = logger;
         }
 

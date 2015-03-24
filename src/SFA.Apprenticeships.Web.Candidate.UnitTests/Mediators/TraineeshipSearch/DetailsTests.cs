@@ -12,6 +12,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
+    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -131,7 +132,9 @@
 
         private ITraineeshipSearchMediator GetMediator(TraineeshipVacancyDetailViewModel vacancyDetailViewModel)
         {
-            var configurationManager = new Mock<IConfigurationManager>();
+            var configurationManager = new Mock<IConfigurationService>();
+            configurationManager.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             var searchProvider = new Mock<ISearchProvider>();
             var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
 

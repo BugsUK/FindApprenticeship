@@ -16,6 +16,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
@@ -33,7 +34,7 @@
         private readonly string[] _blacklistedCategoryCodes;
 
         public ApprenticeshipSearchMediator(
-            IConfigurationManager configManager,
+            IConfigurationService configService,
             ISearchProvider searchProvider,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ICandidateServiceProvider candidateServiceProvider,
@@ -42,7 +43,7 @@
             ApprenticeshipSearchViewModelServerValidator searchRequestValidator,
             ApprenticeshipSearchViewModelLocationValidator searchLocationValidator,
             IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)
-            : base(configManager, userDataProvider)
+            : base(configService, userDataProvider)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _searchProvider = searchProvider;
@@ -51,7 +52,7 @@
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
-            _blacklistedCategoryCodes = configManager.GetAppSetting("BlacklistedCategoryCodes").Split(',');
+            _blacklistedCategoryCodes = configService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).BlacklistedCategoryCodes.Split(',');
         }
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index(ApprenticeshipSearchMode searchMode)

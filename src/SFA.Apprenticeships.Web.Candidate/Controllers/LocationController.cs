@@ -7,6 +7,7 @@
     using System.Web.Mvc;
     using Domain.Interfaces.Configuration;
     using Constants;
+    using Infrastructure.Web.Configuration;
     using Providers;
     using ViewModels.VacancySearch;
     using Common.Attributes;
@@ -16,10 +17,10 @@
         private readonly int _locationResultLimit;
         private readonly ISearchProvider _searchProvider;
 
-        public LocationController(IConfigurationManager configManager, ISearchProvider searchProvider)
+        public LocationController(IConfigurationService configService, ISearchProvider searchProvider)
         {
             _searchProvider = searchProvider;
-            _locationResultLimit = configManager.GetAppSetting<int>("LocationResultLimit");
+            _locationResultLimit = configService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).LocationResultLimit;
         }
 
         [HttpGet]

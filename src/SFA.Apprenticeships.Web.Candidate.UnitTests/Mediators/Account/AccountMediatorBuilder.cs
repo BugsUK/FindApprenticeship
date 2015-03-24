@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
         private IAccountProvider _accountProvider = new Mock<IAccountProvider>().Object;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
         private Mock<VerifyMobileViewModelServerValidator> _verifyMobileViewModelServerValidatorMock = new Mock<VerifyMobileViewModelServerValidator>();
-        private Mock<IConfigurationManager> _configurationManagerMock = new Mock<IConfigurationManager>();
+        private Mock<IConfigurationService> _configurationServiceMock = new Mock<IConfigurationService>();
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
 
         public AccountMediatorBuilder With(Mock<IApprenticeshipVacancyDetailProvider> apprenticeshipVacancyDetailProvider)
@@ -55,9 +55,9 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             return this;
         }
 
-        public AccountMediatorBuilder With(Mock<IConfigurationManager> configurationManager)
+        public AccountMediatorBuilder With(Mock<IConfigurationService> configurationService)
         {
-            _configurationManagerMock = configurationManager;
+            _configurationServiceMock = configurationService;
             return this;
         }
 
@@ -69,7 +69,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
                 _apprenticeshipApplicationProviderMock.Object,
                 _apprenticeshipVacancyDetailProvider.Object,
                 _traineeshipVacancyDetailProvider.Object,
-                _configurationManagerMock.Object,
+                _configurationServiceMock.Object,
                 _verifyMobileViewModelServerValidatorMock.Object);
         }
     }

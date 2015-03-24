@@ -86,6 +86,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\UserAccountConfiguration.cs" />
     <Compile Include="RandomCodeGenerator.cs" />
     <Compile Include="StaticCodeGenerator.cs" />
     <Compile Include="Strategies\ILockAccountStrategy.cs" />

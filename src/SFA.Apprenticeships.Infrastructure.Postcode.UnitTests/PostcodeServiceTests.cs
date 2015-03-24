@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.UnitTests
 {
     using Application.Interfaces.Logging;
+    using Configuration;
     using Moq;
     using NUnit.Framework;
     using RestSharp;
@@ -16,10 +17,9 @@
         [SetUp]
         public void SetUp()
         {
-            var configurationManager = new Mock<IConfigurationManager>();
-            configurationManager.Setup(cm => cm.GetAppSetting("PostcodeServiceEndpoint"))
-                .Returns("http://api.postodes.io");
-            _postcodeService = new Mock<PostcodeLookupProvider>(MockBehavior.Loose, configurationManager.Object, new Mock<ILogService>().Object) { CallBase = true };
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(cm => cm.Get<PostcodeConfiguration>(PostcodeConfiguration.PostcodeConfigurationName)).Returns(new PostcodeConfiguration() { ServiceEndpoint = "http://api.postodes.io" });
+            _postcodeService = new Mock<PostcodeLookupProvider>(MockBehavior.Loose, configurationService.Object, new Mock<ILogService>().Object) { CallBase = true };
             _postcodeService.Setup(ps => ps.Execute<PostcodeInfoResult>(It.IsAny<IRestRequest>()))
                 .Returns(new RestResponse<PostcodeInfoResult>());
         }

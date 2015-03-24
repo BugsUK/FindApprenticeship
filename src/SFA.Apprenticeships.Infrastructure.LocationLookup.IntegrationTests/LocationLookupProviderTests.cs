@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Application.Location;
+    using Common.IoC;
     using Elastic.Common.IoC;
     using IoC;
     using Logging.IoC;
@@ -17,6 +18,7 @@
         {
             _container = new Container(x =>
             {
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

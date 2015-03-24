@@ -1,10 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
 {
     using System.Collections.Generic;
-    using System.Runtime.Remoting.Contexts;
     using Application.Interfaces.Communications;
-    using Common.Configuration;
-    using Configuration;
     using Domain.Interfaces.Configuration;
     using Email;
     using Email.EmailFromResolvers;
@@ -19,21 +16,8 @@
     {
         public CommunicationRegistry()
         {
-            IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> emailMessageFormatters = new[]
-            {
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendActivationCode, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendAccountUnlockCode, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendPasswordResetCode, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.PasswordChanged, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter(new ConfigurationManager())),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SavedSearchAlert, new EmailSavedSearchAlertMessageFormatter(new ConfigurationManager())),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactMessage, new EmailSimpleMessageFormatter())
-            };
-
             For<IEmailDispatcher>().Use<SendGridEmailDispatcher>().Named("SendGridEmailDispatcher")
-                .Ctor<IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>>>().Is(emailMessageFormatters);
+                .Ctor<IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>>>().Is(context => BuildEmailFormatters(context));
 
             For<IEmailFromResolver>().Use<CandidateMessageEmailFromResolver>();
             For<IEmailFromResolver>().Use<HelpDeskMessageEmailFromResolver>();
@@ -42,12 +26,32 @@
             For<ISmsDispatcher>().Use<VoidSmsDispatcher>().Name = "VoidSmsDispatcher";
 
             For<ISmsDispatcher>().Use<ReachSmsDispatcher>().Named("ReachSmsDispatcher")
-                .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(context => BuildFormatters(context))
+                .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(context => BuildSmsFormatters(context))
                 .Ctor<IRestClient>().Is(new RestClient())
                 .Ctor<ISmsNumberFormatter>().Is(new ReachSmsNumberFormatter());
         }
 
-        private IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> BuildFormatters(IContext context)
+        private IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> BuildEmailFormatters(IContext context)
+        {
+            var configurationService = context.GetInstance<IConfigurationService>();
+
+            IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> emailMessageFormatters = new[]
+            {
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendActivationCode, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendAccountUnlockCode, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendPasswordResetCode, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.PasswordChanged, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SavedSearchAlert, new EmailSavedSearchAlertMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactMessage, new EmailSimpleMessageFormatter())
+            };
+
+            return emailMessageFormatters;
+        }
+
+        private IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> BuildSmsFormatters(IContext context)
         {
             var configurationService = context.GetInstance<IConfigurationService>();
             IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> smsMessageFormatters = new[]

@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Configuration;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
@@ -8,20 +9,20 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
     public class SendAccountUnlockCodeStrategy : ISendAccountUnlockCodeStrategy
     {
-        private readonly IConfigurationManager _configurationManager;
+        private readonly int _unlockCodeExpiryDays;
         private readonly IUserReadRepository _userReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILockUserStrategy _lockUserStrategy;
         private readonly ICommunicationService _communicationService;
 
         public SendAccountUnlockCodeStrategy(
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationService,
             IUserReadRepository userReadRepository,
             ICandidateReadRepository candidateReadRepository,
             ILockUserStrategy lockUserStrategy,
             ICommunicationService communicationService)
         {
-            _configurationManager = configurationManager;
+            _unlockCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName).UnlockCodeExpiryDays;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
             _lockUserStrategy = lockUserStrategy;
@@ -42,12 +43,10 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 _lockUserStrategy.LockUser(user);
             }
 
-            var unlockCodeExpiryDays = _configurationManager.GetAppSetting<int>("UnlockCodeExpiryDays");
-
             var firstName = candidate.RegistrationDetails.FirstName;
             var emailAddress = candidate.RegistrationDetails.EmailAddress;
             var accountUnlockCode = user.AccountUnlockCode;
-            var expiryInDays = string.Format(unlockCodeExpiryDays == 1 ? "{0} day" : "{0} days", unlockCodeExpiryDays);
+            var expiryInDays = string.Format(_unlockCodeExpiryDays == 1 ? "{0} day" : "{0} days", _unlockCodeExpiryDays);
 
             var tokens = new[]
             {

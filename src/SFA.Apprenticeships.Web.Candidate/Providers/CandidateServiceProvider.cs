@@ -16,6 +16,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
+    using Infrastructure.Web.Configuration;
     using ViewModels;
     using ViewModels.Home;
     using ViewModels.Login;
@@ -33,7 +34,7 @@
     {
         private readonly ILogService _logger;
         private readonly ICandidateService _candidateService;
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
         private readonly IUserAccountService _userAccountService;
         private readonly IUserDataProvider _userDataProvider;
@@ -45,14 +46,14 @@
             IUserDataProvider userDataProvider,
             IAuthenticationTicketService authenticationTicketService,
             IMapper mapper,
-            IConfigurationManager configurationManager, ILogService logger)
+            IConfigurationService configurationService, ILogService logger)
         {
             _candidateService = candidateService;
             _userAccountService = userAccountService;
             _userDataProvider = userDataProvider;
             _authenticationTicketService = authenticationTicketService;
             _mapper = mapper;
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
             _logger = logger;
         }
 
@@ -135,7 +136,7 @@
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
-                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion);
+                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).TermsAndConditionsVersion;
 
                 _candidateService.Register(candidate, model.Password);
                 _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Unactivated);

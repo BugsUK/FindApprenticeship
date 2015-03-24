@@ -16,7 +16,6 @@
     [TestFixture]
     public class ApprenticeshipApplicationReadRepositoryTests : RepositoryIntegrationTest
     {
-        private IConfigurationManager _configurationManager;
         private IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private MongoDatabase _database;
@@ -27,11 +26,10 @@
         [SetUp]
         public void SetUp()
         {
-            _configurationManager = Container.GetInstance<IConfigurationManager>();
             _apprenticeshipApplicationReadRepository = Container.GetInstance<IApprenticeshipApplicationReadRepository>();
             _apprenticeshipApplicationWriteRepository = Container.GetInstance<IApprenticeshipApplicationWriteRepository>();
 
-            var mongoConnectionString = _configurationManager.GetAppSetting("Applications.mongoDB");
+            var mongoConnectionString = MongoConfiguration.ApplicationsDb;
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
 
             _database = new MongoClient(mongoConnectionString)

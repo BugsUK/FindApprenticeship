@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Application.UserAccount.Configuration;
     using Application.Vacancies;
+    using Application.Vacancies.Configuration;
     using Application.Vacancies.Entities;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
@@ -18,6 +20,8 @@
     [TestFixture]
     public class VacancySummaryProcessorTests
     {
+        const int VacancyAboutToExpireNotificationHours = 96;
+
         [SetUp]
         public void SetUp()
         {
@@ -25,15 +29,16 @@
             _messagingServiceMock = new Mock<IJobControlQueue<StorageQueueMessage>>();
             _mapperMock = new Mock<IMapper>();
             _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
-            _configurationManagerMock = new Mock<IConfigurationManager>();
+            _configurationServiceMock = new Mock<IConfigurationService>();
             _loggerMock = new Mock<ILogService>();
+            _configurationServiceMock.Setup(cmm => cmm.Get<ApplicationVacancyConfiguration>(ApplicationVacancyConfiguration.ConfigurationName)).Returns(new ApplicationVacancyConfiguration() { VacancyAboutToExpireNotificationHours = VacancyAboutToExpireNotificationHours });
         }
 
         private Mock<IMessageBus> _busMock;
         private Mock<IJobControlQueue<StorageQueueMessage>> _messagingServiceMock;
         private Mock<IMapper> _mapperMock;
         private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
-        private Mock<IConfigurationManager> _configurationManagerMock;
+        private Mock<IConfigurationService> _configurationServiceMock;
         private Mock<ILogService> _loggerMock;
 
         [TestCase(1)]
@@ -123,7 +128,7 @@
         private VacancySummaryProcessor GetGatewayVacancySummaryProcessor()
         {
             var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object,
-                _mapperMock.Object, _messagingServiceMock.Object, _configurationManagerMock.Object, _loggerMock.Object);
+                _mapperMock.Object, _messagingServiceMock.Object, _configurationServiceMock.Object, _loggerMock.Object);
             return vacancyConsumer;
         }
 
@@ -131,42 +136,36 @@
         public void ShouldNotQueueTheVacancyIfTheVacancyIsNotAboutToExpire()
         {
             const int aVacancyId = 5;
-            const int vacancyAboutToExpireNotificationHours = 96;
-            _configurationManagerMock.Setup(cmm => cmm.GetAppSetting<int>("VacancyAboutToExpireNotificationHours"))
-                .Returns(vacancyAboutToExpireNotificationHours);
             var vacancyConsumer = GetGatewayVacancySummaryProcessor();
 
             var vacancySummary = new ApprenticeshipSummary
             {
                 Id = aVacancyId,
-                ClosingDate = DateTime.Now.AddHours(vacancyAboutToExpireNotificationHours + 1)
+                ClosingDate = DateTime.Now.AddHours(VacancyAboutToExpireNotificationHours + 1)
             };
 
             vacancyConsumer.QueueVacancyIfExpiring(vacancySummary);
 
             _busMock.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)), Times.Never());
-            _configurationManagerMock.VerifyAll();
+            _configurationServiceMock.VerifyAll();
         }
 
         [Test]
         public void ShouldQueueTheVacancyIfTheVacancyIsAboutToExpire()
         {
             const int aVacancyId = 5;
-            const int vacancyAboutToExpireNotificationHours = 96;
-            _configurationManagerMock.Setup(cmm => cmm.GetAppSetting<int>("VacancyAboutToExpireNotificationHours"))
-                .Returns(vacancyAboutToExpireNotificationHours);
             var vacancyConsumer = GetGatewayVacancySummaryProcessor();
 
             var vacancySummary = new ApprenticeshipSummary
             {
                 Id = aVacancyId,
-                ClosingDate = DateTime.Now.AddHours(vacancyAboutToExpireNotificationHours - 1)
+                ClosingDate = DateTime.Now.AddHours(VacancyAboutToExpireNotificationHours - 1)
             };
 
             vacancyConsumer.QueueVacancyIfExpiring(vacancySummary);
 
             _busMock.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)));
-            _configurationManagerMock.VerifyAll();
+            _configurationServiceMock.VerifyAll();
         }
     }
 }

@@ -15,7 +15,6 @@
     [TestFixture]
     public class ExpiringApprenticeshipApplicationDraftsRepositoryTests : RepositoryIntegrationTest
     {
-        private IConfigurationManager _configurationManager;
         private IExpiringApprenticeshipApplicationDraftRepository _expiringDraftRepository;
         private MongoDatabase _database;
         private MongoCollection<MongoApprenticeshipApplicationExpiringDraft> _collection;
@@ -25,10 +24,9 @@
         [SetUp]
         public void SetUp()
         {
-            _configurationManager = Container.GetInstance<IConfigurationManager>();
             _expiringDraftRepository = Container.GetInstance<IExpiringApprenticeshipApplicationDraftRepository>();
 
-            var mongoConnectionString = _configurationManager.GetAppSetting("Communications.mongoDB");
+            var mongoConnectionString = MongoConfiguration.CommunicationsDb;
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
 
             _database = new MongoClient(mongoConnectionString)

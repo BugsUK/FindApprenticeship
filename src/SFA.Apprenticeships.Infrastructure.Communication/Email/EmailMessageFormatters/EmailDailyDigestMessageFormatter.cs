@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Text;
     using Application.Interfaces.Communications;
+    using Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Configuration;
@@ -17,9 +18,9 @@
 
         private readonly string _siteDomainName;
 
-        public EmailDailyDigestMessageFormatter(IConfigurationManager configurationManager)
+        public EmailDailyDigestMessageFormatter(IConfigurationService configurationService)
         {
-            _siteDomainName = configurationManager.GetAppSetting<string>("SiteDomainName");
+            _siteDomainName = configurationService.Get<CommunicationConfiguration>(CommunicationConfiguration.ConfigurationName).SiteDomainName;
         }
 
         public override void PopulateMessage(EmailRequest request, ISendGrid message)

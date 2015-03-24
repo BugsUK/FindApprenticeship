@@ -9,6 +9,7 @@
     using Common.Providers;
     using Common.Services;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
     using Moq;
 
     public class CandidateServiceProviderBuilder
@@ -17,7 +18,7 @@
         protected Mock<IUserAccountService> UserAccountService;
         protected Mock<IUserDataProvider> UserDataProvider;
         protected Mock<IAuthenticationTicketService> AuthenticationTicketService;
-        protected Mock<IConfigurationManager> ConfigurationManager;
+        protected Mock<IConfigurationService> ConfigurationService;
         protected Mock<ILogService> Logger;
         protected CandidateServiceProvider CandidateServiceProvider;
 
@@ -27,7 +28,9 @@
             UserAccountService = new Mock<IUserAccountService>();
             UserDataProvider = new Mock<IUserDataProvider>();
             AuthenticationTicketService = new Mock<IAuthenticationTicketService>();
-            ConfigurationManager = new Mock<IConfigurationManager>();
+            ConfigurationService = new Mock<IConfigurationService>();
+            ConfigurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                .Returns(new WebConfiguration() {TermsAndConditionsVersion = "Version 1"});
             Logger = new Mock<ILogService>();
         }
 
@@ -35,7 +38,7 @@
         {
             CandidateServiceProvider = new CandidateServiceProvider(CandidateService.Object, UserAccountService.Object,
                 UserDataProvider.Object, AuthenticationTicketService.Object,
-                new ApprenticeshipCandidateWebMappers(), ConfigurationManager.Object, Logger.Object);
+                new ApprenticeshipCandidateWebMappers(), ConfigurationService.Object, Logger.Object);
             return CandidateServiceProvider;
         }
 

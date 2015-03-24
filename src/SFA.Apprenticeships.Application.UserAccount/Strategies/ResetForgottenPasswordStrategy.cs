@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
@@ -24,7 +25,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository,
             IAuthenticationService authenticationService,
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationService,
             IUserWriteRepository userWriteRepository)
         {
             _communicationService = communicationService;
@@ -33,7 +34,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _userReadRepository = userReadRepository;
             _authenticationService = authenticationService;
             _userWriteRepository = userWriteRepository;
-            _maximumPasswordAttemptsAllowed = configurationManager.GetAppSetting<int>("MaximumPasswordAttemptsAllowed");
+            _maximumPasswordAttemptsAllowed = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName).MaximumPasswordAttemptsAllowed;
         }
 
         public void ResetForgottenPassword(string username, string passwordCode, string newPassword)

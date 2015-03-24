@@ -8,6 +8,7 @@
     using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.ReferenceData;
+    using Domain.Interfaces.Configuration;
     using LegacyReferenceDataProxy;
     using Wcf;
 
@@ -15,12 +16,12 @@
     {
         private readonly ILogService _logger;
         private readonly IWcfService<IReferenceData> _service;
-        private readonly ILegacyServicesConfiguration _legacyServicesConfiguration;
+        private readonly LegacyServicesConfiguration _legacyServicesConfiguration;
 
-        public ReferenceDataProvider(IWcfService<IReferenceData> service, ILegacyServicesConfiguration legacyServicesConfiguration, ILogService logger)
+        public ReferenceDataProvider(IWcfService<IReferenceData> service, IConfigurationService configurationService, ILogService logger)
         {
             _service = service;
-            _legacyServicesConfiguration = legacyServicesConfiguration;
+            _legacyServicesConfiguration = configurationService.Get<LegacyServicesConfiguration>(LegacyServicesConfiguration.ConfigurationName);
             _logger = logger;
         }
 

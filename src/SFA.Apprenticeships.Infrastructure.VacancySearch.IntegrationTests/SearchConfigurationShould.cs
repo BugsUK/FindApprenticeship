@@ -7,7 +7,7 @@
     using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
-    using VacancySearch.Configuration;
+    using Configuration;
 
     [TestFixture]
     public class SearchConfigurationShould
@@ -38,24 +38,24 @@
             jobFactors.PhraseProximity.Should().NotHaveValue();
             jobFactors.MinimumMatch.Should().Be("100%");
 
-            var descriptionFactors = config.DescriptionFactors;
-            descriptionFactors.Should().NotBeNull();
-            descriptionFactors.Boost.Should().Be(5d);
-            descriptionFactors.Fuzziness.Should().Be(1);
-            descriptionFactors.FuzzyPrefix.Should().Be(1);
-            descriptionFactors.MatchAllKeywords.Should().BeTrue();
-            descriptionFactors.PhraseProximity.Should().NotHaveValue();
-            descriptionFactors.MinimumMatch.Should().Be("100%");
-
-            //Not in config so should all be defaults
             var employerFactors = config.EmployerFactors;
             employerFactors.Should().NotBeNull();
-            employerFactors.Boost.Should().Be(1.0d);
+            employerFactors.Boost.Should().Be(5d);
             employerFactors.Fuzziness.Should().Be(1);
             employerFactors.FuzzyPrefix.Should().Be(1);
-            employerFactors.MatchAllKeywords.Should().BeFalse();
-            employerFactors.PhraseProximity.Should().Be(2);
-            employerFactors.MinimumMatch.Should().Be("2<75%");
+            employerFactors.MatchAllKeywords.Should().BeTrue();
+            employerFactors.PhraseProximity.Should().NotHaveValue();
+            employerFactors.MinimumMatch.Should().Be("100%");
+
+            //Not in config so should all be defaults
+            var desciptionfactors = config.DescriptionFactors;
+            desciptionfactors.Should().NotBeNull();
+            desciptionfactors.Boost.Should().Be(1.0d);
+            desciptionfactors.Fuzziness.Should().Be(1);
+            desciptionfactors.FuzzyPrefix.Should().Be(1);
+            desciptionfactors.MatchAllKeywords.Should().BeFalse();
+            desciptionfactors.PhraseProximity.Should().Be(2);
+            desciptionfactors.MinimumMatch.Should().Be("2<75%");
         }
     }
 }

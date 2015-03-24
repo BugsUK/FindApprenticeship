@@ -8,6 +8,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
     using Providers;
     using Validators;
     using ViewModels.Account;
@@ -18,7 +19,7 @@
         private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
         private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
         private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
         private readonly IAccountProvider _accountProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator;
@@ -31,7 +32,7 @@
             IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
             IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationService,
             VerifyMobileViewModelServerValidator mobileViewModelServerValidator)
         {
             _accountProvider = accountProvider;
@@ -39,7 +40,7 @@
             _settingsViewModelServerValidator = settingsViewModelServerValidator;
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
             _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
             _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
             _verifyMobileViewModelServerValidator = mobileViewModelServerValidator;
         }
@@ -175,7 +176,7 @@
             try
             {
                 var candidate = _candidateServiceProvider.GetCandidate(candidateId);
-                var currentTsAndCsVersion = _configurationManager.GetAppSetting<string>(Constants.Settings.TermsAndConditionsVersion);
+                var currentTsAndCsVersion = _configurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).TermsAndConditionsVersion;
 
                 if (candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion == currentTsAndCsVersion)
                 {

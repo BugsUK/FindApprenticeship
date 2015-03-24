@@ -716,6 +716,7 @@
     <Compile Include="Attributes\UserJourneyContextAttribute.cs" />
     <Compile Include="Configuration\FeatureToggle.cs" />
     <Compile Include="Configuration\IFeatureToggle.cs" />
+    <Compile Include="Configuration\WebConfiguration.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\CandidateRouteNames.cs" />
     <Compile Include="Constants\Pages\ApplicationPageMessages.cs" />
@@ -729,7 +730,6 @@
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
     <Compile Include="Constants\Pages\VerifyMobilePageMessages.cs" />
-    <Compile Include="Constants\Settings.cs" />
     <Compile Include="Constants\CandidateDataItemNames.cs" />
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyMobileViewModelMessages.cs" />

@@ -3,6 +3,7 @@
     using System;
     using Application.Authentication;
     using Application.Interfaces.Logging;
+    using Application.UserAccount.Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -14,16 +15,16 @@
     {
         private readonly ILogService _logger;
 
-        private readonly IConfigurationManager _configurationManager;
+        private readonly IConfigurationService _configurationService;
         private readonly IAuthenticationRepository _authenticationRepository;
         private readonly IPasswordHash _passwordHash;
 
         public UserDirectoryProvider(
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationService,
             IAuthenticationRepository authenticationRepository,
             IPasswordHash passwordHash, ILogService logger)
         {
-            _configurationManager = configurationManager;
+            _configurationService = configurationService;
             _authenticationRepository = authenticationRepository;
             _passwordHash = passwordHash;
             _logger = logger;
@@ -102,7 +103,11 @@
 
         private string SecretKey
         {
-            get { return _configurationManager.GetAppSetting("UserDirectory.SecretKey"); }
+            get
+            {
+                var config = _configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName);
+                return config.UserDirectorySecretKey;
+            }
         }
     }
 }

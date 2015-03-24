@@ -6,6 +6,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
+    using Mongo.Common.Configuration;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
@@ -19,8 +20,7 @@
         [SetUp]
         public void SetUp()
         {
-            var configurationManager = Container.GetInstance<IConfigurationManager>();
-            var mongoConnectionString = configurationManager.GetAppSetting("Applications.mongoDB");
+            var mongoConnectionString = MongoConfiguration.ApplicationsDb;
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
 
             var database = new MongoClient(mongoConnectionString)

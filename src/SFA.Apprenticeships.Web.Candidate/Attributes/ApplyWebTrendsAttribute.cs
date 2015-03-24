@@ -2,10 +2,11 @@
 {
     using System.Web.Mvc;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
 
     public class ApplyWebTrendsAttribute : ActionFilterAttribute
     {
-        public IConfigurationManager ConfigurationManager { get; set; }
+        public IConfigurationService ConfigurationService { get; set; }
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
@@ -15,12 +16,13 @@
                 return;
             }
 
-            viewResult.ViewBag.EnableWebTrends = ConfigurationManager.GetAppSetting<bool>("EnableWebTrends");
+            var webSettings = ConfigurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName);
+            viewResult.ViewBag.EnableWebTrends = webSettings.EnableWebTrends;
 
             if (viewResult.ViewBag.EnableWebTrends == true)
             {
-                viewResult.ViewBag.WebTrendsDscId = ConfigurationManager.GetAppSetting<string>("WebTrendsDscId");
-                viewResult.ViewBag.WebTrendsDomainName = ConfigurationManager.GetAppSetting<string>("SiteDomainName");
+                viewResult.ViewBag.WebTrendsDscId = webSettings.WebTrendsDscId;
+                viewResult.ViewBag.WebTrendsDomainName = webSettings.SiteDomainName;
             }
 
             base.OnActionExecuted(filterContext);

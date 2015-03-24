@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -20,7 +21,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
 
-        public SendPasswordResetCodeStrategy(IConfigurationManager configurationManager,
+        public SendPasswordResetCodeStrategy(IConfigurationService configurationService,
             ICommunicationService communicationService, ICodeGenerator codeGenerator,
             IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository,
             ICandidateReadRepository candidateReadRepository, ILogService logger)
@@ -31,7 +32,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _userWriteRepository = userWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _logger = logger;
-            _passwordResetCodeExpiryDays = configurationManager.GetAppSetting<int>("PasswordResetCodeExpiryDays");
+            _passwordResetCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName).PasswordResetCodeExpiryDays;
         }
 
         public void SendPasswordResetCode(string username)

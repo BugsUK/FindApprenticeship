@@ -5,12 +5,12 @@
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
-    using Constants;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Web.Configuration;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {
-        public IConfigurationManager ConfigurationManager { get; set; }
+        public IConfigurationService ConfigurationService { get; set; }
 
         public override void OnAuthorization(AuthorizationContext filterContext)
         {
@@ -34,7 +34,7 @@
             }
             else if (
                 !filterContext.RequestContext.HttpContext.Request.Path.ToLower().StartsWith("/updatedtermsandconditions") &&
-                userContext.AcceptedTermsAndConditionsVersion != ConfigurationManager.GetAppSetting<string>(Settings.TermsAndConditionsVersion))
+                userContext.AcceptedTermsAndConditionsVersion != ConfigurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).TermsAndConditionsVersion)
             {
                 var routeValues = new RouteValueDictionary
                 {

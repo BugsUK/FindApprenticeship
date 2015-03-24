@@ -22,8 +22,8 @@
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelFullValidator;
         private readonly ApprenticeshipApplicationViewModelSaveValidator _apprenticeshipApplicationViewModelSaveValidator;
 
-        public ApprenticeshipApplicationMediator(IApprenticeshipApplicationProvider apprenticeshipApplicationProvider, ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelFullValidator, ApprenticeshipApplicationViewModelSaveValidator apprenticeshipApplicationViewModelSaveValidator, IConfigurationManager configManager, IUserDataProvider userDataProvider)
-            : base(configManager, userDataProvider)
+        public ApprenticeshipApplicationMediator(IApprenticeshipApplicationProvider apprenticeshipApplicationProvider, ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelFullValidator, ApprenticeshipApplicationViewModelSaveValidator apprenticeshipApplicationViewModelSaveValidator, IConfigurationService configService, IUserDataProvider userDataProvider)
+            : base(configService, userDataProvider)
         {
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
             _apprenticeshipApplicationViewModelFullValidator = apprenticeshipApplicationViewModelFullValidator;

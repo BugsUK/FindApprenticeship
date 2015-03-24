@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.IntegrationTests
 {
     using Common.IoC;
+    using Domain.Interfaces.Configuration;
     using Logging.IoC;
+    using Mongo.Common.Configuration;
     using NUnit.Framework;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
@@ -12,6 +14,7 @@
     [SetUpFixture]
     public class RepositoryIntegrationTest
     {
+        protected MongoConfiguration MongoConfiguration;
         protected Container Container;
 
         [SetUp]
@@ -26,6 +29,9 @@
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
             });
+
+            var configurationManager = Container.GetInstance<IConfigurationService>();
+            MongoConfiguration = configurationManager.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
         }
     }
 }

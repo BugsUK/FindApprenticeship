@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Configuration;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
@@ -8,24 +9,24 @@
 
     public class LockUserStrategy : ILockUserStrategy
     {
-        private readonly IConfigurationManager _configurationManager;
+        private readonly UserAccountConfiguration _userAccountConfiguration;
         private readonly ICodeGenerator _codeGenerator;
         private readonly IUserWriteRepository _userWriteRepository;
 
         public LockUserStrategy(
-            IConfigurationManager configurationManager,
+            IConfigurationService configurationService,
             ICodeGenerator codeGenerator,
             IUserWriteRepository userWriteRepository)
         {
             _userWriteRepository = userWriteRepository;
-            _configurationManager = configurationManager;
             _codeGenerator = codeGenerator;
+            _userAccountConfiguration = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.UserAccountConfigurationName);
         }
 
         public void LockUser(User user)
         {
             // Create and set an unlock code, set code expiry, save user, send email containing unlock code.
-            var unlockCodeExpiryDays = _configurationManager.GetAppSetting<int>("UnlockCodeExpiryDays");
+            var unlockCodeExpiryDays = _userAccountConfiguration.UnlockCodeExpiryDays;
 
             var accountUnlockCode = _codeGenerator.GenerateAlphaNumeric();
             var expiry = DateTime.Now.AddDays(unlockCodeExpiryDays);

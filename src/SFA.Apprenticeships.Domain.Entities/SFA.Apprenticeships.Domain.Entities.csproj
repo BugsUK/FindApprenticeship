@@ -97,7 +97,6 @@
     <Compile Include="Communication\ContactMessage.cs" />
     <Compile Include="Communication\ApplicationStatusAlert.cs" />
     <Compile Include="Communication\ExpiringApprenticeshipApplicationDraft.cs" />
-    <Compile Include="Configuration\SettingsConfiguration.cs" />
     <Compile Include="Exceptions\BoundaryException.cs" />
     <Compile Include="Exceptions\CustomException.cs" />
     <Compile Include="ErrorCodes.cs" />

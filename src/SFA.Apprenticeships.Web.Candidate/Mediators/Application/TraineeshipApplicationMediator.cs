@@ -16,7 +16,8 @@
     {
         private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
 
-        public TraineeshipApplicationMediator(ITraineeshipApplicationProvider traineeshipApplicationProvider, IConfigurationManager configManager, IUserDataProvider userDataProvider) : base(configManager, userDataProvider)
+        public TraineeshipApplicationMediator(ITraineeshipApplicationProvider traineeshipApplicationProvider, IConfigurationService configService, IUserDataProvider userDataProvider)
+            : base(configService, userDataProvider)
         {
             _traineeshipApplicationProvider = traineeshipApplicationProvider;
         }

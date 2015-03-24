@@ -9,6 +9,7 @@
     using System.Xml;
     using System.Xml.Xsl;
     using Application.Interfaces.Communications;
+    using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -22,9 +23,9 @@
 
         private readonly string _siteDomainName;
 
-        public EmailSavedSearchAlertMessageFormatter(IConfigurationManager configurationManager)
+        public EmailSavedSearchAlertMessageFormatter(IConfigurationService configurationService)
         {
-            _siteDomainName = configurationManager.GetAppSetting<string>("SiteDomainName");
+            _siteDomainName = configurationService.Get<CommunicationConfiguration>(CommunicationConfiguration.ConfigurationName).SiteDomainName;
         }
 
         public override void PopulateMessage(EmailRequest request, ISendGrid message)
