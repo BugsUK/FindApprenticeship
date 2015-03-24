@@ -63,8 +63,8 @@
                 .Build();            
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
-            
-            //serviceMock.Setup(cs => cs.SendMessage(It.IsAny<EmployerEnquiry>()));
+
+            serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>(), It.IsAny<IEnumerable<CommunicationToken>>()));
             var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
 
             //Act
