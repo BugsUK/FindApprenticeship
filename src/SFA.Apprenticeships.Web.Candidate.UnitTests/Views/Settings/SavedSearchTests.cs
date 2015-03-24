@@ -1,13 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Settings
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Security.Policy;
     using Builders;
     using Candidate.ViewModels.Account;
     using FluentAssertions;
-    using HtmlAgilityPack;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 

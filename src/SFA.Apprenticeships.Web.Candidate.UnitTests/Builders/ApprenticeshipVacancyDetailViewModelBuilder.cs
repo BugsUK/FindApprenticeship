@@ -3,19 +3,19 @@
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
 
-    public class VacancyDetailViewModelBuilder
+    public class ApprenticeshipVacancyDetailViewModelBuilder
     {
         private VacancyStatuses _vacancyStatus = VacancyStatuses.Live;
 
-        public VacancyDetailViewModelBuilder WithVacancyStatus(VacancyStatuses vacancyStatus)
+        public ApprenticeshipVacancyDetailViewModelBuilder WithVacancyStatus(VacancyStatuses vacancyStatus)
         {
             _vacancyStatus = vacancyStatus;
             return this;
         }
 
-        public VacancyDetailViewModel Build()
+        public ApprenticeshipVacancyDetailViewModel Build()
         {
-            var model = new VacancyDetailViewModel
+            var model = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = _vacancyStatus
             };

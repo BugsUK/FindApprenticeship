@@ -63,10 +63,10 @@
             }
         }
 
-        public VacancyDetailViewModel VacancyDetail { get; set; }
-
         public DateTime? DateUpdated { get; set; }
+
         public int VacancyId { get; set; }
+
         public bool IsJavascript { get; set; }
 
         public ApplicationViewModelStatus ViewModelStatus { get; set; }

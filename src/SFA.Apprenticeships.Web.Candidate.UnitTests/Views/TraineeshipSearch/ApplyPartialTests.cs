@@ -21,7 +21,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new TraineeshipVacancyDetailViewModel
             {
                 ApplyViaEmployerWebsite = true,
                 IsWellFormedVacancyUrl = true,
@@ -45,7 +45,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new TraineeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live
             };
@@ -66,7 +66,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new TraineeshipVacancyDetailViewModel
             {
                 ApplyViaEmployerWebsite = true,
                 IsWellFormedVacancyUrl = false,
@@ -90,7 +90,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new TraineeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live
             };
@@ -110,7 +110,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new TraineeshipVacancyDetailViewModel
             {
                 CandidateApplicationStatus = ApplicationStatuses.Submitted,
                 DateApplied = DateTime.Today.AddDays(-1)
@@ -129,7 +129,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new TraineeshipVacancyDetailViewModel
             {
                 CandidateApplicationStatus = ApplicationStatuses.Submitted,
                 VacancyStatus = VacancyStatuses.Expired
@@ -148,7 +148,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new TraineeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live,
                 ClosingDate = DateTime.Today.AddDays(42)
@@ -166,7 +166,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new TraineeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Expired,
                 ClosingDate = DateTime.Today.AddDays(-42)
@@ -194,7 +194,7 @@
             // Request.
             var mockResponse = new Mock<HttpResponseBase>(MockBehavior.Loose);
 
-            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>((virtualPath) => virtualPath);
+            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(virtualPath => virtualPath);
             mockResponse.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
 
             // HttpContext.

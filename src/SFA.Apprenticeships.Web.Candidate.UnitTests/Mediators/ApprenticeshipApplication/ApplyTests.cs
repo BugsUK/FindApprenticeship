@@ -24,7 +24,7 @@
         public void VacancyNotFound()
         {
             var apprenticeshipApplicationProvider = new Mock<IApprenticeshipApplicationProvider>();
-            apprenticeshipApplicationProvider.Setup(p => p.CreateApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn, VacancyDetail = new VacancyDetailViewModel() });
+            apprenticeshipApplicationProvider.Setup(p => p.CreateApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn, VacancyDetail = new ApprenticeshipVacancyDetailViewModel() });
             var mediator = new ApprenticeshipApplicationMediatorBuilder().With(apprenticeshipApplicationProvider).Build();
 
             var response = mediator.Apply(Guid.NewGuid(), InvalidVacancyId.ToString());

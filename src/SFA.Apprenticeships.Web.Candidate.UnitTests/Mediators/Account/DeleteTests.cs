@@ -50,7 +50,7 @@
         {
             var successApplicationView = new ApprenticeshipApplicationViewModel
             {
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     Title = "Vac title"
                 }

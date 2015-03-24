@@ -94,7 +94,7 @@
                         GeoPoint = new GeoPointViewModel()
                     }
                 },
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyAddress = new AddressViewModel
                     {

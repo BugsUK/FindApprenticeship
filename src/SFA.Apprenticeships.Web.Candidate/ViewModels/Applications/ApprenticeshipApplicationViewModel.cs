@@ -7,6 +7,7 @@
     using Domain.Entities.Applications;
     using Candidate;
     using Common.Models.Application;
+    using VacancySearch;
     using Validators;
 
     [Validator(typeof(ApprenticeshipApplicationViewModelClientValidator))]
@@ -19,6 +20,9 @@
         public ApplicationStatuses Status { get; set; }
 
         public ApprenticeshipCandidateViewModel Candidate { get; set; }
+
+        public ApprenticeshipVacancyDetailViewModel VacancyDetail { get; set; }
+
 
         public ApprenticeshipApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus)
             : base(message, viewModelStatus)

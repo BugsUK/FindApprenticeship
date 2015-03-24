@@ -23,7 +23,7 @@
             var viewModel = new TraineeshipApplicationViewModel
             {
                 Candidate = new TraineeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new TraineeshipVacancyDetailViewModel(),
                 ViewModelStatus = ApplicationViewModelStatus.ApplicationInIncorrectState
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new TraineeshipApplicationViewModel { ViewModelStatus = ApplicationViewModelStatus.ApplicationInIncorrectState });
@@ -53,7 +53,7 @@
             var viewModel = new TraineeshipApplicationViewModel
             {
                 Candidate = new TraineeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new TraineeshipVacancyDetailViewModel(),
                 ViewModelStatus = ApplicationViewModelStatus.Error
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new TraineeshipApplicationViewModel { ViewModelStatus = ApplicationViewModelStatus.Error });
@@ -71,7 +71,7 @@
             var viewModel = new TraineeshipApplicationViewModel
             {
                 Candidate = new TraineeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new TraineeshipVacancyDetailViewModel()
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new TraineeshipApplicationViewModel());
             TraineeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
@@ -88,7 +88,7 @@
             var viewModel = new TraineeshipApplicationViewModel
             {
                 Candidate = new TraineeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new TraineeshipVacancyDetailViewModel(),
                 IsJavascript = true
             };
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new TraineeshipApplicationViewModel());

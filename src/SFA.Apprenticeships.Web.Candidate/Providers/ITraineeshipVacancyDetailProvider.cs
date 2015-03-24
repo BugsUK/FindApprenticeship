@@ -5,6 +5,6 @@
 
     public interface ITraineeshipVacancyDetailProvider
     {
-        VacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId);
+        TraineeshipVacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId);
     }
 }

@@ -4,7 +4,6 @@
     using System.Collections;
     using System.Collections.Specialized;
     using System.Web;
-    using System.Web.Routing;
     using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
@@ -28,7 +27,7 @@
             var details = new Details();
             details.ViewBag.SearchReturnUrl = someUrl;
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel()
             };
@@ -41,8 +40,8 @@
         public void ShouldNotShowSearchReturnUrlLink()
         {
             var details = new Details();
-            
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel()
             };
@@ -57,7 +56,7 @@
         {
             var details = new Details();
            
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ViewModelMessage = SomeString
@@ -73,7 +72,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
@@ -90,7 +89,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.NonNational
@@ -106,7 +105,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.National
@@ -122,7 +121,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 FutureProspects = SomeString
@@ -138,7 +137,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel()
             };
@@ -153,7 +152,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 RealityCheck = SomeString
@@ -169,7 +168,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel()
             };
@@ -184,7 +183,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsEmployerAnonymous = false,
@@ -201,7 +200,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsEmployerAnonymous = true
@@ -217,7 +216,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsWellFormedEmployerWebsiteUrl = true,
@@ -235,7 +234,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsWellFormedEmployerWebsiteUrl = false,
@@ -254,7 +253,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
@@ -273,7 +272,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.National
@@ -291,7 +290,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
@@ -310,7 +309,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
@@ -329,7 +328,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.National
@@ -347,7 +346,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
@@ -366,7 +365,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsNasProvider = true
@@ -388,7 +387,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsNasProvider = false
@@ -410,7 +409,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsNasProvider = false,
@@ -433,7 +432,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsNasProvider = false
@@ -455,7 +454,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsNasProvider = false,
@@ -478,7 +477,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsNasProvider = false
@@ -500,7 +499,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsRecruitmentAgencyAnonymous = true
@@ -517,7 +516,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsRecruitmentAgencyAnonymous = false,
@@ -535,7 +534,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsRecruitmentAgencyAnonymous = false,
@@ -554,7 +553,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 Contact = SomeString
@@ -572,7 +571,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 Contact = NoValue
@@ -590,7 +589,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 OtherInformation = SomeString
@@ -608,7 +607,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 OtherInformation = NoValue
@@ -626,7 +625,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ApplyViaEmployerWebsite = true,
@@ -645,7 +644,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ApplyViaEmployerWebsite = false,
@@ -664,7 +663,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ApplyViaEmployerWebsite = true,
@@ -683,7 +682,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ApplyViaEmployerWebsite = false
@@ -703,7 +702,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ApplyViaEmployerWebsite = true
@@ -721,7 +720,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ApplyViaEmployerWebsite = false
@@ -755,7 +754,7 @@
 
             // mock the response object
             var mockResponse = new Mock<HttpResponseBase>(MockBehavior.Loose);
-            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>((virtualPath) => virtualPath);
+            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(virtualPath => virtualPath);
             mockResponse.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
 
             // mock the httpcontext

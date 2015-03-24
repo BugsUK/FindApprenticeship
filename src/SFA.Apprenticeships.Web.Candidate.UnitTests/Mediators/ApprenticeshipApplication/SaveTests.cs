@@ -22,7 +22,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn });
             
@@ -37,7 +37,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel("Has Error"));
             
@@ -58,9 +58,9 @@
                         FromYear = "1066"
                     }
                 },
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel(),
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new VacancyDetailViewModel() });
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new ApprenticeshipVacancyDetailViewModel() });
             ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
 
             var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
@@ -74,10 +74,10 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel(),
                 IsJavascript = true
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new VacancyDetailViewModel() });
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new ApprenticeshipVacancyDetailViewModel() });
             ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
             
@@ -92,9 +92,9 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new VacancyDetailViewModel() });
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new ApprenticeshipVacancyDetailViewModel() });
             ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
             
@@ -109,9 +109,9 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new VacancyDetailViewModel { ApplyViaEmployerWebsite = true } });
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Draft, VacancyDetail = new ApprenticeshipVacancyDetailViewModel { ApplyViaEmployerWebsite = true } });
             ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
 

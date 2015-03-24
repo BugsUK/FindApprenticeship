@@ -28,7 +28,7 @@
             _logger = logger;
         }
 
-        public VacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
+        public TraineeshipVacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling TraineeshipVacancyDetailProvider to get the Vacancy detail View Model for candidate ID: {0}, vacancy ID: {1}.",
@@ -42,7 +42,7 @@
 
                 if (vacancyDetail == null) return null;
 
-                var vacancyDetailViewModel = _mapper.Map<TraineeshipVacancyDetail, VacancyDetailViewModel>(vacancyDetail);
+                var vacancyDetailViewModel = _mapper.Map<TraineeshipVacancyDetail, TraineeshipVacancyDetailViewModel>(vacancyDetail);
 
                 if (candidateId == null) return vacancyDetailViewModel;
 
@@ -63,7 +63,7 @@
 
                 _logger.Error(message, e);
 
-                return new VacancyDetailViewModel(TraineeshipVacancyDetailPageMessages.GetVacancyDetailFailed);
+                return new TraineeshipVacancyDetailViewModel(TraineeshipVacancyDetailPageMessages.GetVacancyDetailFailed);
             }
             catch (Exception e)
             {

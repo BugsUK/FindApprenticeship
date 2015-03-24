@@ -24,7 +24,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
 
             var response = Mediator.AddEmptyQualificationRows(viewModel);
@@ -38,7 +38,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = CreateCandidateWithOneQualificationAndTwoEmptyQualifications(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
 
             var response = Mediator.AddEmptyQualificationRows(viewModel);

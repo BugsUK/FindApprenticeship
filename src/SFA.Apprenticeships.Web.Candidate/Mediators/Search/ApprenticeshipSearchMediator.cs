@@ -275,20 +275,20 @@
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SaveSearch.Ok, viewModel, VacancySearchResultsPageMessages.SaveSearchSuccess, UserMessageLevel.Success);
         }
 
-        public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
+        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
         {
             int vacancyId;
 
             if (!TryParseVacancyId(vacancyIdString, out vacancyId))
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             if (vacancyDetailViewModel.HasError())
@@ -301,7 +301,7 @@
             {
                 // Candidate has no application for the vacancy and the vacancy is no longer live OR
                 // candidate has an application (at least a draft) but the vacancy is no longer available.
-                return GetMediatorResponse<VacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
+                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);

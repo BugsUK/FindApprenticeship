@@ -14,6 +14,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
         MediatorResponse<ApprenticeshipSearchViewModel> SaveSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel);
 
-        MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId);
+        MediatorResponse<ApprenticeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId);
     }
 }

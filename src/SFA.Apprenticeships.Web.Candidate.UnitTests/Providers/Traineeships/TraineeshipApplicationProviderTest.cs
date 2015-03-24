@@ -38,7 +38,7 @@
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             var apprenticeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((VacancyDetailViewModel)null);
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((TraineeshipVacancyDetailViewModel)null);
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(apprenticeshipVacancyDetailProvider).Build();
             
             var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
@@ -56,7 +56,7 @@
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail { VacancyStatus = VacancyStatuses.Unavailable });
             var apprenticeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModel { VacancyStatus = VacancyStatuses.Unavailable });
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Unavailable });
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(apprenticeshipVacancyDetailProvider).Build();
 
             var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
@@ -74,7 +74,7 @@
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail { VacancyStatus = VacancyStatuses.Live });
             var apprenticeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModel { VacancyStatus = VacancyStatuses.Live });
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Live });
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(apprenticeshipVacancyDetailProvider).Build();
 
             var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
@@ -92,7 +92,7 @@
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail { Status = ApplicationStatuses.ExpiredOrWithdrawn });
             var apprenticeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((VacancyDetailViewModel)null);
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((TraineeshipVacancyDetailViewModel)null);
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().With(candidateService).With(apprenticeshipVacancyDetailProvider).Build();
 
             var viewModel = traineeshipApplicationProvider.GetApplicationViewModel(candidateId, ValidVacancyId);
@@ -141,7 +141,7 @@
         {
             var candidateId = Guid.NewGuid();
             var apprenticeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((VacancyDetailViewModel)null);
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((TraineeshipVacancyDetailViewModel)null);
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail());
@@ -159,7 +159,7 @@
         {
             var candidateId = Guid.NewGuid();
             var apprenticeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModel { VacancyStatus = VacancyStatuses.Unavailable });
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel { VacancyStatus = VacancyStatuses.Unavailable });
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail());
@@ -177,7 +177,7 @@
         {
             var candidateId = Guid.NewGuid();
             var apprenticeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed));
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed));
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail());
@@ -195,7 +195,7 @@
         {
             var candidateId = Guid.NewGuid();
             var apprenticeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new VacancyDetailViewModel());
+            apprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new TraineeshipVacancyDetailViewModel());
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetTraineeshipApplication(candidateId, ValidVacancyId)).Returns((TraineeshipApplicationDetail)null);
             candidateService.Setup(cs => cs.CreateTraineeshipApplication(candidateId, ValidVacancyId)).Returns(new TraineeshipApplicationDetail());

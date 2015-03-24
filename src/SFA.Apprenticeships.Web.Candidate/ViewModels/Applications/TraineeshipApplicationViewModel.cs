@@ -1,11 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Applications
 {
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
-    using SFA.Apprenticeships.Web.Common.Models.Application;
+    using Candidate;
+    using Common.Models.Application;
+    using VacancySearch;
 
     public class TraineeshipApplicationViewModel : ApplicationViewModelBase
     {
         public TraineeshipCandidateViewModel Candidate { get; set; }
+
+        public TraineeshipVacancyDetailViewModel VacancyDetail { get; set; }
 
         public TraineeshipApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus)
             : base(message, viewModelStatus)

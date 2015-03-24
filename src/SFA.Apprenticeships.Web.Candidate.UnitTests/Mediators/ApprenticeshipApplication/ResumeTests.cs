@@ -66,7 +66,7 @@
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
             {
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyStatus = VacancyStatuses.Expired
                 }

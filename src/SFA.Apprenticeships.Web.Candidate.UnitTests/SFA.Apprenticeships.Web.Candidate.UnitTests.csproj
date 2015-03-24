@@ -181,13 +181,13 @@
     <Compile Include="Builders\RegisterViewModelBuilder.cs" />
     <Compile Include="Builders\SettingsViewModelBuilder.cs" />
     <Compile Include="Builders\TraineeshipApplicationViewModelBuilder.cs" />
-    <Compile Include="Builders\VacancyDetailViewModelBuilder.cs" />
+    <Compile Include="Builders\ApprenticeshipVacancyDetailViewModelBuilder.cs" />
     <Compile Include="Builders\VerifyMobileViewModelBuilder.cs" />
     <Compile Include="Builders\WorkExperienceViewModelBuilder.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
     <Compile Include="Helpers\FullNameFormatterTests.cs" />
-    <Compile Include="Mappers\VacancyDetailViewModelMapperTests.cs" />
+    <Compile Include="Mappers\ApprenticeshipVacancyDetailViewModelMapperTests.cs" />
     <Compile Include="Mediators\Account\AcceptTermsAndConditionsTests.cs" />
     <Compile Include="Mediators\Account\AccountMediatorBuilder.cs" />
     <Compile Include="Mediators\Account\ApprenticeshipVacancyDetailsTests.cs" />

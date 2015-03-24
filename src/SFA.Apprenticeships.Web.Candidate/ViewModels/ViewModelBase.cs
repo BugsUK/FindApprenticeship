@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels
 {
-    public class ViewModelBase
+    public abstract class ViewModelBase
     {
-        public ViewModelBase()
+        protected ViewModelBase()
         {
         }
 
-        public ViewModelBase(string message)
+        protected ViewModelBase(string message)
         {
             ViewModelMessage = message;
         }

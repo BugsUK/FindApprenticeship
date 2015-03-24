@@ -1,13 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.TraineeshipSearch
 {
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.Web;
     using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.TraineeshipSearch;
     using FluentAssertions;
-    using Moq;
     using NUnit.Framework;
     using RazorGenerator.Testing;
 
@@ -24,7 +20,7 @@
             var details = new Details();
             details.ViewBag.SearchReturnUrl = someUrl;
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel()
             };
@@ -37,8 +33,8 @@
         public void ShouldNotShowSearchReturnUrlLink()
         {
             var details = new Details();
-            
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel()
             };
@@ -52,8 +48,8 @@
         public void ShouldNotSeeAnyInfoIfModelHasError()
         {
             var details = new Details();
-           
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ViewModelMessage = SomeString
@@ -69,7 +65,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 Distance = SomeString
@@ -85,7 +81,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 Distance = NoValue
@@ -101,7 +97,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 FutureProspects = SomeString
@@ -117,7 +113,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel()
             };
@@ -132,7 +128,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsWellFormedEmployerWebsiteUrl = true,
@@ -150,7 +146,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 IsWellFormedEmployerWebsiteUrl = false,
@@ -169,7 +165,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 OtherInformation = SomeString
@@ -187,7 +183,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 OtherInformation = NoValue
@@ -205,7 +201,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ExpectedDuration = SomeString
@@ -223,7 +219,7 @@
         {
             var details = new Details();
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
                 ExpectedDuration = NoValue
@@ -234,38 +230,6 @@
             view.GetElementbyId("vacancy-expected-duration").InnerText
                 .Should()
                 .Be("Not specified");
-        }
-
-        private static HttpContextBase CreateMockContext(bool isAuthenticated)
-        {
-            // Use Moq for faking context objects as it can setup all members
-            // so that by default, calls to the members return a default/null value 
-            // instead of a not implemented exception.
-
-            // members were we want specific values returns are setup explicitly.
-
-            // mock the request object
-            var mockRequest = new Mock<HttpRequestBase>(MockBehavior.Loose);
-            mockRequest.Setup(m => m.IsLocal).Returns(false);
-            mockRequest.Setup(m => m.ApplicationPath).Returns("/");
-            mockRequest.Setup(m => m.ServerVariables).Returns(new NameValueCollection());
-            mockRequest.Setup(m => m.RawUrl).Returns(string.Empty);
-            mockRequest.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
-            mockRequest.Setup(m => m.IsAuthenticated).Returns(isAuthenticated);
-
-            // mock the response object
-            var mockResponse = new Mock<HttpResponseBase>(MockBehavior.Loose);
-            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(virtualPath => virtualPath);
-            mockResponse.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
-
-            // mock the httpcontext
-
-            var mockHttpContext = new Mock<HttpContextBase>(MockBehavior.Loose);
-            mockHttpContext.Setup(m => m.Items).Returns(new Hashtable());
-            mockHttpContext.Setup(m => m.Request).Returns(mockRequest.Object);
-            mockHttpContext.Setup(m => m.Response).Returns(mockResponse.Object);
-
-            return mockHttpContext.Object;
         }
     }
 }

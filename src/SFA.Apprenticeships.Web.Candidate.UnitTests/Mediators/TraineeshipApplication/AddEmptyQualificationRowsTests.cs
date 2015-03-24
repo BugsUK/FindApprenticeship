@@ -15,7 +15,7 @@
             var viewModel = new TraineeshipApplicationViewModel
             {
                 Candidate = new TraineeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new TraineeshipVacancyDetailViewModel()
             };
 
             var response = Mediator.AddEmptyQualificationRows(viewModel);

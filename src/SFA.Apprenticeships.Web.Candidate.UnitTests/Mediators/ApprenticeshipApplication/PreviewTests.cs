@@ -21,7 +21,7 @@
         [Test]
         public void VacancyNotFound()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn, VacancyDetail = new VacancyDetailViewModel() });
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn, VacancyDetail = new ApprenticeshipVacancyDetailViewModel() });
             
             var response = Mediator.Preview(Guid.NewGuid(), InvalidVacancyId);
 
@@ -63,7 +63,7 @@
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
             {
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyStatus = VacancyStatuses.Expired
                 }
@@ -79,7 +79,7 @@
         {
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
             {
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     ApplyViaEmployerWebsite = true
                 }

@@ -24,7 +24,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel(),
                 Status = ApplicationStatuses.ExpiredOrWithdrawn
             };
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
@@ -41,7 +41,7 @@
             var getApplicationViewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyStatus = VacancyStatuses.Live
                 }
@@ -49,7 +49,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed)
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed)
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed)
             };
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(getApplicationViewModel);
             ApprenticeshipApplicationProvider.Setup(p => p.SubmitApplication(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
@@ -65,7 +65,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyStatus = VacancyStatuses.Live
                 },
@@ -85,7 +85,7 @@
             var getApplicationViewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyStatus = VacancyStatuses.Live
                 }
@@ -93,7 +93,7 @@
             var submitApplicationViewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel(),
                 ViewModelStatus = ApplicationViewModelStatus.Error,
                 ViewModelMessage = "An error message"
             };
@@ -111,7 +111,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel(),
                 ViewModelStatus = ApplicationViewModelStatus.Error,
                 ViewModelMessage = "An error message"
             };
@@ -137,7 +137,7 @@
                         ToYear = "0"
                     }
                 },
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyStatus = VacancyStatuses.Live
                 },
@@ -157,7 +157,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyStatus = VacancyStatuses.Live
                 }
@@ -178,12 +178,12 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
             ApprenticeshipApplicationProvider.Setup(p => p.CreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel
             {
-                VacancyDetail = new VacancyDetailViewModel
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {
                     VacancyStatus = VacancyStatuses.Expired
                 }
@@ -202,7 +202,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(viewModel);
             ApprenticeshipApplicationProvider.Setup(p => p.CreateApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel(MyApplicationsPageMessages.ApplicationNotFound, ApplicationViewModelStatus.ApplicationNotFound));

@@ -57,7 +57,7 @@
         [Test]
         public void VacancyUnavailable()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Unavailable,
             };
@@ -73,7 +73,7 @@
         {
             const string message = "The vacancy has an error";
 
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live,
                 ViewModelMessage = message
@@ -89,7 +89,7 @@
         [Test]
         public void Ok()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
             {
                 Id = int.Parse(VacancyId),
                 VacancyStatus = VacancyStatuses.Live
@@ -129,7 +129,7 @@
             return userDataProvider;
         }
 
-        private ITraineeshipSearchMediator GetMediator(VacancyDetailViewModel vacancyDetailViewModel)
+        private ITraineeshipSearchMediator GetMediator(TraineeshipVacancyDetailViewModel vacancyDetailViewModel)
         {
             var configurationManager = new Mock<IConfigurationManager>();
             var searchProvider = new Mock<ISearchProvider>();

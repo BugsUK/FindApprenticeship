@@ -11,7 +11,7 @@
     [TestFixture]
     public class AddEmptyWorkExperienceRowsTests : TestsBase
     {
-        private static string SomeJobTitle;
+        private static string _someJobTitle;
         private const string BlankSpace = "  ";
         private const string SomeWorkExperienceDescription = "Work experience description";
         private const string SomeEmployer = "Some employer";
@@ -24,7 +24,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
 
             var response = Mediator.AddEmptyWorkExperienceRows(viewModel);
@@ -38,7 +38,7 @@
             var viewModel = new ApprenticeshipApplicationViewModel
             {
                 Candidate = CreateCandidateWithOneWorkExerienceAndTwoEmptyWorkExperiences(),
-                VacancyDetail = new VacancyDetailViewModel()
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
 
             var response = Mediator.AddEmptyWorkExperienceRows(viewModel);
@@ -49,7 +49,7 @@
 
         private static ApprenticeshipCandidateViewModel CreateCandidateWithOneWorkExerienceAndTwoEmptyWorkExperiences()
         {
-            SomeJobTitle = "Job title";
+            _someJobTitle = "Job title";
             return new ApprenticeshipCandidateViewModel
             {
                 WorkExperience = new List<WorkExperienceViewModel>
@@ -61,7 +61,7 @@
                         Employer = SomeEmployer,
                         FromMonth = SomeMonth,
                         FromYear = SomeYear,
-                        JobTitle = SomeJobTitle,
+                        JobTitle = _someJobTitle,
                         ToMonth = SomeMonth,
                         ToYear = SomeYear
                     },

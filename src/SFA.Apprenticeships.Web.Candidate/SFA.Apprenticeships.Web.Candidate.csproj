@@ -899,6 +899,8 @@
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
     <Compile Include="ViewModels\Register\PasswordResetViewModel.cs" />
     <Compile Include="ViewModels\Register\RegisterViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\ApprenticeshipVacancyDetailViewModel.cs" />
+    <Compile Include="ViewModels\VacancySearch\TraineeshipVacancyDetailViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\TraineeshipVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\VacancySearch\TraineeshipSearchResponseViewModel.cs" />

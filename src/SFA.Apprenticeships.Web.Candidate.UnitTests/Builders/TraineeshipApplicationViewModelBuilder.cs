@@ -40,7 +40,7 @@
                     HasWorkExperience = _workExperience != null,
                     WorkExperience = _workExperience
                 },
-                VacancyDetail = new VacancyDetailViewModel(),
+                VacancyDetail = new TraineeshipVacancyDetailViewModel(),
             };
             return viewModel;
         }

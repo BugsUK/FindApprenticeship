@@ -67,7 +67,7 @@
             };
         }
 
-        private static TraineeshipSummary GetVacancy(VacancyDetailViewModel model)
+        private static TraineeshipSummary GetVacancy(TraineeshipVacancyDetailViewModel model)
         {
             return new TraineeshipSummary
             {

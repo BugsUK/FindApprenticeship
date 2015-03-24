@@ -32,7 +32,7 @@
                 .ForMember(d => d.Latitude, opt => opt.MapFrom(s => s.GeoPoint.Latitude))
                 .ForMember(d => d.Longitude, opt => opt.MapFrom(s => s.GeoPoint.Longitude));
 
-            Mapper.CreateMap<ApprenticeshipVacancyDetail, VacancyDetailViewModel>()
+            Mapper.CreateMap<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>()
                 .ForMember(d => d.VacancyStatus,
                     opt => opt.MapFrom(src => src.VacancyStatus))
                 .ForMember(d => d.EmployerName,

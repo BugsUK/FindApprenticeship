@@ -69,7 +69,7 @@
             };
         }
 
-        private static ApprenticeshipSummary GetVacancy(VacancyDetailViewModel model)
+        private static ApprenticeshipSummary GetVacancy(ApprenticeshipVacancyDetailViewModel model)
         {
             return new ApprenticeshipSummary
             {

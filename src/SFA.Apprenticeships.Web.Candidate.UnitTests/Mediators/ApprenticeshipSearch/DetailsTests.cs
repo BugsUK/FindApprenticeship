@@ -42,8 +42,8 @@
         public void VacancyHasError()
         {
             const string message = "The vacancy has an error";
-            
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 ViewModelMessage = message,
                 VacancyStatus = VacancyStatuses.Live
@@ -59,7 +59,7 @@
         [Test]
         public void VacancyIsUnavailable_CandidateNotLoggedIn()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Unavailable
             };
@@ -75,7 +75,7 @@
         [Test]
         public void VacancyIsUnavailble_CandidateLoggedInButHasNeverAppliedForVacancy()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Unavailable
             };
@@ -91,7 +91,7 @@
         [Test]
         public void VacancyIsUnavailable_CandidateLoggedInAndHasPreviouslyAppliedForVacancy()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 CandidateApplicationStatus = ApplicationStatuses.Submitted,
                 VacancyStatus = VacancyStatuses.Unavailable
@@ -108,7 +108,7 @@
         [Test]
         public void Ok()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live
             };
@@ -123,7 +123,7 @@
         [Test]
         public void PopulateDistance()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live
             };

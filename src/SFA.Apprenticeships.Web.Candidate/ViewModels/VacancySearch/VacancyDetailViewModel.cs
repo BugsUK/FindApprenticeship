@@ -7,16 +7,15 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Locations;
 
-    //TODO Remove unused properties
-    //TODO Split into Apprenticeship and Traineeship ViewModels
+    //TODO move type specific properties into sub classes, remove unused properties
     [Serializable]
-    public class VacancyDetailViewModel : ViewModelBase
+    public abstract class VacancyDetailViewModel : ViewModelBase
     {
-        public VacancyDetailViewModel()
+        protected VacancyDetailViewModel()
         {
         }
 
-        public VacancyDetailViewModel(string message) : base(message)
+        protected VacancyDetailViewModel(string message) : base(message)
         {
         }
 

@@ -4,7 +4,6 @@
     using System.Collections;
     using System.Collections.Specialized;
     using System.Web;
-    using System.Web.Routing;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
     using Domain.Entities.Applications;
@@ -22,7 +21,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 ApplyViaEmployerWebsite = true,
                 IsWellFormedVacancyUrl = true,
@@ -46,7 +45,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live
             };
@@ -67,7 +66,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 ApplyViaEmployerWebsite = true,
                 IsWellFormedVacancyUrl = false,
@@ -91,7 +90,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 CandidateApplicationStatus = ApplicationStatuses.Draft,
                 VacancyStatus = VacancyStatuses.Live
@@ -113,7 +112,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live
             };
@@ -133,7 +132,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 CandidateApplicationStatus = ApplicationStatuses.Submitted,
                 VacancyStatus = VacancyStatuses.Live
@@ -152,7 +151,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 CandidateApplicationStatus = ApplicationStatuses.Submitted,
                 DateApplied = DateTime.Today.AddDays(-1)
@@ -171,7 +170,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 CandidateApplicationStatus = ApplicationStatuses.Submitted,
                 VacancyStatus = VacancyStatuses.Expired
@@ -190,7 +189,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live,
                 ClosingDate = DateTime.Today.AddDays(42)
@@ -208,7 +207,7 @@
         {
             // Arrange.
             var index = new Apply();
-            var vm = new VacancyDetailViewModel
+            var vm = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Expired,
                 ClosingDate = DateTime.Today.AddDays(-42)
@@ -236,7 +235,7 @@
             // Request.
             var mockResponse = new Mock<HttpResponseBase>(MockBehavior.Loose);
 
-            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>((virtualPath) => virtualPath);
+            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(virtualPath => virtualPath);
             mockResponse.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
 
             // HttpContext.

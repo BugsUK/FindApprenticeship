@@ -17,7 +17,7 @@
         [Test]
         public void VacancyStatusLiveTest()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Live
             };
@@ -35,7 +35,7 @@
         [Test]
         public void VacancyStatusExpiredTest()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Expired
             };
@@ -53,7 +53,7 @@
         [Test]
         public void VacancyStatusUnavailableTest()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyStatus = VacancyStatuses.Unavailable
             };
@@ -74,7 +74,7 @@
         public void VacancyNotFoundTest()
         {
             var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(default(VacancyDetailViewModel));
+            apprenticeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(default(ApprenticeshipVacancyDetailViewModel));
             var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyDetailProvider).Build();
 
             var response = accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
@@ -88,7 +88,7 @@
         [Test]
         public void ErrorTest()
         {
-            var vacancyDetailViewModel = new VacancyDetailViewModel
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 ViewModelMessage = "Has error"
             };

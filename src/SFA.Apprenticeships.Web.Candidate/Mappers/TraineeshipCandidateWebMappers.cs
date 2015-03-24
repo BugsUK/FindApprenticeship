@@ -26,7 +26,7 @@
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
             Mapper.CreateMap<GeoPointViewModel, GeoPoint>();
 
-            Mapper.CreateMap<TraineeshipVacancyDetail, VacancyDetailViewModel>()
+            Mapper.CreateMap<TraineeshipVacancyDetail, TraineeshipVacancyDetailViewModel>()
                 .ForMember(d => d.VacancyStatus,
                     opt => opt.MapFrom(src => src.VacancyStatus))
                 .ForMember(d => d.EmployerName,

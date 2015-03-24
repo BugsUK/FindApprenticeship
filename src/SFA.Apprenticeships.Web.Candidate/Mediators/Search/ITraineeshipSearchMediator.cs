@@ -9,6 +9,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
         MediatorResponse<TraineeshipSearchResponseViewModel> Results(TraineeshipSearchViewModel model);
 
-        MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId, string searchReturnUrl);
+        MediatorResponse<TraineeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId, string searchReturnUrl);
     }
 }

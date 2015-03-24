@@ -122,20 +122,20 @@
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, traineeshipSearchResponseViewModel);
         }
 
-        public MediatorResponse<VacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId, string searchReturnUrl)
+        public MediatorResponse<TraineeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId, string searchReturnUrl)
         {
             int vacancyId;
 
             if (!TryParseVacancyId(vacancyIdString, out vacancyId))
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
+                return GetMediatorResponse<TraineeshipVacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
-                return GetMediatorResponse<VacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
+                return GetMediatorResponse<TraineeshipVacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
             if (vacancyDetailViewModel.HasError())
