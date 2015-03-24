@@ -5,23 +5,24 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 ## Web layer ##
 
 - refactor providers (not quite right)
-- refactor: configuration service - use mongo collection with JSON fallback. This should periodically check for updates to allow in-situ config updates to running applications.
+- refactor: configuration service - use mongo collection and cache in host process
 - validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
-- usernamecheck should use remote validator 
+- refactor: usernamecheck should use remote validator 
+- refactor: _qualificationsJS.cshtml, _qualificationsNonJS.cshtml, _workExperiencesJS.cshtml, _workExperiencesNonJS.cshtml files are in ApprenticeshipApplication and TraineeshipApplication folders, but only differs in the model they receive. Tried to use the base class but HasQualification and HasWorkExperience property doesn't propagate correctly to the controller.
 - increase the HSTS header to months or years in line with GDS recommendations when we're confident it works https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains#transport-layer-security
 - CDN changes:
     - fix links to CDN to use "assets" sub-domain in production
     - solve issue with custom domain name being used with an Azure CDN over HTTPS (may move CDN off Azure or use 3rd party CDN)
-- refactor: _qualificationsJS.cshtml, _qualificationsNonJS.cshtml, _workExperiencesJS.cshtml, _workExperiencesNonJS.cshtml files are in ApprenticeshipApplication and TraineeshipApplication folders, but only differs in the model they receive. Tried to use the base class but HasQualification and HasWorkExperience property doesn't propagate correctly to the controller.
-- Potentially remove IsWebsiteOffline/WebsiteOfflineMessage
+- Consider removing IsWebsiteOffline/WebsiteOfflineMessage as now managed by DNS
+- Change local hostname to be "local.findapprenticeship.service.gov.uk"
 
 ## Service layer ##
 
 - Lock down providers to "internal", web, application and infrastructure to enforce structural pattern, see [http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute%28v=vs.110%29.aspx](http://msdn.microsoft.com/en-us/library/system.runtime.compilerservices.internalsvisibletoattribute%28v=vs.110%29.aspx) for application providers
+    - defer until we know more about host processes required in phase 2
 
 ## Infrastructure layer ##
 
-- add a "contact message" collection to the communication repository
 - log request/response payloads for nas gateway calls
 - change to entity repos (re. Mark). E.g. Consider renaming GenericMongoClient to MongoRepositoryBase; move MongoDB code out of into new MongoClient class; MongoRepositoryBase (and other future repos that may not be based on Domain EntityBase) would consume MongoClient (via IoC).
 - wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
@@ -41,8 +42,6 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 - Configure remote powershell from Build Servers to Deployment Server to use Certificates over file system stored encrypted user details.   
 - Merge build and management networks (See Simon)
-- Upgrade TeamCity
-
 
 ----------
 
@@ -73,6 +72,8 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 - Multiple PreFetchCount values for each queue. Intetrnal processes should be able to have a much higher value than ones that talk to the gateway- 
 - Review and increase heap allocation for elasticsearch. Production is 1Gb and we have 4Gb of free memory available.
 - review ApplyWebTrends attribute - use on controller or apply globally (reviewed all attribute usage)
+- add a "contact message" collection to the communication repository
+- Upgrade TeamCity
 
 # Descoped #
 
