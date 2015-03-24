@@ -293,25 +293,27 @@ $(function() {
       var $this = $(this),
           $selectedOption = $this.find('option:selected'),
           $thisOptionText = $selectedOption.text(),
-          $nextInput;
+          $theInput = $this.closest('.form-group').find('.select-injected'),
+          $selectedVal = $selectedOption.val();
 
+      $theInput.val($thisOptionText);
 
-      if ($this.next('.select-injected').length > 0) {
-          $this.next('.select-injected').val($thisOptionText);
-          $nextInput = $this.next('.select-injected');
-      } else {
-          var $sibling = $this.next();
-          $sibling.find('.select-injected').val($thisOptionText);
-          $nextInput = $sibling.find('.select-injected');
+      $('.selfServe').each(function () {
+          if ($(this).prop('id') == $selectedVal) {
+              $(this).show();
+              $('.selfServe').not($(this)).hide();
+          }
+      });
+
+      if ($('#' + $selectedVal).length == 0) {
+          $('.selfServe').hide();
       }
 
-      if ($selectedOption.val() == "noSelect") {
-          $nextInput.val("");
+      if ($selectedVal == "noSelect") {
+          $theInput.val("");
       }
 
-      if ($nextInput) {
-          $nextInput.focusout();
-      }
+      $theInput.focusout();
   });
 
     //------- Inline details toggle

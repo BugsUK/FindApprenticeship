@@ -27,12 +27,12 @@
             }
         }
 
-        public static string ToFriendlyDaysAgo(this DateTime closingDate)
+        public static string ToFriendlyDaysAgo(this DateTime date)
         {
             var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-            var dateTimeByZoneId = TimeZoneInfo.ConvertTime(closingDate.ToUniversalTime(), timeZoneInfo);
+            var dateTimeByZoneInfo = TimeZoneInfo.ConvertTime(date.ToUniversalTime(), timeZoneInfo);
 
-            var daysLeft = (int)(dateTimeByZoneId - DateTime.Now.Date).TotalDays;
+            var daysLeft = (int)(DateTime.Now.Date - dateTimeByZoneInfo.Date).TotalDays;
 
             switch (daysLeft)
             {

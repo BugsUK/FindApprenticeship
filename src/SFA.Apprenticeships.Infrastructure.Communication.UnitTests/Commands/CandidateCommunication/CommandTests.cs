@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands.CandidateCommunication
 {
     using System;
     using Application.Interfaces.Communications;
@@ -6,18 +6,17 @@
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
     using FluentAssertions;
-    using Moq;
     using NUnit.Framework;
     using Processes.Communications.Commands;
 
     [TestFixture]
-    public class CandidateCommunicationCommandTests : CandidateCommunicationCommandTestsBase
+    public class CommandTests : CommandTestsBase
     {
         [SetUp]
         public void SetUp()
         {
             var command = new CandidateCommunicationCommand(
-                MessageBus.Object, CandidateRepository.Object, UserRepository.Object);
+                LogService.Object, MessageBus.Object, CandidateRepository.Object, UserRepository.Object);
 
             base.SetUp(command);
         }
@@ -80,9 +79,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
-                .VerifiedMobile(true)
+                .AllowAllCommunications()
                 .Build();
 
             AddCandidate(candidate, userStatus);
@@ -93,8 +90,8 @@
             Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(messageType, Times.Once());
-            ShouldQueueSms(messageType, Times.Once());
+            ShouldQueueEmail(messageType, 1);
+            ShouldQueueSms(messageType, 1);
         }
 
         [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Inactive)]
@@ -103,9 +100,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
-                .VerifiedMobile(true)
+                .AllowAllCommunications()
                 .Build();
 
             AddCandidate(candidate, userStatus);
@@ -116,8 +111,8 @@
             Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(messageType, Times.Never());
-            ShouldQueueSms(messageType, Times.Never());
+            ShouldQueueEmail(messageType, 0);
+            ShouldQueueSms(messageType, 0);
         }
 
         [TestCase(MessageTypes.SavedSearchAlert)]
@@ -125,8 +120,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
+                .AllowAllCommunications()
                 .VerifiedMobile(false)
                 .Build();
 
@@ -138,8 +132,8 @@
             Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(messageType, Times.Once());
-            ShouldQueueSms(messageType, Times.Never());
+            ShouldQueueEmail(messageType, 1);
+            ShouldQueueSms(messageType, 0);
         }
 
         [TestCase(MessageTypes.SendMobileVerificationCode, true)]
@@ -148,8 +142,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
+                .AllowAllCommunications()
                 .VerifiedMobile(verifiedMobile)
                 .Build();
 
@@ -161,8 +154,8 @@
             Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(messageType, Times.Never());
-            ShouldQueueSms(messageType, Times.Once());
+            ShouldQueueEmail(messageType, 0);
+            ShouldQueueSms(messageType, 1);
         }
 
         [TestCase(MessageTypes.PasswordChanged)]
@@ -173,9 +166,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
-                .VerifiedMobile(true)
+                .AllowAllCommunications()
                 .Build();
 
             AddCandidate(candidate);
@@ -186,8 +177,8 @@
             Command.Handle(communicationRequest);
 
             // Assert.
-            ShouldQueueEmail(messageType, Times.Once());
-            ShouldQueueSms(messageType, Times.Never());
+            ShouldQueueEmail(messageType, 1);
+            ShouldQueueSms(messageType, 0);
         }
     }
 }

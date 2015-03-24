@@ -185,9 +185,9 @@
     <Compile Include="Applications\ApplicationStatusSummaryConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusSummaryPageConsumerAsync.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesConsumerAsync.cs" />
+    <Compile Include="Communications\CandidateCommunicationHelper.cs" />
     <Compile Include="Communications\Commands\CandidateDailyDigestCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CandidateCommunicationCommand.cs" />
-    <Compile Include="Communications\Commands\CandidateApplicationStatusAlertCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CommunicationCommand.cs" />
     <Compile Include="Communications\Commands\HelpDeskCommunicationCommand.cs" />
     <Compile Include="Communications\CommunicationRequestConsumerAsync.cs" />

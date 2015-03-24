@@ -25,6 +25,7 @@
         private readonly ISavedSearchAlertMetricsRepository _savedSearchAlertMetricsRepository;
         private readonly IContactMessagesMetricsRepository _contactMessagesMetricsRepository;
         private readonly ISavedSearchesMetricsRepository _savedSearchesMetricsRepository;
+        private readonly ICandidateMetricsRepository _candidateMetricsRepository;
 
         private readonly int _validNumberOfDaysSinceUserActivity;
 
@@ -38,7 +39,8 @@
             IApplicationStatusAlertsMetricsRepository applicationStatusAlertsMetricsRepository,
             ISavedSearchAlertMetricsRepository savedSearchAlertMetricsRepository,
             IContactMessagesMetricsRepository contactMessagesMetricsRepository,
-            ISavedSearchesMetricsRepository savedSearchesMetricsRepository)
+            ISavedSearchesMetricsRepository savedSearchesMetricsRepository,
+            ICandidateMetricsRepository candidateMetricsRepository)
         {
             _logger = logger;
             _configurationManager = configurationManager;
@@ -50,6 +52,7 @@
             _savedSearchAlertMetricsRepository = savedSearchAlertMetricsRepository;
             _contactMessagesMetricsRepository = contactMessagesMetricsRepository;
             _savedSearchesMetricsRepository = savedSearchesMetricsRepository;
+            _candidateMetricsRepository = candidateMetricsRepository;
 
             _validNumberOfDaysSinceUserActivity = _configurationManager.GetCloudAppSetting<int>("ValidNumberOfDaysSinceUserActivity");
         }
@@ -92,15 +95,16 @@
             var oneWeekAgo = DateTime.UtcNow.AddDays(-7);
             var fourWeeksAgo = DateTime.UtcNow.AddDays(-28);
             var customDaysAgo = DateTime.UtcNow.AddDays(-_validNumberOfDaysSinceUserActivity);
-            sb.AppendFormat(" - Total number of candidates active in the last week: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, oneWeekAgo));
-            sb.AppendFormat(" - Total number of candidates active in the last four weeks: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, fourWeeksAgo));
 
-            var p1 = new object[3];
-            var result = TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, customDaysAgo);
-            p1[0] = result[0];
-            p1[1] = result[1];
-            p1[2] = _validNumberOfDaysSinceUserActivity;
-            sb.AppendFormat(" - Total number of candidates active in the last {2} days: {0} ({1}ms)\n", p1);
+            sb.AppendFormat(" - Total number of candidates active in the last week based on last login: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActiveUserCount, oneWeekAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last four weeks based on last login: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActiveUserCount, fourWeeksAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last {2} days based on applications: {0} ({1}ms)\n", GetActiveUserCount(_userMetricsRepository.GetActiveUserCount, customDaysAgo));
+
+            sb.AppendFormat(" - Total number of candidates active in the last week based on applications: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, oneWeekAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last four weeks based on applications: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, fourWeeksAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last {2} days based on applications: {0} ({1}ms)\n", GetActiveUserCount(_apprenticeshipMetricsRepository.GetActiveUserCount, customDaysAgo));
+
+            sb.AppendFormat(" - Total number of candidates with verified mobile numbers: {0} ({1}ms)\n", TimedMongoCall(_candidateMetricsRepository.GetVerfiedMobileNumbersCount));
 
             sb.AppendFormat(" - Total number of saved searches: {0} ({1}ms)\n", TimedMongoCall(_savedSearchesMetricsRepository.GetSavedSearchesCount));
 
@@ -138,6 +142,16 @@
             sb.AppendFormat(" - Number of contact us emails sent today: {0} ({1}ms)\n", TimedMongoCall(_contactMessagesMetricsRepository.GetContactMessagesSentToday));
 
             return sb.ToString();
+        }
+
+        private object[] GetActiveUserCount(Func<DateTime, long> activeUserCountFunc, DateTime customDaysAgo)
+        {
+            var p1 = new object[3];
+            var result = TimedMongoCall(activeUserCountFunc, customDaysAgo);
+            p1[0] = result[0];
+            p1[1] = result[1];
+            p1[2] = _validNumberOfDaysSinceUserActivity;
+            return p1;
         }
 
         private static object[] TimedMongoCall<T>(Func<T> mongoCall)

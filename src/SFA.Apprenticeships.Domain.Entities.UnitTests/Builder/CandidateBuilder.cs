@@ -18,7 +18,8 @@
         private bool _sendApplicationSubmitted;
         private bool _sendApplicationStatusChanges;
         private bool _sendApprenticeshipApplicationsExpiring;
-        private bool _sendSavedSearchAlerts;
+        private bool _sendSavedSearchAlertsViaEmail;
+        private bool _sendSavedSearchAlertsViaText;
         private bool _sendMarketingComms;
 
         public CandidateBuilder(Guid candidateId)
@@ -88,13 +89,39 @@
 
         public CandidateBuilder SendSavedSearchAlerts(bool sendSavedSearchAlerts)
         {
-            _sendSavedSearchAlerts = sendSavedSearchAlerts;
+            SendSavedSearchAlertsViaEmail(sendSavedSearchAlerts);
+            SendSavedSearchAlertsViaText(sendSavedSearchAlerts);
+            return this;
+        }
+
+        public CandidateBuilder SendSavedSearchAlertsViaEmail(bool sendSavedSearchAlertsViaEmail)
+        {
+            _sendSavedSearchAlertsViaEmail = sendSavedSearchAlertsViaEmail;
+            return this;
+        }
+
+        public CandidateBuilder SendSavedSearchAlertsViaText(bool sendSavedSearchAlertsViaText)
+        {
+            _sendSavedSearchAlertsViaText = sendSavedSearchAlertsViaText;
             return this;
         }
 
         public CandidateBuilder SendMarketingComms(bool sendMarketingComms)
         {
             _sendMarketingComms = sendMarketingComms;
+            return this;
+        }
+
+        public CandidateBuilder AllowAllCommunications(bool allow = true)
+        {
+            AllowEmail(allow);
+            AllowMobile(allow);
+            VerifiedMobile(allow);
+            SendApplicationSubmitted(allow);
+            SendApplicationStatusChanges(allow);
+            SendApprenticeshipApplicationsExpiring(allow);
+            SendSavedSearchAlerts(allow);
+
             return this;
         }
 
@@ -119,7 +146,8 @@
                     SendApplicationSubmitted = _sendApplicationSubmitted,
                     SendApplicationStatusChanges = _sendApplicationStatusChanges,
                     SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
-                    SendSavedSearchAlertsViaEmail = _sendSavedSearchAlerts,
+                    SendSavedSearchAlertsViaEmail = _sendSavedSearchAlertsViaEmail,
+                    SendSavedSearchAlertsViaText = _sendSavedSearchAlertsViaText,
                     SendMarketingCommunications = _sendMarketingComms
                 }
             };

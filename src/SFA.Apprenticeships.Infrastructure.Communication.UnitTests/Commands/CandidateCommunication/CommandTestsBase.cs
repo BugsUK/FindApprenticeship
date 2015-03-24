@@ -1,6 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.UnitTests.Commands.CandidateCommunication
 {
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Logging;
     using Builders;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
@@ -10,16 +11,18 @@
     using Moq;
     using Processes.Communications.Commands;
 
-    public abstract class CandidateCommunicationCommandTestsBase
+    public abstract class CommandTestsBase
     {
+        protected Mock<ILogService> LogService;
         protected Mock<IMessageBus> MessageBus;
         protected Mock<ICandidateReadRepository> CandidateRepository;
         protected Mock<IUserReadRepository> UserRepository;
 
         protected CandidateCommunicationCommand Command;
 
-        protected CandidateCommunicationCommandTestsBase()
+        protected CommandTestsBase()
         {
+            LogService = new Mock<ILogService>();
             MessageBus = new Mock<IMessageBus>();
             UserRepository = new Mock<IUserReadRepository>();
             CandidateRepository = new Mock<ICandidateReadRepository>();
@@ -29,29 +32,28 @@
         {
             Command = command;
 
+            LogService.ResetCalls();
             MessageBus.ResetCalls();
             UserRepository.ResetCalls();
             CandidateRepository.ResetCalls();
         }
 
-        protected void ShouldQueueEmail(MessageTypes messageType, Times times, string emailAddress = CommunicationRequestBuilder.DefaultTestEmailAddress)
+        protected void ShouldQueueEmail(MessageTypes messageType, int expectedCount, string emailAddress = CommunicationRequestBuilder.DefaultTestEmailAddress)
         {
             MessageBus.Verify(mock => mock.PublishMessage(
                 It.Is<EmailRequest>(emailRequest =>
                     emailRequest.MessageType == messageType &&
                     emailRequest.ToEmail == emailAddress)),
-                    // TODO: AG: email tokens?
-                times);
+                Times.Exactly(expectedCount));
         }
 
-        protected void ShouldQueueSms(MessageTypes messageType, Times times, string mobileNumber = CommunicationRequestBuilder.DefaultTestMobileNumber)
+        protected void ShouldQueueSms(MessageTypes messageType, int expectedCount, string mobileNumber = CommunicationRequestBuilder.DefaultTestMobileNumber)
         {
             MessageBus.Verify(mock => mock.PublishMessage(
                 It.Is<SmsRequest>(smsRequest =>
                     smsRequest.MessageType == messageType &&
                     smsRequest.ToNumber == mobileNumber)),
-                // TODO: AG: email tokens?
-               times);
+                Times.Exactly(expectedCount));
         }
 
         protected void AddCandidate(Candidate candidate, UserStatuses userStatus = UserStatuses.Active)

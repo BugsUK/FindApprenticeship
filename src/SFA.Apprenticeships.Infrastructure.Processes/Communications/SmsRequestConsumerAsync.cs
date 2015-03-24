@@ -37,9 +37,10 @@
                         _messageBus.PublishMessage(request);
                         return;
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        _logger.Error("Failed to re-queue SMS request: {0}", JsonConvert.SerializeObject(request, Formatting.None));
+                        _logger.Error(
+                            "Failed to re-queue SMS request: {0}", e, JsonConvert.SerializeObject(request, Formatting.None));
                         throw;
                     }
                 }
