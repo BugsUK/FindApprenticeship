@@ -122,7 +122,7 @@ $(document).ready(function () {
         var $this    = $(this),
             delDraft = $this[0];
 
-        $(delDraft).addClass('disabled');
+        $(delDraft).addClass('disabled').blur();
     });
 
     // -- Sort out styling issues on details page
