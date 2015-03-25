@@ -4,17 +4,7 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 ## Web layer ##
 
-- refactor providers (not quite right)
-- refactor: configuration service - use mongo collection and cache in host process
-- validation messages should be parameterised where possible (e.g. max length). See AddressMessages.cs for an example.
-- refactor: usernamecheck should use remote validator 
-- refactor: _qualificationsJS.cshtml, _qualificationsNonJS.cshtml, _workExperiencesJS.cshtml, _workExperiencesNonJS.cshtml files are in ApprenticeshipApplication and TraineeshipApplication folders, but only differs in the model they receive. Tried to use the base class but HasQualification and HasWorkExperience property doesn't propagate correctly to the controller.
-- increase the HSTS header to months or years in line with GDS recommendations when we're confident it works https://www.gov.uk/service-manual/operations/operating-servicegovuk-subdomains#transport-layer-security
-- CDN changes:
-    - fix links to CDN to use "assets" sub-domain in production
-    - solve issue with custom domain name being used with an Azure CDN over HTTPS (may move CDN off Azure or use 3rd party CDN)
-- Consider removing IsWebsiteOffline/WebsiteOfflineMessage as now managed by DNS
-- Change local hostname to be "local.findapprenticeship.service.gov.uk"
+
 
 ## Service layer ##
 
@@ -25,18 +15,9 @@ Dev work that is not covered by backlog stories or TODO comments in the code.
 
 - log request/response payloads for nas gateway calls
 - change to entity repos (re. Mark). E.g. Consider renaming GenericMongoClient to MongoRepositoryBase; move MongoDB code out of into new MongoClient class; MongoRepositoryBase (and other future repos that may not be based on Domain EntityBase) would consume MongoClient (via IoC).
-- wrap ElasticSearchClient -> search into a new class to be able to rethrow WebException swallowed by Nest
-- agree on and implement location search behaviour fix for prefix sorting on different servers
-- refactor: vacancy ETL process (simplify to process pages immediately? TBD. current approach facilitates multiple data sources)
-- additional mongo indexes for app status and date updated (TBC: not sure how effective this would be - re. Alan)
-- Enums should be serialized to strings into mongo (rather than numeric enum values)
-- Remove AutoMapper from web service proxy layer
-- Worker role rationalisation (reduce number and clean shutdown of rabbit subscribers)
 
 ## Cross cutting ##
 
-- Error codes are defined inconsistently across the services. Codes should be considered part of a service's interface/contract so should be defined close to where the interface is defined
-- Error logging is inconsistent between layers which leads to double logging/counting some errors/warnings
 
 ## WebOps
 
