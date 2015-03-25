@@ -40,7 +40,10 @@
 
         public IApprenticeshipSearchMediator Build()
         {
-            var mediator = new ApprenticeshipSearchMediator(_configurationService.Object, _searchProvider.Object, _apprenticeshipVacancyDetailProvider.Object, _candidateServiceProvider.Object, _userDataProvider.Object, _referenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator());
+            var mediator = new ApprenticeshipSearchMediator(_configurationService.Object, _searchProvider.Object,
+                _apprenticeshipVacancyDetailProvider.Object, _candidateServiceProvider.Object, _userDataProvider.Object,
+                _referenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(),
+                new ApprenticeshipSearchViewModelLocationValidator(), _apprenticeshipVacancyProvider.Object);
             return mediator;
         }
     }

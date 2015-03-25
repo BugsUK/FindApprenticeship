@@ -258,9 +258,7 @@
             var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
             var userDataProvider = GetUserDataProvider();
 
-            var mediator = GetMediator(configurationManager.Object, searchProvider, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider);
-            var mediator = GetMediator(configurationService.Object, searchProvider, traineeshipVacancyDetailProvider.Object, userDataProvider.Object);
-
+            var mediator = GetMediator(configurationService.Object, searchProvider, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider);
             return mediator;
         }
     }
