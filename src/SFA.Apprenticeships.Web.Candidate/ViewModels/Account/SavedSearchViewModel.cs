@@ -20,6 +20,8 @@
 
         public string SubCategoriesFullNames { get; set; }
 
+        public DateTime DateCreated { get; set; }
+
         public DateTime? DateProcessed { get; set; }
     }
 }

@@ -223,12 +223,26 @@
 
 
         [Test, Category("Integration")]
-        public void ShouldSendSavedSearchAlertsEmail()
+        public void ShouldSendSavedSearchAlertsEmailWithoutSubCategories()
         {
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
                 Tokens = TokenGenerator.CreateSavedSearchAlertTokens(5),
+                MessageType = MessageTypes.SavedSearchAlert
+            };
+
+            _dispatcher.SendEmail(request);
+            VerifyErrorsLogged(Times.Never());
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldSendSavedSearchAlertsEmailWithSubCategories()
+        {
+            var request = new EmailRequest
+            {
+                ToEmail = TestToEmail,
+                Tokens = TokenGenerator.CreateSavedSearchAlertTokens(5, true),
                 MessageType = MessageTypes.SavedSearchAlert
             };
 

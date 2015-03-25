@@ -1,0 +1,27 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+
+@model ApprenticeshipSearchViewModel
+
+@{
+    var divClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches ? "active" : "";
+}
+
+<div id="saved-searches" class="tabbed-element tab3 @divClass">
+    <span class="form-label">Run a saved search</span>
+    @if (Model.SavedSearches != null && Model.SavedSearches.Any())
+    {
+        <ul id="saved-searches-list" class="list-text list-checkradio">
+            @foreach (var savedSearch in Model.SavedSearches)
+            {
+                <li>
+                    <input type="radio" name="SavedSearchId" id="saved-search-@savedSearch.Id" value="@savedSearch.Id">
+                    <label id="saved-search-label-@savedSearch.Id" for="saved-search-@savedSearch.Id">@savedSearch.Name</label>
+                </li>
+            }
+        </ul>
+    }
+    <p>
+        You can change your saved searches by visiting
+        @Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new { id = "saved-searches-settings-link" })
+    </p>
+</div>

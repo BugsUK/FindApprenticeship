@@ -641,6 +641,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_refineSearch.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ApprenticeshipSearch\_savedSearches.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_savedSearches.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -726,6 +730,7 @@
     <Compile Include="Constants\Pages\PreviewPageMessages.cs" />
     <Compile Include="Constants\Pages\LoginPageMessages.cs" />
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
+    <Compile Include="Constants\Pages\ApprenticeshipsSearchPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
     <Compile Include="Constants\Pages\VerifyMobilePageMessages.cs" />
     <Compile Include="Constants\CandidateDataItemNames.cs" />
@@ -1036,6 +1041,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_pagination.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_savedSearches.generated.cs">
+      <DependentUpon>_savedSearches.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\ApprenticeshipSearch\_refineSearch.generated.cs">
       <AutoGen>True</AutoGen>

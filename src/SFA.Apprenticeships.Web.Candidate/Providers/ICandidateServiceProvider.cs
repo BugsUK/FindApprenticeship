@@ -48,5 +48,9 @@
         ApprenticeshipSearchViewModel CreateSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel);
 
         SavedSearchViewModel DeleteSavedSearch(Guid savedSearchId);
+
+        IEnumerable<SavedSearchViewModel> GetSavedSearches(Guid candidateId);
+
+        SavedSearchViewModel GetSavedSearch(Guid savedSearchId);
     }
 }

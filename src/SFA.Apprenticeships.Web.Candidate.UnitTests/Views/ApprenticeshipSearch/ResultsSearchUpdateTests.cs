@@ -15,7 +15,7 @@
         {
             var searchUpdate = new searchUpdate();
 
-            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Keyword).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Keyword).ViewModel;
             var searchResultsViewModel = Mediator.Results(null, searchViewModel).ViewModel;
             var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 
@@ -49,7 +49,7 @@
         {
             var searchUpdate = new searchUpdate();
 
-            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
             var searchResultsViewModel = Mediator.Results(null, searchViewModel).ViewModel;
             var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 
@@ -88,7 +88,7 @@
             ReferenceDataService.Setup(rds => rds.GetCategories());
             var searchUpdate = new searchUpdate();
 
-            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
             var searchResultsViewModel = Mediator.Results(null, searchViewModel).ViewModel;
             var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 

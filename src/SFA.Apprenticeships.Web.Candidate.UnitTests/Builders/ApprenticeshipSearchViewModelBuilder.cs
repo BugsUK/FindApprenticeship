@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using Candidate.Mediators.Search;
+    using Candidate.ViewModels.Account;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -20,6 +21,7 @@
         private List<Category> _categories;
         private double? _latitude;
         private double? _longitude;
+        private SavedSearchViewModel[] _savedSearches;
 
         public ApprenticeshipSearchViewModel Build()
         {
@@ -39,7 +41,9 @@
                 SortTypes = SearchMediatorBase.GetSortTypes(),
                 ResultsPerPageSelectList = SearchMediatorBase.GetResultsPerPageSelectList(5),
                 Categories = _categories,
-                ViewModelMessage = _viewModelMessage
+                ViewModelMessage = _viewModelMessage,
+
+                SavedSearches = _savedSearches
             };
 
             if (viewModel.Latitude.HasValue && viewModel.Longitude.HasValue)
@@ -114,6 +118,12 @@
         {
             _latitude = latitude;
             _longitude = longitude;
+            return this;
+        }
+
+        public ApprenticeshipSearchViewModelBuilder WithSavedSearches(SavedSearchViewModel[] savedSearches)
+        {
+            _savedSearches = savedSearches;
             return this;
         }
     }

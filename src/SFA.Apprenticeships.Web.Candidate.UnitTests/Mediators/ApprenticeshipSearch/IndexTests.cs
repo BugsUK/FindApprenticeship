@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Candidate.Mediators.Search;
-    using Candidate.ViewModels.VacancySearch;
     using Constants;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -13,10 +13,16 @@
     [TestFixture]
     public class IndexTests : TestsBase
     {
-        [Test]
-        public void Ok_Keyword()
+        [TestCase(ApprenticeshipSearchMode.Keyword)]
+        [TestCase(ApprenticeshipSearchMode.Category)]
+        [TestCase(ApprenticeshipSearchMode.SavedSearches)]
+        public void Ok_AllApprenticeshipSearchModes(ApprenticeshipSearchMode searchMode)
         {
-            var response = Mediator.Index(ApprenticeshipSearchMode.Keyword);
+            var candidateId = searchMode == ApprenticeshipSearchMode.SavedSearches
+                ? Guid.NewGuid()
+                : default(Guid?);
+
+            var response = Mediator.Index(candidateId, searchMode);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 
@@ -27,24 +33,16 @@
             viewModel.Distances.SelectedValue.Should().Be(null);
             viewModel.ApprenticeshipLevels.Should().NotBeNull();
             viewModel.ApprenticeshipLevel.Should().Be("All");
-            viewModel.SearchMode.Should().Be(ApprenticeshipSearchMode.Keyword);
-        }
+            viewModel.SearchMode.Should().Be(searchMode);
 
-        [Test]
-        public void Ok_Category()
-        {
-            var response = Mediator.Index(ApprenticeshipSearchMode.Category);
-
-            response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
-
-            var viewModel = response.ViewModel;
-            viewModel.WithinDistance.Should().Be(5);
-            viewModel.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
-            viewModel.ResultsPerPage.Should().Be(5);
-            viewModel.Distances.SelectedValue.Should().Be(null);
-            viewModel.ApprenticeshipLevels.Should().NotBeNull();
-            viewModel.ApprenticeshipLevel.Should().Be("All");
-            viewModel.SearchMode.Should().Be(ApprenticeshipSearchMode.Category);
+            if (searchMode == ApprenticeshipSearchMode.SavedSearches)
+            {
+                viewModel.SavedSearches.Should().NotBeNull();
+            }
+            else
+            {
+                viewModel.SavedSearches.Should().BeNull();
+            }
         }
 
         [Test]
@@ -52,7 +50,7 @@
         {
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(GetCategories);
 
-            var response = Mediator.Index(ApprenticeshipSearchMode.Category);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Category);
 
             var categories = response.ViewModel.Categories;
             categories.Count.Should().Be(3);
@@ -65,7 +63,7 @@
         {
             UserDataProvider.Setup(udp => udp.Get(CandidateDataItemNames.ApprenticeshipLevel)).Returns("Advanced");
 
-            var response = Mediator.Index(ApprenticeshipSearchMode.Keyword);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Keyword);
 
             var viewModel = response.ViewModel;
             viewModel.ApprenticeshipLevel.Should().Be("Advanced");
@@ -74,7 +72,7 @@
         [Test]
         public void ShowEnglandSearchInKeywordSearch()
         {
-            var response = Mediator.Index(ApprenticeshipSearchMode.Keyword);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Keyword);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 
@@ -88,7 +86,7 @@
         [Test]
         public void ShowEnglandSearchInCategorySearch()
         {
-            var response = Mediator.Index(ApprenticeshipSearchMode.Category);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Category);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 

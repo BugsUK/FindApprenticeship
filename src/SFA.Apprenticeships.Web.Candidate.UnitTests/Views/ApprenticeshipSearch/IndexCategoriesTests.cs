@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
     using System.Linq;
-    using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
@@ -15,7 +14,7 @@
         {
             var categories = new categories();
 
-            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Keyword).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Keyword).ViewModel;
             var view = categories.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("categories").Attributes["class"].Value.Contains(" active").Should().BeFalse();
@@ -26,7 +25,7 @@
         {
             var categories = new categories();
 
-            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
             var view = categories.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("categories").Attributes["class"].Value.Contains(" active").Should().BeTrue();
@@ -40,7 +39,7 @@
 
             var categories = new categories();
 
-            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
             var view = categories.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("category-load-failed").Should().NotBeNull();
@@ -51,7 +50,7 @@
         {
             var categories = new categories();
 
-            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
             var view = categories.RenderAsHtml(searchViewModel);
 
             var categoryListLeft = view.GetElementbyId("category-list-left");
@@ -67,7 +66,7 @@
         {
             var categories = new categories();
 
-            var searchViewModel = Mediator.Index(ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
             searchViewModel.Category = "3";
             var view = categories.RenderAsHtml(searchViewModel);
 

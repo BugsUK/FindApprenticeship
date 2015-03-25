@@ -22,7 +22,7 @@ Scenario: Pre-populate my Education Qualifications Work Experience About You det
 		| FullnameReadOnly        | Equals | Firstname Lastname |
 		| EmailReadOnly           | Equals | {EmailToken}       |
 		| DobReadOnly             | Equals | 01/01/2000         |
-		| PhoneReadOnly           | Equals | 07970523193        |
+		| PhoneReadOnly           | Equals | 07469984649        |
 		| AddressLine1ReadOnly    | Equals | Flat A             |
 		| AddressLine2ReadOnly    | Equals | 6 Furlong Road     |
 		| AddressLine3ReadOnly    | Equals | London             |

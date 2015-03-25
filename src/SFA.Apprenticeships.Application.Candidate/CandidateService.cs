@@ -449,5 +449,12 @@
             var deletedSavedSearch = _deleteSavedSearchStrategy.DeleteSavedSearch(savedSearchId);
             return deletedSavedSearch;
         }
+
+        public SavedSearch RetrieveSavedSearch(Guid savedSearchId)
+        {
+            _logger.Debug("Calling CandidateService to get saved search with id='{0}'.", savedSearchId);
+
+            return _retrieveSavedSearchesStrategy.RetrieveSavedSearch(savedSearchId);
+        }
     }
 }

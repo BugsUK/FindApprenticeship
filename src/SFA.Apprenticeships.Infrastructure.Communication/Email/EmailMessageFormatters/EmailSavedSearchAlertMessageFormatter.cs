@@ -90,7 +90,7 @@
                     searchMode = GetSearchModeName(savedSearchAlert.Parameters.SearchMode),
                     keywords = savedSearchAlert.Parameters.Keywords,
                     category = savedSearchAlert.Parameters.CategoryFullName,
-                    subCategories = savedSearchAlert.Parameters.SubCategoriesFullName,
+                    subCategoriesFullName = savedSearchAlert.Parameters.SubCategoriesFullName,
                     location = savedSearchAlert.Parameters.Location,
                     apprenticeshipLevel = savedSearchAlert.Parameters.ApprenticeshipLevel,
                 },

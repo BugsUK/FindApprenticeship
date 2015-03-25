@@ -26,5 +26,10 @@
         {
             public const string RequiredErrorText = "Please select a category";
         }
+
+        public static class SavedSearchMessages
+        {
+            public const string RequiredErrorText = "TODO: Please select a saved search";
+        }
     }
 }

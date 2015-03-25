@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Newtonsoft.Json;
@@ -92,9 +93,8 @@
             var tokens = new List<CommunicationToken>
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
+                new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, string.Empty)
             };
-
-            tokens.Add(new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, string.Empty));
 
             var drafts = new Fixture().Build<ExpiringApprenticeshipApplicationDraft>()
                 .CreateMany(numOfVacancies)
@@ -111,22 +111,36 @@
         {
             return new[]
             {
-                    new CommunicationToken(CommunicationTokens.UserEmailAddress, TestToEmail),
-                    new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
-                    new CommunicationToken(CommunicationTokens.UserEnquiry, "User enquiry"),
-                    new CommunicationToken(CommunicationTokens.UserEnquiryDetails, details)
+                new CommunicationToken(CommunicationTokens.UserEmailAddress, TestToEmail),
+                new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
+                new CommunicationToken(CommunicationTokens.UserEnquiry, "User enquiry"),
+                new CommunicationToken(CommunicationTokens.UserEnquiryDetails, details)
             };
         }
 
-        public static IEnumerable<CommunicationToken> CreateSavedSearchAlertTokens(int noOfAlerts)
+        public static IEnumerable<CommunicationToken> CreateSavedSearchAlertTokens(int noOfAlerts, bool includeSubCategories = false)
         {
             var tokens = new List<CommunicationToken>
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane")
             };
 
+            var subCategories = new[]
+            {
+                "Emergency Fire Service Operations",
+                "Employment Related Services",
+                "Health - Allied Health Profession Support"
+            };
+
+            var subCategoriesFullName = string.Join(", ", subCategories);
+
             var savedSearchAlerts = new Fixture()
                 .Build<SavedSearchAlert>()
+                .With(each => each.Parameters, new Fixture()
+                    .Build<SavedSearch>()
+                    .With(each => each.SubCategories, includeSubCategories ? subCategories : null)
+                    .With(each => each.SubCategoriesFullName, includeSubCategories ? subCategoriesFullName : null)
+                    .Create())
                 .CreateMany(noOfAlerts)
                 .ToList();
 
@@ -137,7 +151,7 @@
             tokens.Add(new CommunicationToken(CommunicationTokens.SavedSearchAlerts, savedSearchAlertsJson));
 
             return tokens;
-       }
+        }
 
         public static IEnumerable<CommunicationToken> CreateApprenticeshipApplicationStatusAlertTokens()
         {

@@ -283,7 +283,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             string[] header = { "Field", "Value" };
             string[] row1 = { "Firstname", "Firstname" };
             string[] row2 = { "Lastname", "Lastname" };
-            string[] row3 = { "Phonenumber", "07970523193" };
+            string[] row3 = { "Phonenumber", "07469984649" };
             string[] row4 = { "EmailAddress", "{EmailToken}" };
             string[] row5 = { "PostcodeSearch", "N7 8LS  " };
             string[] row6 = { "Day", "01" };

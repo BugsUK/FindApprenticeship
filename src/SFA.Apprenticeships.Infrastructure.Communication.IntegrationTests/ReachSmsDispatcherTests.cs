@@ -15,7 +15,7 @@
     public class ReachSmsDispatcherTests
     {
         private const string BadToNumber = "0677878788978";
-        private const string TestToNumber = "447876546700";
+        private const string TestToNumber = "447469984649";
 
         private ISmsDispatcher _dispatcher;
 

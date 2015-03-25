@@ -33,5 +33,12 @@
             public const string VacancyHasError = "ApprenticeshipSearch.Details.VacancyHasError";
             public const string Ok = "ApprenticeshipSearch.Details.Ok";
         }
+
+        public class RunSavedSearch
+        {
+            public const string Ok = "ApprenticeshipSearch.RunSavedSearch.Ok";
+            public const string SavedSearchNotFound = "ApprenticeshipSearch.RunSavedSearch.SavedSearchNotFound";
+            public const string RunSaveSearchFailed = "ApprenticeshipSearch.RunSavedSearch.RunSaveSearchFailed";
+        }
     }
 }

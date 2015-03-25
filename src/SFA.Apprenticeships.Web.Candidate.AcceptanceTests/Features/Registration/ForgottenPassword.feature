@@ -46,7 +46,7 @@ Scenario: Reset password in an unactivated account
 		| Field           | Value         |
 		| Firstname       | FirstnameTest |
 		| Lastname        | LastnameTest  |
-		| Phonenumber     | 07970523193   |
+		| Phonenumber     | 07469984649   |
 		| EmailAddress    | {EmailToken}  |
 		| PostcodeSearch  | N7 8LS        |
 		| Day             | 01            |

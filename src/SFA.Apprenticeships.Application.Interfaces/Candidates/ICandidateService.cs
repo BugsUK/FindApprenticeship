@@ -76,5 +76,7 @@
         SavedSearch UpdateSavedSearch(SavedSearch savedSearch);
 
         SavedSearch DeleteSavedSearch(Guid savedSearchId);
+
+        SavedSearch RetrieveSavedSearch(Guid savedSearchId);
     }
 }

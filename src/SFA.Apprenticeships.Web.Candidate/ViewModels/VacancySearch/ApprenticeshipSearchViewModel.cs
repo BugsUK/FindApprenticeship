@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
+    using Account;
     using Constants.ViewModels;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -28,6 +30,8 @@
             SubCategories = viewModel.SubCategories;
             SearchMode = viewModel.SearchMode;
             SearchField = viewModel.SearchField;
+            // TODO: AG: US769: consider ApprenticeshipSearchViewModel.SavedSearches.
+            SavedSearches = viewModel.SavedSearches;
         }
 
         [Display(Name = ApprenticeshipSearchViewModelMessages.KeywordMessages.LabelText, Description = ApprenticeshipSearchViewModelMessages.KeywordMessages.HintText)]
@@ -75,5 +79,9 @@
         public string[] SubCategories { get; set; }
 
         public ApprenticeshipSearchMode SearchMode { get; set; }
+
+        public SavedSearchViewModel[] SavedSearches { get; set; }
+
+        public string SavedSearchId { get; set; }
     }
 }

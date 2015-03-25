@@ -5,7 +5,6 @@
     using System.Linq;
     using Builders;
     using Domain.Entities.Communication;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Helpers;
     using Moq;

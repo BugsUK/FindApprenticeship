@@ -18,7 +18,9 @@
         <tr>
           <td border="0" cellpadding="0" cellspacing="0" style="font-family: Helvetica, Arial, sans-serif;color:#0b0c0c;" valign="top">
             <h2 style="font-size: 18px; margin: 0; padding: 0;">
-              Top <span><xsl:value-of select="resultsCount"/></span> result(s) matching your search:
+              Top <span>
+                <xsl:value-of select="resultsCount"/>
+              </span> result(s) matching your search:
             </h2>
             <br/>
           </td>
@@ -39,6 +41,11 @@
           <td border="0" cellpadding="0" cellspacing="0" style="font-family: Helvetica, Arial, sans-serif;color:#0b0c0c;" valign="top">
             <p>
               <xsl:value-of select="parameters/name"/>
+              <xsl:if test="parameters/subCategoriesFullName != ''">
+                <br />
+                <b>Sub-categories: </b>
+                <xsl:value-of select="parameters/subCategoriesFullName"/>
+              </xsl:if>
               <br />
               <b>Apprenticeship level: </b>
               <xsl:value-of select="parameters/apprenticeshipLevel"/>
@@ -82,6 +89,10 @@
         <br/>
       </td>
     </tr>
-    <tr><td><xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;</td></tr>
+    <tr>
+      <td>
+        <xsl:text disable-output-escaping="yes">&amp;</xsl:text>nbsp;
+      </td>
+    </tr>
   </xsl:template>
 </xsl:stylesheet>

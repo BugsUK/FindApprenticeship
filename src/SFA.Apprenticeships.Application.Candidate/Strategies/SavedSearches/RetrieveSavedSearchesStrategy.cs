@@ -19,5 +19,10 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies.SavedSearches
             var savedSearches = _savedSearchReadRepository.GetForCandidate(candidateId);
             return savedSearches;
         }
+
+        public SavedSearch RetrieveSavedSearch(Guid savedSearchId)
+        {
+            return _savedSearchReadRepository.Get(savedSearchId);
+        }
     }
 }

@@ -7,5 +7,6 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies.SavedSearches
     public interface IRetrieveSavedSearchesStrategy
     {
         IList<SavedSearch> RetrieveSavedSearches(Guid candidateId);
+        SavedSearch RetrieveSavedSearch(Guid savedSearchId);
     }
 }

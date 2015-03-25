@@ -39,6 +39,7 @@
         {
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
+                .When(IsKeywordOrCategorySearch)
                 .When(x => !VacancyHelper.IsVacancyReference(x.Keywords))
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.RequiredErrorText)
                 .Length(2, 99)
@@ -48,6 +49,7 @@
 
             validator.RuleFor(x => x.Keywords)
                 .Matches(ApprenticeshipSearchViewModelMessages.KeywordMessages.WhiteList)
+                .When(IsKeywordOrCategorySearch)
                 .WithMessage(ApprenticeshipSearchViewModelMessages.KeywordMessages.WhiteListErrorText);
 
             validator.RuleFor(x => x.Category)
@@ -60,8 +62,14 @@
         {
             validator.RuleFor(x => x.Location)
                 .Length(3, 99)
+                .When(IsKeywordOrCategorySearch)
                 .When(x => x.Location != null && !x.Location.Any(Char.IsDigit) && !VacancyHelper.IsVacancyReference(x.Keywords))
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.LengthErrorText);
+
+            validator.RuleFor(x => x.SavedSearchId)
+                .NotEmpty()
+                .When(x => x.SearchMode == ApprenticeshipSearchMode.SavedSearches)
+                .WithMessage(ApprenticeshipSearchViewModelMessages.SavedSearchMessages.RequiredErrorText);
         }
 
         public static void AddLocationRules(this AbstractValidator<ApprenticeshipSearchViewModel> validator)
@@ -69,12 +77,18 @@
             // NOTE: no message here, 'no results' help text provides suggestions to user.
             validator.RuleFor(x => x.Location)
                 .Must(HaveLatAndLongPopulated)
+                .When(x => x.SearchMode == ApprenticeshipSearchMode.Keyword || x.SearchMode == ApprenticeshipSearchMode.Category)
                 .When(x => !VacancyHelper.IsVacancyReference(x.Keywords));
         }
 
         private static bool HaveLatAndLongPopulated(ApprenticeshipSearchViewModel instance, string location)
         {
             return instance.Latitude.HasValue && instance.Longitude.HasValue;
+        }
+
+        private static bool IsKeywordOrCategorySearch(ApprenticeshipSearchViewModel viewModel)
+        {
+            return viewModel.SearchMode == ApprenticeshipSearchMode.Keyword || viewModel.SearchMode == ApprenticeshipSearchMode.Category;
         }
     }
 }

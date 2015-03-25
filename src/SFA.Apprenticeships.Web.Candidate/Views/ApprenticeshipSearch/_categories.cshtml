@@ -1,9 +1,11 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+
 @model ApprenticeshipSearchViewModel
 
 @{
     var divClass = Model.SearchMode == ApprenticeshipSearchMode.Category ? "active" : "";
 }
+
 <div id="categories" class="form-group tabbed-element tab2 @divClass">
     <span class="form-label">Browse by category</span>
     <div class="grid-wrapper">

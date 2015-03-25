@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
+    using System;
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -18,7 +19,7 @@
                 SearchMode = ApprenticeshipSearchMode.Keyword
             };
 
-            var response = Mediator.SearchValidation(searchViewModel);
+            var response = Mediator.SearchValidation(null, searchViewModel);
 
             response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, true);
         }
@@ -33,7 +34,21 @@
                 SearchMode = ApprenticeshipSearchMode.Category
             };
 
-            var response = Mediator.SearchValidation(searchViewModel);
+            var response = Mediator.SearchValidation(null, searchViewModel);
+
+            response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, true);
+        }
+
+        [Test]
+        public void SavedSearchesModeValidationError()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                SavedSearchId = string.Empty,
+                SearchMode = ApprenticeshipSearchMode.SavedSearches
+            };
+
+            var response = Mediator.SearchValidation(null, searchViewModel);
 
             response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, true);
         }

@@ -15,6 +15,7 @@
                 AlertsEnabled = savedSearch.AlertsEnabled,
                 ApprenticeshipLevel = savedSearch.ApprenticeshipLevel,
                 SubCategoriesFullNames = savedSearch.SubCategoriesFullName,
+                DateCreated = savedSearch.DateCreated,
                 DateProcessed = savedSearch.DateProcessed
             };
 

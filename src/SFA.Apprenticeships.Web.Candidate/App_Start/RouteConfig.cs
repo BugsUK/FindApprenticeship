@@ -93,6 +93,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.RunSavedSearch,
+                url: "savedsearch",
+                defaults: new { controller = "ApprenticeshipSearch", action = "RunSavedSearch" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipDetailsWithDistance,
                 url: "apprenticeshipdetail/{id}/{distance}",
                 defaults: new {controller = "ApprenticeshipSearch", action = "DetailsWithDistance"}

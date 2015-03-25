@@ -7,7 +7,6 @@
     using Common.Configuration;
     using Common.Providers;
     using Common.Services;
-    using Constants;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
     using Domain.Entities.Applications;
@@ -584,14 +583,45 @@
             {
                 var deletedSavedSearch = _candidateService.DeleteSavedSearch(savedSearchId);
 
-                var viewModel = deletedSavedSearch.ToViewModel();
-
-                return viewModel;
+                return deletedSavedSearch.ToViewModel();
             }
             catch (Exception ex)
             {
                 _logger.Error("Error deleting saved search", ex);
                 return new SavedSearchViewModel { ViewModelMessage = AccountPageMessages.DeleteSavedSearchFailed };
+            }
+        }
+
+        public IEnumerable<SavedSearchViewModel> GetSavedSearches(Guid candidateId)
+        {
+            try
+            {
+                return _candidateService.RetrieveSavedSearches(candidateId)
+                    .Select(each => each.ToViewModel());
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error retrieving saved searches for candidate id='{0}'", ex, candidateId);
+                return null;
+            }
+        }
+
+        public SavedSearchViewModel GetSavedSearch(Guid savedSearchId)
+        {
+            try
+            {
+                var savedSearch = _candidateService.RetrieveSavedSearch(savedSearchId);
+
+                return savedSearch == null ? null : savedSearch.ToViewModel();
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error retrieving saved search id='{0}'", ex, savedSearchId);
+
+                return new SavedSearchViewModel
+                {
+                    ViewModelMessage = ApprenticeshipsSearchPageMessages.GetSavedSearchFailed
+                };
             }
         }
 

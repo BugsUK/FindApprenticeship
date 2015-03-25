@@ -13,12 +13,14 @@
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using Providers;
     using Validators;
+    using ViewModels.Account;
     using ViewModels.VacancySearch;
 
     public class ApprenticeshipSearchMediator : SearchMediatorBase, IApprenticeshipSearchMediator
@@ -52,7 +54,7 @@
             _blacklistedCategoryCodes = configService.Get<WebConfiguration>().BlacklistedCategoryCodes.Split(',');
         }
 
-        public MediatorResponse<ApprenticeshipSearchViewModel> Index(ApprenticeshipSearchMode searchMode)
+        public MediatorResponse<ApprenticeshipSearchViewModel> Index(Guid? candidateId, ApprenticeshipSearchMode searchMode)
         {
             var distances = GetDistances(true);
             var sortTypes = GetSortTypes();
@@ -60,6 +62,7 @@
             var apprenticeshipLevels = GetApprenticeshipLevels();
             var apprenticeshipLevel = GetApprenticeshipLevel();
             var categories = GetCategories();
+            var savedSearches = GetSavedSearches(candidateId);
 
             var viewModel = new ApprenticeshipSearchViewModel
             {
@@ -71,6 +74,7 @@
                 ApprenticeshipLevels = apprenticeshipLevels,
                 ApprenticeshipLevel = apprenticeshipLevel,
                 Categories = categories,
+                SavedSearches = savedSearches,
                 SearchMode = searchMode
             };
 
@@ -106,7 +110,7 @@
             return cats == null ? null : _referenceDataService.GetCategories().Where(c => !_blacklistedCategoryCodes.Contains(c.CodeName)).ToList();
         }
 
-        public MediatorResponse<ApprenticeshipSearchViewModel> SearchValidation(ApprenticeshipSearchViewModel model)
+        public MediatorResponse<ApprenticeshipSearchViewModel> SearchValidation(Guid? candidateId, ApprenticeshipSearchViewModel model)
         {
             var clientResult = _searchRequestValidator.Validate(model);
 
@@ -116,6 +120,11 @@
                 model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
                 model.Categories = GetCategories();
+
+                if (candidateId.HasValue)
+                {
+                    model.SavedSearches = GetSavedSearches(candidateId);
+                }
 
                 return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, model, clientResult);
             }
@@ -319,6 +328,38 @@
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
 
+        public MediatorResponse<SavedSearchViewModel> RunSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel apprenticeshipSearchViewModel)
+        {
+            Guid savedSearchId;
+            
+            var validSavedSearchId = Guid.TryParse(apprenticeshipSearchViewModel.SavedSearchId, out savedSearchId);
+            var savedSearchViewModel = validSavedSearchId
+                ? _candidateServiceProvider.GetSavedSearch(savedSearchId)
+                : null;
+
+            if (savedSearchViewModel == null)
+            {
+                return GetMediatorResponse(
+                    ApprenticeshipSearchMediatorCodes.RunSavedSearch.SavedSearchNotFound,
+                    default(SavedSearchViewModel),
+                    ApprenticeshipsSearchPageMessages.SavedSearchNotFound,
+                    UserMessageLevel.Error);
+            }
+
+            if (savedSearchViewModel.HasError())
+            {
+                return GetMediatorResponse(
+                    ApprenticeshipSearchMediatorCodes.RunSavedSearch.RunSaveSearchFailed,
+                    savedSearchViewModel,
+                    ApprenticeshipsSearchPageMessages.RunSavedSearchFailed,
+                    UserMessageLevel.Error);
+            }
+
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.RunSavedSearch.Ok, savedSearchViewModel);
+        }
+
+        #region Helpers
+
         private static ApprenticeshipSearchViewModel GetSearchModel(ApprenticeshipSearchViewModel model)
         {
             //Create a new search view model based on the search mode and user data
@@ -330,9 +371,14 @@
                     searchModel.Category = null;
                     searchModel.SubCategories = null;
                     break;
+
                 case ApprenticeshipSearchMode.Category:
                     searchModel.Keywords = null;
                     searchModel.Categories = model.Categories;
+                    break;
+
+                case ApprenticeshipSearchMode.SavedSearches:
+                    // TODO: AG: US769: consider ApprenticeshipSearchMode.SavedSearches.
                     break;
             }
 
@@ -401,5 +447,21 @@
                     : apprenticeshipApplication.Status;
             }
         }
+
+        private SavedSearchViewModel[] GetSavedSearches(Guid? candidateId)
+        {
+            if (candidateId == null)
+            {
+                return null;
+            }
+
+            var savedSearches = _candidateServiceProvider.GetSavedSearches(candidateId.Value);
+
+            return savedSearches == null
+                ? null
+                : savedSearches.OrderByDescending(each => each.DateCreated).ToArray();
+        }
+
+        #endregion
     }
 }

@@ -3,6 +3,7 @@
     public enum ApprenticeshipSearchMode
     {
         Keyword,
-        Category
+        Category,
+        SavedSearches
     }
 }
