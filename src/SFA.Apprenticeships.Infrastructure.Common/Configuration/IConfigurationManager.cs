@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Domain.Interfaces.Configuration
+﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
     //TODO: move to configuration infrastructure as private and expose everything through strongly typed configuration models
     //TODO: using the IConfigurationService. There will be some tricky IoC to sort.

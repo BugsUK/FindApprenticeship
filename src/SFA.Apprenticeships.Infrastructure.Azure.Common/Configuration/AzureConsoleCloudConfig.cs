@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common.Configuration
 {
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Common.Configuration;
 
     public class AzureConsoleCloudConfig : IAzureCloudConfig
     {

@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization;

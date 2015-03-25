@@ -5,8 +5,10 @@
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
     using Application.Interfaces.Logging;
+    using Common.Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Configuration;
+    using ConfigurationManager = System.Configuration.ConfigurationManager;
 
     public class WcfService<T> : IWcfService<T>
     {

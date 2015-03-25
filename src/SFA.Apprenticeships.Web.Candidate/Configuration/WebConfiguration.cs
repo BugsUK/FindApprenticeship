@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Configuration
 {
+    using System.Collections.Generic;
+
     public class WebConfiguration
     {
         public const string ConfigurationName = "WebConfiguration";
@@ -19,5 +21,7 @@
         public string TermsAndConditionsVersion { get; set; }
 
         public string BlacklistedCategoryCodes { get; set; }
+
+        //public IEnumerable<FeatureToggle> FeatureToggles { get ; set; }
     }
 }
