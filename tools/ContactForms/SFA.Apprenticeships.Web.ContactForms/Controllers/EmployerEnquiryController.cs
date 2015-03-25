@@ -72,7 +72,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _employerEnquiryMediator.SubmitEnquiry(model);
+                var response = _employerEnquiryMediator.SubmitGlaEnquiry(model);
                 ModelState.Clear();
 
                 switch (response.Code)

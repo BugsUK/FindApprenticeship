@@ -6,6 +6,7 @@
     public interface IEmployerEnquiryMediator
     {
         MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry(EmployerEnquiryViewModel message);
+        MediatorResponse<EmployerEnquiryViewModel> SubmitGlaEnquiry(EmployerEnquiryViewModel message);
 
         MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry();
     }

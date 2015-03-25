@@ -61,6 +61,30 @@
             }
         }
 
+        public MediatorResponse<EmployerEnquiryViewModel> SubmitGlaEnquiry(EmployerEnquiryViewModel viewModel)
+        {
+            var validationResult = _validator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                viewModel = PopulateStaticData(viewModel);
+                return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.ValidationError, viewModel, validationResult);
+            }
+
+            //todo: add other cases..
+            SubmitQueryStatus resultStatus = _employerEnquiryProvider.SubmitGlaEnquiry(viewModel);
+            //populate reference data
+            viewModel = PopulateStaticData(viewModel);
+
+            switch (resultStatus)
+            {
+                case SubmitQueryStatus.Success:
+                    return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.Success, viewModel, EmployerEnquiryPageMessages.QueryHasBeenSubmittedSuccessfully, UserMessageLevel.Success);
+                default:
+                    return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.Error, viewModel, EmployerEnquiryPageMessages.ErrorWhileQuerySubmission, UserMessageLevel.Error);
+            }
+        }
+
         private EmployerEnquiryViewModel PopulateStaticData(EmployerEnquiryViewModel viewModel)
         {
             viewModel.EmployeesCountList = GetEmployeeCountTypes();

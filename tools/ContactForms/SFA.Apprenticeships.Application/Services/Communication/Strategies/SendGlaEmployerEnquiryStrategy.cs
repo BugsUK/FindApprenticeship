@@ -57,6 +57,7 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
                 {
                     ToEmail = tokens.First(a => a.Key == CommunicationTokens.Email).Value,
                     MessageType = messageType,
+                    Subject = "(GLA)",
                     Tokens = tokens
                 };
 
