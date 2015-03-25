@@ -130,6 +130,7 @@
     <Compile Include="Infrastructure\EmailContentGenerator.cs" />
     <Compile Include="Infrastructure\SendGridEmailDispatcherTests.cs" />
     <Compile Include="Mediators\EmployerEnquiryMediatorBuilder.cs" />
+    <Compile Include="Mediators\GlaEmployerEnquiryTests.cs" />
     <Compile Include="Mediators\EmployerEnquiryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\EmployerEnquiryProviderBuilder.cs" />
