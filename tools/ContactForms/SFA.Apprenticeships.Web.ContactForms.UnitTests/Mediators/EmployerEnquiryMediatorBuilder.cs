@@ -9,12 +9,18 @@
     internal class EmployerEnquiryMediatorBuilder
     {
         private Mock<IEmployerEnquiryProvider> _employerEnquiryProviderMock = new Mock<IEmployerEnquiryProvider>();
-        readonly Mock<IReferenceDataMediator> _referenceDataMediator = new Mock<IReferenceDataMediator>();
+        private Mock<IReferenceDataMediator> _referenceDataMediator = new Mock<IReferenceDataMediator>();
         private EmployerEnquiryViewModelServerValidator _enquiryViewModelServerValidator = new EmployerEnquiryViewModelServerValidator();
 
         public EmployerEnquiryMediatorBuilder With(Mock<IEmployerEnquiryProvider> mock)
         {
             _employerEnquiryProviderMock = mock;
+            return this;
+        }
+
+        public EmployerEnquiryMediatorBuilder With(Mock<IReferenceDataMediator> mock)
+        {
+            _referenceDataMediator = mock;
             return this;
         }
 

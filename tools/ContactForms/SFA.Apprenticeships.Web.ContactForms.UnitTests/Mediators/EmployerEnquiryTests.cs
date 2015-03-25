@@ -1,4 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Mediators
+﻿using System;
+using SFA.Apprenticeships.Domain.Enums;
+using SFA.Apprenticeships.Web.ContactForms.Mediators;
+using SFA.Apprenticeships.Web.ContactForms.Mediators.Interfaces;
+
+namespace SFA.Apprenticeships.Web.ContactForms.Tests.Mediators
 {
     using Builders;
     using Constants;
@@ -47,7 +52,11 @@
             var employerProviderMock = new Mock<IEmployerEnquiryProvider>();
             employerProviderMock.Setup(x => x.SubmitEnquiry(It.IsAny<EmployerEnquiryViewModel>())).Returns(submitQueryStatus);
 
-            var mediator = new EmployerEnquiryMediatorBuilder().With(employerProviderMock).Build();
+            Mock<IReferenceDataMediator> referenceDataMediator = new Mock<IReferenceDataMediator>();
+            referenceDataMediator.Setup(c => c.GetReferenceData(It.IsAny<ReferenceDataTypes>()))
+                .Returns(new MediatorResponse<ReferenceDataListViewModel>() { ViewModel = new ReferenceDataListViewModel() });
+
+            var mediator = new EmployerEnquiryMediatorBuilder().With(employerProviderMock).With(referenceDataMediator).Build();
 
             //Act
             var response = mediator.SubmitEnquiry(employerEnquiryViewModel);
@@ -71,7 +80,11 @@
                                                 .Address(addressViewModelBuilder)
                                                 .Build();
 
-            var mediator = new EmployerEnquiryMediatorBuilder().Build();
+            Mock<IReferenceDataMediator> referenceDataMediator = new Mock<IReferenceDataMediator>();
+            referenceDataMediator.Setup(c => c.GetReferenceData(It.IsAny<ReferenceDataTypes>()))
+                .Returns(new MediatorResponse<ReferenceDataListViewModel>() { ViewModel = new ReferenceDataListViewModel() });
+            
+            var mediator = new EmployerEnquiryMediatorBuilder().With(referenceDataMediator).Build();
 
             //Act
             var response = mediator.SubmitEnquiry(employerEnquiryViewModel);
