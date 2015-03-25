@@ -7,7 +7,7 @@
     using Interfaces.Communications;
     using Newtonsoft.Json;
 
-    public class CommunicationRequestFactory
+    public static class CommunicationRequestFactory
     {
         public static CommunicationRequest GetDailyDigestCommunicationRequest(
             Candidate candidate,
@@ -45,19 +45,28 @@
             Candidate candidate,
             List<SavedSearchAlert> candidateSavedSearchAlerts)
         {
+            // Order by most recently added saved search alert.
+            var sortedCandidateSavedSearchAlerts = candidateSavedSearchAlerts
+                .OrderByDescending(each => each.DateCreated)
+                .ToList();
+
+            foreach (var candidateSavedSearchAlert in sortedCandidateSavedSearchAlerts)
+            {
+                // Order by most recently posted vacancy.
+                candidateSavedSearchAlert.Results = candidateSavedSearchAlert.Results
+                    .OrderByDescending(each => each.Id)
+                    .ToList();
+            }
+
+            var savedSearchAlertsJson = JsonConvert.SerializeObject(sortedCandidateSavedSearchAlerts);
+
             var communicationTokens = new List<CommunicationToken>
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, candidate.RegistrationDetails.EmailAddress),
                 new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber),
+                new CommunicationToken(CommunicationTokens.SavedSearchAlerts, savedSearchAlertsJson)
             };
-
-            // TODO: AG: ordering of saved search alerts.
-            var savedSearchAlertsJson = candidateSavedSearchAlerts == null
-                ? string.Empty
-                : JsonConvert.SerializeObject(candidateSavedSearchAlerts);
-
-            communicationTokens.Add(new CommunicationToken(CommunicationTokens.SavedSearchAlerts, savedSearchAlertsJson));
 
             return new CommunicationRequest
             {

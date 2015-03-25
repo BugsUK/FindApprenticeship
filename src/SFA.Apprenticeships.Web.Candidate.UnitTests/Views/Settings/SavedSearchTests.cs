@@ -96,7 +96,7 @@
 
             if (shouldShowLevel)
             {
-                savedSearchProperties[1].InnerText.Should().Be(string.Format("Apprenticeship level: {0}", apprenticeshipLevel));
+                savedSearchProperties[0].InnerText.Should().Be(string.Format("Apprenticeship level: {0}", apprenticeshipLevel));
             }
 
             savedSearchProperties.Last().ChildNodes.First(n => n.Name == "a").InnerText.Should().Contain("Delete saved search");
@@ -125,7 +125,7 @@
 
             savedSearchProperties.Count.Should().Be(3);
 
-            savedSearchProperties[1].InnerText.Should().Be(string.Format("Sub-categories: {0}", subCategoriesFullName));
+            savedSearchProperties[0].InnerText.Should().Be(string.Format("Sub-categories: {0}", subCategoriesFullName));
         }
 
         [Test]

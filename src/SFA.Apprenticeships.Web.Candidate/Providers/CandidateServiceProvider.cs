@@ -172,10 +172,9 @@
             try
             {
                 var candidate = _candidateService.GetCandidate(candidateId);
-                if (candidate.RegistrationDetails.EmailAddress != model.EmailAddress)
+                if (!String.Equals(candidate.RegistrationDetails.EmailAddress, model.EmailAddress, StringComparison.CurrentCultureIgnoreCase))
                 {
-                    _logger.Error("Candidate email address {0} does not match supplied email address {1}", candidate.RegistrationDetails.EmailAddress, model.EmailAddress);
-                    return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Error, ActivationPageMessages.ActivationFailed);
+                    _logger.Warn("Candidate email address {0} does not match supplied email address {1}", candidate.RegistrationDetails.EmailAddress, model.EmailAddress);
                 }
 
                 _candidateService.Activate(model.EmailAddress, model.ActivationCode);

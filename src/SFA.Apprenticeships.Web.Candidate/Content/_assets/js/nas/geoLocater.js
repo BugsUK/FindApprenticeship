@@ -1,15 +1,31 @@
-﻿$(function () {
-    var geocoder;
+﻿window.googleMapsScriptLoaded = function () {
+    $(window).trigger('googleMapsScriptLoaded');
+};
 
-    function initialize() {
+$(function () {
+    var geocoder,
+        apiScriptLoaded = false,
+		apiScriptLoading = false,
+        $window = $(window),
+        $body = $('body');
+
+    $window.on('googleMapsScriptLoaded', function () {
+        apiScriptLoaded = true;
         geocoder = new google.maps.Geocoder();
-    }
+        geoFindMe();
+    });
 
     function geoFindMe() {
         var output = document.getElementById("Location"),
             latVal,
-            longVal;
+            longVal;  
 
+        if (!apiScriptLoaded && !apiScriptLoading) {
+            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
+            apiScriptLoading = true;
+        }
+
+        if (!apiScriptLoaded) return true;
 
         if (!navigator.geolocation) {
             output.placeholder = "Geolocation is not supported by your browser";
@@ -62,8 +78,6 @@
     $('.geolocation').on('click', '#getLocation', function () {
         geoFindMe();
     });
-
-    google.maps.event.addDomListener(window, 'load', initialize);
 
 });
 

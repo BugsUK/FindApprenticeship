@@ -9,6 +9,7 @@
         private readonly Guid _candidateId;
         private string _firstName;
         private string _phoneNumber;
+        private string _emailAddress;
         private string _mobileVerificationCode;
         private bool _allowEmail;
         private bool _allowMobile;
@@ -36,6 +37,12 @@
         public CandidateBuilder PhoneNumber(string phoneNumber)
         {
             _phoneNumber = phoneNumber;
+            return this;
+        }
+
+        public CandidateBuilder EmailAddress(string emailAddress)
+        {
+            _emailAddress = emailAddress;
             return this;
         }
 
@@ -133,7 +140,8 @@
                 RegistrationDetails = new RegistrationDetails
                 {
                     FirstName = _firstName,
-                    PhoneNumber = _phoneNumber
+                    PhoneNumber = _phoneNumber,
+                    EmailAddress = _emailAddress
                 },
                 CommunicationPreferences = new CommunicationPreferences
                 {

@@ -99,6 +99,8 @@
                 indexSettings.Analysis.Analyzers.Add("snowballStopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter", "snowball" } });
                 indexSettings.Analysis.Analyzers.Add("snowballStopwordsExtended", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsExtendedFilter", "snowball" } });
 
+                indexSettings.Analysis.Analyzers.Add("stopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter" } });
+
                 client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
 
                 client.Map<TDestinationSummary>(p => p.Index(newIndexName)
