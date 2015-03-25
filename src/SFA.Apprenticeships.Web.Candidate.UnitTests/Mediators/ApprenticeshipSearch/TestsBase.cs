@@ -12,12 +12,11 @@
 
     public abstract class TestsBase
     {
-        protected static IApprenticeshipSearchMediator GetMediator(IConfigurationService configurationService, ISearchProvider searchProvider, IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider, ICandidateServiceProvider candidateServiceProvider, IUserDataProvider userDataProvider, IReferenceDataService referenceDataService, IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)
+        protected static IApprenticeshipSearchMediator GetMediator(IConfigurationService configurationService, ISearchProvider searchProvider, ICandidateServiceProvider candidateServiceProvider, IUserDataProvider userDataProvider, IReferenceDataService referenceDataService, IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)
         {
-            return new ApprenticeshipSearchMediator(configurationService, searchProvider, apprenticeshipVacancyDetailProvider, candidateServiceProvider, userDataProvider, referenceDataService, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), apprenticeshipVacancyProvider);
+            return new ApprenticeshipSearchMediator(configurationService, searchProvider, candidateServiceProvider, userDataProvider, referenceDataService, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), apprenticeshipVacancyProvider);
         }
 
-        protected Mock<IApprenticeshipVacancyDetailProvider> ApprenticeshipVacancyDetailProvider;
         protected Mock<ICandidateServiceProvider> CandidateServiceProvider;
         protected Mock<IConfigurationService> ConfigurationService;
         protected Mock<IUserDataProvider> UserDataProvider;
@@ -30,7 +29,6 @@
         public virtual void Setup()
         {
             CandidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            ApprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
             CandidateServiceProvider = new Mock<ICandidateServiceProvider>();
             ConfigurationService = new Mock<IConfigurationService>();
             ConfigurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
@@ -39,7 +37,7 @@
             SearchProvider = new Mock<ISearchProvider>();
             ReferenceDataService = new Mock<IReferenceDataService>();
             ApprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
-            Mediator = new ApprenticeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, ApprenticeshipVacancyDetailProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), ApprenticeshipVacancyProvider.Object);
+            Mediator = new ApprenticeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), ApprenticeshipVacancyProvider.Object);
         }
     }
 }

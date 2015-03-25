@@ -136,15 +136,14 @@
             configurationManager.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             var searchProvider = new Mock<ISearchProvider>();
-            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
 
-            traineeshipVacancyDetailProvider.Setup(
+            traineeshipVacancyProvider.Setup(
                 p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             var userDataProvider = GetUserDataProvider();
-            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
 
-            return GetMediator(configurationManager.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object);
+            return GetMediator(configurationManager.Object, searchProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object);
         }
     }
 }

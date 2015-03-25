@@ -16,7 +16,6 @@
     public class TraineeshipSearchMediator : SearchMediatorBase, ITraineeshipSearchMediator
     {
         private readonly ISearchProvider _searchProvider;
-        private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
         private readonly TraineeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly TraineeshipSearchViewModelLocationValidator _searchLocationValidator;
         private readonly ITraineeshipVacancyProvider _traineeshipVacancyProvider;
@@ -24,7 +23,6 @@
         public TraineeshipSearchMediator(
             IConfigurationService configService,
             ISearchProvider searchProvider,
-            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
             IUserDataProvider userDataProvider,
             TraineeshipSearchViewModelServerValidator searchRequestValidator,
             TraineeshipSearchViewModelLocationValidator searchLocationValidator,
@@ -32,7 +30,6 @@
             : base(configService, userDataProvider)
         {
             _searchProvider = searchProvider;
-            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _traineeshipVacancyProvider = traineeshipVacancyProvider;
@@ -134,7 +131,7 @@
                 return GetMediatorResponse<TraineeshipVacancyDetailViewModel>(TraineeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
-            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {

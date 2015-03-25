@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
@@ -19,6 +20,7 @@
         private const int PageSize = 10;
 
         private Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _apprenticeshipSearchService;
+        private Mock<ICandidateService> _candidateService; 
         private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
         private Mock<ILogService> _logService;
 
@@ -26,6 +28,7 @@
         public void Setup()
         {
             _apprenticeshipSearchService = new Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
+            _candidateService = new Mock<ICandidateService>();
             _apprenticeshipMapper = new ApprenticeshipCandidateWebMappers();
             _logService = new Mock<ILogService>();
         }
@@ -128,6 +131,7 @@
         {
             var searchProvider = new ApprenticeshipVacancyProvider(
                 _apprenticeshipSearchService.Object,
+                _candidateService.Object,
                 _apprenticeshipMapper,
                 _logService.Object);
             return searchProvider;

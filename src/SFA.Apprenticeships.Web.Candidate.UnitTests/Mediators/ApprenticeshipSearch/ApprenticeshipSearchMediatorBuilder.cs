@@ -13,7 +13,6 @@
     {
         private readonly Mock<IConfigurationService> _configurationService;
         private readonly Mock<ISearchProvider> _searchProvider;
-        private readonly Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider;
         private Mock<ICandidateServiceProvider> _candidateServiceProvider;
         private readonly Mock<IUserDataProvider> _userDataProvider;
         private readonly Mock<IReferenceDataService> _referenceDataService;
@@ -22,7 +21,6 @@
         public ApprenticeshipSearchMediatorBuilder()
         {
             _candidateServiceProvider = new Mock<ICandidateServiceProvider>();
-            _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
             _candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             _configurationService = new Mock<IConfigurationService>();
             _configurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.ConfigurationName)).Returns(new WebConfiguration() { VacancyResultsPerPage = 5, BlacklistedCategoryCodes = "00,99" });
@@ -41,7 +39,7 @@
         public IApprenticeshipSearchMediator Build()
         {
             var mediator = new ApprenticeshipSearchMediator(_configurationService.Object, _searchProvider.Object,
-                _apprenticeshipVacancyDetailProvider.Object, _candidateServiceProvider.Object, _userDataProvider.Object,
+                _candidateServiceProvider.Object, _userDataProvider.Object,
                 _referenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(),
                 new ApprenticeshipSearchViewModelLocationValidator(), _apprenticeshipVacancyProvider.Object);
             return mediator;

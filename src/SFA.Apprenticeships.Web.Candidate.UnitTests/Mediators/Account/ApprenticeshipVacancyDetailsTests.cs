@@ -22,9 +22,9 @@
                 VacancyStatus = VacancyStatuses.Live
             };
 
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyDetailProvider).Build();
+            var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
+            apprenticeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyProvider).Build();
 
             var response = accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
 
@@ -40,9 +40,9 @@
                 VacancyStatus = VacancyStatuses.Expired
             };
 
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyDetailProvider).Build();
+            var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
+            apprenticeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyProvider).Build();
 
             var response = accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
 
@@ -58,9 +58,9 @@
                 VacancyStatus = VacancyStatuses.Unavailable
             };
 
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyDetailProvider).Build();
+            var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
+            apprenticeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyProvider).Build();
 
             var response = accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
 
@@ -73,9 +73,9 @@
         [Test]
         public void VacancyNotFoundTest()
         {
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(default(ApprenticeshipVacancyDetailViewModel));
-            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyDetailProvider).Build();
+            var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
+            apprenticeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(default(ApprenticeshipVacancyDetailViewModel));
+            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyProvider).Build();
 
             var response = accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
 
@@ -93,9 +93,9 @@
                 ViewModelMessage = "Has error"
             };
 
-            var apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-            apprenticeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyDetailProvider).Build();
+            var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
+            apprenticeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(apprenticeshipVacancyProvider).Build();
 
             var response = accountMediator.ApprenticeshipVacancyDetails(Guid.NewGuid(), 42);
 

@@ -13,7 +13,7 @@
         private readonly ILogService _logger;
 
         private Mock<ICandidateService> _candidateService;
-        private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider;
+        private Mock<ITraineeshipVacancyProvider> _traineeshipVacancyProvider;
 
         public TraineeshipApplicationProviderBuilder()
         {
@@ -21,7 +21,7 @@
             _logger = new Mock<ILogService>().Object;
 
             _candidateService = new Mock<ICandidateService>();
-            _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
+            _traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
         }
 
         public TraineeshipApplicationProviderBuilder With(Mock<ICandidateService> candidateService)
@@ -30,15 +30,15 @@
             return this;
         }
 
-        public TraineeshipApplicationProviderBuilder With(Mock<ITraineeshipVacancyDetailProvider> traineeshipVacancyDetailProvider)
+        public TraineeshipApplicationProviderBuilder With(Mock<ITraineeshipVacancyProvider> traineeshipVacancyProvider)
         {
-            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
+            _traineeshipVacancyProvider = traineeshipVacancyProvider;
             return this;
         }
 
         public TraineeshipApplicationProvider Build()
         {
-            var provider = new TraineeshipApplicationProvider(_mapper, _candidateService.Object, _traineeshipVacancyDetailProvider.Object, _logger);
+            var provider = new TraineeshipApplicationProvider(_mapper, _candidateService.Object, _traineeshipVacancyProvider.Object, _logger);
             return provider;
         }
     }

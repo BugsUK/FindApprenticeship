@@ -49,7 +49,7 @@
                 VacancyStatus = VacancyStatuses.Live
             };
 
-            ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            ApprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
             
             var response = Mediator.Details(Id, null);
 
@@ -64,7 +64,7 @@
                 VacancyStatus = VacancyStatuses.Unavailable
             };
 
-            ApprenticeshipVacancyDetailProvider.Setup(
+            ApprenticeshipVacancyProvider.Setup(
                 p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             var response = Mediator.Details(Id, null);
@@ -80,7 +80,7 @@
                 VacancyStatus = VacancyStatuses.Unavailable
             };
 
-            ApprenticeshipVacancyDetailProvider.Setup(
+            ApprenticeshipVacancyProvider.Setup(
                 p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             var response = Mediator.Details(Id, Guid.NewGuid());
@@ -97,7 +97,7 @@
                 VacancyStatus = VacancyStatuses.Unavailable
             };
 
-            ApprenticeshipVacancyDetailProvider.Setup(
+            ApprenticeshipVacancyProvider.Setup(
                 p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             var response = Mediator.Details(Id, Guid.NewGuid());
@@ -113,7 +113,7 @@
                 VacancyStatus = VacancyStatuses.Live
             };
 
-            ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            ApprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             var response = Mediator.Details(Id, null);
 
@@ -128,7 +128,7 @@
                 VacancyStatus = VacancyStatuses.Live
             };
 
-            ApprenticeshipVacancyDetailProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            ApprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             UserDataProvider.Setup(udp => udp.Pop(CandidateDataItemNames.VacancyDistance)).Returns(VacancyDistance);
             UserDataProvider.Setup(udp => udp.Pop(CandidateDataItemNames.LastViewedVacancyId)).Returns(Convert.ToString(Id));

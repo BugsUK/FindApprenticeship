@@ -17,8 +17,8 @@
     public class AccountMediator : MediatorBase, IAccountMediator
     {
         private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
-        private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
-        private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
+        private readonly IApprenticeshipVacancyProvider _apprenticeshipVacancyProvider;
+        private readonly ITraineeshipVacancyProvider _traineeshipVacancyProvider;
         private readonly IConfigurationService _configurationService;
         private readonly IAccountProvider _accountProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
@@ -30,8 +30,8 @@
             ICandidateServiceProvider candidateServiceProvider,
             SettingsViewModelServerValidator settingsViewModelServerValidator,
             IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
-            IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
-            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider,
+            IApprenticeshipVacancyProvider apprenticeshipVacancyProvider,
+            ITraineeshipVacancyProvider traineeshipVacancyProvider,
             IConfigurationService configurationService,
             VerifyMobileViewModelServerValidator mobileViewModelServerValidator)
         {
@@ -39,9 +39,9 @@
             _candidateServiceProvider = candidateServiceProvider;
             _settingsViewModelServerValidator = settingsViewModelServerValidator;
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
-            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
+            _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
             _configurationService = configurationService;
-            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
+            _traineeshipVacancyProvider = traineeshipVacancyProvider;
             _verifyMobileViewModelServerValidator = mobileViewModelServerValidator;
         }
 
@@ -200,7 +200,7 @@
 
         public MediatorResponse ApprenticeshipVacancyDetails(Guid candidateId, int vacancyId)
         {
-            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {
@@ -217,7 +217,7 @@
 
         public MediatorResponse TraineeshipVacancyDetails(Guid candidateId, int vacancyId)
         {
-            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {

@@ -1,27 +1,25 @@
-﻿using Moq;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-using SFA.Apprenticeships.Web.Candidate.Mediators.Account;
-using SFA.Apprenticeships.Web.Candidate.Providers;
-using SFA.Apprenticeships.Web.Candidate.Validators;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
 {
-    using Common.Providers;
+    using Candidate.Mediators.Account;
+    using Candidate.Providers;
+    using Candidate.Validators;
+    using Domain.Interfaces.Configuration;
+    using Moq;
 
     internal class AccountMediatorBuilder
     {
         private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
-        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
-        private Mock<ITraineeshipVacancyDetailProvider> _traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
+        private Mock<IApprenticeshipVacancyProvider> _apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
+        private Mock<ITraineeshipVacancyProvider> _traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
         private IAccountProvider _accountProvider = new Mock<IAccountProvider>().Object;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
         private Mock<VerifyMobileViewModelServerValidator> _verifyMobileViewModelServerValidatorMock = new Mock<VerifyMobileViewModelServerValidator>();
         private Mock<IConfigurationService> _configurationServiceMock = new Mock<IConfigurationService>();
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
 
-        public AccountMediatorBuilder With(Mock<IApprenticeshipVacancyDetailProvider> apprenticeshipVacancyDetailProvider)
+        public AccountMediatorBuilder With(Mock<IApprenticeshipVacancyProvider> apprenticeshipVacancyProvider)
         {
-            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
+            _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
             return this;
         }
 
@@ -37,9 +35,9 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
             return this;
         }
 
-        public AccountMediatorBuilder With(Mock<ITraineeshipVacancyDetailProvider> traineeshipVacancyDetailProvider)
+        public AccountMediatorBuilder With(Mock<ITraineeshipVacancyProvider> traineeshipVacancyProvider)
         {
-            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
+            _traineeshipVacancyProvider = traineeshipVacancyProvider;
             return this;
         }
 
@@ -67,8 +65,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
                 _candidateServiceProviderMock.Object,
                 _settingsViewModelServerValidator,
                 _apprenticeshipApplicationProviderMock.Object,
-                _apprenticeshipVacancyDetailProvider.Object,
-                _traineeshipVacancyDetailProvider.Object,
+                _apprenticeshipVacancyProvider.Object,
+                _traineeshipVacancyProvider.Object,
                 _configurationServiceMock.Object,
                 _verifyMobileViewModelServerValidatorMock.Object);
         }

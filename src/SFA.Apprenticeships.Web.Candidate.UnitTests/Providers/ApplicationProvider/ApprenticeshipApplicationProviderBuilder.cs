@@ -9,9 +9,7 @@
 
     internal class ApprenticeshipApplicationProviderBuilder
     {
-        private Mock<IApprenticeshipVacancyDetailProvider> _apprenticeshipVacancyDetailProvider =
-            new Mock<IApprenticeshipVacancyDetailProvider>();
-
+        private Mock<IApprenticeshipVacancyProvider> _apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
         private Mock<ICandidateService> _candidateService = new Mock<ICandidateService>();
         private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
@@ -22,18 +20,15 @@
             return this;
         }
 
-        public ApprenticeshipApplicationProviderBuilder With(
-            Mock<IApprenticeshipVacancyDetailProvider> apprenticeshipVacancyDetailProviderMock)
+        public ApprenticeshipApplicationProviderBuilder With(Mock<IApprenticeshipVacancyProvider> apprenticeshipVacancyProvider)
         {
-            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProviderMock;
+            _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
             return this;
         }
 
         public ApprenticeshipApplicationProvider Build()
         {
-            return new ApprenticeshipApplicationProvider(_apprenticeshipVacancyDetailProvider.Object,
-                _candidateService.Object, new ApprenticeshipCandidateWebMappers(), _configurationService.Object,
-                _logService.Object);
+            return new ApprenticeshipApplicationProvider(_apprenticeshipVacancyProvider.Object, _candidateService.Object, new ApprenticeshipCandidateWebMappers(), _configurationService.Object, _logService.Object);
         }
     }
 }

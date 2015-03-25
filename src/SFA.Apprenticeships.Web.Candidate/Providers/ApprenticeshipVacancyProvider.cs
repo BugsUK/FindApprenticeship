@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
@@ -19,15 +20,18 @@
     public class ApprenticeshipVacancyProvider : IApprenticeshipVacancyProvider
     {
         private readonly IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> _apprenticeshipSearchService;
+        private readonly ICandidateService _candidateService;
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly ILogService _logger;
 
         public ApprenticeshipVacancyProvider(
             IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
+            ICandidateService candidateService,
             IMapper apprenticeshipSearchMapper,
             ILogService logger)
         {
             _apprenticeshipSearchService = apprenticeshipSearchService;
+            _candidateService = candidateService;
             _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
             _logger = logger;
         }
@@ -136,6 +140,52 @@
             catch (Exception e)
             {
                 _logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", e);
+                throw;
+            }
+        }
+
+        public ApprenticeshipVacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId)
+        {
+            _logger.Debug(
+                "Calling ApprenticeshipVacancyDetailProvider to get the Vacancy detail View Model for candidate ID: {0}, vacancy ID: {1}.",
+                candidateId, vacancyId);
+
+            try
+            {
+                var vacancyDetail = candidateId.HasValue ?
+                    _candidateService.GetApprenticeshipVacancyDetail(candidateId.Value, vacancyId) :
+                    _apprenticeshipSearchService.GetVacancyDetails(vacancyId);
+
+                if (vacancyDetail == null) return null;
+
+                var vacancyDetailViewModel = _apprenticeshipSearchMapper.Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
+
+                if (candidateId == null) return vacancyDetailViewModel;
+
+                var applicationDetails = _candidateService.GetApplication(candidateId.Value, vacancyId);
+                if (applicationDetails == null) return vacancyDetailViewModel;
+
+                // If candidate has applied for vacancy, include the details in the view model.
+                vacancyDetailViewModel.CandidateApplicationStatus = applicationDetails.Status;
+                vacancyDetailViewModel.DateApplied = applicationDetails.DateApplied;
+
+                return vacancyDetailViewModel;
+            }
+            catch (CustomException e)
+            {
+                var message = string.Format("Get Apprenticeship Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                    candidateId, vacancyId);
+
+                _logger.Error(message, e);
+
+                return new ApprenticeshipVacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed);
+            }
+            catch (Exception e)
+            {
+                var message = string.Format("Get Apprenticeship Vacancy View Model failed for candidate ID: {0}, vacancy ID: {1}.",
+                    candidateId, vacancyId);
+
+                _logger.Error(message, e);
                 throw;
             }
         }

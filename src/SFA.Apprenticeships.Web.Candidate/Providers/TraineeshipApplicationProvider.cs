@@ -17,15 +17,15 @@
         private readonly ILogService _logger;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
-        private readonly ITraineeshipVacancyDetailProvider _traineeshipVacancyDetailProvider;
+        private readonly ITraineeshipVacancyProvider _traineeshipVacancyProvider;
 
         public TraineeshipApplicationProvider(IMapper mapper,
             ICandidateService candidateService,
-            ITraineeshipVacancyDetailProvider traineeshipVacancyDetailProvider, ILogService logger)
+            ITraineeshipVacancyProvider traineeshipVacancyProvider, ILogService logger)
         {
             _mapper = mapper;
             _candidateService = candidateService;
-            _traineeshipVacancyDetailProvider = traineeshipVacancyDetailProvider;
+            _traineeshipVacancyProvider = traineeshipVacancyProvider;
             _logger = logger;
         }
 
@@ -131,7 +131,7 @@
 
             try
             {
-                var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+                var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
                 if (vacancyDetailViewModel.HasError())
                 {
@@ -196,7 +196,7 @@
             TraineeshipApplicationViewModel traineeshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _traineeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _traineeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {

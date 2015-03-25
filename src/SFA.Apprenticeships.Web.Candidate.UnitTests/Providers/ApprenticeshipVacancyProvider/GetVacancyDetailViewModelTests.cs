@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApprenticeshipVacancyDetailProvider
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApprenticeshipVacancyProvider
 {
     using System;
     using System.ServiceModel;
@@ -22,7 +22,7 @@
             var exception = new ServerTooBusyException("The HTTP service located at https://gateway.prod.avms.sfa.bis.gov.uk/services/NASGatewayService/GatewayService.svc is unavailable");
             var customException = new CustomException(message, exception, Application.Interfaces.Vacancies.ErrorCodes.GetVacancyDetailsFailed);
             candidateService.Setup(cs => cs.GetApprenticeshipVacancyDetail(candidateId, vacancyId)).Throws(customException);
-            var provider = new ApprenticeshipVacancyDetailProviderBuilder().With(candidateService).Build();
+            var provider = new ApprenticeshipVacancyProviderBuilder().With(candidateService).Build();
 
             var viewModel = provider.GetVacancyDetailViewModel(candidateId, vacancyId);
 

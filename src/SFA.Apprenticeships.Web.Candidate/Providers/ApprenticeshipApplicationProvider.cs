@@ -23,17 +23,17 @@
     {
         private readonly ILogService _logger;
         private readonly IMapper _mapper;
-        private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
+        private readonly IApprenticeshipVacancyProvider _apprenticeshipVacancyProvider;
         private readonly ICandidateService _candidateService;
         private readonly IConfigurationService _configurationService;
 
         public ApprenticeshipApplicationProvider(
-            IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
+            IApprenticeshipVacancyProvider apprenticeshipVacancyProvider,
             ICandidateService candidateService,
             IMapper mapper,
             IConfigurationService configurationService, ILogService logger)
         {
-            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
+            _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
             _candidateService = candidateService;
             _mapper = mapper;
             _configurationService = configurationService;
@@ -561,7 +561,7 @@
             Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
             // TODO: why have a patch method like this? should be done in mapper.
-            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null || vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable)
             {

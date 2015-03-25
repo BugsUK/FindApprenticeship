@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApprenticeshipVacancyDetailProvider
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApprenticeshipVacancyProvider
 {
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
@@ -9,7 +9,7 @@
     using Domain.Interfaces.Mapping;
     using Moq;
 
-    public class ApprenticeshipVacancyDetailProviderBuilder
+    public class ApprenticeshipVacancyProviderBuilder
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -17,7 +17,7 @@
         private Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _vacancySearchService;
         private Mock<ICandidateService> _candidateService;
 
-        public ApprenticeshipVacancyDetailProviderBuilder()
+        public ApprenticeshipVacancyProviderBuilder()
         {
             _mapper = new ApprenticeshipCandidateWebMappers();
             _logger = new Mock<ILogService>().Object;
@@ -26,21 +26,21 @@
             _candidateService = new Mock<ICandidateService>();
         }
 
-        public ApprenticeshipVacancyDetailProviderBuilder With(Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> vacancySearchService)
+        public ApprenticeshipVacancyProviderBuilder With(Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> vacancySearchService)
         {
             _vacancySearchService = vacancySearchService;
             return this;
         }
 
-        public ApprenticeshipVacancyDetailProviderBuilder With(Mock<ICandidateService> candidateService)
+        public ApprenticeshipVacancyProviderBuilder With(Mock<ICandidateService> candidateService)
         {
             _candidateService = candidateService;
             return this;
         }
 
-        public ApprenticeshipVacancyDetailProvider Build()
+        public ApprenticeshipVacancyProvider Build()
         {
-            var provider = new ApprenticeshipVacancyDetailProvider(_vacancySearchService.Object, _candidateService.Object, _mapper, _logger);
+            var provider = new ApprenticeshipVacancyProvider(_vacancySearchService.Object, _candidateService.Object, _mapper, _logger);
             return provider;
         }
     }

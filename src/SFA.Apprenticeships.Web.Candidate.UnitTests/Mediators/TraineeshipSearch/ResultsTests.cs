@@ -255,10 +255,9 @@
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() { VacancyResultsPerPage = 5 });
-            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
             var userDataProvider = GetUserDataProvider();
 
-            var mediator = GetMediator(configurationService.Object, searchProvider, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider);
+            var mediator = GetMediator(configurationService.Object, searchProvider, userDataProvider.Object, traineeshipVacancyProvider);
             return mediator;
         }
     }

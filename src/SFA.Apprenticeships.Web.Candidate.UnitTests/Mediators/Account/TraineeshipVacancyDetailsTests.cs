@@ -22,9 +22,9 @@
                 VacancyStatus = VacancyStatuses.Live
             };
 
-            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
+            traineeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyProvider).Build();
 
             var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
@@ -40,9 +40,9 @@
                 VacancyStatus = VacancyStatuses.Expired
             };
 
-            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
+            traineeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyProvider).Build();
 
             var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
@@ -58,9 +58,9 @@
                 VacancyStatus = VacancyStatuses.Unavailable
             };
 
-            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
+            traineeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyProvider).Build();
 
             var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
@@ -73,9 +73,9 @@
         [Test]
         public void VacancyNotFoundTest()
         {
-            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(default(TraineeshipVacancyDetailViewModel));
-            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
+            traineeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(default(TraineeshipVacancyDetailViewModel));
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyProvider).Build();
 
             var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 
@@ -93,9 +93,9 @@
                 ViewModelMessage = "Has error"
             };
 
-            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
-            traineeshipVacancyDetailProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
-            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyDetailProvider).Build();
+            var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
+            traineeshipVacancyProvider.Setup(x => x.GetVacancyDetailViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
+            var accountMediator = new AccountMediatorBuilder().With(traineeshipVacancyProvider).Build();
 
             var response = accountMediator.TraineeshipVacancyDetails(Guid.NewGuid(), 42);
 

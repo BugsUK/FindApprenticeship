@@ -24,7 +24,6 @@
     public class ApprenticeshipSearchMediator : SearchMediatorBase, IApprenticeshipSearchMediator
     {
         private readonly ISearchProvider _searchProvider;
-        private readonly IApprenticeshipVacancyDetailProvider _apprenticeshipVacancyDetailProvider;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly IReferenceDataService _referenceDataService;
         private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
@@ -36,7 +35,6 @@
         public ApprenticeshipSearchMediator(
             IConfigurationService configService,
             ISearchProvider searchProvider,
-            IApprenticeshipVacancyDetailProvider apprenticeshipVacancyDetailProvider,
             ICandidateServiceProvider candidateServiceProvider,
             IUserDataProvider userDataProvider,
             IReferenceDataService referenceDataService,
@@ -47,7 +45,6 @@
         {
             _candidateServiceProvider = candidateServiceProvider;
             _searchProvider = searchProvider;
-            _apprenticeshipVacancyDetailProvider = apprenticeshipVacancyDetailProvider;
             _referenceDataService = referenceDataService;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
@@ -288,7 +285,7 @@
                 return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound);
             }
 
-            var vacancyDetailViewModel = _apprenticeshipVacancyDetailProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
+            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.GetVacancyDetailViewModel(candidateId, vacancyId);
 
             if (vacancyDetailViewModel == null)
             {

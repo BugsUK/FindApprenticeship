@@ -44,10 +44,9 @@
                 .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
 
             var searchProvider = new Mock<ISearchProvider>();
-            var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
             var userDataProvider = new Mock<IUserDataProvider>();
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
-            return GetMediator(configurationService.Object, searchProvider.Object, traineeshipVacancyDetailProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object);
+            return GetMediator(configurationService.Object, searchProvider.Object, userDataProvider.Object, traineeshipVacancyProvider.Object);
         }
     }
 }

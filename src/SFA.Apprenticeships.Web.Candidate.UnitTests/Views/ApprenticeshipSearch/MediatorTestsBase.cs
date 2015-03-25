@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
-    using System;
     using System.Collections.Generic;
     using Application.Interfaces.ReferenceData;
     using Candidate.Mediators.Search;
@@ -15,7 +14,6 @@
 
     public abstract class MediatorTestsBase : ViewUnitTest
     {
-        protected Mock<IApprenticeshipVacancyDetailProvider> ApprenticeshipVacancyDetailProvider;
         protected Mock<ICandidateServiceProvider> CandidateServiceProvider;
         protected Mock<IConfigurationService> ConfigurationService;
         protected Mock<IUserDataProvider> UserDataProvider;
@@ -28,7 +26,6 @@
         public virtual void SetUpMethod()
         {
             //Use the mediator so that we get an accurate view model for testing
-            ApprenticeshipVacancyDetailProvider = new Mock<IApprenticeshipVacancyDetailProvider>();
             CandidateServiceProvider = new Mock<ICandidateServiceProvider>();
             ConfigurationService = new Mock<IConfigurationService>();
             ConfigurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
@@ -38,7 +35,7 @@
             ReferenceDataService = new Mock<IReferenceDataService>();
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(GetCategories);
             ApprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
-            Mediator = new ApprenticeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, ApprenticeshipVacancyDetailProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), ApprenticeshipVacancyProvider.Object);
+            Mediator = new ApprenticeshipSearchMediator(ConfigurationService.Object, SearchProvider.Object, CandidateServiceProvider.Object, UserDataProvider.Object, ReferenceDataService.Object, new ApprenticeshipSearchViewModelServerValidator(), new ApprenticeshipSearchViewModelLocationValidator(), ApprenticeshipVacancyProvider.Object);
         }
 
         private static IEnumerable<Category> GetCategories()
