@@ -25,10 +25,9 @@
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
             For<ISmsDispatcher>().Use<VoidSmsDispatcher>().Name = "VoidSmsDispatcher";
 
-            For<ISmsNumberFormatter>().Singleton().Use<ReachSmsNumberFormatter>();
-            For<IRestClient>().Singleton().Use<RestClient>();
-
             For<ISmsDispatcher>().Use<ReachSmsDispatcher>().Named("ReachSmsDispatcher")
+                .Ctor<IRestClient>().Is(new RestClient())
+                .Ctor<ISmsNumberFormatter>().Is(new ReachSmsNumberFormatter())
                 .Ctor<IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>>>().Is(context => BuildSmsFormatters(context));
 
         }

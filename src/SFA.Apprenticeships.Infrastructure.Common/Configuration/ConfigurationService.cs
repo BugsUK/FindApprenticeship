@@ -75,6 +75,7 @@
 
                 var bson = settings.Single();
                 bson.Remove("_id");
+                bson.Remove("DateTimeUpdated");
                 return bson.ToString();
             }
             catch (Exception ex)
