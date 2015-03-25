@@ -572,6 +572,10 @@
       <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.UserDirectory</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Candidate\SFA.Apprenticeships.Web.Candidate.csproj">
+      <Project>{470ba0c8-fe2e-4db9-92c8-6f37095688ee}</Project>
+      <Name>SFA.Apprenticeships.Web.Candidate</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Hooks\" />

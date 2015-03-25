@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
 {
     using System;
+    using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using IoC;
-    using StructureMap;
-
+    
     public class CandidateBuilder
     {
         public CandidateBuilder(string emailAddress)
@@ -28,10 +28,10 @@
         {
             var repo = WebTestRegistry.Container.GetInstance<ICandidateWriteRepository>();
             var repoRead = WebTestRegistry.Container.GetInstance<ICandidateReadRepository>();
-            var configuration = WebTestRegistry.Container.GetInstance<IConfigurationManager>();
+            var configuration = WebTestRegistry.Container.GetInstance<IConfigurationService>();
 
             Candidate.RegistrationDetails = RegistrationBuilder.Build();
-            Candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = configuration.GetAppSetting<string>("TermsAndConditionsVersion");
+            Candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = configuration.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion;
             Candidate.CommunicationPreferences = new CommunicationPreferences();
 
             var candidateInRepo = repoRead.Get(Candidate.RegistrationDetails.EmailAddress);
