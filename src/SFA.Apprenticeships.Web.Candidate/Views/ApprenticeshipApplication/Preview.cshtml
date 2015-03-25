@@ -5,7 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var AnalyticsTag = "Webtrends.multiTrack({{ element: this, argsa: ['DCS.dcsuri', '/apprenticeship/preview/" + Model.VacancyId + "', 'WT.dl', '99', 'WT.ti', 'Apprenticeship – Submit Preview', 'DCSext.buttonPos', '{0}'] }});";
 }
-
+<div class="progress-indicator progress-indicator-horizontal">
+    <ul>
+        <li>1. Application form</li>
+        <li class="active">2. Check your application</li>
+        <li>3. Submitted</li>
+    </ul>
+</div>
 @if (Model.DateUpdated.HasValue)
 {
     <div class="panel-info">
@@ -13,9 +19,19 @@
     </div>
 }
 
-<h1 class="heading-xlarge">Preview your application</h1>
+<h1 class="heading-xlarge">Check your application</h1>
 
-@Html.DisplayFor(m => m.Candidate)
+<div class="text">
+    @Html.HiddenFor(m => m.VacancyDetail.Title)
+    @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
+    <div class="panel-indent">
+        <p class="para-btm-margin">Before you submit your application, please check your answers are relevant to the apprenticeship: <b class="inl-block">@Model.VacancyDetail.Title with @Model.VacancyDetail.EmployerName</b>.
+    </div>
+<div class="form-group">
+    <p><a title="Return to application form" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.VacancyId })">Return to application form</a></p>
+</div>
+</div>
+
 @Html.DisplayFor(m => m.Candidate.Education)
 
 <section id="applyQualifications" class="section-border">
@@ -28,12 +44,12 @@
             </a>
         }
     </h2>
-    
+
     @if (!Model.Candidate.Qualifications.Any())
     {
         <p id="no-qualifications">I don't have any qualifications</p>
     }
-   
+
     @foreach (var group in Model.Candidate.Qualifications.GroupBy(item => item.QualificationType))
     {
         <div class="hgroup-small">
@@ -66,8 +82,8 @@
                         <td>
                             <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Subject" readonly>
                         </td>
-                        <td>                                                        
-                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@Html.GetDisplayGrade(item.Grade, item.IsPredicted)" readonly>                          
+                        <td>
+                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@Html.GetDisplayGrade(item.Grade, item.IsPredicted)" readonly>
                         </td>
                         <td>
                             <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Year" readonly>
@@ -90,7 +106,7 @@
             </a>
         }
     </h2>
-    
+
     @if (!Model.Candidate.WorkExperience.Any())
     {
         <p id="no-work-experience">I don't have any work experience</p>
@@ -192,7 +208,7 @@
 </div>
 
 @section scripts{
-    
+
     <script>
         function getMonthLabel(index) {
             //alert(index);
@@ -208,8 +224,8 @@
             return month;
         }
 
-        $(function() {
-            $('#submit-application').on('click', function() {
+        $(function () {
+            $('#submit-application').on('click', function () {
 
                 if ($('#submit-application').attr('data-disabled') != undefined) {
                     if (event.preventDefault) {
