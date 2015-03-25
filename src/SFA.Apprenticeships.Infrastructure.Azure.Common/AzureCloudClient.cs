@@ -17,7 +17,7 @@
 
         public CloudQueueMessage GetMessage(string queueName)
         {
-            return _cloudQueueClient.GetQueueReference(queueName).GetMessage(TimeSpan.FromMinutes(1));    
+            return _cloudQueueClient.GetQueueReference(queueName).GetMessage(TimeSpan.FromMinutes(5));    
         }
 
         public void DeleteMessage(string queueName, string id, string popReceipt)
