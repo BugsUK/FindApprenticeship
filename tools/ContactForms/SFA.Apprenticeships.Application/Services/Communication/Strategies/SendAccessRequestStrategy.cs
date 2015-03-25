@@ -14,29 +14,30 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
     public class SendAccessRequestStrategy : ISendAccessRequestStrategy
     {
         private readonly IEmailDispatcher _emailDispatcher;
+        private readonly IXmlGenerator _xmlGenerator;
+
         private readonly ILogService _logger;
 
-        public SendAccessRequestStrategy(IEmailDispatcher emailDispatcher, ILogService logger)
+        public SendAccessRequestStrategy(IEmailDispatcher emailDispatcher, ILogService logger, IXmlGenerator xmlGenerator)
         {
             _emailDispatcher = emailDispatcher;
             _logger = logger;
+            _xmlGenerator = xmlGenerator;
         }
 
-        public void Send(MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
+        public void SendMessageToHelpdesk(MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
             if (!tokens.IsNullOrEmpty())
             {
+                //get xml stream to attach in the email
+                var xmlAttachmentName = _xmlGenerator.SerializeToXmlFile(messageType, tokens);
+
                 var request = new EmailRequest
                 {
                     ToEmail = BaseAppSettingValues.ToEmailAddress,
-                    Subject = String.Format("{0} at {1} on {2}",
-                                                tokens.First(a => a.Key == CommunicationTokens.Fullname).Value.ToFirstCharToUpper(),
-                                                DateTime.Now.ToString("hh:mm tt"),
-                                                DateTime.Now.ToString("dd-MMM-yyyy")),
                     MessageType = messageType,
                     Tokens = tokens,
-                    //todo: attach file as an XML
-                    //Attachment = tokens.ToFileStream()
+                    StreamedAttachmentName = xmlAttachmentName//generate XML and attach to the email
                 };
 
                 _emailDispatcher.SendEmail(request);

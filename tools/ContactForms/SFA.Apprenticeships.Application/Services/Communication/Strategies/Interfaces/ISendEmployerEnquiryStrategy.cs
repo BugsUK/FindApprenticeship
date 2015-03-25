@@ -5,7 +5,7 @@
 
     public interface ISendEmployerEnquiryStrategy
     {
-        void Send(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
+        void SendMessageToHelpdesk(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
         void SendMessageToApplicant(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
     }
 }

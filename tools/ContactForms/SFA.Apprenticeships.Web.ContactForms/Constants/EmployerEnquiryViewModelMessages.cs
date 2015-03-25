@@ -85,7 +85,7 @@
 
         public static class PreviousExperienceTypeMessages
         {
-            public const string LabelText = "Have you had any previous experience with Apprenticeships / Traineeships?";
+            public const string LabelText = "Have you had any previous experience with apprenticeships / traineeships?";
             public const string RequiredErrorText = "Please select previous experience (Yes/No/Don't Know)";
         }
 

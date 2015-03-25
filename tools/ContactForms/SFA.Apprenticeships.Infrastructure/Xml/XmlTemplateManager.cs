@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Infrastructure.Xml
             {
                 case MessageTypes.EmployerEnquiry:
                 case MessageTypes.GlaEmployerEnquiry:
+                    //todo: there is a spelling mistake in word EmployerBroadsytemRecord although as CRM cant make changes on their side before given deadline. So this will need to be fixed in next release.
                     xElementTemplate = new XElement("EmployerBroadsytemRecord",
                                                 new XElement("PrimaryContactEmailAddress", CommunicationTokens.Email),
                                                 new XElement("PrimaryContactLandlineTelephoneNumber", CommunicationTokens.WorkPhoneNumber),
@@ -38,7 +39,8 @@ namespace SFA.Apprenticeships.Infrastructure.Xml
                                                                                    new XElement("LscRegionDetails", new XElement("FullName", "CRM to Validate"))));
                     break;
                 case MessageTypes.WebAccessRequest:
-                    xElementTemplate = new XElement("WebServiceRequestRecord"); //todo: Update with correct template once received from WILL @ Panlogic
+                    //todo: Update with correct template once received from WILL @ Panlogic
+                    xElementTemplate = new XElement("WebServiceRequestRecord"); 
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(string.Format("no XML template found for messageType {0}", messageType));

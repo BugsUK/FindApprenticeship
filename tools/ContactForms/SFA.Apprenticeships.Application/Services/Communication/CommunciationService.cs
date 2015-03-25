@@ -27,13 +27,13 @@
             {
                 //Messages to helpdesk
                 case MessageTypes.EmployerEnquiry:
-                    _employerEnquirySendStrategy.Send(messageType, tokens);
+                    _employerEnquirySendStrategy.SendMessageToHelpdesk(messageType, tokens);
                     break;
                 case MessageTypes.GlaEmployerEnquiry:
-                    _glaEmployerEnquirySendStrategy.Send(messageType, tokens);
+                    _glaEmployerEnquirySendStrategy.SendMessageToHelpdesk(messageType, tokens);
                     break;
                 case MessageTypes.WebAccessRequest:
-                    _accessRequestSendStrategy.Send(messageType, tokens);
+                    _accessRequestSendStrategy.SendMessageToHelpdesk(messageType, tokens);
                     break;
                     //Confirmation messages to applciants
                 case MessageTypes.EmployerEnquiryConfirmation:

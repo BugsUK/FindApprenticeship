@@ -11,22 +11,8 @@
     public class EmployerEnquiryProviderBuilder
     {
         Mock<ICommunciationService> _communciationServiceMock = new Mock<ICommunciationService>();
-        Mock<IReferenceDataService> _referenceDataMock = new Mock<IReferenceDataService>();
-        private Mock<IDomainToViewModelMapper<ReferenceData, ReferenceDataViewModel>> _referenceDataDtoVMapper = new Mock<IDomainToViewModelMapper<ReferenceData, ReferenceDataViewModel>>();
         private Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>> _employerEnquiryVtoDMapper= new Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>>();
-
-        public EmployerEnquiryProviderBuilder With( Mock<IReferenceDataService> mock)
-        {
-            _referenceDataMock = mock;
-            return this;
-        }
         
-        public EmployerEnquiryProviderBuilder With(Mock<IDomainToViewModelMapper<ReferenceData, ReferenceDataViewModel>> mock)
-        {
-            _referenceDataDtoVMapper = mock;
-            return this;
-        }
-
         public EmployerEnquiryProviderBuilder With(Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>> mock)
         {
             _employerEnquiryVtoDMapper = mock;

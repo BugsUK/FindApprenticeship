@@ -81,7 +81,7 @@
         }
         public static class HasVacanciesAdvertisedMessages
         {
-            public const string LabelText = "Have you already got vacancies advertised on Apprenticeships vacancies?";
+            public const string LabelText = "Have you already got vacancies advertised on apprenticeships vacancies?";
         }
 
         public static class AccessRequestServicesMessages

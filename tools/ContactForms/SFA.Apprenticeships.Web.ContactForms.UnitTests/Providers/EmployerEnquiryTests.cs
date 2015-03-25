@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Providers
+﻿using SFA.Apprenticeships.Domain.Entities;
+using SFA.Apprenticeships.Web.ContactForms.Mappers.Interfaces;
+
+namespace SFA.Apprenticeships.Web.ContactForms.Tests.Providers
 {
     using Application.Interfaces.Communications;
     using Builders;
@@ -12,7 +15,7 @@
 
     [TestFixture]
     public class EmployerEnquiryTests
-    {   
+    {
         [Test]
         public void GivenError_ThenErrorStatusIsReturned()
         {
@@ -23,7 +26,7 @@
             //todo: fix this : 
             serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>(), It.IsAny<IEnumerable<CommunicationToken>>())).Throws(new Exception());
             var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
-            
+
             //Act
             var result = provider.SubmitEnquiry(viewModel);
 
@@ -60,12 +63,16 @@
                 .EnquirySource(enquirySource).EnquiryDescription(enquiryDescription).EmployeeCount(employeeCount)
                 .Email(email).Companyname(companyname)
                 .Address(addressViewModelBuilder)
-                .Build();            
+                .Build();
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
-
             serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>(), It.IsAny<IEnumerable<CommunicationToken>>()));
-            var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
+            Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>> employerEnquiryVtoDMapper = new Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>>();
+
+            employerEnquiryVtoDMapper.Setup(cs => cs.ConvertToDomain(It.IsAny<EmployerEnquiryViewModel>()))
+                .Returns(new EmployerEnquiry() { Address = new Address() });
+
+            var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).With(employerEnquiryVtoDMapper).Build();
 
             //Act
             var result = provider.SubmitEnquiry(viewModel);

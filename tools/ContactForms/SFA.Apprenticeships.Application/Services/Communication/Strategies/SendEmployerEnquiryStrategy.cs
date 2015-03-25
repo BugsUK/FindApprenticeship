@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
 {
-    using System;
     using System.Linq;
     using Common.AppSettings;
     using Common.Extensions;
@@ -24,7 +23,7 @@
             _xmlGenerator = xmlGenerator;
         }
 
-        public void Send(MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
+        public void SendMessageToHelpdesk(MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
             if (!tokens.IsNullOrEmpty())
             {
@@ -34,7 +33,6 @@
                 var request = new EmailRequest
                 {
                     ToEmail = BaseAppSettingValues.ToEmailAddress,
-                    Subject = "Employer enquiry",
                     MessageType = messageType,
                     Tokens = tokens,
                     StreamedAttachmentName = xmlAttachmentName//generate XML and attach to the email
@@ -66,10 +64,5 @@
                 throw new CustomException(string.Format("No tokens found for messageType:{0}", messageType));
             }
         }
-
-        #region Helper Methods
-
-        
-        #endregion
     }
 }

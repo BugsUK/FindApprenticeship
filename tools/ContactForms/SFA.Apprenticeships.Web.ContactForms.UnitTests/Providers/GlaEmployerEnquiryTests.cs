@@ -1,4 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Providers
+﻿using System;
+using System.Collections.Generic;
+using SFA.Apprenticeships.Domain.Entities;
+using SFA.Apprenticeships.Web.ContactForms.Mappers.Interfaces;
+
+namespace SFA.Apprenticeships.Web.ContactForms.Tests.Providers
 {
     using Application.Interfaces.Communications;
     using Builders;
@@ -9,7 +14,7 @@
 
     [TestFixture]
     public class GlaEmployerEnquiryTests
-    {   
+    {
         [Test]
         public void GivenError_ThenErrorStatusIsReturned()
         {
@@ -17,12 +22,11 @@
             var viewModel = new EmployerEnquiryViewModelBuilder().Build();
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
-            //todo: fix this : 
-            //serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>()), ).Throws(new Exception());
+            serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>(), It.IsAny<IEnumerable<CommunicationToken>>())).Throws(new Exception());
             var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
 
             //Act
-            var result = provider.SubmitEnquiry(viewModel);
+            var result = provider.SubmitGlaEnquiry(viewModel);
 
             //Assert
             result.Should().Be(SubmitQueryStatus.Error);
@@ -58,15 +62,19 @@
                 .Email(email).Companyname(companyname)
                 .Address(addressViewModelBuilder)
                 .Build();
-            
 
             Mock<ICommunciationService> serviceMock = new Mock<ICommunciationService>();
-            
-            //serviceMock.Setup(cs => cs.SendMessage(It.IsAny<EmployerEnquiry>()));
-            var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).Build();
+            serviceMock.Setup(cs => cs.SendMessage(It.IsAny<MessageTypes>(), It.IsAny<IEnumerable<CommunicationToken>>()));
+
+            Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>> employerEnquiryVtoDMapper = new Mock<IViewModelToDomainMapper<EmployerEnquiryViewModel, EmployerEnquiry>>();
+
+            employerEnquiryVtoDMapper.Setup(cs => cs.ConvertToDomain(It.IsAny<EmployerEnquiryViewModel>()))
+                .Returns(new EmployerEnquiry() { Address = new Address() });
+
+            var provider = new EmployerEnquiryProviderBuilder().With(serviceMock).With(employerEnquiryVtoDMapper).Build();
 
             //Act
-            var result = provider.SubmitEnquiry(viewModel);
+            var result = provider.SubmitGlaEnquiry(viewModel);
 
             //Assert
             result.Should().Be(SubmitQueryStatus.Success);
