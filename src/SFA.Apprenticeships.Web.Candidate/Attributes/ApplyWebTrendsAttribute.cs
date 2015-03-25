@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Attributes
 {
     using System.Web.Mvc;
+    using Configuration;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
 
     public class ApplyWebTrendsAttribute : ActionFilterAttribute
     {
@@ -16,7 +16,7 @@
                 return;
             }
 
-            var webSettings = ConfigurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName);
+            var webSettings = ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName);
             viewResult.ViewBag.EnableWebTrends = webSettings.EnableWebTrends;
 
             if (viewResult.ViewBag.EnableWebTrends == true)

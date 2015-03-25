@@ -22,7 +22,7 @@
                 x.AddRegistry<ElasticsearchCommonRegistry>();
             });
 
-            var config = container.GetInstance<IConfigurationService>().Get<SearchFactorConfiguration>(SearchFactorConfiguration.SearchTermFactorsName);
+            var config = container.GetInstance<IConfigurationService>().Get<SearchFactorConfiguration>(SearchFactorConfiguration.ConfigurationName);
 
             config.Should().NotBeNull();
             config.JobTitleFactors.Enabled.Should().BeTrue();

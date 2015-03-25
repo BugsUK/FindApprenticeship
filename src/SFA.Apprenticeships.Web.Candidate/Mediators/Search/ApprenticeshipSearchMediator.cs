@@ -9,6 +9,7 @@
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
+    using Configuration;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
@@ -16,7 +17,6 @@
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
@@ -52,7 +52,7 @@
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
-            _blacklistedCategoryCodes = configService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).BlacklistedCategoryCodes.Split(',');
+            _blacklistedCategoryCodes = configService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).BlacklistedCategoryCodes.Split(',');
         }
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index(ApprenticeshipSearchMode searchMode)

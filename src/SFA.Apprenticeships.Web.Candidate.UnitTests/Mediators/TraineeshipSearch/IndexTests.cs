@@ -5,9 +5,9 @@
     using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Common.Providers;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
-    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -40,7 +40,7 @@
         {
             var configurationService = new Mock<IConfigurationService>();
 
-            configurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+            configurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
 
             var searchProvider = new Mock<ISearchProvider>();

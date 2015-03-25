@@ -2,7 +2,7 @@
 {
     public class SearchFactorConfiguration
     {
-        public static string SearchTermFactorsName { get { return "SearchTermFactors"; } }
+        public const string ConfigurationName = "SearchTermFactors";
 
         public SearchTermFactors JobTitleFactors { get; set; }
 

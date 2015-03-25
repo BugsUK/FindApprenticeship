@@ -4,9 +4,9 @@
 
     public class ElasticsearchConfiguration
     {
-        public static string SearchConfigurationName { get { return "SearchConfiguration"; } }
+        public const string SearchConfigurationName = "SearchConfiguration";
 
-        public static string LogstashConfigurationName { get { return "LogstashConfiguration"; } }
+        public const string LogstashConfigurationName = "LogstashConfiguration";
 
         public string HostName { get; set; }
 

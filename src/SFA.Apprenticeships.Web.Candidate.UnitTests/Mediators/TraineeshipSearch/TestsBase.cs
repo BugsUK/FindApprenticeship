@@ -4,8 +4,8 @@
     using Candidate.Providers;
     using Candidate.Validators;
     using Common.Providers;
+    using Configuration;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -30,7 +30,7 @@
         {
             TraineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
             ConfigurationService = new Mock<IConfigurationService>();
-            ConfigurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+            ConfigurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() { VacancyResultsPerPage = 5, BlacklistedCategoryCodes = "00,99" });
             UserDataProvider = new Mock<IUserDataProvider>();
             SearchProvider = new Mock<ISearchProvider>();

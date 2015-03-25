@@ -7,8 +7,8 @@
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
     using Common.Providers;
+    using Configuration;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using ViewModels.VacancySearch;
 
     public abstract class SearchMediatorBase : MediatorBase
@@ -21,7 +21,7 @@
 
         protected SearchMediatorBase(IConfigurationService configService, IUserDataProvider userDataProvider)
         {
-            _vacancyResultsPerPage = configService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).VacancyResultsPerPage;
+            _vacancyResultsPerPage = configService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).VacancyResultsPerPage;
             UserDataProvider = userDataProvider;
         }
 

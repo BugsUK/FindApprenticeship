@@ -4,8 +4,8 @@
     using Candidate.Providers;
     using Candidate.Validators;
     using Common.Providers;
+    using Configuration;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using Moq;
 
     public class LoginMediatorBuilder
@@ -43,7 +43,7 @@
             if (_configurationService == null)
             {
                 _configurationService = new Mock<IConfigurationService>();
-                _configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+                _configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                     .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             }
 

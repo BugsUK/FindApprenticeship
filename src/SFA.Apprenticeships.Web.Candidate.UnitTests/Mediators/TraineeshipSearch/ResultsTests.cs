@@ -9,10 +9,10 @@
     using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.Providers;
+    using Configuration;
     using Constants;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
-    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -253,7 +253,7 @@
         private ITraineeshipSearchMediator GetMediator(ISearchProvider searchProvider, ITraineeshipVacancyProvider traineeshipVacancyProvider)
         {
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() { VacancyResultsPerPage = 5 });
             var traineeshipVacancyDetailProvider = new Mock<ITraineeshipVacancyDetailProvider>();
             var userDataProvider = GetUserDataProvider();

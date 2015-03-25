@@ -19,11 +19,11 @@
             For<IMessageBus>().Singleton().Use<RabbitMessageBus>();
         }
 
-        private IBus CreateBus(IContext context)
+        private static IBus CreateBus(IContext context)
         {
             var  customServiceProvider = new CustomServiceProvider();
             var configurationService = context.GetInstance<IConfigurationService>();
-            var rabbitHost = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.RabbitConfigurationName).MessagingHost;
+            var rabbitHost = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.ConfigurationName).MessagingHost;
             var rabbitBus = RabbitHutch.CreateBus(rabbitHost.ConnectionString, customServiceProvider.RegisterCustomServices());
             return rabbitBus;
         }

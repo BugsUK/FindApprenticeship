@@ -4,7 +4,7 @@
 
     public class RabbitConfiguration
     {
-        public static string RabbitConfigurationName { get { return "RabbitConfiguration"; } }
+        public const string ConfigurationName = "RabbitConfiguration";
 
         public RabbitHost MessagingHost { get; set; }
 

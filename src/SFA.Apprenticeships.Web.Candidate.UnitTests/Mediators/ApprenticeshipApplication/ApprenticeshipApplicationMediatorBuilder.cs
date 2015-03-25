@@ -4,8 +4,8 @@
     using Candidate.Providers;
     using Candidate.Validators;
     using Common.Providers;
+    using Configuration;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using Moq;
 
     public class ApprenticeshipApplicationMediatorBuilder
@@ -36,7 +36,7 @@
 
         public ApprenticeshipApplicationMediator Build()
         {
-            _configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+            _configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             var mediator = new ApprenticeshipApplicationMediator(_apprenticeshipApplicationProvider.Object, new ApprenticeshipApplicationViewModelServerValidator(), new ApprenticeshipApplicationViewModelSaveValidator(), _configurationService.Object, _userDataProvider.Object);
             return mediator;

@@ -3,12 +3,12 @@
     using System;
     using System.Linq;
     using Common.Constants;
+    using Configuration;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using Providers;
     using Validators;
     using ViewModels.Account;
@@ -176,7 +176,7 @@
             try
             {
                 var candidate = _candidateServiceProvider.GetCandidate(candidateId);
-                var currentTsAndCsVersion = _configurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).TermsAndConditionsVersion;
+                var currentTsAndCsVersion = _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion;
 
                 if (candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion == currentTsAndCsVersion)
                 {

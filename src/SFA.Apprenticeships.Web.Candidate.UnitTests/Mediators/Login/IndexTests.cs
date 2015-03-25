@@ -6,13 +6,13 @@
     using Candidate.Providers;
     using Common.Constants;
     using Common.Providers;
+    using Configuration;
     using Constants;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
-    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -209,7 +209,7 @@
 
             const string returnUrl = "/allowedasolutoepath";
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() {TermsAndConditionsVersion = "2", VacancyResultsPerPage = 5});
             var userDataProvider = new Mock<IUserDataProvider>();
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);

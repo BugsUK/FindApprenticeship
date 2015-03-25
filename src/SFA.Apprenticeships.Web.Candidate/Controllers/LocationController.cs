@@ -5,9 +5,9 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using Constants;
-    using Infrastructure.Web.Configuration;
     using Providers;
     using ViewModels.VacancySearch;
     using Common.Attributes;
@@ -20,7 +20,7 @@
         public LocationController(IConfigurationService configService, ISearchProvider searchProvider)
         {
             _searchProvider = searchProvider;
-            _locationResultLimit = configService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).LocationResultLimit;
+            _locationResultLimit = configService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).LocationResultLimit;
         }
 
         [HttpGet]

@@ -6,6 +6,7 @@
     using Application.Interfaces.Logging;
     using Common.Providers;
     using Common.Services;
+    using Configuration;
     using Constants;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
@@ -16,7 +17,6 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
-    using Infrastructure.Web.Configuration;
     using ViewModels;
     using ViewModels.Home;
     using ViewModels.Login;
@@ -136,7 +136,7 @@
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
-                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).TermsAndConditionsVersion;
+                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion;
 
                 _candidateService.Register(candidate, model.Password);
                 _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Unactivated);

@@ -6,11 +6,11 @@
     using Common.Attributes;
     using Common.Constants;
     using Common.Services;
+    using Configuration;
     using Constants;
     using Constants.Pages;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
-    using Infrastructure.Web.Configuration;
     using Mediators;
     using Mediators.Register;
     using Providers;
@@ -62,7 +62,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case RegisterMediatorCodes.Register.SuccessfullyRegistered:
-                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, _configurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).TermsAndConditionsVersion);
+                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion);
                         return RedirectToAction("Activation");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);

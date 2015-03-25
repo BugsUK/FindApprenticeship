@@ -3,8 +3,8 @@
     using Candidate.Mediators.Application;
     using Candidate.Providers;
     using Common.Providers;
+    using Configuration;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using Moq;
     using NUnit.Framework;
 
@@ -20,7 +20,7 @@
         {
             TraineeshipApplicationProvider = new Mock<ITraineeshipApplicationProvider>();
             ConfigurationService = new Mock<IConfigurationService>();
-            ConfigurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+            ConfigurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             UserDataProvider = new Mock<IUserDataProvider>();
             Mediator = new TraineeshipApplicationMediator(TraineeshipApplicationProvider.Object, ConfigurationService.Object, UserDataProvider.Object);

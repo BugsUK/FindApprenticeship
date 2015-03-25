@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Web.Configuration
+﻿namespace SFA.Apprenticeships.Web.Candidate.Configuration
 {
     public class WebConfiguration
     {
-        public static string WebConfigurationName { get { return "WebConfiguration"; } }
+        public const string ConfigurationName = "WebConfiguration";
 
         public int VacancyResultsPerPage { get; set; }
 

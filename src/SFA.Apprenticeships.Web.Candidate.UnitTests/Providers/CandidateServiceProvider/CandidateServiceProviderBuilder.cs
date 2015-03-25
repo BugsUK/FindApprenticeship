@@ -8,8 +8,8 @@
     using Candidate.Providers;
     using Common.Providers;
     using Common.Services;
+    using Configuration;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using Moq;
 
     public class CandidateServiceProviderBuilder
@@ -29,7 +29,7 @@
             UserDataProvider = new Mock<IUserDataProvider>();
             AuthenticationTicketService = new Mock<IAuthenticationTicketService>();
             ConfigurationService = new Mock<IConfigurationService>();
-            ConfigurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.WebConfigurationName))
+            ConfigurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
                 .Returns(new WebConfiguration() {TermsAndConditionsVersion = "Version 1"});
             Logger = new Mock<ILogService>();
         }

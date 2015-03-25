@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Attributes
 {
     using System.Web.Mvc;
+    using Configuration;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
 
     public class SiteRootRedirect : ActionFilterAttribute
     {
@@ -10,7 +10,7 @@
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var redirectUrl = ConfigurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).SiteRootRedirectUrl;
+            var redirectUrl = ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).SiteRootRedirectUrl;
 
             if (!string.IsNullOrEmpty(redirectUrl))
             {

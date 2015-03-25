@@ -36,7 +36,7 @@
         {
             //TODO: Can we use IoC anyway here?
             var configService = new ConfigurationService(new ConfigurationManager(), new NLogLogService(typeof(RabbitMQTarget)));
-            var rabbitConfig = configService.Get<RabbitConfiguration>(RabbitConfiguration.RabbitConfigurationName);
+            var rabbitConfig = configService.Get<RabbitConfiguration>(RabbitConfiguration.ConfigurationName);
             _rabbitMqHostHostConfig = rabbitConfig.LoggingHost;
         }
 

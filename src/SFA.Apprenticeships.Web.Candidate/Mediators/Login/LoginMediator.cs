@@ -3,12 +3,12 @@
     using Common.Constants;
     using Common.Framework;
     using Common.Providers;
+    using Configuration;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Web.Configuration;
     using Providers;
     using Validators;
     using ViewModels.Login;
@@ -70,7 +70,7 @@
                     var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
                     result.ReturnUrl = returnUrl;
 
-                    if (result.AcceptedTermsAndConditionsVersion != _configurationService.Get<WebConfiguration>(WebConfiguration.WebConfigurationName).TermsAndConditionsVersion)
+                    if (result.AcceptedTermsAndConditionsVersion != _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion)
                     {
                         return returnUrl.IsValidReturnUrl()
                             ? GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, result, parameters: returnUrl)

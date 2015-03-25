@@ -17,7 +17,7 @@
 
         public BootstrapSubcribers(IBus bus, IConfigurationService configurationService, ILogService logService)
         {
-            _defaultHostConfiguration = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.RabbitConfigurationName).MessagingHost;
+            _defaultHostConfiguration = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.ConfigurationName).MessagingHost;
             _bus = bus;
             _logService = logService;
         }
