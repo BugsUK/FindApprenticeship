@@ -1,4 +1,7 @@
 ﻿
+using SFA.Apprenticeships.Common;
+using SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters;
+
 namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
     using System;
@@ -65,14 +68,14 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
             const string emptyText = "";
             var subject = request.Subject ?? " ";
 
+            //to support multiple email ids in to field
+            MailAddress[] toEmailAddresses = ParseEmailList(request.ToEmail);
+
             // NOTE: https://github.com/sendgrid/sendgrid-csharp.
             var message = new SendGridMessage
             {
                 Subject = subject,
-                To = new[]
-                {
-                    new MailAddress(request.ToEmail)
-                },
+                To = toEmailAddresses,
                 Text = emptyText,
                 Html = emptyHtml,
 
@@ -85,6 +88,23 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
             }
 
             return message;
+        }
+
+        private static MailAddress[] ParseEmailList(string toEmail)
+        {
+            if (string.IsNullOrEmpty(toEmail))
+            {
+                throw new CustomException("ToEmailAddress key is blank");
+            }
+
+            string[] toEmailArray = toEmail.Split(Constants.EmailSeparator);
+            MailAddress[] toEmailAddresses = new MailAddress[toEmailArray.Length];
+
+            for (var i = 0; i < toEmailArray.Length; i++)
+            {
+                toEmailAddresses[i] = new MailAddress(toEmailArray[i]);
+            }
+            return toEmailAddresses;
         }
 
         private void PopulateTemplate(EmailRequest request, SendGridMessage message)
