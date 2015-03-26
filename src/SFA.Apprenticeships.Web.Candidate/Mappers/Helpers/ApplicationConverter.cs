@@ -154,7 +154,10 @@
                 Description = model.Description,
                 Employer = model.Employer,
                 JobTitle = model.JobTitle,
-                FromDate = new DateTime(ConvertYearStringToInt(model.FromYear), model.FromMonth, 1),
+                FromDate = 
+                    ConvertYearStringToInt(model.FromYear) != 0
+                        ? new DateTime(ConvertYearStringToInt(model.FromYear), model.FromMonth, 1)
+                        : DateTime.MinValue,
                 ToDate =
                     ConvertYearStringToInt(model.ToYear) != 0
                         ? new DateTime(ConvertYearStringToInt(model.ToYear), model.ToMonth, 1)
