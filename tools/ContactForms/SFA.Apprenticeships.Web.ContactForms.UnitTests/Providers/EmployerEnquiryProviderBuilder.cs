@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Providers
 {
-    using Application.Interfaces;
     using Application.Interfaces.Communications;
-    using ContactForms.Mappers.Interfaces;
+    using Mappers.Interfaces;
     using ContactForms.Providers;
-    using ContactForms.ViewModels;
+    using ViewModels;
     using Domain.Entities;
     using Moq;
 

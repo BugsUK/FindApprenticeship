@@ -1,10 +1,11 @@
-﻿using System;
-using SFA.Apprenticeships.Domain.Enums;
-using SFA.Apprenticeships.Web.ContactForms.Mediators;
-using SFA.Apprenticeships.Web.ContactForms.Mediators.Interfaces;
+﻿
 
 namespace SFA.Apprenticeships.Web.ContactForms.Tests.Mediators
 {
+    using System;
+    using SFA.Apprenticeships.Domain.Enums;
+    using SFA.Apprenticeships.Web.ContactForms.Mediators;
+    using SFA.Apprenticeships.Web.ContactForms.Mediators.Interfaces;
     using Builders;
     using Constants;
     using Constants.Pages;

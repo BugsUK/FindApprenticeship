@@ -126,13 +126,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builders\AddressViewModelBuilder.cs" />
+    <Compile Include="Builders\AccessRequestViewModelBuilder.cs" />
     <Compile Include="Builders\EmployerEnquiryViewModelBuilder.cs" />
     <Compile Include="Infrastructure\EmailContentGenerator.cs" />
     <Compile Include="Infrastructure\SendGridEmailDispatcherTests.cs" />
+    <Compile Include="Mediators\AccessRequestMediatorBuilder.cs" />
+    <Compile Include="Mediators\AccessRequestTests.cs" />
     <Compile Include="Mediators\EmployerEnquiryMediatorBuilder.cs" />
     <Compile Include="Mediators\GlaEmployerEnquiryTests.cs" />
     <Compile Include="Mediators\EmployerEnquiryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\AccessRequestProviderBuilder.cs" />
+    <Compile Include="Providers\AccessRequestTests.cs" />
     <Compile Include="Providers\EmployerEnquiryProviderBuilder.cs" />
     <Compile Include="Providers\GlaEmployerEnquiryTests.cs" />
     <Compile Include="Providers\EmployerEnquiryTests.cs" />
