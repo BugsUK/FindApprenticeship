@@ -47,7 +47,7 @@
 
                     if (user.LoginIncorrectAttempts > 0)
                     {
-                        user.SetStateActive();
+                        user.LoginIncorrectAttempts = 0;
                     }
 
                     user.LastLogin = DateTime.UtcNow;
