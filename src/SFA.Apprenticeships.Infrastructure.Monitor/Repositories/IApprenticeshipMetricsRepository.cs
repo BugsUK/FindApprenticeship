@@ -10,5 +10,6 @@
         int GetApplicationCountPerCandidate();
         int GetApplicationStateCountPerCandidate(ApplicationStatuses applicationStatus);
         long GetActiveUserCount(DateTime activeFrom);
+        int GetCandidatesWithApplicationsInStatusCount(ApplicationStatuses applicationStatus, int minimumCount);
     }
 }

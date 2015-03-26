@@ -7,6 +7,8 @@
     using Infrastructure.Repositories.Applications.Entities;
     using Mongo.Common;
     using Mongo.Common.Configuration;
+    using MongoDB.Bson;
+    using MongoDB.Driver;
     using MongoDB.Driver.Linq;
 
     public class ApprenticeshipMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipMetricsRepository
@@ -54,6 +56,21 @@
                 .Distinct()
                 .ToList()
                 .Count;
+        }
+
+        public int GetCandidatesWithApplicationsInStatusCount(ApplicationStatuses applicationStatus, int minimumCount)
+        {
+            var statusMatch = new BsonDocument {{"$match", new BsonDocument {{"Status", (int) applicationStatus}}}};
+            var candidateIdGroup = new BsonDocument {{"$group", new BsonDocument {{"_id", "$CandidateId"}, {"count", new BsonDocument{{"$sum", 1}}}}}};
+            var countMatch = new BsonDocument {{"$match", new BsonDocument {{"count", new BsonDocument {{"$gte", minimumCount}}}}}};
+            var sumGroup = new BsonDocument {{"$group", new BsonDocument {{"_id", "candidatesWithApplicationsInStatusCount"}, {"candidatesWithApplicationsInStatusCount", new BsonDocument {{"$sum", 1}}}}}};
+
+            var pipeline = new[] { statusMatch, candidateIdGroup, countMatch, sumGroup };
+
+            var result = Collection.Aggregate(new AggregateArgs{Pipeline = pipeline}).ToArray();
+            var count = result.Length == 0 ? 0 : result[0].ToArray()[1].Value.AsInt32;
+
+            return count;
         }
     }
 }

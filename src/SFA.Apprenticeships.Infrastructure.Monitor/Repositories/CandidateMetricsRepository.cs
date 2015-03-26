@@ -21,5 +21,12 @@
                 .AsQueryable()
                 .Count(each => each.CommunicationPreferences.AllowMobile);
         }
+
+        public int GetDismissedTraineeshipPromptCount()
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => !each.CommunicationPreferences.AllowTraineeshipPrompts);
+        }
     }
 }

@@ -5,5 +5,7 @@
     public interface ICandidateMetricsRepository
     {
         int GetVerfiedMobileNumbersCount();
+
+        int GetDismissedTraineeshipPromptCount();
     }
 }

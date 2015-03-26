@@ -134,6 +134,8 @@
             sb.Append("Traineeships:\n");
             sb.AppendFormat(" - Total number of applications submitted: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetApplicationCount));
             sb.AppendFormat(" - Total number of candidates with applications: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetApplicationsPerCandidateCount));
+            sb.AppendFormat(" - Total number of candidates who would have been shown the traineeship prompt (6+ unsuccessful applications): {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetCandidatesWithApplicationsInStatusCount, ApplicationStatuses.Unsuccessful, 6));
+            sb.AppendFormat(" - Total number of candidates who have dismissed the traineeship prompt: {0} ({1}ms)\n", TimedMongoCall(_candidateMetricsRepository.GetDismissedTraineeshipPromptCount));
 
             // Communications.
             sb.Append("Communications:\n");
@@ -169,6 +171,15 @@
             var sw = new Stopwatch();
             sw.Start();
             var result = mongoCall.Invoke(param);
+            sw.Stop();
+            return new object[] { result, sw.ElapsedMilliseconds };
+        }
+
+        private static object[] TimedMongoCall<TParam1, TParam2, TResult>(Func<TParam1, TParam2, TResult> mongoCall, TParam1 param1, TParam2 param2)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            var result = mongoCall.Invoke(param1, param2);
             sw.Stop();
             return new object[] { result, sw.ElapsedMilliseconds };
         } 
