@@ -5,11 +5,12 @@
     using System.Linq;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
-    using Configuration;
+    using Common.Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Mappers;
     using ViewModels.Account;
@@ -18,17 +19,17 @@
     public class AccountProvider : IAccountProvider
     {
         private readonly ILogService _logger;
-        private readonly IFeatureToggle _featureToggle;
+        private readonly IConfigurationService _configurationService;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
 
         public AccountProvider(
             ICandidateService candidateService,
-            IMapper mapper, ILogService logger, IFeatureToggle featureToggle)
+            IMapper mapper, ILogService logger, IConfigurationService configurationService)
         {
             _mapper = mapper;
             _logger = logger;
-            _featureToggle = featureToggle;
+            _configurationService = configurationService;
             _candidateService = candidateService;
         }
 
@@ -45,7 +46,7 @@
                 settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
                 settings.AllowSmsComms = candidate.CommunicationPreferences.AllowMobile;
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
-                settings.SmsEnabled = _featureToggle.IsActive(Feature.Sms);
+                settings.SmsEnabled = _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).Features.SmsEnabled;
 
                 settings.SendApplicationSubmitted = candidate.CommunicationPreferences.SendApplicationSubmitted;
                 settings.SendApplicationStatusChanges = candidate.CommunicationPreferences.SendApplicationStatusChanges;

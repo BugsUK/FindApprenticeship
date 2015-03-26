@@ -21,7 +21,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Candidate.IoC;
     using Common.IoC;
     using Common.Providers;
-    using Configuration;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Address.IoC;
     using Infrastructure.Caching.Azure.IoC;
@@ -82,7 +81,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
-                x.Policies.SetAllProperties(y => y.OfType<IFeatureToggle>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IEuCookieDirectiveProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IDismissPlannedOutageMessageCookieProvider>());

@@ -7,9 +7,9 @@
     using System.Web.Mvc;
     using Apprenticeships.Application.Interfaces.ReferenceData;
     using Apprenticeships.Application.Interfaces.Vacancies;
+    using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
-    using Configuration;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;

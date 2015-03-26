@@ -4,9 +4,9 @@
     using Builders;
     using Candidate.Mediators.Login;
     using Candidate.Providers;
+    using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
-    using Configuration;
     using Constants;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;

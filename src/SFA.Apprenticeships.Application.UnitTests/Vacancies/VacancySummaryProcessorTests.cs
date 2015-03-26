@@ -4,13 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using Application.UserAccount.Configuration;
     using Application.Vacancies;
-    using Application.Vacancies.Configuration;
     using Application.Vacancies.Entities;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
     using Interfaces.Logging;
@@ -29,16 +26,13 @@
             _messagingServiceMock = new Mock<IJobControlQueue<StorageQueueMessage>>();
             _mapperMock = new Mock<IMapper>();
             _vacancyProviderMock = new Mock<IVacancyIndexDataProvider>();
-            _configurationServiceMock = new Mock<IConfigurationService>();
             _loggerMock = new Mock<ILogService>();
-            _configurationServiceMock.Setup(cmm => cmm.Get<ApplicationVacancyConfiguration>(ApplicationVacancyConfiguration.ConfigurationName)).Returns(new ApplicationVacancyConfiguration() { VacancyAboutToExpireNotificationHours = VacancyAboutToExpireNotificationHours });
         }
 
         private Mock<IMessageBus> _busMock;
         private Mock<IJobControlQueue<StorageQueueMessage>> _messagingServiceMock;
         private Mock<IMapper> _mapperMock;
         private Mock<IVacancyIndexDataProvider> _vacancyProviderMock;
-        private Mock<IConfigurationService> _configurationServiceMock;
         private Mock<ILogService> _loggerMock;
 
         [TestCase(1)]
@@ -128,7 +122,7 @@
         private VacancySummaryProcessor GetGatewayVacancySummaryProcessor()
         {
             var vacancyConsumer = new VacancySummaryProcessor(_busMock.Object, _vacancyProviderMock.Object,
-                _mapperMock.Object, _messagingServiceMock.Object, _configurationServiceMock.Object, _loggerMock.Object);
+                _mapperMock.Object, _messagingServiceMock.Object, _loggerMock.Object);
             return vacancyConsumer;
         }
 
@@ -144,10 +138,9 @@
                 ClosingDate = DateTime.Now.AddHours(VacancyAboutToExpireNotificationHours + 1)
             };
 
-            vacancyConsumer.QueueVacancyIfExpiring(vacancySummary);
+            vacancyConsumer.QueueVacancyIfExpiring(vacancySummary, VacancyAboutToExpireNotificationHours);
 
             _busMock.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)), Times.Never());
-            _configurationServiceMock.VerifyAll();
         }
 
         [Test]
@@ -162,10 +155,9 @@
                 ClosingDate = DateTime.Now.AddHours(VacancyAboutToExpireNotificationHours - 1)
             };
 
-            vacancyConsumer.QueueVacancyIfExpiring(vacancySummary);
+            vacancyConsumer.QueueVacancyIfExpiring(vacancySummary, VacancyAboutToExpireNotificationHours);
 
             _busMock.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)));
-            _configurationServiceMock.VerifyAll();
         }
     }
 }

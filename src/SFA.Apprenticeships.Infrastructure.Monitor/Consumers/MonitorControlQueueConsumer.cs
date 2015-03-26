@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Azure.Common.Messaging;
@@ -28,7 +29,8 @@
 
                 if (monitorScheduleMessage != null)
                 {
-                    if (IsMonitorEnabled())
+                    var monitorConfig = _configurationService.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
+                    if (monitorConfig != null && monitorConfig.IsEnabled)
                     {
                         _monitorTasksRunner.RunMonitorTasks();
                     }
@@ -36,11 +38,6 @@
                     MessageService.DeleteMessage(ScheduledJobQueues.Monitor, monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
                 }
             });
-        }
-
-        private bool IsMonitorEnabled()
-        {   
-            return _configurationService.GetCloudAppSetting<bool>("MonitorEnabled");
         }
     }
 }

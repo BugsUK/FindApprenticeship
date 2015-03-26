@@ -1,7 +1,5 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Configuration
+﻿namespace SFA.Apprenticeships.Web.Common.Configuration
 {
-    using System.Collections.Generic;
-
     public class WebConfiguration
     {
         public const string ConfigurationName = "WebConfiguration";
@@ -22,6 +20,23 @@
 
         public string BlacklistedCategoryCodes { get; set; }
 
-        //public IEnumerable<FeatureToggle> FeatureToggles { get ; set; }
+        public bool IsWebsiteOffline { get; set; }
+
+        public string WebsiteOfflineMessage { get; set; }
+
+        public string CodeGenerator { get; set; }
+
+        public int UnsuccessfulApplicationsToShowTraineeshipsPrompt { get; set; }
+
+        public string PlannedOutageMessage { get; set; }
+
+        public Features Features { get ; set; }
+    }
+
+    public class Features
+    {
+        public bool SavedSearchesEnabled { get; set; }
+
+        public bool SmsEnabled { get; set; }
     }
 }

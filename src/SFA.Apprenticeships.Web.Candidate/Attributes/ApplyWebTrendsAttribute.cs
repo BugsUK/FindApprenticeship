@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Attributes
 {
     using System.Web.Mvc;
-    using Configuration;
+    using Common.Configuration;
     using Domain.Interfaces.Configuration;
 
     public class ApplyWebTrendsAttribute : ActionFilterAttribute

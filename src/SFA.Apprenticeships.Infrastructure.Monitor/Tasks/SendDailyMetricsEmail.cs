@@ -54,7 +54,8 @@
             _savedSearchesMetricsRepository = savedSearchesMetricsRepository;
             _candidateMetricsRepository = candidateMetricsRepository;
 
-            _validNumberOfDaysSinceUserActivity = configurationManager.GetCloudAppSetting<int>("ValidNumberOfDaysSinceUserActivity");
+            var monitorConfig = configurationManager.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
+            _validNumberOfDaysSinceUserActivity = monitorConfig.ValidNumberOfDaysSinceUserActivity;
             _monitorConfiguration = configurationManager.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
         }
 

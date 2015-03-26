@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
-    using System;
     using System.Threading.Tasks;
     using Application.Applications;
     using Application.Applications.Entities;
+    using Configuration;
     using Domain.Interfaces.Caching;
     using Domain.Interfaces.Configuration;
     using EasyNetQ.AutoSubscribe;
@@ -20,7 +20,7 @@
         {
             _cacheService = cacheService;
             _applicationStatusProcessor = applicationStatusProcessor;
-            _enableVacancyStatusPropagation = configurationService.GetCloudAppSetting<bool>("EnableVacancyStatusPropagation");
+            _enableVacancyStatusPropagation = configurationService.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName).EnableVacancyStatusPropagation;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]

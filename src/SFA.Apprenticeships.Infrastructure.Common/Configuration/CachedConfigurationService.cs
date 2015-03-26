@@ -19,11 +19,5 @@
         {
             return _cacheService.Get(ConfigurationCacheKey, _configurationService.Get<TSettings>, settingName);
         }
-
-        public T GetCloudAppSetting<T>(string key)
-        {
-            //Not caching as system is self managed
-            return _configurationService.GetCloudAppSetting<T>(key);
-        }
     }
 }

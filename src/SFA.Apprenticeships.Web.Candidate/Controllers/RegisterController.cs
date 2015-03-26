@@ -4,9 +4,9 @@
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
+    using Common.Configuration;
     using Common.Constants;
     using Common.Services;
-    using Configuration;
     using Constants;
     using Constants.Pages;
     using Domain.Interfaces.Configuration;

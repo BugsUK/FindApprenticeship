@@ -125,6 +125,7 @@
     <Compile Include="Configuration\AzureCloudConfig.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Configuration\AzureConfiguration.cs" />
     <Compile Include="Configuration\AzureConsoleCloudConfig.cs">
       <SubType>Code</SubType>
     </Compile>

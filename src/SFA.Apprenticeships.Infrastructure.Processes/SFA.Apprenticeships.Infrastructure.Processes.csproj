@@ -196,6 +196,7 @@
     <Compile Include="Applications\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Applications\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Communications\EmailRequestConsumerAsync.cs" />
+    <Compile Include="Configuration\ProcessConfiguration.cs" />
     <Compile Include="Vacancies\ApprenticeshipSummaryUpdateConsumerAsync.cs" />
     <Compile Include="Vacancies\TraineeshipsSummaryUpdateConsumerAsync.cs" />
     <Compile Include="Vacancies\VacancyAboutToExpireConsumerAsync.cs" />

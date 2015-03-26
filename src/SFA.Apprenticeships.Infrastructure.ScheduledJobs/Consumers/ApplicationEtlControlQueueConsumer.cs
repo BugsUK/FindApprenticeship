@@ -4,16 +4,22 @@
     using Application.Applications;
     using Application.Interfaces.Logging;
     using Azure.Common.Messaging;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
+    using Processes.Configuration;
 
     public class ApplicationEtlControlQueueConsumer : AzureControlQueueConsumer
     {
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
+        private readonly int _applicationStatusExtractWindow;
 
-        public ApplicationEtlControlQueueConsumer(IJobControlQueue<StorageQueueMessage> messageService,
+        public ApplicationEtlControlQueueConsumer(
+            IConfigurationService configurationService,
+            IJobControlQueue<StorageQueueMessage> messageService,
             IApplicationStatusProcessor applicationStatusProcessor, ILogService logger)
             : base(messageService, logger, "Application ETL", ScheduledJobQueues.ApplicationEtl)
         {
+            _applicationStatusExtractWindow = configurationService.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName).ApplicationStatusExtractWindow;
             _applicationStatusProcessor = applicationStatusProcessor;
         }
 
@@ -24,7 +30,7 @@
                 var scheduleerNotification = GetLatestQueueMessage();
                 if (scheduleerNotification != null)
                 {
-                    _applicationStatusProcessor.QueueApplicationStatusesPages();
+                    _applicationStatusProcessor.QueueApplicationStatusesPages(_applicationStatusExtractWindow);
                     MessageService.DeleteMessage(ScheduledJobQueues.ApplicationEtl, scheduleerNotification.MessageId, scheduleerNotification.PopReceipt);
                 }
             });

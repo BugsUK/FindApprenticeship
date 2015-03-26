@@ -2,8 +2,8 @@
 {
     using Candidate.Mediators.Application;
     using Candidate.Providers;
+    using Common.Configuration;
     using Common.Providers;
-    using Configuration;
     using Domain.Interfaces.Configuration;
     using Moq;
     using NUnit.Framework;

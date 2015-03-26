@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Azure.Common.Messaging;
@@ -31,7 +32,8 @@
 
                 if (monitorScheduleMessage != null)
                 {
-                    if (IsDailyMetricsEnabled())
+                    var monitorConfig = _configurationService.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
+                    if (monitorConfig != null && monitorConfig.IsDailyMetricsEnabled)
                     {
                         _dailyMetricsTasksRunner.RunDailyMetricsTasks();
                     }
@@ -39,11 +41,6 @@
                     MessageService.DeleteMessage(ScheduledJobQueues.DailyMetrics, monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
                 }
             });
-        }
-
-        private bool IsDailyMetricsEnabled()
-        {   
-            return _configurationService.GetCloudAppSetting<bool>("DailyMetricsEnabled");
         }
     }
 }

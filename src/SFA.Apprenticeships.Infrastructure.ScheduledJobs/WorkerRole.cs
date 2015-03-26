@@ -11,14 +11,15 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Caching.Azure.IoC;
     using Common.Configuration;
     using Common.IoC;
+    using Communication.Configuration;
     using Consumers;
+    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using LocationLookup.IoC;
     using Logging;
     using Logging.IoC;
-    using Microsoft.WindowsAzure;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
     using RabbitMq.IoC;
@@ -38,6 +39,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
         private SavedSearchControlQueueConsumer _savedSearchControlQueueConsumer;
         private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
         private DailyDigestControlQueueConsumer _dailyDigestControlQueueConsumer;
+        private IConfigurationService _configurationService;
         private IContainer _container;
 
         public override void Run()
@@ -114,7 +116,12 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
         private bool CommunicationsIsEnabled
         {
-            get { return bool.Parse(CloudConfigurationManager.GetSetting("CommunicationsIsEnabled") ?? "true"); }
+            get
+            {
+                return
+                    _configurationService.Get<CommunicationConfiguration>(CommunicationConfiguration.ConfigurationName)
+                        .IsEnabled;
+            }
         }
 
         private void InitializeIoC()
@@ -150,6 +157,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
             _savedSearchControlQueueConsumer = _container.GetInstance<SavedSearchControlQueueConsumer>();
             _applicationEtlControlQueueConsumer = _container.GetInstance<ApplicationEtlControlQueueConsumer>();
             _dailyDigestControlQueueConsumer = _container.GetInstance<DailyDigestControlQueueConsumer>();
+            _configurationService = _container.GetInstance<IConfigurationService>();
         }
     }
 }

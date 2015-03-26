@@ -2,8 +2,8 @@
 {
     using System;
     using System.Linq;
+    using Common.Configuration;
     using Common.Constants;
-    using Configuration;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;

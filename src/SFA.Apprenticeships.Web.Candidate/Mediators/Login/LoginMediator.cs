@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
 {
+    using Common.Configuration;
     using Common.Constants;
     using Common.Framework;
     using Common.Providers;
-    using Configuration;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;

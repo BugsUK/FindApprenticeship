@@ -6,6 +6,7 @@
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
     using Candidate.Providers;
+    using Common.Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Configuration;
@@ -31,8 +32,8 @@
             _candidateService = new Mock<ICandidateService>();
             _configurationService = new Mock<IConfigurationService>();
 
-            _configurationService.Setup(cm => cm.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt"))
-                .Returns(UnsuccessfulApplications);
+            _configurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+                .Returns(new WebConfiguration { UnsuccessfulApplicationsToShowTraineeshipsPrompt = UnsuccessfulApplications });
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
                 null, _configurationService.Object, _logService.Object);

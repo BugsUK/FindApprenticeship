@@ -7,25 +7,24 @@
     using System.Web.Optimization;
     using System.Web.Routing;
     using Common.Binders;
+    using Common.Configuration;
     using Common.Framework;
     using Common.Validations;
     using Controllers;
+    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using FluentValidation.Validators;
-    using Microsoft.WindowsAzure;
+    using Infrastructure.Common.IoC;
     using Infrastructure.Logging;
+    using Infrastructure.Logging.IoC;
     using StructureMap;
 
     public class MvcApplication : HttpApplication
     {
+
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            bool isWebsiteOffline;
-
-            if (!bool.TryParse(CloudConfigurationManager.GetSetting("IsWebsiteOffline"), out isWebsiteOffline))
-            {
-                return;
-            }
+            bool isWebsiteOffline = ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).IsWebsiteOffline;
 
             var context = HttpContext.Current;
             var path = context.Request.Path.ToLower();
@@ -44,6 +43,27 @@
             if (isWebsiteOffline)
             {               
                 context.RewritePath("~/403.aspx", false);
+            }
+        }
+
+        private IConfigurationService _configurationService;
+        private IConfigurationService ConfigurationService
+        {
+            get
+            {
+                if (_configurationService != null)
+                {
+                    return _configurationService;
+                }
+
+                var container = new Container(x =>
+                {
+                    x.AddRegistry<LoggingRegistry>();
+                    x.AddRegistry<CommonRegistry>();
+                });
+
+                _configurationService = container.GetInstance<IConfigurationService>();
+                return _configurationService;
             }
         }
 

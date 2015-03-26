@@ -1,15 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Attributes
 {
     using System.Web.Mvc;
-    using Configuration;
+    using Common.Configuration;
+    using Domain.Interfaces.Configuration;
 
     public class SmsEnabledToggle : ActionFilterAttribute
     {
-        public IFeatureToggle FeatureToggle { get; set; }
+        public IConfigurationService ConfigurationService { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!FeatureToggle.IsActive(Feature.Sms))
+            var config = ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName);
+            if (!config.Features.SmsEnabled)
             {
                 filterContext.Result = new HttpNotFoundResult();
                 return;

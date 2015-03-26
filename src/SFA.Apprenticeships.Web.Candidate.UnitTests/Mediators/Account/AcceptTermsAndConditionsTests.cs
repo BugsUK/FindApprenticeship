@@ -3,7 +3,7 @@
     using System;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
-    using Configuration;
+    using Common.Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;

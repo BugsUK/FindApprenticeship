@@ -5,6 +5,8 @@
     using System.Threading.Tasks;
     using Application.Applications;
     using Application.Applications.Entities;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ.AutoSubscribe;
 
     public class ApplicationStatusSummaryPageConsumerAsync : IConsumeAsync<ApplicationUpdatePage>
@@ -13,12 +15,15 @@
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _applicationStatusSummaryPageConsumerResetEvent = new ManualResetEvent(true);
-
+        
         private CancellationToken CancellationToken { get { return _cancellationTokenSource.Token; } }
 
-        public ApplicationStatusSummaryPageConsumerAsync(IApplicationStatusProcessor applicationStatusProcessor)
+        private readonly int _applicationStatusExtractWindow;
+
+        public ApplicationStatusSummaryPageConsumerAsync(IConfigurationService configurationService, IApplicationStatusProcessor applicationStatusProcessor)
         {
             _applicationStatusProcessor = applicationStatusProcessor;
+            _applicationStatusExtractWindow = configurationService.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName).ApplicationStatusExtractWindow;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 2)]
@@ -37,7 +42,7 @@
 
                 try
                 {
-                    _applicationStatusProcessor.QueueApplicationStatuses(message);
+                    _applicationStatusProcessor.QueueApplicationStatuses(_applicationStatusExtractWindow, message);
                 }
                 finally
                 {

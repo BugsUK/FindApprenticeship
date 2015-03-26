@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Attributes
 {
     using System.Web.Mvc;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using Providers;
 
     public class PlannedOutageMessageAttribute : ActionFilterAttribute
     {
-        private const string PlannedOutageMessageKey = "PlannedOutageMessage";
-
         public IConfigurationService ConfigurationService { get; set; }
 
         public IDismissPlannedOutageMessageCookieProvider DismissPlannedOutageMessageCookieProvider { get; set; }
@@ -16,7 +15,7 @@
         {
             base.OnActionExecuted(filterContext);
 
-            var plannedOutageMessage = ConfigurationService.GetCloudAppSetting<string>(PlannedOutageMessageKey);
+            var plannedOutageMessage = ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).PlannedOutageMessage;
             if (!string.IsNullOrEmpty(plannedOutageMessage) && !DismissPlannedOutageMessageCookieProvider.IsCookiePresent(filterContext.HttpContext))
             {
                 filterContext.Controller.ViewBag.PlannedOutageMessage = plannedOutageMessage;

@@ -4,6 +4,12 @@
     {
         public const string ConfigurationName = "CommunicationConfiguration";
 
+        public bool IsEnabled { get; set; }
+
         public string SiteDomainName { get; set; }
+
+        public string EmailDispatcher { get; set; }
+
+        public string SmsDispatcher { get; set; }
     }
 }

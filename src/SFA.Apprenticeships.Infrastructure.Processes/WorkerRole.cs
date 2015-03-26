@@ -5,8 +5,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using System.Reflection;
     using System.Threading;
     using Application.Interfaces.Logging;
-    using Application.ReferenceData;
-    using Application.Vacancies.Entities;
     using Azure.Common.IoC;
     using Caching.Azure.IoC;
     using Common.Configuration;

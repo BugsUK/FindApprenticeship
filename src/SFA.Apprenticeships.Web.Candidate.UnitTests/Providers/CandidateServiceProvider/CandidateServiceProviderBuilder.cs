@@ -6,9 +6,9 @@
     using Application.Interfaces.Users;
     using Candidate.Mappers;
     using Candidate.Providers;
+    using Common.Configuration;
     using Common.Providers;
     using Common.Services;
-    using Configuration;
     using Domain.Interfaces.Configuration;
     using Moq;
 

@@ -5,9 +5,9 @@
     using System.Text.RegularExpressions;
     using System.Web.Mvc;
     using Apprenticeships.Application.Interfaces.Vacancies;
+    using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
-    using Configuration;
     using Domain.Interfaces.Configuration;
     using ViewModels.VacancySearch;
 

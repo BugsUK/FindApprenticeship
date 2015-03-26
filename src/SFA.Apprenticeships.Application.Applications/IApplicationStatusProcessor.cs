@@ -4,9 +4,9 @@
 
     public interface IApplicationStatusProcessor
     {
-        void QueueApplicationStatusesPages();
+        void QueueApplicationStatusesPages(int applicationStatusExtractWindow);
 
-        void QueueApplicationStatuses(ApplicationUpdatePage applicationStatusSummaryPage);
+        void QueueApplicationStatuses(int applicationStatusExtractWindow, ApplicationUpdatePage applicationStatusSummaryPage);
 
         void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary);
 

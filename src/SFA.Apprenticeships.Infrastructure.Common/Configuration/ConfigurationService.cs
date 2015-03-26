@@ -5,7 +5,6 @@
     using System.Linq;
     using Application.Interfaces.Logging;
     using Domain.Interfaces.Configuration;
-    using Microsoft.WindowsAzure;
     using MongoDB.Driver;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -83,12 +82,6 @@
                 _loggerService.Error("Failed to load confguration from mongo, either doesn't exist or contains more than 1 entry", ex);
                 throw;
             }
-        }
-
-        public T GetCloudAppSetting<T>(string key)
-        {
-            var setting = CloudConfigurationManager.GetSetting(key);
-            return (T)Convert.ChangeType(setting, typeof(T));
         }
     }
 }

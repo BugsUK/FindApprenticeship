@@ -10,10 +10,13 @@
     using Application.Vacancies;
     using Applications;
     using Candidates;
+    using Common.IoC;
+    using Communication.Configuration;
     using Communications;
     using Communications.Commands;
     using Domain.Interfaces.Mapping;
-    using Microsoft.WindowsAzure;
+    using Logging.IoC;
+    using StructureMap;
     using StructureMap.Configuration.DSL;
     using Vacancies;
 
@@ -22,11 +25,16 @@
         public ProcessesRegistry()
         {
             // communications
-            var emailDispatcher = CloudConfigurationManager.GetSetting("EmailDispatcher");
-            var smsDispatcher = CloudConfigurationManager.GetSetting("SmsDispatcher");
-            
-            For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(emailDispatcher);
-            For<SmsRequestConsumerAsync>().Use<SmsRequestConsumerAsync>().Ctor<ISmsDispatcher>().Named(smsDispatcher);
+            var container = new Container(x =>
+            {
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<CommonRegistry>();
+            });
+
+            var commsConfig = container.GetInstance<CommunicationConfiguration>(CommunicationConfiguration.ConfigurationName);
+
+            For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(commsConfig.EmailDispatcher);
+            For<SmsRequestConsumerAsync>().Use<SmsRequestConsumerAsync>().Ctor<ISmsDispatcher>().Named(commsConfig.SmsDispatcher);
 
             For<CommunicationCommand>().Use<CandidateCommunicationCommand>();
             For<CommunicationCommand>().Use<CandidateDailyDigestCommunicationCommand>();

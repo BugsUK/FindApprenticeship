@@ -10,6 +10,6 @@
 
         void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage);
 
-        void QueueVacancyIfExpiring(ApprenticeshipSummary vacancySummary);
+        void QueueVacancyIfExpiring(ApprenticeshipSummary vacancySummary, int aboutToExpireThreshold);
     }
 }

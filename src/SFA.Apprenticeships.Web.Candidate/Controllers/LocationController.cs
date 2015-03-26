@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Configuration;
+    using Common.Configuration;
     using Domain.Interfaces.Configuration;
     using Constants;
     using Providers;

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
+    using Common.Configuration;
     using Domain.Entities.Vacancies;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Applications;
@@ -530,7 +531,8 @@
         {
             var candididate = _candidateService.GetCandidate(candidateId);
 
-            var unsuccessfulApplicationsToShowTraineeshipsPrompt = _configurationService.GetCloudAppSetting<int>("UnsuccessfulApplicationsToShowTraineeshipsPrompt");
+            var webConfiguration = _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName);
+            var unsuccessfulApplicationsToShowTraineeshipsPrompt = webConfiguration.UnsuccessfulApplicationsToShowTraineeshipsPrompt;
             var allowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts;
 
             var sufficentUnsuccessfulApprenticeshipApplicationsToPrompt = apprenticeshipApplicationSummaries.Count(each => each.Status == ApplicationStatuses.Unsuccessful) >= unsuccessfulApplicationsToShowTraineeshipsPrompt;

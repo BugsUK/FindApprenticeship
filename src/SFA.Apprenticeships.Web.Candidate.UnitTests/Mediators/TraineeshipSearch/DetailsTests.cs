@@ -6,9 +6,9 @@
     using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
-    using Configuration;
     using Constants;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;

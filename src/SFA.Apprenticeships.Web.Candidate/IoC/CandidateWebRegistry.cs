@@ -23,10 +23,13 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
-    using Configuration;
+    using Common.Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Infrastructure.Common.IoC;
+    using Infrastructure.Logging.IoC;
     using Mappers;
     using Mediators.Account;
     using Mediators.Application;
@@ -34,8 +37,8 @@
     using Mediators.Login;
     using Mediators.Register;
     using Mediators.Search;
-    using Microsoft.WindowsAzure;
     using Providers;
+    using StructureMap;
     using StructureMap.Configuration.DSL;
     using ISendPasswordResetCodeStrategy = Application.UserAccount.Strategies.ISendPasswordResetCodeStrategy;
 
@@ -51,8 +54,6 @@
 
             For<IMapper>().Singleton().Use<ApprenticeshipCandidateWebMappers>().Name = "ApprenticeshipCandidateWebMappers";
             For<IMapper>().Singleton().Use<TraineeshipCandidateWebMappers>().Name = "TraineeshipCandidateWebMappers";
-
-            For<IFeatureToggle>().Use<FeatureToggle>();
 
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
 
@@ -93,7 +94,13 @@
 
         private void RegisterStrategies()
         {
-            var codeGenerator = CloudConfigurationManager.GetSetting("CodeGenerator");
+            var settingsContainer = new Container(x =>
+            {
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<CommonRegistry>();
+            });
+            var configurationService = settingsContainer.GetInstance<IConfigurationService>();
+            var codeGenerator = configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).CodeGenerator;
 
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
             For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();

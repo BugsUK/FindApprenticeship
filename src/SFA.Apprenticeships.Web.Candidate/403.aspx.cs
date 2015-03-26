@@ -1,7 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate
 {
     using System;
+    using Common.Configuration;
+    using Domain.Interfaces.Configuration;
+    using Infrastructure.Common.IoC;
+    using Infrastructure.Logging.IoC;
     using Microsoft.WindowsAzure;
+    using StructureMap;
     using Views;
 
     public partial class _403 : ErrorBasePage
@@ -10,7 +15,13 @@
         {
             if (!IsPostBack)
             {
-                var message = CloudConfigurationManager.GetSetting("WebsiteOfflineMessage");
+                var container = new Container(x =>
+                {
+                    x.AddRegistry<LoggingRegistry>();
+                    x.AddRegistry<CommonRegistry>();
+                });
+                var configurationService = container.GetInstance<IConfigurationService>();
+                var message = configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).WebsiteOfflineMessage;
 
                 OfflineMessageLabel.Text = message;
             }

@@ -7,6 +7,8 @@
     using Application.Interfaces.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ.AutoSubscribe;
     using VacancyIndexer;
     using Elastic = Elastic.Common.Entities;
@@ -17,11 +19,14 @@
         private readonly ILogService _logService;
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _vacancyIndexerService;
         private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
+        private readonly int _vacancyAboutToExpireThreshold;
 
         public ApprenticeshipSummaryUpdateConsumerAsync(
+            IConfigurationService configurationService,
             IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> vacancyIndexerService,
             IVacancySummaryProcessor vacancySummaryProcessor, IReferenceDataService referenceDataService, ILogService logService)
         {
+            _vacancyAboutToExpireThreshold = configurationService.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName).VacancyAboutToExpireNotificationHours;
             _vacancyIndexerService = vacancyIndexerService;
             _vacancySummaryProcessor = vacancySummaryProcessor;
             _referenceDataService = referenceDataService;
@@ -36,7 +41,7 @@
             {
                 PopulateCategoriesCodes(vacancySummaryToIndex);
                 _vacancyIndexerService.Index(vacancySummaryToIndex);
-                _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex);
+                _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex, _vacancyAboutToExpireThreshold);
             });
         }
 

@@ -4,8 +4,8 @@
     using Application.Interfaces.Vacancies;
     using Candidate.Mediators.Search;
     using Candidate.Providers;
+    using Common.Configuration;
     using Common.Providers;
-    using Configuration;
     using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;

@@ -83,7 +83,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\ApplicationVacancyConfiguration.cs" />
     <Compile Include="Entities\CandidateSavedSearches.cs" />
     <Compile Include="Entities\IVacancyUpdate.cs" />
     <Compile Include="Entities\TraineeshipSummaryUpdate.cs" />

@@ -5,8 +5,6 @@
     using System.Configuration;
     using System.IO;
     using CuttingEdge.Conditions;
-    using Domain.Interfaces.Configuration;
-    using Microsoft.WindowsAzure;
 
     public class ConfigurationManager : IConfigurationManager
     {

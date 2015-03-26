@@ -4,10 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
     using Entities;
@@ -16,7 +14,6 @@
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {
         private readonly ILogService _logger;
-        private readonly int _vacancyAboutToExpireNotificationHours;
 
         private readonly IMessageBus _messageBus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
@@ -27,14 +24,13 @@
                                        IVacancyIndexDataProvider vacancyIndexDataProvider,
                                        IMapper mapper,
                                        IJobControlQueue<StorageQueueMessage> jobControlQueue, 
-                                       IConfigurationService configurationService, ILogService logger)
+                                       ILogService logger)
         {
             _messageBus = messageBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
             _jobControlQueue = jobControlQueue;
             _logger = logger;
-            _vacancyAboutToExpireNotificationHours = configurationService.Get<ApplicationVacancyConfiguration>(ApplicationVacancyConfiguration.ConfigurationName).VacancyAboutToExpireNotificationHours;
         }
 
         public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
@@ -98,11 +94,11 @@
                 });
         }
 
-        public void QueueVacancyIfExpiring(ApprenticeshipSummary vacancySummary)
+        public void QueueVacancyIfExpiring(ApprenticeshipSummary vacancySummary, int aboutToExpireThreshold)
         {
             try
             {
-                if (vacancySummary.ClosingDate < DateTime.Now.AddHours(_vacancyAboutToExpireNotificationHours))
+                if (vacancySummary.ClosingDate < DateTime.Now.AddHours(aboutToExpireThreshold))
                 {
                     _logger.Debug("Queueing expiring vacancy");
 

@@ -22,7 +22,6 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
         private readonly IMessageBus _messageBus;
-        private int? _applicationStatusExtractWindow;
 
         public ApplicationStatusProcessor(ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
@@ -41,24 +40,11 @@
             _configurationService = configurationService;
         }
 
-        private int ApplicationStatusExtractWindow
-        {
-            get
-            {
-                if (!_applicationStatusExtractWindow.HasValue)
-                {
-                    _applicationStatusExtractWindow = _configurationService.GetCloudAppSetting<int>("ApplicationStatusExtractWindow");
-                }
-
-                return _applicationStatusExtractWindow.Value;
-            }
-        }
-
-        public void QueueApplicationStatusesPages()
+        public void QueueApplicationStatusesPages(int applicationStatusExtractWindow)
         {
             _logger.Debug("Starting to queue application summary status update pages");
 
-            var pageCount = _legacyApplicationStatusesProvider.GetApplicationStatusesPageCount(ApplicationStatusExtractWindow);
+            var pageCount = _legacyApplicationStatusesProvider.GetApplicationStatusesPageCount(applicationStatusExtractWindow);
 
             if (pageCount == 0)
             {
@@ -79,12 +65,12 @@
             _logger.Debug("Queued {0} application status update pages", pageCount);
         }
 
-        public void QueueApplicationStatuses(ApplicationUpdatePage applicationStatusSummaryPage)
+        public void QueueApplicationStatuses(int applicationStatusExtractWindow, ApplicationUpdatePage applicationStatusSummaryPage)
         {
             _logger.Debug("Starting to queue application status updates for page {0} of {1}", applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
 
             // retrieve page of status updates from legacy... then queue each one for subsequent processing
-            var applicationStatusSummaries = _legacyApplicationStatusesProvider.GetAllApplicationStatuses(applicationStatusSummaryPage.PageNumber, ApplicationStatusExtractWindow).ToList();
+            var applicationStatusSummaries = _legacyApplicationStatusesProvider.GetAllApplicationStatuses(applicationStatusSummaryPage.PageNumber, applicationStatusExtractWindow).ToList();
 
             if (!applicationStatusSummaries.Any())
             {

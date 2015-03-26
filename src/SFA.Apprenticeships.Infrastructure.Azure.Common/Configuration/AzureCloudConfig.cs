@@ -1,14 +1,22 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common.Configuration
 {
-    using Microsoft.WindowsAzure;
+    using Domain.Interfaces.Configuration;
 
     public class AzureCloudConfig : IAzureCloudConfig
     {
-        public AzureCloudConfig()
+        private readonly IConfigurationService _configurationService;
+
+        public AzureCloudConfig(IConfigurationService configurationService)
         {
-            StorageConnectionString = CloudConfigurationManager.GetSetting("StorageConnectionString");
+            _configurationService = configurationService;
         }
 
-        public string StorageConnectionString { get; private set; }
+        public string StorageConnectionString
+        {
+            get
+            {
+                return _configurationService.Get<AzureConfiguration>(AzureConfiguration.ConfigurationName).StorageConnectionString;
+            }
+        }
     }
 }

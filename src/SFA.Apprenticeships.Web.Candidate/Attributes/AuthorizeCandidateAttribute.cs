@@ -2,10 +2,10 @@
 {
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Common.Configuration;
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
-    using Configuration;
     using Domain.Interfaces.Configuration;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute

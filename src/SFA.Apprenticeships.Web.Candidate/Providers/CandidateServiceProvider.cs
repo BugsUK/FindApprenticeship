@@ -4,9 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
+    using Common.Configuration;
     using Common.Providers;
     using Common.Services;
-    using Configuration;
     using Constants;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;

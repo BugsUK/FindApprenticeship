@@ -5,8 +5,8 @@
     using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Candidate.Validators;
+    using Common.Configuration;
     using Common.Providers;
-    using Configuration;
     using Domain.Entities.ReferenceData;
     using Domain.Interfaces.Configuration;
     using Moq;
