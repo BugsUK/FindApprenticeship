@@ -14,7 +14,7 @@
         public MongoAdminClient(IConfigurationService configurationService, ILogService logger)
         {
             _logger = logger;
-            var mongoConfig = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            var mongoConfig = configurationService.Get<MongoConfiguration>();
             var mongoDbName = MongoUrl.Create(mongoConfig.AdminDb).DatabaseName;
             _database = new MongoClient(mongoConfig.AdminDb).GetServer().GetDatabase(mongoDbName);
         }

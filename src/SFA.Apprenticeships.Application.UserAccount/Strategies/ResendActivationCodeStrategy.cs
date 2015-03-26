@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _codeGenerator = codeGenerator;
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
-            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).ActivationCodeExpiryDays;
+            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>().ActivationCodeExpiryDays;
         }
 
         public void ResendActivationCode(string username)

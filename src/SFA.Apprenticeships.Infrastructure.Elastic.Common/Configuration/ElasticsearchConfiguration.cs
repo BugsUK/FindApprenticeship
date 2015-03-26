@@ -2,6 +2,10 @@
 {
     using System.Collections.Generic;
 
+    public class SearchConfiguration : ElasticsearchConfiguration { }
+
+    public class LogstashConfiguration : ElasticsearchConfiguration { }
+
     public class ElasticsearchConfiguration
     {
         public const string SearchConfigurationName = "SearchConfiguration";

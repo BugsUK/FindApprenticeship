@@ -33,7 +33,7 @@
             _messageFormatters = messageFormatters;
             _logger = logger;
             _emailFromResolvers = emailFromResolvers;
-            var config = configuration.Get<SendGridConfiguration>(SendGridConfiguration.EmailConfigurationName);
+            var config = configuration.Get<EmailConfiguration>();
             _userName = config.Username;
             _password = config.Password;
             _templates = config.Templates.ToArray();

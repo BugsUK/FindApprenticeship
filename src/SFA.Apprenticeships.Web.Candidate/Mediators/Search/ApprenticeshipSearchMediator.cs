@@ -49,7 +49,7 @@
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
-            _blacklistedCategoryCodes = configService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).BlacklistedCategoryCodes.Split(',');
+            _blacklistedCategoryCodes = configService.Get<WebConfiguration>().BlacklistedCategoryCodes.Split(',');
         }
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index(ApprenticeshipSearchMode searchMode)

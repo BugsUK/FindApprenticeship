@@ -24,7 +24,7 @@
 
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            bool isWebsiteOffline = ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).IsWebsiteOffline;
+            bool isWebsiteOffline = ConfigurationService.Get<WebConfiguration>().IsWebsiteOffline;
 
             var context = HttpContext.Current;
             var path = context.Request.Path.ToLower();

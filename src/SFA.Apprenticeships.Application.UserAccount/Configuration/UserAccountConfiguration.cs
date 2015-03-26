@@ -2,8 +2,6 @@
 {
     public class UserAccountConfiguration
     {
-        public const string ConfigurationName = "UserAccount";
-
         public string UserDirectorySecretKey { get; set; }
 
         public int ActivationCodeExpiryDays { get; set; }

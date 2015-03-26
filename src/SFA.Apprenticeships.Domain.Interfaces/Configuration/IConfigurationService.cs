@@ -2,6 +2,6 @@
 {
     public interface IConfigurationService
     {
-        TSettings Get<TSettings>(string settingName) where TSettings : class;
+        TSettings Get<TSettings>() where TSettings : class;
     }
 }

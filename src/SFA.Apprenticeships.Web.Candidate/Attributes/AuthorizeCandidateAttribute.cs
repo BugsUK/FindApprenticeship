@@ -34,7 +34,7 @@
             }
             else if (
                 !filterContext.RequestContext.HttpContext.Request.Path.ToLower().StartsWith("/updatedtermsandconditions") &&
-                userContext.AcceptedTermsAndConditionsVersion != ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion)
+                userContext.AcceptedTermsAndConditionsVersion != ConfigurationService.Get<WebConfiguration>().TermsAndConditionsVersion)
             {
                 var routeValues = new RouteValueDictionary
                 {

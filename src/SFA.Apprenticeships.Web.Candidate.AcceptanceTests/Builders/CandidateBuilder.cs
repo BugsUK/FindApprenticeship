@@ -31,7 +31,7 @@
             var configuration = WebTestRegistry.Container.GetInstance<IConfigurationService>();
 
             Candidate.RegistrationDetails = RegistrationBuilder.Build();
-            Candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = configuration.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion;
+            Candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = configuration.Get<WebConfiguration>().TermsAndConditionsVersion;
             Candidate.CommunicationPreferences = new CommunicationPreferences();
 
             var candidateInRepo = repoRead.Get(Candidate.RegistrationDetails.EmailAddress);

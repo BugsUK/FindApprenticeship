@@ -29,7 +29,7 @@
 
                 if (monitorScheduleMessage != null)
                 {
-                    var monitorConfig = _configurationService.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
+                    var monitorConfig = _configurationService.Get<MonitorConfiguration>();
                     if (monitorConfig != null && monitorConfig.IsEnabled)
                     {
                         _monitorTasksRunner.RunMonitorTasks();

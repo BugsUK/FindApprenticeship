@@ -15,7 +15,7 @@
         private readonly ILogService _logger;
         public CheckRabbitMessageQueue(IConfigurationService configurationService, ILogService logger)
         {
-            _rabbitConfiguration = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.ConfigurationName);
+            _rabbitConfiguration = configurationService.Get<RabbitConfiguration>();
             _logger = logger;
         }
 

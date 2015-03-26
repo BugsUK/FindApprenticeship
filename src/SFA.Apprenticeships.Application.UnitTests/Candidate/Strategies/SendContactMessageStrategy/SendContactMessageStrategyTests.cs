@@ -24,7 +24,7 @@
         public void SetUp()
         {
             _configurationService.Setup(
-                cm => cm.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName))
+                cm => cm.Get<UserAccountConfiguration>())
                 .Returns(new UserAccountConfiguration() {HelpdeskEmailAddress = HelpdeskEmailAddress});
         }
 

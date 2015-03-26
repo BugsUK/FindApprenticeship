@@ -32,7 +32,7 @@
             _candidateService = new Mock<ICandidateService>();
             _configurationService = new Mock<IConfigurationService>();
 
-            _configurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+            _configurationService.Setup(cm => cm.Get<WebConfiguration>())
                 .Returns(new WebConfiguration { UnsuccessfulApplicationsToShowTraineeshipsPrompt = UnsuccessfulApplications });
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,

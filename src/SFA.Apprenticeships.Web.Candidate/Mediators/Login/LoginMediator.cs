@@ -70,7 +70,7 @@
                     var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
                     result.ReturnUrl = returnUrl;
 
-                    if (result.AcceptedTermsAndConditionsVersion != _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion)
+                    if (result.AcceptedTermsAndConditionsVersion != _configurationService.Get<WebConfiguration>().TermsAndConditionsVersion)
                     {
                         return returnUrl.IsValidReturnUrl()
                             ? GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, result, parameters: returnUrl)

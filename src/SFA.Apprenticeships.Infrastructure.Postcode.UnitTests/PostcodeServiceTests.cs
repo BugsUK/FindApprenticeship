@@ -18,7 +18,7 @@
         public void SetUp()
         {
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(cm => cm.Get<PostcodeConfiguration>(PostcodeConfiguration.PostcodeConfigurationName)).Returns(new PostcodeConfiguration() { ServiceEndpoint = "http://api.postodes.io" });
+            configurationService.Setup(cm => cm.Get<PostcodeConfiguration>()).Returns(new PostcodeConfiguration() { ServiceEndpoint = "http://api.postodes.io" });
             _postcodeService = new Mock<PostcodeLookupProvider>(MockBehavior.Loose, configurationService.Object, new Mock<ILogService>().Object) { CallBase = true };
             _postcodeService.Setup(ps => ps.Execute<PostcodeInfoResult>(It.IsAny<IRestRequest>()))
                 .Returns(new RestResponse<PostcodeInfoResult>());

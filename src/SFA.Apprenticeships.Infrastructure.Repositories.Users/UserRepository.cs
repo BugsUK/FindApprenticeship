@@ -19,7 +19,7 @@
 
         public UserRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
-            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.UsersDb, "users");
             _mapper = mapper;
             _logger = logger;

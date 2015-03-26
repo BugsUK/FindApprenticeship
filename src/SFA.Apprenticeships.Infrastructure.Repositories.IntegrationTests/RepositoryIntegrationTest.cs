@@ -31,7 +31,7 @@
             });
 
             var configurationManager = Container.GetInstance<IConfigurationService>();
-            MongoConfiguration = configurationManager.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            MongoConfiguration = configurationManager.Get<MongoConfiguration>();
         }
     }
 }

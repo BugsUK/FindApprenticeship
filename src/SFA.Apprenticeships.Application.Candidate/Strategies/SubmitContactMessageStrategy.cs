@@ -24,7 +24,7 @@
 
         public void SubmitMessage(ContactMessage contactMessage)
         {
-            var config = _configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName);
+            var config = _configurationService.Get<UserAccountConfiguration>();
             var helpdeskAddress = config.HelpdeskEmailAddress;
             var details = string.IsNullOrWhiteSpace(contactMessage.Details) ? string.Empty : contactMessage.Details;
 

@@ -20,7 +20,7 @@
         {
             _cacheService = cacheService;
             _applicationStatusProcessor = applicationStatusProcessor;
-            _enableVacancyStatusPropagation = configurationService.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName).EnableVacancyStatusPropagation;
+            _enableVacancyStatusPropagation = configurationService.Get<ProcessConfiguration>().EnableVacancyStatusPropagation;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]

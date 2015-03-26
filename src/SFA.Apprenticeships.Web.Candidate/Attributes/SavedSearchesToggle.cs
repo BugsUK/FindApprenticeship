@@ -10,7 +10,7 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var config = ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName);
+            var config = ConfigurationService.Get<WebConfiguration>();
             if (!config.Features.SavedSearchesEnabled)
             {
                 filterContext.Result = new HttpNotFoundResult();

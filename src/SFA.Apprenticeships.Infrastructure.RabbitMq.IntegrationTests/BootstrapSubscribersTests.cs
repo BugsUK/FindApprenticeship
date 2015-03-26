@@ -47,7 +47,7 @@
 
             var config = _container.GetInstance<IConfigurationService>();
             var bs = _container.GetInstance<IBootstrapSubcribers>();
-            var rabbitConfig = config.Get<RabbitConfiguration>(RabbitConfiguration.ConfigurationName);
+            var rabbitConfig = config.Get<RabbitConfiguration>();
 
             _managementClient = new ManagementClient(string.Format("http://{0}", rabbitConfig.MessagingHost.HostName),
                 rabbitConfig.MessagingHost.UserName, rabbitConfig.MessagingHost.Password);

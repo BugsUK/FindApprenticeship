@@ -18,7 +18,7 @@
         private readonly ILogService _logger;
 
         private readonly IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> _messageFormatters;
-        private readonly ReachSmsConfiguration _reachConfiguration;
+        private readonly SmsConfiguration _reachConfiguration;
         private readonly ISmsNumberFormatter _smsNumberFormatter;
         private readonly IRestClient _restClient;
 
@@ -32,7 +32,7 @@
         {
             _logger = logger;
             _restClient = restClient;
-            _reachConfiguration = configurationService.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName);
+            _reachConfiguration = configurationService.Get<SmsConfiguration>();
             _smsNumberFormatter = smsNumberFormatter;
             _messageFormatters = messageFormatters;
         }

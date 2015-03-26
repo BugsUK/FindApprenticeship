@@ -136,7 +136,7 @@
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
-                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion;
+                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationService.Get<WebConfiguration>().TermsAndConditionsVersion;
 
                 _candidateService.Register(candidate, model.Password);
                 _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Unactivated);

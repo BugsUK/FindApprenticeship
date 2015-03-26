@@ -4,8 +4,6 @@
 
     public class RabbitConfiguration
     {
-        public const string ConfigurationName = "RabbitConfiguration";
-
         public RabbitHost MessagingHost { get; set; }
 
         public RabbitHost LoggingHost { get; set; } 

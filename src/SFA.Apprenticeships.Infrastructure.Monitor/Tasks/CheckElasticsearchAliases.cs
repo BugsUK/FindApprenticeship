@@ -8,10 +8,10 @@
 
     internal class CheckElasticsearchAliases : IMonitorTask
     {
-        private readonly ElasticsearchConfiguration _elasticsearchConfiguration;
+        private readonly SearchConfiguration _elasticsearchConfiguration;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
-        public CheckElasticsearchAliases(ElasticsearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory)
+        public CheckElasticsearchAliases(SearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory)
         {
             _elasticsearchConfiguration = elasticsearchConfiguration;
             _elasticsearchClientFactory = elasticsearchClientFactory;

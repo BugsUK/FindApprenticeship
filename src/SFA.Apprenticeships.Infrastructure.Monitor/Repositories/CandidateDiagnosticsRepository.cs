@@ -21,7 +21,7 @@
 
         public CandidateDiagnosticsRepository(IConfigurationService configurationService, IMapper mapper, IUserReadRepository userReadRepository, ILogService logger)
         {
-            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.CandidatesDb, "candidates");
             _mapper = mapper;
             _userReadRepository = userReadRepository;

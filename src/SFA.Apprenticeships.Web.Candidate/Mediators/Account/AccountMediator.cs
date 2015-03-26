@@ -176,7 +176,7 @@
             try
             {
                 var candidate = _candidateServiceProvider.GetCandidate(candidateId);
-                var currentTsAndCsVersion = _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion;
+                var currentTsAndCsVersion = _configurationService.Get<WebConfiguration>().TermsAndConditionsVersion;
 
                 if (candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion == currentTsAndCsVersion)
                 {

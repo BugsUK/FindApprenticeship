@@ -62,7 +62,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case RegisterMediatorCodes.Register.SuccessfullyRegistered:
-                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).TermsAndConditionsVersion);
+                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, _configurationService.Get<WebConfiguration>().TermsAndConditionsVersion);
                         return RedirectToAction("Activation");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);

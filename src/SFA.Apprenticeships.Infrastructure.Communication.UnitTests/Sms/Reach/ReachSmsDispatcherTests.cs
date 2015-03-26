@@ -50,8 +50,8 @@
             _smsTemplateConfigurations = new[] { smsTemplateConfiguration };
 
             var configService = new Mock<IConfigurationService>();
-            configService.Setup(x => x.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName))
-                .Returns(new ReachSmsConfiguration() { Templates = _smsTemplateConfigurations });
+            configService.Setup(x => x.Get<SmsConfiguration>())
+                .Returns(new SmsConfiguration() { Templates = _smsTemplateConfigurations });
 
             _smsMessageFormatters = new[]
             {
@@ -59,14 +59,14 @@
                     new SmsAccountUnlockCodeMessageFormatter(configService.Object))
             };
 
-            var smsConfig = new ReachSmsConfiguration()
+            var smsConfig = new SmsConfiguration()
             {
                 Templates = _smsTemplateConfigurations,
                 Url = "https://www.example.com"
             };
 
             _configurationService = new Mock<IConfigurationService>();
-            _configurationService.Setup(x => x.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName)).Returns(smsConfig);
+            _configurationService.Setup(x => x.Get<SmsConfiguration>()).Returns(smsConfig);
 
             _smsNumberFormatter = new ReachSmsNumberFormatter();
 

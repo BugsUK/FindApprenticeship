@@ -10,10 +10,10 @@
     {
         private readonly ILogService _logger;
 
-        private readonly ElasticsearchConfiguration _elasticsearchConfiguration;
+        private readonly SearchConfiguration _elasticsearchConfiguration;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
-        public CheckElasticsearchCluster(ElasticsearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory, ILogService logger)
+        public CheckElasticsearchCluster(SearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory, ILogService logger)
         {
             _elasticsearchConfiguration = elasticsearchConfiguration;
             _elasticsearchClientFactory = elasticsearchClientFactory;

@@ -21,7 +21,7 @@
         private string _vacancyIndexAlias;
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private ElasticClient _elasticClient;
-        private ElasticsearchConfiguration _elasticsearchConfiguration = null;
+        private SearchConfiguration _elasticsearchConfiguration = null;
         private Container _container;
 
         [SetUp]
@@ -35,7 +35,7 @@
                 x.AddRegistry<VacancyIndexerRegistry>();
             });
 
-            _elasticsearchConfiguration = _container.GetInstance<IConfigurationService>().Get<ElasticsearchConfiguration>(ElasticsearchConfiguration.SearchConfigurationName);
+            _elasticsearchConfiguration = _container.GetInstance<IConfigurationService>().Get<SearchConfiguration>();
             var settings = new ConnectionSettings(new Uri(_elasticsearchConfiguration.HostName));
             _elasticClient = new ElasticClient(settings);
 

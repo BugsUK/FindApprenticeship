@@ -15,7 +15,7 @@
 
         protected SmsMessageFormatter(IConfigurationService configurationService)
         {
-            var config = configurationService.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName);
+            var config = configurationService.Get<SmsConfiguration>();
             _templateConfigurations = config.Templates;
         }
 

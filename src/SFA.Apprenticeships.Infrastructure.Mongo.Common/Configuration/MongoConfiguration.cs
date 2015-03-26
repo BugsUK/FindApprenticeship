@@ -2,8 +2,6 @@
 {
     public class MongoConfiguration
     {
-        public static string MongoConfigurationName { get { return "MongoConfiguration"; } }
-
         public string CandidatesDb { get; set; }
 
         public string ApplicationsDb { get; set; }

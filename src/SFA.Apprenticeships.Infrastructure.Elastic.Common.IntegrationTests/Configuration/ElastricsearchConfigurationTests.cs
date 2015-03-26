@@ -31,14 +31,14 @@
         [Test]
         public void ShouldPopulateWithValues()
         {
-            var searchConfig = configurationService.Get<ElasticsearchConfiguration>(ElasticsearchConfiguration.SearchConfigurationName);
+            var searchConfig = configurationService.Get<SearchConfiguration>();
 
             searchConfig.Should().NotBeNull();
             searchConfig.HostName.Should().NotBeNull();
             searchConfig.NodeCount.Should().BeGreaterOrEqualTo(1);
             searchConfig.Timeout.Should().Be(30);
 
-            var logstashConfig = configurationService.Get<ElasticsearchConfiguration>(ElasticsearchConfiguration.LogstashConfigurationName);
+            var logstashConfig = configurationService.Get<LogstashConfiguration>();
 
             logstashConfig.Should().NotBeNull();
             logstashConfig.HostName.Should().NotBeNull();

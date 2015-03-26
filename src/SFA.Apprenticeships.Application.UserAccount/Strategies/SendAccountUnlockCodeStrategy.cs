@@ -22,7 +22,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             ILockUserStrategy lockUserStrategy,
             ICommunicationService communicationService)
         {
-            _unlockCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).UnlockCodeExpiryDays;
+            _unlockCodeExpiryDays = configurationService.Get<UserAccountConfiguration>().UnlockCodeExpiryDays;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
             _lockUserStrategy = lockUserStrategy;

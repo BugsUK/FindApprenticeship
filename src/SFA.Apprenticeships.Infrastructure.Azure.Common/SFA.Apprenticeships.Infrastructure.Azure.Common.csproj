@@ -122,16 +122,7 @@
     </Compile>
     <Compile Include="AzureCloudClient.cs" />
     <Compile Include="AzureMessageHelper.cs" />
-    <Compile Include="Configuration\AzureCloudConfig.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Configuration\AzureConfiguration.cs" />
-    <Compile Include="Configuration\AzureConsoleCloudConfig.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Configuration\IAzureCloudConfig.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="IAzureCloudClient.cs" />
     <Compile Include="IoC\AzureCommonConsoleRegistry.cs" />
     <Compile Include="IoC\AzureCommonRegistry.cs" />

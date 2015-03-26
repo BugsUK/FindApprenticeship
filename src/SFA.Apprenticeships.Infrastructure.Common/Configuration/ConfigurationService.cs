@@ -20,7 +20,7 @@
             _loggerService = loggerService;
         }
 
-        public TSettings Get<TSettings>(string settingName) where TSettings : class
+        public TSettings Get<TSettings>() where TSettings : class
         {
             _loggerService.Debug("Loading confguration from mongo");
 
@@ -40,6 +40,7 @@
                 return null;
             }
 
+            string settingName = typeof (TSettings).Name;
             string elementJson = null;
 
             try

@@ -3,21 +3,15 @@
     using System;
     using System.Collections.Generic;
 
-    public class SendGridConfiguration
+    public class EmailConfiguration
     {
-        public static string EmailConfigurationName { get { return "EmailConfiguration"; } }
-
         public string Username { get; set; }
-
+        
         public string Password { get; set; }
 
-        public string Originator { get; set; }
+        public string SiteDomainName { get; set; }
 
-        public string Url { get; set; }
-
-        public string CallbackUrl { get; set; }
-
-        public IEnumerable<EmailTemplate> Templates { get; set; } 
+        public IEnumerable<EmailTemplate> Templates { get; set; }
     }
 
     public class EmailTemplate

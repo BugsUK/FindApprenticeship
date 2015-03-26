@@ -33,7 +33,7 @@
             _communicationService = communicationService;
             _codeGenerator = codeGenerator;
             _userReadRepository = userReadRepository;
-            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).ActivationCodeExpiryDays;
+            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>().ActivationCodeExpiryDays;
         }
 
         public Candidate RegisterCandidate(Candidate newCandidate, string password)

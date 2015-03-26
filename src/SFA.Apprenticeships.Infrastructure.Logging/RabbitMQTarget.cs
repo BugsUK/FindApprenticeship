@@ -4,9 +4,11 @@
     using System.Configuration;
     using System.Text;
     using Common.Configuration;
+    using Common.IoC;
     using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using EasyNetQ.Topology;
+    using IoC;
     using Layouts;
     using NLog;
     using NLog.Common;
@@ -34,9 +36,14 @@
 
         public RabbitMQTarget()
         {
-            //TODO: Can we use IoC anyway here?
-            var configService = new ConfigurationService(new ConfigurationManager(), new NLogLogService(typeof(RabbitMQTarget)));
-            var rabbitConfig = configService.Get<RabbitConfiguration>(RabbitConfiguration.ConfigurationName);
+            var container = new Container(x =>
+            {
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<CommonRegistry>();
+            });
+
+            var configService = container.GetInstance<IConfigurationService>();
+            var rabbitConfig = configService.Get<RabbitConfiguration>();
             _rabbitMqHostHostConfig = rabbitConfig.LoggingHost;
         }
 

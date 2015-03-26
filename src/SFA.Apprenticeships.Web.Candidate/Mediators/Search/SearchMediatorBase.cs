@@ -21,7 +21,7 @@
 
         protected SearchMediatorBase(IConfigurationService configService, IUserDataProvider userDataProvider)
         {
-            _vacancyResultsPerPage = configService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).VacancyResultsPerPage;
+            _vacancyResultsPerPage = configService.Get<WebConfiguration>().VacancyResultsPerPage;
             UserDataProvider = userDataProvider;
         }
 

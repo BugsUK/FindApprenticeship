@@ -11,7 +11,7 @@
     {
         public CandidateMetricsRepository(IConfigurationService configurationService)
         {
-            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.CandidatesDb, "candidates");
         }
 

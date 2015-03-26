@@ -23,7 +23,7 @@
         public ApplicationStatusSummaryPageConsumerAsync(IConfigurationService configurationService, IApplicationStatusProcessor applicationStatusProcessor)
         {
             _applicationStatusProcessor = applicationStatusProcessor;
-            _applicationStatusExtractWindow = configurationService.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName).ApplicationStatusExtractWindow;
+            _applicationStatusExtractWindow = configurationService.Get<ProcessConfiguration>().ApplicationStatusExtractWindow;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 2)]

@@ -10,7 +10,6 @@
         public AzureCommonRegistry()
         {
             For<IJobControlQueue<StorageQueueMessage>>().Use<AzureControlQueue>();
-            For<IAzureCloudConfig>().Singleton().Use<AzureCloudConfig>();
             For<IAzureCloudClient>().Use<AzureCloudClient>();
         }
     }

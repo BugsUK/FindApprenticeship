@@ -114,8 +114,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\CommunicationConfiguration.cs" />
-    <Compile Include="Configuration\ReachSmsConfiguration.cs" />
-    <Compile Include="Configuration\SendGridConfiguration.cs" />
+    <Compile Include="Configuration\SmsConfiguration.cs" />
+    <Compile Include="Configuration\EmailConfiguration.cs" />
     <Compile Include="Email\EmailFromResolvers\CandidateMessageEmailFromResolver.cs" />
     <Compile Include="Email\EmailMessageFormatter.cs" />
     <Compile Include="Email\EmailMessageFormatters\EmailSavedSearchAlertMessageFormatter.cs" />

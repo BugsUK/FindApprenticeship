@@ -10,7 +10,7 @@
 
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            var redirectUrl = ConfigurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).SiteRootRedirectUrl;
+            var redirectUrl = ConfigurationService.Get<WebConfiguration>().SiteRootRedirectUrl;
 
             if (!string.IsNullOrEmpty(redirectUrl))
             {

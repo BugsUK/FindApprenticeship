@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Reflection;
     using Application.Interfaces.Logging;
     using Domain.Interfaces.Configuration;
     using Nest;
@@ -17,7 +16,7 @@
 
         public ElasticsearchClientFactory(IConfigurationService configurationService, ILogService logService, bool buildIndexes = true)
         {
-            var elasticsearchConfiguration = configurationService.Get<ElasticsearchConfiguration>(ElasticsearchConfiguration.SearchConfigurationName);
+            var elasticsearchConfiguration = configurationService.Get<SearchConfiguration>();
 
             foreach (var index in elasticsearchConfiguration.Indexes)
             {

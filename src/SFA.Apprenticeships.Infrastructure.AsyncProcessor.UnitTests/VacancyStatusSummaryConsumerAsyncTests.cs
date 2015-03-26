@@ -48,7 +48,7 @@
             var vacancyStatusSummary = new VacancyStatusSummary { LegacyVacancyId = 123, ClosingDate = DateTime.Now.AddMonths(-3), VacancyStatus = VacancyStatuses.Expired };
             _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()));
             _cacheServiceMock.Setup(x => x.PutObject(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<CacheDuration>()));
-            _configurationServiceMock.Setup(x => x.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName))
+            _configurationServiceMock.Setup(x => x.Get<ProcessConfiguration>())
                 .Returns(new ProcessConfiguration {EnableVacancyStatusPropagation = true});
             _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object, _configurationServiceMock.Object);
 

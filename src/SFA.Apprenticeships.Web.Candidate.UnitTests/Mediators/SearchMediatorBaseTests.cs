@@ -15,7 +15,7 @@
         public SearchMediatorBaseTests()
         {
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName)).Returns(new WebConfiguration());
+            configurationService.Setup(x => x.Get<WebConfiguration>()).Returns(new WebConfiguration());
             var userDataProvider = new Mock<IUserDataProvider>();
             _testClass = new SearchMediatorBaseTestClass(configurationService.Object, userDataProvider.Object);
         }

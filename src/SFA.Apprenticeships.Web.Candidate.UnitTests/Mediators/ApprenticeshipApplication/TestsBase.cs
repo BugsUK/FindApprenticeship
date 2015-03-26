@@ -21,7 +21,7 @@
         {
             ApprenticeshipApplicationProvider = new Mock<IApprenticeshipApplicationProvider>();
             ConfigurationService = new Mock<IConfigurationService>();
-            ConfigurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+            ConfigurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration() { VacancyResultsPerPage = 5 });
             UserDataProvider = new Mock<IUserDataProvider>();
             Mediator = new ApprenticeshipApplicationMediator(ApprenticeshipApplicationProvider.Object, new ApprenticeshipApplicationViewModelServerValidator(), new ApprenticeshipApplicationViewModelSaveValidator(), ConfigurationService.Object, UserDataProvider.Object);

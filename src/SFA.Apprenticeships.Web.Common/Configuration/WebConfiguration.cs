@@ -2,8 +2,6 @@
 {
     public class WebConfiguration
     {
-        public const string ConfigurationName = "WebConfiguration";
-
         public int VacancyResultsPerPage { get; set; }
 
         public int LocationResultLimit { get; set; }

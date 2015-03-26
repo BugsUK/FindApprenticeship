@@ -30,7 +30,7 @@
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _vacancySearchMapper = vacancySearchMapper;
-            _searchConfiguration = configurationService.Get<SearchFactorConfiguration>(SearchFactorConfiguration.ConfigurationName);
+            _searchConfiguration = configurationService.Get<SearchFactorConfiguration>();
             _logger = logger;
         }
 

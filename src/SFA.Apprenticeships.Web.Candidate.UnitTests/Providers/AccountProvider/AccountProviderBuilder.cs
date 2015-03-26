@@ -29,7 +29,7 @@
 
         public AccountProvider Build()
         {
-            _configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+            _configurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration(){Features = new Features()});
             var provider = new AccountProvider(_candidateService.Object, new ApprenticeshipCandidateWebMappers(), _logger.Object, _configurationService.Object);
             return provider;

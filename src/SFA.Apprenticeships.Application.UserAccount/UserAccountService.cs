@@ -9,7 +9,7 @@
     using Interfaces.Users;
     using Strategies;
     using Web.Common.Constants;
-    
+
     public class UserAccountService : IUserAccountService
     {
         private readonly ILogService _logger;

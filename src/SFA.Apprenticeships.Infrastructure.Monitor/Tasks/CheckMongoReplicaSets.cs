@@ -19,7 +19,7 @@
         {
             _mongoAdminClient = mongoAdminClient;
             _logger = logger;
-            _expectedMongoReplicaSetCount = configurationService.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName).ExpectedMongoReplicaSetCount;
+            _expectedMongoReplicaSetCount = configurationService.Get<MonitorConfiguration>().ExpectedMongoReplicaSetCount;
         }
 
         public string TaskName

@@ -7,7 +7,6 @@
     {
         public AzureCommonConsoleRegistry()
         {
-            For<IAzureCloudConfig>().Singleton().Use<AzureConsoleCloudConfig>();
             For<IAzureCloudClient>().Use<AzureCloudClient>();
         }
     }

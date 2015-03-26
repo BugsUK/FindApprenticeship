@@ -13,7 +13,7 @@
     [TestFixture]
     public class SendGridConfigurationTests
     {
-        private SendGridConfiguration _sendGridConfiguration = null;
+        private EmailConfiguration _sendGridConfiguration = null;
         [SetUp]
         public void SetUp()
         {
@@ -26,7 +26,7 @@
 
             _sendGridConfiguration =
                 container.GetInstance<IConfigurationService>()
-                    .Get<SendGridConfiguration>(SendGridConfiguration.EmailConfigurationName);
+                    .Get<EmailConfiguration>();
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]

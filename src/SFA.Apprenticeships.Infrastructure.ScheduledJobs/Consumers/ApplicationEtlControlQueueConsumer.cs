@@ -19,7 +19,7 @@
             IApplicationStatusProcessor applicationStatusProcessor, ILogService logger)
             : base(messageService, logger, "Application ETL", ScheduledJobQueues.ApplicationEtl)
         {
-            _applicationStatusExtractWindow = configurationService.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName).ApplicationStatusExtractWindow;
+            _applicationStatusExtractWindow = configurationService.Get<ProcessConfiguration>().ApplicationStatusExtractWindow;
             _applicationStatusProcessor = applicationStatusProcessor;
         }
 

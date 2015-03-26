@@ -31,7 +31,7 @@
                 x.AddRegistry<CommonRegistry>();
             });
 
-            var commsConfig = container.GetInstance<CommunicationConfiguration>(CommunicationConfiguration.ConfigurationName);
+            var commsConfig = container.GetInstance<CommunicationConfiguration>();
 
             For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(commsConfig.EmailDispatcher);
             For<SmsRequestConsumerAsync>().Use<SmsRequestConsumerAsync>().Ctor<ISmsDispatcher>().Named(commsConfig.SmsDispatcher);

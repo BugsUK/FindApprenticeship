@@ -21,7 +21,7 @@
     {
         private readonly ILogService _logger;
         private readonly MonitorConfiguration _monitorConfiguration;
-        private readonly ElasticsearchConfiguration _logstashConfiguration;
+        private readonly LogstashConfiguration _logstashConfiguration;
 
         public class DynamicJsonDeserializer : IDeserializer
         {
@@ -37,8 +37,8 @@
 
         public CheckLogstashLogs(IConfigurationService configurationService, ILogService logger)
         {
-            _monitorConfiguration = configurationService.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
-            _logstashConfiguration = configurationService.Get<ElasticsearchConfiguration>(ElasticsearchConfiguration.LogstashConfigurationName);
+            _monitorConfiguration = configurationService.Get<MonitorConfiguration>();
+            _logstashConfiguration = configurationService.Get<LogstashConfiguration>();
             _logger = logger;
         }
 

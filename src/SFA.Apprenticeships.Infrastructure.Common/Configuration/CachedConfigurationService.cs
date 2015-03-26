@@ -15,9 +15,14 @@
             _cacheService = cacheService;
         }
 
-        public TSettings Get<TSettings>(string settingName) where TSettings : class
+        public TSettings Get<TSettings>() where TSettings : class
         {
-            return _cacheService.Get(ConfigurationCacheKey, _configurationService.Get<TSettings>, settingName);
+            return _cacheService.Get(ConfigurationCacheKey, GetFromBase<TSettings>, typeof(TSettings).Name);
+        }
+
+        private TSettings GetFromBase<TSettings>(string configurationSectionName) where TSettings : class
+        {
+            return _configurationService.Get<TSettings>();
         }
     }
 }

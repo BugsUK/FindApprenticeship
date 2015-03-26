@@ -32,7 +32,7 @@
 
                 if (monitorScheduleMessage != null)
                 {
-                    var monitorConfig = _configurationService.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
+                    var monitorConfig = _configurationService.Get<MonitorConfiguration>();
                     if (monitorConfig != null && monitorConfig.IsDailyMetricsEnabled)
                     {
                         _dailyMetricsTasksRunner.RunDailyMetricsTasks();

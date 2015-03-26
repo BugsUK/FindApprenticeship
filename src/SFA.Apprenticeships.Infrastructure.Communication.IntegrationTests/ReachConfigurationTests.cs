@@ -13,7 +13,7 @@
     [TestFixture]
     public class ReachConfigurationTests
     {
-        private ReachSmsConfiguration _smsConfiguration = null;
+        private SmsConfiguration _smsConfiguration = null;
         [SetUp]
         public void SetUp()
         {
@@ -26,7 +26,7 @@
 
             _smsConfiguration =
                 container.GetInstance<IConfigurationService>()
-                    .Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName);
+                    .Get<SmsConfiguration>();
         }
 
         [Test, Category("Integration"), Category("SmokeTests")]

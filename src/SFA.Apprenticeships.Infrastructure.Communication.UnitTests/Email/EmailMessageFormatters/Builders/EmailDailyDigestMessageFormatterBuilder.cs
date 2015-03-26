@@ -12,7 +12,7 @@
         public EmailDailyDigestMessageFormatterBuilder()
         {
             _configurationService = new Mock<IConfigurationService>();
-            _configurationService.Setup(cm => cm.Get<CommunicationConfiguration>(CommunicationConfiguration.ConfigurationName)).Returns(new CommunicationConfiguration(){SiteDomainName = "test.findapprenticeship.service.gov.uk"});
+            _configurationService.Setup(cm => cm.Get<CommunicationConfiguration>()).Returns(new CommunicationConfiguration(){SiteDomainName = "test.findapprenticeship.service.gov.uk"});
         }
 
         public EmailDailyDigestMessageFormatter Build()

@@ -29,7 +29,7 @@
             UserDataProvider = new Mock<IUserDataProvider>();
             AuthenticationTicketService = new Mock<IAuthenticationTicketService>();
             ConfigurationService = new Mock<IConfigurationService>();
-            ConfigurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+            ConfigurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration() {TermsAndConditionsVersion = "Version 1"});
             Logger = new Mock<ILogService>();
         }

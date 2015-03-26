@@ -27,8 +27,8 @@
         public SmsDailyDigestMessageFormatter Build()
         {
             var configService = new Mock<IConfigurationService>();
-            configService.Setup(x => x.Get<ReachSmsConfiguration>(ReachSmsConfiguration.SmsConfigurationName))
-                .Returns(new ReachSmsConfiguration() {Templates = _templates});
+            configService.Setup(x => x.Get<SmsConfiguration>())
+                .Returns(new SmsConfiguration() {Templates = _templates});
 
             return new SmsDailyDigestMessageFormatter(configService.Object);
         }

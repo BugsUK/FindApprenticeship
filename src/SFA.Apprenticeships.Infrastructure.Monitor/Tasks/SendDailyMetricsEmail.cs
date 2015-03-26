@@ -54,9 +54,8 @@
             _savedSearchesMetricsRepository = savedSearchesMetricsRepository;
             _candidateMetricsRepository = candidateMetricsRepository;
 
-            var monitorConfig = configurationManager.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
-            _validNumberOfDaysSinceUserActivity = monitorConfig.ValidNumberOfDaysSinceUserActivity;
-            _monitorConfiguration = configurationManager.Get<MonitorConfiguration>(MonitorConfiguration.ConfigurationName);
+            _monitorConfiguration = configurationManager.Get<MonitorConfiguration>();
+            _validNumberOfDaysSinceUserActivity = _monitorConfiguration.ValidNumberOfDaysSinceUserActivity;
         }
 
         public string TaskName

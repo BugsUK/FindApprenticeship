@@ -21,7 +21,7 @@
         public ReferenceDataProvider(IWcfService<IReferenceData> service, IConfigurationService configurationService, ILogService logger)
         {
             _service = service;
-            _legacyServicesConfiguration = configurationService.Get<LegacyServicesConfiguration>(LegacyServicesConfiguration.ConfigurationName);
+            _legacyServicesConfiguration = configurationService.Get<LegacyServicesConfiguration>();
             _logger = logger;
         }
 

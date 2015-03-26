@@ -98,7 +98,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategie
 
         public AuthenticateCandidateStrategy Build()
         {
-            _configService.Setup(cm => cm.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName))
+            _configService.Setup(cm => cm.Get<UserAccountConfiguration>())
                 .Returns(new UserAccountConfiguration() {MaximumPasswordAttemptsAllowed = MaximumLoginAttemptsAllowed});
 
             var user = GetAnActiveUserWithSomeLoginIncorrectAttempt(CurrentLoginAttemptsDone);

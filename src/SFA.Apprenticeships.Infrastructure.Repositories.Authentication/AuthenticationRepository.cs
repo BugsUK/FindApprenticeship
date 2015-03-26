@@ -19,7 +19,7 @@
 
         public AuthenticationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
-            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.AuthenticationDb, "userCredentials");
             _mapper = mapper;
             _logger = logger;

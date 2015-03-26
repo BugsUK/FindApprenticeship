@@ -253,7 +253,7 @@
         private ITraineeshipSearchMediator GetMediator(ISearchProvider searchProvider, ITraineeshipVacancyProvider traineeshipVacancyProvider)
         {
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+            configurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration() { VacancyResultsPerPage = 5 });
             var userDataProvider = GetUserDataProvider();
 

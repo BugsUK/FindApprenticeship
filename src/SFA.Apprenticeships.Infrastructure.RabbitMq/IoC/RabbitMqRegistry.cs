@@ -23,7 +23,7 @@
         {
             var  customServiceProvider = new CustomServiceProvider();
             var configurationService = context.GetInstance<IConfigurationService>();
-            var rabbitHost = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.ConfigurationName).MessagingHost;
+            var rabbitHost = configurationService.Get<RabbitConfiguration>().MessagingHost;
             var rabbitBus = RabbitHutch.CreateBus(rabbitHost.ConnectionString, customServiceProvider.RegisterCustomServices());
             return rabbitBus;
         }

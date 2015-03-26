@@ -25,7 +25,7 @@
 
         public EmailSavedSearchAlertMessageFormatter(IConfigurationService configurationService)
         {
-            _siteDomainName = configurationService.Get<CommunicationConfiguration>(CommunicationConfiguration.ConfigurationName).SiteDomainName;
+            _siteDomainName = configurationService.Get<CommunicationConfiguration>().SiteDomainName;
         }
 
         public override void PopulateMessage(EmailRequest request, ISendGrid message)

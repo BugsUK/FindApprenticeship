@@ -100,7 +100,7 @@
                 x.AddRegistry<CommonRegistry>();
             });
             var configurationService = settingsContainer.GetInstance<IConfigurationService>();
-            var codeGenerator = configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).CodeGenerator;
+            var codeGenerator = configurationService.Get<WebConfiguration>().CodeGenerator;
 
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
             For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();

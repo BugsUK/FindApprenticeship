@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common
 {
     using System;
+    using Domain.Interfaces.Configuration;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Queue;
     using Configuration;
@@ -9,9 +10,10 @@
     {
         private readonly CloudQueueClient _cloudQueueClient;
 
-        public AzureCloudClient(IAzureCloudConfig cloudConfig)
+        public AzureCloudClient(IConfigurationService configurationService)
         {
-            var cloudStorageAccount = CloudStorageAccount.Parse(cloudConfig.StorageConnectionString);
+            var connectionString = configurationService.Get<AzureConfiguration>().StorageConnectionString;
+            var cloudStorageAccount = CloudStorageAccount.Parse(connectionString);
             _cloudQueueClient = cloudStorageAccount.CreateCloudQueueClient();
         }
 

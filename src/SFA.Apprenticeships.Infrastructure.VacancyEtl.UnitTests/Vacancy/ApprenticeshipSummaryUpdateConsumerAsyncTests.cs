@@ -32,7 +32,7 @@
             _vacancyIndexer.ResetCalls();
             _logService.ResetCalls();
             _vacancySummaryProcessor.ResetCalls();
-            _configurationService.Setup(x => x.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName))
+            _configurationService.Setup(x => x.Get<ProcessConfiguration>())
                 .Returns(new ProcessConfiguration { VacancyAboutToExpireNotificationHours = VacancyAboutToExpireNotificationHours });
         }
 

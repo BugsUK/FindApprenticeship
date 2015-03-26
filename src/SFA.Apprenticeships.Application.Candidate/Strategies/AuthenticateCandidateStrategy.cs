@@ -31,7 +31,7 @@
             _userReadRepository = userReadRepository;
             _candidateReadRepository = candidateReadRepository;
             _lockAccountStrategy = lockAccountStrategy;
-            _maximumPasswordAttemptsAllowed = configService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).MaximumPasswordAttemptsAllowed;
+            _maximumPasswordAttemptsAllowed = configService.Get<UserAccountConfiguration>().MaximumPasswordAttemptsAllowed;
         }
 
         public Candidate AuthenticateCandidate(string username, string password)

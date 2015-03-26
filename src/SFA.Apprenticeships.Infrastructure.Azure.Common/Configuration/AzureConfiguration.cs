@@ -2,8 +2,6 @@
 {
     public class AzureConfiguration
     {
-        public const string ConfigurationName = "AzureConfiguration";
-
         public string StorageConnectionString { get; set; }
     }
 }

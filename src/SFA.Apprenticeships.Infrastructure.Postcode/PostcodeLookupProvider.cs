@@ -18,7 +18,7 @@
 
         public PostcodeLookupProvider(IConfigurationService configurationService, ILogService logger)
         {
-            var config = configurationService.Get<PostcodeConfiguration>(PostcodeConfiguration.PostcodeConfigurationName);
+            var config = configurationService.Get<PostcodeConfiguration>();
             BaseUrl = new Uri(config.ServiceEndpoint);
             _logger = logger;
         }

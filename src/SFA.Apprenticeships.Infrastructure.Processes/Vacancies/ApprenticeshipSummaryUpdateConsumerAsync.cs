@@ -26,7 +26,7 @@
             IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> vacancyIndexerService,
             IVacancySummaryProcessor vacancySummaryProcessor, IReferenceDataService referenceDataService, ILogService logService)
         {
-            _vacancyAboutToExpireThreshold = configurationService.Get<ProcessConfiguration>(ProcessConfiguration.ConfigurationName).VacancyAboutToExpireNotificationHours;
+            _vacancyAboutToExpireThreshold = configurationService.Get<ProcessConfiguration>().VacancyAboutToExpireNotificationHours;
             _vacancyIndexerService = vacancyIndexerService;
             _vacancySummaryProcessor = vacancySummaryProcessor;
             _referenceDataService = referenceDataService;

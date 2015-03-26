@@ -46,7 +46,7 @@
                 settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
                 settings.AllowSmsComms = candidate.CommunicationPreferences.AllowMobile;
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
-                settings.SmsEnabled = _configurationService.Get<WebConfiguration>(WebConfiguration.ConfigurationName).Features.SmsEnabled;
+                settings.SmsEnabled = _configurationService.Get<WebConfiguration>().Features.SmsEnabled;
 
                 settings.SendApplicationSubmitted = candidate.CommunicationPreferences.SendApplicationSubmitted;
                 settings.SendApplicationStatusChanges = candidate.CommunicationPreferences.SendApplicationStatusChanges;

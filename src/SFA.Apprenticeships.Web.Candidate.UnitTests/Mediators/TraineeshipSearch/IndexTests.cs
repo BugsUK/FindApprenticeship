@@ -40,7 +40,7 @@
         {
             var configurationService = new Mock<IConfigurationService>();
 
-            configurationService.Setup(cm => cm.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+            configurationService.Setup(cm => cm.Get<WebConfiguration>())
                 .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
 
             var searchProvider = new Mock<ISearchProvider>();

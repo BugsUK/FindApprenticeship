@@ -118,9 +118,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
         {
             get
             {
-                return
-                    _configurationService.Get<CommunicationConfiguration>(CommunicationConfiguration.ConfigurationName)
-                        .IsEnabled;
+                return _configurationService.Get<CommunicationConfiguration>().IsEnabled;
             }
         }
 

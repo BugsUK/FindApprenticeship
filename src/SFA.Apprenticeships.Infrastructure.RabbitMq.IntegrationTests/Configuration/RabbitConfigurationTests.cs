@@ -17,7 +17,7 @@
             var mockLogger = new Mock<ILogService>();
             var configurationService = new ConfigurationService(new ConfigurationManager(), mockLogger.Object);
 
-            var rabbitConfig = configurationService.Get<RabbitConfiguration>(RabbitConfiguration.ConfigurationName);
+            var rabbitConfig = configurationService.Get<RabbitConfiguration>();
 
             rabbitConfig.MessagingHost.Should().NotBeNull();
             rabbitConfig.LoggingHost.Should().NotBeNull();

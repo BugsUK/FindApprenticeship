@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         {
             _userWriteRepository = userWriteRepository;
             _userReadRepository = userReadRepository;
-            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>(UserAccountConfiguration.ConfigurationName).ActivationCodeExpiryDays;
+            _activationCodeExpiryDays = configurationService.Get<UserAccountConfiguration>().ActivationCodeExpiryDays;
         }
 
         public void Register(string username, Guid userId, string activationCode, UserRoles roles)

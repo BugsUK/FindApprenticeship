@@ -43,7 +43,7 @@
             if (_configurationService == null)
             {
                 _configurationService = new Mock<IConfigurationService>();
-                _configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+                _configurationService.Setup(x => x.Get<WebConfiguration>())
                     .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             }
 

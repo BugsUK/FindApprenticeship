@@ -209,7 +209,7 @@
 
             const string returnUrl = "/allowedasolutoepath";
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<WebConfiguration>(WebConfiguration.ConfigurationName))
+            configurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration() {TermsAndConditionsVersion = "2", VacancyResultsPerPage = 5});
             var userDataProvider = new Mock<IUserDataProvider>();
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
