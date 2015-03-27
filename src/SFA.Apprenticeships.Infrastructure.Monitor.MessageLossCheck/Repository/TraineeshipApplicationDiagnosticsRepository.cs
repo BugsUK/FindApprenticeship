@@ -25,7 +25,7 @@
 
         public TraineeshipApplicationDiagnosticsRepository(IConfigurationService configurationService, IMapper mapper, ICandidateReadRepository candidateReadRepository, ILogService logger)
         {
-            var config = configurationService.Get<MongoConfiguration>(MongoConfiguration.MongoConfigurationName);
+            var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.ApplicationsDb, "traineeships");
             _mapper = mapper;
             _candidateReadRepository = candidateReadRepository;
