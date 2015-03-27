@@ -718,6 +718,7 @@
     <Compile Include="Constants\CandidateRouteNames.cs" />
     <Compile Include="Constants\Pages\ApplicationPageMessages.cs" />
     <Compile Include="Constants\Pages\AccountPageMessages.cs" />
+    <Compile Include="Constants\Pages\PrivacyPageMessages.cs" />
     <Compile Include="Constants\Pages\RegisterPageMessages.cs" />
     <Compile Include="Constants\Pages\PasswordResetPageMessages.cs" />
     <Compile Include="Constants\Pages\ActivationPageMessages.cs" />

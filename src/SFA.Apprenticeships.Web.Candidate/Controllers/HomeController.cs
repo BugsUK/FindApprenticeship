@@ -1,10 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Threading.Tasks;
+    using System.Web;
     using System.Web.Mvc;
     using Attributes;
+    using Common.Constants;
     using Common.Framework;
     using Constants;
+    using Constants.Pages;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Home;
@@ -30,6 +34,18 @@
         public async Task<ActionResult> Privacy()
         {
             return await Task.Run<ActionResult>(() => View());
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.None)]
+        public async Task<ActionResult> WebTrendsOptOut()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var webTrendsOptOutCookie = new HttpCookie("WTLOPTOUT", "yes") {Expires = DateTime.UtcNow.AddYears(5)};
+                HttpContext.Response.Cookies.Add(webTrendsOptOutCookie);
+                SetUserMessage(PrivacyPageMessages.WebTrendsOptOutSuccessful);
+                return View("Privacy");
+            });
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]

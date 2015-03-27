@@ -151,10 +151,19 @@ WriteLiteral(@">Webtrends analytics cookie</h2>
         <li>how you got to the service</li>
         <li>what you click on while you’re using the service</li>
     </ul>
-    <p>Webtrends isn’t allowed to use or share our analytics data with anyone.</p>
-    <table>
-        <colgroup>
-            <col");
+    <p>Webtrends isn’t allowed to use or share our analytics data with anyone, but you can <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 2748), Tuple.Create("\"", 2785)
+            
+            #line 52 "..\..\Views\Home\Privacy.cshtml"
+                    , Tuple.Create(Tuple.Create("", 2755), Tuple.Create<System.Object, System.Int32>(Url.Action("WebTrendsOptOut")
+            
+            #line default
+            #line hidden
+, 2755), false)
+);
+
+WriteLiteral(">opt out</a> if you wish.</p>\r\n    <table>\r\n        <colgroup>\r\n            <col");
 
 WriteLiteral(" class=\"t20\"");
 
@@ -213,6 +222,17 @@ WriteLiteral(@" />
             </td>
             <td>
                 10 years
+            </td>
+        </tr>
+        <tr>
+            <td>
+                WTLOPTOUT
+            </td>
+            <td>
+                Specifies that you have opted out of Webtrends analytics collection
+            </td>
+            <td>
+               5 years
             </td>
         </tr>
     </table>
