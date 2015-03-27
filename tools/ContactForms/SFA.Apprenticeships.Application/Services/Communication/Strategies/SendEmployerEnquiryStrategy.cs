@@ -32,7 +32,7 @@
 
                 var request = new EmailRequest
                 {
-                    ToEmail = BaseAppSettingValues.ToEmailAddress,
+                    ToEmail = BaseAppSettingValues.EmployerEnquiryToEmailAddress,
                     MessageType = messageType,
                     Tokens = tokens,
                     StreamedAttachmentName = xmlAttachmentName//generate XML and attach to the email

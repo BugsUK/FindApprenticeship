@@ -94,7 +94,7 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
         {
             if (string.IsNullOrEmpty(toEmail))
             {
-                throw new CustomException("ToEmailAddress key is blank");
+                throw new CustomException("EmployerEnquiryToEmailAddress key is blank");
             }
 
             string[] toEmailArray = toEmail.Split(Constants.EmailSeparator);

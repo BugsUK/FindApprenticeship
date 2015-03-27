@@ -6,7 +6,8 @@
         public const string IsReferenceDataFileInDataDirectory = "IsReferenceDataFileInDataDirectory";
         public const string FromMailAddress = "FromMailAddress";
         public const string FromName = "FromName";
-        public const string ToEmailAddress = "ToEmailAddress";
+        public const string EmployerEnquiryToEmailAddress = "EmployerEnquiryToEmailAddress";
+        public const string AccessRequestToEmailAddress = "AccessRequestToEmailAddress";
         public const string NetworkUsername = "NetworkUsername";
         public const string NetworkPassword = "NetworkPassword";
         public const string IsDemoModeEnabled = "IsDemoModeEnabled";

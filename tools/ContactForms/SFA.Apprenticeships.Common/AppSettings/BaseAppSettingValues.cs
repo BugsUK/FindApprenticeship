@@ -10,7 +10,8 @@
         public static string EmailDispatcher = AppConfiguration.GetValue(BaseAppSettingKeys.EmailDispatcher) ?? "VoidEmailDispatcher"; //default configured to VoidEmailDispatcher
         public static string NetworkUsername = AppConfiguration.GetValue(BaseAppSettingKeys.NetworkUsername) ?? string.Empty;
         public static string NetworkPassword = AppConfiguration.GetValue(BaseAppSettingKeys.NetworkPassword) ?? string.Empty;
-        public static string ToEmailAddress = AppConfiguration.GetValue(BaseAppSettingKeys.ToEmailAddress) ?? string.Empty;
+        public static string EmployerEnquiryToEmailAddress = AppConfiguration.GetValue(BaseAppSettingKeys.EmployerEnquiryToEmailAddress) ?? string.Empty;
+        public static string AccessRequestToEmailAddress = AppConfiguration.GetValue(BaseAppSettingKeys.AccessRequestToEmailAddress) ?? string.Empty;
         public static string FromMailAddress = AppConfiguration.GetValue(BaseAppSettingKeys.FromMailAddress) ?? string.Empty;
         public static string FromName = AppConfiguration.GetValue(BaseAppSettingKeys.FromName) ?? string.Empty;
         

@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
 
                 var request = new EmailRequest
                 {
-                    ToEmail = BaseAppSettingValues.ToEmailAddress,
+                    ToEmail = BaseAppSettingValues.AccessRequestToEmailAddress,
                     MessageType = messageType,
                     Tokens = tokens,
                     //todo: enable this once we receive xml template for access request

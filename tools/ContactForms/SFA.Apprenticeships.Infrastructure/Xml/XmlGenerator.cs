@@ -87,6 +87,10 @@ namespace SFA.Apprenticeships.Infrastructure.Xml
                         xElementName = "Title";
                         xElement.Element("PrimaryContactName").Element(xElementName).Value = tokenValue;
                         break;
+                    case CommunicationTokens.UserType:
+                        xElementName = "UserType";
+                        xElement.Element(xElementName).Value = tokenValue;
+                        break;
                     case CommunicationTokens.Firstname:
                         xElementName = "Firstname";
                         xElement.Element("PrimaryContactName").Element(xElementName).Value = tokenValue;

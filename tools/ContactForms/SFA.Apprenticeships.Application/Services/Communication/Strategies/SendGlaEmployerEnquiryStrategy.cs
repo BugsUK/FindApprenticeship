@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
 
                 var request = new EmailRequest
                 {
-                    ToEmail = BaseAppSettingValues.ToEmailAddress,
+                    ToEmail = BaseAppSettingValues.EmployerEnquiryToEmailAddress,
                     Subject = "From GLA",
                     MessageType = messageType,
                     Tokens = tokens,
