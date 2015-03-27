@@ -26,6 +26,8 @@
             _cacheServiceMock = new Mock<ICacheService>();
             _applicationStatusProcessor = new Mock<IApplicationStatusProcessor>();
             _configurationServiceMock = new Mock<IConfigurationService>();
+            _configurationServiceMock.Setup(x => x.Get<ProcessConfiguration>())
+                .Returns(new ProcessConfiguration() {EnableVacancyStatusPropagation = true});
             _vacancyStatusSummaryConsumerAsync = new VacancyStatusSummaryConsumerAsync(_cacheServiceMock.Object, _applicationStatusProcessor.Object, _configurationServiceMock.Object);
         }
 

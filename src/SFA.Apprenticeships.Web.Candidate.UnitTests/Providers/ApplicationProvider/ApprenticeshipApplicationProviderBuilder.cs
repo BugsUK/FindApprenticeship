@@ -4,6 +4,7 @@
     using Application.Interfaces.Logging;
     using Candidate.Mappers;
     using Candidate.Providers;
+    using Common.Configuration;
     using Domain.Interfaces.Configuration;
     using Moq;
 
@@ -28,6 +29,7 @@
 
         public ApprenticeshipApplicationProvider Build()
         {
+            _configurationService.Setup(x => x.Get<WebConfiguration>()).Returns(new WebConfiguration());
             return new ApprenticeshipApplicationProvider(_apprenticeshipVacancyProvider.Object, _candidateService.Object, new ApprenticeshipCandidateWebMappers(), _configurationService.Object, _logService.Object);
         }
     }
