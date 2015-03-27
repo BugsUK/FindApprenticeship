@@ -17,7 +17,6 @@
         private bool _showTraineeshipsPrompt;
         private bool _smsEnabled;
 
-        private bool _sendApplicationSubmitted;
         private bool _sendApplicationStatusChanges;
         private bool _sendApprenticeshipApplicationsExpiring;
         private bool _sendMarketingComms;
@@ -81,12 +80,6 @@
             return this;
         }
 
-        public SettingsViewModelBuilder SendApplicationSubmitted(bool sendApplicationSubmitted)
-        {
-            _sendApplicationSubmitted = sendApplicationSubmitted;
-            return this;
-        }
-
         public SettingsViewModelBuilder SendApplicationStatusChanges(bool sendApplicationStatusChanges)
         {
             _sendApplicationStatusChanges = sendApplicationStatusChanges;
@@ -146,7 +139,6 @@
                 },
                 SmsEnabled = _smsEnabled,
 
-                SendApplicationSubmitted = _sendApplicationSubmitted,
                 SendApplicationStatusChanges = _sendApplicationStatusChanges,
                 SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
                 SendMarketingCommunications = _sendMarketingComms,

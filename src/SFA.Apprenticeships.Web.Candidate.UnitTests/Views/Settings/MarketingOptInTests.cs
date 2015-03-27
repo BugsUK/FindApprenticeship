@@ -7,12 +7,11 @@
     [TestFixture]
     public class MarketingOptInTests
     {
-        [TestCase(false, false, false, false)]
-        [TestCase(true, true, true, true)]
-        [TestCase(true, false, true, true)]
-        [TestCase(false, true, false, false)]
+        [TestCase(false, false, false)]
+        [TestCase(true, true, true)]
+        [TestCase(false, true, true)]
+        [TestCase(true, false, false)]
         public void US519_AC2_AC3_MarketingPreferences(
-            bool sendApplicationSubmitted,
             bool sendApplicationStatusChanges,
             bool sendApprenticeshipApplicationsExpiring,
             bool sendMarketingCommunications
@@ -20,7 +19,6 @@
         {
             var viewModel = new SettingsViewModelBuilder()
                 .SmsEnabled(true)
-                .SendApplicationSubmitted(sendApplicationSubmitted)
                 .SendApplicationStatusChanges(sendApplicationStatusChanges)
                 .SendApprenticeshipApplicationsExpiring(sendApprenticeshipApplicationsExpiring)
                 .SendMarketingComms(sendMarketingCommunications)
@@ -28,29 +26,17 @@
 
             var result = new SettingsViewBuilder().With(viewModel).Render();
 
-            var sendApplicationSubmittedCheckBox = result.GetElementbyId("SendApplicationSubmitted");
             var sendApplicationStatusChangesCheckBox = result.GetElementbyId("SendApplicationStatusChanges");
             var sendApprenticeshipApplicationsExpiringCheckBox = result.GetElementbyId("SendApprenticeshipApplicationsExpiring");
             var sendMarketingCommsCheckBox = result.GetElementbyId("SendMarketingCommunications");
 
-            sendApplicationSubmittedCheckBox.Should().NotBeNull();
             sendApplicationStatusChangesCheckBox.Should().NotBeNull();
             sendApprenticeshipApplicationsExpiringCheckBox.Should().NotBeNull();
             sendMarketingCommsCheckBox.Should().NotBeNull();
 
-            sendApplicationSubmittedCheckBox.ParentNode.InnerText.Should().Be("you submit an application form");
             sendApplicationStatusChangesCheckBox.ParentNode.InnerText.Should().Be("the status of one of your applications changes");
             sendApprenticeshipApplicationsExpiringCheckBox.ParentNode.InnerText.Should().Be("an apprenticeship is approaching its closing date");
             sendMarketingCommsCheckBox.ParentNode.InnerText.Should().Be("we send you updates on news and information");
-
-            if (sendApplicationSubmitted)
-            {
-                sendApplicationSubmittedCheckBox.Attributes["checked"].Should().NotBeNull();
-            }
-            else
-            {
-                sendApplicationSubmittedCheckBox.Attributes["checked"].Should().BeNull();
-            }
 
             if (sendApplicationStatusChanges)
             {

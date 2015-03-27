@@ -48,7 +48,6 @@
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
                 settings.SmsEnabled = _configurationService.Get<WebConfiguration>().Features.SmsEnabled;
 
-                settings.SendApplicationSubmitted = candidate.CommunicationPreferences.SendApplicationSubmitted;
                 settings.SendApplicationStatusChanges = candidate.CommunicationPreferences.SendApplicationStatusChanges;
                 settings.SendApprenticeshipApplicationsExpiring = candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring;
                 settings.SendMarketingCommunications = candidate.CommunicationPreferences.SendMarketingCommunications;
@@ -88,7 +87,6 @@
                     candidate.CommunicationPreferences.VerifiedMobile = false;
                 }
 
-                candidate.CommunicationPreferences.SendApplicationSubmitted = model.SendApplicationSubmitted;
                 candidate.CommunicationPreferences.SendApplicationStatusChanges = model.SendApplicationStatusChanges;
                 candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring = model.SendApprenticeshipApplicationsExpiring;
                 candidate.CommunicationPreferences.SendMarketingCommunications = model.SendMarketingCommunications;

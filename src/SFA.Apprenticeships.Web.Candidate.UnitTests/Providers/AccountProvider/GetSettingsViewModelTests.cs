@@ -42,15 +42,14 @@
             viewModel.AllowSmsComms.Should().Be(allowSmsComms);
         }
 
-        [TestCase(false, false, false, false, false)]
-        [TestCase(true, true, true, true, true)]
-        [TestCase(false, true, false, true, false)]
-        [TestCase(true, false, true, false, true)]
-        public void TestMarketingMappings(bool sendApplicationSubmitted, bool sendApplicationStatusChanges, bool sendApprenticeshipApplicationsExpiring, bool sendSavedSearchAlertsViaEmail, bool sendMarketingCommunications)
+        [TestCase(false, false, false, false)]
+        [TestCase(true, true, true, true)]
+        [TestCase(true, false, true, false)]
+        [TestCase(false, true, false, true)]
+        public void TestMarketingMappings(bool sendApplicationStatusChanges, bool sendApprenticeshipApplicationsExpiring, bool sendSavedSearchAlertsViaEmail, bool sendMarketingCommunications)
         {
             var candidateId = Guid.NewGuid();
             var candidate = new CandidateBuilder(candidateId)
-                .SendApplicationSubmitted(sendApplicationSubmitted)
                 .SendApplicationStatusChanges(sendApplicationStatusChanges)
                 .SendApprenticeshipApplicationsExpiring(sendApprenticeshipApplicationsExpiring)
                 .SendSavedSearchAlerts(sendSavedSearchAlertsViaEmail)
@@ -63,7 +62,6 @@
             var viewModel = provider.GetSettingsViewModel(candidateId);
 
             viewModel.Should().NotBeNull();
-            viewModel.SendApplicationSubmitted.Should().Be(sendApplicationSubmitted);
             viewModel.SendApplicationStatusChanges.Should().Be(sendApplicationStatusChanges);
             viewModel.SendApprenticeshipApplicationsExpiring.Should().Be(sendApprenticeshipApplicationsExpiring);
             viewModel.SendMarketingCommunications.Should().Be(sendMarketingCommunications);

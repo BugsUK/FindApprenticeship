@@ -44,9 +44,6 @@
 
         public bool SmsEnabled { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.SubmitApplicationForm.LabelText)]
-        public bool SendApplicationSubmitted { get; set; }
-
         [Display(Name = SettingsViewModelMessages.ApplicationStatusChange.LabelText)]
         public bool SendApplicationStatusChanges { get; set; }
 

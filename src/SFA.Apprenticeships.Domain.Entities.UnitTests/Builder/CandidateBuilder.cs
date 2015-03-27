@@ -16,7 +16,6 @@
         private bool _verifiedMobile;
         private bool _allowTraineeshipPrompts;
 
-        private bool _sendApplicationSubmitted;
         private bool _sendApplicationStatusChanges;
         private bool _sendApprenticeshipApplicationsExpiring;
         private bool _sendSavedSearchAlertsViaEmail;
@@ -76,12 +75,6 @@
             return this;
         }
 
-        public CandidateBuilder SendApplicationSubmitted(bool sendApplicationSubmitted)
-        {
-            _sendApplicationSubmitted = sendApplicationSubmitted;
-            return this;
-        }
-
         public CandidateBuilder SendApplicationStatusChanges(bool sendApplicationStatusChanges)
         {
             _sendApplicationStatusChanges = sendApplicationStatusChanges;
@@ -124,7 +117,6 @@
             AllowEmail(allow);
             AllowMobile(allow);
             VerifiedMobile(allow);
-            SendApplicationSubmitted(allow);
             SendApplicationStatusChanges(allow);
             SendApprenticeshipApplicationsExpiring(allow);
             SendSavedSearchAlerts(allow);
@@ -151,7 +143,6 @@
                     MobileVerificationCode = _mobileVerificationCode,
                     AllowTraineeshipPrompts = _allowTraineeshipPrompts,
 
-                    SendApplicationSubmitted = _sendApplicationSubmitted,
                     SendApplicationStatusChanges = _sendApplicationStatusChanges,
                     SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
                     SendSavedSearchAlertsViaEmail = _sendSavedSearchAlertsViaEmail,

@@ -52,9 +52,8 @@
 
                 case MessageTypes.ApprenticeshipApplicationSubmitted:
                 case MessageTypes.TraineeshipApplicationSubmitted:
-                    // Application submitted notifications may be sent via email and SMS, candidate can opt out.
-                    return candidateAllowsCommunicationsViaChannel &&
-                           communicationPreferences.SendApplicationSubmitted;
+                    // Application submitted notifications are sent via email only and candidate cannot opt out.
+                    return communicationChannel == CommunicationChannels.Email;
 
                 case MessageTypes.SavedSearchAlert:
                     // Saved search alerts may be sent via email and SMS, candidate can opt out of each channel separately.

@@ -10,7 +10,6 @@
             MobileVerificationCode = string.Empty;
             AllowTraineeshipPrompts = true;
 
-            SendApplicationSubmitted = true;
             SendApplicationStatusChanges = true;
             SendApprenticeshipApplicationsExpiring = true;
             SendMarketingCommunications = true;
@@ -27,8 +26,6 @@
         public string MobileVerificationCode { get; set; }
 
         public bool AllowTraineeshipPrompts { get; set; }
-
-        public bool SendApplicationSubmitted { get; set; }
 
         public bool SendApplicationStatusChanges { get; set; }
 

@@ -91,7 +91,14 @@
 
             // Assert.
             ShouldQueueEmail(messageType, 1);
-            ShouldQueueSms(messageType, 1);
+            if (messageType == MessageTypes.ApprenticeshipApplicationSubmitted || messageType == MessageTypes.TraineeshipApplicationSubmitted)
+            {
+                ShouldQueueSms(messageType, 0);
+            }
+            else
+            {
+                ShouldQueueSms(messageType, 1);
+            }
         }
 
         [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Inactive)]

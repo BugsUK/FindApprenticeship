@@ -129,8 +129,8 @@
         }
 
         [TestCase(CommunicationChannels.Email, true, true)]
-        [TestCase(CommunicationChannels.Email, false, false)]
-        [TestCase(CommunicationChannels.Sms, true, true)]
+        [TestCase(CommunicationChannels.Email, false, true)]
+        [TestCase(CommunicationChannels.Sms, true, false)]
         [TestCase(CommunicationChannels.Sms, false, false)]
         public void ShouldHonourSendApplicationSubmittedCommunicationPreference(
             CommunicationChannels communicationChannel, bool preference, bool expectedResult)
@@ -138,7 +138,6 @@
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
                 .AllowAllCommunications()
-                .SendApplicationSubmitted(preference)
                 .Build();
 
             // Act.
@@ -225,7 +224,14 @@
                     CommunicationChannels.Sms, messageType);
 
                 // Assert.
-                result.Should().Be(expectedResult);
+                if (messageType == MessageTypes.ApprenticeshipApplicationSubmitted || messageType == MessageTypes.TraineeshipApplicationSubmitted)
+                {
+                    result.Should().Be(false);
+                }
+                else
+                {
+                    result.Should().Be(expectedResult);
+                }
             }
         }
 

@@ -41,11 +41,6 @@
             public const string LabelText = "Text";
         }
 
-        public static class SubmitApplicationForm
-        {
-            public const string LabelText = "you submit an application form";
-        }
-
         public static class ApplicationStatusChange
         {
             public const string LabelText = "the status of one of your applications changes";

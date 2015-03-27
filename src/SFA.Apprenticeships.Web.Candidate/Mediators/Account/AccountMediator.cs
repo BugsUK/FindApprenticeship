@@ -135,7 +135,7 @@
                 if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.YourAccount)
                 {
                     var shouldSendNotifications = settingsViewModel.AllowEmailComms || settingsViewModel.AllowSmsComms;
-                    var anyNotificationEnabled = settingsViewModel.SendApplicationSubmitted || settingsViewModel.SendApplicationStatusChanges || settingsViewModel.SendApprenticeshipApplicationsExpiring || settingsViewModel.SendMarketingCommunications;
+                    var anyNotificationEnabled = settingsViewModel.SendApplicationStatusChanges || settingsViewModel.SendApprenticeshipApplicationsExpiring || settingsViewModel.SendMarketingCommunications;
                     if (shouldSendNotifications && !anyNotificationEnabled)
                     {
                         return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedNotificationsAlertWarning, UserMessageLevel.Info);
