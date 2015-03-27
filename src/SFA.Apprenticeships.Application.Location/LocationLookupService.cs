@@ -70,7 +70,7 @@
             if (location == null)
             {
                 _logger.Debug("Cannot find any match for place name or postcode {0}.", placeName);
-                return null; // no match
+                return new Location[0]; // no match
             }
 
             return new[]
