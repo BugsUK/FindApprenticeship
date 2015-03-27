@@ -47,7 +47,13 @@
 
         private void PopulateCategoriesCodes(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
         {
-            var categories = _referenceDataService.GetCategories().ToArray();
+            var categories = _referenceDataService.GetCategories();
+
+            if (categories == null)
+            {
+                _logService.Error("Reference data service return null categories");
+                return;
+            }
 
             var category = categories.FirstOrDefault(c => c.FullName == vacancySummaryToIndex.Sector);
 

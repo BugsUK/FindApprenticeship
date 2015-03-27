@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Interfaces.Logging;
+    using Domain.Interfaces.Configuration;
     using Elastic.Common.Configuration;
     using Elasticsearch.Net;
     using Nest;
@@ -13,9 +14,9 @@
         private readonly SearchConfiguration _elasticsearchConfiguration;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
-        public CheckElasticsearchCluster(SearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory, ILogService logger)
+        public CheckElasticsearchCluster(IElasticsearchClientFactory elasticsearchClientFactory, ILogService logger, IConfigurationService configurationService)
         {
-            _elasticsearchConfiguration = elasticsearchConfiguration;
+            _elasticsearchConfiguration = configurationService.Get<SearchConfiguration>();
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _logger = logger;
         }

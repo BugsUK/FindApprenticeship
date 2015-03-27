@@ -80,8 +80,8 @@
             {
                 var rabbitQueues = managementClient.GetQueues();
                 var defaultQueueWarningLimit = rabbitConfiguration.DefaultQueueWarningLimit;
-                var queueWarningLimits = rabbitConfiguration.QueueWarningLimits.ToList();
-                var checkedQueueWarningLimits = new List<QueueWarningLimit>(queueWarningLimits.Count);
+                var queueWarningLimits = rabbitConfiguration.QueueWarningLimits == null ? Enumerable.Empty<QueueWarningLimit>() : rabbitConfiguration.QueueWarningLimits.ToList();
+                var checkedQueueWarningLimits = new List<QueueWarningLimit>();
 
                 foreach (var rabbitQueue in rabbitQueues)
                 {
@@ -105,7 +105,7 @@
                     }
                 }
 
-                if (checkedQueueWarningLimits.Count != queueWarningLimits.Count)
+                if (checkedQueueWarningLimits.Count != queueWarningLimits.Count())
                 {
                     var missingQueues = queueWarningLimits.Except(checkedQueueWarningLimits);
                     foreach (var missingQueue in missingQueues)

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain.Interfaces.Configuration;
     using Elastic.Common.Configuration;
     using Nest;
 
@@ -11,9 +12,9 @@
         private readonly SearchConfiguration _elasticsearchConfiguration;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
-        public CheckElasticsearchAliases(SearchConfiguration elasticsearchConfiguration, IElasticsearchClientFactory elasticsearchClientFactory)
+        public CheckElasticsearchAliases(IElasticsearchClientFactory elasticsearchClientFactory, IConfigurationService configurationService)
         {
-            _elasticsearchConfiguration = elasticsearchConfiguration;
+            _elasticsearchConfiguration = configurationService.Get<SearchConfiguration>();
             _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
