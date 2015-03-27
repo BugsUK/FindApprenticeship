@@ -1,11 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
     using System;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using Application.Interfaces.Logging;
+    using Domain.Entities.Locations;
     using Domain.Interfaces.Configuration;
     using MongoDB.Driver;
+    using MongoDB.Driver.Builders;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
@@ -13,6 +17,7 @@
     {
         private readonly IConfigurationManager _configurationManager;
         private readonly ILogService _loggerService;
+        private readonly static string FileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(ConfigurationService)).Location).FileVersion;
 
         public ConfigurationService(IConfigurationManager configurationManager, ILogService loggerService)
         {
@@ -69,12 +74,15 @@
                 var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
                 var database = new MongoClient(mongoConnectionString).GetServer().GetDatabase(mongoDbName);
                 var collection = database.GetCollection("configuration");
-                var settings = collection.FindAll();
+
+                var query = Query.EQ("DeploymentVersion", FileVersion);
+                var settings = collection.Find(query);
 
                 _loggerService.Debug("Loaded confguration from mongo");
 
                 var bson = settings.Single();
                 bson.Remove("_id");
+                bson.Remove("DeploymentVersion");
                 bson.Remove("DateTimeUpdated");
                 return bson.ToString();
             }

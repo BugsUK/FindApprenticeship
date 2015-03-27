@@ -6,7 +6,6 @@
     using Moq;
     using NUnit.Framework;
     using RabbitMq.Configuration;
-    using StructureMap.AutoMocking;
 
     [TestFixture]
     public class RabbitConfigurationTests

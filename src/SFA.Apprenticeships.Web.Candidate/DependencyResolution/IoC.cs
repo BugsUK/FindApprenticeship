@@ -48,8 +48,9 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
             var useCacheSetting = config.TryGetAppSetting("UseCaching");
             bool useCache;
             bool.TryParse(useCacheSetting, out useCache);
+            //if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("RoleRoot"){
 
-            return new Container(delegate(ConfigurationExpression x)
+            return new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
