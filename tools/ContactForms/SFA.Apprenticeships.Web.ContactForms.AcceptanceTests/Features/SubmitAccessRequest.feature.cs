@@ -126,112 +126,101 @@ this.ScenarioSetup(scenarioInfo);
  testRunner.When("I am on UserTypeDropdown list item matching criteria", ((string)(null)), table2, "When ");
 #line 30
  testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 31
+ testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
-                        "Rule",
                         "Value"});
             table3.AddRow(new string[] {
-                        "ValidationFieldErrorCount",
-                        "Equals",
-                        "10"});
-#line 31
- testRunner.Then("I see", ((string)(null)), table3, "Then ");
-#line 34
- testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                        "Firstname",
+                        "FirstnameTest"});
+            table3.AddRow(new string[] {
+                        "Lastname",
+                        "LastnameTest"});
+            table3.AddRow(new string[] {
+                        "Position",
+                        "PositionTest"});
+            table3.AddRow(new string[] {
+                        "EmailAddress",
+                        "helpdesk.sfa@gmail.com"});
+            table3.AddRow(new string[] {
+                        "ConfirmEmailAddress",
+                        "helpdesk.sfa@gmail.com"});
+            table3.AddRow(new string[] {
+                        "WorkPhoneNumber",
+                        "07999999999"});
+#line 32
+ testRunner.And("I enter data", ((string)(null)), table3, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
-                        "Value"});
-            table4.AddRow(new string[] {
-                        "Firstname",
-                        "FirstnameTest"});
-            table4.AddRow(new string[] {
-                        "Lastname",
-                        "LastnameTest"});
-            table4.AddRow(new string[] {
-                        "Position",
-                        "PositionTest"});
-            table4.AddRow(new string[] {
-                        "EmailAddress",
-                        "helpdesk.sfa@gmail.com"});
-            table4.AddRow(new string[] {
-                        "ConfirmEmailAddress",
-                        "helpdesk.sfa@gmail.com"});
-            table4.AddRow(new string[] {
-                        "WorkPhoneNumber",
-                        "07999999999"});
-#line 35
- testRunner.And("I enter data", ((string)(null)), table4, "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
                         "Rule",
                         "Value"});
-            table5.AddRow(new string[] {
+            table4.AddRow(new string[] {
                         "ValidationFieldErrorCount",
                         "Equals",
                         "4"});
+#line 40
+ testRunner.Then("I see", ((string)(null)), table4, "Then ");
 #line 43
- testRunner.Then("I see", ((string)(null)), table5, "Then ");
-#line 46
  testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Value"});
+            table5.AddRow(new string[] {
+                        "Companyname",
+                        "CompanynameTest"});
+            table5.AddRow(new string[] {
+                        "AddressLine1",
+                        "1, Oxford street"});
+            table5.AddRow(new string[] {
+                        "City",
+                        "London"});
+            table5.AddRow(new string[] {
+                        "Postcode",
+                        "tw5 0by"});
+#line 44
+ testRunner.And("I enter data", ((string)(null)), table5, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
+                        "Rule",
                         "Value"});
             table6.AddRow(new string[] {
-                        "Companyname",
-                        "CompanynameTest"});
-            table6.AddRow(new string[] {
-                        "AddressLine1",
-                        "1, Oxford street"});
-            table6.AddRow(new string[] {
-                        "City",
-                        "London"});
-            table6.AddRow(new string[] {
-                        "Postcode",
-                        "tw5 0by"});
-#line 47
- testRunner.And("I enter data", ((string)(null)), table6, "And ");
+                        "ValidationFieldErrorCount",
+                        "Equals",
+                        "0"});
+#line 50
+ testRunner.Then("I see", ((string)(null)), table6, "Then ");
+#line 53
+ testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 54
+ testRunner.When("I choose SendAccessRequestButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 55
+ testRunner.And("I am on the ThankYouPageAccessRequest page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 56
+ testRunner.And("I wait to see ThankYouLabel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 57
+ testRunner.And("I wait to see SuccessMessageLabel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table7.AddRow(new string[] {
-                        "ValidationFieldErrorCount",
-                        "Equals",
-                        "0"});
-#line 53
- testRunner.Then("I see", ((string)(null)), table7, "Then ");
-#line 56
- testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 57
- testRunner.When("I choose SendAccessRequestButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 58
- testRunner.And("I am on the ThankYouPageAccessRequest page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 59
- testRunner.And("I wait to see ThankYouLabel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 60
- testRunner.And("I wait to see SuccessMessageLabel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Rule",
-                        "Value"});
-            table8.AddRow(new string[] {
                         "ThankYouLabel",
                         "Equals",
                         "Thank You"});
-            table8.AddRow(new string[] {
+            table7.AddRow(new string[] {
                         "SuccessMessageLabel",
                         "Equals",
                         "Thank you, your request has been successfully sent. A member of our support team " +
                             "will contact you in the next 2 working days. <br/><br/> Alternatively you could " +
                             "join us on Facebook, Twitter or Linkedin"});
-#line 61
- testRunner.Then("I see", ((string)(null)), table8, "Then ");
+#line 58
+ testRunner.Then("I see", ((string)(null)), table7, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -245,27 +234,44 @@ this.ScenarioSetup(scenarioInfo);
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a applicant I am on the access request page and all required fields are presen" +
                     "t and all validators show correct validation messages", new string[] {
                         "SmokeTest"});
-#line 69
+#line 66
 this.ScenarioSetup(scenarioInfo);
-#line 70
+#line 67
  testRunner.Given("I navigated to the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 71
+#line 68
  testRunner.When("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 72
+#line 69
  testRunner.And("I choose SendAccessRequestButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 73
+#line 70
  testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "Field",
+                        "Rule",
+                        "Value"});
+            table8.AddRow(new string[] {
+                        "ValidationSummaryCount",
+                        "Equals",
+                        "11"});
+#line 71
+ testRunner.Then("I see", ((string)(null)), table8, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table9.AddRow(new string[] {
-                        "ValidationSummaryCount",
+                        "Text",
                         "Equals",
-                        "14"});
+                        "Please enter first name"});
+            table9.AddRow(new string[] {
+                        "Href",
+                        "Equals",
+                        "#firstname"});
 #line 74
- testRunner.Then("I see", ((string)(null)), table9, "Then ");
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table9, "And ");
+#line 78
+ testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -274,15 +280,15 @@ this.ScenarioSetup(scenarioInfo);
             table10.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter first name"});
+                        "Please enter last name"});
             table10.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#firstname"});
-#line 77
+                        "#lastname"});
+#line 79
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table10, "And ");
-#line 81
- testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 83
+  testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -291,15 +297,15 @@ this.ScenarioSetup(scenarioInfo);
             table11.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter last name"});
+                        "Please enter email address"});
             table11.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#lastname"});
-#line 82
+                        "#email"});
+#line 84
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table11, "And ");
-#line 86
-  testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 88
+ testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -308,14 +314,14 @@ this.ScenarioSetup(scenarioInfo);
             table12.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter email address"});
+                        "Please enter work phone number"});
             table12.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#email"});
-#line 87
+                        "#workPhoneNumber"});
+#line 89
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table12, "And ");
-#line 91
+#line 93
  testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -325,14 +331,14 @@ this.ScenarioSetup(scenarioInfo);
             table13.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter work phone number"});
+                        "Please enter your company name"});
             table13.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#workPhoneNumber"});
-#line 92
+                        "#companyname"});
+#line 94
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table13, "And ");
-#line 96
+#line 98
  testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -342,14 +348,14 @@ this.ScenarioSetup(scenarioInfo);
             table14.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter your company name"});
+                        "Please enter position at company"});
             table14.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#companyname"});
-#line 97
+                        "#Position"});
+#line 99
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table14, "And ");
-#line 101
+#line 103
  testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
@@ -359,14 +365,14 @@ this.ScenarioSetup(scenarioInfo);
             table15.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter position at company"});
+                        "Please enter your first line of address"});
             table15.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#Position"});
-#line 102
+                        "#Address_AddressLine1"});
+#line 104
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table15, "And ");
-#line 106
+#line 108
  testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
@@ -376,14 +382,14 @@ this.ScenarioSetup(scenarioInfo);
             table16.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter your first line of address"});
+                        "Please enter your city"});
             table16.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#Address_AddressLine1"});
-#line 107
+                        "#Address_City"});
+#line 109
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table16, "And ");
-#line 111
+#line 113
  testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
@@ -393,30 +399,13 @@ this.ScenarioSetup(scenarioInfo);
             table17.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter your city"});
+                        "Please enter your postcode"});
             table17.AddRow(new string[] {
                         "Href",
                         "Equals",
-                        "#Address_City"});
-#line 112
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table17, "And ");
-#line 116
- testRunner.And("I am on the AccessRequestPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
-                        "Field",
-                        "Rule",
-                        "Value"});
-            table18.AddRow(new string[] {
-                        "Text",
-                        "Equals",
-                        "Please enter your postcode"});
-            table18.AddRow(new string[] {
-                        "Href",
-                        "Equals",
                         "#Address_Postcode"});
-#line 117
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table18, "And ");
+#line 114
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table17, "And ");
 #line hidden
             this.ScenarioCleanup();
         }

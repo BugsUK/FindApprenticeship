@@ -27,10 +27,7 @@ Scenario: As a applicant I am on the access request page
 	When I am on UserTypeDropdown list item matching criteria
 		| Field | Rule   | Value    |
 		| Text  | Equals | Employer |
-	And I choose WrappedElement
-	Then I see 
-		| Field                     | Rule   | Value |
-		| ValidationFieldErrorCount | Equals | 10    |	
+	And I choose WrappedElement		
 	And I am on the AccessRequestPage page
 	And I enter data
 		| Field               | Value                  |
@@ -73,7 +70,7 @@ Scenario: As a applicant I am on the access request page and all required fields
 	And I wait to see ValidationSummary
 	Then I see
         | Field                  | Rule   | Value |
-        | ValidationSummaryCount | Equals | 14    |
+        | ValidationSummaryCount | Equals | 11    |
 	And I am on ValidationSummaryItems list item matching criteria
 		| Field | Rule   | Value                   |
 		| Text  | Equals | Please enter first name |
