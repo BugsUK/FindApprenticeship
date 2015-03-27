@@ -34,8 +34,7 @@
         SelectedServiceTypeIds,
         AdditionalPhoneNumber,
         AdditionalEmail,
-
-
+        ConfirmEmail
     }
 
 

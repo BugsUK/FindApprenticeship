@@ -5,6 +5,6 @@ namespace SFA.Apprenticeships.Application.Interfaces
     using Communications;
     public interface IXmlGenerator
     {
-        string SerializeToXmlFile(MessageTypes messageTypes, IEnumerable<CommunicationToken> tokens);
+        string SerializeToXmlFile(MessageTypes messageType, IEnumerable<CommunicationToken> tokens);
     }
 }
