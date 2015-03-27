@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
+    using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Messaging;
@@ -129,11 +131,12 @@
         {
             if (!savedSearch.HasGeoPoint())
             {
-                var locations = _locationSearchService.FindLocation(savedSearch.Location).ToList();
+                var locations = _locationSearchService.FindLocation(savedSearch.Location);
+                var locationsList = locations == null ? new List<Location>() : locations.ToList();
 
-                if (locations.Any())
+                if (locationsList.Any())
                 {
-                    var location = locations.First();
+                    var location = locationsList.First();
 
                     _logService.Info("Location {0} specified in saved search with id {1} was identified as {2}", savedSearch.Location, savedSearch.EntityId, location.Name);
 
