@@ -40,8 +40,8 @@
           <xs:sequence>
             <xs:element minOccurs="0" name="PageNumber" type="xs:int" />
             <xs:element minOccurs="0" name="PreferredPageSize" type="xs:int" />
-            <xs:element minOccurs="0" name="RangeFrom" type="xs:dateTime" />
-            <xs:element minOccurs="0" name="RangeTo" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="RangeFrom" nillable="true" type="xs:dateTime" />
+            <xs:element minOccurs="0" name="RangeTo" nillable="true" type="xs:dateTime" />
           </xs:sequence>
         </xs:complexType>
       </xs:element>
@@ -91,6 +91,8 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
+      <xs:element xmlns:q11="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" name="Candidate" nillable="true" type="q11:Candidate" />
+      <xs:element xmlns:q12="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" name="ValidationErrors" nillable="true" type="q12:ValidationErrors" />
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="anyType" nillable="true" type="xs:anyType" />
@@ -213,6 +215,7 @@
       <xs:element name="ValidationError" nillable="true" type="tns:ValidationError" />
       <xs:complexType name="Candidate">
         <xs:sequence>
+          <xs:element minOccurs="0" name="Id" type="xs:int" />
           <xs:element minOccurs="0" name="EmailAddress" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="FirstName" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MiddleName" nillable="true" type="xs:string" />
@@ -439,6 +442,13 @@
           <xs:element minOccurs="0" name="VacancyReference" nillable="true" type="xs:int" />
           <xs:element minOccurs="0" name="PossibleStartDate" nillable="true" type="xs:dateTime" />
           <xs:element minOccurs="0" name="ApprenticeshipOccupation" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="VacancyPostedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="EmployerTradingName" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="EmployerAnonymous" type="xs:boolean" />
+          <xs:element minOccurs="0" name="WageText" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WeeklyWage" type="xs:decimal" />
+          <xs:element minOccurs="0" name="WorkingWeek" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="WageType" nillable="true" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="VacancySummary" nillable="true" type="tns:VacancySummary" />
@@ -521,6 +531,12 @@
   <wsdl:message name="GetVacancySummaryResponse">
     <wsdl:part name="parameters" element="tns:GetVacancySummaryResponse" />
   </wsdl:message>
+  <wsdl:message name="UpdateCandidateRequest">
+    <wsdl:part name="Candidate" element="tns:Candidate" />
+  </wsdl:message>
+  <wsdl:message name="UpdateCandidateReponse">
+    <wsdl:part name="ValidationErrors" element="tns:ValidationErrors" />
+  </wsdl:message>
   <wsdl:portType name="GatewayServiceContract">
     <wsdl:operation name="CreateApplication">
       <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/CreateApplication" name="CreateApplicationRequest" message="tns:CreateApplicationRequest" />
@@ -549,6 +565,10 @@
     <wsdl:operation name="GetVacancySummaries">
       <wsdl:input wsaw:Action="GetVacancySummaries" name="GetVacancySummaryRequest" message="tns:GetVacancySummaryRequest" />
       <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/GetVacancySummariesResponse" name="GetVacancySummaryResponse" message="tns:GetVacancySummaryResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCandidate">
+      <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/UpdateCandidate" name="UpdateCandidateRequest" message="tns:UpdateCandidateRequest" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/UpdateCandidateResponse" name="UpdateCandidateReponse" message="tns:UpdateCandidateReponse" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DefaultEndpoint" type="tns:GatewayServiceContract">
@@ -613,6 +633,15 @@
         <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output name="GetVacancySummaryResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateCandidate">
+      <soap:operation soapAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/UpdateCandidate" style="document" />
+      <wsdl:input name="UpdateCandidateRequest">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="UpdateCandidateReponse">
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
