@@ -101,19 +101,44 @@
     <Compile Include="BindingsUtils.cs" />
     <Compile Include="Builders\AddressViewModelBuilder.cs" />
     <Compile Include="Builders\EmployerEnquiryViewModelBuilder.cs" />
+    <Compile Include="Features\SubmitAccessRequest.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubmitAccessRequest.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\SubmitGlaQuery.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>SubmitGlaQuery.feature</DependentUpon>
+    </Compile>
     <Compile Include="Features\SubmitQuery.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>SubmitQuery.feature</DependentUpon>
     </Compile>
     <Compile Include="IoC\WebTestRegistry.cs" />
-    <Compile Include="Pages\ThankYouPage.cs" />
+    <Compile Include="Pages\AccessRequestPage.cs" />
+    <Compile Include="Pages\DropdownItems.cs" />
+    <Compile Include="Pages\GlaEmployerEnquiryPage.cs" />
+    <Compile Include="Pages\ThankYouPageAccessRequest.cs" />
+    <Compile Include="Pages\ThankYouPageGlaEmployerEnquiry.cs" />
+    <Compile Include="Pages\ThankYouPageEmployerEnquiry.cs" />
     <Compile Include="Pages\EmployerEnquiryPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Templates\EditorFor\AddressTemplate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Features\SubmitAccessRequest.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SubmitAccessRequest.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\SubmitGlaQuery.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>SubmitGlaQuery.feature.cs</LastGenOutput>
+    </None>
     <None Include="Features\SubmitQuery.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>SubmitQuery.feature.cs</LastGenOutput>

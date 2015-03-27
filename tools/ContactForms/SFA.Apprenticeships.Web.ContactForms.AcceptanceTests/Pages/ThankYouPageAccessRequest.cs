@@ -3,11 +3,11 @@
     using OpenQA.Selenium;
     using SpecBind.Pages;
 
-    [PageNavigation("/employerenquiry")]
-    [PageAlias("ThankYouPage")]
-    public class ThankYouPage : BaseValidationPage
+    [PageNavigation("/access-request")]
+    [PageAlias("ThankYouPageAccessRequest")]
+    public class ThankYouPageAccessRequest: BaseValidationPage
     {
-        public ThankYouPage(ISearchContext context)
+        public ThankYouPageAccessRequest(ISearchContext context)
             : base(context)
         {
         }

@@ -148,7 +148,6 @@
                 x => x.ServiceTypes.AvailableServices,  // List<AccessRequestServiceTypes>()
                 x => x.Id,            // AccessRequestServiceTypes.Id
                 x => x.Description,   // Service.Description
-        //x => (Model.ServiceTypes.PostedServiceIds != null && Model.ServiceTypes.PostedServiceIds.Contains(x.Id)),
                 x => x.ServiceTypes.SelectedServices,
                 Position.Vertical)
             @Html.ValidationMessageFor(model => model.ServiceTypes)
@@ -159,7 +158,7 @@
     <br />
     <div class="form-group">
         <p>
-            <button class="button" id="submit-query-button" type="submit" name="EmployerEnquiryAction:SubmitEnquiry">Submit Request</button>
+            <button class="button" id="submit-access-request-button" type="submit">Submit Request</button>
         </p>
     </div>
 }

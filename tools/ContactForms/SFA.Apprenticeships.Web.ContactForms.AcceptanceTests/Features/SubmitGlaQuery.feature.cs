@@ -19,21 +19,21 @@ namespace SFA.Apprenticeships.Web.ContactForms.AcceptanceTests.Features
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [NUnit.Framework.TestFixtureAttribute()]
-    [NUnit.Framework.DescriptionAttribute("SubmitQuery")]
-    public partial class SubmitQueryFeature
+    [NUnit.Framework.DescriptionAttribute("SubmitGlaQuery")]
+    public partial class SubmitGlaQueryFeature
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "SubmitQuery.feature"
+#line 1 "SubmitGlaQuery.feature"
 #line hidden
         
         [NUnit.Framework.TestFixtureSetUpAttribute()]
         public virtual void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SubmitQuery", "In order to finding out more about employing apprentices \r\nAs an employer \r\nI wan" +
-                    "t to able to send employer query form", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "SubmitGlaQuery", "In order to finding out more about employing apprentices \r\nAs an employer \r\nI wan" +
+                    "t to able to send gla employer query form", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -66,18 +66,18 @@ namespace SFA.Apprenticeships.Web.ContactForms.AcceptanceTests.Features
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a employer I am on the employer contact page")]
+        [NUnit.Framework.DescriptionAttribute("As a gla employer I am on the gla employer contact page")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
-        public virtual void AsAEmployerIAmOnTheEmployerContactPage()
+        public virtual void AsAGlaEmployerIAmOnTheGlaEmployerContactPage()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a employer I am on the employer contact page", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a gla employer I am on the gla employer contact page", new string[] {
                         "SmokeTests"});
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 10
- testRunner.Given("I navigated to the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I navigated to the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 11
- testRunner.When("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 12
  testRunner.And("I wait to see Firstname", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 13
@@ -122,7 +122,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 28
  testRunner.Then("I see", ((string)(null)), table1, "Then ");
 #line 31
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -156,7 +156,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 39
  testRunner.Then("I see", ((string)(null)), table3, "Then ");
 #line 42
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -187,7 +187,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 49
  testRunner.Then("I see", ((string)(null)), table5, "Then ");
 #line 52
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -202,7 +202,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 56
  testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 57
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -217,7 +217,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 61
  testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 62
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -232,7 +232,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 66
  testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 67
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -247,7 +247,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 71
  testRunner.And("I choose WrappedElement", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 72
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -269,11 +269,11 @@ this.ScenarioSetup(scenarioInfo);
 #line 76
  testRunner.Then("I see", ((string)(null)), table11, "Then ");
 #line 79
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 80
  testRunner.When("I choose SendEmployerEnquiryButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 81
- testRunner.And("I am on the ThankYouPageEmployerEnquiry page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am on the ThankYouPageGlaEmployerEnquiry page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 82
  testRunner.And("I wait to see ThankYouLabel", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 83
@@ -300,23 +300,23 @@ this.ScenarioSetup(scenarioInfo);
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a employer I am on the employer contact page and all required fields are prese" +
-            "nt and all validators show correct validation messages")]
+        [NUnit.Framework.DescriptionAttribute("As a gla employer I am on the gla employer contact page and all required fields a" +
+            "re present and all validators show correct validation messages")]
         [NUnit.Framework.CategoryAttribute("SmokeTest")]
-        public virtual void AsAEmployerIAmOnTheEmployerContactPageAndAllRequiredFieldsArePresentAndAllValidatorsShowCorrectValidationMessages()
+        public virtual void AsAGlaEmployerIAmOnTheGlaEmployerContactPageAndAllRequiredFieldsArePresentAndAllValidatorsShowCorrectValidationMessages()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a employer I am on the employer contact page and all required fields are prese" +
-                    "nt and all validators show correct validation messages", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a gla employer I am on the gla employer contact page and all required fields a" +
+                    "re present and all validators show correct validation messages", new string[] {
                         "SmokeTest"});
-#line 92
+#line 91
 this.ScenarioSetup(scenarioInfo);
+#line 92
+ testRunner.Given("I navigated to the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 93
- testRunner.Given("I navigated to the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.When("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 94
- testRunner.When("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 95
  testRunner.And("I choose SendEmployerEnquiryButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 96
+#line 95
  testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -327,7 +327,7 @@ this.ScenarioSetup(scenarioInfo);
                         "ValidationSummaryCount",
                         "Equals",
                         "14"});
-#line 97
+#line 96
  testRunner.Then("I see", ((string)(null)), table13, "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -342,10 +342,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#firstname"});
-#line 100
+#line 99
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table14, "And ");
-#line 104
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 103
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -359,10 +359,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#lastname"});
-#line 105
+#line 104
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table15, "And ");
-#line 109
-  testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 108
+  testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -376,10 +376,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#email"});
-#line 110
+#line 109
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table16, "And ");
-#line 114
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 113
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -393,10 +393,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#workPhoneNumber"});
-#line 115
+#line 114
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table17, "And ");
-#line 119
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 118
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -410,10 +410,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#companyname"});
-#line 120
+#line 119
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table18, "And ");
-#line 124
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 123
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -427,10 +427,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#Position"});
-#line 125
+#line 124
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table19, "And ");
-#line 129
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 128
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -445,10 +445,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#EmployeesCount"});
-#line 130
+#line 129
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table20, "And ");
-#line 134
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 133
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -462,10 +462,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#WorkSector"});
-#line 135
+#line 134
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table21, "And ");
-#line 139
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 138
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -479,10 +479,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#EnquiryDescription"});
-#line 140
+#line 139
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table22, "And ");
-#line 144
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 143
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -496,10 +496,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#PreviousExperienceType"});
-#line 145
+#line 144
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table23, "And ");
-#line 149
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 148
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -513,10 +513,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#EnquirySource"});
-#line 150
+#line 149
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table24, "And ");
-#line 154
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 153
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -530,10 +530,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#Address_AddressLine1"});
-#line 155
+#line 154
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table25, "And ");
-#line 159
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 158
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -547,10 +547,10 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#Address_City"});
-#line 160
+#line 159
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table26, "And ");
-#line 164
- testRunner.And("I am on the EmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 163
+ testRunner.And("I am on the GlaEmployerEnquiryPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -564,7 +564,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#Address_Postcode"});
-#line 165
+#line 164
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table27, "And ");
 #line hidden
             this.ScenarioCleanup();

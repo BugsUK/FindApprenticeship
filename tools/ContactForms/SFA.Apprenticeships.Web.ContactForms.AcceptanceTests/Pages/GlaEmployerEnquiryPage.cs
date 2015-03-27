@@ -5,9 +5,9 @@
     using SpecBind.Selenium;
     using Templates.EditorFor;
 
-    [PageNavigation("/employer-enquiry")]
-    [PageAlias("EmployerEnquiryPage")]
-    public class EmployerEnquiryPage : BaseValidationPage
+    [PageNavigation("/gla-employer-enquiry")]
+    [PageAlias("GlaEmployerEnquiryPage")]
+    public class GlaEmployerEnquiryPage : BaseValidationPage
     {
         private IElementList<IWebElement, AddressDropdownItem> _addressDropdown;
         private IElementList<IWebElement, EmployeeCountDropdownItem> _employeeCountDropdown;
@@ -15,7 +15,7 @@
         private IElementList<IWebElement, PrevExperienceDropdownItem> _prevExperienceDropdown;
         private IElementList<IWebElement, WorkSectorDropdownItem> _workSectorDropdown;
 
-        public EmployerEnquiryPage(ISearchContext context)
+        public GlaEmployerEnquiryPage(ISearchContext context)
             : base(context)
         {
         }
@@ -131,6 +131,4 @@
             set { _workSectorDropdown = value; }
         }
     }
-
-   
 }

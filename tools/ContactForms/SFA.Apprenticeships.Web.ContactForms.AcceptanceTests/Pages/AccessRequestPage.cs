@@ -5,17 +5,13 @@
     using SpecBind.Selenium;
     using Templates.EditorFor;
 
-    [PageNavigation("/employer-enquiry")]
-    [PageAlias("EmployerEnquiryPage")]
-    public class EmployerEnquiryPage : BaseValidationPage
+    [PageNavigation("/access-request")]
+    [PageAlias("AccessRequestPage")]
+    public class AccessRequestPage : BaseValidationPage
     {
         private IElementList<IWebElement, AddressDropdownItem> _addressDropdown;
-        private IElementList<IWebElement, EmployeeCountDropdownItem> _employeeCountDropdown;
-        private IElementList<IWebElement, EnquirySourceDropdownItem> _enquirySourceDropdown;
-        private IElementList<IWebElement, PrevExperienceDropdownItem> _prevExperienceDropdown;
-        private IElementList<IWebElement, WorkSectorDropdownItem> _workSectorDropdown;
-
-        public EmployerEnquiryPage(ISearchContext context)
+        private IElementList<IWebElement, UserTypeDropdownItem> _userTypeDropdownItems;
+        public AccessRequestPage(ISearchContext context)
             : base(context)
         {
         }
@@ -32,6 +28,9 @@
         [ElementLocator(Id = "Email")]
         public IWebElement EmailAddress { get; set; }
 
+        [ElementLocator(Id = "ConfirmEmail")]
+        public IWebElement ConfirmEmailAddress { get; set; }
+
         [ElementLocator(Id = "WorkPhoneNumber")]
         public IWebElement WorkPhoneNumber { get; set; }
 
@@ -44,23 +43,8 @@
         [ElementLocator(Id = "Position")]
         public IWebElement Position { get; set; }
 
-        [ElementLocator(Id = "EmployeesCount")]
-        public IWebElement EmployeesCount { get; set; }
-
-        [ElementLocator(Id = "WorkSector")]
-        public IWebElement WorkSector { get; set; }
-
-        [ElementLocator(Id = "EnquiryDescription")]
-        public IWebElement EnquiryDescription { get; set; }
-
-        [ElementLocator(Id = "PreviousExperienceType")]
-        public IWebElement PreviousExperienceType { get; set; }
-
-        [ElementLocator(Id = "EnquirySource")]
-        public IWebElement EnquirySource { get; set; }
-
-        [ElementLocator(Id = "submit-query-button")]
-        public IWebElement SendEmployerEnquiryButton { get; set; }
+        [ElementLocator(Id = "submit-access-request-button")]
+        public IWebElement SendAccessRequestButton { get; set; }
 
         #region Address Template
 
@@ -103,34 +87,12 @@
         #endregion
 
         #endregion
-        [ElementLocator(Id = "EmployeesCount")]
-        public IElementList<IWebElement, EmployeeCountDropdownItem> EmployeeCountDropdown
-        {
-            get { return _employeeCountDropdown; }
-            set { _employeeCountDropdown = value; }
-        }
 
-        [ElementLocator(Id = "EnquirySource")]
-        public IElementList<IWebElement, EnquirySourceDropdownItem> EnquirySourceDropdown
+        [ElementLocator(Id = "UserType")]
+        public IElementList<IWebElement, UserTypeDropdownItem> UserTypeDropdown
         {
-            get { return _enquirySourceDropdown; }
-            set { _enquirySourceDropdown = value; }
-        }
-
-        [ElementLocator(Id = "PreviousExperienceType")]
-        public IElementList<IWebElement, PrevExperienceDropdownItem> PrevExperienceDropdown
-        {
-            get { return _prevExperienceDropdown; }
-            set { _prevExperienceDropdown = value; }
-        }
-
-        [ElementLocator(Id = "WorkSector")]
-        public IElementList<IWebElement, WorkSectorDropdownItem> WorkSectorDropdown
-        {
-            get { return _workSectorDropdown; }
-            set { _workSectorDropdown = value; }
+            get { return _userTypeDropdownItems; }
+            set { _userTypeDropdownItems = value; }
         }
     }
-
-   
 }
