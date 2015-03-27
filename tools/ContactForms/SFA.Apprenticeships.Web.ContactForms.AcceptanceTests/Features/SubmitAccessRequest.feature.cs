@@ -217,8 +217,8 @@ this.ScenarioSetup(scenarioInfo);
                         "SuccessMessageLabel",
                         "Equals",
                         "Thank you, your request has been successfully sent. A member of our support team " +
-                            "will contact you in the next 2 working days. <br/><br/> Alternatively you could " +
-                            "join us on Facebook, Twitter or Linkedin"});
+                            "will contact you in the next 2 working days.  Alternatively you could join us on" +
+                            " Facebook, Twitter or Linkedin"});
 #line 58
  testRunner.Then("I see", ((string)(null)), table7, "Then ");
 #line hidden

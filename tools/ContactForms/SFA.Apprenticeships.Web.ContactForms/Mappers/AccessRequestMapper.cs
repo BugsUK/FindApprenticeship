@@ -43,6 +43,12 @@
         {
             viewModel.ThrowIfNull("AccessRequestViewModel", "viewModel object of type AccessRequestViewModel can't be null");
 
+            string selectedServiceTypeIds = string.Empty; 
+            if (viewModel.ServiceTypes != null)
+            {
+                selectedServiceTypeIds = string.Join(",", viewModel.ServiceTypes.PostedServiceIds);
+            }
+
             return new AccessRequest()
             {
                 Address = _addressViewModelToDomainMapper.ConvertToDomain(viewModel.Address),
@@ -59,8 +65,8 @@
                 Systemname= viewModel.Systemname,
                 Contactname= viewModel.Contactname,
                 AdditionalEmail= viewModel.AdditionalEmail,
-                AdditionalPhoneNumber= viewModel.AdditionalPhoneNumber,                
-                SelectedServiceTypeIds = string.Join(",",viewModel.ServiceTypes.PostedServiceIds)
+                AdditionalPhoneNumber= viewModel.AdditionalPhoneNumber,
+                SelectedServiceTypeIds = selectedServiceTypeIds
             };
         }
     }

@@ -56,9 +56,9 @@ Scenario: As a applicant I am on the access request page
 	And I wait to see ThankYouLabel
 	And I wait to see SuccessMessageLabel
 	Then I see
-        | Field               | Rule   | Value                                                                                                                                                                                                     |
-        | ThankYouLabel       | Equals | Thank You                                                                                                                                                                                                 |
-        | SuccessMessageLabel | Equals | Thank you, your request has been successfully sent. A member of our support team will contact you in the next 2 working days. <br/><br/> Alternatively you could join us on Facebook, Twitter or Linkedin |
+        | Field               | Rule   | Value                                                                                                                                                                                           |
+        | ThankYouLabel       | Equals | Thank You                                                                                                                                                                                       |
+        | SuccessMessageLabel | Equals | Thank you, your request has been successfully sent. A member of our support team will contact you in the next 2 working days.  Alternatively you could join us on Facebook, Twitter or Linkedin |
 	
 
 
