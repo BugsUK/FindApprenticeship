@@ -129,6 +129,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipView,
+                url: "apprenticeship/view/{id}",
+                defaults: new { controller = "ApprenticeshipApplication", action = "View" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipSaveVacancy,
                 url: "apprenticeship/savevacancy/{id}",
                 defaults: new { controller = "ApprenticeshipApplication", action = "SaveVacancy" }

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
+    using System;
     using System.Collections.Generic;
     using Candidate.ViewModels.MyApplications;
     using Domain.Entities.Applications;
@@ -13,10 +14,17 @@
 
             for (var i = 0; i < count; i++)
             {
-                apprenticeships.Add(new MyApprenticeshipApplicationViewModel
+                var myApprenticeshipApplicationViewModel = new MyApprenticeshipApplicationViewModel
                 {
                     ApplicationStatus = applicationStatus
-                });
+                };
+
+                if (applicationStatus == ApplicationStatuses.Submitted)
+                {
+                    myApprenticeshipApplicationViewModel.DateApplied = new DateTime(2015, 01, 01);
+                }
+
+                apprenticeships.Add(myApprenticeshipApplicationViewModel);
             }
 
             return apprenticeships;

@@ -11,5 +11,6 @@
         public const string PreviewFailed = "There's been a problem processing your request. Please try again.";
         public const string SaveFailed = "There's been a problem saving your application. Please try again.";
         public const string LeavingPageMessage = "You’re about to leave the page. Any changes you’ve made will be lost.";
+        public const string ViewApplicationFailed = "There’s been a problem viewing your application. Please try again.";
     }
 }

@@ -18,6 +18,7 @@
         public const string ApprenticeshipApply = "ApprenticeshipApply";
         public const string ApprenticeshipPreview = "ApprenticeshipPreview";
         public const string ApprenticeshipWhatNext = "ApprenticeshipWhatNext";
+        public const string ApprenticeshipView = "ApprenticeshipView";
         public const string ApprenticeshipSaveVacancy = "ApprenticeshipSaveVacancy";
         public const string ApprenticeshipDeleteSavedVacancy = "ApprenticeshipDeleteSavedVacancy";
         public const string TraineeshipSearch = "TraineeshipSearch";

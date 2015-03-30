@@ -319,6 +319,30 @@
             });
         }
 
+        [ClearSearchReturnUrl(false)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> View(int id)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _apprenticeshipApplicationMediator.View(UserContext.CandidateId, id);
+
+                switch (response.Code)
+                {
+                    case ApprenticeshipApplicationMediatorCodes.View.Error:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
+                    case ApprenticeshipApplicationMediatorCodes.View.Ok:
+                        return View(response.ViewModel);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+            });
+        }
+
         [HttpPost]
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]

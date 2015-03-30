@@ -645,6 +645,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_savedSearches.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ApprenticeshipApplication\View.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

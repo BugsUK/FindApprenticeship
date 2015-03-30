@@ -26,8 +26,10 @@
 
         MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle);
 
+        MediatorResponse<ApprenticeshipApplicationViewModel> View(Guid candidateId, int vacancyId);
+
         MediatorResponse<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId);
 
         MediatorResponse<SavedVacancyViewModel> DeleteSavedVacancy(Guid candidateId, int vacancyId);
-   }
+    }
 }

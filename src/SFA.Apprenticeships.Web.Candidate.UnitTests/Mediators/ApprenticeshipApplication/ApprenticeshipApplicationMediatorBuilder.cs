@@ -11,7 +11,7 @@
     public class ApprenticeshipApplicationMediatorBuilder
     {
         private Mock<IApprenticeshipApplicationProvider> _apprenticeshipApplicationProvider;
-        private Mock<IConfigurationService> _configurationService;
+        private readonly Mock<IConfigurationService> _configurationService;
         private Mock<IUserDataProvider> _userDataProvider;
 
         public ApprenticeshipApplicationMediatorBuilder()
@@ -34,7 +34,7 @@
         }
 
 
-        public ApprenticeshipApplicationMediator Build()
+        public IApprenticeshipApplicationMediator Build()
         {
             _configurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});

@@ -7,7 +7,11 @@ using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
 namespace SFA.Apprenticeships.Infrastructure.Address.PostcodeSearch
 {
     using Common.Configuration;
+    using Common.IoC;
+    using Domain.Interfaces.Configuration;
     using Logging;
+    using Logging.IoC;
+    using StructureMap;
 
     class Program
     {
@@ -18,7 +22,13 @@ namespace SFA.Apprenticeships.Infrastructure.Address.PostcodeSearch
 
             Console.WriteLine("Scroll: {0}, Size {1}", scroll, size);
 
-            var configurationService = new ConfigurationService(new ConfigurationManager(), new NLogLogService(typeof (Program)));
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = container.GetInstance<IConfigurationService>();
             var clientFactory = new ElasticsearchClientFactory(configurationService, new NLogLogService(typeof (ElasticsearchClientFactory)), false);
             var client = clientFactory.GetElasticClient();
 

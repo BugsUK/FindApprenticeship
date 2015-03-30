@@ -133,7 +133,7 @@ else
                                                 @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
                                         </td>
-                                        <td class="ta-center">@application.ApplicationStatusDescription</td>
+                                        <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
                                         <td class="ta-center">
                                             <a title="Remove from my applications" class="icon-black archive-successful" href="@Url.Action("Archive", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                         </td>
@@ -175,12 +175,13 @@ else
                                                 @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                             }
                                         </td>
-                                        <td class="ta-center">@application.ApplicationStatusDescription</td>
+                                        <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
                                         <td class="ta-center">
                                             @{
                                                 if (application.DateApplied.HasValue)
                                                 {
-                                                    @Html.DisplayFor(m => application.DateApplied)
+                                                    var submittedApplication = application;
+                                                    @Html.DisplayFor(m => submittedApplication.DateApplied)
                                                 }
                                             }
                                         </td>
@@ -229,7 +230,7 @@ else
                                                     @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td id="application-status-description" class="ta-center">@application.ApplicationStatusDescription</td>
+                                            <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
                                             <td class="ta-center">
                                                 <a title="Remove from my applications" class="icon-black archive-unsuccessful" href="@Url.Action("Archive", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                             </td>

@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck
 {
     using System;
+    using Common.Configuration;
     using Common.IoC;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using Elastic.Common.IoC;
     using Infrastructure.Repositories.Applications.IoC;
@@ -23,9 +25,18 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var cacheConfig = configurationService.Get<CacheConfiguration>();
+
+            container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(false));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();

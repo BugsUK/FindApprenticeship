@@ -1,0 +1,11 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
+
+@{
+    ViewBag.Title = "View your application - Find an apprenticeship";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="heading-xlarge">Your application</h1>
+
+@Html.DisplayFor(m => m.Candidate)
+@Html.DisplayFor(m => m.Candidate.Education)

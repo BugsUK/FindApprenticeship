@@ -331,6 +331,23 @@
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 
+        public MediatorResponse<ApprenticeshipApplicationViewModel> View(Guid candidateId, int vacancyId)
+        {
+            var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+
+            if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationNotFound)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound, model);
+            }
+
+            if (model.HasError())
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.View.Error, null, ApplicationPageMessages.ViewApplicationFailed, UserMessageLevel.Warning);
+            }
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.Ok, model);
+        }
+
         public MediatorResponse<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId)
         {
             var viewModel = _apprenticeshipApplicationProvider.SaveVacancy(candidateId, vacancyId);

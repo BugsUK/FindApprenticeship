@@ -14,6 +14,7 @@
     using Communication.Configuration;
     using Communications;
     using Communications.Commands;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Logging.IoC;
     using StructureMap;
@@ -31,7 +32,8 @@
                 x.AddRegistry<CommonRegistry>();
             });
 
-            var commsConfig = container.GetInstance<CommunicationConfiguration>();
+            var configService = container.GetInstance<IConfigurationService>();
+            var commsConfig = configService.Get<CommunicationConfiguration>();
 
             For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(commsConfig.EmailDispatcher);
             For<SmsRequestConsumerAsync>().Use<SmsRequestConsumerAsync>().Ctor<ISmsDispatcher>().Named(commsConfig.SmsDispatcher);
