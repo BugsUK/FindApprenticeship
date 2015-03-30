@@ -3,7 +3,6 @@
     using System;
     using System.Configuration;
     using System.Text;
-    using Common.Configuration;
     using Common.IoC;
     using Domain.Interfaces.Configuration;
     using EasyNetQ;
@@ -15,7 +14,6 @@
     using NLog.Targets;
     using RabbitMq.Configuration;
     using StructureMap;
-    using ConfigurationManager = Common.Configuration.ConfigurationManager;
 
     /// <summary>
     /// A RabbitMQ-target for NLog that must use a JsonLayout!

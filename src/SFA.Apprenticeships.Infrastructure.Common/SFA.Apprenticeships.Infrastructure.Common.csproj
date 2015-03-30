@@ -127,6 +127,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Configuration\CacheConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationCacheKey.cs" />
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\CachedConfigurationService.cs" />

@@ -1,16 +1,30 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
     using Configuration;
+    using Domain.Interfaces.Caching;
     using Domain.Interfaces.Configuration;
     using StructureMap.Configuration.DSL;
 
-    //TODO: remove this? should be setting up configuration IoC in particular infra projects
     public class CommonRegistry : Registry
     {
-        public CommonRegistry()
+        public CommonRegistry() : this(new CacheConfiguration()) { }
+
+        public CommonRegistry(CacheConfiguration cacheConfiguration)
         {
             For<IConfigurationManager>().Singleton().Use<ConfigurationManager>();
-            For<IConfigurationService>().Singleton().Use<ConfigurationService>();
+            For<IConfigurationService>().Singleton().Use<ConfigurationService>().Name = "ConfigurationService";
+
+            if (cacheConfiguration.UseCache)
+            {
+                For<IConfigurationService>()
+                    .Singleton()
+                    .Use<CachedConfigurationService>()
+                    .Ctor<IConfigurationService>()
+                    .Named("ConfigurationService")
+                    .Ctor<ICacheService>()
+                    .IsTheDefault()
+                    .Named(cacheConfiguration.DefaultCache);
+            }
         }
     }
 }

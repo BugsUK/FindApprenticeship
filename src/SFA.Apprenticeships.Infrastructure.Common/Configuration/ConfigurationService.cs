@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Reflection;
     using Application.Interfaces.Logging;
-    using Domain.Entities.Locations;
     using Domain.Interfaces.Configuration;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;

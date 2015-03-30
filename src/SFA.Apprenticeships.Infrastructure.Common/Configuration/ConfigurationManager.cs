@@ -6,7 +6,7 @@
     using System.IO;
     using CuttingEdge.Conditions;
 
-    public class ConfigurationManager : IConfigurationManager
+    internal class ConfigurationManager : IConfigurationManager
     {
         internal const string ConfigurationFileAppSettingName = "ConfigurationPath";
 

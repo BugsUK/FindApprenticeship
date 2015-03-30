@@ -14,6 +14,7 @@
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using FluentValidation.Validators;
+    using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging;
     using Infrastructure.Logging.IoC;
@@ -46,7 +47,8 @@
             }
         }
 
-        private IConfigurationService _configurationService;
+        private readonly static object _lock = new object();
+        private static IConfigurationService _configurationService;
         private IConfigurationService ConfigurationService
         {
             get
@@ -56,13 +58,29 @@
                     return _configurationService;
                 }
 
-                var container = new Container(x =>
+                lock (_lock)
                 {
-                    x.AddRegistry<LoggingRegistry>();
-                    x.AddRegistry<CommonRegistry>();
-                });
+                    if (_configurationService == null)
+                    {
+                        var uncachedContiner = new Container(x =>
+                        {
+                            x.AddRegistry<LoggingRegistry>();
+                            x.AddRegistry<CommonRegistry>();
+                        });
 
-                _configurationService = container.GetInstance<IConfigurationService>();
+                        var configurationService = uncachedContiner.GetInstance<IConfigurationService>();
+                        var cacheConfig = configurationService.Get<CacheConfiguration>();
+
+                        var cachedContiner = new Container(x =>
+                        {
+                            x.AddRegistry<LoggingRegistry>();
+                            x.AddRegistry(new CommonRegistry(cacheConfig));
+                        });
+
+                        _configurationService = cachedContiner.GetInstance<IConfigurationService>();
+                    }
+                }
+
                 return _configurationService;
             }
         }

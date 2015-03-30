@@ -14,7 +14,6 @@
         {
             For<MonitorControlQueueConsumer>().Use<MonitorControlQueueConsumer>();
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>();
-            For<IConfigurationManager>().Use<ConfigurationManager>();
 
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>()
                 .EnumerableOf<IMonitorTask>()

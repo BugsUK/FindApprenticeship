@@ -5,10 +5,12 @@
     using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancy;
+    using Common.Configuration;
     using CreateApplication;
     using CreateCandidate;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
+    using Domain.Interfaces.Caching;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using GetCandidateApplicationStatuses;
@@ -24,9 +26,9 @@
 
     public class LegacyWebServicesRegistry : Registry
     {
-        public LegacyWebServicesRegistry(): this(false) { }
+        public LegacyWebServicesRegistry() : this(new CacheConfiguration()) { }
 
-        public LegacyWebServicesRegistry(bool useCache)
+        public LegacyWebServicesRegistry(CacheConfiguration cacheConfiguration)
         {
             For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
             For<IMapper>().Use<LegacyApprenticeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper";
@@ -53,21 +55,25 @@
                 .Named("LegacyWebServices.LegacyTraineeshipVacancyDetailMapper")
                 .Name = "LegacyTraineeshipVacancyDataProvider";
 
-            if (useCache)
+            if (cacheConfiguration.UseCache)
             {
                 For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
                     .Use<CachedLegacyVacancyDataProvider<ApprenticeshipVacancyDetail>>()
                     .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
                     .IsTheDefault()
                     .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                    .Named("LegacyApprenticeshipVacancyDataProvider");
+                    .Named("LegacyApprenticeshipVacancyDataProvider")
+                    .Ctor<ICacheService>()
+                    .Named(cacheConfiguration.DefaultCache);
 
                 For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
                     .Use<CachedLegacyVacancyDataProvider<TraineeshipVacancyDetail>>()
                     .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
                     .IsTheDefault()
                     .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
-                    .Named("LegacyTraineeshipVacancyDataProvider");
+                    .Named("LegacyTraineeshipVacancyDataProvider")
+                    .Ctor<ICacheService>()
+                    .Named(cacheConfiguration.DefaultCache);
             }
 
             #endregion
@@ -93,14 +99,16 @@
 
             For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = "LegacyReferenceDataProvider";
 
-            if (useCache)
+            if (cacheConfiguration.UseCache)
             {
                 For<IReferenceDataProvider>()
                     .Use<CachedReferenceDataProvider>()
                     .Ctor<IReferenceDataProvider>()
                     .IsTheDefault()
                     .Ctor<IReferenceDataProvider>()
-                    .Named("LegacyReferenceDataProvider");
+                    .Named("LegacyReferenceDataProvider")
+                    .Ctor<ICacheService>()
+                    .Named(cacheConfiguration.DefaultCache);
             }
 
             #endregion

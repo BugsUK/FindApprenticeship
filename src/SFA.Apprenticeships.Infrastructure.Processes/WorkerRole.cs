@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.IoC;
     using Communication.IoC;
     using Communications;
+    using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using Elastic.Common.IoC;
     using IoC;
@@ -83,14 +84,18 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
         private void InitializeIoC()
         {
-            var config = new ConfigurationManager();
-            var useCacheSetting = config.TryGetAppSetting("UseCaching");
-            bool useCache;
-            bool.TryParse(useCacheSetting, out useCache);
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var cacheConfig = configurationService.Get<CacheConfiguration>();
 
             _container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
@@ -101,7 +106,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AzureCacheRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(useCache));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
