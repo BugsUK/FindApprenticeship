@@ -50,10 +50,12 @@
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-
-            var counter = 0;
+            
             var candidateIds = _savedSearchReadRepository.GetCandidateIds();
 
+            var message = string.Format("Querying candidate saved searches took {0}", stopwatch.Elapsed);
+
+            var counter = 0;
             Parallel.ForEach(candidateIds, candidateId =>
             {
                 var candidateSavedSearches = new CandidateSavedSearches
@@ -65,8 +67,8 @@
             });
 
             stopwatch.Stop();
-            var message = string.Format("Queuing {0} candidate saved searches took {1}", counter, stopwatch.Elapsed);
-            if (stopwatch.ElapsedMilliseconds > 10000)
+            message += string.Format(". Queuing {0} candidate saved searches took {1}", counter, stopwatch.Elapsed);
+            if (stopwatch.ElapsedMilliseconds > 60000)
             {
                 _logService.Warn(message);
             }

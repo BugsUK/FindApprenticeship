@@ -41,7 +41,7 @@
 
             messageBus.Verify(b => b.PublishMessage(It.IsAny<CandidateSavedSearches>()), Times.Exactly(numCandidateIds));
             logService.Verify(l => l.Info(It.IsAny<string>(), It.IsAny<object[]>()), Times.Once());
-            var expectedMessage = string.Format("Queuing {0} candidate saved searches took", numCandidateIds);
+            const string expectedMessage = "Querying candidate saved searches took ";
             loggedMessage.Should().StartWith(expectedMessage);
         }
     }
