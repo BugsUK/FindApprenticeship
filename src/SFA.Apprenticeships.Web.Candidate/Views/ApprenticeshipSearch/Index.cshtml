@@ -40,12 +40,14 @@
                             case ApprenticeshipSearchMode.Category:
                                 elementControlClass = categoriesElementControlClass;
                                 break;
+                            case ApprenticeshipSearchMode.SavedSearches:
+                                break;
                         }
                     }
                     @Html.RouteLink("Keywords", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywords-tab-control", @class = "tabbed-tab" + keywordTabControlClass, tab = "#tab1" })
                     @Html.RouteLink("Categories", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categories-tab-control", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#tab2" })
                     
-                    @if (anySavedSearches)
+                    @if (anySavedSearches || Model.SearchMode == ApprenticeshipSearchMode.SavedSearches)
                     {
                         @Html.RouteLink("Saved searches", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.SavedSearches }, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabControlClass, tab = "#tab3" })
                     }

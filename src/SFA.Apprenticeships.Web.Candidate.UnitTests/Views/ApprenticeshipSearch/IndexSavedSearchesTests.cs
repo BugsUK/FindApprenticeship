@@ -87,14 +87,6 @@
         }
 
         [Test]
-        [Ignore]
-        public void ShouldSelectFirstSavedSearchByDefault()
-        {
-            // TODO: AG: US769: unimplemented test.
-            Assert.Fail();
-        }
-
-        [Test]
         public void ShouldRenderAlertSettingsLink()
         {
             var @partial = new savedSearches();

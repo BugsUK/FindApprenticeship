@@ -118,6 +118,7 @@
                 switch (response.Code)
                 {
                     case ApprenticeshipSearchMediatorCodes.RunSavedSearch.SavedSearchNotFound:
+                    case ApprenticeshipSearchMediatorCodes.RunSavedSearch.RunSaveSearchFailed:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToAction("Index");
                     case ApprenticeshipSearchMediatorCodes.RunSavedSearch.Ok:

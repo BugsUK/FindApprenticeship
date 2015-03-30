@@ -378,7 +378,9 @@
                     break;
 
                 case ApprenticeshipSearchMode.SavedSearches:
-                    // TODO: AG: US769: consider ApprenticeshipSearchMode.SavedSearches.
+                    searchModel.Keywords = null;
+                    searchModel.Category = null;
+                    searchModel.SubCategories = null;
                     break;
             }
 

@@ -30,7 +30,6 @@
             SubCategories = viewModel.SubCategories;
             SearchMode = viewModel.SearchMode;
             SearchField = viewModel.SearchField;
-            // TODO: AG: US769: consider ApprenticeshipSearchViewModel.SavedSearches.
             SavedSearches = viewModel.SavedSearches;
         }
 

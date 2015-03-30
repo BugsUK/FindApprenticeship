@@ -7,9 +7,10 @@
 }
 
 <div id="saved-searches" class="tabbed-element tab3 @divClass">
-    <span class="form-label">Run a saved search</span>
     @if (Model.SavedSearches != null && Model.SavedSearches.Any())
     {
+        <span class="form-label">Run a saved search</span>
+
         <ul id="saved-searches-list" class="list-text list-checkradio">
             @foreach (var savedSearch in Model.SavedSearches)
             {
@@ -19,6 +20,10 @@
                 </li>
             }
         </ul>
+    }
+    else
+    {
+        <div id="saved-searches-load-failed" class="field-validation-error">TODO: Failed to retrieve your saved searches. Please try again or use the keyword search.</div>
     }
     <p>
         You can change your saved searches by visiting
