@@ -99,7 +99,7 @@ WriteLiteral("></i><span");
 
 WriteLiteral(" class=\"the-text\"");
 
-WriteLiteral(">Change details</span>\r\n            </a>\r\n");
+WriteLiteral(">Edit section</span>\r\n            </a>\r\n");
 
             
             #line 11 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
@@ -119,14 +119,14 @@ WriteLiteral(" class=\"form-label\"");
 
 WriteLiteral(">Name of most recent school/college</p>\r\n        <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 601), Tuple.Create("\"", 655)
+WriteAttribute("id", Tuple.Create(" id=\"", 599), Tuple.Create("\"", 653)
             
             #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 606), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.NameOfMostRecentSchoolCollege)
+, Tuple.Create(Tuple.Create("", 604), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.NameOfMostRecentSchoolCollege)
             
             #line default
             #line hidden
-, 606), false)
+, 604), false)
 );
 
 WriteLiteral(" class=\"form-prepopped\"");
@@ -158,14 +158,14 @@ WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Started</span>\r\n            <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 944), Tuple.Create("\"", 977)
+WriteAttribute("id", Tuple.Create(" id=\"", 942), Tuple.Create("\"", 975)
             
             #line 22 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 949), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.FromYear)
+, Tuple.Create(Tuple.Create("", 947), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.FromYear)
             
             #line default
             #line hidden
-, 949), false)
+, 947), false)
 );
 
 WriteLiteral(" class=\"form-prepopped\"");
@@ -189,14 +189,14 @@ WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">Finished</span>\r\n            <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1168), Tuple.Create("\"", 1199)
+WriteAttribute("id", Tuple.Create(" id=\"", 1166), Tuple.Create("\"", 1197)
             
             #line 26 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 1173), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.ToYear)
+, Tuple.Create(Tuple.Create("", 1171), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.ToYear)
             
             #line default
             #line hidden
-, 1173), false)
+, 1171), false)
 );
 
 WriteLiteral(" class=\"form-prepopped\"");

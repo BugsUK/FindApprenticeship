@@ -106,7 +106,7 @@ WriteLiteral("></i><span");
 
 WriteLiteral(" class=\"the-text\"");
 
-WriteLiteral(">Change details</span>\r\n                </a>\r\n");
+WriteLiteral(">Edit section</span>\r\n                </a>\r\n");
 
             
             #line 13 "..\..\Views\TraineeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"

@@ -23,9 +23,8 @@
 
 <div class="text">
     @Html.HiddenFor(m => m.VacancyDetail.Title)
-    @Html.HiddenFor(m => m.VacancyDetail.EmployerName)
     <div class="panel-indent">
-        <p class="para-btm-margin">Before you submit your application, please check your answers are relevant to the apprenticeship: <b class="inl-block">@Model.VacancyDetail.Title with @Model.VacancyDetail.EmployerName</b>.
+        <p class="para-btm-margin">Check your answers before submitting and make sure they're relevant to the apprenticehip: <b>@Model.VacancyDetail.Title</b>.
     </div>
 <div class="form-group">
     <p><a title="Return to application form" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.VacancyId })">Return to application form</a></p>
@@ -40,7 +39,7 @@
         @if (ViewBag.VacancyId != null)
         {
             <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyQualifications">
-                <i class="the-icon fa fa-pencil"></i><span class="the-text">Change details</span>
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
             </a>
         }
     </h2>
@@ -102,7 +101,7 @@
         @if (ViewBag.VacancyId != null)
         {
             <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyWorkExperience">
-                <i class="the-icon fa fa-pencil"></i><span class="the-text">Change details</span>
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
             </a>
         }
     </h2>

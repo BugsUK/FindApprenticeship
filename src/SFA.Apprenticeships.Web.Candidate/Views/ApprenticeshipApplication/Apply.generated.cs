@@ -430,7 +430,7 @@ WriteAttribute("onclick", Tuple.Create(" onclick=\'", 2910), Tuple.Create("\'", 
 , Tuple.Create(Tuple.Create(" ", 3091), Tuple.Create("});", 3092), true)
 );
 
-WriteLiteral(">Save draft</button>\r\n        </p>\r\n");
+WriteLiteral(">Save</button>\r\n        </p>\r\n");
 
             
             #line 67 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
@@ -463,14 +463,14 @@ WriteLiteral(">Last saved at ");
             #line hidden
 WriteLiteral(" to <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3318), Tuple.Create("\"", 3374)
+WriteAttribute("href", Tuple.Create(" href=\"", 3312), Tuple.Create("\"", 3368)
             
             #line 69 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 3325), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+                                                            , Tuple.Create(Tuple.Create("", 3319), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 3325), false)
+, 3319), false)
 );
 
 WriteLiteral(" title=\"My Applications\"");

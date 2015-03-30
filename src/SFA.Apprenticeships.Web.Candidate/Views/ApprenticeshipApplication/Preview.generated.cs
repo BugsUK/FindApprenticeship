@@ -138,17 +138,6 @@ Write(Html.HiddenFor(m => m.VacancyDetail.Title));
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 26 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-Write(Html.HiddenFor(m => m.VacancyDetail.EmployerName));
-
-            
-            #line default
-            #line hidden
 WriteLiteral("\r\n    <div");
 
 WriteLiteral(" class=\"panel-indent\"");
@@ -157,25 +146,12 @@ WriteLiteral(">\r\n        <p");
 
 WriteLiteral(" class=\"para-btm-margin\"");
 
-WriteLiteral(">Before you submit your application, please check your answers are relevant to th" +
-"e apprenticeship: <b");
-
-WriteLiteral(" class=\"inl-block\"");
-
-WriteLiteral(">");
+WriteLiteral(">Check your answers before submitting and make sure they\'re relevant to the appre" +
+"nticehip: <b>");
 
             
-            #line 28 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                                                                                                                                                     Write(Model.VacancyDetail.Title);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" with ");
-
-            
-            #line 28 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                                                                                                                                                                                     Write(Model.VacancyDetail.EmployerName);
+            #line 27 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+                                                                                                                           Write(Model.VacancyDetail.Title);
 
             
             #line default
@@ -188,20 +164,20 @@ WriteLiteral(">\r\n    <p><a");
 
 WriteLiteral(" title=\"Return to application form\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1518), Tuple.Create("\"", 1610)
+WriteAttribute("href", Tuple.Create(" href=\"", 1397), Tuple.Create("\"", 1489)
             
-            #line 31 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 1525), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.VacancyId })
+            #line 30 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+, Tuple.Create(Tuple.Create("", 1404), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.VacancyId })
             
             #line default
             #line hidden
-, 1525), false)
+, 1404), false)
 );
 
 WriteLiteral(">Return to application form</a></p>\r\n</div>\r\n</div>\r\n\r\n");
 
             
-            #line 35 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 34 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.Education));
 
             
@@ -220,13 +196,13 @@ WriteLiteral(" class=\"heading-large\"");
 WriteLiteral(">\r\n        Qualifications\r\n");
 
             
-            #line 40 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 39 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 40 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 39 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
          if (ViewBag.VacancyId != null)
         {
 
@@ -237,15 +213,15 @@ WriteLiteral("            <a");
 
 WriteLiteral(" class=\"icon-with-text\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1918), Tuple.Create("\"", 2029)
+WriteAttribute("href", Tuple.Create(" href=\"", 1797), Tuple.Create("\"", 1908)
             
-            #line 42 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 1925), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
+            #line 41 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+, Tuple.Create(Tuple.Create("", 1804), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
             
             #line default
             #line hidden
-, 1925), false)
-, Tuple.Create(Tuple.Create("", 2009), Tuple.Create("#applyQualifications", 2009), true)
+, 1804), false)
+, Tuple.Create(Tuple.Create("", 1888), Tuple.Create("#applyQualifications", 1888), true)
 );
 
 WriteLiteral(">\r\n                <i");
@@ -256,10 +232,10 @@ WriteLiteral("></i><span");
 
 WriteLiteral(" class=\"the-text\"");
 
-WriteLiteral(">Change details</span>\r\n            </a>\r\n");
+WriteLiteral(">Edit section</span>\r\n            </a>\r\n");
 
             
-            #line 45 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 44 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
         }
 
             
@@ -268,13 +244,13 @@ WriteLiteral(">Change details</span>\r\n            </a>\r\n");
 WriteLiteral("    </h2>\r\n\r\n");
 
             
-            #line 48 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 47 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 48 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 47 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
      if (!Model.Candidate.Qualifications.Any())
     {
 
@@ -288,7 +264,7 @@ WriteLiteral(" id=\"no-qualifications\"");
 WriteLiteral(">I don\'t have any qualifications</p>\r\n");
 
             
-            #line 51 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 50 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     }
 
             
@@ -297,13 +273,13 @@ WriteLiteral(">I don\'t have any qualifications</p>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 53 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 52 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 53 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 52 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
      foreach (var group in Model.Candidate.Qualifications.GroupBy(item => item.QualificationType))
     {
 
@@ -321,7 +297,7 @@ WriteLiteral(" class=\"heading-small\"");
 WriteLiteral(">");
 
             
-            #line 56 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 55 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                                  Write(Html.Encode(group.Key));
 
             
@@ -364,13 +340,13 @@ WriteLiteral(">Year</span>\r\n                    </th>\r\n                </tr>
 "ad>\r\n            <tbody>\r\n");
 
             
-            #line 79 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 78 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 79 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 78 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                  foreach (QualificationsViewModel item in group)
                 {
 
@@ -384,14 +360,14 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3451), Tuple.Create("\"", 3472)
+WriteAttribute("value", Tuple.Create(" value=\"", 3328), Tuple.Create("\"", 3349)
             
-            #line 83 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                          , Tuple.Create(Tuple.Create("", 3459), Tuple.Create<System.Object, System.Int32>(item.Subject
+            #line 82 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+                          , Tuple.Create(Tuple.Create("", 3336), Tuple.Create<System.Object, System.Int32>(item.Subject
             
             #line default
             #line hidden
-, 3459), false)
+, 3336), false)
 );
 
 WriteLiteral(" readonly>\r\n                        </td>\r\n                        <td>\r\n        " +
@@ -401,14 +377,14 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3644), Tuple.Create("\"", 3703)
+WriteAttribute("value", Tuple.Create(" value=\"", 3521), Tuple.Create("\"", 3580)
             
-            #line 86 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                          , Tuple.Create(Tuple.Create("", 3652), Tuple.Create<System.Object, System.Int32>(Html.GetDisplayGrade(item.Grade, item.IsPredicted)
+            #line 85 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+                          , Tuple.Create(Tuple.Create("", 3529), Tuple.Create<System.Object, System.Int32>(Html.GetDisplayGrade(item.Grade, item.IsPredicted)
             
             #line default
             #line hidden
-, 3652), false)
+, 3529), false)
 );
 
 WriteLiteral(" readonly>\r\n                        </td>\r\n                        <td>\r\n        " +
@@ -418,20 +394,20 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3875), Tuple.Create("\"", 3893)
+WriteAttribute("value", Tuple.Create(" value=\"", 3752), Tuple.Create("\"", 3770)
             
-            #line 89 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                          , Tuple.Create(Tuple.Create("", 3883), Tuple.Create<System.Object, System.Int32>(item.Year
+            #line 88 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+                          , Tuple.Create(Tuple.Create("", 3760), Tuple.Create<System.Object, System.Int32>(item.Year
             
             #line default
             #line hidden
-, 3883), false)
+, 3760), false)
 );
 
 WriteLiteral(" readonly>\r\n                        </td>\r\n                    </tr>\r\n");
 
             
-            #line 92 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 91 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                 }
 
             
@@ -440,7 +416,7 @@ WriteLiteral(" readonly>\r\n                        </td>\r\n                   
 WriteLiteral("            </tbody>\r\n        </table>\r\n");
 
             
-            #line 95 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 94 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     }
 
             
@@ -457,13 +433,13 @@ WriteLiteral(" class=\"heading-large\"");
 WriteLiteral(">\r\n        Work experience\r\n");
 
             
-            #line 102 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 101 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 102 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 101 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
          if (ViewBag.VacancyId != null)
         {
 
@@ -474,15 +450,15 @@ WriteLiteral("            <a");
 
 WriteLiteral(" class=\"icon-with-text\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4226), Tuple.Create("\"", 4337)
+WriteAttribute("href", Tuple.Create(" href=\"", 4103), Tuple.Create("\"", 4214)
             
-            #line 104 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-, Tuple.Create(Tuple.Create("", 4233), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
+            #line 103 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+, Tuple.Create(Tuple.Create("", 4110), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
             
             #line default
             #line hidden
-, 4233), false)
-, Tuple.Create(Tuple.Create("", 4317), Tuple.Create("#applyWorkExperience", 4317), true)
+, 4110), false)
+, Tuple.Create(Tuple.Create("", 4194), Tuple.Create("#applyWorkExperience", 4194), true)
 );
 
 WriteLiteral(">\r\n                <i");
@@ -493,10 +469,10 @@ WriteLiteral("></i><span");
 
 WriteLiteral(" class=\"the-text\"");
 
-WriteLiteral(">Change details</span>\r\n            </a>\r\n");
+WriteLiteral(">Edit section</span>\r\n            </a>\r\n");
 
             
-            #line 107 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 106 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
         }
 
             
@@ -505,13 +481,13 @@ WriteLiteral(">Change details</span>\r\n            </a>\r\n");
 WriteLiteral("    </h2>\r\n\r\n");
 
             
-            #line 110 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 109 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 110 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 109 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
      if (!Model.Candidate.WorkExperience.Any())
     {
 
@@ -525,7 +501,7 @@ WriteLiteral(" id=\"no-work-experience\"");
 WriteLiteral(">I don\'t have any work experience</p>\r\n");
 
             
-            #line 113 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 112 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     }
 
             
@@ -534,13 +510,13 @@ WriteLiteral(">I don\'t have any work experience</p>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 115 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 114 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 115 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 114 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
      foreach (WorkExperienceViewModel experience in Model.Candidate.WorkExperience)
     {
 
@@ -589,7 +565,7 @@ WriteLiteral(" class=\"form-prepopped cell-span\"");
 WriteLiteral(">");
 
             
-            #line 136 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 135 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                                                                       Write(experience.Employer);
 
             
@@ -606,7 +582,7 @@ WriteLiteral(" class=\"form-prepopped cell-span\"");
 WriteLiteral(">");
 
             
-            #line 138 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 137 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                                                                       Write(experience.JobTitle);
 
             
@@ -620,7 +596,7 @@ WriteLiteral(" class=\"form-prepopped cell-span prewrap\"");
 WriteLiteral(">");
 
             
-            #line 140 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 139 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                                                                               Write(experience.Description);
 
             
@@ -679,7 +655,7 @@ WriteLiteral(" class=\"form-prepopped cell-span\"");
 WriteLiteral(">");
 
             
-            #line 170 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 169 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                                                                       Write(Html.GetMonthYearLabel(experience.FromMonth, experience.FromYear));
 
             
@@ -693,7 +669,7 @@ WriteLiteral(" class=\"form-prepopped cell-span\"");
 WriteLiteral(">");
 
             
-            #line 173 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 172 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                                                                       Write(Html.GetMonthYearLabel(experience.ToMonth, experience.ToYear));
 
             
@@ -712,7 +688,7 @@ WriteLiteral(@"</span>
 ");
 
             
-            #line 183 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 182 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     }
 
             
@@ -721,7 +697,7 @@ WriteLiteral(@"</span>
 WriteLiteral("\r\n</section>\r\n\r\n\r\n\r\n");
 
             
-            #line 189 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 188 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.AboutYou));
 
             
@@ -730,7 +706,7 @@ Write(Html.DisplayFor(m => m.Candidate.AboutYou));
 WriteLiteral("\r\n");
 
             
-            #line 190 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 189 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers));
 
             
@@ -761,7 +737,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 202 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 201 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
 Write(Html.ActionLink("Submit application", "SubmitApplication", new { id = Model.VacancyId }, new { @class = "button", id = "submit-application", onclick = string.Format(AnalyticsTag, "BottomButton") }));
 
             
@@ -770,13 +746,13 @@ Write(Html.ActionLink("Submit application", "SubmitApplication", new { id = Mode
 WriteLiteral("\r\n\r\n");
 
             
-            #line 204 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 203 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 204 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 203 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
      if (Model.DateUpdated.HasValue)
     {
 
@@ -790,7 +766,7 @@ WriteLiteral(" id=\"applicationSavedBottomMessage\"");
 WriteLiteral(">Last saved at ");
 
             
-            #line 206 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 205 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
                                                        Write(Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved"));
 
             
@@ -798,14 +774,14 @@ WriteLiteral(">Last saved at ");
             #line hidden
 WriteLiteral(" to <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8725), Tuple.Create("\"", 8781)
+WriteAttribute("href", Tuple.Create(" href=\"", 8600), Tuple.Create("\"", 8656)
             
-            #line 206 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 8732), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+            #line 205 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+                                                    , Tuple.Create(Tuple.Create("", 8607), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 8732), false)
+, 8607), false)
 );
 
 WriteLiteral(" title=\"My Applications\"");
@@ -813,7 +789,7 @@ WriteLiteral(" title=\"My Applications\"");
 WriteLiteral(">my applications</a></p>\r\n");
 
             
-            #line 207 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
+            #line 206 "..\..\Views\ApprenticeshipApplication\Preview.cshtml"
     }
 
             
