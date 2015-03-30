@@ -45,7 +45,6 @@ Scenario: As a candidate I can change my personal settings
 	And I wait to see AllowEmailComms
 	And I wait to see AllowSmsComms
 	
-	And I wait to see SendApplicationSubmitted
 	And I wait to see SendApplicationStatusChanges
 	And I wait to see SendApprenticeshipApplicationsExpiring
 	And I wait to see SendMarketingCommunications
@@ -213,12 +212,10 @@ Scenario: As a candidate I can opt into marketing messages
 	| Field                                    | Rule           | Value |
 	| VerifyContainer                          | Does Not Exist |       |
 	| IsAllowSmsComms                          | Equals         | False |
-	| IsSendApplicationSubmitted               | Equals         | True  |
 	| IsSendApplicationStatusChanges           | Equals         | True  |
 	| IsSendApprenticeshipApplicationsExpiring | Equals         | True  |
 	| IsSendMarketingCommunications            | Equals         | True  |
 	When I choose AllowSmsComms
-	And I choose SendApplicationSubmitted
 	And I choose SendApplicationStatusChanges
 	And I choose SendApprenticeshipApplicationsExpiring
 	And I choose SendMarketingCommunications
@@ -233,6 +230,6 @@ Scenario: As a candidate I can opt into marketing messages
 	And I see
 	| Field                                    | Rule   | Value |
 	| VerifyContainer                          | Exists |       |
-	| IsSendApplicationSubmitted               | Equals | False |
+	| IsSendApplicationStatusChanges           | Equals | False |
 	| IsSendApprenticeshipApplicationsExpiring | Equals | False |
 	| IsSendMarketingCommunications            | Equals | False |
