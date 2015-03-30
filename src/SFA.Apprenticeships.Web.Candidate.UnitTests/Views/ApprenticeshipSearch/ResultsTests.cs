@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
+    using Builders;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -126,7 +127,8 @@
         [Test]
         public void SaveSearchAvailableNotLoggedIn()
         {
-            var result = new ResultsViewBuilder().Render();
+            var vacancySearchViewModel = new ApprenticeshipSearchViewModelBuilder().WithLocation("CV1").Build();
+            var result = new ResultsViewBuilder().With(new ApprenticeshipSearchResponseViewModelBuilder().WithVacancySearch(vacancySearchViewModel).Build()).Render();
 
             var receiveSaveSearchAlert = result.GetElementbyId("receiveSaveSearchAlert");
 
