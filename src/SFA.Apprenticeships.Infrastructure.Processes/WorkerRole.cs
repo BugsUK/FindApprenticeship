@@ -105,7 +105,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
-                x.AddRegistry<AzureCacheRegistry>();
+                x.AddCachingRegistry(cacheConfig);
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
