@@ -14,9 +14,6 @@
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using FluentValidation.Validators;
-    using Infrastructure.Caching.Azure;
-    using Infrastructure.Caching.Azure.IoC;
-    using Infrastructure.Caching.Memory.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging;
@@ -78,15 +75,7 @@
                         {
                             x.AddRegistry<LoggingRegistry>();
                             x.AddRegistry(new CommonRegistry(cacheConfig));
-
-                            if (cacheConfig.DefaultCache == CacheConfiguration.AzureCacheName)
-                            {
-                                x.AddRegistry<AzureCacheRegistry>();
-                            }
-                            else
-                            {
-                                x.AddRegistry<MemoryCacheRegistry>();
-                            }
+                            x.AddCachingRegistry(cacheConfig);
                         });
 
                         _configurationService = cachedContiner.GetInstance<IConfigurationService>();

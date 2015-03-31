@@ -17,16 +17,9 @@
 
         public AzureCacheService(ILogService logger)
         {
-            try
-            {
-                _logger = logger;
-                var cacheFactory = new DataCacheFactory();
-                _cache = cacheFactory.GetDefaultCache();
-            }
-            catch (Exception ex)
-            {
-                _logger.Warn("AzureCacheService unable to load cache", ex);
-            }
+            _logger = logger;
+            var cacheFactory = new DataCacheFactory();
+            _cache = cacheFactory.GetDefaultCache();
         }
 
         private void Store(string key, object value, CacheDuration cacheDuration)

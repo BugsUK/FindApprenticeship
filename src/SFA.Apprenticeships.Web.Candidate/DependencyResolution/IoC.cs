@@ -59,16 +59,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry<LoggingRegistry>();
 
                 // cache service - to allow web site to run without azure cache
-                // either one of the other is used
-                switch (cacheConfig.DefaultCache)
-                {
-                    case CacheConfiguration.AzureCacheName:
-                        x.AddRegistry<AzureCacheRegistry>();
-                        break;
-                    case CacheConfiguration.MemoryCacheName:
-                        x.AddRegistry<MemoryCacheRegistry>();
-                        break;
-                }
+                x.AddCachingRegistry(cacheConfig);
 
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
