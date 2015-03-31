@@ -256,8 +256,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
-                IsMultiLocation = false
+                VacancyLocationType = ApprenticeshipLocationType.NonNational
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
@@ -286,25 +285,6 @@
         }
 
         [Test]
-        public void HideAddressIfVacancyIsMultilocation()
-        {
-            var details = new Details();
-
-            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
-                IsMultiLocation = true
-            };
-
-            var view = details.RenderAsHtml(vacancyDetailViewModel);
-
-            view.GetElementbyId("vacancy-address")
-                .Should()
-                .BeNull("The address should not be shown if the vacancy has multiple locations.");
-        }
-
-        [Test]
         public void ShowMap()
         {
             var details = new Details();
@@ -312,8 +292,7 @@
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
-                IsMultiLocation = false
+                VacancyLocationType = ApprenticeshipLocationType.NonNational
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
@@ -339,25 +318,6 @@
             view.GetElementbyId("vacancy-map")
                 .Should()
                 .BeNull("The map should not be shown if the vacancy is National");
-        }
-
-        [Test]
-        public void HideMapIfVacancyIsMultilocation()
-        {
-            var details = new Details();
-
-            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyAddress = new AddressViewModel(),
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
-                IsMultiLocation = true
-            };
-
-            var view = details.RenderAsHtml(vacancyDetailViewModel);
-
-            view.GetElementbyId("vacancy-map")
-                .Should()
-                .BeNull("The map should not be shown if the vacancy has multiple locations.");
         }
 
         [Test]
