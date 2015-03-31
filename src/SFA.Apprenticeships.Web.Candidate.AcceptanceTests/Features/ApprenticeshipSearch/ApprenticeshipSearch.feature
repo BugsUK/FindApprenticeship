@@ -211,3 +211,22 @@ Scenario: Return to find apprenticeship link appears if not arriving from search
 	Then I see
 		| Field                  | Rule   | Value |
 		| FindApprenticeshipLink | Exists |       |
+
+@US726
+@SmokeTests
+Scenario: Reset search options
+	Given I navigated to the ApprenticeshipSearchPage page
+	When I enter data
+		 | Field               | Value    |
+		 | Keywords            | Admin    |
+		 | Location            | Coventry |
+		 | WithInDistance      | 40 miles |
+		 | ApprenticeshipLevel | Advanced |
+	And I choose Reset Search Options Link
+	And I am on the ApprenticeshipSearchPage page
+	Then I see
+		 | Field               | Rule   | Value      |
+		 | Keywords            | Empty  |            |
+		 | Location            | Empty  |            |
+		 | WithInDistance      | Empty  | 5 miles    |
+		 | ApprenticeshipLevel | Equals | All levels |

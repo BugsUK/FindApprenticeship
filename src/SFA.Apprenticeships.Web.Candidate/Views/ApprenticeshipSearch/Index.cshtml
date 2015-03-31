@@ -84,8 +84,8 @@
                         <button class="button tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass" id="run-saved-search-button">Run search</button>
                     </div>
 
-                    <div id="reset-search-options-link" class="tabbed-element disp-block form-group tab1 @keywordTabControlClass @categoriesTabClass @categoriesTabControlClass">
-                        @Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch)
+                    <div class="tabbed-element disp-block form-group tab1 @keywordTabControlClass @categoriesTabClass @categoriesTabControlClass">
+                        @Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "reset-search-options-link" })
                     </div>
 
                     @Html.HiddenFor(m => m.Latitude)

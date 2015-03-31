@@ -70,5 +70,9 @@
 
         [ElementLocator(Id = "browse-button")]
         public IWebElement Browse { get; set; }
+
+
+        [ElementLocator(Id = "reset-search-options-link")]
+        public IWebElement ResetSearchOptionsLink { get; set; }
     }
 }
