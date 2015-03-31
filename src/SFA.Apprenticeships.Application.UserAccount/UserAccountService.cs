@@ -158,13 +158,5 @@
 
             return claims.ToArray();
         }
-
-        public void UpdateUserProfile(string username, RegistrationDetails profileDetails)
-        {
-            Condition.Requires(username).IsNotNullOrEmpty();
-            Condition.Requires(profileDetails);
-
-            //todo: 1.9: allow update of name, DOB, address, contact number (not email address as new addresses must be confirmed)
-        }
     }
 }

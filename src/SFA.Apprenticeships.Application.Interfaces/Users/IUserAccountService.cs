@@ -29,7 +29,5 @@
         UserStatuses? GetUserStatus(string username);
 
         string[] GetRoleNames(string username);
-
-        void UpdateUserProfile(string username, RegistrationDetails profileDetails);
     }
 }
