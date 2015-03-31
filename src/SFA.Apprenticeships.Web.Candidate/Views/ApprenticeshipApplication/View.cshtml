@@ -1,4 +1,5 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
 
 @{
     ViewBag.Title = "View your application - Find an apprenticeship";
@@ -7,5 +8,40 @@
 
 <h1 class="heading-xlarge">Your application</h1>
 
+<div class="panel-indent text">
+    <p>This is your application form for the apprenticeship:<b class="inl-block">@Model.VacancyDetail.Title</b>.</p>
+    <p>
+        You applied on @Html.DisplayFor(m => m.DateApplied, "Date").
+        @if (Model.Status == ApplicationStatuses.Successful)
+        {
+            <span>This application was successful.</span>
+        }
+        else if (Model.Status == ApplicationStatuses.Unsuccessful)
+        {
+            <span>This application was unsuccessful.</span>
+        }
+        else if (Model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+        {
+            <span>This apprenticeship expired or was withdrawn.</span>
+        }
+    </p>
+</div>
+
+<div class="form-group">
+    <p>
+        <a id="return-to-my-applications" href="@Url.Action("Index", "Account")">Return to my applications</a>
+    </p>
+</div>
+
 @Html.DisplayFor(m => m.Candidate)
 @Html.DisplayFor(m => m.Candidate.Education)
+@Html.DisplayFor(m => m.Candidate.Qualifications, "QualificationsViewModel")
+@Html.DisplayFor(m => m.Candidate.WorkExperience, "WorkExperienceViewModel")
+@Html.DisplayFor(m => m.Candidate.AboutYou)
+@Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
+
+<div class="form-group">
+    <p>
+        <a id="return-to-my-applications" href="@Url.Action("Index", "Account")">Return to my applications</a>
+    </p>
+</div>

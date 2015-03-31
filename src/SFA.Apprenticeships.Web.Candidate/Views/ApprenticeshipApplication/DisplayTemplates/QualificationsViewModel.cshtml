@@ -1,0 +1,63 @@
+﻿@model IEnumerable<QualificationsViewModel>
+
+<section id="applyQualifications" class="section-border">
+    <h2 class="heading-large">
+        Qualifications
+        @if (ViewBag.VacancyId != null)
+        {
+            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyQualifications">
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
+            </a>
+        }
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <p id="no-qualifications">I don't have any qualifications</p>
+    }
+
+    @foreach (var group in Model.GroupBy(item => item.QualificationType))
+    {
+        <div class="hgroup-small">
+            <h3 class="heading-small">@Html.Encode(group.Key)</h3>
+        </div>
+        <table class="grid-3-4">
+            <colgroup>
+                <col class="t40">
+                <col class="t25">
+                <col class="t15">
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        <span class="heading-span">Subject</span>
+                    </th>
+                    <th>
+                        <span class="heading-span">Grade</span>
+                    </th>
+                    <th>
+                        <span class="heading-span">Year</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (QualificationsViewModel item in group)
+                {
+                    <tr>
+                        <td>
+                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Subject" readonly>
+                        </td>
+                        <td>
+                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@Html.GetDisplayGrade(item.Grade, item.IsPredicted)" readonly>
+                        </td>
+                        <td>
+                            <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Year" readonly>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</section>

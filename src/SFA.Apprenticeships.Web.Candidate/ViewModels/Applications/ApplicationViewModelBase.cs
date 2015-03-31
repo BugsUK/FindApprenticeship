@@ -70,5 +70,7 @@
         public bool IsJavascript { get; set; }
 
         public ApplicationViewModelStatus ViewModelStatus { get; set; }
+
+        public DateTime DateApplied { get; set; }
     }
 }

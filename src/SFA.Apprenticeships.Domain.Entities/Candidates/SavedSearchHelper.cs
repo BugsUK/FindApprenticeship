@@ -54,7 +54,7 @@
             var urlSb = new StringBuilder("/apprenticeships");
             urlSb.Append("?");
 
-            var excludedKeys = new[] { "CandidateId", "AlertsEnabled", "SubCategories", "LastResultsHash", "DateProcessed" };
+            var excludedKeys = new[] { "CandidateId", "AlertsEnabled", "CategoryFullName", "SubCategories", "SubCategoriesFullName", "LastResultsHash", "DateProcessed" };
 
             foreach (var kvp in propertyDictionary.Where(kvp => !excludedKeys.Contains(kvp.Key)))
             {

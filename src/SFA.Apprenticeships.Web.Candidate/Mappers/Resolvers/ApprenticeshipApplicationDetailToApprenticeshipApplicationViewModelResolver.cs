@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
+    using System;
     using AutoMapper;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Web.Candidate.Mappers.Helpers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
+    using Domain.Entities.Applications;
+    using Helpers;
+    using ViewModels.Applications;
+    using ViewModels.Candidate;
 
     public class ApprenticeshipApplicationDetailToApprenticeshipApplicationViewModelResolver :
         ITypeConverter<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>
@@ -18,7 +19,8 @@
                 Candidate = new ApprenticeshipCandidateViewModel().Resolve(application),
                 DateUpdated = application.DateUpdated,
                 VacancyId = application.Vacancy.Id,
-                Status = application.Status
+                Status = application.Status,
+                DateApplied = application.DateApplied ?? DateTime.Now
             };
 
             model.Candidate.AboutYou =

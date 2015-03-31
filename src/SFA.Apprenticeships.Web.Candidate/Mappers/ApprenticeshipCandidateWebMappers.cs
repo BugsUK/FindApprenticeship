@@ -78,6 +78,8 @@
                 .ForMember(d => d.Distance,
                     opt => opt.Ignore())
                 .ForMember(d => d.SearchReturnUrl,
+                    opt => opt.Ignore())
+                .ForMember(d => d.IsMultiLocation,
                     opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>()
