@@ -4,7 +4,7 @@
     using Nest;
 
     [ElasticType(Name = "apprenticeship")]
-    public class ApprenticeshipSummary : IVacancySummary
+    public class ApprenticeshipSummary : IApprenticeshipVacancySummary
     {
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public int Id { get; set; }
@@ -17,6 +17,9 @@
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public DateTime ClosingDate { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.Analyzed)]
+        public DateTime PostedDate { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "stopwordsBase")]
         public string EmployerName { get; set; }
@@ -47,5 +50,11 @@
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string FrameworkCode { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public string Wage { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public string WorkingWeek { get; set; }
     }
 }

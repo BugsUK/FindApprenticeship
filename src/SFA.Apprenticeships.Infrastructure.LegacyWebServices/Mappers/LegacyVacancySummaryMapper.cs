@@ -29,8 +29,11 @@
                 .ForMember(dest => dest.ClosingDate,
                     opt => opt.MapFrom(src => src.ClosingDate))
 
+                .ForMember(dest => dest.PostedDate,
+                    opt => opt.MapFrom(src => src.VacancyPostedDate))
+
                 .ForMember(dest => dest.EmployerName,
-                    opt => opt.MapFrom(src => src.EmployerName))
+                    opt => opt.ResolveUsing<LegacyVacancySummaryEmployerNameResolver>().FromMember(src => src))
 
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.ShortDescription))
@@ -54,6 +57,12 @@
                 .ForMember(dest => dest.Framework,
                     opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription))
 
+                .ForMember(dest => dest.Wage,
+                    opt => opt.ResolveUsing<LegacyVacancySummaryWageResolver>().FromMember(src => src))
+
+                .ForMember(dest => dest.WorkingWeek,
+                    opt => opt.MapFrom(src => src.WorkingWeek))
+
                 .ForMember(dest => dest.SectorCode, opt => opt.Ignore())
 
                 .ForMember(dest => dest.FrameworkCode, opt => opt.Ignore());
@@ -76,8 +85,11 @@
                 .ForMember(dest => dest.ClosingDate,
                     opt => opt.MapFrom(src => src.ClosingDate))
 
+                .ForMember(dest => dest.PostedDate,
+                    opt => opt.MapFrom(src => src.VacancyPostedDate))
+
                 .ForMember(dest => dest.EmployerName,
-                    opt => opt.MapFrom(src => src.EmployerName))
+                    opt => opt.ResolveUsing<LegacyVacancySummaryEmployerNameResolver>().FromMember(src => src))
 
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.ShortDescription))

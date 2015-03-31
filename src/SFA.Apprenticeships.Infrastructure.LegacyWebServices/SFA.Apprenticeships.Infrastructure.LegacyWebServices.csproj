@@ -120,6 +120,8 @@
     <Compile Include="Mappers\Apprenticeships\SummaryApprenticeshipLevelResolver .cs" />
     <Compile Include="Mappers\Apprenticeships\LegacyApprenticeshipVacancyDetailMapper.cs" />
     <Compile Include="Mappers\LegacyVacancyDetailAddressDetailsResolver.cs" />
+    <Compile Include="Mappers\LegacyVacancySummaryWageResolver.cs" />
+    <Compile Include="Mappers\LegacyVacancySummaryEmployerNameResolver.cs" />
     <Compile Include="Mappers\LegacyVacancySummaryMapper.cs" />
     <Compile Include="Mappers\LegacyVacancySummaryLocationResolver.cs" />
     <Compile Include="Mappers\ApplicationStatusSummaryMapper.cs" />

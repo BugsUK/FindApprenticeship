@@ -10,6 +10,8 @@
 
         DateTime ClosingDate { get; set; }
 
+        DateTime PostedDate { get; set; }
+
         string EmployerName { get; set; }
 
         string Description { get; set; }

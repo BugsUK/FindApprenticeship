@@ -15,7 +15,7 @@
             Id = vacancySummary.Id;
             VacancyReference = vacancySummary.VacancyReference;
             Title = vacancySummary.Title;
-            //todo: 1.9: PostedDate = vacancySummary.PostedDate;
+            PostedDate = vacancySummary.PostedDate;
             StartDate = vacancySummary.StartDate;
             ClosingDate = vacancySummary.ClosingDate;
             Description = vacancySummary.Description;
@@ -33,7 +33,7 @@
 
         public string Title { get; set; }
 
-        //todo: 1.9: public DateTime PostedDate { get; set; }
+        public DateTime PostedDate { get; set; }
 
         public DateTime StartDate { get; set; }
 
