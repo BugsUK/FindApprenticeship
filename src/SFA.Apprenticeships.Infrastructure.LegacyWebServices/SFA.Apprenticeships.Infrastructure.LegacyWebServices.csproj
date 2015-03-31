@@ -119,7 +119,6 @@
     <Compile Include="Mappers\Apprenticeships\ApprenticeshipTypeCheck.cs" />
     <Compile Include="Mappers\Apprenticeships\SummaryApprenticeshipLevelResolver .cs" />
     <Compile Include="Mappers\Apprenticeships\LegacyApprenticeshipVacancyDetailMapper.cs" />
-    <Compile Include="Mappers\Apprenticeships\MultiLocationResolver.cs" />
     <Compile Include="Mappers\LegacyVacancyDetailAddressDetailsResolver.cs" />
     <Compile Include="Mappers\LegacyVacancySummaryMapper.cs" />
     <Compile Include="Mappers\LegacyVacancySummaryLocationResolver.cs" />
