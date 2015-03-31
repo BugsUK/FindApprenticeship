@@ -9,7 +9,6 @@
 <div id="saved-searches" class="tabbed-element tab3 @divClass">
     @if (Model.SavedSearches != null && Model.SavedSearches.Any())
     {
-        <span class="form-label">Run a saved search</span>
 
         <ul id="saved-searches-list" class="list-text list-checkradio">
             @foreach (var savedSearch in Model.SavedSearches)
@@ -22,7 +21,8 @@
         </ul>
     }
     <p>
-        You can change your saved searches by visiting
+        You can edit your saved searches in the
         @Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new { id = "saved-searches-settings-link" })
+        section.
     </p>
 </div>
