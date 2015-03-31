@@ -1,14 +1,14 @@
-﻿using SFA.Apprenticeships.Domain.Interfaces.Caching;
-
-namespace SFA.Apprenticeships.Infrastructure.Caching.Memory.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Memory.IoC
 {
+    using Common.Configuration;
     using StructureMap.Configuration.DSL;
+    using Domain.Interfaces.Caching;
 
     public class MemoryCacheRegistry : Registry
     {
         public MemoryCacheRegistry()
         {
-            For<ICacheService>().Singleton().Use<MemoryCacheService>().Name = "MemoryCacheService";
+            For<ICacheService>().Singleton().Use<MemoryCacheService>().Name = CacheConfiguration.MemoryCacheName;
         }
     }
 }

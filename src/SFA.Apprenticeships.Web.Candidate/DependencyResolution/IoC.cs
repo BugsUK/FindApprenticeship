@@ -24,6 +24,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Domain.Interfaces.Configuration;
     using Infrastructure.Address.IoC;
     using Infrastructure.Caching.Azure.IoC;
+    using Infrastructure.Caching.Memory.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.IoC;
@@ -57,8 +58,19 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
 
+                // cache service - to allow web site to run without azure cache
+                // either one of the other is used
+                switch (cacheConfig.DefaultCache)
+                {
+                    case CacheConfiguration.AzureCacheName:
+                        x.AddRegistry<AzureCacheRegistry>();
+                        break;
+                    case CacheConfiguration.MemoryCacheName:
+                        x.AddRegistry<MemoryCacheRegistry>();
+                        break;
+                }
+
                 // service layer
-                x.AddRegistry<AzureCacheRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
