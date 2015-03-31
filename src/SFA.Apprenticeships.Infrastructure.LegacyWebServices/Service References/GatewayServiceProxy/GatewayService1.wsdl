@@ -91,8 +91,20 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element xmlns:q11="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" name="Candidate" nillable="true" type="q11:Candidate" />
-      <xs:element xmlns:q12="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" name="ValidationErrors" nillable="true" type="q12:ValidationErrors" />
+      <xs:element name="UpdateCandidateRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q11="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="Candidate" nillable="true" type="q11:Candidate" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="UpdateCandidateResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element xmlns:q12="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes" minOccurs="0" name="ValidationErrors" nillable="true" type="q12:ValidationErrors" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
     </xs:schema>
     <xs:schema xmlns:tns="http://schemas.microsoft.com/2003/10/Serialization/" attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
       <xs:element name="anyType" nillable="true" type="xs:anyType" />
@@ -532,10 +544,10 @@
     <wsdl:part name="parameters" element="tns:GetVacancySummaryResponse" />
   </wsdl:message>
   <wsdl:message name="UpdateCandidateRequest">
-    <wsdl:part name="Candidate" element="tns:Candidate" />
+    <wsdl:part name="parameters" element="tns:UpdateCandidateRequest" />
   </wsdl:message>
-  <wsdl:message name="UpdateCandidateReponse">
-    <wsdl:part name="ValidationErrors" element="tns:ValidationErrors" />
+  <wsdl:message name="UpdateCandidateResponse">
+    <wsdl:part name="parameters" element="tns:UpdateCandidateResponse" />
   </wsdl:message>
   <wsdl:portType name="GatewayServiceContract">
     <wsdl:operation name="CreateApplication">
@@ -568,7 +580,7 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateCandidate">
       <wsdl:input wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/UpdateCandidate" name="UpdateCandidateRequest" message="tns:UpdateCandidateRequest" />
-      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/UpdateCandidateResponse" name="UpdateCandidateReponse" message="tns:UpdateCandidateReponse" />
+      <wsdl:output wsaw:Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/UpdateCandidateResponse" name="UpdateCandidateResponse" message="tns:UpdateCandidateResponse" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="DefaultEndpoint" type="tns:GatewayServiceContract">
@@ -641,7 +653,7 @@
       <wsdl:input name="UpdateCandidateRequest">
         <soap:body use="literal" />
       </wsdl:input>
-      <wsdl:output name="UpdateCandidateReponse">
+      <wsdl:output name="UpdateCandidateResponse">
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>

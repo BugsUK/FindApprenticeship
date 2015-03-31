@@ -95,17 +95,17 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             "acancySummariesResponse")]
         System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancySummaryResponse> GetVacancySummariesAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancySummaryRequest request);
         
-        // CODEGEN: Generating message contract since the operation UpdateCandidate is neither RPC nor document wrapped.
+        // CODEGEN: Generating message contract since the wrapper name (UpdateCandidateRequest) of message UpdateCandidateRequest does not match the default value (UpdateCandidate)
         [System.ServiceModel.OperationContractAttribute(Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/Upda" +
             "teCandidate", ReplyAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/Upda" +
             "teCandidateResponse")]
         [System.ServiceModel.XmlSerializerFormatAttribute(SupportFaults=true)]
-        SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateReponse UpdateCandidate(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest request);
+        SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateResponse UpdateCandidate(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/Upda" +
             "teCandidate", ReplyAction="http://schemas.imservices.org.uk/nas/gatewayservice/1/GatewayServiceContract/Upda" +
             "teCandidateResponse")]
-        System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateReponse> UpdateCandidateAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest request);
+        System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateResponse> UpdateCandidateAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest request);
     }
     
     /// <remarks/>
@@ -4859,7 +4859,7 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    [System.ServiceModel.MessageContractAttribute(WrapperName="UpdateCandidateRequest", WrapperNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", IsWrapped=true)]
     public partial class UpdateCandidateRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=0)]
@@ -4877,18 +4877,18 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class UpdateCandidateReponse {
+    [System.ServiceModel.MessageContractAttribute(WrapperName="UpdateCandidateResponse", WrapperNamespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", IsWrapped=true)]
+    public partial class UpdateCandidateResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1", Order=0)]
         [System.Xml.Serialization.XmlArrayAttribute(IsNullable=true)]
         [System.Xml.Serialization.XmlArrayItemAttribute(Namespace="http://schemas.imservices.org.uk/nas/gatewayservice/1/datatypes")]
         public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ValidationError[] ValidationErrors;
         
-        public UpdateCandidateReponse() {
+        public UpdateCandidateResponse() {
         }
         
-        public UpdateCandidateReponse(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ValidationError[] ValidationErrors) {
+        public UpdateCandidateResponse(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ValidationError[] ValidationErrors) {
             this.ValidationErrors = ValidationErrors;
         }
     }
@@ -5064,23 +5064,23 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateReponse SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract.UpdateCandidate(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest request) {
+        SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateResponse SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract.UpdateCandidate(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest request) {
             return base.Channel.UpdateCandidate(request);
         }
         
         public SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.ValidationError[] UpdateCandidate(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.Candidate Candidate) {
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest inValue = new SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest();
             inValue.Candidate = Candidate;
-            SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateReponse retVal = ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).UpdateCandidate(inValue);
+            SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateResponse retVal = ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).UpdateCandidate(inValue);
             return retVal.ValidationErrors;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateReponse> SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract.UpdateCandidateAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest request) {
+        System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateResponse> SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract.UpdateCandidateAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest request) {
             return base.Channel.UpdateCandidateAsync(request);
         }
         
-        public System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateReponse> UpdateCandidateAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.Candidate Candidate) {
+        public System.Threading.Tasks.Task<SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateResponse> UpdateCandidateAsync(SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.Candidate Candidate) {
             SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest inValue = new SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateRequest();
             inValue.Candidate = Candidate;
             return ((SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GatewayServiceContract)(this)).UpdateCandidateAsync(inValue);

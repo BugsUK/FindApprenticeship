@@ -155,7 +155,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="Service References\GatewayServiceProxy\GatewayService.wsdl" />
+    <None Include="Service References\GatewayServiceProxy\GatewayService1.wsdl" />
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.CandidateApplication.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -186,7 +186,7 @@
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.GetVacancySummaryResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateReponse.datasource">
+    <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.UpdateCandidateResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\GatewayServiceProxy\SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServiceProxy.VacancySummary.datasource">
