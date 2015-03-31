@@ -45,44 +45,5 @@ Scenario: Browse based search happy path
 	Then I see
         | Field                  | Rule         | Value |
         | SearchResultItemsCount | Equals       | 5     |
-        | BrowseTab              | Exists       |       |
         | Categories             | Exists       |       |
         | CategoryItemsCount     | Greater Than | 0     |
-
-@SmokeTests
-Scenario: Switch to browse based search
-	Given I navigated to the ApprenticeshipSearchPage page
-	When I enter data
-		 | Field               | Value      |
-		 | Keywords            | Mechanical |
-		 | Location            | Birmingham |
-		 | WithInDistance      | 40 miles   |
-		 | ApprenticeshipLevel | All levels |
-	And I choose Search
-	And I am on the ApprenticeshipSearchResultPage page
-	Then I see 
-        | Field    | Rule   | Value      |
-        | Keywords | Equals | Mechanical |
-	When I choose BrowseTab
-	Then I see
-        | Field              | Rule         | Value |
-        | Categories         | Exists       |       |
-        | CategoryItemsCount | Greater Than | 0     |
-	And I am on the ApprenticeshipSearchResultPage page
-	When I am on CategoryItems list item matching criteria
-		| Field         | Rule   | Value                                     |
-		| CategoryLabel | Equals | Agriculture, Horticulture and Animal Care |
-	And I choose WrappedElement
-	And I am on the ApprenticeshipSearchResultPage page
-	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	Then I see
-        | Field              | Rule         | Value |
-        | BrowseTab          | Exists       |       |
-        | Categories         | Exists       |       |
-        | CategoryItemsCount | Greater Than | 0     |
-	When I choose SearchTab
-	Then I see
-        | Field     | Rule   | Value      |
-        | SearchTab | Exists |            |
-        | Keywords  | Equals | Mechanical |

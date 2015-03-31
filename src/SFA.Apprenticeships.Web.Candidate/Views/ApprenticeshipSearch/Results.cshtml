@@ -101,6 +101,7 @@
     {
         Html.Partial("ValidationSummary", ViewData.ModelState);
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);
+
         <section class="grid grid-2-3">
             @{
                 if (Model.TotalLocalHits == 0 && Model.TotalNationalHits == 0)
@@ -150,7 +151,6 @@
 
 @section scripts
 {
-
     @Scripts.Render("~/bundles/nas/locationsearch")
     @Scripts.Render("~/bundles/nas/apprenticeships/results");
 
@@ -175,14 +175,6 @@
 
         $('#search-button').click(function () {
             $('#LocationType').val("NonNational");
-        });
-
-        $("#search-tab-control").click(function () {
-            $("#SearchMode").val("Keyword");
-        });
-
-        $("#browse-tab-control").click(function () {
-            $("#SearchMode").val("Category");
         });
 
         initSavedVacancies({

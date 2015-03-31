@@ -12,5 +12,7 @@
         public ApprenticeshipVacancyDetailViewModel(string message) : base(message)
         {
         }
+
+        public bool IsMultiLocation { get; set; }
     }
 }

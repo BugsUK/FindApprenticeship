@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.ApprenticeshipSearch
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using OpenQA.Selenium;
     using SpecBind.Pages;
     using SpecBind.Selenium;
-    using VacancySearch;
 
     [PageNavigation("/apprenticeships")]
     [PageAlias("ApprenticeshipSearchResultPage")]
@@ -78,7 +78,7 @@
 
         public string SortOrderingDropDownItemsCount
         {
-            get { return SortOrderingDropDownItems.Count().ToString(); }
+            get { return SortOrderingDropDownItems.Count().ToString(CultureInfo.InvariantCulture); }
         }
 
         [ElementLocator(Id = "results-per-page")]
@@ -130,7 +130,7 @@
 
         public string SearchResultItemsCount
         {
-            get { return SearchResultItems.Count().ToString(); }
+            get { return SearchResultItems.Count().ToString(CultureInfo.InvariantCulture); }
         }
 
         [ElementLocator(Id = "location-suggestions")]
@@ -141,7 +141,7 @@
 
         public string LocationSuggestionsCount
         {
-            get { return LocationSuggestions.Count().ToString(); }
+            get { return LocationSuggestions.Count().ToString(CultureInfo.InvariantCulture); }
         }
 
         [ElementLocator(Id = "search-no-results-apprenticeship-levels")]
@@ -149,12 +149,6 @@
 
         [ElementLocator(Id = "search-no-results-reference-number")]
         public IWebElement ReferenceNumberAdvice { get; set; }
-
-        [ElementLocator(Id = "search-tab-control")]
-        public IWebElement SearchTab { get; set; }
-
-        [ElementLocator(Id = "browse-tab-control")]
-        public IWebElement BrowseTab { get; set; }
 
         [ElementLocator(Id = "categories")]
         public IWebElement Categories { get; set; }
@@ -164,25 +158,26 @@
 
         public string CategoryItemsCount
         {
-            get { return CategoryItems.Count().ToString(); }
+            get { return CategoryItems.Count().ToString(CultureInfo.InvariantCulture); }
         }
         
         public string ResultsAreInDistanceOrder
         {
             get
             {
-                bool result = true;
+                var result = true;
                 SearchResultItem previousItem = null;
-                for (int i = 0; i < SearchResultItems.Count(); i++)
+
+                for (var i = 0; i < SearchResultItems.Count(); i++)
                 {
-                    if (i > 0)
+                    if (previousItem != null)
                     {
                         var currentItem = SearchResultItems.ElementAt(i);
                         var currentDistance = double.Parse(currentItem.Distance.Text);
                         var previousDistance = double.Parse(previousItem.Distance.Text);
                         result = result & currentDistance >= previousDistance;
-
                     }
+
                     previousItem = SearchResultItems.ElementAt(i);
                 }
 
@@ -194,17 +189,19 @@
         {
             get
             {
-                bool result = true;
+                var result = true;
                 SearchResultItem previousItem = null;
-                for (int i = 0; i < SearchResultItems.Count(); i++)
+
+                for (var i = 0; i < SearchResultItems.Count(); i++)
                 {
-                    if (i > 0)
+                    if (previousItem != null)
                     {
                         var currentItem = SearchResultItems.ElementAt(i);
                         var currrentClosingDate = DateTime.Parse(currentItem.ClosingDate.GetAttribute("data-date"));
                         var previousClosingDate = DateTime.Parse(previousItem.ClosingDate.GetAttribute("data-date"));
                         result = result & currrentClosingDate >= previousClosingDate;
                     }
+
                     previousItem = SearchResultItems.ElementAt(i);
                 }
 

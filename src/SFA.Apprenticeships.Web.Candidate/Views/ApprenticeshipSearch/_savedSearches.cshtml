@@ -21,10 +21,6 @@
             }
         </ul>
     }
-    else
-    {
-        <div id="saved-searches-load-failed" class="field-validation-error">TODO: Failed to retrieve your saved searches. Please try again or use the keyword search.</div>
-    }
     <p>
         You can change your saved searches by visiting
         @Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new { id = "saved-searches-settings-link" })

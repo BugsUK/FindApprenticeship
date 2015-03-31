@@ -207,24 +207,6 @@ WriteLiteral("        </ul>\r\n");
             
             #line 23 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
     }
-    else
-    {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
-
-WriteLiteral(" id=\"saved-searches-load-failed\"");
-
-WriteLiteral(" class=\"field-validation-error\"");
-
-WriteLiteral(">TODO: Failed to retrieve your saved searches. Please try again or use the keywor" +
-"d search.</div>\r\n");
-
-            
-            #line 27 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
-    }
 
             
             #line default
@@ -234,7 +216,7 @@ WriteLiteral("    <p>\r\n        You can change your saved searches by visiting\
 WriteLiteral("        ");
 
             
-            #line 30 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
+            #line 26 "..\..\Views\ApprenticeshipSearch\_savedSearches.cshtml"
    Write(Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new { id = "saved-searches-settings-link" }));
 
             
