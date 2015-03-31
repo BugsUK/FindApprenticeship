@@ -49,8 +49,8 @@
             view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" active").Should().BeFalse();
 
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
-            view.GetElementbyId("reset-search-options-link").Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("reset-search-options-link").Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
         }
 
         [Test]
@@ -89,8 +89,8 @@
             view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" active").Should().BeTrue();
 
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
-            view.GetElementbyId("reset-search-options-link").Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("reset-search-options-link").Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
         }
 
         /// <summary>
@@ -134,8 +134,8 @@
             view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" active").Should().BeFalse();
 
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
-            view.GetElementbyId("reset-search-options-link").Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("reset-search-options-link").Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
         }
 
         [Test]
@@ -172,8 +172,8 @@
             button.Attributes["class"].Value.Should().Contain(" active");
 
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
-            view.GetElementbyId("reset-search-options-link").Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("reset-search-options-link").Attributes["class"].Value.Contains(" tab3").Should().BeFalse();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab3").Should().BeFalse();
         }
 
         [Test]
