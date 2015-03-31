@@ -224,8 +224,19 @@ WriteLiteral(">You applied on ");
             #line hidden
 WriteLiteral(".</p>\r\n");
 
+WriteLiteral("                <p>");
+
             
             #line 37 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+              Write(Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = Model.Id }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n");
+
+            
+            #line 38 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
             }
 
             if (Model.VacancyStatus == VacancyStatuses.Live)
@@ -238,20 +249,20 @@ WriteLiteral("                <a");
 
 WriteLiteral(" id=\"track-application-status\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2001), Tuple.Create("\"", 2062)
+WriteAttribute("href", Tuple.Create(" href=\"", 2124), Tuple.Create("\"", 2185)
             
-            #line 41 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 2008), Tuple.Create<System.Object, System.Int32>(Url.Action("Track", "Account", new { id = Model.Id })
+            #line 42 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+, Tuple.Create(Tuple.Create("", 2131), Tuple.Create<System.Object, System.Int32>(Url.Action("Track", "Account", new { id = Model.Id })
             
             #line default
             #line hidden
-, 2008), false)
+, 2131), false)
 );
 
 WriteLiteral(">Track application status</a>\r\n");
 
             
-            #line 42 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 43 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
             }
             else
             {
@@ -263,20 +274,20 @@ WriteLiteral("                <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2191), Tuple.Create("\"", 2229)
+WriteAttribute("href", Tuple.Create(" href=\"", 2314), Tuple.Create("\"", 2352)
             
-            #line 45 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 2198), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
+            #line 46 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+, Tuple.Create(Tuple.Create("", 2321), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
             
             #line default
             #line hidden
-, 2198), false)
+, 2321), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n");
 
             
-            #line 46 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 47 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
             }
         }
     }
@@ -296,20 +307,20 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Apply for apprenticeship\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2468), Tuple.Create("\"", 2553)
+WriteAttribute("href", Tuple.Create(" href=\"", 2591), Tuple.Create("\"", 2676)
             
-            #line 51 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-                                  , Tuple.Create(Tuple.Create("", 2475), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })
+            #line 52 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+                                  , Tuple.Create(Tuple.Create("", 2598), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })
             
             #line default
             #line hidden
-, 2475), false)
+, 2598), false)
 );
 
 WriteLiteral(" ");
 
             
-            #line 51 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 52 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
                                                                                                                                                                                              Write(Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signedin/", "Apprenticeship – Signed In Apply", ViewData["AnalyticsButtonPosition"])));
 
             
@@ -318,7 +329,7 @@ WriteLiteral(" ");
 WriteLiteral(">Apply for apprenticeship</a>\r\n");
 
             
-            #line 52 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 53 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
     }
 }
 else if (Model.VacancyStatus == VacancyStatuses.Live)
@@ -337,20 +348,20 @@ WriteLiteral(" class=\"button button-with-hint\"");
 
 WriteLiteral(" title=\"Sign in to apply\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2895), Tuple.Create("\"", 2980)
+WriteAttribute("href", Tuple.Create(" href=\"", 3018), Tuple.Create("\"", 3103)
             
-            #line 56 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
-                      , Tuple.Create(Tuple.Create("", 2902), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })
+            #line 57 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+                      , Tuple.Create(Tuple.Create("", 3025), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { @id = Model.Id })
             
             #line default
             #line hidden
-, 2902), false)
+, 3025), false)
 );
 
 WriteLiteral(" ");
 
             
-            #line 56 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 57 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
                                                                                                                                                                                  Write(Html.Raw(string.Format(AnalyticsTag, "/apprenticeship/apply/signin/", "Apprenticeship – Sign In to Apply", ViewData["AnalyticsButtonPosition"])));
 
             
@@ -359,7 +370,7 @@ WriteLiteral(" ");
 WriteLiteral(">Sign in to apply</a>\r\n");
 
             
-            #line 57 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 58 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
 }
 
             
@@ -368,7 +379,7 @@ WriteLiteral(">Sign in to apply</a>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 59 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 60 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
  if (Model.VacancyStatus == VacancyStatuses.Live)
 {
 
@@ -384,7 +395,7 @@ WriteLiteral(" class=\"copy-16\"");
 WriteLiteral(">Closing date: ");
 
             
-            #line 61 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 62 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
                                                           Write(Model.ClosingDate.ToFriendlyClosingToday());
 
             
@@ -393,7 +404,7 @@ WriteLiteral(">Closing date: ");
 WriteLiteral("</p>\r\n");
 
             
-            #line 62 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
+            #line 63 "..\..\Views\ApprenticeshipSearch\_Apply.cshtml"
 }
 
             

@@ -177,6 +177,7 @@ else
                                         </td>
                                         <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
                                         <td class="ta-center">
+                                            Applied<br/>
                                             @{
                                                 if (application.DateApplied.HasValue)
                                                 {
@@ -219,7 +220,7 @@ else
                                 <tbody class="tbody-3rows tbody-withReasons">
                                     @foreach (var application in @Model.UnsuccessfulApplications)
                                     {
-                                        <tr>
+                                        <tr class="no-btm-border">
                                             <td>
                                                 @if (application.VacancyStatus == VacancyStatuses.Unavailable)
                                                 {
@@ -236,11 +237,12 @@ else
                                             </td>
                                         </tr>
 
-                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason))
+                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
                                         {
+                                            var reason = string.IsNullOrWhiteSpace(application.UnsuccessfulReason) ? application.ApplicationStatusDescription : application.UnsuccessfulReason;
                                             <tr>
                                                 <td colspan="3">
-                                                    <b>Reason:</b> @application.UnsuccessfulReason
+                                                    <b>Reason:</b> @reason
                                                 </td>
                                             </tr>
                                         }
