@@ -28,7 +28,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
     using StructureMap;
-    using VacancyIndexer;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
 
