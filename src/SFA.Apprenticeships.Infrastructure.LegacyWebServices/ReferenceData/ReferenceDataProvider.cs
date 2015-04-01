@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Logging;
-    using Application.ReferenceData;
+    using Apprenticeships.Application.Interfaces.Logging;
+    using Apprenticeships.Application.ReferenceData;
     using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.ReferenceData;

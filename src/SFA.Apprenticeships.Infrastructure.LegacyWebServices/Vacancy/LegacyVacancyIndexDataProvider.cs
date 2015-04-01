@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancySummary
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Vacancy
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Logging;
-    using Application.Vacancies;
-    using Application.Vacancies.Entities;
+    using Apprenticeships.Application.Interfaces.Logging;
+    using Apprenticeships.Application.Vacancies;
+    using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;

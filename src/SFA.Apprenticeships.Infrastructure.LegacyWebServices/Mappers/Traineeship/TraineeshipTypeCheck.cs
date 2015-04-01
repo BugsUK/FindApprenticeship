@@ -3,7 +3,7 @@
     using AutoMapper;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Traineeships;
-    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
+    using ApplicationErrorCodes = SFA.Apprenticeships.Application.Interfaces.Applications.ErrorCodes;
 
     internal class TraineeshipTypeCheck : IMappingAction<GatewayServiceProxy.Vacancy, TraineeshipVacancyDetail>
     {

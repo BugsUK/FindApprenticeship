@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetail
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Vacancy
 {
     using Domain.Interfaces.Caching;
 

@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
-    using Application.Applications.Entities;
     using Apprenticeships;
     using Common.Mappers;
     using GatewayServiceProxy;
+    using SFA.Apprenticeships.Application.Applications.Entities;
 
     public class ApplicationStatusSummaryMapper : MapperEngine
     {

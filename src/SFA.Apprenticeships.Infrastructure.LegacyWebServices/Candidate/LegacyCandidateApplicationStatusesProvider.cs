@@ -1,17 +1,16 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GetCandidateApplicationStatuses
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Candidate
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Applications;
-    using Application.Applications.Entities;
-    using Application.Interfaces.Logging;
+    using Apprenticeships.Application.Applications;
+    using Apprenticeships.Application.Applications.Entities;
+    using Apprenticeships.Application.Interfaces.Logging;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using Wcf;
-
     using Candidate = Domain.Entities.Candidates.Candidate;
 
     public class LegacyCandidateApplicationStatusesProvider : ILegacyApplicationStatusesProvider

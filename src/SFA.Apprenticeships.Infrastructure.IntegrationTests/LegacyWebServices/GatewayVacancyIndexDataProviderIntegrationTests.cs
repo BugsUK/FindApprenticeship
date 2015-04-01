@@ -4,7 +4,7 @@
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.LegacyWebServices.IoC;
-    using Infrastructure.LegacyWebServices.VacancySummary;
+    using Infrastructure.LegacyWebServices.Vacancy;
     using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;

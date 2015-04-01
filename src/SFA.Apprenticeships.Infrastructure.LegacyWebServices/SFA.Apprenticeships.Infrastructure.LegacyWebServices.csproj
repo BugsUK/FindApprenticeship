@@ -111,10 +111,10 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\LegacyServicesConfiguration.cs" />
-    <Compile Include="CreateApplication\LegacyApplicationProvider.cs" />
-    <Compile Include="CreateCandidate\LegacyCandidateProvider.cs" />
+    <Compile Include="Application\LegacyApplicationProvider.cs" />
+    <Compile Include="Candidate\LegacyCandidateProvider.cs" />
     <Compile Include="ErrorCodes.cs" />
-    <Compile Include="GetCandidateApplicationStatuses\LegacyCandidateApplicationStatusesProvider.cs" />
+    <Compile Include="Candidate\LegacyCandidateApplicationStatusesProvider.cs" />
     <Compile Include="IoC\LegacyWebServicesRegistry.cs" />
     <Compile Include="Mappers\Apprenticeships\ApprenticeshipTypeCheck.cs" />
     <Compile Include="Mappers\Apprenticeships\SummaryApprenticeshipLevelResolver .cs" />
@@ -144,10 +144,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="VacancyDetail\CachedLegacyVacancyDataProvider.cs" />
-    <Compile Include="VacancyDetail\LegacyVacancyDataProvider.cs" />
-    <Compile Include="VacancyDetail\VacancyDataServiceCacheKeyEntry.cs" />
-    <Compile Include="VacancySummary\LegacyVacancyIndexDataProvider.cs" />
+    <Compile Include="Vacancy\CachedLegacyVacancyDataProvider.cs" />
+    <Compile Include="Vacancy\LegacyVacancyDataProvider.cs" />
+    <Compile Include="Vacancy\VacancyDataServiceCacheKeyEntry.cs" />
+    <Compile Include="Vacancy\LegacyVacancyIndexDataProvider.cs" />
     <Compile Include="Wcf\IWcfService.cs" />
     <Compile Include="Wcf\WcfService.cs" />
   </ItemGroup>

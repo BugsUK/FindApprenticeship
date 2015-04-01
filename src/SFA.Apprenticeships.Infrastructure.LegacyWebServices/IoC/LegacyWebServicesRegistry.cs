@@ -1,27 +1,25 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
-    using Application.Applications;
-    using Application.Candidate;
-    using Application.ReferenceData;
-    using Application.Vacancies;
-    using Application.Vacancy;
+    using Application;
+    using Apprenticeships.Application.Applications;
+    using Apprenticeships.Application.Candidate;
+    using Apprenticeships.Application.ReferenceData;
+    using Apprenticeships.Application.Vacancies;
+    using Apprenticeships.Application.Vacancy;
+    using Candidate;
     using Common.Configuration;
-    using CreateApplication;
-    using CreateCandidate;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Caching;
     using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
-    using GetCandidateApplicationStatuses;
     using LegacyReferenceDataProxy;
     using Mappers;
     using Mappers.Apprenticeships;
     using Mappers.Traineeship;
     using ReferenceData;
     using StructureMap.Configuration.DSL;
-    using VacancyDetail;
-    using VacancySummary;
+    using Vacancy;
     using Wcf;
 
     public class LegacyWebServicesRegistry : Registry

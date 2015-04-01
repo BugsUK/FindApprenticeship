@@ -1,10 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.CreateApplication
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Application
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidate;
-    using Application.Interfaces.Logging;
+    using Apprenticeships.Application.Candidate;
+    using Apprenticeships.Application.Interfaces.Applications;
+    using Apprenticeships.Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -12,10 +13,6 @@
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using Wcf;
-
-    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
-    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
-    using VacancyErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
 
     public class LegacyApplicationProvider : ILegacyApplicationProvider
     {
@@ -81,7 +78,7 @@
             }
             catch (DomainException e)
             {
-                if (e.Code == ApplicationErrorCodes.ApplicationCreationFailed)
+                if (e.Code == ErrorCodes.ApplicationCreationFailed)
                     _logger.Error(e);
                 else
                     _logger.Warn(e);
@@ -91,7 +88,7 @@
             catch (BoundaryException e)
             {
                 _logger.Error(e, context);
-                throw new DomainException(ApplicationErrorCodes.ApplicationCreationFailed, e, context);
+                throw new DomainException(ErrorCodes.ApplicationCreationFailed, e, context);
             }
             catch (Exception e)
             {
@@ -114,12 +111,12 @@
                 if (response == null)
                 {
                     message = "No response";
-                    errorCode = ApplicationErrorCodes.ApplicationCreationFailed;
+                    errorCode = ErrorCodes.ApplicationCreationFailed;
                 }
                 else if (IsDuplicateError(response))
                 {
                     message = "Duplicate application";
-                    errorCode = ApplicationErrorCodes.ApplicationDuplicatedError;
+                    errorCode = ErrorCodes.ApplicationDuplicatedError;
                 }
                 else
                 {
@@ -142,10 +139,10 @@
         {
             var map = new Dictionary<string, string>
             {
-                { ValidationErrorCodes.InvalidCandidateState, CandidateErrorCodes.CandidateStateError },
-                { ValidationErrorCodes.CandidateNotFound, CandidateErrorCodes.CandidateNotFoundError },
-                { ValidationErrorCodes.UnknownCandidate, CandidateErrorCodes.CandidateNotFoundError },
-                { ValidationErrorCodes.InvalidVacancyState, VacancyErrorCodes.LegacyVacancyStateError }
+                { ValidationErrorCodes.InvalidCandidateState, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CandidateStateError },
+                { ValidationErrorCodes.CandidateNotFound, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError },
+                { ValidationErrorCodes.UnknownCandidate, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError },
+                { ValidationErrorCodes.InvalidVacancyState, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError }
             };
 
             foreach (var pair in map)
@@ -164,7 +161,7 @@
             message = string.Format("{0} unexpected validation error(s): {1}",
                 response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
 
-            errorCode = ApplicationErrorCodes.ApplicationCreationFailed;
+            errorCode = ErrorCodes.ApplicationCreationFailed;
         }
 
         private static CreateApplicationRequest CreateRequest(
@@ -190,8 +187,7 @@
             };
         }
 
-        private static CreateApplicationRequest CreateRequest(
-            TraineeshipApplicationDetail traineeshipApplicationDetail, int legacyCandidateId)
+        private static CreateApplicationRequest CreateRequest(TraineeshipApplicationDetail traineeshipApplicationDetail, int legacyCandidateId)
         {
             return new CreateApplicationRequest
             {

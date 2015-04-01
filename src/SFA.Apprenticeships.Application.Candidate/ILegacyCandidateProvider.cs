@@ -6,6 +6,6 @@ namespace SFA.Apprenticeships.Application.Candidate
     {
         int CreateCandidate(Candidate candidate);
 
-        //todo: 1.9: void UpdateCandidate(Candidate candidate);
+        void UpdateCandidate(Candidate candidate);
     }
 }

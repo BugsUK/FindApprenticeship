@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.ReferenceData
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Logging;
-    using Application.ReferenceData;
+    using Apprenticeships.Application.Interfaces.Logging;
+    using Apprenticeships.Application.ReferenceData;
     using Domain.Entities.ReferenceData;
     using Domain.Interfaces.Caching;
 

@@ -1,16 +1,15 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.CreateCandidate
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Candidate
 {
     using System;
     using System.Linq;
-    using Application.Candidate;
-    using Application.Interfaces.Logging;
+    using Apprenticeships.Application.Candidate;
+    using Apprenticeships.Application.Interfaces.Logging;
     using Domain.Entities.Exceptions;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using Wcf;
-
-    using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
     using CreateCandidateRequest = GatewayServiceProxy.CreateCandidateRequest;
+    using ErrorCodes = Apprenticeships.Application.Interfaces.Candidates.ErrorCodes;
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
@@ -45,13 +44,20 @@
             catch (BoundaryException e)
             {
                 _logger.Error(e, context);
-                throw new DomainException(CandidateErrorCodes.CreateCandidateFailed, e, context);
+                throw new DomainException(ErrorCodes.CreateCandidateFailed, e, context);
             }
             catch (Exception e)
             {
                 _logger.Error(e, context);
                 throw;
             }
+        }
+
+        public void UpdateCandidate(Domain.Entities.Candidates.Candidate candidate)
+        {
+            //todo: 1.9: US750 update candidate details. 
+            // Note that although changing email address is a separate story (US711) it will also call 
+            // this operation once the user has verified their new address
         }
 
         private int InternalCreateCandidate(Domain.Entities.Candidates.Candidate candidate)
@@ -75,7 +81,7 @@
                         response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
                 }
 
-                throw new DomainException(CandidateErrorCodes.CreateCandidateFailed, new { message, candidateId = candidate.EntityId });
+                throw new DomainException(ErrorCodes.CreateCandidateFailed, new { message, candidateId = candidate.EntityId });
             }
 
             return response.CandidateId;

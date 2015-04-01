@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.VacancyDetail
+﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Vacancy
 {
-    using Application.Interfaces.Logging;
-    using Application.Vacancy;
+    using Apprenticeships.Application.Interfaces.Logging;
+    using Apprenticeships.Application.Vacancy;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Caching;
 
