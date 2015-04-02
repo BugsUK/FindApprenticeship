@@ -1498,7 +1498,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>18850</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://local.candidates.gov.uk</IISUrl>
+          <IISUrl>https://local.findapprenticeship.service.gov.uk/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
