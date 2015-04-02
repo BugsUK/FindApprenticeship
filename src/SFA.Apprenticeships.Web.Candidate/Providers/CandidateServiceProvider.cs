@@ -620,7 +620,7 @@
 
                 return new SavedSearchViewModel
                 {
-                    ViewModelMessage = ApprenticeshipsSearchPageMessages.GetSavedSearchFailed
+                    ViewModelMessage = ApprenticeshipsSearchPageMessages.RunSavedSearchFailed
                 };
             }
         }
