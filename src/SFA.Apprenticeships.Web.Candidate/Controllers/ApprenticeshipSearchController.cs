@@ -9,6 +9,7 @@
     using Common.Constants;
     using Constants;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Extensions;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Search;
@@ -145,10 +146,10 @@
                     case ApprenticeshipSearchMediatorCodes.SaveSearch.HasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToAction("Results", model);
+                        return new RedirectResult(Url.ApprenticeshipSearchViewModelAction("Results", model));
                     case ApprenticeshipSearchMediatorCodes.SaveSearch.Ok:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToAction("Results", model);
+                        return new RedirectResult(Url.ApprenticeshipSearchViewModelAction("Results", model));
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
