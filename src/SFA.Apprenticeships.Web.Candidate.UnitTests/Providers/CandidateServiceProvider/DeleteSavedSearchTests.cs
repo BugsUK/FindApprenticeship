@@ -15,29 +15,41 @@
         [Test]
         public void Success()
         {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
             var savedSearchId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
-            candidateService.Setup(cs => cs.DeleteSavedSearch(savedSearchId)).Returns(new SavedSearch());
+
+            candidateService.Setup(cs => cs.DeleteSavedSearch(candidateId, savedSearchId)).Returns(new SavedSearch());
+
             var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
 
-            var response = provider.DeleteSavedSearch(savedSearchId);
+            // Act.
+            var response = provider.DeleteSavedSearch(candidateId, savedSearchId);
 
+            // Assert.
             response.Should().NotBeNull();
-            candidateService.Verify(cs => cs.DeleteSavedSearch(savedSearchId), Times.Once);
+            candidateService.Verify(cs => cs.DeleteSavedSearch(candidateId, savedSearchId), Times.Once);
         }
 
         [Test]
         public void Error()
         {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
             var savedSearchId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
-            candidateService.Setup(cs => cs.DeleteSavedSearch(savedSearchId)).Throws<Exception>();
+
+            candidateService.Setup(cs => cs.DeleteSavedSearch(candidateId, savedSearchId)).Throws<Exception>();
+
             var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
 
-            var response = provider.DeleteSavedSearch(savedSearchId);
+            // Act.
+            var response = provider.DeleteSavedSearch(candidateId, savedSearchId);
 
+            // Assert.
             response.Should().NotBeNull();
-            candidateService.Verify(cs => cs.DeleteSavedSearch(savedSearchId), Times.Once);
+            candidateService.Verify(cs => cs.DeleteSavedSearch(candidateId, savedSearchId), Times.Once);
             response.HasError().Should().BeTrue();
             response.ViewModelMessage.Should().Be(AccountPageMessages.DeleteSavedSearchFailed);
         }
@@ -46,8 +58,11 @@
         [TestCase(false)]
         public void TestSavedSearchMappings(bool alertsEnabled)
         {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
             var savedSearchId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
+
             var savedSearch = new Fixture().Build<SavedSearch>()
                 .With(s => s.EntityId, savedSearchId)
                 .With(s => s.AlertsEnabled, alertsEnabled)
@@ -56,12 +71,16 @@
                 .With(s => s.Location, "CV1 2WT")
                 .With(s => s.WithinDistance, 5)
                 .Create();
-            candidateService.Setup(cs => cs.DeleteSavedSearch(savedSearchId)).Returns(savedSearch);
+
+            candidateService.Setup(cs => cs.DeleteSavedSearch(candidateId, savedSearchId)).Returns(savedSearch);
+            
             var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
 
-            var viewModel = provider.DeleteSavedSearch(savedSearchId);
+            // Act.
+            var viewModel = provider.DeleteSavedSearch(candidateId, savedSearchId);
 
-            candidateService.Verify(cs => cs.DeleteSavedSearch(savedSearchId), Times.Once);
+            // Assert.
+            candidateService.Verify(cs => cs.DeleteSavedSearch(candidateId, savedSearchId), Times.Once);
 
             viewModel.Should().NotBeNull();
             viewModel.Id.Should().Be(savedSearchId);

@@ -97,7 +97,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.DeleteSavedSearch(id);
+                var response = _accountMediator.DeleteSavedSearch(UserContext.CandidateId, id);
 
                 if (isJavascript)
                 {

@@ -19,8 +19,8 @@
         public void Ok()
         {
             // Arrange.
-            var savedSearchId = Guid.NewGuid();
             var candidateId = Guid.NewGuid();
+            var savedSearchId = Guid.NewGuid();
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
 
             var viewModel = new ApprenticeshipSearchViewModel
@@ -34,7 +34,7 @@
                 .Create();
 
             candidateServiceProvider
-                .Setup(p => p.GetSavedSearch(savedSearchId)).Returns(savedSearch);
+                .Setup(p => p.GetSavedSearch(candidateId, savedSearchId)).Returns(savedSearch);
 
             var mediator = new ApprenticeshipSearchMediatorBuilder()
                 .With(candidateServiceProvider).Build();
@@ -43,7 +43,7 @@
             var response = mediator.RunSavedSearch(candidateId, viewModel);
 
             // Assert.
-            candidateServiceProvider.Verify(p => p.GetSavedSearch(savedSearchId), Times.Once);
+            candidateServiceProvider.Verify(p => p.GetSavedSearch(candidateId, savedSearchId), Times.Once);
 
             response.Code.Should().Be(ApprenticeshipSearchMediatorCodes.RunSavedSearch.Ok);
             response.ViewModel.Should().Be(savedSearch);
@@ -53,8 +53,8 @@
         public void SavedSearchNotFound_UnknownSavedSearchId()
         {
             // Arrange.
-            var savedSearchId = Guid.NewGuid();
             var candidateId = Guid.NewGuid();
+            var savedSearchId = Guid.NewGuid();
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
 
             var viewModel = new ApprenticeshipSearchViewModel
@@ -63,7 +63,7 @@
             };
 
             candidateServiceProvider
-                .Setup(p => p.GetSavedSearch(savedSearchId)).Returns((SavedSearchViewModel)null);
+                .Setup(p => p.GetSavedSearch(candidateId, savedSearchId)).Returns((SavedSearchViewModel)null);
 
             var mediator = new ApprenticeshipSearchMediatorBuilder()
                 .With(candidateServiceProvider).Build();
@@ -72,7 +72,7 @@
             var response = mediator.RunSavedSearch(candidateId, viewModel);
 
             // Assert.
-            candidateServiceProvider.Verify(p => p.GetSavedSearch(savedSearchId), Times.Once);
+            candidateServiceProvider.Verify(p => p.GetSavedSearch(candidateId, savedSearchId), Times.Once);
 
             response.AssertMessage(
                 ApprenticeshipSearchMediatorCodes.RunSavedSearch.SavedSearchNotFound,
@@ -100,7 +100,7 @@
             var response = mediator.RunSavedSearch(candidateId, viewModel);
 
             // Assert.
-            candidateServiceProvider.Verify(p => p.GetSavedSearch(It.IsAny<Guid>()), Times.Never);
+            candidateServiceProvider.Verify(p => p.GetSavedSearch(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Never);
 
             response.AssertMessage(
                 ApprenticeshipSearchMediatorCodes.RunSavedSearch.SavedSearchNotFound,
@@ -113,8 +113,8 @@
         public void RunSaveSearchFailed()
         {
             // Arrange.
-            var savedSearchId = Guid.NewGuid();
             var candidateId = Guid.NewGuid();
+            var savedSearchId = Guid.NewGuid();
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
 
             var viewModel = new ApprenticeshipSearchViewModel
@@ -123,7 +123,7 @@
             };
 
             candidateServiceProvider
-                .Setup(p => p.GetSavedSearch(savedSearchId))
+                .Setup(p => p.GetSavedSearch(candidateId, savedSearchId))
                 .Returns(new SavedSearchViewModel
                 {
                     ViewModelMessage = "Error" 
@@ -136,7 +136,7 @@
             var response = mediator.RunSavedSearch(candidateId, viewModel);
 
             // Assert.
-            candidateServiceProvider.Verify(p => p.GetSavedSearch(savedSearchId), Times.Once);
+            candidateServiceProvider.Verify(p => p.GetSavedSearch(candidateId, savedSearchId), Times.Once);
 
             response.AssertMessage(
                 ApprenticeshipSearchMediatorCodes.RunSavedSearch.RunSaveSearchFailed,

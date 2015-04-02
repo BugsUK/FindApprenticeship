@@ -577,11 +577,11 @@
             return viewModel;
         }
 
-        public SavedSearchViewModel DeleteSavedSearch(Guid savedSearchId)
+        public SavedSearchViewModel DeleteSavedSearch(Guid candidateId, Guid savedSearchId)
         {
             try
             {
-                var deletedSavedSearch = _candidateService.DeleteSavedSearch(savedSearchId);
+                var deletedSavedSearch = _candidateService.DeleteSavedSearch(candidateId, savedSearchId);
 
                 return deletedSavedSearch.ToViewModel();
             }
@@ -606,11 +606,11 @@
             }
         }
 
-        public SavedSearchViewModel GetSavedSearch(Guid savedSearchId)
+        public SavedSearchViewModel GetSavedSearch(Guid candidateId, Guid savedSearchId)
         {
             try
             {
-                var savedSearch = _candidateService.RetrieveSavedSearch(savedSearchId);
+                var savedSearch = _candidateService.RetrieveSavedSearch(candidateId, savedSearchId);
 
                 return savedSearch == null ? null : savedSearch.ToViewModel();
             }

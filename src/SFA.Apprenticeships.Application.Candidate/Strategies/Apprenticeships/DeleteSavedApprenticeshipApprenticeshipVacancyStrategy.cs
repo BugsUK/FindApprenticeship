@@ -17,7 +17,7 @@
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
         }
 
-        public ApprenticeshipApplicationDetail DeletedSavedVacancy(Guid candidateId, int vacancyId)
+        public ApprenticeshipApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId)
         {
             var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
 

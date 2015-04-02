@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.Candidate.Strategies.SavedSearches
 {
     using System;
+    using System.Linq;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
 
@@ -15,9 +16,11 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies.SavedSearches
             _savedSearchWriteRepository = savedSearchWriteRepository;
         }
 
-        public SavedSearch DeleteSavedSearch(Guid savedSearchId)
+        public SavedSearch DeleteSavedSearch(Guid candidateId, Guid savedSearchId)
         {
-            var savedSearch = _savedSearchReadRepository.Get(savedSearchId);
+            var savedSearch = _savedSearchReadRepository
+                .GetForCandidate(candidateId)
+                .FirstOrDefault(each => each.EntityId == savedSearchId);
 
             if (savedSearch == null) return null;
 

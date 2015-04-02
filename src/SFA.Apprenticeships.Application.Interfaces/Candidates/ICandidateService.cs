@@ -71,12 +71,12 @@
 
         SavedSearch CreateSavedSearch(SavedSearch savedSearch);
 
-        IList<SavedSearch> RetrieveSavedSearches(Guid candidateId);  
+        IList<SavedSearch> RetrieveSavedSearches(Guid candidateId);
 
         SavedSearch UpdateSavedSearch(SavedSearch savedSearch);
 
-        SavedSearch DeleteSavedSearch(Guid savedSearchId);
+        SavedSearch DeleteSavedSearch(Guid candidateId, Guid savedSearchId);
 
-        SavedSearch RetrieveSavedSearch(Guid savedSearchId);
+        SavedSearch RetrieveSavedSearch(Guid candidateId, Guid savedSearchId);
     }
 }

@@ -5,6 +5,6 @@
 
     public interface IDeleteSavedSearchStrategy
     {
-        SavedSearch DeleteSavedSearch(Guid savedSearchId);
+        SavedSearch DeleteSavedSearch(Guid candidateId, Guid savedSearchId);
     }
 }

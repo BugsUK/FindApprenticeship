@@ -13,7 +13,6 @@
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -334,7 +333,7 @@
             
             var validSavedSearchId = Guid.TryParse(apprenticeshipSearchViewModel.SavedSearchId, out savedSearchId);
             var savedSearchViewModel = validSavedSearchId
-                ? _candidateServiceProvider.GetSavedSearch(savedSearchId)
+                ? _candidateServiceProvider.GetSavedSearch(candidateId, savedSearchId)
                 : null;
 
             if (savedSearchViewModel == null)

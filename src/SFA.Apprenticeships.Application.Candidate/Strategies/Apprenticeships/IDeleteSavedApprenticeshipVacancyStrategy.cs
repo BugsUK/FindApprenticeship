@@ -5,6 +5,6 @@
 
     public interface IDeleteSavedApprenticeshipVacancyStrategy
     {
-        ApprenticeshipApplicationDetail DeletedSavedVacancy(Guid candidateId, int vacancyId);
+        ApprenticeshipApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId);
     }
 }

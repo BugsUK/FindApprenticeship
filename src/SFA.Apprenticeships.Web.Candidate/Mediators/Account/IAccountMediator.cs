@@ -32,6 +32,6 @@
 
         MediatorResponse<VerifyMobileViewModel> Resend(Guid candidateId, VerifyMobileViewModel model);
 
-        MediatorResponse<SavedSearchViewModel> DeleteSavedSearch(Guid id);
+        MediatorResponse<SavedSearchViewModel> DeleteSavedSearch(Guid candidateId, Guid savedSearchId);
     }
 }

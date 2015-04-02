@@ -298,9 +298,9 @@
             }
         }
 
-        public MediatorResponse<SavedSearchViewModel> DeleteSavedSearch(Guid id)
+        public MediatorResponse<SavedSearchViewModel> DeleteSavedSearch(Guid candidateId, Guid savedSearchId)
         {
-            var viewModel = _candidateServiceProvider.DeleteSavedSearch(id);
+            var viewModel = _candidateServiceProvider.DeleteSavedSearch(candidateId, savedSearchId);
 
             if (viewModel.HasError())
             {

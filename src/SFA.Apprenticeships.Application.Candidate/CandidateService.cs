@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -397,7 +398,7 @@
 
             _logger.Info("Calling CandidateService to delete saved vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
-            return _deleteSavedApprenticeshipVacancyStrategy.DeletedSavedVacancy(candidateId, vacancyId);
+            return _deleteSavedApprenticeshipVacancyStrategy.DeleteSavedVacancy(candidateId, vacancyId);
         }
 
         public ApprenticeshipApplicationDetail CreateDraftFromSavedVacancy(Guid candidateId, int vacancyId)
@@ -426,8 +427,7 @@
 
             _logger.Info("Calling CandidateService to retrieve saved searches for candidate='{0}'.", candidateId);
 
-            var savedSearches = _retrieveSavedSearchesStrategy.RetrieveSavedSearches(candidateId);
-            return savedSearches;
+            return _retrieveSavedSearchesStrategy.RetrieveSavedSearches(candidateId);
         }
 
         public SavedSearch UpdateSavedSearch(SavedSearch savedSearch)
@@ -436,25 +436,25 @@
 
             _logger.Info("Calling CandidateService to update saved search with id='{0}' for candidate='{1}'.", savedSearch.EntityId, savedSearch.CandidateId);
 
-            var updatedSavedSearch = _updateSavedSearchStrategy.UpdateSavedSearch(savedSearch);
-            return updatedSavedSearch;
+            return _updateSavedSearchStrategy.UpdateSavedSearch(savedSearch);
         }
 
-        public SavedSearch DeleteSavedSearch(Guid savedSearchId)
+        public SavedSearch DeleteSavedSearch(Guid candidateId, Guid savedSearchId)
         {
             Condition.Requires(savedSearchId);
 
-            _logger.Info("Calling CandidateService to delete saved search with id='{0}'.", savedSearchId);
+            _logger.Info("Calling CandidateService to delete saved search with id='{0}' for candidate='{1}'.", savedSearchId, candidateId);
 
-            var deletedSavedSearch = _deleteSavedSearchStrategy.DeleteSavedSearch(savedSearchId);
-            return deletedSavedSearch;
+            return _deleteSavedSearchStrategy.DeleteSavedSearch(candidateId, savedSearchId);
         }
 
-        public SavedSearch RetrieveSavedSearch(Guid savedSearchId)
+        public SavedSearch RetrieveSavedSearch(Guid candidateId, Guid savedSearchId)
         {
-            _logger.Debug("Calling CandidateService to get saved search with id='{0}'.", savedSearchId);
+            _logger.Debug("Calling CandidateService to get saved search with id='{0}' for candidate='{1}'.", savedSearchId, candidateId);
 
-            return _retrieveSavedSearchesStrategy.RetrieveSavedSearch(savedSearchId);
+            return _retrieveSavedSearchesStrategy
+                .RetrieveSavedSearches(candidateId)
+                .FirstOrDefault(each => each.EntityId == savedSearchId);
         }
     }
 }
