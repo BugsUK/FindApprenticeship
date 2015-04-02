@@ -42,7 +42,7 @@
 
         public Candidate SaveCandidate(Candidate candidate)
         {
-            //todo: 1.9: US7750 - incorporate call to legacy via ILegacyCandidateProvider. wrap this class in LegacySaveCandidateStrategy and delegate a call to here from it
+            //todo: 1.9: US750 - incorporate call to legacy via ILegacyCandidateProvider. wrap this class in LegacySaveCandidateStrategy and delegate a call to here from it
 
             if (candidate.MobileVerificationRequired())
             {
