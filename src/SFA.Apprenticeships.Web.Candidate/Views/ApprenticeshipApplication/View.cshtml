@@ -8,31 +8,29 @@
 
 <h1 class="heading-xlarge">Your application</h1>
 
-<p>This is your application form for the apprenticeship:</p>
-<div class="panel-indent text">
-    <div class="hgroup-medium">
-        <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
-        <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
-    </div>
-    <p id="vacancy-summary">@Model.VacancyDetail.Description</p>
+<div class="hgroup-medium">
+    <h2 class="heading-medium" id="vacancy-title">@Model.VacancyDetail.Title</h2>
+    <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
 </div>
-<p>
-    You applied on @Html.DisplayFor(m => m.DateApplied, "Date").
-    @if (Model.Status == ApplicationStatuses.Successful)
-    {
-        <span>This application was successful.</span>
-    }
-    else if (Model.Status == ApplicationStatuses.Unsuccessful)
-    {
-        <span>This application was unsuccessful.</span>
-    }
-    else if (Model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-    {
-        <span>This apprenticeship expired or was withdrawn.</span>
-    }
-</p>
+<p class="text" id="vacancy-summary">@Model.VacancyDetail.Description</p>
 
-<div class="form-group">
+<div class="panel-indent text">
+    <p>This is your submitted application.</p>
+    <p>
+        You applied on @Html.DisplayFor(m => m.DateApplied, "Date").
+        @if (Model.Status == ApplicationStatuses.Successful)
+        {
+            <span>This application was successful.</span>
+        }
+        else if (Model.Status == ApplicationStatuses.Unsuccessful)
+        {
+            <span>This application was unsuccessful.</span>
+        }
+        else if (Model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+        {
+            <span>This apprenticeship expired or was withdrawn.</span>
+        }
+    </p>
     <p>
         <a id="return-to-my-applications" href="@Url.Action("Index", "Account")">Return to my applications</a>
     </p>
