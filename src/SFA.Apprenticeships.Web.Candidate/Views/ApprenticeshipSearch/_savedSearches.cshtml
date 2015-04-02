@@ -16,6 +16,20 @@
                 <li>
                     <input type="radio" name="SavedSearchId" id="saved-search-@savedSearch.Id" value="@savedSearch.Id">
                     <label id="saved-search-label-@savedSearch.Id" for="saved-search-@savedSearch.Id">@savedSearch.Name</label>
+                    
+                    @if (savedSearch.ApprenticeshipLevel != "All")
+                    {
+                        <p class="font-xsmall no-btm-margin">
+                            <b>Apprenticeship level:</b> <span id="saved-search-apprenticeship-level-@savedSearch.Id">@savedSearch.ApprenticeshipLevel</span>
+                        </p>
+                    }
+                    
+                    @if (!string.IsNullOrWhiteSpace(savedSearch.SubCategoriesFullNames))
+                    {
+                        <p class="font-xsmall no-btm-margin">
+                            <b>Sub-categories:</b> <span id="saved-search-subcategories-@savedSearch.Id">@savedSearch.SubCategoriesFullNames</span>
+                        </p>
+                    }
                 </li>
             }
         </ul>

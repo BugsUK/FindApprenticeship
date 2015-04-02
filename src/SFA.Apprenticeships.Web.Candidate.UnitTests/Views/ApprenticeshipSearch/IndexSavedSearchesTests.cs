@@ -15,22 +15,28 @@
         [Test]
         public void ShouldNotRenderTabAsActiveWhenSearchModeIsKeyword()
         {
+            // Arrange.
             var @partial = new savedSearches();
-
             var viewModel = Mediator.Index(null, ApprenticeshipSearchMode.Keyword).ViewModel;
+
+            // Act.
             var view = @partial.RenderAsHtml(viewModel);
 
+            // Assert.
             view.GetElementbyId("saved-searches").Attributes["class"].Value.Contains(" active").Should().BeFalse();
         }
 
         [Test]
         public void ShouldNotRenderTabAsActiveWhenSearchModeIsCategory()
         {
+            // Arrange.
             var @partial = new savedSearches();
-
             var viewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
+
+            // Act.
             var view = @partial.RenderAsHtml(viewModel);
 
+            // Assert.
             view.GetElementbyId("saved-searches").Attributes["class"].Value.Contains(" active").Should().BeFalse();
         }
 
@@ -38,6 +44,7 @@
         [TestCase(5)]
         public void ShouldRenderTabAsActiveWhenSearchModeIsSavedSearches(int savedSearchCount)
         {
+            // Arrange.
             var @partial = new savedSearches();
             var candidateId = Guid.NewGuid();
             var mockViewModel = new Fixture().Build<SavedSearchViewModel>().CreateMany(savedSearchCount);
@@ -45,8 +52,11 @@
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
             var viewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+
+            // Act.
             var view = @partial.RenderAsHtml(viewModel);
 
+            // Assert.
             view.GetElementbyId("saved-searches").Attributes["class"].Value.Contains(" active").Should().BeTrue();
         }
 
@@ -54,6 +64,7 @@
         [TestCase(5)]
         public void ShouldRenderSavedSearchesList(int savedSearchCount)
         {
+            // Arrange.
             var @partial = new savedSearches();
             var candidateId = Guid.NewGuid();
 
@@ -62,8 +73,11 @@
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
             var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+
+            // Act.
             var view = @partial.RenderAsHtml(indexViewModel);
 
+            // Assert.
             var list = view.GetElementbyId("saved-searches-list");
 
             list.Should().NotBeNull();
@@ -86,14 +100,155 @@
             }
         }
 
+        [TestCase(1)]
+        [TestCase(5)]
+        public void ShouldRenderSubcategoriesFilter(int savedSearchCount)
+        {
+            // Arrange.
+            var @partial = new savedSearches();
+            var candidateId = Guid.NewGuid();
+
+            var mockViewModel = new Fixture().Build<SavedSearchViewModel>().CreateMany(savedSearchCount).ToList();
+
+            CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
+
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+
+            // Act.
+            var view = @partial.RenderAsHtml(indexViewModel);
+
+            // Assert.
+            var list = view.GetElementbyId("saved-searches-list");
+
+            list.Should().NotBeNull();
+            list.ChildNodes.Count(node => node.Name == "li").Should().Be(savedSearchCount);
+
+            foreach (var savedSearchViewModel in mockViewModel)
+            {
+                var id = string.Format("{0}-{1}", "saved-search-subcategories", savedSearchViewModel.Id);
+
+                var element = view.GetElementbyId(id);
+
+                element.Should().NotBeNull();
+                element.InnerText.Should().Be(savedSearchViewModel.SubCategoriesFullNames);
+            }
+        }
+
+        [TestCase(1)]
+        [TestCase(5)]
+        public void ShouldNotRenderSubcategoriesFilter(int savedSearchCount)
+        {
+            // Arrange.
+            var @partial = new savedSearches();
+            var candidateId = Guid.NewGuid();
+
+            var mockViewModel = new Fixture()
+                .Build<SavedSearchViewModel>()
+                .With(each => each.SubCategoriesFullNames, null)
+                .CreateMany(savedSearchCount).ToList();
+
+            CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
+
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+
+            // Act.
+            var view = @partial.RenderAsHtml(indexViewModel);
+
+            // Assert.
+            var list = view.GetElementbyId("saved-searches-list");
+
+            list.Should().NotBeNull();
+            list.ChildNodes.Count(node => node.Name == "li").Should().Be(savedSearchCount);
+
+            foreach (var savedSearchViewModel in mockViewModel)
+            {
+                var id = string.Format("{0}-{1}", "saved-search-subcategories", savedSearchViewModel.Id);
+
+                var element = view.GetElementbyId(id);
+
+                element.Should().BeNull();
+            }
+        }
+
+        [TestCase(1)]
+        [TestCase(5)]
+        public void ShouldRenderApprenticeshipLevelFilterWhenNotAll(int savedSearchCount)
+        {
+            // Arrange.
+            var @partial = new savedSearches();
+            var candidateId = Guid.NewGuid();
+
+            var mockViewModel = new Fixture().Build<SavedSearchViewModel>().CreateMany(savedSearchCount).ToList();
+
+            CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
+
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+
+            // Act.
+            var view = @partial.RenderAsHtml(indexViewModel);
+
+            // Assert.
+            var list = view.GetElementbyId("saved-searches-list");
+
+            list.Should().NotBeNull();
+            list.ChildNodes.Count(node => node.Name == "li").Should().Be(savedSearchCount);
+
+            foreach (var savedSearchViewModel in mockViewModel)
+            {
+                var id = string.Format("{0}-{1}", "saved-search-apprenticeship-level", savedSearchViewModel.Id);
+
+                var element = view.GetElementbyId(id);
+
+                element.Should().NotBeNull();
+                element.InnerText.Should().Be(savedSearchViewModel.ApprenticeshipLevel);
+            }
+        }
+
+        [TestCase(1)]
+        [TestCase(5)]
+        public void ShouldNotRenderApprenticeshipLevelFilterAll(int savedSearchCount)
+        {
+            // Arrange.
+            var @partial = new savedSearches();
+            var candidateId = Guid.NewGuid();
+
+            var mockViewModel = new Fixture()
+                .Build<SavedSearchViewModel>()
+                .With(each => each.ApprenticeshipLevel, "All")
+                .CreateMany(savedSearchCount).ToList();
+
+            CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
+
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+
+            // Act.
+            var view = @partial.RenderAsHtml(indexViewModel);
+
+            // Assert.
+            var list = view.GetElementbyId("saved-searches-list");
+
+            list.Should().NotBeNull();
+            list.ChildNodes.Count(node => node.Name == "li").Should().Be(savedSearchCount);
+
+            foreach (var savedSearchViewModel in mockViewModel)
+            {
+                var id = string.Format("{0}-{1}", "saved-search-apprenticeship-level", savedSearchViewModel.Id);
+
+                view.GetElementbyId(id).Should().BeNull();
+            }
+        }
+
         [Test]
         public void ShouldRenderAlertSettingsLink()
         {
+            // Arrange.
             var @partial = new savedSearches();
-
             var viewModel = Mediator.Index(null, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+
+            // Act.
             var view = @partial.RenderAsHtml(viewModel);
 
+            // Assert.
             view.GetElementbyId("saved-searches-settings-link").Should().NotBeNull();
         }
     }
