@@ -47,7 +47,7 @@
                     <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
                 </div>
                 <div class="form-group">
-                    @Html.RouteLink("Create new search", CandidateRouteNames.ApprenticeshipSearch, routeValues: new { Model.SearchMode })
+                    @Html.RouteLink("Create new search", CandidateRouteNames.ApprenticeshipSearch, new { Model.SearchMode }, new { @id = "create-new-search-link" })
                 </div>
                 <div class="form-group map-container hide-nojs">
                     <div id="map-canvas" style="width: 100%; height: 250px"></div>

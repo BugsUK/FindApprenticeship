@@ -19,12 +19,16 @@
             var view = searchUpdate.RenderAsHtml(searchResultsViewModel.VacancySearch);
 
             view.GetElementbyId("validation-summary").Should().BeNull();
-            // TODO: AG: US726:
             view.GetElementbyId("Keywords").Should().NotBeNull();
             view.GetElementbyId("Location").Should().NotBeNull();            
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
             view.GetElementbyId("search-button").Should().NotBeNull();
+
+            var createNewSearchLink = view.GetElementbyId("create-new-search-link");
+
+            createNewSearchLink.Should().NotBeNull();
+            createNewSearchLink.OuterHtml.Should().Contain("SearchMode=Keyword");
         }
 
         [Test]
@@ -42,6 +46,11 @@
             view.GetElementbyId("loc-within").Should().NotBeNull();            
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
             view.GetElementbyId("search-button").Should().NotBeNull();
+
+            var createNewSearchLink = view.GetElementbyId("create-new-search-link");
+
+            createNewSearchLink.Should().NotBeNull();
+            createNewSearchLink.OuterHtml.Should().Contain("SearchMode=Category");
         }
 
         /// <summary>
@@ -49,7 +58,7 @@
         /// to tell users loading of categories prevents filtering by them
         /// </summary>
         [Test]
-        public void SearchModeCategoryNullCategoryiesVisibilityTest()
+        public void SearchModeCategoryNullCategoriesVisibilityTest()
         {
             ReferenceDataService.Setup(rds => rds.GetCategories());
             var searchUpdate = new searchUpdate();
@@ -63,6 +72,11 @@
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
             view.GetElementbyId("search-button").Should().NotBeNull();
+
+            var createNewSearchLink = view.GetElementbyId("create-new-search-link");
+
+            createNewSearchLink.Should().NotBeNull();
+            createNewSearchLink.OuterHtml.Should().Contain("SearchMode=Category");
         }
     }
 }
