@@ -1,4 +1,5 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+
 @model ApprenticeshipSearchViewModel
 
 @{
@@ -17,21 +18,32 @@
                     var checkedAttr = Model.Category == category.CodeName ? "checked" : "";
                     var openAttr = Model.Category == category.CodeName && Model.SubCategories != null && Model.SubCategories.Any() ? "open" : "";
                     var subCategoryListId = string.Format("sub-category-{0}-list", category.CodeName.ToLower());
+
+                    var categoryLabelText = FullNameFormatter.Format(category.FullName);
+                    
+                    if (category.Count.HasValue)
+                    {
+                        categoryLabelText = string.Format("{0} ({1})", categoryLabelText, category.Count.Value);
+                    }
+                    
                     <li>
-                        <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@FullNameFormatter.Format(category.FullName)</label>
+                        <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@categoryLabelText</label>
                         <details @openAttr class="@openAttr">
                             <summary class="copy-16">@subCategories.Count sub-categories</summary>
                             <ul id="@subCategoryListId" class="detail-content copy-16 list-text list-checkradio scrolling-panel max-height-6ish">
                                 @foreach (var subCategory in subCategories)
                                 {
                                     checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
+                                    
                                     var checkboxId = string.Format("sub-category-{0}", subCategory.CodeName.ToLower());
-                                    var labelText = FullNameFormatter.Format(subCategory.FullName);
+                                    var subcategoryLabelText = FullNameFormatter.Format(subCategory.FullName);
+
                                     if (subCategory.Count.HasValue)
                                     {
-                                        labelText = string.Format("{0} ({1})", labelText, subCategory.Count.Value);
+                                        subcategoryLabelText = string.Format("{0} ({1})", subcategoryLabelText, subCategory.Count.Value);
                                     }
-                                    <li><input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName"><label for="@checkboxId">@labelText</label></li>
+                                    
+                                    <li><input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName"><label for="@checkboxId">@subcategoryLabelText</label></li>
                                 }
                             </ul>
                         </details>

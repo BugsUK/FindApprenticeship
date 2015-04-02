@@ -24,6 +24,13 @@
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly ILogService _logger;
 
+        private static class ResultsKeys
+        {
+            public const string NonNational = "NonNational";
+            public const string National = "National";
+            public const string Unfiltered = "Unfiltered";
+        }
+
         public ApprenticeshipVacancyProvider(
             IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
             ICandidateService candidateService,
@@ -45,6 +52,7 @@
             try
             {
                 string vacancyReference;
+
                 if ((search.SearchField == ApprenticeshipSearchField.All.ToString() || search.SearchField == ApprenticeshipSearchField.ReferenceNumber.ToString())
                     && VacancyHelper.TryGetVacancyReference(search.Keywords, out vacancyReference))
                 {
@@ -54,7 +62,9 @@
                         PageNumber = 1,
                         PageSize = 1
                     };
+
                     var searchResults = _apprenticeshipSearchService.Search(searchParameters);
+
                     //Expect only a single result. Any other number should be interpreted as no results
                     if (searchResults.Total == 1)
                     {
@@ -62,78 +72,81 @@
                         exactMatchResponse.ExactMatchFound = true;
                         return exactMatchResponse;
                     }
+
                     if (searchResults.Total > 1)
                     {
                         _logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReference, search.Keywords);
                     }
+
                     var response = new ApprenticeshipSearchResponseViewModel
                     {
                         Vacancies = new List<ApprenticeshipVacancySummaryViewModel>(),
                         VacancySearch = search
                     };
+
                     return response;
                 }
 
                 var results = ProcessNationalAndNonNationalSearches(search, searchLocation);
 
-                var nationalResults = results.Single(r => r.SearchParameters.VacancyLocationType == ApprenticeshipLocationType.National);
+                var nationalResults = results[ResultsKeys.National];
+                var nonNationalResults = results[ResultsKeys.NonNational];
+                var unfilteredResults = results[ResultsKeys.Unfiltered];
 
-                var nonNationalResults = results.Single(r => r.SearchParameters.VacancyLocationType == ApprenticeshipLocationType.NonNational);
+                var nationalResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(nationalResults);
 
-                var nationalResponse =
-                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(
-                        nationalResults);
                 nationalResponse.VacancySearch = search;
 
-                var nonNationlResponse =
-                    _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(
-                        nonNationalResults);
-                nonNationlResponse.VacancySearch = search;
+                var nonNationalResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(nonNationalResults);
+
+                nonNationalResponse.VacancySearch = search;
 
                 if (search.LocationType == ApprenticeshipLocationType.NonNational)
                 {
-                    nonNationlResponse.TotalLocalHits = nonNationalResults.Total;
-                    nonNationlResponse.TotalNationalHits = nationalResults.Total;
-                    nonNationlResponse.PageSize = search.ResultsPerPage;
+                    nonNationalResponse.TotalLocalHits = nonNationalResults.Total;
+                    nonNationalResponse.TotalNationalHits = nationalResults.Total;
+                    nonNationalResponse.PageSize = search.ResultsPerPage;
 
                     if (nonNationalResults.Total == 0 && nationalResults.Total > 0)
                     {
-                        nonNationlResponse.Vacancies = nationalResponse.Vacancies;
-                        var vacancySearch = nonNationlResponse.VacancySearch;
+                        nonNationalResponse.Vacancies = nationalResponse.Vacancies;
+
+                        var vacancySearch = nonNationalResponse.VacancySearch;
+
                         if (vacancySearch.SearchAction == SearchAction.Search || vacancySearch.SortType == VacancySearchSortType.Distance)
                         {
                             vacancySearch.SortType = string.IsNullOrWhiteSpace(vacancySearch.Keywords) ? VacancySearchSortType.ClosingDate : VacancySearchSortType.Relevancy;
                         }
+
                         vacancySearch.LocationType = ApprenticeshipLocationType.National;
-                        SetAggregationResults(nonNationlResponse, nationalResults.AggregationResults);
+                        SetAggregationResults(nonNationalResponse, nationalResults.AggregationResults, unfilteredResults.AggregationResults);
                     }
                     else
                     {
-                        SetAggregationResults(nonNationlResponse, nonNationalResults.AggregationResults);
+                        SetAggregationResults(nonNationalResponse, nonNationalResults.AggregationResults, unfilteredResults.AggregationResults);
                     }
 
-                    return nonNationlResponse;
+                    return nonNationalResponse;
                 }
 
                 nationalResponse.TotalLocalHits = nonNationalResults.Total;
                 nationalResponse.TotalNationalHits = nationalResults.Total;
                 nationalResponse.PageSize = search.ResultsPerPage;
 
-                if (nationalResults.Total == 0 && nonNationalResults.Total != 0)
+                if (nationalResults.Total == 0 && nonNationalResults.Total > 0)
                 {
-                    nationalResponse.Vacancies = nonNationlResponse.Vacancies;
-                    SetAggregationResults(nonNationlResponse, nonNationalResults.AggregationResults);
+                    nationalResponse.Vacancies = nonNationalResponse.Vacancies;
+                    SetAggregationResults(nonNationalResponse, nonNationalResults.AggregationResults, unfilteredResults.AggregationResults);
                 }
                 else
                 {
-                    SetAggregationResults(nonNationlResponse, nationalResults.AggregationResults);
+                    SetAggregationResults(nonNationalResponse, nationalResults.AggregationResults, unfilteredResults.AggregationResults);
                 }
 
                 return nationalResponse;
             }
             catch (CustomException ex)
             {
-                // ReSharper disable once FormatStringProblem
                 _logger.Error("Find apprenticeship vacancies failed. Check inner details for more info", ex);
                 return new ApprenticeshipSearchResponseViewModel(VacancySearchResultsPageMessages.VacancySearchFailed);
             }
@@ -190,7 +203,7 @@
             }
         }
 
-        private SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>[] ProcessNationalAndNonNationalSearches(
+        private Dictionary<string, SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>> ProcessNationalAndNonNationalSearches(
             ApprenticeshipSearchViewModel search, Location searchLocation)
         {
             VacancySearchSortType nationalSortType, nonNationalSortType;
@@ -211,70 +224,100 @@
                 nonNationalPageNumber = search.PageNumber;
             }
 
-            var searchparameters = new List<ApprenticeshipSearchParameters>
+            var searchField = (ApprenticeshipSearchField) Enum.Parse(typeof (ApprenticeshipSearchField), search.SearchField);
+
+            var searchParameters = new Dictionary<string, ApprenticeshipSearchParameters>
             {
-                new ApprenticeshipSearchParameters
                 {
-                    SearchField = (ApprenticeshipSearchField)Enum.Parse(typeof(ApprenticeshipSearchField), search.SearchField),
-                    Keywords = search.Keywords,
-                    Location = null,
-                    PageNumber = nationalPageNumber,
-                    PageSize = search.ResultsPerPage,
-                    SearchRadius = search.WithinDistance,
-                    SortType = nationalSortType,
-                    VacancyLocationType = ApprenticeshipLocationType.National,
-                    ApprenticeshipLevel = search.ApprenticeshipLevel,
-                    Sector = search.Category,
-                    Frameworks = search.SubCategories
+                    ResultsKeys.National,
+                    new ApprenticeshipSearchParameters
+                    {
+                        SearchField = searchField,
+                        Keywords = search.Keywords,
+                        Location = null,
+                        PageNumber = nationalPageNumber,
+                        PageSize = search.ResultsPerPage,
+                        SearchRadius = search.WithinDistance,
+                        SortType = nationalSortType,
+                        VacancyLocationType = ApprenticeshipLocationType.National,
+                        ApprenticeshipLevel = search.ApprenticeshipLevel,
+                        Sector = search.Category,
+                        Frameworks = search.SubCategories
+                    }
                 },
-                new ApprenticeshipSearchParameters
                 {
-                    SearchField = (ApprenticeshipSearchField)Enum.Parse(typeof(ApprenticeshipSearchField), search.SearchField),
-                    Keywords = search.Keywords,
-                    Location = searchLocation,
-                    PageNumber = nonNationalPageNumber,
-                    PageSize = search.ResultsPerPage,
-                    SearchRadius = search.WithinDistance,
-                    SortType = nonNationalSortType,
-                    VacancyLocationType = ApprenticeshipLocationType.NonNational,
-                    ApprenticeshipLevel = search.ApprenticeshipLevel,
-                    Sector = search.Category,
-                    Frameworks = search.SubCategories
+                    ResultsKeys.NonNational,
+                    new ApprenticeshipSearchParameters
+                    {
+                        SearchField = searchField,
+                        Keywords = search.Keywords,
+                        Location = searchLocation,
+                        PageNumber = nonNationalPageNumber,
+                        PageSize = search.ResultsPerPage,
+                        SearchRadius = search.WithinDistance,
+                        SortType = nonNationalSortType,
+                        VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                        ApprenticeshipLevel = search.ApprenticeshipLevel,
+                        Sector = search.Category,
+                        Frameworks = search.SubCategories
+                    }
+                },
+                {
+                    ResultsKeys.Unfiltered,
+                    new ApprenticeshipSearchParameters
+                    {
+                        SearchField = searchField,
+                        Keywords = null,
+                        Location = searchLocation,
+                        PageNumber = 1,
+                        PageSize = 1,
+                        SearchRadius = search.WithinDistance,
+                        SortType = VacancySearchSortType.ClosingDate,
+                        VacancyLocationType = search.LocationType,
+                        ApprenticeshipLevel = "All",
+                        Sector = null,
+                        Frameworks = null
+                    }
                 }
             };
 
-            var resultCollection = new ConcurrentBag<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
-            Parallel.ForEach(searchparameters,
-                parameters =>
-                {
-                    var searchResults = _apprenticeshipSearchService.Search(parameters);
-                    resultCollection.Add(searchResults);
-                });
+            var resultCollection = new ConcurrentDictionary<string, SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
 
-            return resultCollection.ToArray();
+            Parallel.ForEach(searchParameters, parameters =>
+            {
+                var searchResults = _apprenticeshipSearchService.Search(parameters.Value);
+
+                resultCollection[parameters.Key] = searchResults;
+            });
+
+            return resultCollection.ToDictionary(each => each.Key, each => each.Value);
         }
 
-        private static void SetAggregationResults(ApprenticeshipSearchResponseViewModel response, IEnumerable<AggregationResult> aggregationResults)
+        private static void SetAggregationResults(
+            ApprenticeshipSearchResponseViewModel response,
+            IEnumerable<AggregationResult> aggregationResults,
+            IEnumerable<AggregationResult> unfilteredAggregationResults)
         {
             if (aggregationResults == null || response.VacancySearch == null || response.VacancySearch.Categories == null) return;
 
             var aggregationResultsList = aggregationResults.ToList();
+            var unfilteredAggregationResultsList = unfilteredAggregationResults.ToList();
 
             foreach (var category in response.VacancySearch.Categories)
             {
                 foreach (var subCategory in category.SubCategories)
                 {
-                    var aggregationResult = aggregationResultsList.SingleOrDefault(ar => ar.Code == subCategory.CodeName);
-                    if (aggregationResult != null) subCategory.Count = aggregationResult.Count;
-                }
-            }
+                    var aggregationResult = aggregationResultsList.SingleOrDefault(each => each.Code == subCategory.CodeName);
 
-            foreach (var category in response.VacancySearch.Categories.Where(c => c.CodeName == response.VacancySearch.Category || c.SubCategories.Any(sc => sc.Count.HasValue)))
-            {
-                foreach (var subCategory in category.SubCategories)
-                {
-                    if (!subCategory.Count.HasValue) subCategory.Count = 0;
+                    if (aggregationResult == null && category.CodeName != response.VacancySearch.Category)
+                    {
+                        aggregationResult = unfilteredAggregationResultsList.SingleOrDefault(each => each.Code == subCategory.CodeName);
+                    }
+
+                    subCategory.Count = aggregationResult != null ? aggregationResult.Count : 0;
                 }
+
+                category.Count = category.SubCategories.Sum(each => each.Count);
             }
         }
     }
