@@ -73,6 +73,9 @@
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.SessionReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
 
             var response = mediator.Index(viewModel);
@@ -91,6 +94,9 @@
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.SessionReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
 
             var response = mediator.Index(viewModel);
@@ -109,6 +115,8 @@
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
 
             var response = mediator.Index(viewModel);
@@ -127,6 +135,9 @@
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
 
             var response = mediator.Index(viewModel);
@@ -199,6 +210,9 @@
 
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
 
             var response = mediator.Index(viewModel);
@@ -212,6 +226,7 @@
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            
             var applicationStatusSummaries = new Fixture().CreateMany<ApprenticeshipApplicationSummary>(25);
             candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(applicationStatusSummaries);
             candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate {EntityId = Guid.Empty});
@@ -242,6 +257,9 @@
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().WithAcceptedTermsAndConditionsVersion("1").Build);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).With(configurationService).Build();
 
             var response = mediator.Index(viewModel);
@@ -258,6 +276,8 @@
             var loginResultViewModel = new LoginResultViewModelBuilder().MobileVerificationRequired().Build();
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(loginResultViewModel);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
             var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
 
             var response = mediator.Index(viewModel);
