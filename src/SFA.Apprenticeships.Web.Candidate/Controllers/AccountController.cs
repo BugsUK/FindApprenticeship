@@ -189,6 +189,7 @@
         [HttpPost]
         [SmsEnabledToggle]
         [AllowReturnUrl(Allow = false)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "Resend")]
         public async Task<ActionResult> Resend(VerifyMobileViewModel model)
         {
