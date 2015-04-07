@@ -81,7 +81,10 @@
 
         [TestCase(CommunicationChannels.Sms, MessageTypes.ApprenticeshipApplicationSuccessful, false, false)]
         [TestCase(CommunicationChannels.Sms, MessageTypes.ApprenticeshipApplicationSuccessful, true, true)]
-        [TestCase(CommunicationChannels.Sms, MessageTypes.ApprenticeshipApplicationSuccessful, true, true)]
+        [TestCase(CommunicationChannels.Sms, MessageTypes.ApprenticeshipApplicationUnsuccessful, false, false)]
+        [TestCase(CommunicationChannels.Sms, MessageTypes.ApprenticeshipApplicationUnsuccessful, true, true)]
+        [TestCase(CommunicationChannels.Sms, MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, false, false)]
+        [TestCase(CommunicationChannels.Sms, MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, true, true)]
         public void ShouldHonourSendApplicationStatusChangesPreferenceViaSms(
             CommunicationChannels communicationChannel,
             MessageTypes messageType,

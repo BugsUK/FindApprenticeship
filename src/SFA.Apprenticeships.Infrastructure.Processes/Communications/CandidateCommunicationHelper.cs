@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Communications
 {
+    using System;
     using Application.Interfaces.Communications;
     using Domain.Entities.Candidates;
 
@@ -35,9 +36,8 @@
                             communicationPreferences.SendApprenticeshipApplicationsExpiring);
 
                 case MessageTypes.ApprenticeshipApplicationSuccessful:
-                // TODO: 1.9: reinstate unsuccessful SMS messages when 'next steps' link is available.
-                // case MessageTypes.ApprenticeshipApplicationUnsuccessful:
-                // case MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary:
+                case MessageTypes.ApprenticeshipApplicationUnsuccessful:
+                case MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary:
                     // These application status alerts are sent via SMS only, candidate can opt out.
                     return communicationChannel == CommunicationChannels.Sms &&
                            candidateAllowsCommunicationsViaChannel &&
@@ -64,6 +64,7 @@
                              communicationPreferences.SendSavedSearchAlertsViaText));
             }
 
+            // Do not allow any communications to be sent implicitly.
             return false;
         }
     }
