@@ -132,7 +132,7 @@
             foreach (var actualSavedSearchAlert in actualSavedSearchAlerts)
             {
                 actualSavedSearchAlert.Results.Count.Should().Be(resultCount);
-                actualSavedSearchAlert.Results.Should().BeInDescendingOrder(each => each.Id);
+                actualSavedSearchAlert.Results.Should().BeInDescendingOrder(each => each.PostedDate);
             }
         }
 

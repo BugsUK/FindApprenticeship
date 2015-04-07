@@ -54,7 +54,7 @@
             {
                 // Order by most recently posted vacancy.
                 candidateSavedSearchAlert.Results = candidateSavedSearchAlert.Results
-                    .OrderByDescending(each => each.Id)
+                    .OrderByDescending(each => each.PostedDate)
                     .ToList();
             }
 

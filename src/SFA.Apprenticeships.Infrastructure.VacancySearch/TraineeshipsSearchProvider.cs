@@ -81,7 +81,7 @@
                 switch (parameters.SortType)
                 {
                     case VacancySearchSortType.RecentlyAdded:
-                        s.Sort(v => v.OnField(f => f.Id).Descending());
+                        s.Sort(v => v.OnField(f => f.PostedDate).Descending());
                         if (parameters.Location == null)
                         {
                             break;
