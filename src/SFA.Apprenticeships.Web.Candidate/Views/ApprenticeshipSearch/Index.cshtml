@@ -83,6 +83,12 @@
                         <button class="button tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass" id="run-saved-search-button">Run search</button>
                     </div>
 
+                    <p class="tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass">
+                        You can edit your saved searches in the
+                        @Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new { id = "saved-searches-settings-link" })
+                        section.
+                    </p>
+
                     <div class="tabbed-element disp-block form-group tab1 @keywordTabControlClass @categoriesTabClass @categoriesTabControlClass">
                         @Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "reset-search-options-link" })
                     </div>
