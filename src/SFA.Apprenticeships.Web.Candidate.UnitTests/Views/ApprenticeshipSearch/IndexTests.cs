@@ -146,6 +146,7 @@
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
+            view.GetElementbyId("saved-searches-settings-link").Should().NotBeNull();
         }
 
         [TestCase(1)]
@@ -174,6 +175,7 @@
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
             view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
             view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab3").Should().BeFalse();
+            view.GetElementbyId("saved-searches-settings-link").Should().NotBeNull();
         }
 
         [Test]
@@ -189,6 +191,7 @@
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
+            view.GetElementbyId("saved-searches-settings-link").Should().NotBeNull();
         }
     }
 }

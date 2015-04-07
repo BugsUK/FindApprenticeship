@@ -237,19 +237,5 @@
                 view.GetElementbyId(id).Should().BeNull();
             }
         }
-
-        [Test]
-        public void ShouldRenderAlertSettingsLink()
-        {
-            // Arrange.
-            var @partial = new savedSearches();
-            var viewModel = Mediator.Index(null, ApprenticeshipSearchMode.SavedSearches).ViewModel;
-
-            // Act.
-            var view = @partial.RenderAsHtml(viewModel);
-
-            // Assert.
-            view.GetElementbyId("saved-searches-settings-link").Should().NotBeNull();
-        }
     }
 }
