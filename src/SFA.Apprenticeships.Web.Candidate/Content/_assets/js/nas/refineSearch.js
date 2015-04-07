@@ -12,8 +12,6 @@ $(document).ready(function () {
         setSelectControl($('#SearchField'));
     } else {
         $searchField.insertBefore($keywordsInput).removeClass('hidden');
-
-        $searchField.find('option:last-of-type').attr('hidden', 'hidden');
     }
 
     function setSelectControl(that) {
