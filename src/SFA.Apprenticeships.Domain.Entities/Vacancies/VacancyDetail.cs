@@ -23,6 +23,8 @@
 
         public DateTime ClosingDate { get; set; }
 
+        public DateTime PostedDate { get; set; }
+
         public DateTime InterviewFromDate { get; set; }
 
         public decimal Wage { get; set; }

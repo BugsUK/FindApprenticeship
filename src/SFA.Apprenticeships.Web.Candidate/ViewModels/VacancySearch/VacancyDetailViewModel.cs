@@ -133,6 +133,10 @@
         [DataType(DataType.DateTime)]
         public DateTime? DateApplied { get; set; }
 
+        [UIHint("Date")]
+        [DataType(DataType.DateTime)]
+        public DateTime PostedDate { get; set; }
+
         #endregion
     }
 }

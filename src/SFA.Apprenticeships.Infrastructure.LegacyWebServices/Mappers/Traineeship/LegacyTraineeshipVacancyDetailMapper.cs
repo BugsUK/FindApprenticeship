@@ -31,6 +31,9 @@
                 .ForMember(dest => dest.ClosingDate,
                     opt => opt.MapFrom(src => src.ClosingDate))
 
+                .ForMember(dest => dest.PostedDate,
+                    opt => opt.MapFrom(src => src.VacancyPostedDate))
+
                 .ForMember(dest => dest.Contact,
                     opt => opt.MapFrom(src => src.ContactForCandidate))
 

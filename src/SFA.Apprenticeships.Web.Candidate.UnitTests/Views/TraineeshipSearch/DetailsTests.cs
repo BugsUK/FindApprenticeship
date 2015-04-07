@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.TraineeshipSearch
 {
+    using System;
     using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.TraineeshipSearch;
+    using Common.Framework;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;
@@ -230,6 +232,34 @@
             view.GetElementbyId("vacancy-expected-duration").InnerText
                 .Should()
                 .Be("Not specified");
+        }
+
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(7)]
+        [TestCase(42)]
+        public void ShowPostedDate(int daysAgo)
+        {
+            // Arrange.
+            var postedDate = DateTime.Today.AddDays(-daysAgo);
+            var friendlyPostedDate = postedDate.ToFriendlyDaysAgo();
+
+            var details = new Details();
+
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
+            {
+                VacancyAddress = new AddressViewModel(),
+                PostedDate = postedDate
+            };
+
+            // Act.
+            var view = details.RenderAsHtml(vacancyDetailViewModel);
+
+            // Assert.
+            var element = view.GetElementbyId("vacancy-posted-date");
+
+            element.Should().NotBeNull();
+            element.InnerText.Should().Be(friendlyPostedDate);
         }
     }
 }

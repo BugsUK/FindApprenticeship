@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers
 {
-    using System.Web.Optimization;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Applications;

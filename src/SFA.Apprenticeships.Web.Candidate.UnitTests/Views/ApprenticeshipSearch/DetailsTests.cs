@@ -7,6 +7,7 @@
     using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
+    using Common.Framework;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
@@ -648,7 +649,7 @@
                 ApplyViaEmployerWebsite = false
             };
 
-            var httpContext = CreateMockContext(isAuthenticated: false);
+            var httpContext = CreateMockContext();
 
             var view = details.RenderAsHtml(httpContext, vacancyDetailViewModel);
 
@@ -686,7 +687,7 @@
                 ApplyViaEmployerWebsite = false
             };
 
-            var httpContext = CreateMockContext(isAuthenticated: true);
+            var httpContext = CreateMockContext(true);
 
             var view = details.RenderAsHtml( httpContext, vacancyDetailViewModel);
 
@@ -695,7 +696,37 @@
                 .BeNull("Before apply should not be shown if the user is authenticated");
         }
 
-        private static HttpContextBase CreateMockContext(bool isAuthenticated)
+        [TestCase(0)]
+        [TestCase(1)]
+        [TestCase(7)]
+        [TestCase(42)]
+        public void ShowPostedDate(int daysAgo)
+        {
+            // Arrange.
+            var postedDate = DateTime.Today.AddDays(-daysAgo);
+            var friendlyPostedDate = postedDate.ToFriendlyDaysAgo();
+
+            var details = new Details();
+
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
+            {
+                VacancyAddress = new AddressViewModel(),
+                PostedDate = postedDate
+            };
+
+            var httpContext = CreateMockContext();
+
+            // Act.
+            var view = details.RenderAsHtml(httpContext, vacancyDetailViewModel);
+
+            // Assert.
+            var element = view.GetElementbyId("vacancy-posted-date");
+
+            element.Should().NotBeNull();
+            element.InnerText.Should().Be(friendlyPostedDate);
+        }
+
+        private static HttpContextBase CreateMockContext(bool isAuthenticated = false)
         {
             // Use Moq for faking context objects as it can setup all members
             // so that by default, calls to the members return a default/null value 
