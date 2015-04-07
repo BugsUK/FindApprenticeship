@@ -85,11 +85,19 @@
         </div>
     </header>
     <div class="content-container">
-        <div class="phase-notice gov-border">
-            <div class="prototype-warning">
-                <strong class="beta__label">Beta</strong> <span>This is a new service – your <a rel="external" href="https://www.surveymonkey.com/s/MFNR7NZ" target="_blank">feedback</a> will help to improve it.</span>
+        <div class="fixed-container">
+            <div class="banner-container">
+                <div class="phase-notice gov-border grid-wrapper">
+                    <div class="grid grid-1-2">
+                        <div class="prototype-warning">
+                            <strong class="beta__label">Beta</strong> <span>This is a new service – your <a rel="external" href="https://www.surveymonkey.com/s/MFNR7NZ" target="_blank">feedback</a> helps to improve it.</span>
+                        </div>
+                    </div>
+                    <div class="grid grid-1-2">
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
             </div>
-            @Html.Partial("_LoginPartial")
         </div>
         <main role="main" id="main">
             @{
