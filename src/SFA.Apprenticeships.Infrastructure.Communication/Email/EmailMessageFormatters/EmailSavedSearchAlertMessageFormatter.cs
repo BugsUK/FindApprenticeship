@@ -101,6 +101,7 @@
                     employerName = result.EmployerName,
                     description = result.Description,
                     closingDate = FormatDate(result.ClosingDate),
+                    postedDate = FormatDate(result.PostedDate),
                     distance = FormatDistance(result.Distance)
                 })
             });

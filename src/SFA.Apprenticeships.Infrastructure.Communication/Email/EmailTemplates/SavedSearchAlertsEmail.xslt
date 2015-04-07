@@ -83,6 +83,9 @@
           <xsl:value-of select="distance"/>
         </span> mile(s)
         <br/>
+        <b>Date posted: </b>
+        <xsl:value-of select="postedDate"/>
+        <br/>
         <b>Closing date: </b>
         <xsl:value-of select="closingDate"/>
         <br/>
