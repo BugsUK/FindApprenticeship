@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Candidate.ViewModels.VacancySearch;
     using Ploeh.AutoFixture;
@@ -36,12 +37,16 @@
 
         public ApprenticeshipSearchResponseViewModel Build()
         {
+            var vacancies = new List<ApprenticeshipVacancySummaryViewModel>();
             var hits = _totalLocalHits > 0 ? _totalLocalHits : _totalNationalHits;
 
-            var vacancies = new Fixture()
-                .Build<ApprenticeshipVacancySummaryViewModel>()
-                .CreateMany(hits)
-                .ToList();
+            if (hits > 0)
+            {
+                vacancies = new Fixture()
+                    .Build<ApprenticeshipVacancySummaryViewModel>()
+                    .CreateMany(hits)
+                    .ToList();                
+            }
 
             var viewModel = new ApprenticeshipSearchResponseViewModel
             {

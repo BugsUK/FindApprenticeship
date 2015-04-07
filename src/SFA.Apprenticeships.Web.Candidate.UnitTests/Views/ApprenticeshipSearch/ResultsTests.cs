@@ -128,7 +128,13 @@
         public void SaveSearchAvailableNotLoggedIn()
         {
             var vacancySearchViewModel = new ApprenticeshipSearchViewModelBuilder().WithLocation("CV1").Build();
-            var result = new ResultsViewBuilder().With(new ApprenticeshipSearchResponseViewModelBuilder().WithVacancySearch(vacancySearchViewModel).Build()).Render();
+            var searchResponseViewModel = new ApprenticeshipSearchResponseViewModelBuilder()
+                .WithVacancySearch(vacancySearchViewModel)
+                .Build();
+
+            var result = new ResultsViewBuilder()
+                .With(searchResponseViewModel)
+                .Render();
 
             var receiveSaveSearchAlert = result.GetElementbyId("receiveSaveSearchAlert");
 
