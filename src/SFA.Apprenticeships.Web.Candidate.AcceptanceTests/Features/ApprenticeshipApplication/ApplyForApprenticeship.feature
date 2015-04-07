@@ -188,11 +188,6 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| Field                         | Rule      | Value                 |
 		| ApplicationSavedTopMessage    | Ends With | my applications       |
 		| ApplicationSavedBottomMessage | Ends With | my applications       |
-		| Fullname                      | Equals    | Firstname Lastname    |
-		| Phonenumber                   | Equals    | 07469984649           |
-		| EmailAddress                  | Equals    | {EmailToken}          |
-		| Postcode                      | Equals    | N7 8LS                |
-		| DateOfBirth                   | Equals    | 01 January 2000       |
 		| EducationNameOfSchool         | Equals    | SchoolName            |
 		| EducationFromYear             | Equals    | 2010                  |
 		| EducationToYear               | Equals    | 2012                  |
