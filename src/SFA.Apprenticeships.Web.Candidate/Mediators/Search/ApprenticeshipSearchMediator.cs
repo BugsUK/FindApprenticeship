@@ -100,7 +100,7 @@
             return apprenticeshipLevels;
         }
 
-        protected static SelectList GetSearchFields(string selectedValue = "All")
+        protected static SelectList GetSearchFields(bool addRefineOption = false, string selectedValue = "All")
         {
             var searchFieldsOptions = new List<object>
             {
@@ -108,14 +108,18 @@
                 new { FieldName = "JobTitle", DisplayName = "Job title"},
                 new { FieldName = "Description", DisplayName = "Description"},
                 new { FieldName = "Employer", DisplayName = "Employer"},
-                new { FieldName = "Reference", DisplayName = "Reference"},
+                new { FieldName = "Reference", DisplayName = "Ref. number"},
             };
+
+            if (addRefineOption)
+            {
+                searchFieldsOptions.Add(new { FieldName = selectedValue, DisplayName = "-- Refine search --" });
+            }
 
             var searchFields = new SelectList(
                 searchFieldsOptions.ToArray(),
                 "FieldName",
-                "DisplayName",
-                selectedValue
+                "DisplayName"
                 );
 
             return searchFields;
@@ -141,7 +145,7 @@
                 model.Distances = GetDistances(true);
                 model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
-                model.SearchFields = GetSearchFields(model.SearchField);
+                model.SearchFields = GetSearchFields(true, model.SearchField);
                 model.Categories = GetCategories();
 
                 if (candidateId.HasValue)
@@ -183,7 +187,7 @@
             model.Distances = GetDistances(true);
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
             model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
-            model.SearchFields = GetSearchFields(model.SearchField);
+            model.SearchFields = GetSearchFields(true, model.SearchField);
             model.Categories = GetCategories();
 
             var clientResult = _searchRequestValidator.Validate(model);
