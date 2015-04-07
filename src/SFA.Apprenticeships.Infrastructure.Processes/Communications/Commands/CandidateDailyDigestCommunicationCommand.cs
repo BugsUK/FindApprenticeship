@@ -110,8 +110,6 @@
                     candidate, mobileNumber, MessageTypes.ApprenticeshipApplicationSuccessful, applicationStatusAlert);
             }
 
-            // TODO: 1.9: reinstate unsuccessful SMS messages when 'next steps' link is available.
-            /*
             // Other (unsuccessful) application status alerts.
             var otherApplicationStatusAlerts = applicationStatusAlerts
                 .Where(each => each.Status != ApplicationStatuses.Successful)
@@ -127,15 +125,12 @@
                 QueueSummaryApplicationStatusAlertSmsMessage(
                     candidate, mobileNumber, MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, otherApplicationStatusAlerts);
             }
-            */
         }
 
-        // TODO: 1.9: reinstate unsuccessful SMS messages when 'next steps' link is available.
-        /*
         private void QueueSummaryApplicationStatusAlertSmsMessage(
             Candidate candidate, string mobileNumber, MessageTypes messageType, IEnumerable<ApplicationStatusAlert> applicationStatusAlerts)
         {
-            base.HandleSms(candidate, new CommunicationRequest
+            base.HandleSmsMessage(candidate, new CommunicationRequest
             {
                 MessageType = messageType,
                 Tokens = new[]
@@ -145,7 +140,6 @@
                     }
             });
         }
-        */
 
         private void QueueApplicationStatusAlertSmsMessage(
             Candidate candidate, string mobileNumber, MessageTypes messageType, ApplicationStatusAlert applicationStatusAlert)

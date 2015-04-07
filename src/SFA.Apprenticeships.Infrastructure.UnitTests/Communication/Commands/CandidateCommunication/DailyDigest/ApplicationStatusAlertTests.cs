@@ -36,7 +36,7 @@
                 .WithApplicationStatusAlerts(1, ApplicationStatuses.Successful)
                 .Build();
 
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(applicationStatusAlerts);
+            var json = JsonConvert.SerializeObject(applicationStatusAlerts);
 
             var communicationRequest = new CommunicationRequestBuilder(MessageTypes.DailyDigest, candidate.EntityId)
                 .WithToken(CommunicationTokens.ExpiringDrafts, null)
@@ -65,7 +65,7 @@
                 .WithApplicationStatusAlerts(successfulApplicationCount, ApplicationStatuses.Successful)
                 .Build();
 
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(applicationStatusAlerts);
+            var json = JsonConvert.SerializeObject(applicationStatusAlerts);
 
             var communicationRequest = new CommunicationRequestBuilder(MessageTypes.DailyDigest, candidate.EntityId)
                 .WithToken(CommunicationTokens.ExpiringDrafts, null)
@@ -94,7 +94,7 @@
                 .WithApplicationStatusAlerts(successfulApplicationCount, ApplicationStatuses.Successful)
                 .Build();
 
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(applicationStatusAlerts);
+            var json = JsonConvert.SerializeObject(applicationStatusAlerts);
 
             var communicationRequest = new CommunicationRequestBuilder(MessageTypes.DailyDigest, candidate.EntityId)
                 .WithToken(CommunicationTokens.ExpiringDrafts, null)
@@ -111,7 +111,6 @@
         [TestCase(1, MessageTypes.ApprenticeshipApplicationUnsuccessful)]
         [TestCase(2, MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary)]
         [TestCase(5, MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary)]
-        [Ignore]
         public void ShouldQueueOneSmsForOneOrMoreUnsuccessfulApplicationStatusUpdates(
             int unsuccessfulApplicationCount, MessageTypes expectedMessageType)
         {
@@ -126,7 +125,7 @@
                 .WithApplicationStatusAlerts(unsuccessfulApplicationCount, ApplicationStatuses.Unsuccessful)
                 .Build();
 
-            var json = Newtonsoft.Json.JsonConvert.SerializeObject(applicationStatusAlerts);
+            var json = JsonConvert.SerializeObject(applicationStatusAlerts);
 
             var communicationRequest = new CommunicationRequestBuilder(MessageTypes.DailyDigest, candidate.EntityId)
                 .WithToken(CommunicationTokens.ExpiringDrafts, null)
