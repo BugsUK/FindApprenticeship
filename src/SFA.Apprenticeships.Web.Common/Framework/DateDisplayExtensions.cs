@@ -30,18 +30,23 @@
         public static string ToFriendlyDaysAgo(this DateTime date)
         {
             var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-            var dateTimeByZoneInfo = TimeZoneInfo.ConvertTime(date.ToUniversalTime(), timeZoneInfo);
+            var dateTimeByZoneId = TimeZoneInfo.ConvertTime(date.ToUniversalTime(), timeZoneInfo);
 
-            var daysLeft = (int)(DateTime.Now.Date - dateTimeByZoneInfo.Date).TotalDays;
+            var daysAgo = (int)(DateTime.Now.Date - dateTimeByZoneId.Date).TotalDays;
 
-            switch (daysLeft)
+            if (daysAgo > 7 || daysAgo < 0)
+            {
+                return dateTimeByZoneId.ToString("dd MMM yyyy");
+            }
+
+            switch (daysAgo)
             {
                 case 0:
                     return "today";
                 case 1:
                     return "yesterday";
                 default:
-                    return daysLeft + " days ago";
+                    return daysAgo + " days ago";
             }
         }
 

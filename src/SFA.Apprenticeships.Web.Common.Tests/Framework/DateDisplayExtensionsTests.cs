@@ -51,6 +51,7 @@
             Assert.AreEqual(friendlyClosingDate, showToday ? "today" : closingDate.ToString("dd MMM yyyy"));
         }
 
+        [TestCase(-1)]
         [TestCase(0)]
         [TestCase(1)]
         [TestCase(2)]
@@ -58,8 +59,9 @@
         [TestCase(28)]
         public void ToFriendlyDaysAgo(int daysAgo)
         {
-            var dateProcessed = DateTime.UtcNow.AddDays(-daysAgo);
-            var friendlyDaysAgo = dateProcessed.ToFriendlyDaysAgo();
+            var dateDaysAgo = DateTime.UtcNow.AddDays(-daysAgo);
+            var friendlyDaysAgo = dateDaysAgo.ToFriendlyDaysAgo();
+
             if (daysAgo == 0)
             {
                 friendlyDaysAgo.Should().Be("today");
@@ -67,6 +69,10 @@
             else if (daysAgo == 1)
             {
                 friendlyDaysAgo.Should().Be("yesterday");
+            }
+            else if (daysAgo > 7 || daysAgo < 0)
+            {
+                friendlyDaysAgo.Should().Be(dateDaysAgo.ToString("dd MMM yyyy"));
             }
             else
             {
