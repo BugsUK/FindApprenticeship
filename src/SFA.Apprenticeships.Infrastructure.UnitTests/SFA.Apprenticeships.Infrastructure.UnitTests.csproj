@@ -167,9 +167,13 @@
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTestsBase.cs" />
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
+    <Compile Include="LegacyWebServices\Candidate\LegacyCandidateProviderBuilder.cs" />
+    <Compile Include="LegacyWebServices\Candidate\MockGatewayService.cs" />
+    <Compile Include="LegacyWebServices\Candidate\UpdateCandidateTests.cs" />
     <Compile Include="LegacyWebServices\GatewayApprenticeshipVacancyDetailMapperTests.cs" />
     <Compile Include="LegacyWebServices\GatewayTraineeshipVacancyDetailMapperTests.cs" />
     <Compile Include="LegacyWebServices\GatewayVacancySummaryMapperTests.cs" />
+    <Compile Include="LegacyWebServices\Candidate\CreateCandidateTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="Processes\ApplicationStatusChangedConsumerAsyncTests.cs" />
     <Compile Include="Processes\Builders\ApplicationStatusChangedConsumerAsyncBuilder.cs" />
@@ -190,6 +194,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
       <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
+      <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidate</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communications\SFA.Apprenticeships.Application.Communications.csproj">
       <Project>{D91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
