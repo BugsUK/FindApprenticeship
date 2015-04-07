@@ -637,10 +637,6 @@
     <Content Include="Startup\DisableSslv3.ps1" />
     <Content Include="Startup\startup.cmd" />
     <Content Include="Startup\startup.ps1" />
-    <Content Include="Views\ApprenticeshipSearch\_refineSearch.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_refineSearch.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\ApprenticeshipSearch\_savedSearches.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_savedSearches.generated.cs</LastGenOutput>
@@ -1073,11 +1069,6 @@
       <DependentUpon>_savedSearches.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Views\ApprenticeshipSearch\_refineSearch.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>_refineSearch.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApprenticeshipSearch\_searchResults.generated.cs">
       <AutoGen>True</AutoGen>

@@ -60,6 +60,7 @@
             var resultsPerPage = GetResultsPerPage();
             var apprenticeshipLevels = GetApprenticeshipLevels();
             var apprenticeshipLevel = GetApprenticeshipLevel();
+            var searchFields = GetSearchFields();
             var categories = GetCategories();
             var savedSearches = GetSavedSearches(candidateId);
 
@@ -72,6 +73,7 @@
                 ResultsPerPage = resultsPerPage,
                 ApprenticeshipLevels = apprenticeshipLevels,
                 ApprenticeshipLevel = apprenticeshipLevel,
+                SearchFields = searchFields,
                 Categories = categories,
                 SavedSearches = savedSearches,
                 SearchMode = searchMode
@@ -98,6 +100,27 @@
             return apprenticeshipLevels;
         }
 
+        protected static SelectList GetSearchFields(string selectedValue = "All")
+        {
+            var searchFieldsOptions = new List<object>
+            {
+                new { FieldName = "All", DisplayName = "All"},
+                new { FieldName = "JobTitle", DisplayName = "Job title"},
+                new { FieldName = "Description", DisplayName = "Description"},
+                new { FieldName = "Employer", DisplayName = "Employer"},
+                new { FieldName = "Reference", DisplayName = "Reference"},
+            };
+
+            var searchFields = new SelectList(
+                searchFieldsOptions.ToArray(),
+                "FieldName",
+                "DisplayName",
+                selectedValue
+                );
+
+            return searchFields;
+        }
+
         private string GetApprenticeshipLevel()
         {
             return UserDataProvider.Get(CandidateDataItemNames.ApprenticeshipLevel) ?? "All";
@@ -118,6 +141,7 @@
                 model.Distances = GetDistances(true);
                 model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
+                model.SearchFields = GetSearchFields(model.SearchField);
                 model.Categories = GetCategories();
 
                 if (candidateId.HasValue)
@@ -159,6 +183,7 @@
             model.Distances = GetDistances(true);
             model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
             model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
+            model.SearchFields = GetSearchFields(model.SearchField);
             model.Categories = GetCategories();
 
             var clientResult = _searchRequestValidator.Validate(model);
@@ -199,6 +224,7 @@
                             WithinDistance = model.WithinDistance,
                             ResultsPerPage = model.ResultsPerPage,
                             Category = model.Category,
+                            SearchFields = model.SearchFields,
                             SubCategories = model.SubCategories,
                             SearchMode = model.SearchMode
                         };

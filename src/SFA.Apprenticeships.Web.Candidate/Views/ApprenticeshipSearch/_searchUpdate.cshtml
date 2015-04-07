@@ -11,10 +11,9 @@
                     @Html.Partial("_categoriesAndSubCategories", Model);
                 }
 
-                @*@Html.Partial("_refineSearch", Model)*@
-
                 @if (Model.SearchMode == ApprenticeshipSearchMode.Keyword)
                 {
+                    @Html.DropDownListFor(m => m.SearchField, Model.SearchFields)
                     @Html.FormTextFor(m => m.Keywords, hintText: "", labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
                 }
 

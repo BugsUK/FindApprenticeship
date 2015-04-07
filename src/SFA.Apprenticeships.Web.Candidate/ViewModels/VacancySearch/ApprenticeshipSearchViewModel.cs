@@ -47,6 +47,8 @@
 
         public string ApprenticeshipLevel { get; set; }
 
+        public SelectList SearchFields { get; set; }
+
         public string SearchField
         {
             get
