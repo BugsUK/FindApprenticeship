@@ -3,9 +3,15 @@
 $(document).ready(function () {
     var $keywordsInput = $("#Keywords");
 
-    $keywordsInput.wrap('<div class="input-withlink input-withlink--all-select"></div>');
+    if ($('#searchHome').length > 0) {
+        $keywordsInput.wrap('<div class="input-withlink input-withlink--all-select"></div>');
 
-    $("#SearchField").insertBefore($keywordsInput).removeClass('hidden');
+        $("#SearchField").insertBefore($keywordsInput).removeClass('hidden');
+
+        setSelectControl($('#SearchField'));
+    } else {
+        $("#SearchField").insertBefore($keywordsInput).removeClass('hidden');
+    }
 
     function setSelectControl(that) {
         var $this = that,
@@ -28,7 +34,4 @@ $(document).ready(function () {
         setSelectControl($this);
     });
 
-    if ($('#getLocation').length > 0) {
-        setSelectControl($('#SearchField'));
-    }
 });
