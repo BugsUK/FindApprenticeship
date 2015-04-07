@@ -24,6 +24,8 @@
 
         public DateTime StartDate { get; set; }
 
+        public DateTime PostedDate { get; set; }
+
         public string DistanceAsString
         {
             get

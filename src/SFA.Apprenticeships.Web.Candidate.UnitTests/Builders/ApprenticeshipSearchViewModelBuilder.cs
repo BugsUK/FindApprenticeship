@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
     using System.Collections.Generic;
+    using Application.Interfaces.Vacancies;
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.Account;
     using Candidate.ViewModels.VacancySearch;
@@ -22,6 +23,7 @@
         private double? _latitude;
         private double? _longitude;
         private SavedSearchViewModel[] _savedSearches;
+        private VacancySearchSortType _sortType;
 
         public ApprenticeshipSearchViewModel Build()
         {
@@ -39,6 +41,8 @@
                 SearchField = _searchField,
 
                 SortTypes = SearchMediatorBase.GetSortTypes(),
+                SortType = _sortType,
+
                 ResultsPerPageSelectList = SearchMediatorBase.GetResultsPerPageSelectList(5),
                 Categories = _categories,
                 ViewModelMessage = _viewModelMessage,
@@ -124,6 +128,12 @@
         public ApprenticeshipSearchViewModelBuilder WithSavedSearches(SavedSearchViewModel[] savedSearches)
         {
             _savedSearches = savedSearches;
+            return this;
+        }
+
+        public ApprenticeshipSearchViewModelBuilder WithSortType(VacancySearchSortType sortType)
+        {
+            _sortType = sortType;
             return this;
         }
     }

@@ -1,11 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
+    using System.Linq;
     using Candidate.ViewModels.VacancySearch;
+    using Ploeh.AutoFixture;
 
     public class ApprenticeshipSearchResponseViewModelBuilder
     {
-        private long _totalLocalHits;
-        private long _totalNationalHits;
+        private int _totalLocalHits;
+        private int _totalNationalHits;
+
         private ApprenticeshipSearchViewModel _vacancySearchViewModel;
 
         public ApprenticeshipSearchResponseViewModelBuilder()
@@ -13,13 +16,13 @@
             _vacancySearchViewModel = new ApprenticeshipSearchViewModelBuilder().Build();
         }
 
-        public ApprenticeshipSearchResponseViewModelBuilder WithTotalLocalHits(long totalLocalHits)
+        public ApprenticeshipSearchResponseViewModelBuilder WithTotalLocalHits(int totalLocalHits)
         {
             _totalLocalHits = totalLocalHits;
             return this;
         }
 
-        public ApprenticeshipSearchResponseViewModelBuilder WithTotalNationalHits(long totalNationalHits)
+        public ApprenticeshipSearchResponseViewModelBuilder WithTotalNationalHits(int totalNationalHits)
         {
             _totalNationalHits = totalNationalHits;
             return this;
@@ -33,12 +36,21 @@
 
         public ApprenticeshipSearchResponseViewModel Build()
         {
+            var hits = _totalLocalHits > 0 ? _totalLocalHits : _totalNationalHits;
+
+            var vacancies = new Fixture()
+                .Build<ApprenticeshipVacancySummaryViewModel>()
+                .CreateMany(hits)
+                .ToList();
+
             var viewModel = new ApprenticeshipSearchResponseViewModel
             {
                 TotalLocalHits = _totalLocalHits,
                 TotalNationalHits = _totalNationalHits,
-                VacancySearch = _vacancySearchViewModel
+                VacancySearch = _vacancySearchViewModel,
+                Vacancies = vacancies
             };
+
             return viewModel;
         }
     }
