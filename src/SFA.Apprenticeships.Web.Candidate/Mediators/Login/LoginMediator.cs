@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
 {
+    using System.Globalization;
+    using System.Linq;
     using Common.Configuration;
     using Common.Constants;
     using Common.Framework;
@@ -66,6 +68,12 @@
                         return GetMediatorResponse(LoginMediatorCodes.Index.PendingActivation, result);
                     }
 
+                    // Set number of saved/draft vacancies
+                    var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
+                    var applications = _candidateServiceProvider.GetApprenticeshipApplications(candidate.EntityId);
+                    var savedAndDraftAppCount = applications.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
+                    _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedAndDraftAppCount.ToString(CultureInfo.InvariantCulture));
+
                     // Redirect to session return URL (if any).
                     var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
                     result.ReturnUrl = returnUrl;
@@ -87,8 +95,6 @@
 
                     if (lastViewedVacancyId != null)
                     {
-                        var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
-
                         var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, int.Parse(lastViewedVacancyId));
 
                         if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)

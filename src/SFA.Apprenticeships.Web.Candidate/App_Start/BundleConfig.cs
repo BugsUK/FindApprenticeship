@@ -34,8 +34,8 @@ namespace SFA.Apprenticeships.Web.Candidate
 
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(
                 "~/Content/_assets/js/nas/lookupService.js",
-                "~/Content/_assets/js/nas/refineSearch.js",
                 "~/Content/_assets/js/nas/validationscripts.js",
+                "~/Content/_assets/js/nas/savedAndDraftCount.js",
                 "~/Content/_assets/js/nas/webTrendsInlineTrack.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/passwordstrength").Include(
@@ -47,7 +47,8 @@ namespace SFA.Apprenticeships.Web.Candidate
 
             bundles.Add(new ScriptBundle("~/bundles/nas/locationsearch").Include(
                 "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
-                "~/Content/_assets/js/nas/locationAutocomplete.js"));
+                "~/Content/_assets/js/nas/locationAutocomplete.js",
+                "~/Content/_assets/js/nas/refineSearch.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/resultsMap").Include(
                 "~/Content/_assets/js/vendor/jquery.lazy-load-google-maps.js",

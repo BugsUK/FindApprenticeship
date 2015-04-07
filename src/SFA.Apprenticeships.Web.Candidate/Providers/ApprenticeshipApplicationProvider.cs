@@ -2,9 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Logging;
     using Common.Configuration;
+    using Common.Constants;
+    using Common.Providers;
     using Domain.Entities.Vacancies;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Applications;
@@ -23,6 +26,7 @@
     public class ApprenticeshipApplicationProvider : IApprenticeshipApplicationProvider
     {
         private readonly ILogService _logger;
+        private readonly IUserDataProvider _userDataProvider;
         private readonly IMapper _mapper;
         private readonly IApprenticeshipVacancyProvider _apprenticeshipVacancyProvider;
         private readonly ICandidateService _candidateService;
@@ -32,13 +36,15 @@
             IApprenticeshipVacancyProvider apprenticeshipVacancyProvider,
             ICandidateService candidateService,
             IMapper mapper,
-            IConfigurationService configurationService, ILogService logger)
+            IConfigurationService configurationService, ILogService logger,
+            IUserDataProvider userDataProvider)
         {
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
             _candidateService = candidateService;
             _mapper = mapper;
             _configurationService = configurationService;
             _logger = logger;
+            _userDataProvider = userDataProvider;
         }
 
         public ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -440,6 +446,8 @@
             try
             {
                 var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId);
+                var savedOrDraft = apprenticeshipApplicationSummaries.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
+                _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedOrDraft.ToString(CultureInfo.InvariantCulture));
 
                 var apprenticeshipApplications = apprenticeshipApplicationSummaries
                     .Select(each => new MyApprenticeshipApplicationViewModel

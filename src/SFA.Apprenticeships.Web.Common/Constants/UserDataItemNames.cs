@@ -8,5 +8,6 @@
         public const string EmailAddress = "Data.UserEmail";
         public const string UnlockEmailAddress = "Data.UnlockEmail";
         public const string LoggingSessionId = "Data.SessionId";
+        public const string SavedAndDraftCount = "Data.SavedAndDraftCount";
     }
 }

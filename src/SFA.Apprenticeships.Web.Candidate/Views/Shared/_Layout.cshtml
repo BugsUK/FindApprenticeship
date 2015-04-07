@@ -175,22 +175,22 @@
     @Scripts.Render("~/bundles/underscore")
 
     <script type="text/javascript">
-        if (typeof jQuery === 'undefined') {
-            var e = document.createElement("script");
+    if (typeof jQuery === 'undefined') {
+        var e = document.createElement("script");
 
-            e.src = '@Url.Content("~/Content/_assets/js/vendor/jquery-1.11.1.js")';
-            e.type = "text/javascript";
-            document.getElementsByTagName("head")[0].appendChild(e);
-        }
+        e.src = '@Url.Content("~/Content/_assets/js/vendor/jquery-1.11.1.js")';
+        e.type = "text/javascript";
+        document.getElementsByTagName("head")[0].appendChild(e);
+    }
 
-        $(function () {
-            $("#dismiss-planned-outage-message").click(function (event) {
+    $(function () {
+        $("#dismiss-planned-outage-message").click(function (event) {
 
-                event.preventDefault();
+            event.preventDefault();
 
-                var request = $.ajax({
-                    type: "GET",
-                    url: '@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = true })'
+            var request = $.ajax({
+                type: "GET",
+                url: '@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = true })'
                 });
 
                 request.done(function () {
@@ -199,14 +199,18 @@
 
                 });
             });
+
+        @if (ViewBag.SavedAndDraftCount != null)
+        {
+            @:UpdateSavedAndDraftCount(@ViewBag.SavedAndDraftCount);
+        }
         });
     </script>
 
     @Scripts.Render("~/bundles/nascript")
     @Scripts.Render("~/bundles/vendor")
     @Scripts.Render("~/bundles/nas")
-
     @RenderSection("scripts", required: false)
-
+    
 </body>
 </html>

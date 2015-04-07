@@ -1,6 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
     using System;
+    using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using Builders;
     using Candidate.Mediators.Login;
     using Candidate.Providers;
@@ -15,6 +18,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class IndexTests
@@ -200,6 +204,29 @@
             var response = mediator.Index(viewModel);
 
             response.AssertCode(LoginMediatorCodes.Index.Ok);
+        }
+
+        [Test]
+        public void SavedAndDraftCountIsSet()
+        {
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            var applicationStatusSummaries = new Fixture().CreateMany<ApprenticeshipApplicationSummary>(25);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(applicationStatusSummaries);
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate {EntityId = Guid.Empty});
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(new LoginResultViewModelBuilder().Build);
+
+            var userDataProvider = new Mock<IUserDataProvider>();
+            userDataProvider.Setup(x => x.Push(UserDataItemNames.SavedAndDraftCount, It.IsAny<string>()));
+
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).With(userDataProvider).Build();
+
+            var response = mediator.Index(viewModel);
+
+            response.AssertCode(LoginMediatorCodes.Index.Ok);
+            var count = applicationStatusSummaries.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
+            userDataProvider.Verify(x => x.Push(UserDataItemNames.SavedAndDraftCount, count.ToString(CultureInfo.InvariantCulture)), Times.Once);
         }
 
         [Test]

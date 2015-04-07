@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
     using System;
+    using System.Globalization;
     using System.Linq;
     using System.Web.Security;
     using Common.Constants;
@@ -352,12 +353,18 @@
         {
             var viewModel = _apprenticeshipApplicationProvider.SaveVacancy(candidateId, vacancyId);
 
+            var savedVacancyCount = int.Parse(UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount)) + 1;
+            UserDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedVacancyCount.ToString(CultureInfo.InvariantCulture));
+
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SaveVacancy.Ok, viewModel);
         }
 
         public MediatorResponse<SavedVacancyViewModel> DeleteSavedVacancy(Guid candidateId, int vacancyId)
         {
             var viewModel = _apprenticeshipApplicationProvider.DeleteSavedVacancy(candidateId, vacancyId);
+
+            var savedVacancyCount = int.Parse(UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount)) - 1;
+            UserDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedVacancyCount.ToString(CultureInfo.InvariantCulture));
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.DeleteSavedVacancy.Ok, viewModel);
         }

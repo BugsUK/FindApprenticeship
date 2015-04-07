@@ -7,6 +7,7 @@
     using Application.Interfaces.Logging;
     using Candidate.Providers;
     using Common.Configuration;
+    using Common.Providers;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Configuration;
@@ -22,6 +23,7 @@
         private Mock<ILogService> _logService;
         private Mock<ICandidateService> _candidateService;
         private Mock<IConfigurationService> _configurationService;
+        private Mock<IUserDataProvider> _userDataProvider;
 
         private ApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
 
@@ -31,12 +33,13 @@
             _logService = new Mock<ILogService>();
             _candidateService = new Mock<ICandidateService>();
             _configurationService = new Mock<IConfigurationService>();
+            _userDataProvider = new Mock<IUserDataProvider>();
 
             _configurationService.Setup(cm => cm.Get<WebConfiguration>())
                 .Returns(new WebConfiguration { UnsuccessfulApplicationsToShowTraineeshipsPrompt = UnsuccessfulApplications });
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
-                null, _configurationService.Object, _logService.Object);
+                null, _configurationService.Object, _logService.Object, _userDataProvider.Object);
         }
 
         [Test]

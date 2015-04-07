@@ -2,6 +2,7 @@
 {
     using System;
     using System.Web.Mvc;
+    using Constants;
     using Framework;
     using Providers;
 
@@ -10,6 +11,8 @@
         public ICookieDetectionProvider CookieDetectionProvider { get; set; }
 
         public IEuCookieDirectiveProvider EuCookieDirectiveProvider { get; set; }
+
+        public IUserDataProvider UserDataProvider { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
@@ -50,6 +53,17 @@
             }
 
             base.OnActionExecuting(filterContext);
+        }
+
+        public override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            var savedAndDraftCount = UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount);
+            if (!string.IsNullOrWhiteSpace(savedAndDraftCount))
+            {
+                filterContext.Controller.ViewBag.SavedAndDraftCount = savedAndDraftCount;
+            }
+
+            base.OnActionExecuted(filterContext);
         }
     }
 }

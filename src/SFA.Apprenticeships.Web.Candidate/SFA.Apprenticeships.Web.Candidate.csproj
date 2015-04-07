@@ -267,6 +267,7 @@
     </None>
     <Content Include="Content\_assets\js\nas\apprenticeships\saveVacancy.js" />
     <Content Include="Content\_assets\js\nas\refineSearch.js" />
+    <Content Include="Content\_assets\js\nas\savedAndDraftCount.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="TraineeshipNotFound.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />

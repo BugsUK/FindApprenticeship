@@ -89,8 +89,9 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IEuCookieDirectiveProvider>());
-                x.Policies.SetAllProperties(y => y.OfType<IDismissPlannedOutageMessageCookieProvider>());
+                x.Policies.SetAllProperties(y => y.OfType<IUserDataProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<ILogService>());
+                x.Policies.SetAllProperties(y => y.OfType<IDismissPlannedOutageMessageCookieProvider>());
             });
         }
     }

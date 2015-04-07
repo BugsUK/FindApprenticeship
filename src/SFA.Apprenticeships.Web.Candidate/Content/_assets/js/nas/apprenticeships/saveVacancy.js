@@ -83,6 +83,11 @@
         $.ajax(ajaxOptions)
             .done(function (result) {
                 updateSaveVacancyView.call($saveLink, result.applicationStatus);
+                if (vacancyStatus.unsaved) {
+                    IncrementSavedAndDraftCount();
+                } else {
+                    DecrementSavedAndDraftCount();
+                }
             })
             .fail(function () {
                 // Best efforts: revert application status.
