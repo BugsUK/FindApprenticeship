@@ -4,6 +4,7 @@
     using Application.Interfaces.Logging;
     using Candidate.Mappers;
     using Candidate.Providers;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Moq;
 
@@ -14,6 +15,7 @@
 
         private Mock<ICandidateService> _candidateService;
         private Mock<ITraineeshipVacancyProvider> _traineeshipVacancyProvider;
+        private Mock<IConfigurationService> _configurationService;
 
         public TraineeshipApplicationProviderBuilder()
         {
@@ -21,6 +23,7 @@
             _logger = new Mock<ILogService>().Object;
 
             _candidateService = new Mock<ICandidateService>();
+            _configurationService = new Mock<IConfigurationService>();
             _traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
         }
 
@@ -36,9 +39,15 @@
             return this;
         }
 
+        public TraineeshipApplicationProviderBuilder With(Mock<IConfigurationService> configurationService)
+        {
+            _configurationService = configurationService;
+            return this;
+        }
+
         public TraineeshipApplicationProvider Build()
         {
-            var provider = new TraineeshipApplicationProvider(_mapper, _candidateService.Object, _traineeshipVacancyProvider.Object, _logger);
+            var provider = new TraineeshipApplicationProvider(_mapper, _candidateService.Object, _traineeshipVacancyProvider.Object, _logger, _configurationService.Object);
             return provider;
         }
     }

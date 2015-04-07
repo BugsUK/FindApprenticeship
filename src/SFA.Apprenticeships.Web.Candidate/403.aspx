@@ -1,5 +1,4 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="403.aspx.cs" Inherits="SFA.Apprenticeships.Web.Candidate._403" %>
-
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
@@ -21,11 +20,6 @@
     <script type="text/javascript" src="/Content/_assets/js/vendor/modernizr-custom.js"></script>
 </head>
 <body>
-   <%-- <div class="skiplink-container">
-        <div>
-            <a href="#main" class="skiplink">Skip to main content</a>
-        </div>
-    </div>--%>
     <header role="banner" class="global-header">
         <div class="global-header__wrapper">
             <div class="global-header__logo">

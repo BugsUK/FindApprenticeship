@@ -5,11 +5,13 @@
     using Builders;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Configuration;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -93,14 +95,19 @@
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
             apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModelBuilder().Build());
-            
+
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<WebConfiguration>())
+                .Returns(new WebConfiguration() {FeedbackUrl = "http://feedback"});
+
             var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
-                .With(candidateService).With(apprenticeshipVacancyProvider).Build()
+                .With(candidateService).With(apprenticeshipVacancyProvider).With(configurationService).Build()
                 .GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
 
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();
             returnedViewModel.Status.Should().Be(ApplicationStatuses.Unknown);
+            returnedViewModel.FeedbackUrl.Should().Be("http://feedback");
         }
 
         [Test]

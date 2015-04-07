@@ -7,11 +7,13 @@
     using System.Web.Security;
     using Attributes;
     using Common.Attributes;
+    using Common.Configuration;
     using Common.Constants;
     using Common.Framework;
     using Common.Services;
     using Constants;
     using Constants.Pages;
+    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Login;
@@ -21,12 +23,15 @@
     {
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ILoginMediator _loginMediator;
+        private readonly IConfigurationService _configurationService;
 
         public LoginController(IAuthenticationTicketService authenticationTicketService,
-            ILoginMediator loginMediator)
+            ILoginMediator loginMediator,
+            IConfigurationService configurationService)
         {
             _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer?
             _loginMediator = loginMediator;
+            _configurationService = configurationService;
         }
 
         [HttpGet]
@@ -207,6 +212,7 @@
             const string userJourneyKey = "UserJourney";
             var userJourneyValue = UserData.Get(userJourneyKey);
             FormsAuthentication.SignOut();
+            var webConfiguration = _configurationService.Get<WebConfiguration>();
 
             if (UserData.Get(UserMessageConstants.WarningMessage) == SignOutPageMessages.MustAcceptUpdatedTermsAndConditions)
             {
@@ -216,10 +222,16 @@
             else
             {
                 UserData.Clear();
-                SetUserMessage(SignOutPageMessages.SignOutMessageText);
+                var signOutMessage = string.Format(SignOutPageMessages.SignOutMessageText, webConfiguration.FeedbackUrl);
+                SetUserMessage(signOutMessage);
             }
 
             UserData.Push(userJourneyKey, userJourneyValue);
+            
+            if (webConfiguration.FeedbackUrl == returnUrl)
+            {
+                return Redirect(webConfiguration.FeedbackUrl);
+            }
 
             return returnUrl.IsValidReturnUrl()
                 ? RedirectToRoute(RouteNames.SignIn, new { ReturnUrl = returnUrl })

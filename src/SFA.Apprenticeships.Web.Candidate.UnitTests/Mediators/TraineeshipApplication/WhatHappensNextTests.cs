@@ -25,7 +25,8 @@
         [Test]
         public void VacancyNotFound()
         {
-            TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new WhatHappensNextViewModel { Status = ApplicationStatuses.ExpiredOrWithdrawn });
+            TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(new WhatHappensNextViewModel {Status = ApplicationStatuses.ExpiredOrWithdrawn});
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
 
@@ -62,11 +63,12 @@
         [Test]
         public void Ok()
         {
-            TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new WhatHappensNextViewModel());
+            TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
+                .Returns(new WhatHappensNextViewModel());
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
 
-            response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);            
         }
     }
 }

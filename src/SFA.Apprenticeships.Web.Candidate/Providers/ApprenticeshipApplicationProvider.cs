@@ -386,6 +386,7 @@
 
             try
             {
+                var webConfiguration = _configurationService.Get<WebConfiguration>();
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
                 var candidate = _candidateService.GetCandidate(candidateId);
 
@@ -400,8 +401,7 @@
                     return new WhatHappensNextViewModel(MyApplicationsPageMessages.ApplicationNotFound);
                 }
 
-                var model =
-                    _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
+                var model = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
                 var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
 
                 if (patchedModel.HasError())
@@ -415,7 +415,8 @@
                     VacancyTitle = patchedModel.VacancyDetail.Title,
                     Status = patchedModel.Status,
                     SentEmail = candidate.CommunicationPreferences.AllowEmail,
-                    VacancyStatus = patchedModel.VacancyDetail.VacancyStatus
+                    VacancyStatus = patchedModel.VacancyDetail.VacancyStatus,
+                    FeedbackUrl = webConfiguration.FeedbackUrl
                 };
             }
             catch (Exception e)

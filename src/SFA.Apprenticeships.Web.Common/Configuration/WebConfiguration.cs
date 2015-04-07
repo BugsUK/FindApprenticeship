@@ -18,6 +18,8 @@
 
         public string BlacklistedCategoryCodes { get; set; }
 
+        public string FeedbackUrl { get; set; }
+
         public bool IsWebsiteOffline { get; set; }
 
         public string WebsiteOfflineMessage { get; set; }
