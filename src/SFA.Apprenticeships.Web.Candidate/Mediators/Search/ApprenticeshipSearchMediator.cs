@@ -111,7 +111,7 @@
                 new { FieldName = "Reference", DisplayName = "Ref. number"},
             };
 
-            if (addRefineOption)
+            if (addRefineOption && selectedValue == "All")
             {
                 searchFieldsOptions.Add(new { FieldName = selectedValue, DisplayName = "-- Refine search --" });
             }
