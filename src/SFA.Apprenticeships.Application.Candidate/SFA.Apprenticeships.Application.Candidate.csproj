@@ -96,6 +96,8 @@
     </Compile>
     <Compile Include="CandidateService.cs" />
     <Compile Include="CreateCandidateRequest.cs" />
+    <Compile Include="SaveCandidateRequest.cs" />
+    <Compile Include="Strategies\QueuedLegacySaveCandidateStrategy.cs" />
     <Compile Include="Strategies\SavedSearches\CreateSavedSearchStrategy.cs" />
     <Compile Include="Strategies\SavedSearches\DeleteSavedSearchStrategy.cs" />
     <Compile Include="Strategies\SavedSearches\ICreateSavedSearchStrategy.cs" />
