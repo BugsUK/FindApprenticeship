@@ -28,6 +28,7 @@
         [TestCase(MessageTypes.SendMobileVerificationCode)]
         [TestCase(MessageTypes.SendPasswordResetCode)]
         [TestCase(MessageTypes.TraineeshipApplicationSubmitted)]
+        [TestCase(MessageTypes.SendPendingUsernameCode)]
         public void ShouldHandleMostCandidateMessagesTypes(MessageTypes messageType)
         {
             // Arrange.
@@ -169,6 +170,7 @@
         [TestCase(MessageTypes.SendAccountUnlockCode)]
         [TestCase(MessageTypes.SendActivationCode)]
         [TestCase(MessageTypes.SendPasswordResetCode)]
+        [TestCase(MessageTypes.SendPendingUsernameCode)]
         public void ShouldNotQueueSmsForNonSmsMessageType(MessageTypes messageType)
         {
             // Arrange.

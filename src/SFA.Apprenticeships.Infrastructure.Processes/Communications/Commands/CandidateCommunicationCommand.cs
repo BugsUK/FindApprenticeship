@@ -39,7 +39,8 @@
                 MessageTypes.ApprenticeshipApplicationSubmitted,
                 MessageTypes.TraineeshipApplicationSubmitted,
                 MessageTypes.PasswordChanged,
-                MessageTypes.SavedSearchAlert
+                MessageTypes.SavedSearchAlert,
+                MessageTypes.SendPendingUsernameCode
             };
 
             return messageTypes.Contains(communicationRequest.MessageType);

@@ -26,14 +26,18 @@
         private readonly IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> _messageFormatters;
         private readonly IEnumerable<IEmailFromResolver> _emailFromResolvers;
 
-        public SendGridEmailDispatcher(IConfigurationService configuration, 
+        public SendGridEmailDispatcher(
+            IConfigurationService configuration, 
             IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> messageFormatters, 
-            ILogService logger, IEnumerable<IEmailFromResolver> emailFromResolvers)
+            ILogService logger,
+            IEnumerable<IEmailFromResolver> emailFromResolvers)
         {
             _messageFormatters = messageFormatters;
             _logger = logger;
             _emailFromResolvers = emailFromResolvers;
+
             var config = configuration.Get<EmailConfiguration>();
+
             _userName = config.Username;
             _password = config.Password;
             _templates = config.Templates.ToArray();
@@ -112,8 +116,10 @@
         {
             var enumType = messageType.GetType();
             var templateName = string.Format("{0}.{1}", enumType.Name, Enum.GetName(enumType, messageType));
+
             _logger.Debug("Determined email template: EnumType={0} Name={1} TemplateName={2} MessageType={3}", enumType,
                 enumType.Name, templateName, messageType);
+
             return templateName;
         }
 
@@ -126,8 +132,7 @@
                 return template;
             }
 
-            var errorMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}",
-                templateName);
+            var errorMessage = string.Format("GetTemplateConfiguration : Invalid email template name: {0}", templateName);
 
             _logger.Error(errorMessage);
 

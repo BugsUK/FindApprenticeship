@@ -27,6 +27,8 @@
         UserEmailAddress,
         ApplicationStatusAlert,
         ApplicationStatusAlerts,
-        SavedSearchAlerts
+        SavedSearchAlerts,
+        UserPendingUsername,
+        UserPendingUsernameCode
     }
 }

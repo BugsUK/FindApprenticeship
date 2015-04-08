@@ -52,6 +52,7 @@
         [TestCase(MessageTypes.SendMobileVerificationCode)]
         [TestCase(MessageTypes.SendPasswordResetCode)]
         [TestCase(MessageTypes.TraineeshipApplicationSubmitted)]
+        [TestCase(MessageTypes.SendPendingUsernameCode)]
         public void ShouldBeUnableToHandleOtherTypeOfMessage(MessageTypes messageType)
         {
             // Arrange.

@@ -14,6 +14,10 @@
             _messageBus = messageBus;
         }
 
+        public abstract bool CanHandle(CommunicationRequest communicationRequest);
+
+        public abstract void Handle(CommunicationRequest communicationRequest);
+
         protected void QueueEmailMessage(CommunicationRequest message)
         {
             var toEmail = message.Tokens.First(token => token.Key == CommunicationTokens.RecipientEmailAddress).Value;
@@ -48,9 +52,5 @@
                 .Where(token => token.Key != CommunicationTokens.RecipientEmailAddress &&
                     token.Key != CommunicationTokens.CandidateMobileNumber);
         }
-
-        public abstract bool CanHandle(CommunicationRequest communicationRequest);
-
-        public abstract void Handle(CommunicationRequest communicationRequest);
     }
 }

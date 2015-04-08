@@ -14,7 +14,9 @@
 
         private const string TestActivationCode = "ABC123";
         private const string TestMobileVerificationCode = "1234";
-        private const string TestToEmail = "valtechnas@gmail.com";
+        private const string TestPendingUsernameCode = "XYZ456";
+        private const string TestUsername = "valtechnas@gmail.com";
+        private const string TestPendingUsername = "valtechnas+awesome@gmail.com";
 
         public static IEnumerable<CommunicationToken> CreateActivationEmailTokens()
         {
@@ -22,7 +24,7 @@
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.ActivationCode, TestActivationCode),
-                new CommunicationToken(CommunicationTokens.Username, TestToEmail),
+                new CommunicationToken(CommunicationTokens.Username, TestUsername),
                 new CommunicationToken(CommunicationTokens.ActivationCodeExpiryDays, " 30 days")
             };
         }
@@ -32,7 +34,7 @@
             return new[]
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
-                new CommunicationToken(CommunicationTokens.Username, TestToEmail),
+                new CommunicationToken(CommunicationTokens.Username, TestUsername),
                 new CommunicationToken(CommunicationTokens.AccountUnlockCode, TestActivationCode),
                 new CommunicationToken(CommunicationTokens.AccountUnlockCodeExpiryDays, " 1 day")
             };
@@ -43,7 +45,7 @@
             return new[]
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
-                new CommunicationToken(CommunicationTokens.Username, TestToEmail)
+                new CommunicationToken(CommunicationTokens.Username, TestUsername)
             };
         }
 
@@ -52,7 +54,7 @@
             return new[]
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
-                new CommunicationToken(CommunicationTokens.Username, TestToEmail),
+                new CommunicationToken(CommunicationTokens.Username, TestUsername),
                 new CommunicationToken(CommunicationTokens.PasswordResetCode, TestActivationCode),
                 new CommunicationToken(CommunicationTokens.PasswordResetCodeExpiryDays, "1 day")
             };
@@ -111,7 +113,7 @@
         {
             return new[]
             {
-                new CommunicationToken(CommunicationTokens.UserEmailAddress, TestToEmail),
+                new CommunicationToken(CommunicationTokens.UserEmailAddress, TestUsername),
                 new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
                 new CommunicationToken(CommunicationTokens.UserEnquiry, "User enquiry"),
                 new CommunicationToken(CommunicationTokens.UserEnquiryDetails, details)
@@ -225,6 +227,16 @@
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.MobileVerificationCode, TestMobileVerificationCode)
+            };
+        }
+
+        public static IEnumerable<CommunicationToken> CreateSendPendingUsernameCodeTokens()
+        {
+            return new[]
+            {
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
+                new CommunicationToken(CommunicationTokens.UserPendingUsername, TestPendingUsername),
+                new CommunicationToken(CommunicationTokens.UserPendingUsernameCode, TestPendingUsernameCode)
             };
         }
     }

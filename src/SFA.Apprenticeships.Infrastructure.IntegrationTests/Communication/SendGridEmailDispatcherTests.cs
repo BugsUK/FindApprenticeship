@@ -250,6 +250,20 @@
             VerifyErrorsLogged(Times.Never());
         }
 
+        [Test, Category("Integration")]
+        public void ShouldSendPendingUsernameCodeEmail()
+        {
+            var request = new EmailRequest
+            {
+                ToEmail = TestToEmail,
+                Tokens = TokenGenerator.CreateSendPendingUsernameCodeTokens(),
+                MessageType = MessageTypes.SendPendingUsernameCode
+            };
+
+            _dispatcher.SendEmail(request);
+            VerifyErrorsLogged(Times.Never());
+        }
+
         #region Helpers
 
         private void VerifyErrorsLogged(Times times)

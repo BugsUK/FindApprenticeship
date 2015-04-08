@@ -21,6 +21,7 @@
                 case MessageTypes.SendPasswordResetCode:
                 case MessageTypes.SendAccountUnlockCode:
                 case MessageTypes.PasswordChanged:
+                case MessageTypes.SendPendingUsernameCode:
                     // Currently sent via email only, candidate cannot opt out of these mandatory communications.
                     return communicationChannel == CommunicationChannels.Email;
 

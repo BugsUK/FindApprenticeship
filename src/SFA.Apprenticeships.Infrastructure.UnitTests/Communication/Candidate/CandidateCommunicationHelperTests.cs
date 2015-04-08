@@ -18,6 +18,8 @@
         [TestCase(CommunicationChannels.Sms, MessageTypes.SendAccountUnlockCode, false)]
         [TestCase(CommunicationChannels.Email, MessageTypes.PasswordChanged, true)]
         [TestCase(CommunicationChannels.Sms, MessageTypes.PasswordChanged, false)]
+        [TestCase(CommunicationChannels.Email, MessageTypes.SendPendingUsernameCode, true)]
+        [TestCase(CommunicationChannels.Sms, MessageTypes.SendPendingUsernameCode, false)]
         public void ShouldSendMandatoryEmailsViaEmailOnly(
             CommunicationChannels communicationChannel, MessageTypes messageType, bool expectedResult)
         {

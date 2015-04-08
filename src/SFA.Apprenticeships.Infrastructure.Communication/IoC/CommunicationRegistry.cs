@@ -42,6 +42,7 @@
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendAccountUnlockCode, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendPasswordResetCode, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.PasswordChanged, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendPendingUsernameCode, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter(configurationService)),

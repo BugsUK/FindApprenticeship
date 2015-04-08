@@ -11,6 +11,7 @@
             foreach (var token in request.Tokens)
             {
                 var sendgridtoken = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(token.Key);
+
                 message.AddSubstitution(sendgridtoken,
                     new List<string>
                     {
