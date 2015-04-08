@@ -78,5 +78,26 @@
             public const string Ok = "AccountMediator.DeleteSavedSearch.Ok";
             public const string HasError = "AccountMediator.DeleteSavedSearch.HasError";
         }
+
+        public class UpdateEmailAddress
+        {
+            public const string Ok = "AccountMediator.UpdateEmailAddress.Ok";
+            public const string HasError = "AccountMediator.UpdateEmailAddress.HasError";
+            public const string ValidationError = "AccountMediator.UpdateEmailAddress.ValidationError";
+        }
+
+        public class VerifyUpdatedEmailAddress
+        {
+            public const string Ok = "AccountMediator.VerifyUpdatedEmailAddress.Ok";
+            public const string HasError = "AccountMediator.VerifyUpdatedEmailAddress.HasError";
+            public const string ValidationError = "AccountMediator.VerifyUpdatedEmailAddress.ValidationError";
+        }
+
+        public class ResendUpdateEmailAddressCode
+        {
+            public const string Ok = "AccountMediator.ResendUpdateEmailAddressCode.Ok";
+            public const string HasError = "AccountMediator.ResendUpdateEmailAddressCode.HasError";
+            public const string ValidationError = "AccountMediator.ResendUpdateEmailAddressCode.ValidationError";
+        }
     }
 }

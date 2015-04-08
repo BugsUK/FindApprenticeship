@@ -265,10 +265,10 @@
             return model;
         }
 
-        public VertifyUpdatedEmailViewModel UpdateEmailAddress(Guid userId, string updatedEmailAddress)
+        public EmailViewModel UpdateEmailAddress(Guid userId, string updatedEmailAddress)
         {
             _logger.Debug("Calling AccountProvider to update username for Id: {0} to new email address: {1}", userId, updatedEmailAddress);
-            var model = new VertifyUpdatedEmailViewModel();
+            var model = new EmailViewModel();
             try
             {
                 _userAccountService.UpdateUsername(userId, updatedEmailAddress);
@@ -292,7 +292,7 @@
             return model;
         }
 
-        public VertifyUpdatedEmailViewModel VerifyUpdatedEmailAddress(Guid userId, VertifyUpdatedEmailViewModel model)
+        public VerifyUpdatedEmailViewModel VerifyUpdatedEmailAddress(Guid userId, VerifyUpdatedEmailViewModel model)
         {
             _logger.Debug("Calling AccountProvider to verify code: {0} and password: {1} for the userId: {2} to update their username", model.PendingUsernameCode, model.Password, userId);
 
@@ -325,10 +325,10 @@
             return model;
         }
 
-        public VertifyUpdatedEmailViewModel ResendUpdateEmailAddressCode(Guid userId)
+        public VerifyUpdatedEmailViewModel ResendUpdateEmailAddressCode(Guid userId)
         {
             _logger.Debug("Calling AccountProvider to resent update email address code for the userId: {0}", userId);
-            var model = new VertifyUpdatedEmailViewModel();
+            var model = new VerifyUpdatedEmailViewModel();
 
             try
             {

@@ -220,17 +220,25 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public async Task<ActionResult> UpdateEmailAddress(string updatedEmailAddress)
+        public async Task<ActionResult> UpdateEmailAddress(EmailViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.UpdateEmailAddress(UserContext.CandidateId, updatedEmailAddress);
+                var response = _accountMediator.UpdateEmailAddress(UserContext.CandidateId, model);
 
-                //switch (response.Code)
-                //{
-                //}
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.UpdateEmailAddress.Ok:
+                        SetUserMessage(response.Message.Text);
+                        return RedirectToRoute(RouteNames.VertifyUpdatedEmail);
+                    case AccountMediatorCodes.UpdateEmailAddress.HasError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
 
-                return View();
+                return View(response.ViewModel);
             });
         }
 
@@ -240,7 +248,7 @@
             return await Task.Run<ActionResult>(() =>
             {
                 var response = _accountMediator.ResendUpdateEmailAddressCode(UserContext.CandidateId);
-
+                SetUserMessage(response.Message.Text, response.Message.Level);
                 return RedirectToRoute(RouteNames.VertifyUpdatedEmail);
             });
         }
@@ -256,17 +264,25 @@
         [ValidateAntiForgeryToken]
         [AllowReturnUrl(Allow = false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public async Task<ActionResult> VerifyUpdatedEmailAddress(VertifyUpdatedEmailViewModel model)
+        public async Task<ActionResult> VerifyUpdatedEmailAddress(VerifyUpdatedEmailViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
                 var response = _accountMediator.VerifyUpdatedEmailAddress(UserContext.CandidateId, model);
 
-                //switch (response.Code)
-                //{
-                //}
+                switch (response.Code)
+                {
+                    case AccountMediatorCodes.VerifyUpdatedEmailAddress.Ok:
+                        SetUserMessage(response.Message.Text);
+                        return RedirectToRoute(RouteNames.SignOut);
+                    case AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        break;
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
 
-                return View();
+                return View(response.ViewModel);
             });
         }
 

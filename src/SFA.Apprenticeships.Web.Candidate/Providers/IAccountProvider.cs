@@ -18,10 +18,10 @@
 
         VerifyMobileViewModel SendMobileVerificationCode(Guid candidateId, VerifyMobileViewModel model);
 
-        VertifyUpdatedEmailViewModel UpdateEmailAddress(Guid userId, string updatedEmailAddress);
+        EmailViewModel UpdateEmailAddress(Guid userId, string updatedEmailAddress);
 
-        VertifyUpdatedEmailViewModel VerifyUpdatedEmailAddress(Guid userId, VertifyUpdatedEmailViewModel model);
+        VerifyUpdatedEmailViewModel VerifyUpdatedEmailAddress(Guid userId, VerifyUpdatedEmailViewModel model);
 
-        VertifyUpdatedEmailViewModel ResendUpdateEmailAddressCode(Guid userId);
+        VerifyUpdatedEmailViewModel ResendUpdateEmailAddressCode(Guid userId);
     }
 }

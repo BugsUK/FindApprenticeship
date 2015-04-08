@@ -14,6 +14,8 @@
         private IAccountProvider _accountProvider = new Mock<IAccountProvider>().Object;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
         private Mock<VerifyMobileViewModelServerValidator> _verifyMobileViewModelServerValidatorMock = new Mock<VerifyMobileViewModelServerValidator>();
+        private Mock<VerifyUpdatedEmailViewModelServerValidator> _verifyUpdatedEmailViewModelServerValidatorMock = new Mock<VerifyUpdatedEmailViewModelServerValidator>();
+        private Mock<EmailViewModelServerValidator> _emailViewModelServerValidatorMock = new Mock<EmailViewModelServerValidator>();
         private Mock<IConfigurationService> _configurationServiceMock = new Mock<IConfigurationService>();
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
 
@@ -32,6 +34,18 @@
         public AccountMediatorBuilder With(Mock<VerifyMobileViewModelServerValidator> verifyMobileViewModelServerValidator)
         {
             _verifyMobileViewModelServerValidatorMock = verifyMobileViewModelServerValidator;
+            return this;
+        }
+
+        public AccountMediatorBuilder With(Mock<VerifyUpdatedEmailViewModelServerValidator> verifyUpdatedEmailViewModelServerValidatorMock)
+        {
+            _verifyUpdatedEmailViewModelServerValidatorMock = verifyUpdatedEmailViewModelServerValidatorMock;
+            return this;
+        }
+
+        public AccountMediatorBuilder With(Mock<EmailViewModelServerValidator> emailViewModelServerValidatorMock)
+        {
+            _emailViewModelServerValidatorMock = emailViewModelServerValidatorMock;
             return this;
         }
 
@@ -68,7 +82,9 @@
                 _apprenticeshipVacancyProvider.Object,
                 _traineeshipVacancyProvider.Object,
                 _configurationServiceMock.Object,
-                _verifyMobileViewModelServerValidatorMock.Object);
+                _verifyMobileViewModelServerValidatorMock.Object,
+                _emailViewModelServerValidatorMock.Object,
+                _verifyUpdatedEmailViewModelServerValidatorMock.Object);
         }
     }
 }

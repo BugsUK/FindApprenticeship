@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Account
 {
     using System.ComponentModel.DataAnnotations;
-    using Applications;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators;
@@ -16,24 +15,23 @@
         Error
     }
 
-    //[Validator(typeof(VerifyMobileViewModelClientValidator))]
-    public class VertifyUpdatedEmailViewModel : ViewModelBase
+    [Validator(typeof(VerifyUpdatedEmailViewModelClientValidator))]
+    public class VerifyUpdatedEmailViewModel : ViewModelBase
     {
-        public VertifyUpdatedEmailViewModel()
+        public VerifyUpdatedEmailViewModel()
         {
         }
 
-        public VertifyUpdatedEmailViewModel(string message)
-            : base(message)
+        public VerifyUpdatedEmailViewModel(string message) : base(message)
         {
         }
 
         public UpdateEmailStatus UpdateStatus { get; set; }
 
-        //[Display(Name = VerifyMobileViewModelMessages.MobileNumberCodeMessages.LabelText)]
+        [Display(Name = VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.LabelText)]
         public string PendingUsernameCode { get; set; }
 
-        //[Display(Name = VerifyMobileViewModelMessages.VerifyMobileCodeMessages.LabelText)]
+        [Display(Name = VertifyUpdatedEmailViewModelMessages.PasswordMessages.LabelText)]
         public string Password { get; set; }
     }
 }

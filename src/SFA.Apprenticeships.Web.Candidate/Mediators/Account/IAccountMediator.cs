@@ -34,10 +34,10 @@
 
         MediatorResponse<SavedSearchViewModel> DeleteSavedSearch(Guid candidateId, Guid savedSearchId);
 
-        MediatorResponse<VertifyUpdatedEmailViewModel> VerifyUpdatedEmailAddress(Guid userId, VertifyUpdatedEmailViewModel model);
+        MediatorResponse<VerifyUpdatedEmailViewModel> VerifyUpdatedEmailAddress(Guid userId, VerifyUpdatedEmailViewModel model);
 
-        MediatorResponse<VertifyUpdatedEmailViewModel> UpdateEmailAddress(Guid userId, string updatedEmailAddress);
+        MediatorResponse<EmailViewModel> UpdateEmailAddress(Guid userId, EmailViewModel emailViewModel);
 
-        MediatorResponse<VertifyUpdatedEmailViewModel> ResendUpdateEmailAddressCode(Guid userId);
+        MediatorResponse<VerifyUpdatedEmailViewModel> ResendUpdateEmailAddressCode(Guid userId);
     }
 }

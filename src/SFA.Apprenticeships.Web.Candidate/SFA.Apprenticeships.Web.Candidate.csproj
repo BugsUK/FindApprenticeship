@@ -746,6 +746,7 @@
     <Compile Include="Constants\Pages\VerifyMobilePageMessages.cs" />
     <Compile Include="Constants\CandidateDataItemNames.cs" />
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\VertifyUpdatedEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyMobileViewModelMessages.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
@@ -764,10 +765,13 @@
     <Compile Include="Providers\ITraineeshipVacancyProvider.cs" />
     <Compile Include="Providers\TraineeshipVacancyProvider.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
+    <Compile Include="Validators\EmailViewModelValidator.cs" />
+    <Compile Include="Validators\VerifyUpdatedEmailViewModelClientValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileState.cs" />
-    <Compile Include="ViewModels\Account\VertifyUpdatedEmailViewModel.cs" />
+    <Compile Include="ViewModels\Account\EmailViewModel.cs" />
+    <Compile Include="ViewModels\Account\VerifyUpdatedEmailViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileViewModel.cs" />
     <Compile Include="ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />

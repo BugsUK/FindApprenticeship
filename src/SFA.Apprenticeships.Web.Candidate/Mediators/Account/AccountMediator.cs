@@ -24,6 +24,8 @@
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator;
         private readonly VerifyMobileViewModelServerValidator _verifyMobileViewModelServerValidator;
+        private readonly EmailViewModelServerValidator _emailViewModelServerValidator;
+        private readonly VerifyUpdatedEmailViewModelServerValidator _verifyUpdatedEmailViewModelServerValidator;
 
         public AccountMediator(
             IAccountProvider accountProvider,
@@ -33,7 +35,10 @@
             IApprenticeshipVacancyProvider apprenticeshipVacancyProvider,
             ITraineeshipVacancyProvider traineeshipVacancyProvider,
             IConfigurationService configurationService,
-            VerifyMobileViewModelServerValidator mobileViewModelServerValidator)
+            VerifyMobileViewModelServerValidator mobileViewModelServerValidator,
+            EmailViewModelServerValidator emailViewModelServerValidator,
+            VerifyUpdatedEmailViewModelServerValidator verifyUpdatedEmailViewModelServerValidator
+            )
         {
             _accountProvider = accountProvider;
             _candidateServiceProvider = candidateServiceProvider;
@@ -43,6 +48,8 @@
             _configurationService = configurationService;
             _traineeshipVacancyProvider = traineeshipVacancyProvider;
             _verifyMobileViewModelServerValidator = mobileViewModelServerValidator;
+            _emailViewModelServerValidator = emailViewModelServerValidator;
+            _verifyUpdatedEmailViewModelServerValidator = verifyUpdatedEmailViewModelServerValidator;
         }
 
         public MediatorResponse<MyApplicationsViewModel> Index(Guid candidateId, string deletedVacancyId, string deletedVacancyTitle)
@@ -311,22 +318,54 @@
         }
 
 
-        public MediatorResponse<VertifyUpdatedEmailViewModel> UpdateEmailAddress(Guid userId, string updatedEmailAddress)
+        public MediatorResponse<EmailViewModel> UpdateEmailAddress(Guid userId, EmailViewModel emailViewModel)
         {
-            VertifyUpdatedEmailViewModel viewModel = _accountProvider.UpdateEmailAddress(userId, updatedEmailAddress);
-            return GetMediatorResponse("", viewModel);
+            var validationResult = _emailViewModelServerValidator.Validate(emailViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.ValidationError, emailViewModel, validationResult);
+            }
+
+            var viewModel = _accountProvider.UpdateEmailAddress(userId, emailViewModel.EmailAddress);
+
+            if (viewModel.HasError())
+            {
+                return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.HasError, viewModel);
+            }
+
+            return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.Ok, viewModel);
         }
 
-        public MediatorResponse<VertifyUpdatedEmailViewModel> VerifyUpdatedEmailAddress(Guid userId, VertifyUpdatedEmailViewModel model)
+        public MediatorResponse<VerifyUpdatedEmailViewModel> VerifyUpdatedEmailAddress(Guid userId, VerifyUpdatedEmailViewModel model)
         {
-            VertifyUpdatedEmailViewModel viewModel = _accountProvider.VerifyUpdatedEmailAddress(userId, model);
-            return GetMediatorResponse("", viewModel);
+            var validationResult = _verifyUpdatedEmailViewModelServerValidator.Validate(model);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.ValidationError, model, validationResult);
+            }
+
+            var viewModel = _accountProvider.VerifyUpdatedEmailAddress(userId, model);
+
+            if (viewModel.HasError())
+            {
+                return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel);
+            }
+
+            return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.Ok, viewModel);
         }
 
-        public MediatorResponse<VertifyUpdatedEmailViewModel> ResendUpdateEmailAddressCode(Guid userId)
+        public MediatorResponse<VerifyUpdatedEmailViewModel> ResendUpdateEmailAddressCode(Guid userId)
         {
-            VertifyUpdatedEmailViewModel viewModel = _accountProvider.ResendUpdateEmailAddressCode(userId);
-            return GetMediatorResponse("", viewModel);
+            var viewModel = _accountProvider.ResendUpdateEmailAddressCode(userId);
+
+            if (viewModel.HasError())
+            {
+                return GetMediatorResponse(AccountMediatorCodes.ResendUpdateEmailAddressCode.HasError, viewModel);
+            }
+
+            return GetMediatorResponse(AccountMediatorCodes.ResendUpdateEmailAddressCode.Ok, viewModel);
         }
     }
 }
