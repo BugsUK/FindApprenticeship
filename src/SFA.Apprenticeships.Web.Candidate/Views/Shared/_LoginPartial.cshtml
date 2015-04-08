@@ -6,12 +6,14 @@
     var fullName = (controller != null && controller.UserContext != null) ? controller.UserContext.FullName : string.Empty;
 
     <div class="account-info" id="bannerSignedIn">
-        <span class="your-name" id="bannerUserName">@fullName</span>
-        <div>
-            <a id="savedapplications-link" href="@(Url.RouteUrl(CandidateRouteNames.MyApplications))#dashDrafts"></a>
-            <a id="myapplications-link" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">My applications</a>
-            <a id="mysettings-link" href="@Url.RouteUrl(CandidateRouteNames.Settings)">Settings</a>
+        <div class="small-btm-margin">
+            <span class="your-name" id="bannerUserName">@fullName</span>
             <a id="signout-link" href="@Url.RouteUrl(RouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
+        </div>
+        <div>
+            <a class="account-link" id="savedapplications-link" href="@(Url.RouteUrl(CandidateRouteNames.MyApplications))#dashDrafts"></a>
+            <a class="account-link" id="myapplications-link" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">My applications</a>
+            <a class="account-link last-link" id="mysettings-link" href="@Url.RouteUrl(CandidateRouteNames.Settings)">Settings</a>
         </div>
     </div>
 }
