@@ -129,7 +129,7 @@ Scenario: As a candidate I want to be told quickly that my email/username is not
 		| Field                        | Rule   | Value                                                                                                                           |
 		| EmailAddressAvailableMessage | Equals | Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it. |
 
-@Ignore
+#@Ignore
 #TODO: test server validations?
 Scenario: As a candidate I must confirm my password
 	Given I navigated to the RegisterCandidatePage page

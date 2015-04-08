@@ -242,7 +242,7 @@ else
                                             var reason = string.IsNullOrWhiteSpace(application.UnsuccessfulReason) ? application.ApplicationStatusDescription : application.UnsuccessfulReason;
                                             <tr>
                                                 <td colspan="3">
-                                                    <b>Reason:</b> @reason
+                                                    <b>Reason:</b> <span id="application-status-description">@reason</span>
                                                 </td>
                                             </tr>
                                         }

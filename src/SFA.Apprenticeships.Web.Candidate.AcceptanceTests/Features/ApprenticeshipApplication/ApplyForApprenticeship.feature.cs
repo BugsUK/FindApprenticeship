@@ -693,31 +693,29 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("As a candidate I would like to see my apprenticeship application as successful")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US154")]
         [NUnit.Framework.CategoryAttribute("RequiresStubGateway")]
         public virtual void AsACandidateIWouldLikeToSeeMyApprenticeshipApplicationAsSuccessful()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I would like to see my apprenticeship application as successful", new string[] {
                         "US154",
-                        "RequiresStubGateway",
-                        "ignore"});
-#line 209
+                        "RequiresStubGateway"});
+#line 208
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 210
+#line 209
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 211
+#line 210
  testRunner.When("I select the \"first\" apprenticeship vacancy in location \"London\" that can apply b" +
                     "y this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 212
+#line 211
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 213
+#line 212
  testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 214
+#line 213
  testRunner.Then("I am on the ApprenticeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 215
+#line 214
  testRunner.When("I choose SupportMeYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
@@ -744,7 +742,7 @@ this.FeatureBackground();
             table29.AddRow(new string[] {
                         "WhatCanWeDoToSupportYou",
                         "What can we do to support you"});
-#line 216
+#line 215
  testRunner.And("I enter data", ((string)(null)), table29, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
@@ -756,21 +754,21 @@ this.FeatureBackground();
             table30.AddRow(new string[] {
                         "Candidate_EmployerQuestionAnswers_CandidateAnswer2",
                         "Emp 2"});
-#line 225
+#line 224
  testRunner.And("I enter employer question data if present", ((string)(null)), table30, "And ");
-#line 229
+#line 228
  testRunner.And("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 230
+#line 229
  testRunner.Then("I am on the ApprenticeshipApplicationPreviewPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 231
+#line 230
  testRunner.When("I choose SubmitApplication", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 232
+#line 231
  testRunner.Then("I am on the ApprenticeshipApplicationCompletePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 233
+#line 232
  testRunner.When("I wait 5 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 234
+#line 233
  testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 235
+#line 234
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
@@ -781,14 +779,14 @@ this.FeatureBackground();
                         "SuccessfulApplicationsCount",
                         "Equals",
                         "1"});
-#line 236
+#line 235
  testRunner.And("I see", ((string)(null)), table31, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
                         "VacancyId"});
             table32.AddRow(new string[] {
                         "{VacancyId}"});
-#line 239
+#line 238
  testRunner.And("I navigate to the ApprenticeshipDetailsPage page with parameters", ((string)(null)), table32, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
@@ -799,11 +797,11 @@ this.FeatureBackground();
                         "TrackApplicationStatusLink",
                         "Exists",
                         ""});
-#line 242
+#line 241
  testRunner.Then("I see", ((string)(null)), table33, "Then ");
-#line 245
+#line 244
  testRunner.When("I choose TrackApplicationStatusLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 246
+#line 245
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -816,22 +814,22 @@ this.FeatureBackground();
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I would like to see my apprenticeship application as submitted", new string[] {
                         "US154"});
-#line 250
+#line 249
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 251
+#line 250
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 252
+#line 251
  testRunner.When("I select the \"first\" apprenticeship vacancy in location \"London\" that can apply b" +
                     "y this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 253
+#line 252
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 254
+#line 253
  testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 255
+#line 254
  testRunner.Then("I am on the ApprenticeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 256
+#line 255
  testRunner.When("I choose SupportMeYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
@@ -858,7 +856,7 @@ this.FeatureBackground();
             table34.AddRow(new string[] {
                         "WhatCanWeDoToSupportYou",
                         "What can we do to support you"});
-#line 257
+#line 256
  testRunner.And("I enter data", ((string)(null)), table34, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table35 = new TechTalk.SpecFlow.Table(new string[] {
@@ -870,21 +868,21 @@ this.FeatureBackground();
             table35.AddRow(new string[] {
                         "Candidate_EmployerQuestionAnswers_CandidateAnswer2",
                         "Emp 2"});
-#line 266
+#line 265
  testRunner.And("I enter employer question data if present", ((string)(null)), table35, "And ");
-#line 270
+#line 269
  testRunner.And("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 271
+#line 270
  testRunner.Then("I am on the ApprenticeshipApplicationPreviewPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 272
+#line 271
  testRunner.When("I choose SubmitApplication", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 273
+#line 272
  testRunner.Then("I am on the ApprenticeshipApplicationCompletePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 274
+#line 273
  testRunner.When("I wait 5 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 275
+#line 274
  testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 276
+#line 275
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table36 = new TechTalk.SpecFlow.Table(new string[] {
@@ -895,14 +893,14 @@ this.FeatureBackground();
                         "SubmittedApplicationsCount",
                         "Equals",
                         "1"});
-#line 277
+#line 276
  testRunner.And("I see", ((string)(null)), table36, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
                         "VacancyId"});
             table37.AddRow(new string[] {
                         "{VacancyId}"});
-#line 280
+#line 279
  testRunner.And("I navigate to the ApprenticeshipDetailsPage page with parameters", ((string)(null)), table37, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
@@ -913,11 +911,11 @@ this.FeatureBackground();
                         "TrackApplicationStatusLink",
                         "Exists",
                         ""});
-#line 283
+#line 282
  testRunner.Then("I see", ((string)(null)), table38, "Then ");
-#line 286
+#line 285
  testRunner.When("I choose TrackApplicationStatusLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 287
+#line 286
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -925,31 +923,29 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("As a candidate I would like to see my apprenticeship application as unsuccessful")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US154")]
         [NUnit.Framework.CategoryAttribute("RequiresStubGateway")]
         public virtual void AsACandidateIWouldLikeToSeeMyApprenticeshipApplicationAsUnsuccessful()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I would like to see my apprenticeship application as unsuccessful", new string[] {
                         "US154",
-                        "RequiresStubGateway",
-                        "ignore"});
-#line 293
+                        "RequiresStubGateway"});
+#line 291
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 294
+#line 292
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 295
+#line 293
  testRunner.When("I select the \"first\" apprenticeship vacancy in location \"London\" that can apply b" +
                     "y this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 296
+#line 294
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 297
+#line 295
  testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 298
+#line 296
  testRunner.Then("I am on the ApprenticeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 299
+#line 297
  testRunner.When("I choose SupportMeYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
@@ -976,7 +972,7 @@ this.FeatureBackground();
             table39.AddRow(new string[] {
                         "WhatCanWeDoToSupportYou",
                         "What can we do to support you"});
-#line 300
+#line 298
  testRunner.And("I enter data", ((string)(null)), table39, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table40 = new TechTalk.SpecFlow.Table(new string[] {
@@ -988,21 +984,21 @@ this.FeatureBackground();
             table40.AddRow(new string[] {
                         "Candidate_EmployerQuestionAnswers_CandidateAnswer2",
                         "Emp 2"});
-#line 309
+#line 307
  testRunner.And("I enter employer question data if present", ((string)(null)), table40, "And ");
-#line 313
+#line 311
  testRunner.And("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 314
+#line 312
  testRunner.Then("I am on the ApprenticeshipApplicationPreviewPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 315
+#line 313
  testRunner.When("I choose SubmitApplication", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 316
+#line 314
  testRunner.Then("I am on the ApprenticeshipApplicationCompletePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 317
+#line 315
  testRunner.When("I wait 5 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 318
+#line 316
  testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 319
+#line 317
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table41 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1013,14 +1009,14 @@ this.FeatureBackground();
                         "UnsuccessfulApplicationsCount",
                         "Equals",
                         "1"});
-#line 320
+#line 318
  testRunner.And("I see", ((string)(null)), table41, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table42 = new TechTalk.SpecFlow.Table(new string[] {
                         "VacancyId"});
             table42.AddRow(new string[] {
                         "{VacancyId}"});
-#line 323
+#line 321
  testRunner.And("I navigate to the ApprenticeshipDetailsPage page with parameters", ((string)(null)), table42, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table43 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1031,11 +1027,11 @@ this.FeatureBackground();
                         "TrackApplicationStatusLink",
                         "Exists",
                         ""});
-#line 326
+#line 324
  testRunner.Then("I see", ((string)(null)), table43, "Then ");
-#line 329
+#line 327
  testRunner.When("I choose TrackApplicationStatusLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 330
+#line 328
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -1043,31 +1039,29 @@ this.FeatureBackground();
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("As a candidate I would like to see my apprenticeship application as withdrawn")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("US154")]
         [NUnit.Framework.CategoryAttribute("RequiresStubGateway")]
         public virtual void AsACandidateIWouldLikeToSeeMyApprenticeshipApplicationAsWithdrawn()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I would like to see my apprenticeship application as withdrawn", new string[] {
                         "US154",
-                        "RequiresStubGateway",
-                        "ignore"});
-#line 337
+                        "RequiresStubGateway"});
+#line 334
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 338
+#line 335
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 339
+#line 336
  testRunner.When("I select the \"first\" apprenticeship vacancy in location \"London\" that can apply b" +
                     "y this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 340
+#line 337
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 341
+#line 338
  testRunner.When("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 342
+#line 339
  testRunner.Then("I am on the ApprenticeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 343
+#line 340
  testRunner.When("I choose SupportMeYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table44 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1094,7 +1088,7 @@ this.FeatureBackground();
             table44.AddRow(new string[] {
                         "WhatCanWeDoToSupportYou",
                         "What can we do to support you"});
-#line 344
+#line 341
  testRunner.And("I enter data", ((string)(null)), table44, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table45 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1106,21 +1100,21 @@ this.FeatureBackground();
             table45.AddRow(new string[] {
                         "Candidate_EmployerQuestionAnswers_CandidateAnswer2",
                         "Emp 2"});
-#line 353
+#line 350
  testRunner.And("I enter employer question data if present", ((string)(null)), table45, "And ");
-#line 357
+#line 354
  testRunner.And("I choose ApplyButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 358
+#line 355
  testRunner.Then("I am on the ApprenticeshipApplicationPreviewPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 359
+#line 356
  testRunner.When("I choose SubmitApplication", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 360
+#line 357
  testRunner.Then("I am on the ApprenticeshipApplicationCompletePage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 361
+#line 358
  testRunner.When("I wait 5 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 362
+#line 359
  testRunner.When("I choose MyApplicationsLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 363
+#line 360
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table46 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1135,14 +1129,14 @@ this.FeatureBackground();
                         "ApplicationStatusDescription",
                         "Equals",
                         "Expired or Withdrawn"});
-#line 364
+#line 361
  testRunner.And("I see", ((string)(null)), table46, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table47 = new TechTalk.SpecFlow.Table(new string[] {
                         "VacancyId"});
             table47.AddRow(new string[] {
                         "{VacancyId}"});
-#line 368
+#line 365
  testRunner.And("I navigate to the ApprenticeshipDetailsPage page with parameters", ((string)(null)), table47, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table48 = new TechTalk.SpecFlow.Table(new string[] {
@@ -1153,11 +1147,11 @@ this.FeatureBackground();
                         "TrackApplicationStatusLink",
                         "Exists",
                         ""});
-#line 371
+#line 368
  testRunner.Then("I see", ((string)(null)), table48, "Then ");
-#line 374
+#line 371
  testRunner.When("I choose TrackApplicationStatusLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 375
+#line 372
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();

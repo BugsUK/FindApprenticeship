@@ -204,7 +204,6 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 
 @US154
 @RequiresStubGateway
-@ignore
 #We are really testing the LegacyTestService here
 Scenario: As a candidate I would like to see my apprenticeship application as successful
 	Given I have registered a new candidate
@@ -288,7 +287,6 @@ Scenario: As a candidate I would like to see my apprenticeship application as su
 
 @US154
 @RequiresStubGateway
-@ignore
 #We are really testing the LegacyTestService here
 Scenario: As a candidate I would like to see my apprenticeship application as unsuccessful
 	Given I have registered a new candidate
@@ -332,7 +330,6 @@ Scenario: As a candidate I would like to see my apprenticeship application as un
 
 @US154
 @RequiresStubGateway
-@ignore
 #We are really testing the LegacyTestService here
 Scenario: As a candidate I would like to see my apprenticeship application as withdrawn
 	Given I have registered a new candidate

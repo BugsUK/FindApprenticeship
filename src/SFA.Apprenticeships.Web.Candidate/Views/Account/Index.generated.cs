@@ -1228,17 +1228,21 @@ WriteLiteral("                                            <tr>\r\n              
 
 WriteLiteral(" colspan=\"3\"");
 
-WriteLiteral(">\r\n                                                    <b>Reason:</b> ");
+WriteLiteral(">\r\n                                                    <b>Reason:</b> <span");
+
+WriteLiteral(" id=\"application-status-description\"");
+
+WriteLiteral(">");
 
             
             #line 245 "..\..\Views\Account\Index.cshtml"
-                                                              Write(reason);
+                                                                                                        Write(reason);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                                </td>\r\n                        " +
-"                    </tr>\r\n");
+WriteLiteral("</span>\r\n                                                </td>\r\n                 " +
+"                           </tr>\r\n");
 
             
             #line 248 "..\..\Views\Account\Index.cshtml"
@@ -1561,14 +1565,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 19554), Tuple.Create("\"", 19629)
+WriteAttribute("href", Tuple.Create(" href=\"", 19603), Tuple.Create("\"", 19678)
             
             #line 325 "..\..\Views\Account\Index.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 19561), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
+                                    , Tuple.Create(Tuple.Create("", 19610), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 19561), false)
+, 19610), false)
 );
 
 WriteLiteral("><i");
