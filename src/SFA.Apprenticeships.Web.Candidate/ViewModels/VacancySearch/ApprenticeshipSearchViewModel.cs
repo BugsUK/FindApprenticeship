@@ -5,6 +5,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Account;
+    using Application.Interfaces.Vacancies;
     using Constants.ViewModels;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -57,18 +58,14 @@
             }
             set
             {
-                switch (value)
+                ApprenticeshipSearchField searchField;
+                if (Enum.TryParse(value, out searchField))
                 {
-                    case "All":
-                    case "JobTitle":
-                    case "Description":
-                    case "Employer":
-                    case "Reference":
-                        _searchField = value;
-                        break;
-                    default:
-                        _searchField = "All";
-                        break;
+                    _searchField = value;
+                }
+                else
+                {
+                    _searchField = ApprenticeshipSearchField.All.ToString();
                 }
             }
         }

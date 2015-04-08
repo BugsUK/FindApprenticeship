@@ -1,46 +1,57 @@
-﻿Feature: ApprenticeshipSearchRefineSearch
+﻿@US702
+Feature: ApprenticeshipSearchRefineSearch
 	In order to filter search results by specific fields
 	As a candidate apprentice
 	I want be able to select which fields to filter by
 
-@ignore
 Scenario: The refine search options should display correctly
 	Given I navigated to the ApprenticeshipSearchPage page
 	Then I see
-        | Field            | Rule           | Value |
-        | RefineSearchLink | Exists         |       |
-        | RefineControls   | Does Not Exist |       |
-	When I choose RefineSearchLink
-	Then I see
-        | Field            | Rule   | Value |
-        | RefineSearchLink | Exists |       |
-        | RefineControls   | Exists |       |
-	When I choose RefineSearchLink
-	Then I see
-        | Field            | Rule           | Value |
-        | RefineSearchLink | Exists         |       |
-        | RefineControls   | Does Not Exist |       |
-	When I choose RefineSearchLink
-	Then I see
-        | Field            | Rule   | Value |
-        | RefineSearchLink | Exists |       |
-        | RefineControls   | Exists |       |
+        | Field       | Rule   | Value |
+        | SearchField | Exists |       |
+        | SearchField | Equals | All   |
 
-@ignore
-Scenario: The refine search options should display on results page if selected
+Scenario: The refine search option should be correct on results page if all was selected
 	Given I navigated to the ApprenticeshipSearchPage page
-	When I choose RefineSearchLink
-	And I choose RefineControlJobTitle
 	When I enter data
 			 | Field               | Value      |
-			 | Keywords            | admin      |
 			 | Location            | London     |
 			 | WithInDistance      | 40 miles   |
 			 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
-        | Field                        | Rule   | Value |
-        | RefineSearchLink             | Exists |       |
-        | RefineControls               | Exists |       |
-        | RefineControlJobTitleChecked | Equals | True  |
+        | Field       | Rule   | Value               |
+        | SearchField | Exists |                     |
+        | SearchField | Equals | -- Refine search -- |
+
+Scenario: The refine search option should be Job title on results page if Job title was selected
+	Given I navigated to the ApprenticeshipSearchPage page
+	When I enter data
+			 | Field               | Value      |
+			 | SearchField         | Job title  |
+			 | Location            | London     |
+			 | WithInDistance      | 40 miles   |
+			 | ApprenticeshipLevel | All levels |
+	And I choose Search
+	Then I am on the ApprenticeshipSearchResultPage page
+	And I see
+        | Field       | Rule   | Value     |
+        | SearchField | Exists |           |
+        | SearchField | Equals | Job title |
+
+Scenario: The refine search option should be Ref number on results page if Ref number was selected
+	Given I navigated to the ApprenticeshipSearchPage page
+	When I enter data
+			 | Field               | Value        |
+			 | SearchField         | Ref. number  |
+			 | Keywords            | VAC000123456 |
+			 | Location            | London       |
+			 | WithInDistance      | 40 miles     |
+			 | ApprenticeshipLevel | All levels   |
+	And I choose Search
+	Then I am on the ApprenticeshipSearchResultPage page
+	And I see
+        | Field       | Rule   | Value       |
+        | SearchField | Exists |             |
+        | SearchField | Equals | Ref. number |

@@ -14,17 +14,8 @@
         {
         }
 
-        [ElementLocator(Id = "refine-search")]
-        public IWebElement RefineSearchLink { get; set; }
-
-        [ElementLocator(Id = "refine-controls")]
-        public IWebElement RefineControls { get; set; }
-
-        [ElementLocator(Id = "refine_all")]
-        public IWebElement RefineControlAll { get; set; }
-
-        [ElementLocator(Id = "refine-jobtitle")]
-        public IWebElement RefineControlJobTitle { get; set; }
+        [ElementLocator(Id = "SearchField")]
+        public IWebElement SearchField { get; set; }
 
         [ElementLocator(Id = "Keywords")]
         public IWebElement Keywords { get; set; }

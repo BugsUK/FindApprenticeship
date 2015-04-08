@@ -109,11 +109,11 @@
         {
             var searchFieldsOptions = new List<object>
             {
-                new { FieldName = "All", DisplayName = "All"},
-                new { FieldName = "JobTitle", DisplayName = "Job title"},
-                new { FieldName = "Description", DisplayName = "Description"},
-                new { FieldName = "Employer", DisplayName = "Employer"},
-                new { FieldName = "Reference", DisplayName = "Ref. number"},
+                new { FieldName = ApprenticeshipSearchField.All.ToString(), DisplayName = "All"},
+                new { FieldName = ApprenticeshipSearchField.JobTitle.ToString(), DisplayName = "Job title"},
+                new { FieldName = ApprenticeshipSearchField.Description.ToString(), DisplayName = "Description"},
+                new { FieldName = ApprenticeshipSearchField.Employer.ToString(), DisplayName = "Employer"},
+                new { FieldName = ApprenticeshipSearchField.ReferenceNumber.ToString(), DisplayName = "Ref. number"},
             };
 
             if (addRefineOption && selectedValue == "All")
