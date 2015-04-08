@@ -12,6 +12,10 @@ $(document).ready(function () {
         setSelectControl($('#SearchField'));
     } else {
         $searchField.insertBefore($keywordsInput).removeClass('hidden');
+
+        if ($searchField.find('option:last-child').text() == "-- Refine search --") {
+            $searchField.find('option:last-child').attr('disabled', true);
+        }
     }
 
     function setSelectControl(that) {
