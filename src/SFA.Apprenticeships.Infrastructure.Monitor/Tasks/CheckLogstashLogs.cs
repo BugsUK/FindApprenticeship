@@ -57,13 +57,13 @@
 
         private void EnsureExpectedNumberOfMessagesLoggedInTimeframe()
         {
-            var timeframeStart = DateTime.Now.AddMinutes(-_monitorConfiguration.ExpectedTimeframeInMinutes);
+            var timeframeStart = DateTime.Now.AddMinutes(-_monitorConfiguration.ExpectedLogTimeframeInMinutes);
 
             var timestamps = GetRecentLogEntryTimestamps();
             var actualLogCount = timestamps.Count(timestamp => timestamp >= timeframeStart);
 
             _logger.Debug("Looking for {0} Logstash message(s) in last {1} minute(s), saw {2}.",
-                _monitorConfiguration.ExpectedMinimumLogCount, _monitorConfiguration.ExpectedTimeframeInMinutes, actualLogCount);
+                _monitorConfiguration.ExpectedMinimumLogCount, _monitorConfiguration.ExpectedLogTimeframeInMinutes, actualLogCount);
 
             if (actualLogCount >= _monitorConfiguration.ExpectedMinimumLogCount)
             {
@@ -72,7 +72,7 @@
 
             var message = string.Format(
                 "Expected {0} Logstash message(s) in last {1} minute(s), saw {2}.",
-                _monitorConfiguration.ExpectedMinimumLogCount, _monitorConfiguration.ExpectedTimeframeInMinutes, actualLogCount);
+                _monitorConfiguration.ExpectedMinimumLogCount, _monitorConfiguration.ExpectedLogTimeframeInMinutes, actualLogCount);
 
             throw new Exception(message);
         }

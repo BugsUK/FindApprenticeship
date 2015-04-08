@@ -14,7 +14,7 @@
 
         public int ExpectedMinimumLogCount { get; set; }
 
-        public int ExpectedTimeframeInMinutes { get; set; }
+        public int ExpectedLogTimeframeInMinutes { get; set; }
 
         public string DailyMetricsFromEmailAddress { get; set; }
 
