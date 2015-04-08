@@ -51,6 +51,11 @@
             @Html.EditorFor(r => r.DateOfBirth)
             @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/settings/findaddress" })
             @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" }, verified: Model.VerifiedMobile)
+            
+            <div class="form-group">
+                <p class="form-label">Email</p>
+                <span class="form-prepopped">@Model.Username</span><a class="inl-block" href="@Url.RouteUrl(RouteNames.UpdateEmail)">Change email address</a>
+            </div>
 
             <div id="accountSettings2">
 

@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
+    using Application.Interfaces.Users;
     using Common.Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -15,22 +16,28 @@
     using Mappers;
     using ViewModels.Account;
     using ViewModels.Locations;
+    using ErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class AccountProvider : IAccountProvider
     {
         private readonly ILogService _logger;
         private readonly IConfigurationService _configurationService;
         private readonly ICandidateService _candidateService;
+        private readonly IUserAccountService _userAccountService;
         private readonly IMapper _mapper;
 
         public AccountProvider(
             ICandidateService candidateService,
-            IMapper mapper, ILogService logger, IConfigurationService configurationService)
+            IUserAccountService userAccountService,
+            IMapper mapper, 
+            ILogService logger, 
+            IConfigurationService configurationService)
         {
             _mapper = mapper;
             _logger = logger;
             _configurationService = configurationService;
             _candidateService = candidateService;
+            _userAccountService = userAccountService;
         }
 
         public SettingsViewModel GetSettingsViewModel(Guid candidateId)
@@ -38,11 +45,15 @@
             try
             {
                 _logger.Debug("Calling AccountProvider to get Settings View Model for candidate with Id={0}", candidateId);
-                
+
                 var candidate = _candidateService.GetCandidate(candidateId);
+                var user = _userAccountService.GetUser(candidateId);
                 var savedSearches = _candidateService.RetrieveSavedSearches(candidateId);
                 var settings = _mapper.Map<RegistrationDetails, SettingsViewModel>(candidate.RegistrationDetails);
-                
+
+                settings.Username = user.Username;
+                settings.PendingUsername = user.PendingUsername;
+
                 settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
                 settings.AllowSmsComms = candidate.CommunicationPreferences.AllowMobile;
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
@@ -222,7 +233,6 @@
         {
             _logger.Debug("Calling AccountProvider to send mobile verification code for candidateId {0} to mobile number {1}",
                                                                                     candidateId, model.PhoneNumber);
-
             try
             {
                 var candidate = _candidateService.GetCandidate(candidateId);
@@ -252,6 +262,85 @@
                 model.Status = VerifyMobileState.Error;
                 model.ViewModelMessage = e.Message;
             }
+            return model;
+        }
+
+        public VertifyUpdatedEmailViewModel UpdateEmailAddress(Guid userId, string updatedEmailAddress)
+        {
+            _logger.Debug("Calling AccountProvider to update username for Id: {0} to new email address: {1}", userId, updatedEmailAddress);
+            var model = new VertifyUpdatedEmailViewModel();
+            try
+            {
+                _userAccountService.UpdateUsername(userId, updatedEmailAddress);
+                model.UpdateStatus = UpdateEmailStatus.Ok;
+            }
+            catch (CustomException ex)
+            {
+                switch (ex.Code)
+                {
+                    case ErrorCodes.UserDirectoryAccountExistsError:
+                        model.UpdateStatus = UpdateEmailStatus.AccountAlreadyExixts;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error updating username", ex);
+                model.UpdateStatus = UpdateEmailStatus.Error;
+            }
+
+            return model;
+        }
+
+        public VertifyUpdatedEmailViewModel VerifyUpdatedEmailAddress(Guid userId, VertifyUpdatedEmailViewModel model)
+        {
+            _logger.Debug("Calling AccountProvider to verify code: {0} and password: {1} for the userId: {2} to update their username", model.PendingUsernameCode, model.Password, userId);
+
+            try
+            {
+                _userAccountService.VerifyUpdateUsername(userId, model.PendingUsernameCode, model.Password);
+                model.UpdateStatus = UpdateEmailStatus.Updated;
+            }
+            catch (CustomException ex)
+            {
+                switch (ex.Code)
+                {
+                    case ErrorCodes.UserDirectoryAccountExistsError:
+                        model.UpdateStatus = UpdateEmailStatus.AccountAlreadyExixts;
+                        break;
+                    case ErrorCodes.InvalidUpdateUsernameCode:
+                        model.UpdateStatus = UpdateEmailStatus.InvalidUpdateUsernameCode;
+                        break;
+                    case ErrorCodes.UserPasswordError:
+                        model.UpdateStatus = UpdateEmailStatus.UserPasswordError;
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error verifying username update and password codes", ex);
+                model.UpdateStatus = UpdateEmailStatus.Error;                
+            }
+
+            return model;
+        }
+
+        public VertifyUpdatedEmailViewModel ResendUpdateEmailAddressCode(Guid userId)
+        {
+            _logger.Debug("Calling AccountProvider to resent update email address code for the userId: {0}", userId);
+            var model = new VertifyUpdatedEmailViewModel();
+
+            try
+            {
+                _userAccountService.ResendUpdateUsernameCode(userId);
+                model.UpdateStatus = UpdateEmailStatus.Ok;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error resending username code", ex);
+                model.UpdateStatus = UpdateEmailStatus.Error;
+            }
+
             return model;
         }
     }

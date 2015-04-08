@@ -309,5 +309,24 @@
 
             return GetMediatorResponse(AccountMediatorCodes.DeleteSavedSearch.Ok, viewModel);
         }
+
+
+        public MediatorResponse<VertifyUpdatedEmailViewModel> UpdateEmailAddress(Guid userId, string updatedEmailAddress)
+        {
+            VertifyUpdatedEmailViewModel viewModel = _accountProvider.UpdateEmailAddress(userId, updatedEmailAddress);
+            return GetMediatorResponse("", viewModel);
+        }
+
+        public MediatorResponse<VertifyUpdatedEmailViewModel> VerifyUpdatedEmailAddress(Guid userId, VertifyUpdatedEmailViewModel model)
+        {
+            VertifyUpdatedEmailViewModel viewModel = _accountProvider.VerifyUpdatedEmailAddress(userId, model);
+            return GetMediatorResponse("", viewModel);
+        }
+
+        public MediatorResponse<VertifyUpdatedEmailViewModel> ResendUpdateEmailAddressCode(Guid userId)
+        {
+            VertifyUpdatedEmailViewModel viewModel = _accountProvider.ResendUpdateEmailAddressCode(userId);
+            return GetMediatorResponse("", viewModel);
+        }
     }
 }

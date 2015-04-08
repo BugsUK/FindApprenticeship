@@ -45,6 +45,18 @@
                 );
 
             routes.MapRoute(
+                name: RouteNames.UpdateEmail,
+                url: "updateemail",
+                defaults: new { controller = "Account", action = "UpdateEmailAddress" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.VertifyUpdatedEmail,
+                url: "verifyemail",
+                defaults: new { controller = "Account", action = "VerifyUpdatedEmailAddress" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.MyApplications,
                 url: "myapplications",
                 defaults: new {controller = "Account", action = "Index"}

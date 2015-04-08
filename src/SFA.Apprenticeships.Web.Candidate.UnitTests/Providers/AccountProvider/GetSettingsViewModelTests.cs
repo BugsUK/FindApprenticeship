@@ -3,8 +3,10 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.Users;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
+    using Domain.Entities.Users;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -13,6 +15,25 @@
     [TestFixture]
     public class GetSettingsViewModelTests
     {
+        [Test]
+        public void TestUserMappings()
+        {
+            var candidateId = Guid.NewGuid();
+            var candidate = new CandidateBuilder(candidateId).Build();
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidate);
+
+            var userAccountService = new Mock<IUserAccountService>();
+            userAccountService.Setup(ac => ac.GetUser(It.IsAny<Guid>()))
+                .Returns(new User { Username = "username", PendingUsername = "pendingun" });
+
+            var provider = new AccountProviderBuilder().With(candidateService).With(userAccountService).Build();
+
+            var viewModel = provider.GetSettingsViewModel(candidateId);
+            viewModel.Username.Should().Be("username");
+            viewModel.PendingUsername.Should().Be("pendingun");
+        }
+
         [TestCase(false, false, false)]
         [TestCase(true, false, false)]
         [TestCase(false, true, false)]

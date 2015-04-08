@@ -16,5 +16,7 @@
         public const string UserDirectoryAccountDoesNotExistError = "User.UserDirectoryAccountDoesNotExistError";
         public const string MobileCodeVerificationFailed = "User.MobileCodeVerificationFailed";
         public const string UnknownMobileCodeResendError = "User.UnknownMobileCodeResendError";
+        public const string InvalidUpdateUsernameCode = "User.InvalidUpdateUsernameCode";
+        public const string UserPasswordError = "User.UserPasswordError";
     }
 }

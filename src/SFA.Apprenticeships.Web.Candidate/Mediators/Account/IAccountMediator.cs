@@ -33,5 +33,11 @@
         MediatorResponse<VerifyMobileViewModel> Resend(Guid candidateId, VerifyMobileViewModel model);
 
         MediatorResponse<SavedSearchViewModel> DeleteSavedSearch(Guid candidateId, Guid savedSearchId);
+
+        MediatorResponse<VertifyUpdatedEmailViewModel> VerifyUpdatedEmailAddress(Guid userId, VertifyUpdatedEmailViewModel model);
+
+        MediatorResponse<VertifyUpdatedEmailViewModel> UpdateEmailAddress(Guid userId, string updatedEmailAddress);
+
+        MediatorResponse<VertifyUpdatedEmailViewModel> ResendUpdateEmailAddressCode(Guid userId);
     }
 }

@@ -212,6 +212,65 @@
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> UpdateEmailAddress()
+        {
+            return await Task.Run<ActionResult>(() => View());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> UpdateEmailAddress(string updatedEmailAddress)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.UpdateEmailAddress(UserContext.CandidateId, updatedEmailAddress);
+
+                //switch (response.Code)
+                //{
+                //}
+
+                return View();
+            });
+        }
+
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> ResendUpdateEmailAddressCode()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.ResendUpdateEmailAddressCode(UserContext.CandidateId);
+
+                return RedirectToRoute(RouteNames.VertifyUpdatedEmail);
+            });
+        }
+
+        [AllowReturnUrl(Allow = false)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> VerifyUpdatedEmailAddress()
+        {
+            return await Task.Run<ActionResult>(() => View());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowReturnUrl(Allow = false)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> VerifyUpdatedEmailAddress(VertifyUpdatedEmailViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _accountMediator.VerifyUpdatedEmailAddress(UserContext.CandidateId, model);
+
+                //switch (response.Code)
+                //{
+                //}
+
+                return View();
+            });
+        }
+
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Archive(int id)
         {
             return await Task.Run<ActionResult>(() =>

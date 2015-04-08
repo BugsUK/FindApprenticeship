@@ -10,7 +10,7 @@
     /// </summary>
     public interface IUserAccountService
     {
-        bool IsUsernameAvailable(string username); // true if matches an existing *activated* account
+        bool IsUsernameAvailable(string username);
 
         void Register(string username, Guid userId, string activationCode, UserRoles roles);
 
@@ -28,6 +28,14 @@
 
         UserStatuses? GetUserStatus(string username);
 
+        User GetUser(Guid userId);
+
         string[] GetRoleNames(string username);
+
+        void UpdateUsername(Guid userId, string newUsername);
+
+        void VerifyUpdateUsername(Guid userId, string verfiyCode, string password);
+
+        void ResendUpdateUsernameCode(Guid userId);
     }
 }

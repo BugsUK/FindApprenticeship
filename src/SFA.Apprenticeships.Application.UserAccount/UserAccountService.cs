@@ -133,6 +133,15 @@
             return user == null ? default(UserStatuses) : user.Status;
         }
 
+        public User GetUser(Guid userId)
+        {
+            _logger.Debug("Calling UserAccountService to get the user with user id: {0}.", userId);
+
+            var user = _userReadRepository.Get(userId);
+
+            return user;
+        }
+
         public string[] GetRoleNames(string username)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
@@ -157,6 +166,26 @@
             // TODO: Add actual user roles.
 
             return claims.ToArray();
+        }
+
+        public void UpdateUsername(Guid userId, string newUsername)
+        {
+            //Strategy to:
+            //Check username is available
+            //Set user PendingUsername, PendingUsernameCode and Send Email
+        }
+
+        public void VerifyUpdateUsername(Guid userId, string verfiyCode, string password)
+        {
+            //Strategy to:
+            //Check username is still available
+            //Vertify code and password
+            //Set user username, candidate registration email address and all draft and saved applications
+        }
+
+        public void ResendUpdateUsernameCode(Guid userId)
+        {
+            //Resend PendingUsernameCode
         }
     }
 }

@@ -654,6 +654,8 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WorkExperienceViewModel.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Account\UpdateEmailAddress.cshtml" />
+    <Content Include="Views\Account\VerifyUpdatedEmailAddress.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -765,6 +767,7 @@
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileState.cs" />
+    <Compile Include="ViewModels\Account\VertifyUpdatedEmailViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileViewModel.cs" />
     <Compile Include="ViewModels\AddressSearchResult.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />

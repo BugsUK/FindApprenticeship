@@ -19,6 +19,10 @@
 
         public SettingsMode Mode { get; set; }
 
+        public string Username { get; set; }
+
+        public string PendingUsername { get; set; }
+
         [Display(Name = SettingsViewModelMessages.FirstnameMessages.LabelText)]
         public string Firstname { get; set; }
 
