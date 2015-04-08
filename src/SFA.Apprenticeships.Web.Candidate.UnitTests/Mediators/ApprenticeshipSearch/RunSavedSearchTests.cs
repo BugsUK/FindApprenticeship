@@ -45,7 +45,7 @@
             // Assert.
             candidateServiceProvider.Verify(p => p.GetSavedSearch(candidateId, savedSearchId), Times.Once);
 
-            response.Code.Should().Be(ApprenticeshipSearchMediatorCodes.RunSavedSearch.Ok);
+            response.Code.Should().Be(ApprenticeshipSearchMediatorCodes.SavedSearch.Ok);
             response.ViewModel.Should().Be(savedSearch);
         }
 
@@ -75,7 +75,7 @@
             candidateServiceProvider.Verify(p => p.GetSavedSearch(candidateId, savedSearchId), Times.Once);
 
             response.AssertMessage(
-                ApprenticeshipSearchMediatorCodes.RunSavedSearch.SavedSearchNotFound,
+                ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound,
                 ApprenticeshipsSearchPageMessages.SavedSearchNotFound,
                 UserMessageLevel.Error,
                 false);
@@ -103,7 +103,7 @@
             candidateServiceProvider.Verify(p => p.GetSavedSearch(It.IsAny<Guid>(), It.IsAny<Guid>()), Times.Never);
 
             response.AssertMessage(
-                ApprenticeshipSearchMediatorCodes.RunSavedSearch.SavedSearchNotFound,
+                ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound,
                 ApprenticeshipsSearchPageMessages.SavedSearchNotFound,
                 UserMessageLevel.Error,
                 false);
@@ -139,7 +139,7 @@
             candidateServiceProvider.Verify(p => p.GetSavedSearch(candidateId, savedSearchId), Times.Once);
 
             response.AssertMessage(
-                ApprenticeshipSearchMediatorCodes.RunSavedSearch.RunSaveSearchFailed,
+                ApprenticeshipSearchMediatorCodes.SavedSearch.RunSaveSearchFailed,
                 ApprenticeshipsSearchPageMessages.RunSavedSearchFailed,
                 UserMessageLevel.Error,
                 true);

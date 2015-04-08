@@ -36,7 +36,14 @@
                 var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
                 var response = _apprenticeshipSearchMediator.Index(candidateId, searchMode);
 
-                return View(response.ViewModel);
+                switch (response.Code)
+                {
+                    case ApprenticeshipSearchMediatorCodes.Index.Ok:
+                        return View(response.ViewModel);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+
             });
         }
 
@@ -57,13 +64,28 @@
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View("Index", response.ViewModel);
+                    case ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn:
+                        return RedirectToAction("Index");
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.Ok:
-                        if (model.SearchMode == ApprenticeshipSearchMode.SavedSearches)
+                        return RedirectToAction("Results", model);
+                    case ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch:
+                    {
+                        // ReSharper disable once PossibleInvalidOperationException
+                        var savedSearchResponse = _apprenticeshipSearchMediator.RunSavedSearch(candidateId.Value, model);
+
+                        switch (savedSearchResponse.Code)
                         {
-                            return RedirectToAction("RunSavedSearch", model);
+                            case ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound:
+                            case ApprenticeshipSearchMediatorCodes.SavedSearch.RunSaveSearchFailed:
+                                SetUserMessage(savedSearchResponse.Message.Text, savedSearchResponse.Message.Level);
+                                return RedirectToAction("Index");
+                            case ApprenticeshipSearchMediatorCodes.SavedSearch.Ok:
+                                ModelState.Clear();
+                                return Redirect(savedSearchResponse.ViewModel.SearchUrl.Value);
                         }
 
-                        return RedirectToAction("Results", model);
+                        throw new InvalidMediatorCodeException(savedSearchResponse.Code);
+                    }
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
@@ -100,31 +122,6 @@
                         ModelState.Remove("Longitude");
                         ModelState.Remove("SortType");
                         return View(response.ViewModel);
-                }
-
-                throw new InvalidMediatorCodeException(response.Code);
-            });
-        }
-
-        [HttpGet]
-        [ClearSearchReturnUrl(false)]
-        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public async Task<ActionResult> RunSavedSearch(ApprenticeshipSearchViewModel model)
-        {
-            return await Task.Run<ActionResult>(() =>
-            {
-                var candidateId = UserContext.CandidateId;
-                var response = _apprenticeshipSearchMediator.RunSavedSearch(candidateId, model);
-
-                switch (response.Code)
-                {
-                    case ApprenticeshipSearchMediatorCodes.RunSavedSearch.SavedSearchNotFound:
-                    case ApprenticeshipSearchMediatorCodes.RunSavedSearch.RunSaveSearchFailed:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToAction("Index");
-                    case ApprenticeshipSearchMediatorCodes.RunSavedSearch.Ok:
-                        ModelState.Clear();
-                        return Redirect(response.ViewModel.SearchUrl.Value);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
@@ -176,12 +173,12 @@
             return await Task.Run<ActionResult>(() =>
             {
                 var candidateId = GetCandidateId();
-                
+
                 var response = _apprenticeshipSearchMediator.Details(id, candidateId);
-                
+
                 switch (response.Code)
                 {
-                    case ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound: 
+                    case ApprenticeshipSearchMediatorCodes.Details.VacancyNotFound:
                         return new ApprenticeshipNotFoundResult();
                     case ApprenticeshipSearchMediatorCodes.Details.VacancyHasError:
                         ModelState.Clear();

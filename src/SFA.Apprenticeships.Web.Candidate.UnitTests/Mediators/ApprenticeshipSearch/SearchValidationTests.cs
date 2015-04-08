@@ -3,7 +3,9 @@
     using System;
     using Candidate.Mediators.Search;
     using Candidate.ViewModels.VacancySearch;
+    using Constants.Pages;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using FluentAssertions;
     using NUnit.Framework;
 
     [TestFixture]
@@ -48,9 +50,37 @@
                 SearchMode = ApprenticeshipSearchMode.SavedSearches
             };
 
-            var response = Mediator.SearchValidation(null, searchViewModel);
+            var response = Mediator.SearchValidation(Guid.NewGuid(), searchViewModel);
 
             response.AssertValidationResult(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, true);
+        }
+
+        [Test]
+        public void SavedSearchesModeCandidateNotLoggedIn()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                SavedSearchId = Guid.NewGuid().ToString(),
+                SearchMode = ApprenticeshipSearchMode.SavedSearches
+            };
+
+            var response = Mediator.SearchValidation(null, searchViewModel);
+
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn);
+        }
+
+        [Test]
+        public void SavedSearchesModeRunSavedSearch()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                SavedSearchId = Guid.NewGuid().ToString(),
+                SearchMode = ApprenticeshipSearchMode.SavedSearches
+            };
+
+            var response = Mediator.SearchValidation(Guid.NewGuid(), searchViewModel);
+
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch);
         }
     }
 }

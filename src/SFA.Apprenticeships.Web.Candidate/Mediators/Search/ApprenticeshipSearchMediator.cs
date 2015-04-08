@@ -55,6 +55,11 @@
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index(Guid? candidateId, ApprenticeshipSearchMode searchMode)
         {
+            if (!candidateId.HasValue && searchMode == ApprenticeshipSearchMode.SavedSearches)
+            {
+                searchMode = ApprenticeshipSearchMode.Keyword;
+            }
+
             var distances = GetDistances(true);
             var sortTypes = GetSortTypes();
             var resultsPerPage = GetResultsPerPage();
@@ -138,6 +143,11 @@
 
         public MediatorResponse<ApprenticeshipSearchViewModel> SearchValidation(Guid? candidateId, ApprenticeshipSearchViewModel model)
         {
+            if (!candidateId.HasValue && model.SearchMode == ApprenticeshipSearchMode.SavedSearches)
+            {
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn, model);
+            }
+
             var clientResult = _searchRequestValidator.Validate(model);
 
             if (!clientResult.IsValid)
@@ -147,16 +157,16 @@
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
                 model.SearchFields = GetSearchFields(true, model.SearchField);
                 model.Categories = GetCategories();
-
-                if (candidateId.HasValue)
-                {
-                    model.SavedSearches = GetSavedSearches(candidateId);
-                }
+                model.SavedSearches = GetSavedSearches(candidateId);
 
                 return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SearchValidation.ValidationError, model, clientResult);
             }
 
-            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SearchValidation.Ok, model);
+            var code = model.SearchMode == ApprenticeshipSearchMode.SavedSearches
+                ? ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch
+                : ApprenticeshipSearchMediatorCodes.SearchValidation.Ok;
+
+            return GetMediatorResponse(code, model);
         }
 
         public MediatorResponse<ApprenticeshipSearchResponseViewModel> Results(Guid? candidateId, ApprenticeshipSearchViewModel model)
@@ -360,7 +370,7 @@
         public MediatorResponse<SavedSearchViewModel> RunSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel apprenticeshipSearchViewModel)
         {
             Guid savedSearchId;
-            
+
             var validSavedSearchId = Guid.TryParse(apprenticeshipSearchViewModel.SavedSearchId, out savedSearchId);
             var savedSearchViewModel = validSavedSearchId
                 ? _candidateServiceProvider.GetSavedSearch(candidateId, savedSearchId)
@@ -369,7 +379,7 @@
             if (savedSearchViewModel == null)
             {
                 return GetMediatorResponse(
-                    ApprenticeshipSearchMediatorCodes.RunSavedSearch.SavedSearchNotFound,
+                    ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound,
                     default(SavedSearchViewModel),
                     ApprenticeshipsSearchPageMessages.SavedSearchNotFound,
                     UserMessageLevel.Error);
@@ -378,13 +388,13 @@
             if (savedSearchViewModel.HasError())
             {
                 return GetMediatorResponse(
-                    ApprenticeshipSearchMediatorCodes.RunSavedSearch.RunSaveSearchFailed,
+                    ApprenticeshipSearchMediatorCodes.SavedSearch.RunSaveSearchFailed,
                     savedSearchViewModel,
                     ApprenticeshipsSearchPageMessages.RunSavedSearchFailed,
                     UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.RunSavedSearch.Ok, savedSearchViewModel);
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SavedSearch.Ok, savedSearchViewModel);
         }
 
         #region Helpers
@@ -452,9 +462,10 @@
                 }
                 else if (model.LocationType == ApprenticeshipLocationType.National)
                 {
+                    // TODO: DEADCODE: added by vgaltes back in Feb.
                     //if (model.SortType != VacancySearchSortType.RecentlyAdded)
                     //{
-                        model.SortType = VacancySearchSortType.ClosingDate;
+                    model.SortType = VacancySearchSortType.ClosingDate;
                     //}
                 }
                 else

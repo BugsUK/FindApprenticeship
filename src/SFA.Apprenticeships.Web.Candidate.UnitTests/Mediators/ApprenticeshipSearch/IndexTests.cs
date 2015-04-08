@@ -46,6 +46,25 @@
         }
 
         [Test]
+        public void CandidateNotLoggedIn_SavedSearchesMode()
+        {
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.SavedSearches);
+
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
+
+            var viewModel = response.ViewModel;
+
+            viewModel.WithinDistance.Should().Be(5);
+            viewModel.LocationType.Should().Be(ApprenticeshipLocationType.NonNational);
+            viewModel.ResultsPerPage.Should().Be(5);
+            viewModel.Distances.SelectedValue.Should().Be(null);
+            viewModel.ApprenticeshipLevels.Should().NotBeNull();
+            viewModel.ApprenticeshipLevel.Should().Be("All");
+            viewModel.SearchMode.Should().Be(ApprenticeshipSearchMode.Keyword);
+            viewModel.SavedSearches.Should().BeNull();
+        }
+
+        [Test]
         public void BlacklistedCategoryCodes()
         {
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(GetCategories);

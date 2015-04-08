@@ -11,6 +11,8 @@
         {
             public const string Ok = "ApprenticeshipSearch.SearchValidation.Ok";
             public const string ValidationError = "ApprenticeshipSearch.SearchValidation.ValidationError";
+            public const string CandidateNotLoggedIn = "ApprenticeshipSearch.SearchValidation.CandidateNotLoggedIn";
+            public const string RunSavedSearch = "ApprenticeshipSearch.SearchValidation.RunSavedSearch";
         }
 
         public class Results
@@ -34,11 +36,11 @@
             public const string Ok = "ApprenticeshipSearch.Details.Ok";
         }
 
-        public class RunSavedSearch
+        public class SavedSearch
         {
-            public const string Ok = "ApprenticeshipSearch.RunSavedSearch.Ok";
-            public const string SavedSearchNotFound = "ApprenticeshipSearch.RunSavedSearch.SavedSearchNotFound";
-            public const string RunSaveSearchFailed = "ApprenticeshipSearch.RunSavedSearch.RunSaveSearchFailed";
+            public const string Ok = "ApprenticeshipSearch.SavedSearch.Ok";
+            public const string SavedSearchNotFound = "ApprenticeshipSearch.SavedSearch.SavedSearchNotFound";
+            public const string RunSaveSearchFailed = "ApprenticeshipSearch.SavedSearch.RunSaveSearchFailed";
         }
     }
 }
