@@ -42,7 +42,8 @@
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns((ApprenticeshipApplicationDetail) null);
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
-
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
+            
             var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
@@ -57,7 +58,8 @@
             var candidateService = new Mock<ICandidateService>();
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns((Candidate) null);
-
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
+            
             var returnedViewModel = new ApprenticeshipApplicationProviderBuilder().With(candidateService).Build().GetWhatHappensNextViewModel(candidateId, ValidVacancyId);
             returnedViewModel.HasError().Should().BeTrue();
             returnedViewModel.ViewModelMessage.Should().NotBeNullOrEmpty();
@@ -73,7 +75,8 @@
             var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
-
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
+            
             apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns((ApprenticeshipVacancyDetailViewModel)null);
             
             var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
@@ -94,6 +97,7 @@
             var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
             apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModelBuilder().Build());
 
             var configurationService = new Mock<IConfigurationService>();
@@ -118,6 +122,7 @@
             var apprenticeshipVacancyProvider = new Mock<IApprenticeshipVacancyProvider>();
             candidateService.Setup(cs => cs.GetApplication(candidateId, ValidVacancyId)).Returns(new ApprenticeshipApplicationDetailBuilder(candidateId, ValidVacancyId).Build);
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
+            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, It.IsAny<bool>())).Returns(new ApprenticeshipApplicationSummary[0]);
             apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModelBuilder().WithVacancyStatus(VacancyStatuses.Expired).Build());
 
             var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
