@@ -12,12 +12,12 @@
         private const string AcceptedTermsAndConditionsVersion = "User.TermsConditionsVersion";
 
         private readonly HttpContextBase _httpContext;
-        private readonly HttpCookie _httpDataCookie;
-
+        
+        private HttpCookie _httpDataCookie;
+        
         public CookieUserDataProvider(HttpContextBase httpContext)
         {
             _httpContext = httpContext;
-            _httpDataCookie = GetOrCreateDataCookie();
         }
 
         public UserContext GetUserContext()
@@ -48,23 +48,23 @@
         public void Clear()
         {
             _httpContext.Response.Cookies.Add(CreateExpiredCookie(UserContextCookieName));
-            _httpDataCookie.Values.Clear();
+            HttpDataCookie.Values.Clear();
         }
 
         public void Push(string key, string value)
         {
-            _httpDataCookie.Values.Remove(key);
-            _httpDataCookie.Values.Add(key, _httpContext.Server.UrlEncode(value));
+            HttpDataCookie.Values.Remove(key);
+            HttpDataCookie.Values.Add(key, _httpContext.Server.UrlEncode(value));
         }
 
         public string Get(string key)
         {
-            if (_httpDataCookie == null || _httpDataCookie.Values[key] == null)
+            if (HttpDataCookie == null || HttpDataCookie.Values[key] == null)
             {
                 return null;
             }
 
-            return _httpContext.Server.UrlDecode(_httpDataCookie.Values[key]);
+            return _httpContext.Server.UrlDecode(HttpDataCookie.Values[key]);
         }
 
         public string Pop(string key)
@@ -76,9 +76,21 @@
                 return null;
             }
 
-            _httpDataCookie.Values.Remove(key);
+            HttpDataCookie.Values.Remove(key);
 
             return value;
+        }
+
+        private HttpCookie HttpDataCookie
+        {
+            get
+            {
+                if (_httpDataCookie == null)
+                {
+                    _httpDataCookie = GetOrCreateDataCookie();
+                }
+                return _httpDataCookie;
+            }
         }
 
         private HttpCookie GetOrCreateDataCookie()
