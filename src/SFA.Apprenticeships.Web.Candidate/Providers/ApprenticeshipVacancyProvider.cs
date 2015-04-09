@@ -52,30 +52,33 @@
             try
             {
                 string vacancyReference;
+                var isVacancyReference = VacancyHelper.TryGetVacancyReference(search.Keywords, out vacancyReference);
 
-                if ((search.SearchField == ApprenticeshipSearchField.All.ToString() || search.SearchField == ApprenticeshipSearchField.ReferenceNumber.ToString())
-                    && VacancyHelper.TryGetVacancyReference(search.Keywords, out vacancyReference))
+                if ((search.SearchField == ApprenticeshipSearchField.All.ToString() && isVacancyReference) || search.SearchField == ApprenticeshipSearchField.ReferenceNumber.ToString())
                 {
-                    var searchParameters = new ApprenticeshipSearchParameters
+                    if (isVacancyReference)
                     {
-                        VacancyReference = vacancyReference,
-                        PageNumber = 1,
-                        PageSize = 1
-                    };
+                        var searchParameters = new ApprenticeshipSearchParameters
+                        {
+                            VacancyReference = vacancyReference,
+                            PageNumber = 1,
+                            PageSize = 1
+                        };
 
-                    var searchResults = _apprenticeshipSearchService.Search(searchParameters);
+                        var searchResults = _apprenticeshipSearchService.Search(searchParameters);
 
-                    //Expect only a single result. Any other number should be interpreted as no results
-                    if (searchResults.Total == 1)
-                    {
-                        var exactMatchResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(searchResults);
-                        exactMatchResponse.ExactMatchFound = true;
-                        return exactMatchResponse;
-                    }
+                        //Expect only a single result. Any other number should be interpreted as no results
+                        if (searchResults.Total == 1)
+                        {
+                            var exactMatchResponse = _apprenticeshipSearchMapper.Map<SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>, ApprenticeshipSearchResponseViewModel>(searchResults);
+                            exactMatchResponse.ExactMatchFound = true;
+                            return exactMatchResponse;
+                        }
 
-                    if (searchResults.Total > 1)
-                    {
-                        _logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReference, search.Keywords);
+                        if (searchResults.Total > 1)
+                        {
+                            _logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReference, search.Keywords);
+                        }
                     }
 
                     var response = new ApprenticeshipSearchResponseViewModel

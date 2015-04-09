@@ -155,7 +155,7 @@
                 model.Distances = GetDistances(true);
                 model.ResultsPerPageSelectList = GetResultsPerPageSelectList(model.ResultsPerPage);
                 model.ApprenticeshipLevels = GetApprenticeshipLevels(model.ApprenticeshipLevel);
-                model.SearchFields = GetSearchFields(true, model.SearchField);
+                model.SearchFields = GetSearchFields(false, model.SearchField);
                 model.Categories = GetCategories();
                 model.SavedSearches = GetSavedSearches(candidateId);
 

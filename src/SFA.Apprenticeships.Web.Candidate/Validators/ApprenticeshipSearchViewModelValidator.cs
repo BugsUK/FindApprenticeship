@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Application.Interfaces.Vacancies;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -40,7 +41,8 @@
             validator.RuleFor(x => x.Location)
                 .NotEmpty()
                 .When(IsKeywordOrCategorySearch)
-                .When(x => !VacancyHelper.IsVacancyReference(x.Keywords))
+                .When(x => x.SearchField != ApprenticeshipSearchField.ReferenceNumber.ToString())
+                .When(x => !VacancyHelper.IsVacancyReference(x.Keywords) || x.SearchField != ApprenticeshipSearchField.All.ToString())
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.RequiredErrorText)
                 .Length(2, 99)
                 .WithMessage(ApprenticeshipSearchViewModelMessages.LocationMessages.LengthErrorText)

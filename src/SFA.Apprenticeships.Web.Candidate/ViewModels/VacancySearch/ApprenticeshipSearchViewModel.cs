@@ -54,7 +54,7 @@
         {
             get
             {
-                return string.IsNullOrEmpty(_searchField) ? "All" : _searchField;
+                return string.IsNullOrEmpty(_searchField) ? ApprenticeshipSearchField.All.ToString() : _searchField;
             }
             set
             {
