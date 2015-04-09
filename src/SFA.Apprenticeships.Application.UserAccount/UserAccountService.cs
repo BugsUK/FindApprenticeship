@@ -173,6 +173,7 @@
             //Strategy to:
             //Check username is available
             //Set user PendingUsername, PendingUsernameCode and Send Email
+            //bool isAvailable = IsUsernameAvailable(newUsername);
         }
 
         public void VerifyUpdateUsername(Guid userId, string verfiyCode, string password)

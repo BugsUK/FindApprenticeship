@@ -9,7 +9,7 @@
     {
         Ok,
         Updated,
-        AccountAlreadyExixts,
+        AccountAlreadyExists,
         UserPasswordError,
         InvalidUpdateUsernameCode,
         Error

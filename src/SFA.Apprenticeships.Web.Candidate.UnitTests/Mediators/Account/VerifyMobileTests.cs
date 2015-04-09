@@ -52,7 +52,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
         public void ValidationErrorTest()
         {
             //Arrange
-            VerifyMobileState verifyMobileState = VerifyMobileState.VerifyMobileCodeInvalid;
+            const VerifyMobileState verifyMobileState = VerifyMobileState.VerifyMobileCodeInvalid;
             var v = new ValidationResult();
             v.Errors.Add(new ValidationFailure("VerifyMobileCode", "Length should be less than 4 digits"));
 

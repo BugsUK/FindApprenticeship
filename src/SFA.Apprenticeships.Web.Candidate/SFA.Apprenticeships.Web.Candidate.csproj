@@ -743,6 +743,7 @@
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\ApprenticeshipsSearchPageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
+    <Compile Include="Constants\Pages\UpdateEmailAddressMessages.cs" />
     <Compile Include="Constants\Pages\VerifyMobilePageMessages.cs" />
     <Compile Include="Constants\CandidateDataItemNames.cs" />
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />

@@ -327,14 +327,14 @@
                 return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.ValidationError, emailViewModel, validationResult);
             }
 
-            var viewModel = _accountProvider.UpdateEmailAddress(userId, emailViewModel.EmailAddress);
+            var viewModel = _accountProvider.UpdateEmailAddress(userId, emailViewModel);
 
             if (viewModel.HasError())
             {
-                return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.HasError, viewModel);
+                return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressError, UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.Ok, viewModel);
+            return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.Ok, viewModel, UpdateEmailAddressMessages.VerificationCodeSent, UserMessageLevel.Success);
         }
 
         public MediatorResponse<VerifyUpdatedEmailViewModel> VerifyUpdatedEmailAddress(Guid userId, VerifyUpdatedEmailViewModel model)

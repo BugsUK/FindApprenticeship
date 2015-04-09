@@ -18,7 +18,7 @@
 
         VerifyMobileViewModel SendMobileVerificationCode(Guid candidateId, VerifyMobileViewModel model);
 
-        EmailViewModel UpdateEmailAddress(Guid userId, string updatedEmailAddress);
+        EmailViewModel UpdateEmailAddress(Guid userId, EmailViewModel emailViewModel);
 
         VerifyUpdatedEmailViewModel VerifyUpdatedEmailAddress(Guid userId, VerifyUpdatedEmailViewModel model);
 

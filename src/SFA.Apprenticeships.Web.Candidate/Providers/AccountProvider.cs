@@ -265,31 +265,37 @@
             return model;
         }
 
-        public EmailViewModel UpdateEmailAddress(Guid userId, string updatedEmailAddress)
+        public EmailViewModel UpdateEmailAddress(Guid userId, EmailViewModel emailViewModel)
         {
-            _logger.Debug("Calling AccountProvider to update username for Id: {0} to new email address: {1}", userId, updatedEmailAddress);
-            var model = new EmailViewModel();
+            _logger.Debug("Calling AccountProvider to update username for Id: {0} to new email address: {1}", userId, emailViewModel.EmailAddress);
             try
             {
-                _userAccountService.UpdateUsername(userId, updatedEmailAddress);
-                model.UpdateStatus = UpdateEmailStatus.Ok;
+                _userAccountService.UpdateUsername(userId, emailViewModel.EmailAddress);
+                emailViewModel.UpdateStatus = UpdateEmailStatus.Ok;
             }
             catch (CustomException ex)
             {
                 switch (ex.Code)
                 {
                     case ErrorCodes.UserDirectoryAccountExistsError:
-                        model.UpdateStatus = UpdateEmailStatus.AccountAlreadyExixts;
+                        emailViewModel.UpdateStatus = UpdateEmailStatus.AccountAlreadyExists;
+                        emailViewModel.ViewModelMessage = UpdateEmailStatus.AccountAlreadyExists.ToString();
+                        break;
+                    default:
+                        _logger.Error("Unknown CustomException", ex);
+                        emailViewModel.UpdateStatus = UpdateEmailStatus.Error;
+                        emailViewModel.ViewModelMessage = UpdateEmailStatus.Error.ToString();
                         break;
                 }
             }
             catch (Exception ex)
             {
                 _logger.Error("Error updating username", ex);
-                model.UpdateStatus = UpdateEmailStatus.Error;
+                emailViewModel.UpdateStatus = UpdateEmailStatus.Error;
+                emailViewModel.ViewModelMessage = UpdateEmailStatus.Error.ToString();
             }
 
-            return model;
+            return emailViewModel;
         }
 
         public VerifyUpdatedEmailViewModel VerifyUpdatedEmailAddress(Guid userId, VerifyUpdatedEmailViewModel model)
@@ -306,7 +312,7 @@
                 switch (ex.Code)
                 {
                     case ErrorCodes.UserDirectoryAccountExistsError:
-                        model.UpdateStatus = UpdateEmailStatus.AccountAlreadyExixts;
+                        model.UpdateStatus = UpdateEmailStatus.AccountAlreadyExists;
                         break;
                     case ErrorCodes.InvalidUpdateUsernameCode:
                         model.UpdateStatus = UpdateEmailStatus.InvalidUpdateUsernameCode;
