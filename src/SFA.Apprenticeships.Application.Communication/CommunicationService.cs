@@ -14,17 +14,20 @@
         private readonly ISendTraineeshipApplicationSubmittedStrategy _sendTraineeshipApplicationSubmittedStrategy;
         private readonly ISendCandidateCommunicationStrategy _sendCandidateCommunicationStrategy;
         private readonly ISendContactMessageStrategy _sendContactMessageStrategy;
+        private readonly ISendUsernameUpdateCommunicationStrategy _sendUsernameUpdateCommunicationStrategy;
 
         public CommunicationService(ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
             ISendTraineeshipApplicationSubmittedStrategy sendTraineeshipApplicationSubmittedStrategy, 
             ISendCandidateCommunicationStrategy sendCandidateCommunicationStrategy, 
             ISendContactMessageStrategy sendContactMessageStrategy,
+            ISendUsernameUpdateCommunicationStrategy sendUsernameUpdateCommunicationStrategy,
             ILogService logger)
         {
             _sendApplicationSubmittedStrategy = sendApplicationSubmittedStrategy;
             _sendTraineeshipApplicationSubmittedStrategy = sendTraineeshipApplicationSubmittedStrategy;
             _sendCandidateCommunicationStrategy = sendCandidateCommunicationStrategy;
             _sendContactMessageStrategy = sendContactMessageStrategy;
+            _sendUsernameUpdateCommunicationStrategy = sendUsernameUpdateCommunicationStrategy;
             _logger = logger;
         }
 
@@ -47,10 +50,11 @@
                 case MessageTypes.SendAccountUnlockCode:
                 case MessageTypes.PasswordChanged:
                 case MessageTypes.SendMobileVerificationCode:
-                case MessageTypes.SendPendingUsernameCode:
                     _sendCandidateCommunicationStrategy.Send(candidateId, messageType, tokens);
                     break;
-
+                case MessageTypes.SendPendingUsernameCode:
+                    _sendUsernameUpdateCommunicationStrategy.Send(candidateId, messageType, tokens);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("messageType");
             }
