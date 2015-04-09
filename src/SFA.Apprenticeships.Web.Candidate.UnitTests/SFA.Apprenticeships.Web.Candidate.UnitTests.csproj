@@ -204,7 +204,9 @@
     <Compile Include="Mediators\Account\SettingsTests.cs" />
     <Compile Include="Mediators\Account\TrackTests.cs" />
     <Compile Include="Mediators\Account\TraineeshipVacancyDetailsTests.cs" />
+    <Compile Include="Mediators\Account\UpdateEmailAddressTests.cs" />
     <Compile Include="Mediators\Account\VerifyMobileTests.cs" />
+    <Compile Include="Mediators\Account\VerifyUpdatedEmailAddressTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyQualificationRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ApplyTests.cs" />
