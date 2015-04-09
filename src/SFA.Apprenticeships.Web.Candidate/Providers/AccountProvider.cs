@@ -304,7 +304,7 @@
 
             try
             {
-                _userAccountService.VerifyUpdateUsername(userId, model.PendingUsernameCode, model.Password);
+                _candidateService.UpdateUsername(userId, model.PendingUsernameCode, model.Password);
                 model.UpdateStatus = UpdateEmailStatus.Updated;
             }
             catch (CustomException ex)
@@ -313,19 +313,23 @@
                 {
                     case ErrorCodes.UserDirectoryAccountExistsError:
                         model.UpdateStatus = UpdateEmailStatus.AccountAlreadyExists;
+                        model.ViewModelMessage = UpdateEmailStatus.AccountAlreadyExists.ToString();
                         break;
                     case ErrorCodes.InvalidUpdateUsernameCode:
                         model.UpdateStatus = UpdateEmailStatus.InvalidUpdateUsernameCode;
+                        model.ViewModelMessage = UpdateEmailStatus.InvalidUpdateUsernameCode.ToString();
                         break;
                     case ErrorCodes.UserPasswordError:
                         model.UpdateStatus = UpdateEmailStatus.UserPasswordError;
+                        model.ViewModelMessage = UpdateEmailStatus.UserPasswordError.ToString();
                         break;
                 }
             }
             catch (Exception ex)
             {
                 _logger.Error("Error verifying username update and password codes", ex);
-                model.UpdateStatus = UpdateEmailStatus.Error;                
+                model.UpdateStatus = UpdateEmailStatus.Error;
+                model.ViewModelMessage = UpdateEmailStatus.Error.ToString();
             }
 
             return model;
@@ -345,6 +349,7 @@
             {
                 _logger.Error("Error resending username code", ex);
                 model.UpdateStatus = UpdateEmailStatus.Error;
+                model.ViewModelMessage = UpdateEmailStatus.Error.ToString();
             }
 
             return model;

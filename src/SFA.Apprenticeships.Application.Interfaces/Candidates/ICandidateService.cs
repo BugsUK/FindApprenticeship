@@ -78,5 +78,7 @@
         SavedSearch DeleteSavedSearch(Guid candidateId, Guid savedSearchId);
 
         SavedSearch RetrieveSavedSearch(Guid candidateId, Guid savedSearchId);
+
+        void UpdateUsername(Guid userId, string verfiyCode, string password);
     }
 }

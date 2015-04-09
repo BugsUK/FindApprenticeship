@@ -200,6 +200,7 @@
     <Compile Include="Mediators\Account\DismissTests.cs" />
     <Compile Include="Mediators\Account\IndexTests.cs" />
     <Compile Include="Mediators\Account\ResendTests.cs" />
+    <Compile Include="Mediators\Account\ResendUpdateEmailAddressCodeTests.cs" />
     <Compile Include="Mediators\Account\SaveSettingsTests.cs" />
     <Compile Include="Mediators\Account\SettingsTests.cs" />
     <Compile Include="Mediators\Account\TrackTests.cs" />

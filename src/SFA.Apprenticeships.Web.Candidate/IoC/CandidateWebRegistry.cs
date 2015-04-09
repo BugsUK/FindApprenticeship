@@ -145,6 +145,9 @@
             For<IRetrieveSavedSearchesStrategy>().Use<RetrieveSavedSearchesStrategy>();
             For<IUpdateSavedSearchStrategy>().Use<UpdateSavedSearchStrategy>();
             For<IDeleteSavedSearchStrategy>().Use<DeleteSavedSearchStrategy>();
+
+            For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>();
+            For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>();
         }
 
         private void RegisterMediators()

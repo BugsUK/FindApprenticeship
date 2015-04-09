@@ -350,10 +350,10 @@
 
             if (viewModel.HasError())
             {
-                return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel);
+                return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressError, UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.Ok, viewModel);
+            return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.Ok, viewModel, UpdateEmailAddressMessages.UpdatedEmailSuccess, UserMessageLevel.Success);
         }
 
         public MediatorResponse<VerifyUpdatedEmailViewModel> ResendUpdateEmailAddressCode(Guid userId)
@@ -362,10 +362,10 @@
 
             if (viewModel.HasError())
             {
-                return GetMediatorResponse(AccountMediatorCodes.ResendUpdateEmailAddressCode.HasError, viewModel);
+                return GetMediatorResponse(AccountMediatorCodes.ResendUpdateEmailAddressCode.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressError, UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(AccountMediatorCodes.ResendUpdateEmailAddressCode.Ok, viewModel);
+            return GetMediatorResponse(AccountMediatorCodes.ResendUpdateEmailAddressCode.Ok, viewModel, UpdateEmailAddressMessages.UpdateEmailCodeResent, UserMessageLevel.Success);
         }
     }
 }

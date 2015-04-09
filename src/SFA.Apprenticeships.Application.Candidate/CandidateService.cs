@@ -7,6 +7,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
+    using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
@@ -17,6 +18,7 @@
     using Strategies.SavedSearches;
     using Strategies.Traineeships;
     using UserAccount.Strategies;
+    using IUpdateUsernameStrategy = Strategies.IUpdateUsernameStrategy;
 
     public class CandidateService : ICandidateService
     {
@@ -53,6 +55,7 @@
         private readonly IRetrieveSavedSearchesStrategy _retrieveSavedSearchesStrategy;
         private readonly IUpdateSavedSearchStrategy _updateSavedSearchStrategy;
         private readonly IDeleteSavedSearchStrategy _deleteSavedSearchStrategy;
+        private readonly IUpdateUsernameStrategy _updateUsernameStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -86,7 +89,8 @@
             ICreateSavedSearchStrategy createSavedSearchStrategy,
             IRetrieveSavedSearchesStrategy retrieveSavedSearchesStrategy,
             IUpdateSavedSearchStrategy updateSavedSearchStrategy,
-            IDeleteSavedSearchStrategy deleteSavedSearchStrategy)
+            IDeleteSavedSearchStrategy deleteSavedSearchStrategy,
+            IUpdateUsernameStrategy updateUsernameStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -120,6 +124,7 @@
             _retrieveSavedSearchesStrategy = retrieveSavedSearchesStrategy;
             _updateSavedSearchStrategy = updateSavedSearchStrategy;
             _deleteSavedSearchStrategy = deleteSavedSearchStrategy;
+            _updateUsernameStrategy = updateUsernameStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -455,6 +460,11 @@
             return _retrieveSavedSearchesStrategy
                 .RetrieveSavedSearches(candidateId)
                 .FirstOrDefault(each => each.EntityId == savedSearchId);
+        }
+
+        public void UpdateUsername(Guid userId, string verfiyCode, string password)
+        {
+            _updateUsernameStrategy.UpdateUsername(userId, verfiyCode, password);
         }
     }
 }

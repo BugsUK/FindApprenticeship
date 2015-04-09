@@ -1,8 +1,9 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
-    // TODO: AG: US711: inject into UserAccountService.
+    using System;
+
     public interface ISendPendingUsernameCodeStrategy
     {
-        void SendPendingUsernameCode(string username);
+        void SendPendingUsernameCode(Guid userId);
     }
 }

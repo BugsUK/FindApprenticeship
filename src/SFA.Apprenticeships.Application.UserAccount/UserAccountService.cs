@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Logging;
@@ -21,6 +22,8 @@
         private readonly IResetForgottenPasswordStrategy _resetForgottenPasswordStrategy;
         private readonly ISendPasswordResetCodeStrategy _sendPasswordCodeStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
+        private readonly IUpdateUsernameStrategy _updateUsernameStrategy;
+        private readonly ISendPendingUsernameCodeStrategy _sendPendingUsernameCodeStrategy;
         private readonly IUserReadRepository _userReadRepository;
 
         public UserAccountService(IUserReadRepository userReadRepository,
@@ -30,7 +33,10 @@
             ISendPasswordResetCodeStrategy sendPasswordCodeStrategy,
             IResendActivationCodeStrategy resendActivationCodeStrategy,
             ISendAccountUnlockCodeStrategy resendAccountUnlockCodeStrategy,
-            IUnlockAccountStrategy unlockAccountStrategy, ILogService logger)
+            IUnlockAccountStrategy unlockAccountStrategy, 
+            IUpdateUsernameStrategy updateUsernameStrategy,
+            ISendPendingUsernameCodeStrategy sendPendingUsernameCodeStrategy,
+            ILogService logger)
         {
             _userReadRepository = userReadRepository;
             _registerUserStrategy = registerUserStrategy;
@@ -40,6 +46,8 @@
             _resendActivationCodeStrategy = resendActivationCodeStrategy;
             _resendAccountUnlockCodeStrategy = resendAccountUnlockCodeStrategy;
             _unlockAccountStrategy = unlockAccountStrategy;
+            _updateUsernameStrategy = updateUsernameStrategy;
+            _sendPendingUsernameCodeStrategy = sendPendingUsernameCodeStrategy;
             _logger = logger;
         }
 
@@ -170,23 +178,23 @@
 
         public void UpdateUsername(Guid userId, string newUsername)
         {
-            //Strategy to:
-            //Check username is available
-            //Set user PendingUsername, PendingUsernameCode and Send Email
-            //bool isAvailable = IsUsernameAvailable(newUsername);
+            if (!IsUsernameAvailable(newUsername))
+            {
+                throw new CustomException(ErrorCodes.UserDirectoryAccountExistsError);
+            }
+
+            _updateUsernameStrategy.UpdateUsername(userId, newUsername);
+            _sendPendingUsernameCodeStrategy.SendPendingUsernameCode(userId);
         }
 
-        public void VerifyUpdateUsername(Guid userId, string verfiyCode, string password)
+        public void UpdateUsername(Guid userId, string verfiyCode, string password)
         {
-            //Strategy to:
-            //Check username is still available
-            //Vertify code and password
-            //Set user username, candidate registration email address and all draft and saved applications
+            _updateUsernameStrategy.UpdateUsername(userId, verfiyCode, password);
         }
 
         public void ResendUpdateUsernameCode(Guid userId)
         {
-            //Resend PendingUsernameCode
+            _sendPendingUsernameCodeStrategy.SendPendingUsernameCode(userId);
         }
     }
 }

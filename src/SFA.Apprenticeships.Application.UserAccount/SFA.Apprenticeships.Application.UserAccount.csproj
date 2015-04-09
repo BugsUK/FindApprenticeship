@@ -91,6 +91,7 @@
     <Compile Include="StaticCodeGenerator.cs" />
     <Compile Include="Strategies\ILockAccountStrategy.cs" />
     <Compile Include="Strategies\ILockUserStrategy.cs" />
+    <Compile Include="Strategies\IUpdateUsernameStrategy.cs" />
     <Compile Include="Strategies\ISendAccountUnlockCodeStrategy.cs" />
     <Compile Include="Strategies\SendPendingUsernameCodeStrategy.cs" />
     <Compile Include="Strategies\ISendPendingUsernameCodeStrategy.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Strategies\IResendActivationCodeStrategy.cs" />
     <Compile Include="Strategies\ISendPasswordResetCodeStrategy.cs" />
     <Compile Include="Strategies\LockUserStrategy.cs" />
+    <Compile Include="Strategies\UpdateUsernameStrategy.cs" />
     <Compile Include="UserAccountService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\LockAccountStrategy.cs" />
@@ -113,6 +115,10 @@
     <Compile Include="Strategies\UnlockAccountStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj">
+      <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
+      <Name>SFA.Apprenticeships.Application.Authentication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

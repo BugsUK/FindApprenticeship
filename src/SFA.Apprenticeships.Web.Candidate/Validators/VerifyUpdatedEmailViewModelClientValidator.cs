@@ -27,8 +27,10 @@
             validator.RuleFor(model => model.PendingUsernameCode)
                 .NotEmpty()
                 .WithMessage(VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.RequiredErrorText)
-                .Length(4, 4)
-                .WithMessage(VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.LengthErrorText);
+                .Length(6, 6)
+                .WithMessage(VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.LengthErrorText)
+                .Matches(VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.WhiteListRegularExpression)
+                .WithMessage(VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.WhiteListErrorText);
 
             validator.RuleFor(x => x.Password)
                 .Length(8, 127)

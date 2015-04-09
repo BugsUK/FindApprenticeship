@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Account.VertifyUpdatedEmailViewModel
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Account.VerifyUpdatedEmailViewModel
 @{
     ViewBag.Title = "VerifyUpdatedEmailAddress";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -23,21 +23,17 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     
-    <div class="form-group form-group-withlink">
-        <label for="enterCode" class="form-label">Enter code</label>
-        <input type="text" class="form-control" id="enterCode">
-    </div>
+    @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { @class = "form-group-withlink", spellcheck = "false", autofocus = "autofocus" }, labelText: "Enter code")
+    
     <div class="form-group">
         <p>
-            <a href="">Resend code</a>
+            <a href="@Url.Action("ResendUpdateEmailAddressCode")" title="Resend code">Resend code</a>
         </p>
     </div>
+    
+    @Html.FormPasswordFor(m => m.Password, controlHtmlAttributes: new { autocomplete = "off" })
+    
     <div class="form-group">
-        <label for="enterPass" class="form-label">Enter your account password</label>
-        <span class="form-hint">We need your password for security reasons</span>
-        <input type="text" class="form-control" id="enterPass">
-    </div>
-    <div class="form-group">
-        <a href="settings.html" class="button" id="emailVerified">Verify email</a>
+        <button class="button" id="emailVerified">Verify email</button>
     </div>
 }

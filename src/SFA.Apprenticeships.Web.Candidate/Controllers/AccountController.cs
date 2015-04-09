@@ -5,6 +5,7 @@
     using System.Net;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using System.Web.Security;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -264,26 +265,24 @@
         [ValidateAntiForgeryToken]
         [AllowReturnUrl(Allow = false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public async Task<ActionResult> VerifyUpdatedEmailAddress(VerifyUpdatedEmailViewModel model)
+        public ActionResult VerifyUpdatedEmailAddress(VerifyUpdatedEmailViewModel model)
         {
-            return await Task.Run<ActionResult>(() =>
+            var response = _accountMediator.VerifyUpdatedEmailAddress(UserContext.CandidateId, model);
+
+            switch (response.Code)
             {
-                var response = _accountMediator.VerifyUpdatedEmailAddress(UserContext.CandidateId, model);
+                case AccountMediatorCodes.VerifyUpdatedEmailAddress.Ok:
+                    SetUserMessage(response.Message.Text);
+                    FormsAuthentication.SignOut();
+                    return RedirectToRoute(RouteNames.SignIn);
+                case AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    break;
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
 
-                switch (response.Code)
-                {
-                    case AccountMediatorCodes.VerifyUpdatedEmailAddress.Ok:
-                        SetUserMessage(response.Message.Text);
-                        return RedirectToRoute(RouteNames.SignOut);
-                    case AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError:
-                        SetUserMessage(response.Message.Text, response.Message.Level);
-                        break;
-                    default:
-                        throw new InvalidMediatorCodeException(response.Code);
-                }
-
-                return View(response.ViewModel);
-            });
+            return View(response.ViewModel);
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]

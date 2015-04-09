@@ -31,7 +31,7 @@
         [Display(Name = VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.LabelText)]
         public string PendingUsernameCode { get; set; }
 
-        [Display(Name = VertifyUpdatedEmailViewModelMessages.PasswordMessages.LabelText)]
+        [Display(Name = VertifyUpdatedEmailViewModelMessages.PasswordMessages.LabelText, Description = VertifyUpdatedEmailViewModelMessages.PasswordMessages.HintText)]
         public string Password { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
+    using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
@@ -30,13 +31,13 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _candidateReadRepository = candidateReadRepository;
         }        
 
-        public void SendPendingUsernameCode(string username)
+        public void SendPendingUsernameCode(Guid userId)
         {
-            var user = _userReadRepository.Get(username, false);
+            var user = _userReadRepository.Get(userId);
 
             if (user == null)
             {
-                _logger.Info(string.Format("Cannot send pending username code, username not found: \"{0}\".", username));
+                _logger.Info(string.Format("Cannot send pending username code, userid not found: \"{0}\".", userId));
                 return;
             }
 

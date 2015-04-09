@@ -34,7 +34,7 @@
 
         void UpdateUsername(Guid userId, string newUsername);
 
-        void VerifyUpdateUsername(Guid userId, string verfiyCode, string password);
+        void UpdateUsername(Guid userId, string verfiyCode, string password);
 
         void ResendUpdateUsernameCode(Guid userId);
     }
