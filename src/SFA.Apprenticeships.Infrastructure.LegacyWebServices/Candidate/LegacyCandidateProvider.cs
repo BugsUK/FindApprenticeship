@@ -111,6 +111,9 @@
         private void InternalUpdateCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
             var request = new UpdateCandidateRequest { Candidate = CreateLegacyCandidate(candidate) };
+            request.Candidate.Id = candidate.LegacyCandidateId;
+            request.Candidate.IdSpecified = true;
+            
             var response = default(UpdateCandidateResponse);
 
             _service.Use("SecureService", client => response = client.UpdateCandidate(request));
