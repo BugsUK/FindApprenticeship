@@ -44,6 +44,22 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             _tokenManager.SetToken(BindingData.InvalidPasswordTokenName, new string(BindingData.Password.Reverse().ToArray()));
         }
 
+        [When("I create a new email address to update my username")]
+        public void GivenICreateANewUserEmailAddressToChangeO()
+        {
+            _email = EmailGenerator.GenerateEmailAddress();
+            _tokenManager.SetToken(BindingData.NewEmailAddressTokenName, _email);
+        }
+
+        [When(@"I recieve the update email address verification code")]
+        public void WhenIRecieveTheUpdateEmailAddressVerificationCode()
+        {
+            var email = _tokenManager.GetTokenByKey(BindingData.UserEmailAddressTokenName);
+            var user = _userReadRepository.Get(email);
+            _tokenManager.SetToken(BindingData.NewEmailAddressVerificationCode, user.PendingUsernameCode);
+        }
+
+
         [Given(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)""")]
         [When(@"I select the ""(.*)"" apprenticeship vacancy in location ""(.*)""")]
         public void WhenISelectTheNthApprenticeshipVacancy(string position, string location)

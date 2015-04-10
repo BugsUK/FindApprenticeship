@@ -23,7 +23,7 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     
-    @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { @class = "form-group-withlink", spellcheck = "false", autofocus = "autofocus" }, labelText: "Enter code")
+    @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { @class = "form-group-withlink", spellcheck = "false", autofocus = "autofocus", autocomplete = "off" }, labelText: "Enter code")
     
     <div class="form-group">
         <p>
@@ -34,6 +34,6 @@
     @Html.FormPasswordFor(m => m.Password, controlHtmlAttributes: new { autocomplete = "off" })
     
     <div class="form-group">
-        <button class="button" id="emailVerified">Verify email</button>
+        <button class="button" id="verify-email-button">Verify email</button>
     </div>
 }

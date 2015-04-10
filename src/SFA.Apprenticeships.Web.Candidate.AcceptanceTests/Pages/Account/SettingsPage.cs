@@ -100,6 +100,22 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
 
         #endregion
 
+        #region Update Username
+
+        [ElementLocator(Id = "settings-username")]
+        public IWebElement Username { get; set; }
+
+        [ElementLocator(Id = "settings-change-username")]
+        public IWebElement ChangeUsernameLink { get; set; }
+
+        [ElementLocator(Id = "settings-pending-username")]
+        public IWebElement PendingUsername { get; set; }
+
+        [ElementLocator(Id = "settings-confirm-username")]
+        public IWebElement ConfirmPendingUsernameLink { get; set; }
+
+        #endregion
+
         [ElementLocator(Id = "AllowEmailComms")]
         public IWebElement AllowEmailComms { get; set; }
 

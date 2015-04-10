@@ -54,14 +54,14 @@
             
             <div class="form-group">
                 <p class="form-label">Email</p>
-                <span class="form-prepopped">@Model.Username</span><a class="inl-block" href="@Url.RouteUrl(RouteNames.UpdateEmail)">Change email address</a>
+                <span class="form-prepopped" id="settings-username">@Model.Username</span><a id="settings-change-username" class="inl-block" href="@Url.RouteUrl(RouteNames.UpdateEmail)">Change email address</a>
             </div>
             
             @if (!string.IsNullOrWhiteSpace(Model.PendingUsername))
             {
                 <div class="form-group">
-                    <p class="form-label">Email</p>
-                    <span class="form-prepopped">@Model.PendingUsername</span><a class="inl-block" href="@Url.RouteUrl(RouteNames.VertifyUpdatedEmail)">Verify new email address</a>
+                    <p class="form-label">Pending Email Update</p>
+                    <span class="form-prepopped" id="settings-pending-username">@Model.PendingUsername</span><a id="settings-confirm-username" class="inl-block" href="@Url.RouteUrl(RouteNames.VertifyUpdatedEmail)">Verify new email address</a>
                 </div>
             }
 

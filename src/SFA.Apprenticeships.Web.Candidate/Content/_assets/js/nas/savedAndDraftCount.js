@@ -38,7 +38,7 @@ function DecrementSavedAndDraftCount() {
     savedSearchTitle.attr("saved-count", currentCount);
 }
 
-$(window).on('scroll', showFixedHeader);
+//$(window).on('scroll', showFixedHeader);
 
 function showFixedHeader() {
     var nowScrollTop = $(window).scrollTop();

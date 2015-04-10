@@ -4,7 +4,10 @@
     {
         public const string UserEmailAddressTokenName = "EmailToken";
         public const string UserEmailAddress = "nas.exemplar+acceptancetests@gmail.com";
-        
+
+        public const string NewEmailAddressTokenName = "NewEmailAddressToken";
+        public const string NewEmailAddressVerificationCode = "NewEmailAddressVerificationCode";
+
         public const string PasswordTokenName = "PasswordToken";
         public const string Password = "?Password01!";
 

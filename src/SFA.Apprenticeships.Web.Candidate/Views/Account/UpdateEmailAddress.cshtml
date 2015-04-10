@@ -22,7 +22,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
-    @Html.FormTextFor(m => m.EmailAddress)
+    @Html.FormTextFor(m => m.EmailAddress, controlHtmlAttributes: new { autocomplete = "off" })
     
     <div class="form-group">
         <button id="btn-sendcode" class="button">Send code</button>
