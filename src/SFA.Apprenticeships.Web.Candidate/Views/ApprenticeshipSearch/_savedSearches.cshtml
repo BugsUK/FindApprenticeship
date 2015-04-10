@@ -15,7 +15,13 @@
             {
                 <li>
                     <input type="radio" name="SavedSearchId" id="saved-search-@savedSearch.Id" value="@savedSearch.Id">
-                    <label id="saved-search-label-@savedSearch.Id" for="saved-search-@savedSearch.Id">@savedSearch.Name</label>
+                    <div>
+                        <label id="saved-search-label-@savedSearch.Id" for="saved-search-@savedSearch.Id">@savedSearch.Name</label>
+                        @if (savedSearch.DateProcessed.HasValue)
+                        {
+                            <span class="inl-block font-xsmall">(New matches: @savedSearch.DateProcessed.Value.ToFriendlyDaysAgo())</span>
+                        }
+                    </div>
                     
                     @if (savedSearch.ApprenticeshipLevel != "All")
                     {
