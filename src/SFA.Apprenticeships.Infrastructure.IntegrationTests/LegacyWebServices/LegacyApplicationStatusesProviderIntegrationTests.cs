@@ -67,7 +67,7 @@
             result.Count().Should().Be(0);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Category("ConcreteGatewayOnly")]
         public void ShouldGetOneApplicationStatusForCandidateWithOneSubmittedApplication()
         {
             // Arrange.

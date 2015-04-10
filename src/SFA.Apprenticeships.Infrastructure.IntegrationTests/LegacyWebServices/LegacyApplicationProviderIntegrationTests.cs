@@ -107,22 +107,14 @@
                 .WithCandidateInformation()
                 .WithVacancyId(TestVacancyId)
                 .Build();
-            //_candidateRepositoryMock.ResetCalls();
-            //_candidateRepositoryMock.Setup(cr => cr.Get(It.IsAny<Guid>())).Returns(new Candidate
-            //{
-            //    LegacyCandidateId = CreateLegacyCandidateId()
-            //});
-            //var applicationDetail = new TestApplicationBuilder().Build();
-
-            //applicationDetail.CandidateInformation.EducationHistory = new Education()
-            //{
-            //    Institution = "GENERAL_ERROR",
-            //    FromYear = 1999,
-            //    ToYear = 2001
-            //};
-            
 
             _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
+            applicationDetail.CandidateInformation.EducationHistory = new Education()
+            {
+                Institution = "DUPLICATE_APPLICATION",
+                FromYear = 1999,
+                ToYear = 2001
+            };
             _legacyApplicationProviderProvider.CreateApplication(applicationDetail);
         }
 
