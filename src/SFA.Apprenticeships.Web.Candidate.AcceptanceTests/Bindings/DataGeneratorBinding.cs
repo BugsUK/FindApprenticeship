@@ -57,6 +57,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             var email = _tokenManager.GetTokenByKey(BindingData.UserEmailAddressTokenName);
             var user = _userReadRepository.Get(email);
             _tokenManager.SetToken(BindingData.NewEmailAddressVerificationCode, user.PendingUsernameCode);
+            _tokenManager.SetToken(BindingData.PasswordTokenName, BindingData.Password);
         }
 
 
