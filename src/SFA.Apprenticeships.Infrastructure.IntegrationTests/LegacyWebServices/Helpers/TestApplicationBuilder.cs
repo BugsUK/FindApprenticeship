@@ -37,7 +37,9 @@
                 {
                     Id = _vacancyId
                 },
-                CandidateInformation = _candidateInformation
+                CandidateInformation = _candidateInformation,
+                AdditionalQuestion1Answer = "Integration Test",
+                AdditionalQuestion2Answer = "Integration Test",
             };
         }
 
