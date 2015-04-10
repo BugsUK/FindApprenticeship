@@ -28,6 +28,7 @@ Scenario: As a candidate I can change my username
 		| Field        | Value           |
 		| EmailAddress | {NewEmailAddressToken} |
 		| Password     | {PasswordToken} |
+	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
 
 

@@ -132,6 +132,8 @@ this.ScenarioSetup(scenarioInfo);
 #line 27
  testRunner.When("I enter data", ((string)(null)), table3, "When ");
 #line 31
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 32
  testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
