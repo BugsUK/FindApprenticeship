@@ -56,6 +56,14 @@
                 <p class="form-label">Email</p>
                 <span class="form-prepopped">@Model.Username</span><a class="inl-block" href="@Url.RouteUrl(RouteNames.UpdateEmail)">Change email address</a>
             </div>
+            
+            @if (!string.IsNullOrWhiteSpace(Model.PendingUsername))
+            {
+                <div class="form-group">
+                    <p class="form-label">Email</p>
+                    <span class="form-prepopped">@Model.PendingUsername</span><a class="inl-block" href="@Url.RouteUrl(RouteNames.VertifyUpdatedEmail)">Verify new email address</a>
+                </div>
+            }
 
             <div id="accountSettings2">
 
