@@ -49,12 +49,11 @@
             }
 
             var result = _candidateWriteRepository.Save(candidate);
-
             var reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
 
             var candidateApplications = _getCandidateApplicationsStrategy
                 .GetApplications(candidate.EntityId)
-                .Where(a => a.Status == ApplicationStatuses.Draft)
+                .Where(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved)
                 .ToList();
 
             candidateApplications.ForEach(candidateApplication =>
@@ -69,7 +68,6 @@
                     var message = string.Format(
                         "Error while updating a draft application with the updated user personal details for user {0}",
                         candidate.EntityId);
-
                     _logger.Warn(message, e);
                 }
             });
