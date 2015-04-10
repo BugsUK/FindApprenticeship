@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";   
 }
 
-@using (Html.BeginForm(null, "TraineeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form" }))
+@using (Html.BeginForm(null, "TraineeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form", autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
     <h1 class="heading-xlarge">Application form</h1>

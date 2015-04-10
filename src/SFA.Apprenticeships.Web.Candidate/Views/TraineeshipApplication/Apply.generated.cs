@@ -63,7 +63,7 @@ WriteLiteral("\r\n\r\n");
 
             
             #line 8 "..\..\Views\TraineeshipApplication\Apply.cshtml"
- using (Html.BeginForm(null, "TraineeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form" }))
+ using (Html.BeginForm(null, "TraineeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form", autocomplete = "off" }))
 {
     
             
@@ -179,14 +179,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1065), Tuple.Create("\"", 1155)
+WriteAttribute("href", Tuple.Create(" href=\"", 1087), Tuple.Create("\"", 1177)
             
             #line 23 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1072), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
+, Tuple.Create(Tuple.Create("", 1094), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
             
             #line default
             #line hidden
-, 1072), false)
+, 1094), false)
 );
 
 WriteLiteral(">View traineeship</a>\r\n            </p>\r\n        </div>\r\n    </section>\r\n");
