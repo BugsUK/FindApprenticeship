@@ -18,9 +18,9 @@ function IncrementSavedAndDraftCount() {
     savedSearchTitle.text(currentCount + " Saved");
     savedSearchTitle.attr("saved-count", currentCount);
 
-    if ($(window).scrollTop() > heightOfHeader) {
-        addFixedHeader();
-    }
+    //if ($(window).scrollTop() > heightOfHeader) {
+    //    addFixedHeader();
+    //}
 }
 
 function DecrementSavedAndDraftCount() {
@@ -31,9 +31,9 @@ function DecrementSavedAndDraftCount() {
         savedSearchTitle.text("");
     } else {
         savedSearchTitle.text(currentCount + " Saved");
-        if ($(window).scrollTop() > heightOfHeader) {
-            addFixedHeader();
-        }
+        //if ($(window).scrollTop() > heightOfHeader) {
+        //    addFixedHeader();
+        //}
     }
     savedSearchTitle.attr("saved-count", currentCount);
 }
