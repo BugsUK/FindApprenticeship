@@ -52,7 +52,6 @@
             $saveLink.attr("title", text);
         } else {
             var $label = $saveLink.children(".save-vacancy-link-text");
-            
             $label.text(text);
         }
     };
@@ -85,8 +84,10 @@
                 updateSaveVacancyView.call($saveLink, result.applicationStatus);
                 if (vacancyStatus.unsaved) {
                     IncrementSavedAndDraftCount();
+                    Webtrends.multiTrack({ argsa: ['DCS.dcsuri', '/apprenticeship/saved/' + vacancyId, 'WT.dl', '99', 'WT.ti', 'Apprenticeship Saved for Later'] });
                 } else {
                     DecrementSavedAndDraftCount();
+                    Webtrends.multiTrack({ argsa: ['DCS.dcsuri', '/apprenticeship/unsaved/' + vacancyId, 'WT.dl', '99', 'WT.ti', 'Apprenticeship UnSaved for Later'] });
                 }
             })
             .fail(function () {
