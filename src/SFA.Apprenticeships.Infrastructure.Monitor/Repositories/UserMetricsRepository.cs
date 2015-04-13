@@ -1,12 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Repositories.Users.Entities;
     using Mongo.Common;
+    using MongoDB.Bson;
+    using MongoDB.Driver;
     using MongoDB.Driver.Linq;
+    using MongoUser = Infrastructure.Repositories.Users.Entities.MongoUser;
 
     public class UserMetricsRepository : GenericMongoClient<MongoUser>, IUserMetricsRepository
     {
@@ -48,6 +51,26 @@
             return Collection
                 .AsQueryable()
                 .Count(each => each.LastLogin != null && each.LastLogin >= activeFrom);
+        }
+
+        public IEnumerable<BsonDocument> GetUserActivityMetrics()
+        {
+            var group = new BsonDocument
+            {
+                {
+                    "$group", new BsonDocument
+                    {
+                        {"_id", new BsonDocument {{"CandidateId", "$_id"}, {"DateCreated", "$DateCreated"}, {"ActivateCodeExpiry", "$ActivateCodeExpiry"}, {"ActivationDate", "$ActivationDate"}, {"LastLogin", "$LastLogin"}}},
+                        {"Activated", new BsonDocument {{"$first", new BsonDocument {{"$cond", new BsonArray {new BsonDocument {{"$gte", new BsonArray {"$Status", 20}}}, true, false}}}}}}
+                    }
+                }
+            };
+
+            var pipeline = new[] { group };
+
+            var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
+
+            return result;
         }
     }
 }

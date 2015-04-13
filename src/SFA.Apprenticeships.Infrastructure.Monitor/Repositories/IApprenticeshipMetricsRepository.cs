@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using Domain.Entities.Applications;
+    using MongoDB.Bson;
 
     public interface IApprenticeshipMetricsRepository
     {
@@ -10,5 +12,9 @@
         int GetApplicationCountPerCandidate();
         int GetApplicationStateCountPerCandidate(ApplicationStatuses applicationStatus);
         long GetActiveUserCount(DateTime activeFrom);
+        IEnumerable<BsonDocument> GetApplicationStatusCounts();
+        IEnumerable<Guid> GetCandidatesThatWouldHaveSeenTraineeshipPrompt();
+        IEnumerable<BsonDocument> GetApplicationCountPerApprenticeship();
+        BsonDocument GetAverageApplicationCountPerApprenticeship();
     }
 }

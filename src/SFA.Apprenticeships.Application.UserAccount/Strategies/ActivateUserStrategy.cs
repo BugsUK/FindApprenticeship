@@ -29,6 +29,9 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             }
 
             user.SetStateActive();
+
+            user.ActivationDate = DateTime.UtcNow;
+
             _userWriteRepository.Save(user);
         }
     }
