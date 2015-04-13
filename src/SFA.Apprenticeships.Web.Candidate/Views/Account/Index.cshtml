@@ -26,10 +26,15 @@
                 Have you considered a traineeship? Traineeships are designed to get someone ready for an apprenticeship.
             </p>
             <p>
-                <a id="traineeship-overview-link" href=@Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)>More about traineeships</a>
+                <a id="traineeship-overview-link" 
+                   href="@Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)"
+                   onlick="Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/promptaccept', 'WT.dl', '99', 'WT.ti', 'Traineeship Prompt Accepted'] })">More about traineeships</a>
             </p>
             <p>
-                <a id="dismiss-traineeship-prompts-link" class="notInterested link-unimp icon-black" href="@Url.Action("DismissTraineeshipPrompts", "Account")"><i class="copy-16 fa fa-times-circle"></i>Don't show me this again</a>
+                <a id="dismiss-traineeship-prompts-link" 
+                   class="notInterested link-unimp icon-black" 
+                   href="@Url.Action("DismissTraineeshipPrompts", "Account")"
+                   onclick="Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/promptdecline', 'WT.dl', '99', 'WT.ti', 'Traineeship Prompt Declined'] })"><i class="copy-16 fa fa-times-circle"></i>Don't show me this again</a>
             </p>
         </div>
     </div>

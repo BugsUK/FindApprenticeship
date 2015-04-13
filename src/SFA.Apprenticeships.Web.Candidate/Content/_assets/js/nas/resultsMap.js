@@ -315,8 +315,9 @@ $(function () {
         }, 300);
     }
 
-    function calcRoute(transportMode, thisLat, thisLong, journeyTime, mapNumber) {
+    function calcRoute(transportMode, thisLat, thisLong, journeyTime, mapNumber, updatedMode) {
 
+        var dcsUri = updatedMode ? '/apprenticeships/journeytimechange' : '/apprenticeships/journeytime';
         directionsDisplay[mapNumber].setMap(theMaps[mapNumber]);
 
         if (!apiScriptLoaded && !apiScriptLoading) {
@@ -333,10 +334,10 @@ $(function () {
         };
         directionsService[mapNumber].route(request, function (response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
-
-                $(journeyTime).text(response.routes[0].legs[0].duration.text);
-
+                var responseJourneyTime = response.routes[0].legs[0].duration.text;
+                $(journeyTime).text(responseJourneyTime);
                 directionsDisplay[mapNumber].setDirections(response);
+                Webtrends.multiTrack({ argsa: ['DCS.dcsuri', dcsUri, 'WT.dl', '99', 'WT.ti', 'Search Results Journey Time Option', 'journeyMethods', transportMode, 'journeyTime', responseJourneyTime] });
             }
         });
     }
@@ -353,11 +354,11 @@ $(function () {
         loadScript();
 
         $window.on('googleMapsScriptLoaded', function () {
-            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber);
+            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, true);
         });
 
         if (apiScriptLoaded) {
-            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber);
+            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, true);
         }
     });
 
@@ -374,11 +375,11 @@ $(function () {
         loadScript();
 
         $window.on('googleMapsScriptLoaded', function () {
-            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber);
+            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, false);
         });
 
         if (apiScriptLoaded) {
-            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber);
+            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, false);
         }
 
     });
