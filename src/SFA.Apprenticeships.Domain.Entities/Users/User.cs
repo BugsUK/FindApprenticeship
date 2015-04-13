@@ -25,6 +25,8 @@
 
         public DateTime? ActivateCodeExpiry { get; set; }
 
+        public DateTime? ActivationDate { get; set; }
+
         public int LoginIncorrectAttempts { get; set; }
 
         public string PasswordResetCode { get; set; }

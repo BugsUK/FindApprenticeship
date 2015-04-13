@@ -8,6 +8,8 @@
     {
         public MetricsRepository()
         {
+            For<IUserMetricsRepository>().Use<UserMetricsRepository>();
+            For<ICandidateMetricsRepository>().Use<CandidateMetricsRepository>();
             For<IApprenticeshipMetricsRepository>().Use<ApprenticeshipMetricsRepository>();
             For<ITraineeshipMetricsRepository>().Use<TraineeshipMetricsRepository>();
 

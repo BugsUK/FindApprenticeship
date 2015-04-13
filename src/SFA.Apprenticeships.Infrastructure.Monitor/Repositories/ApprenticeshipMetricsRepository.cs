@@ -98,6 +98,29 @@
             return result;
         }
 
+        public IEnumerable<Guid> GetCandidatesThatWouldHaveSeenTraineeshipPrompt()
+        {
+            var statusMatch = new BsonDocument {{"$match", new BsonDocument {{"Status", (int) ApplicationStatuses.Unsuccessful}}}};
+            var candidateIdGroup = new BsonDocument {{"$group", new BsonDocument {{"_id", "$CandidateId"}, {"count", new BsonDocument {{"$sum", 1}}}}}};
+            var countMatch = new BsonDocument {{"$match", new BsonDocument {{"count", new BsonDocument {{"$gte", 6}}}}}};
+           
+            var pipeline = new[] { statusMatch, candidateIdGroup, countMatch };
+
+            var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
+
+            return result.Select(r => r.AsGuid);
+        }
+
+        public IEnumerable<BsonDocument> GetApplicationCountPerApprenticeship()
+        {
+            throw new NotImplementedException();
+        }
+
+        public BsonDocument GetAverageApplicationCountPerApprenticeship()
+        {
+            throw new NotImplementedException();
+        }
+
         private static BsonDocument GetApplicationStatusCount(ApplicationStatuses applicationStatus)
         {
             return new BsonDocument
