@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
@@ -71,6 +72,48 @@
             var count = result.Length == 0 ? 0 : result[0].ToArray()[1].Value.AsInt32;
 
             return count;
+        }
+
+        public IEnumerable<BsonDocument> GetApplicationStatusCounts()
+        {
+            var group = new BsonDocument
+            {
+                { 
+                    "$group", new BsonDocument
+                    {
+                        { "_id", "$CandidateId" },
+                        { "Saved", GetApplicationStatusCount(ApplicationStatuses.Saved) },
+                        { "Draft", GetApplicationStatusCount(ApplicationStatuses.Draft) },
+                        { "Submitted", GetApplicationStatusCount(ApplicationStatuses.Submitted) },
+                        { "Unsuccessful", GetApplicationStatusCount(ApplicationStatuses.Unsuccessful) },
+                        { "Successful", GetApplicationStatusCount(ApplicationStatuses.Successful) }
+                    } 
+                }
+            };
+
+            var pipeline = new[] { group };
+
+            var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
+
+            return result;
+        }
+
+        private static BsonDocument GetApplicationStatusCount(ApplicationStatuses applicationStatus)
+        {
+            return new BsonDocument
+            {
+                {
+                    "$sum", new BsonDocument
+                    {
+                        {
+                            "$cond", new BsonArray
+                            {
+                                new BsonDocument {{"$eq", new BsonArray {"$Status", (int) applicationStatus}}}, 1, 0
+                            }
+                        }
+                    }
+                }
+            };
         }
     }
 }
