@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Application;
     using Common.Configuration;
     using Common.Constants;
     using Constants.Pages;
@@ -331,6 +332,10 @@
 
             if (viewModel.HasError())
             {
+                if (viewModel.UpdateStatus == UpdateEmailStatus.AccountAlreadyExists)
+                {
+                    return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressAlreadyInUse, UserMessageLevel.Error);
+                }
                 return GetMediatorResponse(AccountMediatorCodes.UpdateEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressError, UserMessageLevel.Error);
             }
 
@@ -350,7 +355,17 @@
 
             if (viewModel.HasError())
             {
-                return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressError, UserMessageLevel.Error);
+                switch (viewModel.UpdateStatus)
+                {
+                    case UpdateEmailStatus.AccountAlreadyExists:
+                        return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressAlreadyInUse, UserMessageLevel.Error);
+                    case UpdateEmailStatus.InvalidUpdateUsernameCode:
+                        return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.IncorrectVertificationCode, UserMessageLevel.Error);
+                    case UpdateEmailStatus.UserPasswordError:
+                        return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.IncorrectPassword, UserMessageLevel.Error);
+                    default:
+                        return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressError, UserMessageLevel.Error);
+                }
             }
 
             return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.Ok, viewModel, UpdateEmailAddressMessages.UpdatedEmailSuccess, UserMessageLevel.Success);
