@@ -14,6 +14,8 @@
         private readonly IApprenticeshipMetricsRepository _apprenticeshipMetricsRepository;
         private readonly ITraineeshipMetricsRepository _traineeshipMetricsRepository;
 
+        private const string fileNamePrefix = "../Sit_";
+
         public TraineeshipsAnalysis(IUserMetricsRepository userMetricsRepository, ICandidateMetricsRepository candidateMetricsRepository, IApprenticeshipMetricsRepository apprenticeshipMetricsRepository, ITraineeshipMetricsRepository traineeshipMetricsRepository)
         {
             _userMetricsRepository = userMetricsRepository;
@@ -51,7 +53,7 @@
 
         private static void WriteTraineeshipAnalysisCsv(Dictionary<Guid, UserApplicationMetrics> userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("TraineeshipAnalysis_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"));
+            var fileName = string.Format("{1}TraineeshipAnalysis_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), fileNamePrefix);
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.Values);
@@ -61,7 +63,7 @@
 
         private static void WriteApprenticeshipApplicationMetricsCsv(ApprenticeshipApplicationMetrics userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("ApprenticeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"));
+            var fileName = string.Format("{1}ApprenticeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), fileNamePrefix);
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.ApprenticeshipMetrics.Values);
@@ -71,7 +73,7 @@
 
         private static void WriteTraineeshipApplicationMetricsCsv(TraineeshipApplicationMetrics userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("TraineeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"));
+            var fileName = string.Format("{1}TraineeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), fileNamePrefix);
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.TraineeshipMetrics.Values);
@@ -247,6 +249,11 @@
         public int Submitted { get; set; }
         public int Unsuccessful { get; set; }
         public int Successful { get; set; }
+
+        public int Total
+        {
+            get { return Saved + Draft + Submitted + Unsuccessful + Successful; }
+        }
     }
 
     public class CandidateTraineeshipApplicationMetrics
@@ -254,6 +261,11 @@
         public int Submitted { get; set; }
         public int Unsuccessful { get; set; }
         public int Successful { get; set; }
+
+        public int Total
+        {
+            get { return Submitted + Unsuccessful + Successful; }
+        }
     }
 
     public class ApprenticeshipApplicationMetrics

@@ -30,7 +30,6 @@
 
         public IEnumerable<BsonDocument> GetApplicationStatusCounts()
         {
-            var match = new BsonDocument { { "$match", new BsonDocument { { "Status", (int)ApplicationStatuses.Submitted } } } };
             var group = new BsonDocument
             {
                 { 
@@ -44,7 +43,7 @@
                 }
             };
 
-            var pipeline = new[] { match, group };
+            var pipeline = new[] { group };
 
             var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
 

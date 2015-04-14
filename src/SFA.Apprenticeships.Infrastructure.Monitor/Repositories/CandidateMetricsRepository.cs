@@ -36,8 +36,8 @@
 
         public IEnumerable<Guid> GetCandidatesThatHaveDismissedTheTraineeshipPrompt()
         {
-            var match = new BsonDocument {{"$match", new BsonDocument {{"Status", (int) ApplicationStatuses.Submitted}}}};
-            var group = new BsonDocument {{"$group", new BsonDocument {{"_id", "_id"}}}};
+            var match = new BsonDocument {{"$match", new BsonDocument {{"CommunicationPreferences.AllowTraineeshipPrompts", false}}}};
+            var group = new BsonDocument {{"$group", new BsonDocument {{"_id", "$_id"}}}};
 
             var pipeline = new[] { match, group };
 
