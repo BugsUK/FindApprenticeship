@@ -108,17 +108,41 @@
 
             var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
 
-            return result.Select(r => r.AsGuid);
+            return result.Select(r => r["_id"].AsGuid);
         }
 
         public IEnumerable<BsonDocument> GetApplicationCountPerApprenticeship()
         {
-            throw new NotImplementedException();
+            var match = new BsonDocument {{"$match", new BsonDocument {{"Status", new BsonDocument {{"$gte", (int) ApplicationStatuses.Submitted}}}}}};
+            var group = new BsonDocument {{"$group", new BsonDocument {{"_id", new BsonDocument {{"VacancyId", "$Vacancy._id"}, {"Title", "$Vacancy.Title"}}}, {"count", new BsonDocument {{"$sum", 1}}}}}};
+
+            var pipeline = new[] { match, group };
+
+            var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
+
+            return result;
         }
 
         public BsonDocument GetAverageApplicationCountPerApprenticeship()
         {
-            throw new NotImplementedException();
+            var match = new BsonDocument
+            {
+                {"$match", new BsonDocument {{"Status", new BsonDocument {{"$gte", (int) ApplicationStatuses.Submitted}}}}}
+            };
+            var group = new BsonDocument
+            {
+                {"$group", new BsonDocument {{"_id", new BsonDocument {{"VacancyId", "$Vacancy._id"}, {"Title", "$Vacancy.Title"}}}, {"count", new BsonDocument {{"$sum", 1}}}}}
+            };
+            var average = new BsonDocument
+            {
+                {"$group", new BsonDocument {{"_id", "averages"}, {"apprenticeshipsWithApplicationsCount", new BsonDocument {{"$sum", 1}}}, {"count", new BsonDocument {{"$sum", "$count"}}}, {"average", new BsonDocument {{"$avg", "$count"}}}}}
+            };
+
+            var pipeline = new[] { match, group, average };
+
+            var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
+
+            return result.First();
         }
 
         private static BsonDocument GetApplicationStatusCount(ApplicationStatuses applicationStatus)

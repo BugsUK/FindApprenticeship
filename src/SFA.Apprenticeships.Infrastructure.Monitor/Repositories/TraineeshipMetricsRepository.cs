@@ -53,9 +53,10 @@
 
         public IEnumerable<BsonDocument> GetApplicationCountPerTraineeship()
         {
-            var group = new BsonDocument {{"$group", new BsonDocument {{"_id", new BsonDocument {{"VacancyId", "$Vacancy._id"}, {"Title", "$Vacancy.Title"}}}, {"count", new BsonDocument {{"sum", 1}}}}}};
+            var match = new BsonDocument {{"$match", new BsonDocument {{"Status", new BsonDocument {{"$gte", (int) ApplicationStatuses.Submitted}}}}}};
+            var group = new BsonDocument {{"$group", new BsonDocument {{"_id", new BsonDocument {{"VacancyId", "$Vacancy._id"}, {"Title", "$Vacancy.Title"}}}, {"count", new BsonDocument {{"$sum", 1}}}}}};
 
-            var pipeline = new[] { group };
+            var pipeline = new[] { match, group };
 
             var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
 
@@ -64,16 +65,20 @@
 
         public BsonDocument GetAverageApplicationCountPerTraineeship()
         {
+            var match = new BsonDocument
+            {
+                {"$match", new BsonDocument {{"Status", new BsonDocument {{"$gte", (int) ApplicationStatuses.Submitted}}}}}
+            };
             var group = new BsonDocument
             {
-                {"$group", new BsonDocument {{"_id", new BsonDocument {{"VacancyId", "$Vacancy._id"}, {"Title", "$Vacancy.Title"}}}, {"count", new BsonDocument {{"sum", 1}}}}}
+                {"$group", new BsonDocument {{"_id", new BsonDocument {{"VacancyId", "$Vacancy._id"}, {"Title", "$Vacancy.Title"}}}, {"count", new BsonDocument {{"$sum", 1}}}}}
             };
             var average = new BsonDocument
             {
-                {"$group", new BsonDocument {{"_id", null}, {"vacanciesWithApplicationsCount", new BsonDocument {{"sum", 1}}}, {"count", new BsonDocument {{"sum", "$count"}}}, {"average", new BsonDocument {{"$avg", "$count"}}}}}
+                {"$group", new BsonDocument {{"_id", "averages"}, {"traineeshipsWithApplicationsCount", new BsonDocument {{"$sum", 1}}}, {"count", new BsonDocument {{"$sum", "$count"}}}, {"average", new BsonDocument {{"$avg", "$count"}}}}}
             };
 
-            var pipeline = new[] { group, average };
+            var pipeline = new[] { match, group, average };
 
             var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
 

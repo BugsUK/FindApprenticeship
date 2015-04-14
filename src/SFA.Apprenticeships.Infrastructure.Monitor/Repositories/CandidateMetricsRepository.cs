@@ -43,7 +43,7 @@
 
             var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
 
-            return result.Select(r => r.AsGuid);
+            return result.Select(r => r["_id"].AsGuid);
         }
     }
 }
