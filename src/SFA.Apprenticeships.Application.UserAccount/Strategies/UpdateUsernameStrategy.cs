@@ -3,6 +3,7 @@
     using System;
     using Authentication;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
@@ -47,6 +48,18 @@
             {
                 throw new CustomException(ErrorCodes.InvalidUpdateUsernameCode);
             }
+
+            //TODO: delete any users with username = user.PendingUsername - they must be PendingActivation
+            //TODO: delete user authentication data for them as well.
+            //var pendingActivationUser = _userReadRepository.Get(user.PendingUsername);
+            //if (pendingActivationUser != null)
+            //{
+            //    if (pendingActivationUser.Status != UserStatuses.PendingActivation)
+            //    {
+            //        throw new CustomException(ErrorCodes.TBC);
+            //    }
+            //    _userWriteRepository.Delete(pendingActivationUser.EntityId);
+            //}
 
             user.Username = user.PendingUsername;
             user.PendingUsername = null;
