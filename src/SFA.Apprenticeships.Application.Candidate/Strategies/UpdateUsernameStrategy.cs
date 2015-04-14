@@ -21,9 +21,12 @@
 
         public void UpdateUsername(Guid userId, string verfiyCode, string password)
         {
-            _userAccountService.UpdateUsername(userId, verfiyCode, password);
             var user = _userAccountService.GetUser(userId);
             var candidate = _candidateReadRepository.Get(userId);
+
+            _userAccountService.UpdateUsername(userId, verfiyCode, password);
+
+            //TODO: delete any candidates for the user.PendingUsername - they must have been PendingActivation
             candidate.RegistrationDetails.EmailAddress = user.Username;
             _saveCandidateStrategy.SaveCandidate(candidate);
         }
