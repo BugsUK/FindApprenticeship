@@ -43,7 +43,7 @@
 
             var user = _userReadRepository.Get(userId);
 
-            if (user.PendingUsernameCode != verfiyCode)
+            if (!verfiyCode.Equals(user.PendingUsernameCode, StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new CustomException(ErrorCodes.InvalidUpdateUsernameCode);
             }
