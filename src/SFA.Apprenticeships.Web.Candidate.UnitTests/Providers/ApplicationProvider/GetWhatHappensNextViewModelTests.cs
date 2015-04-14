@@ -5,7 +5,6 @@
     using Builders;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
-    using Common.Configuration;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -101,8 +100,6 @@
             apprenticeshipVacancyProvider.Setup(cs => cs.GetVacancyDetailViewModel(candidateId, ValidVacancyId)).Returns(new ApprenticeshipVacancyDetailViewModelBuilder().Build());
 
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<WebConfiguration>())
-                .Returns(new WebConfiguration() {FeedbackUrl = "http://feedback"});
 
             var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
                 .With(candidateService).With(apprenticeshipVacancyProvider).With(configurationService).Build()
@@ -111,7 +108,6 @@
             returnedViewModel.HasError().Should().BeFalse();
             returnedViewModel.ViewModelMessage.Should().BeNullOrEmpty();
             returnedViewModel.Status.Should().Be(ApplicationStatuses.Unknown);
-            returnedViewModel.FeedbackUrl.Should().Be("http://feedback");
         }
 
         [Test]

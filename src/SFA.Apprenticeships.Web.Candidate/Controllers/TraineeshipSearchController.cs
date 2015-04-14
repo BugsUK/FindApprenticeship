@@ -6,6 +6,7 @@
     using ActionResults;
     using Attributes;
     using Constants;
+    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Search;
@@ -16,7 +17,8 @@
     {
         private readonly ITraineeshipSearchMediator _traineeshipSearchMediator;
 
-        public TraineeshipSearchController(ITraineeshipSearchMediator traineeshipSearchMediator)
+        public TraineeshipSearchController(ITraineeshipSearchMediator traineeshipSearchMediator,
+            IConfigurationService configurationService) : base(configurationService)
         {
             _traineeshipSearchMediator = traineeshipSearchMediator;
         }

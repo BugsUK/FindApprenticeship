@@ -27,24 +27,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
-    
-    #line 1 "..\..\Views\Shared\_ErrorLayout.cshtml"
-    using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-    
-    #line default
-    #line hidden
-    
-    #line 2 "..\..\Views\Shared\_ErrorLayout.cshtml"
-    using SFA.Apprenticeships.Infrastructure.Common.IoC;
-    
-    #line default
-    #line hidden
-    
-    #line 3 "..\..\Views\Shared\_ErrorLayout.cshtml"
-    using SFA.Apprenticeships.Infrastructure.Logging.IoC;
-    
-    #line default
-    #line hidden
     using SFA.Apprenticeships.Web.Candidate;
     using SFA.Apprenticeships.Web.Candidate.Constants;
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
@@ -55,21 +37,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
-    
-    #line 4 "..\..\Views\Shared\_ErrorLayout.cshtml"
-    using SFA.Apprenticeships.Web.Common.Configuration;
-    
-    #line default
-    #line hidden
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
-    
-    #line 5 "..\..\Views\Shared\_ErrorLayout.cshtml"
-    using StructureMap;
-    
-    #line default
-    #line hidden
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/_ErrorLayout.cshtml")]
@@ -80,24 +50,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
         }
         public override void Execute()
         {
-            
-            #line 6 "..\..\Views\Shared\_ErrorLayout.cshtml"
-  
-    var container = new Container(x =>
-    {
-        x.AddRegistry<LoggingRegistry>();
-        x.AddRegistry<CommonRegistry>();
-    });
-    var configurationService = container.GetInstance<IConfigurationService>();
-    var webConfiguration = configurationService.Get<WebConfiguration>();
-    var feedbackUrl = webConfiguration.FeedbackUrl;
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n<!DOCTYPE html>\r\n<!--[if lt IE 7]><html class=\"no-js lt-ie9 lt-ie8 lt-ie7\"><![e" +
-"ndif]-->\r\n<!--[if IE 7]><html class=\"no-js lt-ie9 lt-ie8\"><![endif]-->\r\n<!--[if " +
-"IE 8]><html class=\"no-js lt-ie9\"><![endif]-->\r\n<!--[if gt IE 8]><!-->\r\n<html");
+WriteLiteral("<!DOCTYPE html>\r\n<!--[if lt IE 7]><html class=\"no-js lt-ie9 lt-ie8 lt-ie7\"><![end" +
+"if]-->\r\n<!--[if IE 7]><html class=\"no-js lt-ie9 lt-ie8\"><![endif]-->\r\n<!--[if IE" +
+" 8]><html class=\"no-js lt-ie9\"><![endif]-->\r\n<!--[if gt IE 8]><!-->\r\n<html");
 
 WriteLiteral(" lang=\"en-GB\"");
 
@@ -116,7 +71,7 @@ WriteLiteral(" content=\"IE=edge\"");
 WriteLiteral(">\r\n    <title>");
 
             
-            #line 26 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 11 "..\..\Views\Shared\_ErrorLayout.cshtml"
       Write(ViewBag.Title);
 
             
@@ -131,7 +86,7 @@ WriteLiteral(" content=\"width=device-width, initial-scale=1\"");
 WriteLiteral(">\r\n    <!--[if gt IE 8]><!-->");
 
             
-            #line 28 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 13 "..\..\Views\Shared\_ErrorLayout.cshtml"
                      Write(Styles.Render(Url.CdnContent("css/main-1.9.0.1755.css", "~/Content/_assets")));
 
             
@@ -140,7 +95,7 @@ WriteLiteral(">\r\n    <!--[if gt IE 8]><!-->");
 WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
-            #line 29 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 14 "..\..\Views\Shared\_ErrorLayout.cshtml"
                  Write(Styles.Render(Url.CdnContent("css/main-ie8-1.9.0.1755.css", "~/Content/_assets")));
 
             
@@ -149,7 +104,7 @@ WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 WriteLiteral("<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
-            #line 30 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 15 "..\..\Views\Shared\_ErrorLayout.cshtml"
                  Write(Styles.Render(Url.CdnContent("css/fonts-ie8.css", "~/Content/_assets")));
 
             
@@ -158,7 +113,7 @@ WriteLiteral("<![endif]-->\r\n    <!--[if lte IE 8]>");
 WriteLiteral("<![endif]-->\r\n    <!--[if gte IE 9]><!-->");
 
             
-            #line 31 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 16 "..\..\Views\Shared\_ErrorLayout.cshtml"
                       Write(Styles.Render(Url.CdnContent("css/fonts.css", "~/Content/_assets")));
 
             
@@ -168,14 +123,14 @@ WriteLiteral("<!--<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1567), Tuple.Create("\"", 1629)
+WriteAttribute("href", Tuple.Create(" href=\"", 979), Tuple.Create("\"", 1041)
             
-            #line 32 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 1574), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+            #line 17 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 986), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1574), false)
+, 986), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
@@ -185,7 +140,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 33 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 18 "..\..\Views\Shared\_ErrorLayout.cshtml"
 Write(Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", "~/Content/_assets")));
 
             
@@ -196,7 +151,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 34 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 19 "..\..\Views\Shared\_ErrorLayout.cshtml"
 Write(Html.Partial("_Scripts"));
 
             
@@ -236,14 +191,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 2217), Tuple.Create("\"", 2292)
+WriteAttribute("src", Tuple.Create(" src=\"", 1629), Tuple.Create("\"", 1704)
             
-            #line 46 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 2223), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+            #line 31 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 1635), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 2223), false)
+, 1635), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -260,7 +215,7 @@ WriteLiteral(" class=\"global-header__title beta\"");
 WriteLiteral(">");
 
             
-            #line 51 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 36 "..\..\Views\Shared\_ErrorLayout.cshtml"
                                                  Write(ViewBag.UserJourneyMainCaption);
 
             
@@ -284,15 +239,7 @@ WriteLiteral(" class=\"beta__label\"");
 
 WriteLiteral(">Beta</strong> <span>This is a new service – your <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2791), Tuple.Create("\"", 2810)
-            
-            #line 58 "..\..\Views\Shared\_ErrorLayout.cshtml"
-                      , Tuple.Create(Tuple.Create("", 2798), Tuple.Create<System.Object, System.Int32>(feedbackUrl
-            
-            #line default
-            #line hidden
-, 2798), false)
-);
+WriteLiteral(" href=\"https://www.surveymonkey.com/s/MFNR7NZ\"");
 
 WriteLiteral(" target=\"_blank\"");
 
@@ -310,7 +257,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">");
 
             
-            #line 62 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 47 "..\..\Views\Shared\_ErrorLayout.cshtml"
                                   Write(ViewBag.Title);
 
             
@@ -325,7 +272,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 64 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 49 "..\..\Views\Shared\_ErrorLayout.cshtml"
            Write(RenderBody());
 
             
@@ -411,14 +358,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4268), Tuple.Create("\"", 4336)
+WriteAttribute("src", Tuple.Create(" src=\"", 3706), Tuple.Create("\"", 3774)
             
-            #line 80 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 4274), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+            #line 65 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 3712), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 4274), false)
+, 3712), false)
 );
 
 WriteLiteral(" width=\"125\"");

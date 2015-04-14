@@ -1,19 +1,4 @@
-﻿@using SFA.Apprenticeships.Domain.Interfaces.Configuration
-@using SFA.Apprenticeships.Infrastructure.Common.IoC
-@using SFA.Apprenticeships.Infrastructure.Logging.IoC
-@using SFA.Apprenticeships.Web.Common.Configuration
-@using StructureMap
-@{
-    var container = new Container(x =>
-    {
-        x.AddRegistry<LoggingRegistry>();
-        x.AddRegistry<CommonRegistry>();
-    });
-    var configurationService = container.GetInstance<IConfigurationService>();
-    var webConfiguration = configurationService.Get<WebConfiguration>();
-    var feedbackUrl = webConfiguration.FeedbackUrl;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
 <!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
 <!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
@@ -55,7 +40,7 @@
     <div class="content-container">
         <div class="phase-notice gov-border">
             <div class="prototype-warning">
-                <strong class="beta__label">Beta</strong> <span>This is a new service – your <a href="@feedbackUrl" target="_blank">feedback</a> will help to improve it.</span>
+                <strong class="beta__label">Beta</strong> <span>This is a new service – your <a href="https://www.surveymonkey.com/s/MFNR7NZ" target="_blank">feedback</a> will help to improve it.</span>
             </div>
         </div>
         <main role="main" id="main">

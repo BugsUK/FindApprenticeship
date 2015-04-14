@@ -9,6 +9,7 @@
     using Common.Attributes;
     using Common.Constants;
     using Constants;
+    using Domain.Interfaces.Configuration;
     using Extensions;
     using FluentValidation.Mvc;
     using Mediators;
@@ -22,7 +23,10 @@
         private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;
         private readonly ILogService _logService;
 
-        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator, ILogService logService)
+        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator, 
+            ILogService logService,
+            IConfigurationService configurationService)
+            : base(configurationService)
         {
             _apprenticeshipApplicationMediator = apprenticeshipApplicationMediator;
             _logService = logService;

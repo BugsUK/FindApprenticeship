@@ -5,10 +5,10 @@
     using System.Web;
     using System.Web.Mvc;
     using Attributes;
-    using Common.Constants;
     using Common.Framework;
     using Constants;
     using Constants.Pages;
+    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Home;
@@ -18,7 +18,9 @@
     {
         private readonly IHomeMediator _homeMediator;
 
-        public HomeController(IHomeMediator homeMediator)
+        public HomeController(IHomeMediator homeMediator, 
+            IConfigurationService configurationService) 
+            : base(configurationService)
         {
             _homeMediator = homeMediator;
         }

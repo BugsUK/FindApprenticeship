@@ -1,13 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Configuration;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
+    using Common.Configuration;
     using Common.Constants;
     using Common.Controllers;
     using Constants;
+    using Domain.Interfaces.Configuration;
     using Infrastructure.Logging;
     using NLog;
     using Providers;
@@ -16,6 +17,13 @@
     AllowReturnUrl(Allow = true), ClearSearchReturnUrl, PlannedOutageMessage, UserJourneyContext(UserJourney.None, Order = 1)]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
+        public readonly IConfigurationService ConfigurationService;
+
+        protected CandidateControllerBase(IConfigurationService configurationService)
+        {
+            ConfigurationService = configurationService;
+        }
+
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             UserContext = null;
@@ -66,14 +74,13 @@
 
         private void SetAbout()
         {
-            var showAbout = bool.Parse(ConfigurationManager.AppSettings["ShowAbout"]);
+            var webConfiguration = ConfigurationService.Get<WebConfiguration>();
+            ViewBag.ShowAbout = webConfiguration.ShowAbout;
 
-            ViewBag.ShowAbout = showAbout;
-
-            if (!showAbout) return;
+            if (!webConfiguration.ShowAbout) return;
 
             ViewBag.Version = VersionLogging.GetVersion();
-            ViewBag.Environment = ConfigurationManager.AppSettings["Environment"];
+            ViewBag.Environment = webConfiguration.Environment;
         }
 
         private void SetLoggingIds()

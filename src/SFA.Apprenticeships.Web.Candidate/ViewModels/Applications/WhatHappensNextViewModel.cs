@@ -22,8 +22,6 @@
 
         public ApplicationStatuses Status { get; set; }
 
-        public string FeedbackUrl { get; set; }
-
         public bool SentEmail { get; set; }
 
         public string ProviderContactInfo { get; set; }

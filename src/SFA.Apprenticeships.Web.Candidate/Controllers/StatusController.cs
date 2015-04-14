@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Domain.Interfaces.Configuration;
     using Providers;
 
     public class StatusController : CandidateControllerBase
@@ -13,7 +14,9 @@
 
         public StatusController(ISearchProvider searchProvider,
             IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
-            ICandidateServiceProvider candidateServiceProvider)
+            ICandidateServiceProvider candidateServiceProvider,
+            IConfigurationService configurationService)
+            : base(configurationService)
         {
             _searchProvider = searchProvider;
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;

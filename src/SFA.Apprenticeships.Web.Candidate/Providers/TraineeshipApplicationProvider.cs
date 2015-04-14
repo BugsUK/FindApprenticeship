@@ -2,12 +2,10 @@
 {
     using System;
     using Application.Interfaces.Logging;
-    using Common.Configuration;
     using Domain.Entities.Vacancies;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
     using ViewModels.Applications;
@@ -17,7 +15,6 @@
     public class TraineeshipApplicationProvider : ITraineeshipApplicationProvider
     {
         private readonly ILogService _logger;
-        private readonly IConfigurationService _configurationService;
         private readonly ICandidateService _candidateService;
         private readonly IMapper _mapper;
         private readonly ITraineeshipVacancyProvider _traineeshipVacancyProvider;
@@ -25,14 +22,12 @@
         public TraineeshipApplicationProvider(IMapper mapper,
             ICandidateService candidateService,
             ITraineeshipVacancyProvider traineeshipVacancyProvider, 
-            ILogService logger,
-            IConfigurationService configurationService)
+            ILogService logger)
         {
             _mapper = mapper;
             _candidateService = candidateService;
             _traineeshipVacancyProvider = traineeshipVacancyProvider;
             _logger = logger;
-            _configurationService = configurationService;
         }
 
         public TraineeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -145,7 +140,6 @@
                 }
 
                 var candidate = _candidateService.GetCandidate(candidateId);
-                var webConfiguration = _configurationService.Get<WebConfiguration>();
 
                 return new WhatHappensNextViewModel
                 {
@@ -153,7 +147,6 @@
                     VacancyTitle = vacancyDetailViewModel.Title,
                     SentEmail = candidate.CommunicationPreferences.AllowEmail,
                     ProviderContactInfo = vacancyDetailViewModel.Contact,
-                    FeedbackUrl = webConfiguration.FeedbackUrl
                 };
             }
             catch (Exception e)

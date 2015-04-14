@@ -202,10 +202,10 @@ WriteLiteral(">Training provider</h3>\r\n    <p>");
             #line hidden
 WriteLiteral("</p>\r\n    <p>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1610), Tuple.Create("\"", 1635)
+WriteAttribute("href", Tuple.Create(" href=\"", 1610), Tuple.Create("\"", 1637)
             
             #line 43 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1617), Tuple.Create<System.Object, System.Int32>(Model.FeedbackUrl
+, Tuple.Create(Tuple.Create("", 1617), Tuple.Create<System.Object, System.Int32>(ViewBag.FeedbackUrl
             
             #line default
             #line hidden
@@ -218,14 +218,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">What did you think of the service?</a>\r\n    </p>\r\n    <p>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1737), Tuple.Create("\"", 1816)
+WriteAttribute("href", Tuple.Create(" href=\"", 1739), Tuple.Create("\"", 1820)
             
             #line 46 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1744), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignOut, new { returnUrl = Model.FeedbackUrl })
+, Tuple.Create(Tuple.Create("", 1746), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.SignOut, new { returnUrl = ViewBag.FeedbackUrl })
             
             #line default
             #line hidden
-, 1744), false)
+, 1746), false)
 );
 
 WriteLiteral(">Finished with this service. Sign out and give feedback</a>\r\n    </p>\r\n</div>\r\n<d" +
@@ -239,14 +239,14 @@ WriteLiteral(" role=\"button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1989), Tuple.Create("\'", 2048)
+WriteAttribute("href", Tuple.Create(" href=\'", 1993), Tuple.Create("\'", 2052)
             
             #line 50 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 1996), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+, Tuple.Create(Tuple.Create("", 2000), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 1996), false)
+, 2000), false)
 );
 
 WriteLiteral(">Find a traineeship</a>\r\n</div>\r\n<div");
@@ -275,14 +275,14 @@ WriteLiteral(" class=\"text\"");
 
 WriteLiteral(">\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2198), Tuple.Create("\"", 2229)
+WriteAttribute("href", Tuple.Create(" href=\"", 2202), Tuple.Create("\"", 2233)
             
             #line 56 "..\..\Views\TraineeshipApplication\WhatHappensNext.cshtml"
-, Tuple.Create(Tuple.Create("", 2205), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
+, Tuple.Create(Tuple.Create("", 2209), Tuple.Create<System.Object, System.Int32>(ViewBag.SearchReturnUrl
             
             #line default
             #line hidden
-, 2205), false)
+, 2209), false)
 );
 
 WriteLiteral(" title=\"Return to search results\"");
