@@ -19,20 +19,15 @@
     public class RegisterController : CandidateControllerBase
     {
         private readonly IRegisterMediator _registerMediator;
-        private readonly IConfigurationService _configurationService;
-
-        private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
 
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
-            IAuthenticationTicketService authenticationTicketService,
             IRegisterMediator registerMediator,
-            IConfigurationService configurationService)
+            IConfigurationService configurationService) 
+            : base(configurationService)
         {
-            _authenticationTicketService = authenticationTicketService;
             _candidateServiceProvider = candidateServiceProvider;
             _registerMediator = registerMediator;
-            _configurationService = configurationService;
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
@@ -62,7 +57,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case RegisterMediatorCodes.Register.SuccessfullyRegistered:
-                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, _configurationService.Get<WebConfiguration>().TermsAndConditionsVersion);
+                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, ConfigurationService.Get<WebConfiguration>().TermsAndConditionsVersion);
                         return RedirectToAction("Activation");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);

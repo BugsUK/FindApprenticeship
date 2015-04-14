@@ -9,6 +9,7 @@
     using Common.Constants;
     using Constants;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Interfaces.Configuration;
     using Extensions;
     using FluentValidation.Mvc;
     using Mediators;
@@ -20,7 +21,9 @@
     {
         private readonly IApprenticeshipSearchMediator _apprenticeshipSearchMediator;
 
-        public ApprenticeshipSearchController(IApprenticeshipSearchMediator apprenticeshipSearchMediator)
+        public ApprenticeshipSearchController(IApprenticeshipSearchMediator apprenticeshipSearchMediator,
+            IConfigurationService configurationService)
+            : base(configurationService)
         {
             _apprenticeshipSearchMediator = apprenticeshipSearchMediator;
         }

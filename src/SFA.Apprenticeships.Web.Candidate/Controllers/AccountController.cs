@@ -13,6 +13,7 @@
     using Common.Providers;
     using Constants;
     using Constants.Pages;
+    using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Account;
@@ -23,7 +24,9 @@
         private readonly IAccountMediator _accountMediator;
         private readonly IDismissPlannedOutageMessageCookieProvider _dismissPlannedOutageMessageCookieProvider;
 
-        public AccountController(IAccountMediator accountMediator, IDismissPlannedOutageMessageCookieProvider dismissPlannedOutageMessageCookieProvider)
+        public AccountController(IAccountMediator accountMediator, 
+            IDismissPlannedOutageMessageCookieProvider dismissPlannedOutageMessageCookieProvider,
+            IConfigurationService configurationService) : base(configurationService)
         {
             _accountMediator = accountMediator;
             _dismissPlannedOutageMessageCookieProvider = dismissPlannedOutageMessageCookieProvider;

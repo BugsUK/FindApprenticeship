@@ -18,7 +18,9 @@
 
         public string BlacklistedCategoryCodes { get; set; }
 
-        public string FeedbackUrl { get; set; }
+        public string ApprenticeshipFeedbackUrl { get; set; }
+
+        public string TraineeshipFeedbackUrl { get; set; }
 
         public bool IsWebsiteOffline { get; set; }
 
@@ -29,6 +31,10 @@
         public int UnsuccessfulApplicationsToShowTraineeshipsPrompt { get; set; }
 
         public string PlannedOutageMessage { get; set; }
+
+        public bool ShowAbout { get; set; }
+
+        public string Environment { get; set; }
 
         public Features Features { get ; set; }
     }

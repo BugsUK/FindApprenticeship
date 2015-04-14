@@ -23,8 +23,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Common.Providers;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Address.IoC;
-    using Infrastructure.Caching.Azure.IoC;
-    using Infrastructure.Caching.Memory.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.IoC;

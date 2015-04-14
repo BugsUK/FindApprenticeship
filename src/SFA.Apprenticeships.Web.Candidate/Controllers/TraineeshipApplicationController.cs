@@ -7,6 +7,7 @@
     using Common.Attributes;
     using Common.Constants;
     using Constants;
+    using Domain.Interfaces.Configuration;
     using Mediators;
     using Mediators.Application;
     using ViewModels.Applications;
@@ -16,7 +17,8 @@
     {
         private readonly ITraineeshipApplicationMediator _traineeshipApplicationMediator;
 
-        public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator)
+        public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator,
+            IConfigurationService configurationService) : base(configurationService)
         {
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }

@@ -394,7 +394,6 @@
 
             try
             {
-                var webConfiguration = _configurationService.Get<WebConfiguration>();
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
                 var candidate = _candidateService.GetCandidate(candidateId);
                 RecalculateSavedAndDraftCount(candidateId, null);
@@ -424,8 +423,7 @@
                     VacancyTitle = patchedModel.VacancyDetail.Title,
                     Status = patchedModel.Status,
                     SentEmail = candidate.CommunicationPreferences.AllowEmail,
-                    VacancyStatus = patchedModel.VacancyDetail.VacancyStatus,
-                    FeedbackUrl = webConfiguration.FeedbackUrl
+                    VacancyStatus = patchedModel.VacancyDetail.VacancyStatus
                 };
             }
             catch (Exception e)
