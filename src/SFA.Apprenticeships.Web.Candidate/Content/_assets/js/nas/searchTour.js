@@ -1,26 +1,4 @@
 ﻿$(function () {
-    //if (!$.cookie('seenSearchTour')) {
-
-    //    setTimeout(function () {
-    //        $("#firstSearchTour").joyride({
-    //            'autoStart': true,
-    //            'nextButton': true,
-    //            'tipAnimation': 'pop',
-    //            'postStepCallback': setSearchTourCookie
-    //        });
-    //    }, 1000);
-
-    //    $('html').on('click', '.startNextTourGuide .joyride-next-tip', function () {
-    //        $("#firstSearchTour").joyride('destroy');
-
-    //        $('#runSearchHelp').click();
-    //    });
-
-    //}
-
-    //function setSearchTourCookie() {
-    //    $.cookie('seenSearchTour', true, { expires: 7, path: '/' });
-    //}
 
     $('#keywords-tab-control').on('click', function () {
         if ($('.joyride-content-wrapper').is(':visible')) {

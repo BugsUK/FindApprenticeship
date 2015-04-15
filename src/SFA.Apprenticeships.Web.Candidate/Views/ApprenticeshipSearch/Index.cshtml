@@ -5,11 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
-{
-    //TODO: Start search tour. Cookie is called NAS.Help and has the value ShowSearchTour=False if you shouldn't show the tour
-}
-
 <div class="hgroup">
     <h1 class="heading-xlarge">Find an apprenticeship</h1>
     <p class="subtitle">Search and apply for an apprenticeship in England</p>
@@ -234,5 +229,26 @@
                                                 
     @Scripts.Render("~/bundles/joyride")
     @Scripts.Render("~/bundles/nas/searchTour")
+
+    @if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
+    {
+        <script>
+            setTimeout(function () {
+                $("#firstSearchTour").joyride({
+                    //'postStepCallback' : setSearchTourCookie,
+                    'autoStart': true,
+                    'nextButton': true,
+                    'tipAnimation': 'pop'
+                });
+            }, 1000);
+
+            $('html').on('click', '.startNextTourGuide .joyride-next-tip', function () {
+                $("#firstSearchTour").joyride('destroy');
+
+                $('#runSearchHelp').click();
+            });
+        </script>
+        
+    }
     
 }
