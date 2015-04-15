@@ -35,7 +35,7 @@
                     </h2>
                     <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                 </div>
-                @if (Request.IsAuthenticated)
+                @if (ViewBag.IsCandidateActivated != null && ViewBag.IsCandidateActivated)
                 {
                     var applicationStatus = vacancy.CandidateApplicationStatus.HasValue
                         ? vacancy.CandidateApplicationStatus.ToString()

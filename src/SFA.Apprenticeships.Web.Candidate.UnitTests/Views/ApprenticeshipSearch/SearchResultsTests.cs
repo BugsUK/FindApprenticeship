@@ -1,14 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
-    using System.Collections;
-    using System.Collections.Specialized;
     using System.Linq;
-    using System.Web;
     using Builders;
     using Common.Framework;
     using FluentAssertions;
-    using Moq;
     using NUnit.Framework;
+    using RazorGenerator.Testing;
 
     [TestFixture]
     public class SearchResultsTests
@@ -84,9 +81,10 @@
             }
         }
 
-        [TestCase(true)]
+        [TestCase(null)]
         [TestCase(false)]
-        public void SaveVacancyLinks(bool isAuthenticated)
+        [TestCase(true)]
+        public void ShowHideSaveVacancyLinks(bool? isCandidateActivated)
         {
             // Arrange.
             const int hits = 5;
@@ -99,10 +97,12 @@
                 .WithTotalLocalHits(hits)
                 .Build();
 
-            var httpContext = CreateMockHttpContext(isAuthenticated);
-
             // Act.
-            var result = new SearchResultsViewBuilder().With(viewModel).Render(httpContext);
+            var view = new SearchResultsViewBuilder().With(viewModel).Build();
+
+            view.ViewBag.IsCandidateActivated = isCandidateActivated;
+
+            var result = view.RenderAsHtml(viewModel);
 
             // Assert.
             viewModel.Vacancies.Count().Should().Be(hits);
@@ -117,7 +117,7 @@
 
                     var element = result.GetElementbyId(id);
 
-                    if (isAuthenticated)
+                    if (isCandidateActivated.HasValue && isCandidateActivated.Value)
                     {
                         element.Should().NotBeNull(id);
                     }
@@ -128,37 +128,5 @@
                 }
             }
         }
-
-        #region Helpers
-
-        private static HttpContextBase CreateMockHttpContext(bool isAuthenticated)
-        {
-            // HttpRequestBase.
-            var mockRequest = new Mock<HttpRequestBase>(MockBehavior.Loose);
-
-            mockRequest.Setup(m => m.IsLocal).Returns(false);
-            mockRequest.Setup(m => m.ApplicationPath).Returns("/");
-            mockRequest.Setup(m => m.ServerVariables).Returns(new NameValueCollection());
-            mockRequest.Setup(m => m.RawUrl).Returns(string.Empty);
-            mockRequest.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
-            mockRequest.Setup(m => m.IsAuthenticated).Returns(isAuthenticated);
-
-            // HttpResponseBase.
-            var mockResponse = new Mock<HttpResponseBase>(MockBehavior.Loose);
-
-            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(virtualPath => virtualPath);
-            mockResponse.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
-
-            // HttpContextBase.
-            var mockHttpContext = new Mock<HttpContextBase>(MockBehavior.Loose);
-
-            mockHttpContext.Setup(m => m.Items).Returns(new Hashtable());
-            mockHttpContext.Setup(m => m.Request).Returns(mockRequest.Object);
-            mockHttpContext.Setup(m => m.Response).Returns(mockResponse.Object);
-
-            return mockHttpContext.Object;
-        }
-
-        #endregion
     }
 }

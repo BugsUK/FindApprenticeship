@@ -34,9 +34,9 @@
                     : "Unsaved";
             }
 
-            @if (Request.IsAuthenticated)
+            @if (ViewBag.IsCandidateActivated != null && ViewBag.IsCandidateActivated)
             {
-                <a title="" href="#" class="hidden fake-link page-link save-vacancy-link" data-vacancy-id="@Model.Id" data-application-status="@applicationStatus"><i class="fa"></i><span class="save-vacancy-link-text"></span></a>
+                <a title="" href="#" id="save-vacancy-link" class="hidden fake-link page-link save-vacancy-link" data-vacancy-id="@Model.Id" data-application-status="@applicationStatus"><i class="fa"></i><span class="save-vacancy-link-text"></span></a>
             }
         </div>
     </div>

@@ -47,8 +47,8 @@
             }
 
             SetLoggingIds();
-
             SetAbout();
+            SetCandidate();
 
             base.OnActionExecuting(filterContext);
         }
@@ -94,6 +94,16 @@
 
             MappedDiagnosticsContext.Set("sessionId", sessionId);
             MappedDiagnosticsContext.Set("userId", UserContext != null ? UserContext.CandidateId.ToString() : "<none>");
+        }
+
+        private void SetCandidate()
+        {
+            var user = HttpContext.User;
+
+            if (user != null)
+            {
+                ViewBag.IsCandidateActivated = user.Identity.IsAuthenticated && user.IsInRole(UserRoleNames.Activated);
+            }
         }
 
         protected Guid? GetCandidateId()
