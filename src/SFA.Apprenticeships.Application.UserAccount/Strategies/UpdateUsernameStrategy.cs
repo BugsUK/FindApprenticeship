@@ -44,18 +44,18 @@
 
         public void UpdateUsername(Guid userId, string verfiyCode, string password)
         {
-            if (!_userDirectoryProvider.AuthenticateUser(userId.ToString(), password))
-            {
-                _logService.Debug("UpdateUsername failed to autheticate userId: {0}", userId);
-                throw new CustomException(ErrorCodes.UserPasswordError);
-            }
-
             var user = _userReadRepository.Get(userId);
 
             if (!verfiyCode.Equals(user.PendingUsernameCode, StringComparison.InvariantCultureIgnoreCase))
             {
                 _logService.Debug("UpdateUsername failed to validate PendingUsernameCode: {0} for userId: {1}", verfiyCode, userId);
                 throw new CustomException(ErrorCodes.InvalidUpdateUsernameCode);
+            }
+
+            if (!_userDirectoryProvider.AuthenticateUser(userId.ToString(), password))
+            {
+                _logService.Debug("UpdateUsername failed to autheticate userId: {0}", userId);
+                throw new CustomException(ErrorCodes.UserPasswordError);
             }
 
             var pendingActivationUser = _userReadRepository.Get(user.PendingUsername);
