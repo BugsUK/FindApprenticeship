@@ -204,9 +204,11 @@
     <Compile Include="Providers\DismissPlannedOutageMessageCookieProvider.cs" />
     <Compile Include="Providers\EntityContext.cs" />
     <Compile Include="Providers\EuCookieDirectiveProvider.cs" />
+    <Compile Include="Providers\HelpCookieProvider.cs" />
     <Compile Include="Providers\ICookieDetectionProvider.cs" />
     <Compile Include="Providers\IDismissPlannedOutageMessageCookieProvider.cs" />
     <Compile Include="Providers\IEuCookieDirectiveProvider.cs" />
+    <Compile Include="Providers\IHelpCookieProvider.cs" />
     <Compile Include="Providers\IUserDataProvider.cs" />
     <Compile Include="Providers\UserContext.cs" />
     <Compile Include="Providers\CookieUserDataProvider.cs" />

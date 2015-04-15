@@ -18,7 +18,7 @@
 
             var cookie = new HttpCookie(EuCookieName)
             {
-                Expires = DateTime.UtcNow.AddDays(90)
+                Expires = DateTime.UtcNow.AddMonths(12)
             };
 
             httpContext.Response.Cookies.Add(cookie);

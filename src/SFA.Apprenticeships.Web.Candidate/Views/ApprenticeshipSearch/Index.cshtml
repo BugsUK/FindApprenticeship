@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
+{
+    //TODO: Start search tour. Cookie is called NAS.Help and has the value ShowSearchTour=False if you shouldn't show the tour
+}
+
 <div class="hgroup">
     <h1 class="heading-xlarge">Find an apprenticeship</h1>
     <p class="subtitle">Search and apply for an apprenticeship in England</p>

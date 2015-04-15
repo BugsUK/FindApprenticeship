@@ -457,7 +457,7 @@ WriteLiteral(">\r\n    <h2");
 WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(@">Introductory message cookies</h2>
-    <p>When you first use the service, you may see a pop-up ‘welcome’ message. Once you’ve seen this, we store a cookie on your computer so it knows not to show it to you again.</p>
+    <p>When you first use the service, you may see pop-up ‘welcome’ or ‘help’ messages. Once you’ve seen one of these, we store a cookie on your computer so it knows not to show it to you again.</p>
     <table>
         <colgroup>
             <col");
@@ -505,6 +505,17 @@ WriteLiteral(@" />
             </td>
             <td>
                 Determines whether the user has cookies enabled.
+            </td>
+            <td>
+                12 months
+            </td>
+        </tr>
+        <tr>
+            <td>
+                NAS.Help
+            </td>
+            <td>
+                Saves a message to let us know you've seen our help guides.
             </td>
             <td>
                 12 months
