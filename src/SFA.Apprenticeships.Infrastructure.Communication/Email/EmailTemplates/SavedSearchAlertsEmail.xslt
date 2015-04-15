@@ -72,7 +72,7 @@
         </xsl:element>
         <br/>
         <span style="color: #6F777B;">
-          <xsl:value-of select="employerName"/>
+          <xsl:value-of select="employerName"/><span style="font-size: 12px;"> (Added <xsl:value-of select="postedDate"/>)</span>
         </span>
         <br/>
         <p>
@@ -82,9 +82,6 @@
         <span>
           <xsl:value-of select="distance"/>
         </span> mile(s)
-        <br/>
-        <b>Date posted: </b>
-        <xsl:value-of select="postedDate"/>
         <br/>
         <b>Closing date: </b>
         <xsl:value-of select="closingDate"/>
