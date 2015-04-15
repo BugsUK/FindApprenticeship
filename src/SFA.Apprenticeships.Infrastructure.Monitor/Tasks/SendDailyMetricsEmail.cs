@@ -8,6 +8,7 @@
     using Configuration;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
+    using Provider;
     using Repositories;
 
     public class SendDailyMetricsEmail : IDailyMetricsTask
@@ -27,6 +28,7 @@
         private readonly IContactMessagesMetricsRepository _contactMessagesMetricsRepository;
         private readonly ISavedSearchesMetricsRepository _savedSearchesMetricsRepository;
         private readonly ICandidateMetricsRepository _candidateMetricsRepository;
+        private readonly IVacancyMetricsProvider _vacancyMetricsProvider;
 
         private readonly int _validNumberOfDaysSinceUserActivity;
 
@@ -41,7 +43,8 @@
             ISavedSearchAlertMetricsRepository savedSearchAlertMetricsRepository,
             IContactMessagesMetricsRepository contactMessagesMetricsRepository,
             ISavedSearchesMetricsRepository savedSearchesMetricsRepository,
-            ICandidateMetricsRepository candidateMetricsRepository)
+            ICandidateMetricsRepository candidateMetricsRepository,
+            IVacancyMetricsProvider vacancyMetricsProvider)
         {
             _logger = logger;
             _apprenticeshipMetricsRepository = apprenticeshipMetricsRepository;
@@ -53,6 +56,7 @@
             _contactMessagesMetricsRepository = contactMessagesMetricsRepository;
             _savedSearchesMetricsRepository = savedSearchesMetricsRepository;
             _candidateMetricsRepository = candidateMetricsRepository;
+            _vacancyMetricsProvider = vacancyMetricsProvider;
 
             _monitorConfiguration = configurationManager.Get<MonitorConfiguration>();
             _validNumberOfDaysSinceUserActivity = _monitorConfiguration.ValidNumberOfDaysSinceUserActivity;
@@ -130,12 +134,16 @@
             sb.AppendFormat(" - Total number of candidates with at least one successful application: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Successful));
             sb.AppendFormat(" - Total number of candidates with at least one unsuccessful application: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Unsuccessful));
 
+            sb.AppendFormat(" - Total number of Apprenticeships: {0}\n", _vacancyMetricsProvider.GetApprenticeshipsCount());
+
             // Traineeships.
             sb.Append("Traineeships:\n");
             sb.AppendFormat(" - Total number of applications submitted: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetApplicationCount));
             sb.AppendFormat(" - Total number of candidates with applications: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetApplicationsPerCandidateCount));
             sb.AppendFormat(" - Total number of candidates who would have been shown the traineeship prompt (6+ unsuccessful applications): {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetCandidatesWithApplicationsInStatusCount, ApplicationStatuses.Unsuccessful, 6));
             sb.AppendFormat(" - Total number of candidates who have dismissed the traineeship prompt: {0} ({1}ms)\n", TimedMongoCall(_candidateMetricsRepository.GetDismissedTraineeshipPromptCount));
+
+            sb.AppendFormat(" - Total number of Traineeships: {0}\n", _vacancyMetricsProvider.GetTraineeshipsCount());
 
             // Communications.
             sb.Append("Communications:\n");

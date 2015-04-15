@@ -4,6 +4,7 @@
     using Consumers;
     using Domain.Interfaces.Configuration;
     using Mongo.Common;
+    using Provider;
     using Repositories;
     using StructureMap.Configuration.DSL;
     using Tasks;
@@ -52,6 +53,8 @@
             For<IContactMessagesMetricsRepository>().Use<ContactMessagesMetricsRepository>();
             For<ISavedSearchesMetricsRepository>().Use<SavedSearchesMetricsRepository>();
             For<ICandidateMetricsRepository>().Use<CandidateMetricsRepository>();
+
+            For<IVacancyMetricsProvider>().Use<VacancyMetricsProvider>();
         }
     }
 }
