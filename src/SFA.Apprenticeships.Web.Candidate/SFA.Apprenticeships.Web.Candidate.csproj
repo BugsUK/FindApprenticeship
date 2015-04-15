@@ -252,8 +252,8 @@
   <ItemGroup>
     <Content Include="403.aspx" />
     <Content Include="403.html" />
-    <Content Include="Content\_assets\css\main-1.9.0.1755.css" />
-    <Content Include="Content\_assets\css\main-ie8-1.9.0.1755.css" />
+    <Content Include="Content\_assets\css\main-1.9.0.1778.css" />
+    <Content Include="Content\_assets\css\main-ie8-1.9.0.1778.css" />
     <Content Include="Content\_assets\img\apple-touch-icon-120x120.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-152x152.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-60x60.png" />
