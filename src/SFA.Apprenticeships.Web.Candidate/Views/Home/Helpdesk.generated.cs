@@ -175,12 +175,31 @@ WriteAttribute("href", Tuple.Create(" href=\"", 1420), Tuple.Create("\"", 1471)
 );
 
 WriteLiteral(">forgotten password</a> page. If you\'re still having problems, contact us using t" +
-"his form.</p>\r\n            </div>\r\n\r\n");
+"his form.</p>\r\n            </div>\r\n\r\n            <div");
+
+WriteLiteral(" id=\"changeEmailAddress\"");
+
+WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
+
+WriteLiteral(">\r\n                <p>If you\'d like to change your email, try visiting the <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1768), Tuple.Create("\"", 1819)
+            
+            #line 35 "..\..\Views\Home\Helpdesk.cshtml"
+ , Tuple.Create(Tuple.Create("", 1775), Tuple.Create<System.Object, System.Int32>(Url.Action("UpdateEmailAddress", "Account")
+            
+            #line default
+            #line hidden
+, 1775), false)
+);
+
+WriteLiteral(">update email</a> page. If you\'re still having problems, contact us using this fo" +
+"rm.</p>\r\n            </div>\r\n\r\n");
 
 WriteLiteral("            ");
 
             
-            #line 34 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 38 "..\..\Views\Home\Helpdesk.cshtml"
        Write(Html.FormTextFor(
             m => m.Enquiry,
             containerHtmlAttributes: new { @class = "form-group-compound" },
@@ -192,13 +211,13 @@ WriteLiteral("            ");
 WriteLiteral("\r\n            </div>\r\n");
 
             
-            #line 39 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 43 "..\..\Views\Home\Helpdesk.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 39 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 43 "..\..\Views\Home\Helpdesk.cshtml"
        Write(Html.FormTextAreaFor(m => m.Details,
                 controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
                 hintHtmlAttributes: new { @class = "text" }));
@@ -207,7 +226,7 @@ WriteLiteral("\r\n            </div>\r\n");
             #line default
             #line hidden
             
-            #line 41 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 45 "..\..\Views\Home\Helpdesk.cshtml"
                                                             
 
             
@@ -226,7 +245,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Send</button>\r\n            </div>\r\n");
 
             
-            #line 45 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 49 "..\..\Views\Home\Helpdesk.cshtml"
     }
 
             
