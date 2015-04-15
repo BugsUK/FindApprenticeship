@@ -71,10 +71,12 @@
                 _authenticationRepository.Delete(pendingActivationUser.EntityId);
             }
 
+            _logService.Info("UpdateUsername updating from '{0}' to '{1}'", user.Username, user.PendingUsername);
             user.Username = user.PendingUsername;
             user.PendingUsername = null;
             user.PendingUsernameCode = null;
             _userWriteRepository.Save(user);
+            _logService.Info("UpdateUsername updated to '{0}'", user.Username);
         }
     }
 }
