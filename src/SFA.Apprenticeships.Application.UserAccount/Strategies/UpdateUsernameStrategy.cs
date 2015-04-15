@@ -5,6 +5,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Interfaces.Logging;
     using Interfaces.Users;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
 
@@ -13,18 +14,24 @@
         private readonly IUserDirectoryProvider _userDirectoryProvider;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
+        private readonly IAuthenticationRepository _authenticationRepository;
         private readonly ICodeGenerator _codeGenerator;
+        private readonly ILogService _logService;
 
         public UpdateUsernameStrategy(
             IUserDirectoryProvider userDirectoryProvider,
             IUserReadRepository userReadRepository,
             IUserWriteRepository userWriteRepository,
-            ICodeGenerator codeGenerator)
+            IAuthenticationRepository authenticationRepository,
+            ICodeGenerator codeGenerator,
+            ILogService logService)
         {
             _userDirectoryProvider = userDirectoryProvider;
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
+            _authenticationRepository = authenticationRepository;
             _codeGenerator = codeGenerator;
+            _logService = logService;
         }
 
         public void UpdateUsername(Guid userId, string newUsername)
@@ -39,6 +46,7 @@
         {
             if (!_userDirectoryProvider.AuthenticateUser(userId.ToString(), password))
             {
+                _logService.Debug("UpdateUsername failed to autheticate userId: {0}", userId);
                 throw new CustomException(ErrorCodes.UserPasswordError);
             }
 
@@ -46,20 +54,22 @@
 
             if (!verfiyCode.Equals(user.PendingUsernameCode, StringComparison.InvariantCultureIgnoreCase))
             {
+                _logService.Debug("UpdateUsername failed to validate PendingUsernameCode: {0} for userId: {1}", verfiyCode, userId);
                 throw new CustomException(ErrorCodes.InvalidUpdateUsernameCode);
             }
 
-            //TODO: delete any users with username = user.PendingUsername - they must be PendingActivation
-            //TODO: delete user authentication data for them as well.
-            //var pendingActivationUser = _userReadRepository.Get(user.PendingUsername);
-            //if (pendingActivationUser != null)
-            //{
-            //    if (pendingActivationUser.Status != UserStatuses.PendingActivation)
-            //    {
-            //        throw new CustomException(ErrorCodes.TBC);
-            //    }
-            //    _userWriteRepository.Delete(pendingActivationUser.EntityId);
-            //}
+            var pendingActivationUser = _userReadRepository.Get(user.PendingUsername);
+            if (pendingActivationUser != null)
+            {
+                //Delete any user with username = user.PendingUsername - they must be PendingActivation
+                if (pendingActivationUser.Status != UserStatuses.PendingActivation)
+                {
+                    _logService.Error("UpdateUsername error, existing userId ({0}) to pending username ({1}) failed as username already exists and is not in PendingActivation state", user.PendingUsername);
+                    throw new CustomException(ErrorCodes.UsernameExistsAndNotInPendingActivationState);
+                }
+                _userWriteRepository.Delete(pendingActivationUser.EntityId);
+                _authenticationRepository.Delete(pendingActivationUser.EntityId);
+            }
 
             user.Username = user.PendingUsername;
             user.PendingUsername = null;
