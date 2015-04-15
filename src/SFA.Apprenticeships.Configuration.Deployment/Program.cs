@@ -2,7 +2,6 @@
 {
     using System;
     using System.IO;
-    using Domain.Interfaces.Configuration;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging;
@@ -14,7 +13,7 @@
 
     public class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             try
             {
@@ -28,22 +27,31 @@
 
                 var json = File.ReadAllText(@"Configs\settings.json");
                 var document = BsonSerializer.Deserialize<BsonDocument>(json);
+
                 var dateTimeUpdated = DateTime.Now;
                 var fileVersion = VersionLogging.GetVersion();
+
+                if (fileVersion == "1.0.0.0")
+                {
+                    // Developers use the memory cache, not Azure cache.
+                    document["CacheConfiguration"]["DefaultCache"] = "MemoryCacheService";
+                }
+
                 document.InsertAt(0, new BsonElement("DateTimeUpdated", dateTimeUpdated));
                 document.InsertAt(0, new BsonElement("DeploymentVersion", fileVersion));
 
                 //Ensure there can only be one entry with this version (mostly for local)
-                IMongoQuery query = Query.And(Query.EQ("DeploymentVersion", fileVersion), Query.NE("DateTimeUpdated", dateTimeUpdated));
+                var query = Query.And(Query.EQ("DeploymentVersion", fileVersion), Query.NE("DateTimeUpdated", dateTimeUpdated));
+
                 collection.Insert(document);
                 collection.Remove(query);
-                //Success
+
+                Console.WriteLine("Successfully deployed configuration");
                 Environment.Exit(0);
             }
             catch (Exception ex)
             {
-                //Error
-                Console.Write("Failed to deploy config with exception: {0}", ex.Message);
+                Console.WriteLine("Failed to deploy config with exception: {0}", ex.Message);
                 Environment.Exit(1);
             }
         }
