@@ -1,0 +1,114 @@
+﻿$(function () {
+    //if (!$.cookie('seenSearchTour')) {
+
+    //    setTimeout(function () {
+    //        $("#firstSearchTour").joyride({
+    //            'autoStart': true,
+    //            'nextButton': true,
+    //            'tipAnimation': 'pop',
+    //            'postStepCallback': setSearchTourCookie
+    //        });
+    //    }, 1000);
+
+    //    $('html').on('click', '.startNextTourGuide .joyride-next-tip', function () {
+    //        $("#firstSearchTour").joyride('destroy');
+
+    //        $('#runSearchHelp').click();
+    //    });
+
+    //}
+
+    //function setSearchTourCookie() {
+    //    $.cookie('seenSearchTour', true, { expires: 7, path: '/' });
+    //}
+
+    $('#keywords-tab-control').on('click', function () {
+        if ($('.joyride-content-wrapper').is(':visible')) {
+            $("#browseTour").joyride('destroy');
+            $("#savedSearchTour").joyride('destroy');
+
+            $("#searchTour").joyride({
+                'autoStart': true,
+                'nextButton': true,
+                'tipAnimation': 'pop'
+            });
+        }
+    });
+
+    $('#categories-tab-control').on('click', function () {
+        if ($('.joyride-content-wrapper').is(':visible')) {
+            $("#searchTour").joyride('destroy');
+            $("#savedSearchTour").joyride('destroy');
+
+            $("#browseTour").joyride({
+                'autoStart': true,
+                'nextButton': true,
+                'tipAnimation': 'pop'
+            });
+        }
+    });
+
+    $('#saved-searches-tab-control').on('click', function () {
+        if ($('.joyride-content-wrapper').is(':visible')) {
+            $("#searchTour").joyride('destroy');
+            $("#browseTour").joyride('destroy');
+
+            $("#savedSearchTour").joyride({
+                'autoStart': true,
+                'nextButton': true,
+                'tipAnimation': 'pop'
+            });
+        }
+    });
+
+    $('#runSearchHelp').on('click', function () {
+        var joyrideAttached = false;
+
+        if ($('.joyride-tip-guide').css('visibility') == 'visible') {
+            joyrideAttached = true;
+        }
+
+        if ($('#keywords-tab-control').hasClass('active')) {
+
+            if (joyrideAttached) {
+                $("#browseTour").joyride('destroy');
+                $("#savedSearchTour").joyride('destroy');
+            }
+
+            $("#searchTour").joyride({
+                'autoStart': true,
+                'nextButton': true,
+                'tipAnimation': 'pop'
+            });
+
+        } else if ($('#categories-tab-control').hasClass('active')) {
+
+            if (joyrideAttached) {
+                $("#searchTour").joyride('destroy');
+                $("#savedSearchTour").joyride('destroy');
+            }
+
+            $("#browseTour").joyride({
+                'autoStart': true,
+                'nextButton': true,
+                'tipAnimation': 'pop'
+            });
+
+        } else if ($('#saved-searches-tab-control').hasClass('active')) {
+
+            if (joyrideAttached) {
+                $("#searchTour").joyride('destroy');
+                $("#browseTour").joyride('destroy');
+            }
+
+            $("#savedSearchTour").joyride({
+                'autoStart': true,
+                'nextButton': true,
+                'tipAnimation': 'pop'
+            });
+
+        }
+
+        return false;
+    });
+});

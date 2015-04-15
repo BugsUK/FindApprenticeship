@@ -597,36 +597,290 @@ WriteLiteral(">\r\n                    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(">Contact us</h2>\r\n                    <ul");
+WriteLiteral(">Help</h2>\r\n                    <ul");
 
 WriteLiteral(" class=\"list-text\"");
 
-WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
-"");
+WriteLiteral(">\r\n                        <li");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 7479), Tuple.Create("\'", 7529)
-            
-            #line 111 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 7486), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
-            
-            #line default
-            #line hidden
-, 7486), false)
-);
+WriteLiteral(" class=\"hide-nojs\"");
 
-WriteLiteral(">Send us an email</a></li>\r\n                    </ul>\r\n                    <ul");
+WriteLiteral("><a");
 
-WriteLiteral(" class=\"list-text\"");
+WriteLiteral(" href=\"#\"");
 
-WriteLiteral(">\r\n                        <li>\r\n                            <a");
+WriteLiteral(" id=\"runSearchHelp\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-question-circle\"");
+
+WriteLiteral("></i>How to search effectively</a> (Interactive walkthrough)</li>\r\n              " +
+"          <li>\r\n                            <a");
 
 WriteLiteral(" href=\"https://www.gov.uk/apprenticeships-guide\"");
 
 WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">About apprenticeships</a>\r\n                        </li>\r\n                    </" +
-"ul>\r\n                </div>\r\n            </div>\r\n        </aside>\r\n    </div>\r\n<" +
-"/div>\r\n\r\n");
+"ul>\r\n                    <ul");
+
+WriteLiteral(" class=\"list-text\"");
+
+WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
+"");
+
+WriteAttribute("href", Tuple.Create(" href=\'", 7903), Tuple.Create("\'", 7953)
+            
+            #line 117 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 7910), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+            
+            #line default
+            #line hidden
+, 7910), false)
+);
+
+WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    \r\n          " +
+"      </div>\r\n            </div>\r\n        </aside>\r\n    </div>\r\n</div>\r\n\r\n<ol");
+
+WriteLiteral(" id=\"firstSearchTour\"");
+
+WriteLiteral(" class=\"alwayshidden\"");
+
+WriteLiteral(">\r\n    <li");
+
+WriteLiteral(" class=\"startTourGuide\"");
+
+WriteLiteral(" data-id=\"runSearchHelp\"");
+
+WriteLiteral(" data-button=\"Start tour\"");
+
+WriteLiteral(">\r\n        <h3");
+
+WriteLiteral(" class=\"heading-small med-btm-margin\"");
+
+WriteLiteral(">Start tour</h3>\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you\'d like some help on how to use the search to find apprenticeships that ar" +
+"e suitable for you, start the tour here.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" class=\"startNextTourGuide\"");
+
+WriteLiteral(" data-id=\"keywords-tab-control\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you know the type of apprenticeship you’re looking for use the keyword search" +
+".</p>\r\n    </li>\r\n</ol>\r\n\r\n<ol");
+
+WriteLiteral(" id=\"searchTour\"");
+
+WriteLiteral(" class=\"alwayshidden\"");
+
+WriteLiteral(">\r\n    <li");
+
+WriteLiteral(" data-id=\"keywords-tab-control\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you know the type of apprenticeship you’re looking for use the keyword search" +
+".</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" class=\"browseHelp\"");
+
+WriteLiteral(" data-id=\"categories-tab-control\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you want to see what apprenticeships are available in different industries yo" +
+"u can search by category (eg construction or retail).</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" class=\"savedHelp\"");
+
+WriteLiteral(" data-id=\"saved-searches-tab-control\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you have saved searches you can run them from here. You can save as many diff" +
+"erent searches as you like.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"SearchField\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">Select this option if you\'d like to refine your search by job title, employer or" +
+" reference number.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" class=\"browseHelp\"");
+
+WriteLiteral(" data-id=\"Keywords\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">Type your keyword here, alternatively you can leave it blank to look for any app" +
+"renticeship in your selected area.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"getLocation\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you\'d like to use your device\'s position to get your current post code, click" +
+" here and then click \"Allow\" when prompted.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"Location\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">You can search for apprenticeships in any location in England. This can be near " +
+"your home or where you’d like to work.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"loc-within\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">Choose how far from your location you want to search.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"apprenticeship-level\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">You can also search by level. Intermediate is equivalent to 5 GCSE passes, Advan" +
+"ced is 2 A-level passes and a Higher can lead to a foundation degree.</p>\r\n    <" +
+"/li>\r\n    <li");
+
+WriteLiteral(" data-id=\"reset-search-options-link\"");
+
+WriteLiteral(" data-button=\"Finish\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you want to start with blank fields, you can clear the form with the button.<" +
+"/p>\r\n    </li>\r\n\r\n</ol>\r\n\r\n<ol");
+
+WriteLiteral(" id=\"browseTour\"");
+
+WriteLiteral(" class=\"alwayshidden\"");
+
+WriteLiteral(">\r\n    <li");
+
+WriteLiteral(" class=\"browseHelp\"");
+
+WriteLiteral(" data-id=\"categories-tab-control\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you want to see what apprenticeships are available in different industries yo" +
+"u can search by category (eg construction or retail).</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"categoryLabelTour\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">Select a category from this list, once you browse you\'ll then see a list of sub-" +
+"categories you can select on the results page.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"getLocation\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you\'d like to use your device\'s position to get your current post code, click" +
+" here and then click \"Allow\" when prompted.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"Location\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">You can search for apprenticeships in any location in England. This can be near " +
+"your home or where you’d like to work.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"loc-within\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">Choose how far from your location you want to search.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"apprenticeship-level\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">You can also search by level. Intermediate is equivalent to 5 GCSE passes, Advan" +
+"ced is 2 A-level passes and a Higher can lead to a foundation degree.</p>\r\n    <" +
+"/li>\r\n    <li");
+
+WriteLiteral(" data-id=\"reset-search-options-link\"");
+
+WriteLiteral(" data-button=\"Finish\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you want to start with blank fields, you can clear the form with the button.<" +
+"/p>\r\n    </li>\r\n</ol>\r\n\r\n<ol");
+
+WriteLiteral(" id=\"savedSearchTour\"");
+
+WriteLiteral(" class=\"alwayshidden\"");
+
+WriteLiteral(">\r\n    <li");
+
+WriteLiteral(" class=\"savedHelp\"");
+
+WriteLiteral(" data-id=\"saved-searches-tab-control\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you have saved searches you can run them from here. You can save as many diff" +
+"erent searches as you like.</p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" data-id=\"saved-searches-list\"");
+
+WriteLiteral(" data-button=\"Finish\"");
+
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">Select one of your saved searches and then run your saved search.</p>\r\n    </li>" +
+"\r\n</ol>\r\n\r\n");
 
 DefineSection("scripts", () => {
 
@@ -635,7 +889,7 @@ WriteLiteral("   \r\n");
 WriteLiteral("    ");
 
             
-            #line 126 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 205 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/locationsearch"));
 
             
@@ -644,7 +898,7 @@ Write(Scripts.Render("~/bundles/nas/locationsearch"));
 WriteLiteral("\r\n\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r\n            url: \'");
 
             
-            #line 130 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 209 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
              Write(Url.Action("location", "Location"));
 
             
@@ -653,7 +907,7 @@ WriteLiteral("\r\n\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r
 WriteLiteral("\',\r\n            longitude: \'#");
 
             
-            #line 131 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 210 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                      Write(Html.IdFor(m => m.Longitude));
 
             
@@ -662,7 +916,7 @@ WriteLiteral("\',\r\n            longitude: \'#");
 WriteLiteral("\',\r\n            latitude: \'#");
 
             
-            #line 132 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 211 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                     Write(Html.IdFor(m => m.Latitude));
 
             
@@ -671,7 +925,7 @@ WriteLiteral("\',\r\n            latitude: \'#");
 WriteLiteral("\',\r\n            latlonhash: \'#");
 
             
-            #line 133 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 212 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                       Write(Html.IdFor(m => m.Hash));
 
             
@@ -698,13 +952,35 @@ WriteLiteral(@"'
 WriteLiteral("    ");
 
             
-            #line 149 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 228 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/geoLocater"));
 
             
             #line default
             #line hidden
+WriteLiteral("\r\n                                                \r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 230 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+Write(Scripts.Render("~/bundles/joyride"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 231 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+Write(Scripts.Render("~/bundles/nas/searchTour"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    \r\n");
 
 });
 
