@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Application.Interfaces.Vacancies
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
 
 @model ApprenticeshipSearchResponseViewModel
 
@@ -34,7 +33,7 @@
                             Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker })
                         )
                     </h2>
-                    <p class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
+                    <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                 </div>
                 @if (Request.IsAuthenticated)
                 {
@@ -43,9 +42,9 @@
                         : "Unsaved";
 
                     <div class="top-align ta-right width-all-1-4">
-                        <a href="#" class="hidden fake-link link-unimp save-vacancy-link" data-vacancy-id="@vacancy.Id" data-application-status="@applicationStatus"><i class="fa"></i></a>
-                        @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = vacancy.Id }, new { @class = "hidden resume-link" })
-                        <p class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
+                        <a href="#" id="save-vacancy-link-@vacancy.Id" class="hidden fake-link link-unimp save-vacancy-link" data-vacancy-id="@vacancy.Id" data-application-status="@applicationStatus"><i class="fa"></i></a>
+                        @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = vacancy.Id }, new { @class = "hidden resume-link", @id = "resume-link-" + @vacancy.Id })
+                        <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
                     </div>
                 }
                 <p>@vacancy.Description</p>
@@ -95,8 +94,6 @@
         }
     }
 </ul>
-
-
 
 @{ Html.RenderPartial("_pagination", Model); }
 
