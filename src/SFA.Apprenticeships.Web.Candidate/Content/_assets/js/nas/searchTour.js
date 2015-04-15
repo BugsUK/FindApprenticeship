@@ -64,6 +64,12 @@
     $('#runSearchHelp').on('click', function () {
         var joyrideAttached = false;
 
+        setTimeout(function () {
+            $('html').find('.joyride-close-tip').each(function () {
+                $(this).attr('title', "Close tour")
+            });
+        }, 100);
+
         if ($('.joyride-tip-guide').css('visibility') == 'visible') {
             joyrideAttached = true;
         }
