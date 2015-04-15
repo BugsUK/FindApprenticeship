@@ -65,5 +65,22 @@
             candidate.CommunicationPreferences.SendMarketingCommunications.Should().BeFalse();
             registered.Should().BeTrue();
         }
+
+        [Test]
+        public void Us773_DefaultHelpPreferences()
+        {
+            Candidate candidate = null;
+            var candidateService = new Mock<ICandidateService>();
+            candidateService.Setup(cs => cs.Register(It.IsAny<Candidate>(), It.IsAny<string>())).Callback<Candidate, string>((c, s) => { candidate = c; });
+            var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
+            var viewModel = new RegisterViewModelBuilder().Build();
+
+            var registered = provider.Register(viewModel);
+
+            candidate.Should().NotBeNull();
+            candidate.HelpPreferences.Should().NotBeNull();
+            candidate.HelpPreferences.ShowSearchTour.Should().BeTrue();
+            registered.Should().BeTrue();
+        }
     }
 }

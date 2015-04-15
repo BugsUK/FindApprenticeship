@@ -2,9 +2,12 @@
 {
     using System;
     using System.Web;
+    using Application.Interfaces.Candidates;
 
     public class HelpCookieProvider : IHelpCookieProvider
     {
+        private readonly ICandidateService _candidateService;
+        
         private const string CookieName = "NAS.Help";
 
         private enum CookieKeys
@@ -12,32 +15,45 @@
             ShowSearchTour
         }
 
-        public bool ShowSearchTour(HttpContextBase httpContext)
+        public HelpCookieProvider(ICandidateService candidateService)
         {
-            return Show(httpContext, CookieKeys.ShowSearchTour);
+            _candidateService = candidateService;
         }
 
-        private static bool Show(HttpContextBase httpContext, CookieKeys cookeKey)
+        public bool ShowSearchTour(HttpContextBase httpContext, Guid? candidateId)
         {
-            var httpCookie = httpContext.Request.Cookies.Get(CookieName);
+            var httpCookie = httpContext.Request.Cookies.Get(CookieName) ?? new HttpCookie(CookieName) { Expires = DateTime.UtcNow.AddMonths(12) };
 
-            if (httpCookie == null)
+            var cookieValue = httpCookie[CookieKeys.ShowSearchTour.ToString()];
+
+            if (cookieValue == candidateId.ToString())
             {
-                httpCookie = new HttpCookie(CookieName)
-                {
-                    Expires = DateTime.UtcNow.AddMonths(12)
-                };
+                return false;
             }
-            else
+
+            if (candidateId.HasValue && (string.IsNullOrEmpty(cookieValue) || cookieValue != candidateId.ToString()))
             {
-                var cookieValue = httpCookie.Values[cookeKey.ToString()];
-                if (!string.IsNullOrEmpty(cookieValue) && !bool.Parse(cookieValue))
+                var candidate = _candidateService.GetCandidate(candidateId.Value);
+                var showSearchTour = candidate.HelpPreferences.ShowSearchTour;
+                if (candidate.HelpPreferences.ShowSearchTour)
                 {
-                    return false;
+                    candidate.HelpPreferences.ShowSearchTour = false;
+                    _candidateService.SaveCandidate(candidate);
                 }
+
+                httpCookie[CookieKeys.ShowSearchTour.ToString()] = candidateId.ToString();
+
+                httpContext.Response.Cookies.Add(httpCookie);
+
+                return showSearchTour;
             }
 
-            httpCookie[cookeKey.ToString()] = false.ToString();
+            if (!string.IsNullOrEmpty(cookieValue))
+            {
+                return false;
+            }
+
+            httpCookie[CookieKeys.ShowSearchTour.ToString()] = Guid.Empty.ToString();
 
             httpContext.Response.Cookies.Add(httpCookie);
 

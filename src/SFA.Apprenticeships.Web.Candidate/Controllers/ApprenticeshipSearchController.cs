@@ -46,7 +46,7 @@
                 {
                     case ApprenticeshipSearchMediatorCodes.Index.Ok:
                     {
-                        ViewBag.ShowSearchTour = _helpCookieProvider.ShowSearchTour(HttpContext);
+                        ViewBag.ShowSearchTour = _helpCookieProvider.ShowSearchTour(HttpContext, candidateId);
                         return View(response.ViewModel);
                     }
                 }
