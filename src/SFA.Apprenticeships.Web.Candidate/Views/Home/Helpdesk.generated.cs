@@ -59,47 +59,41 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n    <div");
+WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" class=\"hgroup\"");
 
-WriteLiteral(">\r\n        <h1");
+WriteLiteral(">\r\n    <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Contact us</h1>\r\n    </div>\r\n\r\n");
+WriteLiteral(">Contact us</h1>\r\n</div>\r\n\r\n");
 
             
             #line 12 "..\..\Views\Home\Helpdesk.cshtml"
+ using (Html.BeginForm("HelpDesk", "Home", FormMethod.Post))
+{
     
             
             #line default
             #line hidden
             
-            #line 12 "..\..\Views\Home\Helpdesk.cshtml"
-     using (Html.BeginForm("HelpDesk", "Home", FormMethod.Post))
-    {
-        
-            
-            #line default
-            #line hidden
-            
             #line 14 "..\..\Views\Home\Helpdesk.cshtml"
-   Write(Html.AntiForgeryToken());
+Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
             #line 14 "..\..\Views\Home\Helpdesk.cshtml"
-                                
-        
+                            
+    
             
             #line default
             #line hidden
             
             #line 15 "..\..\Views\Home\Helpdesk.cshtml"
-   Write(Html.FormTextFor(
+Write(Html.FormTextFor(
             m => m.Name,
             containerHtmlAttributes: new { @class = "form-group-compound" },
             controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" }));
@@ -111,13 +105,13 @@ WriteLiteral(">Contact us</h1>\r\n    </div>\r\n\r\n");
             #line 18 "..\..\Views\Home\Helpdesk.cshtml"
                                                                                                 
 
-        
+    
             
             #line default
             #line hidden
             
             #line 20 "..\..\Views\Home\Helpdesk.cshtml"
-   Write(Html.FormTextFor(
+Write(Html.FormTextFor(
             m => m.Email,
             containerHtmlAttributes: new { @class = "form-group-compound" },
                 controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
@@ -134,11 +128,11 @@ WriteLiteral(">Contact us</h1>\r\n    </div>\r\n\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                <label");
+WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"contact-subject\"");
 
@@ -146,61 +140,84 @@ WriteLiteral(" class=\"form-label\"");
 
 WriteLiteral(">Briefly describe your question</label>\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("        ");
 
             
             #line 28 "..\..\Views\Home\Helpdesk.cshtml"
-           Write(Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class="hide-nojs small-btm-margin select-inject" }));
+   Write(Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs small-btm-margin select-inject" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n            <div");
-
-WriteLiteral(" id=\"cantSignIn\"");
-
-WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
-
-WriteLiteral(">\r\n                <p>If you\'re having trouble signing in to your account, try vi" +
-"siting the <a");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 1420), Tuple.Create("\"", 1471)
-            
-            #line 31 "..\..\Views\Home\Helpdesk.cshtml"
-                  , Tuple.Create(Tuple.Create("", 1427), Tuple.Create<System.Object, System.Int32>(Url.Action("ForgottenPassword", "Register")
-            
-            #line default
-            #line hidden
-, 1427), false)
-);
-
-WriteLiteral(">forgotten password</a> page. If you\'re still having problems, contact us using t" +
-"his form.</p>\r\n            </div>\r\n\r\n            <div");
+WriteLiteral("\r\n\r\n        <div");
 
 WriteLiteral(" id=\"changeEmailAddress\"");
 
 WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
 
-WriteLiteral(">\r\n                <p>If you\'d like to change your email, try visiting the <a");
+WriteLiteral(">\r\n            <p>If you\'d like to change your email, try visiting the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1768), Tuple.Create("\"", 1819)
+WriteAttribute("href", Tuple.Create(" href=\"", 1353), Tuple.Create("\"", 1404)
             
-            #line 35 "..\..\Views\Home\Helpdesk.cshtml"
- , Tuple.Create(Tuple.Create("", 1775), Tuple.Create<System.Object, System.Int32>(Url.Action("UpdateEmailAddress", "Account")
+            #line 31 "..\..\Views\Home\Helpdesk.cshtml"
+, Tuple.Create(Tuple.Create("", 1360), Tuple.Create<System.Object, System.Int32>(Url.Action("UpdateEmailAddress", "Account")
             
             #line default
             #line hidden
-, 1775), false)
+, 1360), false)
 );
 
 WriteLiteral(">update email</a> page. If you\'re still having problems, contact us using this fo" +
-"rm.</p>\r\n            </div>\r\n\r\n");
+"rm.</p>\r\n        </div>\r\n\r\n        <div");
 
-WriteLiteral("            ");
+WriteLiteral(" id=\"cantSignIn\"");
+
+WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
+
+WriteLiteral(">\r\n            <p>If you\'re having trouble signing in to your account, try visiti" +
+"ng the <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1692), Tuple.Create("\"", 1743)
+            
+            #line 35 "..\..\Views\Home\Helpdesk.cshtml"
+              , Tuple.Create(Tuple.Create("", 1699), Tuple.Create<System.Object, System.Int32>(Url.Action("ForgottenPassword", "Register")
+            
+            #line default
+            #line hidden
+, 1699), false)
+);
+
+WriteLiteral(">forgotten password</a> page. If you\'re still having problems, contact us using t" +
+"his form.</p>\r\n        </div>\r\n\r\n        <div");
+
+WriteLiteral(" id=\"cantActivate\"");
+
+WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
+
+WriteLiteral(">\r\n            <p>To activate your account, <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1995), Tuple.Create("\"", 2031)
+            
+            #line 39 "..\..\Views\Home\Helpdesk.cshtml"
+, Tuple.Create(Tuple.Create("", 2002), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Login")
+            
+            #line default
+            #line hidden
+, 2002), false)
+);
+
+WriteLiteral(@">sign in</a> with the email address and password you used to create your account.</p>
+            <p>If you haven't received your activation code, you can re-send it from the activation page (make sure you've checked your junk folder in your email).</p>
+            <p>If you're still having problems, contact us using this form.</p>
+        </div>
+
+");
+
+WriteLiteral("        ");
 
             
-            #line 38 "..\..\Views\Home\Helpdesk.cshtml"
-       Write(Html.FormTextFor(
+            #line 44 "..\..\Views\Home\Helpdesk.cshtml"
+   Write(Html.FormTextFor(
             m => m.Enquiry,
             containerHtmlAttributes: new { @class = "form-group-compound" },
           controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty));
@@ -208,17 +225,17 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n");
+WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 43 "..\..\Views\Home\Helpdesk.cshtml"
-            
+            #line 49 "..\..\Views\Home\Helpdesk.cshtml"
+    
             
             #line default
             #line hidden
             
-            #line 43 "..\..\Views\Home\Helpdesk.cshtml"
-       Write(Html.FormTextAreaFor(m => m.Details,
+            #line 49 "..\..\Views\Home\Helpdesk.cshtml"
+Write(Html.FormTextAreaFor(m => m.Details,
                 controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
                 hintHtmlAttributes: new { @class = "text" }));
 
@@ -226,63 +243,63 @@ WriteLiteral("\r\n            </div>\r\n");
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Home\Helpdesk.cshtml"
+            #line 51 "..\..\Views\Home\Helpdesk.cshtml"
                                                             
 
             
             #line default
             #line hidden
-WriteLiteral("            <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                <button");
+WriteLiteral(">\r\n        <button");
 
 WriteLiteral(" id=\"send-contact-form-button\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Send</button>\r\n            </div>\r\n");
+WriteLiteral(">Send</button>\r\n    </div>\r\n");
 
             
-            #line 49 "..\..\Views\Home\Helpdesk.cshtml"
-    }
+            #line 55 "..\..\Views\Home\Helpdesk.cshtml"
+}
 
             
             #line default
             #line hidden
-WriteLiteral("    <section");
+WriteLiteral("<section");
 
 WriteLiteral(" class=\"text\"");
 
-WriteLiteral(">\r\n        <h2");
+WriteLiteral(">\r\n    <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
 WriteLiteral(@">Apprenticeship helpline</h2>
-        <p>
-            Contact the helpline if you’d prefer to speak to somebody, or if
-            you're having difficulty with the contact form.
-        </p>
-        <p>
-            Phone:
-            <br>0800 015 0400
-            <br>02476 826482
-        </p>
-        <p>
-            Email: <a");
+    <p>
+        Contact the helpline if you’d prefer to speak to somebody, or if
+        you're having difficulty with the contact form.
+    </p>
+    <p>
+        Phone:
+        <br>0800 015 0400
+        <br>02476 826482
+    </p>
+    <p>
+        Email: <a");
 
 WriteLiteral(" href=\"mailto:nationalhelpdesk@findapprenticeship.service.gov.uk\"");
 
-WriteLiteral(">nationalhelpdesk@findapprenticeship.service.gov.uk</a>\r\n        </p>\r\n        <p" +
-">\r\n            Contact <a");
+WriteLiteral(">nationalhelpdesk@findapprenticeship.service.gov.uk</a>\r\n    </p>\r\n    <p>\r\n     " +
+"   Contact <a");
 
 WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx\"");
 
-WriteLiteral("\r\n                       rel=\"external\"");
+WriteLiteral("\r\n                   rel=\"external\"");
 
-WriteLiteral(">National Careers Service</a> (NCS) if you have a\r\n            question about whe" +
-"ther an apprenticeship is right for you.\r\n        </p>\r\n    </section>\r\n");
+WriteLiteral(">National Careers Service</a> (NCS) if you have a\r\n        question about whether" +
+" an apprenticeship is right for you.\r\n    </p>\r\n</section>\r\n");
 
         }
     }

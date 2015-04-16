@@ -5,65 +5,71 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    <div class="hgroup">
-        <h1 class="heading-xlarge">Contact us</h1>
-    </div>
+<div class="hgroup">
+    <h1 class="heading-xlarge">Contact us</h1>
+</div>
 
-    @using (Html.BeginForm("HelpDesk", "Home", FormMethod.Post))
-    {
-        @Html.AntiForgeryToken()
-        @Html.FormTextFor(
+@using (Html.BeginForm("HelpDesk", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.FormTextFor(
             m => m.Name,
             containerHtmlAttributes: new { @class = "form-group-compound" },
             controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" })
 
-        @Html.FormTextFor(
+    @Html.FormTextFor(
             m => m.Email,
             containerHtmlAttributes: new { @class = "form-group-compound" },
                 controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
             hintHtmlAttributes: new { @class = "text" })
 
-        <div class="form-group">
-                <label for="contact-subject" class="form-label">Briefly describe your question</label>
-                @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class="hide-nojs small-btm-margin select-inject" })
+    <div class="form-group">
+        <label for="contact-subject" class="form-label">Briefly describe your question</label>
+        @Html.DropDownListFor(m => m.SelectedEnquiry, Model.Enquiries, new { @id = "contact-subject", @class = "hide-nojs small-btm-margin select-inject" })
 
-            <div id="cantSignIn" class="selfServe panel-indent toggle-content hide-nojs text">
-                <p>If you're having trouble signing in to your account, try visiting the <a href="@Url.Action("ForgottenPassword", "Register")">forgotten password</a> page. If you're still having problems, contact us using this form.</p>
-            </div>
+        <div id="changeEmailAddress" class="selfServe panel-indent toggle-content hide-nojs text">
+            <p>If you'd like to change your email, try visiting the <a href="@Url.Action("UpdateEmailAddress", "Account")">update email</a> page. If you're still having problems, contact us using this form.</p>
+        </div>
 
-            <div id="changeEmailAddress" class="selfServe panel-indent toggle-content hide-nojs text">
-                <p>If you'd like to change your email, try visiting the <a href="@Url.Action("UpdateEmailAddress", "Account")">update email</a> page. If you're still having problems, contact us using this form.</p>
-            </div>
+        <div id="cantSignIn" class="selfServe panel-indent toggle-content hide-nojs text">
+            <p>If you're having trouble signing in to your account, try visiting the <a href="@Url.Action("ForgottenPassword", "Register")">forgotten password</a> page. If you're still having problems, contact us using this form.</p>
+        </div>
 
-            @Html.FormTextFor(
+        <div id="cantActivate" class="selfServe panel-indent toggle-content hide-nojs text">
+            <p>To activate your account, <a href="@Url.Action("Index", "Login")">sign in</a> with the email address and password you used to create your account.</p>
+            <p>If you haven't received your activation code, you can re-send it from the activation page (make sure you've checked your junk folder in your email).</p>
+            <p>If you're still having problems, contact us using this form.</p>
+        </div>
+
+        @Html.FormTextFor(
             m => m.Enquiry,
             containerHtmlAttributes: new { @class = "form-group-compound" },
           controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty)
-            </div>
-            @Html.FormTextAreaFor(m => m.Details,
+    </div>
+    @Html.FormTextAreaFor(m => m.Details,
                 controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
                 hintHtmlAttributes: new { @class = "text" })
-            <div class="form-group">
-                <button id="send-contact-form-button" class="button">Send</button>
-            </div>
-    }
-    <section class="text">
-        <h2 class="heading-medium">Apprenticeship helpline</h2>
-        <p>
-            Contact the helpline if you’d prefer to speak to somebody, or if
-            you're having difficulty with the contact form.
-        </p>
-        <p>
-            Phone:
-            <br>0800 015 0400
-            <br>02476 826482
-        </p>
-        <p>
-            Email: <a href="mailto:nationalhelpdesk@findapprenticeship.service.gov.uk">nationalhelpdesk@findapprenticeship.service.gov.uk</a>
-        </p>
-        <p>
-            Contact <a href="https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx"
-                       rel="external">National Careers Service</a> (NCS) if you have a
-            question about whether an apprenticeship is right for you.
-        </p>
-    </section>
+    <div class="form-group">
+        <button id="send-contact-form-button" class="button">Send</button>
+    </div>
+}
+<section class="text">
+    <h2 class="heading-medium">Apprenticeship helpline</h2>
+    <p>
+        Contact the helpline if you’d prefer to speak to somebody, or if
+        you're having difficulty with the contact form.
+    </p>
+    <p>
+        Phone:
+        <br>0800 015 0400
+        <br>02476 826482
+    </p>
+    <p>
+        Email: <a href="mailto:nationalhelpdesk@findapprenticeship.service.gov.uk">nationalhelpdesk@findapprenticeship.service.gov.uk</a>
+    </p>
+    <p>
+        Contact <a href="https://nationalcareersservice.direct.gov.uk/Pages/Home.aspx"
+                   rel="external">National Careers Service</a> (NCS) if you have a
+        question about whether an apprenticeship is right for you.
+    </p>
+</section>

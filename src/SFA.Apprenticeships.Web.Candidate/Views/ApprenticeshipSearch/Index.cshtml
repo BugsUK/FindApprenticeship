@@ -60,7 +60,7 @@
                     @Html.Partial("_savedSearches", Model)
                     
                     @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden input-withlink__select all-select" })
-                    @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { autofocus = "autofocus", aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element tab1" + keywordTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
+                    @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element tab1" + keywordTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
 
                     <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
                     
@@ -235,7 +235,6 @@
         <script>
             setTimeout(function () {
                 $("#firstSearchTour").joyride({
-                    //'postStepCallback' : setSearchTourCookie,
                     'autoStart': true,
                     'nextButton': true,
                     'tipAnimation': 'pop'
