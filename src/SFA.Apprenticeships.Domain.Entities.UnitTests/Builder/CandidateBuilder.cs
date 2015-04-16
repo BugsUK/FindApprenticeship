@@ -15,16 +15,17 @@
         private bool _allowMobile;
         private bool _verifiedMobile;
         private bool _allowTraineeshipPrompts;
-
         private bool _sendApplicationStatusChanges;
         private bool _sendApprenticeshipApplicationsExpiring;
         private bool _sendSavedSearchAlertsViaEmail;
         private bool _sendSavedSearchAlertsViaText;
         private bool _sendMarketingComms;
+        private HelpPreferences _helpPreferences;
 
         public CandidateBuilder(Guid candidateId)
         {
             _candidateId = candidateId;
+            _helpPreferences = new HelpPreferences();
         }
 
         public CandidateBuilder FirstName(string firstName)
@@ -124,6 +125,12 @@
             return this;
         }
 
+        public CandidateBuilder With(HelpPreferences helpPreferences)
+        {
+            _helpPreferences = helpPreferences;
+            return this;
+        }
+
         public Candidate Build()
         {
             var candidate = new Candidate
@@ -148,7 +155,8 @@
                     SendSavedSearchAlertsViaEmail = _sendSavedSearchAlertsViaEmail,
                     SendSavedSearchAlertsViaText = _sendSavedSearchAlertsViaText,
                     SendMarketingCommunications = _sendMarketingComms
-                }
+                },
+                HelpPreferences = _helpPreferences
             };
 
             return candidate;

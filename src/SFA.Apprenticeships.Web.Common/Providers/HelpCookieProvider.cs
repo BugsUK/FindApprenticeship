@@ -8,9 +8,9 @@
     {
         private readonly ICandidateService _candidateService;
         
-        private const string CookieName = "NAS.Help";
+        public const string CookieName = "NAS.Help";
 
-        private enum CookieKeys
+        public enum CookieKeys
         {
             ShowSearchTour
         }
@@ -34,7 +34,7 @@
             if (candidateId.HasValue && (string.IsNullOrEmpty(cookieValue) || cookieValue != candidateId.ToString()))
             {
                 var candidate = _candidateService.GetCandidate(candidateId.Value);
-                var showSearchTour = candidate.HelpPreferences.ShowSearchTour;
+                var showSearchTour = cookieValue != Guid.Empty.ToString() && candidate.HelpPreferences.ShowSearchTour;
                 if (candidate.HelpPreferences.ShowSearchTour)
                 {
                     candidate.HelpPreferences.ShowSearchTour = false;
