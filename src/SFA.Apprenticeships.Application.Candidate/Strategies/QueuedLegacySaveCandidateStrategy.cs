@@ -18,8 +18,11 @@
         {
             var savedCandidate = _saveCandidateStrategy.SaveCandidate(candidate);
 
-            var request = new SaveCandidateRequest { CandidateId = savedCandidate.EntityId };
-            _messageBus.PublishMessage(request);
+            if (savedCandidate.LegacyCandidateId > 0)
+            {
+                var request = new SaveCandidateRequest {CandidateId = savedCandidate.EntityId};
+                _messageBus.PublishMessage(request);
+            }
 
             return savedCandidate;
         }

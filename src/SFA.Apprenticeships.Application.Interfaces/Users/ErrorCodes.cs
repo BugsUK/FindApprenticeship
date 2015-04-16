@@ -18,5 +18,6 @@
         public const string UnknownMobileCodeResendError = "User.UnknownMobileCodeResendError";
         public const string InvalidUpdateUsernameCode = "User.InvalidUpdateUsernameCode";
         public const string UserPasswordError = "User.UserPasswordError";
+        public const string UsernameExistsAndNotInPendingActivationState = "User.UsernameExistsAndNotInPendingActivationState";
     }
 }

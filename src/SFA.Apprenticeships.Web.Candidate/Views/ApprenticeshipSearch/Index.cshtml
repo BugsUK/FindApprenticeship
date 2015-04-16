@@ -60,7 +60,7 @@
                     @Html.Partial("_savedSearches", Model)
                     
                     @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden input-withlink__select all-select" })
-                    @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { autofocus = "autofocus", aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element tab1" + keywordTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
+                    @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element tab1" + keywordTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
 
                     <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
                     
@@ -105,21 +105,100 @@
         <aside class="grid grid-1-3">
             <div class="inner-block">
                 <div class="gov-border">
-                    <h2 class="heading-medium">Contact us</h2>
+                    <h2 class="heading-medium">Help</h2>
                     <ul class="list-text">
-                        <li>0800 015 0400</li>
-                        <li><a href='@Url.RouteUrl(CandidateRouteNames.Helpdesk)'>Send us an email</a></li>
-                    </ul>
-                    <ul class="list-text">
+                        <li class="hide-nojs"><a href="#" id="runSearchHelp"><i class="fa fa-question-circle"></i>How to search effectively</a> (Interactive walkthrough)</li>
                         <li>
                             <a href="https://www.gov.uk/apprenticeships-guide" target="_blank">About apprenticeships</a>
                         </li>
                     </ul>
+                    <ul class="list-text">
+                        <li>0800 015 0400</li>
+                        <li><a href='@Url.RouteUrl(CandidateRouteNames.Helpdesk)'>Contact us</a></li>
+                    </ul>
+                    
                 </div>
             </div>
         </aside>
     </div>
 </div>
+
+<ol id="firstSearchTour" class="alwayshidden">
+    <li class="startTourGuide" data-id="runSearchHelp" data-button="Start tour">
+        <h3 class="heading-small med-btm-margin">Start tour</h3>
+        <p aria-live="polite">If you'd like some help on how to use the search to find apprenticeships that are suitable for you, start the tour here.</p>
+    </li>
+    <li class="startNextTourGuide" data-id="keywords-tab-control">
+        <p aria-live="polite">If you know the type of apprenticeship you’re looking for use the keyword search.</p>
+    </li>
+</ol>
+
+<ol id="searchTour" class="alwayshidden">
+    <li data-id="keywords-tab-control">
+        <p aria-live="polite">If you know the type of apprenticeship you’re looking for use the keyword search.</p>
+    </li>
+    <li class="browseHelp" data-id="categories-tab-control">
+        <p aria-live="polite">If you want to see what apprenticeships are available in different industries you can search by category (eg construction or retail).</p>
+    </li>
+    <li class="savedHelp" data-id="saved-searches-tab-control">
+        <p aria-live="polite">If you have saved searches you can run them from here. You can save as many different searches as you like.</p>
+    </li>
+    <li data-id="SearchField">
+        <p aria-live="polite">Select this option if you'd like to refine your search by job title, employer or reference number.</p>
+    </li>
+    <li class="browseHelp" data-id="Keywords">
+        <p aria-live="polite">Type your keyword here, alternatively you can leave it blank to look for any apprenticeship in your selected area.</p>
+    </li>
+    <li data-id="getLocation">
+        <p aria-live="polite">If you'd like to use your device's position to get your current post code, click here and then click "Allow" when prompted.</p>
+    </li>
+    <li data-id="Location">
+        <p aria-live="polite">You can search for apprenticeships in any location in England. This can be near your home or where you’d like to work.</p>
+    </li>
+    <li data-id="loc-within">
+        <p aria-live="polite">Choose how far from your location you want to search.</p>
+    </li>
+    <li data-id="apprenticeship-level">
+        <p aria-live="polite">You can also search by level. Intermediate is equivalent to 5 GCSE passes, Advanced is 2 A-level passes and a Higher can lead to a foundation degree.</p>
+    </li>
+    <li data-id="reset-search-options-link" data-button="Finish">
+        <p aria-live="polite">If you want to start with blank fields, you can clear the form with the button.</p>
+    </li>
+
+</ol>
+
+<ol id="browseTour" class="alwayshidden">
+    <li class="browseHelp" data-id="categories-tab-control">
+        <p aria-live="polite">If you want to see what apprenticeships are available in different industries you can search by category (eg construction or retail).</p>
+    </li>
+    <li data-id="categoryLabelTour">
+        <p aria-live="polite">Select a category from this list, once you browse you'll then see a list of sub-categories you can select on the results page.</p>
+    </li>
+    <li data-id="getLocation">
+        <p aria-live="polite">If you'd like to use your device's position to get your current post code, click here and then click "Allow" when prompted.</p>
+    </li>
+    <li data-id="Location">
+        <p aria-live="polite">You can search for apprenticeships in any location in England. This can be near your home or where you’d like to work.</p>
+    </li>
+    <li data-id="loc-within">
+        <p aria-live="polite">Choose how far from your location you want to search.</p>
+    </li>
+    <li data-id="apprenticeship-level">
+        <p aria-live="polite">You can also search by level. Intermediate is equivalent to 5 GCSE passes, Advanced is 2 A-level passes and a Higher can lead to a foundation degree.</p>
+    </li>
+    <li data-id="reset-search-options-link" data-button="Finish">
+        <p aria-live="polite">If you want to start with blank fields, you can clear the form with the button.</p>
+    </li>
+</ol>
+
+<ol id="savedSearchTour" class="alwayshidden">
+    <li class="savedHelp" data-id="saved-searches-tab-control">
+        <p aria-live="polite">If you have saved searches you can run them from here. You can save as many different searches as you like.</p>
+    </li>
+    <li data-id="saved-searches-list" data-button="Finish">
+        <p aria-live="polite">Select one of your saved searches and then run your saved search.</p>
+    </li>
+</ol>
 
 @section scripts
 {   
@@ -147,4 +226,28 @@
     </script>
 
     @Scripts.Render("~/bundles/nas/geoLocater")
+                                                
+    @Scripts.Render("~/bundles/joyride")
+    @Scripts.Render("~/bundles/nas/searchTour")
+
+    @if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
+    {
+        <script>
+            setTimeout(function () {
+                $("#firstSearchTour").joyride({
+                    'autoStart': true,
+                    'nextButton': true,
+                    'tipAnimation': 'pop'
+                });
+            }, 1000);
+
+            $('html').on('click', '.startNextTourGuide .joyride-next-tip', function () {
+                $("#firstSearchTour").joyride('destroy');
+
+                $('#runSearchHelp').click();
+            });
+        </script>
+        
+    }
+    
 }

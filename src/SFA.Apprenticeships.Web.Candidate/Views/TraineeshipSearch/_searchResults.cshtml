@@ -28,7 +28,7 @@
             <li class="search-results__item section-border">
                 <div class="hgroup-medium">
                     <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
-                    <p class="subtitle">@vacancy.EmployerName</p>
+                    <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                 </div>
                 <p>@vacancy.Description</p>
                 <div class="grid-wrapper">
@@ -49,11 +49,6 @@
                             </li>
                             <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
                             <li><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
-                            
-                            @if (Model.VacancySearch.SortType == VacancySearchSortType.RecentlyAdded)
-                            {
-                                <li><b>Date posted:</b> <span id="posted-date-@vacancy.Id" data-date="@vacancy.PostedDate.ToString("u")">@vacancy.PostedDate.ToFriendlyDaysAgo()</span></li>
-                            }
                         </ul>
                     </div>
                     <div class="hide-tablet">

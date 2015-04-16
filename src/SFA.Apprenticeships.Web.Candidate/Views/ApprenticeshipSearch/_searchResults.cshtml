@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Application.Interfaces.Vacancies
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
 
 @model ApprenticeshipSearchResponseViewModel
 
@@ -34,18 +33,18 @@
                             Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker })
                         )
                     </h2>
-                    <p class="subtitle">@vacancy.EmployerName</p>
+                    <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                 </div>
-                @if (Request.IsAuthenticated)
+                @if (ViewBag.IsCandidateActivated != null && ViewBag.IsCandidateActivated)
                 {
                     var applicationStatus = vacancy.CandidateApplicationStatus.HasValue
                         ? vacancy.CandidateApplicationStatus.ToString()
                         : "Unsaved";
 
                     <div class="top-align ta-right width-all-1-4">
-                        <a href="#" class="hidden fake-link link-unimp save-vacancy-link" data-vacancy-id="@vacancy.Id" data-application-status="@applicationStatus"><i class="fa"></i></a>
-                        @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = vacancy.Id }, new { @class = "hidden resume-link" })
-                        <p class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
+                        <a href="#" id="save-vacancy-link-@vacancy.Id" class="hidden fake-link link-unimp save-vacancy-link" data-vacancy-id="@vacancy.Id" data-application-status="@applicationStatus"><i class="fa"></i></a>
+                        @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = vacancy.Id }, new { @class = "hidden resume-link", @id = "resume-link-" + @vacancy.Id })
+                        <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
                     </div>
                 }
                 <p>@vacancy.Description</p>
@@ -69,26 +68,17 @@
                                     </div>
                                 </li>
                             }
-
                             <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
-
                             <li><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
-                            
-                            @if (Model.VacancySearch.SortType == VacancySearchSortType.RecentlyAdded)
-                            {
-                                <li><b>Date posted:</b> <span id="posted-date-@vacancy.Id" data-date="@vacancy.PostedDate.ToString("u")">@vacancy.PostedDate.ToFriendlyDaysAgo()</span></li>
-                            }
 
                             @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
                             {
                                 <li>This apprenticeship has multiple positions nationwide.</li>
                             }
-
                         </ul>
                     </div>
                     @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                     {
-
                         <div class="hide-tablet">
                             <span style="margin-left: 0;" class="summary-style fake-link mob-map-trigger map-closed">Show/hide map</span>
                         </div>
@@ -100,12 +90,10 @@
                 </div>
 
             </li>
-                    itemPosition++;
+            itemPosition++;
         }
     }
 </ul>
-
-
 
 @{ Html.RenderPartial("_pagination", Model); }
 

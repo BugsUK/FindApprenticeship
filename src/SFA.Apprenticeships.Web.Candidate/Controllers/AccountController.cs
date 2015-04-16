@@ -278,6 +278,9 @@
                     SetUserMessage(response.Message.Text);
                     FormsAuthentication.SignOut();
                     return RedirectToRoute(RouteNames.SignIn);
+                case AccountMediatorCodes.VerifyUpdatedEmailAddress.ValidationError:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    break;
                 case AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError:
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     break;

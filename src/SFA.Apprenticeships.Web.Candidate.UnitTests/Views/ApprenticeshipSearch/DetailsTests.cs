@@ -56,7 +56,7 @@
         public void ShouldNotSeeAnyInfoIfModelHasError()
         {
             var details = new Details();
-           
+
             var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
             {
                 VacancyAddress = new AddressViewModel(),
@@ -81,7 +81,7 @@
             };
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
-            
+
             view.GetElementbyId("vacancy-distance").InnerText.Should().Be(SomeString + " miles");
         }
 
@@ -226,7 +226,7 @@
 
             var view = details.RenderAsHtml(vacancyDetailViewModel);
 
-            view.GetElementbyId("vacancy-employer-website").Attributes["href"].Value.Should().Be(SomeString, 
+            view.GetElementbyId("vacancy-employer-website").Attributes["href"].Value.Should().Be(SomeString,
                 string.Format("The employer website url should be shown and should be {0}", SomeString));
         }
 
@@ -337,7 +337,7 @@
             view.GetElementbyId("vacancy-nas-provider")
                 .Should()
                 .NotBeNull("The nas provider message should be shown.");
-            
+
             view.GetElementbyId("vacancy-framework")
                 .Should()
                 .BeNull("The vacancy framework should not be shown if the vacancy has nas provider");
@@ -689,7 +689,7 @@
 
             var httpContext = CreateMockContext(true);
 
-            var view = details.RenderAsHtml( httpContext, vacancyDetailViewModel);
+            var view = details.RenderAsHtml(httpContext, vacancyDetailViewModel);
 
             view.GetElementbyId("before-apply")
                 .Should()
@@ -726,6 +726,36 @@
             element.InnerText.Should().Be(friendlyPostedDate);
         }
 
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ShowHideSaveVacancyLink(bool? isCandidateActivated)
+        {
+            // Arrange.
+            var details = new Details();
+
+            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
+            {
+                VacancyAddress = new AddressViewModel(),
+            };
+
+            details.ViewBag.IsCandidateActivated = isCandidateActivated;
+
+            // Act.
+            var view = details.RenderAsHtml(vacancyDetailViewModel);
+
+            // Assert.
+            var element = view.GetElementbyId("save-vacancy-link");
+
+            if (isCandidateActivated.HasValue && isCandidateActivated.Value)
+            {
+                element.Should().NotBeNull();
+            }
+            else
+            {
+                element.Should().BeNull();
+            }
+        }
         private static HttpContextBase CreateMockContext(bool isAuthenticated = false)
         {
             // Use Moq for faking context objects as it can setup all members

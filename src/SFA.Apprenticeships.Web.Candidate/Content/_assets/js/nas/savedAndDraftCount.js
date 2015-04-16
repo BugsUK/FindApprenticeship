@@ -14,7 +14,7 @@ function UpdateSavedAndDraftCount(savedAndDraftCount) {
 
 function IncrementSavedAndDraftCount() {
     var savedSearchTitle = $("#savedapplications-link");
-    var currentCount = parseInt(savedSearchTitle.attr("saved-count")) + 1;
+    var currentCount = parseInt(savedSearchTitle.attr("saved-count") || 0) + 1;
     savedSearchTitle.text(currentCount + " Saved");
     savedSearchTitle.attr("saved-count", currentCount);
 
@@ -25,7 +25,7 @@ function IncrementSavedAndDraftCount() {
 
 function DecrementSavedAndDraftCount() {
     var savedSearchTitle = $("#savedapplications-link");
-    var currentCount = parseInt(savedSearchTitle.attr("saved-count")) - 1;
+    var currentCount = Math.max(0, parseInt(savedSearchTitle.attr("saved-count") || 0) - 1);
 
     if (currentCount == 0) {
         savedSearchTitle.text("");

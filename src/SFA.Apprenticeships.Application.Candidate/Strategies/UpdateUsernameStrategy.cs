@@ -8,14 +8,17 @@
     {
         private readonly IUserAccountService _userAccountService;
         private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly ICandidateWriteRepository _candidateWriteRepository;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
 
         public UpdateUsernameStrategy(IUserAccountService userAccountService,
             ICandidateReadRepository candidateReadRepository,
+            ICandidateWriteRepository candidateWriteRepository,
             ISaveCandidateStrategy saveCandidateStrategy)
         {
             _userAccountService = userAccountService;
             _candidateReadRepository = candidateReadRepository;
+            _candidateWriteRepository = candidateWriteRepository;
             _saveCandidateStrategy = saveCandidateStrategy;
         }
 
@@ -26,7 +29,13 @@
 
             _userAccountService.UpdateUsername(userId, verfiyCode, password);
 
-            //TODO: delete any candidates for the user.PendingUsername - they must have been PendingActivation
+            //Updating user succeeded, therefore any candidates with the pending username must have been pending activation and can be deleted.
+            var pendingCandidate = _candidateReadRepository.Get(user.PendingUsername, false);
+            if (pendingCandidate != null)
+            {
+                _candidateWriteRepository.Delete(pendingCandidate.EntityId);
+            }
+
             candidate.RegistrationDetails.EmailAddress = user.Username;
             _saveCandidateStrategy.SaveCandidate(candidate);
         }

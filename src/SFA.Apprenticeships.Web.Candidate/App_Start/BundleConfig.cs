@@ -21,10 +21,13 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/underscore", "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js").Include(
                 "~/Content/_assets/js/vendor/underscore-1.7.0.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/joyride", "//cdnjs.cloudflare.com/ajax/libs/joyride/2.1.0/jquery.joyride.js").Include(
+                "~/Content/_assets/js/vendor/jquery.joyride.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/nascript").Include(
                   "~/Content/_assets/js/scripts.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/vendor").Include(              
+            bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
                 "~/Content/_assets/js/vendor/jquery.validate.js",
                 "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.custom.js"));
 
@@ -59,6 +62,9 @@ namespace SFA.Apprenticeships.Web.Candidate
 
             bundles.Add(new ScriptBundle("~/bundles/nas/geoLocater").Include(
                 "~/Content/_assets/js/nas/geoLocater.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/nas/searchTour").Include(
+                "~/Content/_assets/js/nas/searchTour.js"));
         }
     }
 }

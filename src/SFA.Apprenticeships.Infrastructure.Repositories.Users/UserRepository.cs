@@ -53,7 +53,11 @@
 
         public void Delete(Guid id)
         {
-            throw new NotSupportedException();
+            _logger.Debug("Calling repository to delete MongoUser with Id={0}", id);
+
+            Collection.Remove(Query<MongoUser>.EQ(o => o.Id, id));
+
+            _logger.Debug("Deleted MongoUser with Id={0}", id);
         }
 
         public User Save(User entity)

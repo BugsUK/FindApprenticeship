@@ -7,6 +7,7 @@
     using ActionResults;
     using Attributes;
     using Common.Constants;
+    using Common.Providers;
     using Constants;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
@@ -20,12 +21,14 @@
     public class ApprenticeshipSearchController : CandidateControllerBase
     {
         private readonly IApprenticeshipSearchMediator _apprenticeshipSearchMediator;
+        private readonly IHelpCookieProvider _helpCookieProvider;
 
-        public ApprenticeshipSearchController(IApprenticeshipSearchMediator apprenticeshipSearchMediator,
+        public ApprenticeshipSearchController(IApprenticeshipSearchMediator apprenticeshipSearchMediator, IHelpCookieProvider helpCookieProvider,
             IConfigurationService configurationService)
             : base(configurationService)
         {
             _apprenticeshipSearchMediator = apprenticeshipSearchMediator;
+            _helpCookieProvider = helpCookieProvider;
         }
 
         [HttpGet]
@@ -42,7 +45,10 @@
                 switch (response.Code)
                 {
                     case ApprenticeshipSearchMediatorCodes.Index.Ok:
+                    {
+                        ViewBag.ShowSearchTour = _helpCookieProvider.ShowSearchTour(HttpContext, candidateId);
                         return View(response.ViewModel);
+                    }
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

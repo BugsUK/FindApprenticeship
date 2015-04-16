@@ -91,6 +91,7 @@
     <Compile Include="Applications\ApplicationStatuses.cs" />
     <Compile Include="Candidates\CandidateHelper.cs" />
     <Compile Include="Candidates\CommunicationPreferences.cs" />
+    <Compile Include="Candidates\HelpPreferences.cs" />
     <Compile Include="Candidates\SavedSearch.cs" />
     <Compile Include="Candidates\SavedSearchHelper.cs" />
     <Compile Include="Communication\SavedSearchAlert.cs" />

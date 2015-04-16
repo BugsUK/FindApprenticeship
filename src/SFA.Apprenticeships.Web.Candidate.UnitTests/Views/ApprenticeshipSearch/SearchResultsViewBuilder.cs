@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
+    using System.Web;
     using System.Web.Routing;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
@@ -28,10 +29,10 @@
             return view;
         }
 
-        public HtmlDocument Render()
+        public HtmlDocument Render(HttpContextBase httpContext = null)
         {
             var view = Build();
-            var result = view.RenderAsHtml(_viewModel);
+            var result = view.RenderAsHtml(httpContext, _viewModel);
             return result;
         }
     }

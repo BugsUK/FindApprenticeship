@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
     using System.Linq;
-    using Application.Interfaces.Vacancies;
     using Builders;
     using Common.Framework;
     using FluentAssertions;
     using NUnit.Framework;
+    using RazorGenerator.Testing;
 
     [TestFixture]
     public class SearchResultsTests
@@ -48,18 +48,13 @@
             }
         }
 
-
-        [TestCase(VacancySearchSortType.Relevancy, false)]
-        [TestCase(VacancySearchSortType.Distance, false)]
-        [TestCase(VacancySearchSortType.ClosingDate, false)]
-        [TestCase(VacancySearchSortType.RecentlyAdded, true)]
-        public void PostedDate(VacancySearchSortType sortType, bool shouldShowPostedDate)
+        [Test]
+        public void PostedDate()
         {
             // Arrange.
             const int hits = 5;
 
             var vacancySearchViewModel = new ApprenticeshipSearchViewModelBuilder()
-                .WithSortType(sortType)
                 .Build();
 
             var viewModel = new ApprenticeshipSearchResponseViewModelBuilder()
@@ -79,16 +74,57 @@
 
                 var element = result.GetElementbyId(id);
 
-                if (shouldShowPostedDate)
-                {
-                    var friendlyPostedDate = vacancy.PostedDate.ToFriendlyDaysAgo();
+                var friendlyPostedDate = vacancy.PostedDate.ToFriendlyDaysAgo();
 
-                    element.Should().NotBeNull();
-                    element.InnerText.Should().Be(friendlyPostedDate);
-                }
-                else
+                element.Should().NotBeNull();
+                element.InnerText.Should().Contain(friendlyPostedDate);
+            }
+        }
+
+        [TestCase(null)]
+        [TestCase(false)]
+        [TestCase(true)]
+        public void ShowHideSaveVacancyLinks(bool? isCandidateActivated)
+        {
+            // Arrange.
+            const int hits = 5;
+
+            var vacancySearchViewModel = new ApprenticeshipSearchViewModelBuilder()
+                .Build();
+
+            var viewModel = new ApprenticeshipSearchResponseViewModelBuilder()
+                .WithVacancySearch(vacancySearchViewModel)
+                .WithTotalLocalHits(hits)
+                .Build();
+
+            // Act.
+            var view = new SearchResultsViewBuilder().With(viewModel).Build();
+
+            view.ViewBag.IsCandidateActivated = isCandidateActivated;
+
+            var result = view.RenderAsHtml(viewModel);
+
+            // Assert.
+            viewModel.Vacancies.Count().Should().Be(hits);
+
+            foreach (var vacancy in viewModel.Vacancies)
+            {
+                var idFormats = new[] { "save-vacancy-link-{0}", "resume-link-{0}", "applied-label-{0}" };
+
+                foreach (var idFormat in idFormats)
                 {
-                    element.Should().BeNull();
+                    var id = string.Format(idFormat, vacancy.Id);
+
+                    var element = result.GetElementbyId(id);
+
+                    if (isCandidateActivated.HasValue && isCandidateActivated.Value)
+                    {
+                        element.Should().NotBeNull(id);
+                    }
+                    else
+                    {
+                        element.Should().BeNull(id);
+                    }
                 }
             }
         }

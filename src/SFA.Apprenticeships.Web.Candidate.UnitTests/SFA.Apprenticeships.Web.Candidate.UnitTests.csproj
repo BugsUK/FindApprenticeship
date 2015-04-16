@@ -216,6 +216,7 @@
     <Compile Include="Mediators\ApprenticeshipApplication\PreviewAndSubmitTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\PreviewTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ResumeTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipApplication\SaveVacancyTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\SaveTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\SubmitTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\TestsBase.cs" />

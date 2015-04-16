@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.TraineeshipSearch
 {
     using System.Linq;
-    using Application.Interfaces.Vacancies;
     using Builders;
     using Common.Framework;
     using FluentAssertions;
@@ -10,17 +9,13 @@
     [TestFixture]
     public class SearchResultsTests
     {
-        [TestCase(VacancySearchSortType.Relevancy, false)]
-        [TestCase(VacancySearchSortType.Distance, false)]
-        [TestCase(VacancySearchSortType.ClosingDate, false)]
-        [TestCase(VacancySearchSortType.RecentlyAdded, true)]
-        public void PostedDate(VacancySearchSortType sortType, bool shouldShowPostedDate)
+        [Test]
+        public void PostedDate()
         {
             // Arrange.
             const int hits = 5;
 
             var vacancySearchViewModel = new TraineeshipSearchViewModelBuilder()
-                .WithSortType(sortType)
                 .Build();
 
             var viewModel = new TraineeshipSearchResponseViewModelBuilder()
@@ -40,17 +35,10 @@
 
                 var element = result.GetElementbyId(id);
 
-                if (shouldShowPostedDate)
-                {
-                    var friendlyPostedDate = vacancy.PostedDate.ToFriendlyDaysAgo();
+                var friendlyPostedDate = vacancy.PostedDate.ToFriendlyDaysAgo();
 
-                    element.Should().NotBeNull();
-                    element.InnerText.Should().Be(friendlyPostedDate);
-                }
-                else
-                {
-                    element.Should().BeNull();
-                }
+                element.Should().NotBeNull();
+                element.InnerText.Should().Contain(friendlyPostedDate);
             }
         }
     }

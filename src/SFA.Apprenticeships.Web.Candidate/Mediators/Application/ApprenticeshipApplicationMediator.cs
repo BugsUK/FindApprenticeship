@@ -352,9 +352,10 @@
         public MediatorResponse<SavedVacancyViewModel> SaveVacancy(Guid candidateId, int vacancyId)
         {
             var viewModel = _apprenticeshipApplicationProvider.SaveVacancy(candidateId, vacancyId);
+            int savedVacancyCount;
 
-            var savedVacancyCount = int.Parse(UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount)) + 1;
-            UserDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedVacancyCount.ToString(CultureInfo.InvariantCulture));
+            int.TryParse(UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount), out savedVacancyCount);
+            UserDataProvider.Push(UserDataItemNames.SavedAndDraftCount, (savedVacancyCount + 1).ToString(CultureInfo.InvariantCulture));
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SaveVacancy.Ok, viewModel);
         }
@@ -362,9 +363,10 @@
         public MediatorResponse<SavedVacancyViewModel> DeleteSavedVacancy(Guid candidateId, int vacancyId)
         {
             var viewModel = _apprenticeshipApplicationProvider.DeleteSavedVacancy(candidateId, vacancyId);
+            int savedVacancyCount;
 
-            var savedVacancyCount = int.Parse(UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount)) - 1;
-            UserDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedVacancyCount.ToString(CultureInfo.InvariantCulture));
+            int.TryParse(UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount), out savedVacancyCount);
+            UserDataProvider.Push(UserDataItemNames.SavedAndDraftCount, Math.Max(0, savedVacancyCount - 1).ToString(CultureInfo.InvariantCulture));
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.DeleteSavedVacancy.Ok, viewModel);
         }

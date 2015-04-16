@@ -10,6 +10,8 @@
     using Mongo.Common;
     using Domain.Entities.Exceptions;
     using Mongo.Common.Configuration;
+    using MongoDB.Driver;
+    using MongoDB.Driver.Builders;
     using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class AuthenticationRepository : GenericMongoClient<MongoUserCredentials>, IAuthenticationRepository
@@ -66,7 +68,11 @@
 
         public void Delete(Guid id)
         {
-            throw new NotSupportedException();
+            _logger.Debug("Calling repository to delete MongoUserCredentials with Id={0}", id);
+
+            Collection.Remove(Query<MongoUserCredentials>.EQ(o => o.Id, id));
+
+            _logger.Debug("Deleted MongoUserCredentials with Id={0}", id);
         }
 
         public UserCredentials Save(UserCredentials entity)
