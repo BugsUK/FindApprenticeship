@@ -366,7 +366,7 @@
             int savedVacancyCount;
 
             int.TryParse(UserDataProvider.Get(UserDataItemNames.SavedAndDraftCount), out savedVacancyCount);
-            UserDataProvider.Push(UserDataItemNames.SavedAndDraftCount, (Math.Max(0, savedVacancyCount - 1)).ToString(CultureInfo.InvariantCulture));
+            UserDataProvider.Push(UserDataItemNames.SavedAndDraftCount, Math.Max(0, savedVacancyCount - 1).ToString(CultureInfo.InvariantCulture));
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.DeleteSavedVacancy.Ok, viewModel);
         }
