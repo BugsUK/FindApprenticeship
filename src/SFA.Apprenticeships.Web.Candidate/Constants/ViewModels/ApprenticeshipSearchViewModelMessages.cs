@@ -29,7 +29,7 @@
 
         public static class SavedSearchMessages
         {
-            public const string RequiredErrorText = "TODO: Please select a saved search";
+            public const string RequiredErrorText = "Please select a saved search";
         }
     }
 }

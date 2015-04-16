@@ -69,7 +69,8 @@
                     case ApprenticeshipApplicationMediatorCodes.Apply.OfflineVacancy:
                         return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
                     case ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound:
-                        return new ApprenticeshipNotFoundResult();
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.Apply.HasError:
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.Apply.IncorrectState:

@@ -58,7 +58,7 @@
                 throw new CustomException(ErrorCodes.UserPasswordError);
             }
 
-            var pendingActivationUser = _userReadRepository.Get(user.PendingUsername);
+            var pendingActivationUser = _userReadRepository.Get(user.PendingUsername, false);
             if (pendingActivationUser != null)
             {
                 //Delete any user with username = user.PendingUsername - they must be PendingActivation

@@ -70,6 +70,32 @@
             }
         }
 
+        public object RouteValues
+        {
+            get
+            {
+                return new
+                {
+                    ApprenticeshipLevel,
+                    Category,
+                    SubCategories = SubCategories == null || SubCategories.Length == 0 ? null : SubCategories,
+                    Hash,
+                    Keywords,
+                    Latitude,
+                    Longitude,
+                    Location,
+                    LocationType,
+                    PageNumber,
+                    ResultsPerPage,
+                    SearchAction,
+                    SearchField,
+                    SearchMode,
+                    SortType,
+                    WithinDistance
+                };
+            }
+        }
+
         public IList<Category> Categories { get; set; }
 
         public string Category { get; set; }

@@ -1519,14 +1519,14 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 314 "..\..\Views\Account\Index.cshtml"
-                                       Write(Html.RouteLink("Apply", CandidateRouteNames.ApprenticeshipDetails, new { id = application.VacancyId }, new { @class = "resume-link" }));
+                                       Write(Html.RouteLink("Apply", CandidateRouteNames.ApprenticeshipApply, new { id = application.VacancyId }, new { @class = "resume-link" }));
 
             
             #line default
             #line hidden
             
             #line 314 "..\..\Views\Account\Index.cshtml"
-                                                                                                                                                                                   
+                                                                                                                                                                                 
                                         }
                                         else
                                         {
@@ -1573,14 +1573,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 20024), Tuple.Create("\"", 20099)
+WriteAttribute("href", Tuple.Create(" href=\"", 20022), Tuple.Create("\"", 20097)
             
             #line 330 "..\..\Views\Account\Index.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 20031), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
+                                    , Tuple.Create(Tuple.Create("", 20029), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 20031), false)
+, 20029), false)
 );
 
 WriteLiteral("><i");
