@@ -29,7 +29,7 @@
 
             var response = mediator.Apply(Guid.NewGuid(), InvalidVacancyId.ToString());
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning, false);
         }
 
         [TestCase(null)]
@@ -80,7 +80,7 @@
 
             var response = mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString());
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Apply.VacancyNotFound, MyApplicationsPageMessages.ApprenticeshipNoLongerAvailable, UserMessageLevel.Warning, false);
         }
 
         [Test]
