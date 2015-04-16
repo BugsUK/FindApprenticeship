@@ -254,7 +254,7 @@ WriteLiteral(" data-vacancy-id=\"");
 
             
             #line 45 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                                                                                               Write(vacancy.Id);
+                                                                                                                                         Write(vacancy.Id);
 
             
             #line default
@@ -265,7 +265,7 @@ WriteLiteral(" data-application-status=\"");
 
             
             #line 45 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                                                                                                                                     Write(applicationStatus);
+                                                                                                                                                                               Write(applicationStatus);
 
             
             #line default
@@ -330,14 +330,14 @@ WriteLiteral(" class=\"grid-wrapper\"");
 
 WriteLiteral(">\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3368), Tuple.Create("\"", 3471)
+WriteAttribute("class", Tuple.Create(" class=\"", 3555), Tuple.Create("\"", 3658)
             
             #line 52 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 3376), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : ""
+, Tuple.Create(Tuple.Create("", 3563), Tuple.Create<System.Object, System.Int32>(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : ""
             
             #line default
             #line hidden
-, 3376), false)
+, 3563), false)
 );
 
 WriteLiteral(">\r\n                        <ul");
@@ -456,10 +456,6 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteAttribute("id", Tuple.Create(" id=\"", 5268), Tuple.Create("\"", 5296)
-, Tuple.Create(Tuple.Create("", 5273), Tuple.Create("posted-date-", 5273), true)
-, Tuple.Create(Tuple.Create("", 5285), Tuple.Create<System.Object, System.Int32>(vacancy.Id
-, 5285), false)
 WriteLiteral("</span></li>\r\n\r\n");
 
             
@@ -521,24 +517,24 @@ WriteLiteral(" class=\"grid grid-1-3 map-container hide-nojs small-btm-margin to
 
 WriteLiteral(">\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6240), Tuple.Create("\"", 6350)
-, Tuple.Create(Tuple.Create("", 6247), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 6247), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 6034), Tuple.Create("\"", 6144)
+, Tuple.Create(Tuple.Create("", 6041), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 6041), true)
             
             #line 86 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-     , Tuple.Create(Tuple.Create("", 6295), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+     , Tuple.Create(Tuple.Create("", 6089), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 6295), false)
-, Tuple.Create(Tuple.Create("", 6321), Tuple.Create(",", 6321), true)
+, 6089), false)
+, Tuple.Create(Tuple.Create("", 6115), Tuple.Create(",", 6115), true)
             
             #line 86 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
-                                , Tuple.Create(Tuple.Create("", 6322), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                , Tuple.Create(Tuple.Create("", 6116), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 6322), false)
-, Tuple.Create(Tuple.Create("", 6349), Tuple.Create("\'", 6349), true)
+, 6116), false)
+, Tuple.Create(Tuple.Create("", 6143), Tuple.Create("\'", 6143), true)
 );
 
 WriteLiteral(" target=\"_blank\"");
