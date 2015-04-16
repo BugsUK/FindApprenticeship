@@ -323,6 +323,11 @@
                         model.UpdateStatus = UpdateEmailStatus.UserPasswordError;
                         model.ViewModelMessage = UpdateEmailStatus.UserPasswordError.ToString();
                         break;
+                    default:
+                        _logger.Error("Unexpected custom error from candidateService.UpdateUsername", ex);
+                        model.UpdateStatus = UpdateEmailStatus.Error;
+                        model.ViewModelMessage = UpdateEmailStatus.Error.ToString();
+                        break;
                 }
             }
             catch (Exception ex)
