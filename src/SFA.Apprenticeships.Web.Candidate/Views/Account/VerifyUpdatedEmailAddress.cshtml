@@ -10,7 +10,7 @@
     </div>
     <div class="grid grid-1-2">
         <p>
-            <a href="#" class="page-link">Find an apprenticeship</a>
+            @Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "page-link" })
         </p>
     </div>
 </div>

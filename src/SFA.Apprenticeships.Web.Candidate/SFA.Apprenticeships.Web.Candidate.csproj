@@ -655,8 +655,14 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>WorkExperienceViewModel.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Account\UpdateEmailAddress.cshtml" />
-    <Content Include="Views\Account\VerifyUpdatedEmailAddress.cshtml" />
+    <Content Include="Views\Account\UpdateEmailAddress.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>UpdateEmailAddress.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Account\VerifyUpdatedEmailAddress.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VerifyUpdatedEmailAddress.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -950,10 +956,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Terms.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Account\UpdateEmailAddress.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UpdateEmailAddress.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Account\VerifyMobile.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VerifyMobile.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Account\VerifyUpdatedEmailAddress.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VerifyUpdatedEmailAddress.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApprenticeshipApplication\Apply.generated.cs">
       <AutoGen>True</AutoGen>
