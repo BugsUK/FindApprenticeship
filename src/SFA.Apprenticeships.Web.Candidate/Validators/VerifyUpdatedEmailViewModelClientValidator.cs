@@ -32,7 +32,7 @@
                 .Matches(VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.WhiteListRegularExpression)
                 .WithMessage(VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.WhiteListErrorText);
 
-            validator.RuleFor(x => x.Password)
+            validator.RuleFor(x => x.VerifyPassword)
                 .Length(8, 127)
                 .WithMessage(VertifyUpdatedEmailViewModelMessages.PasswordMessages.LengthErrorText)
                 .NotEmpty()
