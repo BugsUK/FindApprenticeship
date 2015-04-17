@@ -331,7 +331,7 @@ WriteLiteral("                    ");
 
             
             #line 49 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-               Write(Html.RouteLink("Create new search", CandidateRouteNames.ApprenticeshipSearch, new { Model.SearchMode }, new { @id = "create-new-search-link" }));
+               Write(Html.RouteLink("Start again", CandidateRouteNames.ApprenticeshipSearch, new { Model.SearchMode }, new { @id = "start-again-link" }));
 
             
             #line default
@@ -400,14 +400,14 @@ WriteLiteral(" name=\"LocationType\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3808), Tuple.Create("\"", 3835)
+WriteAttribute("value", Tuple.Create(" value=\"", 3796), Tuple.Create("\"", 3823)
             
             #line 60 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-  , Tuple.Create(Tuple.Create("", 3816), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+  , Tuple.Create(Tuple.Create("", 3804), Tuple.Create<System.Object, System.Int32>(Model.LocationType
             
             #line default
             #line hidden
-, 3816), false)
+, 3804), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n</section>");
