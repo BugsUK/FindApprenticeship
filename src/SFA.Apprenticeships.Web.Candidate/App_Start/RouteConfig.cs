@@ -14,6 +14,8 @@
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Content" });
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Scripts" });
 
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: RouteNames.SignOut,
                 url: "signout",

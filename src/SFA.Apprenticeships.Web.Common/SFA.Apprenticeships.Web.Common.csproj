@@ -168,6 +168,11 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
+    <Compile Include="SiteMap\ISiteMapGenerator.cs" />
+    <Compile Include="SiteMap\SiteMapChangeFrequency.cs" />
+    <Compile Include="SiteMap\SiteMapGenerator.cs" />
+    <Compile Include="SiteMap\SiteMapItem.cs" />
+    <Compile Include="SiteMap\SiteMapResult.cs" />
     <Compile Include="Attributes\AllowCrossSiteJsonAttribute .cs" />
     <Compile Include="Attributes\MultipleFormActionsButtonAttribute.cs" />
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
@@ -198,6 +203,7 @@
     <Compile Include="Models\Application\ApplicationViewModelStatus.cs" />
     <Compile Include="Models\Common\ReferenceDataViewModel.cs" />
     <Compile Include="Models\Common\VacancyLocationType.cs" />
+    <Compile Include="SiteMap\ISiteMapItem.cs" />
     <Compile Include="Modules\RemoveETagModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\CookieDetectionProvider.cs" />
