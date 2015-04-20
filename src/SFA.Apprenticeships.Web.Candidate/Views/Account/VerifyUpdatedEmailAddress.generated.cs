@@ -95,7 +95,7 @@ WriteLiteral(">\r\n    You\'ve been sent a code to your new email address, enter
 
             
             #line 21 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
- using (Html.BeginRouteForm(RouteNames.VertifyUpdatedEmail, FormMethod.Post))
+ using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post))
 {
     
             

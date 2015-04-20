@@ -13,20 +13,67 @@
     [TestFixture]
     public class LoginTests
     {
-        [Test]
-        public void Us616_Ac7_MobileVerificationRequiredLogin()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void ShouldSetMobileVerificationRequired(bool verifiedMobile)
         {
+            // Arrange.
             var candidateId = Guid.NewGuid();
             var userAccountService = new Mock<IUserAccountService>();
-            userAccountService.Setup(s => s.GetUserStatus(LoginViewModelBuilder.ValidEmailAddress)).Returns(UserStatuses.Active);
+
+            userAccountService
+                .Setup(s => s.GetUser(LoginViewModelBuilder.ValidEmailAddress, false))
+                .Returns(new User
+                {
+                    Status = UserStatuses.Active
+                });
+
             var candidateService = new Mock<ICandidateService>();
-            candidateService.Setup(cs => cs.Authenticate(LoginViewModelBuilder.ValidEmailAddress, LoginViewModelBuilder.ValidPassword)).Returns(new CandidateBuilder(candidateId).AllowMobile(true).VerifiedMobile(false).Build);
+
+            candidateService
+                .Setup(cs => cs.Authenticate(LoginViewModelBuilder.ValidEmailAddress, LoginViewModelBuilder.ValidPassword))
+                .Returns(new CandidateBuilder(candidateId).AllowMobile(true).VerifiedMobile(verifiedMobile).Build);
+
             var provider = new CandidateServiceProviderBuilder().With(candidateService).With(userAccountService).Build();
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
 
+            // Act.
             var resultViewModel = provider.Login(viewModel);
 
-            resultViewModel.MobileVerificationRequired.Should().BeTrue();
+            // Assert.
+            resultViewModel.MobileVerificationRequired.Should().Be(!verifiedMobile);
+        }
+
+        [TestCase(null, false)]
+        [TestCase("jane.doe@example.com", true)]
+        public void ShouldSetPendingUsernameVerificationRequired(string pendingUsername, bool expectedResult)
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var userAccountService = new Mock<IUserAccountService>();
+
+            userAccountService
+                .Setup(s => s.GetUser(LoginViewModelBuilder.ValidEmailAddress, false))
+                .Returns(new User
+                {
+                    Status = UserStatuses.Active,
+                    PendingUsername = pendingUsername
+                });
+
+            var candidateService = new Mock<ICandidateService>();
+
+            candidateService
+                .Setup(cs => cs.Authenticate(LoginViewModelBuilder.ValidEmailAddress, LoginViewModelBuilder.ValidPassword))
+                .Returns(new CandidateBuilder(candidateId).AllowMobile(true).Build);
+
+            var provider = new CandidateServiceProviderBuilder().With(candidateService).With(userAccountService).Build();
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            // Act.
+            var resultViewModel = provider.Login(viewModel);
+
+            // Assert.
+            resultViewModel.PendingUsernameVerificationRequired.Should().Be(expectedResult);
         }
     }
 }

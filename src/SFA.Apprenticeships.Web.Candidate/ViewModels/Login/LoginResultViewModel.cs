@@ -25,6 +25,8 @@
 
         public bool MobileVerificationRequired { get; set; }
 
+        public bool PendingUsernameVerificationRequired { get; set; }
+
         public string ReturnUrl { get; set; }
     }
 }

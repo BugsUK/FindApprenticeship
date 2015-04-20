@@ -51,7 +51,7 @@
                 );
 
             routes.MapRoute(
-                name: RouteNames.VertifyUpdatedEmail,
+                name: RouteNames.VerifyUpdatedEmail,
                 url: "verifyemail",
                 defaults: new { controller = "Account", action = "VerifyUpdatedEmailAddress" }
                 );

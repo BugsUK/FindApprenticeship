@@ -21,8 +21,6 @@
 
         UserNameAvailability IsUsernameAvailable(string username);
 
-        UserStatusesViewModel GetUserStatus(string username);
-
         ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId);
 
         bool RequestForgottenPasswordResetCode(ForgottenPasswordViewModel model);

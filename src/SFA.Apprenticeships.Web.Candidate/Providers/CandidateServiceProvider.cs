@@ -79,27 +79,6 @@
             return userNameAvailability;
         }
 
-        public UserStatusesViewModel GetUserStatus(string username)
-        {
-            _logger.Debug("Calling CandidateServiceProvider to get the user status for the user {0}.", username);
-
-            try
-            {
-                return new UserStatusesViewModel
-                {
-                    UserStatus = _userAccountService.GetUserStatus(username)
-                };
-            }
-            catch (Exception e)
-            {
-                const string errorMessage = "Error getting user status";
-                var message = string.Format("{0} for {1}", errorMessage, username);
-                _logger.Error(message, e);
-
-                return new UserStatusesViewModel(e.Message);
-            }
-        }
-
         public ApplicationStatuses? GetApplicationStatus(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
@@ -209,43 +188,46 @@
 
             try
             {
-                var userStatusViewModel = GetUserStatus(model.EmailAddress);
+                var user = _userAccountService.GetUser(model.EmailAddress, false);
 
-                if (userStatusViewModel.UserStatus.HasValue)
+                if (user == null)
                 {
-                    if (userStatusViewModel.UserStatus == UserStatuses.Locked)
-                    {
-                        return GetLoginResultViewModel(model, userStatusViewModel.UserStatus.Value);
-                    }
-
-                    var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
-
-                    if (candidate != null)
-                    {
-                        // User is authentic.
-                        _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), _userAccountService.GetRoleNames(model.EmailAddress));
-
-                        return new LoginResultViewModel
-                        {
-                            EmailAddress = candidate.RegistrationDetails.EmailAddress,
-                            FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
-                            UserStatus = userStatusViewModel.UserStatus.Value,
-                            IsAuthenticated = true,
-                            AcceptedTermsAndConditionsVersion = candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion,
-                            MobileVerificationRequired = candidate.MobileVerificationRequired()
-                        };
-                    }
-
-                    userStatusViewModel = GetUserStatus(model.EmailAddress);
-
-                    if (userStatusViewModel.UserStatus == UserStatuses.Locked)
-                    {
-                        // Authentication failed, user just locked their account.
-                        return GetLoginResultViewModel(model, userStatusViewModel.UserStatus.Value);
-                    }
+                    return GetAuthenticationFailedViewModel(model);
                 }
 
-                return GetAuthenticationFailedViewModel(model, userStatusViewModel.UserStatus);
+                if (user.Status == UserStatuses.Locked)
+                {
+                    return GetLoginResultViewModel(model, user.Status);
+                }
+
+                var candidate = _candidateService.Authenticate(model.EmailAddress, model.Password);
+
+                if (candidate != null)
+                {
+                    // User is authentic.
+                    _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), _userAccountService.GetRoleNames(candidate.EntityId));
+
+                    return new LoginResultViewModel
+                    {
+                        EmailAddress = candidate.RegistrationDetails.EmailAddress,
+                        FullName = candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                        UserStatus = user.Status,
+                        IsAuthenticated = true,
+                        AcceptedTermsAndConditionsVersion = candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion,
+                        MobileVerificationRequired = candidate.MobileVerificationRequired(),
+                        PendingUsernameVerificationRequired = user.PendingUsernameVerificationRequired()
+                    };
+                }
+
+                user = _userAccountService.GetUser(model.EmailAddress);
+
+                if (user.Status == UserStatuses.Locked)
+                {
+                    // Authentication failed, user just locked their account.
+                    return GetLoginResultViewModel(model, user.Status);
+                }
+
+                return GetAuthenticationFailedViewModel(model, user.Status);
             }
             catch (Exception e)
             {
@@ -637,7 +619,7 @@
             };
         }
 
-        private static LoginResultViewModel GetAuthenticationFailedViewModel(LoginViewModel model, UserStatuses? userStatus)
+        private static LoginResultViewModel GetAuthenticationFailedViewModel(LoginViewModel model, UserStatuses? userStatus = null)
         {
             return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
             {

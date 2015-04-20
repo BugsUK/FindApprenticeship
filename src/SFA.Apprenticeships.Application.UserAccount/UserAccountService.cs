@@ -130,15 +130,15 @@
             _unlockAccountStrategy.UnlockAccount(username, accountUnlockCode);
         }
 
-        public UserStatuses? GetUserStatus(string username)
+        public User GetUser(string username, bool errorIfNotFound = true)
         {
             Condition.Requires(username).IsNotNullOrEmpty();
 
             _logger.Debug("Calling UserAccountService to get the status for the user {0}.", username);
 
-            var user = _userReadRepository.Get(username, false);
+            var user = _userReadRepository.Get(username, errorIfNotFound);
 
-            return user == null ? default(UserStatuses) : user.Status;
+            return user;
         }
 
         public User GetUser(Guid userId)
@@ -150,17 +150,15 @@
             return user;
         }
 
-        public string[] GetRoleNames(string username)
+        public string[] GetRoleNames(Guid userId)
         {
-            Condition.Requires(username).IsNotNullOrEmpty();
-
-            _logger.Debug("Calling UserAccountService to get the role names for the user {0}.", username);
+            _logger.Debug("Calling UserAccountService to get the role names for the user {0}.", userId);
 
             var claims = new List<string>();
-            var userStatus = GetUserStatus(username);
+            var user = GetUser(userId);
 
             // Add 'roles' for user status.
-            switch (userStatus)
+            switch (user.Status)
             {
                 case UserStatuses.Active:
                     claims.Add(UserRoleNames.Activated);

@@ -12,6 +12,7 @@
         private string _viewModelMessage;
         private string _acceptedTermsAndConditionsVersion;
         private bool _mobileVerificationRequired;
+        private bool _pendingUsernameVerificationRequired;
 
         public LoginResultViewModelBuilder(UserStatuses userStatus = UserStatuses.Active, bool isAuthenticated = true)
         {
@@ -43,6 +44,12 @@
             return this;
         }
 
+        public LoginResultViewModelBuilder PendingUsernameVerificationRequired(bool value)
+        {
+            _pendingUsernameVerificationRequired = value;
+            return this;
+        }
+
         public LoginResultViewModel Build()
         {
             var viewModel = new LoginResultViewModel
@@ -52,7 +59,8 @@
                 EmailAddress = _emailAddress,
                 ViewModelMessage = _viewModelMessage,
                 AcceptedTermsAndConditionsVersion = _acceptedTermsAndConditionsVersion,
-                MobileVerificationRequired = _mobileVerificationRequired
+                MobileVerificationRequired = _mobileVerificationRequired,
+                PendingUsernameVerificationRequired = _pendingUsernameVerificationRequired
             };
 
             return viewModel;

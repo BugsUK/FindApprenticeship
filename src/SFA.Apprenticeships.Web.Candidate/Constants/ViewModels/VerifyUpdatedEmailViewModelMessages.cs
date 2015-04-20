@@ -2,7 +2,7 @@
 {
     using Common.Constants;
 
-    public static class VertifyUpdatedEmailViewModelMessages
+    public static class VerifyUpdatedEmailViewModelMessages
     {
         public static class VerifyUpdatedEmailCodeMessages
         {

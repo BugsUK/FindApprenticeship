@@ -285,5 +285,29 @@
             response.AssertCode(LoginMediatorCodes.Index.Ok);
             response.ViewModel.MobileVerificationRequired.Should().BeTrue();
         }
+
+        [TestCase(false)]
+        [TestCase(true)]
+        public void PendingUsernameVerificationRequired(bool expectedValue)
+        {
+            // Arrange.
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            var loginResultViewModel = new LoginResultViewModelBuilder().PendingUsernameVerificationRequired(expectedValue).Build();
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+
+            candidateServiceProvider.Setup(p => p.Login(viewModel)).Returns(loginResultViewModel);
+            candidateServiceProvider.Setup(x => x.GetApprenticeshipApplications(It.IsAny<Guid>(), It.IsAny<bool>())).Returns(new List<ApprenticeshipApplicationSummary>());
+            candidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<string>())).Returns(new Candidate { EntityId = Guid.Empty });
+
+            var mediator = new LoginMediatorBuilder().With(candidateServiceProvider).Build();
+
+            // Act.
+            var response = mediator.Index(viewModel);
+
+            // Assert.
+            response.AssertCode(LoginMediatorCodes.Index.Ok);
+            response.ViewModel.PendingUsernameVerificationRequired.Should().Be(expectedValue);
+        }
     }
 }

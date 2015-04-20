@@ -57,6 +57,13 @@
             return user.Status == UserStatuses.Active || user.Status == UserStatuses.Locked;
         }
 
+        public static bool PendingUsernameVerificationRequired(this User user)
+        {
+            return !string.IsNullOrWhiteSpace(user.PendingUsername);
+        }
+
+        #region Helpers
+
         private static void ClearNonRelatedToLockStateUserStateAttributes(User user)
         {
             user.ActivationCode = null;
@@ -75,5 +82,7 @@
             user.AccountUnlockCode = null;
             user.AccountUnlockCodeExpiry = null;
         }
+
+        #endregion
     }
 }
