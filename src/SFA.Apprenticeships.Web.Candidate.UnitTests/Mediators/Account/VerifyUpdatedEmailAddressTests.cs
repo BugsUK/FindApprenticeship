@@ -16,7 +16,7 @@
         [Test]
         public void VerifyUpdatedEmailAddressOk()
         {
-            var verifyUpdatedEmailViewModel = new VerifyUpdatedEmailViewModel { PendingUsernameCode = "ABC123", Password = "Password01" };
+            var verifyUpdatedEmailViewModel = new VerifyUpdatedEmailViewModel { PendingUsernameCode = "ABC123", VerifyPassword = "Password01" };
             var accountProviderMock = new Mock<IAccountProvider>();
             accountProviderMock.Setup(x => x.VerifyUpdatedEmailAddress(It.IsAny<Guid>(), It.IsAny<VerifyUpdatedEmailViewModel>())).Returns(verifyUpdatedEmailViewModel);
             var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
@@ -33,7 +33,7 @@
         [Test]
         public void VerifyUpdatedEmailAddressHasError()
         {
-            var verifyUpdatedEmailViewModel = new VerifyUpdatedEmailViewModel { PendingUsernameCode = "ABC123", Password = "Password01", ViewModelMessage = "Error" };
+            var verifyUpdatedEmailViewModel = new VerifyUpdatedEmailViewModel { PendingUsernameCode = "ABC123", VerifyPassword = "Password01", ViewModelMessage = "Error" };
             var accountProviderMock = new Mock<IAccountProvider>();
             accountProviderMock.Setup(x => x.VerifyUpdatedEmailAddress(It.IsAny<Guid>(), It.IsAny<VerifyUpdatedEmailViewModel>())).Returns(verifyUpdatedEmailViewModel);
             var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
@@ -50,7 +50,7 @@
         [Test]
         public void VerifyUpdatedEmailAddressFailedValidation()
         {
-            var verifyUpdatedEmailViewModel = new VerifyUpdatedEmailViewModel { PendingUsernameCode = "ABC123", Password = "" };
+            var verifyUpdatedEmailViewModel = new VerifyUpdatedEmailViewModel { PendingUsernameCode = "ABC123", VerifyPassword = "" };
             var accountProviderMock = new Mock<IAccountProvider>();
             accountProviderMock.Setup(x => x.VerifyUpdatedEmailAddress(It.IsAny<Guid>(), It.IsAny<VerifyUpdatedEmailViewModel>())).Returns(verifyUpdatedEmailViewModel);
             var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();

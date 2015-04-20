@@ -12,6 +12,8 @@
         public string SiteDomainName { get; set; }
 
         public IEnumerable<EmailTemplate> Templates { get; set; }
+
+        public int SubCategoriesFullNamesLimit { get; set; }
     }
 
     public class EmailTemplate

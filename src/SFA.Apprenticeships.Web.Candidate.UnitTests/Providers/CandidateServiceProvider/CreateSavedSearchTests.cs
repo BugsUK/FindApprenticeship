@@ -64,7 +64,7 @@
             const string category = "MFP";
             const string categoryFullName = "Engineering and Manufacturing Technologies";
             var subCategories = new[] { "513", "540" };
-            const string subCategoriesFullNames = "Surveying, Construction Civil Engineering";
+            const string subCategoriesFullNames = "Surveying|Construction Civil Engineering";
             const string searchField = "JobTitle";
 
             var categories = new List<Category>
@@ -137,7 +137,7 @@
             var candidateId = Guid.NewGuid();
             const string category = "MFP";
             var subCategories = new[] { "513", "540", "600" };
-            const string subCategoriesFullNames = "Surveying, Construction Civil Engineering";
+            const string subCategoriesFullNames = "Surveying|Construction Civil Engineering";
 
             var categories = new List<Category>
             {

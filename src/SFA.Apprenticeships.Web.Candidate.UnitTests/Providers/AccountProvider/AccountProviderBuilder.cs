@@ -23,6 +23,7 @@
             _candidateService = new Mock<ICandidateService>();
             _logger = new Mock<ILogService>();
             _configurationService = new Mock<IConfigurationService>();
+            _configurationService.Setup(cm => cm.Get<WebConfiguration>()).Returns(new WebConfiguration { Features = new Features(), SubCategoriesFullNamesLimit = 5 });
             _userAccountService = new Mock<IUserAccountService>();
             _userAccountService.Setup(x => x.GetUser(It.IsAny<Guid>())).Returns(new User());
         }
@@ -41,7 +42,6 @@
 
         public AccountProvider Build()
         {
-            _configurationService.Setup(x => x.Get<WebConfiguration>()).Returns(new WebConfiguration(){Features = new Features()});
             var provider = new AccountProvider(_candidateService.Object, _userAccountService.Object, new ApprenticeshipCandidateWebMappers(), _logger.Object, _configurationService.Object);
             return provider;
         }

@@ -520,7 +520,7 @@
                         var selectedSubCategories = category.SubCategories.Where(sc => viewModel.SubCategories.Contains(sc.CodeName)).ToList();
                         subCategories = selectedSubCategories.Select(sc => sc.CodeName).ToArray();
                         var subCategoryFullNames = selectedSubCategories.Select(sc => FullNameFormatter.Format(sc.FullName));
-                        subCategoriesFullName = string.Join(", ", subCategoryFullNames);
+                        subCategoriesFullName = string.Join("|", subCategoryFullNames);
                     }
                 }
             }
@@ -583,7 +583,7 @@
             {
                 var deletedSavedSearch = _candidateService.DeleteSavedSearch(candidateId, savedSearchId);
 
-                return deletedSavedSearch.ToViewModel();
+                return deletedSavedSearch.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit);
             }
             catch (Exception ex)
             {
@@ -597,7 +597,7 @@
             try
             {
                 return _candidateService.RetrieveSavedSearches(candidateId)
-                    .Select(each => each.ToViewModel());
+                    .Select(each => each.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit));
             }
             catch (Exception ex)
             {
@@ -612,7 +612,7 @@
             {
                 var savedSearch = _candidateService.RetrieveSavedSearch(candidateId, savedSearchId);
 
-                return savedSearch == null ? null : savedSearch.ToViewModel();
+                return savedSearch == null ? null : savedSearch.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit);
             }
             catch (Exception ex)
             {

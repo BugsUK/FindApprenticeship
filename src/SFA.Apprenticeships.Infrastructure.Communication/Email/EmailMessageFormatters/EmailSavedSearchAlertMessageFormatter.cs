@@ -19,12 +19,14 @@
 
     public class EmailSavedSearchAlertMessageFormatter : EmailMessageFormatter
     {
+        private readonly IConfigurationService _configurationService;
         private const string HttpsScheme = "https://";
 
         private readonly string _siteDomainName;
 
         public EmailSavedSearchAlertMessageFormatter(IConfigurationService configurationService)
         {
+            _configurationService = configurationService;
             _siteDomainName = configurationService.Get<CommunicationConfiguration>().SiteDomainName;
         }
 
@@ -90,7 +92,7 @@
                     searchMode = GetSearchModeName(savedSearchAlert.Parameters.SearchMode),
                     keywords = savedSearchAlert.Parameters.Keywords,
                     category = savedSearchAlert.Parameters.CategoryFullName,
-                    subCategoriesFullName = savedSearchAlert.Parameters.SubCategoriesFullName,
+                    subCategoriesFullName = savedSearchAlert.Parameters.TruncatedSubCategoriesFullNames(_configurationService.Get<EmailConfiguration>().SubCategoriesFullNamesLimit),
                     location = savedSearchAlert.Parameters.Location,
                     apprenticeshipLevel = savedSearchAlert.Parameters.ApprenticeshipLevel,
                 },

@@ -36,7 +36,7 @@
                 _candidateWriteRepository.Delete(pendingCandidate.EntityId);
             }
 
-            candidate.RegistrationDetails.EmailAddress = user.Username;
+            candidate.RegistrationDetails.EmailAddress = user.PendingUsername;
             _saveCandidateStrategy.SaveCandidate(candidate);
         }
     }

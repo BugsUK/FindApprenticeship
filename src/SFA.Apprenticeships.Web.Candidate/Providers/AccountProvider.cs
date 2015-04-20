@@ -66,7 +66,7 @@
                 settings.SendSavedSearchAlertsViaEmail = candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail;
                 settings.SendSavedSearchAlertsViaText = candidate.CommunicationPreferences.SendSavedSearchAlertsViaText;
 
-                var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel()).ToList();
+                var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit)).ToList();
 
                 settings.SavedSearches = savedSeachViewModels;
 
@@ -300,11 +300,11 @@
 
         public VerifyUpdatedEmailViewModel VerifyUpdatedEmailAddress(Guid userId, VerifyUpdatedEmailViewModel model)
         {
-            _logger.Debug("Calling AccountProvider to verify code: {0} and password: {1} for the userId: {2} to update their username", model.PendingUsernameCode, model.Password, userId);
+            _logger.Debug("Calling AccountProvider to verify code: {0} and password: {1} for the userId: {2} to update their username", model.PendingUsernameCode, model.VerifyPassword, userId);
 
             try
             {
-                _candidateService.UpdateUsername(userId, model.PendingUsernameCode, model.Password);
+                _candidateService.UpdateUsername(userId, model.PendingUsernameCode, model.VerifyPassword);
                 model.UpdateStatus = UpdateEmailStatus.Updated;
             }
             catch (CustomException ex)

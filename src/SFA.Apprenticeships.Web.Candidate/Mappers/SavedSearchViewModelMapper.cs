@@ -5,7 +5,7 @@
 
     public static class SavedSearchViewModelMapper
     {
-        public static SavedSearchViewModel ToViewModel(this SavedSearch savedSearch)
+        public static SavedSearchViewModel ToViewModel(this SavedSearch savedSearch, int subCategoriesFullNamesLimit)
         {
             var viewModel = new SavedSearchViewModel
             {
@@ -14,7 +14,7 @@
                 SearchUrl = savedSearch.SearchUrl(),
                 AlertsEnabled = savedSearch.AlertsEnabled,
                 ApprenticeshipLevel = savedSearch.ApprenticeshipLevel,
-                SubCategoriesFullNames = savedSearch.SubCategoriesFullName,
+                SubCategoriesFullNames = savedSearch.TruncatedSubCategoriesFullNames(subCategoriesFullNamesLimit),
                 DateCreated = savedSearch.DateCreated,
                 DateProcessed = savedSearch.DateProcessed
             };

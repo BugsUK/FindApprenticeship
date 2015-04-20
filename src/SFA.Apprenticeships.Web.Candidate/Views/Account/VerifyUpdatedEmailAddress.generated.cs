@@ -174,7 +174,7 @@ WriteLiteral(">Resend code</a>\r\n        </p>\r\n    </div>\r\n");
             #line hidden
             
             #line 34 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-Write(Html.FormPasswordFor(m => m.Password, controlHtmlAttributes: new { autocomplete = "off" }));
+Write(Html.FormPasswordFor(m => m.VerifyPassword, controlHtmlAttributes: new { autocomplete = "off" }));
 
             
             #line default

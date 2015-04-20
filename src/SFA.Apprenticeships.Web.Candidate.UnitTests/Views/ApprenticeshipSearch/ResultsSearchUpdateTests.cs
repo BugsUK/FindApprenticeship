@@ -25,7 +25,7 @@
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
             view.GetElementbyId("search-button").Should().NotBeNull();
 
-            var createNewSearchLink = view.GetElementbyId("create-new-search-link");
+            var createNewSearchLink = view.GetElementbyId("start-again-link");
 
             createNewSearchLink.Should().NotBeNull();
             createNewSearchLink.OuterHtml.Should().Contain("SearchMode=Keyword");
@@ -47,7 +47,7 @@
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
             view.GetElementbyId("search-button").Should().NotBeNull();
 
-            var createNewSearchLink = view.GetElementbyId("create-new-search-link");
+            var createNewSearchLink = view.GetElementbyId("start-again-link");
 
             createNewSearchLink.Should().NotBeNull();
             createNewSearchLink.OuterHtml.Should().Contain("SearchMode=Category");
@@ -73,7 +73,7 @@
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
             view.GetElementbyId("search-button").Should().NotBeNull();
 
-            var createNewSearchLink = view.GetElementbyId("create-new-search-link");
+            var createNewSearchLink = view.GetElementbyId("start-again-link");
 
             createNewSearchLink.Should().NotBeNull();
             createNewSearchLink.OuterHtml.Should().Contain("SearchMode=Category");

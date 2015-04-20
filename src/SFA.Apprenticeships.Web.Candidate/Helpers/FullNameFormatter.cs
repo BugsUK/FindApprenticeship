@@ -12,9 +12,9 @@
             var match = FullNameRegex.Match(fullName);
             if (match.Success)
             {
-                fullName = match.Groups[1].Value.Trim();
+                fullName = match.Groups[1].Value;
             }
-            return fullName;
+            return fullName.Trim();
         }
     }
 }
