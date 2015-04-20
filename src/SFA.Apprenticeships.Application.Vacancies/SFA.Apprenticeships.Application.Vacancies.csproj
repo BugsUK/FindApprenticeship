@@ -93,7 +93,9 @@
     <Compile Include="Entities\ApprenticeshipSummaryUpdate.cs" />
     <Compile Include="Extensions\ApprenticeshipSummaryExtensions.cs" />
     <Compile Include="Factories\SearchParametersFactory.cs" />
+    <Compile Include="IApprenticeshipSummaryUpdateProcessor.cs" />
     <Compile Include="ISavedSearchProcessor.cs" />
+    <Compile Include="ITraineeshipsSummaryUpdateProcessor.cs" />
     <Compile Include="SavedSearchProcessor.cs" />
     <Compile Include="VacancySummaryProcessor.cs" />
     <Compile Include="IVacancyIndexDataProvider.cs" />

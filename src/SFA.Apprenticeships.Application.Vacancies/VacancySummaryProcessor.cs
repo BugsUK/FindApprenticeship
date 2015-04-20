@@ -19,21 +19,27 @@
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMapper _mapper;
         private readonly IJobControlQueue<StorageQueueMessage> _jobControlQueue;
+        private readonly IApprenticeshipSummaryUpdateProcessor _apprenticeshipSummaryUpdateProcessor;
+        private readonly ITraineeshipsSummaryUpdateProcessor _traineeshipsSummaryUpdateProcessor;
 
         public VacancySummaryProcessor(IMessageBus messageBus,
                                        IVacancyIndexDataProvider vacancyIndexDataProvider,
                                        IMapper mapper,
                                        IJobControlQueue<StorageQueueMessage> jobControlQueue, 
+                                       IApprenticeshipSummaryUpdateProcessor apprenticeshipSummaryUpdateProcessor,
+                                       ITraineeshipsSummaryUpdateProcessor traineeshipsSummaryUpdateProcessor,
                                        ILogService logger)
         {
             _messageBus = messageBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
             _jobControlQueue = jobControlQueue;
+            _apprenticeshipSummaryUpdateProcessor = apprenticeshipSummaryUpdateProcessor;
+            _traineeshipsSummaryUpdateProcessor = traineeshipsSummaryUpdateProcessor;
             _logger = logger;
         }
 
-        public void QueueVacancyPages(StorageQueueMessage scheduledQueueMessage)
+        public void ProcessVacancyPages(StorageQueueMessage scheduledQueueMessage)
         {
             _logger.Debug("Retrieving vacancy summary page count");
 
@@ -50,18 +56,29 @@
 
             var vacancySummaries = BuildVacancySummaryPages(scheduledQueueMessage.ExpectedExecutionTime, vacancyPageCount).ToList();
 
-            foreach (var vacancySummaryPage in vacancySummaries)
-            {
-                _messageBus.PublishMessage(vacancySummaryPage);
-            }
-
             // Only delete from queue once we have all vacancies from the service without error.
             _jobControlQueue.DeleteMessage(ScheduledJobQueues.VacancyEtl, scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
-            _logger.Info("Queued {0} vacancy summary pages", vacancySummaries.Count());
+            //Process pages
+            Parallel.ForEach(vacancySummaries, new ParallelOptions { MaxDegreeOfParallelism = 2 }, ProcessVacancySummaryPage);
+
+            var lastVacancySummaryPage = vacancySummaries.Last();
+            
+            _logger.Info("Vacancy ETL Queue completed: {0} vacancy summary pages processed ", lastVacancySummaryPage.TotalPages);
+
+            _logger.Info("Publishing VacancySummaryUpdateComplete message to queue");
+
+            var vsuc = new VacancySummaryUpdateComplete
+            {
+                ScheduledRefreshDateTime = lastVacancySummaryPage.ScheduledRefreshDateTime
+            };
+
+            _messageBus.PublishMessage(vsuc);
+
+            _logger.Info("Published VacancySummaryUpdateComplete message published to queue");
         }
-      
-        public void QueueVacancySummaries(VacancySummaryPage vacancySummaryPage)
+
+        private void ProcessVacancySummaryPage(VacancySummaryPage vacancySummaryPage)
         {
             _logger.Info("Retrieving vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
 
@@ -69,11 +86,11 @@
             var apprenticeshipsExtended = _mapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSummaryUpdate>>(vacancies.ApprenticeshipSummaries).ToList();
             var traineeshipsExtended = _mapper.Map<IEnumerable<TraineeshipSummary>, IEnumerable<TraineeshipSummaryUpdate>>(vacancies.TraineeshipSummaries).ToList();
 
-            _logger.Info("Retrieved vacancy search page number: {0}/{1} with {2} apprenticeships and {3} traineeships", 
-                vacancySummaryPage.PageNumber, 
-                vacancySummaryPage.TotalPages, 
-                apprenticeshipsExtended.Count(), 
-                traineeshipsExtended.Count());
+            _logger.Info("Retrieved vacancy search page number: {0}/{1} with {2} apprenticeships and {3} traineeships",
+                vacancySummaryPage.PageNumber,
+                vacancySummaryPage.TotalPages,
+                apprenticeshipsExtended.Count,
+                traineeshipsExtended.Count);
 
             Parallel.ForEach(
                 apprenticeshipsExtended,
@@ -81,8 +98,10 @@
                 apprenticeshipExtended =>
                 {
                     apprenticeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
-                    _messageBus.PublishMessage(apprenticeshipExtended);
+                    _apprenticeshipSummaryUpdateProcessor.Process(apprenticeshipExtended);
                 });
+
+            _logger.Info("Processed {0} apprenticeships", apprenticeshipsExtended.Count);
 
             Parallel.ForEach(
                 traineeshipsExtended,
@@ -90,30 +109,16 @@
                 traineeshipExtended =>
                 {
                     traineeshipExtended.ScheduledRefreshDateTime = vacancySummaryPage.ScheduledRefreshDateTime;
-                    _messageBus.PublishMessage(traineeshipExtended);
+                    _traineeshipsSummaryUpdateProcessor.Process(traineeshipExtended);
                 });
-        }
 
-        public void QueueVacancyIfExpiring(ApprenticeshipSummary vacancySummary, int aboutToExpireThreshold)
-        {
-            try
-            {
-                if (vacancySummary.ClosingDate < DateTime.Now.AddHours(aboutToExpireThreshold))
-                {
-                    _logger.Debug("Queueing expiring vacancy");
+            _logger.Info("Processed {0} traineeships", traineeshipsExtended.Count);
 
-                    var vacancyAboutToExpireMessage = new VacancyAboutToExpire { Id = vacancySummary.Id };
-                    _messageBus.PublishMessage(vacancyAboutToExpireMessage);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.Warn("Failed queueing expiring vacancy {0}", ex, vacancySummary.Id);
-            }
+            _logger.Info("Processed vacancy search page number: {0}/{1}", vacancySummaryPage.PageNumber, vacancySummaryPage.TotalPages);
         }
 
         #region Helpers
-        private static IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int count)
+        private static IList<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int count)
         {           
             var vacancySumaries = new List<VacancySummaryPage>(count);
 

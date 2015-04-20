@@ -53,9 +53,12 @@
             For<IApplicationStatusAlertStrategy>().Use<ApplicationStatusAlertStrategy>();
 
             // vacancies
+            For<IApprenticeshipSummaryUpdateProcessor>().Use<ApprenticeshipSummaryUpdateProcessor>();
+            For<ITraineeshipsSummaryUpdateProcessor>().Use<TraineeshipsSummaryUpdateProcessor>();
+
             For<VacancyStatusSummaryConsumerAsync>().Use<VacancyStatusSummaryConsumerAsync>();
-            For<ApprenticeshipSummaryUpdateConsumerAsync>().Use<ApprenticeshipSummaryUpdateConsumerAsync>();
-            For<TraineeshipsSummaryUpdateConsumerAsync>().Use<TraineeshipsSummaryUpdateConsumerAsync>();
+            For<ApprenticeshipSummaryUpdateProcessor>().Use<ApprenticeshipSummaryUpdateProcessor>();
+            For<TraineeshipsSummaryUpdateProcessor>().Use<TraineeshipsSummaryUpdateProcessor>();
 
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";//todo: remove
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");

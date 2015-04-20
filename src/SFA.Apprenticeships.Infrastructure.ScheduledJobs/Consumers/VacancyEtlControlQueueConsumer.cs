@@ -48,7 +48,7 @@
 
                 _logger.Info("Calling vacancy summary processor to queue vacancy pages");
                 
-                _vacancySummaryProcessor.QueueVacancyPages(latestScheduledMessage);
+                _vacancySummaryProcessor.ProcessVacancyPages(latestScheduledMessage);
 
                 _logger.Info("Scheduled index created and vacancy pages queued");
             });

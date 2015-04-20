@@ -2,47 +2,41 @@
 {
     using System;
     using System.Linq;
-    using System.Threading.Tasks;
     using Application.Interfaces.Logging;
     using Application.Interfaces.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
-    using Configuration;
     using Domain.Interfaces.Configuration;
-    using EasyNetQ.AutoSubscribe;
+    using Configuration;
+    using Domain.Interfaces.Messaging;
     using VacancyIndexer;
     using Elastic = Elastic.Common.Entities;
 
-    public class ApprenticeshipSummaryUpdateConsumerAsync : IConsumeAsync<ApprenticeshipSummaryUpdate>
+    public class ApprenticeshipSummaryUpdateProcessor : IApprenticeshipSummaryUpdateProcessor
     {
         private readonly IReferenceDataService _referenceDataService;
+        private readonly IMessageBus _messageBus;
         private readonly ILogService _logService;
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _vacancyIndexerService;
-        private readonly IVacancySummaryProcessor _vacancySummaryProcessor;
         private readonly int _vacancyAboutToExpireThreshold;
 
-        public ApprenticeshipSummaryUpdateConsumerAsync(
+        public ApprenticeshipSummaryUpdateProcessor(
             IConfigurationService configurationService,
             IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> vacancyIndexerService,
-            IVacancySummaryProcessor vacancySummaryProcessor, IReferenceDataService referenceDataService, ILogService logService)
+            IReferenceDataService referenceDataService, IMessageBus messageBus, ILogService logService)
         {
             _vacancyAboutToExpireThreshold = configurationService.Get<ProcessConfiguration>().VacancyAboutToExpireNotificationHours;
             _vacancyIndexerService = vacancyIndexerService;
-            _vacancySummaryProcessor = vacancySummaryProcessor;
             _referenceDataService = referenceDataService;
+            _messageBus = messageBus;
             _logService = logService;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 20)]
-        [AutoSubscriberConsumer(SubscriptionId = "ApprenticeshipSummaryUpdateConsumerAsync")]
-        public Task Consume(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
+        public void Process(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
         {
-            return Task.Run(() =>
-            {
-                PopulateCategoriesCodes(vacancySummaryToIndex);
-                _vacancyIndexerService.Index(vacancySummaryToIndex);
-                _vacancySummaryProcessor.QueueVacancyIfExpiring(vacancySummaryToIndex, _vacancyAboutToExpireThreshold);
-            });
+            PopulateCategoriesCodes(vacancySummaryToIndex);
+            _vacancyIndexerService.Index(vacancySummaryToIndex);
+            QueueVacancyIfExpiring(vacancySummaryToIndex, _vacancyAboutToExpireThreshold);
         }
 
         private void PopulateCategoriesCodes(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
@@ -79,6 +73,24 @@
                 {
                     vacancySummaryToIndex.FrameworkCode = subCategory.CodeName;
                 }
+            }
+        }
+
+        public void QueueVacancyIfExpiring(ApprenticeshipSummaryUpdate vacancySummary, int aboutToExpireThreshold)
+        {
+            try
+            {
+                if (vacancySummary.ClosingDate < DateTime.Now.AddHours(aboutToExpireThreshold))
+                {
+                    _logService.Debug("Queueing expiring vacancy");
+
+                    var vacancyAboutToExpireMessage = new VacancyAboutToExpire { Id = vacancySummary.Id };
+                    _messageBus.PublishMessage(vacancyAboutToExpireMessage);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn("Failed queueing expiring vacancy {0}", ex, vacancySummary.Id);
             }
         }
     }

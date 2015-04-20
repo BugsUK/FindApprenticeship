@@ -198,8 +198,8 @@
     <Compile Include="Applications\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Communications\EmailRequestConsumerAsync.cs" />
     <Compile Include="Configuration\ProcessConfiguration.cs" />
-    <Compile Include="Vacancies\ApprenticeshipSummaryUpdateConsumerAsync.cs" />
-    <Compile Include="Vacancies\TraineeshipsSummaryUpdateConsumerAsync.cs" />
+    <Compile Include="Vacancies\ApprenticeshipSummaryUpdateProcessor.cs" />
+    <Compile Include="Vacancies\TraineeshipsSummaryUpdateProcessor.cs" />
     <Compile Include="Vacancies\VacancyAboutToExpireConsumerAsync.cs" />
     <Compile Include="Vacancies\VacancyEtlMapper.cs" />
     <Compile Include="Vacancies\VacancyStatusSummaryConsumerAsync.cs" />
@@ -212,7 +212,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Vacancies\VacancySummaryCompleteConsumerAsync.cs" />
-    <Compile Include="Vacancies\VacancySummaryPageConsumerAsync.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
   <ItemGroup>

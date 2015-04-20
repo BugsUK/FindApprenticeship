@@ -46,7 +46,7 @@
             _messageServiceMock.Verify(x => x.GetMessage(It.Is<string>(queueName => queueName == ScheduledJobQueues.VacancyEtl)), Times.Exactly(queuedScheduledMessages + 1));
             _messageServiceMock.Verify(x => x.DeleteMessage(It.Is<string>(queueName => queueName == ScheduledJobQueues.VacancyEtl), It.IsAny<string>(), It.IsAny<string>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : queuedScheduledMessages - 1));
             _apprenticeshipIndexerService.Verify(x => x.CreateScheduledIndex(It.Is<DateTime>(d => d == DateTime.Today)), Times.Exactly(queuedScheduledMessages > 0 ? 1 : 0));
-            _vacancySummaryProcessorMock.Verify(x => x.QueueVacancyPages(It.IsAny<StorageQueueMessage>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : 1));
+            _vacancySummaryProcessorMock.Verify(x => x.ProcessVacancyPages(It.IsAny<StorageQueueMessage>()), Times.Exactly(queuedScheduledMessages == 0 ? 0 : 1));
         }
 
         private static Queue<StorageQueueMessage> GetScheduledMessagesQueue(int count)
