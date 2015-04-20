@@ -76,7 +76,7 @@
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn:
                         return RedirectToAction("Index");
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.Ok:
-                        return RedirectToAction("Results", model);
+                        return RedirectToAction("Results", model.RouteValues);
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch:
                     {
                         // ReSharper disable once PossibleInvalidOperationException
