@@ -14,7 +14,8 @@
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Content" });
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Scripts" });
 
-            routes.MapMvcAttributeRoutes();
+            // TODO: US438: reinstate.
+            // routes.MapMvcAttributeRoutes();
 
             routes.MapRoute(
                 name: RouteNames.SignOut,
