@@ -66,7 +66,7 @@
                 settings.SendSavedSearchAlertsViaEmail = candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail;
                 settings.SendSavedSearchAlertsViaText = candidate.CommunicationPreferences.SendSavedSearchAlertsViaText;
 
-                var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel()).ToList();
+                var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit)).ToList();
 
                 settings.SavedSearches = savedSeachViewModels;
 

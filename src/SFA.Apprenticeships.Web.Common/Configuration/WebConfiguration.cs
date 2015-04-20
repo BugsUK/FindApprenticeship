@@ -37,6 +37,8 @@
         public string Environment { get; set; }
 
         public Features Features { get ; set; }
+
+        public int SubCategoriesFullNamesLimit { get; set; }
     }
 
     public class Features

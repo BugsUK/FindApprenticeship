@@ -9,7 +9,7 @@
     {
         [TestCase(null, null)]
         [TestCase("", "")]
-        [TestCase(" ", " ")]
+        [TestCase(" ", "")]
         [TestCase("Animal Technology (Lantra)", "Animal Technology")]
         [TestCase("Creative and Digital Media (Skillset)", "Creative and Digital Media")]
         public void TestFullNameFormatter(string fullName, string expectedFullName)

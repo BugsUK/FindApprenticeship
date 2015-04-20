@@ -12,7 +12,8 @@
         public EmailSavedSearchAlertMessageFormatterBuilder()
         {
             _configurationService = new Mock<IConfigurationService>();
-            _configurationService.Setup(cm => cm.Get<CommunicationConfiguration>()).Returns(new CommunicationConfiguration() { SiteDomainName = "test.findapprenticeship.service.gov.uk" });
+            _configurationService.Setup(cm => cm.Get<CommunicationConfiguration>()).Returns(new CommunicationConfiguration { SiteDomainName = "test.findapprenticeship.service.gov.uk" });
+            _configurationService.Setup(cm => cm.Get<EmailConfiguration>()).Returns(new EmailConfiguration { SubCategoriesFullNamesLimit = 5});
         }
 
         public EmailSavedSearchAlertMessageFormatter Build()

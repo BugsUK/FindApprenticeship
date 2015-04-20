@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
+    using System;
     using System.Linq;
     using System.Net;
     using System.Reflection;
@@ -100,6 +101,26 @@
             sb.Append(savedSearch.SearchField);
 
             return sb.ToString().ToLower();
+        }
+
+        public static string TruncatedSubCategoriesFullNames(this SavedSearch savedSearch, int subCategoriesFullNamesLimit)
+        {
+            if (string.IsNullOrEmpty(savedSearch.SubCategoriesFullName))
+            {
+                return savedSearch.SubCategoriesFullName;
+            }
+
+            //For backwards compatability with existing saved searches
+            var separator = savedSearch.SubCategoriesFullName.Contains("|") ? new[] {"|"} : new[] {", "};
+            var split = savedSearch.SubCategoriesFullName.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            var truncatedSubCategoriesFullName = string.Join(", ", split.Take(subCategoriesFullNamesLimit).Select(s => s.Trim()));
+
+            if (split.Length <= subCategoriesFullNamesLimit)
+            {
+                return truncatedSubCategoriesFullName;
+            }
+
+            return string.Format("{0} and {1} more", truncatedSubCategoriesFullName, split.Length - subCategoriesFullNamesLimit);
         }
     }
 }
