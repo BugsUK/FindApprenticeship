@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
         [ElementLocator(Id = "PendingUsernameCode")]
         public IWebElement PendingUsernameCode { get; set; }
 
-        [ElementLocator(Id = "Password")]
+        [ElementLocator(Id = "VerifyPassword")]
         public IWebElement Password { get; set; }
 
         [ElementLocator(Id = "verify-email-button")]
