@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Candidate.ViewModels.Account;
     using Candidate.Views.ApprenticeshipSearch;
@@ -13,7 +14,7 @@
     public class IndexSavedSearchesTests : MediatorTestsBase
     {
         [Test]
-        public void ShouldNotRenderTabAsActiveWhenSearchModeIsKeyword()
+        public void ShouldRenderTabAsInactiveWhenSearchModeIsKeyword()
         {
             // Arrange.
             var @partial = new savedSearches();
@@ -27,7 +28,7 @@
         }
 
         [Test]
-        public void ShouldNotRenderTabAsActiveWhenSearchModeIsCategory()
+        public void ShouldRenderTabAsInactiveWhenSearchModeIsCategory()
         {
             // Arrange.
             var @partial = new savedSearches();
@@ -58,6 +59,30 @@
 
             // Assert.
             view.GetElementbyId("saved-searches").Attributes["class"].Value.Contains(" active").Should().BeTrue();
+        }
+
+        [Test]
+        public void ShouldRenderSavedSearchPromptWhenCandidateHasNoSavedSearches()
+        {
+            // Arrange.
+            var @partial = new savedSearches();
+            var candidateId = Guid.NewGuid();
+
+            var mockViewModel = new List<SavedSearchViewModel>();
+
+            CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
+
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+
+            // Act.
+            var view = @partial.RenderAsHtml(indexViewModel);
+
+            // Assert.
+            var list = view.GetElementbyId("saved-searches-list");
+            var prompt = view.GetElementbyId("saved-searches-prompt");
+
+            list.Should().BeNull();
+            prompt.Should().NotBeNull();
         }
 
         [TestCase(1)]

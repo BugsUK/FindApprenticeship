@@ -1,11 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
     using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Collections.Specialized;
+    using System.Web;
     using Candidate.ViewModels.Account;
-    using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using RazorGenerator.Testing;
@@ -146,12 +150,11 @@
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
-            view.GetElementbyId("saved-searches-settings-link").Should().NotBeNull();
         }
 
         [TestCase(1)]
         [TestCase(5)]
-        public void SearchMode_SavedSearches_CandidateWithSavedSearchesVisibilityTest(int savedSearchCount)
+        public void SearchMode_SavedSearches_AuthenticatedUserWithSavedSearchesTest(int savedSearchCount)
         {
             var index = new Index();
             var candidateId = Guid.NewGuid();
@@ -160,7 +163,7 @@
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
             var searchViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
-            var view = index.RenderAsHtml(searchViewModel);
+            var view = index.RenderAsHtml(CreateMockHttpContext(true), searchViewModel);
 
             var link = view.GetElementbyId("saved-searches-tab-control");
 
@@ -179,19 +182,53 @@
         }
 
         [Test]
-        public void SearchMode_SavedSearches_CandidateWithNoSavedSearchesVisibilityTest()
+        public void SearchMode_SavedSearches_AuthenticatedUserWithNoSavedSearchesTest()
         {
             var index = new Index();
             var candidateId = Guid.NewGuid();
-            var mockViewModel = new SavedSearchViewModel[] { };
+            var mockViewModel = new List<SavedSearchViewModel>();
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
             var searchViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
-            var view = index.RenderAsHtml(searchViewModel);
+            var view = index.RenderAsHtml(CreateMockHttpContext(true), searchViewModel);
 
-            view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
-            view.GetElementbyId("saved-searches-settings-link").Should().NotBeNull();
+            var link = view.GetElementbyId("saved-searches-tab-control");
+
+            link.Should().NotBeNull();
+            link.Attributes["class"].Value.Should().Contain(" active");
+
+            view.GetElementbyId("run-saved-search-button").Should().BeNull();
+            view.GetElementbyId("saved-searches-settings-link").Should().BeNull();
+        }
+
+        // TODO: AG: DEBT: refactor this function out of each test class.
+        private static HttpContextBase CreateMockHttpContext(bool isAuthenticated)
+        {
+            // Response.
+            var mockRequest = new Mock<HttpRequestBase>(MockBehavior.Loose);
+
+            mockRequest.Setup(m => m.IsLocal).Returns(false);
+            mockRequest.Setup(m => m.ApplicationPath).Returns("/");
+            mockRequest.Setup(m => m.ServerVariables).Returns(new NameValueCollection());
+            mockRequest.Setup(m => m.RawUrl).Returns(string.Empty);
+            mockRequest.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
+            mockRequest.Setup(m => m.IsAuthenticated).Returns(isAuthenticated);
+
+            // Request.
+            var mockResponse = new Mock<HttpResponseBase>(MockBehavior.Loose);
+
+            mockResponse.Setup(m => m.ApplyAppPathModifier(It.IsAny<string>())).Returns<string>(virtualPath => virtualPath);
+            mockResponse.Setup(m => m.Cookies).Returns(new HttpCookieCollection());
+
+            // HttpContext.
+            var mockHttpContext = new Mock<HttpContextBase>(MockBehavior.Loose);
+
+            mockHttpContext.Setup(m => m.Items).Returns(new Hashtable());
+            mockHttpContext.Setup(m => m.Request).Returns(mockRequest.Object);
+            mockHttpContext.Setup(m => m.Response).Returns(mockResponse.Object);
+
+            return mockHttpContext.Object;
         }
     }
 }

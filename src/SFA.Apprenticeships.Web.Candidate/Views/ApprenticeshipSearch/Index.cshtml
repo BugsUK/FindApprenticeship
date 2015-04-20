@@ -25,10 +25,11 @@
                         var anyCategories = Model.Categories != null && Model.Categories.Any();
                         var categoriesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category && anyCategories ? " active" : "";
                         var categoriesTabClass = anyCategories ? " tab2" : "";
-                        
+
+                        var showSavedSearches = Request.IsAuthenticated;
                         var anySavedSearches = Model.SavedSearches != null && Model.SavedSearches.Any();
-                        var savedSearchesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches && anySavedSearches ? " active" : "";
-                        var savedSearchesTabClass = anySavedSearches ? " tab3" : "";
+                        var savedSearchesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches && showSavedSearches ? " active" : "";
+                        var savedSearchesTabClass = showSavedSearches ? " tab3" : "";
 
                         string elementControlClass = string.Empty;
 
@@ -48,7 +49,7 @@
                     @Html.RouteLink("Search", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywords-tab-control", @class = "tabbed-tab" + keywordTabControlClass, tab = "#tab1" })
                     @Html.RouteLink("Browse", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categories-tab-control", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#tab2" })
                     
-                    @if (anySavedSearches)
+                    @if (showSavedSearches)
                     {
                         @Html.RouteLink("Saved searches", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.SavedSearches }, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabControlClass, tab = "#tab3" })
                     }
@@ -80,14 +81,21 @@
                     <div class="form-group form-group-compound">
                         <button class="button tabbed-element tab1 @keywordTabControlClass" id="search-button">Search</button>
                         <button class="button tabbed-element @categoriesTabClass @categoriesElementControlClass" id="browse-button">Browse</button>
-                        <button class="button tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass" id="run-saved-search-button">Run search</button>
+                        
+                        @if (anySavedSearches)
+                        {
+                            <button class="button tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass" id="run-saved-search-button">Run search</button>
+                        }
                     </div>
 
-                    <p class="tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass">
-                        You can edit your saved searches in the
-                        @Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new { id = "saved-searches-settings-link" })
-                        section.
-                    </p>
+                    @if (anySavedSearches)
+                    {
+                        <p class="tabbed-element @savedSearchesTabClass @savedSearchesElementControlClass">
+                            You can edit your saved searches in the
+                            @Html.RouteLink("alert settings", CandidateRouteNames.SavedSearchesSettings, null, new {id = "saved-searches-settings-link"})
+                            section.
+                        </p>
+                    }
 
                     <div class="tabbed-element disp-block form-group tab1 @keywordTabControlClass @categoriesTabClass @categoriesTabControlClass">
                         @Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "reset-search-options-link" })
