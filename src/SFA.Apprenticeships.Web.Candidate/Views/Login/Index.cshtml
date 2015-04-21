@@ -13,9 +13,8 @@
         {
             @Html.AntiForgeryToken();
             <h1 class="heading-large">Sign in</h1>
-            <p>
-                Sign in or
-                @Html.ActionLink("create an account", controllerName: "Register", actionName: "Index").
+            <p class="hide-tablet">
+                @Html.ActionLink("Create an account", controllerName: "Register", actionName: "Index").
             </p>
 
             @Html.FormTextFor(
@@ -29,26 +28,47 @@
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
                 @Html.ValidationMessageFor(m => m.Password, null)
                 
-                <a class="form-hint" href='@Url.Action(RouteNames.ForgottenCredentials)'>I can't access my account</a>
+                <p><a href='@Url.Action("ForgottenPassword", "Register")'>I can't access my account</a></p>
             </div>
 
             <div class="form-group">
                 <button class="button" id="sign-in-button">Sign in</button>
+                <details class="text hide-tablet">
+                    <summary>Activate your account</summary>
+                    <div class="detail-content">
+                        <ol class="list-number">
+                            <li>Once you've created an account we'll send you an activation code</li>
+                            <li>To activate your account sign in using your email address and password</li>
+                            <li>You'll then be asked to enter your activation code</li>
+                        </ol>
+                    </div>
+                </details>
             </div>
         }
     </div>
     <div class="grid grid-1-2">
-        <h2 class="heading-large">Create an account</h2>
+        <h2 class="heading-large">New user?</h2>
         <div class="text">
             <p>
-                This is a new service. You must create an account if you’ve not used it before.
-                @Html.ActionLink("Create an account", "Index", "Register", null, new { id = "create-account-link" })
+                You must
+                @Html.ActionLink("create an account", "Index", "Register", null, new { id = "create-account-link" }) if you've not used this service before.
             </p>
+            <p class="small-btm-margin">Creating an account allows you to:</p>
+            <ul class="list-bullet">
+                <li>Apply for an apprenticeship</li>
+                <li>Track your applications</li>
+                <li>Receive alerts for new apprenticeships</li>
+            </ul>
         </div>
-        <div class="panel-indent">
-            <p>
-                If you’ve applied for an apprenticeship before you’ll only be able to access your application history using your old account. <a href="https://apprenticeshipvacancymatchingservice.lsc.gov.uk/navms/Forms/Candidate/CandidatesLogin.aspx" rel="external" target="_blank">Sign in to old account</a>
-            </p>
-        </div>
+        <details class="text hide-mob">
+            <summary>Activate your account</summary>
+            <div class="detail-content">
+                <ol class="list-number">
+                    <li>Once you've created an account we'll send you an activation code</li>
+                    <li>To activate your account sign in using your email address and password</li>
+                    <li>You'll then be asked to enter your activation code</li>
+                </ol>
+            </div>
+        </details>
     </div>
 </div>
