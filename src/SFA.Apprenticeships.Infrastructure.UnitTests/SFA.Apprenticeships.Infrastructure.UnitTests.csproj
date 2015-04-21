@@ -183,6 +183,7 @@
     <Compile Include="ScheduledJobs\Application\ApplicationStatusSummaryConsumerAsyncTests.cs" />
     <Compile Include="ScheduledJobs\Vacancy\ApprenticeshipSummaryUpdateProcessorTests.cs" />
     <Compile Include="ScheduledJobs\Vacancy\VacancySchedulerConsumerTests.cs" />
+    <Compile Include="SiteMap\CreateVacancySiteMapRequestConsumerAsyncTests.cs" />
     <Compile Include="UserDirectory\PasswordHashTests.cs" />
   </ItemGroup>
   <ItemGroup>

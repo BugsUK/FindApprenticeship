@@ -29,7 +29,8 @@
         /// to use the new index that contains the latest indexed data.
         /// </summary>
         /// <param name="scheduledRefreshDateTime"></param>
-        void SwapIndex(DateTime scheduledRefreshDateTime);
+        /// <returns>New index name.</returns>
+        string SwapIndex(DateTime scheduledRefreshDateTime);
 
         /// <summary>
         /// Checks if the index is correctly created

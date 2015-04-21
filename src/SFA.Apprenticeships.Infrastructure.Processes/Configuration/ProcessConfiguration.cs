@@ -9,5 +9,7 @@
         public int ApplicationStatusExtractWindow { get; set; }
 
         public bool EnableVacancyStatusPropagation { get; set; }
+
+        public bool EnableVacancySiteMapCreation { get; set; }
     }
 }

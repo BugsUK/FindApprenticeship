@@ -21,7 +21,7 @@
 
         public SiteMapChangeFrequency? ChangeFrequency { get; private set; }
 
-        // TODO: US438: consider deriving priority based on how recently vacancy was added.
+        // TODO: AG: US438: consider deriving priority based on how recently vacancy was added.
         public double? Priority { get; private set; }
     }
 }

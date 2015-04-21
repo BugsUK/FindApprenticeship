@@ -7,15 +7,18 @@
 
     public class RouteConfig
     {
-        public static void RegisterRoutes(RouteCollection routes)
+        public static void RegisterRoutes(RouteCollection routes, RouteConfigOptions options = RouteConfigOptions.None)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
             routes.IgnoreRoute("{resource}.ico/{*pathInfo}");
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Content" });
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Scripts" });
 
-            // TODO: US438: reinstate.
-            // routes.MapMvcAttributeRoutes();
+            if ((options & RouteConfigOptions.MapMvcAttributeRoutes) == RouteConfigOptions.MapMvcAttributeRoutes)
+            {
+                // TODO: AG: US438: why doesn't named route work for ~/sitemap.xml?
+                routes.MapMvcAttributeRoutes();
+            }
 
             routes.MapRoute(
                 name: RouteNames.SignOut,

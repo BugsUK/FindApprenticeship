@@ -112,6 +112,9 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AllTraineeshipVacanciesProvider.cs" />
+    <Compile Include="AllApprenticeshipVacanciesProvider.cs" />
+    <Compile Include="AllVacanciesProviderBase.cs" />
     <Compile Include="Configuration\SearchFactorConfiguration.cs" />
     <Compile Include="IoC\VacancySearchRegistry.cs" />
     <Compile Include="Mappers\GeoPointElasticToDomainResolver.cs" />

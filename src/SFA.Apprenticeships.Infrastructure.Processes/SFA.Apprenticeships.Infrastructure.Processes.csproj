@@ -198,6 +198,7 @@
     <Compile Include="Applications\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Communications\EmailRequestConsumerAsync.cs" />
     <Compile Include="Configuration\ProcessConfiguration.cs" />
+    <Compile Include="SiteMap\CreateVacancySiteMapRequestConsumerAsync.cs" />
     <Compile Include="Vacancies\ApprenticeshipSummaryUpdateProcessor.cs" />
     <Compile Include="Vacancies\TraineeshipsSummaryUpdateProcessor.cs" />
     <Compile Include="Vacancies\VacancyAboutToExpireConsumerAsync.cs" />
@@ -369,6 +370,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
+      <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
+      <Name>SFA.Apprenticeships.Web.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

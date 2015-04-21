@@ -95,8 +95,10 @@
     <Compile Include="Factories\SearchParametersFactory.cs" />
     <Compile Include="IApprenticeshipSummaryUpdateProcessor.cs" />
     <Compile Include="ISavedSearchProcessor.cs" />
+    <Compile Include="IVacancySiteMapProcessor.cs" />
     <Compile Include="ITraineeshipsSummaryUpdateProcessor.cs" />
     <Compile Include="SavedSearchProcessor.cs" />
+    <Compile Include="VacancySiteMapProcessor.cs" />
     <Compile Include="VacancySummaryProcessor.cs" />
     <Compile Include="IVacancyIndexDataProvider.cs" />
     <Compile Include="IVacancySummaryProcessor.cs" />
@@ -118,6 +120,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
+      <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
+      <Name>SFA.Apprenticeships.Web.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

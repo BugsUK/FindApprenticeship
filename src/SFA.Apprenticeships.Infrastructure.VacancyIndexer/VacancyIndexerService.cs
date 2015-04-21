@@ -128,7 +128,7 @@
             return stopwords;
         } 
 
-        public void SwapIndex(DateTime scheduledRefreshDateTime)
+        public string SwapIndex(DateTime scheduledRefreshDateTime)
         {
             _logger.Debug("Swapping vacancy search index for date: {0}", scheduledRefreshDateTime);
 
@@ -150,6 +150,8 @@
             client.Alias(aliasRequest);
 
             _logger.Debug("Swapped vacancy search index alias to new index: {0}", newIndexName);
+
+            return newIndexName;
         }
 
         public bool IsIndexCorrectlyCreated(DateTime scheduledRefreshDateTime)

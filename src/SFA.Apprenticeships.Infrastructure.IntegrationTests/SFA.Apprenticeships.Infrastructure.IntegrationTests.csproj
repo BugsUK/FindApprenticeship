@@ -196,6 +196,7 @@
     <Compile Include="UserDirectory\UserDirectoryProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VacancyIndexer\IndexingInitialisationTests.cs" />
+    <Compile Include="VacancySearch\AllVacanciesProviderTests.cs" />
     <Compile Include="VacancySearch\TraineeshipVacancySearchTests.cs" />
     <Compile Include="VacancySearch\SearchConfigurationShould.cs" />
     <Compile Include="VacancySearch\ApprenticeshipVacancySearchTests.cs" />

@@ -96,7 +96,7 @@
 
             var container = (IContainer) DependencyResolver.Current.GetService(typeof(IContainer));
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters, container);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            RouteConfig.RegisterRoutes(RouteTable.Routes, RouteConfigOptions.MapMvcAttributeRoutes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             ViewEngines.Engines.Clear();
