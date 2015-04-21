@@ -3,10 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Caching;
     using Interfaces.Logging;
-    using Interfaces.Vacancies;
     using Vacancy;
     using Web.Common.SiteMap;
 
@@ -15,14 +13,14 @@
     {
         private readonly ILogService _logger;
         private readonly ICacheService _cacheService;
-        private readonly IAllVacanciesProvider<ApprenticeshipSearchResponse> _apprenticeshipVacanciesProvider;
-        private readonly IAllVacanciesProvider<TraineeshipSearchResponse> _traineeshipVacanciesProvider;
+        private readonly IAllApprenticeshipVacanciesProvider _apprenticeshipVacanciesProvider;
+        private readonly IAllTraineeshipVacanciesProvider _traineeshipVacanciesProvider;
 
         public VacancySiteMapProcessor(
             ILogService logger,
             ICacheService cacheService,
-            IAllVacanciesProvider<ApprenticeshipSearchResponse> apprenticeshipVacanciesProvider,
-            IAllVacanciesProvider<TraineeshipSearchResponse> traineeshipVacanciesProvider)
+            IAllApprenticeshipVacanciesProvider apprenticeshipVacanciesProvider,
+            IAllTraineeshipVacanciesProvider traineeshipVacanciesProvider)
         {
             _logger = logger;
             _cacheService = cacheService;
@@ -32,8 +30,11 @@
 
         public void CreateVacancySiteMap(CreateVacancySiteMapRequest request)
         {
-            var apprenticeshipVacancies = _apprenticeshipVacanciesProvider.GetAllVacancies();
-            var traineeshipVacancies = _traineeshipVacanciesProvider.GetAllVacancies();
+            _logger.Info("Creating site map based on apprenticeship and traineeship indexes '{0}' and '{1}' respectively",
+                request.ApprenticeshipVacancyIndexName, request.TraineeshipVacancyIndexName);
+
+            var apprenticeshipVacancies = _apprenticeshipVacanciesProvider.GetAllVacancyIds(request.ApprenticeshipVacancyIndexName).ToList();
+            var traineeshipVacancies = _traineeshipVacanciesProvider.GetAllVacancyIds(request.TraineeshipVacancyIndexName).ToList();
 
             var siteMapItems = new List<SiteMapItem>();
 
@@ -43,24 +44,32 @@
             siteMapItems.AddRange(
                 apprenticeshipVacancies
                     .Select(
-                        vacancy => new SiteMapItem(CreateVacancySiteMapUrl(vacancy), lastModified, changeFrequency))
+                        vacancyId => new SiteMapItem(CreateApprenticeshipVacancySiteMapUrl(vacancyId), lastModified, changeFrequency))
                     .Union(
                         traineeshipVacancies.Select(
-                            vacancy => new SiteMapItem(CreateVacancySiteMapUrl(vacancy), lastModified, changeFrequency))));
+                            vacancyId => new SiteMapItem(CreateTraineeshipVacancySiteMapUrl(vacancyId), lastModified, changeFrequency))));
 
-            _cacheService.PutObject("SiteMap.Vacancies", siteMapItems.ToArray());
+            _logger.Info("Caching {0} apprenticeship + {1} traineeship vacancies",
+                apprenticeshipVacancies.Count(), traineeshipVacancies.Count());
+
+            // TODO: AG: US438: where to put cach keys?
+            // TODO: AG: US438: review cache duration.
+            _cacheService.PutObject("SiteMap.Vacancies", siteMapItems.ToArray(), CacheDuration.OneDay);
+
+            _logger.Info("Created site map based on apprenticeship and traineeship indexes '{0}' and '{1}' respectively",
+                request.ApprenticeshipVacancyIndexName, request.TraineeshipVacancyIndexName);
         }
 
-        private static string CreateVacancySiteMapUrl(ApprenticeshipSearchResponse vacancy)
+        private static string CreateApprenticeshipVacancySiteMapUrl(int vacancyId)
         {
             // TODO: AG: US438: consider putting into configuration.
-            return string.Format("https://www.findapprenticeship.service.gov.uk/apprenticeship/{0}", vacancy.Id);
+            return string.Format("https://www.findapprenticeship.service.gov.uk/apprenticeship/{0}", vacancyId);
         }
 
-        private static string CreateVacancySiteMapUrl(TraineeshipSearchResponse vacancy)
+        private static string CreateTraineeshipVacancySiteMapUrl(int vacancyId)
         {
             // TODO: AG: US438: consider putting into configuration.
-            return string.Format("https://www.findapprenticeship.service.gov.uk/traineeship/{0}", vacancy.Id);
+            return string.Format("https://www.findapprenticeship.service.gov.uk/traineeship/{0}", vacancyId);
         }
     }
 }

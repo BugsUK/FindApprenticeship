@@ -17,8 +17,8 @@
             For<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>().Use<ApprenticeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
             For<IVacancySearchProvider<TraineeshipSearchResponse, TraineeshipSearchParameters>>().Use<TraineeshipsSearchProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
 
-            For<IAllVacanciesProvider<ApprenticeshipSearchResponse>>().Use<AllApprenticeshipVacanciesProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
-            For<IAllVacanciesProvider<TraineeshipSearchResponse>>().Use<AllTraineeshipVacanciesProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
+            For<IAllApprenticeshipVacanciesProvider>().Use<AllApprenticeshipVacanciesProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
+            For<IAllTraineeshipVacanciesProvider>().Use<AllTraineeshipVacanciesProvider>().Ctor<IMapper>().Named("VacancySearchMapper");
         }
     }
 }

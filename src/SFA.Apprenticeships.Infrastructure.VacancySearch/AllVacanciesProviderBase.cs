@@ -4,16 +4,13 @@
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.Vacancy;
-    using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
+    using Elastic.Common.Entities;
     using Elasticsearch.Net;
     using Nest;
 
-    // TODO: AG: US438: logging.
-    public abstract class AllVacanciesProviderBase<TVacancySearchResponse, TVacancySummary> : IAllVacanciesProvider<TVacancySearchResponse>
-        where TVacancySearchResponse : class
-        where TVacancySummary : class
+    public abstract class AllVacanciesProviderBase<TVacancySummary> : IAllVacanciesProvider
+        where TVacancySummary : class, IVacancySummary
     {
         // TODO: AG: US438: consider moving to configuration.
         private const string ScrollIndexConsistencyTime = "2s";
@@ -22,50 +19,55 @@
 
         private readonly ILogService _logger;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
-        private readonly IMapper _vacancySearchMapper;
 
         protected AllVacanciesProviderBase(
             ILogService logger,
-            IElasticsearchClientFactory elasticsearchClientFactory,
-            IMapper vacancySearchMapper)
+            IElasticsearchClientFactory elasticsearchClientFactory)
         {
             _logger = logger;
             _elasticsearchClientFactory = elasticsearchClientFactory;
-            _vacancySearchMapper = vacancySearchMapper;
         }
 
-        public IEnumerable<TVacancySearchResponse> GetAllVacancies()
+        public IEnumerable<int> GetAllVacancyIds(string indexName)
         {
+            _logger.Debug("Getting all vacancy id from index '{0}' with ScrollSize='{1}', ScrollIndexConsistencyTime='{2}', ScrollTimeout='{3}'",
+                indexName, ScrollSize, ScrollIndexConsistencyTime, ScrollTimeout);
+
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(TVacancySummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(TVacancySummary));
 
             // REFERENCE: http://nest.azurewebsites.net/nest/search/scroll.html.
-            var scanResults = client.Search<ApprenticeshipSummary>(search => search
+            var scanResults = client.Search<TVacancySummary>(search => search
                 .Index(indexName)
                 .Type(documentTypeName)
+                // TODO: AG: US438: why does filtering fields here yield no results?
+                // .Fields("id")
                 .From(0)
                 .Size(ScrollSize)
                 .MatchAll()
                 .SearchType(SearchType.Scan)
                 .Scroll(ScrollIndexConsistencyTime));
 
-            var vacancies = new List<TVacancySearchResponse>();
+            var vacancies = new List<int>();
+            var scrollRequest = new ScrollRequest(scanResults.ScrollId, ScrollTimeout);
+            var scrollCount = 0;
 
             while (true)
             {
-                var scrollRequest = new ScrollRequest(scanResults.ScrollId, ScrollTimeout);
                 var results = client.Scroll<TVacancySummary>(scrollRequest);
+
+                scrollCount++;
 
                 if (!results.Documents.Any())
                 {
                     break;
                 }
-    
-                vacancies.AddRange(_vacancySearchMapper
-                    .Map<IEnumerable<TVacancySummary>, IEnumerable<TVacancySearchResponse>>(results.Documents));
+
+                vacancies.AddRange(results.Documents.Select(each => each.Id));
             }
 
+            _logger.Debug("Got {0} vacancy ids from index '{1}' in {2} 'scrolls'", vacancies.Count, indexName, scrollCount);
+            
             return vacancies;
         }
     }

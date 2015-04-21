@@ -42,10 +42,10 @@
         public void ShouldGetAllApprenticeships()
         {
             // Arrange.
-            var provider = new AllApprenticeshipVacanciesProvider(_logger.Object, _elasticsearchClientFactory, _mapper);
+            var provider = new AllApprenticeshipVacanciesProvider(_logger.Object, _elasticsearchClientFactory);
 
             // Act.
-            var vacancies = provider.GetAllVacancies().ToList();
+            var vacancies = provider.GetAllVacancyIds("apprenticeships").ToList();
 
             // Assert.
             vacancies.Should().NotBeNull();
@@ -58,10 +58,10 @@
         public void ShouldGetAllTraineeships()
         {
             // Arrange.
-            var provider = new AllTraineeshipVacanciesProvider(_logger.Object, _elasticsearchClientFactory, _mapper);
+            var provider = new AllTraineeshipVacanciesProvider(_logger.Object, _elasticsearchClientFactory);
 
             // Act.
-            var vacancies = provider.GetAllVacancies().ToList();
+            var vacancies = provider.GetAllVacancyIds("traineeships").ToList();
 
             // Assert.
             vacancies.Should().NotBeNull();

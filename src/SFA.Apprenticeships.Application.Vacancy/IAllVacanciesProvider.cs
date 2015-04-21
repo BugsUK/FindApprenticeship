@@ -2,9 +2,8 @@
 {
     using System.Collections.Generic;
 
-    public interface IAllVacanciesProvider<TVacancySearchResponse>
-        where TVacancySearchResponse : class
+    public interface IAllVacanciesProvider
     {
-        IEnumerable<TVacancySearchResponse> GetAllVacancies();
+        IEnumerable<int> GetAllVacancyIds(string indexName);
     }
 }
