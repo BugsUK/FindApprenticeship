@@ -33,7 +33,7 @@
                 .With(candidateServiceProvider).Build();
 
             // Act.
-            var response = mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches);
+            var response = mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false);
 
             // Assert.
             candidateServiceProvider.Verify(p => p.GetSavedSearches(candidateId), Times.Once);
@@ -57,7 +57,7 @@
                 .With(candidateServiceProvider).Build();
 
             // Act.
-            var response = mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches);
+            var response = mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false);
 
             // Assert.
             candidateServiceProvider.Verify(p => p.GetSavedSearches(candidateId), Times.Once);
@@ -75,7 +75,7 @@
                 .With(candidateServiceProvider).Build();
 
             // Act.
-            var response = mediator.Index(null, ApprenticeshipSearchMode.SavedSearches);
+            var response = mediator.Index(null, ApprenticeshipSearchMode.SavedSearches, false);
 
             // Assert.
             candidateServiceProvider.Verify(p => p.GetSavedSearches(It.IsAny<Guid>()), Times.Never);

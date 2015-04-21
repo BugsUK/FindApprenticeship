@@ -46,7 +46,7 @@
                     <button class="button no-btm-margin" id="search-button" name="SearchAction" value="Search">Update results</button>
                 </div>
                 <div class="form-group">
-                    @Html.RouteLink("Start again", CandidateRouteNames.ApprenticeshipSearch, new { Model.SearchMode }, new { @id = "start-again-link" })
+                    @Html.RouteLink("Start again", CandidateRouteNames.ApprenticeshipSearch, new { Model.SearchMode, reset = true }, new { @id = "start-again-link" })
                 </div>
                 <div class="form-group map-container hide-nojs">
                     <div id="map-canvas" style="width: 100%; height: 250px"></div>

@@ -22,7 +22,7 @@
         {
             var index = new Index();
 
-            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Keyword).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Keyword, false).ViewModel;
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
@@ -62,7 +62,7 @@
         {
             var index = new Index();
 
-            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category, false).ViewModel;
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
@@ -107,7 +107,7 @@
             ReferenceDataService.Setup(rds => rds.GetCategories());
             var index = new Index();
 
-            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category, false).ViewModel;
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
@@ -146,7 +146,7 @@
         public void SearchMode_SavedSearches_AnonymousUserTest()
         {
             var index = new Index();
-            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
@@ -162,7 +162,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var searchViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var searchViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
             var view = index.RenderAsHtml(CreateMockHttpContext(true), searchViewModel);
 
             var link = view.GetElementbyId("saved-searches-tab-control");
@@ -190,7 +190,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var searchViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var searchViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
             var view = index.RenderAsHtml(CreateMockHttpContext(true), searchViewModel);
 
             var link = view.GetElementbyId("saved-searches-tab-control");

@@ -16,7 +16,7 @@
         {
             var results = new Results();
 
-            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category, false).ViewModel;
             searchViewModel.Category = "1";
             var searchResultsViewModel = Mediator.Results(null, searchViewModel).ViewModel;
             var view = results.RenderAsHtml(searchResultsViewModel);
@@ -31,7 +31,7 @@
         {
             var results = new Results();
 
-            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
+            var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category, false).ViewModel;
             searchViewModel.Category = "1";
             searchViewModel.SubCategories = new []{"1_1"};
             var searchResultsViewModel = Mediator.Results(null, searchViewModel).ViewModel;

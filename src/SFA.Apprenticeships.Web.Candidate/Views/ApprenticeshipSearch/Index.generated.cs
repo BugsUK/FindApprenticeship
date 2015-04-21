@@ -551,7 +551,7 @@ WriteLiteral("                        ");
 
             
             #line 101 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-                   Write(Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "reset-search-options-link" }));
+                   Write(Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, new { reset = true }, new { @id = "reset-search-options-link" }));
 
             
             #line default
@@ -588,14 +588,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 7395), Tuple.Create("\"", 7425)
+WriteAttribute("value", Tuple.Create(" value=\"", 7411), Tuple.Create("\"", 7441)
             
             #line 107 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 7403), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 7419), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 7403), false)
+, 7419), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -689,14 +689,14 @@ WriteLiteral(" class=\"list-text\"");
 WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
 "");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8394), Tuple.Create("\'", 8444)
+WriteAttribute("href", Tuple.Create(" href=\'", 8410), Tuple.Create("\'", 8460)
             
             #line 126 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 8401), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 8417), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 8401), false)
+, 8417), false)
 );
 
 WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    \r\n          " +
