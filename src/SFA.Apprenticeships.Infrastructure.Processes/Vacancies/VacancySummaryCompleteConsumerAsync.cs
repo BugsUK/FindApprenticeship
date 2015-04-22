@@ -3,10 +3,10 @@
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
     using Application.Vacancies.Entities;
+    using Application.Vacancies.Entities.SiteMap;
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
     using VacancyIndexer;
-    using Web.Common.SiteMap;
     using Elastic = Elastic.Common.Entities;
 
     public class VacancySummaryCompleteConsumerAsync : IConsumeAsync<VacancySummaryUpdateComplete>
@@ -72,7 +72,7 @@
                         TraineeshipVacancyIndexName =  traineeshipVacancyIndexName
                     };
 
-                    // TODO: AG: US438: reinstate.
+                    // TODO: AG: US438: reinstate and add test.
                     // _messageBus.PublishMessage(request);
                 }
             });

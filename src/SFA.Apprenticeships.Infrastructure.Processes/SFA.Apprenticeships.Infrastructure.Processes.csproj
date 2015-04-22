@@ -295,6 +295,10 @@
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancies</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
@@ -370,10 +374,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
-      <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
-      <Name>SFA.Apprenticeships.Web.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,14 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System.Web.Http.Results;
+    using System;
+    using System.Linq;
     using System.Web.Mvc;
+    using Application.Vacancy.SiteMap;
     using Common.SiteMap;
 
-    // TODO: AG: US438: review caching policy.
+    // TODO: AG: US438: review page caching policy.
     [OutputCache(Duration = 30, VaryByParam = "none")]
     public class SiteMapController : Controller
     {
-        // TODO: AG: US438: consider adding a mediator here - but what value would be added?
         private readonly ISiteMapVacancyProvider _siteMapVacancyProvider;
 
         public SiteMapController(ISiteMapVacancyProvider siteMapVacancyProvider)
@@ -19,14 +20,18 @@
         [Route("sitemap.xml")]
         public ActionResult Index()
         {
-            var siteMapVacancies = _siteMapVacancyProvider.GetVacancies();
+            var vacancies = _siteMapVacancyProvider.GetVacancies();
 
-            if (siteMapVacancies == null)
+            if (vacancies == null)
             {
                 return new HttpNotFoundResult();
             }
+ 
+            var siteMapItems = vacancies
+                .Select(vacancy =>
+                    new SiteMapItem(vacancy.ToUrl(), DateTime.Today, SiteMapChangeFrequency.Hourly));
 
-            return new HttpNotFoundResult();
+            return new SiteMapResult(siteMapItems);
         }
     }
 }

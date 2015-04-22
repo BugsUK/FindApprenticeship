@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
-    using Web.Common.SiteMap;
+    using Entities.SiteMap;
 
-    public interface IVacancySiteMapProcessor
+    public interface ISiteMapVacancyProcessor
     {
         void Process(CreateVacancySiteMapRequest request);
     }

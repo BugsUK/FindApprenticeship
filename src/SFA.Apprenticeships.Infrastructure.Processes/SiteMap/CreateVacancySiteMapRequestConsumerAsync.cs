@@ -3,24 +3,24 @@
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
     using Application.Vacancies;
+    using Application.Vacancies.Entities.SiteMap;
     using Configuration;
     using Domain.Interfaces.Configuration;
     using EasyNetQ.AutoSubscribe;
-    using Web.Common.SiteMap;
 
     public class CreateVacancySiteMapRequestConsumerAsync : IConsumeAsync<CreateVacancySiteMapRequest>
     {
         private readonly ILogService _logger;
-        private readonly IVacancySiteMapProcessor _vacancySiteMapProcessor;
+        private readonly ISiteMapVacancyProcessor _siteMapVacancyProcessor;
         private readonly bool _enableVacancySiteMap;
 
         public CreateVacancySiteMapRequestConsumerAsync(
             ILogService logger,
             IConfigurationService configurationService,
-            IVacancySiteMapProcessor vacancySiteMapProcessor)
+            ISiteMapVacancyProcessor siteMapVacancyProcessor)
         {
             _logger = logger;
-            _vacancySiteMapProcessor = vacancySiteMapProcessor;
+            _siteMapVacancyProcessor = siteMapVacancyProcessor;
             _enableVacancySiteMap = configurationService.Get<ProcessConfiguration>().EnableVacancySiteMap;
         }
 
@@ -36,7 +36,7 @@
                     return;
                 }
 
-                _vacancySiteMapProcessor.Process(request);
+                _siteMapVacancyProcessor.Process(request);
             });
         }
     }

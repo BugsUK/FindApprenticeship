@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.SiteMap
+﻿namespace SFA.Apprenticeships.Application.Vacancy.SiteMap
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -21,7 +21,6 @@
 
         public void SetVacancies(IEnumerable<SiteMapVacancy> siteMapVacancies)
         {
-            // TODO: AG: US438: review cache duration.
             _cacheService.PutObject(CacheKey, siteMapVacancies.ToArray(), CacheDuration.OneDay);
         }
     }

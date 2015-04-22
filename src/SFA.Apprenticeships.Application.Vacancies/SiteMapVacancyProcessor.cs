@@ -3,19 +3,19 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Vacancies;
+    using Entities.SiteMap;
     using Interfaces.Logging;
     using Vacancy;
-    using Web.Common.SiteMap;
+    using Vacancy.SiteMap;
 
-    // TODO: AG: US438: logging.
-    public class VacancySiteMapProcessor : IVacancySiteMapProcessor
+    public class SiteMapVacancyProcessor : ISiteMapVacancyProcessor
     {
         private readonly ILogService _logger;
         private readonly ISiteMapVacancyProvider _siteMapVacancyProvider;
         private readonly IAllApprenticeshipVacanciesProvider _apprenticeshipVacanciesProvider;
         private readonly IAllTraineeshipVacanciesProvider _traineeshipVacanciesProvider;
 
-        public VacancySiteMapProcessor(
+        public SiteMapVacancyProcessor(
             ILogService logger,
             ISiteMapVacancyProvider siteMapVacancyProvider,
             IAllApprenticeshipVacanciesProvider apprenticeshipVacanciesProvider,

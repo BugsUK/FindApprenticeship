@@ -2,26 +2,26 @@
 {
     using Application.Interfaces.Logging;
     using Application.Vacancies;
+    using Application.Vacancies.Entities.SiteMap;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Processes.Configuration;
     using Infrastructure.Processes.SiteMap;
     using Moq;
     using NUnit.Framework;
-    using Web.Common.SiteMap;
 
     [TestFixture]
     public class CreateVacancySiteMapRequestConsumerAsyncTests
     {
         private Mock<ILogService> _logger;
         private Mock<IConfigurationService> _configurationService;
-        private Mock<IVacancySiteMapProcessor> _siteMapVacancyProcessor;
+        private Mock<ISiteMapVacancyProcessor> _siteMapVacancyProcessor;
 
         [SetUp]
         public void SetUp()
         {
             _logger = new Mock<ILogService>();
             _configurationService = new Mock<IConfigurationService>();
-            _siteMapVacancyProcessor = new Mock<IVacancySiteMapProcessor>();
+            _siteMapVacancyProcessor = new Mock<ISiteMapVacancyProcessor>();
         }
 
         [TestCase(true)]

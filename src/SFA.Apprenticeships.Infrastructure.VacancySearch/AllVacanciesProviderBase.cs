@@ -12,8 +12,7 @@
     public abstract class AllVacanciesProviderBase<TVacancySummary> : IAllVacanciesProvider
         where TVacancySummary : class, IVacancySummary
     {
-        // TODO: AG: US438: consider moving to configuration.
-        private const string ScrollIndexConsistencyTime = "2s";
+        private const string ScrollIndexConsistencyTime = "5s";
         private const int ScrollSize = 100;
         private const string ScrollTimeout = "5s";
 
@@ -40,11 +39,12 @@
             var scanResults = client.Search<TVacancySummary>(search => search
                 .Index(indexName)
                 .Type(documentTypeName)
-                // TODO: AG: US438: why does filtering fields here yield no results?
-                // .Fields("id")
                 .From(0)
                 .Size(ScrollSize)
                 .MatchAll()
+                // TODO: AG: US438: why does filtering fields here yield no results?
+                // .Fields("id")
+                // .Fields(field => field.Id)
                 .SearchType(SearchType.Scan)
                 .Scroll(ScrollIndexConsistencyTime));
 

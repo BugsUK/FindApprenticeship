@@ -23,6 +23,7 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
+    using Application.Vacancy.SiteMap;
     using Common.Configuration;
     using Common.SiteMap;
     using Domain.Entities.Vacancies.Apprenticeships;

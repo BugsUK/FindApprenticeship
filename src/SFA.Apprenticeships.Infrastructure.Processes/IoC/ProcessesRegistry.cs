@@ -8,6 +8,7 @@
     using Application.Location;
     using Application.ReferenceData;
     using Application.Vacancies;
+    using Application.Vacancy.SiteMap;
     using Applications;
     using Candidates;
     using Common.IoC;
@@ -20,7 +21,6 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Vacancies;
-    using Web.Common.SiteMap;
 
     public class ProcessesRegistry : Registry
     {
@@ -66,7 +66,7 @@
             For<VacancyAboutToExpireConsumerAsync>().Use<VacancyAboutToExpireConsumerAsync>().Ctor<IMapper>().Named("VacancyEtlMapper");
 
             // site map
-            For<IVacancySiteMapProcessor>().Use<VacancySiteMapProcessor>();
+            For<ISiteMapVacancyProcessor>().Use<SiteMapVacancyProcessor>();
             For<ISiteMapVacancyProvider>().Use<SiteMapVacancyProvider>();
 
             // reference data

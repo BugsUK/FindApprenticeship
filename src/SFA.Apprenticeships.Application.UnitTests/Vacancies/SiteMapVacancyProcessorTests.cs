@@ -3,16 +3,17 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Vacancies;
+    using Application.Vacancies.Entities.SiteMap;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
     using Vacancy;
-    using Web.Common.SiteMap;
+    using Vacancy.SiteMap;
 
     [TestFixture]
-    public class VacancySiteMapProcessorTests
+    public class SiteMapVacancyProcessorTests
     {
         private const string ApprenticeshipVacancyIndexName = "apprenticeships";
         private const string TraineeshipVacancyIndexName = "traineeships";
@@ -24,7 +25,7 @@
         private Mock<IAllTraineeshipVacanciesProvider> _mockTraineeshipVacanciesProvider;
 
         private List<SiteMapVacancy> _siteMapVacancies;
-        private VacancySiteMapProcessor _processor;
+        private SiteMapVacancyProcessor _processor;
 
         [SetUp]
         public void SetUp()
@@ -49,7 +50,7 @@
         public void ShouldCacheApprenticeshipVacancies()
         {
             // Arrange.
-            _processor = new VacancySiteMapProcessor(
+            _processor = new SiteMapVacancyProcessor(
                 _mockLogger.Object, _mockSiteMapVacancyProvider.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
 
             var vacancyIds = new[] { 1, 2, 3 };
@@ -82,7 +83,7 @@
         public void ShouldCacheTraineeshipVacancies()
         {
             // Arrange.
-            _processor = new VacancySiteMapProcessor(
+            _processor = new SiteMapVacancyProcessor(
                 _mockLogger.Object, _mockSiteMapVacancyProvider.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
 
             var vacancyIds = new[] { 4, 5, 6, 42 };
@@ -115,7 +116,7 @@
         public void ShouldCacheApprenticeshipAndTraineeshipVacancies()
         {
             // Arrange.
-            _processor = new VacancySiteMapProcessor(
+            _processor = new SiteMapVacancyProcessor(
                 _mockLogger.Object, _mockSiteMapVacancyProvider.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
 
             var apprenticeshipVacancyIds = new[] { 1, 2, 3 };

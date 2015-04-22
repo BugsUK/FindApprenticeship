@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.SiteMap
+﻿namespace SFA.Apprenticeships.Application.Vacancy.SiteMap
 {
     using System.Collections.Generic;
 

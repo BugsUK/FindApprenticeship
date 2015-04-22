@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.VacancySearch
 {
-    // TODO: AG: US438: implement tests.
     using System;
     using System.Linq;
     using Application.Interfaces.Logging;
@@ -20,7 +19,6 @@
     public class AllVacanciesProviderTests
     {
         private IElasticsearchClientFactory _elasticsearchClientFactory;
-        private IMapper _mapper;
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
 
         [SetUp]
@@ -35,7 +33,7 @@
             });
 
             _elasticsearchClientFactory = container.GetInstance<IElasticsearchClientFactory>();
-            _mapper = container.GetInstance<IMapper>();
+            container.GetInstance<IMapper>();
         }
 
         [Test, Category("Integration")]
