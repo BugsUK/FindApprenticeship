@@ -18,7 +18,7 @@
         {
             // Arrange.
             var @partial = new savedSearches();
-            var viewModel = Mediator.Index(null, ApprenticeshipSearchMode.Keyword).ViewModel;
+            var viewModel = Mediator.Index(null, ApprenticeshipSearchMode.Keyword, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(viewModel);
@@ -32,7 +32,7 @@
         {
             // Arrange.
             var @partial = new savedSearches();
-            var viewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category).ViewModel;
+            var viewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(viewModel);
@@ -52,7 +52,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var viewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var viewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(viewModel);
@@ -72,7 +72,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(indexViewModel);
@@ -97,7 +97,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(indexViewModel);
@@ -137,7 +137,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(indexViewModel);
@@ -174,7 +174,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(indexViewModel);
@@ -207,7 +207,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(indexViewModel);
@@ -244,7 +244,7 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
-            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches).ViewModel;
+            var indexViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
 
             // Act.
             var view = @partial.RenderAsHtml(indexViewModel);

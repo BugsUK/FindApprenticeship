@@ -53,7 +53,7 @@
             _blacklistedCategoryCodes = configService.Get<WebConfiguration>().BlacklistedCategoryCodes.Split(',');
         }
 
-        public MediatorResponse<ApprenticeshipSearchViewModel> Index(Guid? candidateId, ApprenticeshipSearchMode searchMode)
+        public MediatorResponse<ApprenticeshipSearchViewModel> Index(Guid? candidateId, ApprenticeshipSearchMode searchMode, bool reset)
         {
             if (!candidateId.HasValue && searchMode == ApprenticeshipSearchMode.SavedSearches)
             {
@@ -64,7 +64,7 @@
             var sortTypes = GetSortTypes();
             var resultsPerPage = GetResultsPerPage();
             var apprenticeshipLevels = GetApprenticeshipLevels();
-            var apprenticeshipLevel = GetApprenticeshipLevel();
+            var apprenticeshipLevel = GetApprenticeshipLevel(reset);
             var searchFields = GetSearchFields();
             var categories = GetCategories();
             var savedSearches = GetSavedSearches(candidateId);
@@ -130,8 +130,13 @@
             return searchFields;
         }
 
-        private string GetApprenticeshipLevel()
+        private string GetApprenticeshipLevel(bool reset)
         {
+            if (reset)
+            {
+                UserDataProvider.Pop(CandidateDataItemNames.ApprenticeshipLevel);
+            }
+
             return UserDataProvider.Get(CandidateDataItemNames.ApprenticeshipLevel) ?? "All";
         }
 
@@ -182,7 +187,7 @@
 
             if (string.IsNullOrEmpty(model.ApprenticeshipLevel))
             {
-                model.ApprenticeshipLevel = GetApprenticeshipLevel();
+                model.ApprenticeshipLevel = GetApprenticeshipLevel(false);
             }
 
             UserDataProvider.Push(CandidateDataItemNames.ApprenticeshipLevel, model.ApprenticeshipLevel.ToString(CultureInfo.InvariantCulture));

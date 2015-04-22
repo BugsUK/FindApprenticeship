@@ -234,7 +234,7 @@
                 {
                     case AccountMediatorCodes.UpdateEmailAddress.Ok:
                         SetUserMessage(response.Message.Text);
-                        return RedirectToRoute(RouteNames.VertifyUpdatedEmail);
+                        return RedirectToRoute(RouteNames.VerifyUpdatedEmail);
                     case AccountMediatorCodes.UpdateEmailAddress.HasError:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         break;
@@ -253,7 +253,7 @@
             {
                 var response = _accountMediator.ResendUpdateEmailAddressCode(UserContext.CandidateId);
                 SetUserMessage(response.Message.Text, response.Message.Level);
-                return RedirectToRoute(RouteNames.VertifyUpdatedEmail);
+                return RedirectToRoute(RouteNames.VerifyUpdatedEmail);
             });
         }
 

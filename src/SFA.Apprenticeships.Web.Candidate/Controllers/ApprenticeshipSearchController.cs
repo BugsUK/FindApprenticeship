@@ -32,7 +32,7 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index(ApprenticeshipSearchMode searchMode = ApprenticeshipSearchMode.Keyword)
+        public async Task<ActionResult> Index(ApprenticeshipSearchMode searchMode = ApprenticeshipSearchMode.Keyword, bool reset = false)
         {
             return await Task.Run<ActionResult>(() =>
             {
@@ -40,7 +40,7 @@
                 ModelState.Remove("SortType");
 
                 var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _apprenticeshipSearchMediator.Index(candidateId, searchMode);
+                var response = _apprenticeshipSearchMediator.Index(candidateId, searchMode, reset);
 
                 switch (response.Code)
                 {
@@ -76,7 +76,7 @@
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn:
                         return RedirectToAction("Index");
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.Ok:
-                        return RedirectToAction("Results", model);
+                        return RedirectToAction("Results", model.RouteValues);
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch:
                     {
                         // ReSharper disable once PossibleInvalidOperationException

@@ -384,7 +384,7 @@ WriteLiteral(" class=\"inl-block\"");
 WriteAttribute("href", Tuple.Create(" href=\"", 3390), Tuple.Create("\"", 3442)
             
             #line 64 "..\..\Views\Account\Settings.cshtml"
-                                                                                       , Tuple.Create(Tuple.Create("", 3397), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.VertifyUpdatedEmail)
+                                                                                       , Tuple.Create(Tuple.Create("", 3397), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.VerifyUpdatedEmail)
             
             #line default
             #line hidden

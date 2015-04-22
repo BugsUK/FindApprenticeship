@@ -26,11 +26,11 @@
 
         void UnlockAccount(string username, string accountUnlockCode);
 
-        UserStatuses? GetUserStatus(string username);
-
         User GetUser(Guid userId);
 
-        string[] GetRoleNames(string username);
+        User GetUser(string username, bool errorIfNotFound = true);
+
+        string[] GetRoleNames(Guid userId);
 
         void UpdateUsername(Guid userId, string newUsername);
 

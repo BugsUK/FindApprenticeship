@@ -18,7 +18,7 @@
     You've been sent a code to your new email address, enter your code to verify
     your address.
 </p>
-@using (Html.BeginRouteForm(RouteNames.VertifyUpdatedEmail, FormMethod.Post, new {autocomplete = "off"}))
+@using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {autocomplete = "off"}))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

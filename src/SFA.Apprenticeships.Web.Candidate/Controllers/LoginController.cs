@@ -25,7 +25,8 @@
 
         public LoginController(IAuthenticationTicketService authenticationTicketService,
             ILoginMediator loginMediator,
-            IConfigurationService configurationService) : base(configurationService)
+            IConfigurationService configurationService)
+            : base(configurationService)
         {
             _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer?
             _loginMediator = loginMediator;
@@ -65,16 +66,11 @@
                 }
 
                 var response = _loginMediator.Index(model);
-
                 var viewModel = response.ViewModel;
-                if (viewModel != null && viewModel.IsAuthenticated && viewModel.MobileVerificationRequired)
-                {
 
-                    var mobileVerificationRequiredMessage = string.Format(LoginPageMessages.MobileVerificationRequiredText, Url.Action("VerifyMobile", "Account",
-                        new RouteValueDictionary{
-                            {"ReturnUrl", viewModel.ReturnUrl}
-                        }));
-                    SetUserMessage(mobileVerificationRequiredMessage, UserMessageLevel.Info);
+                if (viewModel != null && viewModel.IsAuthenticated)
+                {
+                    SetLoggedInUserMessages(viewModel);
                 }
 
                 switch (response.Code)
@@ -223,7 +219,7 @@
             }
 
             UserData.Push(userJourneyKey, userJourneyValue);
-            
+
             if (ViewBag.FeedbackUrl == returnUrl)
             {
                 return Redirect(ViewBag.FeedbackUrl);
@@ -261,5 +257,34 @@
 
             return RedirectToRoute(RouteNames.SignIn);
         }
+
+        #region Helpers
+
+        private void SetLoggedInUserMessages(LoginResultViewModel viewModel)
+        {
+            if (viewModel.MobileVerificationRequired)
+            {
+                var message = string.Format(LoginPageMessages.MobileVerificationRequiredText,
+                    Url.Action("VerifyMobile", "Account",
+                        new RouteValueDictionary
+                        {
+                            {
+                                "ReturnUrl", viewModel.ReturnUrl
+                            }
+                        }));
+
+                SetUserMessage(message, UserMessageLevel.Info);
+            }
+
+            if (viewModel.PendingUsernameVerificationRequired)
+            {
+                var message = string.Format(LoginPageMessages.PendingUsernameVerificationRequiredText,
+                    Url.RouteUrl(RouteNames.VerifyUpdatedEmail));
+
+                SetUserMessage(message, UserMessageLevel.Info);
+            }
+        }
+
+        #endregion
     }
 }

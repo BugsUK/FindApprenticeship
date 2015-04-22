@@ -22,7 +22,7 @@
                 ? Guid.NewGuid()
                 : default(Guid?);
 
-            var response = Mediator.Index(candidateId, searchMode);
+            var response = Mediator.Index(candidateId, searchMode, false);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 
@@ -48,7 +48,7 @@
         [Test]
         public void CandidateNotLoggedIn_SavedSearchesMode()
         {
-            var response = Mediator.Index(null, ApprenticeshipSearchMode.SavedSearches);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.SavedSearches, false);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 
@@ -69,7 +69,7 @@
         {
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(GetCategories);
 
-            var response = Mediator.Index(null, ApprenticeshipSearchMode.Category);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Category, false);
 
             var categories = response.ViewModel.Categories;
             categories.Count.Should().Be(3);
@@ -82,7 +82,7 @@
         {
             UserDataProvider.Setup(udp => udp.Get(CandidateDataItemNames.ApprenticeshipLevel)).Returns("Advanced");
 
-            var response = Mediator.Index(null, ApprenticeshipSearchMode.Keyword);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Keyword, false);
 
             var viewModel = response.ViewModel;
             viewModel.ApprenticeshipLevel.Should().Be("Advanced");
@@ -91,7 +91,7 @@
         [Test]
         public void ShowEnglandSearchInKeywordSearch()
         {
-            var response = Mediator.Index(null, ApprenticeshipSearchMode.Keyword);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Keyword, false);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 
@@ -105,7 +105,7 @@
         [Test]
         public void ShowEnglandSearchInCategorySearch()
         {
-            var response = Mediator.Index(null, ApprenticeshipSearchMode.Category);
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Category, false);
 
             response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
 

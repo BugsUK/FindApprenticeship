@@ -28,10 +28,10 @@
 
         public UpdateEmailStatus UpdateStatus { get; set; }
 
-        [Display(Name = VertifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.LabelText)]
+        [Display(Name = VerifyUpdatedEmailViewModelMessages.VerifyUpdatedEmailCodeMessages.LabelText)]
         public string PendingUsernameCode { get; set; }
 
-        [Display(Name = VertifyUpdatedEmailViewModelMessages.PasswordMessages.LabelText, Description = VertifyUpdatedEmailViewModelMessages.PasswordMessages.HintText)]
+        [Display(Name = VerifyUpdatedEmailViewModelMessages.PasswordMessages.LabelText, Description = VerifyUpdatedEmailViewModelMessages.PasswordMessages.HintText)]
         public string VerifyPassword { get; set; }
     }
 }

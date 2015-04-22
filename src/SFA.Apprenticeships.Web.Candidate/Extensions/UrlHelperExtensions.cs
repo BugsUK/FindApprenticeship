@@ -10,7 +10,7 @@
         {
             var subCategories = model.SubCategories;
             model.SubCategories = null;
-            var actionUrl = url.Action(actionName, model) + subCategories.ToQueryString("SubCategories");
+            var actionUrl = url.Action(actionName, model.RouteValues) + subCategories.ToQueryString("SubCategories");
             model.SubCategories = subCategories;
             return actionUrl;
         }

@@ -6,7 +6,7 @@
         public const string SignOut = "SignOut";
         public const string UpdatedTermsAndConditions = "UpdatedTermsAndConditions";
         public const string UpdateEmail = "UpdateEmail";
-        public const string VertifyUpdatedEmail = "VertifyUpdatedEmail";
+        public const string VerifyUpdatedEmail = "VerifyUpdatedEmail";
         public const string SiteMap = "SiteMap";
     }
 }
