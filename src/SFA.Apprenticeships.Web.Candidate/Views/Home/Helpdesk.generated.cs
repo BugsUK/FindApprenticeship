@@ -177,10 +177,10 @@ WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
 WriteLiteral(">\r\n            <p>If you\'re having trouble signing in to your account, try visiti" +
 "ng the <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1692), Tuple.Create("\"", 1755)
+WriteAttribute("href", Tuple.Create(" href=\"", 1692), Tuple.Create("\"", 1743)
             
             #line 35 "..\..\Views\Home\Helpdesk.cshtml"
-              , Tuple.Create(Tuple.Create("", 1699), Tuple.Create<System.Object, System.Int32>(Url.Action(RouteNames.ForgottenCredentials, "Register")
+              , Tuple.Create(Tuple.Create("", 1699), Tuple.Create<System.Object, System.Int32>(Url.Action(RouteNames.ForgottenCredentials)
             
             #line default
             #line hidden
@@ -196,14 +196,14 @@ WriteLiteral(" class=\"selfServe panel-indent toggle-content hide-nojs text\"");
 
 WriteLiteral(">\r\n            <p>To activate your account, <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2010), Tuple.Create("\"", 2046)
+WriteAttribute("href", Tuple.Create(" href=\"", 1998), Tuple.Create("\"", 2034)
             
             #line 39 "..\..\Views\Home\Helpdesk.cshtml"
-, Tuple.Create(Tuple.Create("", 2017), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Login")
+, Tuple.Create(Tuple.Create("", 2005), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Login")
             
             #line default
             #line hidden
-, 2017), false)
+, 2005), false)
 );
 
 WriteLiteral(@">sign in</a> with the email address and password you used to create your account.</p>

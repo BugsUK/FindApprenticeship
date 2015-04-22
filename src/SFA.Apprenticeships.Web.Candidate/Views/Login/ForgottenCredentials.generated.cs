@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Candidate.Views.Register
+namespace SFA.Apprenticeships.Web.Candidate.Views.Login
 {
     using System;
     using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Register/ForgottenCredentials.cshtml")]
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Login/ForgottenCredentials.cshtml")]
     public partial class ForgottenCredentials : System.Web.Mvc.WebViewPage<ForgottenCredentialsViewModel>
     {
         public ForgottenCredentials()
@@ -51,9 +51,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
         public override void Execute()
         {
             
-            #line 3 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 3 "..\..\Views\Login\ForgottenCredentials.cshtml"
   
-    ViewBag.Title = "Forgotten password - Find an apprenticeship";
+    ViewBag.Title = "Forgotten credentials - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
             
@@ -70,7 +70,7 @@ WriteLiteral(" class=\"heading-large\"");
 WriteLiteral(">If you can\'t access your account</h1>\r\n</div>\r\n\r\n");
 
             
-            #line 12 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 12 "..\..\Views\Login\ForgottenCredentials.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
@@ -79,22 +79,22 @@ Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 14 "..\..\Views\Register\ForgottenCredentials.cshtml"
- using (Html.BeginForm("ForgottenPassword", "Register", FormMethod.Post, new { @id = "forgotten-password-form" }))
+            #line 14 "..\..\Views\Login\ForgottenCredentials.cshtml"
+ using (Html.BeginForm("ForgottenPassword", "Login", FormMethod.Post, new { @id = "forgotten-password-form" }))
 {
     
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 16 "..\..\Views\Login\ForgottenCredentials.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 16 "..\..\Views\Login\ForgottenCredentials.cshtml"
                             
     
 
@@ -120,7 +120,7 @@ WriteLiteral(">If you\'ve forgotten your password</h2>\r\n            <p>\r\n   
 WriteLiteral("        ");
 
             
-            #line 27 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 27 "..\..\Views\Login\ForgottenCredentials.cshtml"
    Write(Html.FormTextFor(m => m.ForgottenPasswordViewModel.EmailAddress, controlHtmlAttributes: new { @class = "linked-input-master", type = "email", spellcheck = "false", autofocus = "autofocus" }, hintHtmlAttributes: new { @class = "text" }, labelText: "Enter email"));
 
             
@@ -139,7 +139,7 @@ WriteLiteral(" id=\"forgottenpassword-button\"");
 WriteLiteral(">Send code</button>\r\n        </div>\r\n    </fieldset>\r\n");
 
             
-            #line 33 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 33 "..\..\Views\Login\ForgottenCredentials.cshtml"
 }
 
             
@@ -158,7 +158,7 @@ WriteLiteral(">If your account is locked</h2>\r\n    <p>\r\n        If your acco
 
 WriteAttribute("href", Tuple.Create(" href=\"", 1425), Tuple.Create("\"", 1462)
             
-            #line 39 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 39 "..\..\Views\Login\ForgottenCredentials.cshtml"
 , Tuple.Create(Tuple.Create("", 1432), Tuple.Create<System.Object, System.Int32>(Url.Action("Unlock", "Login")
             
             #line default
@@ -169,22 +169,22 @@ WriteAttribute("href", Tuple.Create(" href=\"", 1425), Tuple.Create("\"", 1462)
 WriteLiteral(">enter it</a> now.\r\n    </p>\r\n</div>\r\n\r\n");
 
             
-            #line 43 "..\..\Views\Register\ForgottenCredentials.cshtml"
- using (Html.BeginForm("ForgottenEmail", "Register", FormMethod.Post, new { @id = "forgotten-email-form" }))
+            #line 43 "..\..\Views\Login\ForgottenCredentials.cshtml"
+ using (Html.BeginForm("ForgottenEmail", "Login", FormMethod.Post, new { @id = "forgotten-email-form" }))
 {
     
             
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 45 "..\..\Views\Login\ForgottenCredentials.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 45 "..\..\Views\Login\ForgottenCredentials.cshtml"
                             
 
 
@@ -216,7 +216,7 @@ WriteLiteral(@">
 WriteLiteral("                ");
 
             
-            #line 58 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 58 "..\..\Views\Login\ForgottenCredentials.cshtml"
            Write(Html.FormTextFor(m => m.ForgottenEmailViewModel.PhoneNumber, controlHtmlAttributes: new { type = "tel" }));
 
             
@@ -236,7 +236,7 @@ WriteLiteral(">Send email address</button>\r\n                </div>\r\n        
 " </details>\r\n    </div>\r\n");
 
             
-            #line 66 "..\..\Views\Register\ForgottenCredentials.cshtml"
+            #line 66 "..\..\Views\Login\ForgottenCredentials.cshtml"
 }
 
             

@@ -5,6 +5,7 @@
     using Candidate.Validators;
     using Common.Configuration;
     using Common.Providers;
+    using Common.Services;
     using Domain.Interfaces.Configuration;
     using Moq;
 
@@ -13,11 +14,13 @@
         private Mock<IUserDataProvider> _userDataProvider;
         private Mock<ICandidateServiceProvider> _candidateServiceProvider;
         private Mock<IConfigurationService> _configurationService;
+        private readonly Mock<IAuthenticationTicketService> _authenticationTicketService;
 
         public LoginMediatorBuilder()
         {
             _userDataProvider = new Mock<IUserDataProvider>();
             _candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+            _authenticationTicketService = new Mock<IAuthenticationTicketService>();
         }
 
         public LoginMediatorBuilder With(Mock<IUserDataProvider> userDataProvider)
@@ -38,7 +41,7 @@
             return this;
         }
 
-        public LoginMediator Build()
+        public ILoginMediator Build()
         {
             if (_configurationService == null)
             {
@@ -47,7 +50,7 @@
                     .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             }
 
-            var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationService.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator());
+            var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationService.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator(), _authenticationTicketService.Object, new ForgottenPasswordViewModelServerValidator(), new PasswordResetViewModelServerValidator());
             return mediator;
         }
     }

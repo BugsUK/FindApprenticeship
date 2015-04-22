@@ -458,11 +458,11 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Index.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Register\ForgottenCredentials.cshtml">
+    <Content Include="Views\Login\ForgottenCredentials.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ForgottenCredentials.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Register\ResetPassword.cshtml">
+    <Content Include="Views\Login\ResetPassword.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ResetPassword.generated.cs</LastGenOutput>
     </Content>
@@ -1166,7 +1166,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Complete.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Register\ForgottenCredentials.generated.cs">
+    <Compile Include="Views\Login\ForgottenCredentials.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ForgottenCredentials.cshtml</DependentUpon>
@@ -1176,7 +1176,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Index.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Register\ResetPassword.generated.cs">
+    <Compile Include="Views\Login\ResetPassword.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ResetPassword.cshtml</DependentUpon>

@@ -14,21 +14,25 @@
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
     using Mediators;
-    using Mediators.Application;
     using Mediators.Login;
+    using Providers;
     using ViewModels.Login;
+    using ViewModels.Register;
 
     public class LoginController : CandidateControllerBase
     {
         private readonly IAuthenticationTicketService _authenticationTicketService;
+        private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ILoginMediator _loginMediator;
 
         public LoginController(IAuthenticationTicketService authenticationTicketService,
+            ICandidateServiceProvider candidateServiceProvider,
             ILoginMediator loginMediator,
             IConfigurationService configurationService)
             : base(configurationService)
         {
             _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer?
+            _candidateServiceProvider = candidateServiceProvider; //todo: shouldn't be in here, move to Provider layer?
             _loginMediator = loginMediator;
         }
 
@@ -258,6 +262,145 @@
             return RedirectToRoute(RouteNames.SignIn);
         }
 
+        [HttpGet]
+        [AllowReturnUrl(Allow = false)]
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
+        public async Task<ActionResult> ForgottenCredentials()
+        {
+            return await Task.Run(() => View());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgottenPassword(ForgottenCredentialsViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _loginMediator.ForgottenPassword(model);
+
+                ModelState.Clear();
+
+                switch (response.Code)
+                {
+                    case LoginMediatorCodes.ForgottenPassword.FailedValidation:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("ForgottenCredentials", response.ViewModel);
+                    case LoginMediatorCodes.ForgottenPassword.FailedToSendResetCode:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("ForgottenCredentials", response.ViewModel);
+                    case LoginMediatorCodes.ForgottenPassword.PasswordSent:
+                        UserData.Push(UserDataItemNames.EmailAddress, model.ForgottenPasswordViewModel.EmailAddress);
+                        return RedirectToAction("ResetPassword");
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgottenEmail(ForgottenCredentialsViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _loginMediator.ForgottenEmail(model);
+
+                ModelState.Clear();
+
+                switch (response.Code)
+                {
+                    case LoginMediatorCodes.ForgottenEmail.FailedValidation:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("ForgottenCredentials", response.ViewModel);
+                    case LoginMediatorCodes.ForgottenEmail.FailedToSendEmail:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("ForgottenCredentials", response.ViewModel);
+                    case LoginMediatorCodes.ForgottenEmail.EmailSent:
+                        SetUserMessage(string.Format(LoginPageMessages.ForgottenEmailSent, model.ForgottenEmailViewModel.PhoneNumber));
+                        return RedirectToAction("Index", "Login");
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+        }
+
+        [HttpGet]
+        [AllowReturnUrl(Allow = false)]
+        public async Task<ActionResult> ResetPassword()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var emailAddress = UserData.Get(UserDataItemNames.EmailAddress);
+
+                if (string.IsNullOrWhiteSpace(emailAddress))
+                {
+                    return RedirectToAction(RouteNames.ForgottenCredentials);
+                }
+
+                var model = new PasswordResetViewModel { EmailAddress = emailAddress };
+                return View(model);
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AllowReturnUrl(Allow = false)]
+        [ValidateInput(false)]
+        public async Task<ActionResult> ResetPassword(PasswordResetViewModel model)
+        {
+            return await Task.Run(() =>
+            {
+                var response = _loginMediator.ResetPassword(model);
+
+                switch (response.Code)
+                {
+                    case LoginMediatorCodes.ResetPassword.FailedValidation:
+                    case LoginMediatorCodes.ResetPassword.InvalidResetCode:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(response.ViewModel);
+
+                    case LoginMediatorCodes.ResetPassword.FailedToResetPassword:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(model);
+
+                    case LoginMediatorCodes.ResetPassword.UserAccountLocked:
+                        UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                        return RedirectToAction("Unlock");
+
+                    case LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword:
+                        SetUserMessage(response.Message.Text);
+                        return SetUserContextAndRedirectToAction(model.EmailAddress);
+
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+
+                }
+            });
+        }
+
+        [HttpGet]
+        [AllowReturnUrl(Allow = false)]
+        public async Task<ActionResult> ResendPasswordResetCode(string emailAddress)
+        {
+            return await Task.Run(() =>
+            {
+                var model = new ForgottenPasswordViewModel { EmailAddress = emailAddress };
+
+                UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+
+                if (_candidateServiceProvider.RequestForgottenPasswordResetCode(model))
+                {
+                    SetUserMessage(string.Format(PasswordResetPageMessages.PasswordResetSent, emailAddress));
+                }
+                else
+                {
+                    SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+                }
+
+                return RedirectToAction("ResetPassword");
+            });
+        }
+
         #region Helpers
 
         private void SetLoggedInUserMessages(LoginResultViewModel viewModel)
@@ -283,6 +426,35 @@
 
                 SetUserMessage(message, UserMessageLevel.Info);
             }
+        }
+
+        private ActionResult SetUserContextAndRedirectToAction(string candidateEmail)
+        {
+            var candidate = _candidateServiceProvider.GetCandidate(candidateEmail);
+            //todo: refactor - similar to stuff in login controller... move to ILoginServiceProvider
+            //todo: test this
+            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress,
+                candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion);
+
+            // ReturnUrl takes precedence over last view vacnacy id.
+            var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
+
+            // Clear last viewed vacancy and distance (if any).
+            var lastViewedVacancyId = UserData.Pop(CandidateDataItemNames.LastViewedVacancyId);
+            UserData.Pop(CandidateDataItemNames.VacancyDistance);
+
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+            {
+                return Redirect(Server.UrlDecode(returnUrl));
+            }
+
+            if (lastViewedVacancyId != null)
+            {
+                return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id = int.Parse(lastViewedVacancyId) });
+            }
+
+            return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
         }
 
         #endregion

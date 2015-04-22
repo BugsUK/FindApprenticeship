@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Candidate.Views.Register
+namespace SFA.Apprenticeships.Web.Candidate.Views.Login
 {
     using System;
     using System.Collections.Generic;
@@ -42,7 +42,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Register/ResetPassword.cshtml")]
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Login/ResetPassword.cshtml")]
     public partial class ResetPassword : System.Web.Mvc.WebViewPage<PasswordResetViewModel>
     {
         public ResetPassword()
@@ -51,7 +51,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
         public override void Execute()
         {
             
-            #line 3 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 3 "..\..\Views\Login\ResetPassword.cshtml"
   
     ViewBag.Title = "Password reset - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -62,36 +62,36 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Register
 WriteLiteral("\r\n\r\n");
 
             
-            #line 8 "..\..\Views\Register\ResetPassword.cshtml"
- using (Html.BeginForm("ResetPassword", "Register", FormMethod.Post, new { @id = "reset-password-form" }))
+            #line 8 "..\..\Views\Login\ResetPassword.cshtml"
+ using (Html.BeginForm("ResetPassword", "Login", FormMethod.Post, new { @id = "reset-password-form" }))
 {
     
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 10 "..\..\Views\Login\ResetPassword.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 10 "..\..\Views\Login\ResetPassword.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 11 "..\..\Views\Login\ResetPassword.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 11 "..\..\Views\Login\ResetPassword.cshtml"
                                                            
 
     //Hide some inputs to stop chrome from autofilling
@@ -120,7 +120,7 @@ WriteLiteral(" class=\"alwayshidden\"");
 WriteLiteral(" />\r\n");
 
             
-            #line 16 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 16 "..\..\Views\Login\ResetPassword.cshtml"
 
 
             
@@ -153,7 +153,7 @@ WriteLiteral(" class=\"form-prepopped\"");
 WriteLiteral(">");
 
             
-            #line 23 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 23 "..\..\Views\Login\ResetPassword.cshtml"
                                     Write(Html.DisplayFor(m => m.EmailAddress));
 
             
@@ -164,7 +164,7 @@ WriteLiteral("</span>\r\n        </div>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 26 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 26 "..\..\Views\Login\ResetPassword.cshtml"
    Write(Html.FormTextFor(m => m.PasswordResetCode, controlHtmlAttributes: new { @class = "form-control-2-3", @maxlength = "6", autofocus = "autofocus" }, containerHtmlAttributes: new { @class = "form-group-withlink" }));
 
             
@@ -177,7 +177,7 @@ WriteLiteral(" class=\"form-group\"");
 WriteLiteral(">\r\n            <p>");
 
             
-            #line 28 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 28 "..\..\Views\Login\ResetPassword.cshtml"
           Write(Html.ActionLink("Resend code", "ResendPasswordResetCode", new { @emailAddress = Model.EmailAddress }, null));
 
             
@@ -192,7 +192,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 32 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 32 "..\..\Views\Login\ResetPassword.cshtml"
        Write(Html.FormPasswordFor(m => m.Password, containerHtmlAttributes: new { @class = "form-group-compound" }, hintHtmlAttributes: new { id = "passwordHint" }, controlHtmlAttributes: new { aria_describedby = "passwordHint", autocomplete = "off" }));
 
             
@@ -217,7 +217,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 37 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 37 "..\..\Views\Login\ResetPassword.cshtml"
        Write(Html.FormPasswordFor(m => m.ConfirmPassword, controlHtmlAttributes: new { autocomplete = "off" }));
 
             
@@ -238,7 +238,7 @@ WriteLiteral(">Reset password</button>\r\n        </div>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 44 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 44 "..\..\Views\Login\ResetPassword.cshtml"
    Write(Html.HiddenFor(m => m.EmailAddress));
 
             
@@ -247,7 +247,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </fieldset>\r\n");
 
             
-            #line 46 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 46 "..\..\Views\Login\ResetPassword.cshtml"
 }
 
             
@@ -256,7 +256,7 @@ WriteLiteral("\r\n    </fieldset>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 48 "..\..\Views\Register\ResetPassword.cshtml"
+            #line 48 "..\..\Views\Login\ResetPassword.cshtml"
 Write(Scripts.Render("~/bundles/nas/passwordstrength"));
 
             

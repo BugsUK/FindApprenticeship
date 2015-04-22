@@ -6,14 +6,17 @@
     using Common.Constants;
     using Common.Framework;
     using Common.Providers;
+    using Common.Services;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Providers;
+    using Register;
     using Validators;
     using ViewModels.Login;
+    using ViewModels.Register;
 
     public class LoginMediator : MediatorBase, ILoginMediator
     {
@@ -23,13 +26,19 @@
         private readonly LoginViewModelServerValidator _loginViewModelServerValidator;
         private readonly AccountUnlockViewModelServerValidator _accountUnlockViewModelServerValidator;
         private readonly ResendAccountUnlockCodeViewModelServerValidator _resendAccountUnlockCodeViewModelServerValidator;
+        private readonly IAuthenticationTicketService _authenticationTicketService;
+        private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
+        private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
 
         public LoginMediator(IUserDataProvider userDataProvider, 
             ICandidateServiceProvider candidateServiceProvider,
             IConfigurationService configurationService,
             LoginViewModelServerValidator loginViewModelServerValidator, 
             AccountUnlockViewModelServerValidator accountUnlockViewModelServerValidator,
-            ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator)
+            ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator,
+            IAuthenticationTicketService authenticationTicketService,
+            ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator,
+            PasswordResetViewModelServerValidator passwordResetViewModelServerValidator)
         {
             _userDataProvider = userDataProvider;
             _candidateServiceProvider = candidateServiceProvider;
@@ -37,6 +46,9 @@
             _loginViewModelServerValidator = loginViewModelServerValidator;
             _accountUnlockViewModelServerValidator = accountUnlockViewModelServerValidator;
             _resendAccountUnlockCodeViewModelServerValidator = resendAccountUnlockCodeViewModelServerValidator;
+            _authenticationTicketService = authenticationTicketService;
+            _forgottenPasswordViewModelServerValidator = forgottenPasswordViewModelServerValidator;
+            _passwordResetViewModelServerValidator = passwordResetViewModelServerValidator;
         }
 
         public MediatorResponse<LoginResultViewModel> Index(LoginViewModel viewModel)
@@ -160,6 +172,66 @@
             }
 
             return GetMediatorResponse(LoginMediatorCodes.Resend.ResentSuccessfully, accountUnlockViewModel, AccountUnlockPageMessages.AccountUnlockCodeMayHaveBeenResent, UserMessageLevel.Success);
+        }
+
+        public MediatorResponse<ForgottenCredentialsViewModel> ForgottenPassword(ForgottenCredentialsViewModel forgottenCredentialsViewModel)
+        {
+            var forgottenPasswordViewModel = forgottenCredentialsViewModel.ForgottenPasswordViewModel;
+            var validationResult = _forgottenPasswordViewModelServerValidator.Validate(forgottenPasswordViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(LoginMediatorCodes.ForgottenPassword.FailedValidation, forgottenCredentialsViewModel, validationResult);
+            }
+
+            if (_candidateServiceProvider.RequestForgottenPasswordResetCode(forgottenPasswordViewModel))
+            {
+                return GetMediatorResponse(LoginMediatorCodes.ForgottenPassword.PasswordSent, forgottenCredentialsViewModel);
+            }
+
+            return GetMediatorResponse(LoginMediatorCodes.ForgottenPassword.FailedToSendResetCode, forgottenCredentialsViewModel, PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+        }
+
+        public MediatorResponse<ForgottenCredentialsViewModel> ForgottenEmail(ForgottenCredentialsViewModel forgottenCredentialsViewModel)
+        {
+            return GetMediatorResponse(LoginMediatorCodes.ForgottenEmail.EmailSent, forgottenCredentialsViewModel);
+        }
+
+        public MediatorResponse<PasswordResetViewModel> ResetPassword(PasswordResetViewModel resetViewModel)
+        {
+            //Password Reset Code is verified in VerifyPasswordReset. 
+            //Initially assume the reset code is valid as a full check requires hitting the repo.
+            resetViewModel.IsPasswordResetCodeValid = true;
+
+            var validationResult = _passwordResetViewModelServerValidator.Validate(resetViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(LoginMediatorCodes.ResetPassword.FailedValidation, resetViewModel, validationResult);
+            }
+
+            resetViewModel = _candidateServiceProvider.VerifyPasswordReset(resetViewModel);
+
+            if (resetViewModel.HasError())
+            {
+                return GetMediatorResponse(LoginMediatorCodes.ResetPassword.FailedToResetPassword, resetViewModel, resetViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            if (resetViewModel.UserStatus == UserStatuses.Locked)
+            {
+                return GetMediatorResponse(LoginMediatorCodes.ResetPassword.UserAccountLocked, resetViewModel);
+            }
+
+            if (!resetViewModel.IsPasswordResetCodeValid)
+            {
+                validationResult = _passwordResetViewModelServerValidator.Validate(resetViewModel);
+                return GetMediatorResponse(LoginMediatorCodes.ResetPassword.InvalidResetCode, resetViewModel, validationResult);
+            }
+
+            var candidate = _candidateServiceProvider.GetCandidate(resetViewModel.EmailAddress);
+            _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Activated);
+
+            return GetMediatorResponse(LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
         }
     }
 }
