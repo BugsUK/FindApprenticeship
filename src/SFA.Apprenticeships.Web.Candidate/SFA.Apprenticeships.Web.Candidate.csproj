@@ -636,9 +636,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>VerifyMobile.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Startup\DisableSslv3.ps1" />
-    <Content Include="Startup\startup.cmd" />
-    <Content Include="Startup\startup.ps1" />
     <Content Include="Views\ApprenticeshipSearch\_savedSearches.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_savedSearches.generated.cs</LastGenOutput>
