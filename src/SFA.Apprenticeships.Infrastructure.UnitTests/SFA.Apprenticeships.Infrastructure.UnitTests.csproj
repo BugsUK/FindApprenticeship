@@ -267,6 +267,10 @@
       <Project>{02D19199-A4BB-484A-AA48-208C7B6D819F}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
+      <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
+      <Name>SFA.Apprenticeships.Web.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

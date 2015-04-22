@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Vacancies;
-    using Domain.Interfaces.Caching;
+    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Interfaces.Logging;
     using Moq;
@@ -19,12 +18,12 @@
         private const string TraineeshipVacancyIndexName = "traineeships";
 
         private Mock<ILogService> _mockLogger;
-        private Mock<ICacheService> _mockCacheService;
+        private Mock<ISiteMapVacancyProvider> _mockSiteMapVacancyProvider;
 
         private Mock<IAllApprenticeshipVacanciesProvider> _mockApprenticeshipVacanciesProvider;
         private Mock<IAllTraineeshipVacanciesProvider> _mockTraineeshipVacanciesProvider;
 
-        private List<SiteMapItem> _siteMapItems;
+        private List<SiteMapVacancy> _siteMapVacancies;
         private VacancySiteMapProcessor _processor;
 
         [SetUp]
@@ -32,15 +31,14 @@
         {
             // Common services.
             _mockLogger = new Mock<ILogService>();
-            _mockCacheService = new Mock<ICacheService>();
+            _mockSiteMapVacancyProvider = new Mock<ISiteMapVacancyProvider>();
 
-            _mockCacheService.Setup(mock => mock
-                .PutObject(It.IsAny<string>(), It.IsAny<object>(), CacheDuration.OneDay))
-                .Callback((string cacheKey, object cacheObject, CacheDuration cacheDuration) =>
-                    _siteMapItems.AddRange((SiteMapItem[])cacheObject)
-                );
+            _mockSiteMapVacancyProvider.Setup(mock => mock
+                .SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()))
+                .Callback((IEnumerable<SiteMapVacancy> siteMapVacancies) =>
+                    _siteMapVacancies = siteMapVacancies.ToList());
 
-            _siteMapItems = new List<SiteMapItem>();
+            _siteMapVacancies = null;
 
             // Providers.
             _mockApprenticeshipVacanciesProvider = new Mock<IAllApprenticeshipVacanciesProvider>();
@@ -52,31 +50,32 @@
         {
             // Arrange.
             _processor = new VacancySiteMapProcessor(
-                _mockLogger.Object, _mockCacheService.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
+                _mockLogger.Object, _mockSiteMapVacancyProvider.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
 
-            var ids = new[] { 1, 2, 3 };
+            var vacancyIds = new[] { 1, 2, 3 };
 
             _mockApprenticeshipVacanciesProvider.Setup(mock => mock.
-                GetAllVacancyIds(ApprenticeshipVacancyIndexName)).Returns(ids);
+                GetAllVacancyIds(ApprenticeshipVacancyIndexName)).Returns(vacancyIds);
 
             // Act.
-            _processor.CreateVacancySiteMap(new CreateVacancySiteMapRequest
+            _processor.Process(new CreateVacancySiteMapRequest
             {
                 ApprenticeshipVacancyIndexName = ApprenticeshipVacancyIndexName,
                 TraineeshipVacancyIndexName = TraineeshipVacancyIndexName
             });
 
             // Assert.
-            _mockCacheService.Verify(mock => mock.PutObject("SiteMap.Vacancies", It.IsAny<object>(), CacheDuration.OneDay), Times.Once);
+            _mockSiteMapVacancyProvider.Verify(mock => mock.SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
 
-            _siteMapItems.Should().HaveSameCount(ids);
+            _siteMapVacancies.Should().NotBeNull();
+            _siteMapVacancies.Should().HaveSameCount(vacancyIds);
 
-            foreach (var id in ids)
+            foreach (var vacancyId in vacancyIds)
             {
-                var currentId = id;
-
-                Assert.That(_siteMapItems.Any(each => each.Url.EndsWith(string.Format("apprenticeship/{0}", currentId))));
+                Assert.That(_siteMapVacancies.Any(each => each.VacancyId == vacancyId));
             }
+
+            Assert.That(_siteMapVacancies.All(each => each.VacancyType == VacancyType.Apprenticeship));
         }
 
         [Test]
@@ -84,31 +83,32 @@
         {
             // Arrange.
             _processor = new VacancySiteMapProcessor(
-                _mockLogger.Object, _mockCacheService.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
+                _mockLogger.Object, _mockSiteMapVacancyProvider.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
 
-            var ids = new[] { 4, 5, 6, 42 };
+            var vacancyIds = new[] { 4, 5, 6, 42 };
 
             _mockTraineeshipVacanciesProvider.Setup(mock => mock.
-                GetAllVacancyIds(TraineeshipVacancyIndexName)).Returns(ids);
+                GetAllVacancyIds(TraineeshipVacancyIndexName)).Returns(vacancyIds);
 
             // Act.
-            _processor.CreateVacancySiteMap(new CreateVacancySiteMapRequest
+            _processor.Process(new CreateVacancySiteMapRequest
             {
                 ApprenticeshipVacancyIndexName = ApprenticeshipVacancyIndexName,
                 TraineeshipVacancyIndexName = TraineeshipVacancyIndexName
             });
 
             // Assert.
-            _mockCacheService.Verify(mock => mock.PutObject("SiteMap.Vacancies", It.IsAny<object>(), CacheDuration.OneDay), Times.Once);
+            _mockSiteMapVacancyProvider.Verify(mock => mock.SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
 
-            _siteMapItems.Should().HaveSameCount(ids);
+            _siteMapVacancies.Should().NotBeNull();
+            _siteMapVacancies.Should().HaveSameCount(vacancyIds);
 
-            foreach (var id in ids)
+            foreach (var vacancyId in vacancyIds)
             {
-                var currentId = id;
-
-                Assert.That(_siteMapItems.Any(each => each.Url.EndsWith(string.Format("traineeship/{0}", currentId))));
+                Assert.That(_siteMapVacancies.Any(each => each.VacancyId == vacancyId));
             }
+
+            Assert.That(_siteMapVacancies.All(each => each.VacancyType == VacancyType.Traineeship));
         }
 
         [Test]
@@ -116,33 +116,42 @@
         {
             // Arrange.
             _processor = new VacancySiteMapProcessor(
-                _mockLogger.Object, _mockCacheService.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
+                _mockLogger.Object, _mockSiteMapVacancyProvider.Object, _mockApprenticeshipVacanciesProvider.Object, _mockTraineeshipVacanciesProvider.Object);
 
-            var apprenticeshipIds = new[] { 1, 2, 3 };
-            var traineeshipIds = new[] { 4, 5, 6, 42 };
+            var apprenticeshipVacancyIds = new[] { 1, 2, 3 };
+            var traineeshipVacancyIds = new[] { 4, 5, 6, 42 };
 
             _mockApprenticeshipVacanciesProvider.Setup(mock => mock.
-                GetAllVacancyIds(ApprenticeshipVacancyIndexName)).Returns(apprenticeshipIds);
+                GetAllVacancyIds(ApprenticeshipVacancyIndexName)).Returns(apprenticeshipVacancyIds);
 
             _mockTraineeshipVacanciesProvider.Setup(mock => mock.
-                GetAllVacancyIds(TraineeshipVacancyIndexName)).Returns(traineeshipIds);
+                GetAllVacancyIds(TraineeshipVacancyIndexName)).Returns(traineeshipVacancyIds);
 
             // Act.
-            _processor.CreateVacancySiteMap(new CreateVacancySiteMapRequest
+            _processor.Process(new CreateVacancySiteMapRequest
             {
                 ApprenticeshipVacancyIndexName = ApprenticeshipVacancyIndexName,
                 TraineeshipVacancyIndexName = TraineeshipVacancyIndexName
             });
 
             // Assert.
-            _mockCacheService.Verify(mock => mock.PutObject("SiteMap.Vacancies", It.IsAny<object>(), CacheDuration.OneDay), Times.Once);
+            _mockSiteMapVacancyProvider.Verify(mock => mock.SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
 
-            _siteMapItems.Should().HaveCount(apprenticeshipIds.Length + traineeshipIds.Length);
+            _siteMapVacancies.Should().NotBeNull();
+            _siteMapVacancies.Should().HaveCount(apprenticeshipVacancyIds.Length + traineeshipVacancyIds.Length);
 
-            Assert.That(_siteMapItems.All(each => each != null));
-            Assert.That(_siteMapItems.All(each => !string.IsNullOrWhiteSpace(each.Url)));
-            Assert.That(_siteMapItems.All(each => each.ChangeFrequency == SiteMapChangeFrequency.Hourly));
-            Assert.That(_siteMapItems.All(each => each.LastModified == DateTime.Today));
+            Assert.That(_siteMapVacancies.All(each => each != null));
+            Assert.That(_siteMapVacancies.All(each => each.VacancyId != 0));
+
+            _siteMapVacancies
+                .Count(each => each.VacancyType == VacancyType.Apprenticeship)
+                .Should()
+                .Be(apprenticeshipVacancyIds.Length);
+
+            _siteMapVacancies
+                .Count(each => each.VacancyType == VacancyType.Traineeship)
+                .Should()
+                .Be(traineeshipVacancyIds.Length);
         }
     }
 }

@@ -136,6 +136,7 @@
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSummary.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\VacancySummary.cs" />
+    <Compile Include="Vacancies\VacancyType.cs" />
     <Compile Include="Vacancies\WageType.cs" />
   </ItemGroup>
   <ItemGroup />

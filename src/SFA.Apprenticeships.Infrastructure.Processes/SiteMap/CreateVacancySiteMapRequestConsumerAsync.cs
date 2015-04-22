@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.SiteMap
 {
-    using System;
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
     using Application.Vacancies;
@@ -9,12 +8,11 @@
     using EasyNetQ.AutoSubscribe;
     using Web.Common.SiteMap;
 
-    // TODO: AG: US438: logging.
     public class CreateVacancySiteMapRequestConsumerAsync : IConsumeAsync<CreateVacancySiteMapRequest>
     {
         private readonly ILogService _logger;
         private readonly IVacancySiteMapProcessor _vacancySiteMapProcessor;
-        private readonly bool _enableVacancyStatusPropagation;
+        private readonly bool _enableVacancySiteMap;
 
         public CreateVacancySiteMapRequestConsumerAsync(
             ILogService logger,
@@ -23,7 +21,7 @@
         {
             _logger = logger;
             _vacancySiteMapProcessor = vacancySiteMapProcessor;
-            _enableVacancyStatusPropagation = configurationService.Get<ProcessConfiguration>().EnableVacancyStatusPropagation;
+            _enableVacancySiteMap = configurationService.Get<ProcessConfiguration>().EnableVacancySiteMap;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 1)]
@@ -32,13 +30,13 @@
         {
             return Task.Run(() =>
             {
-                if (!_enableVacancyStatusPropagation)
+                if (!_enableVacancySiteMap)
                 {
-                    // TODO: AG: US438: logging.
+                    _logger.Info("Vacancy site map is currently disabled");
                     return;
                 }
 
-                _vacancySiteMapProcessor.CreateVacancySiteMap(request);
+                _vacancySiteMapProcessor.Process(request);
             });
         }
     }

@@ -10,6 +10,6 @@
 
         public bool EnableVacancyStatusPropagation { get; set; }
 
-        public bool EnableVacancySiteMapCreation { get; set; }
+        public bool EnableVacancySiteMap { get; set; }
     }
 }

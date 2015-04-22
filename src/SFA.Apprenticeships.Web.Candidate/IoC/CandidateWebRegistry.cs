@@ -24,6 +24,7 @@
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
     using Common.Configuration;
+    using Common.SiteMap;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Configuration;
@@ -76,6 +77,7 @@
             For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<ICandidateServiceProvider>().Use<CandidateServiceProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
             For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>().Ctor<IMapper>().Named("TraineeshipCandidateWebMappers");
+            For<ISiteMapVacancyProvider>().Use<SiteMapVacancyProvider>();
         }
 
         private void RegisterServices()

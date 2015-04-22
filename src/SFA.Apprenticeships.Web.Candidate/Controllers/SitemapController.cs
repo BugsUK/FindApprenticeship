@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
+    using System.Web.Http.Results;
     using System.Web.Mvc;
     using Common.SiteMap;
 
@@ -8,17 +8,25 @@
     [OutputCache(Duration = 30, VaryByParam = "none")]
     public class SiteMapController : Controller
     {
+        // TODO: AG: US438: consider adding a mediator here - but what value would be added?
+        private readonly ISiteMapVacancyProvider _siteMapVacancyProvider;
+
+        public SiteMapController(ISiteMapVacancyProvider siteMapVacancyProvider)
+        {
+            _siteMapVacancyProvider = siteMapVacancyProvider;
+        }
+
         [Route("sitemap.xml")]
         public ActionResult Index()
         {
-            var siteMapItems = new[]
-            {
-                new SiteMapItem("https://local.findapprenticeship.service.gov.uk/apprenticeship/443939", DateTime.Today, SiteMapChangeFrequency.Hourly),
-                new SiteMapItem("https://local.findapprenticeship.service.gov.uk/apprenticeship/431501", DateTime.Today, SiteMapChangeFrequency.Hourly),
-                new SiteMapItem("https://local.findapprenticeship.service.gov.uk/traineeship/437787", DateTime.Today, SiteMapChangeFrequency.Hourly)
-            };
+            var siteMapVacancies = _siteMapVacancyProvider.GetVacancies();
 
-            return new SiteMapResult(siteMapItems);
+            if (siteMapVacancies == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            return new HttpNotFoundResult();
         }
     }
 }

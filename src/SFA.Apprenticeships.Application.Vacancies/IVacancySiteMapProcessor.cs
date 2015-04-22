@@ -4,6 +4,6 @@
 
     public interface IVacancySiteMapProcessor
     {
-        void CreateVacancySiteMap(CreateVacancySiteMapRequest request);
+        void Process(CreateVacancySiteMapRequest request);
     }
 }
