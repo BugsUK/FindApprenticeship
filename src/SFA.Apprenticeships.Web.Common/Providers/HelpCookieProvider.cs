@@ -43,7 +43,7 @@
 
                 httpCookie[CookieKeys.ShowSearchTour.ToString()] = candidateId.ToString();
 
-                AddOrSetResponseCookie(httpContext, httpCookie);
+                httpContext.Response.Cookies.Add(httpCookie);
 
                 return showSearchTour;
             }
@@ -55,21 +55,9 @@
 
             httpCookie[CookieKeys.ShowSearchTour.ToString()] = Guid.Empty.ToString();
 
-            AddOrSetResponseCookie(httpContext, httpCookie);
+            httpContext.Response.Cookies.Add(httpCookie);
 
             return true;
-        }
-
-        private static void AddOrSetResponseCookie(HttpContextBase httpContext, HttpCookie httpCookie)
-        {
-            if (httpContext.Response.Cookies.Get(CookieName) == null)
-            {
-                httpContext.Response.Cookies.Add(httpCookie);
-            }
-            else
-            {
-                httpContext.Response.Cookies.Set(httpCookie);
-            }
         }
     }
 }
