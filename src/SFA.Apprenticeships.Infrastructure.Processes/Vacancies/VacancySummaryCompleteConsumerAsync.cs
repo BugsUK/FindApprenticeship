@@ -68,12 +68,15 @@
                 {
                     var request = new CreateVacancySiteMapRequest
                     {
-                        ApprenticeshipVacancyIndexName =  apprenticeshipVacancyIndexName,
-                        TraineeshipVacancyIndexName =  traineeshipVacancyIndexName
+                        ApprenticeshipVacancyIndexName = apprenticeshipVacancyIndexName,
+                        TraineeshipVacancyIndexName = traineeshipVacancyIndexName
                     };
 
-                    // TODO: AG: US438: reinstate and add test.
-                    // _messageBus.PublishMessage(request);
+                    _messageBus.PublishMessage(request);
+                }
+                else
+                {
+                    _logger.Warn("One or more indexes was not correctly created (see previously logged errors), vacancy site map will not be created.");
                 }
             });
         }
