@@ -101,21 +101,27 @@
             }
         }
 
-        public MediatorResponse<ForgottenPasswordViewModel> ForgottenPassword(ForgottenPasswordViewModel forgottenPasswordViewModel)
+        public MediatorResponse<ForgottenCredentialsViewModel> ForgottenPassword(ForgottenCredentialsViewModel forgottenCredentialsViewModel)
         {
+            var forgottenPasswordViewModel = forgottenCredentialsViewModel.ForgottenPasswordViewModel;
             var validationResult = _forgottenPasswordViewModelServerValidator.Validate(forgottenPasswordViewModel);
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.FailedValidation, forgottenPasswordViewModel, validationResult);
+                return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.FailedValidation, forgottenCredentialsViewModel, validationResult);
             }
 
             if (_candidateServiceProvider.RequestForgottenPasswordResetCode(forgottenPasswordViewModel))
             {
-                return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.PasswordSent, forgottenPasswordViewModel);
+                return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.PasswordSent, forgottenCredentialsViewModel);
             }
 
-            return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode, forgottenPasswordViewModel, PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+            return GetMediatorResponse(RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode, forgottenCredentialsViewModel, PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
+        }
+
+        public MediatorResponse<ForgottenCredentialsViewModel> ForgottenEmail(ForgottenCredentialsViewModel forgottenCredentialsViewModel)
+        {
+            return GetMediatorResponse(RegisterMediatorCodes.ForgottenEmail.EmailSent, forgottenCredentialsViewModel);
         }
 
         public MediatorResponse<PasswordResetViewModel> ResetPassword(PasswordResetViewModel resetViewModel)

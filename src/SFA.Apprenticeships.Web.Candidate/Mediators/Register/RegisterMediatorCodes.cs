@@ -33,5 +33,12 @@
 
             public const string SuccessfullyResetPassword = "RegisterMediatorCodes.ResetPassword.SuccessfullyResetPassword";
         }
+
+        public class ForgottenEmail
+        {
+            public const string FailedValidation = "RegisterMediatorCodes.ForgottenEmail.FailedValidation";
+            public const string FailedToSendEmail = "RegisterMediatorCodes.ForgottenEmail.FailedToSendEmail";
+            public const string EmailSent = "RegisterMediatorCodes.ForgottenEmail.EmailSent";
+        }
     }
 }

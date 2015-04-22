@@ -122,14 +122,14 @@
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
-        public async Task<ActionResult> ForgottenPassword()
+        public async Task<ActionResult> ForgottenCredentials()
         {
             return await Task.Run(() => View());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgottenPassword(ForgottenPasswordViewModel model)
+        public async Task<ActionResult> ForgottenPassword(ForgottenCredentialsViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
@@ -141,13 +141,40 @@
                 {
                     case RegisterMediatorCodes.ForgottenPassword.FailedValidation:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View(response.ViewModel);
+                        return View("ForgottenCredentials", response.ViewModel);
                     case RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View(response.ViewModel);
+                        return View("ForgottenCredentials", response.ViewModel);
                     case RegisterMediatorCodes.ForgottenPassword.PasswordSent:
-                        UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
+                        UserData.Push(UserDataItemNames.EmailAddress, model.ForgottenPasswordViewModel.EmailAddress);
                         return RedirectToAction("ResetPassword");
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ForgottenEmail(ForgottenCredentialsViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _registerMediator.ForgottenEmail(model);
+
+                ModelState.Clear();
+
+                switch (response.Code)
+                {
+                    case RegisterMediatorCodes.ForgottenEmail.FailedValidation:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("ForgottenCredentials", response.ViewModel);
+                    case RegisterMediatorCodes.ForgottenEmail.FailedToSendEmail:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View("ForgottenCredentials", response.ViewModel);
+                    case RegisterMediatorCodes.ForgottenEmail.EmailSent:
+                        SetUserMessage(string.Format(LoginPageMessages.ForgottenEmailSent, model.ForgottenEmailViewModel.PhoneNumber));
+                        return RedirectToAction("Index", "Login");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -164,7 +191,7 @@
 
                 if (string.IsNullOrWhiteSpace(emailAddress))
                 {
-                    return RedirectToAction("ForgottenPassword");
+                    return RedirectToAction(RouteNames.ForgottenCredentials);
                 }
 
                 var model = new PasswordResetViewModel { EmailAddress = emailAddress };

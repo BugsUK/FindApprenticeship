@@ -8,5 +8,6 @@
         public const string UpdateEmail = "UpdateEmail";
         public const string VerifyUpdatedEmail = "VerifyUpdatedEmail";
         public const string SiteMap = "SiteMap";
+        public const string ForgottenCredentials = "ForgottenCredentials";
     }
 }

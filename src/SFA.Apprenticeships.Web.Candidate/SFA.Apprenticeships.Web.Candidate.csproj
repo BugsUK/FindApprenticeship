@@ -458,9 +458,9 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Index.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Register\ForgottenPassword.cshtml">
+    <Content Include="Views\Register\ForgottenCredentials.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>ForgottenPassword.generated.cs</LastGenOutput>
+      <LastGenOutput>ForgottenCredentials.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Register\ResetPassword.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -752,6 +752,7 @@
     <Compile Include="Constants\Pages\VerifyMobilePageMessages.cs" />
     <Compile Include="Constants\CandidateDataItemNames.cs" />
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ForgottenEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyUpdatedEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyMobileViewModelMessages.cs" />
     <Compile Include="Controllers\SiteMapController.cs" />
@@ -773,6 +774,7 @@
     <Compile Include="Providers\TraineeshipVacancyProvider.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
     <Compile Include="Validators\EmailViewModelValidator.cs" />
+    <Compile Include="Validators\ForgottenEmailViewModelValidator.cs" />
     <Compile Include="Validators\VerifyUpdatedEmailViewModelClientValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />
@@ -797,6 +799,8 @@
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
+    <Compile Include="ViewModels\Register\ForgottenCredentialsViewModel.cs" />
+    <Compile Include="ViewModels\Register\ForgottenEmailViewModel.cs" />
     <Compile Include="ViewModels\UserNameAvailability.cs" />
     <Compile Include="Constants\ViewModels\WorkExperienceViewModelMessages.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
@@ -1162,10 +1166,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Complete.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Register\ForgottenPassword.generated.cs">
+    <Compile Include="Views\Register\ForgottenCredentials.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ForgottenPassword.cshtml</DependentUpon>
+      <DependentUpon>ForgottenCredentials.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Register\Index.generated.cs">
       <AutoGen>True</AutoGen>

@@ -195,10 +195,10 @@ WriteLiteral("\r\n                \r\n                <a");
 
 WriteLiteral(" class=\"form-hint\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 1299), Tuple.Create("\'", 1350)
+WriteAttribute("href", Tuple.Create(" href=\'", 1299), Tuple.Create("\'", 1362)
             
             #line 32 "..\..\Views\Login\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1306), Tuple.Create<System.Object, System.Int32>(Url.Action("ForgottenPassword", "Register")
+, Tuple.Create(Tuple.Create("", 1306), Tuple.Create<System.Object, System.Int32>(Url.Action(RouteNames.ForgottenCredentials, "Register")
             
             #line default
             #line hidden

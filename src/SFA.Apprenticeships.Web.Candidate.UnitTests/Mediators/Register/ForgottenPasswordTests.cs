@@ -24,7 +24,7 @@
             _candidateServiceProvider.Setup(
                 csp => csp.RequestForgottenPasswordResetCode(It.IsAny<ForgottenPasswordViewModel>())).Returns(false);
 
-            var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
+            var response = _registerMediator.ForgottenPassword(new ForgottenCredentialsViewModel{ForgottenPasswordViewModel = forgottenPasswordViewModel});
 
             response.AssertMessage(RegisterMediatorCodes.ForgottenPassword.FailedToSendResetCode,
                 PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning, true);
@@ -41,7 +41,7 @@
             _candidateServiceProvider.Setup(
                 csp => csp.RequestForgottenPasswordResetCode(It.IsAny<ForgottenPasswordViewModel>())).Returns(true);
 
-            var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
+            var response = _registerMediator.ForgottenPassword(new ForgottenCredentialsViewModel { ForgottenPasswordViewModel = forgottenPasswordViewModel });
 
             response.AssertCode(RegisterMediatorCodes.ForgottenPassword.PasswordSent, true);
         }
@@ -54,7 +54,7 @@
                 EmailAddress = InvalidEmailAddress
             };
 
-            var response = _registerMediator.ForgottenPassword(forgottenPasswordViewModel);
+            var response = _registerMediator.ForgottenPassword(new ForgottenCredentialsViewModel { ForgottenPasswordViewModel = forgottenPasswordViewModel });
 
             response.AssertValidationResult(RegisterMediatorCodes.ForgottenPassword.FailedValidation, true);
         }
