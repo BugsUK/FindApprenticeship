@@ -40,7 +40,8 @@
                 MessageTypes.TraineeshipApplicationSubmitted,
                 MessageTypes.PasswordChanged,
                 MessageTypes.SavedSearchAlert,
-                MessageTypes.SendPendingUsernameCode
+                MessageTypes.SendPendingUsernameCode,
+                MessageTypes.SendEmailReminder
             };
 
             return messageTypes.Contains(communicationRequest.MessageType);

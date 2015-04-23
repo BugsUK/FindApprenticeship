@@ -232,6 +232,7 @@
     <Compile Include="Mediators\ApprenticeshipSearch\SearchValidationTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\TestsBase.cs" />
     <Compile Include="Mediators\Home\HomeMediatorTests.cs" />
+    <Compile Include="Mediators\Login\ForgottenEmailTests.cs" />
     <Compile Include="Mediators\Login\IndexTests.cs" />
     <Compile Include="Mediators\Login\LoginMediatorBuilder.cs" />
     <Compile Include="Mediators\Login\ResendTests.cs" />
@@ -283,6 +284,7 @@
     <Compile Include="Providers\CandidateServiceProvider\LoginTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RegisterTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestAccountUnlockCodeTests.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\RequestEmailReminderTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\SendContactMessageTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\VerifyAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />

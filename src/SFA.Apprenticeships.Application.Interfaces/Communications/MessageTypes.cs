@@ -18,7 +18,8 @@
         ApprenticeshipApplicationsUnsuccessfulSummary = 12,
         ApprenticeshipApplicationExpiringDraft = 13,
         ApprenticeshipApplicationExpiringDraftsSummary = 14,
-        SendPendingUsernameCode = 15
+        SendPendingUsernameCode = 15,
+        SendEmailReminder = 16
         //EmployerContactMessage
     }
 }

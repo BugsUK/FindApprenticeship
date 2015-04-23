@@ -29,6 +29,7 @@
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
+        private readonly ForgottenEmailViewModelServerValidator _forgottenEmailViewModelServerValidator;
 
         public LoginMediator(IUserDataProvider userDataProvider, 
             ICandidateServiceProvider candidateServiceProvider,
@@ -38,7 +39,8 @@
             ResendAccountUnlockCodeViewModelServerValidator resendAccountUnlockCodeViewModelServerValidator,
             IAuthenticationTicketService authenticationTicketService,
             ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator,
-            PasswordResetViewModelServerValidator passwordResetViewModelServerValidator)
+            PasswordResetViewModelServerValidator passwordResetViewModelServerValidator,
+            ForgottenEmailViewModelServerValidator forgottenEmailViewModelServerValidator)
         {
             _userDataProvider = userDataProvider;
             _candidateServiceProvider = candidateServiceProvider;
@@ -49,6 +51,7 @@
             _authenticationTicketService = authenticationTicketService;
             _forgottenPasswordViewModelServerValidator = forgottenPasswordViewModelServerValidator;
             _passwordResetViewModelServerValidator = passwordResetViewModelServerValidator;
+            _forgottenEmailViewModelServerValidator = forgottenEmailViewModelServerValidator;
         }
 
         public MediatorResponse<LoginResultViewModel> Index(LoginViewModel viewModel)
@@ -194,7 +197,22 @@
 
         public MediatorResponse<ForgottenCredentialsViewModel> ForgottenEmail(ForgottenCredentialsViewModel forgottenCredentialsViewModel)
         {
-            return GetMediatorResponse(LoginMediatorCodes.ForgottenEmail.EmailSent, forgottenCredentialsViewModel);
+            var forgottenEmailViewModel = forgottenCredentialsViewModel.ForgottenEmailViewModel;
+            var validationResult = _forgottenEmailViewModelServerValidator.Validate(forgottenEmailViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(LoginMediatorCodes.ForgottenEmail.FailedValidation, forgottenCredentialsViewModel, validationResult);
+            }
+
+            var message = string.Format(LoginPageMessages.ForgottenEmailSent, forgottenEmailViewModel.PhoneNumber);
+
+            if (_candidateServiceProvider.RequestEmailReminder(forgottenEmailViewModel))
+            {
+                return GetMediatorResponse(LoginMediatorCodes.ForgottenEmail.EmailSent, forgottenCredentialsViewModel, message, UserMessageLevel.Success);
+            }
+
+            return GetMediatorResponse(LoginMediatorCodes.ForgottenEmail.FailedToSendEmail, forgottenCredentialsViewModel, message, UserMessageLevel.Success);
         }
 
         public MediatorResponse<PasswordResetViewModel> ResetPassword(PasswordResetViewModel resetViewModel)

@@ -50,5 +50,7 @@
         IEnumerable<SavedSearchViewModel> GetSavedSearches(Guid candidateId);
 
         SavedSearchViewModel GetSavedSearch(Guid candidateId, Guid savedSearchId);
+
+        bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel);
     }
 }

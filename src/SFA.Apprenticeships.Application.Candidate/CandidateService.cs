@@ -7,7 +7,6 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
-    using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
@@ -56,6 +55,7 @@
         private readonly IUpdateSavedSearchStrategy _updateSavedSearchStrategy;
         private readonly IDeleteSavedSearchStrategy _deleteSavedSearchStrategy;
         private readonly IUpdateUsernameStrategy _updateUsernameStrategy;
+        private readonly IRequestEmailReminderStrategy _requestEmailReminderStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -90,7 +90,8 @@
             IRetrieveSavedSearchesStrategy retrieveSavedSearchesStrategy,
             IUpdateSavedSearchStrategy updateSavedSearchStrategy,
             IDeleteSavedSearchStrategy deleteSavedSearchStrategy,
-            IUpdateUsernameStrategy updateUsernameStrategy)
+            IUpdateUsernameStrategy updateUsernameStrategy,
+            IRequestEmailReminderStrategy requestEmailReminderStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -125,6 +126,7 @@
             _updateSavedSearchStrategy = updateSavedSearchStrategy;
             _deleteSavedSearchStrategy = deleteSavedSearchStrategy;
             _updateUsernameStrategy = updateUsernameStrategy;
+            _requestEmailReminderStrategy = requestEmailReminderStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -465,6 +467,15 @@
         public void UpdateUsername(Guid userId, string verfiyCode, string password)
         {
             _updateUsernameStrategy.UpdateUsername(userId, verfiyCode, password);
+        }
+
+        public void RequestEmailReminder(string phoneNumber)
+        {
+            Condition.Requires(phoneNumber);
+
+            _logger.Info("Using RequestEmailReminderStrategy to send email reminder for candidate(s) with mobile number='{0}'.", phoneNumber);
+
+            _requestEmailReminderStrategy.RequestEmailReminder(phoneNumber);
         }
     }
 }

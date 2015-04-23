@@ -132,6 +132,7 @@
     <Compile Include="Sms\SmsMessageFormatters\SmsApprenticeshipApplicationUnsuccessfulMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsSavedSearchAlertMessageFormatter.cs" />
+    <Compile Include="Sms\SmsMessageFormatters\SmsSendEmailReminderMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsSendMobileVerificationCodeMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsTraineeshipApplicationSubmittedMessageFormatter.cs" />
     <Compile Include="Sms\SmsMessageFormatters\SmsAccountUnlockCodeMessageFormatter.cs" />

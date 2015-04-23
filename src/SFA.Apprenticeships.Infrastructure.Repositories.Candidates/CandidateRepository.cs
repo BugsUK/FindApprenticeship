@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Candidates
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Logging;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -93,6 +95,28 @@
             LogOutcome(legacyCandidateId, mongoEntity);
 
             return CandidateOrNull(mongoEntity);
+        }
+
+        public IEnumerable<Candidate> GetAllWith(string phoneNumber, bool errorIfNotFound = true)
+        {
+            _logger.Debug("Calling repository to get candidates with PhoneNumber={0}", phoneNumber);
+
+            var candidates = 
+                Collection.Find(Query<MongoCandidate>.EQ(o => o.RegistrationDetails.PhoneNumber, phoneNumber))
+                .Select(e => _mapper.Map<MongoCandidate, Candidate>(e))
+                .ToList();
+
+            if (candidates.Count == 0 && errorIfNotFound)
+            {
+                var message = string.Format("No candidates found with PhoneNumber={0}", phoneNumber);
+                _logger.Debug(message);
+
+                throw new CustomException(message, CandidateErrorCodes.CandidateNotFoundError);
+            }
+
+            _logger.Debug(string.Format("Found {0} candidates with PhoneNumber={1}", candidates.Count, phoneNumber));
+
+            return candidates;
         }
 
         public void Delete(Guid id)

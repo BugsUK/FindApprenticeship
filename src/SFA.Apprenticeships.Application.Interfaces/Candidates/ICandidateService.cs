@@ -80,5 +80,7 @@
         SavedSearch RetrieveSavedSearch(Guid candidateId, Guid savedSearchId);
 
         void UpdateUsername(Guid userId, string verfiyCode, string password);
+
+        void RequestEmailReminder(string phoneNumber);
     }
 }

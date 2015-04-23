@@ -118,6 +118,7 @@
     <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSearchResultsBuilder.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
+    <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyTests.cs" />
@@ -138,6 +139,7 @@
     <Compile Include="Services\Candidate\Strategies\SaveCandidateStrategyTests.cs" />
     <Compile Include="Services\Location\LocationSearchServiceTests.cs" />
     <Compile Include="SiteMap\SiteMapVacancyHelperTests.cs" />
+    <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyTests.cs" />
     <Compile Include="UserAccount\SendAccountUnlockTests.cs" />
     <Compile Include="UserAccount\UnlockAccountStrategyTests.cs" />
     <Compile Include="Vacancies\Extensions\ApprenticeshipSummaryExtensionsTests.cs" />

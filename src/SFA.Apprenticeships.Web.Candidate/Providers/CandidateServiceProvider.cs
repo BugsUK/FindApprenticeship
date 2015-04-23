@@ -607,6 +607,37 @@
             }
         }
 
+        public bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel)
+        {
+            try
+            {
+                _candidateService.RequestEmailReminder(forgottenEmailViewModel.PhoneNumber);
+
+                return true;
+            }
+            catch (CustomException e)
+            {
+                switch (e.Code)
+                {
+                    case Domain.Entities.ErrorCodes.EntityStateError:
+                    case Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError:
+                        _logger.Info(e.Message, e);
+                        break;
+                    default:
+                        _logger.Error(e.Message, e);
+                        break;
+                }
+
+                return false;
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Send email reminder failed for " + forgottenEmailViewModel.PhoneNumber, e);
+
+                return false;
+            }
+        }
+
         #region Helper
 
 

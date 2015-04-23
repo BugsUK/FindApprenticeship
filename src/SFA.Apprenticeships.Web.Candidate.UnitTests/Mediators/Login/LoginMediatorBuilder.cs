@@ -50,7 +50,7 @@
                     .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             }
 
-            var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationService.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator(), _authenticationTicketService.Object, new ForgottenPasswordViewModelServerValidator(), new PasswordResetViewModelServerValidator());
+            var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationService.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator(), _authenticationTicketService.Object, new ForgottenPasswordViewModelServerValidator(), new PasswordResetViewModelServerValidator(), new ForgottenEmailViewModelServerValidator());
             return mediator;
         }
     }

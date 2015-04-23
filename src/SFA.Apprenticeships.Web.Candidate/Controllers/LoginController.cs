@@ -316,7 +316,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View("ForgottenCredentials", response.ViewModel);
                     case LoginMediatorCodes.ForgottenEmail.EmailSent:
-                        SetUserMessage(string.Format(LoginPageMessages.ForgottenEmailSent, model.ForgottenEmailViewModel.PhoneNumber));
+                        SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToAction("Index", "Login");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);

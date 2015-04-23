@@ -66,7 +66,8 @@
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, new SmsApprenticeshipApplicationsUnsuccessfulSummaryMessageFormatter(configurationService)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationExpiringDraft, new SmsApprenticeshipApplicationExpiringDraftMessageFormatter(configurationService)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary, new SmsApprenticeshipApplicationExpiringDraftsSummaryMessageFormatter(configurationService)),
-                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SavedSearchAlert, new SmsSavedSearchAlertMessageFormatter(configurationService))
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SavedSearchAlert, new SmsSavedSearchAlertMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendEmailReminder, new SmsSendEmailReminderMessageFormatter(configurationService))
             };
 
             return smsMessageFormatters;
