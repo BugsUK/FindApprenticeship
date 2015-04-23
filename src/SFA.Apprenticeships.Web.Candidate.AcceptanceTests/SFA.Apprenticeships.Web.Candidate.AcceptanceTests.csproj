@@ -340,8 +340,8 @@
     <Compile Include="Pages\TraineeshipSearch\TraineeshipSearchResultPage.cs" />
     <Compile Include="Pages\Traineeship\Overview.cs" />
     <Compile Include="Pages\ApprenticeshipSearch\ApprenticeshipVacancyNotFound.cs" />
-    <Compile Include="Pages\Registration\ResetPasswordPage.cs" />
-    <Compile Include="Pages\Registration\ForgottenPasswordPage.cs" />
+    <Compile Include="Pages\Login\ResetPasswordPage.cs" />
+    <Compile Include="Pages\Login\ForgottenCredentialsPage.cs" />
     <Compile Include="Pages\Login\UnlockPage.cs" />
     <Compile Include="Pages\Login\LoginPage.cs" />
     <Compile Include="Pages\Registration\ActivationPage.cs" />

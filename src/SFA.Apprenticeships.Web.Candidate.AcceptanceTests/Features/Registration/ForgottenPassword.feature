@@ -12,16 +12,16 @@ Background:
 
 Scenario: Reset password successful
 	Given I have registered a new candidate
-	When I navigate to the ForgottenPasswordPage page
-	Then I am on the ForgottenPasswordPage page
+	When I navigate to the ForgottenCredentialsPage page
+	Then I am on the ForgottenCredentialsPage page
 	When I enter data
 		| Field        | Value        |
 		| EmailAddress | {EmailToken} |
 	And I choose SendCodeButton
 	Then I am on the ResetPasswordPage page
 	When I get the token to reset the password
-	And I navigate to the ForgottenPasswordPage page
-	When I am on the ForgottenPasswordPage page
+	And I navigate to the ForgottenCredentialsPage page
+	When I am on the ForgottenCredentialsPage page
 	And I enter data
 		| Field        | Value        |
 		| EmailAddress | {EmailToken} |
@@ -64,8 +64,8 @@ Scenario: Reset password in an unactivated account
 	And I am on the RegisterCandidatePage page
 	And I choose CreateAccountButton
 	Then I wait 120 second for the ActivationPage page
-	When I navigate to the ForgottenPasswordPage page
-	And I am on the ForgottenPasswordPage page
+	When I navigate to the ForgottenCredentialsPage page
+	And I am on the ForgottenCredentialsPage page
 	And I enter data
 		| Field        | Value        |
 		| EmailAddress | {EmailToken} |

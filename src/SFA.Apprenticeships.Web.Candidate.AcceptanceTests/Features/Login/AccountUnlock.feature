@@ -52,7 +52,7 @@ Scenario: Email is not pre populated when navigating to unlock page directly
 	When I choose SignInLink
 	Then I am on the LoginPage page
 	When I choose CannotAccessMyAccountLink
-	Then I am on the ForgottenPasswordPage page
+	Then I am on the ForgottenCredentialsPage page
 	When I choose UnlockAccountLink
 	Then I am on the UnlockPage page
 	And I see
@@ -93,8 +93,8 @@ Scenario: Reset password after locking an account unlocks the account
          | EmailAddress      | Equals | {EmailToken} |
          | AccountUnlockCode | Exists |              |
 	And the user login incorrect attempts should be 3
-	When I navigate to the ForgottenPasswordPage page
-	Then I am on the ForgottenPasswordPage page
+	When I navigate to the ForgottenCredentialsPage page
+	Then I am on the ForgottenCredentialsPage page
 	And I enter data
 		| Field        | Value        |
 		| EmailAddress | {EmailToken} |

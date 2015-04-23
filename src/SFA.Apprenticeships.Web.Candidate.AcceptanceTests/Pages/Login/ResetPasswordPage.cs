@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Registration
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Login
 {
-    using global::SpecBind.Pages;
     using OpenQA.Selenium;
+    using SpecBind.Pages;
 
-    [PageNavigation("/register/resetpassword")]
+    [PageNavigation("/login/resetpassword")]
     [PageAlias("ResetPasswordPage")]
     public class ResetPasswordPage : BaseValidationPage
     {
