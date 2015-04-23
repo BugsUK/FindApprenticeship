@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.RabbitMq.Serializers
 {
     using System.Text;
-    using ServiceStack;
-    using ServiceStack.Text;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Json serialiser for rabbit messages that support interface types.
@@ -20,18 +19,18 @@
 
         public byte[] MessageToBytes<T>(T message) where T : class
         {
-            return GetBytes(message.ToJson());
+            return GetBytes(JsonConvert.SerializeObject(message));
         }
 
         public T BytesToMessage<T>(byte[] bytes)
         {
-            return GetString(bytes).To<T>();
+            return JsonConvert.DeserializeObject<T>(GetString(bytes));
         }
 
         public object BytesToMessage(string typeName, byte[] bytes)
         {
             var type = _typeNameSerializer.DeSerialize(typeName);
-            return ServiceStack.Text.JsonSerializer.DeserializeFromString(GetString(bytes), type);
+            return JsonConvert.DeserializeObject(GetString(bytes), type);
         }
 
         private static string GetString(byte[] bytes)
