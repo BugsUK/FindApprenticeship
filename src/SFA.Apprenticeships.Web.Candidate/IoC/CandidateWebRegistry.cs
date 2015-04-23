@@ -150,6 +150,7 @@
             For<IUpdateSavedSearchStrategy>().Use<UpdateSavedSearchStrategy>();
             For<IDeleteSavedSearchStrategy>().Use<DeleteSavedSearchStrategy>();
             For<IRequestEmailReminderStrategy>().Use<RequestEmailReminderStrategy>();
+            For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
 
             For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>().Ctor<ISaveCandidateStrategy>().Named("QueuedLegacySaveCandidateStrategy").Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
