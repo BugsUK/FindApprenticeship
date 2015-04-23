@@ -17,7 +17,7 @@
 
         public void RequestEmailReminder(string phoneNumber)
         {
-            var candidates = _candidateReadRepository.GetAllWith(phoneNumber);
+            var candidates = _candidateReadRepository.GetAllCandidatesWithPhoneNumber(phoneNumber);
 
             var verified = false;
 

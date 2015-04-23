@@ -21,15 +21,15 @@
             const string phoneNumber = "0123456789";
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            candidateReadRepository.Setup(r => r.GetAllWith(phoneNumber, true)).Throws(new CustomException(ErrorCodes.CandidateNotFoundError));
+            candidateReadRepository.Setup(r => r.GetAllCandidatesWithPhoneNumber(phoneNumber, true)).Throws(new CustomException(ErrorCodes.CandidateNotFoundError));
             var communicationService = new Mock<ICommunicationService>();
             var strategy = new RequestEmailReminderStrategyBuilder().With(candidateReadRepository).With(communicationService).Build();
 
             Action action = () => { strategy.RequestEmailReminder(phoneNumber); };
 
             action.ShouldThrow<CustomException>().Which.Code.Should().Be(ErrorCodes.CandidateNotFoundError);
-            candidateReadRepository.Verify(r => r.GetAllWith(phoneNumber, true), Times.Once);
-            candidateReadRepository.Verify(r => r.GetAllWith(phoneNumber, false), Times.Never);
+            candidateReadRepository.Verify(r => r.GetAllCandidatesWithPhoneNumber(phoneNumber, true), Times.Once);
+            candidateReadRepository.Verify(r => r.GetAllCandidatesWithPhoneNumber(phoneNumber, false), Times.Never);
             communicationService.Verify(cs => cs.SendMessageToCandidate(It.IsAny<Guid>(), MessageTypes.SendEmailReminder, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Never);
         }
 
@@ -40,7 +40,7 @@
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             var candidate = new CandidateBuilder(Guid.NewGuid()).PhoneNumber(phoneNumber).VerifiedMobile(false).Build();
-            candidateReadRepository.Setup(r => r.GetAllWith(phoneNumber, true)).Returns(new List<Candidate> { candidate });
+            candidateReadRepository.Setup(r => r.GetAllCandidatesWithPhoneNumber(phoneNumber, true)).Returns(new List<Candidate> { candidate });
             var communicationService = new Mock<ICommunicationService>();
             var strategy = new RequestEmailReminderStrategyBuilder().With(candidateReadRepository).With(communicationService).Build();
 
@@ -57,7 +57,7 @@
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             var candidate = new CandidateBuilder(Guid.NewGuid()).PhoneNumber(phoneNumber).VerifiedMobile(true).Build();
-            candidateReadRepository.Setup(r => r.GetAllWith(phoneNumber, true)).Returns(new List<Candidate> { candidate });
+            candidateReadRepository.Setup(r => r.GetAllCandidatesWithPhoneNumber(phoneNumber, true)).Returns(new List<Candidate> { candidate });
             var communicationService = new Mock<ICommunicationService>();
             var strategy = new RequestEmailReminderStrategyBuilder().With(candidateReadRepository).With(communicationService).Build();
 
@@ -75,7 +75,7 @@
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             var candidateOne = new CandidateBuilder(Guid.NewGuid()).PhoneNumber(phoneNumber).VerifiedMobile(false).Build();
             var candidateTwo = new CandidateBuilder(Guid.NewGuid()).PhoneNumber(phoneNumber).VerifiedMobile(false).Build();
-            candidateReadRepository.Setup(r => r.GetAllWith(phoneNumber, true)).Returns(new List<Candidate> { candidateOne, candidateTwo });
+            candidateReadRepository.Setup(r => r.GetAllCandidatesWithPhoneNumber(phoneNumber, true)).Returns(new List<Candidate> { candidateOne, candidateTwo });
             var communicationService = new Mock<ICommunicationService>();
             var strategy = new RequestEmailReminderStrategyBuilder().With(candidateReadRepository).With(communicationService).Build();
 
@@ -93,7 +93,7 @@
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             var candidateOne = new CandidateBuilder(Guid.NewGuid()).PhoneNumber(phoneNumber).VerifiedMobile(true).Build();
             var candidateTwo = new CandidateBuilder(Guid.NewGuid()).PhoneNumber(phoneNumber).VerifiedMobile(true).Build();
-            candidateReadRepository.Setup(r => r.GetAllWith(phoneNumber, true)).Returns(new List<Candidate> { candidateOne, candidateTwo });
+            candidateReadRepository.Setup(r => r.GetAllCandidatesWithPhoneNumber(phoneNumber, true)).Returns(new List<Candidate> { candidateOne, candidateTwo });
             var communicationService = new Mock<ICommunicationService>();
             var strategy = new RequestEmailReminderStrategyBuilder().With(candidateReadRepository).With(communicationService).Build();
 
@@ -111,7 +111,7 @@
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             var candidateOne = new CandidateBuilder(Guid.NewGuid()).PhoneNumber(phoneNumber).VerifiedMobile(false).Build();
             var candidateTwo = new CandidateBuilder(Guid.NewGuid()).PhoneNumber(phoneNumber).VerifiedMobile(true).Build();
-            candidateReadRepository.Setup(r => r.GetAllWith(phoneNumber, true)).Returns(new List<Candidate> { candidateOne, candidateTwo });
+            candidateReadRepository.Setup(r => r.GetAllCandidatesWithPhoneNumber(phoneNumber, true)).Returns(new List<Candidate> { candidateOne, candidateTwo });
             var communicationService = new Mock<ICommunicationService>();
             var strategy = new RequestEmailReminderStrategyBuilder().With(candidateReadRepository).With(communicationService).Build();
 

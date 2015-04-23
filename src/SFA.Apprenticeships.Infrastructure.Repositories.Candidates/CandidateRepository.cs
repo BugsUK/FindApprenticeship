@@ -97,7 +97,7 @@
             return CandidateOrNull(mongoEntity);
         }
 
-        public IEnumerable<Candidate> GetAllWith(string phoneNumber, bool errorIfNotFound = true)
+        public IEnumerable<Candidate> GetAllCandidatesWithPhoneNumber(string phoneNumber, bool errorIfNotFound = true)
         {
             _logger.Debug("Calling repository to get candidates with PhoneNumber={0}", phoneNumber);
 
