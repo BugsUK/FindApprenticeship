@@ -287,9 +287,10 @@ WriteLiteral(">Creating an account allows you to:</p>\r\n            <ul");
 
 WriteLiteral(" class=\"list-bullet\"");
 
-WriteLiteral(">\r\n                <li>Apply for an apprenticeship</li>\r\n                <li>Trac" +
-"k your applications</li>\r\n                <li>Receive alerts for new apprentices" +
-"hips</li>\r\n            </ul>\r\n        </div>\r\n        <details");
+WriteLiteral(">\r\n                <li>Apply for an apprenticeship or traineeship</li>\r\n         " +
+"       <li>Track your apprenticeship applications</li>\r\n                <li>Rece" +
+"ive alerts for new apprenticeships</li>\r\n            </ul>\r\n        </div>\r\n    " +
+"    <details");
 
 WriteLiteral(" class=\"text hide-mob\"");
 
