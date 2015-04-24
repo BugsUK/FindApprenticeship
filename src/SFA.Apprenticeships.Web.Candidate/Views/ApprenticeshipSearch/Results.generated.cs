@@ -516,61 +516,112 @@ WriteLiteral(";\r\n\r\n    <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
-WriteLiteral(">\r\n    $(function () {\r\n        $(\"#Location\").locationMatch({\r\n            url: " +
-"\'");
+WriteLiteral(">\r\n        $(function() {\r\n            $(\"#Location\").locationMatch({\r\n          " +
+"      url: \'");
 
             
             #line 162 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-             Write(Url.Action("location", "Location"));
+                 Write(Url.Action("location", "Location"));
 
             
             #line default
             #line hidden
 WriteLiteral(@"',
-            longitude: '#Longitude',
-            latitude: '#Latitude',
-            latlonhash: '#Hash'
-        });
+                longitude: '#Longitude',
+                latitude: '#Latitude',
+                latlonhash: '#Hash'
+            });
 
-        $('#sort-results').change(function () {
-            $('#SearchAction').val(""Sort"");
-            $(""form"").submit();
-        });
+            $('#sort-results').change(function() {
+                $('#SearchAction').val(""Sort"");
+                $(""form"").submit();
+            });
 
-        $('#results-per-page').change(function () {
-            $('#SearchAction').val(""Sort"");
-            $(""form"").submit();
-        });
+            $('#results-per-page').change(function() {
+                $('#SearchAction').val(""Sort"");
+                $(""form"").submit();
+            });
 
-        $('#search-button').click(function () {
-            $('#LocationType').val(""NonNational"");
-        });
+            $('#search-button').click(function() {
+                $('#LocationType').val(""NonNational"");
+            });
 
-        initSavedVacancies({
-            saveUrl: '");
+            initSavedVacancies({
+                saveUrl: '");
 
             
             #line 183 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                 Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
+                     Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n            deleteUrl: \'");
+WriteLiteral("\',\r\n                deleteUrl: \'");
 
             
             #line 184 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-                   Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
+                       Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n            title: true\r\n       });\r\n    });\r\n    </script>\r\n\r\n");
+WriteLiteral("\',\r\n                title: true\r\n            });\r\n\r\n            $(\'#receiveSaveSe" +
+"archAlert\').click(function() {\r\n                var $this = $(this),\r\n          " +
+"          $href = $this.attr(\'href\');\r\n\r\n                //Append current result" +
+"s detail view settings to query string so they are saved.\r\n                $href" +
+" = $href + \'&\' + GetSearchResultsDetailsValues();\r\n\r\n                $this.attr(" +
+"\'href\', $href);\r\n            });\r\n\r\n            $(\'#chooseDetails input\').each(f" +
+"unction() {\r\n                var $this = $(this),\r\n                    $thisId =" +
+" $this.attr(\'id\');\r\n\r\n                var $value = GetSearchResultsDetailsValue(" +
+"$thisId);\r\n\r\n                if ($value != null) {\r\n                    var $cur" +
+"rentlyChecked = $this.is(\':checked\');\r\n                    $this.prop(\"checked\"," +
+" $value);\r\n                    if ($currentlyChecked !== $value) {\r\n            " +
+"            $(\'[data-show=\"\' + $thisId + \'\"]\').toggle();\r\n                    }\r" +
+"\n                }\r\n            });\r\n\r\n            //Write the new, complete coo" +
+"kie with the current view of the display settings\r\n            SetSearchResultsD" +
+"etailsCookieValue();\r\n\r\n            $(\'#chooseDetails input\').on(\'change\', funct" +
+"ion() {\r\n                var $this = $(this),\r\n                    $thisId = $th" +
+"is.attr(\'id\');\r\n\r\n                $(\'[data-show=\"\' + $thisId + \'\"]\').toggle();\r\n" +
+"\r\n                //Write the new, complete cookie with the current view of the " +
+"display settings\r\n                SetSearchResultsDetailsCookieValue();\r\n       " +
+"     });\r\n        });\r\n\r\n        jQuery.extend({\r\n            getQueryParameters" +
+": function(str) {\r\n                return (str || document.location.search).repl" +
+"ace(/(^\\?)/, \'\').split(\"&\").map(function(n) { return n = n.split(\"=\"), this[n[0]" +
+"] = n[1], this }.bind({}))[0];\r\n            }\r\n        });\r\n\r\n        jQuery.ext" +
+"end({\r\n            getCookieValues: function (str) {\r\n                var cookie" +
+"Values = {};\r\n\r\n                var cookie = $.cookie(str);\r\n\r\n                i" +
+"f (typeof cookie !== \'undefined\' && cookie != null) {\r\n                    var c" +
+"ookieComponents = cookie.split(\"&\");\r\n                    $.each(cookieComponent" +
+"s, function (index, value) {\r\n                        var cookieComponent = valu" +
+"e.split(\'=\');\r\n                        cookieValues[cookieComponent[0]] = cookie" +
+"Component[1];\r\n                    });\r\n                }\r\n\r\n                ret" +
+"urn cookieValues;\r\n            }\r\n        });\r\n\r\n        function GetSearchResul" +
+"tsDetailsValue(searchResultDetail) {\r\n            //Get URL param first\r\n       " +
+"     var queryParams = $.getQueryParameters();\r\n            var queryValue = que" +
+"ryParams[searchResultDetail];\r\n            if (typeof queryValue !== \'undefined\'" +
+" && queryValue != null) {\r\n                return queryValue.toLowerCase() === \'" +
+"true\';\r\n            }\r\n\r\n            //If that fails use cookie value\r\n         " +
+"   var cookieValues = $.getCookieValues(\'NAS.SearchResultsDetails\');\r\n          " +
+"  var cookieValue = cookieValues[searchResultDetail];\r\n            if (typeof co" +
+"okieValue !== \'undefined\' && cookieValue != null) {\r\n                return cook" +
+"ieValue.toLowerCase() === \'true\';\r\n            }\r\n\r\n            //Otherwise use " +
+"defaults\r\n            return null;\r\n        }\r\n\r\n        function GetSearchResul" +
+"tsDetailsValues() {\r\n            //Assemble query string or cookie compatible va" +
+"lue from inputs\r\n            var detailsValue = $(\'#chooseDetails input\').toArra" +
+"y().map(function (value) {\r\n                return $(value).attr(\'id\') + \"=\" + $" +
+"(value).is(\':checked\');\r\n            }).join(\"&\");\r\n\r\n            return details" +
+"Value;\r\n        }\r\n\r\n        function SetSearchResultsDetailsCookieValue() {\r\n  " +
+"          //Assemble cookie value from inputs\r\n            var cookieValue = Get" +
+"SearchResultsDetailsValues();\r\n\r\n            //Need the cookie not to be encoded" +
+" so it\'s compatible with MVC\r\n            $.cookie.raw = true;\r\n\r\n            //" +
+"Write the new, complete cookie with the current view of the display settings\r\n  " +
+"          $.cookie(\'NAS.SearchResultsDetails\', cookieValue);\r\n        }\r\n    </s" +
+"cript>\r\n\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 190 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 291 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/resultsMap"));
 
             

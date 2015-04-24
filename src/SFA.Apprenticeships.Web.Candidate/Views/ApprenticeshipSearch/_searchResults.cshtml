@@ -16,33 +16,37 @@
                                 @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
                                 {
                                 <li>
-                                    <input checked="" type="checkbox" id="subCatCheck">
-                                    <label for="subCatCheck">Sub-category</label>
+                                    <input @{if (Model.VacancySearch.DisplaySubCategory) { <text> checked="checked" </text> }} type="checkbox" id="DisplaySubCategory">
+                                    <label for="DisplaySubCategory">Sub-category</label>
                                 </li>
                                 }
                                 <li>
-                                    <input checked="" type="checkbox" id="descriptionCheck">
-                                    <label for="descriptionCheck">Description</label>
+                                    <input @{if (Model.VacancySearch.DisplayDescription) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayDescription">
+                                    <label for="DisplayDescription">Description</label>
                                 </li>
                                 <li>
-                                    <input checked="" type="checkbox" id="distanceCheck">
-                                    <label for="distanceCheck">Distance</label>
+                                    <input @{if (Model.VacancySearch.DisplayDistance) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayDistance">
+                                    <label for="DisplayDistance">Distance</label>
                                 </li>
                                 <li>
-                                    <input checked="" type="checkbox" id="closingDateCheck">
-                                    <label for="closingDateCheck">Closing date</label>
+                                    <input @{if (Model.VacancySearch.DisplayClosingDate) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayClosingDate">
+                                    <label for="DisplayClosingDate">Closing date</label>
                                 </li>
                                 <li>
-                                    <input checked="" type="checkbox" id="startDateCheck">
-                                    <label for="startDateCheck">Possible start date</label>
+                                    <input @{if (Model.VacancySearch.DisplayStartDate) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayStartDate">
+                                    <label for="DisplayStartDate">Possible start date</label>
                                 </li>
                                 <li>
-                                    <input checked="" type="checkbox" id="levelCheck">
-                                    <label for="levelCheck">Apprenticeship level</label>
+                                    <input @{if (Model.VacancySearch.DisplayApprenticeshipLevel) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayApprenticeshipLevel">
+                                    <label for="DisplayApprenticeshipLevel">Apprenticeship level</label>
                                 </li>
                                 <li>
-                                    <input checked="" type="checkbox" id="wageCheck">
-                                    <label for="wageCheck">Wage</label>
+                                    <input @{if (Model.VacancySearch.DisplayWage) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayWage">
+                                    <label for="DisplayWage">Wage</label>
+                                </li>
+                                <li>
+                                    <input @{if (Model.VacancySearch.DisplayDatePosted) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayDatePosted">
+                                    <label for="DisplayDatePosted">Date Posted</label>
                                 </li>
                             </ul>
                         </div>
@@ -76,10 +80,10 @@
                         )
                         @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
                         {
-                            <span data-show="subCatCheck" class="font-small hidden-subcategory toggle-content" style="display: inline;"> (@FullNameFormatter.Format(vacancy.SubCategory))</span>
+                            <span data-show="DisplaySubCategory" class="font-small hidden-subcategory @(Model.VacancySearch.DisplaySubCategory ? "" : "toggle-content")"> (@FullNameFormatter.Format(vacancy.SubCategory))</span>
                         }
                     </h2>
-                    <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
+                    <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span data-show="DisplayDatePosted" class="font-xsmall @(Model.VacancySearch.DisplayDatePosted ? "" : "toggle-content")"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                 </div>
                 @if (ViewBag.IsCandidateActivated != null && ViewBag.IsCandidateActivated)
                 {
@@ -93,14 +97,14 @@
                         <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
                     </div>
                 }
-                <p data-show="descriptionCheck">@vacancy.Description</p>
+                <p data-show="DisplayDescription" @{if (!Model.VacancySearch.DisplayDescription) { <text> class="toggle-content" </text>  }}>@vacancy.Description</p>
                 <div class="grid-wrapper">
                     <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : "")">
                         <ul class="list-text no-btm-margin inner-block-padr">
 
                             @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                             {
-                                <li data-show="distanceCheck">
+                                <li data-show="DisplayDistance" @{if (!Model.VacancySearch.DisplayDistance) { <text> class="toggle-content" </text>  }}>
                                     <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<span class="summary-style fake-link hide-nojs journey-trigger">Journey time</span>
                                     <div class="detail-content toggle-content hide-nojs">
                                         <select class="select-mode" name="">
@@ -114,10 +118,10 @@
                                     </div>
                                 </li>
                             }
-                            <li data-show="closingDateCheck"><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
-                            <li data-show="startDateCheck"><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
-                            <li data-show="levelCheck" style="display: list-item;"><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
-                            <li data-show="wageCheck" style="display: list-item;"><b>Wage:</b> @vacancy.Wage p/week</li>
+                            <li data-show="DisplayClosingDate" @{if (!Model.VacancySearch.DisplayClosingDate) { <text> class="toggle-content" </text>  }}><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
+                            <li data-show="DisplayStartDate" @{if (!Model.VacancySearch.DisplayStartDate) { <text> class="toggle-content" </text>  }}><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
+                            <li data-show="DisplayApprenticeshipLevel" @{if (!Model.VacancySearch.DisplayApprenticeshipLevel) { <text> class="toggle-content" </text>  }}><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
+                            <li data-show="DisplayWage" @{if (!Model.VacancySearch.DisplayWage) { <text> class="toggle-content" </text>  }}><b>Wage:</b> @vacancy.Wage p/week</li>
 
                             @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
                             {

@@ -10,6 +10,11 @@
             AlertsEnabled = true;
             ApprenticeshipLevel = "All";
             SearchField = "All";
+            DisplaySubCategory = true;
+            DisplayDescription = true;
+            DisplayDistance = true;
+            DisplayClosingDate = true;
+            DisplayStartDate = true;
         }
 
         public Guid CandidateId { get; set; }
@@ -49,5 +54,21 @@
         public string LastResultsHash { get; set; }
 
         public DateTime? DateProcessed { get; set; }
+
+        public bool DisplaySubCategory { get; set; }
+
+        public bool DisplayDescription { get; set; }
+
+        public bool DisplayDistance { get; set; }
+
+        public bool DisplayClosingDate { get; set; }
+
+        public bool DisplayStartDate { get; set; }
+
+        public bool DisplayApprenticeshipLevel { get; set; }
+
+        public bool DisplayWage { get; set; }
+
+        public bool DisplayDatePosted { get; set; }
     }
 }

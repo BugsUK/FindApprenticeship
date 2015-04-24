@@ -66,6 +66,14 @@
             var subCategories = new[] { "513", "540" };
             const string subCategoriesFullNames = "Surveying|Construction Civil Engineering";
             const string searchField = "JobTitle";
+            const bool displaySubCategory = false;
+            const bool displayDescription = false;
+            const bool displayDistance = false;
+            const bool displayClosingDate = false;
+            const bool displayStartDate = false;
+            const bool displayApprenticeshipLevel = true;
+            const bool displayWage = true;
+            const bool displayDatePosted = true;
 
             var categories = new List<Category>
             {
@@ -105,6 +113,7 @@
                 .WithSubCategories(subCategories)
                 .WithSearchField(searchField)
                 .WithCategories(categories)
+                .WithDisplay(displaySubCategory, displayDescription, displayDistance, displayClosingDate, displayStartDate, displayApprenticeshipLevel, displayWage, displayDatePosted)
                 .Build();
 
             var response = provider.CreateSavedSearch(candidateId, viewModel);
@@ -129,6 +138,14 @@
             savedSearch.SearchField.Should().Be(searchField);
             savedSearch.LastResultsHash.Should().BeNull();
             savedSearch.DateProcessed.Should().Be(null);
+            savedSearch.DisplaySubCategory.Should().Be(displaySubCategory);
+            savedSearch.DisplayDescription.Should().Be(displayDescription);
+            savedSearch.DisplayDistance.Should().Be(displayDistance);
+            savedSearch.DisplayClosingDate.Should().Be(displayClosingDate);
+            savedSearch.DisplayStartDate.Should().Be(displayStartDate);
+            savedSearch.DisplayApprenticeshipLevel.Should().Be(displayApprenticeshipLevel);
+            savedSearch.DisplayWage.Should().Be(displayWage);
+            savedSearch.DisplayDatePosted.Should().Be(displayDatePosted);
         }
 
         [Test]

@@ -24,6 +24,14 @@
         private double? _longitude;
         private SavedSearchViewModel[] _savedSearches;
         private VacancySearchSortType _sortType;
+        private bool _displaySubCategory = true;
+        private bool _displayDescription = true;
+        private bool _displayDistance = true;
+        private bool _displayClosingDate = true;
+        private bool _displayStartDate = true;
+        private bool _displayApprenticeshipLevel;
+        private bool _displayWage;
+        private bool _displayDatePosted;
 
         public ApprenticeshipSearchViewModel Build()
         {
@@ -47,7 +55,16 @@
                 Categories = _categories,
                 ViewModelMessage = _viewModelMessage,
 
-                SavedSearches = _savedSearches
+                SavedSearches = _savedSearches,
+
+                DisplaySubCategory = _displaySubCategory,
+                DisplayDescription = _displayDescription,
+                DisplayDistance = _displayDistance,
+                DisplayClosingDate = _displayClosingDate,
+                DisplayStartDate = _displayStartDate,
+                DisplayApprenticeshipLevel = _displayApprenticeshipLevel,
+                DisplayWage = _displayWage,
+                DisplayDatePosted = _displayDatePosted
             };
 
             if (viewModel.Latitude.HasValue && viewModel.Longitude.HasValue)
@@ -134,6 +151,19 @@
         public ApprenticeshipSearchViewModelBuilder WithSortType(VacancySearchSortType sortType)
         {
             _sortType = sortType;
+            return this;
+        }
+
+        public ApprenticeshipSearchViewModelBuilder WithDisplay(bool displaySubCategory, bool displayDescription, bool displayDistance, bool displayClosingDate, bool displayStartDate, bool displayApprenticeshipLevel, bool displayWage, bool displayDatePosted)
+        {
+            _displaySubCategory = displaySubCategory;
+            _displayDescription = displayDescription;
+            _displayDistance = displayDistance;
+            _displayClosingDate = displayClosingDate;
+            _displayStartDate = displayStartDate;
+            _displayApprenticeshipLevel = displayApprenticeshipLevel;
+            _displayWage = displayWage;
+            _displayDatePosted = displayDatePosted;
             return this;
         }
     }

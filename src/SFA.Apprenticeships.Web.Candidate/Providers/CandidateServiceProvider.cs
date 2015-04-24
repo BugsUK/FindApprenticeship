@@ -523,7 +523,15 @@
                 CategoryFullName = categoryFullName,
                 SubCategories = subCategories,
                 SubCategoriesFullName = subCategoriesFullName,
-                SearchField = viewModel.SearchField
+                SearchField = viewModel.SearchField,
+                DisplaySubCategory = viewModel.DisplaySubCategory,
+                DisplayDescription = viewModel.DisplayDescription,
+                DisplayDistance = viewModel.DisplayDistance,
+                DisplayClosingDate = viewModel.DisplayClosingDate,
+                DisplayStartDate = viewModel.DisplayStartDate,
+                DisplayApprenticeshipLevel = viewModel.DisplayApprenticeshipLevel,
+                DisplayWage = viewModel.DisplayWage,
+                DisplayDatePosted = viewModel.DisplayDatePosted
             };
 
             try

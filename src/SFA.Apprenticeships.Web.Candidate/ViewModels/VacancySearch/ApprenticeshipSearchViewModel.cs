@@ -22,6 +22,11 @@
 
         public ApprenticeshipSearchViewModel()
         {
+            DisplaySubCategory = true;
+            DisplayDescription = true;
+            DisplayDistance = true;
+            DisplayClosingDate = true;
+            DisplayStartDate = true;
         }
 
         public ApprenticeshipSearchViewModel(ApprenticeshipSearchViewModel viewModel) : base (viewModel)
@@ -34,6 +39,14 @@
             SearchMode = viewModel.SearchMode;
             SearchField = viewModel.SearchField;
             SavedSearches = viewModel.SavedSearches;
+            DisplaySubCategory = DisplaySubCategory;
+            DisplayDescription = DisplayDescription;
+            DisplayDistance = DisplayDistance;
+            DisplayClosingDate = DisplayClosingDate;
+            DisplayStartDate = DisplayStartDate;
+            DisplayApprenticeshipLevel = DisplayApprenticeshipLevel;
+            DisplayWage = DisplayWage;
+            DisplayDatePosted = DisplayDatePosted;
         }
 
         [Display(Name = ApprenticeshipSearchViewModelMessages.KeywordMessages.LabelText, Description = ApprenticeshipSearchViewModelMessages.KeywordMessages.HintText)]
@@ -109,6 +122,22 @@
         public SavedSearchViewModel[] SavedSearches { get; set; }
 
         public string SavedSearchId { get; set; }
+
+        public bool DisplaySubCategory { get; set; }
+
+        public bool DisplayDescription { get; set; }
+
+        public bool DisplayDistance { get; set; }
+
+        public bool DisplayClosingDate { get; set; }
+
+        public bool DisplayStartDate { get; set; }
+
+        public bool DisplayApprenticeshipLevel { get; set; }
+
+        public bool DisplayWage { get; set; }
+
+        public bool DisplayDatePosted { get; set; }
 
         #region Helpers
 
