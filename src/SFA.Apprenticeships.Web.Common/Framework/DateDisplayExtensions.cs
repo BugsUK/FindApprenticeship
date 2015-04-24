@@ -52,7 +52,7 @@
 
         public static string ToFriendlyClosingToday(this DateTime closingDate)
         {
-            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+            var timeZoneInfo = TimeZoneInfo.Local; //.FindSystemTimeZoneById("GMT Standard Time");
             var dateTimeByZoneId = TimeZoneInfo.ConvertTime(closingDate.ToUniversalTime(), timeZoneInfo);
 
             var daysLeft = (int) (dateTimeByZoneId - DateTime.Now.Date).TotalDays;
