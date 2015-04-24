@@ -11,8 +11,17 @@
             AllowTraineeshipPrompts = true;
 
             SendApplicationStatusChanges = true;
+            SendApplicationStatusChangesViaEmail = true;
+            SendApplicationStatusChangesViaText = false;
+
             SendApprenticeshipApplicationsExpiring = true;
+            SendApprenticeshipApplicationsExpiringViaEmail = true;
+            SendApprenticeshipApplicationsExpiringViaText = false;
+
             SendMarketingCommunications = true;
+            SendMarketingCommunicationsViaEmail = true;
+            SendMarketingCommunicationsViaText = false;
+
             SendSavedSearchAlertsViaEmail = true;
             SendSavedSearchAlertsViaText = false;
         }
@@ -29,9 +38,21 @@
 
         public bool SendApplicationStatusChanges { get; set; }
 
+        public bool SendApplicationStatusChangesViaText { get; set; }
+
+        public bool SendApplicationStatusChangesViaEmail { get; set; }
+
         public bool SendApprenticeshipApplicationsExpiring { get; set; }
 
+        public bool SendApprenticeshipApplicationsExpiringViaText { get; set; }
+
+        public bool SendApprenticeshipApplicationsExpiringViaEmail { get; set; }
+
         public bool SendMarketingCommunications { get; set; }
+
+        public bool SendMarketingCommunicationsViaText { get; set; }
+
+        public bool SendMarketingCommunicationsViaEmail { get; set; }
 
         public bool SendSavedSearchAlertsViaEmail { get; set; }
 

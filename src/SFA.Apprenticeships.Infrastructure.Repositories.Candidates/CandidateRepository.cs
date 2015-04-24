@@ -35,7 +35,7 @@
 
             var mongoEntity = Collection.FindOneById(id);
 
-            LogOutcome(id, mongoEntity);
+            LogOutcome("Id", id, mongoEntity);
 
             return CandidateOrNull(mongoEntity);
         }
@@ -54,7 +54,7 @@
                 throw new CustomException(message, CandidateErrorCodes.CandidateNotFoundError);
             }
 
-            LogOutcome(id, mongoEntity);
+            LogOutcome("Id", id, mongoEntity);
 
             return CandidateOrNull(mongoEntity);
         }
@@ -119,6 +119,25 @@
             return candidates;
         }
 
+        public Candidate GetBySubscriberId(Guid subscriberId, bool errorIfNotFound = true)
+        {
+            _logger.Debug("Calling repository to get candidate with subscriberId='{0}'", subscriberId);
+
+            var mongoEntity = Collection.FindOne(Query<MongoCandidate>.EQ(o => o.SubscriberId, subscriberId));
+
+            if (mongoEntity == null && errorIfNotFound)
+            {
+                var message = string.Format("Unknown candidate with subscriberId='{0}'", subscriberId);
+                _logger.Debug(message);
+
+                throw new CustomException(message, CandidateErrorCodes.CandidateNotFoundError);
+            }
+
+            LogOutcome("SubscriberId", subscriberId, mongoEntity);
+
+            return CandidateOrNull(mongoEntity);
+        }
+
         public void Delete(Guid id)
         {
             _logger.Debug("Calling repository to delete candidate with Id={0}", id);
@@ -143,11 +162,11 @@
             return _mapper.Map<MongoCandidate, Candidate>(mongoEntity);
         }
 
-        private void LogOutcome(Guid id, MongoCandidate mongoEntity)
+        private void LogOutcome(string fieldName, Guid id, MongoCandidate mongoEntity)
         {
-            var message = mongoEntity == null ? "Found no candidate with Id={0}" : "Found candidate with Id={0}";
+            var message = mongoEntity == null ? "Found no candidate with {0}={1}" : "Found candidate with Id={0}";
 
-            _logger.Debug(message, id);
+            _logger.Debug(message, fieldName, id);
         }
 
         private void LogOutcome(string username, MongoCandidate mongoEntity)

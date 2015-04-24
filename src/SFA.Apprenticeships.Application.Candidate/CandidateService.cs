@@ -11,6 +11,7 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
+    using Interfaces.Communications;
     using Interfaces.Logging;
     using Strategies;
     using Strategies.Apprenticeships;
@@ -73,18 +74,18 @@
             IResetForgottenPasswordStrategy resetForgottenPasswordStrategy,
             IUnlockAccountStrategy unlockAccountStrategy,
             ISaveApprenticeshipApplicationStrategy saveApplicationStrategy,
-            IArchiveApplicationStrategy archiveApplicationStrategy, 
-            IDeleteApplicationStrategy deleteApplicationStrategy, 
+            IArchiveApplicationStrategy archiveApplicationStrategy,
+            IDeleteApplicationStrategy deleteApplicationStrategy,
             ISaveCandidateStrategy saveCandidateStrategy,
-            ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy, 
-            ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy, 
+            ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy,
+            ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy,
             ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail> candidateApprenticeshipVacancyDetailStrategy,
             ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail> candidateTraineeshipVacancyDetailStrategy,
             ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
             ILogService logService,
-            IVerifyMobileStrategy verifyMobileStrategy, 
+            IVerifyMobileStrategy verifyMobileStrategy,
             ISubmitContactMessageStrategy submitContactMessageStrategy,
             ICreateSavedSearchStrategy createSavedSearchStrategy,
             IRetrieveSavedSearchesStrategy retrieveSavedSearchesStrategy,
@@ -174,6 +175,12 @@
             _logger.Debug("Calling CandidateService to get the user {0}.", username);
 
             return _candidateReadRepository.Get(username);
+        }
+
+        public Candidate GetCandidateBySubscriberId(Guid subscriberId)
+        {
+            _logger.Debug("Calling CandidateService to get the candidate for subscriberId='{0}'.", subscriberId);
+            return _candidateReadRepository.Get(subscriberId);
         }
 
         public Candidate SaveCandidate(Candidate candidate)
@@ -415,7 +422,7 @@
 
             _logger.Info("Calling CandidateService to create draft from saved vacancy, vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
-            return _createDraftApprenticeshipFromSavedVacancyStrategy.CreateDraft(candidateId, vacancyId);            
+            return _createDraftApprenticeshipFromSavedVacancyStrategy.CreateDraft(candidateId, vacancyId);
         }
 
         public SavedSearch CreateSavedSearch(SavedSearch savedSearch)

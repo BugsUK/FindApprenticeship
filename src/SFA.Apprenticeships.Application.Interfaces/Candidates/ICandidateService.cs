@@ -23,6 +23,8 @@
 
         Candidate GetCandidate(string username);
 
+        Candidate GetCandidateBySubscriberId(Guid subscriberId);
+
         Candidate SaveCandidate(Candidate candidate);
 
         ApprenticeshipApplicationDetail CreateApplication(Guid candidateId, int vacancyId); // note: only an int due to legacy - will be a Guid

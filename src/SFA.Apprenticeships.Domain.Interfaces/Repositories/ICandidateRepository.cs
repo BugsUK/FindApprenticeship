@@ -7,9 +7,15 @@
     public interface ICandidateReadRepository : IReadRepository<Candidate>
     {
         Candidate Get(Guid id, bool errorIfNotFound);
+        
         Candidate Get(string username, bool errorIfNotFound = true);
+
         Candidate Get(int legacyCandidateId, bool errorIfNotFound = true);
+        
         IEnumerable<Candidate> GetAllCandidatesWithPhoneNumber(string phoneNumber, bool errorIfNotFound = true);
+
+
+        Candidate GetBySubscriberId(Guid subscriberId, bool errorIfNotFound = true);
     }
 
     public interface ICandidateWriteRepository : IWriteRepository<Candidate>

@@ -25,7 +25,6 @@
     using Application.Vacancy;
     using Application.Vacancy.SiteMap;
     using Common.Configuration;
-    using Common.SiteMap;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Configuration;
@@ -39,6 +38,7 @@
     using Mediators.Login;
     using Mediators.Register;
     using Mediators.Search;
+    using Mediators.Unsubscribe;
     using Providers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
@@ -166,6 +166,7 @@
             For<IRegisterMediator>().Use<RegisterMediator>();
             For<ILoginMediator>().Use<LoginMediator>();
             For<IHomeMediator>().Use<HomeMediator>();
+            For<IUnsubscribeMediator>().Use<UnsubscribeMediator>();
         }
     }
 }

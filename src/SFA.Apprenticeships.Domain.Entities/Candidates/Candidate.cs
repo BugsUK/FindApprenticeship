@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
+    using System;
     using Users;
 
     public class Candidate : BaseEntity
@@ -13,6 +14,8 @@
         }
 
         public int LegacyCandidateId { get; set; } // temporary "weak link" to legacy candidate record (could be via an index)
+
+        public Guid SubscriberId { get; set; }
 
         public RegistrationDetails RegistrationDetails { get; set; }
 

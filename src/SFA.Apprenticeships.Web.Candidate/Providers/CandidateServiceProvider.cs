@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Communications;
     using Application.Interfaces.Logging;
     using Common.Configuration;
     using Common.Providers;
@@ -282,7 +283,7 @@
             try
             {
                 _userAccountService.ResendAccountUnlockCode(model.EmailAddress);
-                return new AccountUnlockViewModel {EmailAddress = model.EmailAddress};
+                return new AccountUnlockViewModel { EmailAddress = model.EmailAddress };
             }
             catch (CustomException e)
             {
@@ -308,13 +309,13 @@
             {
                 var message = string.Format("Send account unlock code failed for " + model.EmailAddress);
                 _logger.Error(message, e);
-                return new AccountUnlockViewModel(message) {EmailAddress = model.EmailAddress, Status = AccountUnlockState.Error};
+                return new AccountUnlockViewModel(message) { EmailAddress = model.EmailAddress, Status = AccountUnlockState.Error };
             }
         }
 
         public PasswordResetViewModel VerifyPasswordReset(PasswordResetViewModel passwordResetViewModel)
         {
-            _logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}", 
+            _logger.Debug("Calling CandidateServiceProvider to verify password reset for user {0}",
                 passwordResetViewModel.EmailAddress);
 
             passwordResetViewModel.IsPasswordResetCodeValid = false;
@@ -366,7 +367,7 @@
             try
             {
                 _candidateService.UnlockAccount(model.EmailAddress, model.AccountUnlockCode);
-                return new AccountUnlockViewModel {Status = AccountUnlockState.Ok};
+                return new AccountUnlockViewModel { Status = AccountUnlockState.Ok };
             }
             catch (CustomException e)
             {
@@ -374,10 +375,10 @@
                 {
                     case Domain.Entities.ErrorCodes.EntityStateError:
                         _logger.Info(e.Message, e);
-                        return new AccountUnlockViewModel {Status = AccountUnlockState.UserInIncorrectState};
+                        return new AccountUnlockViewModel { Status = AccountUnlockState.UserInIncorrectState };
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeExpired:
                         _logger.Info(e.Message, e);
-                        return new AccountUnlockViewModel {Status = AccountUnlockState.AccountUnlockCodeExpired};
+                        return new AccountUnlockViewModel { Status = AccountUnlockState.AccountUnlockCodeExpired };
                     case Application.Interfaces.Users.ErrorCodes.AccountUnlockCodeInvalid:
                     case Application.Interfaces.Users.ErrorCodes.UnknownUserError:
                         _logger.Info(e.Message, e);
@@ -387,13 +388,13 @@
                         };
                     default:
                         _logger.Error(e.Message, e);
-                        return new AccountUnlockViewModel {Status = AccountUnlockState.Error};
+                        return new AccountUnlockViewModel { Status = AccountUnlockState.Error };
                 }
             }
             catch (Exception e)
             {
                 _logger.Error("Account unlock failed for " + model.EmailAddress, e);
-                return new AccountUnlockViewModel {Status = AccountUnlockState.Error};
+                return new AccountUnlockViewModel { Status = AccountUnlockState.Error };
             }
         }
 
@@ -604,6 +605,45 @@
                 {
                     ViewModelMessage = ApprenticeshipsSearchPageMessages.RunSavedSearchFailed
                 };
+            }
+        }
+
+        public bool TryUnsubscribe(Guid subscriberId, int subscriptionTypeId, out SubscriptionTypes subscriptionType)
+        {
+            subscriptionType = (SubscriptionTypes)subscriptionTypeId;
+
+            try
+            {
+                var candidate = _candidateService.GetCandidateBySubscriberId(subscriberId);
+                var communicationPreferences = candidate.CommunicationPreferences;
+
+                switch (subscriptionType)
+                {
+                    case SubscriptionTypes.DailyDigestViaEmail:
+                        communicationPreferences.SendApplicationStatusChanges =
+                            communicationPreferences.SendApplicationStatusChangesViaEmail =
+                                communicationPreferences.SendApprenticeshipApplicationsExpiring =
+                                    communicationPreferences.SendApprenticeshipApplicationsExpiringViaEmail = false;
+                        break;
+
+                    case SubscriptionTypes.SavedSearchAlertsViaEmail:
+                        communicationPreferences.SendSavedSearchAlertsViaEmail = false;
+                        break;
+
+                    default:
+                        _logger.Error("Unknown subscriptionTypeId='{0}' for subscriberId='{0}'", subscriptionTypeId,
+                            subscriberId);
+
+                        subscriptionType = SubscriptionTypes.Unknown;
+                        return false;
+                }
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Error unsubscribing subscriptionTypeId='{0}' for subscriberId='{0}'", e, subscriptionTypeId, subscriberId);
+                return false;
             }
         }
 

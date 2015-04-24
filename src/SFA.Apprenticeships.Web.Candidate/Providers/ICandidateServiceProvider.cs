@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Application.Interfaces.Communications;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using ViewModels;
@@ -52,5 +53,7 @@
         SavedSearchViewModel GetSavedSearch(Guid candidateId, Guid savedSearchId);
 
         bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel);
+
+        bool TryUnsubscribe(Guid subscriberId, int subscriptionTypeId, out SubscriptionTypes subscriptionType);
     }
 }

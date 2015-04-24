@@ -256,6 +256,7 @@
     <Compile Include="Mediators\TraineeshipApplication\TestsBase.cs" />
     <Compile Include="Mediators\TraineeshipSearch\ResultsTests.cs" />
     <Compile Include="Mediators\TraineeshipSearch\TestsBase.cs" />
+    <Compile Include="Mediators\Unsubscribe\UnsubscribeTests.cs" />
     <Compile Include="Providers\AccountProvider\AccountProviderBuilder.cs" />
     <Compile Include="Providers\AccountProvider\GetSettingsViewModelTests.cs" />
     <Compile Include="Providers\AccountProvider\ResendTests.cs" />
@@ -286,6 +287,7 @@
     <Compile Include="Providers\CandidateServiceProvider\RequestAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestEmailReminderTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\SendContactMessageTests.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\UnsubscribeTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\VerifyAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

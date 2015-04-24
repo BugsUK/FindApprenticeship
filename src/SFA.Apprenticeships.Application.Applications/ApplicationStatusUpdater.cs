@@ -6,7 +6,6 @@
     using Entities;
     using Extensions;
     using Interfaces.Logging;
-    using Strategies;
 
     public class ApplicationStatusUpdater : IApplicationStatusUpdater
     {
@@ -16,21 +15,18 @@
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
-        private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
 
         public ApplicationStatusUpdater(
             ILogService logger,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
-            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy)
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository)
         {
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
-            _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _logger = logger;
         }
 
@@ -47,7 +43,7 @@
 
                 if (apprenticeshipApplication != null)
                 {
-                    _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
+                    _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
                     return;
                 }
 

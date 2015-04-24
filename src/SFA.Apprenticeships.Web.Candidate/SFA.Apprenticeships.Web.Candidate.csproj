@@ -747,6 +747,7 @@
     <Compile Include="Constants\Pages\LoginPageMessages.cs" />
     <Compile Include="Constants\Pages\ApprenticeshipVacancyDetailPageMessages.cs" />
     <Compile Include="Constants\Pages\ApprenticeshipsSearchPageMessages.cs" />
+    <Compile Include="Constants\Pages\UnsubscribePageMessages.cs" />
     <Compile Include="Constants\Pages\VacancySearchResultsPageMessages.cs" />
     <Compile Include="Constants\Pages\UpdateEmailAddressMessages.cs" />
     <Compile Include="Constants\Pages\VerifyMobilePageMessages.cs" />
@@ -756,6 +757,7 @@
     <Compile Include="Constants\ViewModels\VerifyUpdatedEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyMobileViewModelMessages.cs" />
     <Compile Include="Controllers\SiteMapController.cs" />
+    <Compile Include="Controllers\UnsubscribeController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
     <Compile Include="DependencyResolution\DefaultRegistry.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
@@ -768,6 +770,9 @@
     <Compile Include="Mediators\Home\HomeMediator.cs" />
     <Compile Include="Mediators\Home\IHomeMediator.cs" />
     <Compile Include="Mediators\Home\HomeMediatorCodes.cs" />
+    <Compile Include="Mediators\Unsubscribe\IUnsubscribeMediator.cs" />
+    <Compile Include="Mediators\Unsubscribe\UnsubscribeMediator.cs" />
+    <Compile Include="Mediators\Unsubscribe\UnsubscribeMediatorCodes.cs" />
     <Compile Include="Providers\ApprenticeshipVacancyProvider.cs" />
     <Compile Include="Providers\IApprenticeshipVacancyProvider.cs" />
     <Compile Include="Providers\ITraineeshipVacancyProvider.cs" />

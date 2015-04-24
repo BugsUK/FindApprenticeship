@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Communications
 {
-    // TODO: AG: should these be numbered?
     public enum MessageTypes
     {
         SendActivationCode = 0,
