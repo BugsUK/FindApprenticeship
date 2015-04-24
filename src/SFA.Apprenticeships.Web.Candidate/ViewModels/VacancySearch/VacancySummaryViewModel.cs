@@ -26,6 +26,8 @@
 
         public DateTime PostedDate { get; set; }
 
+        public string SubCategory { get; set; }
+
         public string DistanceAsString
         {
             get

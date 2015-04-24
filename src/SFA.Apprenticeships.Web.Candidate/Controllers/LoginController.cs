@@ -314,7 +314,7 @@
                         return View("ForgottenCredentials", response.ViewModel);
                     case LoginMediatorCodes.ForgottenEmail.FailedToSendEmail:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View("ForgottenCredentials", response.ViewModel);
+                        return RedirectToAction("Index", "Login");
                     case LoginMediatorCodes.ForgottenEmail.EmailSent:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToAction("Index", "Login");

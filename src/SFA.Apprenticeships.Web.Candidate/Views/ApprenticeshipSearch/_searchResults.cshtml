@@ -6,8 +6,50 @@
 {
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
-        <div class="float-right-wrap">
-            <div class="form-group form-group-compound">
+        <div class="grid-wrapper">
+            <div class="font-xsmall grid grid-1-3">
+                <div class="inner-block-padr">
+                    <details class="no-btm-margin small-top-padding">
+                        <summary>More/less detail</summary>
+                        <div class="detail-content" id="chooseDetails">
+                            <ul class="list-text list-checkradio">
+                                @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
+                                {
+                                <li>
+                                    <input checked="" type="checkbox" id="subCatCheck">
+                                    <label for="subCatCheck">Sub-category</label>
+                                </li>
+                                }    
+                                <li>
+                                    <input checked="" type="checkbox" id="descriptionCheck">
+                                    <label for="descriptionCheck">Description</label>
+                                </li>
+                                <li>
+                                    <input checked="" type="checkbox" id="distanceCheck">
+                                    <label for="distanceCheck">Distance</label>
+                                </li>
+                                <li>
+                                    <input checked="" type="checkbox" id="closingDateCheck">
+                                    <label for="closingDateCheck">Closing date</label>
+                                </li>
+                                <li>
+                                    <input checked="" type="checkbox" id="startDateCheck">
+                                    <label for="startDateCheck">Possible start date</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="levelCheck">
+                                    <label for="levelCheck">Apprenticeship level</label>
+                                </li>
+                                <li>
+                                    <input type="checkbox" id="wageCheck">
+                                    <label for="wageCheck">Wage</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+            </div>
+            <div class="grid grid-2-3 ta-right ta-left-mob">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
                 @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" })
                 <noscript>
@@ -32,6 +74,10 @@
                             Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude }) :
                             Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker })
                         )
+                        @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
+                        {
+                            <span data-show="subCatCheck" class="font-small hidden-subcategory toggle-content" style="display: inline;"> (@FullNameFormatter.Format(vacancy.SubCategory))</span>
+                        }
                     </h2>
                     <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                 </div>
@@ -70,6 +116,9 @@
                             }
                             <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
                             <li><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
+                            <li class="toggle-content" data-show="levelCheck" style="display: list-item;"><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
+                            <li class="toggle-content" data-show="wageCheck" style="display: list-item;"><b>Wage:</b> @vacancy.Wage p/week</li>
+                            <li class="toggle-content" data-show="postedCheck"><b>Date posted:</b> @vacancy.PostedDate</li>
 
                             @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
                             {

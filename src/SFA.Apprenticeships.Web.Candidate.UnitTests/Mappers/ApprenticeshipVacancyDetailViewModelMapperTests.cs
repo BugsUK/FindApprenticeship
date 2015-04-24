@@ -85,6 +85,21 @@
         }
 
         [Test]
+        public void ShouldTryParseWageDescriptionIfWageTypeIsText()
+        {
+            var vacancyDetail = new ApprenticeshipVacancyDetail
+            {
+                WageType = WageType.Text,
+                WageDescription = "123.45678"
+            };
+
+            var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
+
+            model.Should().NotBeNull();
+            model.Wage.Should().Be("£123.46");
+        }
+
+        [Test]
         public void ShouldReturnTheEmployerWebsiteWithHttpIfItAlreadyHasIt()
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail

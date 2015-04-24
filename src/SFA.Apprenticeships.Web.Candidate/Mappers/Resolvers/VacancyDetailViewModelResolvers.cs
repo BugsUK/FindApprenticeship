@@ -20,9 +20,23 @@
         {
             protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
-                return vacancyDetail.WageType == WageType.Text
-                    ? vacancyDetail.WageDescription
-                    : string.Format("£{0:N2}", vacancyDetail.Wage);
+                string wage;
+
+                if (vacancyDetail.WageType == WageType.Text)
+                {
+                    wage = vacancyDetail.WageDescription;
+                    decimal wageDecimal;
+                    if (decimal.TryParse(wage, out wageDecimal))
+                    {
+                        wage = string.Format("£{0:N2}", wageDecimal);
+                    }
+                }
+                else
+                {
+                    wage = string.Format("£{0:N2}", vacancyDetail.Wage);
+                }
+
+                return wage;
             }
         }
 

@@ -8,5 +8,11 @@
         public ApprenticeshipLocationType VacancyLocationType { get; set; }
         
         public ApplicationStatuses? CandidateApplicationStatus { get; set; }
+
+        public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
+
+        public string Wage { get; set; }
+
+        public string WorkingWeek { get; set; }
     }
 }
