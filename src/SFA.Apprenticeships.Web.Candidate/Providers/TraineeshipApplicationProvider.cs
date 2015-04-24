@@ -124,7 +124,7 @@
             }
         }
 
-        public WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
+        public WhatHappensNextTraineeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling TraineeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
@@ -136,12 +136,12 @@
 
                 if (vacancyDetailViewModel.HasError())
                 {
-                    return new WhatHappensNextViewModel(vacancyDetailViewModel.ViewModelMessage);
+                    return new WhatHappensNextTraineeshipViewModel(vacancyDetailViewModel.ViewModelMessage);
                 }
 
                 var candidate = _candidateService.GetCandidate(candidateId);
 
-                return new WhatHappensNextViewModel
+                return new WhatHappensNextTraineeshipViewModel
                 {
                     VacancyReference = vacancyDetailViewModel.VacancyReference,
                     VacancyTitle = vacancyDetailViewModel.Title,
@@ -157,7 +157,7 @@
 
                 _logger.Error(message, e);
 
-                return new WhatHappensNextViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
+                return new WhatHappensNextTraineeshipViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
             }
         }
 

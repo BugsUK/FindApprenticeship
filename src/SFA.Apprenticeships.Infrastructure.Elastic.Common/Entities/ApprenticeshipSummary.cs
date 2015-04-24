@@ -40,16 +40,16 @@
         public string VacancyReference { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string Sector { get; set; }
+        public string Category { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string Framework { get; set; }
+        public string CategoryCode { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string SectorCode { get; set; }
+        public string SubCategory { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string FrameworkCode { get; set; }
+        public string SubCategoryCode { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string Wage { get; set; }

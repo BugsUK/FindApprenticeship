@@ -6,5 +6,7 @@
     public interface IReferenceDataProvider
     {
         IEnumerable<Category> GetCategories();
+
+        Category GetSubCategory(string subCategory);
     }
 }

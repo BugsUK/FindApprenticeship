@@ -26,7 +26,7 @@
         public void VacancyNotFound()
         {
             TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(new WhatHappensNextViewModel {Status = ApplicationStatuses.ExpiredOrWithdrawn});
+                .Returns(new WhatHappensNextTraineeshipViewModel {Status = ApplicationStatuses.ExpiredOrWithdrawn});
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
 
@@ -50,7 +50,7 @@
         [Test]
         public void HasError()
         {
-            TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new WhatHappensNextViewModel("Has Error"));
+            TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new WhatHappensNextTraineeshipViewModel("Has Error"));
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
 
@@ -64,7 +64,7 @@
         public void Ok()
         {
             TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
-                .Returns(new WhatHappensNextViewModel());
+                .Returns(new WhatHappensNextTraineeshipViewModel());
 
             var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
 

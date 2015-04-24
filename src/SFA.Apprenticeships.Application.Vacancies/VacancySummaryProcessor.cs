@@ -118,7 +118,7 @@
         }
 
         #region Helpers
-        private static IList<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int count)
+        private static IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int count)
         {           
             var vacancySumaries = new List<VacancySummaryPage>(count);
 

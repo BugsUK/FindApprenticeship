@@ -182,7 +182,7 @@
                                 <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
                             }
                             <h3 class="heading-small">Apprenticeship framework</h3>
-                            <p id="vacancy-framework">@Html.Raw(Model.Framework)</p>
+                            <p id="vacancy-framework">@Html.Raw(Model.SubCategory)</p>
                             @if (Model.ProviderSectorPassRate.HasValue)
                             {
                                 <p id="vacancy-provider-sector-pass-rate">The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprenticeship training.</p>

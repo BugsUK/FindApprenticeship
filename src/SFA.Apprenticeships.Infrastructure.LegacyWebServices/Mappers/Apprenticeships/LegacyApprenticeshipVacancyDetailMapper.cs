@@ -24,7 +24,7 @@
                 .ForMember(dest => dest.ApplyViaEmployerWebsite,
                     opt => opt.MapFrom(src => src.ApplyViaEmployerWebsiteSpecified && src.ApplyViaEmployerWebsite))
 
-                .ForMember(dest => dest.Framework,
+                .ForMember(dest => dest.SubCategory,
                     opt => opt.MapFrom(src => src.ApprenticeshipFramework.Description))
 
                 .ForMember(dest => dest.ClosingDate,

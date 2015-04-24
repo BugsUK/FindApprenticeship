@@ -35,7 +35,7 @@
         public void VacancyNotFound()
         {
             var mediator = GetMediator(null);
-            var response = mediator.Details(VacancyId, null, null);
+            var response = mediator.Details(VacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
@@ -50,7 +50,7 @@
         public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
         {
             var mediator = GetMediator(null);
-            var response = mediator.Details(vacancyId, null, null);
+            var response = mediator.Details(vacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
@@ -64,7 +64,7 @@
             };
 
             var mediator = GetMediator(vacancyDetailViewModel);
-            var response = mediator.Details(VacancyId, null, null);
+            var response = mediator.Details(VacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.VacancyNotFound, false);
         }
@@ -82,7 +82,7 @@
 
             var mediator = GetMediator(vacancyDetailViewModel);
 
-            var response = mediator.Details(VacancyId, null, null);
+            var response = mediator.Details(VacancyId, null);
 
             response.AssertMessage(TraineeshipSearchMediatorCodes.Details.VacancyHasError, message, UserMessageLevel.Warning, true);
         }
@@ -97,12 +97,11 @@
             };
 
             var mediator = GetMediator(vacancyDetailViewModel);
-            var response = mediator.Details(VacancyId, null, SearchReturnUrl);
+            var response = mediator.Details(VacancyId, null);
 
             response.AssertCode(TraineeshipSearchMediatorCodes.Details.Ok, true);
             
             response.ViewModel.Distance.Should().Be(Distance);
-            response.ViewModel.SearchReturnUrl.Should().Be(SearchReturnUrl);
 
             _userData.ContainsKey(CandidateDataItemNames.VacancyDistance).Should().BeTrue();
             _userData[CandidateDataItemNames.VacancyDistance].Should().Be(Distance);

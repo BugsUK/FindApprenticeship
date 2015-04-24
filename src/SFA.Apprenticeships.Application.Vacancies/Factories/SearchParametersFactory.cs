@@ -49,8 +49,8 @@
                     parameters.Keywords = savedSearch.Keywords;
                     break;
                 case ApprenticeshipSearchMode.Category:
-                    parameters.Sector = savedSearch.Category;
-                    parameters.Frameworks = savedSearch.SubCategories;
+                    parameters.Category = savedSearch.Category;
+                    parameters.SubCategories = savedSearch.SubCategories;
                     parameters.SearchField = ApprenticeshipSearchField.All;
                     break;
             }

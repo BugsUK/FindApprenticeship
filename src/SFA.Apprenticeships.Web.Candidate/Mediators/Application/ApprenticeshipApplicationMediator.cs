@@ -307,18 +307,17 @@
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Preview.Ok, model);
         }
 
-        public MediatorResponse<WhatHappensNextViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle)
+        public MediatorResponse<WhatHappensNextApprenticeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle)
         {
             int vacancyId;
 
             if (!TryParseVacancyId(vacancyIdString, out vacancyId))
             {
-                return GetMediatorResponse<WhatHappensNextViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
+                return GetMediatorResponse<WhatHappensNextApprenticeshipViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
             }
 
             var model = _apprenticeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
 
-            
             if (model.HasError())
             {
                 model.VacancyReference = vacancyReference;
@@ -326,7 +325,7 @@
             }
             else if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn || model.VacancyStatus != VacancyStatuses.Live)
             {
-                return GetMediatorResponse<WhatHappensNextViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
+                return GetMediatorResponse<WhatHappensNextApprenticeshipViewModel>(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
             }
             
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);

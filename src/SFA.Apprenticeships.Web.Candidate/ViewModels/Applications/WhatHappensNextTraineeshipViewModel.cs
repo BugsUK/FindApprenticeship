@@ -3,13 +3,13 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
 
-    public class WhatHappensNextViewModel : ViewModelBase
+    public class WhatHappensNextTraineeshipViewModel : ViewModelBase
     {
-        public WhatHappensNextViewModel()
+        public WhatHappensNextTraineeshipViewModel()
         {
         }
 
-        public WhatHappensNextViewModel(string message)
+        public WhatHappensNextTraineeshipViewModel(string message)
             : base(message)
         {
         }

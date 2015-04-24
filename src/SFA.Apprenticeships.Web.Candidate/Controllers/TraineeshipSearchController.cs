@@ -95,9 +95,7 @@
             {
                 var candidateId = GetCandidateId();
 
-                string searchReturnUrl = ViewBag.SearchReturnUrl != null ? ViewBag.SearchReturnUrl.ToString() : null;
-
-                var response = _traineeshipSearchMediator.Details(id, candidateId, searchReturnUrl);
+                var response = _traineeshipSearchMediator.Details(id, candidateId);
 
                 switch (response.Code)
                 {

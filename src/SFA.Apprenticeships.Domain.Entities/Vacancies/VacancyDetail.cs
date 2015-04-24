@@ -17,7 +17,7 @@
 
         public string FullDescription { get; set; }
 
-        public string Framework { get; set; }
+        public string SubCategory { get; set; }
 
         public DateTime StartDate { get; set; }
 

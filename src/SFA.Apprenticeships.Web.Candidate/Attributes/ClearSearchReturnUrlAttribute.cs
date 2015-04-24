@@ -5,7 +5,7 @@
 
     public class ClearSearchReturnUrlAttribute : ActionFilterAttribute
     {
-        const string SearchReturnUrlKey = "SearchReturnUrl";
+        public const string SearchReturnUrlKey = "SearchReturnUrl";
 
         public ClearSearchReturnUrlAttribute(bool clearSearchReturnUrl = true)
         {

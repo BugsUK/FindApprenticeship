@@ -27,5 +27,12 @@
             _logger.Debug("Calling cached GetCategories");
             return _cacheService.Get(CacheKey, _legcayService.GetCategories);
         }
+
+
+        public Category GetSubCategory(string subCategory)
+        {
+            _logger.Debug("Calling cached GetSubCategory");
+            return _cacheService.Get(CacheKey, _legcayService.GetSubCategory, subCategory);
+        }
     }
 }

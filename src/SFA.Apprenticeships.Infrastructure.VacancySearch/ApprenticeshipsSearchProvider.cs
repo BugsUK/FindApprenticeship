@@ -22,7 +22,7 @@
         private readonly IMapper _vacancySearchMapper;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly SearchFactorConfiguration _searchConfiguration;
-        private const string FrameworkAggregationName = "Frameworks";
+        private const string SubCategoriesAggregationName = "SubCategories";
 
         public ApprenticeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
             IMapper vacancySearchMapper,
@@ -106,7 +106,7 @@
         private static IEnumerable<AggregationResult> GetAggregationResultsFrom(AggregationsHelper aggregations)
         {
             return
-                aggregations.Terms(FrameworkAggregationName)
+                aggregations.Terms(SubCategoriesAggregationName)
                     .Items.Select(bucket => new AggregationResult {Code = bucket.Key, Count = bucket.DocCount});
         }
 
@@ -165,9 +165,9 @@
                         query = BuildContainer(query, exactMatchClause);
                     }
 
-                    if (!string.IsNullOrWhiteSpace(parameters.Sector))
+                    if (!string.IsNullOrWhiteSpace(parameters.Category))
                     {
-                        var querySector = q.Match(m => m.OnField(f => f.SectorCode).Query(parameters.Sector));
+                        var querySector = q.Match(m => m.OnField(f => f.CategoryCode).Query(parameters.Category));
                         query = query && querySector;
                     }
 
@@ -256,11 +256,11 @@
                         break;
                 }
 
-                s.Aggregations(a => a.Terms(FrameworkAggregationName, st => st.Field(o => o.FrameworkCode).Size(0)));
+                s.Aggregations(a => a.Terms(SubCategoriesAggregationName, st => st.Field(o => o.SubCategoryCode).Size(0)));
 
-                if (parameters.Frameworks != null)
+                if (parameters.SubCategories != null)
                 {
-                    s.Filter(ff => ff.Terms(f => f.FrameworkCode, parameters.Frameworks));
+                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, parameters.SubCategories));
                 }
 
                 return s;

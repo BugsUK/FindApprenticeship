@@ -45,8 +45,8 @@
 
             processor.Process(new ApprenticeshipSummaryUpdate
             {
-                Sector = ASector,
-                Framework = AnotherSubcategory
+                Category = ASector,
+                SubCategory = AnotherSubcategory
             });
 
             _vacancyIndexer.Verify(vi => vi.Index(It.IsAny<ApprenticeshipSummaryUpdate>()), Times.Once);
@@ -62,8 +62,8 @@
 
             processor.Process(new ApprenticeshipSummaryUpdate
             {
-                Sector = ASector,
-                Framework = ASubcategory
+                Category = ASector,
+                SubCategory = ASubcategory
             });
 
             _vacancyIndexer.Verify(vi => vi.Index(It.IsAny<ApprenticeshipSummaryUpdate>()), Times.Once);

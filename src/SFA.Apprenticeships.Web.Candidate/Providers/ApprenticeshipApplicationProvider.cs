@@ -5,6 +5,7 @@
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Logging;
+    using Attributes;
     using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
@@ -386,7 +387,7 @@
             return new ApprenticeshipApplicationViewModel();
         }
 
-        public WhatHappensNextViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
+        public WhatHappensNextApprenticeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
@@ -401,12 +402,12 @@
                 if (applicationDetails == null || candidate == null)
                 {
                     var message =
-                    string.Format("Get What Happens Next View Model failed as no application was found for candidate ID: {0}, vacancy ID: {1}.",
-                        candidateId, vacancyId);
+                        string.Format(
+                            "Get What Happens Next View Model failed as no application was found for candidate ID: {0}, vacancy ID: {1}.",
+                            candidateId, vacancyId);
 
                     _logger.Info(message);
-
-                    return new WhatHappensNextViewModel(MyApplicationsPageMessages.ApplicationNotFound);
+                    return new WhatHappensNextApprenticeshipViewModel(MyApplicationsPageMessages.ApplicationNotFound);
                 }
 
                 var model = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
@@ -414,17 +415,20 @@
 
                 if (patchedModel.HasError())
                 {
-                    return new WhatHappensNextViewModel(patchedModel.ViewModelMessage);
+                    return new WhatHappensNextApprenticeshipViewModel(patchedModel.ViewModelMessage);
                 }
 
-                return new WhatHappensNextViewModel
+                var whatHappensNextViewModel = new WhatHappensNextApprenticeshipViewModel
                 {
                     VacancyReference = patchedModel.VacancyDetail.VacancyReference,
                     VacancyTitle = patchedModel.VacancyDetail.Title,
                     Status = patchedModel.Status,
                     SentEmail = candidate.CommunicationPreferences.AllowEmail,
-                    VacancyStatus = patchedModel.VacancyDetail.VacancyStatus
+                    VacancyStatus = patchedModel.VacancyDetail.VacancyStatus,
+                    ProviderContactInfo = patchedModel.VacancyDetail.Contact
                 };
+
+                return WhatHappensNextSuggestions(whatHappensNextViewModel, applicationDetails);
             }
             catch (Exception e)
             {
@@ -434,9 +438,30 @@
 
                 _logger.Error(message, e);
 
-                return new WhatHappensNextViewModel(
-                    MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
+                return new WhatHappensNextApprenticeshipViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
             }
+        }
+
+        private WhatHappensNextApprenticeshipViewModel WhatHappensNextSuggestions(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
+        {
+            //TODO: find appropriate home for vacancy suggestions, probably ApplicationVacancyProvider
+
+            /*
+            SuggestedVacanciesSearchLocation = "",
+            SuggestedVacanciesSearchDistance = "",
+            SuggestedVacancies = null,
+            SuggestedVacanciesCategory = "",
+            SuggestedVacanciesSearchUrl = ""
+            */
+            
+            //var searchReturnUrl = _userDataProvider.Get(ClearSearchReturnUrlAttribute.SearchReturnUrlKey);
+            //var searchReturnViewModel = ApprenticeshipSearchViewModel.FromSearchUrl(searchReturnUrl);
+            //var vacancySubCategoryName = apprenticeshipApplicationDetail.Vacancy.SubCategory;
+
+            //apprenticeshipApplicationDetail.Vacancy.Category
+            //apprenticeshipApplicationDetail.Vacancy.SubCategory
+
+            return whatHappensNextViewModel;
         }
 
         public MyApplicationsViewModel GetMyApplications(Guid candidateId)

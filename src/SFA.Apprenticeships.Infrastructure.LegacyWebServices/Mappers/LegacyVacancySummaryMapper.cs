@@ -51,10 +51,10 @@
                 .ForMember(dest => dest.Title,
                     opt => opt.MapFrom(src => src.VacancyTitle))
 
-                .ForMember(dest => dest.Sector,
+                .ForMember(dest => dest.Category,
                     opt => opt.MapFrom(src => src.ApprenticeshipOccupation))
 
-                .ForMember(dest => dest.Framework,
+                .ForMember(dest => dest.SubCategory,
                     opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription))
 
                 .ForMember(dest => dest.Wage,
@@ -63,9 +63,9 @@
                 .ForMember(dest => dest.WorkingWeek,
                     opt => opt.MapFrom(src => src.WorkingWeek))
 
-                .ForMember(dest => dest.SectorCode, opt => opt.Ignore())
+                .ForMember(dest => dest.CategoryCode, opt => opt.Ignore())
 
-                .ForMember(dest => dest.FrameworkCode, opt => opt.Ignore());
+                .ForMember(dest => dest.SubCategoryCode, opt => opt.Ignore());
 
 
         }
@@ -101,15 +101,15 @@
                 .ForMember(dest => dest.Title,
                     opt => opt.MapFrom(src => src.VacancyTitle))
 
-                .ForMember(dest => dest.Sector,
+                .ForMember(dest => dest.Category,
                     opt => opt.MapFrom(src => src.ApprenticeshipOccupation))
 
-                .ForMember(dest => dest.Framework,
+                .ForMember(dest => dest.SubCategory,
                     opt => opt.MapFrom(src => src.ApprenticeshipFrameworkDescription))
 
-                .ForMember(dest => dest.SectorCode, opt => opt.Ignore())
+                .ForMember(dest => dest.CategoryCode, opt => opt.Ignore())
 
-                .ForMember(dest => dest.FrameworkCode, opt => opt.Ignore());
+                .ForMember(dest => dest.SubCategoryCode, opt => opt.Ignore());
         }
     }
 }

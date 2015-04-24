@@ -244,8 +244,8 @@
                         SortType = nationalSortType,
                         VacancyLocationType = ApprenticeshipLocationType.National,
                         ApprenticeshipLevel = search.ApprenticeshipLevel,
-                        Sector = search.Category,
-                        Frameworks = search.SubCategories
+                        Category = search.Category,
+                        SubCategories = search.SubCategories
                     }
                 },
                 {
@@ -261,8 +261,8 @@
                         SortType = nonNationalSortType,
                         VacancyLocationType = ApprenticeshipLocationType.NonNational,
                         ApprenticeshipLevel = search.ApprenticeshipLevel,
-                        Sector = search.Category,
-                        Frameworks = search.SubCategories
+                        Category = search.Category,
+                        SubCategories = search.SubCategories
                     }
                 },
                 {
@@ -278,8 +278,8 @@
                         SortType = VacancySearchSortType.ClosingDate,
                         VacancyLocationType = search.LocationType,
                         ApprenticeshipLevel = "All",
-                        Sector = null,
-                        Frameworks = null
+                        Category = null,
+                        SubCategories = null
                     }
                 }
             };

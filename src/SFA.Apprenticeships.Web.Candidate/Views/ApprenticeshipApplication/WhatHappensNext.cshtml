@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.WhatHappensNextViewModel
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.WhatHappensNextApprenticeshipViewModel
 @{
     ViewBag.Title = "Apprenticeship application submitted - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,57 +11,90 @@
     </ul>
 </div>
 <div class="success-banner" role="alert" aria-live="assertive">
-    <h1 class="heading-large"><i class="fa fa-check"></i>Apprenticeship application submitted</h1>
-    <div>
-        You've applied for:
-        <h2 class="heading-medium">@Html.DisplayFor(m => m.VacancyTitle) - @Html.DisplayFor(m => m.VacancyReference)</h2>
-    </div>
+    <h1 class="heading-large no-btm-margin"><i class="fa fa-check"></i>Apprenticeship application submitted</h1>
 </div>
 @if (Model.SentEmail)
 {
     <section class="section-border">
-        <p>
-            <i class="fa fa-envelope-o"></i>We've sent you an email confirming your application
-        </p>
+        <div class="text">
+            <p>
+                <i class="fa fa-envelope-o"></i>
+                We've sent you an email confirming your <b>@Html.DisplayFor(m => m.VacancyTitle)</b> application.
+                You can also <a title="Track the progress of your applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application at any time.
+            </p>
+            <p>You’ll be contacted if you’ve been selected for the next stage of the application process.</p>
+            <details>
+                <summary>Apprenticeship contact details</summary>
+                <div class="detail-content">@Model.ProviderContactInfo</div>
+            </details>
+        </div>
     </section>
 }
 else
 {
     <section class="section-border">
-        <p class="text">
-            <i class="fa fa-envelope-o"></i>If you'd like to receive email confirmation of applications, you can turn notifications on in the <a href="@Url.RouteUrl(CandidateRouteNames.Settings)">settings</a> section in your account.
-        </p>
+        <div class="text">
+            <p>
+                <i class="fa fa-envelope-o"></i>
+                If you'd like to receive email confirmation of applications, you can turn notifications on in the <a href="@Url.RouteUrl(CandidateRouteNames.Settings)">settings</a> section in your account.
+                You can also <a title="Track the progress of your applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application at any time.
+            </p>
+            <p>You’ll be contacted if you’ve been selected for the next stage of the application process.</p>
+            <details>
+                <summary>Apprenticeship contact details</summary>
+                <div class="detail-content">@Model.ProviderContactInfo</div>
+            </details>
+        </div>
     </section>
 }
 
-<h2 class="heading-medium">What happens next</h2>
-<div class="text form-group">
-    <p>
-        You’ll be contacted if you’ve been shortlisted for an interview. If you
-        haven’t been successful the training provider will let you know and
-        give you feedback.
-    </p>
-    <p>
-        You can also <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress of your application</a> at any time.</p>
-    <p>
-        If you need to contact us about your application, don’t forget to quote
-        the reference number.
-    </p>
-    <p>
-        <a href="@ViewBag.FeedbackUrl" rel="external" target="_blank">What did you think of the service?</a>
-    </p>
-    <p>
-        <a href="@Url.RouteUrl(RouteNames.SignOut, new { returnUrl = ViewBag.FeedbackUrl })">Finished with this service. Sign out and give feedback</a>
-    </p>
-</div>
-<div class="form-group form-group-compound get-started">
-    <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)'>Find an apprenticeship</a>
-</div>
-<div class="form-group">
+<section class="section-border">
+    
+    @if (Model.SuggestedVacancies == null || !Model.SuggestedVacancies.Any())
+    {
+        <div class="form-group form-group-compound get-started">
+            <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)'>Find an apprenticeship</a>
+        </div>
+    }
+    else
+    {
+        <div class="hgroup-medium text">
+            <h2 class="heading-medium">Similar apprenticeships</h2>
+            <span class="subtitle">Also in the @Model.SuggestedVacanciesCategory category and within @Model.SuggestedVacanciesSearchDistance miles of @Model.SuggestedVacanciesSearchLocation</span>
+        </div>
+        <div class="grid-wrapper">
+            <div class="grid grid-1-3">
+                <div class="inner-block-padr">
+                    <h3 class="heading-small"><a href="">Advanced Engineering Apprentice - Multi Skilled Maintenance</a></h3>
+                    <p><b>Distance:</b> 2.1 miles</p>
+                </div>
+            </div>
+            <div class="grid grid-1-3">
+                <div class="inner-block-padr">
+                    <h3 class="heading-small"><a href="">Advanced Engineering Apprentice - Technician</a></h3>
+                    <p><b>Distance:</b> 2.4 miles</p>
+                </div>
+            </div>
+            <div class="grid grid-1-3">
+                <div class="inner-block-padr">
+                    <h3 class="heading-small"><a href="">Apprentice Grade 1 Infrastructure Engineer</a></h3>
+                    <p><b>Distance:</b> 2.8 miles</p>
+                </div>
+            </div>
+        </div>
+        <p>View the apprenticeships in the <a href="@Model.SuggestedVacanciesSearchUrl" title="View apprenticeships in category '@Model.SuggestedVacanciesCategory'">@Model.SuggestedVacanciesCategory</a> category.</p>
+    }
     @if (ViewBag.SearchReturnUrl != null)
     {
-        <p class="text">
+        <div class="form-group">
             <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
-        </p>
+        </div>
     }
+</section>
+
+<div class="text form-group">
+    <p>
+        <a href="@Url.RouteUrl(RouteNames.SignOut, new { returnUrl = ViewBag.FeedbackUrl })">What did you think of this service? </a>
+        <span class="inl-block">(30 second survey, this will also sign you out)</span>
+    </p>
 </div>

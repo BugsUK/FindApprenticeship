@@ -55,6 +55,11 @@
             return null;
         }
 
+        public Category GetSubCategory(string subCategory)
+        {
+            return GetCategories().FirstOrDefault(sc => sc.FullName == subCategory && sc.ParentCategory != null);
+        }
+
         private IEnumerable<Category> GetCategories(GetApprenticeshipFrameworksResponse response)
         {
             if (response == null || response.ApprenticeshipFrameworks == null || response.ApprenticeshipFrameworks.Length == 0)

@@ -304,6 +304,7 @@
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Validators\SettingsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
+    <Compile Include="ViewModels\ApprenticeshipSearchViewModelTests.cs" />
     <Compile Include="ViewModels\PaginationTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\IndexSavedSearchesTests.cs" />
     <Compile Include="Views\ApprenticeshipSearch\IndexCategoriesTests.cs" />

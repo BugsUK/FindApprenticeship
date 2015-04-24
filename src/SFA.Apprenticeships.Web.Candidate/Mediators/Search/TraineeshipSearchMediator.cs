@@ -122,7 +122,7 @@
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, traineeshipSearchResponseViewModel);
         }
 
-        public MediatorResponse<TraineeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId, string searchReturnUrl)
+        public MediatorResponse<TraineeshipVacancyDetailViewModel> Details(string vacancyIdString, Guid? candidateId)
         {
             int vacancyId;
 
@@ -151,8 +151,6 @@
                 vacancyDetailViewModel.Distance = distance;
                 UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
             }
-
-            vacancyDetailViewModel.SearchReturnUrl = searchReturnUrl;
 
             UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
 

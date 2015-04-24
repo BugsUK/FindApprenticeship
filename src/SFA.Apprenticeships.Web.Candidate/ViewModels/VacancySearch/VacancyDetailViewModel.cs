@@ -23,8 +23,6 @@
 
         public string Distance { get; set; }
 
-        public string SearchReturnUrl { get; set; }
-
         #endregion
 
         #region Vacancy
@@ -41,7 +39,7 @@
 
         public string FullDescription { get; set; }
 
-        public string Framework { get; set; }
+        public string SubCategory { get; set; }
 
         public string VacancyType { get; set; }
 

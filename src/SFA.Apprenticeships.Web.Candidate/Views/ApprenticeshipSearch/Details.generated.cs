@@ -1178,7 +1178,7 @@ WriteLiteral(">");
 
             
             #line 185 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                 Write(Html.Raw(Model.Framework));
+                                                 Write(Html.Raw(Model.SubCategory));
 
             
             #line default

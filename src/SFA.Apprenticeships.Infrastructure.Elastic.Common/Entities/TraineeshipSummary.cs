@@ -34,9 +34,9 @@
         public string VacancyReference { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string Sector { get; set; }
+        public string Category { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string Framework { get; set; }
+        public string SubCategory { get; set; }
     }
 }

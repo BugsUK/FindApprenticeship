@@ -21,10 +21,10 @@
             Description = vacancySummary.Description;
             EmployerName = vacancySummary.EmployerName;
             Location = vacancySummary.Location;
-            Sector = vacancySummary.Sector;
-            SectorCode = vacancySummary.SectorCode;
-            Framework = vacancySummary.Framework;
-            FrameworkCode = vacancySummary.FrameworkCode;
+            Category = vacancySummary.Category;
+            CategoryCode = vacancySummary.CategoryCode;
+            SubCategory = vacancySummary.SubCategory;
+            SubCategoryCode = vacancySummary.SubCategoryCode;
         }
 
         public int Id { get; set; }
@@ -45,12 +45,12 @@
 
         public GeoPoint Location { get; set; }
 
-        public string Sector { get; set; }
+        public string Category { get; set; }
 
-        public string SectorCode { get; set; }
+        public string CategoryCode { get; set; }
 
-        public string Framework { get; set; }
+        public string SubCategory { get; set; }
 
-        public string FrameworkCode { get; set; }
+        public string SubCategoryCode { get; set; }
     }
 }

@@ -20,8 +20,8 @@
 
         string VacancyReference { get; set; }
 
-        string Sector { get; set; }
+        string Category { get; set; }
 
-        string Framework { get; set; }
+        string SubCategory { get; set; }
     }
 }

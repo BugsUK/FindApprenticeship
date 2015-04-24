@@ -798,6 +798,7 @@
     <Compile Include="Constants\ViewModels\EducationViewModelMessages.cs" />
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
+    <Compile Include="ViewModels\Applications\WhatHappensNextApprenticeshipViewModel.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenCredentialsViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenEmailViewModel.cs" />
@@ -910,7 +911,7 @@
     <Compile Include="ViewModels\Login\LoginResultViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyApprenticeshipApplicationViewModel.cs" />
-    <Compile Include="ViewModels\Applications\WhatHappensNextViewModel.cs" />
+    <Compile Include="ViewModels\Applications\WhatHappensNextTraineeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Candidate\AboutYouViewModel.cs" />

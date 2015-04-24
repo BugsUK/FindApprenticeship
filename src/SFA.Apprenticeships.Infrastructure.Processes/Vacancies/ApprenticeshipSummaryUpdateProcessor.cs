@@ -49,29 +49,29 @@
                 return;
             }
 
-            var category = categories.FirstOrDefault(c => c.FullName == vacancySummaryToIndex.Sector);
+            var category = categories.FirstOrDefault(c => c.FullName == vacancySummaryToIndex.Category);
 
             if (category == null)
             {
-                vacancySummaryToIndex.SectorCode = "Unknown";
-                vacancySummaryToIndex.FrameworkCode = "Unknown";
-                _logService.Warn("The vacancy with Id {0} has an unknown Sector and Framework: {1} | {2}. It is likely these were deprecated", vacancySummaryToIndex.Id, vacancySummaryToIndex.Sector, vacancySummaryToIndex.Framework);
+                vacancySummaryToIndex.CategoryCode = "Unknown";
+                vacancySummaryToIndex.SubCategoryCode = "Unknown";
+                _logService.Warn("The vacancy with Id {0} has an unknown Category and SubCategory: {1} | {2}. It is likely these were deprecated", vacancySummaryToIndex.Id, vacancySummaryToIndex.Category, vacancySummaryToIndex.SubCategory);
             }
             else
             {
-                vacancySummaryToIndex.SectorCode = category.CodeName;
+                vacancySummaryToIndex.CategoryCode = category.CodeName;
 
-                var subCategory = category.SubCategories.FirstOrDefault(sc => sc.FullName == vacancySummaryToIndex.Framework);
+                var subCategory = category.SubCategories.FirstOrDefault(sc => sc.FullName == vacancySummaryToIndex.SubCategory);
 
                 if (subCategory == null)
                 {
-                    vacancySummaryToIndex.SectorCode = "Unknown";
-                    vacancySummaryToIndex.FrameworkCode = "Unknown";
-                    _logService.Warn("The vacancy with Id {0} has a mismatched Sector/Framework: {1} | {2}", vacancySummaryToIndex.Id, vacancySummaryToIndex.Sector, vacancySummaryToIndex.Framework);
+                    vacancySummaryToIndex.CategoryCode = "Unknown";
+                    vacancySummaryToIndex.SubCategoryCode = "Unknown";
+                    _logService.Warn("The vacancy with Id {0} has a mismatched Category/SubCategory: {1} | {2}", vacancySummaryToIndex.Id, vacancySummaryToIndex.Category, vacancySummaryToIndex.SubCategory);
                 }
                 else
                 {
-                    vacancySummaryToIndex.FrameworkCode = subCategory.CodeName;
+                    vacancySummaryToIndex.SubCategoryCode = subCategory.CodeName;
                 }
             }
         }

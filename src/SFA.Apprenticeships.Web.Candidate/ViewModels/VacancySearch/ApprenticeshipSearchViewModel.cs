@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web;
     using System.Web.Mvc;
     using Account;
     using Application.Interfaces.Vacancies;
+    using Common.Framework;
     using Constants.ViewModels;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -107,5 +109,43 @@
         public SavedSearchViewModel[] SavedSearches { get; set; }
 
         public string SavedSearchId { get; set; }
+
+        #region Helpers
+
+        public static ApprenticeshipSearchViewModel FromSearchUrl(string searchUrl)
+        {
+            var searchUri = new Uri(new Uri("http://base"), searchUrl);
+            var queryStringParams = HttpUtility.ParseQueryString(searchUri.Query);
+
+            var searchModel = new ApprenticeshipSearchViewModel();
+
+            searchModel.SearchMode = queryStringParams.Get("SearchMode") != null
+                ? (ApprenticeshipSearchMode)Enum.Parse(typeof(ApprenticeshipSearchMode), queryStringParams.Get("SearchMode"))
+                : ApprenticeshipSearchMode.Keyword;
+
+            searchModel.SortType = queryStringParams.Get("SortType") != null
+                ? (VacancySearchSortType)Enum.Parse(typeof(VacancySearchSortType), queryStringParams.Get("SortType"))
+                : VacancySearchSortType.Relevancy;
+
+            searchModel.LocationType = queryStringParams.Get("LocationType") != null
+                ? (ApprenticeshipLocationType)Enum.Parse(typeof(ApprenticeshipLocationType), queryStringParams.Get("LocationType"))
+                : ApprenticeshipLocationType.NonNational;
+
+            searchModel.Latitude = queryStringParams.Get("Latitude").GetValueOrNull<double>();
+            searchModel.Longitude = queryStringParams.Get("Longitude").GetValueOrNull<double>();
+            searchModel.WithinDistance = queryStringParams.Get("WithinDistance").GetValueOrDefault<int>();
+            searchModel.ResultsPerPage = queryStringParams.Get("ResultsPerPage").GetValueOrDefault<int>();
+
+            searchModel.Keywords = queryStringParams.Get("Keywords");
+            searchModel.Location = queryStringParams.Get("Location");
+            searchModel.ApprenticeshipLevel = queryStringParams.Get("ApprenticeshipLevel");
+            searchModel.SearchField = queryStringParams.Get("SearchField");
+            searchModel.Category = queryStringParams.Get("Category");
+            searchModel.SubCategories = queryStringParams.Get("SubCategories") != null ? queryStringParams.Get("SubCategories").Split(',') : null;
+
+            return searchModel;
+        }
+
+        #endregion
     }
 }

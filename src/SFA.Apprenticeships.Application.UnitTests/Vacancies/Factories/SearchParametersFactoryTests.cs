@@ -53,8 +53,8 @@
             parameters.Location.Name.Should().Be(location);
             parameters.SearchRadius.Should().Be(withinDistance);
             parameters.ApprenticeshipLevel.Should().Be(apprenticeshipLevel);
-            parameters.Sector.Should().BeNullOrEmpty();
-            parameters.Frameworks.Should().BeNull();
+            parameters.Category.Should().BeNullOrEmpty();
+            parameters.SubCategories.Should().BeNull();
             parameters.SearchField.Should().Be(ApprenticeshipSearchField.JobTitle);
         }
 
@@ -88,8 +88,8 @@
             parameters.Location.Name.Should().Be(location);
             parameters.SearchRadius.Should().Be(withinDistance);
             parameters.ApprenticeshipLevel.Should().Be(apprenticeshipLevel);
-            parameters.Sector.Should().Be(category);
-            parameters.Frameworks.Should().BeEquivalentTo(subCategories);
+            parameters.Category.Should().Be(category);
+            parameters.SubCategories.Should().BeEquivalentTo(subCategories);
             parameters.SearchField.Should().Be(ApprenticeshipSearchField.All);
         }
 

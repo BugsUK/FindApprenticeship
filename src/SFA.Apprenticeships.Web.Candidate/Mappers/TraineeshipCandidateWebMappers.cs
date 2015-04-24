@@ -74,8 +74,6 @@
                 .ForMember(d => d.ApprenticeshipLevel,
                     opt => opt.Ignore())
                 .ForMember(d => d.Distance,
-                    opt => opt.Ignore())
-                .ForMember(d => d.SearchReturnUrl,
                     opt => opt.Ignore());
 
             Mapper.CreateMap<Address, AddressViewModel>();
