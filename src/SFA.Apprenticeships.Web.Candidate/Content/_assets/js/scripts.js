@@ -326,6 +326,14 @@ $(function() {
       $this.next('.detail-content').toggle();
   });
 
+    //------- More/Less detail toggle
+
+  $('#chooseDetails input').on('change', function () {
+      var $this = $(this),
+          $thisId = $this.attr('id');
+
+      $('[data-show="' + $thisId + '"]').toggle();
+  });
 
 });;/*
  *  jQuery Password Strength - v0.0.1

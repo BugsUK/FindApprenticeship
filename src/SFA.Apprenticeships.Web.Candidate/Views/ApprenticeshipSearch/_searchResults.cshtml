@@ -19,7 +19,7 @@
                                     <input checked="" type="checkbox" id="subCatCheck">
                                     <label for="subCatCheck">Sub-category</label>
                                 </li>
-                                }    
+                                }
                                 <li>
                                     <input checked="" type="checkbox" id="descriptionCheck">
                                     <label for="descriptionCheck">Description</label>
@@ -37,11 +37,11 @@
                                     <label for="startDateCheck">Possible start date</label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" id="levelCheck">
+                                    <input checked="" type="checkbox" id="levelCheck">
                                     <label for="levelCheck">Apprenticeship level</label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" id="wageCheck">
+                                    <input checked="" type="checkbox" id="wageCheck">
                                     <label for="wageCheck">Wage</label>
                                 </li>
                             </ul>
@@ -93,14 +93,14 @@
                         <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
                     </div>
                 }
-                <p>@vacancy.Description</p>
+                <p data-show="descriptionCheck">@vacancy.Description</p>
                 <div class="grid-wrapper">
                     <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : "")">
                         <ul class="list-text no-btm-margin inner-block-padr">
 
                             @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                             {
-                                <li>
+                                <li data-show="distanceCheck">
                                     <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<span class="summary-style fake-link hide-nojs journey-trigger">Journey time</span>
                                     <div class="detail-content toggle-content hide-nojs">
                                         <select class="select-mode" name="">
@@ -114,11 +114,10 @@
                                     </div>
                                 </li>
                             }
-                            <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
-                            <li><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
-                            <li class="toggle-content" data-show="levelCheck" style="display: list-item;"><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
-                            <li class="toggle-content" data-show="wageCheck" style="display: list-item;"><b>Wage:</b> @vacancy.Wage p/week</li>
-                            <li class="toggle-content" data-show="postedCheck"><b>Date posted:</b> @vacancy.PostedDate</li>
+                            <li data-show="closingDateCheck"><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
+                            <li data-show="startDateCheck"><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
+                            <li data-show="levelCheck" style="display: list-item;"><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
+                            <li data-show="wageCheck" style="display: list-item;"><b>Wage:</b> @vacancy.Wage p/week</li>
 
                             @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
                             {
