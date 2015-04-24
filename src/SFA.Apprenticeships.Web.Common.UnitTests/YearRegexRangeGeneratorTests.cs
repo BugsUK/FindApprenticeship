@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Tests
+﻿namespace SFA.Apprenticeships.Web.Common.UnitTests
 {
     using System.Text.RegularExpressions;
+    using Constants;
     using FluentAssertions;
     using NUnit.Framework;
-    using SFA.Apprenticeships.Web.Common.Constants;
 
     [TestFixture]
     public class YearRegexRangeGeneratorTests

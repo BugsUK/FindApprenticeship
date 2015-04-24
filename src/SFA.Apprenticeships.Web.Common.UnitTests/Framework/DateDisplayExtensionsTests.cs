@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Tests.Framework
+﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Framework
 {
     using System;
     using Common.Framework;

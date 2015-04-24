@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Tests.Providers
+﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Providers
 {
     using System;
     using System.Web;

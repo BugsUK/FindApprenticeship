@@ -7,8 +7,8 @@
     <ProjectGuid>{3CA36139-BBDD-4305-B15A-E9500606B672}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Web.Common.Tests</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Web.Common.Tests</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Web.Common.UnitTests</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Web.Common.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>

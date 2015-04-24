@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Tests.Builders
+﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Builders
 {
     using System.Collections;
     using System.Collections.Specialized;
