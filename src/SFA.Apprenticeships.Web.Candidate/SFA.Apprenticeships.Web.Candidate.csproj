@@ -334,6 +334,7 @@
     <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.woff" />
     <None Include="Content\_assets\js\vendor\jquery.validate-vsdoc.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.min.js" />
+    <Content Include="robots.txt" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
