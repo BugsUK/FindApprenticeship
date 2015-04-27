@@ -27,7 +27,7 @@
             return await Task.Run<ActionResult>(() =>
             {
                 var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _unsubscribeMediator.Unsubscribe(candidateId, subscriberId, (SubscriptionTypes)subscriptionTypeId);
+                var response = _unsubscribeMediator.Unsubscribe(candidateId, subscriberId, (SubscriptionTypes)subscriptionTypeId, subscriptionItemId);
 
                 SetUserMessage(response.Message.Text, response.Message.Level);
 
