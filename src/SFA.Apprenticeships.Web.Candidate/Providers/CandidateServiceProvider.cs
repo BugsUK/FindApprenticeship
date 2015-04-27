@@ -608,43 +608,9 @@
             }
         }
 
-        public bool TryUnsubscribe(Guid subscriberId, int subscriptionTypeId, out SubscriptionTypes subscriptionType)
+        public bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId = null)
         {
-            subscriptionType = (SubscriptionTypes)subscriptionTypeId;
-
-            try
-            {
-                var candidate = _candidateService.GetCandidateBySubscriberId(subscriberId);
-                var communicationPreferences = candidate.CommunicationPreferences;
-
-                switch (subscriptionType)
-                {
-                    case SubscriptionTypes.DailyDigestViaEmail:
-                        communicationPreferences.SendApplicationStatusChanges =
-                            communicationPreferences.SendApplicationStatusChangesViaEmail =
-                                communicationPreferences.SendApprenticeshipApplicationsExpiring =
-                                    communicationPreferences.SendApprenticeshipApplicationsExpiringViaEmail = false;
-                        break;
-
-                    case SubscriptionTypes.SavedSearchAlertsViaEmail:
-                        communicationPreferences.SendSavedSearchAlertsViaEmail = false;
-                        break;
-
-                    default:
-                        _logger.Error("Unknown subscriptionTypeId='{0}' for subscriberId='{0}'", subscriptionTypeId,
-                            subscriberId);
-
-                        subscriptionType = SubscriptionTypes.Unknown;
-                        return false;
-                }
-
-                return true;
-            }
-            catch (Exception e)
-            {
-                _logger.Error("Error unsubscribing subscriptionTypeId='{0}' for subscriberId='{0}'", e, subscriptionTypeId, subscriberId);
-                return false;
-            }
+            return _candidateService.Unsubscribe(subscriberId, subscriptionType, subscriptionItemId);
         }
 
         public bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel)

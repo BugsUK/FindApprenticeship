@@ -54,6 +54,6 @@
 
         bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel);
 
-        bool TryUnsubscribe(Guid subscriberId, int subscriptionTypeId, out SubscriptionTypes subscriptionType);
+        bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId = null);
     }
 }

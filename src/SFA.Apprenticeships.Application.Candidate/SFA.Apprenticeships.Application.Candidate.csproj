@@ -98,6 +98,7 @@
     <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="SaveCandidateRequest.cs" />
     <Compile Include="Strategies\IRequestEmailReminderStrategy.cs" />
+    <Compile Include="Strategies\IUnsubscribeStrategy.cs" />
     <Compile Include="Strategies\IUpdateUsernameStrategy.cs" />
     <Compile Include="Strategies\QueuedLegacySaveCandidateStrategy.cs" />
     <Compile Include="Strategies\RequestEmailReminderStrategy.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Strategies\Traineeships\SaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\SaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\SaveCandidateStrategy.cs" />
+    <Compile Include="Strategies\UnsubscribeStrategy.cs" />
     <Compile Include="Strategies\UpdateUsernameStrategy.cs" />
     <Compile Include="Strategies\VerifyMobileStrategy.cs" />
     <Compile Include="SubmitApprenticeshipApplicationRequest.cs" />

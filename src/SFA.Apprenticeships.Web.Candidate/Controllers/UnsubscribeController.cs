@@ -3,6 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Application.Interfaces.Communications;
     using Common.Constants;
     using Constants;
     using Domain.Interfaces.Configuration;
@@ -20,12 +21,13 @@
             _unsubscribeMediator = unsubscribeMediator;
         }
 
-        public async Task<ActionResult> Index(Guid subscriberId, int subscriptionTypeId)
+        [HttpGet]
+        public async Task<ActionResult> Index(Guid subscriberId, int subscriptionTypeId, string subscriptionItemId = null)
         {
             return await Task.Run<ActionResult>(() =>
             {
                 var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _unsubscribeMediator.Unsubscribe(candidateId, subscriberId, subscriptionTypeId);
+                var response = _unsubscribeMediator.Unsubscribe(candidateId, subscriberId, (SubscriptionTypes)subscriptionTypeId);
 
                 SetUserMessage(response.Message.Text, response.Message.Level);
 

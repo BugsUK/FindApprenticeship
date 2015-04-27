@@ -122,6 +122,9 @@
     <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyTests.cs" />
+    <Compile Include="Candidate\Strategies\UnsubscribeStrategy\UnsubscribeSendSavedSearchAlertsViaEmailTests.cs" />
+    <Compile Include="Candidate\Strategies\UnsubscribeStrategy\UnsubscribeDailyDigestViaEmailTests.cs" />
+    <Compile Include="Candidate\Strategies\UnsubscribeStrategy\UnsubscribeFailureTests.cs" />
     <Compile Include="Candidate\Strategies\VerifyMobileStrategy\VerifyMobileStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\VerifyMobileStrategy\VerifyMobileStrategyTests.cs" />
     <Compile Include="CodeGeneratorTests.cs" />

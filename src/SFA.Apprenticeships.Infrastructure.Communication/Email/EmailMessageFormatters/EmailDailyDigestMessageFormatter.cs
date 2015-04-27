@@ -26,11 +26,13 @@
         public override void PopulateMessage(EmailRequest request, ISendGrid message)
         {
             PopulateCandidateName(request, message);
-
             PopulateApplicationStatusAlerts(request, message);
-
             PopulateExpiringDrafts(request, message);
+            PopulateSiteDomainName(message);
+            PopulateSubscriber(request, message);
         }
+
+        #region Helpers
 
         private static void PopulateCandidateName(EmailRequest request, ISendGrid message)
         {
@@ -126,9 +128,35 @@
             stringBuilder.Append("</ul>");
         }
 
+        private void PopulateSiteDomainName(ISendGrid message)
+        {
+            var token = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.CandidateSiteDomainName);
+
+            AddSubstitutionTo(message, token, _siteDomainName);
+        }
+
+        private void PopulateSubscriber(EmailRequest request, ISendGrid message)
+        {
+            {
+                var token = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.CandidateSubscriberId);
+                var value = request.Tokens.First(t => t.Key == CommunicationTokens.CandidateSubscriberId).Value;
+
+                AddSubstitutionTo(message, token, value);
+            }
+
+            {
+                var token = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.CandidateSubscriptionType);
+                var value = request.Tokens.First(t => t.Key == CommunicationTokens.CandidateSubscriptionType).Value;
+
+                AddSubstitutionTo(message, token, value);
+            }
+        }
+
         private static void AddSubstitutionTo(ISendGrid message, string sendgridtoken, string substitutionText)
         {
             message.AddSubstitution(sendgridtoken, new List<string> {substitutionText});
         }
+
+        #endregion
     }
 }

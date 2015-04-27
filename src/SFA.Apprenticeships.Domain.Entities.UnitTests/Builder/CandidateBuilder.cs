@@ -16,7 +16,9 @@
         private bool _verifiedMobile;
         private bool _allowTraineeshipPrompts;
         private bool _sendApplicationStatusChanges;
+        private bool _sendApplicationStatusChangesViaEmail;
         private bool _sendApprenticeshipApplicationsExpiring;
+        private bool _sendApprenticeshipApplicationsExpiringViaEmail;
         private bool _sendSavedSearchAlertsViaEmail;
         private bool _sendSavedSearchAlertsViaText;
         private bool _sendMarketingComms;
@@ -82,9 +84,21 @@
             return this;
         }
 
+        public CandidateBuilder SendApplicationStatusChangesViaEmail(bool sendApplicationStatusChangesViaEmail)
+        {
+            _sendApplicationStatusChangesViaEmail = sendApplicationStatusChangesViaEmail;
+            return this;
+        }
+
         public CandidateBuilder SendApprenticeshipApplicationsExpiring(bool sendApprenticeshipApplicationsExpiring)
         {
             _sendApprenticeshipApplicationsExpiring = sendApprenticeshipApplicationsExpiring;
+            return this;
+        }
+
+        public CandidateBuilder SendApprenticeshipApplicationsExpiringViaEmail(bool sendApprenticeshipApplicationsExpiringViaEmail)
+        {
+            _sendApprenticeshipApplicationsExpiringViaEmail = sendApprenticeshipApplicationsExpiringViaEmail;
             return this;
         }
 
@@ -151,7 +165,9 @@
                     AllowTraineeshipPrompts = _allowTraineeshipPrompts,
 
                     SendApplicationStatusChanges = _sendApplicationStatusChanges,
+                    SendApplicationStatusChangesViaEmail = _sendApplicationStatusChangesViaEmail,
                     SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
+                    SendApprenticeshipApplicationsExpiringViaEmail = _sendApprenticeshipApplicationsExpiringViaEmail,
                     SendSavedSearchAlertsViaEmail = _sendSavedSearchAlertsViaEmail,
                     SendSavedSearchAlertsViaText = _sendSavedSearchAlertsViaText,
                     SendMarketingCommunications = _sendMarketingComms

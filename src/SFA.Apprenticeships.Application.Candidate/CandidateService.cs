@@ -57,6 +57,7 @@
         private readonly IDeleteSavedSearchStrategy _deleteSavedSearchStrategy;
         private readonly IUpdateUsernameStrategy _updateUsernameStrategy;
         private readonly IRequestEmailReminderStrategy _requestEmailReminderStrategy;
+        private readonly IUnsubscribeStrategy _unsubscribeStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -92,7 +93,8 @@
             IUpdateSavedSearchStrategy updateSavedSearchStrategy,
             IDeleteSavedSearchStrategy deleteSavedSearchStrategy,
             IUpdateUsernameStrategy updateUsernameStrategy,
-            IRequestEmailReminderStrategy requestEmailReminderStrategy)
+            IRequestEmailReminderStrategy requestEmailReminderStrategy,
+            IUnsubscribeStrategy unsubscribeStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -128,6 +130,7 @@
             _deleteSavedSearchStrategy = deleteSavedSearchStrategy;
             _updateUsernameStrategy = updateUsernameStrategy;
             _requestEmailReminderStrategy = requestEmailReminderStrategy;
+            _unsubscribeStrategy = unsubscribeStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -175,12 +178,6 @@
             _logger.Debug("Calling CandidateService to get the user {0}.", username);
 
             return _candidateReadRepository.Get(username);
-        }
-
-        public Candidate GetCandidateBySubscriberId(Guid subscriberId)
-        {
-            _logger.Debug("Calling CandidateService to get the candidate for subscriberId='{0}'.", subscriberId);
-            return _candidateReadRepository.Get(subscriberId);
         }
 
         public Candidate SaveCandidate(Candidate candidate)
@@ -483,6 +480,14 @@
             _logger.Info("Using RequestEmailReminderStrategy to send email reminder for candidate(s) with mobile number='{0}'.", phoneNumber);
 
             _requestEmailReminderStrategy.RequestEmailReminder(phoneNumber);
+        }
+
+        public bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId)
+        {
+            _logger.Info("Using UnsubscribeStrategy to unsubscribe candidate='{0}' from subscription type='{1}' for subscriptionItemId='{2}' (optional).",
+                subscriberId, subscriptionType, subscriptionItemId);
+
+            return _unsubscribeStrategy.Unsubscribe(subscriberId, subscriptionType, subscriptionItemId);
         }
     }
 }

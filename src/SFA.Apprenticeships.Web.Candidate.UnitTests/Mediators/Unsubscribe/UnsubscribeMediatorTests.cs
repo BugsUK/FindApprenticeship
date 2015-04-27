@@ -9,7 +9,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class UnsubscribeTests
+    public class UnsubscribeMediatorTests
     {
         private Mock<ICandidateServiceProvider> _mockCandidateServiceProvider;
 
@@ -23,26 +23,23 @@
         [TestCase(false, SubscriptionTypes.DailyDigestViaEmail, UnsubscribeMediatorCodes.Unsubscribe.UnsubscribedNotSignedIn)]
         [TestCase(true, SubscriptionTypes.SavedSearchAlertsViaEmail, UnsubscribeMediatorCodes.Unsubscribe.UnsubscribedShowSavedSearchesSettings)]
         [TestCase(false, SubscriptionTypes.SavedSearchAlertsViaEmail, UnsubscribeMediatorCodes.Unsubscribe.UnsubscribedNotSignedIn)]
-        public void ShouldUnsubscribe(bool isCandidateSignedIn, int subscriptionTypeId, string expectedMediatorCode)
+        public void ShouldUnsubscribe(bool isCandidateSignedIn, SubscriptionTypes subscriptionType, string expectedMediatorCode)
         {
             // Arrange.
             var mediator = new UnsubscribeMediator(_mockCandidateServiceProvider.Object);
             var candidateId = isCandidateSignedIn ? Guid.NewGuid() : default(Guid?);
             var subscriberId = Guid.NewGuid();
 
-            var subscriptionType = (SubscriptionTypes)subscriptionTypeId;
-
             _mockCandidateServiceProvider.Setup(mock => mock
-                .TryUnsubscribe(subscriberId, subscriptionTypeId, out subscriptionType))
+                .Unsubscribe(subscriberId, subscriptionType, null))
                 .Returns(true);
 
             // Act.
-            var response = mediator.Unsubscribe(candidateId, subscriberId, subscriptionTypeId);
+            var response = mediator.Unsubscribe(candidateId, subscriberId, subscriptionType);
 
             // Assert.
             response.Should().NotBeNull();
             response.Code.Should().Be(expectedMediatorCode);
-            subscriptionType.Should().Be((SubscriptionTypes)subscriptionTypeId);
         }
 
         [Test]
@@ -51,15 +48,14 @@
             var mediator = new UnsubscribeMediator(_mockCandidateServiceProvider.Object);
             var subscriberId = Guid.NewGuid();
 
-            const int subscriptionTypeId = 0;
-            SubscriptionTypes subscriptionType;
+            const SubscriptionTypes subscriptionType = SubscriptionTypes.Unknown;
 
             _mockCandidateServiceProvider.Setup(mock => mock
-                .TryUnsubscribe(subscriberId, subscriptionTypeId, out subscriptionType))
+                .Unsubscribe(subscriberId, subscriptionType, null))
                 .Returns(false);
 
             // Act.
-            var response = mediator.Unsubscribe(null, subscriberId, subscriptionTypeId);
+            var response = mediator.Unsubscribe(null, subscriberId, subscriptionType);
 
             // Assert.
             response.Should().NotBeNull();

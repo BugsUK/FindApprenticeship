@@ -19,6 +19,8 @@
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, candidate.RegistrationDetails.EmailAddress),
                 new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriberId, candidate.SubscriberId.ToString()),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, SubscriptionTypes.DailyDigestViaEmail.ToString())
             };
 
             var draftsJson = candidateExpiringDraftsDailyDigest == null
@@ -65,6 +67,8 @@
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, candidate.RegistrationDetails.EmailAddress),
                 new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriberId, candidate.SubscriberId.ToString()),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, SubscriptionTypes.SavedSearchAlertsViaEmail.ToString()),
                 new CommunicationToken(CommunicationTokens.SavedSearchAlerts, savedSearchAlertsJson)
             };
 

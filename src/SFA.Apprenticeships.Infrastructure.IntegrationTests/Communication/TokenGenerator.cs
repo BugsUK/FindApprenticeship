@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Communication
 {
+    using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Communications;
     using Domain.Entities.Candidates;
@@ -95,7 +97,9 @@
             var tokens = new List<CommunicationToken>
             {
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
-                new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, string.Empty)
+                new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, string.Empty),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriberId, Guid.NewGuid().ToString()),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, ((int)SubscriptionTypes.DailyDigestViaEmail).ToString(CultureInfo.InvariantCulture))
             };
 
             var drafts = new Fixture().Build<ExpiringApprenticeshipApplicationDraft>()
@@ -124,7 +128,10 @@
         {
             var tokens = new List<CommunicationToken>
             {
-                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane")
+                new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "http://example.com"),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriberId, Guid.NewGuid().ToString()),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, ((int)SubscriptionTypes.SavedSearchAlertsViaEmail).ToString(CultureInfo.InvariantCulture))
             };
 
             var subCategories = new[]

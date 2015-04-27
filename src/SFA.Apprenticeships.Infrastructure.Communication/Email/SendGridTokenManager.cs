@@ -81,6 +81,15 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.UserPendingUsernameCode:
                     emailTemplateToken = "User.PendingUsernameCode";
                     break;
+                case CommunicationTokens.CandidateSiteDomainName:
+                    emailTemplateToken = "Candidate.SiteDomainName";
+                    break;
+                case CommunicationTokens.CandidateSubscriberId:
+                    emailTemplateToken = "Candidate.SubscriberId";
+                    break;
+                case CommunicationTokens.CandidateSubscriptionType:
+                    emailTemplateToken = "Candidate.SubscriptionType";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("key", key, string.Format("Unknown communication token '{0}'.", key));
             }

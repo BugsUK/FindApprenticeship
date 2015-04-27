@@ -34,7 +34,12 @@
         {
             PopulateCandidateName(request, message);
             PopulateSavedSearchAlerts(request, message);
+            PopulateSiteDomainName(message);
+            PopulateSubscriber(request, message);
         }
+
+        #region Helpers
+
 
         private void PopulateSavedSearchAlerts(EmailRequest request, ISendGrid message)
         {
@@ -70,7 +75,7 @@
             }
         }
 
-        private static string GetStylesheetUri()
+        private string GetStylesheetUri()
         {
             var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
 
@@ -109,10 +114,6 @@
             });
         }
 
-        #region Helpers
-
-        // TODO: US638: most of these functions are all candidates to be moved elsewhere with supporting tests.
-
         private string FormatDistance(double distance)
         {
             return Math.Round(distance, 1, MidpointRounding.AwayFromZero).ToString(CultureInfo.InvariantCulture);
@@ -144,6 +145,30 @@
             var value = request.Tokens.First(t => t.Key == CommunicationTokens.CandidateFirstName).Value;
 
             AddSubstitutionTo(message, token, value);
+        }
+
+        private void PopulateSiteDomainName(ISendGrid message)
+        {
+            var token = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.CandidateSiteDomainName);
+
+            AddSubstitutionTo(message, token, _siteDomainName);
+        }
+
+        private void PopulateSubscriber(EmailRequest request, ISendGrid message)
+        {
+            {
+                var token = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.CandidateSubscriberId);
+                var value = request.Tokens.First(t => t.Key == CommunicationTokens.CandidateSubscriberId).Value;
+
+                AddSubstitutionTo(message, token, value);
+            }
+
+            {
+                var token = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.CandidateSubscriptionType);
+                var value = request.Tokens.First(t => t.Key == CommunicationTokens.CandidateSubscriptionType).Value;
+
+                AddSubstitutionTo(message, token, value);
+            }
         }
 
         private void AddSubstitutionTo(ISendGrid message, string replacementTag, string value)

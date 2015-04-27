@@ -16,6 +16,10 @@
 
         public bool AlertsEnabled { get; set; }
 
+        public bool AlertsEnabledViaEmail { get; set; }
+
+        public bool AlertsEnabledViaText { get; set; }
+
         public ApprenticeshipSearchMode SearchMode { get; set; }
 
         public string Location { get; set; }

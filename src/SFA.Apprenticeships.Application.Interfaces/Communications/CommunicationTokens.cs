@@ -29,6 +29,9 @@
         ApplicationStatusAlerts,
         SavedSearchAlerts,
         UserPendingUsername,
-        UserPendingUsernameCode
+        UserPendingUsernameCode,
+        CandidateSiteDomainName,
+        CandidateSubscriberId,
+        CandidateSubscriptionType,
     }
 }

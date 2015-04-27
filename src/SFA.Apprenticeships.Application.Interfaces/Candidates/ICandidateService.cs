@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Communications;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
@@ -22,8 +23,6 @@
         Candidate GetCandidate(Guid id);
 
         Candidate GetCandidate(string username);
-
-        Candidate GetCandidateBySubscriberId(Guid subscriberId);
 
         Candidate SaveCandidate(Candidate candidate);
 
@@ -84,5 +83,7 @@
         void UpdateUsername(Guid userId, string verfiyCode, string password);
 
         void RequestEmailReminder(string phoneNumber);
+        
+        bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId);
     }
 }
