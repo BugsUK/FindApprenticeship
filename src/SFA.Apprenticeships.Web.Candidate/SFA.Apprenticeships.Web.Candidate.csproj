@@ -252,13 +252,16 @@
   <ItemGroup>
     <Content Include="403.aspx" />
     <Content Include="403.html" />
-    <Content Include="Content\_assets\css\main-1.9.0.1778.css" />
-    <Content Include="Content\_assets\css\main-ie8-1.9.0.1778.css" />
+    <Content Include="Content\_assets\css\main-1.10.css" />
+    <Content Include="Content\_assets\css\main-ie8-1.10.css" />
     <Content Include="Content\_assets\img\apple-touch-icon-120x120.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-152x152.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-60x60.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-76x76.png" />
+    <Content Include="Content\_assets\img\icon-sms.png" />
+    <Content Include="Content\_assets\img\icon-sms.svg" />
     <Content Include="Content\_assets\js\nas\geoLocater.js" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff2" />
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -269,6 +272,7 @@
     <Content Include="Content\_assets\js\nas\refineSearch.js" />
     <Content Include="Content\_assets\js\nas\savedAndDraftCount.js" />
     <Content Include="Content\_assets\js\nas\searchTour.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.joyride.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="TraineeshipNotFound.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />
