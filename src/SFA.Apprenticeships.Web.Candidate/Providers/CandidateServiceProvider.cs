@@ -530,7 +530,7 @@
                 DisplayClosingDate = viewModel.DisplayClosingDate,
                 DisplayStartDate = viewModel.DisplayStartDate,
                 DisplayApprenticeshipLevel = viewModel.DisplayApprenticeshipLevel,
-                DisplayWage = viewModel.DisplayWage,
+                DisplayWage = viewModel.DisplayWage
             };
 
             try

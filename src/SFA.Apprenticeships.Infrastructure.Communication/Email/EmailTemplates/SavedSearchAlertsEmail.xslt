@@ -76,12 +76,10 @@
           </xsl:if>
         </xsl:element>
         <br/>
-        <xsl:if test="displayDatePosted='true'">
-          <span style="color: #6F777B;">
-            <xsl:value-of select="employerName"/><span style="font-size: 12px;"> (Added <xsl:value-of select="postedDate"/>)</span>
-          </span>
-          <br/>
-        </xsl:if>
+        <span style="color: #6F777B;">
+          <xsl:value-of select="employerName"/><span style="font-size: 12px;"> (Added <xsl:value-of select="postedDate"/>)</span>
+        </span>
+        <br/>
         <xsl:if test="displayDescription='true'">
           <p>
             <xsl:value-of select="description"/>

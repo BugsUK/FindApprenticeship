@@ -62,7 +62,7 @@
                 DisplayClosingDate = _displayClosingDate,
                 DisplayStartDate = _displayStartDate,
                 DisplayApprenticeshipLevel = _displayApprenticeshipLevel,
-                DisplayWage = _displayWage,
+                DisplayWage = _displayWage
             };
 
             if (viewModel.Latitude.HasValue && viewModel.Longitude.HasValue)

@@ -120,8 +120,7 @@
                     displayClosingDate = savedSearchAlert.Parameters.DisplayClosingDate,
                     displayStartDate = savedSearchAlert.Parameters.DisplayStartDate,
                     displayApprenticeshipLevel = savedSearchAlert.Parameters.DisplayApprenticeshipLevel,
-                    displayWage = savedSearchAlert.Parameters.DisplayWage,
-                    displayDatePosted = savedSearchAlert.Parameters.DisplayDatePosted
+                    displayWage = savedSearchAlert.Parameters.DisplayWage
                 })
             });
         }
