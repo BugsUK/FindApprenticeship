@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
+    using Application.Interfaces.ReferenceData;
     using Candidate.Providers;
     using Common.Configuration;
     using Common.Providers;
@@ -24,6 +25,7 @@
         private Mock<ICandidateService> _candidateService;
         private Mock<IConfigurationService> _configurationService;
         private Mock<IUserDataProvider> _userDataProvider;
+        private Mock<IReferenceDataService> _referenceDataService;
 
         private ApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
 
@@ -34,12 +36,13 @@
             _candidateService = new Mock<ICandidateService>();
             _configurationService = new Mock<IConfigurationService>();
             _userDataProvider = new Mock<IUserDataProvider>();
+            _referenceDataService = new Mock<IReferenceDataService>();
 
             _configurationService.Setup(cm => cm.Get<WebConfiguration>())
                 .Returns(new WebConfiguration { UnsuccessfulApplicationsToShowTraineeshipsPrompt = UnsuccessfulApplications });
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
-                null, _configurationService.Object, _logService.Object, _userDataProvider.Object);
+                null, _configurationService.Object, _logService.Object, _userDataProvider.Object, _referenceDataService.Object);
         }
 
         [Test]

@@ -8,6 +8,12 @@ namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
         public Location Convert(ResolutionContext context)
         {
             var viewModel = (VacancySearchViewModel)context.SourceValue;
+
+            if (string.IsNullOrWhiteSpace(viewModel.Location) && !viewModel.Latitude.HasValue && !viewModel.Longitude.HasValue)
+            {
+                return null;
+            }
+
             var location = new Location
             {
                 Name = viewModel.Location,

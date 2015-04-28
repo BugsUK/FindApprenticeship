@@ -2,6 +2,7 @@
 {
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Logging;
+    using Application.Interfaces.ReferenceData;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Common.Configuration;
@@ -16,6 +17,7 @@
         private Mock<IConfigurationService> _configurationService;
         private readonly Mock<ILogService> _logService;
         private Mock<IUserDataProvider> _userDataProvider;
+        private Mock<IReferenceDataService> _referenceDataService;
 
         public ApprenticeshipApplicationProviderBuilder()
         {
@@ -23,6 +25,7 @@
             _configurationService = new Mock<IConfigurationService>();
             _configurationService.Setup(x => x.Get<WebConfiguration>()).Returns(new WebConfiguration());
             _userDataProvider = new Mock<IUserDataProvider>();
+            _referenceDataService = new Mock<IReferenceDataService>();
         }
 
         public ApprenticeshipApplicationProviderBuilder With(Mock<ICandidateService> candidateServiceMock)
@@ -53,7 +56,7 @@
         {
             return new ApprenticeshipApplicationProvider(_apprenticeshipVacancyProvider.Object, _candidateService.Object,
                 new ApprenticeshipCandidateWebMappers(), _configurationService.Object, _logService.Object,
-                _userDataProvider.Object);
+                _userDataProvider.Object, _referenceDataService.Object);
         }
     }
 }

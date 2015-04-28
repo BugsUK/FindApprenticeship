@@ -125,6 +125,8 @@
     <Compile Include="Strategies\SavedSearches\UpdateSavedSearchStrategy.cs" />
     <Compile Include="Strategies\SubmitContactMessageStrategy.cs" />
     <Compile Include="Strategies\SendMobileVerificationCodeStrategy.cs" />
+    <Compile Include="Strategies\SuggestedVacancies\ApprenticeshipVacancySuggestionsStrategy.cs" />
+    <Compile Include="Strategies\SuggestedVacancies\IApprenticeshipVacancySuggestionsStrategy.cs" />
     <Compile Include="Strategies\Traineeships\CreateTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\IArchiveApplicationStrategy.cs" />
     <Compile Include="Strategies\Traineeships\ICreateTraineeshipApplicationStrategy.cs" />

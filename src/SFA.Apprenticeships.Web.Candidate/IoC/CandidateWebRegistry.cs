@@ -9,6 +9,7 @@
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Candidate.Strategies.SavedSearches;
+    using Application.Candidate.Strategies.SuggestedVacancies;
     using Application.Candidate.Strategies.Traineeships;
     using Application.Communication;
     using Application.Communication.Strategies;
@@ -72,12 +73,25 @@
             For<ISearchProvider>().Use<SearchProvider>()
                 .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers")
                 .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers");
-            For<IApprenticeshipVacancyProvider>().Use<ApprenticeshipVacancyProvider>().Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers");
-            For<ITraineeshipVacancyProvider>().Use<TraineeshipVacancyProvider>().Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers");
-            For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
-            For<IAccountProvider>().Use<AccountProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
-            For<ICandidateServiceProvider>().Use<CandidateServiceProvider>().Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
-            For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>().Ctor<IMapper>().Named("TraineeshipCandidateWebMappers");
+
+            For<IApprenticeshipVacancyProvider>().Use<ApprenticeshipVacancyProvider>()
+                .Ctor<IMapper>("apprenticeshipSearchMapper").Named("ApprenticeshipCandidateWebMappers");
+
+            For<ITraineeshipVacancyProvider>().Use<TraineeshipVacancyProvider>()
+                .Ctor<IMapper>("traineeshipSearchMapper").Named("TraineeshipCandidateWebMappers");
+
+            For<IApprenticeshipApplicationProvider>().Use<ApprenticeshipApplicationProvider>()
+                .Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+
+            For<IAccountProvider>().Use<AccountProvider>()
+                .Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+
+            For<ICandidateServiceProvider>().Use<CandidateServiceProvider>()
+                .Ctor<IMapper>().Named("ApprenticeshipCandidateWebMappers");
+
+            For<ITraineeshipApplicationProvider>().Use<TraineeshipApplicationProvider>()
+                .Ctor<IMapper>().Named("TraineeshipCandidateWebMappers");
+
             For<ISiteMapVacancyProvider>().Use<SiteMapVacancyProvider>();
         }
 
@@ -152,6 +166,7 @@
             For<IRequestEmailReminderStrategy>().Use<RequestEmailReminderStrategy>();
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
             For<IUnsubscribeStrategy>().Use<UnsubscribeStrategy>();
+            For<IApprenticeshipVacancySuggestionsStrategy>().Use<ApprenticeshipVacancySuggestionsStrategy>();
 
             For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>().Ctor<ISaveCandidateStrategy>().Named("QueuedLegacySaveCandidateStrategy").Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);

@@ -152,10 +152,10 @@
                     case ApprenticeshipSearchMediatorCodes.SaveSearch.HasError:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return new RedirectResult(Url.ApprenticeshipSearchViewModelAction("Results", model));
+                        return new RedirectResult(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, model));
                     case ApprenticeshipSearchMediatorCodes.SaveSearch.Ok:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return new RedirectResult(Url.ApprenticeshipSearchViewModelAction("Results", model));
+                        return new RedirectResult(Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, model));
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

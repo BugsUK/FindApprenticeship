@@ -26,12 +26,12 @@
         [Test]
         public void Ok()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId)).Returns(new WhatHappensNextApprenticeshipViewModel
+            ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId, null)).Returns(new WhatHappensNextApprenticeshipViewModel
             {
                 VacancyStatus = VacancyStatuses.Live
             });
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle, null);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
         }
@@ -45,7 +45,7 @@
         [TestCase("separator.png")]
         public void GivenInvalidVacancyIdString_ThenVacancyNotFound(string vacancyId)
         {
-            var response = Mediator.WhatHappensNext(_someCandidateId, vacancyId, VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, vacancyId, VacancyReference, VacancyTitle, null);
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound, false);
         }
@@ -53,12 +53,12 @@
         [Test]
         public void ExpiredOrWithdrawnVacancyReturnsAVacancyNotFound()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId)).Returns(new WhatHappensNextApprenticeshipViewModel
+            ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId, null)).Returns(new WhatHappensNextApprenticeshipViewModel
             {
                 Status = ApplicationStatuses.ExpiredOrWithdrawn
             });
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle, null);
 
             response.Code.Should().Be(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);
         }
@@ -66,9 +66,9 @@
         [Test]
         public void IfModelHasError_PopulateVacancyTitleAndVacancyReferenceInTheModel()
         {
-            ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId)).Returns(new WhatHappensNextApprenticeshipViewModel(SomeErrorMessage));
+            ApprenticeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(_someCandidateId, SomeVacancyId, null)).Returns(new WhatHappensNextApprenticeshipViewModel(SomeErrorMessage));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle, null);
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
             response.ViewModel.VacancyTitle = VacancyTitle;
             response.ViewModel.VacancyReference = VacancyReference;

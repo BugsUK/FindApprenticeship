@@ -60,7 +60,7 @@
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
 
             var searchParameters = GetCommonSearchParameters();
-            searchParameters.Category = RetailAndCommercialEnterprise;
+            searchParameters.CategoryCode = RetailAndCommercialEnterprise;
 
             var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
 
@@ -73,8 +73,8 @@
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
 
             var searchParameters = GetCommonSearchParameters();
-            searchParameters.Category = RetailAndCommercialEnterprise;
-            searchParameters.SubCategories = new[] {"582"};
+            searchParameters.CategoryCode = RetailAndCommercialEnterprise;
+            searchParameters.SubCategoryCodes = new[] {"582"};
 
             var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
 

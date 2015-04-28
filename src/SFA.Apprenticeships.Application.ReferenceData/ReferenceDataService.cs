@@ -18,9 +18,24 @@
             return _referenceDataProvider.GetCategories();
         }
 
-        public Category GetSubCategory(string subCategory)
+        public Category GetSubCategoryByName(string subCategoryName)
         {
-            return _referenceDataProvider.GetSubCategory(subCategory);
+            return _referenceDataProvider.GetSubCategoryByName(subCategoryName);
+        }
+
+        public Category GetCategoryByName(string categoryName)
+        {
+            return _referenceDataProvider.GetCategoryByName(categoryName);
+        }
+
+        public Category GetSubCategoryByCode(string subCategoryCode)
+        {
+            return _referenceDataProvider.GetSubCategoryByCode(subCategoryCode);
+        }
+
+        public Category GetCategoryByCode(string categoryCode)
+        {
+            return _referenceDataProvider.GetCategoryByCode(categoryCode);
         }
     }
 }

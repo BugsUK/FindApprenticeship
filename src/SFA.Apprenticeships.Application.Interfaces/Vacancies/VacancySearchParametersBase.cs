@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
+    using System.Collections.Generic;
     using Domain.Entities.Locations;
     using Search;
 
@@ -15,8 +16,8 @@
 
         public override string ToString()
         {
-            return string.Format("Location:{0}, PageNumber:{1}, PageSize:{2}, SearchRadius:{3}, SortType:{4}, VacancyReference:{5}", 
-                Location, PageNumber, PageSize, SearchRadius, SortType, VacancyReference);
+            return string.Format("Location:{0}, PageNumber:{1}, PageSize:{2}, SearchRadius:{3}, SortType:{4}, VacancyReference:{5} ExcludeVacancyIds: {6}",
+                Location, PageNumber, PageSize, SearchRadius, SortType, VacancyReference, string.Join(",", ExcludeVacancyIds ?? new List<int>()));
         }        
     }
 }

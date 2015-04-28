@@ -19,7 +19,7 @@
 
         ApprenticeshipApplicationViewModel SubmitApplication(Guid candidateId, int vacancyId);
 
-        WhatHappensNextApprenticeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId);
+        WhatHappensNextApprenticeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId, string searchReturnUrl);
 
         ApprenticeshipApplicationViewModel ArchiveApplication(Guid candidateId, int vacancyId);
 

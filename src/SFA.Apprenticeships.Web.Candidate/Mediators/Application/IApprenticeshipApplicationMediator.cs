@@ -24,7 +24,7 @@
 
         MediatorResponse<ApprenticeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId);
 
-        MediatorResponse<WhatHappensNextApprenticeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle);
+        MediatorResponse<WhatHappensNextApprenticeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle, string searchReturnUrl);
 
         MediatorResponse<ApprenticeshipApplicationViewModel> View(Guid candidateId, int vacancyId);
 

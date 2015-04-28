@@ -5,17 +5,22 @@
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Logging;
-    using Attributes;
+    using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Vacancies;
     using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
+    using Domain.Entities.Locations;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
+    using Infrastructure.LegacyWebServices.LegacyReferenceDataProxy;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using Common.Models.Application;
@@ -28,7 +33,8 @@
     {
         private readonly ILogService _logger;
         private readonly IUserDataProvider _userDataProvider;
-        private readonly IMapper _mapper;
+        private readonly IReferenceDataService _referenceDataService;
+        private readonly IMapper _apprenticeshipCandidateWebMappers;
         private readonly IApprenticeshipVacancyProvider _apprenticeshipVacancyProvider;
         private readonly ICandidateService _candidateService;
         private readonly IConfigurationService _configurationService;
@@ -36,16 +42,18 @@
         public ApprenticeshipApplicationProvider(
             IApprenticeshipVacancyProvider apprenticeshipVacancyProvider,
             ICandidateService candidateService,
-            IMapper mapper,
+            IMapper apprenticeshipCandidateWebMappers,
             IConfigurationService configurationService, ILogService logger,
-            IUserDataProvider userDataProvider)
+            IUserDataProvider userDataProvider,
+            IReferenceDataService referenceDataService)
         {
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
             _candidateService = candidateService;
-            _mapper = mapper;
+            _apprenticeshipCandidateWebMappers = apprenticeshipCandidateWebMappers;
             _configurationService = configurationService;
             _logger = logger;
             _userDataProvider = userDataProvider;
+            _referenceDataService = referenceDataService;
         }
 
         public ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -68,7 +76,7 @@
                     applicationDetails = _candidateService.CreateDraftFromSavedVacancy(candidateId, vacancyId);
                 }
 
-                var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
+                var applicationViewModel = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
 
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
@@ -122,7 +130,7 @@
                 }
 
                 RecalculateSavedAndDraftCount(candidateId, null);
-                var applicationViewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
+                var applicationViewModel = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)
@@ -212,7 +220,7 @@
             try
             {
                 var application =
-                    _mapper.Map<ApprenticeshipApplicationViewModel, ApprenticeshipApplicationDetail>(
+                    _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationViewModel, ApprenticeshipApplicationDetail>(
                         apprenticeshipApplicationViewModel);
 
                 _candidateService.SaveApplication(candidateId, vacancyId, application);
@@ -387,7 +395,7 @@
             return new ApprenticeshipApplicationViewModel();
         }
 
-        public WhatHappensNextApprenticeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId)
+        public WhatHappensNextApprenticeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId, string searchReturnUrl)
         {
             _logger.Debug(
                 "Calling ApprenticeshipApplicationProvider to get the What Happens Next data for candidate ID: {0}, vacancy ID: {1}.",
@@ -410,7 +418,7 @@
                     return new WhatHappensNextApprenticeshipViewModel(MyApplicationsPageMessages.ApplicationNotFound);
                 }
 
-                var model = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
+                var model = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
                 var patchedModel = PatchWithVacancyDetail(candidateId, vacancyId, model);
 
                 if (patchedModel.HasError())
@@ -428,7 +436,7 @@
                     ProviderContactInfo = patchedModel.VacancyDetail.Contact
                 };
 
-                return WhatHappensNextSuggestions(whatHappensNextViewModel, applicationDetails);
+                return WhatHappensNextSuggestions(whatHappensNextViewModel, candidateId, applicationDetails.Vacancy.Id, searchReturnUrl);
             }
             catch (Exception e)
             {
@@ -442,24 +450,40 @@
             }
         }
 
-        private WhatHappensNextApprenticeshipViewModel WhatHappensNextSuggestions(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
+        private WhatHappensNextApprenticeshipViewModel WhatHappensNextSuggestions(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, Guid candidateId, int vacancyId, string searchReturnUrl)
         {
-            //TODO: find appropriate home for vacancy suggestions, probably ApplicationVacancyProvider
+            var searchReturnViewModel = ApprenticeshipSearchViewModel.FromSearchUrl(searchReturnUrl) ?? new ApprenticeshipSearchViewModel { WithinDistance = 40, ResultsPerPage = 5, PageNumber = 1 } ;
+            var searchLocation = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipSearchViewModel, Location>(searchReturnViewModel);
 
-            /*
-            SuggestedVacanciesSearchLocation = "",
-            SuggestedVacanciesSearchDistance = "",
-            SuggestedVacancies = null,
-            SuggestedVacanciesCategory = "",
-            SuggestedVacanciesSearchUrl = ""
-            */
-            
-            //var searchReturnUrl = _userDataProvider.Get(ClearSearchReturnUrlAttribute.SearchReturnUrlKey);
-            //var searchReturnViewModel = ApprenticeshipSearchViewModel.FromSearchUrl(searchReturnUrl);
-            //var vacancySubCategoryName = apprenticeshipApplicationDetail.Vacancy.SubCategory;
+            var searchParameters = new ApprenticeshipSearchParameters
+            {
+                VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                ApprenticeshipLevel = searchReturnViewModel.ApprenticeshipLevel,
+                SortType = VacancySearchSortType.Distance,
+                Location = searchLocation,
+                PageNumber = 1,
+                PageSize = searchReturnViewModel.ResultsPerPage,
+                SearchRadius = searchReturnViewModel.WithinDistance
+            };
 
-            //apprenticeshipApplicationDetail.Vacancy.Category
-            //apprenticeshipApplicationDetail.Vacancy.SubCategory
+            var suggestedVacancies = _candidateService.GetSuggestedApprenticeshipVacancies(searchParameters, candidateId, vacancyId);
+
+            var searchedCategory = (suggestedVacancies.SearchParameters.SubCategoryCodes != null && suggestedVacancies.SearchParameters.SubCategoryCodes.Length == 1
+                ? _referenceDataService.GetSubCategoryByCode(suggestedVacancies.SearchParameters.SubCategoryCodes[0])
+                : _referenceDataService.GetCategoryByCode(suggestedVacancies.SearchParameters.CategoryCode)) ??
+                                        new Category { FullName = "Unknown" };
+
+            whatHappensNextViewModel.SuggestedVacanciesSearchViewModel = new ApprenticeshipSearchViewModel(suggestedVacancies.SearchParameters);
+            whatHappensNextViewModel.SuggestedVacanciesCategory = searchedCategory.FullName;
+            whatHappensNextViewModel.SuggestedVacanciesSearchDistance = suggestedVacancies.SearchParameters.SearchRadius;
+            whatHappensNextViewModel.SuggestedVacanciesSearchLocation = suggestedVacancies.SearchParameters.Location.Name;
+            whatHappensNextViewModel.SuggestedVacancies =
+                suggestedVacancies.Results.Select(x => new SuggestedVacancyViewModel
+                {
+                    VacancyId = x.Id,
+                    VacancyTitle = x.Title,
+                    Distance = Math.Round(x.Distance, 1, MidpointRounding.AwayFromZero).ToString(CultureInfo.InvariantCulture)
+                }).ToList();
 
             return whatHappensNextViewModel;
         }

@@ -302,12 +302,13 @@
             });
         }
 
+        [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle);
+                var response = _apprenticeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle, ViewBag.SearchReturnUrl as string);
 
                 switch (response.Code)
                 {

@@ -8,10 +8,13 @@
     {
         public static string ApprenticeshipSearchViewModelAction(this UrlHelper url, string actionName, ApprenticeshipSearchViewModel model)
         {
-            var subCategories = model.SubCategories;
-            model.SubCategories = null;
-            var actionUrl = url.Action(actionName, model.RouteValues) + subCategories.ToQueryString("SubCategories");
-            model.SubCategories = subCategories;
+            var actionUrl = url.Action(actionName, model.RouteValues) + model.SubCategories.ToQueryString("SubCategories");
+            return actionUrl;
+        }
+
+        public static string ApprenticeshipSearchViewModelRouteUrl(this UrlHelper url, string routeName, ApprenticeshipSearchViewModel model)
+        {
+            var actionUrl = url.RouteUrl(routeName, model.RouteValues) + model.SubCategories.ToQueryString("SubCategories");
             return actionUrl;
         }
     }

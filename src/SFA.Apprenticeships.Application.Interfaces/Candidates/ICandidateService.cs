@@ -8,6 +8,8 @@
     using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
+    using Search;
+    using Vacancies;
 
     /// <summary>
     /// For candidate users to register, manage their profile and other dashboard entities
@@ -85,5 +87,8 @@
         void RequestEmailReminder(string phoneNumber);
         
         bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId);
+
+        SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(
+            ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId);
     }
 }

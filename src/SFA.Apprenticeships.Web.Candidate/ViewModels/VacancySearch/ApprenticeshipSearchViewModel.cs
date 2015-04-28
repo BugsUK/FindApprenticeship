@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Globalization;
     using System.Web;
     using System.Web.Mvc;
     using Account;
@@ -46,6 +47,17 @@
             DisplayStartDate = DisplayStartDate;
             DisplayApprenticeshipLevel = DisplayApprenticeshipLevel;
             DisplayWage = DisplayWage;
+        }
+
+        public ApprenticeshipSearchViewModel(ApprenticeshipSearchParameters searchParameters) : base(searchParameters)
+        {
+            Keywords = searchParameters.Keywords;
+            LocationType = searchParameters.VacancyLocationType;
+            ApprenticeshipLevel = searchParameters.ApprenticeshipLevel;
+            Category = searchParameters.CategoryCode;
+            SubCategories = searchParameters.SubCategoryCodes;
+            SearchMode = string.IsNullOrWhiteSpace(searchParameters.CategoryCode) ? ApprenticeshipSearchMode.Keyword : ApprenticeshipSearchMode.Category;
+            SearchField = searchParameters.SearchField.ToString();
         }
 
         [Display(Name = ApprenticeshipSearchViewModelMessages.KeywordMessages.LabelText, Description = ApprenticeshipSearchViewModelMessages.KeywordMessages.HintText)]
@@ -92,7 +104,6 @@
                 {
                     ApprenticeshipLevel,
                     Category,
-                    SubCategories = SubCategories == null || SubCategories.Length == 0 ? null : SubCategories,
                     Hash,
                     Keywords,
                     Latitude,
@@ -140,6 +151,11 @@
 
         public static ApprenticeshipSearchViewModel FromSearchUrl(string searchUrl)
         {
+            if (string.IsNullOrWhiteSpace(searchUrl))
+            {
+                return null;
+            }
+
             var searchUri = new Uri(new Uri("http://base"), searchUrl);
             var queryStringParams = HttpUtility.ParseQueryString(searchUri.Query);
 

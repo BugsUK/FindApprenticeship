@@ -22,7 +22,7 @@
         private readonly IMapper _vacancySearchMapper;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
         private readonly SearchFactorConfiguration _searchConfiguration;
-        private const string SubCategoriesAggregationName = "SubCategories";
+        private const string SubCategoriesAggregationName = "SubCategoryCodes";
 
         public ApprenticeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
             IMapper vacancySearchMapper,
@@ -165,16 +165,23 @@
                         query = BuildContainer(query, exactMatchClause);
                     }
 
-                    if (!string.IsNullOrWhiteSpace(parameters.Category))
+                    if (!string.IsNullOrWhiteSpace(parameters.CategoryCode))
                     {
-                        var querySector = q.Match(m => m.OnField(f => f.CategoryCode).Query(parameters.Category));
+                        var querySector = q.Match(m => m.OnField(f => f.CategoryCode).Query(parameters.CategoryCode));
                         query = query && querySector;
                     }
 
-                    queryVacancyLocation = q
-                        .Match(m => m.OnField(f => f.VacancyLocationType)
-                            .Query(parameters.VacancyLocationType.ToString()));
-                    query = query && queryVacancyLocation;
+                    if (parameters.ExcludeVacancyIds != null)
+                    {
+                        var queryExcludeVacancyIds = !q.Ids(parameters.ExcludeVacancyIds.Select(x => x.ToString()));
+                        query = query && queryExcludeVacancyIds;
+                    }
+
+                    if (parameters.VacancyLocationType != ApprenticeshipLocationType.Unknown)
+                    {
+                        queryVacancyLocation = q.Match(m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
+                        query = query && queryVacancyLocation;
+                    }
 
                     if (!string.IsNullOrWhiteSpace(parameters.ApprenticeshipLevel) && parameters.ApprenticeshipLevel != "All")
                     {
@@ -258,9 +265,9 @@
 
                 s.Aggregations(a => a.Terms(SubCategoriesAggregationName, st => st.Field(o => o.SubCategoryCode).Size(0)));
 
-                if (parameters.SubCategories != null)
+                if (parameters.SubCategoryCodes != null)
                 {
-                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, parameters.SubCategories));
+                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, parameters.SubCategoryCodes));
                 }
 
                 return s;

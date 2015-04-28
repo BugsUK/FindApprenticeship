@@ -13,9 +13,12 @@
     using Interfaces.Candidates;
     using Interfaces.Communications;
     using Interfaces.Logging;
+    using Interfaces.Search;
+    using Interfaces.Vacancies;
     using Strategies;
     using Strategies.Apprenticeships;
     using Strategies.SavedSearches;
+    using Strategies.SuggestedVacancies;
     using Strategies.Traineeships;
     using UserAccount.Strategies;
     using IUpdateUsernameStrategy = Strategies.IUpdateUsernameStrategy;
@@ -58,6 +61,7 @@
         private readonly IUpdateUsernameStrategy _updateUsernameStrategy;
         private readonly IRequestEmailReminderStrategy _requestEmailReminderStrategy;
         private readonly IUnsubscribeStrategy _unsubscribeStrategy;
+        private readonly IApprenticeshipVacancySuggestionsStrategy _apprenticeshipVacancySuggestionsStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -94,7 +98,8 @@
             IDeleteSavedSearchStrategy deleteSavedSearchStrategy,
             IUpdateUsernameStrategy updateUsernameStrategy,
             IRequestEmailReminderStrategy requestEmailReminderStrategy,
-            IUnsubscribeStrategy unsubscribeStrategy)
+            IUnsubscribeStrategy unsubscribeStrategy,
+            IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -131,6 +136,7 @@
             _updateUsernameStrategy = updateUsernameStrategy;
             _requestEmailReminderStrategy = requestEmailReminderStrategy;
             _unsubscribeStrategy = unsubscribeStrategy;
+            _apprenticeshipVacancySuggestionsStrategy = apprenticeshipVacancySuggestionsStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -488,6 +494,15 @@
                 subscriberId, subscriptionType, subscriptionItemId);
 
             return _unsubscribeStrategy.Unsubscribe(subscriberId, subscriptionType, subscriptionItemId);
+        }
+        
+        public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId)
+        {
+            Condition.Requires(searchParameters).IsNotNull();
+            Condition.Requires(vacancyId).IsGreaterThan(0);
+            
+            var candidateApplications = GetApprenticeshipApplications(candidateId);
+            return _apprenticeshipVacancySuggestionsStrategy.GetSuggestedApprenticeshipVacancies(searchParameters, candidateApplications, vacancyId);
         }
     }
 }

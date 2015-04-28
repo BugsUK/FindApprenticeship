@@ -31,6 +31,18 @@
             SearchAction = viewModel.SearchAction;
         }
 
+        protected VacancySearchViewModel(ApprenticeshipSearchParameters searchParameters)
+        {
+            Location = searchParameters.Location != null ? searchParameters.Location.Name : string.Empty;
+            Longitude = searchParameters.Location != null && searchParameters.Location.GeoPoint != null ? searchParameters.Location.GeoPoint.Longitude : 0;
+            Latitude = searchParameters.Location != null && searchParameters.Location.GeoPoint != null ? searchParameters.Location.GeoPoint.Latitude : 0;
+            WithinDistance = searchParameters.SearchRadius;
+            PageNumber = searchParameters.PageNumber;
+            SortType = searchParameters.SortType;
+            ResultsPerPage = searchParameters.PageSize;
+            SearchAction = SearchAction.Search;
+        }
+
         public abstract string Location { get; set; }
 
         public double? Longitude { get; set; }

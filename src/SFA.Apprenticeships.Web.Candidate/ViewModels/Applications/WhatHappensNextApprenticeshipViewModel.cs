@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
+    using VacancySearch;
 
     public class WhatHappensNextApprenticeshipViewModel : ViewModelBase
     {
@@ -27,15 +28,15 @@
 
         public string ProviderContactInfo { get; set; }
 
-        public string SuggestedVacanciesSearchUrl { get; set; }
+        public ApprenticeshipSearchViewModel SuggestedVacanciesSearchViewModel { get; set; }
 
         public string SuggestedVacanciesCategory { get; set; }
 
-        public string SuggestedVacanciesSearchDistance { get; set; }
+        public int SuggestedVacanciesSearchDistance { get; set; }
 
         public string SuggestedVacanciesSearchLocation { get; set; }
 
-        public IEnumerable<SuggestedVacancyViewModel> SuggestedVacancies { get; set; } 
+        public IList<SuggestedVacancyViewModel> SuggestedVacancies { get; set; } 
     }
 
     public class SuggestedVacancyViewModel

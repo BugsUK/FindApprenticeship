@@ -7,6 +7,12 @@
     {
         IEnumerable<Category> GetCategories();
 
-        Category GetSubCategory(string subCategory);
+        Category GetSubCategoryByName(string subCategoryName);
+
+        Category GetCategoryByName(string categoryName);
+
+        Category GetSubCategoryByCode(string subCategoryCode);
+
+        Category GetCategoryByCode(string categoryCode);
     }
 }
