@@ -73,7 +73,6 @@
             const bool displayStartDate = false;
             const bool displayApprenticeshipLevel = true;
             const bool displayWage = true;
-            const bool displayDatePosted = true;
 
             var categories = new List<Category>
             {
@@ -113,7 +112,7 @@
                 .WithSubCategories(subCategories)
                 .WithSearchField(searchField)
                 .WithCategories(categories)
-                .WithDisplay(displaySubCategory, displayDescription, displayDistance, displayClosingDate, displayStartDate, displayApprenticeshipLevel, displayWage, displayDatePosted)
+                .WithDisplay(displaySubCategory, displayDescription, displayDistance, displayClosingDate, displayStartDate, displayApprenticeshipLevel, displayWage)
                 .Build();
 
             var response = provider.CreateSavedSearch(candidateId, viewModel);
@@ -145,7 +144,6 @@
             savedSearch.DisplayStartDate.Should().Be(displayStartDate);
             savedSearch.DisplayApprenticeshipLevel.Should().Be(displayApprenticeshipLevel);
             savedSearch.DisplayWage.Should().Be(displayWage);
-            savedSearch.DisplayDatePosted.Should().Be(displayDatePosted);
         }
 
         [Test]

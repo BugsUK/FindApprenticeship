@@ -531,7 +531,6 @@
                 DisplayStartDate = viewModel.DisplayStartDate,
                 DisplayApprenticeshipLevel = viewModel.DisplayApprenticeshipLevel,
                 DisplayWage = viewModel.DisplayWage,
-                DisplayDatePosted = viewModel.DisplayDatePosted
             };
 
             try

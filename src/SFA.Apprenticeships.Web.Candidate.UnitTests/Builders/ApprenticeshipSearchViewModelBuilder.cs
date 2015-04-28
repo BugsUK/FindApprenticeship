@@ -31,7 +31,6 @@
         private bool _displayStartDate = true;
         private bool _displayApprenticeshipLevel;
         private bool _displayWage;
-        private bool _displayDatePosted;
 
         public ApprenticeshipSearchViewModel Build()
         {
@@ -64,7 +63,6 @@
                 DisplayStartDate = _displayStartDate,
                 DisplayApprenticeshipLevel = _displayApprenticeshipLevel,
                 DisplayWage = _displayWage,
-                DisplayDatePosted = _displayDatePosted
             };
 
             if (viewModel.Latitude.HasValue && viewModel.Longitude.HasValue)
@@ -154,7 +152,7 @@
             return this;
         }
 
-        public ApprenticeshipSearchViewModelBuilder WithDisplay(bool displaySubCategory, bool displayDescription, bool displayDistance, bool displayClosingDate, bool displayStartDate, bool displayApprenticeshipLevel, bool displayWage, bool displayDatePosted)
+        public ApprenticeshipSearchViewModelBuilder WithDisplay(bool displaySubCategory, bool displayDescription, bool displayDistance, bool displayClosingDate, bool displayStartDate, bool displayApprenticeshipLevel, bool displayWage)
         {
             _displaySubCategory = displaySubCategory;
             _displayDescription = displayDescription;
@@ -163,7 +161,6 @@
             _displayStartDate = displayStartDate;
             _displayApprenticeshipLevel = displayApprenticeshipLevel;
             _displayWage = displayWage;
-            _displayDatePosted = displayDatePosted;
             return this;
         }
     }

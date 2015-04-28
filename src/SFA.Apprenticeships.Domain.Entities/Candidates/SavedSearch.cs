@@ -69,6 +69,5 @@
 
         public bool DisplayWage { get; set; }
 
-        public bool DisplayDatePosted { get; set; }
     }
 }

@@ -46,7 +46,6 @@
             DisplayStartDate = DisplayStartDate;
             DisplayApprenticeshipLevel = DisplayApprenticeshipLevel;
             DisplayWage = DisplayWage;
-            DisplayDatePosted = DisplayDatePosted;
         }
 
         [Display(Name = ApprenticeshipSearchViewModelMessages.KeywordMessages.LabelText, Description = ApprenticeshipSearchViewModelMessages.KeywordMessages.HintText)]
@@ -136,8 +135,6 @@
         public bool DisplayApprenticeshipLevel { get; set; }
 
         public bool DisplayWage { get; set; }
-
-        public bool DisplayDatePosted { get; set; }
 
         #region Helpers
 

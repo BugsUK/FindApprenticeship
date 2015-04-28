@@ -44,10 +44,7 @@
                                     <input @{if (Model.VacancySearch.DisplayWage) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayWage">
                                     <label for="DisplayWage">Wage</label>
                                 </li>
-                                <li>
-                                    <input @{if (Model.VacancySearch.DisplayDatePosted) { <text> checked="checked" </text>  }} type="checkbox" id="DisplayDatePosted">
-                                    <label for="DisplayDatePosted">Date Posted</label>
-                                </li>
+                                
                             </ul>
                         </div>
                     </details>
@@ -83,7 +80,7 @@
                             <span data-show="DisplaySubCategory" class="font-small hidden-subcategory @(Model.VacancySearch.DisplaySubCategory ? "" : "toggle-content")"> (@FullNameFormatter.Format(vacancy.SubCategory))</span>
                         }
                     </h2>
-                    <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span data-show="DisplayDatePosted" class="font-xsmall @(Model.VacancySearch.DisplayDatePosted ? "" : "toggle-content")"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
+                    <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                 </div>
                 @if (ViewBag.IsCandidateActivated != null && ViewBag.IsCandidateActivated)
                 {
