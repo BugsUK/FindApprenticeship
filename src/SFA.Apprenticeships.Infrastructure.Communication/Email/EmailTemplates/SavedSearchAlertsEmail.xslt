@@ -69,23 +69,51 @@
             <xsl:text>font-size: 19px; font-weight: bold;</xsl:text>
           </xsl:attribute>
           <xsl:value-of select="title"/>
+          <xsl:if test="displaySubCategory='true'">
+            <span style="font-size: 19px;">
+              (<xsl:value-of select="subCategory"/>)
+            </span>
+          </xsl:if>
         </xsl:element>
         <br/>
-        <span style="color: #6F777B;">
-          <xsl:value-of select="employerName"/><span style="font-size: 12px;"> (Added <xsl:value-of select="postedDate"/>)</span>
-        </span>
-        <br/>
-        <p>
-          <xsl:value-of select="description"/>
-        </p>
-        <b>Distance: </b>
-        <span>
-          <xsl:value-of select="distance"/>
-        </span> mile(s)
-        <br/>
-        <b>Closing date: </b>
-        <xsl:value-of select="closingDate"/>
-        <br/>
+        <xsl:if test="displayDatePosted='true'">
+          <span style="color: #6F777B;">
+            <xsl:value-of select="employerName"/><span style="font-size: 12px;"> (Added <xsl:value-of select="postedDate"/>)</span>
+          </span>
+          <br/>
+        </xsl:if>
+        <xsl:if test="displayDescription='true'">
+          <p>
+            <xsl:value-of select="description"/>
+          </p>
+        </xsl:if>
+        <xsl:if test="displayDistance='true'">
+          <b>Distance: </b>
+          <span>
+            <xsl:value-of select="distance"/>
+          </span> mile(s)
+          <br/>
+        </xsl:if>
+        <xsl:if test="displayClosingDate='true'">
+          <b>Closing date: </b>
+          <xsl:value-of select="closingDate"/>
+          <br/>
+        </xsl:if>
+        <xsl:if test="displayStartDate='true'">
+          <b>Possible start date: </b>
+          <xsl:value-of select="startDate"/>
+          <br/>
+        </xsl:if>
+        <xsl:if test="displayApprenticeshipLevel='true'">
+          <b>Apprenticeship level: </b>
+          <xsl:value-of select="apprenticeshipLevel"/>
+          <br/>
+        </xsl:if>
+        <xsl:if test="displayWage='true'">
+          <b>Wage: </b>
+          <xsl:value-of select="wage"/> p/week
+          <br/>
+        </xsl:if>
         <br/>
       </td>
     </tr>

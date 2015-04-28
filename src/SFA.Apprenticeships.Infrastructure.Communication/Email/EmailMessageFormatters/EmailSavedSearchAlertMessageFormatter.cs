@@ -99,17 +99,29 @@
                     category = savedSearchAlert.Parameters.CategoryFullName,
                     subCategoriesFullName = savedSearchAlert.Parameters.TruncatedSubCategoriesFullNames(_configurationService.Get<EmailConfiguration>().SubCategoriesFullNamesLimit),
                     location = savedSearchAlert.Parameters.Location,
-                    apprenticeshipLevel = savedSearchAlert.Parameters.ApprenticeshipLevel,
+                    apprenticeshipLevel = savedSearchAlert.Parameters.ApprenticeshipLevel
                 },
                 results = savedSearchAlert.Results.Select(result => new
                 {
                     url = FormatVacancyDetailsUrl(result),
                     title = result.Title,
+                    subCategory = FullNameFormatter.Format(result.SubCategory),
                     employerName = result.EmployerName,
                     description = result.Description,
                     closingDate = FormatDate(result.ClosingDate),
                     postedDate = FormatDate(result.PostedDate),
-                    distance = FormatDistance(result.Distance)
+                    startDate = FormatDate(result.StartDate),
+                    distance = FormatDistance(result.Distance),
+                    apprenticeshipLevel = result.ApprenticeshipLevel.ToString(),
+                    wage = result.Wage,
+                    displaySubCategory = savedSearchAlert.Parameters.SearchMode == ApprenticeshipSearchMode.Category && savedSearchAlert.Parameters.DisplaySubCategory,
+                    displayDescription = savedSearchAlert.Parameters.DisplayDescription,
+                    displayDistance = savedSearchAlert.Parameters.DisplayDistance,
+                    displayClosingDate = savedSearchAlert.Parameters.DisplayClosingDate,
+                    displayStartDate = savedSearchAlert.Parameters.DisplayStartDate,
+                    displayApprenticeshipLevel = savedSearchAlert.Parameters.DisplayApprenticeshipLevel,
+                    displayWage = savedSearchAlert.Parameters.DisplayWage,
+                    displayDatePosted = savedSearchAlert.Parameters.DisplayDatePosted
                 })
             });
         }
