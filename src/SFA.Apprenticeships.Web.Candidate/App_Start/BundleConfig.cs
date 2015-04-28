@@ -13,8 +13,7 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.UseCdn = true;
 
             bundles.Add(new ScriptBundle("~/bundles/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js").Include(
-                "~/Content/_assets/js/vendor/jquery-1.11.1.js",
-                "~/Content/_assets/js/vendor/jquery.cookie.js"));
+                "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/fastclick", "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js").Include(
                 "~/Content/_assets/js/vendor/fastclick-1.0.6.js"));
@@ -24,6 +23,9 @@ namespace SFA.Apprenticeships.Web.Candidate
 
             bundles.Add(new ScriptBundle("~/bundles/joyride", "//cdnjs.cloudflare.com/ajax/libs/joyride/2.1.0/jquery.joyride.js").Include(
                 "~/Content/_assets/js/vendor/jquery.joyride.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/cookie", "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(
+                "~/Content/_assets/js/vendor/jquery.cookie.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nascript").Include(
                   "~/Content/_assets/js/scripts.js"));
