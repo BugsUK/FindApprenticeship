@@ -2,13 +2,10 @@
 {
     using System.Configuration;
     using Common.Configuration;
-    using SFA.Apprenticeships.Common.AppSettings;
+    using Common.AppSettings;
 
     public class SendGridConfiguration : SecureConfigurationSection<SendGridConfiguration>
     {
-        private const string UserNameConstant = "NetworkUsername";
-        private const string PasswordConstant = "NetworkPassword";
-
         public SendGridConfiguration()
             : base("SendGridConfiguration")
         {

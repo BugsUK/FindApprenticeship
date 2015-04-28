@@ -11,7 +11,7 @@
 
     public class EmployerEnquiryController : ContactFormsControllerBase
     {
-        private IEmployerEnquiryMediator _employerEnquiryMediator;
+        private readonly IEmployerEnquiryMediator _employerEnquiryMediator;
 
         public EmployerEnquiryController(IEmployerEnquiryMediator employerEnquiryMediator)
         {
