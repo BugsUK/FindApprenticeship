@@ -514,7 +514,18 @@ Write(Scripts.Render("~/bundles/nas/apprenticeships/results"));
             
             #line default
             #line hidden
-WriteLiteral(";\r\n\r\n    <script");
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 160 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+Write(Scripts.Render("~/bundles/cookie"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n    <script");
 
 WriteLiteral(" type=\"text/javascript\"");
 
@@ -522,7 +533,7 @@ WriteLiteral(">\r\n        $(function() {\r\n            $(\"#Location\").locati
 "      url: \'");
 
             
-            #line 164 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 165 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                  Write(Url.Action("location", "Location"));
 
             
@@ -552,7 +563,7 @@ WriteLiteral(@"',
                 saveUrl: '");
 
             
-            #line 185 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 186 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                      Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
 
             
@@ -561,7 +572,7 @@ WriteLiteral(@"',
 WriteLiteral("\',\r\n                deleteUrl: \'");
 
             
-            #line 186 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 187 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                        Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
 
             
@@ -623,7 +634,7 @@ WriteLiteral("\',\r\n                title: true\r\n            });\r\n\r\n     
 WriteLiteral("    ");
 
             
-            #line 293 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 294 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/resultsMap"));
 
             
