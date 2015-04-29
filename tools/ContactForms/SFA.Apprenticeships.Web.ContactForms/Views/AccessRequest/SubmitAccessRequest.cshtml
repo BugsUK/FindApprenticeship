@@ -14,15 +14,16 @@
     </div>
 </div>
 
+<div class="text">
+    <p>
+        Please complete the form below if you wish to access Apprenticeship vacancies in order to track vacancies and/or use the web services now available.
+    </p>
+    <p><b>Before completing the form:</b></p>
+    <p> <a href="https://www.gov.uk/government/collections/apprenticeship-vacancies">View more information for on viewing/tracking vacancies and using the web services</a>. </p>
+    <p>Please note that the 4th section (Your system details) is only required if you wish to use the web services interface.</p>
 
-<p class="text">
-    Please complete the form below if you wish to access Apprenticeship vacancies in order to track vacancies and/or use the web services now available.
-</p>
-<p><b>Before completing the form:</b></p>
-<p> <a href="https://www.gov.uk/government/collections/apprenticeship-vacancies">View more information for on viewing/tracking vacancies and using the web services</a> </p>
-<p>Please note that the 4th section (Your system details) is only required if you wish to use the web services interface.</p>
-
-<p> If you only wish to access the system to view and track vacancies, then first 3 sections & then select 'Submit Request' at the bottom of the form.</p>
+    <p> If you only wish to access the system to view and track vacancies, then first 3 sections & then select 'Submit Request' at the bottom of the form.</p>
+</div>
 
 
 @using (Html.BeginForm("SubmitAccessRequest", "AccessRequest", FormMethod.Post))
@@ -78,14 +79,17 @@
 
         <legend class="heading-large">Advertising details</legend>
 
-        <p>
-            If you are currently advertising on Apprenticeship vacancies you may already be registered on the system and
-            able to view your vacancies and relevant information, but may not be aware of this.
-        </p>
-        <p>
-            Please indicate below if you have vacancies on Apprenticeship vacancies, as this will help us provide the
-            right support to ensure you can view and track your vacancies.
-        </p>
+        <div class="text">
+            <p>
+                If you are currently advertising on Apprenticeship vacancies you may already be registered on the system and
+                able to view your vacancies and relevant information, but may not be aware of this.
+            </p>
+            <p>
+                Please indicate below if you have vacancies on Apprenticeship vacancies, as this will help us provide the
+                right support to ensure you can view and track your vacancies.
+            </p>
+        </div>
+       
         <div class="form-group inline clearfix">
             <label for="HasApprenticeshipVacancies-yes" class="block-label">
                 @Html.RadioButtonFor(m => m.HasApprenticeshipVacancies, false, new
@@ -109,22 +113,25 @@
 
 
         <legend class="heading-large">Your system details</legend>
-        <p class="text">
-            If you wish to utilise the range of web services available, please complete the fields below.
-        </p>
+        <div class="text">
+            <p>
+                If you wish to utilise the range of web services available, please complete the fields below.
+            </p>
 
-        <p>
-            Please note that your system/website will need to be registered in order for the transmission of information from
-            Apprenticeship vacancies to your system/website to be recognised and permitted.
-        </p>
-        <p>
-            More technical information regarding the web services can be found in our
-            <a rel="external" href="http://nas.apprenticeships.org.uk/~/media/CDCAA67106724CE1AE4A8822D8F1903C.ashx">Service Interface Guide (PDF)</a>
-        </p>
-        <p>
-            For further enquiries regarding the web services contact the NAS Helpdesk by
-            emailing <a href="mailto:nationalhelpdesk@apprenticeships.gov.uk">nationalhelpdesk@apprenticeships.gov.uk</a>  or calling <b> 024 76 82 6482</b>.
-        </p>
+            <p>
+                Please note that your system/website will need to be registered in order for the transmission of information from
+                Apprenticeship vacancies to your system/website to be recognised and permitted.
+            </p>
+            <p>
+                More technical information regarding the web services can be found in our
+                <a rel="external" href="http://nas.apprenticeships.org.uk/~/media/CDCAA67106724CE1AE4A8822D8F1903C.ashx">Service Interface Guide (PDF)</a>
+            </p>
+            <p>
+                For further enquiries regarding the web services contact the NAS Helpdesk by
+                emailing <a href="mailto:nationalhelpdesk@apprenticeships.gov.uk">nationalhelpdesk@apprenticeships.gov.uk</a>  or calling <b> 024 76 82 6482</b>.
+            </p>
+        </div>
+        
 
         @Html.FormTextFor(
             m => m.Contactname,
