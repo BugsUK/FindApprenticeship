@@ -69,9 +69,5 @@ The send grid credentials are stored in the app settings on the configuration ta
 
 ## Outstanding Work ##
 
-- Document the CRM integration process
-- The Web Access Request Form is generating XML but this has not yet been integrated with the CRM. This needs testing so contact Zee to begin the testing process
 - Work out either how to make the location lookup work or remove it
 - It's unclear if logging is working and, if so, whether we will be alerted in the event of failure. Logging should follow FAA pattern and all submitted information logged in a verbose manner to enable reconstruction of the requests
-- Update send grid credentials
-- Remove email addresses from web.config
