@@ -1036,57 +1036,30 @@ WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\"#fi
             
             #line default
             #line hidden
-WriteLiteral(@"',
-                selectlist: '#address-select'
-            });
-
-            $("".delete-saved-search-link"").on('click', function () {
-                var $this = $(this),
-                    $href = $this.attr('href').replace(""isJavascript=False"", ""isJavascript=true"").replace(""isJavascript=false"", ""isJavascript=true""),
-                    $id = $this.attr('id');
-
-                $.ajax({
-                    url: $href,
-                    complete: function (result) {
-
-                        if (result.status == 200) {
-                            $(""#"" + $id).hide();
-
-                            if ($("".saved-search:visible"").length == 0) {
-                                $(""#noSavedSearchesText"").show();
-                            }
-                        }
-                    }
-                });
-
-                return false;
-            });
-
-            $('#emailToggle').on('click', function () {
-                var theTable = $(this).closest('.display-table');
-
-                theTable.find('.email-input:not(:checked)').click();
-
-                $(this).blur();
-
-                return false;
-
-            });
-
-            $('#textToggle').on('click', function () {
-                var theTable = $(this).closest('.display-table');
-
-                theTable.find('.text-input:not(:checked)').click();
-
-                $(this).blur();
-
-                return false;
-
-            });
-
-        });
-    </script>
-");
+WriteLiteral("\',\r\n                selectlist: \'#address-select\'\r\n            });\r\n\r\n           " +
+" $(\".delete-saved-search-link\").on(\'click\', function () {\r\n                var $" +
+"this = $(this),\r\n                    $href = $this.attr(\'href\').replace(\"isJavas" +
+"cript=False\", \"isJavascript=true\").replace(\"isJavascript=false\", \"isJavascript=t" +
+"rue\"),\r\n                    $id = $this.attr(\'id\');\r\n\r\n                $.ajax({\r" +
+"\n                    url: $href,\r\n                    complete: function (result" +
+") {\r\n\r\n                        if (result.status == 200) {\r\n                    " +
+"        $(\"#\" + $id).hide();\r\n\r\n                            if ($(\".saved-search" +
+":visible\").length == 0) {\r\n                                $(\"#noSavedSearchesTe" +
+"xt\").show();\r\n                            }\r\n                        }\r\n        " +
+"            }\r\n                });\r\n\r\n                return false;\r\n           " +
+" });\r\n\r\n            $(\'#emailToggle\').on(\'click\', function () {\r\n               " +
+" var theTable = $(this).closest(\'.display-table\');\r\n\r\n                if (theTab" +
+"le.find(\'.email-input:checked\').length == 3) {\r\n                    theTable.fin" +
+"d(\'.email-input:checked\').click();\r\n                } else {\r\n                  " +
+"  theTable.find(\'.email-input:not(:checked)\').click();\r\n                }\r\n\r\n   " +
+"             $(this).blur();\r\n\r\n                return false;\r\n\r\n            });" +
+"\r\n\r\n            $(\'#textToggle\').on(\'click\', function () {\r\n                var " +
+"theTable = $(this).closest(\'.display-table\');\r\n\r\n                if (theTable.fi" +
+"nd(\'.text-input:checked\').length == 3) {\r\n                    theTable.find(\'.te" +
+"xt-input:checked\').click();\r\n                } else {\r\n                    theTa" +
+"ble.find(\'.text-input:not(:checked)\').click();\r\n                }\r\n\r\n           " +
+"     $(this).blur();\r\n\r\n                return false;\r\n\r\n            });\r\n\r\n    " +
+"    });\r\n    </script>\r\n");
 
 });
 

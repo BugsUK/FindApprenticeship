@@ -233,7 +233,11 @@
             $('#emailToggle').on('click', function () {
                 var theTable = $(this).closest('.display-table');
 
-                theTable.find('.email-input:not(:checked)').click();
+                if (theTable.find('.email-input:checked').length == 3) {
+                    theTable.find('.email-input:checked').click();
+                } else {
+                    theTable.find('.email-input:not(:checked)').click();
+                }
 
                 $(this).blur();
 
@@ -244,7 +248,11 @@
             $('#textToggle').on('click', function () {
                 var theTable = $(this).closest('.display-table');
 
-                theTable.find('.text-input:not(:checked)').click();
+                if (theTable.find('.text-input:checked').length == 3) {
+                    theTable.find('.text-input:checked').click();
+                } else {
+                    theTable.find('.text-input:not(:checked)').click();
+                }
 
                 $(this).blur();
 
