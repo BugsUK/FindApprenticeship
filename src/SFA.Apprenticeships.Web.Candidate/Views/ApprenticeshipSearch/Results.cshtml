@@ -283,6 +283,11 @@
             //Assemble cookie value from inputs
             var cookieValue = GetSearchResultsDetailsValues();
 
+            //Break early if the cookie was empty. This happens if there are no results.
+            //Saving and empty cookie would reset the user's settings
+            if (!cookieValue)
+                return;
+
             //Need the cookie not to be encoded so it's compatible with MVC
             $.cookie.raw = true;
 

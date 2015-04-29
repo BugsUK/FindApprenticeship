@@ -625,16 +625,18 @@ WriteLiteral("\',\r\n                title: true\r\n            });\r\n\r\n     
 "(value).is(\':checked\');\r\n            }).join(\"&\");\r\n\r\n            return details" +
 "Value;\r\n        }\r\n\r\n        function SetSearchResultsDetailsCookieValue() {\r\n  " +
 "          //Assemble cookie value from inputs\r\n            var cookieValue = Get" +
-"SearchResultsDetailsValues();\r\n\r\n            //Need the cookie not to be encoded" +
-" so it\'s compatible with MVC\r\n            $.cookie.raw = true;\r\n\r\n            //" +
-"Write the new, complete cookie with the current view of the display settings\r\n  " +
-"          $.cookie(\'NAS.SearchResultsDetails\', cookieValue);\r\n        }\r\n    </s" +
-"cript>\r\n\r\n");
+"SearchResultsDetailsValues();\r\n\r\n            //Break early if the cookie was emp" +
+"ty. This happens if there are no results.\r\n            //Saving and empty cookie" +
+" would reset the user\'s settings\r\n            if (!cookieValue)\r\n               " +
+" return;\r\n\r\n            //Need the cookie not to be encoded so it\'s compatible w" +
+"ith MVC\r\n            $.cookie.raw = true;\r\n\r\n            //Write the new, comple" +
+"te cookie with the current view of the display settings\r\n            $.cookie(\'N" +
+"AS.SearchResultsDetails\', cookieValue);\r\n        }\r\n    </script>\r\n\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 294 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 299 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/resultsMap"));
 
             
