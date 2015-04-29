@@ -103,9 +103,9 @@
             enableExpiringApplicationAlertsViaTextCheckbox.Should().NotBeNull();
             enableMarketingViaTextCheckbox.Should().NotBeNull();
 
-            enableApplicationStatusChangeAlertsViaTextCheckbox.ParentNode.InnerText.Should().Be("the status of one of your applications changes");
-            enableExpiringApplicationAlertsViaTextCheckbox.ParentNode.InnerText.Should().Be("an apprenticeship is approaching its closing date");
-            enableMarketingViaTextCheckbox.ParentNode.InnerText.Should().Be("we send you updates on news and information");
+            enableApplicationStatusChangeAlertsViaTextCheckbox.ParentNode.InnerText.Should().Be(string.Empty);
+            enableExpiringApplicationAlertsViaTextCheckbox.ParentNode.InnerText.Should().Be(string.Empty);
+            enableMarketingViaTextCheckbox.ParentNode.InnerText.Should().Be(string.Empty);
 
             if (enableApplicationStatusChangeAlertsViaText)
             {
