@@ -1,7 +1,7 @@
 ﻿@using SFA.Apprenticeships.Web.ContactForms.Framework
 @model SFA.Apprenticeships.Web.ContactForms.ViewModels.AddressViewModel
 
-<div id="address-lookup" class="hide-nojs">
+<div id="address-lookup" class="hide-nojs" style="display: none">
     <div class="form-group form-group-compound">
         <label for="postcode-search" class="form-label">Postcode</label>
         <span class="form-hint">For example, BN1 8NH</span>
@@ -10,12 +10,11 @@
         <span id="postcode-search-validation-error" class="field-validation-valid" aria-live="polite"></span>
     </div>
     <div class="form-group form-group-compound">
-        <a role="button" id="find-addresses" class="button address-find-btn" onclick="" >Find address</a>
+        <a role="button" id="find-addresses" class="button address-find-btn" onclick="">Find address</a>
     </div>
     <div id="address-list" class="address-find-select form-group toggle-content" hidden>
         <label id="address-select-label" for="address-select" class="form-label">Select your address</label>
-        <select id="address-select" aria-describedby="address-select-label">
-        </select>
+        <select id="address-select" aria-describedby="address-select-label"></select>
     </div>
     <div id="address-manual" class="form-group form-group-compound">
         <span class="form-hint">Or enter address manually</span>
