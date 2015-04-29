@@ -36,7 +36,8 @@
                 Companyname= domain.Companyname,
                 Position = domain.Position,
                 PreviousExperienceType = domain.PreviousExperienceType,
-                WorkSector = domain.WorkSector
+                WorkSector = domain.WorkSector,
+                EnquiryRelatesTo = domain.EnquiryRelatesTo
             };
         }
 
@@ -59,7 +60,8 @@
                 Title = viewModel.Title,
                 Position = viewModel.Position,
                 PreviousExperienceType = viewModel.PreviousExperienceType,
-                WorkSector = viewModel.WorkSector
+                WorkSector = viewModel.WorkSector,
+                EnquiryRelatesTo = viewModel.EnquiryRelatesTo
             };
         }
     }

@@ -27,12 +27,29 @@ namespace SFA.Apprenticeships.Infrastructure.Xml
             }
 
             //Generate xml file in temp folder and return the filename with path
-            return GetTempXmlFileName(xElement);
+            return GetTempXmlFileName(messageType, xElement);
         }
 
-        private string GetTempXmlFileName(XElement xElement)
+        private string GetTempXmlFileName(MessageTypes messageType, XElement xElement)
         {
-            string xmlAttachmentName = Path.Combine(Path.GetTempPath(), string.Format("{0}_{1}.xml", Constants.EmployerEnquiryXmlFilePrefix, Guid.NewGuid()));
+            var xmlFilePrefix = "unknown";
+            switch (messageType)
+            {
+                case MessageTypes.EmployerEnquiry:
+                case MessageTypes.EmployerEnquiryConfirmation:
+                    xmlFilePrefix = Constants.EmployerEnquiryXmlFilePrefix;
+                    break;
+                case MessageTypes.GlaEmployerEnquiry:
+                case MessageTypes.GlaEmployerEnquiryConfirmation:
+                    xmlFilePrefix = Constants.GlaEmployerEnquiryXmlFilePrefix;
+                    break;
+                case MessageTypes.WebAccessRequest:
+                case MessageTypes.WebAccessRequestConfirmation:
+                    xmlFilePrefix = Constants.AccessRequestXmlFilePrefix;
+                    break;
+            }
+
+            var xmlAttachmentName = Path.Combine(Path.GetTempPath(), string.Format("{0}_{1}.xml", xmlFilePrefix, Guid.NewGuid()));
             var doc = new XDocument(new XDeclaration("1.0", "utf-8", null), xElement);
 
             using (var writer = new XmlTextWriter(xmlAttachmentName, new UTF8Encoding(false)))
@@ -272,6 +289,7 @@ namespace SFA.Apprenticeships.Infrastructure.Xml
                         xElementName = "PreviousExperience";
                         xElement.Element(xElementName).Value = tokenValue;
                         break;
+                    //todo: add for EnquiryRelatesTo
                     #endregion
 
                     default:

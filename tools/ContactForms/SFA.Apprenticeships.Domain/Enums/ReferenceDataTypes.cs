@@ -8,6 +8,7 @@
         PreviousExperienceTypes,
         EnquirySourceTypes,
         AccessRequestServiceTypes,
-        AccessRequestAreaTypes
+        AccessRequestAreaTypes,
+        EnquiryRelatesTo
     }
 }

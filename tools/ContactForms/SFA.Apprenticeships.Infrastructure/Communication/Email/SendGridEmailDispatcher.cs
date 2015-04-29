@@ -1,8 +1,4 @@
-﻿
-using SFA.Apprenticeships.Common;
-using SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters;
-
-namespace SFA.Apprenticeships.Infrastructure.Communication.Email
+﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email
 {
     using System;
     using System.Collections.Generic;
@@ -12,9 +8,10 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
     using System.Net.Mail;
     using Application.Interfaces;
     using Application.Interfaces.Communications;
+    using Common;
     using Domain.Exceptions;
+    using Exceptions;
     using SendGrid;
-    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     public class SendGridEmailDispatcher : IEmailDispatcher
     {
@@ -166,6 +163,13 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 web.Deliver(message);
                 _logger.Info("Dispatched email: {0} to {1}", message.Subject,
                     string.Join(", ", message.To.Select(a => a.Address)));
+            }
+            catch (InvalidApiRequestException e)
+            {
+                var errorMessage = string.Format("Failed to dispatch email: Errors: {0}", string.Join(", ", e.Errors));
+
+                _logger.Error(errorMessage, e);
+                throw new CustomException(errorMessage, e, ErrorCodes.EmailError);
             }
             catch (Exception e)
             {

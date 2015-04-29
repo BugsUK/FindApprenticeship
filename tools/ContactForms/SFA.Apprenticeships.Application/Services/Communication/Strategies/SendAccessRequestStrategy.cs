@@ -30,7 +30,6 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
             if (!tokens.IsNullOrEmpty())
             {
                 //get xml stream to attach in the email
-                //todo: enable this once we receive xml template for access request
                 var xmlAttachmentName = _xmlGenerator.SerializeToXmlFile(messageType, tokens);
 
                 var request = new EmailRequest
@@ -38,7 +37,6 @@ namespace SFA.Apprenticeships.Application.Services.Communication.Strategies
                     ToEmail = BaseAppSettingValues.AccessRequestToEmailAddress,
                     MessageType = messageType,
                     Tokens = tokens,
-                    //todo: enable this once we receive xml template for access request
                     StreamedAttachmentName = xmlAttachmentName//generate XML and attach to the email
                 };
 

@@ -42,5 +42,8 @@
         [Display(Name = EmployerEnquiryViewModelMessages.EnquirySourceMessages.LabelText)]
         public string EnquirySource { get; set; }
         public SelectList EnquirySourceList { get; set; }
+        [Display(Name = EmployerEnquiryViewModelMessages.EnquiryRelatesToMessages.LabelText)]
+        public string EnquiryRelatesTo { get; set; }
+        public SelectList EnquiryRelatesToList { get; set; }
     }
 }

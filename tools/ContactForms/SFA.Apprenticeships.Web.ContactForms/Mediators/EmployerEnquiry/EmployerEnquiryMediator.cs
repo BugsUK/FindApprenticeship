@@ -32,7 +32,8 @@
                 WorkSectorList = GetWorkSectorTypes(),
                 PreviousExperienceTypeList = GetPreviousExperienceTypes(),
                 TitleList = GetTitleTypes(),
-                EnquirySourceList = GetEnquirySourceTypes()
+                EnquirySourceList = GetEnquirySourceTypes(),
+                EnquiryRelatesToList = GetEnquiryRelatesTo()
             };
             return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.Success, model);
         }
@@ -93,6 +94,7 @@
             viewModel.EnquirySourceList = GetEnquirySourceTypes();
             viewModel.EmployeesCountList = GetEmployeeCountTypes();
             viewModel.TitleList = GetTitleTypes();
+            viewModel.EnquiryRelatesToList = GetEnquiryRelatesTo();
             return viewModel;
         }
 
@@ -100,8 +102,8 @@
 
         private SelectList GetTitleTypes()
         {
-            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.Titles).ViewModel.ReferenceData;
-            return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
+            var titleTypesKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.Titles).ViewModel.ReferenceData;
+            return new SelectList(titleTypesKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         }
 
         private SelectList GetEmployeeCountTypes()
@@ -112,20 +114,26 @@
 
         private SelectList GetWorkSectorTypes()
         {
-            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.WorkSectorTypes).ViewModel.ReferenceData;
-            return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
+            var workSectorTypesKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.WorkSectorTypes).ViewModel.ReferenceData;
+            return new SelectList(workSectorTypesKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         }
 
         private SelectList GetPreviousExperienceTypes()
         {
-            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.PreviousExperienceTypes).ViewModel.ReferenceData;
-            return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
+            var previousExperienceKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.PreviousExperienceTypes).ViewModel.ReferenceData;
+            return new SelectList(previousExperienceKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         }
 
         private SelectList GetEnquirySourceTypes()
         {
-            var employeeCountKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.EnquirySourceTypes).ViewModel.ReferenceData;
-            return new SelectList(employeeCountKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
+            var enquirySourceKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.EnquirySourceTypes).ViewModel.ReferenceData;
+            return new SelectList(enquirySourceKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
+        }
+
+        private SelectList GetEnquiryRelatesTo()
+        {
+            var enquiryRelatesToKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.EnquiryRelatesTo).ViewModel.ReferenceData;
+            return new SelectList(enquiryRelatesToKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         } 
         #endregion
     }

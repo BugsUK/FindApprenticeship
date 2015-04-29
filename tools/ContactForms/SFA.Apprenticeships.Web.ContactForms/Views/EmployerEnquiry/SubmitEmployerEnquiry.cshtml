@@ -16,7 +16,9 @@
     <p>
         If you are interested in finding out more about employing apprentices please complete the following form.
     </p>
-
+    <p>
+        Alternatively you can also call the National Apprenticeship Service on 08000 150 600.
+    </p>
     <p>
         Different organisations deal with apprenticeships in <a href="http://www.mappit.org.uk/" rel="external">Scotland</a>, <a href="http://www.nidirect.gov.uk/index/information-and-services/education-and-learning/14-19/starter-skills-16-18/apprenticeships.htm" rel="external">Northern Ireland</a> and <a href="https://ams.careerswales.com/Public/Default.aspx?mode=vacancy&type=ams" rel="external">Wales</a>.
     </p>
@@ -78,6 +80,11 @@
             @Html.ValidationMessageFor(model => model.WorkSector)
         </div>
         <legend class="heading-large">Your enquiry</legend>
+        <div class="form-group" style="display: none">
+            @Html.FormLabelFor(m => m.EnquiryRelatesTo)
+            @Html.DropDownListFor(m => m.EnquiryRelatesTo, Model.EnquiryRelatesToList)
+            @Html.ValidationMessageFor(model => model.EnquiryRelatesTo)
+        </div>
         @Html.FormTextAreaFor(
             m => m.EnquiryDescription,
              controlHtmlAttributes: new { @class = "form-control", @rows = 7 })

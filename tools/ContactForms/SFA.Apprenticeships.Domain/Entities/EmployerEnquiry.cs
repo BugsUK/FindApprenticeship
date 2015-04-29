@@ -16,5 +16,6 @@
         public string PreviousExperienceType { get; set; }
         public string EnquiryDescription { get; set; }
         public string EnquirySource { get; set; }
+        public string EnquiryRelatesTo { get; set; }
     }
 }

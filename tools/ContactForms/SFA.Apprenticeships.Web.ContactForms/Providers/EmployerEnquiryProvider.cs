@@ -52,6 +52,7 @@ namespace SFA.Apprenticeships.Web.ContactForms.Providers
                     new CommunicationToken(CommunicationTokens.EnquirySource, result.EnquirySource),
                     new CommunicationToken(CommunicationTokens.PreviousExperienceType, result.PreviousExperienceType),
                     new CommunicationToken(CommunicationTokens.WorkSector, result.WorkSector),
+                    new CommunicationToken(CommunicationTokens.EnquiryRelatesTo, result.EnquiryRelatesTo)
                     };
                 //Send confirmation email to applicant
                 _communciationService.SendMessage(MessageTypes.EmployerEnquiry, communicationTokens);
@@ -97,6 +98,7 @@ namespace SFA.Apprenticeships.Web.ContactForms.Providers
                     new CommunicationToken(CommunicationTokens.EnquirySource, result.EnquirySource),
                     new CommunicationToken(CommunicationTokens.PreviousExperienceType, result.PreviousExperienceType),
                     new CommunicationToken(CommunicationTokens.WorkSector, result.WorkSector),
+                    new CommunicationToken(CommunicationTokens.EnquiryRelatesTo, result.EnquiryRelatesTo)
                     };
                 //Send confirmation email to applicant
                 _communciationService.SendMessage(MessageTypes.GlaEmployerEnquiry, communicationTokens);

@@ -37,6 +37,7 @@ namespace SFA.Apprenticeships.Infrastructure.Xml
                                                 new XElement("NumberOfEmployees", CommunicationTokens.EmployeesCount),
                                                 new XElement("Sector", CommunicationTokens.WorkSector),
                                                 new XElement("PreviousExperience", CommunicationTokens.PreviousExperienceType),
+                                                //todo: add for EnquiryRelatesTo
                                                 new XElement("HowDidYOuhearaboutWebsite", CommunicationTokens.EnquirySource));
                     break;
                 case MessageTypes.WebAccessRequest:
@@ -52,7 +53,7 @@ namespace SFA.Apprenticeships.Infrastructure.Xml
                                                 new XElement("EmailAddress", CommunicationTokens.Email),
                                                 new XElement("ConfirmEmailAddress", CommunicationTokens.Email),
                                                 new XElement("OrganisationName", CommunicationTokens.Companyname),
-                                                new XElement("AddressDetails", new XElement("CompanyName", CommunicationTokens.Companyname), 
+                                                new XElement("AddressDetails", new XElement("CompanyName", CommunicationTokens.Companyname),
                                                                                    new XElement("AddressLine1", CommunicationTokens.Address1),
                                                                                    new XElement("AddressLine2", CommunicationTokens.Address2),
                                                                                    new XElement("AddressLine3", CommunicationTokens.Address3),
@@ -63,7 +64,8 @@ namespace SFA.Apprenticeships.Infrastructure.Xml
                                                 new XElement("SystemDetails", new XElement("ContactName", CommunicationTokens.Contactname),
                                                                                    new XElement("ContactPhoneNumber", CommunicationTokens.AdditionalPhoneNumber),
                                                                                    new XElement("ContactEmailAddress", CommunicationTokens.AdditionalEmail),
-                                                                                   new XElement("SystemName", CommunicationTokens.Systemname))); 
+                                                                                   new XElement("SystemName", CommunicationTokens.Systemname),
+                                                                                   new XElement("ServiceRequired", CommunicationTokens.SelectedServiceTypeIds))); 
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(string.Format("no XML template found for messageType {0}", messageType));

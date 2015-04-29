@@ -63,9 +63,9 @@
     <item id="Twitter" value="Twitter" />
     <item id="Facebook" value="Facebook" />
     <item id="Search engine e.g. Google" value="Search engine e.g. Google" />
-    <item id="Website – apprenticeships.org.uk" value="Website – apprenticeships.org.uk" />
-    <item id="Website – other" value="Website – other" />
-    <item id="Av live feed" value="Av live feed" />
+    <item id="Website - gov.uk" value="Website - gov.uk" />
+    <item id="Website - greatbusiness.gov.uk" value="Website - greatbusiness.gov.uk" />
+    <item id="Television" value="Television" />
     <item id="Mobile app (Apprenticeships)" value="Mobile app (Apprenticeships)" />
     <item id="Mobile app (NCS)" value="Mobile app (NCS)" />
     <item id="Jobcentre plus" value="Jobcentre plus" />
@@ -82,9 +82,14 @@
     <item id="Bulk vacancy upload" value="Bulk vacancy upload" />
     <item id="Application tracking" value="Application tracking" />
   </data>
-<data key="AccessRequestAreaTypes">
+  <data key="AccessRequestAreaTypes">
     <item id="" value="Please select" />
     <item id="Employer" value="Employer" />
     <item id="Provider/Stakeholder" value="Provider/Stakeholder" />
+  </data>
+  <data key="EnquiryRelatesTo">
+    <item id="Apprenticeships" value="Apprenticeships" />
+    <item id="Traineeships" value="Traineeships" />
+    <item id="Both" value="Both" />
   </data>
 </referenceData>

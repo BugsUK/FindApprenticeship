@@ -27,9 +27,14 @@ These are replaced by the following (temporary) urls:
 
 ### New ###
 
-TODO: Complete
+1. User completes the form and submits
+2. Code behind generates CRM compatible XML containing their information 
+3. Two emails are sent, one for the helpdesk which contains the XML and the other is sent to the email the user supplied
+4. The XML is automatically consumed by the CRM
 
 ### Testing ###
+
+To test using your own email addresses, change the EmployerEnquiryToEmailAddress and AccessRequestToEmailAddress app settings on azure. Do this on staging so that you can verify the code base before switching.
 
 Complete the form using Zee's contact details so for example: 
 
@@ -69,3 +74,4 @@ The send grid credentials are stored in the app settings on the configuration ta
 - Work out either how to make the location lookup work or remove it
 - It's unclear if logging is working and, if so, whether we will be alerted in the event of failure. Logging should follow FAA pattern and all submitted information logged in a verbose manner to enable reconstruction of the requests
 - Update send grid credentials
+- Remove email addresses from web.config

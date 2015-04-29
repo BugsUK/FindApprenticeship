@@ -112,5 +112,9 @@
             public const string WhiteListErrorText = "Enquiry description " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
+        public static class EnquiryRelatesToMessages
+        {
+            public const string LabelText = "Does your enquiry relate to apprenticeships or traineeships?";
+        }
     }
 }
