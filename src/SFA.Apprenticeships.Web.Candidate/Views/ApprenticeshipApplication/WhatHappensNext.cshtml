@@ -14,44 +14,20 @@
 <div class="success-banner" role="alert" aria-live="assertive">
     <h1 class="heading-large no-btm-margin"><i class="fa fa-check"></i>Apprenticeship application submitted</h1>
 </div>
-@if (Model.SentEmail)
-{
-    <section class="section-border">
-        <div class="text">
-            <p>
-                <i class="fa fa-envelope-o"></i>
-                We've sent you an email confirming your <b>@Html.DisplayFor(m => m.VacancyTitle)</b> application.
-                You can also <a title="Track the progress of your applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application at any time.
-            </p>
-            <p>You’ll be contacted if you’ve been selected for the next stage of the application process.</p>
-            <details>
-                <summary>Apprenticeship contact details</summary>
-                <div class="detail-content">@Model.ProviderContactInfo</div>
-            </details>
-        </div>
-    </section>
-}
-else
-{
-    <section class="section-border">
-        <div class="text">
-            <p>
-                <i class="fa fa-envelope-o"></i>
-                If you'd like to receive email confirmation of applications, you can turn notifications on in the <a href="@Url.RouteUrl(CandidateRouteNames.Settings)">settings</a> section in your account.
-                You can also <a title="Track the progress of your applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application at any time.
-            </p>
-            <p>You’ll be contacted if you’ve been selected for the next stage of the application process.</p>
-            @if (!string.IsNullOrWhiteSpace(Model.ProviderContactInfo))
-            {
-                <details>
-                    <summary>Apprenticeship contact details</summary>
-                    <div class="detail-content">@Model.ProviderContactInfo</div>
-                </details>
-            }
-        </div>
-    </section>
-}
-
+<section class="section-border">
+    <div class="text">
+        <p>
+            <i class="fa fa-envelope-o"></i>
+            We've sent you an email confirming your <b>@Html.DisplayFor(m => m.VacancyTitle)</b> application.
+            You can also <a title="Track the progress of your applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application at any time.
+        </p>
+        <p>You’ll be contacted if you’ve been selected for the next stage of the application process.</p>
+        <details>
+            <summary>Apprenticeship contact details</summary>
+            <div class="detail-content">@Model.ProviderContactInfo</div>
+        </details>
+    </div>
+</section>
 <section class="section-border">
     
     @if (Model.SuggestedVacancies == null || !Model.SuggestedVacancies.Any())

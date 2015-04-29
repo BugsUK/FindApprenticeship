@@ -10,20 +10,26 @@
         private string _firstName;
         private string _phoneNumber;
         private string _emailAddress;
-        private string _mobileVerificationCode;
-        private bool _allowEmail;
-        private bool _allowMobile;
-        private bool _verifiedMobile;
-        private bool _allowTraineeshipPrompts;
-        private bool _sendApplicationStatusChanges;
-        private bool _sendApplicationStatusChangesViaEmail;
-        private bool _sendApprenticeshipApplicationsExpiring;
-        private bool _sendApprenticeshipApplicationsExpiringViaEmail;
-        private bool _sendSavedSearchAlertsViaEmail;
-        private bool _sendSavedSearchAlertsViaText;
-        private bool _sendMarketingComms;
-        private HelpPreferences _helpPreferences;
 
+        private string _mobileVerificationCode;
+        private bool _verifiedMobile;
+
+        private bool _allowTraineeshipPrompts;
+
+        private bool _enableApplicationStatusChangeAlertsViaEmail;
+        private bool _enableApplicationStatusChangeAlertsViaText;
+
+        private bool _enableExpiringApplicationAlertsViaText;
+        private bool _enableExpiringApplicationAlertsViaEmail;
+
+        private bool _enableSavedSearchAlertsViaEmail;
+        private bool _enableSavedSearchAlertsViaText;
+
+        private bool _enableMarketingViaEmail;
+        private bool _enableMarketingViaText;
+
+        private HelpPreferences _helpPreferences;
+        
         public CandidateBuilder(Guid candidateId)
         {
             _candidateId = candidateId;
@@ -48,25 +54,13 @@
             return this;
         }
 
-        public CandidateBuilder AllowEmail(bool allowEmail)
-        {
-            _allowEmail = allowEmail;
-            return this;
-        }
-
-        public CandidateBuilder AllowMobile(bool allowMobile)
-        {
-            _allowMobile = allowMobile;
-            return this;
-        }
-
         public CandidateBuilder VerifiedMobile(bool verifiedMobile)
         {
             _verifiedMobile = verifiedMobile;
             return this;
         }
 
-        public CandidateBuilder MobileVerificationCode(string  mobileVerificationCode)
+        public CandidateBuilder MobileVerificationCode(string mobileVerificationCode)
         {
             _mobileVerificationCode = mobileVerificationCode;
             return this;
@@ -78,63 +72,88 @@
             return this;
         }
 
-        public CandidateBuilder SendApplicationStatusChanges(bool sendApplicationStatusChanges)
+        public CandidateBuilder EnableOneCommunicationViaEmail(bool enable)
         {
-            _sendApplicationStatusChanges = sendApplicationStatusChanges;
+            EnableApplicationStatusChangeAlertsViaEmail(enable);
             return this;
         }
 
-        public CandidateBuilder SendApplicationStatusChangesViaEmail(bool sendApplicationStatusChangesViaEmail)
+        public CandidateBuilder EnableOneCommunicationViaText(bool enable)
         {
-            _sendApplicationStatusChangesViaEmail = sendApplicationStatusChangesViaEmail;
+            EnableApplicationStatusChangeAlertsViaText(enable);
             return this;
         }
 
-        public CandidateBuilder SendApprenticeshipApplicationsExpiring(bool sendApprenticeshipApplicationsExpiring)
+        public CandidateBuilder EnableApplicationStatusChangeAlertsViaText(bool enabe)
         {
-            _sendApprenticeshipApplicationsExpiring = sendApprenticeshipApplicationsExpiring;
+            _enableApplicationStatusChangeAlertsViaText = enabe;
             return this;
         }
 
-        public CandidateBuilder SendApprenticeshipApplicationsExpiringViaEmail(bool sendApprenticeshipApplicationsExpiringViaEmail)
+        public CandidateBuilder EnableApplicationStatusChangeAlertsViaEmail(bool enable)
         {
-            _sendApprenticeshipApplicationsExpiringViaEmail = sendApprenticeshipApplicationsExpiringViaEmail;
+            _enableApplicationStatusChangeAlertsViaEmail = enable;
             return this;
         }
 
-        public CandidateBuilder SendSavedSearchAlerts(bool sendSavedSearchAlerts)
+        public CandidateBuilder EnableExpiringApplicationAlertsViaText(bool enable)
         {
-            SendSavedSearchAlertsViaEmail(sendSavedSearchAlerts);
-            SendSavedSearchAlertsViaText(sendSavedSearchAlerts);
+            _enableExpiringApplicationAlertsViaText = enable;
             return this;
         }
 
-        public CandidateBuilder SendSavedSearchAlertsViaEmail(bool sendSavedSearchAlertsViaEmail)
+        public CandidateBuilder EnableExpiringApplicationAlertsViaEmail(bool enable)
         {
-            _sendSavedSearchAlertsViaEmail = sendSavedSearchAlertsViaEmail;
+            _enableExpiringApplicationAlertsViaEmail = enable;
             return this;
         }
 
-        public CandidateBuilder SendSavedSearchAlertsViaText(bool sendSavedSearchAlertsViaText)
+        public CandidateBuilder EnableSavedSearchAlertsViaEmailAndText(bool enable)
         {
-            _sendSavedSearchAlertsViaText = sendSavedSearchAlertsViaText;
+            EnableSavedSearchAlertsViaEmail(enable);
+            EnableSavedSearchAlertsViaText(enable);
             return this;
         }
 
-        public CandidateBuilder SendMarketingComms(bool sendMarketingComms)
+        public CandidateBuilder EnableSavedSearchAlertsViaEmail(bool enable)
         {
-            _sendMarketingComms = sendMarketingComms;
+            _enableSavedSearchAlertsViaEmail = enable;
             return this;
         }
 
-        public CandidateBuilder AllowAllCommunications(bool allow = true)
+        public CandidateBuilder EnableSavedSearchAlertsViaText(bool enable)
         {
-            AllowEmail(allow);
-            AllowMobile(allow);
-            VerifiedMobile(allow);
-            SendApplicationStatusChanges(allow);
-            SendApprenticeshipApplicationsExpiring(allow);
-            SendSavedSearchAlerts(allow);
+            _enableSavedSearchAlertsViaText = enable;
+            return this;
+        }
+
+        public CandidateBuilder EnableMarketingViaEmail(bool enable)
+        {
+            _enableMarketingViaEmail = enable;
+            return this;
+        }
+
+        public CandidateBuilder EnableMarketingViaText(bool enable)
+        {
+            _enableMarketingViaText = enable;
+            return this;
+        }
+
+        public CandidateBuilder EnableAllCommunications(bool enable = true)
+        {
+            VerifiedMobile(enable);
+            
+            EnableApplicationStatusChangeAlertsViaEmail(enable);
+            EnableApplicationStatusChangeAlertsViaText(enable);
+
+            EnableExpiringApplicationAlertsViaEmail(enable);
+            EnableExpiringApplicationAlertsViaText(enable);
+
+            EnableMarketingViaEmail(enable);
+            EnableMarketingViaText(enable);
+
+            EnableSavedSearchAlertsViaEmail(enable);
+            EnableSavedSearchAlertsViaText(enable);
 
             return this;
         }
@@ -158,19 +177,29 @@
                 },
                 CommunicationPreferences = new CommunicationPreferences
                 {
-                    AllowEmail = _allowEmail,
-                    AllowMobile = _allowMobile,
                     VerifiedMobile = _verifiedMobile,
                     MobileVerificationCode = _mobileVerificationCode,
                     AllowTraineeshipPrompts = _allowTraineeshipPrompts,
-
-                    SendApplicationStatusChanges = _sendApplicationStatusChanges,
-                    SendApplicationStatusChangesViaEmail = _sendApplicationStatusChangesViaEmail,
-                    SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
-                    SendApprenticeshipApplicationsExpiringViaEmail = _sendApprenticeshipApplicationsExpiringViaEmail,
-                    SendSavedSearchAlertsViaEmail = _sendSavedSearchAlertsViaEmail,
-                    SendSavedSearchAlertsViaText = _sendSavedSearchAlertsViaText,
-                    SendMarketingCommunications = _sendMarketingComms
+                    ApplicationStatusChangePreferences = new CommunicationPreference
+                    {
+                        EnableEmail = _enableApplicationStatusChangeAlertsViaEmail,
+                        EnableText = _enableApplicationStatusChangeAlertsViaText
+                    },
+                    ExpiringApplicationPreferences = new CommunicationPreference
+                    {
+                        EnableEmail = _enableExpiringApplicationAlertsViaEmail,
+                        EnableText = _enableExpiringApplicationAlertsViaText
+                    },
+                    SavedSearchPreferences = new CommunicationPreference
+                    {
+                        EnableEmail = _enableSavedSearchAlertsViaEmail,
+                        EnableText = _enableSavedSearchAlertsViaText
+                    },
+                    MarketingPreferences = new CommunicationPreference
+                    {
+                        EnableEmail = _enableMarketingViaEmail,
+                        EnableText = _enableMarketingViaText
+                    }
                 },
                 HelpPreferences = _helpPreferences
             };

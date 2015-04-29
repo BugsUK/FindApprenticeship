@@ -19,9 +19,9 @@
         {
             var viewModel = new SettingsViewModelBuilder()
                 .SmsEnabled(true)
-                .SendApplicationStatusChanges(sendApplicationStatusChanges)
-                .SendApprenticeshipApplicationsExpiring(sendApprenticeshipApplicationsExpiring)
-                .SendMarketingComms(sendMarketingCommunications)
+                .EnableApplicationStatusChangeAlertsViaEmail(sendApplicationStatusChanges)
+                .EnableExpiringApplicationAlertsViaEmail(sendApprenticeshipApplicationsExpiring)
+                .EnableMarketingViaEmail(sendMarketingCommunications)
                 .Build();
 
             var result = new SettingsViewBuilder().With(viewModel).Render();

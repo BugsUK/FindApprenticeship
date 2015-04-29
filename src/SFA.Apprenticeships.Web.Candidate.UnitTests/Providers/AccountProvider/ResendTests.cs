@@ -22,7 +22,11 @@
             //Arrange
             var candidateId = Guid.NewGuid();
             var candidateMock =
-                new CandidateBuilder(candidateId).AllowMobile(true).PhoneNumber(PhoneNumber).VerifiedMobile(false).Build();
+                new CandidateBuilder(candidateId)
+                .EnableApplicationStatusChangeAlertsViaText(true)
+                .PhoneNumber(PhoneNumber)
+                .VerifiedMobile(false)
+                .Build();
 
             var candidateServiceMock = new Mock<ICandidateService>();
             candidateServiceMock.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidateMock);
@@ -46,7 +50,11 @@
             //Arrange
             var candidateId = Guid.NewGuid();
             var candidateMock =
-                new CandidateBuilder(candidateId).AllowMobile(true).PhoneNumber(PhoneNumber).VerifiedMobile(false).Build();
+                new CandidateBuilder(candidateId)
+                .EnableApplicationStatusChangeAlertsViaText(true)
+                .PhoneNumber(PhoneNumber)
+                .VerifiedMobile(false)
+                .Build();
 
             var candidateServiceMock = new Mock<ICandidateService>();
             candidateServiceMock.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidateMock);

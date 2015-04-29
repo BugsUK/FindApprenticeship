@@ -32,7 +32,7 @@
 
             candidateService
                 .Setup(cs => cs.Authenticate(LoginViewModelBuilder.ValidEmailAddress, LoginViewModelBuilder.ValidPassword))
-                .Returns(new CandidateBuilder(candidateId).AllowMobile(true).VerifiedMobile(verifiedMobile).Build);
+                .Returns(new CandidateBuilder(candidateId).EnableApplicationStatusChangeAlertsViaText(true).VerifiedMobile(verifiedMobile).Build);
 
             var provider = new CandidateServiceProviderBuilder().With(candidateService).With(userAccountService).Build();
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
@@ -64,7 +64,7 @@
 
             candidateService
                 .Setup(cs => cs.Authenticate(LoginViewModelBuilder.ValidEmailAddress, LoginViewModelBuilder.ValidPassword))
-                .Returns(new CandidateBuilder(candidateId).AllowMobile(true).Build);
+                .Returns(new CandidateBuilder(candidateId).EnableApplicationStatusChangeAlertsViaText(true).Build);
 
             var provider = new CandidateServiceProviderBuilder().With(candidateService).With(userAccountService).Build();
             var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();

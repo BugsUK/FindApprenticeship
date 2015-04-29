@@ -24,8 +24,6 @@
 
         public ApplicationStatuses Status { get; set; }
 
-        public bool SentEmail { get; set; }
-
         public string ProviderContactInfo { get; set; }
 
         public ApprenticeshipSearchViewModel SuggestedVacanciesSearchViewModel { get; set; }

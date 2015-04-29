@@ -80,7 +80,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
+                .EnableAllCommunications()
                 .Build();
 
             AddCandidate(candidate, userStatus);
@@ -108,7 +108,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
+                .EnableAllCommunications()
                 .Build();
 
             AddCandidate(candidate, userStatus);
@@ -128,7 +128,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
+                .EnableAllCommunications()
                 .VerifiedMobile(false)
                 .Build();
 
@@ -150,7 +150,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
+                .EnableAllCommunications()
                 .VerifiedMobile(verifiedMobile)
                 .Build();
 
@@ -175,7 +175,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
+                .EnableAllCommunications()
                 .Build();
 
             AddCandidate(candidate);

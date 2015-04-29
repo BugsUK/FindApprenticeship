@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using Application;
     using Common.Configuration;
     using Common.Constants;
     using Constants.Pages;
@@ -133,38 +132,51 @@
             Candidate candidate;
             var saved = _accountProvider.TrySaveSettings(candidateId, settingsViewModel, out candidate);
 
-            if (saved)
+            if (!saved)
             {
-                if (candidate.MobileVerificationRequired())
-                {
-                    return GetMediatorResponse(AccountMediatorCodes.Settings.MobileVerificationRequired, settingsViewModel, AccountPageMessages.MobileVerificationRequired, UserMessageLevel.Success);
-                }
-
-                if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.YourAccount)
-                {
-                    var shouldSendNotifications = settingsViewModel.AllowEmailComms || settingsViewModel.AllowSmsComms;
-                    var anyNotificationEnabled = settingsViewModel.SendApplicationStatusChanges || settingsViewModel.SendApprenticeshipApplicationsExpiring || settingsViewModel.SendMarketingCommunications;
-                    if (shouldSendNotifications && !anyNotificationEnabled)
-                    {
-                        return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedNotificationsAlertWarning, UserMessageLevel.Info);
-                    }
-                }
-
-                if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.SavedSearches)
-                {
-                    var anySavedSearchAlertsEnabled = settingsViewModel.SavedSearches != null && settingsViewModel.SavedSearches.Any(s => s.AlertsEnabled);
-                    var shouldSendSavedSearchAlerts = settingsViewModel.SendSavedSearchAlertsViaEmail || settingsViewModel.SendSavedSearchAlertsViaText;
-                    if ((shouldSendSavedSearchAlerts && (!anySavedSearchAlertsEnabled && settingsViewModel.SavedSearches != null)) ||
-                        (anySavedSearchAlertsEnabled && !shouldSendSavedSearchAlerts))
-                    {
-                        return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedSavedSearchesAlertWarning, UserMessageLevel.Info);
-                    }
-                }
-
-                return GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
+                return GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
             }
 
-            return GetMediatorResponse(AccountMediatorCodes.Settings.SaveError, settingsViewModel, AccountPageMessages.SettingsUpdateFailed, UserMessageLevel.Warning);
+            if (candidate.MobileVerificationRequired())
+            {
+                return GetMediatorResponse(AccountMediatorCodes.Settings.MobileVerificationRequired, settingsViewModel, AccountPageMessages.MobileVerificationRequired, UserMessageLevel.Success);
+            }
+
+            if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.YourAccount)
+            {
+                // TODO: AG: US733: include full set of properties here and test.
+                var anyNotificationEnabled =
+                    settingsViewModel.EnableApplicationStatusChangeAlertsViaEmail ||
+                    settingsViewModel.EnableApplicationStatusChangeAlertsViaText ||
+                    settingsViewModel.EnableExpiringApplicationAlertsViaEmail ||
+                    settingsViewModel.EnableExpiringApplicationAlertsViaText ||
+                    settingsViewModel.EnableMarketingViaEmail ||
+                    settingsViewModel.EnableMarketingViaText;
+
+                if (!anyNotificationEnabled)
+                {
+                    return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel, AccountPageMessages.SettingsUpdatedNotificationsAlertWarning, UserMessageLevel.Info);
+                }
+            }
+
+            if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.SavedSearches)
+            {
+                var anySavedSearchAlertsEnabled =
+                    settingsViewModel.SavedSearches != null && settingsViewModel.SavedSearches.Any(s => s.AlertsEnabled);
+
+                var shouldSendSavedSearchAlerts =
+                    settingsViewModel.EnableSavedSearchAlertsViaEmail || settingsViewModel.EnableSavedSearchAlertsViaText;
+
+                if ((shouldSendSavedSearchAlerts &&
+                     (!anySavedSearchAlertsEnabled && settingsViewModel.SavedSearches != null)) ||
+                    (anySavedSearchAlertsEnabled && !shouldSendSavedSearchAlerts))
+                {
+                    return GetMediatorResponse(AccountMediatorCodes.Settings.SuccessWithWarning, settingsViewModel,
+                        AccountPageMessages.SettingsUpdatedSavedSearchesAlertWarning, UserMessageLevel.Info);
+                }
+            }
+
+            return GetMediatorResponse(AccountMediatorCodes.Settings.Success, settingsViewModel);
         }
 
         public MediatorResponse Track(Guid candidateId, int vacancyId)
@@ -198,6 +210,7 @@
                     return GetMediatorResponse(AccountMediatorCodes.AcceptTermsAndConditions.SuccessfullyAccepted);
                 }
             }
+            // ReSharper disable once EmptyGeneralCatchClause
             catch
             {
                 // returns ErrorAccepting

@@ -29,8 +29,8 @@
         public AccountProvider(
             ICandidateService candidateService,
             IUserAccountService userAccountService,
-            IMapper mapper, 
-            ILogService logger, 
+            IMapper mapper,
+            ILogService logger,
             IConfigurationService configurationService)
         {
             _mapper = mapper;
@@ -54,17 +54,23 @@
                 settings.Username = user.Username;
                 settings.PendingUsername = user.PendingUsername;
 
-                settings.AllowEmailComms = candidate.CommunicationPreferences.AllowEmail;
-                settings.AllowSmsComms = candidate.CommunicationPreferences.AllowMobile;
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
                 settings.SmsEnabled = _configurationService.Get<WebConfiguration>().Features.SmsEnabled;
 
-                settings.SendApplicationStatusChanges = candidate.CommunicationPreferences.SendApplicationStatusChanges;
-                settings.SendApprenticeshipApplicationsExpiring = candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring;
-                settings.SendMarketingCommunications = candidate.CommunicationPreferences.SendMarketingCommunications;
+                // TODO: AG: US733: unit test migrated communication preferences.
+                var communicationPreferences = candidate.CommunicationPreferences;
 
-                settings.SendSavedSearchAlertsViaEmail = candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail;
-                settings.SendSavedSearchAlertsViaText = candidate.CommunicationPreferences.SendSavedSearchAlertsViaText;
+                settings.EnableApplicationStatusChangeAlertsViaEmail = communicationPreferences.ApplicationStatusChangePreferences.EnableEmail;
+                settings.EnableApplicationStatusChangeAlertsViaText = communicationPreferences.ApplicationStatusChangePreferences.EnableText;
+
+                settings.EnableExpiringApplicationAlertsViaEmail = communicationPreferences.ExpiringApplicationPreferences.EnableEmail;
+                settings.EnableExpiringApplicationAlertsViaText = communicationPreferences.ExpiringApplicationPreferences.EnableText;
+
+                settings.EnableMarketingViaEmail = communicationPreferences.MarketingPreferences.EnableEmail;
+                settings.EnableMarketingViaText = communicationPreferences.MarketingPreferences.EnableText;
+
+                settings.EnableSavedSearchAlertsViaEmail = communicationPreferences.SavedSearchPreferences.EnableEmail;
+                settings.EnableSavedSearchAlertsViaText = communicationPreferences.SavedSearchPreferences.EnableText;
 
                 var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit)).ToList();
 
@@ -74,10 +80,10 @@
             }
             catch (Exception e)
             {
-                var message =
-                    string.Format(
-                        "Unexpected error while getting settings view model on AccountProvider for candidate with Id={0}.",
-                        candidateId);
+                var message = string.Format(
+                    "Unexpected error while getting settings view model on AccountProvider for candidate with Id={0}.",
+                    candidateId);
+
                 _logger.Error(message, e);
                 throw;
             }
@@ -88,32 +94,41 @@
             try
             {
                 _logger.Debug("Calling AccountProvider to save the settings for candidate with Id={0}", candidateId);
+
                 candidate = _candidateService.GetCandidate(candidateId);
 
-                candidate.CommunicationPreferences.AllowEmail = model.AllowEmailComms;
-                candidate.CommunicationPreferences.AllowMobile = model.AllowSmsComms;
-                
                 if (candidate.RegistrationDetails.PhoneNumber != model.PhoneNumber)
                 {
                     candidate.CommunicationPreferences.VerifiedMobile = false;
                 }
 
-                candidate.CommunicationPreferences.SendApplicationStatusChanges = model.SendApplicationStatusChanges;
-                candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring = model.SendApprenticeshipApplicationsExpiring;
-                candidate.CommunicationPreferences.SendMarketingCommunications = model.SendMarketingCommunications;
+                var communicationPreferences = candidate.CommunicationPreferences;
 
-                candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail = model.SendSavedSearchAlertsViaEmail;
-                candidate.CommunicationPreferences.SendSavedSearchAlertsViaText = model.SendSavedSearchAlertsViaText;
+                // TODO: AG: US733: unit test migrated communication preferences.
+                communicationPreferences.ApplicationStatusChangePreferences.EnableEmail = model.EnableApplicationStatusChangeAlertsViaEmail;
+                communicationPreferences.ApplicationStatusChangePreferences.EnableText = model.EnableApplicationStatusChangeAlertsViaText;
+
+                communicationPreferences.ExpiringApplicationPreferences.EnableEmail = model.EnableExpiringApplicationAlertsViaEmail;
+                communicationPreferences.ExpiringApplicationPreferences.EnableText = model.EnableExpiringApplicationAlertsViaText;
+
+                communicationPreferences.MarketingPreferences.EnableEmail = model.EnableMarketingViaEmail;
+                communicationPreferences.MarketingPreferences.EnableText = model.EnableMarketingViaText;
+
+                communicationPreferences.SavedSearchPreferences.EnableEmail = model.EnableSavedSearchAlertsViaEmail;
+                communicationPreferences.SavedSearchPreferences.EnableText = model.EnableSavedSearchAlertsViaText;
 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
+
                 _candidateService.SaveCandidate(candidate);
 
                 if (model.SavedSearches != null && model.SavedSearches.Count > 0)
                 {
                     var savedSearches = _candidateService.RetrieveSavedSearches(candidateId);
+
                     foreach (var updatedSavedSearch in model.SavedSearches)
                     {
                         var savedSearch = savedSearches.SingleOrDefault(s => s.EntityId == updatedSavedSearch.Id);
+
                         if (savedSearch != null && savedSearch.AlertsEnabled != updatedSavedSearch.AlertsEnabled)
                         {
                             savedSearch.AlertsEnabled = updatedSavedSearch.AlertsEnabled;
@@ -151,7 +166,6 @@
             catch (Exception e)
             {
                 _logger.Error("Dismiss traineeship prompts failed for candidate " + candidateId, e);
-
                 return false;
             }
         }
@@ -163,7 +177,7 @@
             registrationDetails.DateOfBirth = new DateTime(
                 // ReSharper disable PossibleInvalidOperationException
                 model.DateOfBirth.Year.Value, model.DateOfBirth.Month.Value, model.DateOfBirth.Day.Value);
-                // ReSharper restore PossibleInvalidOperationException
+            // ReSharper restore PossibleInvalidOperationException
             registrationDetails.Address = _mapper.Map<AddressViewModel, Address>(model.Address);
             registrationDetails.PhoneNumber = model.PhoneNumber;
         }
@@ -172,7 +186,8 @@
         {
             _logger.Debug("Calling CandidateService to fetch candidateId {0} details", candidateId);
 
-            VerifyMobileViewModel model = new VerifyMobileViewModel();
+            var model = new VerifyMobileViewModel();
+
             try
             {
                 var candidate = _candidateService.GetCandidate(candidateId);
@@ -193,12 +208,12 @@
 
         public VerifyMobileViewModel VerifyMobile(Guid candidateId, VerifyMobileViewModel model)
         {
-            _logger.Debug("Calling AccountProvider to verify mobile code candidateId {0} and mobile number {1}",
-                                                                                    candidateId, model.PhoneNumber);
+            _logger.Debug("Calling AccountProvider to verify mobile code candidateId {0} and mobile number {1}", candidateId, model.PhoneNumber);
+
             try
             {
                 _candidateService.VerifyMobileCode(candidateId, model.VerifyMobileCode);
-                model.Status =VerifyMobileState.Ok;
+                model.Status = VerifyMobileState.Ok;
             }
             catch (CustomException e)
             {
@@ -208,9 +223,9 @@
                         _logger.Info(e.Message, e);
                         model.Status = VerifyMobileState.MobileVerificationNotRequired;
                         break;
-                    case Application.Interfaces.Users.ErrorCodes.MobileCodeVerificationFailed:
+                    case ErrorCodes.MobileCodeVerificationFailed:
                         _logger.Info(e.Message, e);
-                        
+
                         model.Status = VerifyMobileState.VerifyMobileCodeInvalid;
                         break;
                     default:
@@ -231,8 +246,8 @@
 
         public VerifyMobileViewModel SendMobileVerificationCode(Guid candidateId, VerifyMobileViewModel model)
         {
-            _logger.Debug("Calling AccountProvider to send mobile verification code for candidateId {0} to mobile number {1}",
-                                                                                    candidateId, model.PhoneNumber);
+            _logger.Debug("Calling AccountProvider to send mobile verification code for candidateId {0} to mobile number {1}", candidateId, model.PhoneNumber);
+
             try
             {
                 var candidate = _candidateService.GetCandidate(candidateId);
@@ -255,10 +270,12 @@
             }
             catch (Exception e)
             {
-                var message = string.Format("Sending Mobile verification code to mobile number {1} failed for candidateId {0} ", 
-                                                                                        candidateId, model.PhoneNumber );
+                var message = string.Format(
+                    "Sending Mobile verification code to mobile number {1} failed for candidateId {0} ",
+                    candidateId, model.PhoneNumber);
+
                 _logger.Error(message, e);
-                
+
                 model.Status = VerifyMobileState.Error;
                 model.ViewModelMessage = e.Message;
             }
@@ -268,6 +285,7 @@
         public EmailViewModel UpdateEmailAddress(Guid userId, EmailViewModel emailViewModel)
         {
             _logger.Debug("Calling AccountProvider to update username for Id: {0} to new email address: {1}", userId, emailViewModel.EmailAddress);
+
             try
             {
                 _userAccountService.UpdateUsername(userId, emailViewModel.EmailAddress);
@@ -361,4 +379,3 @@
         }
     }
 }
-        

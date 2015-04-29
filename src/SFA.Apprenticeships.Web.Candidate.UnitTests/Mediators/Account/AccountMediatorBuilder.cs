@@ -14,8 +14,8 @@
         private IAccountProvider _accountProvider = new Mock<IAccountProvider>().Object;
         private Mock<ICandidateServiceProvider> _candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
         private Mock<VerifyMobileViewModelServerValidator> _verifyMobileViewModelServerValidatorMock = new Mock<VerifyMobileViewModelServerValidator>();
-        private VerifyUpdatedEmailViewModelServerValidator _verifyUpdatedEmailViewModelServerValidatorMock = new VerifyUpdatedEmailViewModelServerValidator();
-        private EmailViewModelServerValidator _emailViewModelServerValidatorMock = new EmailViewModelServerValidator();
+        private readonly VerifyUpdatedEmailViewModelServerValidator _verifyUpdatedEmailViewModelServerValidatorMock = new VerifyUpdatedEmailViewModelServerValidator();
+        private readonly EmailViewModelServerValidator _emailViewModelServerValidatorMock = new EmailViewModelServerValidator();
         private Mock<IConfigurationService> _configurationServiceMock = new Mock<IConfigurationService>();
         private readonly SettingsViewModelServerValidator _settingsViewModelServerValidator = new SettingsViewModelServerValidator();
 

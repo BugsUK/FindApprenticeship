@@ -5,6 +5,8 @@
     using FluentValidation.TestHelper;
     using NUnit.Framework;
 
+    // TODO: US733: fix unit tests.
+
     [TestFixture]
     public class SettingsViewModelServerValidatorTests
     {
@@ -22,7 +24,7 @@
         [TestCase(true, true, "0123456789", true)]
         public void US616_AC4_PhoneNumberRequired(bool allowEmailComms, bool allowSmsComms, string phoneNumber, bool expectValid)
         {
-            var viewModel = new SettingsViewModelBuilder().PhoneNumber(phoneNumber).AllowEmailComms(allowEmailComms).AllowSmsComms(allowSmsComms).Build();
+            var viewModel = new SettingsViewModelBuilder().PhoneNumber(phoneNumber).Build();
 
             var validator = new SettingsViewModelServerValidator();
 

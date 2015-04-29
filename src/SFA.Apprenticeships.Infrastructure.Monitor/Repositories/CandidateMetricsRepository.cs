@@ -24,7 +24,7 @@
         {
             return Collection
                 .AsQueryable()
-                .Count(each => each.CommunicationPreferences.AllowMobile);
+                .Count(each => each.CommunicationPreferences.VerifiedMobile);
         }
 
         public int GetDismissedTraineeshipPromptCount()

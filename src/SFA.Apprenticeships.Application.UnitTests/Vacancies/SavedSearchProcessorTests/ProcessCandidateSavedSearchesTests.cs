@@ -60,7 +60,7 @@
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(candidateId)).Returns(new UserBuilder(candidateId).Activated(userActivated).Build);
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(sendSavedSearchAlerts).SendSavedSearchAlerts(sendSavedSearchAlerts).Build);
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).EnableSavedSearchAlertsViaEmailAndText(sendSavedSearchAlerts).Build);
             var savedSearchReadRepository = new Mock<ISavedSearchReadRepository>();
             var processor = new SavedSearchProcessorBuilder().With(userReadRepository).With(candidateReadRepository).With(savedSearchReadRepository).Build();
 
@@ -88,7 +88,7 @@
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(candidateId)).Returns(new UserBuilder(candidateId).Activated(true).Build);
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(true).SendSavedSearchAlerts(true).Build);
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).EnableSavedSearchAlertsViaEmailAndText(true).Build);
             var vacancySearchProvider = new Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
             ApprenticeshipSearchParameters searchParameters = null;
             vacancySearchProvider.Setup(p => p.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>()))
@@ -137,7 +137,7 @@
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(candidateId)).Returns(new UserBuilder(candidateId).Activated(true).Build);
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(true).SendSavedSearchAlerts(true).Build);
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).EnableSavedSearchAlertsViaEmailAndText(true).Build);
             var locationSearchService = new Mock<ILocationSearchService>();
             if (locationFound)
             {
@@ -198,7 +198,7 @@
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(candidateId)).Returns(new UserBuilder(candidateId).Activated(true).Build);
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(true).SendSavedSearchAlerts(true).Build);
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).EnableSavedSearchAlertsViaEmailAndText(true).Build);
             var vacancySearchProvider = new Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
             vacancySearchProvider.Setup(p => p.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>())).Returns(searchResults);
             var savedSearchAlertRepository = new Mock<ISavedSearchAlertRepository>();
@@ -231,7 +231,7 @@
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(candidateId)).Returns(new UserBuilder(candidateId).Activated(true).Build);
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).AllowEmail(true).SendSavedSearchAlerts(true).Build);
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(new CandidateBuilder(candidateId).EnableSavedSearchAlertsViaEmailAndText(true).Build);
             var vacancySearchProvider = new Mock<IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>>();
             vacancySearchProvider.Setup(p => p.FindVacancies(It.IsAny<ApprenticeshipSearchParameters>())).Returns(new ApprenticeshipSearchResultsBuilder().WithResultCount(3).Build);
             var savedSearchAlertRepository = new Mock<ISavedSearchAlertRepository>();

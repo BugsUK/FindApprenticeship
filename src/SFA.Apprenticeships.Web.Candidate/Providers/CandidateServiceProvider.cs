@@ -547,9 +547,9 @@
 
                 var saveCandidate = false;
 
-                if (!candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail && !candidate.CommunicationPreferences.SendSavedSearchAlertsViaText)
+                if (!candidate.CommunicationPreferences.SavedSearchPreferences.EnableEmail && !candidate.CommunicationPreferences.SavedSearchPreferences.EnableText)
                 {
-                    candidate.CommunicationPreferences.SendSavedSearchAlertsViaEmail = true;
+                    candidate.CommunicationPreferences.SavedSearchPreferences.EnableEmail = true;
                     saveCandidate = true;
                 }
 

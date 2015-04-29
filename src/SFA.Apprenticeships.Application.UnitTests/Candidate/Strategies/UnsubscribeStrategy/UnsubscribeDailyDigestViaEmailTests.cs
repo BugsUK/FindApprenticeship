@@ -58,10 +58,11 @@
             unsubscribed.Should().BeTrue();
 
             candidate.CommunicationPreferences.Should().NotBeNull();
-            candidate.CommunicationPreferences.SendApplicationStatusChanges.Should().BeFalse();
-            candidate.CommunicationPreferences.SendApplicationStatusChangesViaEmail.Should().BeFalse();
-            candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiring.Should().BeFalse();
-            candidate.CommunicationPreferences.SendApprenticeshipApplicationsExpiringViaEmail.Should().BeFalse();
+            candidate.CommunicationPreferences.ApplicationStatusChangePreferences.Should().NotBeNull();
+            candidate.CommunicationPreferences.ApplicationStatusChangePreferences.EnableEmail.Should().BeFalse();
+
+            candidate.CommunicationPreferences.ExpiringApplicationPreferences.Should().NotBeNull();
+            candidate.CommunicationPreferences.ExpiringApplicationPreferences.EnableEmail.Should().BeFalse();
 
             _mockSaveCandidateStrategy.Verify(mock => mock
                 .SaveCandidate(candidate), Times.Once);
@@ -75,11 +76,12 @@
         private static Candidate BuildSubscribedCandidate(Guid candidateId)
         {
             return new CandidateBuilder(candidateId)
-                .SendApplicationStatusChanges(true)
-                .SendApplicationStatusChangesViaEmail(true)
-                .SendApprenticeshipApplicationsExpiring(true)
-                .SendApprenticeshipApplicationsExpiringViaEmail(true)
-                .SendSavedSearchAlertsViaEmail(true)
+                .EnableApplicationStatusChangeAlertsViaEmail(true)
+                .EnableApplicationStatusChangeAlertsViaText(true)
+                .EnableExpiringApplicationAlertsViaEmail(true)
+                .EnableExpiringApplicationAlertsViaText(true)
+                .EnableExpiringApplicationAlertsViaEmail(true)
+                .EnableSavedSearchAlertsViaEmail(true)
                 .Build();
         }
 

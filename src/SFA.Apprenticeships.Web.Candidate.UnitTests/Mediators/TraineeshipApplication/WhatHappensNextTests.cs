@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using System;
+    using System.Globalization;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Domain.Entities.Applications;
@@ -28,7 +29,7 @@
             TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
                 .Returns(new WhatHappensNextTraineeshipViewModel {Status = ApplicationStatuses.ExpiredOrWithdrawn});
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(CultureInfo.InvariantCulture), VacancyReference, VacancyTitle);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound, false);
         }
@@ -52,7 +53,7 @@
         {
             TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>())).Returns(new WhatHappensNextTraineeshipViewModel("Has Error"));
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(CultureInfo.InvariantCulture), VacancyReference, VacancyTitle);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);
             var viewModel = response.ViewModel;
@@ -66,7 +67,7 @@
             TraineeshipApplicationProvider.Setup(p => p.GetWhatHappensNextViewModel(It.IsAny<Guid>(), It.IsAny<int>()))
                 .Returns(new WhatHappensNextTraineeshipViewModel());
 
-            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(), VacancyReference, VacancyTitle);
+            var response = Mediator.WhatHappensNext(_someCandidateId, SomeVacancyId.ToString(CultureInfo.InvariantCulture), VacancyReference, VacancyTitle);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, true);            
         }

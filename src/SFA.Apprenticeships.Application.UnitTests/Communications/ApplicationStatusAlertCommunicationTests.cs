@@ -40,7 +40,10 @@
             expiringDraftRepository.Setup(r => r.GetCandidatesDailyDigest()).Returns(drafts);
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            var candidate = new CandidateBuilder(Guid.NewGuid()).AllowEmail(true).Build();
+            var candidate = new CandidateBuilder(Guid.NewGuid())
+                .EnableApplicationStatusChangeAlertsViaEmail(true)
+                .EnableExpiringApplicationAlertsViaEmail(true)
+                .Build();
 
             candidateReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(candidate);
 
@@ -79,7 +82,13 @@
             applicationStatusAlertRepository.Setup(x => x.GetCandidatesDailyDigest()).Returns(GetAlertCandidatesDailyDigest(2, 2));
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            var candidate = new CandidateBuilder(Guid.NewGuid()).AllowEmail(false).AllowMobile(false).Build();
+
+            var candidate = new CandidateBuilder(Guid.NewGuid())
+                .EnableApplicationStatusChangeAlertsViaEmail(false)
+                .EnableApplicationStatusChangeAlertsViaText(false)
+                .EnableExpiringApplicationAlertsViaEmail(false)
+                .EnableExpiringApplicationAlertsViaText(false)
+                .Build();
 
             candidateReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(candidate);
 
@@ -110,17 +119,17 @@
             applicationStatusAlertRepository.Verify(x => x.Delete(It.IsAny<ApplicationStatusAlert>()), Times.Exactly(4));
         }
 
-        private static Dictionary<Guid, List<ApplicationStatusAlert>> GetAlertCandidatesDailyDigest(int noOfcandidates, int noOfAlerts)
+        private static Dictionary<Guid, List<ApplicationStatusAlert>> GetAlertCandidatesDailyDigest(int candidateCount, int alertCount)
         {
             var digest = new Dictionary<Guid, List<ApplicationStatusAlert>>();
 
-            for (var i = 0; i < noOfcandidates; i++)
+            for (var i = 0; i < candidateCount; i++)
             {
                 var candidateId = Guid.NewGuid();
 
                 var alerts = new Fixture().Build<ApplicationStatusAlert>()
                     .With(asa => asa.CandidateId, candidateId)
-                    .CreateMany(noOfAlerts).ToList();
+                    .CreateMany(alertCount).ToList();
 
                 digest.Add(candidateId, alerts);
             }
@@ -128,17 +137,17 @@
             return digest;
         }
 
-        private static Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>> GetExpiringDraftsCandidatesDailyDigest(int noOfcandidates, int noOfAlerts)
+        private static Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>> GetExpiringDraftsCandidatesDailyDigest(int candidateCount, int expiringDraftCount)
         {
             var digest = new Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>>();
 
-            for (var i = 0; i < noOfcandidates; i++)
+            for (var i = 0; i < candidateCount; i++)
             {
                 var candidateId = Guid.NewGuid();
 
                 var alerts = new Fixture().Build<ExpiringApprenticeshipApplicationDraft>()
                     .With(asa => asa.CandidateId, candidateId)
-                    .CreateMany(noOfAlerts).ToList();
+                    .CreateMany(expiringDraftCount).ToList();
 
                 digest.Add(candidateId, alerts);
             }

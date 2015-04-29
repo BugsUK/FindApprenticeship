@@ -41,25 +41,25 @@
             public const string LabelText = "Text";
         }
 
-        public static class ApplicationStatusChange
+        public static class ApplicationStatusChanges
         {
             public const string LabelText = "the status of one of your applications changes";
         }
 
-        public static class ApplicationExpiring
+        public static class ExpiringApplications
         {
             public const string LabelText = "an apprenticeship is approaching its closing date";
         }
 
-        public static class MarketingComms
+        public static class Marketing
         {
             public const string LabelText = "we send you updates on news and information";
         }
 
         public static class SavedSearch
         {
-            public const string SendSavedSearchAlertsViaEmailLabelText = "Email";
-            public const string SendSavedSearchAlertsViaTextLabelText = "Text";
+            public const string EmailLabelText = "Email";
+            public const string TextLabelText = "Text";
             public const string AlertsEnabledLabelText = "Receive alerts for this search";
         }
     }

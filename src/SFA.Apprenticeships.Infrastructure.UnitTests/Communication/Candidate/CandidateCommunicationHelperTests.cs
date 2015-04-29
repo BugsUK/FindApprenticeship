@@ -25,7 +25,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications(false)
+                .EnableAllCommunications(false)
                 .Build();
 
             // Act.
@@ -43,7 +43,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications(false)
+                .EnableAllCommunications(false)
                 .Build();
 
             // Act.
@@ -62,15 +62,17 @@
         public void ShouldHonourDailyDigestPreferencesViaEmail(
             CommunicationChannels communicationChannel,
             MessageTypes messageType,
-            bool sendApplicationStatusChanges,
-            bool sendApprenticeshipApplicationsExpiring,
+            bool sendApplicationStatusChangesViaEmail,
+            bool sendApprenticeshipApplicationsExpiringViaEmail,
             bool expectedResult)
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
-                .SendApplicationStatusChanges(sendApplicationStatusChanges)
-                .SendApprenticeshipApplicationsExpiring(sendApprenticeshipApplicationsExpiring)
+                .EnableAllCommunications()
+                .EnableApplicationStatusChangeAlertsViaEmail(sendApplicationStatusChangesViaEmail)
+                .EnableApplicationStatusChangeAlertsViaText(true)
+                .EnableExpiringApplicationAlertsViaEmail(sendApprenticeshipApplicationsExpiringViaEmail)
+                .EnableExpiringApplicationAlertsViaText(true)
                 .Build();
 
             // Act.
@@ -90,13 +92,13 @@
         public void ShouldHonourSendApplicationStatusChangesPreferenceViaSms(
             CommunicationChannels communicationChannel,
             MessageTypes messageType,
-            bool sendApplicationStatusChanges,
+            bool sendApplicationStatusChangesViaText,
             bool expectedResult)
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
-                .SendApplicationStatusChanges(sendApplicationStatusChanges)
+                .EnableAllCommunications()
+                .EnableApplicationStatusChangeAlertsViaText(sendApplicationStatusChangesViaText)
                 .Build();
 
             // Act.
@@ -116,13 +118,14 @@
         public void ShouldHonourSendApprenticeshipApplicationsExpiringPreferenceViaSms(
             CommunicationChannels communicationChannel,
             MessageTypes messageType,
-            bool sendApprenticeshipApplicationsExpiring,
+            bool sendApprenticeshipApplicationsExpiringViaText,
             bool expectedResult)
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
-                .SendApprenticeshipApplicationsExpiring(sendApprenticeshipApplicationsExpiring)
+                .EnableAllCommunications()
+                .EnableExpiringApplicationAlertsViaText(sendApprenticeshipApplicationsExpiringViaText)
+                .EnableExpiringApplicationAlertsViaEmail(true)
                 .Build();
 
             // Act.
@@ -142,7 +145,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
+                .EnableAllCommunications()
                 .Build();
 
             // Act.
@@ -164,9 +167,9 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
-                .SendSavedSearchAlertsViaEmail(preference)
-                .SendSavedSearchAlertsViaText(false)
+                .EnableAllCommunications()
+                .EnableSavedSearchAlertsViaEmail(preference)
+                .EnableSavedSearchAlertsViaText(false)
                 .Build();
 
             // Act.
@@ -184,80 +187,14 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
-                .SendSavedSearchAlertsViaEmail(false)
-                .SendSavedSearchAlertsViaText(preference)
+                .EnableAllCommunications()
+                .EnableSavedSearchAlertsViaEmail(false)
+                .EnableSavedSearchAlertsViaText(preference)
                 .Build();
 
             // Act.
             var result = candidate.ShouldSendMessageViaChannel(
                 communicationChannel, MessageTypes.SavedSearchAlert);
-
-            // Assert.
-            result.Should().Be(expectedResult);
-        }
-
-        [TestCase(false, false, false)]
-        [TestCase(false, true, false)]
-        [TestCase(true, false, false)]
-        [TestCase(true, true, true)]
-        public void ShouldHonourGeneralCommunicationPreferencesForOptionalSmsMessages(
-            bool allowMobile, bool verifiedMobile, bool expectedResult)
-        {
-            var messageTypes = new[]
-            {
-                MessageTypes.ApprenticeshipApplicationSuccessful,
-                MessageTypes.ApprenticeshipApplicationExpiringDraft,
-                MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary,
-                MessageTypes.ApprenticeshipApplicationSubmitted,
-                MessageTypes.TraineeshipApplicationSubmitted,
-                MessageTypes.SavedSearchAlert
-            };
-
-            foreach (var messageType in messageTypes)
-            {
-                // Arrange.
-                var candidate = new CandidateBuilder(Guid.NewGuid())
-                    .AllowAllCommunications()
-                    .AllowEmail(false)
-                    .AllowMobile(allowMobile)
-                    .VerifiedMobile(verifiedMobile)
-                    .Build();
-
-                // Act.
-                var result = candidate.ShouldSendMessageViaChannel(
-                    CommunicationChannels.Sms, messageType);
-
-                // Assert.
-                if (messageType == MessageTypes.ApprenticeshipApplicationSubmitted || messageType == MessageTypes.TraineeshipApplicationSubmitted)
-                {
-                    result.Should().Be(false);
-                }
-                else
-                {
-                    result.Should().Be(expectedResult);
-                }
-            }
-        }
-
-        [TestCase(MessageTypes.DailyDigest, false, false)]
-        [TestCase(MessageTypes.DailyDigest, true, true)]
-        [TestCase(MessageTypes.SavedSearchAlert, false, false)]
-        [TestCase(MessageTypes.SavedSearchAlert, true, true)]
-        public void ShouldHonourGeneralCommunicationPreferencesForOptionalEmailMessages(
-            MessageTypes messageType, bool allowEmail, bool expectedResult)
-        {
-            // Arrange.
-            var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
-                .AllowEmail(allowEmail)
-                .AllowMobile(false)
-                .VerifiedMobile(false)
-                .Build();
-
-            // Act.
-            var result = candidate.ShouldSendMessageViaChannel(
-                CommunicationChannels.Email, messageType);
 
             // Assert.
             result.Should().Be(expectedResult);

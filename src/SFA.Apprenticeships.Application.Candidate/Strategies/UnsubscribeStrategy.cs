@@ -73,13 +73,8 @@
 
         private bool UnsubscribeDailyDigestViaEmail(Candidate candidate)
         {
-            var communicationPreferences = candidate.CommunicationPreferences;
-
-            // TODO: AG: US733: remove 'dead' field(s).
-            communicationPreferences.SendApplicationStatusChanges =
-                communicationPreferences.SendApplicationStatusChangesViaEmail =
-                    communicationPreferences.SendApprenticeshipApplicationsExpiring =
-                        communicationPreferences.SendApprenticeshipApplicationsExpiringViaEmail = false;
+            candidate.CommunicationPreferences.ApplicationStatusChangePreferences.EnableEmail = false;
+            candidate.CommunicationPreferences.ExpiringApplicationPreferences.EnableEmail = false;
 
             _saveCandidateStrategy.SaveCandidate(candidate);
             return true;
@@ -97,9 +92,7 @@
                 return false;
             }
 
-            // TODO: AG: US733: remove 'dead' field(s).
-            savedSearch.AlertsEnabled =
-                savedSearch.AlertsEnabledViaEmail = false;
+            savedSearch.AlertsEnabled = false;
 
             _updateSavedSearchStrategy.UpdateSavedSearch(savedSearch);
             return true;

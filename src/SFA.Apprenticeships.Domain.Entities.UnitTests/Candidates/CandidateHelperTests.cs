@@ -15,11 +15,11 @@
         [TestCase(false, true, false, false)]
         [TestCase(false, false, false, false)]
         [TestCase(false, false, true, false)]
-        public void ShouldCommunicateWithCandidate(bool allowEmail, bool allowSms, bool verifiedMobile, bool expected)
+        public void ShouldCommunicateWithCandidate(bool enableAnyEmail, bool enableAnyText, bool verifiedMobile, bool expected)
         {
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(allowEmail)
-                .AllowMobile(allowSms)
+                .EnableOneCommunicationViaEmail(enableAnyEmail)
+                .EnableOneCommunicationViaText(enableAnyText)
                 .VerifiedMobile(verifiedMobile)
                 .Build();
 

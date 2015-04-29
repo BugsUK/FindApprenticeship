@@ -38,30 +38,33 @@
 
         public bool VerifiedMobile { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.AllowEmailMessages.LabelText)]
-        public bool AllowEmailComms { get; set; }
-
-        [Display(Name = SettingsViewModelMessages.AllowSmsMessages.LabelText)]
-        public bool AllowSmsComms { get; set; }
-
         public TraineeshipFeatureViewModel TraineeshipFeature { get; set; }
 
         public bool SmsEnabled { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.ApplicationStatusChange.LabelText)]
-        public bool SendApplicationStatusChanges { get; set; }
+        [Display(Name = "")]
+        public bool EnableApplicationStatusChangeAlertsViaEmail { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.ApplicationExpiring.LabelText)]
-        public bool SendApprenticeshipApplicationsExpiring { get; set; }
+        [Display(Name = SettingsViewModelMessages.ApplicationStatusChanges.LabelText)]
+        public bool EnableApplicationStatusChangeAlertsViaText { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.MarketingComms.LabelText)]
-        public bool SendMarketingCommunications { get; set; }
+        [Display(Name = "")]
+        public bool EnableExpiringApplicationAlertsViaEmail { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.SavedSearch.SendSavedSearchAlertsViaEmailLabelText)]
-        public bool SendSavedSearchAlertsViaEmail { get; set; }
+        [Display(Name = SettingsViewModelMessages.ExpiringApplications.LabelText)]
+        public bool EnableExpiringApplicationAlertsViaText { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.SavedSearch.SendSavedSearchAlertsViaTextLabelText)]
-        public bool SendSavedSearchAlertsViaText { get; set; }
+        [Display(Name = "")]
+        public bool EnableMarketingViaEmail { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.Marketing.LabelText)]
+        public bool EnableMarketingViaText { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.SavedSearch.EmailLabelText)]
+        public bool EnableSavedSearchAlertsViaEmail { get; set; }
+
+        [Display(Name = SettingsViewModelMessages.SavedSearch.TextLabelText)]
+        public bool EnableSavedSearchAlertsViaText { get; set; }
 
         public IList<SavedSearchViewModel> SavedSearches { get; set; }
     }

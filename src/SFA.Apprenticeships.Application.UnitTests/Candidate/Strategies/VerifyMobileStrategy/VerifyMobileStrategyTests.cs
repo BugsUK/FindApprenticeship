@@ -12,31 +12,36 @@
     [TestFixture]
     public class VerifyMobileStrategyTests
     {
-
         [Test]
         public void SuccessTest()
         {
             //Arrange
-            Guid candidateId = Guid.NewGuid();
-            string verificationCode = "1234";
+            var candidateId = Guid.NewGuid();
+            const string verificationCode = "1234";
 
-            Candidate candidate = new CandidateBuilder(candidateId).MobileVerificationCode(verificationCode).AllowMobile(true).VerifiedMobile(false).Build();
+            var candidate = new CandidateBuilder(candidateId)
+                .MobileVerificationCode(verificationCode)
+                .EnableApplicationStatusChangeAlertsViaText(true)
+                .VerifiedMobile(false).Build();
+
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
             candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(candidate);
 
-            //candidateReadRepository.Setup()
             var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
             
             candidateWriteRepository.Setup(r => r.Save(It.IsAny<Candidate>())).Callback<Candidate>(c => { candidate = c; });
 
-            var verifyMobileStrategy = new VerifyMobileStrategyBuilder().With(candidateReadRepository).With(candidateWriteRepository).Build();
+            var verifyMobileStrategy = new VerifyMobileStrategyBuilder()
+                .With(candidateReadRepository)
+                .With(candidateWriteRepository)
+                .Build();
 
             //Act
             verifyMobileStrategy.VerifyMobile(candidateId, verificationCode);
 
             //Assert
             candidateWriteRepository.Verify(r => r.Save(It.IsAny<Candidate>()), Times.Once);
-            candidate.CommunicationPreferences.AllowMobile.Should().BeTrue();
+            candidate.CommunicationPreferences.ApplicationStatusChangePreferences.EnableText.Should().BeTrue();
             candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
             candidate.CommunicationPreferences.VerifiedMobile.Should().BeTrue();
             candidate.MobileVerificationRequired().Should().BeFalse();
@@ -50,19 +55,26 @@
         public void ErrorTest(bool verifiedMobile, bool allowMobile, bool allowMobileMarketing)
         {
             //Arrange
-            Guid candidateId = Guid.NewGuid();
-            string verificationCode = string.Empty;
+            var candidateId = Guid.NewGuid();
+            var verificationCode = string.Empty;
 
-            Candidate candidate = new CandidateBuilder(candidateId).MobileVerificationCode(verificationCode).AllowMobile(allowMobile).VerifiedMobile(verifiedMobile).Build();
+            Candidate candidate = new CandidateBuilder(candidateId)
+                .MobileVerificationCode(verificationCode)
+                .EnableApplicationStatusChangeAlertsViaText(allowMobile)
+                .VerifiedMobile(verifiedMobile).Build();
+
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(candidate);
 
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(candidate);
             
             var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
 
             candidateWriteRepository.Setup(r => r.Save(It.IsAny<Candidate>())).Callback<Candidate>(c => { candidate = c; });
 
-            var verifyMobileStrategy = new VerifyMobileStrategyBuilder().With(candidateReadRepository).With(candidateWriteRepository).Build();
+            var verifyMobileStrategy = new VerifyMobileStrategyBuilder()
+                .With(candidateReadRepository)
+                .With(candidateWriteRepository)
+                .Build();
 
             //Act
             Action a = () => verifyMobileStrategy.VerifyMobile(candidateId, verificationCode);
@@ -77,14 +89,19 @@
         public void MobileCodeVerificationFailedTest()
         {
             //Arrange
-            Guid candidateId = Guid.NewGuid();
-            string actualVerificationCode = "1234";
-            string enteredVerificationCode = "5678";
+            var candidateId = Guid.NewGuid();
+            const string actualVerificationCode = "1234";
+            const string enteredVerificationCode = "5678";
 
-            Candidate candidate = new CandidateBuilder(candidateId).MobileVerificationCode(actualVerificationCode).AllowMobile(true).VerifiedMobile(false).Build();
+            Candidate candidate = new CandidateBuilder(candidateId)
+                .MobileVerificationCode(actualVerificationCode)
+                .EnableApplicationStatusChangeAlertsViaText(true)
+                .VerifiedMobile(false)
+                .Build();
+
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(candidate);
 
+            candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(candidate);
 
             var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
 
@@ -96,8 +113,10 @@
             Action a = () => verifyMobileStrategy.VerifyMobile(candidateId, enteredVerificationCode);
 
             //Assert
-            var errorMessage = string.Format("Mobile verification code {0} is invalid for candidate {1} with mobile number {2}", enteredVerificationCode, 
-                                                                        candidateId, candidate.RegistrationDetails.PhoneNumber);
+            var errorMessage =
+                string.Format("Mobile verification code {0} is invalid for candidate {1} with mobile number {2}",
+                    enteredVerificationCode, candidateId, candidate.RegistrationDetails.PhoneNumber);
+
             a.ShouldThrow<CustomException>().WithMessage(errorMessage);
         }
     }

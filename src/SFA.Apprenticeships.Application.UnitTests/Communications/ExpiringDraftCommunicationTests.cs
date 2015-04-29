@@ -64,8 +64,8 @@
             _expiringDraftRepository.Setup(mock => mock.Save(It.IsAny<ExpiringApprenticeshipApplicationDraft>()));
 
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(allowEmail)
-                .AllowMobile(allowMobile)
+                .EnableExpiringApplicationAlertsViaEmail(allowEmail)
+                .EnableExpiringApplicationAlertsViaText(allowMobile)
                 .VerifiedMobile(allowMobile)
                 .Build();
 
@@ -97,8 +97,9 @@
             _expiringDraftRepository.Setup(mock => mock.Delete(It.IsAny<ExpiringApprenticeshipApplicationDraft>()));
 
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(false)
-                .AllowMobile(false)
+                .EnableExpiringApplicationAlertsViaEmail(false)
+                .EnableExpiringApplicationAlertsViaText(false)
+                .VerifiedMobile(true)
                 .Build();
 
             var user = new UserBuilder(candidate.EntityId)
@@ -129,8 +130,9 @@
             _expiringDraftRepository.Setup(mock => mock.Save(It.IsAny<ExpiringApprenticeshipApplicationDraft>()));
 
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowEmail(true)
-                .AllowMobile(true)
+                .EnableExpiringApplicationAlertsViaEmail(true)
+                .EnableExpiringApplicationAlertsViaText(true)
+                .VerifiedMobile(true)
                 .Build();
 
             var user = new UserBuilder(candidate.EntityId)
@@ -153,15 +155,15 @@
             _bus.Verify(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Never);
         }
 
-        private Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>> GetDraftDigests(int noOfCandidates, int noOfDrafts)
+        private static Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>> GetDraftDigests(int candidateCount, int expiringDraftCount)
         {
             var digest = new Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>>();
 
-            for (var i = 0; i < noOfCandidates; i++)
+            for (var i = 0; i < candidateCount; i++)
             {
                 var candidateId = Guid.NewGuid();
 
-                var drafts = Builder<ExpiringApprenticeshipApplicationDraft>.CreateListOfSize(noOfDrafts)
+                var drafts = Builder<ExpiringApprenticeshipApplicationDraft>.CreateListOfSize(expiringDraftCount)
                     .All()
                     .With(ed => ed.CandidateId == candidateId)
                     .Build()

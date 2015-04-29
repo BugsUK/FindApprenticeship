@@ -27,7 +27,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
+                .EnableAllCommunications()
                 .Build();
 
             AddCandidate(candidate);
@@ -59,7 +59,7 @@
         {
             // Arrange.
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .AllowAllCommunications()
+                .EnableAllCommunications()
                 .Build();
 
             AddCandidate(candidate);

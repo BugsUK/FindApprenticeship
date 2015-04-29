@@ -11,18 +11,16 @@
         private string _lastname = "Last";
         private string _phoneNumber = "0123456789";
         private bool _verifiedMobile;
-        private bool _allowEmailComms;
-        private bool _allowSmsComms;
         private bool _showTraineeshipsLink;
         private bool _showTraineeshipsPrompt;
         private bool _smsEnabled;
 
-        private bool _sendApplicationStatusChanges;
-        private bool _sendApprenticeshipApplicationsExpiring;
-        private bool _sendMarketingComms;
+        private bool _enableApplicationStatusChangeAlertsViaEmail;
+        private bool _enableExpiringApplicationAlertsViaEmail;
+        private bool _enableMarketingViaEmail;
 
-        private bool _sendSavedSearchAlertsViaEmail;
-        private bool _sendSavedSearchAlertsViaText;
+        private bool _enableSavedSearchAlertsViaEmail;
+        private bool _enableSavedSearchAlertsViaText;
 
         private IList<SavedSearchViewModel> _savedSearches;
 
@@ -50,18 +48,6 @@
             return this;
         }
 
-        public SettingsViewModelBuilder AllowEmailComms(bool allowEmailComms)
-        {
-            _allowEmailComms = allowEmailComms;
-            return this;
-        }
-
-        public SettingsViewModelBuilder AllowSmsComms(bool allowSmsComms)
-        {
-            _allowSmsComms = allowSmsComms;
-            return this;
-        }
-
         public SettingsViewModelBuilder ShowTraineeshipsLink(bool showTraineeshipsLink)
         {
             _showTraineeshipsLink = showTraineeshipsLink;
@@ -80,39 +66,46 @@
             return this;
         }
 
-        public SettingsViewModelBuilder SendApplicationStatusChanges(bool sendApplicationStatusChanges)
+        public SettingsViewModelBuilder EnableApplicationStatusChangeAlertsViaEmail(bool enable)
         {
-            _sendApplicationStatusChanges = sendApplicationStatusChanges;
+            _enableApplicationStatusChangeAlertsViaEmail = enable;
             return this;
         }
 
-        public SettingsViewModelBuilder SendApprenticeshipApplicationsExpiring(bool sendApprenticeshipApplicationsExpiring)
+        public SettingsViewModelBuilder EnableExpiringApplicationAlertsViaEmail(bool enable)
         {
-            _sendApprenticeshipApplicationsExpiring = sendApprenticeshipApplicationsExpiring;
+            _enableExpiringApplicationAlertsViaEmail = enable;
             return this;
         }
 
-        public SettingsViewModelBuilder SendMarketingComms(bool sendMarketingComms)
+        public SettingsViewModelBuilder EnableMarketingViaEmail(bool enable)
         {
-            _sendMarketingComms = sendMarketingComms;
+            _enableMarketingViaEmail = enable;
             return this;
         }
 
-        public SettingsViewModelBuilder SendSavedSearchAlertsViaEmail(bool sendSavedSearchAlertsViaEmail)
+        public SettingsViewModelBuilder EnableSavedSearchAlertsViaEmail(bool enable)
         {
-            _sendSavedSearchAlertsViaEmail = sendSavedSearchAlertsViaEmail;
+            _enableSavedSearchAlertsViaEmail = enable;
             return this;
         }
 
-        public SettingsViewModelBuilder SendSavedSearchAlertsViaText(bool sendSavedSearchAlertsViaText)
+        public SettingsViewModelBuilder EnableSavedSearchAlertsViaText(bool enable)
         {
-            _sendSavedSearchAlertsViaText = sendSavedSearchAlertsViaText;
+            _enableSavedSearchAlertsViaText = enable;
             return this;
         }
 
         public SettingsViewModelBuilder WithSavedSearchViewModels(IList<SavedSearchViewModel> savedSearches)
         {
             _savedSearches = savedSearches;
+            return this;
+        }
+
+        // TODO: AG: US733: remove and replace with specific properties.
+        public SettingsViewModelBuilder EnableAnyTextCommunication(bool enable)
+        {
+            _enableSavedSearchAlertsViaText = enable;
             return this;
         }
 
@@ -130,8 +123,6 @@
                 },
                 PhoneNumber = _phoneNumber,
                 VerifiedMobile = _verifiedMobile,
-                AllowEmailComms = _allowEmailComms,
-                AllowSmsComms = _allowSmsComms,
                 TraineeshipFeature = new TraineeshipFeatureViewModel
                 {
                     ShowTraineeshipsLink = _showTraineeshipsLink,
@@ -139,12 +130,12 @@
                 },
                 SmsEnabled = _smsEnabled,
 
-                SendApplicationStatusChanges = _sendApplicationStatusChanges,
-                SendApprenticeshipApplicationsExpiring = _sendApprenticeshipApplicationsExpiring,
-                SendMarketingCommunications = _sendMarketingComms,
+                EnableApplicationStatusChangeAlertsViaEmail = _enableApplicationStatusChangeAlertsViaEmail,
+                EnableExpiringApplicationAlertsViaEmail = _enableExpiringApplicationAlertsViaEmail,
+                EnableMarketingViaEmail = _enableMarketingViaEmail,
 
-                SendSavedSearchAlertsViaEmail = _sendSavedSearchAlertsViaEmail,
-                SendSavedSearchAlertsViaText = _sendSavedSearchAlertsViaText,
+                EnableSavedSearchAlertsViaEmail = _enableSavedSearchAlertsViaEmail,
+                EnableSavedSearchAlertsViaText = _enableSavedSearchAlertsViaText,
 
                 SavedSearches = _savedSearches
             };

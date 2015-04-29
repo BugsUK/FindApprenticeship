@@ -20,7 +20,6 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Constants.Pages;
-    using Infrastructure.LegacyWebServices.LegacyReferenceDataProxy;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using Common.Models.Application;
@@ -431,7 +430,6 @@
                     VacancyReference = patchedModel.VacancyDetail.VacancyReference,
                     VacancyTitle = patchedModel.VacancyDetail.Title,
                     Status = patchedModel.Status,
-                    SentEmail = candidate.CommunicationPreferences.AllowEmail,
                     VacancyStatus = patchedModel.VacancyDetail.VacancyStatus,
                     ProviderContactInfo = patchedModel.VacancyDetail.Contact
                 };

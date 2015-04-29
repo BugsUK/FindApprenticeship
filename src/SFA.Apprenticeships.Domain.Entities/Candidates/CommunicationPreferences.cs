@@ -1,34 +1,38 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
+    // TODO: US733: review default Communication Preferences.
     public class CommunicationPreferences
     {
         public CommunicationPreferences()
         {
-            AllowMobile = false;
-            AllowEmail = true;
             VerifiedMobile = false;
             MobileVerificationCode = string.Empty;
             AllowTraineeshipPrompts = true;
 
-            SendApplicationStatusChanges = true;
-            SendApplicationStatusChangesViaEmail = true;
-            SendApplicationStatusChangesViaText = false;
+            ApplicationStatusChangePreferences = new CommunicationPreference
+            {
+                EnableEmail = true,
+                EnableText = false
+            };
+            
+            ExpiringApplicationPreferences = new CommunicationPreference
+            {
+                EnableEmail = true,
+                EnableText = false
+            };
 
-            SendApprenticeshipApplicationsExpiring = true;
-            SendApprenticeshipApplicationsExpiringViaEmail = true;
-            SendApprenticeshipApplicationsExpiringViaText = false;
+            SavedSearchPreferences = new CommunicationPreference
+            {
+                EnableEmail = true,
+                EnableText = false
+            };
 
-            SendMarketingCommunications = true;
-            SendMarketingCommunicationsViaEmail = true;
-            SendMarketingCommunicationsViaText = false;
-
-            SendSavedSearchAlertsViaEmail = true;
-            SendSavedSearchAlertsViaText = false;
+            MarketingPreferences = new CommunicationPreference
+            {
+                EnableEmail = true,
+                EnableText = false
+            };
         }
-
-        public bool AllowEmail { get; set; }
-
-        public bool AllowMobile { get; set; }
 
         public bool VerifiedMobile { get; set; }
 
@@ -36,26 +40,12 @@
 
         public bool AllowTraineeshipPrompts { get; set; }
 
-        public bool SendApplicationStatusChanges { get; set; }
+        public CommunicationPreference ApplicationStatusChangePreferences { get; set; }
 
-        public bool SendApplicationStatusChangesViaText { get; set; }
+        public CommunicationPreference ExpiringApplicationPreferences { get; set; }
 
-        public bool SendApplicationStatusChangesViaEmail { get; set; }
+        public CommunicationPreference SavedSearchPreferences { get; set; }
 
-        public bool SendApprenticeshipApplicationsExpiring { get; set; }
-
-        public bool SendApprenticeshipApplicationsExpiringViaText { get; set; }
-
-        public bool SendApprenticeshipApplicationsExpiringViaEmail { get; set; }
-
-        public bool SendMarketingCommunications { get; set; }
-
-        public bool SendMarketingCommunicationsViaText { get; set; }
-
-        public bool SendMarketingCommunicationsViaEmail { get; set; }
-
-        public bool SendSavedSearchAlertsViaEmail { get; set; }
-
-        public bool SendSavedSearchAlertsViaText { get; set; }
+        public CommunicationPreference MarketingPreferences { get; set; }
     }
 }

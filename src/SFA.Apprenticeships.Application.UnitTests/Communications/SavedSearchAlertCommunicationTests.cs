@@ -28,7 +28,11 @@
             savedSearchAlertRepository.Setup(x => x.GetCandidatesSavedSearchAlerts()).Returns(GetSavedSearchAlerts(2, 2));
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            var candidate = new CandidateBuilder(Guid.NewGuid()).AllowEmail(allowEmail).AllowMobile(allowMobile).VerifiedMobile(allowMobile).Build();
+            var candidate = new CandidateBuilder(Guid.NewGuid())
+                .EnableSavedSearchAlertsViaEmail(allowEmail)
+                .EnableSavedSearchAlertsViaText(allowMobile)
+                .VerifiedMobile(allowMobile)
+                .Build();
 
             candidateReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(candidate);
 
@@ -67,7 +71,10 @@
             savedSearchAlertRepository.Setup(x => x.GetCandidatesSavedSearchAlerts()).Returns(GetSavedSearchAlerts(2, 2));
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
-            var candidate = new CandidateBuilder(Guid.NewGuid()).AllowEmail(false).AllowMobile(false).Build();
+            var candidate = new CandidateBuilder(Guid.NewGuid())
+                .EnableSavedSearchAlertsViaEmail(false)
+                .EnableSavedSearchAlertsViaText(false)
+                .Build();
 
             candidateReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(candidate);
 
@@ -95,17 +102,17 @@
 
         #region Helpers
 
-        private static Dictionary<Guid, List<SavedSearchAlert>> GetSavedSearchAlerts(int noOfcandidates, int noOfAlerts)
+        private static Dictionary<Guid, List<SavedSearchAlert>> GetSavedSearchAlerts(int candidateCount, int alertCount)
         {
             var allSavedSearchAlerts = new Dictionary<Guid, List<SavedSearchAlert>>();
 
-            for (var i = 0; i < noOfcandidates; i++)
+            for (var i = 0; i < candidateCount; i++)
             {
                 var candidateId = Guid.NewGuid();
 
                 var candidateSavedSearchAlerts = new Fixture()
                     .Build<SavedSearchAlert>()
-                    .CreateMany(noOfAlerts)
+                    .CreateMany(alertCount)
                     .ToList();
 
                 allSavedSearchAlerts.Add(candidateId, candidateSavedSearchAlerts);

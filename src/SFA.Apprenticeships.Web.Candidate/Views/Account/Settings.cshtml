@@ -1,4 +1,5 @@
 ﻿@using SFA.Apprenticeships.Web.Candidate.ViewModels.Account
+
 @model SettingsViewModel
 
 @{
@@ -27,8 +28,8 @@
     <fieldset>
 
         @{
-    var yourAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.YourAccount ? " active" : "";
-    var savedSearchesTabClass = Model.Mode == SettingsViewModel.SettingsMode.SavedSearches ? " active" : "";
+            var yourAccountTabClass = Model.Mode == SettingsViewModel.SettingsMode.YourAccount ? " active" : "";
+            var savedSearchesTabClass = Model.Mode == SettingsViewModel.SettingsMode.SavedSearches ? " active" : "";
         }
 
         <nav class="tabbed-nav">
@@ -51,12 +52,12 @@
             @Html.EditorFor(r => r.DateOfBirth)
             @Html.EditorFor(a => a.Address, new { AnalyticsDSCUri = "/settings/findaddress" })
             @Html.FormTextFor(m => m.PhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" }, verified: Model.VerifiedMobile)
-            
+
             <div class="form-group">
                 <p class="form-label">Email</p>
                 <span class="form-prepopped" id="settings-username">@Model.Username</span><a id="settings-change-username" class="inl-block" href="@Url.RouteUrl(RouteNames.UpdateEmail)">Change email address</a>
             </div>
-            
+
             @if (!string.IsNullOrWhiteSpace(Model.PendingUsername))
             {
                 <div class="form-group">
@@ -68,33 +69,57 @@
             <div id="accountSettings2">
 
                 <h3 class="heading-large">How we contact you</h3>
-
-                <div class="form-group form-group-compound">
-                    <p class="form-label">Receive notifications?</p>
-                    <span class="form-hint">If you don't select an option you won't receive notifications</span>
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.AllowEmailComms, labelHtmlAttributes: new { @class = "block-label allowCommsCheck" })
-                    @if (Model.SmsEnabled)
-                    {
-                        @Html.FormUnvalidatedCheckBoxFor(m => m.AllowSmsComms, labelHtmlAttributes: new { @class = "block-label allowCommsCheck" })
-                    }
-                </div>
-
                 <div class="text para-btm-margin">
-                    <p class="small-btm-margin">Choose to be notified when:</p>
-                    <ul class="list-text list-checkradio" id="notificationPrefs">
-                        <li>
-                            @Html.FormUnvalidatedCheckBoxFor(m => m.SendApplicationStatusChanges)
-                        </li>
-                        <li>
-                            @Html.FormUnvalidatedCheckBoxFor(m => m.SendApprenticeshipApplicationsExpiring)
-                        </li>
-                        <li>
-                            @Html.FormUnvalidatedCheckBoxFor(m => m.SendMarketingCommunications)
-                        </li>
-                    </ul>
+                    <p class="small-btm-margin">
+                        Choose to be notified by <i class="fa fa-envelope-o"></i>email or<i class="icon-sms"></i>text when:
+                    </p>
+                    <div class="display-table">
+                        <div class="display-table__row va-bottom">
+                            <a id="emailToggle" href="" title="Email notifications" class="display-table__cell ta-center font-black">
+                                <span class="notification-pulltop"><i class="fa fa-envelope-o no-right-margin"></i></span>
+                            </a>
+                            <a id="textToggle" href="" title="Text notifications" class="display-table__cell ta-center">
+                                <i class="icon-sms"></i>
+                            </a>
+                            <span class="display-table__cell ta-left">
+                            </span>
+                        </div>
+                        <div class="display-table__row">
+                            <span class="display-table__cell ta-center">
+                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaEmail,
+                                    controlHtmlAttributes: new { @class = "no-margins email-input" })
+                            </span>
+                            <span class="display-table__cell ta-center">
+                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaText,
+                                    labelHtmlAttributes: new { @class = "display-table__cell ta-left" },
+                                    controlHtmlAttributes: new { @class = "no-margins text-input" })
+                            </span>
+                        </div>
+                        <div class="display-table__row">
+                            <span class="display-table__cell ta-center">
+                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaEmail,
+                                    controlHtmlAttributes: new { @class = "no-margins email-input" })
+                            </span>
+                            <span class="display-table__cell ta-center">
+                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaText,
+                                    labelHtmlAttributes: new { @class = "display-table__cell ta-left" },
+                                    controlHtmlAttributes: new { @class = "no-margins text-input" })
+                            </span>
+                        </div>
+                        <div class="display-table__row">
+                            <span class="display-table__cell ta-center">
+                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaEmail,
+                                    controlHtmlAttributes: new { @class = "no-margins email-input" })
+                            </span>
+                            <span class="display-table__cell ta-center">
+                                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaText,
+                                labelHtmlAttributes: new { @class = "display-table__cell ta-left" },
+                                controlHtmlAttributes: new { @class = "no-margins text-input" })
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
-
             <div class="form-group">
                 <button id="update-details-button" class="button">Save settings</button>
             </div>
@@ -103,23 +128,24 @@
         <div class="tabbed-content @savedSearchesTabClass">
             <h2 class="heading-large" id="savedSearchHeading">Saved searches</h2>
             <div class="form-group form-group-compound">
-                <p class="form-label">Receive saved search alerts?</p>
-                <span class="form-hint text">If you don't select an option you won't receive alerts when we find new apprenticeships matching your saved searches.</span>
-                @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
+                <p class="form-label">Receive notifications?</p>
+                <span class="form-hint text">If you don't select an option you won't receive notifications</span>
+                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
                 @if (Model.SmsEnabled)
                 {
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.SendSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
                 }
             </div>
 
             <div class="form-group" id="savedSearch">
-
                 @{
-    var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
+                    var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
                 }
+
                 <p class="savedInitalText text" id="noSavedSearchesText" @Html.Raw(noSavedSearchesTextStyle)>
                     You currently don't have any active saved searches. If you <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">set up a saved search</a> we can alert you when we find a suitable apprenticeship.
                 </p>
+
                 @if (Model.SavedSearches != null)
                 {
                     <div id="savedSearches" class="toggle-content text" style="display: block;">
@@ -159,11 +185,11 @@
                     </div>
                 }
 
-            <div class="form-group">
-                <button id="update-details-button" class="button">Save settings</button>
+                <div class="form-group">
+                    <button id="update-details-button" class="button">Save settings</button>
+                </div>
             </div>
         </div>
-
     </fieldset>
 }
 
@@ -207,7 +233,7 @@
             }
 
             function disableSavedCommsChecks() {
-                if (!$('#SendSavedSearchAlertsViaEmail').is(':checked') && !$('#SendSavedSearchAlertsViaText').is(':checked')) {
+                if (!$('#EnableSavedSearchAlertsViaEmail').is(':checked') && !$('#EnableSavedSearchAlertsViaText').is(':checked')) {
                     $('#savedSearches').find('input[type="checkbox"]').parent().addClass('disabled');
                 } else {
                     $('#savedSearches').find('input[type="checkbox"]').parent().removeClass('disabled');
@@ -224,12 +250,6 @@
 
             disableCommsChecks();
             disableSavedCommsChecks();
-
-
         });
-
-        
-
-
     </script>
 }

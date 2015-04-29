@@ -1,19 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Communications
 {
-    using System;
     using Application.Interfaces.Communications;
     using Domain.Entities.Candidates;
 
+    // TODO: AG: US733: close code review.
     public static class CandidateCommunicationHelper
     {
         public static bool ShouldSendMessageViaChannel(
             this Candidate candidate, CommunicationChannels communicationChannel, MessageTypes messageType)
         {
             var communicationPreferences = candidate.CommunicationPreferences;
-
-            var candidateAllowsCommunicationsViaChannel =
-                (communicationChannel == CommunicationChannels.Email && communicationPreferences.AllowEmail) ||
-                (communicationChannel == CommunicationChannels.Sms && communicationPreferences.AllowMobile && communicationPreferences.VerifiedMobile);
 
             switch (messageType)
             {
@@ -32,25 +28,24 @@
                 case MessageTypes.DailyDigest:
                     // Daily digests are sent via email only, candidate can opt out of application status alerts
                     // and expiring draft notifications individually.
-                    return candidateAllowsCommunicationsViaChannel &&
-                           communicationChannel == CommunicationChannels.Email &&
-                           (communicationPreferences.SendApplicationStatusChanges ||
-                            communicationPreferences.SendApprenticeshipApplicationsExpiring);
+                    return communicationChannel == CommunicationChannels.Email &&
+                           (communicationPreferences.ApplicationStatusChangePreferences.EnableEmail ||
+                            communicationPreferences.ExpiringApplicationPreferences.EnableEmail);
 
                 case MessageTypes.ApprenticeshipApplicationSuccessful:
                 case MessageTypes.ApprenticeshipApplicationUnsuccessful:
                 case MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary:
                     // These application status alerts are sent via SMS only, candidate can opt out.
                     return communicationChannel == CommunicationChannels.Sms &&
-                           candidateAllowsCommunicationsViaChannel &&
-                           communicationPreferences.SendApplicationStatusChanges;
+                           communicationPreferences.VerifiedMobile &&
+                           communicationPreferences.ApplicationStatusChangePreferences.EnableText;
 
                 case MessageTypes.ApprenticeshipApplicationExpiringDraft:
                 case MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary:
                     // These expiring draft notifications are sent via SMS only, candidate can opt out.
                     return communicationChannel == CommunicationChannels.Sms &&
-                           candidateAllowsCommunicationsViaChannel &&
-                           communicationPreferences.SendApprenticeshipApplicationsExpiring;
+                           communicationPreferences.VerifiedMobile &&
+                           communicationPreferences.ExpiringApplicationPreferences.EnableText;
 
                 case MessageTypes.ApprenticeshipApplicationSubmitted:
                 case MessageTypes.TraineeshipApplicationSubmitted:
@@ -59,11 +54,11 @@
 
                 case MessageTypes.SavedSearchAlert:
                     // Saved search alerts may be sent via email and SMS, candidate can opt out of each channel separately.
-                    return candidateAllowsCommunicationsViaChannel &&
-                           ((communicationChannel == CommunicationChannels.Email &&
-                             communicationPreferences.SendSavedSearchAlertsViaEmail) ||
+                    return ((communicationChannel == CommunicationChannels.Email &&
+                             communicationPreferences.SavedSearchPreferences.EnableEmail) ||
                             (communicationChannel == CommunicationChannels.Sms &&
-                             communicationPreferences.SendSavedSearchAlertsViaText));
+                             communicationPreferences.VerifiedMobile &&
+                             communicationPreferences.SavedSearchPreferences.EnableText));
             }
 
             // Do not allow any communications to be sent implicitly.

@@ -57,8 +57,7 @@
             var savedSearch = new SavedSearch
             {
                 EntityId = subscriberItemId,
-                AlertsEnabled = true,
-                AlertsEnabledViaEmail = true
+                AlertsEnabled = true
             };
 
             _mockRetrieveSavedSearchesStrategy.Setup(mock => mock
@@ -68,13 +67,13 @@
                     savedSearch
                 });
 
-            var unsubscribed = strategy.Unsubscribe(subscriberId, SubscriptionTypes.SavedSearchAlertsViaEmail, subscriberItemId.ToString());
+            var unsubscribed = strategy.Unsubscribe(
+                subscriberId, SubscriptionTypes.SavedSearchAlertsViaEmail, subscriberItemId.ToString());
             
             // Assert.
             unsubscribed.Should().BeTrue();
 
             savedSearch.AlertsEnabled.Should().Be(false);
-            savedSearch.AlertsEnabledViaEmail.Should().Be(false);
 
             _mockUpdateSavedSearchStrategy.Verify(mock => mock
                 .UpdateSavedSearch(savedSearch), Times.Once);
@@ -109,7 +108,8 @@
                 .RetrieveSavedSearches(candidateId))
                 .Returns(new List<SavedSearch>());
 
-            var unsubscribed = strategy.Unsubscribe(subscriberId, SubscriptionTypes.SavedSearchAlertsViaEmail, subscriberItemId.ToString());
+            var unsubscribed = strategy.Unsubscribe(
+                subscriberId, SubscriptionTypes.SavedSearchAlertsViaEmail, subscriberItemId.ToString());
 
             // Assert.
             unsubscribed.Should().BeFalse();
@@ -126,11 +126,7 @@
         private static Candidate BuildSubscribedCandidate(Guid candidateId)
         {
             return new CandidateBuilder(candidateId)
-                .SendApplicationStatusChanges(true)
-                .SendApplicationStatusChangesViaEmail(true)
-                .SendApprenticeshipApplicationsExpiring(true)
-                .SendApprenticeshipApplicationsExpiringViaEmail(true)
-                .SendSavedSearchAlertsViaEmail(true)
+                .EnableAllCommunications()
                 .Build();
         }
 

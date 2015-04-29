@@ -139,13 +139,10 @@
                     return new WhatHappensNextTraineeshipViewModel(vacancyDetailViewModel.ViewModelMessage);
                 }
 
-                var candidate = _candidateService.GetCandidate(candidateId);
-
                 return new WhatHappensNextTraineeshipViewModel
                 {
                     VacancyReference = vacancyDetailViewModel.VacancyReference,
                     VacancyTitle = vacancyDetailViewModel.Title,
-                    SentEmail = candidate.CommunicationPreferences.AllowEmail,
                     ProviderContactInfo = vacancyDetailViewModel.Contact,
                 };
             }

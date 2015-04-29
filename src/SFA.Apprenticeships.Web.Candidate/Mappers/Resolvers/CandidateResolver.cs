@@ -6,6 +6,7 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using ViewModels.Register;
+
     internal class CandidateResolver : ITypeConverter<RegisterViewModel, Candidate>
     {
         public Candidate Convert(ResolutionContext context)
@@ -40,7 +41,10 @@
                 },
                 CommunicationPreferences = new CommunicationPreferences
                 {
-                    SendMarketingCommunications = viewModel.AcceptUpdates
+                    MarketingPreferences = new CommunicationPreference
+                    {
+                        EnableEmail = viewModel.AcceptUpdates
+                    }
                 }
             };
 

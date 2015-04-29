@@ -89,7 +89,7 @@
         [TestCase(true, true)]
         [TestCase(false, false)]
         [TestCase(false, true)]
-        public void ShouldAssignAndSendMobileUserCodeIfVerificationIsRequired(bool verifiedMobile, bool allowMobile)
+        public void ShouldAssignAndSendMobileUserCodeIfVerificationIsRequired(bool verifiedMobile, bool enableText)
         {
             var candidateId = Guid.NewGuid();
             const string phoneNumber = "0123456789";
@@ -102,23 +102,31 @@
                 },
                 CommunicationPreferences = new CommunicationPreferences
                 {
-                    AllowMobile = allowMobile,
+                    ApplicationStatusChangePreferences = new CommunicationPreference
+                    {
+                        EnableText = enableText
+                    },
                     VerifiedMobile = verifiedMobile
                 }
             };
 
             var codeGenerator = new Mock<ICodeGenerator>();
             const string mobileVerificationCode = "1234";
+            
             codeGenerator.Setup(cg => cg.GenerateNumeric(4)).Returns(mobileVerificationCode);
+            
             var communicationService = new Mock<ICommunicationService>();
+            
             IEnumerable<CommunicationToken> communicationTokens = new List<CommunicationToken>(0);
+
             communicationService.Setup(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>())).Callback<Guid, MessageTypes, IEnumerable<CommunicationToken>>((cid, mt, ct) => { communicationTokens = ct; });
+
             var sendMobileVerificationCodeStrategy = new SendMobileVerificationCodeStrategyBuilder().With(communicationService).Build();
             var saveCandidateStrategy = new SaveCandidateStrategyBuilder().With(sendMobileVerificationCodeStrategy).With(codeGenerator).Build();
 
             saveCandidateStrategy.SaveCandidate(candidate);
 
-            if (verifiedMobile || !allowMobile)
+            if (verifiedMobile || !enableText)
             {
                 candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
                 communicationService.Verify(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Never);
@@ -127,7 +135,9 @@
             {
                 candidate.CommunicationPreferences.MobileVerificationCode.Should().Be(mobileVerificationCode);
                 communicationService.Verify(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Once);
+
                 var communicationTokensList = communicationTokens.ToList();
+
                 communicationTokensList.Count.Should().Be(2);
                 communicationTokensList.Single(ct => ct.Key == CommunicationTokens.CandidateMobileNumber).Value.Should().Be(phoneNumber);
                 communicationTokensList.Single(ct => ct.Key == CommunicationTokens.MobileVerificationCode).Value.Should().Be(mobileVerificationCode);
