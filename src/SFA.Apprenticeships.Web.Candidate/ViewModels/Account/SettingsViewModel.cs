@@ -45,19 +45,19 @@
         [Display(Name = "")]
         public bool EnableApplicationStatusChangeAlertsViaEmail { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.ApplicationStatusChanges.LabelText)]
+        [Display(Name = "")]
         public bool EnableApplicationStatusChangeAlertsViaText { get; set; }
 
         [Display(Name = "")]
         public bool EnableExpiringApplicationAlertsViaEmail { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.ExpiringApplications.LabelText)]
+        [Display(Name = "")]
         public bool EnableExpiringApplicationAlertsViaText { get; set; }
 
         [Display(Name = "")]
         public bool EnableMarketingViaEmail { get; set; }
 
-        [Display(Name = SettingsViewModelMessages.Marketing.LabelText)]
+        [Display(Name = "")]
         public bool EnableMarketingViaText { get; set; }
 
         [Display(Name = SettingsViewModelMessages.SavedSearch.EmailLabelText)]

@@ -71,14 +71,14 @@
                 <h3 class="heading-large">How we contact you</h3>
                 <div class="text para-btm-margin">
                     <p class="small-btm-margin">
-                        Choose to be notified by <i class="fa fa-envelope-o"></i>email or<i class="icon-sms"></i>text when:
+                        Choose to be notified by <i class="fa fa-envelope-o no-right-margin"></i> email or <i class="icon-sms"></i> text when:
                     </p>
                     <div class="display-table">
                         <div class="display-table__row va-bottom">
-                            <a id="emailToggle" href="" title="Email notifications" class="display-table__cell ta-center font-black">
+                            <a href="#" id="emailToggle" title="Email notifications" class="display-table__cell ta-center font-black">
                                 <span class="notification-pulltop"><i class="fa fa-envelope-o no-right-margin"></i></span>
                             </a>
-                            <a id="textToggle" href="" title="Text notifications" class="display-table__cell ta-center">
+                            <a href="#" id="textToggle" title="Text notifications" class="display-table__cell ta-center">
                                 <i class="icon-sms"></i>
                             </a>
                             <span class="display-table__cell ta-left">
@@ -87,34 +87,40 @@
                         <div class="display-table__row">
                             <span class="display-table__cell ta-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaEmail,
-                                    controlHtmlAttributes: new { @class = "no-margins email-input" })
+                                    controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "appStatusLabel", title = "Email notifications when the status of one of your applications changes" })
                             </span>
                             <span class="display-table__cell ta-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaText,
-                                    labelHtmlAttributes: new { @class = "display-table__cell ta-left" },
-                                    controlHtmlAttributes: new { @class = "no-margins text-input" })
+                                    controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "appStatusLabel", title = "Text notifications when the status of one of your applications changes" })
+                            </span>
+                            <span class="display-table__cell ta-left" id="appStatusLabel">
+                                the status of one of your applications changes
                             </span>
                         </div>
                         <div class="display-table__row">
                             <span class="display-table__cell ta-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaEmail,
-                                    controlHtmlAttributes: new { @class = "no-margins email-input" })
+                                    controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "closingDateStatusLabel", title = "Email notifications when an apprenticeship is approaching its closing date" })
                             </span>
                             <span class="display-table__cell ta-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaText,
-                                    labelHtmlAttributes: new { @class = "display-table__cell ta-left" },
-                                    controlHtmlAttributes: new { @class = "no-margins text-input" })
+                                    controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "closingDateStatusLabel", title = "Text notifications when an apprenticeship is approaching its closing date" })
+                            </span>
+                            <span class="display-table__cell ta-left" id="closingDateStatusLabel">
+                                an apprenticeship is approaching its closing date
                             </span>
                         </div>
                         <div class="display-table__row">
                             <span class="display-table__cell ta-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaEmail,
-                                    controlHtmlAttributes: new { @class = "no-margins email-input" })
+                                    controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Email notifications when we send you updates on news and information" })
                             </span>
                             <span class="display-table__cell ta-center">
                                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaText,
-                                labelHtmlAttributes: new { @class = "display-table__cell ta-left" },
-                                controlHtmlAttributes: new { @class = "no-margins text-input" })
+                                    controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Text notifications when we send you updates on news and information" })
+                            </span>
+                            <span class="display-table__cell ta-left" id="marketingUpdatesStatusLabel">
+                                we send you updates on news and information
                             </span>
                         </div>
                     </div>
@@ -131,7 +137,10 @@
                 <p class="form-label">Receive notifications?</p>
                 <span class="form-hint text">If you don't select an option you won't receive notifications</span>
                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
-                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
+                @if (Model.SmsEnabled)
+                {
+                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
+                }
             </div>
 
             <div class="form-group" id="savedSearch">
@@ -221,33 +230,28 @@
                 return false;
             });
 
-            // TODO: AG: US733: remove dead JavaScript.
-            function disableCommsChecks() {
-                if (!$('#AllowEmailComms').is(':checked') && !$('#AllowSmsComms').is(':checked')) {
-                    $('#notificationPrefs').find('input[type="checkbox"]').parent().addClass('disabled');
-                } else {
-                    $('#notificationPrefs').find('input[type="checkbox"]').parent().removeClass('disabled');
-                }
-            }
+            $('#emailToggle').on('click', function () {
+                var theTable = $(this).closest('.display-table');
 
-            function disableSavedCommsChecks() {
-                if (!$('#EnableSavedSearchAlertsViaEmail').is(':checked') && !$('#EnableSavedSearchAlertsViaText').is(':checked')) {
-                    $('#savedSearches').find('input[type="checkbox"]').parent().addClass('disabled');
-                } else {
-                    $('#savedSearches').find('input[type="checkbox"]').parent().removeClass('disabled');
-                }
-            }
+                theTable.find('.email-input:not(:checked)').click();
 
-            $('.allowCommsCheck').on('click', function () {
-                disableCommsChecks();
+                $(this).blur();
+
+                return false;
+
             });
 
-            $('.allowSavedComms').on('click', function () {
-                disableSavedCommsChecks();
+            $('#textToggle').on('click', function () {
+                var theTable = $(this).closest('.display-table');
+
+                theTable.find('.text-input:not(:checked)').click();
+
+                $(this).blur();
+
+                return false;
+
             });
 
-            disableCommsChecks();
-            disableSavedCommsChecks();
         });
     </script>
 }
