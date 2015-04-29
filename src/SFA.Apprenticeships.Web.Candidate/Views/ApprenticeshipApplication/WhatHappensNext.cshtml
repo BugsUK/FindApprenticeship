@@ -33,7 +33,7 @@
     @if (Model.SuggestedVacancies == null || !Model.SuggestedVacancies.Any())
     {
         <div class="form-group form-group-compound get-started">
-            <a role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)'>Find an apprenticeship</a>
+            <a id="find-apprenticeship-btn" role="button" class="button" href='@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)'>Find an apprenticeship</a>
         </div>
     }
     else
@@ -43,8 +43,9 @@
             <span class="subtitle">Also in the @Model.SuggestedVacanciesCategory category and within @Model.SuggestedVacanciesSearchDistance miles of @Model.SuggestedVacanciesSearchLocation</span>
         </div>
         <div class="grid-wrapper">
-            @for (int i = 0; i < Math.Min(3, Model.SuggestedVacancies.Count()); i++){
-                <div class="grid grid-1-3">
+            @for (int i = 0; i < Math.Min(3, Model.SuggestedVacancies.Count()); i++)
+            {
+                <div class="grid grid-1-3" id="suggested-vacancy-@Model.SuggestedVacancies[i].VacancyId">
                     <div class="inner-block-padr">
                         <h3 class="heading-small"><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.SuggestedVacancies[i].VacancyId.ToString() })">@Model.SuggestedVacancies[i].VacancyTitle</a></h3>
                         <p><b>Distance:</b> @Model.SuggestedVacancies[i].Distance miles</p>
@@ -52,12 +53,14 @@
                 </div>
             }
         </div>
-        <p>View the apprenticeships in the <a href="@Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, Model.SuggestedVacanciesSearchViewModel)" title="View apprenticeships in category '@Model.SuggestedVacanciesCategory'">@Model.SuggestedVacanciesCategory</a> category.</p>
+        if (Model.SuggestedVacanciesSearchViewModel != null){
+             <p>View the apprenticeships in the <a href="@Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, Model.SuggestedVacanciesSearchViewModel)" title="View apprenticeships in category '@Model.SuggestedVacanciesCategory'">@Model.SuggestedVacanciesCategory</a> category.</p>
+        }
     }
 
     @if (ViewBag.SearchReturnUrl != null)
     {
-        <div class="form-group">
+        <div id="search-return-link" class="form-group">
             <a href="@ViewBag.SearchReturnUrl" title="Return to search results" id="lnk-return-search-results">Return to search results</a>
         </div>
     }
