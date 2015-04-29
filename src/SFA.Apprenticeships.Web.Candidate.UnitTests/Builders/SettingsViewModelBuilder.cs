@@ -16,8 +16,13 @@
         private bool _smsEnabled;
 
         private bool _enableApplicationStatusChangeAlertsViaEmail;
+        private bool _enableApplicationStatusChangeAlertsViaText;
+
         private bool _enableExpiringApplicationAlertsViaEmail;
+        private bool _enableExpiringApplicationAlertsViaText;
+
         private bool _enableMarketingViaEmail;
+        private bool _enableMarketingViaText;
 
         private bool _enableSavedSearchAlertsViaEmail;
         private bool _enableSavedSearchAlertsViaText;
@@ -72,15 +77,33 @@
             return this;
         }
 
+        public SettingsViewModelBuilder EnableApplicationStatusChangeAlertsViaText(bool enable)
+        {
+            _enableApplicationStatusChangeAlertsViaText = enable;
+            return this;
+        }
+
         public SettingsViewModelBuilder EnableExpiringApplicationAlertsViaEmail(bool enable)
         {
             _enableExpiringApplicationAlertsViaEmail = enable;
             return this;
         }
 
+        public SettingsViewModelBuilder EnableExpiringApplicationAlertsViaText(bool enable)
+        {
+            _enableExpiringApplicationAlertsViaText = enable;
+            return this;
+        }
+
         public SettingsViewModelBuilder EnableMarketingViaEmail(bool enable)
         {
             _enableMarketingViaEmail = enable;
+            return this;
+        }
+
+        public SettingsViewModelBuilder EnableMarketingViaText(bool enable)
+        {
+            _enableMarketingViaText = enable;
             return this;
         }
 
@@ -131,8 +154,13 @@
                 SmsEnabled = _smsEnabled,
 
                 EnableApplicationStatusChangeAlertsViaEmail = _enableApplicationStatusChangeAlertsViaEmail,
+                EnableApplicationStatusChangeAlertsViaText = _enableApplicationStatusChangeAlertsViaText,
+
                 EnableExpiringApplicationAlertsViaEmail = _enableExpiringApplicationAlertsViaEmail,
+                EnableExpiringApplicationAlertsViaText = _enableExpiringApplicationAlertsViaText,
+
                 EnableMarketingViaEmail = _enableMarketingViaEmail,
+                EnableMarketingViaText = _enableMarketingViaText,
 
                 EnableSavedSearchAlertsViaEmail = _enableSavedSearchAlertsViaEmail,
                 EnableSavedSearchAlertsViaText = _enableSavedSearchAlertsViaText,

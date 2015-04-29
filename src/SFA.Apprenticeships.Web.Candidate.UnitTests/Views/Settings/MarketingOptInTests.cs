@@ -4,90 +4,136 @@
     using FluentAssertions;
     using NUnit.Framework;
 
+    // TODO: US733: review / possibly extend unit tests.
+
     [TestFixture]
     public class MarketingOptInTests
     {
         [TestCase(false, false, false)]
-        [TestCase(true, true, true)]
+        [TestCase(false, false, true)]
+        [TestCase(false, true, false)]
         [TestCase(false, true, true)]
-        [TestCase(true, false, false)]
-        public void US519_AC2_AC3_MarketingPreferences(
-            bool sendApplicationStatusChanges,
-            bool sendApprenticeshipApplicationsExpiring,
-            bool sendMarketingCommunications
-            )
+        [TestCase(true, true, true)]
+        public void ShouldRenderEmailCommunicationPreferences(
+            bool enableApplicationStatusChangeAlertsViaEmail,
+            bool enableExpiringApplicationAlertsViaEmail,
+            bool enableMarketingViaEmail)
         {
             var viewModel = new SettingsViewModelBuilder()
                 .SmsEnabled(true)
-                .EnableApplicationStatusChangeAlertsViaEmail(sendApplicationStatusChanges)
-                .EnableExpiringApplicationAlertsViaEmail(sendApprenticeshipApplicationsExpiring)
-                .EnableMarketingViaEmail(sendMarketingCommunications)
+                .EnableApplicationStatusChangeAlertsViaEmail(enableApplicationStatusChangeAlertsViaEmail)
+                .EnableExpiringApplicationAlertsViaEmail(enableExpiringApplicationAlertsViaEmail)
+                .EnableMarketingViaEmail(enableMarketingViaEmail)
                 .Build();
 
             var result = new SettingsViewBuilder().With(viewModel).Render();
 
-            var sendApplicationStatusChangesCheckBox = result.GetElementbyId("SendApplicationStatusChanges");
-            var sendApprenticeshipApplicationsExpiringCheckBox = result.GetElementbyId("SendApprenticeshipApplicationsExpiring");
-            var sendMarketingCommsCheckBox = result.GetElementbyId("SendMarketingCommunications");
+            var enableApplicationStatusChangeAlertsViaEmailCheckbox = result.GetElementbyId("EnableApplicationStatusChangeAlertsViaEmail");
+            var enableApplicationStatusChangeAlertsViaTextCheckbox = result.GetElementbyId("EnableApplicationStatusChangeAlertsViaText");
 
-            sendApplicationStatusChangesCheckBox.Should().NotBeNull();
-            sendApprenticeshipApplicationsExpiringCheckBox.Should().NotBeNull();
-            sendMarketingCommsCheckBox.Should().NotBeNull();
+            var enableExpiringApplicationAlertsViaEmailCheckbox = result.GetElementbyId("EnableExpiringApplicationAlertsViaEmail");
+            var enableExpiringApplicationAlertsViaTextCheckbox = result.GetElementbyId("EnableExpiringApplicationAlertsViaText");
 
-            sendApplicationStatusChangesCheckBox.ParentNode.InnerText.Should().Be("the status of one of your applications changes");
-            sendApprenticeshipApplicationsExpiringCheckBox.ParentNode.InnerText.Should().Be("an apprenticeship is approaching its closing date");
-            sendMarketingCommsCheckBox.ParentNode.InnerText.Should().Be("we send you updates on news and information");
+            var enableMarketingViaEmailCheckbox = result.GetElementbyId("EnableMarketingViaEmail");
+            var enableMarketingViaTextCheckbox = result.GetElementbyId("EnableMarketingViaText");
 
-            if (sendApplicationStatusChanges)
+            enableApplicationStatusChangeAlertsViaEmailCheckbox.Should().NotBeNull();
+            enableApplicationStatusChangeAlertsViaTextCheckbox.Should().NotBeNull();
+
+            enableExpiringApplicationAlertsViaEmailCheckbox.Should().NotBeNull();
+            enableExpiringApplicationAlertsViaTextCheckbox.Should().NotBeNull();
+
+            enableMarketingViaEmailCheckbox.Should().NotBeNull();
+            enableMarketingViaTextCheckbox.Should().NotBeNull();
+
+            enableApplicationStatusChangeAlertsViaEmailCheckbox.ParentNode.InnerText.Should().Be(string.Empty);
+            enableExpiringApplicationAlertsViaEmailCheckbox.ParentNode.InnerText.Should().Be(string.Empty);
+            enableMarketingViaEmailCheckbox.ParentNode.InnerText.Should().Be(string.Empty);
+
+            if (enableApplicationStatusChangeAlertsViaEmail)
             {
-                sendApplicationStatusChangesCheckBox.Attributes["checked"].Should().NotBeNull();
+                enableApplicationStatusChangeAlertsViaEmailCheckbox.Attributes["checked"].Should().NotBeNull();
             }
             else
             {
-                sendApplicationStatusChangesCheckBox.Attributes["checked"].Should().BeNull();
+                enableApplicationStatusChangeAlertsViaEmailCheckbox.Attributes["checked"].Should().BeNull();
             }
 
-            if (sendApprenticeshipApplicationsExpiring)
+            if (enableExpiringApplicationAlertsViaEmail)
             {
-                sendApprenticeshipApplicationsExpiringCheckBox.Attributes["checked"].Should().NotBeNull();
+                enableExpiringApplicationAlertsViaEmailCheckbox.Attributes["checked"].Should().NotBeNull();
             }
             else
             {
-                sendApprenticeshipApplicationsExpiringCheckBox.Attributes["checked"].Should().BeNull();
+                enableExpiringApplicationAlertsViaEmailCheckbox.Attributes["checked"].Should().BeNull();
             }
 
-            if (sendMarketingCommunications)
+            if (enableMarketingViaEmail)
             {
-                sendMarketingCommsCheckBox.Attributes["checked"].Should().NotBeNull();
+                enableMarketingViaEmailCheckbox.Attributes["checked"].Should().NotBeNull();
             }
             else
             {
-                sendMarketingCommsCheckBox.Attributes["checked"].Should().BeNull();
+                enableMarketingViaEmailCheckbox.Attributes["checked"].Should().BeNull();
             }
         }
 
-        [TestCase(true)]
-        [TestCase(false)]
-        public void SmsEnabledFeatureToggle(bool smsEnabled)
+        [TestCase(false, false, false)]
+        [TestCase(false, false, true)]
+        [TestCase(false, true, false)]
+        [TestCase(false, true, true)]
+        [TestCase(true, true, true)]
+        public void ShouldRenderTextCommunicationPreferences(
+            bool enableApplicationStatusChangeAlertsViaText,
+            bool enableExpiringApplicationAlertsViaText,
+            bool enableMarketingViaText)
         {
-            var viewModel = new SettingsViewModelBuilder().SmsEnabled(smsEnabled).Build();
+            var viewModel = new SettingsViewModelBuilder()
+                .SmsEnabled(true)
+                .EnableApplicationStatusChangeAlertsViaText(enableApplicationStatusChangeAlertsViaText)
+                .EnableExpiringApplicationAlertsViaText(enableExpiringApplicationAlertsViaText)
+                .EnableMarketingViaText(enableMarketingViaText)
+                .Build();
 
             var result = new SettingsViewBuilder().With(viewModel).Render();
 
-            var allowEmailCommsCheckBox = result.GetElementbyId("AllowEmailComms");
-            var allowSmsCommsCheckBox = result.GetElementbyId("AllowSmsComms");
+            var enableApplicationStatusChangeAlertsViaTextCheckbox = result.GetElementbyId("EnableApplicationStatusChangeAlertsViaText");
+            var enableExpiringApplicationAlertsViaTextCheckbox = result.GetElementbyId("EnableExpiringApplicationAlertsViaText");
+            var enableMarketingViaTextCheckbox = result.GetElementbyId("EnableMarketingViaText");
 
-            allowEmailCommsCheckBox.Should().NotBeNull();
-            allowEmailCommsCheckBox.ParentNode.InnerText.Should().Be("Email");
+            enableApplicationStatusChangeAlertsViaTextCheckbox.Should().NotBeNull();
+            enableExpiringApplicationAlertsViaTextCheckbox.Should().NotBeNull();
+            enableMarketingViaTextCheckbox.Should().NotBeNull();
 
-            if (smsEnabled)
+            enableApplicationStatusChangeAlertsViaTextCheckbox.ParentNode.InnerText.Should().Be("the status of one of your applications changes");
+            enableExpiringApplicationAlertsViaTextCheckbox.ParentNode.InnerText.Should().Be("an apprenticeship is approaching its closing date");
+            enableMarketingViaTextCheckbox.ParentNode.InnerText.Should().Be("we send you updates on news and information");
+
+            if (enableApplicationStatusChangeAlertsViaText)
             {
-                allowSmsCommsCheckBox.Should().NotBeNull();
-                allowSmsCommsCheckBox.ParentNode.InnerText.Should().Be("Text");
+                enableApplicationStatusChangeAlertsViaTextCheckbox.Attributes["checked"].Should().NotBeNull();
             }
             else
             {
-                allowSmsCommsCheckBox.Should().BeNull();
+                enableApplicationStatusChangeAlertsViaTextCheckbox.Attributes["checked"].Should().BeNull();
+            }
+
+            if (enableExpiringApplicationAlertsViaText)
+            {
+                enableExpiringApplicationAlertsViaTextCheckbox.Attributes["checked"].Should().NotBeNull();
+            }
+            else
+            {
+                enableExpiringApplicationAlertsViaTextCheckbox.Attributes["checked"].Should().BeNull();
+            }
+
+            if (enableMarketingViaText)
+            {
+                enableMarketingViaTextCheckbox.Attributes["checked"].Should().NotBeNull();
+            }
+            else
+            {
+                enableMarketingViaTextCheckbox.Attributes["checked"].Should().BeNull();
             }
         }
     }

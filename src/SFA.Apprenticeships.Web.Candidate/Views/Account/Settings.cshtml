@@ -131,10 +131,7 @@
                 <p class="form-label">Receive notifications?</p>
                 <span class="form-hint text">If you don't select an option you won't receive notifications</span>
                 @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
-                @if (Model.SmsEnabled)
-                {
-                    @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
-                }
+                @Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" })
             </div>
 
             <div class="form-group" id="savedSearch">
@@ -224,6 +221,7 @@
                 return false;
             });
 
+            // TODO: AG: US733: remove dead JavaScript.
             function disableCommsChecks() {
                 if (!$('#AllowEmailComms').is(':checked') && !$('#AllowSmsComms').is(':checked')) {
                     $('#notificationPrefs').find('input[type="checkbox"]').parent().addClass('disabled');
