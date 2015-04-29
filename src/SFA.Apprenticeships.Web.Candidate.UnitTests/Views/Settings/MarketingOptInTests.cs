@@ -10,9 +10,8 @@
     public class MarketingOptInTests
     {
         [TestCase(false, false, false)]
-        [TestCase(false, false, true)]
         [TestCase(false, true, false)]
-        [TestCase(false, true, true)]
+        [TestCase(true, false, false)]
         [TestCase(true, true, true)]
         public void ShouldRenderEmailCommunicationPreferences(
             bool enableApplicationStatusChangeAlertsViaEmail,
@@ -79,9 +78,8 @@
         }
 
         [TestCase(false, false, false)]
-        [TestCase(false, false, true)]
         [TestCase(false, true, false)]
-        [TestCase(false, true, true)]
+        [TestCase(true, false, false)]
         [TestCase(true, true, true)]
         public void ShouldRenderTextCommunicationPreferences(
             bool enableApplicationStatusChangeAlertsViaText,

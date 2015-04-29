@@ -32,6 +32,6 @@
         UserPendingUsernameCode,
         CandidateSiteDomainName,
         CandidateSubscriberId,
-        CandidateSubscriptionType,
+        CandidateSubscriptionType
     }
 }

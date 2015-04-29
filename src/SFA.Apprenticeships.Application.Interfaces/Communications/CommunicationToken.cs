@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Communications
 {
-    using System;
-
     public class CommunicationToken
     {
         public CommunicationTokens Key { get; set; }

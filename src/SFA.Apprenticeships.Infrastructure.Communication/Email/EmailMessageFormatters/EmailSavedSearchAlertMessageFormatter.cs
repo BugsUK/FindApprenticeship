@@ -35,7 +35,7 @@
             PopulateCandidateName(request, message);
             PopulateSavedSearchAlerts(request, message);
             PopulateSiteDomainName(message);
-            PopulateSubscriber(request, message);
+            PopulateUnsubscribe(request, message);
         }
 
         #region Helpers
@@ -165,7 +165,7 @@
             AddSubstitutionTo(message, token, _siteDomainName);
         }
 
-        private void PopulateSubscriber(EmailRequest request, ISendGrid message)
+        private void PopulateUnsubscribe(EmailRequest request, ISendGrid message)
         {
             {
                 var token = SendGridTokenManager.GetEmailTemplateTokenForCommunicationToken(CommunicationTokens.CandidateSubscriberId);

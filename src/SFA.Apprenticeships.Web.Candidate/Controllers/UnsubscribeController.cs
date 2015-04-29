@@ -22,12 +22,12 @@
         }
 
         [HttpGet]
-        public async Task<ActionResult> Index(Guid subscriberId, int subscriptionTypeId, string subscriptionItemId = null)
+        public async Task<ActionResult> Index(Guid subscriberId, int subscriptionTypeId)
         {
             return await Task.Run<ActionResult>(() =>
             {
                 var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _unsubscribeMediator.Unsubscribe(candidateId, subscriberId, (SubscriptionTypes)subscriptionTypeId, subscriptionItemId);
+                var response = _unsubscribeMediator.Unsubscribe(candidateId, subscriberId, (SubscriptionTypes)subscriptionTypeId);
 
                 SetUserMessage(response.Message.Text, response.Message.Level);
 

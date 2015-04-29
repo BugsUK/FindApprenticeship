@@ -615,9 +615,9 @@
             }
         }
 
-        public bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId = null)
+        public bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType)
         {
-            return _candidateService.Unsubscribe(subscriberId, subscriptionType, subscriptionItemId);
+            return _candidateService.Unsubscribe(subscriberId, subscriptionType);
         }
 
         public bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel)

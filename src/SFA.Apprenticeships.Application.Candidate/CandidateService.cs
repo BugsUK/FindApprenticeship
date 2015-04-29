@@ -488,12 +488,12 @@
             _requestEmailReminderStrategy.RequestEmailReminder(phoneNumber);
         }
 
-        public bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId)
+        public bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType)
         {
-            _logger.Info("Using UnsubscribeStrategy to unsubscribe candidate='{0}' from subscription type='{1}' for subscriptionItemId='{2}' (optional).",
-                subscriberId, subscriptionType, subscriptionItemId);
+            _logger.Info("Using UnsubscribeStrategy to unsubscribe candidate='{0}' from subscription type='{1}'",
+                subscriberId, subscriptionType);
 
-            return _unsubscribeStrategy.Unsubscribe(subscriberId, subscriptionType, subscriptionItemId);
+            return _unsubscribeStrategy.Unsubscribe(subscriberId, subscriptionType);
         }
         
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId)

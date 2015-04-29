@@ -5,6 +5,6 @@
 
     public interface IUnsubscribeMediator
     {
-        MediatorResponse Unsubscribe(Guid? candidateId, Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId = null);
+        MediatorResponse Unsubscribe(Guid? candidateId, Guid subscriberId, SubscriptionTypes subscriptionType);
     }
 }

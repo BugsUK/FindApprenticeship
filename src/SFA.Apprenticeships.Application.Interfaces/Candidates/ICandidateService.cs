@@ -86,7 +86,7 @@
 
         void RequestEmailReminder(string phoneNumber);
         
-        bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId);
+        bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType);
 
         SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(
             ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId);

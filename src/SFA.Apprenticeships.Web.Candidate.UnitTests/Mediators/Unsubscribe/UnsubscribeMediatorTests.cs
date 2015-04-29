@@ -31,7 +31,7 @@
             var subscriberId = Guid.NewGuid();
 
             _mockCandidateServiceProvider.Setup(mock => mock
-                .Unsubscribe(subscriberId, subscriptionType, null))
+                .Unsubscribe(subscriberId, subscriptionType))
                 .Returns(true);
 
             // Act.
@@ -51,7 +51,7 @@
             const SubscriptionTypes subscriptionType = SubscriptionTypes.Unknown;
 
             _mockCandidateServiceProvider.Setup(mock => mock
-                .Unsubscribe(subscriberId, subscriptionType, null))
+                .Unsubscribe(subscriberId, subscriptionType))
                 .Returns(false);
 
             // Act.

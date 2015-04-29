@@ -15,9 +15,9 @@
             _candidateServiceProvider = candidateServiceProvider;
         }
 
-        public MediatorResponse Unsubscribe(Guid? candidateId, Guid subscriberId, SubscriptionTypes subscriptionType, string subscriptionItemId = null)
+        public MediatorResponse Unsubscribe(Guid? candidateId, Guid subscriberId, SubscriptionTypes subscriptionType)
         {
-            var unsubscribed = _candidateServiceProvider.Unsubscribe(subscriberId, subscriptionType, subscriptionItemId);
+            var unsubscribed = _candidateServiceProvider.Unsubscribe(subscriberId, subscriptionType);
 
             if (!unsubscribed)
             {

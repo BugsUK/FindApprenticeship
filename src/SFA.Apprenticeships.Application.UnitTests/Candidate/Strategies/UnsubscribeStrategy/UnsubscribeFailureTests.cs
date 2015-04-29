@@ -2,7 +2,6 @@
 {
     using System;
     using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.SavedSearches;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
@@ -16,8 +15,6 @@
         private Mock<ILogService> _mockLogger;
         private Mock<ICandidateReadRepository> _mockCandidateRepository;
         private Mock<ISaveCandidateStrategy> _mockSaveCandidateStrategy;
-        private Mock<IRetrieveSavedSearchesStrategy> _mockRetrieveSavedSearchesStrategy;
-        private Mock<IUpdateSavedSearchStrategy> _mockUpdateSavedSearchStrategy;
 
         [SetUp]
         public void SetUp()
@@ -25,8 +22,6 @@
             _mockLogger = new Mock<ILogService>();
             _mockCandidateRepository = new Mock<ICandidateReadRepository>();
             _mockSaveCandidateStrategy = new Mock<ISaveCandidateStrategy>();
-            _mockRetrieveSavedSearchesStrategy = new Mock<IRetrieveSavedSearchesStrategy>();
-            _mockUpdateSavedSearchStrategy = new Mock<IUpdateSavedSearchStrategy>();
         }
 
         [Test]
@@ -36,9 +31,7 @@
             var strategy = new UnsubscribeStrategy(
                 _mockLogger.Object,
                 _mockCandidateRepository.Object,
-                _mockSaveCandidateStrategy.Object,
-                _mockRetrieveSavedSearchesStrategy.Object,
-                _mockUpdateSavedSearchStrategy.Object);
+                _mockSaveCandidateStrategy.Object);
 
             // Act.
             _mockCandidateRepository.Setup(mock => mock
