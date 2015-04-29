@@ -91,5 +91,6 @@
     <item id="Apprenticeships" value="Apprenticeships" />
     <item id="Traineeships" value="Traineeships" />
     <item id="Both" value="Both" />
+    <item id="Not sure" value="Not sure" />
   </data>
 </referenceData>
