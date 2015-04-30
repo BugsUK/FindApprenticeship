@@ -66,8 +66,8 @@
 
             var excludedKeys = new[]
             {
-                "CandidateId", "AlertsEnabled", "AlertsEnabledViaEmail", "AlertsEnabledViaText", "CategoryFullName",
-                "SubCategories", "SubCategoriesFullName", "LastResultsHash", "DateProcessed"
+                "CandidateId", "AlertsEnabled", "CategoryFullName", "SubCategories", "SubCategoriesFullName",
+                "LastResultsHash", "DateProcessed"
             };
 
             foreach (var kvp in propertyDictionary.Where(kvp => !excludedKeys.Contains(kvp.Key)))
