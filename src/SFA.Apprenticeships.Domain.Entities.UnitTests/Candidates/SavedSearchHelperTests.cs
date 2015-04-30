@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.UnitTests.Candidates
 {
     using System.Collections.Generic;
+    using Application.Interfaces.Vacancies;
     using Builder;
     using Entities.Candidates;
     using Entities.Vacancies.Apprenticeships;
@@ -28,6 +29,20 @@
             var name = savedSearch.Name();
 
             name.Should().Be("engineering within 5 miles of CV1 2WT");
+        }
+
+        [TestCase(ApprenticeshipSearchField.All, "")]
+        [TestCase(ApprenticeshipSearchField.JobTitle, " (Job title)")]
+        [TestCase(ApprenticeshipSearchField.Description, " (Description)")]
+        [TestCase(ApprenticeshipSearchField.Employer, " (Employer)")]
+        [TestCase(ApprenticeshipSearchField.ReferenceNumber, "")]
+        public void KeywordSearchFieldSearchName(ApprenticeshipSearchField apprenticeshipSearchField, string expectedSuffix)
+        {
+            var savedSearch = new SavedSearchBuilder().WithSearchField(apprenticeshipSearchField.ToString()).WithKeywords("engineering").WithinDistance(5).WithLocation("CV1 2WT").Build();
+
+            var name = savedSearch.Name();
+
+            name.Should().Be(string.Format("engineering{0} within 5 miles of CV1 2WT", expectedSuffix));
         }
 
         [Test]

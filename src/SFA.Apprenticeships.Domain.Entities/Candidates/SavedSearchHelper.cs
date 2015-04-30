@@ -20,6 +20,15 @@
                 if (!string.IsNullOrEmpty(savedSearch.Keywords))
                 {
                     sb.Append(savedSearch.Keywords);
+
+                    if (savedSearch.SearchField == "JobTitle")
+                    {
+                        sb.Append(" (Job title)");
+                    }
+                    else if (savedSearch.SearchField != "All" && savedSearch.SearchField != "ReferenceNumber")
+                    {
+                        sb.AppendFormat(" ({0})", savedSearch.SearchField);
+                    }
                 }
             }
             else if (savedSearch.SearchMode == ApprenticeshipSearchMode.Category)
