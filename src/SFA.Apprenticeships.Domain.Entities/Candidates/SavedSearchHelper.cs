@@ -19,16 +19,16 @@
             {
                 if (!string.IsNullOrEmpty(savedSearch.Keywords))
                 {
-                    sb.Append(savedSearch.Keywords);
-
                     if (savedSearch.SearchField == "JobTitle")
                     {
-                        sb.Append(" (Job title)");
+                        sb.Append("Job title: ");
                     }
                     else if (savedSearch.SearchField != "All" && savedSearch.SearchField != "ReferenceNumber")
                     {
-                        sb.AppendFormat(" ({0})", savedSearch.SearchField);
+                        sb.AppendFormat("{0}: ", savedSearch.SearchField);
                     }
+
+                    sb.Append(savedSearch.Keywords);
                 }
             }
             else if (savedSearch.SearchMode == ApprenticeshipSearchMode.Category)

@@ -32,17 +32,17 @@
         }
 
         [TestCase(ApprenticeshipSearchField.All, "")]
-        [TestCase(ApprenticeshipSearchField.JobTitle, " (Job title)")]
-        [TestCase(ApprenticeshipSearchField.Description, " (Description)")]
-        [TestCase(ApprenticeshipSearchField.Employer, " (Employer)")]
+        [TestCase(ApprenticeshipSearchField.JobTitle, "Job title: ")]
+        [TestCase(ApprenticeshipSearchField.Description, "Description: ")]
+        [TestCase(ApprenticeshipSearchField.Employer, "Employer: ")]
         [TestCase(ApprenticeshipSearchField.ReferenceNumber, "")]
-        public void KeywordSearchFieldSearchName(ApprenticeshipSearchField apprenticeshipSearchField, string expectedSuffix)
+        public void KeywordSearchFieldSearchName(ApprenticeshipSearchField apprenticeshipSearchField, string expectedPrefix)
         {
             var savedSearch = new SavedSearchBuilder().WithSearchField(apprenticeshipSearchField.ToString()).WithKeywords("engineering").WithinDistance(5).WithLocation("CV1 2WT").Build();
 
             var name = savedSearch.Name();
 
-            name.Should().Be(string.Format("engineering{0} within 5 miles of CV1 2WT", expectedSuffix));
+            name.Should().Be(string.Format("{0}engineering within 5 miles of CV1 2WT", expectedPrefix));
         }
 
         [Test]
