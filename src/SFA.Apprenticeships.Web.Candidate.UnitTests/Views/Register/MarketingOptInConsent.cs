@@ -16,7 +16,7 @@
             var acceptUpdatesCheckBox = result.GetElementbyId("AcceptUpdates");
             acceptUpdatesCheckBox.Should().NotBeNull();
             acceptUpdatesCheckBox.Attributes["checked"].Should().NotBeNull();
-            acceptUpdatesCheckBox.ParentNode.InnerText.Should().Be("I would like to receive the latest careers news and updates");
+            acceptUpdatesCheckBox.ParentNode.InnerText.Should().Be("I'd like to receive the latest careers news and updates");
         }
     }
 }

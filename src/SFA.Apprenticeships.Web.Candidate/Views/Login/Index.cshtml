@@ -27,7 +27,7 @@
                 @Html.LabelFor(m => m.Password, new { @class = "form-label" })
                 @Html.PasswordFor(m => m.Password, new { @class = "form-control form-control-3-4" })
                 @Html.ValidationMessageFor(m => m.Password, null)
-                
+
                 <p><a href='@Url.Action(RouteNames.ForgottenCredentials)'>I can't access my account</a></p>
             </div>
 
@@ -37,9 +37,9 @@
                     <summary>Activate your account</summary>
                     <div class="detail-content">
                         <ol class="list-number">
-                            <li>Once you've created an account we'll send you an activation code</li>
-                            <li>To activate your account sign in using your email address and password</li>
-                            <li>You'll then be asked to enter your activation code</li>
+                            <li>Once you've created an account we'll send you an activation code.</li>
+                            <li>Sign in using your email address and password.</li>
+                            <li>You'll then be asked to enter your activation code.</li>
                         </ol>
                     </div>
                 </details>
@@ -50,23 +50,23 @@
         <h2 class="heading-large">New user?</h2>
         <div class="text">
             <p>
-                You must
-                @Html.ActionLink("create an account", "Index", "Register", null, new { id = "create-account-link" }) if you've not used this service before.
+                If you haven’t used this service before you must
+                @Html.ActionLink("create an account", "Index", "Register", null, new { id = "create-account-link" }).
             </p>
             <p class="small-btm-margin">Creating an account allows you to:</p>
             <ul class="list-bullet">
-                <li>Apply for an apprenticeship or traineeship</li>
+                <li>tpply for an apprenticeship or traineeship</li>
                 <li>Track your apprenticeship applications</li>
-                <li>Receive alerts for new apprenticeships</li>
+                <li>receive alerts about new apprenticeships</li>
             </ul>
         </div>
         <details class="text hide-mob">
             <summary>Activate your account</summary>
             <div class="detail-content">
                 <ol class="list-number">
-                    <li>Once you've created an account we'll send you an activation code</li>
-                    <li>To activate your account sign in using your email address and password</li>
-                    <li>You'll then be asked to enter your activation code</li>
+                    <li>Once you've created an account we'll send you an activation code.</li>
+                    <li>Sign in using your email address and password.</li>
+                    <li>You'll then be asked to enter your activation code.</li>
                 </ol>
             </div>
         </details>

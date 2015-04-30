@@ -94,11 +94,11 @@
                     new {Id="forgottenEmailAddress", Enquiry = "I've forgotten my email address"},
                     new {Id="cantSignIn", Enquiry = "I can't sign in to my account"},
                     new {Id="cantActivate", Enquiry = "I can't activate my account"},
-                    new {Id="knowMore", Enquiry = "I would like to know more about eligibility and funding"},
+                    new {Id="knowMore", Enquiry = "I'd like to know more about eligibility and funding"},
                     new {Id="problemsSubmitting", Enquiry = "I'm having problems submitting my application"},
                     new {Id="noApplication", Enquiry = "I can't see my application"},
-                    new {Id="withdrawApplication", Enquiry = "I wish to withdraw an application"},
-                    new {Id="deleteAccount", Enquiry = "I wish to delete my account" }
+                    new {Id="withdrawApplication", Enquiry = "I want to withdraw an application"},
+                    new {Id="deleteAccount", Enquiry = "I want to delete my account" }
                 },
                 "Id",
                 "Enquiry"

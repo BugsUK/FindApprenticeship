@@ -56,7 +56,7 @@
 
         public static class AcceptUpdates
         {
-            public const string LabelText = "I would like to receive the latest careers news and updates";
+            public const string LabelText = "I'd like to receive the latest careers news and updates";
         }
 
         public static class TermsAndConditions
