@@ -19,11 +19,11 @@
         <p>
             <i class="fa fa-envelope-o"></i>
             We've sent you an email confirming your <b>@Html.DisplayFor(m => m.VacancyTitle)</b> application.
-            You can also <a title="Track the progress of your applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application at any time.
+            You can also <a title="Track the progress of your application" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">track the progress</a> of your application.
         </p>
         <p>You’ll be contacted if you’ve been selected for the next stage of the application process.</p>
         <details>
-            <summary>Apprenticeship contact details</summary>
+            <summary>Contact the provider</summary>
             <div class="detail-content">@Model.ProviderContactInfo</div>
         </details>
     </div>
@@ -54,7 +54,7 @@
             }
         </div>
         if (Model.SuggestedVacanciesSearchViewModel != null){
-             <p>View the apprenticeships in the <a href="@Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, Model.SuggestedVacanciesSearchViewModel)" title="View apprenticeships in category '@Model.SuggestedVacanciesCategory'">@Model.SuggestedVacanciesCategory</a> category.</p>
+             <p>View apprenticeships in the <a href="@Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, Model.SuggestedVacanciesSearchViewModel)" title="View apprenticeships in category '@Model.SuggestedVacanciesCategory'">@Model.SuggestedVacanciesCategory</a> category.</p>
         }
     }
 
