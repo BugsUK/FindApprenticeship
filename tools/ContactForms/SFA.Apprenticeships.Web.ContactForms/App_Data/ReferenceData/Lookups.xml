@@ -10,38 +10,37 @@
   </data>
   <data key="EmployeeCountTypes">
     <item id="" value="Please select" />
-    <item id="&lt; 9" value="&lt; 9" />
-    <item id="9 - 49" value="9 - 49" />
-    <item id="50 - 249" value="50 - 249" />
-    <item id="250 - 999" value="250 - 999" />
-    <item id="1000 - 4999" value="1000 - 4999" />
-    <item id="5000 +" value="5000 +" />
-    <item id="Don&apos;t know" value="Don&apos;t know" />
+    <item id="&lt;9" value="&lt; 9" />
+    <item id="9-49" value="9 - 49" />
+    <item id="50-249" value="50 - 249" />
+    <item id="250-999" value="250 - 999" />
+    <item id="1000-4999" value="1000 - 4999" />
+    <item id="5000+" value="5000 +" />
+    <item id="Not Known" value="Don&apos;t know" />
   </data>
   <data key="WorkSectorTypes">
-    <!--todo: discuss with mark if we should replace ID value from "Agriculture &amp; land based services" to "Agriculture_land_based_services"-->
     <item id="" value="Please select" />
-    <item id="Administration &amp; human resources" value="Administration &amp; human resources" />
-    <item id="Agriculture &amp; land based services" value="Agriculture &amp; land based services" />
-    <item id="Arts, creative &amp; cultural industries" value="Arts, creative &amp; cultural industries" />
-    <item id="Automotive industry &amp; passenger transport" value="Automotive industry &amp; passenger transport" />
-    <item id="Broadcast, film &amp; multimedia" value="Broadcast, film &amp; multimedia" />
-    <item id="Chemical, oil &amp; nuclear industry" value="Chemical, oil &amp; nuclear industry" />
+    <item id="Administration &amp; Human Resources" value="Administration &amp; Human Resources" />
+    <item id="Agriculture &amp; Land Based Services" value="Agriculture &amp; Land Based Services" />
+    <item id="Arts, Creative &amp; Cultural Industries" value="Arts, Creative &amp; Cultural Industries" />
+    <item id="Automotive Industry &amp; Passenger Transport" value="Automotive Industry &amp; Passenger Transport" />
+    <item id="Broadcast, Film &amp; Multimedia" value="Broadcast, Film &amp; Multimedia" />
+    <item id="Chemical, Oil &amp; Nuclear Industry" value="Chemical, Oil &amp; Nuclear Industry" />
     <item id="Construction" value="Construction" />
-    <item id="Customer service &amp; retail" value="Customer service &amp; retail" />
-    <item id="Energy or utilities industry" value="Energy/Utilities industry" />
-    <item id="Engineering, electricians &amp; building services" value="Engineering, electricians &amp; building services" />
-    <item id="Financial services" value="Financial services" />
-    <item id="Food and drink" value="Food and drink" />
-    <item id="Hair &amp; beauty" value="Hair &amp; beauty" />
-    <item id="Hospitality &amp; travel" value="Hospitality &amp; travel" />
-    <item id="Information technology &amp; communications" value="Information technology &amp; communications" />
+    <item id="Customer Service &amp; Retail" value="Customer Service &amp; Retail" />
+    <item id="Energy/Utilities Industry" value="Energy/Utilities Industry" />
+    <item id="Engineering, Electricians &amp; Building Services" value="Engineering, Electricians &amp; Building Services" />
+    <item id="Financial Services" value="Financial Services" />
+    <item id="Food and Drink" value="Food and Drink" />
+    <item id="Hair &amp; Beauty" value="Hair &amp; Beauty" />
+    <item id="Hospitality &amp; Travel" value="Hospitality &amp; Travel" />
+    <item id="Information Technology &amp; Communications" value="Information Technology &amp; Communications" />
     <item id="Logistics" value="Logistics" />
-    <item id="Manufacturing &amp; processing" value="Manufacturing &amp; processing" />
-    <item id="Marine industry" value="Marine industry" />
+    <item id="Manufacturing &amp; Processing" value="Manufacturing &amp; Processing" />
+    <item id="Marine Industry" value="Marine Industry" />
     <item id="Property" value="Property" />
-    <item id="Public services" value="Public services" />
-    <item id="Sports &amp; fitness" value="Sports &amp; fitness" />
+    <item id="Public Services" value="Public Services" />
+    <item id="Sports &amp; Fitness" value="Sports &amp; Fitness" />
   </data>
   <data key="PreviousExperienceTypes">
     <item id="" value="Please select" />
