@@ -175,8 +175,8 @@
 
             searchModel.Latitude = queryStringParams.Get("Latitude").GetValueOrNull<double>();
             searchModel.Longitude = queryStringParams.Get("Longitude").GetValueOrNull<double>();
-            searchModel.WithinDistance = queryStringParams.Get("WithinDistance").GetValueOrDefault<int>();
-            searchModel.ResultsPerPage = queryStringParams.Get("ResultsPerPage").GetValueOrDefault<int>();
+            searchModel.WithinDistance = queryStringParams.Get("WithinDistance").GetValueOrDefault(5);
+            searchModel.ResultsPerPage = queryStringParams.Get("ResultsPerPage").GetValueOrDefault(5);
 
             searchModel.Keywords = queryStringParams.Get("Keywords");
             searchModel.Location = queryStringParams.Get("Location");

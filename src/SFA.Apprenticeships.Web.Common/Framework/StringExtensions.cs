@@ -14,9 +14,10 @@
             if (string.IsNullOrEmpty(valueAsString)) return null;
             return (T)Convert.ChangeType(valueAsString, typeof(T));
         }
-        public static T GetValueOrDefault<T>(this string valueAsString) where T : struct
+
+        public static T GetValueOrDefault<T>(this string valueAsString, T defaultValue = default(T)) where T : struct
         {
-            if (string.IsNullOrEmpty(valueAsString)) return default(T);
+            if (string.IsNullOrEmpty(valueAsString)) return defaultValue;
             return (T)Convert.ChangeType(valueAsString, typeof(T));
         }
     }
