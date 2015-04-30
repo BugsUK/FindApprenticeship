@@ -63,8 +63,6 @@
                 .WithMessage(EducationViewModelMessages.FromYearMessages.NotInFutureErrorText);
 
             validator.RuleFor(x => x.ToYear)
-                .Matches(EducationViewModelMessages.ToYearMessages.WhiteListRegularExpression)
-                .WithMessage(EducationViewModelMessages.ToYearMessages.WhiteListErrorText)
                 .Must(ValidatorsHelper.EducationYearBeBeforeOrEqual)
                 .WithMessage(EducationViewModelMessages.ToYearMessages.BeforeOrEqualErrorText);
         }

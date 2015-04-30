@@ -71,7 +71,6 @@
 
             viewModelServerValidator.ShouldNotHaveValidationErrorFor(x => x.NameOfMostRecentSchoolCollege, viewModel);
             viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.FromYear, viewModel);
-            viewModelServerValidator.ShouldHaveValidationErrorFor(x => x.ToYear, viewModel);
         }
     }
 }
