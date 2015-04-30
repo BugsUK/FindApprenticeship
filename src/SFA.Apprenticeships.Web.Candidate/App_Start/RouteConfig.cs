@@ -33,6 +33,12 @@
                 );
 
             routes.MapRoute(
+                name: RouteNames.ForgottenCredentials,
+                url: "forgottencredentials",
+                defaults: new { controller = "Login", action = "ForgottenCredentials" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.Settings,
                 url: "settings",
                 defaults: new { controller = "Account", action = "Settings" }

@@ -284,10 +284,10 @@
                 {
                     case LoginMediatorCodes.ForgottenPassword.FailedValidation:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View("ForgottenCredentials", response.ViewModel);
+                        return View(RouteNames.ForgottenCredentials, response.ViewModel);
                     case LoginMediatorCodes.ForgottenPassword.FailedToSendResetCode:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return View("ForgottenCredentials", response.ViewModel);
+                        return View(RouteNames.ForgottenCredentials, response.ViewModel);
                     case LoginMediatorCodes.ForgottenPassword.PasswordSent:
                         UserData.Push(UserDataItemNames.EmailAddress, model.ForgottenPasswordViewModel.EmailAddress);
                         return RedirectToAction("ResetPassword");
@@ -311,7 +311,7 @@
                 {
                     case LoginMediatorCodes.ForgottenEmail.FailedValidation:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                        return View("ForgottenCredentials", response.ViewModel);
+                        return View(RouteNames.ForgottenCredentials, response.ViewModel);
                     case LoginMediatorCodes.ForgottenEmail.FailedToSendEmail:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToAction("Index", "Login");
@@ -334,7 +334,7 @@
 
                 if (string.IsNullOrWhiteSpace(emailAddress))
                 {
-                    return RedirectToAction(RouteNames.ForgottenCredentials);
+                    return RedirectToRoute(RouteNames.ForgottenCredentials);
                 }
 
                 var model = new PasswordResetViewModel { EmailAddress = emailAddress };
