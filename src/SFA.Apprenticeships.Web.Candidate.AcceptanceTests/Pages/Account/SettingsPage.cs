@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
 {
     using OpenQA.Selenium;
     using Registration;
@@ -116,85 +114,32 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Account
 
         #endregion
 
-        [ElementLocator(Id = "AllowEmailComms")]
-        public IWebElement AllowEmailComms { get; set; }
-
-        [ElementLocator(Id = "AllowSmsComms")]
-        public IWebElement AllowSmsComms { get; set; }
-
         [ElementLocator(Id = "verifyContainer")]
         public IWebElement VerifyContainer { get; set; }
 
-        public string IsAllowEmailComms
-        {
-            get
-            {
-                return AllowEmailComms.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
-            }
-        }
+        [ElementLocator(Id = "EnableApplicationStatusChangeAlertsViaEmail")]
+        public IWebElement EnableApplicationStatusChangeAlertsViaEmail { get; set; }
 
-        public string IsAllowSmsComms
-        {
-            get
-            {
-                return AllowSmsComms.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
-            }
-        }
+        [ElementLocator(Id = "EnableApplicationStatusChangeAlertsViaText")]
+        public IWebElement EnableApplicationStatusChangeAlertsViaText { get; set; }
 
-        [ElementLocator(Id = "SendApplicationSubmitted")]
-        public IWebElement SendApplicationSubmitted { get; set; }
+        [ElementLocator(Id = "EnableExpiringApplicationAlertsViaEmail")]
+        public IWebElement EnableExpiringApplicationAlertsViaEmail { get; set; }
 
-        [ElementLocator(Id = "SendApplicationStatusChanges")]
-        public IWebElement SendApplicationStatusChanges { get; set; }
+        [ElementLocator(Id = "EnableExpiringApplicationAlertsViaText")]
+        public IWebElement EnableExpiringApplicationAlertsViaText { get; set; }
 
-        [ElementLocator(Id = "SendApprenticeshipApplicationsExpiring")]
-        public IWebElement SendApprenticeshipApplicationsExpiring { get; set; }
+        [ElementLocator(Id = "EnableSavedSearchAlertsViaEmail")]
+        public IWebElement EnableSavedSearchAlertsViaEmail { get; set; }
 
-        [ElementLocator(Id = "SendSavedSearchAlerts")]
-        public IWebElement SendSavedSearchAlerts { get; set; }
+        [ElementLocator(Id = "EnableSavedSearchAlertsViaText")]
+        public IWebElement EnableSavedSearchAlertsViaText { get; set; }
 
-        [ElementLocator(Id = "SendMarketingCommunications")]
-        public IWebElement SendMarketingCommunications { get; set; }
+        [ElementLocator(Id = "EnableMarketingViaEmail")]
+        public IWebElement EnableMarketingViaEmail { get; set; }
 
-        public string IsSendApplicationSubmitted
-        {
-            get
-            {
-                return SendApplicationSubmitted.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
-            }
-        }
-
-        public string IsSendApplicationStatusChanges
-        {
-            get
-            {
-                return SendApplicationStatusChanges.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
-            }
-        }
-
-        public string IsSendApprenticeshipApplicationsExpiring
-        {
-            get
-            {
-                return SendApprenticeshipApplicationsExpiring.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
-            }
-        }
-
-        public string IsSendSavedSearchAlerts
-        {
-            get
-            {
-                return SendSavedSearchAlerts.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
-            }
-        }
-
-        public string IsSendMarketingCommunications
-        {
-            get
-            {
-                return SendMarketingCommunications.GetAttribute("checked") != null ? bool.TrueString : bool.FalseString;
-            }
-        }
+        [ElementLocator(Id = "EnableMarketingViaText")]
+        public IWebElement EnableMarketingViaText { get; set; }
 
         [ElementLocator(Id = "find-apprenticeship-link")]
         public IWebElement FindApprenticeshipLink { get; set; }

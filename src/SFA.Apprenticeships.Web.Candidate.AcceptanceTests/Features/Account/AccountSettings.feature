@@ -41,13 +41,15 @@ Scenario: As a candidate I can change my personal settings
 	And I wait to see AddressLine3
 	And I wait to see AddressLine4
 	And I wait to see Postcode
-
-	And I wait to see AllowEmailComms
-	And I wait to see AllowSmsComms
 	
-	And I wait to see SendApplicationStatusChanges
-	And I wait to see SendApprenticeshipApplicationsExpiring
-	And I wait to see SendMarketingCommunications
+	And I wait to see EnableApplicationStatusChangeAlertsViaEmail
+	And I wait to see EnableApplicationStatusChangeAlertsViaText
+	
+	And I wait to see EnableExpiringApplicationAlertsViaEmail
+	And I wait to see EnableExpiringApplicationAlertsViaText
+	
+	And I wait to see EnableMarketingViaEmail
+	And I wait to see EnableMarketingViaText
 	
 	And I wait to see UpdateDetailsButton
 
@@ -69,7 +71,8 @@ Scenario: As a candidate I can change my personal settings
 	| AddressLine4 | England             |
 	| Postcode     | SW1A 2AA            |
 
-	And I choose AllowEmailComms
+	And I choose EnableApplicationStatusChangeAlertsViaEmail
+	And I choose EnableExpiringApplicationAlertsViaEmail
 
 	And I choose UpdateDetailsButton
 	Then I am on the SettingsPage page
@@ -79,20 +82,21 @@ Scenario: As a candidate I can change my personal settings
 	| ValidationSummary | Does Not Exist |       |
 
 	And I see
-	| Field             | Rule   | Value               |
-	| Firstname         | Equals | Jane                |
-	| Lastname          | Equals | Dovedale            |
-	| Day               | Equals | 31                  |
-	| Month             | Equals | 1                   |
-	| Year              | Equals | 1994                |
-	| Phonenumber       | Equals | 07123000099         |
-	| AddressLine1      | Equals | 10 Downing Street   |
-	| AddressLine2      | Equals | City of Westminster |
-	| AddressLine3      | Equals | London              |
-	| AddressLine4      | Equals | England             |
-	| Postcode          | Equals | SW1A 2AA            |
-	| BannerUserName    | Equals | Jane Dovedale       |
-	| IsAllowEmailComms | Equals | False               |
+	| Field                                       | Rule   | Value               |
+	| Firstname                                   | Equals | Jane                |
+	| Lastname                                    | Equals | Dovedale            |
+	| Day                                         | Equals | 31                  |
+	| Month                                       | Equals | 1                   |
+	| Year                                        | Equals | 1994                |
+	| Phonenumber                                 | Equals | 07123000099         |
+	| AddressLine1                                | Equals | 10 Downing Street   |
+	| AddressLine2                                | Equals | City of Westminster |
+	| AddressLine3                                | Equals | London              |
+	| AddressLine4                                | Equals | England             |
+	| Postcode                                    | Equals | SW1A 2AA            |
+	| BannerUserName                              | Equals | Jane Dovedale       |
+	| EnableApplicationStatusChangeAlertsViaEmail | Equals | False               |
+	| EnableExpiringApplicationAlertsViaEmail     | Equals | False               |
 
 	And I see
 	| Field              | Rule   | Value                                     |
@@ -185,11 +189,11 @@ Scenario: As a candidate I can verify my mobile number
 	Given I navigated to the SettingsPage page
 	Then I am on the SettingsPage page
 	And I see
-	| Field           | Rule           | Value |
-	| VerifyContainer | Does Not Exist |       |
-	| IsAllowSmsComms | Equals         | False |
-	And I wait to see AllowSmsComms
-	When I choose AllowSmsComms
+	| Field                                      | Rule           | Value |
+	| VerifyContainer                            | Does Not Exist |       |
+	| EnableApplicationStatusChangeAlertsViaText | Equals         | False |
+	And I wait to see EnableApplicationStatusChangeAlertsViaText
+	When I choose EnableApplicationStatusChangeAlertsViaText
 	And I choose UpdateDetailsButton
 	Then I am on the VerifyMobile page
 	When I get my mobile verification code
@@ -199,26 +203,34 @@ Scenario: As a candidate I can verify my mobile number
 	And I choose VerifyNumberButton
 	Then I am on the SettingsPage page
 	And I see
-	| Field           | Rule   | Value |
-	| VerifyContainer | Exists |       |
-	| IsAllowSmsComms | Equals | True  |
+	| Field                                      | Rule   | Value |
+	| VerifyContainer                            | Exists |       |
+	| EnableApplicationStatusChangeAlertsViaText | Equals | True  |
 
 @US519
-Scenario: As a candidate I can opt into marketing messages
+Scenario: As a candidate I can opt into marketing messages via text
 	Given I have registered a new candidate
 	Given I navigated to the SettingsPage page
 	Then I am on the SettingsPage page
 	And I see
-	| Field                                    | Rule           | Value |
-	| VerifyContainer                          | Does Not Exist |       |
-	| IsAllowSmsComms                          | Equals         | False |
-	| IsSendApplicationStatusChanges           | Equals         | True  |
-	| IsSendApprenticeshipApplicationsExpiring | Equals         | True  |
-	| IsSendMarketingCommunications            | Equals         | True  |
-	When I choose AllowSmsComms
-	And I choose SendApplicationStatusChanges
-	And I choose SendApprenticeshipApplicationsExpiring
-	And I choose SendMarketingCommunications
+	| Field                                       | Rule           | Value |
+	| VerifyContainer                             | Does Not Exist |       |
+	| EnableApplicationStatusChangeAlertsViaEmail | Equals         | True  |
+	| EnableApplicationStatusChangeAlertsViaText  | Equals         | False |
+	| EnableExpiringApplicationAlertsViaEmail     | Equals         | True  |
+	| EnableExpiringApplicationAlertsViaText      | Equals         | False |
+	| EnableMarketingViaEmail                     | Equals         | True  |
+	| EnableMarketingViaText                      | Equals         | False |
+	
+	When I choose EnableApplicationStatusChangeAlertsViaEmail
+	And I choose EnableApplicationStatusChangeAlertsViaText
+		  
+	And I choose EnableExpiringApplicationAlertsViaEmail
+	And I choose EnableExpiringApplicationAlertsViaText
+		  
+	And I choose EnableMarketingViaEmail
+	And I choose EnableMarketingViaText
+
 	And I choose UpdateDetailsButton
 	Then I am on the VerifyMobile page
 	When I get my mobile verification code
@@ -228,8 +240,11 @@ Scenario: As a candidate I can opt into marketing messages
 	And I choose VerifyNumberButton
 	Then I am on the SettingsPage page
 	And I see
-	| Field                                    | Rule   | Value |
-	| VerifyContainer                          | Exists |       |
-	| IsSendApplicationStatusChanges           | Equals | False |
-	| IsSendApprenticeshipApplicationsExpiring | Equals | False |
-	| IsSendMarketingCommunications            | Equals | False |
+	| Field                                       | Rule   | Value |
+	| VerifyContainer                             | Exists |       |
+	| EnableApplicationStatusChangeAlertsViaEmail | Equals | False |
+	| EnableApplicationStatusChangeAlertsViaText  | Equals | True  |
+	| EnableExpiringApplicationAlertsViaEmail     | Equals | False |
+	| EnableExpiringApplicationAlertsViaText      | Equals | True  |
+	| EnableMarketingViaEmail                     | Equals | False |
+	| EnableMarketingViaText                      | Equals | True  |
