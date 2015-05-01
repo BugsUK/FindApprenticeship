@@ -2,6 +2,7 @@
 {
     using System;
 
+    //todo: consider removing "Inactive" state as implementation deletes the user rather than marking as inactive
     public enum UserStatuses
     {
         Unknown = 0,
@@ -9,6 +10,7 @@
         Active = 20,                // once activated
         Inactive = 30,              // when superseded by a new account (user changed their username)
         Locked = 90,                // if locked out for security reasons
-        Dormant = 100               // if the account is no longer in use (reqts are TBC)
+        Dormant = 100,              // if the account has not been recently used
+        PendingDeletion             // when marked for hard deletion following being dormant or if not activated
     }
 }
