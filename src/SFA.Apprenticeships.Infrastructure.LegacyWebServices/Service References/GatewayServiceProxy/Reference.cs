@@ -720,6 +720,10 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         
         private string wageTypeField;
         
+        private bool isDisableAllowedField;
+        
+        private bool isDisableAllowedFieldSpecified;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int VacancyId {
@@ -1233,6 +1237,30 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             set {
                 this.wageTypeField = value;
                 this.RaisePropertyChanged("WageType");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Order=32)]
+        public bool IsDisableAllowed {
+            get {
+                return this.isDisableAllowedField;
+            }
+            set {
+                this.isDisableAllowedField = value;
+                this.RaisePropertyChanged("IsDisableAllowed");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsDisableAllowedSpecified {
+            get {
+                return this.isDisableAllowedFieldSpecified;
+            }
+            set {
+                this.isDisableAllowedFieldSpecified = value;
+                this.RaisePropertyChanged("IsDisableAllowedSpecified");
             }
         }
         
@@ -4039,6 +4067,20 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
         
         private string mobileTelephoneField;
         
+        private System.Nullable<int> genderField;
+        
+        private bool genderFieldSpecified;
+        
+        private System.Nullable<int> ethnicOriginField;
+        
+        private bool ethnicOriginFieldSpecified;
+        
+        private string ethnicOrginOtherField;
+        
+        private System.Nullable<int> disabilityField;
+        
+        private bool disabilityFieldSpecified;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
         public int Id {
@@ -4228,6 +4270,90 @@ namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.GatewayServicePro
             set {
                 this.mobileTelephoneField = value;
                 this.RaisePropertyChanged("MobileTelephone");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=15)]
+        public System.Nullable<int> Gender {
+            get {
+                return this.genderField;
+            }
+            set {
+                this.genderField = value;
+                this.RaisePropertyChanged("Gender");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool GenderSpecified {
+            get {
+                return this.genderFieldSpecified;
+            }
+            set {
+                this.genderFieldSpecified = value;
+                this.RaisePropertyChanged("GenderSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=16)]
+        public System.Nullable<int> EthnicOrigin {
+            get {
+                return this.ethnicOriginField;
+            }
+            set {
+                this.ethnicOriginField = value;
+                this.RaisePropertyChanged("EthnicOrigin");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool EthnicOriginSpecified {
+            get {
+                return this.ethnicOriginFieldSpecified;
+            }
+            set {
+                this.ethnicOriginFieldSpecified = value;
+                this.RaisePropertyChanged("EthnicOriginSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=17)]
+        public string EthnicOrginOther {
+            get {
+                return this.ethnicOrginOtherField;
+            }
+            set {
+                this.ethnicOrginOtherField = value;
+                this.RaisePropertyChanged("EthnicOrginOther");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true, Order=18)]
+        public System.Nullable<int> Disability {
+            get {
+                return this.disabilityField;
+            }
+            set {
+                this.disabilityField = value;
+                this.RaisePropertyChanged("Disability");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool DisabilitySpecified {
+            get {
+                return this.disabilityFieldSpecified;
+            }
+            set {
+                this.disabilityFieldSpecified = value;
+                this.RaisePropertyChanged("DisabilitySpecified");
             }
         }
         

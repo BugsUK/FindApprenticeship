@@ -242,6 +242,10 @@
           <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="LandlineTelephone" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="MobileTelephone" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Gender" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="EthnicOrigin" nillable="true" type="xs:int" />
+          <xs:element minOccurs="0" name="EthnicOrginOther" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Disability" nillable="true" type="xs:int" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="Candidate" nillable="true" type="tns:Candidate" />
@@ -461,6 +465,7 @@
           <xs:element minOccurs="0" name="WeeklyWage" type="xs:decimal" />
           <xs:element minOccurs="0" name="WorkingWeek" nillable="true" type="xs:string" />
           <xs:element minOccurs="0" name="WageType" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="IsDisableAllowed" type="xs:boolean" />
         </xs:sequence>
       </xs:complexType>
       <xs:element name="VacancySummary" nillable="true" type="tns:VacancySummary" />
@@ -660,7 +665,7 @@
   </wsdl:binding>
   <wsdl:service name="GatewayService">
     <wsdl:port name="DefaultEndpoint" binding="tns:DefaultEndpoint">
-      <soap:address location="http://gateway.preprod.avms.sfa.bis.gov.uk/services/NASGatewayService/GatewayService.svc" />
+      <soap:address location="http://gateway.sit.avms.sfa.bis.gov.uk/services/NASGatewayService/GatewayService.svc" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

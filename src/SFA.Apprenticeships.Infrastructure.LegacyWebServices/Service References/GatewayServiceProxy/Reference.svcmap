@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="C:\Projects\SFA\Apprenticeships\LegacyServices\Wsdl\GatewayService-20150329.wsdl" Protocol="file" SourceId="1" />
+    <MetadataSource Address="C:\Projects\SFA\Apprenticeships\LegacyServices\Wsdl\GatewayService-20150501-1.4.wsdl" Protocol="file" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="GatewayService1.wsdl" MetadataType="Wsdl" ID="b31cce0b-b5b5-451f-8adc-dfd38d255755" SourceId="1" SourceUrl="file:///C:/Projects/SFA/Apprenticeships/LegacyServices/Wsdl/GatewayService-20150329.wsdl" />
+    <MetadataFile FileName="GatewayService.wsdl" MetadataType="Wsdl" ID="223c7f41-440c-45aa-bc16-40bb1d6c5f7f" SourceId="1" SourceUrl="file:///C:/Projects/SFA/Apprenticeships/LegacyServices/Wsdl/GatewayService-20150501-1.4.wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
