@@ -25,9 +25,12 @@
             get { return PropertyList.Any(i => i.Text.StartsWith("Closing date:")).ToString(); }
         }
 
+        [ElementLocator(Id = "multiple-positions-nationwide")]
+        public IWebElement MultiplePositionsNationwide { get; set; }
+
         public string NationwideDisplayed
         {
-            get { return PropertyList.Any(i => i.Text == "This apprenticeship has multiple positions nationwide.").ToString(); }
+            get { return (MultiplePositionsNationwide != null && MultiplePositionsNationwide.Text == "This apprenticeship has multiple positions nationwide.").ToString(); }
         }
     }
 

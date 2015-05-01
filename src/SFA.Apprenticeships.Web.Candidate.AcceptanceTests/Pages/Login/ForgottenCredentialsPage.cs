@@ -3,7 +3,7 @@
     using OpenQA.Selenium;
     using SpecBind.Pages;
 
-    [PageNavigation("/login/forgottencredentials")]
+    [PageNavigation("/forgottencredentials")]
     [PageAlias("ForgottenCredentialsPage")]
     public class ForgottenCredentialsPage : BaseValidationPage
     {
