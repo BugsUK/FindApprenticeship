@@ -22,63 +22,84 @@
 
         public UserContext GetUserContext()
         {
-            var cookie = _httpContext.Request.Cookies.Get(UserContextCookieName);
+            lock (_httpContext)
+            {
+                var cookie = _httpContext.Request.Cookies.Get(UserContextCookieName);
 
-            return cookie == null
-                ? null
-                : new UserContext
-                {
-                    UserName = cookie.Values[UserNameCookieName],
-                    FullName = cookie.Values[FullNameCookieName],
-                    AcceptedTermsAndConditionsVersion = cookie.Values[AcceptedTermsAndConditionsVersion]
-                };
+                return cookie == null
+                    ? null
+                    : new UserContext
+                    {
+                        UserName = cookie.Values[UserNameCookieName],
+                        FullName = cookie.Values[FullNameCookieName],
+                        AcceptedTermsAndConditionsVersion = cookie.Values[AcceptedTermsAndConditionsVersion]
+                    };
+            }
         }
 
         public void SetUserContext(string userName, string fullName, string acceptedTermsAndConditionsVersion)
         {
-            var cookie = new HttpCookie(UserContextCookieName);
+            lock (_httpContext)
+            {
+                var cookie = new HttpCookie(UserContextCookieName);
 
-            cookie.Values.Add(UserNameCookieName, userName);
-            cookie.Values.Add(FullNameCookieName, fullName);
-            cookie.Values.Add(AcceptedTermsAndConditionsVersion, acceptedTermsAndConditionsVersion);
+                cookie.Values.Add(UserNameCookieName, userName);
+                cookie.Values.Add(FullNameCookieName, fullName);
+                cookie.Values.Add(AcceptedTermsAndConditionsVersion, acceptedTermsAndConditionsVersion);
 
-            _httpContext.Response.Cookies.Add(cookie);
+                AddOrUpdateResponseCookie(_httpContext, cookie);
+            }
         }
 
         public void Clear()
         {
-            _httpContext.Response.Cookies.Add(CreateExpiredCookie(UserContextCookieName));
-            HttpDataCookie.Values.Clear();
+            lock (_httpContext)
+            {
+                var cookie = CreateExpiredCookie(UserContextCookieName);
+
+                AddOrUpdateResponseCookie(_httpContext, cookie);
+            }
         }
 
         public void Push(string key, string value)
         {
-            HttpDataCookie.Values.Remove(key);
-            HttpDataCookie.Values.Add(key, _httpContext.Server.UrlEncode(value));
+            lock (_httpContext)
+            {
+                var urlEncode = _httpContext.Server.UrlEncode(value);
+                if (urlEncode == null) return;
+                HttpDataCookie.Values.Remove(key);
+                HttpDataCookie.Values.Add(key, urlEncode);
+            }
         }
 
         public string Get(string key)
         {
-            if (HttpDataCookie == null || HttpDataCookie.Values[key] == null)
+            lock (_httpContext)
             {
-                return null;
-            }
+                if (HttpDataCookie == null || HttpDataCookie.Values[key] == null)
+                {
+                    return null;
+                }
 
-            return _httpContext.Server.UrlDecode(HttpDataCookie.Values[key]);
+                return _httpContext.Server.UrlDecode(HttpDataCookie.Values[key]);
+            }
         }
 
         public string Pop(string key)
         {
-            var value = Get(key);
-
-            if (value == null)
+            lock (_httpContext)
             {
-                return null;
+                var value = Get(key);
+
+                if (value == null)
+                {
+                    return null;
+                }
+
+                HttpDataCookie.Values.Remove(key);
+
+                return value;
             }
-
-            HttpDataCookie.Values.Remove(key);
-
-            return value;
         }
 
         private HttpCookie HttpDataCookie
@@ -87,21 +108,20 @@
             {
                 if (_httpDataCookie == null)
                 {
-                    _httpDataCookie = GetOrCreateDataCookie();
+                    _httpDataCookie = GetOrCreateDataCookie(_httpContext);
                 }
                 return _httpDataCookie;
             }
         }
 
-        private HttpCookie GetOrCreateDataCookie()
+        private static HttpCookie GetOrCreateDataCookie(HttpContextBase context)
         {
-            var requestDataCookie = _httpContext.Request.Cookies.Get(UserDataCookieName);
-            var responseDataCookie = _httpContext.Response.Cookies.Get(UserDataCookieName);
+            var requestDataCookie = context.Request.Cookies.Get(UserDataCookieName);
+            var responseDataCookie = context.Response.Cookies.Get(UserDataCookieName);
 
             var dataCookie = new HttpCookie(UserDataCookieName);
 
-            if (requestDataCookie != null && requestDataCookie.Values.HasKeys() 
-                && (responseDataCookie == null || !responseDataCookie.Values.HasKeys()))
+            if (requestDataCookie != null && requestDataCookie.Values.HasKeys() && (responseDataCookie == null || !responseDataCookie.Values.HasKeys()))
             {
                 foreach (var key in requestDataCookie.Values.AllKeys)
                 {
@@ -109,15 +129,9 @@
                 }
             }
 
-            if (responseDataCookie == null)
-            {
-                _httpContext.Response.Cookies.Add(dataCookie);
-            }
-            else
-            {
-                dataCookie = responseDataCookie.Values.HasKeys() ? responseDataCookie : dataCookie;
-                _httpContext.Response.Cookies.Set(dataCookie);
-            }
+            dataCookie = responseDataCookie != null && responseDataCookie.Values.HasKeys() ? responseDataCookie : dataCookie;
+
+            AddOrUpdateResponseCookie(context, dataCookie);
 
             return dataCookie;
         }
@@ -130,6 +144,18 @@
             };
 
             return cookie;
+        }
+
+        private static void AddOrUpdateResponseCookie(HttpContextBase context, HttpCookie cookie)
+        {
+            if (context.Response.Cookies.Get(cookie.Name) == null)
+            {
+                context.Response.Cookies.Add(cookie);
+            }
+            else
+            {
+                context.Response.Cookies.Set(cookie);
+            }
         }
     }
 }
