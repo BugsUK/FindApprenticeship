@@ -18,8 +18,8 @@
         public void ShouldCommunicateWithCandidate(bool enableAnyEmail, bool enableAnyText, bool verifiedMobile, bool expected)
         {
             var candidate = new CandidateBuilder(Guid.NewGuid())
-                .EnableOneCommunicationViaEmail(enableAnyEmail)
-                .EnableOneCommunicationViaText(enableAnyText)
+                .EnableOneCommunicationPreferenceViaEmail(enableAnyEmail)
+                .EnableOneCommunicationPreferenceViaText(enableAnyText)
                 .VerifiedMobile(verifiedMobile)
                 .Build();
 

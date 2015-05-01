@@ -125,7 +125,6 @@
             return this;
         }
 
-        // TODO: AG: US733: remove and replace with specific properties.
         public SettingsViewModelBuilder EnableAnyTextCommunication(bool enable)
         {
             _enableSavedSearchAlertsViaText = enable;

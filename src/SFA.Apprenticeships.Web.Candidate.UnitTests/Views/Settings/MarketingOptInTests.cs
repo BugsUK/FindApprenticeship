@@ -4,8 +4,6 @@
     using FluentAssertions;
     using NUnit.Framework;
 
-    // TODO: US733: review / possibly extend unit tests.
-
     [TestFixture]
     public class MarketingOptInTests
     {

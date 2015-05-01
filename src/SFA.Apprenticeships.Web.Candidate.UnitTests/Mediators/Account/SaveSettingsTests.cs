@@ -16,8 +16,6 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
-    // TODO: AG: US733: fix unit test (see Ignored).
-
     [TestFixture]
     public class SaveSettingsTests
     {
@@ -34,7 +32,6 @@
         }
 
         [Test]
-        [Ignore]
         public void SaveSuccessTest()
         {
             var settingsViewModel = new SettingsViewModel
@@ -50,7 +47,8 @@
                 DateOfBirth = new DateViewModel { Day = DateTime.Now.Day, Month = DateTime.Now.Month, Year = DateTime.Now.Year },
                 PhoneNumber = "079824524523",
                 Firstname = "FN",
-                Lastname = "LN"
+                Lastname = "LN",
+                EnableApplicationStatusChangeAlertsViaEmail = true
             };
 
             var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();

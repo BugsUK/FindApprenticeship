@@ -144,7 +144,6 @@
 
             if (settingsViewModel.Mode == SettingsViewModel.SettingsMode.YourAccount)
             {
-                // TODO: AG: US733: include full set of properties here and test.
                 var anyNotificationEnabled =
                     settingsViewModel.EnableApplicationStatusChangeAlertsViaEmail ||
                     settingsViewModel.EnableApplicationStatusChangeAlertsViaText ||

@@ -72,13 +72,13 @@
             return this;
         }
 
-        public CandidateBuilder EnableOneCommunicationViaEmail(bool enable)
+        public CandidateBuilder EnableOneCommunicationPreferenceViaEmail(bool enable)
         {
             EnableApplicationStatusChangeAlertsViaEmail(enable);
             return this;
         }
 
-        public CandidateBuilder EnableOneCommunicationViaText(bool enable)
+        public CandidateBuilder EnableOneCommunicationPreferenceViaText(bool enable)
         {
             EnableApplicationStatusChangeAlertsViaText(enable);
             return this;

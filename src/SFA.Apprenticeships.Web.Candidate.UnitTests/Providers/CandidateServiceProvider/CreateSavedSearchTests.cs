@@ -13,8 +13,6 @@
     using Moq;
     using NUnit.Framework;
 
-    // TODO: AG: US733: fix unit tests.
-
     [TestFixture]
     public class CreateSavedSearchTests
     {
@@ -242,10 +240,10 @@
 
             candidateService.Verify(cs => cs.GetCandidate(candidateId), Times.Once);
             candidateService.Verify(cs => cs.SaveCandidate(candidate), Times.Once);
+        
             candidate.Should().NotBeNull();
-            // TODO: AG: US733: fix unit test.
-            // candidate.CommunicationPreferences.AllowEmail.Should().BeFalse();
             candidate.CommunicationPreferences.SavedSearchPreferences.EnableEmail.Should().BeTrue();
+            candidate.CommunicationPreferences.SavedSearchPreferences.EnableText.Should().BeFalse();
         }
 
         [Test]

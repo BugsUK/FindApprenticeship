@@ -57,7 +57,6 @@
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
                 settings.SmsEnabled = _configurationService.Get<WebConfiguration>().Features.SmsEnabled;
 
-                // TODO: AG: US733: unit test migrated communication preferences.
                 var communicationPreferences = candidate.CommunicationPreferences;
 
                 settings.EnableApplicationStatusChangeAlertsViaEmail = communicationPreferences.ApplicationStatusChangePreferences.EnableEmail;
@@ -104,7 +103,6 @@
 
                 var communicationPreferences = candidate.CommunicationPreferences;
 
-                // TODO: AG: US733: unit test migrated communication preferences.
                 communicationPreferences.ApplicationStatusChangePreferences.EnableEmail = model.EnableApplicationStatusChangeAlertsViaEmail;
                 communicationPreferences.ApplicationStatusChangePreferences.EnableText = model.EnableApplicationStatusChangeAlertsViaText;
 

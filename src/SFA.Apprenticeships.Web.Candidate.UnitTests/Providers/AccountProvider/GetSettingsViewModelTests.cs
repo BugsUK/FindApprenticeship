@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.Communications;
     using Application.Interfaces.Users;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
@@ -40,16 +41,13 @@
         [TestCase(true, true, false)]
         [TestCase(false, true, true)]
         [TestCase(true, true, true)]
-        public void TestCommunicationMappings(bool verifiedMobile, bool enableOneEmail, bool enableOneText)
+        public void TestCommunicationMappings(bool verifiedMobile, bool enableEmail, bool enableText)
         {
             var candidateId = Guid.NewGuid();
             const string phoneNumber = "0123456789";
 
             var candidate = new CandidateBuilder(candidateId)
                 .PhoneNumber(phoneNumber)
-                // TODO: AG: US733: migrate communication preferences.
-                .EnableOneCommunicationViaEmail(enableOneEmail)
-                .EnableOneCommunicationViaText(enableOneText)
                 .VerifiedMobile(verifiedMobile)
                 .Build();
 
@@ -64,24 +62,35 @@
             viewModel.Should().NotBeNull();
             viewModel.PhoneNumber.Should().Be(phoneNumber);
             viewModel.VerifiedMobile.Should().Be(verifiedMobile);
-            // TODO: AG: US733: migrate communication preferences.
-            // viewModel.AllowEmailComms.Should().Be(allowEmailComms);
-            // viewModel.AllowSmsComms.Should().Be(allowSmsComms);
         }
 
-        [TestCase(false, false, false, false)]
-        [TestCase(true, true, true, true)]
-        [TestCase(true, false, true, false)]
-        [TestCase(false, true, false, true)]
-        public void TestMarketingMappings(bool sendApplicationStatusChanges, bool sendApprenticeshipApplicationsExpiring, bool sendSavedSearchAlertsViaEmail, bool sendMarketingCommunications)
+        [TestCase(false, false, false, false, CommunicationChannels.Email)]
+        [TestCase(false, false, false, true, CommunicationChannels.Email)]
+        [TestCase(false, false, true, false, CommunicationChannels.Email)]
+        [TestCase(false, true, false, false, CommunicationChannels.Email)]
+        [TestCase(true, false, false, false, CommunicationChannels.Email)]
+        [TestCase(false, false, false, false, CommunicationChannels.Sms)]
+        [TestCase(false, false, false, true, CommunicationChannels.Sms)]
+        [TestCase(false, false, true, false, CommunicationChannels.Sms)]
+        [TestCase(false, true, false, false, CommunicationChannels.Sms)]
+        [TestCase(true, false, false, false, CommunicationChannels.Sms)]
+        public void TestMarketingMappings(
+            bool enableApplicationStatusChangeAlerts,
+            bool enableExpiringApplicationAlerts,
+            bool sendMarketingCommunications,
+            bool sendSavedSearchAlerts,
+            CommunicationChannels channel)
         {
             var candidateId = Guid.NewGuid();
             var candidate = new CandidateBuilder(candidateId)
-                // TODO: AG: US733: migrate communication preferences.
-                // .SendApplicationStatusChanges(sendApplicationStatusChanges)
-                // .SendApprenticeshipApplicationsExpiring(sendApprenticeshipApplicationsExpiring)
-                // .EnableMarketingViaEmail(sendMarketingCommunications)
-                .EnableSavedSearchAlertsViaEmail(sendSavedSearchAlertsViaEmail)
+                .EnableApplicationStatusChangeAlertsViaEmail(enableApplicationStatusChangeAlerts && channel == CommunicationChannels.Email)
+                .EnableApplicationStatusChangeAlertsViaText(enableApplicationStatusChangeAlerts && channel == CommunicationChannels.Sms)
+                .EnableExpiringApplicationAlertsViaEmail(enableExpiringApplicationAlerts && channel == CommunicationChannels.Email)
+                .EnableExpiringApplicationAlertsViaText(enableExpiringApplicationAlerts && channel == CommunicationChannels.Sms)
+                .EnableMarketingViaEmail(sendMarketingCommunications && channel == CommunicationChannels.Email)
+                .EnableMarketingViaText(sendMarketingCommunications && channel == CommunicationChannels.Sms)
+                .EnableSavedSearchAlertsViaEmail(sendSavedSearchAlerts && channel == CommunicationChannels.Email)
+                .EnableSavedSearchAlertsViaText(sendSavedSearchAlerts && channel == CommunicationChannels.Sms)
                 .Build();
 
             var candidateService = new Mock<ICandidateService>();
@@ -92,12 +101,18 @@
             var viewModel = provider.GetSettingsViewModel(candidateId);
 
             viewModel.Should().NotBeNull();
-            // TODO: AG: US733: migrate communication preferences.
-            // viewModel.SendApplicationStatusChanges.Should().Be(sendApplicationStatusChanges);
-            // viewModel.SendApprenticeshipApplicationsExpiring.Should().Be(sendApprenticeshipApplicationsExpiring);
-            // viewModel.SendMarketingCommunications.Should().Be(sendMarketingCommunications);
 
-            viewModel.EnableSavedSearchAlertsViaEmail.Should().Be(sendSavedSearchAlertsViaEmail);
+            viewModel.EnableApplicationStatusChangeAlertsViaEmail.Should().Be(enableApplicationStatusChangeAlerts && channel == CommunicationChannels.Email);
+            viewModel.EnableApplicationStatusChangeAlertsViaText.Should().Be(enableApplicationStatusChangeAlerts && channel == CommunicationChannels.Sms);
+
+            viewModel.EnableExpiringApplicationAlertsViaEmail.Should().Be(enableExpiringApplicationAlerts && channel == CommunicationChannels.Email);
+            viewModel.EnableExpiringApplicationAlertsViaText.Should().Be(enableExpiringApplicationAlerts && channel == CommunicationChannels.Sms);
+
+            viewModel.EnableMarketingViaEmail.Should().Be(sendMarketingCommunications && channel == CommunicationChannels.Email);
+            viewModel.EnableMarketingViaText.Should().Be(sendMarketingCommunications && channel == CommunicationChannels.Sms);
+
+            viewModel.EnableSavedSearchAlertsViaEmail.Should().Be(sendSavedSearchAlerts && channel == CommunicationChannels.Email);
+            viewModel.EnableSavedSearchAlertsViaText.Should().Be(sendSavedSearchAlerts && channel == CommunicationChannels.Sms);
         }
 
         [TestCase(true)]

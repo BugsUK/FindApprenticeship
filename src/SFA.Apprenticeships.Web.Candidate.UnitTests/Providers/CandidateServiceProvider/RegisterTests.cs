@@ -42,7 +42,6 @@
 
             var registered = provider.Register(viewModel);
 
-            // TODO: AG: US733: unit test.
             candidate.Should().NotBeNull();
             candidate.CommunicationPreferences.Should().NotBeNull();
             candidate.CommunicationPreferences.MarketingPreferences.EnableEmail.Should().BeTrue();
