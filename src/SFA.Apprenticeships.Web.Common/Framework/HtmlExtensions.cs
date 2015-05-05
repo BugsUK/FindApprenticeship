@@ -351,12 +351,15 @@
 
             var tagHint = new TagBuilder("span");
             var tagCount = new TagBuilder("span");
+            var tagText = new TagBuilder("span");
 
             tagHint.Attributes.Add("class", "form-hint hide-nojs");
             tagCount.Attributes.Add("class", "maxchar-count");
+            tagText.Attributes.Add("class", "maxchar-text");
 
             tagCount.SetInnerText("4000");
-            tagHint.InnerHtml = tagCount + " characters remaining";
+            tagText.SetInnerText(" characters remaining");
+            tagHint.InnerHtml = tagCount + "\r\n" + tagText;
 
             return MvcHtmlString.Create(tagHint.ToString(TagRenderMode.Normal));
         }

@@ -147,19 +147,33 @@ $(function() {
         $enteredText  = $this.val(),
         $lineBreaks   = ($enteredText.match(/\n/g) || []).length,
         $lengthOfText = $enteredText.length + $lineBreaks,
+        $characterCount = Math.abs($maxLength - $lengthOfText),
         $charCountEl  = $this.closest('.form-group').find('.maxchar-count'),
+        $charTextEl   = $this.closest('.form-group').find('.maxchar-text'),
         $thisAria     = $this.closest('.form-group').find('.aria-limit');
 
     if($maxLength) {
-      $($charCountEl).text($maxLength - $lengthOfText);
+        $charCountEl.text($characterCount);
     }
 
     if($lengthOfText > $maxLength) {
-      $charCountEl.parent().addClass('has-error');
-      $thisAria.text("Character limit has been reached, you must type fewer than " + $maxLength + " characters");
+        $charCountEl.parent().addClass('has-error');
+        $charTextEl.text(' characters over the limit');
+        $thisAria.text("Character limit has been reached, you must type fewer than " + $maxLength + " characters");
+        if ($characterCount == 1) {
+            $charTextEl.text(' character over the limit');
+        } else {
+            $charTextEl.text(' characters over the limit');
+        }
     } else {
         $charCountEl.parent().removeClass('has-error');
-      $thisAria.text("");
+        $charTextEl.text(' characters remaining');
+        $thisAria.text("");
+        if ($characterCount == 1) {
+            $charTextEl.text(' character remaining');
+        } else {
+            $charTextEl.text(' characters remaining');
+        }
     }
   }
 

@@ -223,7 +223,11 @@ WriteLiteral("><span");
 
 WriteLiteral(" class=\"maxchar-count\"");
 
-WriteLiteral(">200</span> characters remaining</span>\r\n                        <span");
+WriteLiteral(">200</span> <span");
+
+WriteLiteral(" class=\"maxchar-text\"");
+
+WriteLiteral("> characters remaining</span></span>\r\n                        <span");
 
 WriteLiteral(" class=\"visuallyhidden aria-limit\"");
 
