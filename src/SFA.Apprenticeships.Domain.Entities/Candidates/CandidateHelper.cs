@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
+    using System;
+
     // TODO: AG: US733: unit test (CandidateHelperTests).
     // TODO: AG: US733: close code review.
     public static class CandidateHelper
