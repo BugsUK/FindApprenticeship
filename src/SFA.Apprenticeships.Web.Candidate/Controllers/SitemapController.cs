@@ -29,7 +29,7 @@
  
             var siteMapItems = vacancies
                 .Select(vacancy =>
-                    new SiteMapItem(vacancy.ToUrl(), DateTime.UtcNow, SiteMapChangeFrequency.Hourly));
+                    new SiteMapItem(vacancy.ToUrl(), vacancy.LastModifiedDate, SiteMapChangeFrequency.Hourly));
 
             return new SiteMapResult(siteMapItems);
         }

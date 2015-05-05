@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Vacancies;
@@ -55,8 +56,8 @@
 
             var vacancyIds = new[] { 1, 2, 3 };
 
-            _mockApprenticeshipVacanciesProvider.Setup(mock => mock.
-                GetAllVacancyIds(ApprenticeshipVacancyIndexName)).Returns(vacancyIds);
+            _mockApprenticeshipVacanciesProvider.Setup(mock => mock
+                .GetAllVacancyIds(ApprenticeshipVacancyIndexName)).Returns(vacancyIds);
 
             // Act.
             _processor.Process(new CreateVacancySiteMapRequest
@@ -66,7 +67,8 @@
             });
 
             // Assert.
-            _mockSiteMapVacancyProvider.Verify(mock => mock.SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
+            _mockSiteMapVacancyProvider.Verify(mock => mock
+                .SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
 
             _siteMapVacancies.Should().NotBeNull();
             _siteMapVacancies.Should().HaveSameCount(vacancyIds);
@@ -77,6 +79,7 @@
             }
 
             Assert.That(_siteMapVacancies.All(each => each.VacancyType == VacancyType.Apprenticeship));
+            Assert.That(_siteMapVacancies.All(each => each.LastModifiedDate != DateTime.MinValue));
         }
 
         [Test]
@@ -88,8 +91,8 @@
 
             var vacancyIds = new[] { 4, 5, 6, 42 };
 
-            _mockTraineeshipVacanciesProvider.Setup(mock => mock.
-                GetAllVacancyIds(TraineeshipVacancyIndexName)).Returns(vacancyIds);
+            _mockTraineeshipVacanciesProvider.Setup(mock => mock
+                .GetAllVacancyIds(TraineeshipVacancyIndexName)).Returns(vacancyIds);
 
             // Act.
             _processor.Process(new CreateVacancySiteMapRequest
@@ -99,7 +102,8 @@
             });
 
             // Assert.
-            _mockSiteMapVacancyProvider.Verify(mock => mock.SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
+            _mockSiteMapVacancyProvider.Verify(mock => mock
+                .SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
 
             _siteMapVacancies.Should().NotBeNull();
             _siteMapVacancies.Should().HaveSameCount(vacancyIds);
@@ -110,6 +114,7 @@
             }
 
             Assert.That(_siteMapVacancies.All(each => each.VacancyType == VacancyType.Traineeship));
+            Assert.That(_siteMapVacancies.All(each => each.LastModifiedDate != DateTime.MinValue));
         }
 
         [Test]
@@ -122,11 +127,11 @@
             var apprenticeshipVacancyIds = new[] { 1, 2, 3 };
             var traineeshipVacancyIds = new[] { 4, 5, 6, 42 };
 
-            _mockApprenticeshipVacanciesProvider.Setup(mock => mock.
-                GetAllVacancyIds(ApprenticeshipVacancyIndexName)).Returns(apprenticeshipVacancyIds);
+            _mockApprenticeshipVacanciesProvider.Setup(mock => mock
+                .GetAllVacancyIds(ApprenticeshipVacancyIndexName)).Returns(apprenticeshipVacancyIds);
 
-            _mockTraineeshipVacanciesProvider.Setup(mock => mock.
-                GetAllVacancyIds(TraineeshipVacancyIndexName)).Returns(traineeshipVacancyIds);
+            _mockTraineeshipVacanciesProvider.Setup(mock => mock
+                .GetAllVacancyIds(TraineeshipVacancyIndexName)).Returns(traineeshipVacancyIds);
 
             // Act.
             _processor.Process(new CreateVacancySiteMapRequest
@@ -136,7 +141,8 @@
             });
 
             // Assert.
-            _mockSiteMapVacancyProvider.Verify(mock => mock.SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
+            _mockSiteMapVacancyProvider.Verify(mock => mock
+                .SetVacancies(It.IsAny<IEnumerable<SiteMapVacancy>>()), Times.Once);
 
             _siteMapVacancies.Should().NotBeNull();
             _siteMapVacancies.Should().HaveCount(apprenticeshipVacancyIds.Length + traineeshipVacancyIds.Length);

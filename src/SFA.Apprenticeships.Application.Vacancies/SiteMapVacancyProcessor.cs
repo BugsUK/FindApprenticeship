@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancies
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Vacancies;
@@ -36,20 +37,23 @@
             var traineeshipVacancies = _traineeshipVacanciesProvider.GetAllVacancyIds(request.TraineeshipVacancyIndexName).ToList();
 
             var siteMapVacancies = new List<SiteMapVacancy>();
+            var lastModifiedDate = DateTime.UtcNow;
 
             siteMapVacancies.AddRange(
                 apprenticeshipVacancies.Select(vacancyId =>
                     new SiteMapVacancy
                     {
                         VacancyId = vacancyId,
-                        VacancyType = VacancyType.Apprenticeship
+                        VacancyType = VacancyType.Apprenticeship,
+                        LastModifiedDate = lastModifiedDate
                     })
                     .Union(
                         traineeshipVacancies.Select(vacancyId =>
                             new SiteMapVacancy
                             {
                                 VacancyId = vacancyId,
-                                VacancyType = VacancyType.Traineeship
+                                VacancyType = VacancyType.Traineeship,
+                                LastModifiedDate = lastModifiedDate
                             })));
 
             _logger.Info("Caching {0} apprenticeship + {1} traineeship vacancies",
