@@ -40,19 +40,20 @@ $(function () {
 
             geocoder.geocode({ 'latLng': latlng }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
+                    if (results[0]) {
                         var myPostcode;
 
-                        for (var i = 0; i < results[1].address_components.length; i++) {
-                            for (var j = 0; j < results[1].address_components[i].types.length; j++) {
-                                if (results[1].address_components[i].types[j] == "postal_code") {
-                                    myPostcode = results[1].address_components[i].long_name;
+                        for (var i = 0; i < results[0].address_components.length; i++) {
+                            for (var j = 0; j < results[0].address_components[i].types.length; j++) {
+                                if (results[0].address_components[i].types[j] == "postal_code") {
+                                    myPostcode = results[0].address_components[i].long_name;
                                     break;
                                 }
                             }
                         }
 
                         output.value = myPostcode;
+                        output.placeholder = "";
 
                     } else {
                         output.placeholder = 'No location found';
