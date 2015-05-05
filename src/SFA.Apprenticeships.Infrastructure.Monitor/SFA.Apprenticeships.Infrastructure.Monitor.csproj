@@ -245,6 +245,9 @@
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configs\dataCacheClient.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

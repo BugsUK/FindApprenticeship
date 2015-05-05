@@ -110,6 +110,7 @@ csx
 *.build.csdef
 *.cscfg
 *.csdef
+dataCacheClient.config
 settings.config
 settings.json
 emailSettings.config

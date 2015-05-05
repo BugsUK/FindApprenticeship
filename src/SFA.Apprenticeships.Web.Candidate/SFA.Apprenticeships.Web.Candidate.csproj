@@ -262,6 +262,10 @@
     <Content Include="Content\_assets\img\icon-sms.svg" />
     <Content Include="Content\_assets\js\nas\geoLocater.js" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Configs\dataCacheClient.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -685,6 +689,7 @@
     </None>
     <None Include="Web.Sit.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
   </ItemGroup>
   <ItemGroup>

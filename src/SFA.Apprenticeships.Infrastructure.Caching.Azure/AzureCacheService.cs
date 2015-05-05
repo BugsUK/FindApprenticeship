@@ -13,12 +13,16 @@
         private const string ItemReturnedFromCacheFormat = "Item with key: {0} returned from cache";
         private const string ItemNotInCacheFormat = "Item with key: {0} not in cache";
 
+        private const string DataCacheClientConfigurationName = "nascache";
+
         private readonly DataCache _cache;
 
         public AzureCacheService(ILogService logger)
         {
             _logger = logger;
-            var cacheFactory = new DataCacheFactory();
+
+            var cacheFactory = new DataCacheFactory(new DataCacheFactoryConfiguration(DataCacheClientConfigurationName));
+            
             _cache = cacheFactory.GetDefaultCache();
         }
 
