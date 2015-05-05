@@ -50,7 +50,7 @@
   </data>
   <data key="EnquirySourceTypes">
     <item id="" value="Please select" />
-    <item id="Telephone call" value="Telephone Call" />
+    <item id="Telephone Call" value="Telephone call" />
     <item id="Postcard/direct mail/letter" value="Postcard/direct mail/letter" />
     <item id="Newspaper" value="Newspaper" />
     <item id="Magazine" value="Magazine" />
@@ -58,19 +58,19 @@
     <item id="Event" value="Event" />
     <item id="Email/e-newsletter" value="Email/e-newsletter" />
     <item id="Online advert" value="Online advert" />
-    <item id="Online advisor" value="Online advisor" />
+    <item id="Online Advisor" value="Online advisor" />
     <item id="Twitter" value="Twitter" />
     <item id="Facebook" value="Facebook" />
-    <item id="Search engine e.g. Google" value="Search engine e.g. Google" />
-    <item id="Website - gov.uk" value="Website - gov.uk" />
-    <item id="Website - greatbusiness.gov.uk" value="Website - greatbusiness.gov.uk" />
-    <item id="Television" value="Television" />
-    <item id="Mobile app (Apprenticeships)" value="Mobile app (Apprenticeships)" />
-    <item id="Mobile app (NCS)" value="Mobile app (NCS)" />
-    <item id="Jobcentre plus" value="Jobcentre plus" />
-    <item id="National careers service" value="National careers service" />
-    <item id="School/college" value="School/college" />
-    <item id="Training organisation" value="Training organisation" />
+    <item id="Search engine e.g. google" value="Search engine e.g. Google" />
+    <item id="Website - DirectGov" value="Website - gov.uk" />
+    <item id="Website - Business Link" value="Website - greatbusiness.gov.uk" />
+    <item id="TV" value="Television" />
+    <item id="Mobile App (Apprenticeships)" value="Mobile App (Apprenticeships)" />
+    <item id="Mobile App (NCS)" value="Mobile App (NCS)" />
+    <item id="Jobcentre Plus" value="Job Centre Plus" />
+    <item id="National Careers Service" value="National Careers Service" />
+    <item id="School/College" value="School/college" />
+    <item id="Training Organisation" value="Training organisation" />
     <item id="Word of mouth" value="Word of mouth" />
     <item id="Other" value="Other" />
   </data>
