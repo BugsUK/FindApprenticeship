@@ -1,3 +1,5 @@
 # TODO: US438: Sitemap: https://www.findapprenticeship.service.gov.uk/sitemap.xml
+User-agent: SortSite
+Allow: /
 User-agent: *
 Disallow: /
