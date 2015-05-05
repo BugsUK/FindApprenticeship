@@ -92,7 +92,6 @@
     <Compile Include="Candidates\CandidateHelper.cs" />
     <Compile Include="Candidates\CommunicationPreference.cs" />
     <Compile Include="Candidates\CommunicationPreferences.cs" />
-    <Compile Include="Candidates\CommunicationPreferencesHelpers.cs" />
     <Compile Include="Candidates\HelpPreferences.cs" />
     <Compile Include="Candidates\SavedSearch.cs" />
     <Compile Include="Candidates\SavedSearchHelper.cs" />
