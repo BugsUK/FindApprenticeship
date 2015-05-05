@@ -27,6 +27,9 @@
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string Description { get; set; }
 
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public bool IsPositiveAboutDisability { get; set; }
+
         [ElasticProperty(Type = FieldType.GeoPoint, Index = FieldIndexOption.Analyzed)]
         public GeoPoint Location { get; set; }
 

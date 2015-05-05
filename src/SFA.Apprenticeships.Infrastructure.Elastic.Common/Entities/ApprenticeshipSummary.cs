@@ -27,6 +27,9 @@
         [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "snowballStopwordsExtended")]
         public string Description { get; set; }
 
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public bool IsPositiveAboutDisability { get; set; }
+
         [ElasticProperty(Index = FieldIndexOption.Analyzed)]
         public VacancyLocationType VacancyLocationType { get; set; }
 

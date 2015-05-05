@@ -38,6 +38,9 @@
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.ShortDescription))
 
+                .ForMember(dest => dest.IsPositiveAboutDisability,
+                    opt => opt.MapFrom(src => src.IsDisableAllowed))
+
                 .ForMember(dest => dest.Location,
                     opt => opt.ResolveUsing<LegacyVacancySummaryLocationResolver>()
                         .FromMember(src => src.Address))
@@ -93,6 +96,9 @@
 
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.ShortDescription))
+
+                .ForMember(dest => dest.IsPositiveAboutDisability,
+                    opt => opt.MapFrom(src => src.IsDisableAllowed))
 
                 .ForMember(dest => dest.Location,
                     opt => opt.ResolveUsing<LegacyVacancySummaryLocationResolver>()

@@ -85,6 +85,8 @@
 
         public bool IsEmployerAnonymous { get; set; }
 
+        public bool IsPositiveAboutDisability { get; set; }
+
         #endregion
 
         #region Provider

@@ -45,7 +45,6 @@
                                     <input @{if (Model.VacancySearch.DisplayWage) { <text> checked="checked" </text> }} type="checkbox" id="DisplayWage">
                                     <label for="DisplayWage">Wage</label>
                                 </li>
-
                             </ul>
                         </div>
                     </details>
@@ -120,6 +119,15 @@
                             <li data-show="DisplayStartDate" @{if (!Model.VacancySearch.DisplayStartDate) { <text> class="toggle-content" </text> }}><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
                             <li data-show="DisplayApprenticeshipLevel" @{if (!Model.VacancySearch.DisplayApprenticeshipLevel) { <text> class="toggle-content" </text> }}><b>Apprenticeship level:</b> @vacancy.ApprenticeshipLevel</li>
                             <li data-show="DisplayWage" @{if (!Model.VacancySearch.DisplayWage) { <text> class="toggle-content" </text> }}><b>Wage:</b> @vacancy.Wage p/week</li>
+                            
+                            @if (vacancy.IsPositiveAboutDisability)
+                            {
+                                <li class="small-btm-margin">
+                                    <a class="inl-block" href="https://www.gov.uk/looking-for-work-if-disabled" target="_blank">
+                                        <img src="@Url.CdnContent("img/logo-ticks.gif", "~/Content/_assets")" height="30" alt="Two ticks logo - Positive about disabled people">
+                                    </a>
+                                </li>
+                            }
 
                             @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.National)
                             {

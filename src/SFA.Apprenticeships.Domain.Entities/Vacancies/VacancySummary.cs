@@ -20,6 +20,7 @@
             ClosingDate = vacancySummary.ClosingDate;
             Description = vacancySummary.Description;
             EmployerName = vacancySummary.EmployerName;
+            IsPositiveAboutDisability = vacancySummary.IsPositiveAboutDisability;
             Location = vacancySummary.Location;
             Category = vacancySummary.Category;
             CategoryCode = vacancySummary.CategoryCode;
@@ -42,6 +43,8 @@
         public string Description { get; set; }
 
         public string EmployerName { get; set; }
+
+        public bool IsPositiveAboutDisability { get; set; }
 
         public GeoPoint Location { get; set; }
 

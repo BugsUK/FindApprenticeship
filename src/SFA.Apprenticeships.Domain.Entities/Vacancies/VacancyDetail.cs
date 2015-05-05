@@ -73,6 +73,8 @@
 
         public bool IsEmployerAnonymous { get; set; }
 
+        public bool IsPositiveAboutDisability { get; set; }
+
         public string ExpectedDuration { get; set; }
 
         public Address VacancyAddress { get; set; }

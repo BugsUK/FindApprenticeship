@@ -79,6 +79,9 @@
                 .ForMember(dest => dest.IsNasProvider,
                     opt => opt.MapFrom(src => src.IsNasProviderSpecified && src.IsNasProvider))
 
+                .ForMember(dest => dest.IsPositiveAboutDisability,
+                    opt => opt.MapFrom(src => src.IsDisableAllowed))
+
                 .ForMember(dest => dest.IsRecruitmentAgencyAnonymous,
                     opt => opt.MapFrom(src => src.IsRecruitmentAgncyAnonymousSpecified && src.IsRecruitmentAgncyAnonymous))
 
