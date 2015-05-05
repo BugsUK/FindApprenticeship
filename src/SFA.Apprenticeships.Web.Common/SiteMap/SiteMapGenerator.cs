@@ -39,7 +39,7 @@
 
             if (siteMapItem.LastModified.HasValue)
             {
-                element.Add(new XElement(Xmlns + "lastmod", siteMapItem.LastModified.Value.ToString("yyyy-MM-dd")));
+                element.Add(new XElement(Xmlns + "lastmod", siteMapItem.LastModified.Value.ToString("o")));
             }
 
             if (siteMapItem.ChangeFrequency.HasValue)
