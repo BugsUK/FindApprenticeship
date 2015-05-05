@@ -128,5 +128,54 @@
                 }
             }
         }
+
+
+        [Test]
+        public void ShowIsPositiveAboutDisabled()
+        {
+            // Arrange.
+            const int hits = 5;
+
+            var viewModel = new ApprenticeshipSearchResponseViewModelBuilder()
+                .WithIsPositiveAboutDisability(true)
+                .WithTotalLocalHits(hits)
+                .Build();
+
+            // Act.
+            var view = new SearchResultsViewBuilder().With(viewModel).Render();
+
+            //Assert.
+
+            foreach (var vacancy in viewModel.Vacancies)
+            {
+                var disabledLink = view.GetElementbyId(string.Format("positive-about-disabled-{0}", vacancy.Id));
+                disabledLink.Should().NotBeNull();
+                disabledLink.GetAttributeValue("href", null).Should().Be("https://www.gov.uk/looking-for-work-if-disabled");
+                disabledLink.GetAttributeValue("target", null).Should().Be("_blank");
+            }
+        }
+
+        [Test]
+        public void HideIsPositiveAboutDisabled()
+        {
+            // Arrange.
+            const int hits = 5;
+
+            var viewModel = new ApprenticeshipSearchResponseViewModelBuilder()
+                .WithIsPositiveAboutDisability(false)
+                .WithTotalLocalHits(hits)
+                .Build();
+
+            // Act.
+            var view = new SearchResultsViewBuilder().With(viewModel).Render();
+
+            //Assert.
+
+            foreach (var vacancy in viewModel.Vacancies)
+            {
+                var disabledLink = view.GetElementbyId(string.Format("positive-about-disabled-{0}", vacancy.Id));
+                disabledLink.Should().BeNull();
+            }
+        }
     }
 }
