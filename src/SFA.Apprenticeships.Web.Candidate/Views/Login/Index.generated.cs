@@ -275,7 +275,7 @@ WriteLiteral("                ");
 
             
             #line 54 "..\..\Views\Login\Index.cshtml"
-           Write(Html.ActionLink("create an account", "Index", "Register", null, new { id = "create-account-link" }));
+           Write(Html.ActionLink("create an account", "Index", "Register", null, new { id = "create-account-link", @class = "inl-block" }));
 
             
             #line default
