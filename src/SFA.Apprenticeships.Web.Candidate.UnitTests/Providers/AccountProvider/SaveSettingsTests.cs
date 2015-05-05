@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.AccountProvider
 {
     using System;
+    using Application.Interfaces.Communications;
     using Domain.Entities.Candidates;
     using Application.Interfaces.Candidates;
     using Builders;
@@ -12,57 +13,75 @@
     [TestFixture]
     public class SaveSettingsTests
     {
-        [TestCase("0123456789", false)]
-        [TestCase("0123456789", false)]
-        [TestCase("0123456789", false)]
-        [TestCase("0123456789", false)]
-        [TestCase("0123456789", true)]
-        [TestCase("0123456789", true)]
-        [TestCase("0123456789", true)]
-        [TestCase("0123456789", true)]
-        public void CommunicationMappingTest(string phoneNumber, bool verifiedMobile)
+        [TestCase("0123456789", CommunicationChannels.Email, false)]
+        [TestCase("0987654321", CommunicationChannels.Sms, false)]
+        [TestCase("0123456789", CommunicationChannels.Email, true)]
+        [TestCase("0987654321", CommunicationChannels.Sms, true)]
+        public void ShouldMapCommunicationPreferences(string phoneNumber, CommunicationChannels communicationChannel, bool verifiedMobile)
         {
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
+
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).PhoneNumber(phoneNumber).VerifiedMobile(verifiedMobile).Build);
-            var viewModel = new SettingsViewModelBuilder().PhoneNumber(phoneNumber).Build();
+
+            var viewModel = new SettingsViewModelBuilder()
+                .PhoneNumber(phoneNumber)
+                .EnableApplicationStatusChangeAlertsViaEmail(communicationChannel == CommunicationChannels.Email)
+                .EnableApplicationStatusChangeAlertsViaText(communicationChannel == CommunicationChannels.Sms)
+                .EnableExpiringApplicationAlertsViaEmail(communicationChannel == CommunicationChannels.Email)
+                .EnableExpiringApplicationAlertsViaText(communicationChannel == CommunicationChannels.Sms)
+                .EnableMarketingViaEmail(communicationChannel == CommunicationChannels.Email)
+                .EnableMarketingViaText(communicationChannel == CommunicationChannels.Sms)
+                .EnableSavedSearchAlertsViaEmail(communicationChannel == CommunicationChannels.Email)
+                .EnableSavedSearchAlertsViaText(communicationChannel == CommunicationChannels.Sms)
+                .Build();
+
             var provider = new AccountProviderBuilder().With(candidateService).Build();
 
             Candidate candidate;
+
             var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
 
             result.Should().BeTrue();
+
             candidate.RegistrationDetails.Should().NotBeNull();
             candidate.RegistrationDetails.PhoneNumber.Should().Be(phoneNumber);
+
             candidate.CommunicationPreferences.Should().NotBeNull();
-            // TODO: AG: US733: extend unit test.
-            // candidate.CommunicationPreferences.AllowEmail.Should().Be(allowEmailComms);
-            // candidate.CommunicationPreferences.AllowMobile.Should().Be(allowSmsComms);
+
+            {
+                var preferences = candidate.CommunicationPreferences.ApplicationStatusChangePreferences;
+
+                preferences.Should().NotBeNull();
+                preferences.EnableEmail.Should().Be(communicationChannel == CommunicationChannels.Email);
+                preferences.EnableText.Should().Be(communicationChannel == CommunicationChannels.Sms);
+            }
+
+            {
+                var preferences = candidate.CommunicationPreferences.ExpiringApplicationPreferences;
+
+                preferences.Should().NotBeNull();
+                preferences.EnableEmail.Should().Be(communicationChannel == CommunicationChannels.Email);
+                preferences.EnableText.Should().Be(communicationChannel == CommunicationChannels.Sms);
+            }
+
+            {
+                var preferences = candidate.CommunicationPreferences.MarketingPreferences;
+
+                preferences.Should().NotBeNull();
+                preferences.EnableEmail.Should().Be(communicationChannel == CommunicationChannels.Email);
+                preferences.EnableText.Should().Be(communicationChannel == CommunicationChannels.Sms);
+            }
+
+            {
+                var preferences = candidate.CommunicationPreferences.SavedSearchPreferences;
+
+                preferences.Should().NotBeNull();
+                preferences.EnableEmail.Should().Be(communicationChannel == CommunicationChannels.Email);
+                preferences.EnableText.Should().Be(communicationChannel == CommunicationChannels.Sms);
+            }
+
             candidate.CommunicationPreferences.VerifiedMobile.Should().Be(verifiedMobile);
-        }
-
-        [Test]
-        public void MarketingMappingTest()
-        {
-            var candidateId = Guid.NewGuid();
-            var candidateService = new Mock<ICandidateService>();
-            
-            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build);
-
-            var viewModel = new SettingsViewModelBuilder().Build();
-            var provider = new AccountProviderBuilder().With(candidateService).Build();
-
-            Candidate candidate;
-            var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
-
-            result.Should().BeTrue();
-            
-            candidate.RegistrationDetails.Should().NotBeNull();
-            candidate.CommunicationPreferences.Should().NotBeNull();
-
-            // TODO: AG: US733: extend unit test.
-            // candidate.CommunicationPreferences.AllowEmail.Should().Be(allowEmailComms);
-            // candidate.CommunicationPreferences.AllowMobile.Should().Be(allowSmsComms);
         }
 
         [TestCase("0123456789", false, false, false)]
@@ -73,33 +92,40 @@
         [TestCase("9876543210", true, false, false)]
         [TestCase("9876543210", false, true, true)]
         [TestCase("9876543210", true, true, true)]
-        public void MobileVerificationRequired(string newPhoneNumber, bool verifiedMobile, bool enableAnyTextCommunication, bool mobileVerificationRequired)
+        public void ShouldRequireMobileVerification(string newPhoneNumber, bool verifiedMobile, bool enableCommunicationViaText, bool mobileVerificationRequired)
         {
             const string mobileVerificationCode = "1234";
+            
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
-            const string phoneNumber = "0123456789";
-            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).PhoneNumber(phoneNumber).VerifiedMobile(verifiedMobile).Build);
+            
+            const string currentPhoneNumber = "0123456789";
+            
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).PhoneNumber(currentPhoneNumber).VerifiedMobile(verifiedMobile).Build);
             candidateService.Setup(cs => cs.SaveCandidate(It.IsAny<Candidate>())).Returns<Candidate>(c =>
             {
                 if (c.MobileVerificationRequired())
                     c.CommunicationPreferences.MobileVerificationCode = mobileVerificationCode;
                 return c;
             });
-            var viewModel = new SettingsViewModelBuilder().PhoneNumber(newPhoneNumber).EnableAnyTextCommunication(enableAnyTextCommunication).Build();
+
+            var viewModel = new SettingsViewModelBuilder().PhoneNumber(newPhoneNumber).EnableMarketingViaText(enableCommunicationViaText).Build();
             var provider = new AccountProviderBuilder().With(candidateService).Build();
 
             Candidate candidate;
+
             var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
 
             result.Should().BeTrue();
+
             candidate.RegistrationDetails.Should().NotBeNull();
             candidate.RegistrationDetails.PhoneNumber.Should().Be(newPhoneNumber);
-            candidate.CommunicationPreferences.Should().NotBeNull();
-            // TODO: AG: US733: fix unit test.
-            // candidate.CommunicationPreferences.AllowMobile.Should().Be(allowSmsComms);
 
-            if (newPhoneNumber != phoneNumber)
+            candidate.CommunicationPreferences.Should().NotBeNull();
+            candidate.CommunicationPreferences.MarketingPreferences.Should().NotBeNull();
+            candidate.CommunicationPreferences.MarketingPreferences.EnableText.Should().Be(enableCommunicationViaText);
+
+            if (newPhoneNumber != currentPhoneNumber)
             {
                 candidate.CommunicationPreferences.VerifiedMobile.Should().BeFalse();
             }
