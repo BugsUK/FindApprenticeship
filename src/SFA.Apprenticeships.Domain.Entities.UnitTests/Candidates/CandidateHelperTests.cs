@@ -39,7 +39,6 @@
             candidate.MobileVerificationRequired().Should().Be(expected);
         }
 
-
         [TestCase(false, false, false, false)] // no email or sms
         [TestCase(false, false, true, false)] // no email or sms, verified mobile
         [TestCase(false, true, false, false)] // sms only, no verified mobile
