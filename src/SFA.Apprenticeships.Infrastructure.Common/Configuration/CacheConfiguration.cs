@@ -5,5 +5,7 @@
         public bool UseCache { get; set; }
 
         public string DefaultCache { get; set; }
+
+        public string CacheName { get; set; }
     }
 }

@@ -17,13 +17,13 @@
 
         private readonly DataCache _cache;
 
-        public AzureCacheService(ILogService logger)
+        public AzureCacheService(ILogService logger, string cacheName)
         {
             _logger = logger;
 
             var cacheFactory = new DataCacheFactory(new DataCacheFactoryConfiguration(DataCacheClientConfigurationName));
-            
-            _cache = cacheFactory.GetDefaultCache();
+
+            _cache = cacheFactory.GetCache(cacheName);
         }
 
         private void Store(string key, object value, CacheDuration cacheDuration)

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Azure.IoC
 {
+    using StructureMap;
     using StructureMap.Configuration.DSL;
     using Domain.Interfaces.Caching;
 
@@ -7,9 +8,9 @@
     {
         public const string AzureCacheName = "AzureCacheService";
 
-        public AzureCacheRegistry()
+        public AzureCacheRegistry(string cacheName)
         {
-            For<ICacheService>().Singleton().Use<AzureCacheService>().Name = AzureCacheName;
+            For<ICacheService>().Singleton().Use<AzureCacheService>().Ctor<string>().Is(cacheName).Name = AzureCacheName;
         }
     }
 }
