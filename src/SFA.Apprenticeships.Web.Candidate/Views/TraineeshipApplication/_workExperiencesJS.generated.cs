@@ -217,9 +217,13 @@ WriteLiteral(" data-bind=\"value: mainDuties\"");
 
 WriteLiteral("></textarea>\r\n                        <span");
 
-WriteLiteral(" class=\"form-hint maxchar-count\"");
+WriteLiteral(" class=\"form-hint\"");
 
-WriteLiteral(">200</span>\r\n                        <span");
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"maxchar-count\"");
+
+WriteLiteral(">200</span> characters remaining</span>\r\n                        <span");
 
 WriteLiteral(" class=\"visuallyhidden aria-limit\"");
 

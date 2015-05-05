@@ -349,11 +349,16 @@
 
             var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
 
-            var tag = new TagBuilder("span");
-            tag.Attributes.Add("class", "form-hint maxchar-count alwayshidden");
+            var tagHint = new TagBuilder("span");
+            var tagCount = new TagBuilder("span");
 
-            tag.SetInnerText("4000");
-            return MvcHtmlString.Create(tag.ToString(TagRenderMode.Normal));
+            tagHint.Attributes.Add("class", "form-hint hide-nojs");
+            tagCount.Attributes.Add("class", "maxchar-count");
+
+            tagCount.SetInnerText("4000");
+            tagHint.InnerHtml = tagCount + " characters remaining";
+
+            return MvcHtmlString.Create(tagHint.ToString(TagRenderMode.Normal));
         }
 
 
