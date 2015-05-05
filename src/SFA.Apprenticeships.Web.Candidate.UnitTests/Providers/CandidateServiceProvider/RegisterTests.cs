@@ -15,7 +15,9 @@
         {
             Candidate candidate = null;
             var candidateService = new Mock<ICandidateService>();
+
             candidateService.Setup(cs => cs.Register(It.IsAny<Candidate>(), It.IsAny<string>())).Callback<Candidate, string>((c, s) => { candidate = c; });
+
             var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
             var viewModel = new RegisterViewModelBuilder().Build();
 
@@ -23,31 +25,42 @@
 
             candidate.Should().NotBeNull();
             candidate.CommunicationPreferences.Should().NotBeNull();
-            // TODO: AG: US733: fix unit test.
-            // candidate.CommunicationPreferences.AllowEmail.Should().BeTrue();
-            // candidate.CommunicationPreferences.AllowMobile.Should().BeFalse();
+
+            {
+                var preferences = candidate.CommunicationPreferences.ApplicationStatusChangePreferences;
+                    
+                preferences.Should().NotBeNull();
+                preferences.EnableEmail.Should().BeTrue();
+                preferences.EnableText.Should().BeFalse();
+            }
+
+            {
+                var preferences = candidate.CommunicationPreferences.ExpiringApplicationPreferences;
+                    
+                preferences.Should().NotBeNull();
+                preferences.EnableEmail.Should().BeTrue();
+                preferences.EnableText.Should().BeFalse();
+            }
+
+            {
+                var preferences = candidate.CommunicationPreferences.MarketingPreferences;
+
+                preferences.Should().NotBeNull();
+                preferences.EnableEmail.Should().BeTrue();
+                preferences.EnableText.Should().BeFalse();
+            }
+
+            {
+                var preferences = candidate.CommunicationPreferences.SavedSearchPreferences;
+
+                preferences.Should().NotBeNull();
+                preferences.EnableEmail.Should().BeTrue();
+                preferences.EnableText.Should().BeFalse();
+            }
+
             candidate.CommunicationPreferences.VerifiedMobile.Should().BeFalse();
             candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
-            registered.Should().BeTrue();
-        }
 
-        [Test]
-        public void Us519_Ac1_DefaultMarketingPreferencesEmailOnly()
-        {
-            Candidate candidate = null;
-            var candidateService = new Mock<ICandidateService>();
-            candidateService.Setup(cs => cs.Register(It.IsAny<Candidate>(), It.IsAny<string>())).Callback<Candidate, string>((c, s) => { candidate = c; });
-            var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
-            var viewModel = new RegisterViewModelBuilder().Build();
-
-            var registered = provider.Register(viewModel);
-
-            candidate.Should().NotBeNull();
-            candidate.CommunicationPreferences.Should().NotBeNull();
-            candidate.CommunicationPreferences.MarketingPreferences.EnableEmail.Should().BeTrue();
-            candidate.CommunicationPreferences.MarketingPreferences.EnableText.Should().BeFalse();
-            candidate.CommunicationPreferences.VerifiedMobile.Should().BeFalse();
-            candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
             registered.Should().BeTrue();
         }
 
