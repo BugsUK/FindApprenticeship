@@ -94,9 +94,9 @@
                 .Build();
 
             var candidateService = new Mock<ICandidateService>();
-            
+
             candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidate);
-            
+
             var provider = new AccountProviderBuilder().With(candidateService).Build();
             var viewModel = provider.GetSettingsViewModel(candidateId);
 
@@ -153,6 +153,45 @@
             savedSearch.SubCategoriesFullNames.Should().Be("Surveying, Construction Civil Engineering");
             savedSearch.DateProcessed.HasValue.Should().BeTrue();
             savedSearch.DateProcessed.Should().Be(new DateTime(2015, 01, 01));
+        }
+
+        [TestCase(null, null, null, null)]
+        [TestCase(Gender.Other, DisabilityStatus.PreferNotToSay, 37, "Braille")]
+        public void TestMonitoringInformationMappings(
+            Gender? gender, DisabilityStatus disabilityStatus, int? ethnicity, string support)
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var candidate = new CandidateBuilder(candidateId)
+                .With(gender)
+                .With(disabilityStatus)
+                .With(ethnicity)
+                .With(new ApplicationTemplate
+                {
+                    AboutYou = new AboutYou
+                    {
+                        Support = support
+                    }
+                })
+                .Build();
+
+            var candidateService = new Mock<ICandidateService>();
+
+            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(candidate);
+
+            var provider = new AccountProviderBuilder().With(candidateService).Build();
+
+            // Act.
+            var viewModel = provider.GetSettingsViewModel(candidateId);
+
+            // Assert.
+            viewModel.Should().NotBeNull();
+
+            viewModel.MonitoringInformation.Gender.Should().Be((int?)gender);
+            viewModel.MonitoringInformation.DisabilityStatus.Should().Be((int?)disabilityStatus);
+            viewModel.MonitoringInformation.Ethnicity.Should().Be(ethnicity);
+            viewModel.MonitoringInformation.RequiresSupportForInterview.Should().Be(!string.IsNullOrWhiteSpace(support));
+            viewModel.MonitoringInformation.AnythingWeCanDoToSupportYourInterview.Should().Be(support);
         }
     }
 }

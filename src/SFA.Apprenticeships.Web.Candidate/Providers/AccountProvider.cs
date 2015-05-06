@@ -57,6 +57,7 @@
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
                 settings.SmsEnabled = _configurationService.Get<WebConfiguration>().Features.SmsEnabled;
 
+                // Communication preferences.
                 var communicationPreferences = candidate.CommunicationPreferences;
 
                 settings.EnableApplicationStatusChangeAlertsViaEmail = communicationPreferences.ApplicationStatusChangePreferences.EnableEmail;
@@ -71,6 +72,23 @@
                 settings.EnableSavedSearchAlertsViaEmail = communicationPreferences.SavedSearchPreferences.EnableEmail;
                 settings.EnableSavedSearchAlertsViaText = communicationPreferences.SavedSearchPreferences.EnableText;
 
+                // Monitoring information.
+                settings.MonitoringInformation.Gender = candidate.MonitoringInformation.Gender.HasValue
+                    ? (int)candidate.MonitoringInformation.Gender
+                    : default(int?);
+
+                settings.MonitoringInformation.DisabilityStatus = candidate.MonitoringInformation.DisabilityStatus.HasValue
+                    ? (int)candidate.MonitoringInformation.DisabilityStatus
+                    : default(int?);
+
+                settings.MonitoringInformation.Ethnicity = candidate.MonitoringInformation.Ethnicity.HasValue
+                    ? candidate.MonitoringInformation.Ethnicity
+                    : default(int?);
+
+                settings.MonitoringInformation.AnythingWeCanDoToSupportYourInterview = candidate.ApplicationTemplate.AboutYou.Support;
+                settings.MonitoringInformation.RequiresSupportForInterview = !string.IsNullOrWhiteSpace(candidate.ApplicationTemplate.AboutYou.Support);
+                
+                // Saved searches.
                 var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit)).ToList();
 
                 settings.SavedSearches = savedSeachViewModels;
@@ -120,10 +138,13 @@
                 var monitoringInformation = candidate.MonitoringInformation;
                 var aboutYou = candidate.ApplicationTemplate.AboutYou;
 
-                // monitoringInformation.Gender = (Gender)model.MonitoringInformation.Gender;
-                // monitoringInformation.DisabilityStatus = (DisabilityStatus)model.MonitoringInformation.DisabilityStatus;
+                monitoringInformation.Gender = model.MonitoringInformation.Gender.HasValue
+                    ? (Gender)model.MonitoringInformation.Gender.Value
+                    : default(Gender?);
+
+                monitoringInformation.DisabilityStatus = (DisabilityStatus?)model.MonitoringInformation.DisabilityStatus;
                 monitoringInformation.Ethnicity = model.MonitoringInformation.Ethnicity == 0 ? default(int?) : model.MonitoringInformation.Ethnicity;
-                // aboutYou.Support = model.MonitoringInformation.AnythingWeCanDoToSupportYourInterview;
+                aboutYou.Support = model.MonitoringInformation.AnythingWeCanDoToSupportYourInterview;
 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
 

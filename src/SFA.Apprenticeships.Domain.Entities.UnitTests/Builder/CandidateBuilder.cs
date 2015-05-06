@@ -29,11 +29,17 @@
         private bool _enableMarketingViaText;
 
         private HelpPreferences _helpPreferences;
+        private ApplicationTemplate _applicationTemplate;
         
+        private Gender? _gender;
+        private DisabilityStatus _disabilityStatus;
+        private int? _ethnicity;
+
         public CandidateBuilder(Guid candidateId)
         {
             _candidateId = candidateId;
             _helpPreferences = new HelpPreferences();
+            _applicationTemplate = new ApplicationTemplate();
         }
 
         public CandidateBuilder FirstName(string firstName)
@@ -164,6 +170,30 @@
             return this;
         }
 
+        public CandidateBuilder With(ApplicationTemplate applicationTemplate)
+        {
+            _applicationTemplate = applicationTemplate;
+            return this;
+        }
+
+        public CandidateBuilder With(Gender? gender)
+        {
+            _gender = gender;
+            return this;
+        }
+
+        public CandidateBuilder With(DisabilityStatus disabilityStatus)
+        {
+            _disabilityStatus = disabilityStatus;
+            return this;
+        }
+
+        public CandidateBuilder With(int? ethnicity)
+        {
+            _ethnicity = ethnicity;
+            return this;
+        }
+
         public Candidate Build()
         {
             var candidate = new Candidate
@@ -201,8 +231,16 @@
                         EnableText = _enableMarketingViaText
                     }
                 },
+                
                 HelpPreferences = _helpPreferences,
-                MonitoringInformation = new MonitoringInformation()
+                ApplicationTemplate = _applicationTemplate,
+
+                MonitoringInformation = new MonitoringInformation
+                {
+                    Gender = _gender,
+                    DisabilityStatus = _disabilityStatus,
+                    Ethnicity = _ethnicity
+                }
             };
 
             return candidate;

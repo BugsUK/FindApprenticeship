@@ -182,5 +182,102 @@
             candidate.MonitoringInformation.Should().NotBeNull();
             candidate.MonitoringInformation.Ethnicity.Should().Be(expectedEthnicity);
         }
+
+        [TestCase(null, null)]
+        [TestCase(1, Gender.Male)]
+        [TestCase(2, Gender.Female)]
+        [TestCase(3, Gender.Other)]
+        [TestCase(4, Gender.PreferNotToSay)]
+        public void ShouldMapGender(int? gender, Gender? expectedGender)
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+
+            candidateService
+                .Setup(cs => cs.GetCandidate(candidateId))
+                .Returns(new CandidateBuilder(candidateId).Build);
+
+            var viewModel = new SettingsViewModelBuilder()
+                .PhoneNumber("0123456789")
+                .Gender(gender)
+                .Build();
+
+            var provider = new AccountProviderBuilder().With(candidateService).Build();
+
+            Candidate candidate;
+
+            // Act.
+            var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
+
+            // Assert.
+            result.Should().BeTrue();
+
+            candidate.MonitoringInformation.Should().NotBeNull();
+            candidate.MonitoringInformation.Gender.Should().Be(expectedGender);
+        }
+
+        [TestCase(null, null)]
+        [TestCase(1, DisabilityStatus.Yes)]
+        [TestCase(2, DisabilityStatus.No)]
+        [TestCase(3, DisabilityStatus.PreferNotToSay)]
+        public void ShouldMapDisabilityStatus(int? disabilityStatus, DisabilityStatus? expectedDisabilityStatus)
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+
+            candidateService
+                .Setup(cs => cs.GetCandidate(candidateId))
+                .Returns(new CandidateBuilder(candidateId).Build);
+
+            var viewModel = new SettingsViewModelBuilder()
+                .PhoneNumber("0123456789")
+                .DisabilityStatus(disabilityStatus)
+                .Build();
+
+            var provider = new AccountProviderBuilder().With(candidateService).Build();
+
+            Candidate candidate;
+
+            // Act.
+            var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
+
+            // Assert.
+            result.Should().BeTrue();
+
+            candidate.MonitoringInformation.Should().NotBeNull();
+            candidate.MonitoringInformation.DisabilityStatus.Should().Be(expectedDisabilityStatus);
+        }
+
+        [TestCase(null)]
+        [TestCase("Braille")]
+        public void ShouldMapSupport(string support)
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+
+            candidateService
+                .Setup(cs => cs.GetCandidate(candidateId))
+                .Returns(new CandidateBuilder(candidateId).Build);
+
+            var viewModel = new SettingsViewModelBuilder()
+                .AnythingWeCanDoToSupportYourInterview(support)
+                .Build();
+
+            var provider = new AccountProviderBuilder().With(candidateService).Build();
+
+            Candidate candidate;
+
+            // Act.
+            var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
+
+            // Assert.
+            result.Should().BeTrue();
+
+            candidate.MonitoringInformation.Should().NotBeNull();
+            candidate.ApplicationTemplate.AboutYou.Support.Should().Be(support);
+        }
     }
 }

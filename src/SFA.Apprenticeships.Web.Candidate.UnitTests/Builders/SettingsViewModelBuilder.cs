@@ -28,7 +28,10 @@
         private bool _enableSavedSearchAlertsViaEmail;
         private bool _enableSavedSearchAlertsViaText;
 
-        private int _ethnicity;
+        private int? _ethnicity;
+        private int? _gender;
+        private int? _disabilityStatus;
+        private string _anythingWeCanDoToSupportYourInterview;
 
         private IList<SavedSearchViewModel> _savedSearches;
 
@@ -134,9 +137,27 @@
             return this;
         }
 
-        public SettingsViewModelBuilder Ethnicity(int ethnicity)
+        public SettingsViewModelBuilder Ethnicity(int? ethnicity)
         {
             _ethnicity = ethnicity;
+            return this;
+        }
+
+        public SettingsViewModelBuilder Gender(int? gender)
+        {
+            _gender = gender;
+            return this;
+        }
+
+        public SettingsViewModelBuilder DisabilityStatus(int? disabilityStatus)
+        {
+            _disabilityStatus = disabilityStatus;
+            return this;
+        }
+
+        public SettingsViewModelBuilder AnythingWeCanDoToSupportYourInterview(string anythingWeCanDoToSupportYourInterview)
+        {
+            _anythingWeCanDoToSupportYourInterview = anythingWeCanDoToSupportYourInterview;
             return this;
         }
 
@@ -175,7 +196,11 @@
 
                 MonitoringInformation = new MonitoringInformationViewModel
                 {
-                    Ethnicity = _ethnicity
+                    Ethnicity = _ethnicity,
+                    Gender = _gender,
+                    DisabilityStatus = _disabilityStatus,
+                    AnythingWeCanDoToSupportYourInterview = _anythingWeCanDoToSupportYourInterview,
+                    RequiresSupportForInterview = !string.IsNullOrWhiteSpace(_anythingWeCanDoToSupportYourInterview)
                 },
 
                 SavedSearches = _savedSearches
