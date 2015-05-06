@@ -854,4 +854,56 @@
         ko.applyBindings(experienceViewModel, document.getElementById('applyWorkExperience'));
 
     });
+
+    $('#qualifications-panel').on('keyup', '#subject-name, #subject-grade', function () {
+        if ($(this).val() != "") {
+            $('#apply-button').addClass('dirtyQuals');
+        } else if ($('#subject-name, #subject-grade').val() == "") {
+            $('#apply-button').removeClass('dirtyQuals');
+        }
+    });
+
+    $('.content-container').on('click', '.dirtyQuals', function (e) {
+        $(this).removeClass('disabled dirtyQuals').text('Continue anyway');
+        $('#unsavedQualsWorkExp, #unsavedQuals').show();
+
+        $('#qualEntry').addClass('panel-danger').css({'margin-bottom':'0', 'padding-top': '0', 'padding-bottom':'0'});
+        e.preventDefault();
+    });
+
+    $('#saveQualification').on('click', function () {
+        $('#qualEntry').removeClass('panel-danger');
+        $('#unsavedQuals').hide();
+        $('#apply-button').text('Save and continue');
+        if ($('#unsavedWorkExp').is(':hidden')) {
+            $('#unsavedQualsWorkExp').hide();
+        }
+    });
+
+    $('#workexperience-apply').on('keyup', '#work-employer, #work-title, #work-role, #work-from-year, #work-to-year', function () {
+        if ($(this).val() != "") {
+            $('#apply-button').addClass('dirtyWorkExp');
+        } else if ($('#work-employer, #work-title, #work-role, #work-from-year, #work-to-year').val() == "") {
+            $('#apply-button').removeClass('dirtyWorkExp');
+        }
+    });
+
+    $('.content-container').on('click', '.dirtyWorkExp', function (e) {
+        $(this).removeClass('disabled dirtyWorkExp').text('Continue anyway');
+        $('#unsavedQualsWorkExp, #unsavedWorkExp').show();
+
+        $('#workexperience-apply').addClass('panel-danger').css({ 'margin-bottom': '0', 'padding-top': '0', 'padding-bottom': '0' });
+        e.preventDefault();
+    });
+
+    $('#addWorkBtn').on('click', function () {
+        $('#workexperience-apply').removeClass('panel-danger');
+        $('#unsavedWorkExp').hide();
+        $('#apply-button').removeClass('dirtyWorkExp').text('Save and continue');
+        if ($('#unsavedQuals').is(':hidden')) {
+            $('#unsavedQualsWorkExp').hide();
+        }
+    });
+
+
 }());

@@ -136,6 +136,8 @@ WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"clearfix\"");
 
+WriteLiteral(" id=\"qualEntry\"");
+
 WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"inline-fixed\"");

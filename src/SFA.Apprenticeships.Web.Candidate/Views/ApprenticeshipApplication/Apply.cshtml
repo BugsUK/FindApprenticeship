@@ -61,6 +61,14 @@
     <div class="form-group">
         @*The buttons below need the values so the controller knows what action to perform if restyling*@
         <button id="apply-button" type="submit" name="ApplicationAction:Preview" class="button no-check-for-dirty-form" value="Preview">Save and continue</button>
+        <div class="panel-danger toggle-content hide-nojs" id="unsavedQualsWorkExp">
+            <div class="text toggle-content hide-nojs" id="unsavedQuals">
+                <p>You've got unsaved changes in your <a href="#qualifications-panel">qualification section</a>. You must press "Save this qualification" to save each qualification.</p>
+            </div>
+            <div class="text toggle-content hide-nojs" id="unsavedWorkExp">
+                <p>You've got unsaved changes in your <a href="#workexperience-panel">work experience section</a>. You must press "Save this work experience" to save each work experience.</p>
+            </div>
+        </div>
         <p id="saveApplication">
             <button id="save-button" type="submit" name="ApplicationAction:Save" class="button-link no-check-for-dirty-form cancel" value="Save" onclick='Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/apprenticeship/apply/savedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Apprenticeship – Save Draft Form"] });'>Save</button>
         </p>
