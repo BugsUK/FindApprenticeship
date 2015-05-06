@@ -623,11 +623,18 @@
 
         public void UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel)
         {
-            var monitoringInformation = _mapper.Map<MonitoringInformationViewModel, MonitoringInformation>(monitoringInformationViewModel);
-            var candidate = _candidateService.GetCandidate(candidateId);
-            candidate.MonitoringInformation = monitoringInformation;
-            candidate.ApplicationTemplate.AboutYou.Support = monitoringInformationViewModel.AnythingWeCanDoToSupportYourInterview;
-            _candidateService.SaveCandidate(candidate);
+            try
+            {
+                var monitoringInformation = _mapper.Map<MonitoringInformationViewModel, MonitoringInformation>(monitoringInformationViewModel);
+                var candidate = _candidateService.GetCandidate(candidateId);
+                candidate.MonitoringInformation = monitoringInformation;
+                candidate.ApplicationTemplate.AboutYou.Support = monitoringInformationViewModel.AnythingWeCanDoToSupportYourInterview;
+                _candidateService.SaveCandidate(candidate);
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Error updating monitoring information", ex);
+            }
         }
 
         public bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel)

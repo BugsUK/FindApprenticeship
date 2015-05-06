@@ -40,7 +40,7 @@
 
             routes.MapRoute(
                 name: RouteNames.MonitoringInformation,
-                url: "additionalinformation",
+                url: "tellusmore",
                 defaults: new { controller = "Register", action = "MonitoringInformation" }
                 );
 

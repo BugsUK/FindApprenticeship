@@ -14,7 +14,7 @@
         protected ActivationViewModelServerValidator _activationViewModelServerValidator;
         protected RegisterViewModelServerValidator _registerViewModelServerValidator;
 
-        [TestFixtureSetUp]
+        [SetUp]
         public void SetUp()
         {
             _candidateServiceProvider = new Mock<ICandidateServiceProvider>();

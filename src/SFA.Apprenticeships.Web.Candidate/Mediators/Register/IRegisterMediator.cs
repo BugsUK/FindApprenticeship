@@ -10,6 +10,6 @@
 
         MediatorResponse<ActivationViewModel> Activate(Guid candidateId, ActivationViewModel activationViewModel);
 
-        void UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel);
+        MediatorResponse UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel);
     }
 }

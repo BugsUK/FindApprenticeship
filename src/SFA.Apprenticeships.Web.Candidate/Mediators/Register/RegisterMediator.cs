@@ -92,9 +92,16 @@
             }
         }
 
-        public void UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel)
+        public MediatorResponse UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel)
         {
-            _candidateServiceProvider.UpdateMonitoringInformation(candidateId, monitoringInformationViewModel);
+            try
+            {
+                _candidateServiceProvider.UpdateMonitoringInformation(candidateId, monitoringInformationViewModel);
+                return GetMediatorResponse(RegisterMediatorCodes.UpdateMonitoringInformation.SuccessfullyUpdated);
+            }
+            catch{
+                return GetMediatorResponse(RegisterMediatorCodes.UpdateMonitoringInformation.ErrorUpdating, ActivationPageMessages.UpdatingMonitoringInformationFailure, UserMessageLevel.Error);
+            }
         }
     }
 }

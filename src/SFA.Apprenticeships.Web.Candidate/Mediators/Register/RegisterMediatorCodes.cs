@@ -16,5 +16,11 @@
             public const string FailedValidation = "RegisterMediatorCodes.Activate.FailedValidation";
             public const string ErrorActivating = "RegisterMediatorCodes.Activate.ErrorActivating";
         }
+
+        public class UpdateMonitoringInformation
+        {
+            public const string SuccessfullyUpdated = "RegisterMediatorCodes.UpdateMonitoringInformation.SuccessfullyUpdated";
+            public const string ErrorUpdating = "RegisterMediatorCodes.UpdateMonitoringInformation.ErrorUpdating";
+        }
     }
 }

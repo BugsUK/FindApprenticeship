@@ -93,7 +93,10 @@
             Mapper.CreateMap<RegisterViewModel, Candidate>()
                 .ConvertUsing<CandidateResolver>();
 
-            Mapper.CreateMap<MonitoringInformationViewModel, MonitoringInformation>();
+            Mapper.CreateMap<MonitoringInformationViewModel, MonitoringInformation>()
+                .ForMember(d => d.Gender, opt => opt.MapFrom(s => s.Gender))
+                .ForMember(d => d.Ethnicity, opt => opt.MapFrom(s => s.Ethnicity))
+                .ForMember(d => d.DisabilityStatus, opt => opt.MapFrom(s => s.DisabilityStatus));
 
             Mapper.CreateMap<ApprenticeshipApplicationViewModel, ApprenticeshipApplicationDetail>()
                 .ConvertUsing<ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver>();
