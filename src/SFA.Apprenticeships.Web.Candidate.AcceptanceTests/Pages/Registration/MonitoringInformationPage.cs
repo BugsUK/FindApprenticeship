@@ -44,6 +44,9 @@
         [ElementLocator(Id = "support-no")]
         public IWebElement DontWantSupportInInterview { get; set; }
 
+        [ElementLocator(Id = "question4")]
+        public IWebElement SupportDetails { get; set; }
+
         #endregion
 
         #region Ethnicity
