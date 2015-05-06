@@ -58,6 +58,6 @@ Scenario: As a new candidate my additional monitoring information is saved
 	Then I wait 120 second for the ApprenticeshipSearchPage page
 	When I navigate to the SettingsPage page
 	Then I see
-		| Field          | Rule   | Value    |
-		| GenderOther    | Equals | Selected |
+		| Field          | Rule   | Value                |
+		| GenderOther    | Equals | Selected             |
 		| SupportDetails | Equals | Support details text |

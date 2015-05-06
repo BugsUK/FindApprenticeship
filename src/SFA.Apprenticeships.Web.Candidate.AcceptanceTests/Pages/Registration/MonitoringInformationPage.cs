@@ -11,6 +11,8 @@
         {
         }
 
+        #region Monitoring Information
+
         #region Gender
 
         [ElementLocator(Id = "gender-male")]
@@ -44,15 +46,17 @@
         [ElementLocator(Id = "support-no")]
         public IWebElement DontWantSupportInInterview { get; set; }
 
-        [ElementLocator(Id = "question4")]
+        [ElementLocator(Id = "support-text")]
         public IWebElement SupportDetails { get; set; }
 
         #endregion
 
         #region Ethnicity
 
-        //[ElementLocator(Id = "tbc")]
-        //public IWebElement EthnicGroup { get; set; }
+        [ElementLocator(Id = "ethnicity-dropdown")]
+        public IWebElement EthnicDropdown { get; set; }
+
+        #endregion
 
         #endregion
 

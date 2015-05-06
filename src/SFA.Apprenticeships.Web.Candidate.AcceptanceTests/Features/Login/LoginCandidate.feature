@@ -57,4 +57,6 @@ Scenario: As a candidate I can login with a registered but unactivated account a
 		| Field          | Value                 |
 		| ActivationCode | {ActivationCodeToken} |
 	And I choose ActivateButton
+	Then I wait 120 second for the MonitoringInformationPage page
+	When I choose SkipLink
 	Then I am on the ApprenticeshipSearchPage page

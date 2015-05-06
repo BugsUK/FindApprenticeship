@@ -114,6 +114,55 @@
 
         #endregion
 
+        #region Monitoring Information
+
+        #region Gender
+
+        [ElementLocator(Id = "gender-male")]
+        public IWebElement GenderMale { get; set; }
+
+        [ElementLocator(Id = "gender-female")]
+        public IWebElement GenderFemale { get; set; }
+
+        [ElementLocator(Id = "gender-other")]
+        public IWebElement GenderOther { get; set; }
+
+        [ElementLocator(Id = "gender-prefer-not-to-say")]
+        public IWebElement GenderPreferNotToSay { get; set; }
+
+        #endregion
+
+        #region Disability
+
+        [ElementLocator(Id = "disability-yes")]
+        public IWebElement DisabilityYes { get; set; }
+
+        [ElementLocator(Id = "disability-no")]
+        public IWebElement DisabilityNo { get; set; }
+
+        [ElementLocator(Id = "disability-prefno")]
+        public IWebElement DisabilityPreferNotToSay { get; set; }
+
+        [ElementLocator(Id = "support-yes")]
+        public IWebElement WantSupportInInterview { get; set; }
+
+        [ElementLocator(Id = "support-no")]
+        public IWebElement DontWantSupportInInterview { get; set; }
+
+        [ElementLocator(Id = "support-text")]
+        public IWebElement SupportDetails { get; set; }
+
+        #endregion
+
+        #region Ethnicity
+
+        [ElementLocator(Id = "ethnicity-dropdown")]
+        public IWebElement EthnicDropdown { get; set; }
+
+        #endregion
+
+        #endregion
+
         [ElementLocator(Id = "verifyContainer")]
         public IWebElement VerifyContainer { get; set; }
 
