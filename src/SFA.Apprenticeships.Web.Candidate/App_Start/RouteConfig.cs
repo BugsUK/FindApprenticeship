@@ -39,6 +39,12 @@
                 );
 
             routes.MapRoute(
+                name: RouteNames.MonitoringInformation,
+                url: "additionalinformation",
+                defaults: new { controller = "Register", action = "MonitoringInformation" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.Settings,
                 url: "settings",
                 defaults: new { controller = "Account", action = "Settings" }

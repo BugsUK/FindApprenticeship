@@ -1,0 +1,26 @@
+﻿@model MonitoringInformationViewModel
+
+@{
+    ViewBag.Title = "Tell us more about you - Find an apprenticeship";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="heading-xlarge">Tell us more about you</h2>
+<p class="text">
+    Please give us a little more information about you. This will help us to
+    understand how effective the service is.
+</p>
+
+@using (Html.BeginRouteForm(RouteNames.MonitoringInformation, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()   
+    @Html.EditorFor(m => m, "MonitoringInformation/_gender")
+    @Html.EditorFor(m => m, "MonitoringInformation/_disability")
+    @Html.EditorFor(m => m, "MonitoringInformation/_ethnicity")
+    @Html.EditorFor(m => m, "MonitoringInformation/_why")
+
+    <div class="form-group">
+        <button class="button">Save and continue</button>
+        <p><a href="@Url.Action("SkipMonitoringInformation")" class="button-link" title="Skip telling us more">Skip</a></p>
+    </div>
+}

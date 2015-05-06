@@ -9,5 +9,6 @@
         public const string VerifyUpdatedEmail = "VerifyUpdatedEmail";
         public const string SiteMap = "SiteMap";
         public const string ForgottenCredentials = "ForgottenCredentials";
+        public const string MonitoringInformation = "MonitoringInformation";
     }
 }

@@ -7,6 +7,7 @@
     using Domain.Entities.Candidates;
     using ViewModels;
     using ViewModels.Account;
+    using ViewModels.Candidate;
     using ViewModels.Home;
     using ViewModels.Login;
     using ViewModels.Register;
@@ -55,5 +56,7 @@
         bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel);
 
         bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType);
+
+        void UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel);
     }
 }

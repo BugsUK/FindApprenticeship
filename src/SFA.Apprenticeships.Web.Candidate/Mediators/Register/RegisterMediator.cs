@@ -8,6 +8,7 @@
     using Providers;
     using Validators;
     using ViewModels;
+    using ViewModels.Candidate;
     using ViewModels.Register;
 
     public class RegisterMediator : MediatorBase, IRegisterMediator
@@ -89,6 +90,11 @@
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        public void UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel)
+        {
+            _candidateServiceProvider.UpdateMonitoringInformation(candidateId, monitoringInformationViewModel);
         }
     }
 }

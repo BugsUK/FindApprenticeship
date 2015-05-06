@@ -684,6 +684,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_why.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Register\MonitoringInformation.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

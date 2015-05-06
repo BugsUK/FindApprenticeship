@@ -2,10 +2,10 @@
 {
     public class MonitoringInformation
     {
-        Gender? Gender { get; set; }
-        
-        DisabilityStatus? DisabilityStatus { get; set; }
+        public Gender? Gender { get; set; }
 
-        int? Ethnicity { get; set; }
+        public DisabilityStatus? DisabilityStatus { get; set; }
+
+        public int? Ethnicity { get; set; }
     }
 }

@@ -13,6 +13,7 @@
     using Mediators;
     using Mediators.Register;
     using Providers;
+    using ViewModels.Candidate;
     using ViewModels.Register;
 
     public class RegisterController : CandidateControllerBase
@@ -87,7 +88,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
         public async Task<ActionResult> Activate(ActivationViewModel model)
         {
-            return await Task.Run(() =>
+            return await Task.Run<ActionResult>(() =>
             {
                 var response = _registerMediator.Activate(UserContext.CandidateId, model);
 
@@ -95,7 +96,11 @@
                 {
                     case RegisterMediatorCodes.Activate.SuccessfullyActivated:
                         SetUserMessage(response.Message.Text);
-                        return SetUserContextAndRedirectToAction(model.EmailAddress);
+                        var candidate = _candidateServiceProvider.GetCandidate(model.EmailAddress);
+                        UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress,
+                            candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
+                            candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion);
+                        return RedirectToRoute(RouteNames.MonitoringInformation);
                     case RegisterMediatorCodes.Activate.InvalidActivationCode:
                     case RegisterMediatorCodes.Activate.FailedValidation:
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
@@ -108,6 +113,54 @@
                 }
 
                 return View("Activation", model);
+            });
+        }
+
+        [HttpGet]
+        [AllowReturnUrl(Allow = false)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> MonitoringInformation()
+        {
+            return await Task.Run(() => View("MonitoringInformation"));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> MonitoringInformation(MonitoringInformationViewModel model)
+        {
+            return await Task.Run(() =>
+            {
+                _registerMediator.UpdateMonitoringInformation(UserContext.CandidateId, model);
+                return RedirectToAction("SkipMonitoringInformation");
+            });
+        }
+
+        [HttpGet]
+        [AllowReturnUrl(Allow = false)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> SkipMonitoringInformation()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                // ReturnUrl takes precedence over last view vacnacy id.
+                var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
+
+                // Clear last viewed vacancy and distance (if any).
+                var lastViewedVacancyId = UserData.Pop(CandidateDataItemNames.LastViewedVacancyId);
+                UserData.Pop(CandidateDataItemNames.VacancyDistance);
+
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                {
+                    return Redirect(Server.UrlDecode(returnUrl));
+                }
+
+                if (lastViewedVacancyId != null)
+                {
+                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id = int.Parse(lastViewedVacancyId) });
+                }
+
+                return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
             });
         }
 
@@ -145,38 +198,5 @@
                 return Json(userNameAvailability, JsonRequestBehavior.AllowGet);
             });
         }
-
-        #region Helpers
-
-        private ActionResult SetUserContextAndRedirectToAction(string candidateEmail)
-        {
-            var candidate = _candidateServiceProvider.GetCandidate(candidateEmail);
-            //todo: refactor - similar to stuff in login controller... move to ILoginServiceProvider
-            //todo: test this
-            UserData.SetUserContext(candidate.RegistrationDetails.EmailAddress,
-                candidate.RegistrationDetails.FirstName + " " + candidate.RegistrationDetails.LastName,
-                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion);
-
-            // ReturnUrl takes precedence over last view vacnacy id.
-            var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
-
-            // Clear last viewed vacancy and distance (if any).
-            var lastViewedVacancyId = UserData.Pop(CandidateDataItemNames.LastViewedVacancyId);
-            UserData.Pop(CandidateDataItemNames.VacancyDistance);
-
-            if (!string.IsNullOrWhiteSpace(returnUrl))
-            {
-                return Redirect(Server.UrlDecode(returnUrl));
-            }
-
-            if (lastViewedVacancyId != null)
-            {
-                return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new {id = int.Parse(lastViewedVacancyId)});
-            }
-
-            return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
-        }
-
-        #endregion
     }
 }

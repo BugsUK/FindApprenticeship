@@ -12,6 +12,7 @@
     using Resolvers;
     using ViewModels.Account;
     using ViewModels.Applications;
+    using ViewModels.Candidate;
     using ViewModels.Home;
     using ViewModels.Locations;
     using ViewModels.Register;
@@ -91,6 +92,8 @@
 
             Mapper.CreateMap<RegisterViewModel, Candidate>()
                 .ConvertUsing<CandidateResolver>();
+
+            Mapper.CreateMap<MonitoringInformationViewModel, MonitoringInformation>();
 
             Mapper.CreateMap<ApprenticeshipApplicationViewModel, ApprenticeshipApplicationDetail>()
                 .ConvertUsing<ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver>();
