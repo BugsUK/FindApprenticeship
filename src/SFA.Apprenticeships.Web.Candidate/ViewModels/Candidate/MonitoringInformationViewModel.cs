@@ -5,11 +5,11 @@
 
     public class MonitoringInformationViewModel
     {
-        public int Ethnicity { get; set; }
+        public int? Ethnicity { get; set; }
 
-        public int Gender { get; set; }
+        public int? Gender { get; set; }
 
-        public int DisabilityStatus { get; set; }
+        public int? DisabilityStatus { get; set; }
 
         public bool RequiresSupportForInterview { get; set; }
 

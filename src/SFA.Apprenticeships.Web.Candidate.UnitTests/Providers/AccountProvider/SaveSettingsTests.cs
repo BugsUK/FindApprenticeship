@@ -182,6 +182,5 @@
             candidate.MonitoringInformation.Should().NotBeNull();
             candidate.MonitoringInformation.Ethnicity.Should().Be(expectedEthnicity);
         }
-
     }
 }
