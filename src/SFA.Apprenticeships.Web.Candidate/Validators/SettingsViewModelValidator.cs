@@ -51,6 +51,8 @@
                 .WithMessage(SettingsViewModelMessages.PhoneNumberMessages.RequiredErrorText)
                 .Matches(SettingsViewModelMessages.PhoneNumberMessages.WhiteListRegularExpression)
                 .WithMessage(SettingsViewModelMessages.PhoneNumberMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.MonitoringInformation).SetValidator(new MonitoringInformationViewModelValidator());
         }
 
         internal static void AddServerRules(this AbstractValidator<SettingsViewModel> validator)

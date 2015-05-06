@@ -11,7 +11,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class SaveSettingsTests
+    public class TrySaveSettingsTests
     {
         [TestCase("0123456789", CommunicationChannels.Email, false)]
         [TestCase("0987654321", CommunicationChannels.Sms, false)]
@@ -250,9 +250,10 @@
             candidate.MonitoringInformation.DisabilityStatus.Should().Be(expectedDisabilityStatus);
         }
 
-        [TestCase(null)]
-        [TestCase("Braille")]
-        public void ShouldMapSupport(string support)
+        [TestCase(false, null)]
+        [TestCase(false, "Braille")]
+        [TestCase(true, "Braille")]
+        public void ShouldMapSupport(bool requiresSupport, string support)
         {
             // Arrange.
             var candidateId = Guid.NewGuid();
@@ -263,7 +264,7 @@
                 .Returns(new CandidateBuilder(candidateId).Build);
 
             var viewModel = new SettingsViewModelBuilder()
-                .AnythingWeCanDoToSupportYourInterview(support)
+                .Support(requiresSupport, support)
                 .Build();
 
             var provider = new AccountProviderBuilder().With(candidateService).Build();
@@ -277,7 +278,15 @@
             result.Should().BeTrue();
 
             candidate.MonitoringInformation.Should().NotBeNull();
-            candidate.ApplicationTemplate.AboutYou.Support.Should().Be(support);
+
+            if (requiresSupport)
+            {
+                candidate.ApplicationTemplate.AboutYou.Support.Should().Be(support);
+            }
+            else
+            {
+                candidate.ApplicationTemplate.AboutYou.Support.Should().BeNull();
+            }
         }
     }
 }

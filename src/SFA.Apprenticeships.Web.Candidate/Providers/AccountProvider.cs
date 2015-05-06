@@ -143,8 +143,14 @@
                     : default(Gender?);
 
                 monitoringInformation.DisabilityStatus = (DisabilityStatus?)model.MonitoringInformation.DisabilityStatus;
-                monitoringInformation.Ethnicity = model.MonitoringInformation.Ethnicity == 0 ? default(int?) : model.MonitoringInformation.Ethnicity;
-                aboutYou.Support = model.MonitoringInformation.AnythingWeCanDoToSupportYourInterview;
+
+                monitoringInformation.Ethnicity = model.MonitoringInformation.Ethnicity == 0
+                    ? default(int?)
+                    : model.MonitoringInformation.Ethnicity;
+
+                aboutYou.Support = model.MonitoringInformation.RequiresSupportForInterview
+                    ? model.MonitoringInformation.AnythingWeCanDoToSupportYourInterview
+                    : null;
 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
 

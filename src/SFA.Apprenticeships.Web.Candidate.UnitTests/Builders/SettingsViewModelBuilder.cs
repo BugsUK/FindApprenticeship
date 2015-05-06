@@ -31,7 +31,8 @@
         private int? _ethnicity;
         private int? _gender;
         private int? _disabilityStatus;
-        private string _anythingWeCanDoToSupportYourInterview;
+        private string _support;
+        private bool _requiresSupport;
 
         private IList<SavedSearchViewModel> _savedSearches;
 
@@ -155,9 +156,10 @@
             return this;
         }
 
-        public SettingsViewModelBuilder AnythingWeCanDoToSupportYourInterview(string anythingWeCanDoToSupportYourInterview)
+        public SettingsViewModelBuilder Support(bool requiresSupport, string support)
         {
-            _anythingWeCanDoToSupportYourInterview = anythingWeCanDoToSupportYourInterview;
+            _requiresSupport = requiresSupport;
+            _support = support;
             return this;
         }
 
@@ -199,8 +201,8 @@
                     Ethnicity = _ethnicity,
                     Gender = _gender,
                     DisabilityStatus = _disabilityStatus,
-                    AnythingWeCanDoToSupportYourInterview = _anythingWeCanDoToSupportYourInterview,
-                    RequiresSupportForInterview = !string.IsNullOrWhiteSpace(_anythingWeCanDoToSupportYourInterview)
+                    RequiresSupportForInterview = _requiresSupport,
+                    AnythingWeCanDoToSupportYourInterview = _support
                 },
 
                 SavedSearches = _savedSearches

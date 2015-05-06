@@ -806,6 +806,7 @@
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
     <Compile Include="Validators\EmailViewModelValidator.cs" />
     <Compile Include="Validators\ForgottenEmailViewModelValidator.cs" />
+    <Compile Include="Validators\MonitoringInformationViewModelClientValidator.cs" />
     <Compile Include="Validators\VerifyUpdatedEmailViewModelClientValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />

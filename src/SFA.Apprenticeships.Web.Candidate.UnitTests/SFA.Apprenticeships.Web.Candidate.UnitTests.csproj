@@ -261,7 +261,7 @@
     <Compile Include="Providers\AccountProvider\AccountProviderBuilder.cs" />
     <Compile Include="Providers\AccountProvider\GetSettingsViewModelTests.cs" />
     <Compile Include="Providers\AccountProvider\ResendTests.cs" />
-    <Compile Include="Providers\AccountProvider\SaveSettingsTests.cs" />
+    <Compile Include="Providers\AccountProvider\TrySaveSettingsTests.cs" />
     <Compile Include="Providers\AccountProvider\UpdateEmailAddressTests.cs" />
     <Compile Include="Providers\AccountProvider\VerifyMobileTests.cs" />
     <Compile Include="Providers\AccountProvider\VerifyUpdatedEmailAddressTests.cs" />
@@ -295,6 +295,7 @@
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderBuilder.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />
     <Compile Include="Providers\TraineeshipVacancyProvider\FindVacanciesTests.cs" />
+    <Compile Include="Validators\MonitoringInformationViewModelValidatorTests.cs" />
     <Compile Include="Validators\ActivationViewModelValidatorTests.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidatorTests.cs" />
     <Compile Include="Validators\ApprenticeshipSearchViewModelServerValidatorTests.cs" />
