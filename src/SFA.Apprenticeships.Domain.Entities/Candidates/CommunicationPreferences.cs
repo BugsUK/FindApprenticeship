@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
-    // TODO: US733: review default Communication Preferences.
     public class CommunicationPreferences
     {
         public CommunicationPreferences()

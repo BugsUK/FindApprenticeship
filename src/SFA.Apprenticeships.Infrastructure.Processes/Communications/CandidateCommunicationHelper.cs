@@ -3,7 +3,6 @@
     using Application.Interfaces.Communications;
     using Domain.Entities.Candidates;
 
-    // TODO: AG: US733: close code review.
     public static class CandidateCommunicationHelper
     {
         public static bool ShouldSendMessageViaChannel(
@@ -35,7 +34,8 @@
                 case MessageTypes.ApprenticeshipApplicationSuccessful:
                 case MessageTypes.ApprenticeshipApplicationUnsuccessful:
                 case MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary:
-                    // These application status alerts are sent via SMS only, candidate can opt out.
+                    // These individual application status alerts are sent via SMS only, candidate can opt out.
+                    // The email version is sent as an aggregate via the daily digest so that check is done above
                     return communicationChannel == CommunicationChannels.Sms &&
                            communicationPreferences.VerifiedMobile &&
                            communicationPreferences.ApplicationStatusChangePreferences.EnableText;
