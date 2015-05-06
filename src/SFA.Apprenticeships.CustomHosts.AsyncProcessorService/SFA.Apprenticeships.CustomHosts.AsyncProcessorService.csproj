@@ -101,7 +101,13 @@
     <StartupObject>SFA.Apprenticeships.CustomHosts.AsyncProcessorService.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EasyNetQ, Version=0.45.0.364, Culture=neutral, processorArchitecture=MSIL">
@@ -167,6 +173,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\app.manifest" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communications\SFA.Apprenticeships.Application.Communications.csproj">
