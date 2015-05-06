@@ -11,6 +11,6 @@
         Inactive = 30,              // when superseded by a new account (user changed their username)
         Locked = 90,                // if locked out for security reasons
         Dormant = 100,              // if the account has not been recently used
-        PendingDeletion             // when marked for hard deletion following being dormant or if not activated
+        PendingDeletion = 999       // when marked for hard deletion following being dormant or if not activated
     }
 }
