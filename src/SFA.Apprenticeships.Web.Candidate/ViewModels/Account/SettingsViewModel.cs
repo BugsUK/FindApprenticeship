@@ -14,10 +14,7 @@
     {
         public SettingsViewModel()
         {
-            MonitoringInformation = new MonitoringInformationViewModel
-            {
-                Options = MonitoringInformationViewOptions.RenderAll
-            };
+            MonitoringInformation = new MonitoringInformationViewModel();
         }
 
         public enum SettingsMode

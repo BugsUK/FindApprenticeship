@@ -402,18 +402,52 @@ WriteLiteral(">Verify new email address</a>\r\n                </div>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("            \r\n");
+WriteLiteral("            \r\n            <details>\r\n                <summary>Your equality and d" +
+"iversity information</summary>\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("                ");
 
             
-            #line 69 "..\..\Views\Account\Settings.cshtml"
-       Write(Html.Partial("_monitoringInformation", Model.MonitoringInformation));
+            #line 71 "..\..\Views\Account\Settings.cshtml"
+           Write(Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_monitoringInformationGender"));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n            <div");
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 72 "..\..\Views\Account\Settings.cshtml"
+           Write(Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_monitoringInformationDisability"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 73 "..\..\Views\Account\Settings.cshtml"
+           Write(Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_monitoringInformationEthnicity"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 74 "..\..\Views\Account\Settings.cshtml"
+           Write(Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_monitoringInformationWhy"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </details>\r\n\r\n            <div");
 
 WriteLiteral(" id=\"accountSettings2\"");
 
@@ -495,7 +529,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 90 "..\..\Views\Account\Settings.cshtml"
+            #line 96 "..\..\Views\Account\Settings.cshtml"
                            Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaEmail,
                                     controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "appStatusLabel", title = "Email notifications when the status of one of your applications changes" }));
 
@@ -511,7 +545,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 94 "..\..\Views\Account\Settings.cshtml"
+            #line 100 "..\..\Views\Account\Settings.cshtml"
                            Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableApplicationStatusChangeAlertsViaText,
                                     controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "appStatusLabel", title = "Text notifications when the status of one of your applications changes" }));
 
@@ -539,7 +573,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 103 "..\..\Views\Account\Settings.cshtml"
+            #line 109 "..\..\Views\Account\Settings.cshtml"
                            Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaEmail,
                                     controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "closingDateStatusLabel", title = "Email notifications when an apprenticeship is approaching its closing date" }));
 
@@ -555,7 +589,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 107 "..\..\Views\Account\Settings.cshtml"
+            #line 113 "..\..\Views\Account\Settings.cshtml"
                            Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableExpiringApplicationAlertsViaText,
                                     controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "closingDateStatusLabel", title = "Text notifications when an apprenticeship is approaching its closing date" }));
 
@@ -583,7 +617,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 116 "..\..\Views\Account\Settings.cshtml"
+            #line 122 "..\..\Views\Account\Settings.cshtml"
                            Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaEmail,
                                     controlHtmlAttributes: new { @class = "no-margins email-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Email notifications when we send you updates on news and information" }));
 
@@ -599,7 +633,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                ");
 
             
-            #line 120 "..\..\Views\Account\Settings.cshtml"
+            #line 126 "..\..\Views\Account\Settings.cshtml"
                            Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableMarketingViaText,
                                     controlHtmlAttributes: new { @class = "no-margins text-input", aria_labelledby = "marketingUpdatesStatusLabel", title = "Text notifications when we send you updates on news and information" }));
 
@@ -626,15 +660,15 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Save settings</button>\r\n            </div>\r\n        </div>\r\n\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8610), Tuple.Create("\"", 8655)
-, Tuple.Create(Tuple.Create("", 8618), Tuple.Create("tabbed-content", 8618), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9139), Tuple.Create("\"", 9184)
+, Tuple.Create(Tuple.Create("", 9147), Tuple.Create("tabbed-content", 9147), true)
             
-            #line 135 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create(" ", 8632), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
+            #line 141 "..\..\Views\Account\Settings.cshtml"
+, Tuple.Create(Tuple.Create(" ", 9161), Tuple.Create<System.Object, System.Int32>(savedSearchesTabClass
             
             #line default
             #line hidden
-, 8633), false)
+, 9162), false)
 );
 
 WriteLiteral(">\r\n            <h2");
@@ -660,7 +694,7 @@ WriteLiteral(">If you don\'t select an option you won\'t receive notifications</
 WriteLiteral("                ");
 
             
-            #line 140 "..\..\Views\Account\Settings.cshtml"
+            #line 146 "..\..\Views\Account\Settings.cshtml"
            Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaEmail, labelHtmlAttributes: new { @class = "block-label allowSavedComms" }));
 
             
@@ -669,13 +703,13 @@ WriteLiteral("                ");
 WriteLiteral("\r\n");
 
             
-            #line 141 "..\..\Views\Account\Settings.cshtml"
+            #line 147 "..\..\Views\Account\Settings.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 141 "..\..\Views\Account\Settings.cshtml"
+            #line 147 "..\..\Views\Account\Settings.cshtml"
                  if (Model.SmsEnabled)
                 {
                     
@@ -683,14 +717,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 143 "..\..\Views\Account\Settings.cshtml"
+            #line 149 "..\..\Views\Account\Settings.cshtml"
                Write(Html.FormUnvalidatedCheckBoxFor(m => m.EnableSavedSearchAlertsViaText, labelHtmlAttributes: new { @class = "block-label allowSavedComms" }));
 
             
             #line default
             #line hidden
             
-            #line 143 "..\..\Views\Account\Settings.cshtml"
+            #line 149 "..\..\Views\Account\Settings.cshtml"
                                                                                                                                                                 
                 }
 
@@ -706,13 +740,13 @@ WriteLiteral(" id=\"savedSearch\"");
 WriteLiteral(">\r\n");
 
             
-            #line 148 "..\..\Views\Account\Settings.cshtml"
+            #line 154 "..\..\Views\Account\Settings.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 148 "..\..\Views\Account\Settings.cshtml"
+            #line 154 "..\..\Views\Account\Settings.cshtml"
                   
                     var noSavedSearchesTextStyle = (Model.SavedSearches != null && Model.SavedSearches.Count > 0) ? "style=\"display: none\"" : "";
                 
@@ -728,7 +762,7 @@ WriteLiteral(" id=\"noSavedSearchesText\"");
 WriteLiteral(" ");
 
             
-            #line 152 "..\..\Views\Account\Settings.cshtml"
+            #line 158 "..\..\Views\Account\Settings.cshtml"
                                                                     Write(Html.Raw(noSavedSearchesTextStyle));
 
             
@@ -737,27 +771,27 @@ WriteLiteral(" ");
 WriteLiteral(">\r\n                    You currently don\'t have any active saved searches. If you" +
 " <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 9839), Tuple.Create("\"", 9901)
+WriteAttribute("href", Tuple.Create(" href=\"", 10368), Tuple.Create("\"", 10430)
             
-            #line 153 "..\..\Views\Account\Settings.cshtml"
-        , Tuple.Create(Tuple.Create("", 9846), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+            #line 159 "..\..\Views\Account\Settings.cshtml"
+       , Tuple.Create(Tuple.Create("", 10375), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 9846), false)
+, 10375), false)
 );
 
 WriteLiteral(">set up a saved search</a> we can alert you when we find a suitable apprenticeshi" +
 "p.\r\n                </p>\r\n\r\n");
 
             
-            #line 156 "..\..\Views\Account\Settings.cshtml"
+            #line 162 "..\..\Views\Account\Settings.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 156 "..\..\Views\Account\Settings.cshtml"
+            #line 162 "..\..\Views\Account\Settings.cshtml"
                  if (Model.SavedSearches != null)
                 {
 
@@ -775,13 +809,13 @@ WriteLiteral(" style=\"display: block;\"");
 WriteLiteral(">\r\n");
 
             
-            #line 159 "..\..\Views\Account\Settings.cshtml"
+            #line 165 "..\..\Views\Account\Settings.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 159 "..\..\Views\Account\Settings.cshtml"
+            #line 165 "..\..\Views\Account\Settings.cshtml"
                          for (var i = 0; i < Model.SavedSearches.Count; i++)
                         {
                             var index = i;
@@ -796,26 +830,26 @@ WriteLiteral("                            <div");
 
 WriteLiteral(" class=\"para-btm-margin saved-search\"");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 10585), Tuple.Create("\"", 10605)
+WriteAttribute("id", Tuple.Create(" id=\"", 11114), Tuple.Create("\"", 11134)
             
-            #line 165 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 10590), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+            #line 171 "..\..\Views\Account\Settings.cshtml"
+, Tuple.Create(Tuple.Create("", 11119), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 10590), false)
+, 11119), false)
 );
 
 WriteLiteral(">\r\n                                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 10643), Tuple.Create("\"", 10688)
+WriteAttribute("href", Tuple.Create(" href=\"", 11172), Tuple.Create("\"", 11217)
             
-            #line 166 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 10650), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
+            #line 172 "..\..\Views\Account\Settings.cshtml"
+, Tuple.Create(Tuple.Create("", 11179), Tuple.Create<System.Object, System.Int32>(Html.Raw(savedSearch.SearchUrl.Value)
             
             #line default
             #line hidden
-, 10650), false)
+, 11179), false)
 );
 
 WriteLiteral(" title=\"Run search\"");
@@ -823,7 +857,7 @@ WriteLiteral(" title=\"Run search\"");
 WriteLiteral(">");
 
             
-            #line 166 "..\..\Views\Account\Settings.cshtml"
+            #line 172 "..\..\Views\Account\Settings.cshtml"
                                                                                                Write(savedSearch.Name);
 
             
@@ -832,13 +866,13 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n");
 
             
-            #line 167 "..\..\Views\Account\Settings.cshtml"
+            #line 173 "..\..\Views\Account\Settings.cshtml"
                                 
             
             #line default
             #line hidden
             
-            #line 167 "..\..\Views\Account\Settings.cshtml"
+            #line 173 "..\..\Views\Account\Settings.cshtml"
                                  if (savedSearch.DateProcessed.HasValue)
                                 {
 
@@ -852,7 +886,7 @@ WriteLiteral(" class=\"inl-block font-xsmall\"");
 WriteLiteral(">(Last alert: ");
 
             
-            #line 169 "..\..\Views\Account\Settings.cshtml"
+            #line 175 "..\..\Views\Account\Settings.cshtml"
                                                                                 Write(savedSearch.DateProcessed.Value.ToFriendlyDaysAgo());
 
             
@@ -861,7 +895,7 @@ WriteLiteral(">(Last alert: ");
 WriteLiteral(")</span>\r\n");
 
             
-            #line 170 "..\..\Views\Account\Settings.cshtml"
+            #line 176 "..\..\Views\Account\Settings.cshtml"
                                 }
 
             
@@ -874,13 +908,13 @@ WriteLiteral(" class=\"list-text\"");
 WriteLiteral(">\r\n");
 
             
-            #line 172 "..\..\Views\Account\Settings.cshtml"
+            #line 178 "..\..\Views\Account\Settings.cshtml"
                                     
             
             #line default
             #line hidden
             
-            #line 172 "..\..\Views\Account\Settings.cshtml"
+            #line 178 "..\..\Views\Account\Settings.cshtml"
                                      if (!string.IsNullOrEmpty(savedSearch.SubCategoriesFullNames))
                                     {
 
@@ -890,7 +924,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                        <li><b>Sub-categories:</b> ");
 
             
-            #line 174 "..\..\Views\Account\Settings.cshtml"
+            #line 180 "..\..\Views\Account\Settings.cshtml"
                                                               Write(savedSearch.SubCategoriesFullNames);
 
             
@@ -899,7 +933,7 @@ WriteLiteral("                                        <li><b>Sub-categories:</b>
 WriteLiteral("</li>\r\n");
 
             
-            #line 175 "..\..\Views\Account\Settings.cshtml"
+            #line 181 "..\..\Views\Account\Settings.cshtml"
                                     }
 
             
@@ -908,7 +942,7 @@ WriteLiteral("</li>\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 176 "..\..\Views\Account\Settings.cshtml"
+            #line 182 "..\..\Views\Account\Settings.cshtml"
                                      if (savedSearch.ApprenticeshipLevel != "All")
                                     {
 
@@ -918,7 +952,7 @@ WriteLiteral("                                    ");
 WriteLiteral("                                        <li><b>Apprenticeship level:</b> ");
 
             
-            #line 178 "..\..\Views\Account\Settings.cshtml"
+            #line 184 "..\..\Views\Account\Settings.cshtml"
                                                                     Write(savedSearch.ApprenticeshipLevel);
 
             
@@ -927,7 +961,7 @@ WriteLiteral("                                        <li><b>Apprenticeship leve
 WriteLiteral("</li>\r\n");
 
             
-            #line 179 "..\..\Views\Account\Settings.cshtml"
+            #line 185 "..\..\Views\Account\Settings.cshtml"
                                     }
 
             
@@ -936,7 +970,7 @@ WriteLiteral("</li>\r\n");
 WriteLiteral("                                    <li ");
 
             
-            #line 180 "..\..\Views\Account\Settings.cshtml"
+            #line 186 "..\..\Views\Account\Settings.cshtml"
                                    Write(Html.Raw(checkedListItemClass));
 
             
@@ -947,7 +981,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                        ");
 
             
-            #line 181 "..\..\Views\Account\Settings.cshtml"
+            #line 187 "..\..\Views\Account\Settings.cshtml"
                                    Write(Html.HiddenFor(m => m.SavedSearches[index].Id));
 
             
@@ -958,7 +992,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                                        ");
 
             
-            #line 182 "..\..\Views\Account\Settings.cshtml"
+            #line 188 "..\..\Views\Account\Settings.cshtml"
                                    Write(Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new { @class = "no-left-margin" }));
 
             
@@ -967,24 +1001,24 @@ WriteLiteral("                                        ");
 WriteLiteral("\r\n                                    </li>\r\n                                    " +
 "<li>\r\n                                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12106), Tuple.Create("\"", 12194)
+WriteAttribute("href", Tuple.Create(" href=\"", 12635), Tuple.Create("\"", 12723)
             
-            #line 185 "..\..\Views\Account\Settings.cshtml"
-, Tuple.Create(Tuple.Create("", 12113), Tuple.Create<System.Object, System.Int32>(Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})
+            #line 191 "..\..\Views\Account\Settings.cshtml"
+, Tuple.Create(Tuple.Create("", 12642), Tuple.Create<System.Object, System.Int32>(Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})
             
             #line default
             #line hidden
-, 12113), false)
+, 12642), false)
 );
 
-WriteAttribute("id", Tuple.Create(" id=\"", 12195), Tuple.Create("\"", 12215)
+WriteAttribute("id", Tuple.Create(" id=\"", 12724), Tuple.Create("\"", 12744)
             
-            #line 185 "..\..\Views\Account\Settings.cshtml"
-                                                       , Tuple.Create(Tuple.Create("", 12200), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
+            #line 191 "..\..\Views\Account\Settings.cshtml"
+                                                       , Tuple.Create(Tuple.Create("", 12729), Tuple.Create<System.Object, System.Int32>(savedSearch.Id
             
             #line default
             #line hidden
-, 12200), false)
+, 12729), false)
 );
 
 WriteLiteral(" class=\"link-unimp icon-black delete-saved-search-link\"");
@@ -998,7 +1032,7 @@ WriteLiteral("></i>Delete saved search\r\n                                      
 "                     </div>\r\n");
 
             
-            #line 191 "..\..\Views\Account\Settings.cshtml"
+            #line 197 "..\..\Views\Account\Settings.cshtml"
                         }
 
             
@@ -1007,7 +1041,7 @@ WriteLiteral("></i>Delete saved search\r\n                                      
 WriteLiteral("                    </div>\r\n");
 
             
-            #line 193 "..\..\Views\Account\Settings.cshtml"
+            #line 199 "..\..\Views\Account\Settings.cshtml"
                 }
 
             
@@ -1027,7 +1061,7 @@ WriteLiteral(">Save settings</button>\r\n                </div>\r\n            <
 "v>\r\n    </fieldset>\r\n");
 
             
-            #line 201 "..\..\Views\Account\Settings.cshtml"
+            #line 207 "..\..\Views\Account\Settings.cshtml"
 }
 
             
@@ -1041,7 +1075,7 @@ WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\"#fi
 "Lookup({\r\n                url: \'");
 
             
-            #line 208 "..\..\Views\Account\Settings.cshtml"
+            #line 214 "..\..\Views\Account\Settings.cshtml"
                  Write(Url.Action("Addresses", "Location"));
 
             

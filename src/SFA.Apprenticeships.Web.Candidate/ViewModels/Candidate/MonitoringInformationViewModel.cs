@@ -1,16 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
     using Constants.ViewModels;
 
     public class MonitoringInformationViewModel
     {
-        public MonitoringInformationViewOptions Options { get; set; }
-
         public int Ethnicity { get; set; }
 
+        // TODO: AG: US454: remove dead code.
+
+        /*
         public SelectList EthnicitiesSelectList
         {
             get
@@ -56,6 +55,7 @@
                 return new SelectList(list, "Value", "Name", "Group");
             }
         }
+        */
 
         public bool RequiresSupportForInterview { get; set; }
 

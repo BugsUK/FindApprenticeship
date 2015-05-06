@@ -66,7 +66,13 @@
                 </div>
             }
             
-            @Html.Partial("_monitoringInformation", Model.MonitoringInformation)
+            <details>
+                <summary>Your equality and diversity information</summary>
+                @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_monitoringInformationGender")
+                @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_monitoringInformationDisability")
+                @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_monitoringInformationEthnicity")
+                @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_monitoringInformationWhy")
+            </details>
 
             <div id="accountSettings2">
                 <h3 class="heading-large">How we contact you</h3>

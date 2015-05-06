@@ -1,0 +1,50 @@
+﻿@model MonitoringInformationViewModel
+
+<div class="form-group inline clearfix">
+    <p class="form-label" id="disability-label">Do you have a learning difficulty, disability or health problem?</p>
+    <label for="disability-yes" class="block-label">
+        <input name="disability" type="radio" id="disability-yes" aria-labelledby="disability-label">Yes
+    </label>
+    <label for="disability-no" class="block-label">
+        <input name="disability" type="radio" id="disability-no" aria-labelledby="disability-label">No
+    </label>
+    <label for="disability-prefno" class="block-label">
+        <input name="disability" type="radio" id="disability-prefno" aria-labelledby="disability-label">Prefer not to say
+    </label>
+    <div class="text">
+        <details class="med-btm-margin">
+            <summary>Why we collect this info</summary>
+            <div class="detail-content panel-indent">
+                <p>
+                    Employers who are part of the ‘Positive about disabled
+                    people’ scheme will guarantee candidates an interview
+                    who meet the apprenticeship criteria if they have a disability.
+                </p>
+                <p>
+                    For this reason we ask you to provide this information
+                    so we can inform the employer and provider.
+                </p>
+            </div>
+        </details>
+    </div>
+</div>
+
+<div class="form-group">
+    <label for="question4" class="form-label">Is there anything we can do to support your interview?</label>
+    <span class="form-hint">For example, do you need a signer or information in braille</span>
+    <div class="form-group form-group-compound inline">
+        <label data-target="support-panel" for="support-yes" class="block-label">
+            <input name="support" type="radio" id="support-yes" aria-controls="support-panel"
+                    aria-expanded="false">Yes
+        </label>
+        <label for="support-no" class="block-label">
+            <input checked name="support" type="radio" id="support-no">No
+        </label>
+    </div>
+    <div id="support-panel" class="panel-indent toggle-content" aria-hidden="true">
+        <span class="form-hint">Please provide details</span>
+        <textarea id="question4" class="form-control" rows="4" data-val-length-max="4000"></textarea>
+        <!-- <span class="form-hint maxchar-count">4000</span> -->
+        <span class="visuallyhidden aria-limit" aria-live="polite"></span>
+    </div>
+</div>

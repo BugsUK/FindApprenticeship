@@ -668,9 +668,21 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>VerifyUpdatedEmailAddress.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\_monitoringInformation.cshtml">
+    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationDisability.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_monitoringInformation.generated.cs</LastGenOutput>
+      <LastGenOutput>_monitoringInformationDisability.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationGender.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_monitoringInformationGender.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationEthnicity.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_monitoringInformationEthnicity.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationWhy.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_monitoringInformationWhy.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -817,9 +829,7 @@
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextApprenticeshipViewModel.cs" />
-    <Compile Include="ViewModels\Candidate\EthnicityViewModel.cs" />
     <Compile Include="ViewModels\Candidate\MonitoringInformationViewModel.cs" />
-    <Compile Include="ViewModels\Candidate\MonitoringInformationViewOptions.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenCredentialsViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenEmailViewModel.cs" />
@@ -1130,8 +1140,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_searchUpdate.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\_monitoringInformation.generated.cs">
-      <DependentUpon>_monitoringInformation.cshtml</DependentUpon>
+    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationEthnicity.generated.cs">
+      <DependentUpon>_monitoringInformationEthnicity.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationWhy.generated.cs">
+      <DependentUpon>_monitoringInformationWhy.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationGender.generated.cs">
+      <DependentUpon>_monitoringInformationGender.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationDisability.generated.cs">
+      <DependentUpon>_monitoringInformationDisability.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
