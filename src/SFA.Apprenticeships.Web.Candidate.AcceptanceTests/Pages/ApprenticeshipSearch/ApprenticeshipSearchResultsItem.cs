@@ -34,7 +34,7 @@
             {
                 var multiplePositionsNationwideCount = FindElements(By.Id("multiple-positions-nationwide")).Count;
 
-                return (multiplePositionsNationwideCount > 0 && MultiplePositionsNationwide != null && MultiplePositionsNationwide.Text == "This apprenticeship has multiple positions nationwide.").ToString();
+                return (multiplePositionsNationwideCount > 0 && MultiplePositionsNationwide != null && MultiplePositionsNationwide.Text == "This apprenticeship has multiple positions across England.").ToString();
             }
         }
     }
