@@ -67,49 +67,52 @@ WriteLiteral(" for=\"disability-yes\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n        <input");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" name=\"disability\"");
+WriteLiteral("        ");
 
-WriteLiteral(" type=\"radio\"");
+            
+            #line 6 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+   Write(Html.RadioButtonFor(m => m.DisabilityStatus, 1, new { id = "disability-yes", aria_labelledby = "disability-label" }));
 
-WriteLiteral(" id=\"disability-yes\"");
-
-WriteLiteral(" aria-labelledby=\"disability-label\"");
-
-WriteLiteral(">Yes\r\n    </label>\r\n    <label");
+            
+            #line default
+            #line hidden
+WriteLiteral(" Yes\r\n    </label>\r\n    <label");
 
 WriteLiteral(" for=\"disability-no\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n        <input");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" name=\"disability\"");
+WriteLiteral("        ");
 
-WriteLiteral(" type=\"radio\"");
+            
+            #line 9 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+   Write(Html.RadioButtonFor(m => m.DisabilityStatus, 2, new { id = "disability-no", aria_labelledby = "disability-label" }));
 
-WriteLiteral(" id=\"disability-no\"");
+            
+            #line default
+            #line hidden
+WriteLiteral(" No\r\n    </label>\r\n    <label");
 
-WriteLiteral(" aria-labelledby=\"disability-label\"");
-
-WriteLiteral(">No\r\n    </label>\r\n    <label");
-
-WriteLiteral(" for=\"disability-prefno\"");
+WriteLiteral(" for=\"disability-prefer-not-to-say\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n        <input");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" name=\"disability\"");
+WriteLiteral("        ");
 
-WriteLiteral(" type=\"radio\"");
+            
+            #line 12 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+   Write(Html.RadioButtonFor(m => m.DisabilityStatus, 3, new { id = "disability-prefer-not-to-say", aria_labelledby = "disability-label" }));
 
-WriteLiteral(" id=\"disability-prefno\"");
-
-WriteLiteral(" aria-labelledby=\"disability-label\"");
-
-WriteLiteral(">Prefer not to say\r\n    </label>\r\n    <div");
+            
+            #line default
+            #line hidden
+WriteLiteral(" Prefer not to say\r\n    </label>\r\n    <div");
 
 WriteLiteral(" class=\"text\"");
 
@@ -158,37 +161,39 @@ WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" data-target=\"support-panel\"");
 
-WriteLiteral(" for=\"support-yes\"");
+WriteLiteral(" for=\"disability-support-yes\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n            <input");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" name=\"support\"");
+WriteLiteral("            ");
 
-WriteLiteral(" type=\"radio\"");
+            
+            #line 37 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+       Write(Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, new { id = "disability-support-yes", aria_controls = "support-panel", aria_expanded = "false" }));
 
-WriteLiteral(" id=\"support-yes\"");
+            
+            #line default
+            #line hidden
+WriteLiteral(" Yes\r\n        </label>\r\n        <label");
 
-WriteLiteral(" aria-controls=\"support-panel\"");
-
-WriteLiteral("\r\n                    aria-expanded=\"false\"");
-
-WriteLiteral(">Yes\r\n        </label>\r\n        <label");
-
-WriteLiteral(" for=\"support-no\"");
+WriteLiteral(" for=\"disability-support-no\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n            <input checked");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" name=\"support\"");
+WriteLiteral("            ");
 
-WriteLiteral(" type=\"radio\"");
+            
+            #line 40 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+       Write(Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, new { id = "disability-support-no" }));
 
-WriteLiteral(" id=\"support-no\"");
-
-WriteLiteral(">No\r\n        </label>\r\n    </div>\r\n    <div");
+            
+            #line default
+            #line hidden
+WriteLiteral(" No\r\n        </label>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" id=\"support-panel\"");
 
@@ -196,28 +201,18 @@ WriteLiteral(" class=\"panel-indent toggle-content\"");
 
 WriteLiteral(" aria-hidden=\"true\"");
 
-WriteLiteral(">\r\n        <span");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" class=\"form-hint\"");
+WriteLiteral("        ");
 
-WriteLiteral(">Please provide details</span>\r\n        <textarea");
+            
+            #line 44 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml"
+   Write(Html.FormTextAreaFor(m => m.AnythingWeCanDoToSupportYourInterview, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" }, labelHtmlAttributes: new { @class = "form-hint text" }));
 
-WriteLiteral(" id=\"question4\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" rows=\"4\"");
-
-WriteLiteral(" data-val-length-max=\"4000\"");
-
-WriteLiteral("></textarea>\r\n        <!-- <span class=\"form-hint maxchar-count\">4000</span> -->\r" +
-"\n        <span");
-
-WriteLiteral(" class=\"visuallyhidden aria-limit\"");
-
-WriteLiteral(" aria-live=\"polite\"");
-
-WriteLiteral("></span>\r\n    </div>\r\n</div>\r\n");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n</div>\r\n");
 
         }
     }

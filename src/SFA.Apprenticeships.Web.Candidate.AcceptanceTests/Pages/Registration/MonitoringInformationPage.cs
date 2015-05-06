@@ -35,7 +35,7 @@
         [ElementLocator(Id = "disability-no")]
         public IWebElement DisabilityNo { get; set; }
 
-        [ElementLocator(Id = "disability-prefno")]
+        [ElementLocator(Id = "disability-prefer-not-to-say")]
         public IWebElement DisabilityPreferNotToSay { get; set; }
 
         [ElementLocator(Id = "support-yes")]

@@ -64,8 +64,6 @@ WriteLiteral(">Are you?</p>\r\n    <label");
 
 WriteLiteral(" for=\"gender-male\"");
 
-WriteLiteral(" id=\"gender-male-label\"");
-
 WriteLiteral(" class=\"block-label\"");
 
 WriteLiteral(">\r\n");
@@ -74,7 +72,7 @@ WriteLiteral("        ");
 
             
             #line 6 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
-   Write(Html.RadioButtonFor(m => m.Gender, 1, new { id = "gender-male", aria_labelledby = "gender-male-label" }));
+   Write(Html.RadioButtonFor(m => m.Gender, 1, new { id = "gender-male", aria_labelledby = "gender-label" }));
 
             
             #line default
@@ -82,8 +80,6 @@ WriteLiteral("        ");
 WriteLiteral(" Male\r\n    </label>\r\n\r\n    <label");
 
 WriteLiteral(" for=\"gender-female\"");
-
-WriteLiteral(" id=\"gender-female-label\"");
 
 WriteLiteral(" class=\"block-label\"");
 
@@ -93,7 +89,7 @@ WriteLiteral("        ");
 
             
             #line 10 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
-   Write(Html.RadioButtonFor(m => m.Gender, 2, new { id = "gender-female", aria_labelledby = "gender-female-label" }));
+   Write(Html.RadioButtonFor(m => m.Gender, 2, new { id = "gender-female", aria_labelledby = "gender-label" }));
 
             
             #line default
@@ -101,8 +97,6 @@ WriteLiteral("        ");
 WriteLiteral(" Female\r\n    </label>\r\n\r\n    <label");
 
 WriteLiteral(" for=\"gender-other\"");
-
-WriteLiteral(" id=\"gender-other-label\"");
 
 WriteLiteral(" class=\"block-label\"");
 
@@ -112,7 +106,7 @@ WriteLiteral("        ");
 
             
             #line 14 "..\..\Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml"
-   Write(Html.RadioButtonFor(m => m.Gender, 3, new { id = "gender-other", aria_labelledby = "gender-other-label" }));
+   Write(Html.RadioButtonFor(m => m.Gender, 3, new { id = "gender-other", aria_labelledby = "gender-label" }));
 
             
             #line default
