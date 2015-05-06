@@ -42,11 +42,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_monitoringInformationDisabi" +
-        "lity.cshtml")]
-    public partial class monitoringInformationDisability : System.Web.Mvc.WebViewPage<MonitoringInformationViewModel>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_disability.cshtml")]
+    public partial class disability : System.Web.Mvc.WebViewPage<MonitoringInformationViewModel>
     {
-        public monitoringInformationDisability()
+        public disability()
         {
         }
         public override void Execute()

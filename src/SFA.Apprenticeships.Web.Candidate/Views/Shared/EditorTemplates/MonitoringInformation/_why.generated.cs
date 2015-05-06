@@ -42,90 +42,48 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_monitoringInformationGender" +
-        ".cshtml")]
-    public partial class monitoringInformationGender : System.Web.Mvc.WebViewPage<MonitoringInformationViewModel>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_why.cshtml")]
+    public partial class why : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public monitoringInformationGender()
+        public why()
         {
         }
         public override void Execute()
         {
 WriteLiteral("<div");
 
-WriteLiteral(" class=\"form-group inline clearfix\"");
+WriteLiteral(" class=\"text\"");
 
-WriteLiteral(">\r\n    <p");
+WriteLiteral(">\r\n    <details>\r\n        <summary>Why are we asking all these questions?</summar" +
+"y>\r\n        <div");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"detail-content\"");
 
-WriteLiteral(" id=\"gender-label\"");
-
-WriteLiteral(">Are you?</p>\r\n    <label");
-
-WriteLiteral(" for=\"gender-male\"");
-
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(">\r\n        <input");
-
-WriteLiteral(" name=\"gender\"");
-
-WriteLiteral(" type=\"radio\"");
-
-WriteLiteral(" id=\"gender-male\"");
-
-WriteLiteral(" aria-labelledby=\"gender-label\"");
-
-WriteLiteral(">Male\r\n    </label>\r\n    <label");
-
-WriteLiteral(" for=\"gender-female\"");
-
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(">\r\n        <input");
-
-WriteLiteral(" name=\"gender\"");
-
-WriteLiteral(" type=\"radio\"");
-
-WriteLiteral(" id=\"gender-female\"");
-
-WriteLiteral(" aria-labelledby=\"gender-label\"");
-
-WriteLiteral(">Female\r\n    </label>\r\n    <label");
-
-WriteLiteral(" for=\"gender-other\"");
-
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(">\r\n        <input");
-
-WriteLiteral(" name=\"gender\"");
-
-WriteLiteral(" type=\"radio\"");
-
-WriteLiteral(" id=\"gender-other\"");
-
-WriteLiteral(" aria-labelledby=\"gender-label\"");
-
-WriteLiteral(">Other\r\n    </label>\r\n    <label");
-
-WriteLiteral(" for=\"gender-no\"");
-
-WriteLiteral(" class=\"block-label\"");
-
-WriteLiteral(">\r\n        <input");
-
-WriteLiteral(" name=\"gender\"");
-
-WriteLiteral(" type=\"radio\"");
-
-WriteLiteral(" id=\"gender-no\"");
-
-WriteLiteral(" aria-labelledby=\"gender-label\"");
-
-WriteLiteral(">Prefer not to say\r\n    </label>\r\n</div>\r\n");
+WriteLiteral(@">
+            <p>
+                The Skills Funding Agency aims to make apprenticeships and
+                traineeships inclusive. Learning more about you will help
+                us do this and meet our obligations under the Equality
+                Act 2010.
+            </p>
+            <p>
+                You don’t have to answer the questions, but the information
+                allows us to make the application process easier.
+            </p>
+            <p>
+                Your answers will be treated in confidence and are covered
+                by the Data Protection Act 1998. We’ll only share them
+                with recruiters if you grant us permission.
+            </p>
+            <p>
+                Answering the questions may lead to a guaranteed interview
+                if you are disabled and the employer is a member of the
+                Two Ticks scheme.
+            </p>
+        </div>
+    </details>
+</div>
+");
 
         }
     }

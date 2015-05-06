@@ -668,21 +668,21 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>VerifyUpdatedEmailAddress.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationDisability.cshtml">
+    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_disability.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_monitoringInformationDisability.generated.cs</LastGenOutput>
+      <LastGenOutput>_disability.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationGender.cshtml">
+    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_gender.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_monitoringInformationGender.generated.cs</LastGenOutput>
+      <LastGenOutput>_gender.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationEthnicity.cshtml">
+    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_monitoringInformationEthnicity.generated.cs</LastGenOutput>
+      <LastGenOutput>_ethnicity.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationWhy.cshtml">
+    <Content Include="Views\Shared\EditorTemplates\MonitoringInformation\_why.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_monitoringInformationWhy.generated.cs</LastGenOutput>
+      <LastGenOutput>_why.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1140,23 +1140,23 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_searchUpdate.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationEthnicity.generated.cs">
-      <DependentUpon>_monitoringInformationEthnicity.cshtml</DependentUpon>
+    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.generated.cs">
+      <DependentUpon>_ethnicity.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationWhy.generated.cs">
-      <DependentUpon>_monitoringInformationWhy.cshtml</DependentUpon>
+    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_why.generated.cs">
+      <DependentUpon>_why.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationGender.generated.cs">
-      <DependentUpon>_monitoringInformationGender.cshtml</DependentUpon>
+    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_gender.generated.cs">
+      <DependentUpon>_gender.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_monitoringInformationDisability.generated.cs">
-      <DependentUpon>_monitoringInformationDisability.cshtml</DependentUpon>
+    <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_disability.generated.cs">
+      <DependentUpon>_disability.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>

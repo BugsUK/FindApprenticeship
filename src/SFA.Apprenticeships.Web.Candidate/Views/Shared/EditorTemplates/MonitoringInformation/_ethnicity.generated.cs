@@ -42,11 +42,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.EditorTemplates.Monitor
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_monitoringInformationEthnic" +
-        "ity.cshtml")]
-    public partial class monitoringInformationEthnicity : System.Web.Mvc.WebViewPage<MonitoringInformationViewModel>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/MonitoringInformation/_ethnicity.cshtml")]
+    public partial class ethnicity : System.Web.Mvc.WebViewPage<MonitoringInformationViewModel>
     {
-        public monitoringInformationEthnicity()
+        public ethnicity()
         {
         }
         public override void Execute()
