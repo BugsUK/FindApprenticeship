@@ -65,9 +65,10 @@
                     <span class="form-prepopped" id="settings-pending-username">@Model.PendingUsername</span><a id="settings-confirm-username" class="inl-block" href="@Url.RouteUrl(RouteNames.VerifyUpdatedEmail)">Verify new email address</a>
                 </div>
             }
+            
+            @Html.Partial("_monitoringInformation", Model.MonitoringInformation)
 
             <div id="accountSettings2">
-
                 <h3 class="heading-large">How we contact you</h3>
                 <div class="text para-btm-margin">
                     <p class="small-btm-margin">
@@ -154,7 +155,7 @@
 
                 @if (Model.SavedSearches != null)
                 {
-                    <div id="savedSearches" class="toggle-content text" style="display: block;">
+                        <div id="savedSearches" class="toggle-content text" style="display: block;">
                         @for (var i = 0; i < Model.SavedSearches.Count; i++)
                         {
                             var index = i;

@@ -24,5 +24,7 @@
         public CommunicationPreferences CommunicationPreferences { get; set; }
 
         public HelpPreferences HelpPreferences { get; set; }
+
+        public MonitoringInformation MonitoringInformation { get; set; }
     }
 }

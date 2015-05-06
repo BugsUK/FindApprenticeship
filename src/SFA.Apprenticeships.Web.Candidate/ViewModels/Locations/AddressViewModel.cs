@@ -3,8 +3,8 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using FluentValidation.Attributes;
-    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.Validators;
+    using Constants.ViewModels;
+    using Validators;
 
     [Serializable]
     [Validator(typeof (AddressViewModelValidator))]
@@ -32,6 +32,7 @@
         }
 
         public string Uprn { get; set; }
+
         public GeoPointViewModel GeoPoint { get; set; }
     }
 }

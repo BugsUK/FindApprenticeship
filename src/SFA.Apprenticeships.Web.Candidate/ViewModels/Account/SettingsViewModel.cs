@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Applications;
+    using Candidate;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Locations;
@@ -11,6 +12,14 @@
     [Validator(typeof(SettingsViewModelClientValidator))]
     public class SettingsViewModel
     {
+        public SettingsViewModel()
+        {
+            MonitoringInformation = new MonitoringInformationViewModel
+            {
+                Options = MonitoringInformationViewOptions.RenderAll
+            };
+        }
+
         public enum SettingsMode
         {
             YourAccount,
@@ -67,5 +76,7 @@
         public bool EnableSavedSearchAlertsViaText { get; set; }
 
         public IList<SavedSearchViewModel> SavedSearches { get; set; }
+
+        public MonitoringInformationViewModel MonitoringInformation { get; set; }
     }
 }

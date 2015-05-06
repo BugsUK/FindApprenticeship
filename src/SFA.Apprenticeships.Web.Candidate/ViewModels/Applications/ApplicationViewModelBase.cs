@@ -6,7 +6,6 @@
     using Common.Constants;
     using Common.Models.Application;
     using Constants.Pages;
-    using VacancySearch;
 
     [Serializable]
     public abstract class ApplicationViewModelBase : ViewModelBase
@@ -19,6 +18,10 @@
         public string FourDigitYearRegex = Whitelists.YearRangeWhiteList.RegularExpression();
         public double SessionTimeout;
         public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
+
+        protected ApplicationViewModelBase()
+        {
+        }
 
         protected ApplicationViewModelBase(string message, ApplicationViewModelStatus viewModelStatus) : base(message)
         {
@@ -33,10 +36,6 @@
         protected ApplicationViewModelBase(ApplicationViewModelStatus viewModelStatus)
         {
             ViewModelStatus = viewModelStatus;
-        }
-
-        protected ApplicationViewModelBase()
-        {
         }
 
         public IEnumerable<SelectListItem> Months
@@ -72,5 +71,5 @@
         public ApplicationViewModelStatus ViewModelStatus { get; set; }
 
         public DateTime DateApplied { get; set; }
-    }
+   }
 }
