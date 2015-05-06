@@ -8,5 +8,6 @@
         public const string Monitor = "monitorscheduler";
         public const string DailyDigest = "dailydigestscheduler";
         public const string DailyMetrics = "dailymetricsscheduler";
+        public const string Housekeeping = "housekeepingscheduler";
     }
 }

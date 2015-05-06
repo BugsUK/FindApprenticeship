@@ -2,8 +2,10 @@
 {
     using Application.Applications;
     using Application.Applications.Strategies;
+    using Application.Candidates.Strategies;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
+    using Application.Interfaces.Logging;
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
@@ -75,9 +77,24 @@
             // candidates
             For<CandidateSavedSearchesConsumerAsync>().Use<CandidateSavedSearchesConsumerAsync>();
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
+            For<CandidateAccountHousekeepingConsumerAsync>().Use<CandidateAccountHousekeepingConsumerAsync>().Ctor<IHousekeepingStrategy>().Is(context => BuildHousekeepingChainOfResponsibility(context));
 
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
+        }
+
+        private static IHousekeepingStrategy BuildHousekeepingChainOfResponsibility(IContext context)
+        {
+            var configurationService = context.GetInstance<IConfigurationService>();
+            var logService = context.GetInstance<ILogService>();
+
+            var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, logService);
+            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, logService);
+
+            sendAccountRemindersStrategy.SetSuccessor(setPendingDeletionStrategy);
+            setPendingDeletionStrategy.SetSuccessor(new TerminatingHousekeepingStrategy(configurationService));
+
+            return sendAccountRemindersStrategy;
         }
     }
 }

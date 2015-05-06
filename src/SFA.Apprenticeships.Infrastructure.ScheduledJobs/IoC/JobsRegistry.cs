@@ -2,6 +2,7 @@
 {
     using Application.Applications;
     using Application.Applications.Strategies;
+    using Application.Candidates;
     using Application.Communications;
     using Application.Communications.Strategies;
     using Application.Interfaces.Locations;
@@ -45,6 +46,11 @@
 
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
+
+            //Housekeeping
+            For<ICandidateProcessor>().Use<CandidateProcessor>();
+
+            For<HousekeepingControlQueueConsumer>().Use<HousekeepingControlQueueConsumer>();
         }
     }
 }
