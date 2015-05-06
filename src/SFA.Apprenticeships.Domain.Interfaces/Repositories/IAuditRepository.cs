@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
-    using Entities.Audit;
+    using Entities.Users;
 
-    public interface IAuditReadRepository<T> : IReadRepository<AuditItem<T>> { }
-
-    public interface IAuditWriteRepository<T> : IWriteRepository<AuditItem<T>> { }
+    public interface IAuditRepository
+    {
+        void Audit(User user, string eventType);
+    }
 }

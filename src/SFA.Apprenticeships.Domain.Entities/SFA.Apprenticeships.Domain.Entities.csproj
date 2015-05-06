@@ -89,7 +89,6 @@
     <Compile Include="Applications\TraineeshipApplicationDetail.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationDetail.cs" />
     <Compile Include="Applications\ApplicationStatuses.cs" />
-    <Compile Include="Audit\AuditItem.cs" />
     <Compile Include="Candidates\CandidateHelper.cs" />
     <Compile Include="Candidates\CommunicationPreference.cs" />
     <Compile Include="Candidates\CommunicationPreferences.cs" />

@@ -1,26 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Audit
 {
-    using System;
-    using Domain.Entities.Audit;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
-    using Entities;
-    using Mongo.Common;
 
-    public class AuditRepository<T> : GenericMongoClient<MongoAuditItem<T>>, IAuditReadRepository<T>, IAuditWriteRepository<T>
+    public class AuditRepository : IAuditRepository
     {
-        public AuditItem<T> Get(Guid id)
+        public void Audit(User user, string eventType)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Guid id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public AuditItem<T> Save(AuditItem<T> entity)
-        {
-            throw new NotImplementedException();
+            //todo: create an AuditItem and write
+            throw new System.NotImplementedException();
         }
     }
 }
