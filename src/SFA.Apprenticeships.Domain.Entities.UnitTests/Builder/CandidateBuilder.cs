@@ -201,7 +201,8 @@
                         EnableText = _enableMarketingViaText
                     }
                 },
-                HelpPreferences = _helpPreferences
+                HelpPreferences = _helpPreferences,
+                MonitoringInformation = new MonitoringInformation()
             };
 
             return candidate;

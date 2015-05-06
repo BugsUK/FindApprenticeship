@@ -19,6 +19,7 @@
         [TestCase("0987654321", CommunicationChannels.Sms, true)]
         public void ShouldMapCommunicationPreferences(string phoneNumber, CommunicationChannels communicationChannel, bool verifiedMobile)
         {
+            // Arrange.
             var candidateId = Guid.NewGuid();
             var candidateService = new Mock<ICandidateService>();
 
@@ -40,8 +41,10 @@
 
             Candidate candidate;
 
+            // Act.
             var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
 
+            // Assert.
             result.Should().BeTrue();
 
             candidate.RegistrationDetails.Should().NotBeNull();
@@ -94,6 +97,7 @@
         [TestCase("9876543210", true, true, true)]
         public void ShouldRequireMobileVerification(string newPhoneNumber, bool verifiedMobile, bool enableCommunicationViaText, bool mobileVerificationRequired)
         {
+            // Arrange.
             const string mobileVerificationCode = "1234";
             
             var candidateId = Guid.NewGuid();
@@ -114,8 +118,10 @@
 
             Candidate candidate;
 
+            // Act.
             var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
 
+            // Assert.
             result.Should().BeTrue();
 
             candidate.RegistrationDetails.Should().NotBeNull();
@@ -145,5 +151,37 @@
                 candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
             }
         }
+
+        [TestCase(0, null)]
+        [TestCase(37, 37)]
+        public void ShouldMapEthnicity(int ethnicity, int? expectedEthnicity)
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var candidateService = new Mock<ICandidateService>();
+
+            candidateService
+                .Setup(cs => cs.GetCandidate(candidateId))
+                .Returns(new CandidateBuilder(candidateId).Build);
+
+            var viewModel = new SettingsViewModelBuilder()
+                .PhoneNumber("0123456789")
+                .Ethnicity(ethnicity)
+                .Build();
+
+            var provider = new AccountProviderBuilder().With(candidateService).Build();
+
+            Candidate candidate;
+
+            // Act.
+            var result = provider.TrySaveSettings(candidateId, viewModel, out candidate);
+
+            // Assert.
+            result.Should().BeTrue();
+
+            candidate.MonitoringInformation.Should().NotBeNull();
+            candidate.MonitoringInformation.Ethnicity.Should().Be(expectedEthnicity);
+        }
+
     }
 }

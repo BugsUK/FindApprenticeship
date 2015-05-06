@@ -11,6 +11,7 @@
             ApplicationTemplate = new ApplicationTemplate();
             CommunicationPreferences = new CommunicationPreferences();
             HelpPreferences = new HelpPreferences();
+            MonitoringInformation = new MonitoringInformation();
         }
 
         public int LegacyCandidateId { get; set; } // temporary "weak link" to legacy candidate record (could be via an index)

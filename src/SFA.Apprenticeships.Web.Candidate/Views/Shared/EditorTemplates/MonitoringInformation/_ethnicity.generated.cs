@@ -67,19 +67,17 @@ WriteLiteral(" class=\"form-hint text\"");
 WriteLiteral(">\r\n        We need this information to make sure we\'re giving equal opportunities" +
 "\r\n        to all candidates\r\n    </p>\r\n    <select");
 
-WriteLiteral(" name=\"\"");
-
-WriteLiteral(" id=\"\"");
+WriteLiteral(" name=\"MonitoringInformation.Ethnicity\"");
 
 WriteLiteral(" class=\"para-btm-margin\"");
 
 WriteLiteral(">\r\n        <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"0\"");
 
 WriteLiteral(">-- Please select --</option>\r\n        <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"99\"");
 
 WriteLiteral(">Prefer not to say</option>\r\n        <optgroup");
 
@@ -87,19 +85,19 @@ WriteLiteral(" label=\"White\"");
 
 WriteLiteral(">\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"31\"");
 
 WriteLiteral(">English/Welsh/Scottish/Northern Irish/British</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"32\"");
 
 WriteLiteral(">Irish</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"33\"");
 
 WriteLiteral(">Gypsy or Irish Traveller</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"34\"");
 
 WriteLiteral(">Other White background</option>\r\n        </optgroup>\r\n        <optgroup");
 
@@ -107,19 +105,19 @@ WriteLiteral(" label=\"Mixed/Multiple ethnic groups\"");
 
 WriteLiteral(">\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"35\"");
 
 WriteLiteral(">White and Black Caribbean</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"36\"");
 
 WriteLiteral(">White and Black African</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"37\"");
 
 WriteLiteral(">White and Asian</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"38\"");
 
 WriteLiteral(">Other mixed/multiple ethnic background</option>\r\n        </optgroup>\r\n        <o" +
 "ptgroup");
@@ -128,23 +126,23 @@ WriteLiteral(" label=\"Asian/Asian British\"");
 
 WriteLiteral(">\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"39\"");
 
 WriteLiteral(">Indian</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"40\"");
 
 WriteLiteral(">Pakistani</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"41\"");
 
 WriteLiteral(">Bangladeshi</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"42\"");
 
 WriteLiteral(">Chinese</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"43\"");
 
 WriteLiteral(">Other Asian background</option>\r\n        </optgroup>\r\n        <optgroup");
 
@@ -152,15 +150,15 @@ WriteLiteral(" label=\"Black/African/Caribbean/Black British\"");
 
 WriteLiteral(">\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"44\"");
 
 WriteLiteral(">African</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"45\"");
 
 WriteLiteral(">Caribbean</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"46\"");
 
 WriteLiteral(">Other Black/African/Caribbean background</option>\r\n        </optgroup>\r\n        " +
 "<optgroup");
@@ -169,13 +167,13 @@ WriteLiteral(" label=\"Other ethnic group\"");
 
 WriteLiteral(">\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"47\"");
 
 WriteLiteral(">Arab</option>\r\n            <option");
 
-WriteLiteral(" value=\"\"");
+WriteLiteral(" value=\"98\"");
 
-WriteLiteral(">Other ethnic group</option>\r\n        </optgroup>\r\n    </select>\r\n</div>\r\n");
+WriteLiteral(">Other ethnic group</option>\r\n        </optgroup>\r\n    </select>\r\n</div>");
 
         }
     }

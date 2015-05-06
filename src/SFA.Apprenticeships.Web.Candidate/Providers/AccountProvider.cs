@@ -101,6 +101,7 @@
                     candidate.CommunicationPreferences.VerifiedMobile = false;
                 }
 
+                // Communication preferences.
                 var communicationPreferences = candidate.CommunicationPreferences;
 
                 communicationPreferences.ApplicationStatusChangePreferences.EnableEmail = model.EnableApplicationStatusChangeAlertsViaEmail;
@@ -114,6 +115,15 @@
 
                 communicationPreferences.SavedSearchPreferences.EnableEmail = model.EnableSavedSearchAlertsViaEmail;
                 communicationPreferences.SavedSearchPreferences.EnableText = model.EnableSavedSearchAlertsViaText;
+
+                // Monitoring information.
+                var monitoringInformation = candidate.MonitoringInformation;
+                var aboutYou = candidate.ApplicationTemplate.AboutYou;
+
+                // monitoringInformation.Gender = (Gender)model.MonitoringInformation.Gender;
+                // monitoringInformation.DisabilityStatus = (DisabilityStatus)model.MonitoringInformation.DisabilityStatus;
+                monitoringInformation.Ethnicity = model.MonitoringInformation.Ethnicity == 0 ? default(int?) : model.MonitoringInformation.Ethnicity;
+                // aboutYou.Support = model.MonitoringInformation.AnythingWeCanDoToSupportYourInterview;
 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
 

@@ -122,6 +122,7 @@
         {
             var validationResult = _settingsViewModelServerValidator.Validate(settingsViewModel);
             var traineeshipFeature = _apprenticeshipApplicationProvider.GetTraineeshipFeatureViewModel(candidateId);
+
             settingsViewModel.TraineeshipFeature = traineeshipFeature;
 
             if (!validationResult.IsValid)

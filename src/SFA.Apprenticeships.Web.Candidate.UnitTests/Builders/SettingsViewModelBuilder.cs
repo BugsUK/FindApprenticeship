@@ -4,6 +4,7 @@
     using Candidate.ViewModels;
     using Candidate.ViewModels.Account;
     using Candidate.ViewModels.Applications;
+    using Candidate.ViewModels.Candidate;
 
     public class SettingsViewModelBuilder
     {
@@ -26,6 +27,8 @@
 
         private bool _enableSavedSearchAlertsViaEmail;
         private bool _enableSavedSearchAlertsViaText;
+
+        private int _ethnicity;
 
         private IList<SavedSearchViewModel> _savedSearches;
 
@@ -131,6 +134,12 @@
             return this;
         }
 
+        public SettingsViewModelBuilder Ethnicity(int ethnicity)
+        {
+            _ethnicity = ethnicity;
+            return this;
+        }
+
         public SettingsViewModel Build()
         {
             var model = new SettingsViewModel
@@ -163,6 +172,11 @@
 
                 EnableSavedSearchAlertsViaEmail = _enableSavedSearchAlertsViaEmail,
                 EnableSavedSearchAlertsViaText = _enableSavedSearchAlertsViaText,
+
+                MonitoringInformation = new MonitoringInformationViewModel
+                {
+                    Ethnicity = _ethnicity
+                },
 
                 SavedSearches = _savedSearches
             };

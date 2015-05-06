@@ -2,16 +2,19 @@
 
 <div class="form-group inline clearfix">
     <p class="form-label" id="gender-label">Are you?</p>
-    <label for="gender-male" class="block-label">
-        <input name="gender" type="radio" id="gender-male" aria-labelledby="gender-label">Male
+    <label for="gender-male" id="gender-male-label" class="block-label">
+        @Html.RadioButtonFor(m => m.Gender, 1, new { id = "gender-male", aria_labelledby = "gender-male-label" }) Male
     </label>
-    <label for="gender-female" class="block-label">
-        <input name="gender" type="radio" id="gender-female" aria-labelledby="gender-label">Female
+
+    <label for="gender-female" id="gender-female-label" class="block-label">
+        @Html.RadioButtonFor(m => m.Gender, 2, new { id = "gender-female", aria_labelledby = "gender-female-label" }) Female
     </label>
-    <label for="gender-other" class="block-label">
-        <input name="gender" type="radio" id="gender-other" aria-labelledby="gender-label">Other
+
+    <label for="gender-other" id="gender-other-label" class="block-label">
+        @Html.RadioButtonFor(m => m.Gender, 3, new { id = "gender-other", aria_labelledby = "gender-other-label" }) Other
     </label>
-    <label for="gender-no" class="block-label">
-        <input name="gender" type="radio" id="gender-no" aria-labelledby="gender-label">Prefer not to say
+
+    <label for="gender-prefer-not-to-say" id="gender-prefer-not-to-say-label" class="block-label">
+        @Html.RadioButtonFor(m => m.Gender, 4, new { id = "gender-prefer-not-to-say", aria_labelledby = "gender-prefer-not-to-say-label" }) Prefer not to say
     </label>
 </div>
