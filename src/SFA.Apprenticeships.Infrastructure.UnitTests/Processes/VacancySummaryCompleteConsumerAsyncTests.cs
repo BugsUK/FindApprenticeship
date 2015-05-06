@@ -91,10 +91,11 @@
                 _mockLogger.Object, _mockMessageBus.Object, _mockApprenticeshipIndexer.Object, _mockTraineeshipIndexer.Object);
 
             // Act.
-            consumer.Consume(new VacancySummaryUpdateComplete
+            var task = consumer.Consume(new VacancySummaryUpdateComplete
             {
                 ScheduledRefreshDateTime = scheduledRefreshDateTime
             });
+            task.Wait();
 
             // Assert.
             _mockApprenticeshipIndexer.Verify(mock => mock.IsIndexCorrectlyCreated(scheduledRefreshDateTime), Times.Once);
