@@ -97,10 +97,13 @@
                         @**Both Skills Required and Quals Required are optional - but displaying headers regardless*@
                         <h3 class="heading-small">Desired skills</h3>
                         <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
+                        <h3 class="heading-small">Personal qualities</h3>
+                        <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.PersonalQualities)</p>
                         <h3 class="heading-small">Qualifications required</h3>
                         <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
+
                     </div>
-                </div>
+                </div>                                                            
             </div>
             <div class="grid grid-1-2">
                 <div class="text">
