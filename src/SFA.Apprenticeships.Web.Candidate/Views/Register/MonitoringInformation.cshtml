@@ -20,7 +20,7 @@
     @Html.EditorFor(m => m, "MonitoringInformation/_why")
 
     <div class="form-group">
-        <button class="button">Save and continue</button>
-        <p><a href="@Url.Action("SkipMonitoringInformation")" class="button-link" title="Skip telling us more">Skip</a></p>
+        <button class="button" id="save-continue-button">Save and continue</button>
+        <p><a href="@Url.Action("SkipMonitoringInformation")" id="skip-link" class="button-link" title="Skip telling us more">Skip</a></p>
     </div>
 }

@@ -291,6 +291,10 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             When("I get the token for my newly created account");
             And("I enter data", GetActivationCodeData());
             And("I choose ActivateButton");
+
+            Then("I wait 120 second for the MonitoringInformationPage page");
+            When("I choose SkipLink");
+
             Then("I wait 120 second for the ApprenticeshipSearchPage page");
             And("I am on the ApprenticeshipSearchPage page");
         }

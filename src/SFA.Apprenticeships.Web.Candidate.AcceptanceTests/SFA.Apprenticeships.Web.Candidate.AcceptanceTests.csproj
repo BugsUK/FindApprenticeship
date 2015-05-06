@@ -331,6 +331,7 @@
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
     <Compile Include="Pages\Gds\GdsStartPage.cs" />
     <Compile Include="Pages\Home\HelpdeskPage.cs" />
+    <Compile Include="Pages\Registration\MonitoringInformationPage.cs" />
     <Compile Include="Pages\TraineeshipApplication\TraineeshipWhatsNextPage.cs" />
     <Compile Include="Pages\TraineeshipApplication\TraineeshipApplicationPage.cs" />
     <Compile Include="Pages\TraineeshipSearch\TraineeshipVacancyNotFound.cs" />
