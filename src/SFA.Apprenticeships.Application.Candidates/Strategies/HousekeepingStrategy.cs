@@ -12,7 +12,6 @@
         protected HousekeepingStrategy(IConfigurationService configurationService)
         {
             _configurationService = configurationService;
-            Successor = new TerminatingHousekeepingStrategy(_configurationService);
         }
 
         public IHousekeepingStrategy Successor { get; private set; }

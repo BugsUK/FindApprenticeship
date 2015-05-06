@@ -117,6 +117,7 @@
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
     <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSearchResultsBuilder.cs" />
+    <Compile Include="Candidates\Strategies\SendAccountRemindersStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
     <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />

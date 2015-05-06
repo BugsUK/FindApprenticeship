@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Users
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Logging;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -11,6 +13,7 @@
     using Mongo.Common.Configuration;
     using MongoDB.Driver.Builders;
     using Domain.Entities.Exceptions;
+    using MongoDB.Driver.Linq;
 
     public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
     {
@@ -49,6 +52,17 @@
             }
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
+        }
+
+        public IEnumerable<User> GetUsersWithStatus(UserStatuses[] userStatuses)
+        {
+            _logger.Debug("Calling repository to get the ids for all candidates that have saved searches with alerts enabled");
+
+            var candidateIds = Collection.AsQueryable().Where(u => userStatuses.Contains(u.Status));
+
+            _logger.Debug("Called repository to get the ids for all candidates that have saved searches with alerts enabled");
+
+            return candidateIds;
         }
 
         public void Delete(Guid id)

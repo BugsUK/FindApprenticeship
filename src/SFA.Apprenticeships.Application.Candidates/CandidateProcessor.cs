@@ -1,26 +1,42 @@
 namespace SFA.Apprenticeships.Application.Candidates
 {
-    using Configuration;
-    using Domain.Interfaces.Configuration;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Domain.Entities.Users;
+    using Domain.Interfaces.Messaging;
+    using Domain.Interfaces.Repositories;
+    using Entities;
     using Interfaces.Logging;
 
     public class CandidateProcessor : ICandidateProcessor
     {
-        private readonly IConfigurationService _configurationService;
+        private readonly IUserReadRepository _userReadRepository;
+        private readonly IMessageBus _messageBus;
         private readonly ILogService _logService;
 
-        public CandidateProcessor(IConfigurationService configurationService, ILogService logService)
+        public CandidateProcessor(IUserReadRepository userReadRepository, IMessageBus messageBus, ILogService logService)
         {
-            _configurationService = configurationService;
+            _userReadRepository = userReadRepository;
+            _messageBus = messageBus;
             _logService = logService;
         }
 
         public void QueueCandidates()
         {
-            var configuration = _configurationService.Get<HousekeepingConfiguration>();
+            var users = _userReadRepository.GetUsersWithStatus(new[] { UserStatuses.PendingActivation });
+            
+            var counter = 0;
+            Parallel.ForEach(users, user =>
+            {
+                var candidateHousekeeping = new CandidateHousekeeping
+                {
+                    CandidateId = user.EntityId
+                };
+                _messageBus.PublishMessage(candidateHousekeeping);
+                Interlocked.Increment(ref counter);
+            });
 
-            //TODO: Check should be INCLUSIVE
-            throw new System.NotImplementedException();
+            _logService.Debug("Queued {0} candidates for Housekeeping", counter);
         }
     }
 }
