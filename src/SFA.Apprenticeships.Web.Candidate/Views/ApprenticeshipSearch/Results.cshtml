@@ -57,22 +57,22 @@
 
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' href={0}>1 apprenticeship nationwide</a>.", locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' href={0}>1 apprenticeship with positions across England</a>.", locationTypeLink, nationalResultsMessagePrefix);
             }
             else
             {
-                nationalResultsMessage = nationalResultsMessagePrefix + " 1 apprenticeship nationwide.";
+                nationalResultsMessage = nationalResultsMessagePrefix + " 1 apprenticeship with positions across England.";
             }
         }
         else
         {
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' href={1}>{0} apprenticeships nationwide</a>.", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' href={1}>{0} apprenticeships with positions across England</a>.", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
             }
             else
             {
-                nationalResultsMessage = string.Format("{1} {0} apprenticeships nationwide.", Model.TotalNationalHits, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{1} {0} apprenticeships with positions across England.", Model.TotalNationalHits, nationalResultsMessagePrefix);
             }
         }
     }

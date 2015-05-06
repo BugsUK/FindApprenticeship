@@ -130,22 +130,22 @@ WriteLiteral("\r\n");
 
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' href={0}>1 apprenticeship nationwide</a>.", locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' href={0}>1 apprenticeship with positions across England</a>.", locationTypeLink, nationalResultsMessagePrefix);
             }
             else
             {
-                nationalResultsMessage = nationalResultsMessagePrefix + " 1 apprenticeship nationwide.";
+                nationalResultsMessage = nationalResultsMessagePrefix + " 1 apprenticeship with positions across England.";
             }
         }
         else
         {
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' href={1}>{0} apprenticeships nationwide</a>.", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' href={1}>{0} apprenticeships with positions across England</a>.", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
             }
             else
             {
-                nationalResultsMessage = string.Format("{1} {0} apprenticeships nationwide.", Model.TotalNationalHits, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{1} {0} apprenticeships with positions across England.", Model.TotalNationalHits, nationalResultsMessagePrefix);
             }
         }
     }
@@ -163,14 +163,14 @@ WriteLiteral("\r\n    <meta");
 
 WriteLiteral(" name=\"WT.oss_r\"");
 
-WriteAttribute("content", Tuple.Create(" content=\"", 3759), Tuple.Create("\"", 3790)
+WriteAttribute("content", Tuple.Create(" content=\"", 3835), Tuple.Create("\"", 3866)
             
             #line 84 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 3769), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
+, Tuple.Create(Tuple.Create("", 3845), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
             
             #line default
             #line hidden
-, 3769), false)
+, 3845), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -245,14 +245,14 @@ WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" id=\"receiveSaveSearchAlert\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4333), Tuple.Create("\"", 4475)
+WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4409), Tuple.Create("\"", 4551)
             
             #line 97 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4365), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelAction("savesearch", new ApprenticeshipSearchViewModel(Model.VacancySearch))
+, Tuple.Create(Tuple.Create("", 4441), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelAction("savesearch", new ApprenticeshipSearchViewModel(Model.VacancySearch))
             
             #line default
             #line hidden
-, 4365), false)
+, 4441), false)
 );
 
 WriteLiteral("\r\n                       onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'" +
