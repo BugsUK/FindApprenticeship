@@ -236,10 +236,10 @@
 
         #region WhatCanWeDoToSupportYou
 
-        [ElementLocator(Id = "support-yes")]
+        [ElementLocator(Id = "disability-support-yes")]
         public IWebElement SupportMeYes { get; set; }
 
-        [ElementLocator(Id = "support-no")]
+        [ElementLocator(Id = "disability-support-no")]
         public IWebElement SupportMeNo { get; set; }
 
         [ElementLocator(Id = "Candidate_MonitoringInformation_AnythingWeCanDoToSupportYourInterview")]
