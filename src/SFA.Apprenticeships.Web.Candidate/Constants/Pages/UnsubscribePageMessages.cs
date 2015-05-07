@@ -4,7 +4,7 @@
 
     public static class UnsubscribePageMessages
     {
-        public const string FailedToUnsubscribe = "TODO: Failed to unsubscribe, please try again";
-        public const string Unsubscribed = "TODO: You've successfully unsubscribed";
+        public const string FailedToUnsubscribe = "Unfortunately we couldn't unsubscribe you. Try turning off notifications in your settings.";
+        public const string Unsubscribed = "You've successfully unsubscribed";
     }
 }
