@@ -47,7 +47,7 @@
                                 </td>
                                 <td>
                                     <div class="small-btm-margin">
-                                        @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Grade, new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 11})
+                                        @Html.TextBoxFor(m => Model.Candidate.Qualifications.ToList()[i].Grade, new {@id = "candidate_qualifications_" + i + "__grade", Name = "Candidate.Qualifications[" + i + "].Grade", @class = "form-control qual-input-edit", @maxlength = 15})
                                         @Html.ValidationMessage("Candidate.Qualifications[" + i + "].Grade") 
                                     </div>
                                 </td>
