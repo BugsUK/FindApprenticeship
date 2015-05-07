@@ -143,10 +143,10 @@
         [ElementLocator(Id = "disability-prefno")]
         public IWebElement DisabilityPreferNotToSay { get; set; }
 
-        [ElementLocator(Id = "support-yes")]
+        [ElementLocator(Id = "disability-support-yes")]
         public IWebElement WantSupportInInterview { get; set; }
 
-        [ElementLocator(Id = "support-no")]
+        [ElementLocator(Id = "disability-support-yes")]
         public IWebElement DontWantSupportInInterview { get; set; }
 
         [ElementLocator(Id = "MonitoringInformation_AnythingWeCanDoToSupportYourInterview")]
