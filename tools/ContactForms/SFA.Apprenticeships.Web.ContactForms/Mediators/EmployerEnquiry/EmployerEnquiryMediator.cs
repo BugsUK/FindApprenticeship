@@ -44,14 +44,14 @@
 
             if (!validationResult.IsValid)
             {
-                viewModel = PopulateStaticData(viewModel);
+                viewModel = PopulateStaticData(viewModel, false);
                 return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.ValidationError, viewModel, validationResult);
             }
 
             //todo: add other cases..
             SubmitQueryStatus resultStatus = _employerEnquiryProvider.SubmitEnquiry(viewModel);
             //populate reference data
-            viewModel = PopulateStaticData(viewModel);
+            viewModel = PopulateStaticData(viewModel, false);
 
             switch (resultStatus)
             {
@@ -60,6 +60,21 @@
                 default:
                     return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.Error, viewModel, EmployerEnquiryPageMessages.ErrorWhileQuerySubmission, UserMessageLevel.Error);
             }
+        }
+
+        public MediatorResponse<EmployerEnquiryViewModel> SubmitGlaEnquiry()
+        {
+            var model = new EmployerEnquiryViewModel
+            {
+                //Get The various reference data list
+                EmployeesCountList = GetEmployeeCountTypes(),
+                WorkSectorList = GetWorkSectorTypes(),
+                PreviousExperienceTypeList = GetPreviousExperienceTypes(),
+                TitleList = GetTitleTypes(),
+                EnquirySourceList = GetGlaEnquirySourceTypes(),
+                EnquiryRelatesToList = GetEnquiryRelatesTo()
+            };
+            return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.Success, model);
         }
 
         public MediatorResponse<EmployerEnquiryViewModel> SubmitGlaEnquiry(EmployerEnquiryViewModel viewModel)
@@ -68,14 +83,14 @@
 
             if (!validationResult.IsValid)
             {
-                viewModel = PopulateStaticData(viewModel);
+                viewModel = PopulateStaticData(viewModel, true);
                 return GetMediatorResponse(EmployerEnquiryMediatorCodes.SubmitEnquiry.ValidationError, viewModel, validationResult);
             }
 
             //todo: add other cases..
             SubmitQueryStatus resultStatus = _employerEnquiryProvider.SubmitGlaEnquiry(viewModel);
             //populate reference data
-            viewModel = PopulateStaticData(viewModel);
+            viewModel = PopulateStaticData(viewModel, true);
 
             switch (resultStatus)
             {
@@ -86,12 +101,12 @@
             }
         }
 
-        private EmployerEnquiryViewModel PopulateStaticData(EmployerEnquiryViewModel viewModel)
+        private EmployerEnquiryViewModel PopulateStaticData(EmployerEnquiryViewModel viewModel, bool isGla)
         {
             viewModel.EmployeesCountList = GetEmployeeCountTypes();
             viewModel.WorkSectorList = GetWorkSectorTypes();
             viewModel.PreviousExperienceTypeList = GetPreviousExperienceTypes();
-            viewModel.EnquirySourceList = GetEnquirySourceTypes();
+            viewModel.EnquirySourceList = isGla ? GetGlaEnquirySourceTypes() : GetEnquirySourceTypes();
             viewModel.EmployeesCountList = GetEmployeeCountTypes();
             viewModel.TitleList = GetTitleTypes();
             viewModel.EnquiryRelatesToList = GetEnquiryRelatesTo();
@@ -127,6 +142,12 @@
         private SelectList GetEnquirySourceTypes()
         {
             var enquirySourceKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.EnquirySourceTypes).ViewModel.ReferenceData;
+            return new SelectList(enquirySourceKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
+        }
+
+        private SelectList GetGlaEnquirySourceTypes()
+        {
+            var enquirySourceKeyValuePair = _referenceDataMediator.GetReferenceData(ReferenceDataTypes.GlaEnquirySourceTypes).ViewModel.ReferenceData;
             return new SelectList(enquirySourceKeyValuePair, CommonConstants.Id, CommonConstants.Description, string.Empty);
         }
 

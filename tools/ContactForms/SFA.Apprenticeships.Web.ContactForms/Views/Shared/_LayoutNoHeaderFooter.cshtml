@@ -1,0 +1,94 @@
+﻿@using SFA.Apprenticeships.Web.ContactForms.Constants
+@using SFA.Apprenticeships.Web.ContactForms.Controllers
+@using SFA.Apprenticeships.Web.ContactForms.Framework
+
+<!DOCTYPE html>
+<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
+<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"><![endif]-->
+<!--[if IE 8]><html class="no-js lt-ie9"><![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en-GB" class="no-js not-ie8">
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="We’ve introduced a new way to submitting your queries regarding apprenticeships in England.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="date=no">
+    <meta name="format-detection" content="address=no">
+    @RenderSection("metatags", false)
+    <!--[if gt IE 8]><!-->@Styles.Render(Url.CdnContent("css/main-1.5.0.862.css", "~/Content/_assets"))<!--<![endif]-->
+    <!--[if lte IE 8]>@Styles.Render(Url.CdnContent("css/main-ie8-1.5.0.862.css", "~/Content/_assets"))<![endif]-->
+    <!--[if lte IE 8]>@Styles.Render(Url.CdnContent("css/fonts-ie8.css", "~/Content/_assets"))<![endif]-->
+    <!--[if gte IE 9]><!-->@Styles.Render(Url.CdnContent("css/fonts.css", "~/Content/_assets"))<!--<![endif]-->
+    <link rel="shortcut icon" href="@Url.CdnContent("img/favicon.ico", "~/Content/_assets")" type="image/x-icon">
+    @Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", "~/Content/_assets"))
+    @Html.Partial("_Scripts")
+</head>
+<body>
+
+    <div class="content-container">
+        <main role="main" id="main" class="gov-border">
+            @{
+                var controller = ViewContext.Controller as ContactFormsControllerBase;
+
+                if (controller != null && ViewBag.UserMessageLevel != null)
+                {
+                    switch ((UserMessageLevel)ViewBag.UserMessageLevel)
+                    {
+                        case UserMessageLevel.Info:
+                            string infoMessage = ViewBag.ConfirmationMessage;
+                            if (infoMessage != null)
+                            {
+                                <div role="alert" class="panel-info">
+                                    <p id="InfoMessageText">@Html.Raw(infoMessage)</p>
+                                </div>
+                            }
+                            break;
+                        case UserMessageLevel.Success:
+                            string successMessage = ViewBag.ConfirmationMessage;
+                            if (successMessage != null)
+                            {
+                                <div role="alert" class="panel-success">
+                                    <p id="SuccessMessageText"><i class="fa fa-check"></i>@Html.Raw(successMessage)</p>
+                                </div>
+                            }
+                            break;
+                        case UserMessageLevel.Warning:
+                            string warningMessage = ViewBag.ConfirmationMessage;
+                            if (warningMessage != null)
+                            {
+                                <div role="alert" class="panel-warning">
+                                    <p id="WarningMessageText">@Html.Raw(warningMessage)</p>
+                                </div>
+                            }
+                            break;
+                        case UserMessageLevel.Error:
+                            string errorMessage = ViewBag.ConfirmationMessage;
+                            if (errorMessage != null)
+                            {
+                                <div role="alert" class="panel-danger">
+                                    <p id="ErrorMessageText">@Html.Raw(errorMessage)</p>
+                                </div>
+                            }
+                            break;
+                    }
+                }
+            }
+            @RenderBody()
+        </main>
+    </div>
+    <!-- Placed at the end of the document so the pages load faster -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/fastclick")
+    @Scripts.Render("~/bundles/underscore")
+    @Scripts.Render("~/bundles/nascript")
+    @Scripts.Render("~/bundles/vendor")
+    @Scripts.Render("~/bundles/nas")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

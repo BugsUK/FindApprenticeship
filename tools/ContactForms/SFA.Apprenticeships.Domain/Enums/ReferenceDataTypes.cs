@@ -9,6 +9,7 @@
         EnquirySourceTypes,
         AccessRequestServiceTypes,
         AccessRequestAreaTypes,
-        EnquiryRelatesTo
+        EnquiryRelatesTo,
+        GlaEnquirySourceTypes
     }
 }

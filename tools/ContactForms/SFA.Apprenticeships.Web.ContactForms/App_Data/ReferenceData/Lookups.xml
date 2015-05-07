@@ -74,6 +74,25 @@
     <item id="Word of mouth" value="Word of mouth" />
     <item id="Other" value="Other" />
   </data>
+  <data key="GlaEnquirySourceTypes">
+    <item id="" value="Please select" />
+    <item id="Poster  on the London Underground" value="Poster  on the London Underground" />
+    <item id="Advert on Transport for London website " value="Advert on Transport for London website " />
+    <item id="Advert in newspaper" value="Advert in newspaper" />
+    <item id="Media coverage " value="Media coverage " />
+    <item id="Online advertisement" value="Online advertisement" />
+    <item id="London.gov.uk (Mayor of London website)" value="London.gov.uk (Mayor of London website)" />
+    <item id="Twitter" value="Twitter" />
+    <item id="Google" value="Google" />
+    <item id="Advert / screen in a petrol station" value="Advert / screen in a petrol station" />
+    <item id="Advert / screen in an office building" value="Advert / screen in an office building" />
+    <item id="LinkedIn" value="LinkedIn" />
+    <item id="Email bulletin from a third party" value="Email bulletin from a third party" />
+    <item id="Recommendation from a friend or colleague" value="Recommendation from a friend or colleague" />
+    <item id="London Loves Business website" value="London Loves Business website" />
+    <item id="Workspace activity" value="Workspace activity" />
+    <item id="Other" value="Other" />
+  </data>
   <data key="AccessRequestServiceTypes">
     <item id="Summary Vacancy Feed" value="Summary Vacancy Feed" />
     <item id="Full vacancy detail feed" value="Full vacancy detail feed" />

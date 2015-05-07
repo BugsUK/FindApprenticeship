@@ -61,7 +61,7 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var result = _employerEnquiryMediator.SubmitEnquiry();
+                var result = _employerEnquiryMediator.SubmitGlaEnquiry();
                 return View(result.ViewModel);
             });
         }
@@ -86,7 +86,7 @@
                     case EmployerEnquiryMediatorCodes.SubmitEnquiry.Success:
                         SetPageMessage(response.Message.Text, response.Message.Level);
                         ViewBag.Title = "Gla Employer enquiry-Thank You";
-                        return View("ThankYou");
+                        return View("GlaThankYou");
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }

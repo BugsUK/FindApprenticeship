@@ -239,6 +239,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>SubmitEmployerEnquiry.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\GlaThankYou.generated.cs">
+      <DependentUpon>GlaThankYou.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\ThankYou.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -253,6 +258,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_LayoutNoHeaderFooter.generated.cs">
+      <DependentUpon>_LayoutNoHeaderFooter.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\_Layout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -412,6 +422,14 @@
     </Content>
     <Content Include="Views\AccessRequest\SubmitAccessRequest.cshtml" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
+    <Content Include="Views\Shared\_LayoutNoHeaderFooter.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_LayoutNoHeaderFooter.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\GlaThankYou.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>GlaThankYou.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />

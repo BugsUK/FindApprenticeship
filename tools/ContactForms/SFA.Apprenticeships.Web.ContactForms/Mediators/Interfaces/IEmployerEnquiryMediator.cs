@@ -9,5 +9,6 @@
         MediatorResponse<EmployerEnquiryViewModel> SubmitGlaEnquiry(EmployerEnquiryViewModel message);
 
         MediatorResponse<EmployerEnquiryViewModel> SubmitEnquiry();
+        MediatorResponse<EmployerEnquiryViewModel> SubmitGlaEnquiry();
     }
 }
