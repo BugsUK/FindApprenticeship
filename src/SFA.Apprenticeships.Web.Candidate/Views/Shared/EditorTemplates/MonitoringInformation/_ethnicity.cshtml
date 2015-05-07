@@ -6,7 +6,7 @@
         We need this information to make sure we're giving equal opportunities
         to all candidates
     </p>
-    <select id="@Html.IdFor(m => m.Ethnicity)" name="@Html.IdFor(m => m.Ethnicity)" class="para-btm-margin">
+    <select id="@Html.IdFor(m => m.Ethnicity)" name="@Html.NameFor(m => m.Ethnicity)" class="para-btm-margin">
         <option value="0"@(Model != null && Model.Ethnicity == 0 ? " selected" : "")>-- Please select --</option>
         <option value="99"@(Model != null && Model.Ethnicity == 99 ? " selected" : "")>Prefer not to say</option>
         <optgroup label="White">
@@ -35,7 +35,7 @@
         </optgroup>
         <optgroup label="Other ethnic group">
             <option value="47"@(Model != null && Model.Ethnicity == 47 ? " selected" : "")>Arab</option>
-            <option value="98"@(Model != null && Model.Ethnicity == 48 ? " selected" : "")>Other ethnic group</option>
+            <option value="98"@(Model != null && Model.Ethnicity == 98 ? " selected" : "")>Any other ethnic group</option>
         </optgroup>
     </select>
 </div>
