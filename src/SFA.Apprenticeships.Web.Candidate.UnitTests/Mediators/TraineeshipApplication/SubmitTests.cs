@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using System;
+    using System.Collections.Generic;
     using Builders;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
@@ -98,6 +99,55 @@
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Submit.Ok, false, true);
+        }
+
+        [Test]
+        public void FailValidation()
+        {
+            var viewModel = new TraineeshipApplicationViewModel
+            {
+                Candidate = new TraineeshipCandidateViewModel
+                {
+                    MonitoringInformation = new MonitoringInformationViewModel
+                    {
+                        RequiresSupportForInterview = true
+                    }
+                }
+            };
+            TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(viewModel);
+            TraineeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
+
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertValidationResult(TraineeshipApplicationMediatorCodes.Submit.ValidationError, true, false);
+        }
+
+        [Test]
+        public void FailValidationEducationLongerThan15Char()
+        {
+            var viewModel = new TraineeshipApplicationViewModel
+            {
+                Candidate = new TraineeshipCandidateViewModel
+                {
+                    MonitoringInformation = new MonitoringInformationViewModel(),
+                    HasQualifications = true,
+                    Qualifications = new List<QualificationsViewModel>()
+                    {
+                        new QualificationsViewModel()
+                        {
+                            Grade = "Grade is Longer than 15 chars",
+                            QualificationType = "QUAL",
+                            Year = "2012"
+                        }
+                    }
+                }
+            };
+            TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(viewModel);
+            TraineeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<TraineeshipApplicationViewModel>(), It.IsAny<TraineeshipApplicationViewModel>())).Returns<Guid, TraineeshipApplicationViewModel, TraineeshipApplicationViewModel>((cid, svm, vm) => vm);
+
+            var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertValidationResult(TraineeshipApplicationMediatorCodes.Submit.ValidationError, true, false);
         }
     }
 }

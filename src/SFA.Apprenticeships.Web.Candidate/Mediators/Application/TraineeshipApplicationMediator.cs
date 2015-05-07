@@ -10,16 +10,23 @@
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Providers;
+    using Validators;
     using ViewModels.Applications;
 
     public class TraineeshipApplicationMediator : ApplicationMediatorBase, ITraineeshipApplicationMediator
     {
         private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
+        private readonly TraineeshipApplicationViewModelServerValidator _traineeshipApplicationViewModelServer;
 
-        public TraineeshipApplicationMediator(ITraineeshipApplicationProvider traineeshipApplicationProvider, IConfigurationService configService, IUserDataProvider userDataProvider)
+        public TraineeshipApplicationMediator(
+            ITraineeshipApplicationProvider traineeshipApplicationProvider, 
+            IConfigurationService configService, 
+            IUserDataProvider userDataProvider,
+            TraineeshipApplicationViewModelServerValidator traineeshipApplicationViewModelServer)
             : base(configService, userDataProvider)
         {
             _traineeshipApplicationProvider = traineeshipApplicationProvider;
+            _traineeshipApplicationViewModelServer = traineeshipApplicationViewModelServer;
         }
 
         public MediatorResponse<TraineeshipApplicationViewModel> Apply(Guid candidateId, string vacancyIdString)
@@ -55,7 +62,14 @@
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Submit.Error, viewModel, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
             }
 
+            var result = _traineeshipApplicationViewModelServer.Validate(viewModel);
+
             viewModel = _traineeshipApplicationProvider.PatchApplicationViewModel(candidateId, savedModel, viewModel);
+
+            if (!result.IsValid)
+            {
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Submit.ValidationError, viewModel, result);
+            }
 
             var submittedApplicationModel = _traineeshipApplicationProvider.SubmitApplication(candidateId, vacancyId, viewModel);
 

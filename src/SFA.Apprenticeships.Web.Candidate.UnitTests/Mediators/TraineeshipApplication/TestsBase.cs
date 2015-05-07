@@ -2,6 +2,7 @@
 {
     using Candidate.Mediators.Application;
     using Candidate.Providers;
+    using Candidate.Validators;
     using Common.Configuration;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
@@ -23,7 +24,7 @@
             ConfigurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
             UserDataProvider = new Mock<IUserDataProvider>();
-            Mediator = new TraineeshipApplicationMediator(TraineeshipApplicationProvider.Object, ConfigurationService.Object, UserDataProvider.Object);
+            Mediator = new TraineeshipApplicationMediator(TraineeshipApplicationProvider.Object, ConfigurationService.Object, UserDataProvider.Object, new TraineeshipApplicationViewModelServerValidator());
         }
     }
 }

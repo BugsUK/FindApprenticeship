@@ -14,6 +14,7 @@
             public const string IncorrectState = "TraineeshipApplication.Submit.IncorrectState";
             public const string Error = "TraineeshipApplication.Submit.Error";
             public const string Ok = "TraineeshipApplication.Submit.Ok";
+            public const string ValidationError = "TraineeshipApplication.Submit.ValidationError";
         }
 
         public class AddEmptyQualificationRows

@@ -8,6 +8,7 @@
     using Common.Constants;
     using Constants;
     using Domain.Interfaces.Configuration;
+    using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Application;
     using ViewModels.Applications;
@@ -65,6 +66,10 @@
                         return View(response.ViewModel);
                     case TraineeshipApplicationMediatorCodes.Submit.Ok:
                         return RedirectToAction("WhatHappensNext", response.Parameters);
+                    case TraineeshipApplicationMediatorCodes.Submit.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(response.ViewModel);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

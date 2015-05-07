@@ -15,7 +15,7 @@
     {
         public TraineeshipApplicationViewModelServerValidator()
         {
-            RuleFor(x => x.Candidate).SetValidator(new TraineeshipViewModelClientValidator());
+            RuleFor(x => x.Candidate).SetValidator(new TraineeshipViewModelServerValidator());
         }
     }
 }
