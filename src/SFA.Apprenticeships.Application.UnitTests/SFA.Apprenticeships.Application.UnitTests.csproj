@@ -117,7 +117,9 @@
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
     <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSearchResultsBuilder.cs" />
-    <Compile Include="Candidates\Strategies\SendAccountRemindersStrategyTests.cs" />
+    <Compile Include="Candidates\Configuration\HousekeepingConfigurationBuilder.cs" />
+    <Compile Include="Candidates\Strategies\SendAccountRemindersStrategyBBuilder.cs" />
+    <Compile Include="Candidates\Strategies\SendAccountRemindersStrategyBTests.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
     <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />
@@ -161,6 +163,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
       <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj">
+      <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidates</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
       <Project>{984f8cd2-61b3-48a4-b0cc-5d05e235983d}</Project>

@@ -2,8 +2,9 @@
 {
     public class HousekeepingConfiguration
     {
-        public int SendAccountReminderAfterHours { get; set; }
-        public int SendAccountReminderEveryHours { get; set; }
-        public int SetPendingDeletionAfterHours { get; set; }
+        public int HousekeepingCycleInHours { get; set; }
+        public int SendAccountReminderAfterCycles { get; set; }
+        public int SendAccountReminderEveryCycles { get; set; }
+        public int SetPendingDeletionAfterCycles { get; set; }
     }
 }

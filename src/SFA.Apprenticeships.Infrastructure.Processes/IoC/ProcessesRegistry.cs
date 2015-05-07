@@ -88,13 +88,15 @@
             var configurationService = context.GetInstance<IConfigurationService>();
             var logService = context.GetInstance<ILogService>();
 
-            var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, logService);
+            var sendAccountRemindersStrategyA = new SendAccountRemindersStrategyA(configurationService, logService);
+            var sendAccountRemindersStrategyB = new SendAccountRemindersStrategyB(configurationService, logService);
             var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, logService);
 
-            sendAccountRemindersStrategy.SetSuccessor(setPendingDeletionStrategy);
+            sendAccountRemindersStrategyA.SetSuccessor(sendAccountRemindersStrategyB);
+            sendAccountRemindersStrategyB.SetSuccessor(setPendingDeletionStrategy);
             setPendingDeletionStrategy.SetSuccessor(new TerminatingHousekeepingStrategy(configurationService));
 
-            return sendAccountRemindersStrategy;
+            return sendAccountRemindersStrategyB;
         }
     }
 }

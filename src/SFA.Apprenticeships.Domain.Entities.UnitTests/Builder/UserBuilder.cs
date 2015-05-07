@@ -6,22 +6,33 @@
     public class UserBuilder
     {
         private readonly Guid _userId;
+        private DateTime _dateCreated;
         private UserStatuses _userStatus;
+        private string _activationCode;
 
         public UserBuilder(Guid userId)
         {
             _userId = userId;
+            _dateCreated = DateTime.Now;
         }
 
         public User Build()
         {
             var user = new User
             {
+                DateCreated = _dateCreated,
                 EntityId = _userId,
-                Status = _userStatus
+                Status = _userStatus,
+                ActivationCode = _activationCode
             };
 
             return user;
+        }
+
+        public UserBuilder WithDateCreated(DateTime dateCreated)
+        {
+            _dateCreated = dateCreated;
+            return this;
         }
 
         public UserBuilder WithStatus(UserStatuses userStatus)
@@ -32,7 +43,8 @@
 
         public UserBuilder Activated(bool activated)
         {
-            _userStatus = activated ? UserStatuses.Active : UserStatuses.Inactive;
+            _userStatus = activated ? UserStatuses.Active : UserStatuses.PendingActivation;
+            _activationCode = activated ? null : "ABC123";
             return this;
         }
     }
