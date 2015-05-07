@@ -14,16 +14,21 @@ $(function () {
         function success(position) {
             var latVal = position.coords.latitude,
                 longVal = position.coords.longitude,
-                url = "https://api.postcodes.io/postcodes?lon=" + longVal + "&lat=" + latVal,
+                url = "https://api.postcodes.io/postcodes?lon=" + longVal + "&lat=" + latVal + "&wideSearch=true",
                 json;
 
             $.get(url)
             .done(function (data) {
                 json = data;
 
-                output.value = json.result[0].postcode;
-                output.placeholder = "";
-                })
+                if (json.status == 200 && json.result !== null) {
+                    output.value = json.result[0].postcode;
+                    output.placeholder = "";
+                } else {
+                    output.value = "Unable to retrieve postcode"
+                }
+
+            })
             .fail(function () {
                 output.value = "Unable to retrieve postcode"
             });
