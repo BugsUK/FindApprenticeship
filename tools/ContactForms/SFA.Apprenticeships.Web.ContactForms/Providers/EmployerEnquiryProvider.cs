@@ -74,8 +74,7 @@ namespace SFA.Apprenticeships.Web.ContactForms.Providers
             {
                 var result = _employerEnquiryViewModelToDomainMapper.ConvertToDomain(employerEnquiryData);
 
-                var enquirySource = result.EnquirySource == null ? null : result.EnquirySource.ToUpper();
-                var natureOfEnquiry = string.Format("HOW DID YOU HEAR ABOUT GLA: {0}\r\n{1}", enquirySource, result.EnquiryDescription);
+                var natureOfEnquiry = string.Format("How did you hear about the GLA: {0}\r\n{1}", result.EnquirySource, result.EnquiryDescription);
 
                 var communicationTokens = new[]
                 {
