@@ -54,7 +54,7 @@ WriteLiteral("<section");
 
 WriteLiteral(" id=\"applyEducation\"");
 
-WriteLiteral(" class=\"section-border\"");
+WriteLiteral(" class=\"section-border nobreak-print\"");
 
 WriteLiteral(">\r\n    <h2");
 
@@ -80,15 +80,15 @@ WriteLiteral("            <a");
 
 WriteLiteral(" class=\"icon-with-text\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 223), Tuple.Create("\'", 329)
+WriteAttribute("href", Tuple.Create(" href=\'", 237), Tuple.Create("\'", 343)
             
             #line 8 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 230), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
+, Tuple.Create(Tuple.Create("", 244), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
             
             #line default
             #line hidden
-, 230), false)
-, Tuple.Create(Tuple.Create("", 314), Tuple.Create("#applyEducation", 314), true)
+, 244), false)
+, Tuple.Create(Tuple.Create("", 328), Tuple.Create("#applyEducation", 328), true)
 );
 
 WriteLiteral(">\r\n                <i");
@@ -104,7 +104,7 @@ WriteLiteral(">Edit section</span>\r\n            </a>\r\n");
             
             #line 11 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EducationViewModel.cshtml"
 
-        }              
+        }
 
             
             #line default

@@ -935,7 +935,7 @@ WriteLiteral(" alt=\"Crown copyright logo\"");
 WriteLiteral(">\r\n                    <p>&copy; Crown copyright</p>\r\n                </a>\r\n     " +
 "       </div>\r\n            <div");
 
-WriteLiteral(" class=\"toggle-content show-print\"");
+WriteLiteral(" class=\"toggle-content show-print nobreak-print\"");
 
 WriteLiteral(">\r\n                <h3");
 

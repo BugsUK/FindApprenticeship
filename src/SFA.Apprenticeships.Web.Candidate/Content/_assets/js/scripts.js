@@ -342,7 +342,13 @@ $(function() {
       $this.next('.detail-content').toggle();
   });
 
-    //------- More/Less detail toggle
+    //------- Print button
+
+  $('.print-trigger').on('click', function (e) {
+      window.print();
+
+      e.preventDefault();
+  });
 
 });;/*
  *  jQuery Password Strength - v0.0.1

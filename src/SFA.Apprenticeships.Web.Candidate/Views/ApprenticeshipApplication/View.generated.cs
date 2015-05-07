@@ -65,15 +65,50 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<h1");
+WriteLiteral("\r\n\r\n<div");
+
+WriteLiteral(" class=\"grid-wrapper\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"grid grid-2-3\"");
+
+WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Your application</h1>\r\n\r\n<div");
+WriteLiteral(">Your application</h1>\r\n    </div>\r\n    <div");
+
+WriteLiteral(" class=\"grid grid-1-3\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" class=\"page-link\"");
+
+WriteLiteral(">\r\n            <p>\r\n                <a");
+
+WriteLiteral(" class=\"print-trigger\"");
+
+WriteLiteral(" href=\"\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"fa fa-print\"");
+
+WriteLiteral("></i>Print this page</a>\r\n            </p>\r\n        </div>\r\n    </div>\r\n</div>\r\n\r" +
+"\n<div");
+
+WriteLiteral(" class=\"grid-wrapper\"");
+
+WriteLiteral(">\r\n    <div");
+
+WriteLiteral(" class=\"grid grid-2-3\"");
+
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"hgroup-medium\"");
 
-WriteLiteral(">\r\n    <h2");
+WriteLiteral(">\r\n            <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
@@ -82,13 +117,13 @@ WriteLiteral(" id=\"vacancy-title\"");
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-                                             Write(Model.VacancyDetail.Title);
+            #line 25 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+                                                     Write(Model.VacancyDetail.Title);
 
             
             #line default
             #line hidden
-WriteLiteral("</h2>\r\n    <p");
+WriteLiteral("</h2>\r\n            <p");
 
 WriteLiteral(" class=\"subtitle\"");
 
@@ -97,13 +132,13 @@ WriteLiteral(" id=\"vacancy-employer\"");
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-                                         Write(Model.VacancyDetail.EmployerName);
+            #line 26 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+                                                 Write(Model.VacancyDetail.EmployerName);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n</div>\r\n<p");
+WriteLiteral("</p>\r\n        </div>\r\n        <p");
 
 WriteLiteral(" class=\"text\"");
 
@@ -112,22 +147,29 @@ WriteLiteral(" id=\"vacancy-summary\"");
 WriteLiteral(">");
 
             
-            #line 15 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-                                Write(Model.VacancyDetail.Description);
+            #line 28 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+                                        Write(Model.VacancyDetail.Description);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n\r\n<div");
+WriteLiteral("</p>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"panel-indent text\"");
+WriteLiteral(" class=\"grid grid-1-3 para-btm-margin\"");
 
-WriteLiteral(">\r\n    <p>This is your submitted application.</p>\r\n    <p>\r\n        You applied o" +
-"n ");
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" class=\"small-btm-margin\"");
+
+WriteLiteral(">This is your submitted application.</p>\r\n        <p");
+
+WriteLiteral(" class=\"small-btm-margin\"");
+
+WriteLiteral(">\r\n            You applied on ");
 
             
-            #line 20 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-                  Write(Html.DisplayFor(m => m.DateApplied, "Date"));
+            #line 33 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+                      Write(Html.DisplayFor(m => m.DateApplied, "Date"));
 
             
             #line default
@@ -135,68 +177,84 @@ WriteLiteral(">\r\n    <p>This is your submitted application.</p>\r\n    <p>\r\n
 WriteLiteral(".\r\n");
 
             
-            #line 21 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-        
+            #line 34 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-         if (Model.Status == ApplicationStatuses.Successful)
-        {
+            #line 34 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+             if (Model.Status == ApplicationStatuses.Successful)
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("            <span>This application was successful.</span>\r\n");
+WriteLiteral("                <span");
+
+WriteLiteral(" class=\"inl-block\"");
+
+WriteLiteral(">This application was successful.</span>\r\n");
 
             
-            #line 24 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-        }
-        else if (Model.Status == ApplicationStatuses.Unsuccessful)
-        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <span>This application was unsuccessful.</span>\r\n");
-
-            
-            #line 28 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-        }
-        else if (Model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-        {
+            #line 37 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            }
+            else if (Model.Status == ApplicationStatuses.Unsuccessful)
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("            <span>This apprenticeship expired or was withdrawn.</span>\r\n");
+WriteLiteral("                <span");
+
+WriteLiteral(" class=\"inl-block\"");
+
+WriteLiteral(">This application was unsuccessful.</span>\r\n");
 
             
-            #line 32 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-        }
+            #line 41 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            }
+            else if (Model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("    </p>\r\n    <p>\r\n        <a");
+WriteLiteral("                <span");
+
+WriteLiteral(" class=\"inl-block\"");
+
+WriteLiteral(">This apprenticeship expired or was withdrawn.</span>\r\n");
+
+            
+            #line 45 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        </p>\r\n        <p");
+
+WriteLiteral(" class=\"hide-print\"");
+
+WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1303), Tuple.Create("\"", 1341)
+WriteAttribute("href", Tuple.Create(" href=\"", 1940), Tuple.Create("\"", 1978)
             
-            #line 35 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1310), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
+            #line 48 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+, Tuple.Create(Tuple.Create("", 1947), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
             
             #line default
             #line hidden
-, 1310), false)
+, 1947), false)
 );
 
-WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>\r\n\r\n");
+WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 39 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 53 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate));
 
             
@@ -205,7 +263,7 @@ Write(Html.DisplayFor(m => m.Candidate));
 WriteLiteral("\r\n");
 
             
-            #line 40 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 54 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.Education));
 
             
@@ -214,7 +272,7 @@ Write(Html.DisplayFor(m => m.Candidate.Education));
 WriteLiteral("\r\n");
 
             
-            #line 41 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 55 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.Qualifications, "QualificationsViewModel"));
 
             
@@ -223,7 +281,7 @@ Write(Html.DisplayFor(m => m.Candidate.Qualifications, "QualificationsViewModel"
 WriteLiteral("\r\n");
 
             
-            #line 42 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 56 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.WorkExperience, "WorkExperienceViewModel"));
 
             
@@ -232,7 +290,7 @@ Write(Html.DisplayFor(m => m.Candidate.WorkExperience, "WorkExperienceViewModel"
 WriteLiteral("\r\n");
 
             
-            #line 43 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 57 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.AboutYou));
 
             
@@ -241,7 +299,7 @@ Write(Html.DisplayFor(m => m.Candidate.AboutYou));
 WriteLiteral("\r\n");
 
             
-            #line 44 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 58 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers));
 
             
@@ -249,20 +307,20 @@ Write(Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers));
             #line hidden
 WriteLiteral("\r\n\r\n<div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group hide-print\"");
 
 WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1815), Tuple.Create("\"", 1853)
+WriteAttribute("href", Tuple.Create(" href=\"", 2479), Tuple.Create("\"", 2517)
             
-            #line 48 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1822), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
+            #line 62 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+, Tuple.Create(Tuple.Create("", 2486), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
             
             #line default
             #line hidden
-, 1822), false)
+, 2486), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");
