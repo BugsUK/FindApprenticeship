@@ -4,30 +4,43 @@
 
     public class HousekeepingConfigurationBuilder
     {
-        private int _housekeepingCycleInHours = 24;
-        private int _sendAccountReminderAfterCycles = 1;
-        private int _sendAccountReminderEveryCycles = 7;
-        private int _setPendingDeletionAfterCycles = 31;
+        private readonly HousekeepingConfiguration _configuration = new HousekeepingConfiguration
+        {
+            HousekeepingCycleInHours = 24,
+            SendAccountReminderStrategyA = new SendAccountReminderStrategyA
+            {
+                SendAccountReminderOneAfterCycles = 7,
+                SendAccountReminderTwoAfterCycles = 21
+            },
+            SendAccountReminderStrategyB = new SendAccountReminderStrategyB
+            {
+                SendAccountReminderAfterCycles = 1,
+                SendAccountReminderEveryCycles = 7
+            },
+            SetPendingDeletionAfterCycles = 31
+        };
 
         public HousekeepingConfiguration Build()
         {
-            var configuration = new HousekeepingConfiguration
-            {
-                HousekeepingCycleInHours = _housekeepingCycleInHours,
-                SendAccountReminderAfterCycles = _sendAccountReminderAfterCycles,
-                SendAccountReminderEveryCycles = _sendAccountReminderEveryCycles,
-                SetPendingDeletionAfterCycles = _setPendingDeletionAfterCycles
-            };
-
-            return configuration;
+            return _configuration;
         }
 
-        public HousekeepingConfigurationBuilder With(int housekeepingCycleInHours, int sendAccountReminderAfterCycles, int sendAccountReminderEveryCycles, int setPendingDeletionAfterCycles)
+        public HousekeepingConfigurationBuilder WithStrategyA(int housekeepingCycleInHours, int sendAccountReminderOneAfterCycles, int sendAccountReminderTwoAfterCycles, int setPendingDeletionAfterCycles)
         {
-            _housekeepingCycleInHours = housekeepingCycleInHours;
-            _sendAccountReminderAfterCycles = sendAccountReminderAfterCycles;
-            _sendAccountReminderEveryCycles = sendAccountReminderEveryCycles;
-            _setPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
+            _configuration.HousekeepingCycleInHours = housekeepingCycleInHours;
+            _configuration.SendAccountReminderStrategyA.SendAccountReminderOneAfterCycles = sendAccountReminderOneAfterCycles;
+            _configuration.SendAccountReminderStrategyA.SendAccountReminderTwoAfterCycles = sendAccountReminderTwoAfterCycles;
+            _configuration.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
+
+            return this;
+        }
+
+        public HousekeepingConfigurationBuilder WithStrategyB(int housekeepingCycleInHours, int sendAccountReminderAfterCycles, int sendAccountReminderEveryCycles, int setPendingDeletionAfterCycles)
+        {
+            _configuration.HousekeepingCycleInHours = housekeepingCycleInHours;
+            _configuration.SendAccountReminderStrategyB.SendAccountReminderAfterCycles = sendAccountReminderAfterCycles;
+            _configuration.SendAccountReminderStrategyB.SendAccountReminderEveryCycles = sendAccountReminderEveryCycles;
+            _configuration.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
 
             return this;
         }

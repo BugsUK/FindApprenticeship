@@ -54,10 +54,10 @@ namespace SFA.Apprenticeships.Web.ContactForms.Providers
                     new CommunicationToken(CommunicationTokens.WorkSector, result.WorkSector),
                     new CommunicationToken(CommunicationTokens.EnquiryRelatesTo, result.EnquiryRelatesTo)
                     };
-                //Send confirmation email to applicant
-                _communciationService.SendMessage(MessageTypes.EmployerEnquiry, communicationTokens);
                 //Send email to helpdesk
-                _communciationService.SendMessage(MessageTypes.EmployerEnquiryConfirmation, communicationTokens);
+                _communciationService.SendMessage(MessageTypes.EmployerEnquiry, communicationTokens);
+                //Send confirmation email to applicant
+                //_communciationService.SendMessage(MessageTypes.EmployerEnquiryConfirmation, communicationTokens);
                 return SubmitQueryStatus.Success;
             }
             catch (System.Exception exception)
@@ -103,10 +103,10 @@ namespace SFA.Apprenticeships.Web.ContactForms.Providers
                     new CommunicationToken(CommunicationTokens.WorkSector, result.WorkSector),
                     new CommunicationToken(CommunicationTokens.EnquiryRelatesTo, result.EnquiryRelatesTo)
                     };
-                //Send confirmation email to applicant
-                _communciationService.SendMessage(MessageTypes.GlaEmployerEnquiry, communicationTokens);
                 //Send email to helpdesk
-                _communciationService.SendMessage(MessageTypes.GlaEmployerEnquiryConfirmation, communicationTokens);
+                _communciationService.SendMessage(MessageTypes.GlaEmployerEnquiry, communicationTokens);
+                //Send confirmation email to applicant
+                //_communciationService.SendMessage(MessageTypes.GlaEmployerEnquiryConfirmation, communicationTokens);
                 return SubmitQueryStatus.Success;
             }
             catch (System.Exception exception)
