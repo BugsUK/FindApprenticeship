@@ -242,7 +242,7 @@
         [ElementLocator(Id = "support-no")]
         public IWebElement SupportMeNo { get; set; }
 
-        [ElementLocator(Id = "Candidate_AboutYou_AnythingWeCanDoToSupportYourInterview")]
+        [ElementLocator(Id = "Candidate_MonitoringInformation_AnythingWeCanDoToSupportYourInterview")]
         public IWebElement WhatCanWeDoToSupportYou { get; set; }
 
         #endregion

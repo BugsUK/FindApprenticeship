@@ -276,6 +276,21 @@ Write(Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers));
             
             #line 44 "..\..\Views\TraineeshipApplication\Apply.cshtml"
                                                              
+    
+    
+            
+            #line default
+            #line hidden
+            
+            #line 46 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+Write(Html.EditorFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability"));
+
+            
+            #line default
+            #line hidden
+            
+            #line 46 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+                                                                                                
 
 
             
@@ -302,7 +317,7 @@ WriteLiteral(" value=\"Preview\"");
 WriteLiteral(">Submit application</button>\r\n    </div>\r\n");
 
             
-            #line 50 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 52 "..\..\Views\TraineeshipApplication\Apply.cshtml"
 }
 
             
@@ -317,7 +332,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 54 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 56 "..\..\Views\TraineeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/knockout"));
 
             
@@ -343,7 +358,7 @@ WriteLiteral(@">
         qualificationData = ");
 
             
-            #line 69 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 71 "..\..\Views\TraineeshipApplication\Apply.cshtml"
                        Write(Html.Raw(Json.Encode(Model.Candidate.Qualifications)));
 
             
@@ -352,7 +367,7 @@ WriteLiteral(@">
 WriteLiteral(";\r\n        workExperienceData = ");
 
             
-            #line 70 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 72 "..\..\Views\TraineeshipApplication\Apply.cshtml"
                         Write(Html.Raw(Json.Encode(Model.Candidate.WorkExperience)));
 
             
@@ -361,7 +376,7 @@ WriteLiteral(";\r\n        workExperienceData = ");
 WriteLiteral(";\r\n        currentYear = ");
 
             
-            #line 71 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 73 "..\..\Views\TraineeshipApplication\Apply.cshtml"
                  Write(Html.Raw(Model.CurrentYear));
 
             
@@ -370,7 +385,7 @@ WriteLiteral(";\r\n        currentYear = ");
 WriteLiteral(";\r\n        whitelistregex =  ");
 
             
-            #line 72 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 74 "..\..\Views\TraineeshipApplication\Apply.cshtml"
                      Write(Html.Raw(Json.Encode(Model.WhiteListRegex)));
 
             
@@ -379,7 +394,7 @@ WriteLiteral(";\r\n        whitelistregex =  ");
 WriteLiteral(";\r\n        yearRegex =  ");
 
             
-            #line 73 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 75 "..\..\Views\TraineeshipApplication\Apply.cshtml"
                 Write(Html.Raw(Json.Encode(Model.FourDigitYearRegex)));
 
             
@@ -390,7 +405,7 @@ WriteLiteral(";\r\n\r\n        $(window).on(\'load\', function (){\r\n          
 "\"no-check-for-dirty-form\",\r\n                timeout: ");
 
             
-            #line 79 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 81 "..\..\Views\TraineeshipApplication\Apply.cshtml"
                     Write(Model.SessionTimeout);
 
             
@@ -399,7 +414,7 @@ WriteLiteral(";\r\n\r\n        $(window).on(\'load\', function (){\r\n          
 WriteLiteral(" * 1000,\r\n                confirmationMessage: \'");
 
             
-            #line 80 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 82 "..\..\Views\TraineeshipApplication\Apply.cshtml"
                                  Write(Model.ConfirmationMessage);
 
             
@@ -450,7 +465,7 @@ WriteLiteral(@"'
 WriteLiteral("    ");
 
             
-            #line 120 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+            #line 122 "..\..\Views\TraineeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/nas/applicationform"));
 
             

@@ -59,7 +59,9 @@
                 CandidateInformation = new ApplicationTemplate
                 {
                     Qualifications = candidate.ApplicationTemplate.Qualifications,
-                    WorkExperience = candidate.ApplicationTemplate.WorkExperience
+                    WorkExperience = candidate.ApplicationTemplate.WorkExperience,
+                    AboutYou = candidate.ApplicationTemplate.AboutYou,
+                    MonitoringInformation = candidate.MonitoringInformation
                 },
             };
         }

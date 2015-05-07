@@ -42,6 +42,8 @@
     Html.RenderPartial("_workExperiencesNonJS", Model);
     
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
+    
+    @Html.EditorFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability")
 
     <div class="form-group">
         @*The buttons below need the values so the controller knows what action to perform if restyling*@

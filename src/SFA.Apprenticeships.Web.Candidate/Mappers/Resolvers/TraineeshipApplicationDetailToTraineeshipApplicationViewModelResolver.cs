@@ -16,7 +16,8 @@
             {
                 Candidate = new TraineeshipCandidateViewModel().Resolve(application),
                 DateUpdated = application.DateUpdated,
-                VacancyId = application.Vacancy.Id
+                VacancyId = application.Vacancy.Id,
+                
             };
 
             return model;
