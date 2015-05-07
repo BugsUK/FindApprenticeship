@@ -933,16 +933,29 @@ WriteLiteral(" height=\"102\"");
 WriteLiteral(" alt=\"Crown copyright logo\"");
 
 WriteLiteral(">\r\n                    <p>&copy; Crown copyright</p>\r\n                </a>\r\n     " +
-"       </div>\r\n        </div>\r\n    </footer>\r\n\r\n");
+"       </div>\r\n            <div");
+
+WriteLiteral(" class=\"toggle-content show-print\"");
+
+WriteLiteral(">\r\n                <h3");
+
+WriteLiteral(" class=\"heading-small\"");
+
+WriteLiteral(">Contact the Skills Funding Agency helpdesk</h3>\r\n                <p");
+
+WriteLiteral(" class=\"small-btm-margin\"");
+
+WriteLiteral(">Telephone (free): 0800 015 0400</p>\r\n                <p>Telephone (from mobiles)" +
+": 02476 826482</p>\r\n            </div>\r\n        </div>\r\n    </footer>\r\n\r\n");
 
             
-            #line 167 "..\..\Views\Shared\_Layout.cshtml"
+            #line 172 "..\..\Views\Shared\_Layout.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 167 "..\..\Views\Shared\_Layout.cshtml"
+            #line 172 "..\..\Views\Shared\_Layout.cshtml"
      if (ViewBag.ShowAbout != null && ViewBag.ShowAbout == true)
     {
         Html.RenderPartial("_about");
@@ -956,7 +969,7 @@ WriteLiteral("\r\n    <!-- Placed at the end of the document so the pages load f
 WriteLiteral("    ");
 
             
-            #line 173 "..\..\Views\Shared\_Layout.cshtml"
+            #line 178 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/jquery"));
 
             
@@ -967,7 +980,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 174 "..\..\Views\Shared\_Layout.cshtml"
+            #line 179 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/fastclick"));
 
             
@@ -978,7 +991,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 175 "..\..\Views\Shared\_Layout.cshtml"
+            #line 180 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/underscore"));
 
             
@@ -992,7 +1005,7 @@ WriteLiteral(">\r\n    if (typeof jQuery === \'undefined\') {\r\n        var e =
 "nt(\"script\");\r\n\r\n        e.src = \'");
 
             
-            #line 181 "..\..\Views\Shared\_Layout.cshtml"
+            #line 186 "..\..\Views\Shared\_Layout.cshtml"
             Write(Url.Content("~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
             
@@ -1013,7 +1026,7 @@ WriteLiteral(@"';
                 url: '");
 
             
-            #line 193 "..\..\Views\Shared\_Layout.cshtml"
+            #line 198 "..\..\Views\Shared\_Layout.cshtml"
                  Write(Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = true }));
 
             
@@ -1024,13 +1037,13 @@ WriteLiteral("\'\r\n                });\r\n\r\n                request.done(func
 "    });\r\n\r\n");
 
             
-            #line 203 "..\..\Views\Shared\_Layout.cshtml"
+            #line 208 "..\..\Views\Shared\_Layout.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 203 "..\..\Views\Shared\_Layout.cshtml"
+            #line 208 "..\..\Views\Shared\_Layout.cshtml"
          if (ViewBag.SavedAndDraftCount != null)
         {
 
@@ -1042,7 +1055,7 @@ WriteLiteral("            ");
 WriteLiteral("UpdateSavedAndDraftCount(");
 
             
-            #line 205 "..\..\Views\Shared\_Layout.cshtml"
+            #line 210 "..\..\Views\Shared\_Layout.cshtml"
                                   Write(ViewBag.SavedAndDraftCount);
 
             
@@ -1051,7 +1064,7 @@ WriteLiteral("UpdateSavedAndDraftCount(");
 WriteLiteral(");\r\n");
 
             
-            #line 206 "..\..\Views\Shared\_Layout.cshtml"
+            #line 211 "..\..\Views\Shared\_Layout.cshtml"
         }
 
             
@@ -1062,7 +1075,7 @@ WriteLiteral("        });\r\n    </script>\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 210 "..\..\Views\Shared\_Layout.cshtml"
+            #line 215 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/nascript"));
 
             
@@ -1073,7 +1086,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 211 "..\..\Views\Shared\_Layout.cshtml"
+            #line 216 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/vendor"));
 
             
@@ -1084,7 +1097,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 212 "..\..\Views\Shared\_Layout.cshtml"
+            #line 217 "..\..\Views\Shared\_Layout.cshtml"
 Write(Scripts.Render("~/bundles/nas"));
 
             
@@ -1095,7 +1108,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 213 "..\..\Views\Shared\_Layout.cshtml"
+            #line 218 "..\..\Views\Shared\_Layout.cshtml"
 Write(RenderSection("scripts", required: false));
 
             
