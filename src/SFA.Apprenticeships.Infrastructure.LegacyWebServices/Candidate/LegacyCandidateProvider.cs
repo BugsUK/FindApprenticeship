@@ -220,7 +220,6 @@
                 {46, 9}, // Any other Black / African / Caribbean background
 
                 // Other ethnic group
-                // TODO: US454: missing mapping
                 {47, 20}, // Arab
                 {98, 20} // Any other ethnic group
             };

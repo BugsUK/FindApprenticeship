@@ -15,6 +15,7 @@
     {
         private readonly ILogService _logger;
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
+        private readonly ILegacyCandidateProvider _legacyCandidateProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
@@ -22,12 +23,15 @@
 
         public SubmitApprenticeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
+            ILegacyCandidateProvider legacyCandidateProvider,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
-            IMessageBus messageBus, ILogService logger)
+            IMessageBus messageBus,
+            ILogService logger)
         {
             _legacyApplicationProvider = legacyApplicationProvider;
+            _legacyCandidateProvider = legacyCandidateProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
@@ -59,7 +63,7 @@
             });
         }
 
-        public void CreateApplication(SubmitApprenticeshipApplicationRequest request)
+        private void CreateApplication(SubmitApprenticeshipApplicationRequest request)
         {
             _logger.Debug("Creating traineeship application Id: {0}", request.ApplicationId);
 
@@ -79,6 +83,7 @@
                 {
                     EnsureApplicationCanBeCreated(applicationDetail);
 
+                    _legacyCandidateProvider.UpdateCandidate(candidate);
                     applicationDetail.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
 
                     SetApplicationStateSubmitted(applicationDetail);
