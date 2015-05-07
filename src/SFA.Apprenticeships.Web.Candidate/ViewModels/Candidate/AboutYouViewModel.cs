@@ -18,10 +18,5 @@
 
         [Display(Name = AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.LabelText, Description = AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.HintText)]
         public string WhatAreYourHobbiesInterests { get; set; }
-
-        public bool RequiresSupportForInterview { get; set; }
-
-        [Display(Name = AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText, Description = "" )]
-        public string AnythingWeCanDoToSupportYourInterview { get; set; }
     }
 }

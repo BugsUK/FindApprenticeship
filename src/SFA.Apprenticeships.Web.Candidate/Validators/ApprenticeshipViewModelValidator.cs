@@ -17,6 +17,7 @@
         public ApprenticeshipViewModelServerValidator()
         {
             RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelServerValidator());
+            RuleFor(x => x.MonitoringInformation).SetValidator(new MonitoringInformationViewModelValidator());
             RuleFor(x => x.Education).SetValidator(new EducationViewModelServerValidator());
         }
     }
@@ -26,6 +27,7 @@
         public ApprenticeshipViewModelSaveValidator()
         {
             RuleFor(x => x.AboutYou).SetValidator(new AboutYouViewModelSaveValidator());
+            RuleFor(x => x.MonitoringInformation).SetValidator(new MonitoringInformationViewModelValidator());
             RuleFor(x => x.Education).SetValidator(new EducationViewModelSaveValidator());
         }
     }

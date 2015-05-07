@@ -85,11 +85,21 @@
         {
             return new AboutYouViewModel
             {
-                AnythingWeCanDoToSupportYourInterview = aboutYou.Support,
-                RequiresSupportForInterview = !string.IsNullOrEmpty(aboutYou.Support),
                 WhatAreYourHobbiesInterests = aboutYou.HobbiesAndInterests,
                 WhatAreYourStrengths = aboutYou.Strengths,
                 WhatDoYouFeelYouCouldImprove = aboutYou.Improvements
+            };
+        }
+
+        public static MonitoringInformationViewModel GetMonitoringInformationViewModel(AboutYou aboutYou, MonitoringInformation monitoringInformation)
+        {
+            return new MonitoringInformationViewModel
+            {
+                AnythingWeCanDoToSupportYourInterview = aboutYou.Support,
+                RequiresSupportForInterview = !string.IsNullOrWhiteSpace(aboutYou.Support),
+                DisabilityStatus = (int?) monitoringInformation.DisabilityStatus.GetValueOrDefault(),
+                Ethnicity = monitoringInformation.Ethnicity,
+                Gender = (int?) monitoringInformation.Gender.GetValueOrDefault()
             };
         }
 
@@ -115,14 +125,24 @@
             };
         }
 
-        public static AboutYou GetAboutYou(AboutYouViewModel model)
+        public static AboutYou GetAboutYou(AboutYouViewModel model, MonitoringInformationViewModel monitoringInformationViewModel)
         {
             return new AboutYou
             {
                 HobbiesAndInterests = model.WhatAreYourHobbiesInterests,
                 Improvements = model.WhatDoYouFeelYouCouldImprove,
                 Strengths = model.WhatAreYourStrengths,
-                Support = model.RequiresSupportForInterview ? model.AnythingWeCanDoToSupportYourInterview : string.Empty
+                Support = monitoringInformationViewModel.RequiresSupportForInterview ? monitoringInformationViewModel.AnythingWeCanDoToSupportYourInterview : string.Empty
+            };
+        }
+
+        public static MonitoringInformation GetMonitoringInformation(MonitoringInformationViewModel monitoringInformationViewModel)
+        {
+            return new MonitoringInformation
+            {
+                DisabilityStatus = (DisabilityStatus?)monitoringInformationViewModel.DisabilityStatus.GetValueOrDefault(),
+                Ethnicity = monitoringInformationViewModel.Ethnicity,
+                Gender = (Gender?) monitoringInformationViewModel.Gender.GetValueOrDefault()
             };
         }
 
@@ -141,8 +161,7 @@
             };
         }
 
-        public static IList<WorkExperience> GetWorkExperiences(
-            IEnumerable<WorkExperienceViewModel> workExperienceViewModels)
+        public static IList<WorkExperience> GetWorkExperiences(IEnumerable<WorkExperienceViewModel> workExperienceViewModels)
         {
             if (workExperienceViewModels == null)
             {

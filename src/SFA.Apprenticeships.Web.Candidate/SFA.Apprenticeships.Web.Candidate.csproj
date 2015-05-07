@@ -685,6 +685,10 @@
       <LastGenOutput>_why.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Register\MonitoringInformation.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MonitoringInformation\_disability.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_disability.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1141,6 +1145,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_searchUpdate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\MonitoringInformation\_disability.generated.cs">
+      <DependentUpon>_disability.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\EditorTemplates\MonitoringInformation\_ethnicity.generated.cs">
       <DependentUpon>_ethnicity.cshtml</DependentUpon>

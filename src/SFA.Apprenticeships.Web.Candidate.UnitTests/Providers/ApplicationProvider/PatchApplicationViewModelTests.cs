@@ -52,7 +52,7 @@
                 .Build();
 
             var patchedViewModel = new ApprenticeshipApplicationProviderBuilder().Build().PatchApplicationViewModel(Guid.NewGuid(), savedModel, submittedModel);
-            patchedViewModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview.Should().BeNullOrEmpty();
+            patchedViewModel.Candidate.MonitoringInformation.AnythingWeCanDoToSupportYourInterview.Should().BeNullOrEmpty();
         }
 
         [Test]
@@ -66,7 +66,7 @@
                 .Build();
 
             var patchedViewModel = new ApprenticeshipApplicationProviderBuilder().Build().PatchApplicationViewModel(Guid.NewGuid(), savedModel, submittedModel);
-            patchedViewModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview.Should().Be(anythingWeCanDoToSupportYourInterview);
+            patchedViewModel.Candidate.MonitoringInformation.AnythingWeCanDoToSupportYourInterview.Should().Be(anythingWeCanDoToSupportYourInterview);
         }
     }
 }

@@ -42,5 +42,7 @@
         public IEnumerable<WorkExperienceViewModel> WorkExperience { get; set; }
 
         public EmployerQuestionAnswersViewModel  EmployerQuestionAnswers { get; set; }
+
+        public MonitoringInformationViewModel MonitoringInformation { get; set; }
     }
 }

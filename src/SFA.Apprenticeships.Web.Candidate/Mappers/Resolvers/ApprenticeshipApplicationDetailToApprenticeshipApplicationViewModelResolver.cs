@@ -23,10 +23,9 @@
                 DateApplied = application.DateApplied ?? DateTime.Now
             };
 
-            model.Candidate.AboutYou =
-                ApplicationConverter.GetAboutYouViewModel(application.CandidateInformation.AboutYou);
-            model.Candidate.Education =
-                ApplicationConverter.GetEducationViewModel(application.CandidateInformation.EducationHistory);
+            model.Candidate.AboutYou = ApplicationConverter.GetAboutYouViewModel(application.CandidateInformation.AboutYou);
+            model.Candidate.Education = ApplicationConverter.GetEducationViewModel(application.CandidateInformation.EducationHistory);
+            model.Candidate.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(application.CandidateInformation.AboutYou, application.CandidateInformation.MonitoringInformation);
 
             return model;
         }

@@ -172,12 +172,13 @@
 
             try
             {
-                if (!submittedModel.Candidate.AboutYou.RequiresSupportForInterview)
+                if (!submittedModel.Candidate.MonitoringInformation.RequiresSupportForInterview)
                 {
-                    submittedModel.Candidate.AboutYou.AnythingWeCanDoToSupportYourInterview = string.Empty;
+                    submittedModel.Candidate.MonitoringInformation.AnythingWeCanDoToSupportYourInterview = string.Empty;
                 }
 
                 savedModel.Candidate.AboutYou = submittedModel.Candidate.AboutYou;
+                savedModel.Candidate.MonitoringInformation = submittedModel.Candidate.MonitoringInformation;
                 savedModel.Candidate.Education = submittedModel.Candidate.Education;
                 savedModel.Candidate.HasQualifications = submittedModel.Candidate.HasQualifications;
                 savedModel.Candidate.Qualifications = submittedModel.Candidate.Qualifications;

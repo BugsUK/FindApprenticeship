@@ -84,14 +84,15 @@
                 Candidate = new ApprenticeshipCandidateViewModel
                 {
                     Education = new EducationViewModel(),
-                    AboutYou = new AboutYouViewModel
-                    {
-                        RequiresSupportForInterview = _requiresSupportForInterview,
-                        AnythingWeCanDoToSupportYourInterview = _anythingWeCanDoToSupportYourInterview
-                    },
+                    AboutYou = new AboutYouViewModel(),
                     Address = new AddressViewModel
                     {
                         GeoPoint = new GeoPointViewModel()
+                    },
+                    MonitoringInformation = new MonitoringInformationViewModel
+                    {
+                        RequiresSupportForInterview = _requiresSupportForInterview,
+                        AnythingWeCanDoToSupportYourInterview = _anythingWeCanDoToSupportYourInterview
                     }
                 },
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel

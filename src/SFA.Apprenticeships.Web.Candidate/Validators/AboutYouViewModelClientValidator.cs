@@ -18,7 +18,6 @@
         public AboutYouViewModelSaveValidator()
         {
             this.AddSaveRules();
-            this.AddConditionalRules();
         }
     }
 
@@ -28,7 +27,6 @@
         {
             this.AddMandatoryRules();
             this.AddSaveRules();
-            this.AddConditionalRules();
         }
     }
 
@@ -68,19 +66,6 @@
                 .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.TooLongErrorText)
                 .Matches(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListRegularExpression)
                 .WithMessage(AboutYouViewModelMessages.WhatAreYourHobbiesInterestsMessages.WhiteListErrorText);          
-        }
-
-        internal static void AddConditionalRules(this AbstractValidator<AboutYouViewModel> validator)
-        {
-            validator.RuleFor(x => x.AnythingWeCanDoToSupportYourInterview)
-               .NotEmpty()
-               .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.RequiredErrorText)
-               .Length(0, 4000)
-               .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.TooLongErrorText)
-               .Matches(
-                   AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListRegularExpression)
-               .WithMessage(AboutYouViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.WhiteListErrorText)
-               .When(x => x.RequiresSupportForInterview);
         }
     }
 }
