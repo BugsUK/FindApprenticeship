@@ -874,6 +874,7 @@
     $('#saveQualification').on('click', function () {
         $('#qualEntry').removeClass('panel-danger');
         $('#unsavedQuals').hide();
+        $('#apply-button').removeClass('dirtyQuals');
         $('#apply-button').text('Save and continue');
         if ($('#unsavedWorkExp').is(':hidden')) {
             $('#unsavedQualsWorkExp').hide();
@@ -899,6 +900,7 @@
     $('#addWorkBtn').on('click', function () {
         $('#workexperience-apply').removeClass('panel-danger');
         $('#unsavedWorkExp').hide();
+        $('#apply-button').removeClass('dirtyWorkExp');
         $('#apply-button').removeClass('dirtyWorkExp').text('Save and continue');
         if ($('#unsavedQuals').is(':hidden')) {
             $('#unsavedQualsWorkExp').hide();
