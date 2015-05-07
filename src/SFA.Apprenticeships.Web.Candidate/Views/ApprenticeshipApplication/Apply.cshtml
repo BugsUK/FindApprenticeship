@@ -81,6 +81,10 @@
     
 }
 
+<div class="saving-prompt toggle-content hide-nojs" id="savedNotification">
+    Saved
+</div>
+
 @section scripts {
 
     @Scripts.Render("~/bundles/knockout")
@@ -143,6 +147,9 @@
                     if (result.Status == "succeeded") {
                         var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a>';
                         $("p.autosave").html(savedMessage);
+
+                        $('#savedNotification').show();
+                        setTimeout(function() { $("#savedNotification").hide(); }, 5000);
 
                         dirtyFormDialog.resetDirtyForm({
                             formSelector: "form"
