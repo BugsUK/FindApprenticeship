@@ -74,6 +74,9 @@ namespace SFA.Apprenticeships.Web.ContactForms.Providers
             {
                 var result = _employerEnquiryViewModelToDomainMapper.ConvertToDomain(employerEnquiryData);
 
+                var enquirySource = result.EnquirySource == null ? null : result.EnquirySource.ToUpper();
+                var natureOfEnquiry = string.Format("HOW DID YOU HEAR ABOUT GLA: {0}\r\n{1}", enquirySource, result.EnquiryDescription);
+
                 var communicationTokens = new[]
                 {
                     //common tokens 
@@ -94,7 +97,7 @@ namespace SFA.Apprenticeships.Web.ContactForms.Providers
                     new CommunicationToken(CommunicationTokens.Position, result.Position),
                     //Employer enquiry specific tokens 
                     new CommunicationToken(CommunicationTokens.EmployeesCount, result.EmployeesCount),
-                    new CommunicationToken(CommunicationTokens.EnquiryDescription, result.EnquiryDescription + "\r\n" + result.EnquirySource),
+                    new CommunicationToken(CommunicationTokens.EnquiryDescription, natureOfEnquiry),
                     new CommunicationToken(CommunicationTokens.EnquirySource, result.EnquirySource),
                     new CommunicationToken(CommunicationTokens.PreviousExperienceType, result.PreviousExperienceType),
                     new CommunicationToken(CommunicationTokens.WorkSector, result.WorkSector),
