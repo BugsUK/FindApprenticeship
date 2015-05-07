@@ -149,14 +149,14 @@
         [ElementLocator(Id = "support-no")]
         public IWebElement DontWantSupportInInterview { get; set; }
 
-        [ElementLocator(Id = "support-text")]
+        [ElementLocator(Id = "MonitoringInformation_AnythingWeCanDoToSupportYourInterview")]
         public IWebElement SupportDetails { get; set; }
 
         #endregion
 
         #region Ethnicity
 
-        [ElementLocator(Id = "ethnicity-dropdown")]
+        [ElementLocator(Id = "MonitoringInformation_Ethnicity")]
         public IWebElement EthnicDropdown { get; set; }
 
         #endregion

@@ -6,36 +6,36 @@
         We need this information to make sure we're giving equal opportunities
         to all candidates
     </p>
-    <select id="ethnicity-dropdown" name="MonitoringInformation.Ethnicity" class="para-btm-margin">
-        <option value="0">-- Please select --</option>
-        <option value="99">Prefer not to say</option>
+    <select id="@Html.IdFor(m => m.Ethnicity)" name="@Html.IdFor(m => m.Ethnicity)" class="para-btm-margin">
+        <option value="0"@(Model != null && Model.Ethnicity == 0 ? " selected" : "")>-- Please select --</option>
+        <option value="99"@(Model != null && Model.Ethnicity == 99 ? " selected" : "")>Prefer not to say</option>
         <optgroup label="White">
-            <option value="31">English/Welsh/Scottish/Northern Irish/British</option>
-            <option value="32">Irish</option>
-            <option value="33">Gypsy or Irish Traveller</option>
-            <option value="34">Other White background</option>
+            <option value="31"@(Model != null && Model.Ethnicity == 31 ? " selected" : "")>English/Welsh/Scottish/Northern Irish/British</option>
+            <option value="32"@(Model != null && Model.Ethnicity == 32 ? " selected" : "")>Irish</option>
+            <option value="33"@(Model != null && Model.Ethnicity == 33 ? " selected" : "")>Gypsy or Irish Traveller</option>
+            <option value="34"@(Model != null && Model.Ethnicity == 34 ? " selected" : "")>Other White background</option>
         </optgroup>
         <optgroup label="Mixed/Multiple ethnic groups">
-            <option value="35">White and Black Caribbean</option>
-            <option value="36">White and Black African</option>
-            <option value="37">White and Asian</option>
-            <option value="38">Other mixed/multiple ethnic background</option>
+            <option value="35"@(Model != null && Model.Ethnicity == 35 ? " selected" : "")>White and Black Caribbean</option>
+            <option value="36"@(Model != null && Model.Ethnicity == 36 ? " selected" : "")>White and Black African</option>
+            <option value="37"@(Model != null && Model.Ethnicity == 37 ? " selected" : "")>White and Asian</option>
+            <option value="38"@(Model != null && Model.Ethnicity == 38 ? " selected" : "")>Other mixed/multiple ethnic background</option>
         </optgroup>
         <optgroup label="Asian/Asian British">
-            <option value="39">Indian</option>
-            <option value="40">Pakistani</option>
-            <option value="41">Bangladeshi</option>
-            <option value="42">Chinese</option>
-            <option value="43">Other Asian background</option>
+            <option value="39"@(Model != null && Model.Ethnicity == 39 ? " selected" : "")>Indian</option>
+            <option value="40"@(Model != null && Model.Ethnicity == 40 ? " selected" : "")>Pakistani</option>
+            <option value="41"@(Model != null && Model.Ethnicity == 41 ? " selected" : "")>Bangladeshi</option>
+            <option value="42"@(Model != null && Model.Ethnicity == 42 ? " selected" : "")>Chinese</option>
+            <option value="43"@(Model != null && Model.Ethnicity == 43 ? " selected" : "")>Other Asian background</option>
         </optgroup>
         <optgroup label="Black/African/Caribbean/Black British">
-            <option value="44">African</option>
-            <option value="45">Caribbean</option>
-            <option value="46">Other Black/African/Caribbean background</option>
+            <option value="44"@(Model != null && Model.Ethnicity == 44 ? " selected" : "")>African</option>
+            <option value="45"@(Model != null && Model.Ethnicity == 45 ? " selected" : "")>Caribbean</option>
+            <option value="46"@(Model != null && Model.Ethnicity == 46 ? " selected" : "")>Other Black/African/Caribbean background</option>
         </optgroup>
         <optgroup label="Other ethnic group">
-            <option value="47">Arab</option>
-            <option value="98">Other ethnic group</option>
+            <option value="47"@(Model != null && Model.Ethnicity == 47 ? " selected" : "")>Arab</option>
+            <option value="98"@(Model != null && Model.Ethnicity == 48 ? " selected" : "")>Other ethnic group</option>
         </optgroup>
     </select>
 </div>
