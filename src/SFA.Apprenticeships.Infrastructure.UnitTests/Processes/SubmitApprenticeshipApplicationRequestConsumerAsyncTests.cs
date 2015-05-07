@@ -84,8 +84,11 @@
             applicationDetail.Status.Should().Be(ApplicationStatuses.Submitted);
         }
 
-        [Test]
-        public void ShouldUpdateLegacyCandidate()
+        [TestCase(null)]
+        [TestCase(DisabilityStatus.Yes)]
+        [TestCase(DisabilityStatus.No)]
+        [TestCase(DisabilityStatus.PreferNotToSay)]
+        public void ShouldUpdateLegacyCandidate(DisabilityStatus? disabilityStatus)
         {
             // Arrange.
             var request = new SubmitApprenticeshipApplicationRequest
@@ -103,6 +106,13 @@
                 .With(fixture => fixture.EntityId, request.ApplicationId)
                 .With(fixture => fixture.CandidateId, candidate.EntityId)
                 .With(fixture => fixture.Status, ApplicationStatuses.Submitting)
+                .With(fixture => fixture.CandidateInformation, new ApplicationTemplate
+                {
+                    MonitoringInformation = new MonitoringInformation
+                    {
+                        DisabilityStatus = disabilityStatus
+                    }
+                })
                 .Create();
 
             _mockApprenticeshipApplicationReadRepository.Setup(mock => mock
@@ -118,6 +128,7 @@
 
             // Assert.
             _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Once);
+            candidate.MonitoringInformation.DisabilityStatus.Should().Be(disabilityStatus);
         }
 
         [Test]
