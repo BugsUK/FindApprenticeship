@@ -57,7 +57,8 @@ Scenario: As a new candidate my additional monitoring information is saved
 	And I choose SaveAndContinueButton
 	Then I wait 120 second for the ApprenticeshipSearchPage page
 	When I navigate to the SettingsPage page
+	And I choose ShowDiversity
 	Then I see
 		| Field          | Rule   | Value                |
-		| GenderOther    | Equals | Selected             |
+		| GenderOther    | Equals | 3                    |
 		| SupportDetails | Equals | Support details text |

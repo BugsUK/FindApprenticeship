@@ -134,6 +134,9 @@
 
         #region Disability
 
+        [ElementLocator(Id = "equality-diversity-summary-link")]
+        public IWebElement ShowDiversity { get; set; }
+
         [ElementLocator(Id = "disability-yes")]
         public IWebElement DisabilityYes { get; set; }
 
