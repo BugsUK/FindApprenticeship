@@ -126,7 +126,8 @@ WriteLiteral(" value=\"31\"");
             
             #line default
             #line hidden
-WriteLiteral(">English/Welsh/Scottish/Northern Irish/British</option>\r\n            <option");
+WriteLiteral(">English / Welsh / Scottish / Northern Irish / British</option>\r\n            <opt" +
+"ion");
 
 WriteLiteral(" value=\"32\"");
 
@@ -159,9 +160,9 @@ WriteLiteral(" value=\"34\"");
             
             #line default
             #line hidden
-WriteLiteral(">Other White background</option>\r\n        </optgroup>\r\n        <optgroup");
+WriteLiteral(">Any other White background</option>\r\n        </optgroup>\r\n        <optgroup");
 
-WriteLiteral(" label=\"Mixed/Multiple ethnic groups\"");
+WriteLiteral(" label=\"Mixed / Multiple ethnic groups\"");
 
 WriteLiteral(">\r\n            <option");
 
@@ -207,10 +208,10 @@ WriteLiteral(" value=\"38\"");
             
             #line default
             #line hidden
-WriteLiteral(">Other mixed/multiple ethnic background</option>\r\n        </optgroup>\r\n        <o" +
-"ptgroup");
+WriteLiteral(">Any other Mixed / Multiple ethnic background</option>\r\n        </optgroup>\r\n    " +
+"    <optgroup");
 
-WriteLiteral(" label=\"Asian/Asian British\"");
+WriteLiteral(" label=\"Asian / Asian British\"");
 
 WriteLiteral(">\r\n            <option");
 
@@ -267,9 +268,9 @@ WriteLiteral(" value=\"43\"");
             
             #line default
             #line hidden
-WriteLiteral(">Other Asian background</option>\r\n        </optgroup>\r\n        <optgroup");
+WriteLiteral(">Any other Asian background</option>\r\n        </optgroup>\r\n        <optgroup");
 
-WriteLiteral(" label=\"Black/African/Caribbean/Black British\"");
+WriteLiteral(" label=\"Black / African / Caribbean / Black British\"");
 
 WriteLiteral(">\r\n            <option");
 
@@ -304,8 +305,8 @@ WriteLiteral(" value=\"46\"");
             
             #line default
             #line hidden
-WriteLiteral(">Other Black/African/Caribbean background</option>\r\n        </optgroup>\r\n        " +
-"<optgroup");
+WriteLiteral(">Any other Black / African / Caribbean background</option>\r\n        </optgroup>\r\n" +
+"        <optgroup");
 
 WriteLiteral(" label=\"Other ethnic group\"");
 

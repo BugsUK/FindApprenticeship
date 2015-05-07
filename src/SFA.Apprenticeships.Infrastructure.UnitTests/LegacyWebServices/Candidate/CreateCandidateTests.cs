@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.LegacyWebServices.Candidate
 {
     using System;
+    using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using FluentAssertions;
     using NUnit.Framework;
@@ -91,7 +92,7 @@
         }
 
         [Test]
-        public void MappingTest()
+        public void BasicMappingTest()
         {
             var gatewayServiceContract = new Mock<GatewayServiceContract>();
             CreateCandidateRequest request = null;
@@ -116,6 +117,147 @@
             request.Candidate.Postcode.Should().Be(candidate.RegistrationDetails.Address.Postcode);
             request.Candidate.LandlineTelephone.Should().Be(candidate.RegistrationDetails.PhoneNumber);
             request.Candidate.MobileTelephone.Should().Be(string.Empty);
+        }
+
+        [TestCase(null, null)]
+        [TestCase(99, 20)]
+        [TestCase(31, 16)]
+        [TestCase(32, 17)]
+        [TestCase(33, 20)]
+        [TestCase(34, 18)]
+        [TestCase(35, 13)]
+        [TestCase(36, 12)]
+        [TestCase(37, 11)]
+        [TestCase(38, 14)]
+        [TestCase(39, 3)]
+        [TestCase(40, 4)]
+        [TestCase(41, 2)]
+        [TestCase(42, 19)]
+        [TestCase(43, 5)]
+        [TestCase(44, 7)]
+        [TestCase(45, 8)]
+        [TestCase(46, 9)]
+        [TestCase(47, 20)]
+        [TestCase(98, 20)]
+        public void EthnicityMappingTest(int? sourceEthnicity, int? expectedEthnicity)
+        {
+            var gatewayServiceContract = new Mock<GatewayServiceContract>();
+            CreateCandidateRequest request = null;
+
+            gatewayServiceContract.Setup(c => c.CreateCandidate(It.IsAny<CreateCandidateRequest>()))
+                .Callback<CreateCandidateRequest>(r => { request = r; })
+                .Returns(new CreateCandidateResponse(123456, null));
+
+            var service = new MockGatewayService(gatewayServiceContract.Object);
+            var provider = new LegacyCandidateProviderBuilder().With(service).Build();
+
+            var candidate =
+                new Fixture().Build<Candidate>()
+                    .With(c => c.MonitoringInformation, new MonitoringInformation
+                    {
+                        Ethnicity = sourceEthnicity
+                    }).Create();
+
+            provider.CreateCandidate(candidate);
+
+            request.Should().NotBeNull();
+            request.Candidate.Should().NotBeNull();
+
+            request.Candidate.EthnicOrigin.Should().Be(expectedEthnicity);
+        }
+
+        [TestCase(null, null)]
+        [TestCase(99, "Not provided")]
+        [TestCase(33, "Gypsy or Irish Traveller")]
+        [TestCase(47, "Arab")]
+        public void EthnicityOtherMappingTest(int? sourceEthnicity, string expectedEthnicityOther)
+        {
+            var gatewayServiceContract = new Mock<GatewayServiceContract>();
+            CreateCandidateRequest request = null;
+
+            gatewayServiceContract.Setup(c => c.CreateCandidate(It.IsAny<CreateCandidateRequest>()))
+                .Callback<CreateCandidateRequest>(r => { request = r; })
+                .Returns(new CreateCandidateResponse(123456, null));
+
+            var service = new MockGatewayService(gatewayServiceContract.Object);
+            var provider = new LegacyCandidateProviderBuilder().With(service).Build();
+
+            var candidate =
+                new Fixture().Build<Candidate>()
+                    .With(c => c.MonitoringInformation, new MonitoringInformation
+                    {
+                        Ethnicity = sourceEthnicity
+                    }).Create();
+
+            provider.CreateCandidate(candidate);
+
+            request.Should().NotBeNull();
+            request.Candidate.Should().NotBeNull();
+
+            request.Candidate.EthnicOrginOther.Should().Be(expectedEthnicityOther);
+        }
+
+        [TestCase(null, null)]
+        [TestCase(Gender.Male, 1)]
+        [TestCase(Gender.Female, 2)]
+        [TestCase(Gender.Other, 3)]
+        [TestCase(Gender.PreferNotToSay, 4)]
+        public void GenderMappingTest(Gender? sourceGender, int? expectedGender)
+        {
+            var gatewayServiceContract = new Mock<GatewayServiceContract>();
+            CreateCandidateRequest request = null;
+
+            gatewayServiceContract.Setup(c => c.CreateCandidate(It.IsAny<CreateCandidateRequest>()))
+                .Callback<CreateCandidateRequest>(r => { request = r; })
+                .Returns(new CreateCandidateResponse(123456, null));
+
+            var service = new MockGatewayService(gatewayServiceContract.Object);
+            var provider = new LegacyCandidateProviderBuilder().With(service).Build();
+
+            var candidate =
+                new Fixture().Build<Candidate>()
+                    .With(c => c.MonitoringInformation, new MonitoringInformation
+                    {
+                        Gender = sourceGender
+                    }).Create();
+
+            provider.CreateCandidate(candidate);
+
+            request.Should().NotBeNull();
+            request.Candidate.Should().NotBeNull();
+
+            request.Candidate.Gender.Should().Be(expectedGender);
+        }
+
+        [TestCase(null, null)]
+        [TestCase(DisabilityStatus.No, 0)]
+        [TestCase(DisabilityStatus.Yes, 13)]
+        [TestCase(DisabilityStatus.PreferNotToSay, 14)]
+        public void DisabilityMappingTest(DisabilityStatus? sourceDisabilityStatus, int? expectedDisabilityStatus)
+        {
+            var gatewayServiceContract = new Mock<GatewayServiceContract>();
+            CreateCandidateRequest request = null;
+
+            gatewayServiceContract.Setup(c => c.CreateCandidate(It.IsAny<CreateCandidateRequest>()))
+                .Callback<CreateCandidateRequest>(r => { request = r; })
+                .Returns(new CreateCandidateResponse(123456, null));
+
+            var service = new MockGatewayService(gatewayServiceContract.Object);
+            var provider = new LegacyCandidateProviderBuilder().With(service).Build();
+
+            var candidate =
+                new Fixture().Build<Candidate>()
+                    .With(c => c.MonitoringInformation, new MonitoringInformation
+                    {
+                        DisabilityStatus = sourceDisabilityStatus
+                    }).Create();
+
+            provider.CreateCandidate(candidate);
+
+            request.Should().NotBeNull();
+            request.Candidate.Should().NotBeNull();
+
+            request.Candidate.Disability.Should().Be(expectedDisabilityStatus);
         }
     }
 }
