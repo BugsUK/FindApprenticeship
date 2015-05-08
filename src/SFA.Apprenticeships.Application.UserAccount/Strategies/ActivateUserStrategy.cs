@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
@@ -10,11 +11,13 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     {
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
+        private readonly IAuditRepository _auditRepository;
 
-        public ActivateUserStrategy(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository)
+        public ActivateUserStrategy(IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository, IAuditRepository auditRepository)
         {
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
+            _auditRepository = auditRepository;
         }
 
         public void Activate(string username, string activationCode)
@@ -33,6 +36,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             user.ActivationDate = DateTime.UtcNow;
 
             _userWriteRepository.Save(user);
+            _auditRepository.Audit(user, AuditEventTypes.UserActivatedAccount);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Infrastructure.Postcode.IoC;
     using Infrastructure.RabbitMq.IoC;
     using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Audit.IoC;
     using Infrastructure.Repositories.Authentication.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
     using Infrastructure.Repositories.Communication.IoC;
@@ -74,6 +75,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AddressRegistry>();
+                x.AddRegistry<AuditRepositoryRegistry>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

@@ -3,5 +3,9 @@
     public class AuditEventTypes
     {
         public const string SetCandidateStatusPendingDeletion = "Candidate.SetStatusPendingDeletion";
+        public const string UsernameChanged = "User.UsernameChanged";
+        public const string CandidateVerifiedMobileNumber = "Candidate.VerifiedMobileNumber";
+        public const string UserResetPassword = "User.ResetPassword";
+        public const string UserActivatedAccount = "User.ActivatedAccount";
     }
 }

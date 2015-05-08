@@ -2,6 +2,7 @@
 namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
+    using Candidates;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
@@ -10,11 +11,13 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
+        private readonly IAuditRepository _auditRepository;
 
-        public VerifyMobileStrategy(ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository)
+        public VerifyMobileStrategy(ICandidateReadRepository candidateReadRepository, ICandidateWriteRepository candidateWriteRepository, IAuditRepository auditRepository)
         {
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
+            _auditRepository = auditRepository;
         }
 
         public void VerifyMobile(Guid candidateId, string verificationCode)
@@ -33,6 +36,7 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
                 candidate.CommunicationPreferences.MobileVerificationCode = string.Empty;
                 candidate.CommunicationPreferences.VerifiedMobile = true;
                 _candidateWriteRepository.Save(candidate);
+                _auditRepository.Audit(candidate, AuditEventTypes.CandidateVerifiedMobileNumber);
             }
             else
             {

@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 {
     using System;
+    using Candidates;
     using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
@@ -15,6 +16,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
+        private readonly IAuditRepository _auditRepository;
         private readonly ICommunicationService _communicationService;
         private readonly ILockAccountStrategy _lockAccountStrategy;
         private readonly IAuthenticationService _authenticationService;
@@ -26,7 +28,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             IUserReadRepository userReadRepository,
             IAuthenticationService authenticationService,
             IConfigurationService configurationService,
-            IUserWriteRepository userWriteRepository)
+            IUserWriteRepository userWriteRepository,
+            IAuditRepository auditRepository)
         {
             _communicationService = communicationService;
             _lockAccountStrategy = lockAccountStrategy;
@@ -34,6 +37,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _userReadRepository = userReadRepository;
             _authenticationService = authenticationService;
             _userWriteRepository = userWriteRepository;
+            _auditRepository = auditRepository;
             _maximumPasswordAttemptsAllowed = configurationService.Get<UserAccountConfiguration>().MaximumPasswordAttemptsAllowed;
         }
 
@@ -55,6 +59,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 user.SetStateActive();
 
                 _userWriteRepository.Save(user);
+                _auditRepository.Audit(user, AuditEventTypes.UserResetPassword);
 
                 SendPasswordResetConfirmationMessage(candidate);
             }

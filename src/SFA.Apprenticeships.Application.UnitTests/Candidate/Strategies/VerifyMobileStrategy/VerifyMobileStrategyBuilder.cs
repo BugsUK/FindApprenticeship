@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.VerifyM
     {
         private Mock<ICandidateReadRepository> _candidateReadRepositoryMock = new Mock<ICandidateReadRepository>();
         private Mock<ICandidateWriteRepository> _candidateWriteRepositoryMock = new Mock<ICandidateWriteRepository>();
+        private readonly Mock<IAuditRepository> _auditRepositoryMock = new Mock<IAuditRepository>();
 
         public VerifyMobileStrategyBuilder With(Mock<ICandidateReadRepository> candidateReadRepository)
         {
@@ -24,7 +25,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.VerifyM
 
         public VerifyMobileStrategy Build()
         {
-            return new VerifyMobileStrategy(_candidateReadRepositoryMock.Object, _candidateWriteRepositoryMock.Object);
+            return new VerifyMobileStrategy(_candidateReadRepositoryMock.Object, _candidateWriteRepositoryMock.Object, _auditRepositoryMock.Object);
         }
     }
 }

@@ -2,6 +2,7 @@
 {
     using System;
     using Authentication;
+    using Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
@@ -15,6 +16,7 @@
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IAuthenticationRepository _authenticationRepository;
+        private readonly IAuditRepository _auditRepository;
         private readonly ICodeGenerator _codeGenerator;
         private readonly ILogService _logService;
 
@@ -23,6 +25,7 @@
             IUserReadRepository userReadRepository,
             IUserWriteRepository userWriteRepository,
             IAuthenticationRepository authenticationRepository,
+            IAuditRepository auditRepository,
             ICodeGenerator codeGenerator,
             ILogService logService)
         {
@@ -30,6 +33,7 @@
             _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
             _authenticationRepository = authenticationRepository;
+            _auditRepository = auditRepository;
             _codeGenerator = codeGenerator;
             _logService = logService;
         }
@@ -72,6 +76,7 @@
             }
 
             _logService.Info("UpdateUsername updating from '{0}' to '{1}'", user.Username, user.PendingUsername);
+            _auditRepository.Audit(user, AuditEventTypes.UsernameChanged);
             user.Username = user.PendingUsername;
             user.PendingUsername = null;
             user.PendingUsernameCode = null;

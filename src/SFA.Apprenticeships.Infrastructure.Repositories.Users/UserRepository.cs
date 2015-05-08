@@ -46,7 +46,7 @@
         {
             _logger.Debug("Called Mongodb to get user with username={0}", username);
 
-            var mongoEntity = Collection.FindOne(Query.EQ("Username", username.ToLower()));
+            var mongoEntity = Collection.AsQueryable().FirstOrDefault(u => u.Username == username.ToLower() && u.Status != UserStatuses.PendingDeletion);
 
             if (mongoEntity == null && errorIfNotFound)
             {
@@ -54,12 +54,6 @@
                 _logger.Debug(message, username);
 
                 throw new CustomException(message, Application.Interfaces.Users.ErrorCodes.UnknownUserError);
-            }
-
-            if (mongoEntity != null && mongoEntity.Status == UserStatuses.PendingDeletion)
-            {
-                _logger.Info("Attempt to retrieve user with username={0} which is pending deletion", username);
-                mongoEntity = null;
             }
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
