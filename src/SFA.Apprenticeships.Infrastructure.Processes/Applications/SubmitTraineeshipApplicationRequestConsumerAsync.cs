@@ -14,6 +14,7 @@
     {
         private readonly ILogService _logger;
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
+        private readonly ILegacyCandidateProvider _legacyCandidateProvider;
         private readonly ITraineeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
@@ -21,12 +22,15 @@
 
         public SubmitTraineeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
+            ILegacyCandidateProvider legacyCandidateProvider,
             ITraineeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
-            IMessageBus messageBus, ILogService logger)
+            IMessageBus messageBus,
+            ILogService logger)
         {
             _legacyApplicationProvider = legacyApplicationProvider;
+            _legacyCandidateProvider = legacyCandidateProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeeshipApplicationWriteRepository = traineeeshipApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
@@ -53,7 +57,7 @@
                         throw;
                     }
                 }
-                
+
                 CreateApplication(request);
             });
         }
@@ -77,6 +81,10 @@
                 }
                 else
                 {
+                    // Update candidate disability status to match the application.
+                    candidate.MonitoringInformation.DisabilityStatus = applicationDetail.CandidateInformation.MonitoringInformation.DisabilityStatus;
+                    _legacyCandidateProvider.UpdateCandidate(candidate);
+
                     applicationDetail.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
                     _traineeeshipApplicationWriteRepository.Save(applicationDetail);
                 }
