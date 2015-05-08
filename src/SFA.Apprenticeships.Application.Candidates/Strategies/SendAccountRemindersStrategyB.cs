@@ -16,8 +16,8 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
-            //Only handle 50% of the users based on id
-            if (Math.Abs(user.EntityId.GetHashCode()%2) == 1) return false;
+            //Only handle 50% of the users based on date of birth
+            if (candidate.RegistrationDetails.DateOfBirth.Day%2 == 1) return false;
 
             if (user.Status != UserStatuses.PendingActivation) return false;
 

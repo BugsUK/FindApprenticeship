@@ -20,18 +20,18 @@
     {
         private Guid CandidateId = Guid.Parse("727d9d37-3962-43d7-bcf2-a96e1bd93397");
 
-        [TestCase("727d9d37-3962-43d7-bcf2-a96e1bd93396", false)]
-        [TestCase("727d9d37-3962-43d7-bcf2-a96e1bd93397", true)]
-        [TestCase("727d9d37-3962-43d7-bcf2-a96e1bd93398", false)]
-        [TestCase("727d9d37-3962-43d7-bcf2-a96e1bd93399", true)]
-        public void BaseStrategyOnGuid(string candidateIdGuid, bool shouldSendReminder)
+        [TestCase(1, true)]
+        [TestCase(2, false)]
+        [TestCase(3, true)]
+        [TestCase(4, false)]
+        public void BaseStrategyOnDateOfBirth(int day, bool shouldSendReminder)
         {
-            var candidateId = Guid.Parse(candidateIdGuid);
+            var dateOfBirth = new DateTime(1985, 1, day);
 
             var dateCreated = DateTime.UtcNow.AddDays(-7);
 
-            var user = new UserBuilder(candidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(candidateId).Build();
+            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();

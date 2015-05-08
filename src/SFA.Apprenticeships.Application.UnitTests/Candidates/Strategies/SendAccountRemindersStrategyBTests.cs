@@ -20,18 +20,18 @@
     {
         private Guid CandidateId = Guid.Parse("727d9d37-3962-43d7-bcf2-a96e1bd93396");
 
-        [TestCase("727d9d37-3962-43d7-bcf2-a96e1bd93396", true)]
-        [TestCase("727d9d37-3962-43d7-bcf2-a96e1bd93397", false)]
-        [TestCase("727d9d37-3962-43d7-bcf2-a96e1bd93398", true)]
-        [TestCase("727d9d37-3962-43d7-bcf2-a96e1bd93399", false)]
-        public void BaseStrategyOnGuid(string candidateIdGuid, bool shouldSendReminder)
+        [TestCase(1, false)]
+        [TestCase(2, true)]
+        [TestCase(3, false)]
+        [TestCase(4, true)]
+        public void BaseStrategyOnDateOfBirth(int day, bool shouldSendReminder)
         {
-            var candidateId = Guid.Parse(candidateIdGuid);
+            var dateOfBirth = new DateTime(1985, 1, day);
 
             var dateCreated = DateTime.UtcNow.AddDays(-1);
 
-            var user = new UserBuilder(candidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(candidateId).Build();
+            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -43,10 +43,12 @@
         [Test]
         public void DoNotSendReminderForActivatedUser()
         {
+            var dateOfBirth = new DateTime(1985, 1, 2);
+
             var dateCreated = DateTime.UtcNow;
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(true).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -58,10 +60,12 @@
         [Test]
         public void DoNotSendReminderBeforeOneDay()
         {
+            var dateOfBirth = new DateTime(1985, 1, 2);
+
             var dateCreated = DateTime.UtcNow;
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -73,10 +77,12 @@
         [Test]
         public void SendReminderAfterOneDay()
         {
+            var dateOfBirth = new DateTime(1985, 1, 2);
+
             var dateCreated = DateTime.UtcNow.AddDays(-1);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -88,10 +94,12 @@
         [Test]
         public void DoNotSendReminderAfterTwoDays()
         {
+            var dateOfBirth = new DateTime(1985, 1, 2);
+
             var dateCreated = DateTime.UtcNow.AddDays(-2);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -143,10 +151,12 @@
         [TestCase(40, false)]
         public void CompleteStrategyBTestDays(int days, bool shouldSendReminder)
         {
+            var dateOfBirth = new DateTime(1985, 1, 2);
+
             var dateCreated = DateTime.UtcNow.AddDays(-days).AddHours(-12);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -168,10 +178,12 @@
         [TestCase(10, false)]
         public void CompleteStrategyBTestHours(int hours, bool shouldSendReminder)
         {
+            var dateOfBirth = new DateTime(1985, 1, 2);
+
             var dateCreated = DateTime.UtcNow.AddHours(-hours).AddMinutes(-30);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(s => s.Get<HousekeepingConfiguration>()).Returns(new HousekeepingConfigurationBuilder().WithStrategyB(1, 1, 1, 6).Build());

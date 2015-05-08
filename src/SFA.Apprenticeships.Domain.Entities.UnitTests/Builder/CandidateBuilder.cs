@@ -35,6 +35,8 @@
         private DisabilityStatus _disabilityStatus;
         private int? _ethnicity;
 
+        private DateTime _dateOfBirth;
+
         public CandidateBuilder(Guid candidateId)
         {
             _candidateId = candidateId;
@@ -203,7 +205,8 @@
                 {
                     FirstName = _firstName,
                     PhoneNumber = _phoneNumber,
-                    EmailAddress = _emailAddress
+                    EmailAddress = _emailAddress,
+                    DateOfBirth = _dateOfBirth
                 },
                 CommunicationPreferences = new CommunicationPreferences
                 {
@@ -244,6 +247,12 @@
             };
 
             return candidate;
+        }
+
+        public CandidateBuilder WithDateOfBirth(DateTime dateOfBirth)
+        {
+            _dateOfBirth = dateOfBirth;
+            return this;
         }
     }
 }
