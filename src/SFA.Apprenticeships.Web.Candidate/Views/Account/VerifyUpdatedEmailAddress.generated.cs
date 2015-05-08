@@ -53,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
             
             #line 2 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
   
-    ViewBag.Title = "VerifyUpdatedEmailAddress";
+    ViewBag.Title = "Verify your email address - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
             
@@ -181,14 +181,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <p>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1438), Tuple.Create("\"", 1488)
+WriteAttribute("href", Tuple.Create(" href=\"", 1463), Tuple.Create("\"", 1513)
             
             #line 33 "..\..\Views\Account\VerifyUpdatedEmailAddress.cshtml"
-, Tuple.Create(Tuple.Create("", 1445), Tuple.Create<System.Object, System.Int32>(Url.Action("ResendUpdateEmailAddressCode")
+, Tuple.Create(Tuple.Create("", 1470), Tuple.Create<System.Object, System.Int32>(Url.Action("ResendUpdateEmailAddressCode")
             
             #line default
             #line hidden
-, 1445), false)
+, 1470), false)
 );
 
 WriteLiteral(" title=\"Resend code\"");
