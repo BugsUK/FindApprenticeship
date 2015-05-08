@@ -10,7 +10,7 @@
         public DateTime EventDate { get; set; }
         public string EventType { get; set; }
         public Guid PrimaryEntityId { get; set; }
-        public Guid SecondaryEntityId { get; set; }
+        public Guid? SecondaryEntityId { get; set; }
         public T Data { get; set; }
     }
 }
