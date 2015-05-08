@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
 {
+    using System;
     using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -31,6 +32,15 @@
         protected HousekeepingConfiguration Configuration
         {
             get { return _configurationService.Get<HousekeepingConfiguration>(); }
+        }
+
+        protected int GetHousekeepingCyclesSinceCreation(User user)
+        {
+            var timeSinceCreation = DateTime.UtcNow - user.DateCreated;
+
+            var housekeepingCyclesSinceCreation = (int)(timeSinceCreation.TotalHours / Configuration.HousekeepingCycleInHours);
+
+            return housekeepingCyclesSinceCreation;
         }
 
         protected abstract bool DoHandle(User user, Candidate candidate);

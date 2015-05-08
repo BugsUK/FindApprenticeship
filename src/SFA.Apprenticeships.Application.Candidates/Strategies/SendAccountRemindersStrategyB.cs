@@ -1,20 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
 {
     using System;
-    using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
+    using Interfaces.Communications;
     using Interfaces.Logging;
 
-    public class SendAccountRemindersStrategyB : HousekeepingStrategy
+    public class SendAccountRemindersStrategyB : SendAccountRemindersStrategy
     {
-        private readonly ILogService _logService;
-
-        public SendAccountRemindersStrategyB(IConfigurationService configurationService, ILogService logService)
-            : base(configurationService)
+        public SendAccountRemindersStrategyB(IConfigurationService configurationService, ICommunicationService communicationService, ILogService logService)
+            : base(configurationService, communicationService, logService)
         {
-            _logService = logService;
         }
 
         protected override bool DoHandle(User user, Candidate candidate)
@@ -22,11 +19,9 @@
             //Only handle 50% of the users based on id
             if (Math.Abs(user.EntityId.GetHashCode()%2) == 1) return false;
 
-            if(user.Status != UserStatuses.PendingActivation) return false;
+            if (user.Status != UserStatuses.PendingActivation) return false;
 
-            var timeSinceCreation = DateTime.Now - user.DateCreated;
-
-            var housekeepingCyclesSinceCreation = (int)(timeSinceCreation.TotalHours / Configuration.HousekeepingCycleInHours);
+            var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSinceCreation(user);
 
             var configuration = Configuration.SendAccountReminderStrategyB;
 
@@ -40,6 +35,7 @@
             //Remind on the first cycle
             if (housekeepingCyclesSinceCreation == configuration.SendAccountReminderAfterCycles)
             {
+                SendAccountReminder(user, candidate);
                 return true;
             }
 
@@ -47,6 +43,7 @@
             if ((housekeepingCyclesSinceCreation - configuration.SendAccountReminderAfterCycles) %
                 configuration.SendAccountReminderEveryCycles == 0)
             {
+                SendAccountReminder(user, candidate);
                 return true;
             }
 

@@ -41,7 +41,8 @@
                 MessageTypes.PasswordChanged,
                 MessageTypes.SavedSearchAlert,
                 MessageTypes.SendPendingUsernameCode,
-                MessageTypes.SendEmailReminder
+                MessageTypes.SendEmailReminder,
+                MessageTypes.SendActivationCodeReminder
             };
 
             return messageTypes.Contains(communicationRequest.MessageType);

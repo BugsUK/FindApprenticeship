@@ -24,6 +24,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using RabbitMq.Interfaces;
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
+    using Repositories.Audit.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
@@ -104,6 +105,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<AuditRepositoryRegistry>();
                 x.AddCachingRegistry(cacheConfig);
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
                 x.AddRegistry<ProcessesRegistry>();

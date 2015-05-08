@@ -4,16 +4,14 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
+    using Interfaces.Communications;
     using Interfaces.Logging;
 
-    public class SendAccountRemindersStrategyA : HousekeepingStrategy
+    public class SendAccountRemindersStrategyA : SendAccountRemindersStrategy
     {
-        private readonly ILogService _logService;
-
-        public SendAccountRemindersStrategyA(IConfigurationService configurationService, ILogService logService)
-            : base(configurationService)
+        public SendAccountRemindersStrategyA(IConfigurationService configurationService, ICommunicationService communicationService, ILogService logService)
+            : base(configurationService, communicationService, logService)
         {
-            _logService = logService;
         }
 
         protected override bool DoHandle(User user, Candidate candidate)
@@ -23,9 +21,7 @@
 
             if (user.Status != UserStatuses.PendingActivation) return false;
 
-            var timeSinceCreation = DateTime.Now - user.DateCreated;
-
-            var housekeepingCyclesSinceCreation = (int)(timeSinceCreation.TotalHours / Configuration.HousekeepingCycleInHours);
+            var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSinceCreation(user);
 
             var configuration = Configuration.SendAccountReminderStrategyA;
 
@@ -39,12 +35,14 @@
             //Remind on the first cycle
             if (housekeepingCyclesSinceCreation == configuration.SendAccountReminderOneAfterCycles)
             {
+                SendAccountReminder(user, candidate);
                 return true;
             }
 
             //Remind on the second cycle
             if (housekeepingCyclesSinceCreation == configuration.SendAccountReminderTwoAfterCycles)
             {
+                SendAccountReminder(user, candidate);
                 return true;
             }
 

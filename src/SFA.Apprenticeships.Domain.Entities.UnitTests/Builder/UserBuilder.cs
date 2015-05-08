@@ -9,6 +9,7 @@
         private DateTime _dateCreated;
         private UserStatuses _userStatus;
         private string _activationCode;
+        private DateTime? _activateCodeExpiry;
 
         public UserBuilder(Guid userId)
         {
@@ -23,7 +24,8 @@
                 DateCreated = _dateCreated,
                 EntityId = _userId,
                 Status = _userStatus,
-                ActivationCode = _activationCode
+                ActivationCode = _activationCode,
+                ActivateCodeExpiry = _activateCodeExpiry
             };
 
             return user;
@@ -45,6 +47,7 @@
         {
             _userStatus = activated ? UserStatuses.Active : UserStatuses.PendingActivation;
             _activationCode = activated ? null : "ABC123";
+            _activateCodeExpiry = activated ? (DateTime?) null : _dateCreated;
             return this;
         }
     }

@@ -3,6 +3,8 @@
     using Application.Applications;
     using Application.Applications.Strategies;
     using Application.Candidates.Strategies;
+    using Application.Communication;
+    using Application.Communication.Strategies;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Logging;
@@ -19,6 +21,7 @@
     using Communications.Commands;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Domain.Interfaces.Repositories;
     using Logging.IoC;
     using StructureMap;
     using StructureMap.Configuration.DSL;
@@ -46,6 +49,14 @@
             For<CommunicationCommand>().Use<HelpDeskCommunicationCommand>();
 
             For<CommunicationRequestConsumerAsync>().Use<CommunicationRequestConsumerAsync>();
+
+            For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
+            For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
+            For<ISendCandidateCommunicationStrategy>().Use<QueueCandidateCommunicationStrategy>();
+            For<ISendContactMessageStrategy>().Use<QueueContactMessageStrategy>();
+            For<ISendUsernameUpdateCommunicationStrategy>().Use<QueueUsernameUpdateCommunicationStrategy>();
+
+            For<ICommunicationService>().Use<CommunicationService>();
 
             // applications
             For<SubmitApprenticeshipApplicationRequestConsumerAsync>().Use<SubmitApprenticeshipApplicationRequestConsumerAsync>();
@@ -86,17 +97,20 @@
         private static IHousekeepingStrategy BuildHousekeepingChainOfResponsibility(IContext context)
         {
             var configurationService = context.GetInstance<IConfigurationService>();
+            var communicationService = context.GetInstance<ICommunicationService>();
             var logService = context.GetInstance<ILogService>();
+            var userWriteRepository = context.GetInstance<IUserWriteRepository>();
+            var auditRepository = context.GetInstance<IAuditRepository>();
 
-            var sendAccountRemindersStrategyA = new SendAccountRemindersStrategyA(configurationService, logService);
-            var sendAccountRemindersStrategyB = new SendAccountRemindersStrategyB(configurationService, logService);
-            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, logService);
+            var sendAccountRemindersStrategyA = new SendAccountRemindersStrategyA(configurationService, communicationService, logService);
+            var sendAccountRemindersStrategyB = new SendAccountRemindersStrategyB(configurationService, communicationService, logService);
+            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, auditRepository, logService);
 
             sendAccountRemindersStrategyA.SetSuccessor(sendAccountRemindersStrategyB);
             sendAccountRemindersStrategyB.SetSuccessor(setPendingDeletionStrategy);
             setPendingDeletionStrategy.SetSuccessor(new TerminatingHousekeepingStrategy(configurationService));
 
-            return sendAccountRemindersStrategyB;
+            return sendAccountRemindersStrategyA;
         }
     }
 }

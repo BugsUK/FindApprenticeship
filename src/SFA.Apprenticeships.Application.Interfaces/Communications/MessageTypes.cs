@@ -18,7 +18,8 @@
         ApprenticeshipApplicationExpiringDraft = 13,
         ApprenticeshipApplicationExpiringDraftsSummary = 14,
         SendPendingUsernameCode = 15,
-        SendEmailReminder = 16
+        SendEmailReminder = 16,
+        SendActivationCodeReminder = 17
         //EmployerContactMessage
     }
 }

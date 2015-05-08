@@ -13,5 +13,7 @@
         public string AdminDb { get; set; }
 
         public string AuthenticationDb { get; set; }
+
+        public string AuditDb { get; set; }
     }
 }

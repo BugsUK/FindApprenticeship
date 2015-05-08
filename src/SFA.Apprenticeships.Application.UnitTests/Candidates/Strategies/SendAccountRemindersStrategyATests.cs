@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Application.Candidates.Configuration;
     using Application.Candidates.Strategies;
     using Configuration;
@@ -8,6 +10,8 @@
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
+    using FluentAssertions;
+    using Interfaces.Communications;
     using Moq;
     using NUnit.Framework;
 
@@ -24,97 +28,91 @@
         {
             var candidateId = Guid.Parse(candidateIdGuid);
 
-            var dateCreated = DateTime.Now.AddDays(-7);
+            var dateCreated = DateTime.UtcNow.AddDays(-7);
 
             var user = new UserBuilder(candidateId).WithDateCreated(dateCreated).Activated(false).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
 
+            var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).Build();
+            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).With(communicationService).Build();
 
-            strategy.Handle(user, candidate);
-
-            Assert(shouldSendReminder, successor, user, candidate);
+            Assert(shouldSendReminder, strategy, successor, communicationService, user, candidate);
         }
 
         [Test]
         public void DoNotSendReminderForActivatedUser()
         {
-            var dateCreated = DateTime.Now;
+            var dateCreated = DateTime.UtcNow;
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(true).Build();
             var candidate = new CandidateBuilder(CandidateId).Build();
 
+            var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).Build();
+            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).With(communicationService).Build();
 
-            strategy.Handle(user, candidate);
-
-            Assert(false, successor, user, candidate);
+            Assert(false, strategy, successor, communicationService, user, candidate);
         }
         
         [Test]
         public void DoNotSendReminderBeforeSevenDays()
         {
-            var dateCreated = DateTime.Now;
+            var dateCreated = DateTime.UtcNow;
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
             var candidate = new CandidateBuilder(CandidateId).Build();
 
+            var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).Build();
+            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).With(communicationService).Build();
 
-            strategy.Handle(user, candidate);
-
-            Assert(false, successor, user, candidate);
+            Assert(false, strategy, successor, communicationService, user, candidate);
         }
         
         [Test]
         public void SendReminderAfterSevenDays()
         {
-            var dateCreated = DateTime.Now.AddDays(-7);
+            var dateCreated = DateTime.UtcNow.AddDays(-7);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
             var candidate = new CandidateBuilder(CandidateId).Build();
 
+            var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).Build();
+            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).With(communicationService).Build();
 
-            strategy.Handle(user, candidate);
-
-            Assert(true, successor, user, candidate);
+            Assert(true, strategy, successor, communicationService, user, candidate);
         }
         
         [Test]
         public void DoNotSendReminderAfterTwentyDays()
         {
-            var dateCreated = DateTime.Now.AddDays(-20);
+            var dateCreated = DateTime.UtcNow.AddDays(-20);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
             var candidate = new CandidateBuilder(CandidateId).Build();
 
+            var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).Build();
+            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).With(communicationService).Build();
 
-            strategy.Handle(user, candidate);
-
-            Assert(false, successor, user, candidate);
+            Assert(false, strategy, successor, communicationService, user, candidate);
         }
 
         [Test]
         public void SendReminderAfterTwentyOneDays()
         {
-            var dateCreated = DateTime.Now.AddDays(-21);
+            var dateCreated = DateTime.UtcNow.AddDays(-21);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
             var candidate = new CandidateBuilder(CandidateId).Build();
 
+            var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).Build();
+            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).With(communicationService).Build();
 
-            strategy.Handle(user, candidate);
-
-            Assert(true, successor, user, candidate);
+            Assert(true, strategy, successor, communicationService, user, candidate);
         }
 
         [TestCase(0, false)]
@@ -160,17 +158,16 @@
         [TestCase(40, false)]
         public void CompleteStrategyATestDays(int days, bool shouldSendReminder)
         {
-            var dateCreated = DateTime.Now.AddDays(-days).AddHours(-12);
+            var dateCreated = DateTime.UtcNow.AddDays(-days).AddHours(-12);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
             var candidate = new CandidateBuilder(CandidateId).Build();
 
+            var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).Build();
+            var strategy = new SendAccountRemindersStrategyABuilder().With(successor.Object).With(communicationService).Build();
 
-            strategy.Handle(user, candidate);
-
-            Assert(shouldSendReminder, successor, user, candidate);
+            Assert(shouldSendReminder, strategy, successor, communicationService, user, candidate);
         }
 
         [TestCase(0, false)]
@@ -186,32 +183,59 @@
         [TestCase(10, false)]
         public void CompleteStrategyATestHours(int hours, bool shouldSendReminder)
         {
-            var dateCreated = DateTime.Now.AddHours(-hours).AddMinutes(-30);
+            var dateCreated = DateTime.UtcNow.AddHours(-hours).AddMinutes(-30);
 
             var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
             var candidate = new CandidateBuilder(CandidateId).Build();
 
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(s => s.Get<HousekeepingConfiguration>()).Returns(new HousekeepingConfigurationBuilder().WithStrategyA(1, 2, 4, 6).Build());
+            var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyABuilder().With(configurationService).With(successor.Object).Build();
+            var strategy = new SendAccountRemindersStrategyABuilder().With(configurationService).With(successor.Object).With(communicationService).Build();
+
+            Assert(shouldSendReminder, strategy, successor, communicationService, user, candidate);
+        }
+
+        private static void Assert(bool shouldSendReminder, SendAccountRemindersStrategyA strategy, Mock<IHousekeepingStrategy> successor, Mock<ICommunicationService> communicationService, User user, Candidate candidate)
+        {
+            CommunicationToken[] communicationTokens = null;
+            communicationService.Setup(s => s.SendMessageToCandidate(user.EntityId, MessageTypes.SendActivationCodeReminder, It.IsAny<IEnumerable<CommunicationToken>>()))
+                .Callback<Guid, MessageTypes, IEnumerable<CommunicationToken>>((id, mt, ct) =>
+                {
+                    communicationTokens = ct.ToArray();
+                });
 
             strategy.Handle(user, candidate);
 
-            Assert(shouldSendReminder, successor, user, candidate);
-        }
-
-        private static void Assert(bool shouldSendReminder, Mock<IHousekeepingStrategy> successor, User user, Candidate candidate)
-        {
             if (shouldSendReminder)
             {
                 //Strategy handled the request
                 successor.Verify(s => s.Handle(user, candidate), Times.Never);
+
+                //Message was sent
+                communicationService.Verify(s => s.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendActivationCodeReminder, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Once);
+                communicationTokens.Should().NotBeNull();
+                communicationTokens.Length.Should().Be(4);
+                communicationTokens[0].Key.Should().Be(CommunicationTokens.CandidateFirstName);
+                communicationTokens[0].Value.Should().Be(candidate.RegistrationDetails.FirstName);
+                communicationTokens[1].Key.Should().Be(CommunicationTokens.ActivationCode);
+                communicationTokens[1].Value.Should().Be(user.ActivationCode);
+                communicationTokens[2].Key.Should().Be(CommunicationTokens.ActivationCodeExpiryDays);
+                var activationCodeExpiryInDays = user.ActivateCodeExpiry.HasValue ? (user.ActivateCodeExpiry.Value - DateTime.UtcNow).Days : 0;
+                var activationCodeExpiryInDaysFormatted = activationCodeExpiryInDays == 1 ? "1 day" : string.Format("{0} days", activationCodeExpiryInDays);
+                communicationTokens[2].Value.Should().Be(activationCodeExpiryInDaysFormatted);
+                communicationTokens[3].Key.Should().Be(CommunicationTokens.Username);
+                communicationTokens[3].Value.Should().Be(candidate.RegistrationDetails.EmailAddress);
             }
             else
             {
                 //Strategy did not handle the request
                 successor.Verify(s => s.Handle(user, candidate), Times.Once);
+
+                //Message was not sent
+                communicationService.Verify(s => s.SendMessageToCandidate(user.EntityId, MessageTypes.SendActivationCodeReminder, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Never);
+                communicationTokens.Should().BeNull();
             }
         }
     }

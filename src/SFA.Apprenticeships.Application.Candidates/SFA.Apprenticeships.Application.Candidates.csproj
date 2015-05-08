@@ -81,6 +81,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AuditEventTypes.cs" />
     <Compile Include="CandidateProcessor.cs" />
     <Compile Include="Configuration\HousekeepingConfiguration.cs" />
     <Compile Include="Entities\CandidateHousekeeping.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\HousekeepingStrategy.cs" />
     <Compile Include="Strategies\IHousekeepingStrategy.cs" />
+    <Compile Include="Strategies\SendAccountRemindersStrategy.cs" />
     <Compile Include="Strategies\SendAccountRemindersStrategyA.cs" />
     <Compile Include="Strategies\SendAccountRemindersStrategyB.cs" />
     <Compile Include="Strategies\SetPendingDeletionStrategy.cs" />
