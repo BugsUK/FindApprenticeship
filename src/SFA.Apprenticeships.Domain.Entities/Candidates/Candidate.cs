@@ -12,6 +12,7 @@
             CommunicationPreferences = new CommunicationPreferences();
             HelpPreferences = new HelpPreferences();
             MonitoringInformation = new MonitoringInformation();
+            SubscriberId = Guid.NewGuid();
         }
 
         public int LegacyCandidateId { get; set; } // temporary "weak link" to legacy candidate record (could be via an index)
