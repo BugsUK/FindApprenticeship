@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Azure.IoC
 {
-    using StructureMap;
     using StructureMap.Configuration.DSL;
     using Domain.Interfaces.Caching;
 

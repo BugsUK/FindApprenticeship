@@ -16,7 +16,7 @@
 
             if ((options & RouteConfigOptions.MapMvcAttributeRoutes) == RouteConfigOptions.MapMvcAttributeRoutes)
             {
-                // TODO: AG: US438: why doesn't named route work for ~/sitemap.xml?
+                // Required for ~/sitemap.xml.
                 routes.MapMvcAttributeRoutes();
             }
 

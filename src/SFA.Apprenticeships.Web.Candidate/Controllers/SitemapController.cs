@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Vacancy.SiteMap;
     using Common.SiteMap;
+    using Constants;
 
-    // TODO: AG: US438: review page caching policy.
-    [OutputCache(Duration = 30, VaryByParam = "none")]
+    [OutputCache(CacheProfile = CacheProfiles.SiteMap)]
     public class SiteMapController : Controller
     {
         private readonly ISiteMapVacancyProvider _siteMapVacancyProvider;

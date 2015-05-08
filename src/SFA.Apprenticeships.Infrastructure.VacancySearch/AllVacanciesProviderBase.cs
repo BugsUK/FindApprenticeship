@@ -42,9 +42,6 @@
                 .From(0)
                 .Size(ScrollSize)
                 .MatchAll()
-                // TODO: AG: US438: why does filtering fields here yield no results?
-                // .Fields("id")
-                // .Fields(field => field.Id)
                 .SearchType(SearchType.Scan)
                 .Scroll(ScrollIndexConsistencyTime));
 
