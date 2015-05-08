@@ -18,12 +18,15 @@
     You've been sent a code to your new email address, enter your code to verify
     your address.
 </p>
+
 @using (Html.BeginRouteForm(RouteNames.VerifyUpdatedEmail, FormMethod.Post, new {autocomplete = "off"}))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
-    
-    @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { @class = "form-group-withlink", spellcheck = "false", autofocus = "autofocus", autocomplete = "off" }, labelText: "Enter code")
+    <input type="password" title="Hidden password field to stop autocomplete" value="" class="alwayshidden" />
+    <input type="password" title="Hidden password field to stop autocomplete" value="" class="alwayshidden" />
+
+    @Html.FormTextFor(m => m.PendingUsernameCode, controlHtmlAttributes: new { spellcheck = "false", autofocus = "autofocus", autocomplete = "off" }, labelText: "Enter code", containerHtmlAttributes: new { @class = "form-group-withlink" })
     
     <div class="form-group">
         <p>
