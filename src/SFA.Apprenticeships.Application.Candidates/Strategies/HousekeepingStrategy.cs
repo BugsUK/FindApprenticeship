@@ -36,7 +36,7 @@
 
         protected int GetHousekeepingCyclesSinceCreation(User user)
         {
-            var timeSinceCreation = DateTime.UtcNow - user.DateCreated;
+            var timeSinceCreation = DateTime.UtcNow - user.DateCreated.ToUniversalTime();
 
             var housekeepingCyclesSinceCreation = (int)(timeSinceCreation.TotalHours / Configuration.HousekeepingCycleInHours);
 
