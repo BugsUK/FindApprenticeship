@@ -83,7 +83,7 @@ WriteLiteral(" class=\"grid grid-1-3\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"page-link\"");
+WriteLiteral(" class=\"page-link hide-nojs\"");
 
 WriteLiteral(">\r\n            <p>\r\n                <a");
 
@@ -241,14 +241,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1940), Tuple.Create("\"", 1978)
+WriteAttribute("href", Tuple.Create(" href=\"", 1950), Tuple.Create("\"", 1988)
             
             #line 48 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1947), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
+, Tuple.Create(Tuple.Create("", 1957), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
             
             #line default
             #line hidden
-, 1947), false)
+, 1957), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
@@ -313,14 +313,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2479), Tuple.Create("\"", 2517)
+WriteAttribute("href", Tuple.Create(" href=\"", 2489), Tuple.Create("\"", 2527)
             
             #line 62 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2486), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
+, Tuple.Create(Tuple.Create("", 2496), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
             
             #line default
             #line hidden
-, 2486), false)
+, 2496), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");
