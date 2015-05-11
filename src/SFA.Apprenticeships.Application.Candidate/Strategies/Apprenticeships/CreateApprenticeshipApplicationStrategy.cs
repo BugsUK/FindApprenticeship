@@ -86,7 +86,7 @@
                     Qualifications = candidate.ApplicationTemplate.Qualifications,
                     WorkExperience = candidate.ApplicationTemplate.WorkExperience,
                     AboutYou = candidate.ApplicationTemplate.AboutYou,
-                    MonitoringInformation = candidate.MonitoringInformation
+                    DisabilityStatus = candidate.MonitoringInformation.DisabilityStatus
                 };
 
             var applicationStatus = saveVacancy ? ApplicationStatuses.Saved : ApplicationStatuses.Draft;

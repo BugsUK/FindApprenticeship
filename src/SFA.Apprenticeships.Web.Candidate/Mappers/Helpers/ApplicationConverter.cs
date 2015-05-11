@@ -91,15 +91,15 @@
             };
         }
 
-        public static MonitoringInformationViewModel GetMonitoringInformationViewModel(AboutYou aboutYou, MonitoringInformation monitoringInformation)
+        public static MonitoringInformationViewModel GetMonitoringInformationViewModel(AboutYou aboutYou, DisabilityStatus? disabilityStatus)
         {
             return new MonitoringInformationViewModel
             {
                 AnythingWeCanDoToSupportYourInterview = aboutYou.Support,
                 RequiresSupportForInterview = !string.IsNullOrWhiteSpace(aboutYou.Support),
-                DisabilityStatus = (int?) monitoringInformation.DisabilityStatus.GetValueOrDefault(),
-                Ethnicity = monitoringInformation.Ethnicity,
-                Gender = (int?) monitoringInformation.Gender.GetValueOrDefault()
+                DisabilityStatus = (int?)disabilityStatus.GetValueOrDefault(),
+                Ethnicity = null,
+                Gender = null
             };
         }
 
@@ -133,16 +133,6 @@
                 Improvements = model.WhatDoYouFeelYouCouldImprove,
                 Strengths = model.WhatAreYourStrengths,
                 Support = monitoringInformationViewModel.RequiresSupportForInterview ? monitoringInformationViewModel.AnythingWeCanDoToSupportYourInterview : string.Empty
-            };
-        }
-
-        public static MonitoringInformation GetMonitoringInformation(MonitoringInformationViewModel monitoringInformationViewModel)
-        {
-            return new MonitoringInformation
-            {
-                DisabilityStatus = (DisabilityStatus?)monitoringInformationViewModel.DisabilityStatus.GetValueOrDefault(),
-                Ethnicity = monitoringInformationViewModel.Ethnicity,
-                Gender = (Gender?) monitoringInformationViewModel.Gender.GetValueOrDefault()
             };
         }
 
@@ -200,6 +190,13 @@
                 Subject = model.Subject,
                 Year = ConvertYearStringToInt(model.Year)
             }).ToList();
+        }
+
+        public static DisabilityStatus? GetDisabilityStatus(int? disabilityStatus)
+        {
+            return disabilityStatus.HasValue
+                ? (DisabilityStatus) disabilityStatus
+                : default(DisabilityStatus?);
         }
 
         private static int ConvertYearStringToInt(string stringYear)

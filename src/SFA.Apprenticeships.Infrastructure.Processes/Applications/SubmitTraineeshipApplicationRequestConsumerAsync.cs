@@ -82,7 +82,7 @@
                 else
                 {
                     // Update candidate disability status to match the application.
-                    candidate.MonitoringInformation.DisabilityStatus = applicationDetail.CandidateInformation.MonitoringInformation.DisabilityStatus;
+                    candidate.MonitoringInformation.DisabilityStatus = applicationDetail.CandidateInformation.DisabilityStatus;
                     _legacyCandidateProvider.UpdateCandidate(candidate);
 
                     applicationDetail.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);

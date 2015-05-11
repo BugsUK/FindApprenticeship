@@ -106,10 +106,7 @@
                 .With(fixture => fixture.CandidateId, candidate.EntityId)
                 .With(fixture => fixture.CandidateInformation, new ApplicationTemplate
                 {
-                    MonitoringInformation = new MonitoringInformation
-                    {
-                        DisabilityStatus = disabilityStatus
-                    }
+                    DisabilityStatus = disabilityStatus
                 })
                 .Create();
 

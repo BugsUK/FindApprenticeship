@@ -109,10 +109,7 @@
                 .With(fixture => fixture.Status, ApplicationStatuses.Submitting)
                 .With(fixture => fixture.CandidateInformation, new ApplicationTemplate
                 {
-                    MonitoringInformation = new MonitoringInformation
-                    {
-                        DisabilityStatus = disabilityStatus
-                    }
+                    DisabilityStatus = disabilityStatus
                 })
                 .Create();
 

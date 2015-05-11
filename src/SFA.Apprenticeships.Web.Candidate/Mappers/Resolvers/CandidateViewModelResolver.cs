@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
     using System.Linq;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Web.Candidate.Mappers.Helpers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
+    using Domain.Entities.Applications;
+    using Helpers;
+    using ViewModels.Candidate;
 
     public static class CandidateViewModelResolver
     {
@@ -21,7 +21,7 @@
             candidateViewModel.HasQualifications = ApplicationConverter.GetQualificationsViewModels(apprenticeshipApplicationDetail.CandidateInformation.Qualifications).Any();
             candidateViewModel.WorkExperience = ApplicationConverter.GetWorkExperiencesViewModels(apprenticeshipApplicationDetail.CandidateInformation.WorkExperience);
             candidateViewModel.HasWorkExperience = ApplicationConverter.GetWorkExperiencesViewModels(apprenticeshipApplicationDetail.CandidateInformation.WorkExperience).Any();
-            candidateViewModel.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(apprenticeshipApplicationDetail.CandidateInformation.AboutYou, apprenticeshipApplicationDetail.CandidateInformation.MonitoringInformation);
+            candidateViewModel.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(apprenticeshipApplicationDetail.CandidateInformation.AboutYou, apprenticeshipApplicationDetail.CandidateInformation.DisabilityStatus);
             candidateViewModel.EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel
             {
                 CandidateAnswer1 = apprenticeshipApplicationDetail.AdditionalQuestion1Answer,
