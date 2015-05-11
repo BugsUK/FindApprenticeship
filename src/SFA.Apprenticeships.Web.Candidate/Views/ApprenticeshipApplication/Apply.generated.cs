@@ -672,8 +672,48 @@ WriteLiteral(" * 1000,\r\n                    confirmationMessage: \'");
             
             #line default
             #line hidden
-WriteLiteral(@"'
-                });
+WriteLiteral("\'\r\n                });\r\n            });\r\n\r\n            var shouldShowQualMessage;" +
+"\r\n\r\n            setTimeout(function() {\r\n                shouldShowQualMessage =" +
+" false;\r\n            }, ");
+
+            
+            #line 126 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+          Write(Model.SessionTimeout);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@" * 1000);
+
+            $(window).on('beforeunload', function (e){
+                if(shouldShowQualMessage == false) {
+                    return;
+                } else {
+                    //https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
+
+                    if ($('#apply-button').hasClass('dirtyQuals') || $('#apply-button').hasClass('dirtyWorkExp')) {
+                        (e || window.event).returnValue = '");
+
+            
+            #line 135 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+                                                      Write(Model.ConfirmationMessage);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\'; //Gecko + IE\r\n                        return \'");
+
+            
+            #line 136 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+                           Write(Model.ConfirmationMessage);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@"'; //Webkit, Safari, Chrome etc.
+                    }
+                }
+                return;
             });
 
             setTimeout(function() {
@@ -681,7 +721,7 @@ WriteLiteral(@"'
             }, autoSaveTimeout);
         });
 
-        
+
 
         function timeout_reset() {
             setTimeout(function() {
@@ -695,7 +735,7 @@ WriteLiteral(@"'
                 Webtrends.multiTrack({ element: this, argsa: [""DCS.dcsuri"", ""/apprenticeship/apply/autosavedraft/");
 
             
-            #line 138 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 158 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                                                             Write(Model.VacancyId);
 
             
@@ -706,7 +746,7 @@ WriteLiteral("\", \"WT.dl\", \"99\", \"WT.ti\", \"Apprenticeship – Auto Save D
 "       url: \'");
 
             
-            #line 141 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 161 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                      Write(Url.Action("AutoSave", "ApprenticeshipApplication", new {id = Model.VacancyId}));
 
             
@@ -722,7 +762,7 @@ WriteLiteral(@"',
                         var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href=""");
 
             
-            #line 148 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 168 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                                                      Write(Url.RouteUrl(CandidateRouteNames.MyApplications));
 
             
@@ -792,7 +832,7 @@ WriteLiteral(@""" title=""My Applications"">my applications</a>';
 WriteLiteral("    ");
 
             
-            #line 207 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 227 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/nas/applicationform"));
 
             

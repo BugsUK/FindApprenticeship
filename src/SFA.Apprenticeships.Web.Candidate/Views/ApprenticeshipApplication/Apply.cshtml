@@ -119,12 +119,32 @@
                 });
             });
 
+            var shouldShowQualMessage;
+
+            setTimeout(function() {
+                shouldShowQualMessage = false;
+            }, @Model.SessionTimeout * 1000);
+
+            $(window).on('beforeunload', function (e){
+                if(shouldShowQualMessage == false) {
+                    return;
+                } else {
+                    //https://developer.mozilla.org/en-US/docs/Web/Events/beforeunload
+
+                    if ($('#apply-button').hasClass('dirtyQuals') || $('#apply-button').hasClass('dirtyWorkExp')) {
+                        (e || window.event).returnValue = '@Model.ConfirmationMessage'; //Gecko + IE
+                        return '@Model.ConfirmationMessage'; //Webkit, Safari, Chrome etc.
+                    }
+                }
+                return;
+            });
+
             setTimeout(function() {
                 timeout_trigger();
             }, autoSaveTimeout);
         });
 
-        
+
 
         function timeout_reset() {
             setTimeout(function() {
