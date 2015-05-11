@@ -33,11 +33,6 @@
             _logger.Debug("Called Mongodb to get user with Id={0}", id);
 
             var mongoEntity = Collection.FindOneById(id);
-            if (mongoEntity != null && mongoEntity.Status == UserStatuses.PendingDeletion)
-            {
-                _logger.Info("Attempt to retrieve user with Id={0} which is pending deletion", id);
-                mongoEntity = null;
-            }
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
         }
