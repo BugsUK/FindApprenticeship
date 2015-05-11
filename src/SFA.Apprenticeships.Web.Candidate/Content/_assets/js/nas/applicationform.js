@@ -856,6 +856,12 @@
     });
 
     $('#qualifications-panel').on('keyup', '#subject-name, #subject-grade', function () {
+        $('#qualEntry').removeClass('panel-danger');
+        $('#unsavedQuals').hide();
+        $('#apply-button').text('Save and continue');
+        if ($('#unsavedWorkExp').is(':hidden')) {
+            $('#unsavedQualsWorkExp').hide();
+        }
         if ($(this).val() != "") {
             $('#apply-button').addClass('dirtyQuals');
         } else if ($('#subject-name, #subject-grade').val() == "") {
@@ -874,14 +880,19 @@
     $('#saveQualification').on('click', function () {
         $('#qualEntry').removeClass('panel-danger');
         $('#unsavedQuals').hide();
-        $('#apply-button').removeClass('dirtyQuals');
-        $('#apply-button').text('Save and continue');
+        $('#apply-button').removeClass('dirtyQuals').text('Save and continue');
         if ($('#unsavedWorkExp').is(':hidden')) {
             $('#unsavedQualsWorkExp').hide();
         }
     });
 
     $('#workexperience-apply').on('keyup', '#work-employer, #work-title, #work-role, #work-from-year, #work-to-year', function () {
+        $('#workexperience-apply').removeClass('panel-danger');
+        $('#unsavedWorkExp').hide();
+        $('#apply-button').text('Save and continue');
+        if ($('#unsavedQuals').is(':hidden')) {
+            $('#unsavedQualsWorkExp').hide();
+        }
         if ($(this).val() != "") {
             $('#apply-button').addClass('dirtyWorkExp');
         } else if ($('#work-employer, #work-title, #work-role, #work-from-year, #work-to-year').val() == "") {
