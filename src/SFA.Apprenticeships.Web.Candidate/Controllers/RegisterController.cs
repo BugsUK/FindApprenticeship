@@ -129,9 +129,19 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> MonitoringInformation(MonitoringInformationViewModel model)
         {
-            return await Task.Run(() =>
+            return await Task.Run<ActionResult>(() =>
             {
-                _registerMediator.UpdateMonitoringInformation(UserContext.CandidateId, model);
+                var response = _registerMediator.UpdateMonitoringInformation(UserContext.CandidateId, model);
+
+                switch (response.Code)
+                {
+                    case RegisterMediatorCodes.UpdateMonitoringInformation.FailedValidation:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
+                }
+
+                //Redirects even if fails for unknown reason, don't hinder user.
                 return RedirectToAction("SkipMonitoringInformation");
             });
         }

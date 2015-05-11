@@ -35,5 +35,13 @@
             response.Message.Text.Should().Be(ActivationPageMessages.UpdatingMonitoringInformationFailure);
             response.Message.Level.Should().Be(UserMessageLevel.Error);
         }
+
+        [Test]
+        public void FailValidation()
+        {
+            var viewModel = new MonitoringInformationViewModel { RequiresSupportForInterview = true };
+            var response = _registerMediator.UpdateMonitoringInformation(Guid.NewGuid(), viewModel);
+            response.AssertValidationResult(RegisterMediatorCodes.UpdateMonitoringInformation.FailedValidation);
+        }
     }
 }
