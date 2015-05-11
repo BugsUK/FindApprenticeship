@@ -9,12 +9,14 @@
 
     public abstract class SendAccountRemindersStrategy : HousekeepingStrategy
     {
+        private readonly IConfigurationService _configurationService;
         private readonly ICommunicationService _communicationService;
         private readonly ILogService _logService;
 
         protected SendAccountRemindersStrategy(IConfigurationService configurationService, ICommunicationService communicationService, ILogService logService)
             : base(configurationService)
         {
+            _configurationService = configurationService;
             _communicationService = communicationService;
             _logService = logService;
         }
@@ -23,6 +25,10 @@
         {
             var activationCodeExpiryInDays = user.ActivateCodeExpiry.HasValue ? (user.ActivateCodeExpiry.Value - DateTime.UtcNow).Days : 0;
             var activationCodeExpiryInDaysFormatted = activationCodeExpiryInDays == 1 ? "1 day" : string.Format("{0} days", activationCodeExpiryInDays);
+            if (user.ActivateCodeExpiry.HasValue)
+            {
+                activationCodeExpiryInDaysFormatted += " on " + user.ActivateCodeExpiry.Value.ToLongDateString();
+            }
 
             _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendActivationCodeReminder,
                 new[]
