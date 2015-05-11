@@ -22,25 +22,36 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
+            if (candidate == null)
+            {
+                _logService.Warn("Setting user status to PendingDeletion for user with Id: {0} as it is associated with a null candidate", user.EntityId);
+                return SetUserStatusPendingDeletion(user);
+            }
+
             if (user.Status != UserStatuses.PendingActivation) return false;
 
             var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSinceCreation(user);
 
             if (housekeepingCyclesSinceCreation >= Configuration.SetPendingDeletionAfterCycles)
             {
-                _logService.Info("Setting User: {0} Status to PendingDeletion", user.EntityId);
-
-                _auditRepository.Audit(user, AuditEventTypes.SetCandidateStatusPendingDeletion);
-
-                user.Status = UserStatuses.PendingDeletion;
-                _userWriteRepository.Save(user);
-
-                _logService.Info("Set User: {0} Status to PendingDeletion", user.EntityId);
-
-                return true;
+                return SetUserStatusPendingDeletion(user);
             }
 
             return false;
+        }
+
+        private bool SetUserStatusPendingDeletion(User user)
+        {
+            _logService.Info("Setting User: {0} Status to PendingDeletion", user.EntityId);
+
+            _auditRepository.Audit(user, AuditEventTypes.SetCandidateStatusPendingDeletion);
+
+            user.Status = UserStatuses.PendingDeletion;
+            _userWriteRepository.Save(user);
+
+            _logService.Info("Set User: {0} Status to PendingDeletion", user.EntityId);
+
+            return true;
         }
     }
 }
