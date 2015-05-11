@@ -127,6 +127,8 @@
 
             if (!validationResult.IsValid)
             {
+                var savedSearchesModel = _accountProvider.GetSettingsViewModel(candidateId);
+                settingsViewModel.SavedSearches = savedSearchesModel.SavedSearches;
                 return GetMediatorResponse(AccountMediatorCodes.Settings.ValidationError, settingsViewModel, validationResult);
             }
 
