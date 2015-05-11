@@ -23,7 +23,7 @@
 
         protected void SendAccountReminder(User user, Candidate candidate)
         {
-            var activationCodeExpiryInDays = user.ActivateCodeExpiry.HasValue ? (user.ActivateCodeExpiry.Value.ToUniversalTime() - DateTime.UtcNow).Days : 0;
+            var activationCodeExpiryInDays = user.ActivateCodeExpiry.HasValue ? (user.ActivateCodeExpiry.Value - DateTime.UtcNow).Days : 0;
             var activationCodeExpiryInDaysFormatted = activationCodeExpiryInDays == 1 ? "1 day" : string.Format("{0} days", activationCodeExpiryInDays);
             if (user.ActivateCodeExpiry.HasValue)
             {
