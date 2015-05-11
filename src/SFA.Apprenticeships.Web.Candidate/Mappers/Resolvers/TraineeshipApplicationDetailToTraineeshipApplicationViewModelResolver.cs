@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
     using AutoMapper;
-    using SFA.Apprenticeships.Domain.Entities.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Applications;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
+    using Helpers;
+    using Domain.Entities.Applications;
+    using ViewModels.Applications;
+    using ViewModels.Candidate;
 
     public class TraineeshipApplicationDetailToTraineeshipApplicationViewModelResolver :
         ITypeConverter<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>
@@ -17,8 +18,10 @@
                 Candidate = new TraineeshipCandidateViewModel().Resolve(application),
                 DateUpdated = application.DateUpdated,
                 VacancyId = application.Vacancy.Id,
-                
             };
+
+            model.Candidate.AboutYou = ApplicationConverter.GetAboutYouViewModel(application.CandidateInformation.AboutYou);
+            model.Candidate.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(application.CandidateInformation.AboutYou, application.CandidateInformation.DisabilityStatus);
 
             return model;
         }

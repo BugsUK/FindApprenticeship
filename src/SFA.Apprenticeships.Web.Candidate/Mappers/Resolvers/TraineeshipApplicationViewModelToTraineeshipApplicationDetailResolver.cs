@@ -43,6 +43,7 @@
         {
             return new ApplicationTemplate
             {
+                AboutYou = ApplicationConverter.GetAboutYou(modelBase.AboutYou, modelBase.MonitoringInformation),
                 Qualifications =
                     modelBase.HasQualifications
                         ? ApplicationConverter.GetQualifications(modelBase.Qualifications)
@@ -51,6 +52,7 @@
                     modelBase.HasWorkExperience
                         ? ApplicationConverter.GetWorkExperiences(modelBase.WorkExperience)
                         : new List<WorkExperience>(),
+                DisabilityStatus = ApplicationConverter.GetDisabilityStatus(modelBase.MonitoringInformation.DisabilityStatus)
             };
         }
 
