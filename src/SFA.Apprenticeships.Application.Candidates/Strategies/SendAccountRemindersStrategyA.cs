@@ -16,6 +16,8 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
+            if (user == null || candidate == null) return false;
+
             //Only handle 50% of the users based on date of birth
             if (candidate.RegistrationDetails.DateOfBirth.Day%2 == 0) return false;
 

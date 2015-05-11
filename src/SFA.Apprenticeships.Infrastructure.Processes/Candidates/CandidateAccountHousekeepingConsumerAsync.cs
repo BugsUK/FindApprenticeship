@@ -32,14 +32,7 @@
                 _logService.Debug("Running housekeeping strategies for CandidateId: {0}", candidateId);
                 var user = _userReadRepository.Get(candidateId);
                 var candidate = _candidateReadRepository.Get(candidateId);
-                if (user == null || candidate == null)
-                {
-                    _logService.Warn("Housekeeping for CandidateId: {0} found a null user {1} or candidate {2}", candidateId, user == null, candidate == null);
-                }
-                else
-                {
-                    _strategy.Handle(user, candidate);
-                }
+                _strategy.Handle(user, candidate);
                 _logService.Debug("Housekeeping for CandidateId: {0} complete", candidateId);
             });
         }
