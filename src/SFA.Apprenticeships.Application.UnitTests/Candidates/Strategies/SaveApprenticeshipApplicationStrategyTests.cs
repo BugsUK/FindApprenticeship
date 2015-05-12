@@ -188,6 +188,7 @@
             _candidate.ApplicationTemplate.WorkExperience.Should().BeEquivalentTo(_newCandidateInformation.WorkExperience);
         }
 
+        [TestCase(null, null, null)]
         [TestCase(DisabilityStatus.No, null, DisabilityStatus.No)]
         [TestCase(DisabilityStatus.Yes, null, DisabilityStatus.Yes)]
         [TestCase(DisabilityStatus.No, DisabilityStatus.Yes, DisabilityStatus.Yes)]
@@ -195,12 +196,12 @@
         [TestCase(DisabilityStatus.Yes, DisabilityStatus.Yes, DisabilityStatus.Yes)]
         public void ShouldSyncToCandidateDisabilityStatus(
             DisabilityStatus? applicationDisabilityStatus,
-            DisabilityStatus? candidateDisabilityStatus,
-            DisabilityStatus? expectedDisabilityStatus)
+            DisabilityStatus? originalCandidateDisabilityStatus,
+            DisabilityStatus? expectedCandidateDisabilityStatus)
         {
             // Arrange.
             _newApplication.CandidateInformation.DisabilityStatus = applicationDisabilityStatus;
-            _candidate.MonitoringInformation.DisabilityStatus = candidateDisabilityStatus;
+            _candidate.MonitoringInformation.DisabilityStatus = originalCandidateDisabilityStatus;
 
             _apprenticeshipApplicationReadRepository
                 .Setup(mock => mock.GetForCandidate(_candidateId, VacancyId, true))
@@ -227,7 +228,7 @@
                 Verify(mock => mock.Save(_candidate), Times.Once);
 
             _candidate.MonitoringInformation.Should().NotBeNull();
-            _candidate.MonitoringInformation.DisabilityStatus.Should().Be(expectedDisabilityStatus);
+            _candidate.MonitoringInformation.DisabilityStatus.Should().Be(expectedCandidateDisabilityStatus);
         }
     }
 }

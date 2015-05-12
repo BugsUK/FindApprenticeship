@@ -11,6 +11,29 @@
 
         public int? DisabilityStatus { get; set; }
 
+        public string DisabilityStatusDescription
+        {
+            get
+            {
+                if (!DisabilityStatus.HasValue)
+                {
+                    return null;
+                }
+
+                switch (DisabilityStatus.Value)
+                {
+                    case 1:
+                        return "Yes";
+                    case 2:
+                        return "No";
+                    case 3:
+                        return "Prefer not to say";
+                }
+
+                return null;
+            }
+        }
+
         public bool RequiresSupportForInterview { get; set; }
 
         [Display(Name = MonitoringInformationViewModelMessages.AnythingWeCanDoToSupportYourInterviewMessages.HintText, Description = "")]

@@ -50,7 +50,8 @@
             candidate.ApplicationTemplate.Qualifications = apprenticeshipApplicationDetail.CandidateInformation.Qualifications;
             candidate.ApplicationTemplate.WorkExperience = apprenticeshipApplicationDetail.CandidateInformation.WorkExperience;
 
-            if (!candidate.MonitoringInformation.DisabilityStatus.HasValue)
+            if (!candidate.MonitoringInformation.DisabilityStatus.HasValue &&
+                apprenticeshipApplicationDetail.CandidateInformation.DisabilityStatus.HasValue)
             {
                 candidate.MonitoringInformation.DisabilityStatus = apprenticeshipApplicationDetail.CandidateInformation.DisabilityStatus;
             }
