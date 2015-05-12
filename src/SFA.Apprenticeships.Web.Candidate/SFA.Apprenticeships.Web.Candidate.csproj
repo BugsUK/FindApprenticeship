@@ -260,6 +260,8 @@
     <Content Include="Content\_assets\img\apple-touch-icon-76x76.png" />
     <Content Include="Content\_assets\img\icon-sms.png" />
     <Content Include="Content\_assets\img\icon-sms.svg" />
+    <Content Include="Content\_assets\img\logo-ticks-2x.png" />
+    <Content Include="Content\_assets\img\logo-ticks-small-2x.png" />
     <Content Include="Content\_assets\js\nas\geoLocater.js" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Configs\dataCacheClient.config">
@@ -284,7 +286,6 @@
     <Content Include="Content\_assets\img\icon-external.svg" />
     <Content Include="Content\_assets\img\icon-location-selected.png" />
     <Content Include="Content\_assets\img\icon-location.png" />
-    <Content Include="Content\_assets\img\logo-ticks.gif" />
     <Content Include="Content\_assets\img\performance-icon-2x.png" />
     <Content Include="Content\_assets\img\performance-icon.png" />
     <Content Include="Content\_assets\js\nas\dirtyFormDialog.js" />
