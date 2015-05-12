@@ -71,16 +71,15 @@
             }
         }
 
-        public void Update(TraineeshipApplicationDetail traineeeshipApplication, ApplicationStatusSummary applicationStatusSummary)
+        public void Update(TraineeshipApplicationDetail traineeshipApplication, ApplicationStatusSummary applicationStatusSummary)
         {
-            var originalLegacyApplicationId = traineeeshipApplication.LegacyApplicationId;
-            var originalStatus = traineeeshipApplication.Status;
-            var originalVacancyStatus = traineeeshipApplication.VacancyStatus;
-            var originalClosingDate = traineeeshipApplication.Vacancy.ClosingDate;
+            var originalLegacyApplicationId = traineeshipApplication.LegacyApplicationId;
+            var originalStatus = traineeshipApplication.Status;
+            var originalVacancyStatus = traineeshipApplication.VacancyStatus;
+            var originalClosingDate = traineeshipApplication.Vacancy.ClosingDate;
 
-            //todo: 1.6: remove this? we won't ever receive these updates while integrating with the legacy system for traineeships
-            // invoked because the status of the apprenticeshipApplication / vacancy *may* have changed
-            if (traineeeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
+            // invoked because the status of the traineeship vacancy *may* have changed
+            if (traineeshipApplication.UpdateTraineeshipApplicationDetail(applicationStatusSummary))
             {
                 // note, this flow will be extended to include a call to outbound communication later (when we do notifications)
                 // note, may subsequently consolidate status updates for a candidate (when we do notifications) but may be done in another component
@@ -93,9 +92,9 @@
 
                 _logger.Info(
                     format,
-                    traineeeshipApplication.EntityId, // 0
-                    traineeeshipApplication.Vacancy.Id, // 1
-                    traineeeshipApplication.CandidateDetails.EmailAddress, // 2
+                    traineeshipApplication.EntityId, // 0
+                    traineeshipApplication.Vacancy.Id, // 1
+                    traineeshipApplication.CandidateDetails.EmailAddress, // 2
 
                     originalLegacyApplicationId, // 3
                     applicationStatusSummary.LegacyApplicationId, // 4
@@ -109,7 +108,7 @@
                     originalClosingDate, // 9
                     applicationStatusSummary.ClosingDate); // 10
 
-                _traineeshipApplicationWriteRepository.Save(traineeeshipApplication);
+                _traineeshipApplicationWriteRepository.Save(traineeshipApplication);
             }
         }
     }

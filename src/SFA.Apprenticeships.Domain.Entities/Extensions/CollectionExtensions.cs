@@ -3,6 +3,7 @@
     using System;
 
     //todo: move to web common
+    //Can't move it to web common because it is used (indirectly) in both Web and Infrastructure.Communication. Needs a target project a little lower down the stack
     public static class CollectionExtensions
     {
         public static string ToQueryString(this string[] collection, string parameterName)
