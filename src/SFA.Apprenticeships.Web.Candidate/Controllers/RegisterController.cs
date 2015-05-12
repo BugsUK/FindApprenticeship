@@ -20,13 +20,16 @@
     {
         private readonly IRegisterMediator _registerMediator;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
+        private readonly IAccountProvider _accountProvider;
 
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
+            IAccountProvider accountProvider,
             IRegisterMediator registerMediator,
             IConfigurationService configurationService) 
             : base(configurationService)
         {
             _candidateServiceProvider = candidateServiceProvider;
+            _accountProvider = accountProvider;
             _registerMediator = registerMediator;
         }
 
@@ -121,7 +124,11 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> MonitoringInformation()
         {
-            return await Task.Run(() => View("MonitoringInformation"));
+            return await Task.Run(() =>
+            {
+                var settingsViewModel = _accountProvider.GetSettingsViewModel(UserContext.CandidateId);
+                return View("MonitoringInformation", settingsViewModel.MonitoringInformation);
+            });
         }
 
         [HttpPost]
