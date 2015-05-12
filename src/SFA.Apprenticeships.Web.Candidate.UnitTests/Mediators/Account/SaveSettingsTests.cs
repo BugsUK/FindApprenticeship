@@ -23,7 +23,9 @@
         public void SaveValidationErrorTest()
         {
             var settingsViewModel = new SettingsViewModel();
-            var accountMediator = new AccountMediatorBuilder().Build();
+            var accountProvider = new Mock<IAccountProvider>();
+            accountProvider.Setup(x => x.GetSettingsViewModel(It.IsAny<Guid>())).Returns(new SettingsViewModel());
+            var accountMediator = new AccountMediatorBuilder().With(accountProvider.Object).Build();
 
             var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
             response.Code.Should().Be(AccountMediatorCodes.Settings.ValidationError);

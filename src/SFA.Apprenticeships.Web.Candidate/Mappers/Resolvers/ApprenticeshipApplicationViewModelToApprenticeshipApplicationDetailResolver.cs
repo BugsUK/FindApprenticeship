@@ -53,7 +53,7 @@
                     modelBase.HasWorkExperience
                         ? ApplicationConverter.GetWorkExperiences(modelBase.WorkExperience)
                         : new List<WorkExperience>(),
-                MonitoringInformation = ApplicationConverter.GetMonitoringInformation(modelBase.MonitoringInformation)
+                DisabilityStatus = ApplicationConverter.GetDisabilityStatus(modelBase.MonitoringInformation.DisabilityStatus)
             };
         }
 

@@ -20,6 +20,7 @@
         public class UpdateMonitoringInformation
         {
             public const string SuccessfullyUpdated = "RegisterMediatorCodes.UpdateMonitoringInformation.SuccessfullyUpdated";
+            public const string FailedValidation = "RegisterMediatorCodes.UpdateMonitoringInformation.FailedValidation";
             public const string ErrorUpdating = "RegisterMediatorCodes.UpdateMonitoringInformation.ErrorUpdating";
         }
     }

@@ -100,15 +100,18 @@
             var communicationService = context.GetInstance<ICommunicationService>();
             var logService = context.GetInstance<ILogService>();
             var userWriteRepository = context.GetInstance<IUserWriteRepository>();
+            var candidateWriteRepository = context.GetInstance<ICandidateWriteRepository>();
             var auditRepository = context.GetInstance<IAuditRepository>();
 
             var sendAccountRemindersStrategyA = new SendAccountRemindersStrategyA(configurationService, communicationService, logService);
             var sendAccountRemindersStrategyB = new SendAccountRemindersStrategyB(configurationService, communicationService, logService);
-            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, auditRepository, logService);
+            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, logService);
+            var hardDeleteStrategy = new HardDeleteStrategy(configurationService, userWriteRepository, candidateWriteRepository, auditRepository, logService);
 
             sendAccountRemindersStrategyA.SetSuccessor(sendAccountRemindersStrategyB);
             sendAccountRemindersStrategyB.SetSuccessor(setPendingDeletionStrategy);
-            setPendingDeletionStrategy.SetSuccessor(new TerminatingHousekeepingStrategy(configurationService));
+            setPendingDeletionStrategy.SetSuccessor(hardDeleteStrategy);
+            hardDeleteStrategy.SetSuccessor(new TerminatingHousekeepingStrategy(configurationService));
 
             return sendAccountRemindersStrategyA;
         }

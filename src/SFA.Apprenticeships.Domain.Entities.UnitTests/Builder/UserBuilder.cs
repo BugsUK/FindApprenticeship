@@ -47,7 +47,7 @@
         {
             _userStatus = activated ? UserStatuses.Active : UserStatuses.PendingActivation;
             _activationCode = activated ? null : "ABC123";
-            _activateCodeExpiry = activated ? (DateTime?) null : _dateCreated;
+            _activateCodeExpiry = activated ? (DateTime?) null : _dateCreated.AddDays(30);
             return this;
         }
     }

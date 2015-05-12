@@ -1665,8 +1665,8 @@ Write(Scripts.Render("~/bundles/nas/apprenticeships/results"));
             
             #line default
             #line hidden
-WriteLiteral(";\r\n\r\n    <script>\r\n    $(function () {\r\n        initSavedVacancies({\r\n           " +
-" saveUrl: \'");
+WriteLiteral("\r\n\r\n    <script>\r\n    $(function () {\r\n        initSavedVacancies({\r\n            " +
+"saveUrl: \'");
 
             
             #line 298 "..\..\Views\ApprenticeshipSearch\Details.cshtml"

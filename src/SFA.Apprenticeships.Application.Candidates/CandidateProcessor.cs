@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Application.Candidates
 
         public void QueueCandidates()
         {
-            var users = _userReadRepository.GetUsersWithStatus(new[] { UserStatuses.PendingActivation });
+            var users = _userReadRepository.GetUsersWithStatus(new[] { UserStatuses.PendingActivation, UserStatuses.PendingDeletion });
             
             var counter = 0;
             Parallel.ForEach(users, user =>

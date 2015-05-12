@@ -15,15 +15,18 @@
     {
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ActivationViewModelServerValidator _activationViewModelServerValidator;
+        private readonly MonitoringInformationViewModelValidator _monitoringInformationViewModelValidator;
         private readonly RegisterViewModelServerValidator _registerViewModelServerValidator;
 
         public RegisterMediator(ICandidateServiceProvider candidateServiceProvider,
             RegisterViewModelServerValidator registerViewModelServerValidator,
-            ActivationViewModelServerValidator activationViewModelServerValidator)
+            ActivationViewModelServerValidator activationViewModelServerValidator,
+            MonitoringInformationViewModelValidator monitoringInformationViewModelValidator)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _registerViewModelServerValidator = registerViewModelServerValidator;
             _activationViewModelServerValidator = activationViewModelServerValidator;
+            _monitoringInformationViewModelValidator = monitoringInformationViewModelValidator;
         }
 
         public MediatorResponse<RegisterViewModel> Register(RegisterViewModel registerViewModel)
@@ -96,6 +99,13 @@
         {
             try
             {
+                var validationResult = _monitoringInformationViewModelValidator.Validate(monitoringInformationViewModel);
+
+                if (!validationResult.IsValid)
+                {
+                    return GetMediatorResponse(RegisterMediatorCodes.UpdateMonitoringInformation.FailedValidation, monitoringInformationViewModel, validationResult);
+                }
+
                 _candidateServiceProvider.UpdateMonitoringInformation(candidateId, monitoringInformationViewModel);
                 return GetMediatorResponse(RegisterMediatorCodes.UpdateMonitoringInformation.SuccessfullyUpdated);
             }

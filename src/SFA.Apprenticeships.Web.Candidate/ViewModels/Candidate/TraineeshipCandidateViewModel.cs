@@ -5,6 +5,7 @@
     [Serializable]
     public class TraineeshipCandidateViewModel : CandidateViewModelBase
     {
+        public AboutYouViewModel AboutYou { get; set; }
 
     }
 }

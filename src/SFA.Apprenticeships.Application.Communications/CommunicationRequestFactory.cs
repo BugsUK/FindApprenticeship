@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Communications
 {
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
@@ -20,7 +21,7 @@
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, candidate.RegistrationDetails.EmailAddress),
                 new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber),
                 new CommunicationToken(CommunicationTokens.CandidateSubscriberId, candidate.SubscriberId.ToString()),
-                new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, SubscriptionTypes.DailyDigestViaEmail.ToString())
+                new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, ((int)SubscriptionTypes.DailyDigestViaEmail).ToString(CultureInfo.InvariantCulture))
             };
 
             var draftsJson = candidateExpiringDraftsDailyDigest == null
@@ -68,7 +69,7 @@
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, candidate.RegistrationDetails.EmailAddress),
                 new CommunicationToken(CommunicationTokens.CandidateMobileNumber, candidate.RegistrationDetails.PhoneNumber),
                 new CommunicationToken(CommunicationTokens.CandidateSubscriberId, candidate.SubscriberId.ToString()),
-                new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, SubscriptionTypes.SavedSearchAlertsViaEmail.ToString()),
+                new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, ((int)SubscriptionTypes.SavedSearchAlertsViaEmail).ToString(CultureInfo.InvariantCulture)),
                 new CommunicationToken(CommunicationTokens.SavedSearchAlerts, savedSearchAlertsJson)
             };
 

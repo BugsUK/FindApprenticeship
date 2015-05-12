@@ -13,7 +13,8 @@
 
 @using (Html.BeginRouteForm(RouteNames.MonitoringInformation, FormMethod.Post))
 {
-    @Html.AntiForgeryToken()   
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
     @Html.EditorFor(m => m, "MonitoringInformation/_gender")
     @Html.EditorFor(m => m, "MonitoringInformation/_disability")
     @Html.EditorFor(m => m, "MonitoringInformation/_ethnicity")

@@ -25,7 +25,7 @@
 
             model.Candidate.AboutYou = ApplicationConverter.GetAboutYouViewModel(application.CandidateInformation.AboutYou);
             model.Candidate.Education = ApplicationConverter.GetEducationViewModel(application.CandidateInformation.EducationHistory);
-            model.Candidate.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(application.CandidateInformation.AboutYou, application.CandidateInformation.MonitoringInformation);
+            model.Candidate.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(application.CandidateInformation.AboutYou, application.CandidateInformation.DisabilityStatus);
 
             return model;
         }

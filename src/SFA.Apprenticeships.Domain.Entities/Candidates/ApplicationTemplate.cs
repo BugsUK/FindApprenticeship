@@ -10,7 +10,6 @@
             Qualifications = new List<Qualification>();
             WorkExperience = new List<WorkExperience>();
             AboutYou = new AboutYou();
-            MonitoringInformation = new MonitoringInformation();
         }
 
         public Education EducationHistory { get; set; }
@@ -20,7 +19,7 @@
         public IList<WorkExperience> WorkExperience { get; set; }
 
         public AboutYou AboutYou { get; set; }
-
-        public MonitoringInformation MonitoringInformation { get; set; }
+        
+        public DisabilityStatus? DisabilityStatus { get; set; }
     }
 }
