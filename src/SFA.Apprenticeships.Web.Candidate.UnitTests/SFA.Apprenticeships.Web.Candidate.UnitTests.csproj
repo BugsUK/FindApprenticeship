@@ -190,6 +190,7 @@
     <Compile Include="Helpers\FormTextForTests.cs" />
     <Compile Include="Helpers\FullNameFormatterTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyDetailViewModelMapperTests.cs" />
+    <Compile Include="Mappers\TraineeshipApplicationViewModelMapperTests.cs" />
     <Compile Include="Mediators\Account\AcceptTermsAndConditionsTests.cs" />
     <Compile Include="Mediators\Account\AccountMediatorBuilder.cs" />
     <Compile Include="Mediators\Account\ApprenticeshipVacancyDetailsTests.cs" />
