@@ -11,8 +11,8 @@
     public class CreateVacancySiteMapRequestConsumerAsync : IConsumeAsync<CreateVacancySiteMapRequest>
     {
         private readonly ILogService _logger;
+        private readonly IConfigurationService _configurationService;
         private readonly ISiteMapVacancyProcessor _siteMapVacancyProcessor;
-        private readonly bool _enableVacancySiteMap;
 
         public CreateVacancySiteMapRequestConsumerAsync(
             ILogService logger,
@@ -20,8 +20,8 @@
             ISiteMapVacancyProcessor siteMapVacancyProcessor)
         {
             _logger = logger;
+            _configurationService = configurationService;
             _siteMapVacancyProcessor = siteMapVacancyProcessor;
-            _enableVacancySiteMap = configurationService.Get<ProcessConfiguration>().EnableVacancySiteMap;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 1)]
@@ -30,7 +30,7 @@
         {
             return Task.Run(() =>
             {
-                if (!_enableVacancySiteMap)
+                if (!_configurationService.Get<ProcessConfiguration>().EnableVacancySiteMap)
                 {
                     _logger.Info("Vacancy site map is currently disabled");
                     return;
