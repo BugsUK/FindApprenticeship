@@ -68,10 +68,12 @@
             
             <details>
                 <summary id="equality-diversity-summary-link">Your equality and diversity information</summary>
-                @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_gender")
-                @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_disability")
-                @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_ethnicity")
-                @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_why")
+                <div class="detail-content">
+                    @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_gender")
+                    @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_disability")
+                    @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_ethnicity")
+                    @Html.EditorFor(m => Model.MonitoringInformation, "MonitoringInformation/_why")
+                </div>
             </details>
 
             <div id="accountSettings2">
