@@ -31,17 +31,11 @@
         {
             var verifyReplicaSets = false;
             var isReplicaSet = _mongoAdminClient.IsReplicaSet();
-            if (_expectedMongoReplicaSetCount > 1 && isReplicaSet)
+            if (isReplicaSet)
             {
                 verifyReplicaSets = true;
                 _logger.Debug("Replica set members will be verified");
             }
-            else if (_expectedMongoReplicaSetCount == 1 && !isReplicaSet)
-            {
-                _logger.Debug("Replica set members will not be verified");
-            }
-            else
-                _logger.Error("{0} config is invalid. ExpectedReplicaSetCount: {1}, IsReplicaSet: {2}", TaskName, _expectedMongoReplicaSetCount, isReplicaSet);
 
             if (verifyReplicaSets)
             {

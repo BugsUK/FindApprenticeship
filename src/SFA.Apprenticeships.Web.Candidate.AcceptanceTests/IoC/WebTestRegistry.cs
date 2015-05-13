@@ -3,6 +3,7 @@
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Audit.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
     using Infrastructure.Repositories.Users.IoC;
     using Infrastructure.UserDirectory.IoC;
@@ -21,6 +22,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<AuditRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
