@@ -304,60 +304,12 @@ WriteLiteral(">\r\n    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">\r\n        Additional questions\r\n");
-
-            
-            #line 62 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 62 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-         if (ViewBag.VacancyId != null)
-        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <a");
-
-WriteLiteral(" class=\"icon-with-text\"");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 2527), Tuple.Create("\"", 2647)
-            
-            #line 64 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2534), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
-            
-            #line default
-            #line hidden
-, 2534), false)
-, Tuple.Create(Tuple.Create("", 2618), Tuple.Create("#applyEmployerQuestionAnswers", 2618), true)
-);
-
-WriteLiteral(">\r\n                <i");
-
-WriteLiteral(" class=\"the-icon fa fa-pencil\"");
-
-WriteLiteral("></i><span");
-
-WriteLiteral(" class=\"the-text\"");
-
-WriteLiteral(">Edit section</span>\r\n            </a>\r\n");
-
-            
-            #line 67 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    </h2>\r\n\r\n");
+WriteLiteral(">\r\n        Additional questions\r\n    </h2>\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 70 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 63 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers));
 
             
@@ -368,7 +320,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 71 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+            #line 64 "..\..\Views\ApprenticeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability"));
 
             
@@ -382,14 +334,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3054), Tuple.Create("\"", 3092)
+WriteAttribute("href", Tuple.Create(" href=\"", 2713), Tuple.Create("\"", 2751)
             
-            #line 76 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 3061), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
+            #line 69 "..\..\Views\ApprenticeshipApplication\View.cshtml"
+, Tuple.Create(Tuple.Create("", 2720), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
             
             #line default
             #line hidden
-, 3061), false)
+, 2720), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");

@@ -59,14 +59,7 @@
 <section class="section-border">
     <h2 class="heading-large">
         Additional questions
-        @if (ViewBag.VacancyId != null)
-        {
-            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyEmployerQuestionAnswers">
-                <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
-            </a>
-        }
     </h2>
-
     @Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers)
     @Html.DisplayFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability")
 </section>

@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Candidates;
 
     public class MonitoringInformationViewModel
     {
@@ -20,13 +21,15 @@
                     return null;
                 }
 
-                switch (DisabilityStatus.Value)
+                var disabilityStatus = (DisabilityStatus) DisabilityStatus.Value;
+
+                switch (disabilityStatus)
                 {
-                    case 1:
+                    case Domain.Entities.Candidates.DisabilityStatus.Yes:
                         return "Yes";
-                    case 2:
+                    case Domain.Entities.Candidates.DisabilityStatus.No:
                         return "No";
-                    case 3:
+                    case Domain.Entities.Candidates.DisabilityStatus.PreferNotToSay:
                         return "Prefer not to say";
                 }
 
