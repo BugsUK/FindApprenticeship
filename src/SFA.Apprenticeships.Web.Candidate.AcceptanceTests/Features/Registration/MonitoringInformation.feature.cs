@@ -222,8 +222,6 @@ this.FeatureBackground();
  testRunner.Then("I wait 120 second for the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 59
  testRunner.When("I navigate to the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 60
- testRunner.And("I choose ShowDiversity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -237,7 +235,7 @@ this.FeatureBackground();
                         "SupportDetails",
                         "Equals",
                         "Support details text"});
-#line 61
+#line 60
  testRunner.Then("I see", ((string)(null)), table5, "Then ");
 #line hidden
             this.ScenarioCleanup();
