@@ -59,174 +59,118 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication.Disp
             
             #line default
             #line hidden
-WriteLiteral("    <section");
-
-WriteLiteral(" class=\"section-border\"");
-
-WriteLiteral(">\r\n        <h2");
-
-WriteLiteral(" class=\"heading-large\"");
-
-WriteLiteral(">\r\n            Employer questions\r\n");
-
-            
-            #line 8 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 8 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-             if (ViewBag.VacancyId != null)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <a");
-
-WriteLiteral(" class=\"icon-with-text\"");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 396), Tuple.Create("\"", 516)
-            
-            #line 10 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-, Tuple.Create(Tuple.Create("", 403), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
-            
-            #line default
-            #line hidden
-, 403), false)
-, Tuple.Create(Tuple.Create("", 487), Tuple.Create("#applyEmployerQuestionAnswers", 487), true)
-);
-
-WriteLiteral(">\r\n                    <i");
-
-WriteLiteral(" class=\"the-icon fa fa-pencil\"");
-
-WriteLiteral("></i><span");
-
-WriteLiteral(" class=\"the-text\"");
-
-WriteLiteral(">Edit section</span>\r\n                </a>\r\n");
-
-            
-            #line 13 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-            }           
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        </h2>\r\n\r\n        <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"text\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 17 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-            
+            #line 6 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+        
             
             #line default
             #line hidden
             
-            #line 17 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-             if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
-            {
+            #line 6 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+         if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
+        {
 
             
             #line default
             #line hidden
-WriteLiteral("                <div");
+WriteLiteral("            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n                    <p");
+WriteLiteral(">\r\n                <p");
 
 WriteLiteral(" class=\"form-label text\"");
 
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                          Write(Html.Raw(Model.SupplementaryQuestion1));
+            #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+                                      Write(Html.Raw(Model.SupplementaryQuestion1));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                    <span");
+WriteLiteral("</p>\r\n                <span");
 
 WriteLiteral(" class=\"form-prepopped prewrap\"");
 
 WriteLiteral(">");
+
+            
+            #line 10 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+                                                Write(Html.Raw(Model.CandidateAnswer1));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span>\r\n            </div>\r\n");
+
+            
+            #line 12 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        ");
+
+            
+            #line 13 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+         if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
+        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n                <p");
+
+WriteLiteral(" class=\"form-label text\"");
+
+WriteLiteral(">");
+
+            
+            #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+                                      Write(Html.Raw(Model.SupplementaryQuestion2));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n                <span");
+
+WriteLiteral(" class=\"form-prepopped prewrap\"");
+
+WriteLiteral(">");
+
+            
+            #line 17 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+                                                Write(Html.Raw(Model.CandidateAnswer2));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</span>\r\n            </div>\r\n");
+
+            
+            #line 19 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    </div>\r\n");
 
             
             #line 21 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                    Write(Html.Raw(Model.CandidateAnswer1));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</span>\r\n                </div>\r\n");
-
-            
-            #line 23 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            ");
-
-            
-            #line 24 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-             if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2))
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                    <p");
-
-WriteLiteral(" class=\"form-label text\"");
-
-WriteLiteral(">");
-
-            
-            #line 27 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                          Write(Html.Raw(Model.SupplementaryQuestion2));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                    <span");
-
-WriteLiteral(" class=\"form-prepopped prewrap\"");
-
-WriteLiteral(">");
-
-            
-            #line 28 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                    Write(Html.Raw(Model.CandidateAnswer2));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</span>\r\n                </div>\r\n");
-
-            
-            #line 30 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-            }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        </div>\r\n    </section>\r\n");
-
-            
-            #line 33 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
 }
 
             
