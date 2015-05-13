@@ -105,8 +105,8 @@
             sb.AppendFormat(" - Total number of candidates active in the last four weeks based on last login: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActiveUserCount, fourWeeksAgo));
             sb.AppendFormat(" - Total number of candidates active in the last {2} days based on applications: {0} ({1}ms)\n", GetActiveUserCount(_userMetricsRepository.GetActiveUserCount, customDaysAgo));
 
-            sb.AppendFormat(" - Total number of candidates active in the last week based on applications: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, oneWeekAgo));
-            sb.AppendFormat(" - Total number of candidates active in the last four weeks based on applications: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, fourWeeksAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last week based on applications created or submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, oneWeekAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last four weeks based on applications created or submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, fourWeeksAgo));
             sb.AppendFormat(" - Total number of candidates active in the last {2} days based on applications: {0} ({1}ms)\n", GetActiveUserCount(_apprenticeshipMetricsRepository.GetActiveUserCount, customDaysAgo));
 
             sb.AppendFormat(" - Total number of candidates with verified mobile numbers: {0} ({1}ms)\n", TimedMongoCall(_candidateMetricsRepository.GetVerfiedMobileNumbersCount));

@@ -52,7 +52,7 @@
         {
             return Collection
                 .AsQueryable()
-                .Where(each => each.DateCreated >= activeFrom || each.DateUpdated >= activeFrom)
+                .Where(each => each.DateCreated >= activeFrom || each.DateApplied >= activeFrom)
                 .Select(each => each.CandidateId)
                 .Distinct()
                 .ToList()
