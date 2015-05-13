@@ -140,6 +140,10 @@
 
         private static Candidate CreateLegacyCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
+            var disabilityStatus = MapDisabilityStatus(candidate);
+            var ethnicity = MapEthnicity(candidate);
+            var gender = MapGender(candidate);
+
             return new Candidate
             {
                 EmailAddress = candidate.RegistrationDetails.EmailAddress,
@@ -155,14 +159,17 @@
                 Postcode = candidate.RegistrationDetails.Address.Postcode,
                 LandlineTelephone = candidate.RegistrationDetails.PhoneNumber,
                 MobileTelephone = string.Empty,
-                Disability = MapDisability(candidate),
-                EthnicOrigin = MapEthnicity(candidate),
+                Disability = disabilityStatus,
+                DisabilitySpecified = disabilityStatus.HasValue,
+                EthnicOrigin = ethnicity,
+                EthnicOriginSpecified = ethnicity.HasValue,
                 EthnicOrginOther = MapEthnicOriginOther(candidate),
-                Gender = MapGender(candidate)
+                Gender = gender,
+                GenderSpecified = gender.HasValue
             };
         }
 
-        private static int? MapDisability(Domain.Entities.Candidates.Candidate candidate)
+        private static int? MapDisabilityStatus(Domain.Entities.Candidates.Candidate candidate)
         {
             if (!candidate.MonitoringInformation.DisabilityStatus.HasValue)
             {

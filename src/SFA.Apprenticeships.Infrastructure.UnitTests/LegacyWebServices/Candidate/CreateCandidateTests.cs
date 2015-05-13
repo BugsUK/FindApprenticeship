@@ -164,6 +164,7 @@
             request.Candidate.Should().NotBeNull();
 
             request.Candidate.EthnicOrigin.Should().Be(expectedEthnicity);
+            request.Candidate.EthnicOriginSpecified.Should().Be(expectedEthnicity.HasValue);
         }
 
         [TestCase(null, null)]
@@ -228,6 +229,7 @@
             request.Candidate.Should().NotBeNull();
 
             request.Candidate.Gender.Should().Be(expectedGender);
+            request.Candidate.GenderSpecified.Should().Be(expectedGender.HasValue);
         }
 
         [TestCase(null, null)]
@@ -259,6 +261,7 @@
             request.Candidate.Should().NotBeNull();
 
             request.Candidate.Disability.Should().Be(expectedDisabilityStatus);
+            request.Candidate.DisabilitySpecified.Should().Be(expectedDisabilityStatus.HasValue);
         }
     }
 }
