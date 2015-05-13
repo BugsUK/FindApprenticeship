@@ -26,6 +26,9 @@
             {
                 @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { @id="lnk-find-traineeship", @class = "page-link" })
             }
+            <p class="page-link hide-nojs">
+                <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
+            </p>
         </div>
     </div>
 
@@ -34,10 +37,8 @@
         <section class="section-border grid-wrapper">
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
-                    <div class="text">
-                        <p>@Html.Raw(Model.TrainingToBeProvided)</p>
-                        <p>@Html.Raw(Model.ProviderDescription)</p>
-                    </div>
+                    <p>@Html.Raw(Model.TrainingToBeProvided)</p>
+                    <p>@Html.Raw(Model.ProviderDescription)</p>
                 </div>
             </div>
             <div class="grid grid-1-3">
@@ -101,12 +102,12 @@
             </div>
         </section>
         <section class="section-border grid-wrapper" id="course-info">
-            <h2 class="heading-large">Desired skills and what this will lead to</h2>
             <div class="text">
+                <h2 class="heading-large">Desired skills and what this will lead to</h2>
                 <h3 class="heading-small">Desired skills</h3>
                 <p>@Html.Raw(Model.SkillsRequired)</p>
                 <p>@Html.Raw(Model.PersonalQualities)</p>
-                
+
                 @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
                 {
                     <h3 class="heading-small">What this will lead to</h3>
