@@ -36,7 +36,7 @@
             var provider = new LegacyCandidateProviderBuilder().With(service).Build();
 
             var candidate = new Fixture().Build<Candidate>().Create();
-            Action createCandidateAction = () => { provider.CreateCandidate(candidate); };
+            Action createCandidateAction = () => provider.CreateCandidate(candidate);
 
             var exception = createCandidateAction.ShouldThrow<DomainException>().Which;
             exception.Code.Should().Be(Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CreateCandidateFailed);
@@ -53,7 +53,7 @@
             var provider = new LegacyCandidateProviderBuilder().With(service).Build();
 
             var candidate = new Fixture().Build<Candidate>().Create();
-            Action createCandidateAction = () => { provider.CreateCandidate(candidate); };
+            Action createCandidateAction = () => provider.CreateCandidate(candidate);
 
             var exception = createCandidateAction.ShouldThrow<DomainException>().Which;
             exception.Code.Should().Be(Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CreateCandidateFailed);
@@ -70,7 +70,7 @@
             var provider = new LegacyCandidateProviderBuilder().With(service).Build();
 
             var candidate = new Fixture().Build<Candidate>().Create();
-            Action createCandidateAction = () => { provider.CreateCandidate(candidate); };
+            Action createCandidateAction = () => provider.CreateCandidate(candidate);
 
             var exception = createCandidateAction.ShouldThrow<DomainException>().Which;
             exception.Code.Should().Be(Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CreateCandidateFailed);
@@ -86,7 +86,7 @@
             var provider = new LegacyCandidateProviderBuilder().With(service).Build();
 
             var candidate = new Fixture().Build<Candidate>().Create();
-            Action createCandidateAction = () => { provider.CreateCandidate(candidate); };
+            Action createCandidateAction = () => provider.CreateCandidate(candidate);
 
             createCandidateAction.ShouldThrow<Exception>();
         }
@@ -167,6 +167,7 @@
         }
 
         [TestCase(null, null)]
+        [TestCase(31, null)]
         [TestCase(99, "Not provided")]
         [TestCase(33, "Gypsy or Irish Traveller")]
         [TestCase(47, "Arab")]
