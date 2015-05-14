@@ -13,7 +13,20 @@
                 throw new ArgumentNullException("smsNumber");
             }
 
-            var formattedSmsNumber = smsNumber.Trim().TrimStart(new[] { '0', '+' });
+            var formattedSmsNumber = smsNumber
+                .Replace(" ", string.Empty)
+                .Replace("(", string.Empty)
+                .Replace(")", string.Empty)
+                .Replace("+", string.Empty);
+
+            formattedSmsNumber = formattedSmsNumber.TrimStart(new[] { '0' });
+
+            if (formattedSmsNumber.StartsWith(CountryCode))
+            {
+                formattedSmsNumber = formattedSmsNumber.Substring(CountryCode.Length);
+            }
+
+            formattedSmsNumber = formattedSmsNumber.TrimStart(new[] { '0' });
 
             if (!formattedSmsNumber.StartsWith(CountryCode))
             {

@@ -65,7 +65,7 @@
             {
                 if (e.Code == ErrorCodes.SmsErrorInvalidMobileNumber)
                 {
-                    _logger.Info("Failed to send SMS. The number was invalid. This is an unrecoverable error and should not be re-queued: {0}", logMessage);
+                    _logger.Error("Failed to send SMS. The number was invalid. This is an unrecoverable error and should not be re-queued: {0}", e, logMessage);
                 }
                 else
                 {

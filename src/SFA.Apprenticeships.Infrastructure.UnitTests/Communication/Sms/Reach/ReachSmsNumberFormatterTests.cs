@@ -23,16 +23,39 @@
         }
 
         [Test]
+        public void ShouldFormatValidMobileNumberWithEmbeddedWhitespaces()
+        {
+            new ReachSmsNumberFormatter().Format("07999 999 999").Should().Be(ExpectedSmsNumber);
+        }
+        
+        [Test]
         public void ShouldFormatValidMobileNumberWithCountryCodePrefix()
         {
             new ReachSmsNumberFormatter().Format("447999999999").Should().Be(ExpectedSmsNumber);
         }
 
+        [Test]
+        public void ShouldFormatValidMobileNumberLeadingZeroesAndCountryCodePrefix()
+        {
+            new ReachSmsNumberFormatter().Format("00447999999999").Should().Be(ExpectedSmsNumber);
+        }
 
         [Test]
         public void ShouldFormatValidMobileNumberWithPlusAndCountryCodePrefix()
         {
             new ReachSmsNumberFormatter().Format("+447999999999").Should().Be(ExpectedSmsNumber);
+        }
+
+        [Test]
+        public void ShouldFormatFullInternationalFormatNumber()
+        {
+            new ReachSmsNumberFormatter().Format("+44(0)7999999999").Should().Be(ExpectedSmsNumber);
+        }
+
+        [Test]
+        public void ShouldFormatUltimatelyValidButWeirdlyFormattedMobileNumber()
+        {
+            new ReachSmsNumberFormatter().Format(" ( + 4 4 ( 0 ) 7 9 + 9 9 ( 9 ) 9 9 + 9 9 9 ) ").Should().Be(ExpectedSmsNumber);
         }
 
         [Test]
