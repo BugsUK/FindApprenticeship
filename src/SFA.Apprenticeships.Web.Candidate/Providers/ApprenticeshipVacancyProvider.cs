@@ -77,7 +77,7 @@
 
                         if (searchResults.Total > 1)
                         {
-                            _logger.Warn("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReference, search.Keywords);
+                            _logger.Info("{0} results found for Vacancy Reference Number {1} parsed from {2}. Expected 0 or 1", searchResults.Total, vacancyReference, search.Keywords);
                         }
                     }
 
