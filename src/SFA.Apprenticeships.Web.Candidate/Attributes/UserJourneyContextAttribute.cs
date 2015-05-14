@@ -7,7 +7,7 @@
 
     public class UserJourneyContextAttribute : ActionFilterAttribute
     {
-        private const string UserJourneyKey = "UserJourney";
+        public const string UserJourneyKey = "UserJourney";
         private const string ApprenticeshipsMainCaption = "Find an apprenticeship";
         private const string TraineeshipsMainCaption = "Find a traineeship";
 

@@ -41,7 +41,7 @@
         {
         }
 
-        //TODO: Think in a better name
+        //TODO: Think of a better name
         public bool IsExpiredOrWithdrawn()
         {
             return Status == ApplicationStatuses.ExpiredOrWithdrawn || VacancyDetail.VacancyStatus != VacancyStatuses.Live;

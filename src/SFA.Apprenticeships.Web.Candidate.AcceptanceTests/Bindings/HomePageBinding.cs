@@ -16,6 +16,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         }
 
         [Given(@"I am logged out")]
+        [When(@"I Logout")]
         public void GivenIAmLoggedOut()
         {
             try

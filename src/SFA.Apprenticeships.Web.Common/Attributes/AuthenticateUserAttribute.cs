@@ -14,12 +14,13 @@
     {
         public ILogService LogService { get; set; }
 
+        public IAuthenticationTicketService  AuthenticationTicketService { get; set; }
+
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             var httpContext = filterContext.RequestContext.HttpContext;
 
-            var service = new AuthenticationTicketService(httpContext);
-            var ticket = service.GetTicket();
+            var ticket = AuthenticationTicketService.GetTicket();
 
             if (ticket == null)
             {
@@ -29,14 +30,14 @@
                 return;
             }
 
-            if (IsCookieExpired(filterContext, service, ticket))
+            if (IsCookieExpired(filterContext, ticket))
             {
                 LogService.Debug("User cookie is expired.");
 
                 filterContext.Result = new RedirectToRouteResult(RouteNames.SignOut, new RouteValueDictionary());
             }
 
-            var claims = service.GetClaims(ticket);
+            var claims = AuthenticationTicketService.GetClaims(ticket);
 
             httpContext.User = new GenericPrincipal(new FormsIdentity(ticket), claims);
 
@@ -51,10 +52,9 @@
         {
         }
 
-        private static bool IsCookieExpired(AuthenticationContext filterContext, AuthenticationTicketService service,
-            FormsAuthenticationTicket ticket)
+        private bool IsCookieExpired(AuthenticationContext filterContext, FormsAuthenticationTicket ticket)
         {
-            var expirationTime = service.GetExpirationTimeFrom(ticket);
+            var expirationTime = AuthenticationTicketService.GetExpirationTimeFrom(ticket);
             return (expirationTime < DateTime.Now && !SigningOut(filterContext));
         }
 

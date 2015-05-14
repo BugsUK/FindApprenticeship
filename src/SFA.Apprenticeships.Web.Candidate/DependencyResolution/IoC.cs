@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Candidate.IoC;
     using Common.IoC;
     using Common.Providers;
+    using Common.Services;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Address.IoC;
     using Infrastructure.Common.Configuration;
@@ -40,7 +41,8 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
     using StructureMap;
-	
+    using StructureMap.Web;
+
     public static class IoC {
         public static IContainer Initialize()
         {
@@ -81,7 +83,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry<WebCommonRegistry>();
                 x.AddRegistry<CandidateWebRegistry>();
 
-                x.For<IUserDataProvider>().Use<CookieUserDataProvider>();
+                x.For<IUserDataProvider>().HttpContextScoped().Use<CookieUserDataProvider>();
                 x.For<IEuCookieDirectiveProvider>().Use<EuCookieDirectiveProvider>();
                 x.For<ICookieDetectionProvider>().Use<CookieDetectionProvider>();
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
@@ -94,6 +96,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.Policies.SetAllProperties(y => y.OfType<ILogService>());
                 x.Policies.SetAllProperties(y => y.OfType<IDismissPlannedOutageMessageCookieProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IHelpCookieProvider>());
+                x.Policies.SetAllProperties(y => y.OfType<IAuthenticationTicketService>());
             });
         }
     }
