@@ -2,12 +2,13 @@
 {
     using Services;
     using StructureMap.Configuration.DSL;
+    using StructureMap.Web;
 
     public class WebCommonRegistry : Registry
     {
         public WebCommonRegistry()
         {
-            For<IAuthenticationTicketService>().Use<AuthenticationTicketService>();
+            For<IAuthenticationTicketService>().HttpContextScoped().Use<AuthenticationTicketService>();
         }
     }
 }

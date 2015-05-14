@@ -12,7 +12,6 @@
         private const string AcceptedTermsAndConditionsVersion = "User.TermsConditionsVersion";
 
         private readonly HttpContextBase _httpContext;
-        
         private HttpCookie _httpDataCookie;
         
         public CookieUserDataProvider(HttpContextBase httpContext)
@@ -47,7 +46,7 @@
                 cookie.Values.Add(FullNameCookieName, fullName);
                 cookie.Values.Add(AcceptedTermsAndConditionsVersion, acceptedTermsAndConditionsVersion);
 
-                AddOrUpdateResponseCookie(_httpContext, cookie);
+                AddOrUpdateResponseCookie(cookie);
             }
         }
 
@@ -55,9 +54,8 @@
         {
             lock (_httpContext)
             {
-                var cookie = CreateExpiredCookie(UserContextCookieName);
-
-                AddOrUpdateResponseCookie(_httpContext, cookie);
+                HttpDataCookie.Values.Clear();
+                AddOrUpdateResponseCookie(CreateExpiredCookie(UserContextCookieName));
             }
         }
 
@@ -104,20 +102,13 @@
 
         private HttpCookie HttpDataCookie
         {
-            get
-            {
-                if (_httpDataCookie == null)
-                {
-                    _httpDataCookie = GetOrCreateDataCookie(_httpContext);
-                }
-                return _httpDataCookie;
-            }
+            get { return _httpDataCookie ?? (_httpDataCookie = GetOrCreateDataCookie()); }
         }
 
-        private static HttpCookie GetOrCreateDataCookie(HttpContextBase context)
+        private HttpCookie GetOrCreateDataCookie()
         {
-            var requestDataCookie = context.Request.Cookies.Get(UserDataCookieName);
-            var responseDataCookie = context.Response.Cookies.Get(UserDataCookieName);
+            var requestDataCookie = _httpContext.Request.Cookies.Get(UserDataCookieName);
+            var responseDataCookie = _httpContext.Response.Cookies.Get(UserDataCookieName);
 
             var dataCookie = new HttpCookie(UserDataCookieName);
 
@@ -131,7 +122,7 @@
 
             dataCookie = responseDataCookie != null && responseDataCookie.Values.HasKeys() ? responseDataCookie : dataCookie;
 
-            AddOrUpdateResponseCookie(context, dataCookie);
+            AddOrUpdateResponseCookie(dataCookie);
 
             return dataCookie;
         }
@@ -146,15 +137,15 @@
             return cookie;
         }
 
-        private static void AddOrUpdateResponseCookie(HttpContextBase context, HttpCookie cookie)
+        private void AddOrUpdateResponseCookie( HttpCookie cookie)
         {
-            if (context.Response.Cookies.Get(cookie.Name) == null)
+            if (_httpContext.Response.Cookies.Get(cookie.Name) == null)
             {
-                context.Response.Cookies.Add(cookie);
+                _httpContext.Response.Cookies.Add(cookie);
             }
             else
             {
-                context.Response.Cookies.Set(cookie);
+                _httpContext.Response.Cookies.Set(cookie);
             }
         }
     }

@@ -5,6 +5,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using System.Web.Security;
+    using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Common.Framework;
@@ -206,8 +207,11 @@
         [AllowReturnUrl(Allow = false)]
         public ActionResult SignOut(string returnUrl)
         {
-            const string userJourneyKey = "UserJourney";
-            var userJourneyValue = UserData.Get(userJourneyKey);
+            //Get values to maintain between sessions
+            var userJourneyValue = UserData.Get(UserJourneyContextAttribute.UserJourneyKey);
+            var resultPerPageValue = UserData.Get(UserDataItemNames.ResultsPerPage);
+            var loggingSessionIdValue = UserData.Get(UserDataItemNames.LoggingSessionId);
+
             FormsAuthentication.SignOut();
 
             if (UserData.Get(UserMessageConstants.WarningMessage) == SignOutPageMessages.MustAcceptUpdatedTermsAndConditions)
@@ -222,7 +226,10 @@
                 SetUserMessage(signOutMessage);
             }
 
-            UserData.Push(userJourneyKey, userJourneyValue);
+            //Reset values to maintain between sessions
+            UserData.Push(UserJourneyContextAttribute.UserJourneyKey, userJourneyValue);
+            UserData.Push(UserDataItemNames.ResultsPerPage, resultPerPageValue);
+            UserData.Push(UserDataItemNames.LoggingSessionId, loggingSessionIdValue);
 
             if (ViewBag.FeedbackUrl == returnUrl)
             {

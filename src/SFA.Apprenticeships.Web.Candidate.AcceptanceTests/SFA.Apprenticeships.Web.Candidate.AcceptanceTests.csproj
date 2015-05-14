@@ -146,6 +146,7 @@
     <Compile Include="Bindings\Dashboard\DashboardBinding.cs" />
     <Compile Include="Bindings\DataGeneratorBinding.cs" />
     <Compile Include="Bindings\HomePageBinding.cs" />
+    <Compile Include="Bindings\Login\CookieBinding.cs" />
     <Compile Include="Bindings\Registration\ForgottenPasswordDataBinding.cs" />
     <Compile Include="Bindings\VacancySearch\VacancySearchPageBindings.cs" />
     <Compile Include="Builders\TraineeshipApplicationBuilder.cs" />
@@ -207,6 +208,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Helpdesk.feature</DependentUpon>
+    </Compile>
+    <Compile Include="Features\Login\Cookies.feature.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cookies.feature</DependentUpon>
     </Compile>
     <Compile Include="Features\Registration\MonitoringInformation.feature.cs">
       <DependentUpon>MonitoringInformation.feature</DependentUpon>
@@ -442,6 +448,10 @@
     <None Include="Features\Home\Helpdesk.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>Helpdesk.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Login\Cookies.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Cookies.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Registration\MonitoringInformation.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
