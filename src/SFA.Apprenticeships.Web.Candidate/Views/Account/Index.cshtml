@@ -360,7 +360,10 @@ else
                                         }
                                     </td>
                                     <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = application.VacancyId })</td>
-                                    <td class="ta-center">@Html.DisplayFor(m => application.DateApplied)</td>
+                                    <td class="ta-center">
+                                        Applied<br />
+                                        @Html.DisplayFor(m => application.DateApplied)
+                                    </td>
                                 </tr>
                             }
                         </tbody>

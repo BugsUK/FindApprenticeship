@@ -1755,19 +1755,22 @@ WriteLiteral("</td>\r\n                                    <td");
 
 WriteLiteral(" class=\"ta-center\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n                                        Applied<br />\r\n");
+
+WriteLiteral("                                        ");
 
             
-            #line 363 "..\..\Views\Account\Index.cshtml"
-                                                     Write(Html.DisplayFor(m => application.DateApplied));
+            #line 365 "..\..\Views\Account\Index.cshtml"
+                                   Write(Html.DisplayFor(m => application.DateApplied));
 
             
             #line default
             #line hidden
-WriteLiteral("</td>\r\n                                </tr>\r\n");
+WriteLiteral("\r\n                                    </td>\r\n                                </tr" +
+">\r\n");
 
             
-            #line 365 "..\..\Views\Account\Index.cshtml"
+            #line 368 "..\..\Views\Account\Index.cshtml"
                             }
 
             
@@ -1805,7 +1808,7 @@ WriteLiteral("></i>More</a>\r\n                                </td>\r\n        
 " </tr>\r\n                        </tbody>\r\n                    </table>\r\n");
 
             
-            #line 376 "..\..\Views\Account\Index.cshtml"
+            #line 379 "..\..\Views\Account\Index.cshtml"
                 }
 
             
@@ -1814,7 +1817,7 @@ WriteLiteral("></i>More</a>\r\n                                </td>\r\n        
 WriteLiteral("            </section>\r\n        </div>\r\n");
 
             
-            #line 379 "..\..\Views\Account\Index.cshtml"
+            #line 382 "..\..\Views\Account\Index.cshtml"
         }
 
             
@@ -1823,7 +1826,7 @@ WriteLiteral("            </section>\r\n        </div>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 381 "..\..\Views\Account\Index.cshtml"
+            #line 384 "..\..\Views\Account\Index.cshtml"
 }
 
             
