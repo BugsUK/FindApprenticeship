@@ -20,6 +20,11 @@
                 VacancyId = application.Vacancy.Id,
             };
 
+            if (application.DateApplied.HasValue)
+            {
+                model.DateApplied = application.DateApplied.Value;
+            }
+
             model.Candidate.AboutYou = ApplicationConverter.GetAboutYouViewModel(application.CandidateInformation.AboutYou);
             model.Candidate.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(application.CandidateInformation.AboutYou, application.CandidateInformation.DisabilityStatus);
 

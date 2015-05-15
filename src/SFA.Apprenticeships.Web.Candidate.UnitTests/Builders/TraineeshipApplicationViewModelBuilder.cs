@@ -4,16 +4,21 @@
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Models.Application;
+    using Domain.Entities.Vacancies;
 
     public class TraineeshipApplicationViewModelBuilder
     {
-        private string _message;
+        private string _viewModelMessage;
+        private ApplicationViewModelStatus _viewModelStatus;
+
         private IEnumerable<QualificationsViewModel> _qualifications;
         private IEnumerable<WorkExperienceViewModel> _workExperience;
+        private VacancyStatuses _vacancyStatus;
 
         public TraineeshipApplicationViewModelBuilder WithMessage(string message)
         {
-            _message = message;
+            _viewModelMessage = message;
             return this;
         }
 
@@ -29,10 +34,25 @@
             return this;
         }
 
+        public TraineeshipApplicationViewModelBuilder HasError(ApplicationViewModelStatus viewModelStatus, string viewModelMessage)
+        {
+            _viewModelStatus = viewModelStatus;
+            _viewModelMessage = viewModelMessage;
+            return this;
+        }
+
+        public TraineeshipApplicationViewModelBuilder WithVacancyStatus(VacancyStatuses vacancyStatus)
+        {
+            _vacancyStatus = vacancyStatus;
+            return this;
+        }
+
         public TraineeshipApplicationViewModel Build()
         {
-            var viewModel = new TraineeshipApplicationViewModel(_message)
+            var viewModel = new TraineeshipApplicationViewModel
             {
+                ViewModelMessage = _viewModelMessage,
+                ViewModelStatus = _viewModelStatus,
                 Candidate = new TraineeshipCandidateViewModel
                 {
                     HasQualifications = _qualifications != null,
@@ -40,7 +60,10 @@
                     HasWorkExperience = _workExperience != null,
                     WorkExperience = _workExperience
                 },
-                VacancyDetail = new TraineeshipVacancyDetailViewModel(),
+                VacancyDetail = new TraineeshipVacancyDetailViewModel
+                {
+                    VacancyStatus = _vacancyStatus
+                }
             };
             return viewModel;
         }

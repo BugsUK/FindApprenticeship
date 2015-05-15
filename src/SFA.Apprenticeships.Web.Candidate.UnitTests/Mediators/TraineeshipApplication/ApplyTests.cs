@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using System;
+    using System.Globalization;
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
     using Moq;
@@ -31,7 +32,7 @@
         {
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), InvalidVacancyId)).Returns(new TraineeshipApplicationViewModel("Vacancy not found"));
             
-            var response = Mediator.Apply(Guid.NewGuid(), InvalidVacancyId.ToString());
+            var response = Mediator.Apply(Guid.NewGuid(), InvalidVacancyId.ToString(CultureInfo.InvariantCulture));
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Apply.HasError, false);
         }
@@ -41,7 +42,7 @@
         {
             TraineeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new TraineeshipApplicationViewModel());
 
-            var response = Mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString());
+            var response = Mediator.Apply(Guid.NewGuid(), ValidVacancyId.ToString(CultureInfo.InvariantCulture));
 
             response.AssertCode(TraineeshipApplicationMediatorCodes.Apply.Ok, true);
         }

@@ -1,8 +1,7 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Applications
-@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.TraineeshipApplicationViewModel
 
 @{
-    ViewBag.Title = "View your application - Find an apprenticeship";
+    ViewBag.Title = "View your application - Find a traineeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -31,18 +30,6 @@
         <p class="small-btm-margin">This is your submitted application.</p>
         <p class="small-btm-margin">
             You applied on @Html.DisplayFor(m => m.DateApplied, "Date").
-            @if (Model.Status == ApplicationStatuses.Successful)
-            {
-                <span class="inl-block">This application was successful.</span>
-            }
-            else if (Model.Status == ApplicationStatuses.Unsuccessful)
-            {
-                <span class="inl-block">This application was unsuccessful.</span>
-            }
-            else if (Model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
-            {
-                <span class="inl-block">This apprenticeship expired or was withdrawn.</span>
-            }
         </p>
         <p class="hide-print">
             <a id="return-to-my-applications" href="@Url.Action("Index", "Account")">Return to my applications</a>
@@ -51,10 +38,8 @@
 </div>
 
 @Html.DisplayFor(m => m.Candidate)
-@Html.DisplayFor(m => m.Candidate.Education)
 @Html.DisplayFor(m => m.Candidate.Qualifications, "Application/Qualifications")
 @Html.DisplayFor(m => m.Candidate.WorkExperience, "Application/WorkExperience")
-@Html.DisplayFor(m => m.Candidate.AboutYou)
 
 <section class="section-border">
     <h2 class="heading-large">

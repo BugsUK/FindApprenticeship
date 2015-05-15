@@ -139,6 +139,24 @@
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.WhatHappensNext.Ok, model);
         }
 
+        public MediatorResponse<TraineeshipApplicationViewModel> View(Guid candidateId, int vacancyId)
+        {
+            var model = _traineeshipApplicationProvider.GetApplicationViewModelEx(candidateId, vacancyId);
+
+            if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationNotFound)
+            {
+                return GetMediatorResponse(TraineeshipApplicationMediatorCodes.View.ApplicationNotFound, model);
+            }
+
+            if (model.HasError())
+            {
+                return GetMediatorResponse<TraineeshipApplicationViewModel>(
+                    TraineeshipApplicationMediatorCodes.View.Error, null, ApplicationPageMessages.ViewApplicationFailed, UserMessageLevel.Warning);
+            }
+
+            return GetMediatorResponse(TraineeshipApplicationMediatorCodes.View.Ok, model);
+        }
+
         private static TraineeshipApplicationViewModel StripApplicationViewModelBeforeValidation(TraineeshipApplicationViewModel model)
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);

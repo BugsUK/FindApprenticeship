@@ -653,13 +653,13 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>View.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\QualificationsViewModel.cshtml">
+    <Content Include="Views\Shared\DisplayTemplates\Application\Qualifications.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>QualificationsViewModel.generated.cs</LastGenOutput>
+      <LastGenOutput>Qualifications.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ApprenticeshipApplication\DisplayTemplates\WorkExperienceViewModel.cshtml">
+    <Content Include="Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>WorkExperienceViewModel.generated.cs</LastGenOutput>
+      <LastGenOutput>WorkExperience.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\UpdateEmailAddress.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -689,6 +689,10 @@
     <Content Include="Views\Shared\DisplayTemplates\MonitoringInformation\_disability.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_disability.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\View.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>View.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1037,15 +1041,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployerQuestionAnswersViewModel.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ApprenticeshipApplication\DisplayTemplates\QualificationsViewModel.generated.cs">
+    <Compile Include="Views\Shared\DisplayTemplates\Application\Qualifications.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>QualificationsViewModel.cshtml</DependentUpon>
+      <DependentUpon>Qualifications.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ApprenticeshipApplication\DisplayTemplates\WorkExperienceViewModel.generated.cs">
+    <Compile Include="Views\Shared\DisplayTemplates\Application\WorkExperience.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>WorkExperienceViewModel.cshtml</DependentUpon>
+      <DependentUpon>WorkExperience.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\ApprenticeshipApplication\EditorTemplates\AboutYouViewModel.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1319,6 +1323,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployerQuestionAnswersViewModel.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\View.generated.cs">
+      <DependentUpon>View.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\TraineeshipApplication\WhatHappensNext.generated.cs">
       <AutoGen>True</AutoGen>

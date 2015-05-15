@@ -250,6 +250,8 @@
     <Compile Include="Mediators\SearchMediatorBaseTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\AddEmptyQualificationRowsTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
+    <Compile Include="Mediators\TraineeshipApplication\TraineeshipApplicationMediatorBuilder.cs" />
+    <Compile Include="Mediators\TraineeshipApplication\ViewTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\WhatHappensNextTests.cs" />
     <Compile Include="Mediators\TraineeshipSearch\DetailsTests.cs" />
     <Compile Include="Mediators\TraineeshipSearch\IndexTests.cs" />

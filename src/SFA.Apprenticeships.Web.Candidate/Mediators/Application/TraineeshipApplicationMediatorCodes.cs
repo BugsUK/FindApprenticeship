@@ -32,5 +32,12 @@
             public const string VacancyNotFound = "TraineeshipApplication.WhatHappensNext.VacancyNotFound";
             public const string Ok = "TraineeshipApplication.WhatHappensNext.Ok";
         }
+
+        public class View
+        {
+            public const string Ok = "TraineeshipApplication.View.Ok";
+            public const string ApplicationNotFound = "TraineeshipApplication.View.ApplicationNotFound";
+            public const string Error = "TraineeshipApplication.View.Error";
+        }
     }
 }

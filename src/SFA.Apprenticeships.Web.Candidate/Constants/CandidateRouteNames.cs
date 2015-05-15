@@ -27,6 +27,7 @@
         public const string TraineeshipResults = "TraineeshipResults";
         public const string TraineeshipDetails = "TraineeshipDetails";
         public const string TraineeshipWhatNext = "TraineeshipWhatNext";
+        public const string TraineeshipView = "TraineeshipView";
         public const string Unsubscribe = "Unsubscribe";
     }
 }

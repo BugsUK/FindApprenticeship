@@ -15,7 +15,6 @@
     public class ViewTests
     {
         private const int ValidVacancyId = 1;
-        private const int InvalidVacancyId = 99999;
 
         [Test]
         public void VacancyNotFound()

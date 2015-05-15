@@ -8,7 +8,6 @@ Background:
 	And I navigated to the TraineeshipSearchPage page
 	Then I am on the TraineeshipSearchPage page
 
-
 @US586
 Scenario: I have applied for six traineeships
 	Given I have an empty dashboard

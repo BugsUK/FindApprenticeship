@@ -10,6 +10,7 @@
     using Constants.Pages;
     using ViewModels.Applications;
     using Common.Models.Application;
+    using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     //TODO: DFSW/AG This whole class needs refactoring or possibly reimplementing plus unit tests.
     public class TraineeshipApplicationProvider : ITraineeshipApplicationProvider
@@ -21,13 +22,45 @@
 
         public TraineeshipApplicationProvider(IMapper mapper,
             ICandidateService candidateService,
-            ITraineeshipVacancyProvider traineeshipVacancyProvider, 
+            ITraineeshipVacancyProvider traineeshipVacancyProvider,
             ILogService logger)
         {
             _mapper = mapper;
             _candidateService = candidateService;
             _traineeshipVacancyProvider = traineeshipVacancyProvider;
             _logger = logger;
+        }
+
+        public TraineeshipApplicationViewModel GetApplicationViewModelEx(Guid candidateId, int vacancyId)
+        {
+            _logger.Debug("Calling TraineeshipApplicationProvider to get the Application View Model for candidate ID: {0}, vacancy ID: {1}.", candidateId, vacancyId);
+
+            try
+            {
+                var applicationDetail = _candidateService.GetTraineeshipApplication(candidateId, vacancyId);
+                var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetail);
+
+                return PatchWithVacancyDetail(candidateId, vacancyId, viewModel);
+            }
+            catch (CustomException e)
+            {
+                if (e.Code == ErrorCodes.ApplicationNotFoundError)
+                {
+                    return new TraineeshipApplicationViewModel
+                    {
+                        ViewModelStatus = ApplicationViewModelStatus.ApplicationNotFound,
+                        ViewModelMessage = MyApplicationsPageMessages.ApplicationNotFound
+                    };
+                }
+
+                _logger.Error("Unhandled custom exception while getting the Application View Model for candidate ID: {0}, vacancy ID: {1}.", e, candidateId, vacancyId);
+                return new TraineeshipApplicationViewModel("Unhandled error", ApplicationViewModelStatus.Error);
+            }
+            catch (Exception e)
+            {
+                _logger.Error("Get Application View Model failed for candidate ID: {0}, vacancy ID: {1}.", e, candidateId, vacancyId);
+                return new TraineeshipApplicationViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed, ApplicationViewModelStatus.Error);
+            }
         }
 
         public TraineeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -52,7 +85,7 @@
                         ViewModelMessage = MyApplicationsPageMessages.TraineeshipNoLongerAvailable
                     };
                 }
-                var applicationViewModel =_mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
+                var applicationViewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetails);
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
             catch (CustomException e)
