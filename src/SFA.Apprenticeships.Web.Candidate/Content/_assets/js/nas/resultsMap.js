@@ -342,7 +342,7 @@ $(function () {
         });
     }
 
-    $('.select-mode').on('change', function () {
+    $(document).on('change', '.select-mode', function () {
         var $this = $(this),
             $thisVal = $this.val(),
             $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
@@ -362,7 +362,7 @@ $(function () {
         }
     });
 
-    $('.journey-trigger').on('click', function (originLocation) {
+    $(document).on('click', '.journey-trigger', function (originLocation) {
         var $this = $(this),
             $thisVal = $this.next('.detail-content').find('.select-mode option:selected').val(),
             $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),

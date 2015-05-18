@@ -130,7 +130,7 @@
                         ModelState.Remove("Latitude");
                         ModelState.Remove("Longitude");
                         ModelState.Remove("SortType");
-                        return View(response.ViewModel);
+                        return Request.IsAjaxRequest() ? (ActionResult)PartialView("_searchResults", response.ViewModel) : View(response.ViewModel);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

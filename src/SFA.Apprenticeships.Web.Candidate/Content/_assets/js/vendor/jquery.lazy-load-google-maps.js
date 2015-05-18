@@ -71,7 +71,7 @@ window.googleMapsScriptLoaded = function()
 				if( !apiScriptLoaded ) return true;
 
 				var map = new google.maps.Map( this, { zoom: 15 });
-				if( thisOptions.callback !== false )
+				if (thisOptions && thisOptions.callback !== false)
 					thisOptions.callback( this, map );
 
 				$containers = $containers.not( $this );

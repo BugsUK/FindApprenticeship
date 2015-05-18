@@ -45,32 +45,9 @@
 {
 
     @Scripts.Render("~/bundles/nas/locationsearch")
-    <script type="text/javascript">
-        $(function () {
-            $("#Location").locationMatch({
-                url: '@Url.Action("location", "Location")',
-                longitude: '#Longitude',
-                latitude: '#Latitude',
-                latlonhash: '#Hash'
-            });
-
-            $('#sort-results').change(function () {
-
-                $('#SearchAction').val("Sort");
-                $("form").submit();
-            });
-
-            $('#results-per-page').change(function () {
-                $('#SearchAction').val("Sort");
-                $("form").submit();
-            });
-
-            $('#search-button').click(function () {
-                $('#LocationType').val("NonNational");
-            });
-        });
+    <script>
+        var searchUrl = '@Url.RouteUrl(CandidateRouteNames.TraineeshipResults)';
+        var locationUrl = '@Url.Action("location", "Location")';
     </script>
-     
-
-    @Scripts.Render("~/bundles/nas/resultsMap")
+    @Scripts.Render("~/bundles/nas/results")
 }
