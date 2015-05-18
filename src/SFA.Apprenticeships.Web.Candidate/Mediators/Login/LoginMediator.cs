@@ -249,6 +249,10 @@
             var candidate = _candidateServiceProvider.GetCandidate(resetViewModel.EmailAddress);
             _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Activated);
 
+            var applications = _candidateServiceProvider.GetApprenticeshipApplications(candidate.EntityId);
+            var savedAndDraftAppCount = applications.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
+            _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedAndDraftAppCount.ToString(CultureInfo.InvariantCulture));
+
             return GetMediatorResponse(LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
         }
     }
