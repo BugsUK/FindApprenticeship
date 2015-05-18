@@ -13,6 +13,7 @@
         [TestCase("", "2014", false)]
         [TestCase("2014", "", false)]
         [TestCase("1910", "2010", true)]
+        [TestCase("2004", "2010", true)]
         [TestCase("1910", "2011", false)]
         [TestCase("1910", "2009", true)]
         [TestCase("2015", "2014", false)]
@@ -22,7 +23,7 @@
         [TestCase("1989", "2024", true)]
         [TestCase("xyz", "2014", false)]
         [TestCase("2014", "--", false)]
-        public void GetsRegexFor2014(string fromYear, string toYear, bool passes)
+        public void CheckYearRangeRegEx(string fromYear, string toYear, bool passes)
         {
             var regex = YearRegexRangeGenerator.GetRegex(toYear);
             Regex.Match(fromYear, regex).Success.Should().Be(passes);

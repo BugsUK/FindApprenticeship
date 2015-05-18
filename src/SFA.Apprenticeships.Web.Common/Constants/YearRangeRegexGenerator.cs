@@ -16,7 +16,7 @@
             var u = int.Parse(year[3].ToString(CultureInfo.InvariantCulture));
             var nextD = d + 1;
 
-            var regex = string.Format(@"19{0}[{1}-9]|19[{2}-9]\d|20{0}[0-{1}]", d, u, nextD);
+            var regex = string.Format(@"19{0}[{1}-9]|19[{2}-9]\d|200\d", d, u, nextD);
 
             for (var i = 1; i <= d; i++)
             {
