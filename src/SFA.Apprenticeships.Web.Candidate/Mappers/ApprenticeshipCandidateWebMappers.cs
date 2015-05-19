@@ -17,6 +17,7 @@
     using ViewModels.Locations;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
+    using Views.Shared.EditorTemplates.MonitoringInformation;
 
     public class ApprenticeshipCandidateWebMappers : MapperEngine
     {
@@ -94,9 +95,9 @@
                 .ConvertUsing<CandidateResolver>();
 
             Mapper.CreateMap<MonitoringInformationViewModel, MonitoringInformation>()
-                .ForMember(d => d.Gender, opt => opt.MapFrom(s => s.Gender))
+                .ForMember(d => d.Gender, opt => opt.MapFrom(s => (Gender?)s.Gender))
                 .ForMember(d => d.Ethnicity, opt => opt.MapFrom(s => s.Ethnicity))
-                .ForMember(d => d.DisabilityStatus, opt => opt.MapFrom(s => s.DisabilityStatus));
+                .ForMember(d => d.DisabilityStatus, opt => opt.MapFrom(s => (DisabilityStatus?)s.DisabilityStatus));
 
             Mapper.CreateMap<ApprenticeshipApplicationViewModel, ApprenticeshipApplicationDetail>()
                 .ConvertUsing<ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver>();
