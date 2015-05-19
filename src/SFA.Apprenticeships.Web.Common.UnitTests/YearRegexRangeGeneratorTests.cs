@@ -8,25 +8,25 @@
     [TestFixture]
     public class YearRegexRangeGeneratorTests
     {
-        [Test]
-        public void GetsRegexFor2014()
+        [TestCase("1913", "2014", false)]
+        [TestCase("2014", null, false)]
+        [TestCase("", "2014", false)]
+        [TestCase("2014", "", false)]
+        [TestCase("1910", "2010", true)]
+        [TestCase("2004", "2010", true)]
+        [TestCase("1910", "2011", false)]
+        [TestCase("1910", "2009", true)]
+        [TestCase("2015", "2014", false)]
+        [TestCase("1989", "2014", true)]
+        [TestCase("1923", "2024", false)]
+        [TestCase("2015", "2025", true)]
+        [TestCase("1989", "2024", true)]
+        [TestCase("xyz", "2014", false)]
+        [TestCase("2014", "--", false)]
+        public void CheckYearRangeRegEx(string fromYear, string toYear, bool passes)
         {
-            var regex = YearRegexRangeGenerator.GetRegex("2014");
-
-            Regex.Match("1913", regex).Success.Should().BeFalse();
-            Regex.Match("2015", regex).Success.Should().BeFalse();
-            Regex.Match("1989", regex).Success.Should().BeTrue();
-        }
-
-        [Test]
-        public void GetsRegexFor2024()
-        {
-            var regex = YearRegexRangeGenerator.GetRegex("2024");
-
-            Regex.Match("1923", regex).Success.Should().BeFalse();
-            Regex.Match("2025", regex).Success.Should().BeFalse();
-            Regex.Match("2015", regex).Success.Should().BeTrue();
-            Regex.Match("1989", regex).Success.Should().BeTrue();
+            var regex = YearRegexRangeGenerator.GetRegex(toYear);
+            Regex.Match(fromYear, regex).Success.Should().Be(passes);
         }
     }
 }

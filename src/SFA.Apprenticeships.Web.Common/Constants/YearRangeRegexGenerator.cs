@@ -6,6 +6,12 @@
     {
         public static string GetRegex(string year)
         {
+            if (string.IsNullOrEmpty(year) || year.Length != 4)
+            {
+                //Will alway fail.
+                return "$^";
+            }
+
             var d = int.Parse(year[2].ToString(CultureInfo.InvariantCulture));
             var u = int.Parse(year[3].ToString(CultureInfo.InvariantCulture));
             var nextD = d + 1;

@@ -28,8 +28,8 @@
             public const string LabelText = "Finished";
             public const string RequiredErrorText = "Please enter year finished";
             public const string BeforeOrEqualErrorText = "Year started can’t be after year finished";
-            public static string WhiteListRegularExpression = Whitelists.YearRangeWhiteList.RegularExpression();
-            public static string WhiteListErrorText = "Year finished " + Whitelists.YearRangeWhiteList.ErrorText();
+            public static string WhiteListRegularExpression = Whitelists.YearRangeWhiteList.RegularExpression(10);
+            public static string WhiteListErrorText = "Year finished " + Whitelists.YearRangeWhiteList.ErrorText(10);
         }
     }
 }
