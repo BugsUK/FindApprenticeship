@@ -179,7 +179,7 @@ WriteLiteral(@">
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(@">Training courses</span>
+WriteLiteral(@">Training course</span>
                                 </th>
                             </tr>
                         </thead>

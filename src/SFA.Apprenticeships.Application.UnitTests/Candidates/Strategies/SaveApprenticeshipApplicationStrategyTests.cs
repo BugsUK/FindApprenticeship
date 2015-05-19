@@ -11,6 +11,8 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
+    // TODO: US786: add unit tests for TrainingHistory.
+
     [TestFixture]
     public class SaveApprenticeshipApplicationStrategyTests
     {

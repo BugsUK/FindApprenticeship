@@ -27,6 +27,11 @@
             public const string Ok = "TraineeshipApplication.AddEmptyWorkExperienceRows.Ok";
         }
 
+        public class AddEmptyTrainingHistoryRows
+        {
+            public const string Ok = "TraineeshipApplication.AddEmptyTrainingHistoryRows.Ok";
+        }
+
         public class WhatHappensNext
         {
             public const string VacancyNotFound = "TraineeshipApplication.WhatHappensNext.VacancyNotFound";

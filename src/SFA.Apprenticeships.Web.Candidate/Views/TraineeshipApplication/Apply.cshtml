@@ -34,12 +34,13 @@
     @Html.HiddenFor(m => m.IsJavascript, new{ @id="hidden-flag-javascript"})
 
     Html.RenderPartial("_qualificationsJS", Model);    
-    
     Html.RenderPartial("_qualificationsNonJS", Model);
     
     Html.RenderPartial("_workExperiencesJS", Model);   
-
     Html.RenderPartial("_workExperiencesNonJS", Model);
+
+    Html.RenderPartial("_trainingHistoryJS", Model);
+    Html.RenderPartial("_trainingHistoryNonJS", Model);   
     
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
     
@@ -59,6 +60,7 @@
 
     var qualificationData = null;
     var workExperienceData = null;
+    var trainingHistoryData = null;
     var currentYear = null;
     var whitelistregex = null;
     var yearRegex = null;
@@ -70,6 +72,7 @@
 
         qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
         workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
+        trainingHistoryData = @Html.Raw(Json.Encode(Model.Candidate.TrainingHistory));
         currentYear = @Html.Raw(Model.CurrentYear);
         whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
         yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));
@@ -96,6 +99,10 @@
         return workExperienceData;
     }
 
+    function getTrainingHistoryData() {
+        return trainingHistoryData;
+    }
+
     function getWhiteListRegex() {
         return whitelistregex;
     }
@@ -118,6 +125,6 @@
     }
 
 </script>
-        
+       
     @Scripts.Render("~/bundles/nas/applicationform")
 }

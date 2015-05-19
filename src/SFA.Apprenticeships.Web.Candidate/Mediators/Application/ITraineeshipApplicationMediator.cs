@@ -13,6 +13,8 @@
 
         MediatorResponse<TraineeshipApplicationViewModel> AddEmptyWorkExperienceRows(TraineeshipApplicationViewModel viewModel);
 
+        MediatorResponse<TraineeshipApplicationViewModel> AddEmptyTrainingHistoryRows(TraineeshipApplicationViewModel viewModel);
+
         MediatorResponse<WhatHappensNextTraineeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle);
 
         MediatorResponse<TraineeshipApplicationViewModel> View(Guid candidateId, int vacancyId);

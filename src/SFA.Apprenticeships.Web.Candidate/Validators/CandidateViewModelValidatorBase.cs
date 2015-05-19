@@ -3,7 +3,6 @@
     using FluentValidation;
     using ViewModels.Candidate;
 
-    // TODO: AG: US786: review TrainingHistory refs.
     public abstract class CandidateViewModelClientValidatorBase<T> : AbstractValidator<T> where T : CandidateViewModelBase
     {
         protected CandidateViewModelClientValidatorBase()

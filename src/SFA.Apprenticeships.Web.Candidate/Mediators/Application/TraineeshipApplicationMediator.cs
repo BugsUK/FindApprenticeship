@@ -13,7 +13,6 @@
     using Validators;
     using ViewModels.Applications;
 
-    // TODO: US786: add TrainingHistory.
     public class TraineeshipApplicationMediator : ApplicationMediatorBase, ITraineeshipApplicationMediator
     {
         private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;
@@ -96,9 +95,11 @@
         public MediatorResponse<TraineeshipApplicationViewModel> AddEmptyQualificationRows(TraineeshipApplicationViewModel viewModel)
         {
             viewModel.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(viewModel.Candidate.Qualifications);
-            viewModel.Candidate.HasQualifications = viewModel.Candidate.Qualifications.Count() != 0;
+            viewModel.Candidate.HasQualifications = viewModel.Candidate.Qualifications.Any();
+
             viewModel.DefaultQualificationRows = 5;
             viewModel.DefaultWorkExperienceRows = 0;
+            viewModel.DefaultTrainingHistoryRows = 0;
 
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.AddEmptyQualificationRows.Ok, viewModel);
         }
@@ -106,12 +107,25 @@
         public MediatorResponse<TraineeshipApplicationViewModel> AddEmptyWorkExperienceRows(TraineeshipApplicationViewModel viewModel)
         {
             viewModel.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(viewModel.Candidate.WorkExperience);
-            viewModel.Candidate.HasWorkExperience = viewModel.Candidate.WorkExperience.Count() != 0;
+            viewModel.Candidate.HasWorkExperience = viewModel.Candidate.WorkExperience.Any();
 
             viewModel.DefaultQualificationRows = 0;
             viewModel.DefaultWorkExperienceRows = 3;
+            viewModel.DefaultTrainingHistoryRows = 0;
 
             return GetMediatorResponse(TraineeshipApplicationMediatorCodes.AddEmptyWorkExperienceRows.Ok, viewModel);
+        }
+
+        public MediatorResponse<TraineeshipApplicationViewModel> AddEmptyTrainingHistoryRows(TraineeshipApplicationViewModel viewModel)
+        {
+            viewModel.Candidate.TrainingHistory = RemoveEmptyRowsFromTrainingHistory(viewModel.Candidate.TrainingHistory);
+            viewModel.Candidate.HasTrainingHistory = viewModel.Candidate.TrainingHistory.Any();
+
+            viewModel.DefaultQualificationRows = 0;
+            viewModel.DefaultWorkExperienceRows = 0;
+            viewModel.DefaultTrainingHistoryRows = 3;
+
+            return GetMediatorResponse(TraineeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, viewModel);
         }
 
         public MediatorResponse<WhatHappensNextTraineeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle)
@@ -162,17 +176,20 @@
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
             model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
+            model.Candidate.TrainingHistory = RemoveEmptyRowsFromTrainingHistory(model.Candidate.TrainingHistory);
 
             model.DefaultQualificationRows = 0;
             model.DefaultWorkExperienceRows = 0;
+            model.DefaultTrainingHistoryRows = 0;
 
             if (model.IsJavascript)
             {
                 return model;
             }
 
-            model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
-            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
+            model.Candidate.HasQualifications = model.Candidate.Qualifications.Any();
+            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Any();
+            model.Candidate.HasTrainingHistory = model.Candidate.TrainingHistory.Any();
 
             return model;
         }

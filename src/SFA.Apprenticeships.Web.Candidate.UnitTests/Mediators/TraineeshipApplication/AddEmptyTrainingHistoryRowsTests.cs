@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipApplication
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;
@@ -20,30 +20,30 @@
         [Test]
         public void Ok()
         {
-            var viewModel = new ApprenticeshipApplicationViewModel
+            var viewModel = new TraineeshipApplicationViewModel
             {
-                Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
+                Candidate = new TraineeshipCandidateViewModel(),
+                VacancyDetail = new TraineeshipVacancyDetailViewModel()
             };
 
             var response = Mediator.AddEmptyTrainingHistoryRows(viewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, true);
             response.ViewModel.Candidate.HasTrainingHistory.Should().BeFalse();
         }
 
         [Test]
         public void WillSetDefaultRowCounts()
         {
-            var viewModel = new ApprenticeshipApplicationViewModel
+            var viewModel = new TraineeshipApplicationViewModel
             {
-                Candidate = new ApprenticeshipCandidateViewModel(),
-                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
+                Candidate = new TraineeshipCandidateViewModel(),
+                VacancyDetail = new TraineeshipVacancyDetailViewModel()
             };
 
             var response = Mediator.AddEmptyTrainingHistoryRows(viewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, true);
 
             response.ViewModel.DefaultQualificationRows.Should().Be(0);
             response.ViewModel.DefaultWorkExperienceRows.Should().Be(0);
@@ -53,24 +53,24 @@
         [Test]
         public void WillRemoveEmptyTrainingHistoryRows()
         {
-            var viewModel = new ApprenticeshipApplicationViewModel
+            var viewModel = new TraineeshipApplicationViewModel
             {
                 Candidate = CreateCandidateWithOneTrainingHistoryRowAndTwoEmptyTrainingHistoryRows(),
-                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
+                VacancyDetail = new TraineeshipVacancyDetailViewModel()
             };
 
             var response = Mediator.AddEmptyTrainingHistoryRows(viewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, true);
+            response.AssertCode(TraineeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, true);
             response.ViewModel.Candidate.TrainingHistory.Should().HaveCount(1);
             response.ViewModel.Candidate.HasTrainingHistory.Should().BeTrue();
         }
 
-        private ApprenticeshipCandidateViewModel CreateCandidateWithOneTrainingHistoryRowAndTwoEmptyTrainingHistoryRows()
+        private TraineeshipCandidateViewModel CreateCandidateWithOneTrainingHistoryRowAndTwoEmptyTrainingHistoryRows()
         {
             _someCourseTitle = "Course title";
 
-            return new ApprenticeshipCandidateViewModel
+            return new TraineeshipCandidateViewModel
             {
                 TrainingHistory = new[]
                 {

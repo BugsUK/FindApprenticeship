@@ -706,6 +706,14 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_trainingHistoryNonJS.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\TraineeshipApplication\_trainingHistoryJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_trainingHistoryJS.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\TraineeshipApplication\_trainingHistoryNonJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_trainingHistoryNonJS.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1373,6 +1381,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_qualificationsNonJS.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\_trainingHistoryJS.generated.cs">
+      <DependentUpon>_trainingHistoryJS.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\TraineeshipApplication\_trainingHistoryNonJS.generated.cs">
+      <DependentUpon>_trainingHistoryNonJS.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\TraineeshipApplication\_workExperiencesJS.generated.cs">
       <AutoGen>True</AutoGen>

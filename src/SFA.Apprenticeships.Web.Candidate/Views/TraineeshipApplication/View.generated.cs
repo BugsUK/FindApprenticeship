@@ -213,6 +213,15 @@ Write(Html.DisplayFor(m => m.Candidate.WorkExperience, "Application/WorkExperien
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+            
+            #line 43 "..\..\Views\TraineeshipApplication\View.cshtml"
+Write(Html.DisplayFor(m => m.Candidate.TrainingHistory, "Application/TrainingHistory"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n\r\n<section");
 
 WriteLiteral(" class=\"section-border\"");
@@ -226,7 +235,7 @@ WriteLiteral(">\r\n        Additional questions\r\n    </h2>\r\n");
 WriteLiteral("    ");
 
             
-            #line 48 "..\..\Views\TraineeshipApplication\View.cshtml"
+            #line 49 "..\..\Views\TraineeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.EmployerQuestionAnswers));
 
             
@@ -237,7 +246,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 49 "..\..\Views\TraineeshipApplication\View.cshtml"
+            #line 50 "..\..\Views\TraineeshipApplication\View.cshtml"
 Write(Html.DisplayFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability"));
 
             
@@ -251,14 +260,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2000), Tuple.Create("\"", 2038)
+WriteAttribute("href", Tuple.Create(" href=\"", 2083), Tuple.Create("\"", 2121)
             
-            #line 54 "..\..\Views\TraineeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2007), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
+            #line 55 "..\..\Views\TraineeshipApplication\View.cshtml"
+, Tuple.Create(Tuple.Create("", 2090), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Account")
             
             #line default
             #line hidden
-, 2007), false)
+, 2090), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");
