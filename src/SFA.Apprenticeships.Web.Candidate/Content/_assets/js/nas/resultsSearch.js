@@ -58,10 +58,9 @@
         });
     });
 
-    $(document).on('change', '.history .page-navigation a', function (e) {
+    $(document).on('click', '.history .page-navigation__btn', function (e) {
         e.preventDefault();
-        var link = $(this);
-        var searchQueryUrl = link.href;
+        var searchQueryUrl = $(this).attr('href');
         //TODO: HENRY START SPINNER/WAITING
         $.ajax({
             url: searchQueryUrl,
