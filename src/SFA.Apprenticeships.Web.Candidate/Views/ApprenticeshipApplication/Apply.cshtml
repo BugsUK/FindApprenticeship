@@ -48,14 +48,13 @@
     @Html.HiddenFor(m => m.IsJavascript, new{ @id="hidden-flag-javascript"})
 
     Html.RenderPartial("_qualificationsJS", Model);    
-    
     Html.RenderPartial("_qualificationsNonJS", Model);
     
     Html.RenderPartial("_workExperiencesJS", Model);   
-
     Html.RenderPartial("_workExperiencesNonJS", Model);
 
     Html.RenderPartial("_trainingHistoryJS", Model);
+    Html.RenderPartial("_trainingHistoryNonJS", Model);
 
     @Html.EditorFor(m => m.Candidate.AboutYou)
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)

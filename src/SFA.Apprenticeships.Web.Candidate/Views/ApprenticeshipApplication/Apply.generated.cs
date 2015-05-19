@@ -353,56 +353,55 @@ Write(Html.HiddenFor(m => m.IsJavascript, new{ @id="hidden-flag-javascript"}));
                                                                             
 
     Html.RenderPartial("_qualificationsJS", Model);    
-    
     Html.RenderPartial("_qualificationsNonJS", Model);
     
     Html.RenderPartial("_workExperiencesJS", Model);   
-
     Html.RenderPartial("_workExperiencesNonJS", Model);
 
     Html.RenderPartial("_trainingHistoryJS", Model);
+    Html.RenderPartial("_trainingHistoryNonJS", Model);
 
     
             
             #line default
             #line hidden
             
-            #line 60 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 59 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Html.EditorFor(m => m.Candidate.AboutYou));
 
             
             #line default
             #line hidden
             
-            #line 60 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 59 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                               
     
             
             #line default
             #line hidden
             
-            #line 61 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 60 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers));
 
             
             #line default
             #line hidden
             
-            #line 61 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 60 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                              
     
             
             #line default
             #line hidden
             
-            #line 62 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 61 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Html.EditorFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability"));
 
             
             #line default
             #line hidden
             
-            #line 62 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 61 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                                                 
 
 
@@ -482,42 +481,42 @@ WriteLiteral(" class=\"button-link no-check-for-dirty-form cancel\"");
 
 WriteLiteral(" value=\"Save\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\'", 4236), Tuple.Create("\'", 4421)
-, Tuple.Create(Tuple.Create("", 4246), Tuple.Create("Webtrends.multiTrack({", 4246), true)
-, Tuple.Create(Tuple.Create(" ", 4268), Tuple.Create("element:", 4269), true)
-, Tuple.Create(Tuple.Create(" ", 4277), Tuple.Create("this,", 4278), true)
-, Tuple.Create(Tuple.Create(" ", 4283), Tuple.Create("argsa:", 4284), true)
-, Tuple.Create(Tuple.Create(" ", 4290), Tuple.Create("[\"DCS.dcsuri\",", 4291), true)
-, Tuple.Create(Tuple.Create(" ", 4305), Tuple.Create("\"/apprenticeship/apply/savedraft/", 4306), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\'", 4285), Tuple.Create("\'", 4470)
+, Tuple.Create(Tuple.Create("", 4295), Tuple.Create("Webtrends.multiTrack({", 4295), true)
+, Tuple.Create(Tuple.Create(" ", 4317), Tuple.Create("element:", 4318), true)
+, Tuple.Create(Tuple.Create(" ", 4326), Tuple.Create("this,", 4327), true)
+, Tuple.Create(Tuple.Create(" ", 4332), Tuple.Create("argsa:", 4333), true)
+, Tuple.Create(Tuple.Create(" ", 4339), Tuple.Create("[\"DCS.dcsuri\",", 4340), true)
+, Tuple.Create(Tuple.Create(" ", 4354), Tuple.Create("\"/apprenticeship/apply/savedraft/", 4355), true)
             
-            #line 79 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                                                                                                                                                                       , Tuple.Create(Tuple.Create("", 4339), Tuple.Create<System.Object, System.Int32>(Model.VacancyId
+            #line 78 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+                                                                                                                                                                       , Tuple.Create(Tuple.Create("", 4388), Tuple.Create<System.Object, System.Int32>(Model.VacancyId
             
             #line default
             #line hidden
-, 4339), false)
-, Tuple.Create(Tuple.Create("", 4355), Tuple.Create("\",", 4355), true)
-, Tuple.Create(Tuple.Create(" ", 4357), Tuple.Create("\"WT.dl\",", 4358), true)
-, Tuple.Create(Tuple.Create(" ", 4366), Tuple.Create("\"99\",", 4367), true)
-, Tuple.Create(Tuple.Create(" ", 4372), Tuple.Create("\"WT.ti\",", 4373), true)
-, Tuple.Create(Tuple.Create(" ", 4381), Tuple.Create("\"Apprenticeship", 4382), true)
-, Tuple.Create(Tuple.Create(" ", 4397), Tuple.Create("–", 4398), true)
-, Tuple.Create(Tuple.Create(" ", 4399), Tuple.Create("Save", 4400), true)
-, Tuple.Create(Tuple.Create(" ", 4404), Tuple.Create("Draft", 4405), true)
-, Tuple.Create(Tuple.Create(" ", 4410), Tuple.Create("Form\"]", 4411), true)
-, Tuple.Create(Tuple.Create(" ", 4417), Tuple.Create("});", 4418), true)
+, 4388), false)
+, Tuple.Create(Tuple.Create("", 4404), Tuple.Create("\",", 4404), true)
+, Tuple.Create(Tuple.Create(" ", 4406), Tuple.Create("\"WT.dl\",", 4407), true)
+, Tuple.Create(Tuple.Create(" ", 4415), Tuple.Create("\"99\",", 4416), true)
+, Tuple.Create(Tuple.Create(" ", 4421), Tuple.Create("\"WT.ti\",", 4422), true)
+, Tuple.Create(Tuple.Create(" ", 4430), Tuple.Create("\"Apprenticeship", 4431), true)
+, Tuple.Create(Tuple.Create(" ", 4446), Tuple.Create("–", 4447), true)
+, Tuple.Create(Tuple.Create(" ", 4448), Tuple.Create("Save", 4449), true)
+, Tuple.Create(Tuple.Create(" ", 4453), Tuple.Create("Draft", 4454), true)
+, Tuple.Create(Tuple.Create(" ", 4459), Tuple.Create("Form\"]", 4460), true)
+, Tuple.Create(Tuple.Create(" ", 4466), Tuple.Create("});", 4467), true)
 );
 
 WriteLiteral(">Save</button>\r\n        </p>\r\n");
 
             
-            #line 81 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 80 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 81 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 80 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
          if (Model.DateUpdated.HasValue)
         {
 
@@ -533,7 +532,7 @@ WriteLiteral(" id=\"applicationSaved\"");
 WriteLiteral(">Last saved at ");
 
             
-            #line 83 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 82 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                Write(Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved"));
 
             
@@ -541,14 +540,14 @@ WriteLiteral(">Last saved at ");
             #line hidden
 WriteLiteral(" to <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4638), Tuple.Create("\"", 4694)
+WriteAttribute("href", Tuple.Create(" href=\"", 4687), Tuple.Create("\"", 4743)
             
-            #line 83 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 4645), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+            #line 82 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+                                                            , Tuple.Create(Tuple.Create("", 4694), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 4645), false)
+, 4694), false)
 );
 
 WriteLiteral(" title=\"My Applications\"");
@@ -556,7 +555,7 @@ WriteLiteral(" title=\"My Applications\"");
 WriteLiteral(">my applications</a></p>\r\n");
 
             
-            #line 84 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 83 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
         }
 
             
@@ -565,7 +564,7 @@ WriteLiteral(">my applications</a></p>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 86 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 85 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
     
 }
 
@@ -587,7 +586,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("    ");
 
             
-            #line 95 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 94 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/knockout"));
 
             
@@ -614,7 +613,7 @@ WriteLiteral(@">
             qualificationData = ");
 
             
-            #line 111 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 110 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                            Write(Html.Raw(Json.Encode(Model.Candidate.Qualifications)));
 
             
@@ -623,7 +622,7 @@ WriteLiteral(@">
 WriteLiteral(";\r\n            workExperienceData = ");
 
             
-            #line 112 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 111 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                             Write(Html.Raw(Json.Encode(Model.Candidate.WorkExperience)));
 
             
@@ -632,7 +631,7 @@ WriteLiteral(";\r\n            workExperienceData = ");
 WriteLiteral(";\r\n            trainingHistoryData = ");
 
             
-            #line 113 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 112 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                              Write(Html.Raw(Json.Encode(Model.Candidate.TrainingHistory)));
 
             
@@ -641,7 +640,7 @@ WriteLiteral(";\r\n            trainingHistoryData = ");
 WriteLiteral(";\r\n\r\n            currentYear = ");
 
             
-            #line 115 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 114 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                      Write(Html.Raw(Model.CurrentYear));
 
             
@@ -650,7 +649,7 @@ WriteLiteral(";\r\n\r\n            currentYear = ");
 WriteLiteral(";\r\n            whitelistregex = ");
 
             
-            #line 116 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 115 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                         Write(Html.Raw(Json.Encode(Model.WhiteListRegex)));
 
             
@@ -659,7 +658,7 @@ WriteLiteral(";\r\n            whitelistregex = ");
 WriteLiteral(";\r\n            yearRegex = ");
 
             
-            #line 117 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 116 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                    Write(Html.Raw(Json.Encode(Model.FourDigitYearRegex)));
 
             
@@ -668,7 +667,7 @@ WriteLiteral(";\r\n            yearRegex = ");
 WriteLiteral(";\r\n\r\n            autoSaveTimeout = ");
 
             
-            #line 119 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 118 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                          Write(Html.Raw(Json.Encode(Model.AutoSaveTimeInMinutes)));
 
             
@@ -680,7 +679,7 @@ WriteLiteral(" * 60 * 1000;\r\n\r\n            $(window).on(\'load\', function()
 "out: ");
 
             
-            #line 125 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 124 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                         Write(Model.SessionTimeout);
 
             
@@ -689,7 +688,7 @@ WriteLiteral(" * 60 * 1000;\r\n\r\n            $(window).on(\'load\', function()
 WriteLiteral(" * 1000,\r\n                    confirmationMessage: \'");
 
             
-            #line 126 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 125 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                      Write(Model.ConfirmationMessage);
 
             
@@ -700,7 +699,7 @@ WriteLiteral("\'\r\n                });\r\n            });\r\n\r\n            va
 " false;\r\n            }, ");
 
             
-            #line 134 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 133 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
           Write(Model.SessionTimeout);
 
             
@@ -718,7 +717,7 @@ WriteLiteral(@" * 1000);
                         (e || window.event).returnValue = '");
 
             
-            #line 143 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 142 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                       Write(Model.ConfirmationMessage);
 
             
@@ -727,7 +726,7 @@ WriteLiteral(@" * 1000);
 WriteLiteral("\'; //Gecko + IE\r\n                        return \'");
 
             
-            #line 144 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 143 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                            Write(Model.ConfirmationMessage);
 
             
@@ -758,7 +757,7 @@ WriteLiteral(@"'; //Webkit, Safari, Chrome etc.
                 Webtrends.multiTrack({ element: this, argsa: [""DCS.dcsuri"", ""/apprenticeship/apply/autosavedraft/");
 
             
-            #line 166 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 165 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                                                             Write(Model.VacancyId);
 
             
@@ -769,7 +768,7 @@ WriteLiteral("\", \"WT.dl\", \"99\", \"WT.ti\", \"Apprenticeship – Auto Save D
 "       url: \'");
 
             
-            #line 169 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 168 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                      Write(Url.Action("AutoSave", "ApprenticeshipApplication", new {id = Model.VacancyId}));
 
             
@@ -785,7 +784,7 @@ WriteLiteral(@"',
                         var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href=""");
 
             
-            #line 176 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 175 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                                                      Write(Url.RouteUrl(CandidateRouteNames.MyApplications));
 
             
@@ -815,7 +814,7 @@ WriteLiteral("\" title=\"My Applications\">my applications</a>\';\r\n           
 WriteLiteral("    ");
 
             
-            #line 238 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 237 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/nas/applicationform"));
 
             
