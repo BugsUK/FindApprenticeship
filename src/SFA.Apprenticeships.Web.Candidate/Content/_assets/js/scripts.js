@@ -334,11 +334,9 @@ $(function() {
 
     //------- Inline details toggle
 
-  $('.summary-style').on('click', function () {
+  $(document).on('click', '.summary-style', function () {
       $this = $(this);
-
       $this.toggleClass('open');
-
       $this.next('.detail-content').toggle();
   });
 

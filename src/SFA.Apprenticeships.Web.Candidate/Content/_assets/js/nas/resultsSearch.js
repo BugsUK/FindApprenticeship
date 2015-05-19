@@ -1,5 +1,9 @@
 ﻿$(function () {
 
+    if (Modernizr.history) {
+        history.replaceState({ searchUrl: location.href }, location.href);
+    };
+
     $("#Location").locationMatch({
         url: locationUrl,
         longitude: '#Longitude',
@@ -14,17 +18,19 @@
 
     $(document).on('change', '.history #sort-results', function () {
         $('#SearchAction').val("Sort");
-        var formdata = $('form').serialize() + "&" + GetSearchResultsDetailsValues();
+        var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
+        //TODO: HENRY START SPINNER/WAITING
         $.ajax({
-            url: searchUrl,
-            method: 'GET',
-            data: formdata
+            url: searchQueryUrl,
+            method: 'GET'            
         }).done(function (response) {
+            $("#pagedList").empty();
             $("#pagedList").html(response);
             $(window).trigger('googleMapsScriptLoaded');
-            //$(document).scrollTop(0);
+            history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
+            //TODO: HENRY STOP SPINNER/WAITING
+            //TODO: Need to add matraxis multi track here to log page
         }).fail(function () {
-            // Whoops; show an error.
         });
     });
 
@@ -35,20 +41,60 @@
 
     $(document).on('change', '.history #results-per-page', function () {
         $('#SearchAction').val("Sort");
-        var formdata = $('form').serialize() + "&" + GetSearchResultsDetailsValues();
+        var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
+        //TODO: HENRY START SPINNER/WAITING
         $.ajax({
-            url: searchUrl,
-            method: 'GET',
-            data: formdata
+            url: searchQueryUrl,
+            method: 'GET'
         }).done(function (response) {
+            $("#pagedList").empty();
             $("#pagedList").html(response);
             $(window).trigger('googleMapsScriptLoaded');
             $(document).scrollTop(0);
+            history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
+            //TODO: HENRY STOP SPINNER/WAITING
+            //TODO: Need to add matraxis multi track here to log page
         }).fail(function () {
-            // Whoops; show an error.deleteVacancyUrl
         });
     });
 
+    $(document).on('change', '.history .page-navigation a', function (e) {
+        e.preventDefault();
+        var link = $(this);
+        var searchQueryUrl = link.href;
+        //TODO: HENRY START SPINNER/WAITING
+        $.ajax({
+            url: searchQueryUrl,
+            method: 'GET'
+        }).done(function (response) {
+            $("#pagedList").empty();
+            $("#pagedList").html(response);
+            $(window).trigger('googleMapsScriptLoaded');
+            $(document).scrollTop(0);
+            history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
+            //TODO: HENRY STOP SPINNER/WAITING
+            //TODO: Need to add matraxis multi track here to log page
+        }).fail(function () {
+        });
+    });
+
+    $(window).on("popstate", function (e) {
+        if (e.originalEvent.state !== null && e.originalEvent.state.searchUrl) {
+            //TODO: HENRY START SPINNER/WAITING
+            $.ajax({
+                url: e.originalEvent.state.searchUrl,
+                method: 'GET'
+            }).done(function (response) {
+                $("#pagedList").empty();
+                $("#pagedList").html(response);
+                $(window).trigger('googleMapsScriptLoaded');
+                $(document).scrollTop(0);
+                //TODO: HENRY STOP SPINNER/WAITING
+                //TODO: Need to add matraxis multi track here to log page
+            }).fail(function () {
+            });
+        }
+    });
 
     $(document).on('click', '#search-button', function () {
         $('#LocationType').val("NonNational");
@@ -60,7 +106,6 @@
 
         //Append current results detail view settings to query string so they are saved.
         $href = $href + '&' + GetSearchResultsDetailsValues();
-
         $this.attr('href', $href);
     });
 

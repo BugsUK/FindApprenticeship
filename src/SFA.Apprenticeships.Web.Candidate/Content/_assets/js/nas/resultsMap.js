@@ -13,17 +13,17 @@ $(function () {
         apprLatitude       = Number($('#Latitude').val()),
         apprLongitude      = Number($('#Longitude').val()),
         apprMiles          = Number($('#loc-within').val()),
-        resultsPage        = $('#results-per-page').val(),
-        numberOfResults    = $('.vacancy-link').length,
-        distanceOfLast     = $('.search-results__item:last-child .distance-value').html(),
-        firstLat           = $('.vacancy-link:first-of-type').attr('data-lat'),
-        firstLon           = $('.vacancy-link:first-of-type').attr('data-lon'),
-        sortResultsControl = $('#sort-results').val(),
+        //resultsPage        = $('#results-per-page').val(),  
+        //numberOfResults    = $('.vacancy-link').length,
+        //distanceOfLast     = $('.search-results__item:last-child .distance-value').html(),
+        firstLat, //           = $('.vacancy-link:first-of-type').attr('data-lat'),
+        firstLon, //           = $('.vacancy-link:first-of-type').attr('data-lon'),
+        //sortResultsControl = $('#sort-results').val(),
         apprZoom           = 9,
         radiusCircle,
-        vacancyLinks       = $('.vacancy-link').toArray(),
+        vacancyLinks       = [],
         vacancies          = [],
-        vacancy            = [],
+        //vacancy            = [],
         theMarkers         = [],
         theMaps            = [],
         directionsDisplay  = [],
@@ -44,17 +44,26 @@ $(function () {
         markerIcon = new google.maps.MarkerImage('/Content/_assets/img/icon-location.png', null, null, null, new google.maps.Size(20, 32));
         selectedIcon = new google.maps.MarkerImage('/Content/_assets/img/icon-location-selected.png', null, null, null, new google.maps.Size(20, 32));
 
+        firstLat = $('.vacancy-link:first-of-type').attr('data-lat');
+        firstLon = $('.vacancy-link:first-of-type').attr('data-lon');
+        vacancyLinks = $('.vacancy-link').toArray();
+
+        theMaps = [];
+
+        $('.map-links').each(function () {
+            var $this = $(this),
+            aHref = $this.attr('href');
+            $this.attr('href', aHref.replace('LocationLatLon', theLatLon));
+        });
+
+        if (apprLatitude == 0 || apprLongitude == 0) {
+            $('#map-canvas').parent().hide();
+        }
+
         lazyLoadMaps();
         setGoogDirectionsServices();
         initialize();
         loadScript();
-    });
-
-    $('.map-links').each(function(){
-        var $this = $(this),
-        aHref = $this.attr('href');
-
-        $this.attr('href', aHref.replace('LocationLatLon', theLatLon));
     });
 
     function setGoogDirectionsServices() {
@@ -75,10 +84,6 @@ $(function () {
         if (lat != firstLat && longi != firstLon) {
             vacanciesSame = false;
         }
-    }
-
-    if (apprLatitude == 0 || apprLongitude == 0) {
-        $('#map-canvas').parent().hide();
     }
 
     function initialize() {
@@ -121,7 +126,7 @@ $(function () {
 
         var theZoom = null;
 
-        setMarkers(map, vacancies)
+        setMarkers(map, vacancies);
 
         if (!vacanciesSame && $('#LocationType').val() == 'NonNational') {
             map.fitBounds(bounds);
@@ -166,18 +171,13 @@ $(function () {
             latLngList.push(myLatLng);
 
             bounds.extend(latLngList[i]);
-
-            var vacancyID = appship[3];
-
-            bindMarkerClick(marker, map, vacancyID, markerIcon, selectedIcon);
-
-            itemHover(markerIcon, selectedIcon);
-
+            var vacancyId = appship[3];
+            bindMarkerClick(marker, map, vacancyId);
+            itemHover();
         }
-
     }
 
-    function bindMarkerClick(marker, map, vacancyID, markerIcon, selectedIcon) {
+    function bindMarkerClick(marker, map, vacancyId) {
         google.maps.event.addListener(marker, 'mouseover', function () {
             marker.setIcon(selectedIcon);
             marker.setZIndex(1000);
@@ -186,7 +186,7 @@ $(function () {
         google.maps.event.addListener(marker, 'click', function () {
             marker.setIcon(selectedIcon);
             marker.setZIndex(1000);
-            $('[data-vacancy-id="' + vacancyID + '"]').closest('.search-results__item')[0].scrollIntoView();
+            $('[data-vacancy-id="' + vacancyId + '"]').closest('.search-results__item')[0].scrollIntoView();
         });
 
         google.maps.event.addListener(marker, 'mouseout', function () {
@@ -195,7 +195,7 @@ $(function () {
         });
     }
 
-    function itemHover(markerIcon, selectedIcon) {
+    function itemHover() {
         $('.search-results__item').mouseover(function () {
             var thisPosition = $(this).index();
             theMarkers[thisPosition].setIcon(selectedIcon);
@@ -208,7 +208,6 @@ $(function () {
             theMarkers[thisPosition].setIcon(markerIcon);
             theMarkers[thisPosition].setZIndex(0);
         });
-
     }
 
     function lazyLoadMaps() {
@@ -240,11 +239,8 @@ $(function () {
                             };
 
                             lazyMap.setOptions(lazyOptions);
-
                             new google.maps.Marker({ position: latlng, map: lazyMap, icon: markerIcon });
-
                             theMaps.push(lazyMap);
-
                         }
                     });
             })(jQuery, window, document);
@@ -260,7 +256,7 @@ $(function () {
         if (!apiScriptLoaded) return true;
     }
 
-    $('.mob-map-trigger.map-closed').on('click', function () {
+    $(document).on('click', '.mob-map-trigger.map-closed', function () {
         var $this = $(this);
 
         loadScript();
@@ -272,7 +268,6 @@ $(function () {
         if (apiScriptLoaded) {
             showHideMaps($this);
         }
-
     });
 
     function showHideMaps(that) {
@@ -362,11 +357,11 @@ $(function () {
         }
     });
 
-    $(document).on('click', '.journey-trigger', function (originLocation) {
+    $(document).on('click', '.journey-trigger', function () {
         var $this = $(this),
             $thisVal = $this.next('.detail-content').find('.select-mode option:selected').val(),
             $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
-            $thisMap = $this.closest('.search-results__item').find('.map'),
+            //$thisMap = $this.closest('.search-results__item').find('.map'),
             $thisLat = $thisVacLink.attr('data-lat'),
             $thisLong = $thisVacLink.attr('data-lon'),
             $durationElement = $this.next('.detail-content').find('.journey-time'),
@@ -381,7 +376,6 @@ $(function () {
         if (apiScriptLoaded) {
             calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, false);
         }
-
     });
 
     if ($('#editSearchPanel').css('display') == 'block') {
@@ -391,5 +385,4 @@ $(function () {
     $('#editSearchToggle').on('click', function () {
         initialize();
     });
-
 });
