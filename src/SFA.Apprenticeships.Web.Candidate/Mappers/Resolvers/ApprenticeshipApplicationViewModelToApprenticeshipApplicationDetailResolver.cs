@@ -53,6 +53,10 @@
                     modelBase.HasWorkExperience
                         ? ApplicationConverter.GetWorkExperiences(modelBase.WorkExperience)
                         : new List<WorkExperience>(),
+                TrainingHistory = 
+                    modelBase.HasTrainingHistory
+                        ? ApplicationConverter.GetTrainingHistory(modelBase.TrainingHistory)
+                        : new List<TrainingHistory>(),
                 DisabilityStatus = ApplicationConverter.GetDisabilityStatus(modelBase.MonitoringInformation.DisabilityStatus)
             };
         }

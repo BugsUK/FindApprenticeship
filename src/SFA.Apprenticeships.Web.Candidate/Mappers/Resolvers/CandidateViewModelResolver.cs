@@ -17,10 +17,16 @@
             candidateViewModel.DateOfBirth = applicationDetail.CandidateDetails.DateOfBirth;
             candidateViewModel.PhoneNumber = applicationDetail.CandidateDetails.PhoneNumber;
             candidateViewModel.Address = ApplicationConverter.GetAddressViewModel(applicationDetail.CandidateDetails.Address);
+
             candidateViewModel.Qualifications = ApplicationConverter.GetQualificationsViewModels(applicationDetail.CandidateInformation.Qualifications);
-            candidateViewModel.HasQualifications = ApplicationConverter.GetQualificationsViewModels(applicationDetail.CandidateInformation.Qualifications).Any();
+            candidateViewModel.HasQualifications = candidateViewModel.Qualifications.Any();
+            
             candidateViewModel.WorkExperience = ApplicationConverter.GetWorkExperiencesViewModels(applicationDetail.CandidateInformation.WorkExperience);
-            candidateViewModel.HasWorkExperience = ApplicationConverter.GetWorkExperiencesViewModels(applicationDetail.CandidateInformation.WorkExperience).Any();
+            candidateViewModel.HasWorkExperience = candidateViewModel.WorkExperience.Any();
+            
+            candidateViewModel.TrainingHistory = ApplicationConverter.GetTrainingHistoryViewModels(applicationDetail.CandidateInformation.TrainingHistory);
+            candidateViewModel.HasTrainingHistory = candidateViewModel.TrainingHistory.Any();
+
             candidateViewModel.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(applicationDetail.CandidateInformation.AboutYou, applicationDetail.CandidateInformation.DisabilityStatus);
             candidateViewModel.EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel
             {

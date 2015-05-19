@@ -60,6 +60,7 @@
                 {
                     Qualifications = candidate.ApplicationTemplate.Qualifications,
                     WorkExperience = candidate.ApplicationTemplate.WorkExperience,
+                    TrainingHistory = candidate.ApplicationTemplate.TrainingHistory,
                     AboutYou = candidate.ApplicationTemplate.AboutYou,
                     DisabilityStatus = candidate.MonitoringInformation.DisabilityStatus
                 },

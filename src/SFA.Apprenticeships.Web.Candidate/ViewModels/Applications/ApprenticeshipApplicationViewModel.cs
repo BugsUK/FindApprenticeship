@@ -15,14 +15,13 @@
     public class ApprenticeshipApplicationViewModel : ApplicationViewModelBase
     {
         //Constants used on application form
-        public string AutoSaveTimeInMiutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
+        public string AutoSaveTimeInMinutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
 
         public ApplicationStatuses Status { get; set; }
 
         public ApprenticeshipCandidateViewModel Candidate { get; set; }
 
         public ApprenticeshipVacancyDetailViewModel VacancyDetail { get; set; }
-
 
         public ApprenticeshipApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus)
             : base(message, viewModelStatus)

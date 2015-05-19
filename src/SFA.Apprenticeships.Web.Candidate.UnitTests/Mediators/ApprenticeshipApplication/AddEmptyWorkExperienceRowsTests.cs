@@ -11,12 +11,13 @@
     [TestFixture]
     public class AddEmptyWorkExperienceRowsTests : TestsBase
     {
-        private static string _someJobTitle;
         private const string BlankSpace = "  ";
-        private const string SomeWorkExperienceDescription = "Work experience description";
+        private const string SomeDescription = "Some description";
         private const string SomeEmployer = "Some employer";
         private const int SomeMonth = 1;
         private const string SomeYear = "2012";
+
+        private static string _someJobTitle;
 
         [Test]
         public void Ok()
@@ -37,7 +38,7 @@
         {
             var viewModel = new ApprenticeshipApplicationViewModel
             {
-                Candidate = CreateCandidateWithOneWorkExerienceAndTwoEmptyWorkExperiences(),
+                Candidate = CreateCandidateWithOneCompletedAndTwoEmptyWorkExperienceRows(),
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
             };
 
@@ -47,7 +48,7 @@
             response.ViewModel.Candidate.WorkExperience.Should().HaveCount(1);
         }
 
-        private static ApprenticeshipCandidateViewModel CreateCandidateWithOneWorkExerienceAndTwoEmptyWorkExperiences()
+        private static ApprenticeshipCandidateViewModel CreateCandidateWithOneCompletedAndTwoEmptyWorkExperienceRows()
         {
             _someJobTitle = "Job title";
             return new ApprenticeshipCandidateViewModel
@@ -57,7 +58,7 @@
                     new WorkExperienceViewModel(),
                     new WorkExperienceViewModel
                     {
-                        Description = SomeWorkExperienceDescription,
+                        Description = SomeDescription,
                         Employer = SomeEmployer,
                         FromMonth = SomeMonth,
                         FromYear = SomeYear,

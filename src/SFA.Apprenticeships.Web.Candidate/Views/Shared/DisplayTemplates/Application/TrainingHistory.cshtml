@@ -1,0 +1,86 @@
+﻿@model IEnumerable<TrainingHistoryViewModel>
+
+<section class="section-border">
+    <h2 class="heading-large">
+        Training courses
+        @if (ViewBag.VacancyId != null)
+        {
+            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyTrainingHistory">
+                <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
+            </a>
+        }
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <p id="no-training-history">I have not been on any training courses</p>
+    }
+
+    @foreach (var each in Model)
+    {
+        <div class="grid-3-4 nobreak-print">
+            <div class="grid-wrapper training-history-item">
+
+                <div class="grid grid-1-2">
+                    <table class="table-no-btm-border table-compound">
+                        <colgroup>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="heading-span">Training courses</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="form-prepopped cell-span">@each.Provider</span>
+                                    <span class="form-prepopped cell-span training-hyphen">-</span>
+                                    <span class="form-prepopped cell-span">@each.CourseTitle</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="grid grid-1-2">
+                    <table class="table-no-btm-border table-compound">
+                        <colgroup>
+                            <col class="t30">
+                            <col class="t30">
+                            <col class="t25">
+                            <col class="t15">
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="heading-span">From</span>
+                                </th>
+                                <th>
+                                    <span class="heading-span">To</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="form-prepopped cell-span">@Html.GetMonthYearLabel(each.FromMonth, each.FromYear)</span>
+                                </td>
+                                <td>
+                                    <span class="form-prepopped cell-span">@Html.GetMonthYearLabel(each.ToMonth, each.ToYear)</span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</section>

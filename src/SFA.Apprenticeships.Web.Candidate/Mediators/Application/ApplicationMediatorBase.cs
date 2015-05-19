@@ -7,6 +7,7 @@
     using Search;
     using ViewModels.Candidate;
 
+    // TODO: AG: US786: unit test.
     public abstract class ApplicationMediatorBase : SearchMediatorBase
     {
         protected ApplicationMediatorBase(IConfigurationService configService, IUserDataProvider userDataProvider)
@@ -23,12 +24,26 @@
             }
 
             return workExperience.Where(vm =>
-                vm.Employer != null && !string.IsNullOrWhiteSpace(vm.Employer.Trim()) ||
-                vm.JobTitle != null && !string.IsNullOrWhiteSpace(vm.JobTitle.Trim()) ||
-                vm.Description != null && !string.IsNullOrWhiteSpace(vm.Description.Trim()) ||
-                vm.FromYear != null && !string.IsNullOrWhiteSpace(vm.FromYear.Trim()) ||
-                vm.ToYear != null && !string.IsNullOrWhiteSpace(vm.ToYear.Trim())
-                ).ToList();
+                IsTrimmedNullOrWhitespace(vm.Employer) ||
+                IsTrimmedNullOrWhitespace(vm.JobTitle) ||
+                IsTrimmedNullOrWhitespace(vm.Description) ||
+                IsTrimmedNullOrWhitespace(vm.FromYear) ||
+                IsTrimmedNullOrWhitespace(vm.ToYear));
+        }
+
+        protected static IEnumerable<TrainingHistoryViewModel> RemoveEmptyRowsFromTrainingHistory(
+            IEnumerable<TrainingHistoryViewModel> trainingHistoryViewModels)
+        {
+            if (trainingHistoryViewModels == null)
+            {
+                return new List<TrainingHistoryViewModel>();
+            }
+
+            return trainingHistoryViewModels.Where(vm =>
+                IsTrimmedNullOrWhitespace(vm.Provider) ||
+                IsTrimmedNullOrWhitespace(vm.CourseTitle) ||
+                IsTrimmedNullOrWhitespace(vm.FromYear) ||
+                IsTrimmedNullOrWhitespace(vm.ToYear));
         }
 
         protected static IEnumerable<QualificationsViewModel> RemoveEmptyRowsFromQualifications(
@@ -40,10 +55,19 @@
             }
 
             return qualifications.Where(vm =>
-                vm.Subject != null && !string.IsNullOrWhiteSpace(vm.Subject.Trim()) ||
-                vm.QualificationType != null && !string.IsNullOrWhiteSpace(vm.QualificationType.Trim()) ||
-                vm.Grade != null && !string.IsNullOrWhiteSpace(vm.Grade.Trim()) ||
-                vm.Year != null && !string.IsNullOrWhiteSpace(vm.Year.Trim())).ToList();
+                IsTrimmedNullOrWhitespace(vm.Subject) ||
+                IsTrimmedNullOrWhitespace(vm.QualificationType) ||
+                IsTrimmedNullOrWhitespace(vm.Grade) ||
+                IsTrimmedNullOrWhitespace(vm.Year));
         }
+
+        #region Helpers
+
+        private static bool IsTrimmedNullOrWhitespace(string s)
+        {
+            return s != null && !string.IsNullOrWhiteSpace(s.Trim());
+        }
+
+        #endregion
     }
 }

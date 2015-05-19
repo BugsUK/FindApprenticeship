@@ -35,6 +35,7 @@
 
             candidate.ApplicationTemplate.Qualifications = traineeshipApplicationDetail.CandidateInformation.Qualifications;
             candidate.ApplicationTemplate.WorkExperience = traineeshipApplicationDetail.CandidateInformation.WorkExperience;
+            candidate.ApplicationTemplate.TrainingHistory = traineeshipApplicationDetail.CandidateInformation.TrainingHistory;
 
             _candidateWriteRepository.Save(candidate);
         }

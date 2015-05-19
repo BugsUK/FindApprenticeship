@@ -66,6 +66,21 @@
             }).AsEnumerable();
         }
 
+
+        public static IEnumerable<TrainingHistoryViewModel> GetTrainingHistoryViewModels(
+            IEnumerable<TrainingHistory> trainingHistory)
+        {
+            return trainingHistory.Select(m => new TrainingHistoryViewModel
+            {
+                Provider = m.Provider,
+                CourseTitle = m.CourseTitle,
+                FromMonth = m.FromDate.Month,
+                FromYear = ConvertYearIntToString(m.FromDate.Year),
+                ToMonth = m.ToDate.Month,
+                ToYear = ConvertYearIntToString(m.ToDate.Year)
+            }).AsEnumerable();
+        }
+
         public static EducationViewModel GetEducationViewModel(Education educationHistory)
         {
             if (educationHistory == null)
@@ -164,6 +179,28 @@
                 Employer = model.Employer,
                 JobTitle = model.JobTitle,
                 FromDate = 
+                    ConvertYearStringToInt(model.FromYear) != 0
+                        ? new DateTime(ConvertYearStringToInt(model.FromYear), model.FromMonth, 1)
+                        : DateTime.MinValue,
+                ToDate =
+                    ConvertYearStringToInt(model.ToYear) != 0
+                        ? new DateTime(ConvertYearStringToInt(model.ToYear), model.ToMonth, 1)
+                        : DateTime.MinValue
+            }).ToList();
+        }
+
+        public static IList<TrainingHistory> GetTrainingHistory(IEnumerable<TrainingHistoryViewModel> trainingHistoryViewModels)
+        {
+            if (trainingHistoryViewModels == null)
+            {
+                return new List<TrainingHistory>();
+            }
+
+            return trainingHistoryViewModels.Select(model => new TrainingHistory
+            {
+                Provider = model.Provider,
+                CourseTitle = model.CourseTitle,
+                FromDate =
                     ConvertYearStringToInt(model.FromYear) != 0
                         ? new DateTime(ConvertYearStringToInt(model.FromYear), model.FromMonth, 1)
                         : DateTime.MinValue,

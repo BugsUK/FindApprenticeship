@@ -13,6 +13,7 @@
     using Validators;
     using ViewModels.Applications;
 
+    // TODO: US786: add TrainingHistory.
     public class TraineeshipApplicationMediator : ApplicationMediatorBase, ITraineeshipApplicationMediator
     {
         private readonly ITraineeshipApplicationProvider _traineeshipApplicationProvider;

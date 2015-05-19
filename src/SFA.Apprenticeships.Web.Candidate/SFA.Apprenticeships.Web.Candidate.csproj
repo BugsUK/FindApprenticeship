@@ -694,6 +694,14 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>View.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TrainingHistory.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\ApprenticeshipApplication\_trainingHistoryJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_trainingHistoryJS.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -791,6 +799,7 @@
     <Compile Include="Constants\ViewModels\ForgottenEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyUpdatedEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyMobileViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\TrainingHistoryViewModelMessages.cs" />
     <Compile Include="Controllers\SiteMapController.cs" />
     <Compile Include="Controllers\UnsubscribeController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
@@ -818,6 +827,7 @@
     <Compile Include="Validators\MonitoringInformationViewModelValidator.cs" />
     <Compile Include="Validators\VerifyUpdatedEmailViewModelClientValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
+    <Compile Include="Validators\TrainingHistoryViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileState.cs" />
     <Compile Include="ViewModels\Account\EmailViewModel.cs" />
@@ -841,6 +851,7 @@
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextApprenticeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\MonitoringInformationViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\TrainingHistoryViewModel.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenCredentialsViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenEmailViewModel.cs" />
@@ -1041,10 +1052,20 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployerQuestionAnswersViewModel.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\_trainingHistoryJS.generated.cs">
+      <DependentUpon>_trainingHistoryJS.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\Qualifications.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Qualifications.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\TrainingHistory.generated.cs">
+      <DependentUpon>TrainingHistory.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\WorkExperience.generated.cs">
       <AutoGen>True</AutoGen>

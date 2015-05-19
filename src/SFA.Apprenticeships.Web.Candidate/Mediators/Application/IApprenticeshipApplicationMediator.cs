@@ -18,6 +18,8 @@
 
         MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyWorkExperienceRows(ApprenticeshipApplicationViewModel viewModel);
 
+        MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyTrainingHistoryRows(ApprenticeshipApplicationViewModel viewModel);
+
         MediatorResponse<ApprenticeshipApplicationViewModel> PreviewAndSubmit(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel);
 
         MediatorResponse<ApprenticeshipApplicationViewModel> Preview(Guid candidateId, int vacancyId);

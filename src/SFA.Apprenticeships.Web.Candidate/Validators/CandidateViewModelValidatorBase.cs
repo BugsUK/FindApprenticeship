@@ -3,6 +3,7 @@
     using FluentValidation;
     using ViewModels.Candidate;
 
+    // TODO: AG: US786: review TrainingHistory refs.
     public abstract class CandidateViewModelClientValidatorBase<T> : AbstractValidator<T> where T : CandidateViewModelBase
     {
         protected CandidateViewModelClientValidatorBase()
@@ -22,6 +23,9 @@
             RuleFor(x => x.WorkExperience)
                 .SetCollectionValidator(new WorkExperienceViewModelValidator())
                 .When(x => x.HasWorkExperience);
+            RuleFor(x => x.TrainingHistory)
+                .SetCollectionValidator(new TrainingHistoryViewModelValidator())
+                .When(x => x.HasTrainingHistory);
         }
     }
 }

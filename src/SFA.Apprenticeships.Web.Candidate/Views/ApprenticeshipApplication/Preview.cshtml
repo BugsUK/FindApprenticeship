@@ -48,8 +48,9 @@
 </div>
 
 @Html.DisplayFor(m => m.Candidate.Education)
-@Html.DisplayFor(m => m.Candidate.Qualifications, "QualificationsViewModel")
-@Html.DisplayFor(m => m.Candidate.WorkExperience, "WorkExperienceViewModel")
+@Html.DisplayFor(m => m.Candidate.Qualifications, "Application/Qualifications")
+@Html.DisplayFor(m => m.Candidate.WorkExperience, "Application/WorkExperience")
+@Html.DisplayFor(m => m.Candidate.TrainingHistory, "Application/TrainingHistory")
 @Html.DisplayFor(m => m.Candidate.AboutYou)
 
 <section class="section-border">

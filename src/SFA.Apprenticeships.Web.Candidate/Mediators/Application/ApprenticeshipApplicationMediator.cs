@@ -262,9 +262,11 @@
         public MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyQualificationRows(ApprenticeshipApplicationViewModel viewModel)
         {
             viewModel.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(viewModel.Candidate.Qualifications);
-            viewModel.Candidate.HasQualifications = viewModel.Candidate.Qualifications.Count() != 0;
+            viewModel.Candidate.HasQualifications = viewModel.Candidate.Qualifications.Any();
+
             viewModel.DefaultQualificationRows = 5;
             viewModel.DefaultWorkExperienceRows = 0;
+            viewModel.DefaultTrainingHistoryRows = 0;
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyQualificationRows.Ok, viewModel);
         }
@@ -272,12 +274,26 @@
         public MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyWorkExperienceRows(ApprenticeshipApplicationViewModel viewModel)
         {
             viewModel.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(viewModel.Candidate.WorkExperience);
-            viewModel.Candidate.HasWorkExperience = viewModel.Candidate.WorkExperience.Count() != 0;
+            viewModel.Candidate.HasWorkExperience = viewModel.Candidate.WorkExperience.Any();
 
             viewModel.DefaultQualificationRows = 0;
             viewModel.DefaultWorkExperienceRows = 3;
+            viewModel.DefaultTrainingHistoryRows = 0;
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyWorkExperienceRows.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyTrainingHistoryRows(ApprenticeshipApplicationViewModel viewModel)
+        {
+            viewModel.Candidate.TrainingHistory = RemoveEmptyRowsFromTrainingHistory(viewModel.Candidate.TrainingHistory);
+            viewModel.Candidate.HasTrainingHistory = viewModel.Candidate.TrainingHistory.Any();
+
+            // TODO: AG: US786: unit test AddXxx functions and understand default rows.
+            viewModel.DefaultQualificationRows = 0;
+            viewModel.DefaultWorkExperienceRows = 0;
+            viewModel.DefaultTrainingHistoryRows = 3;
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, viewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Preview(Guid candidateId, int vacancyId)
@@ -374,19 +390,23 @@
 
         private static ApprenticeshipApplicationViewModel StripApplicationViewModelBeforeValidation(ApprenticeshipApplicationViewModel model)
         {
+            // TODO: AG: US786: unit test.
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
             model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
+            model.Candidate.TrainingHistory = RemoveEmptyRowsFromTrainingHistory(model.Candidate.TrainingHistory);
 
             model.DefaultQualificationRows = 0;
             model.DefaultWorkExperienceRows = 0;
+            model.DefaultTrainingHistoryRows = 0;
 
             if (model.IsJavascript)
             {
                 return model;
             }
 
-            model.Candidate.HasQualifications = model.Candidate.Qualifications.Count() != 0;
-            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Count() != 0;
+            model.Candidate.HasQualifications = model.Candidate.Qualifications.Any();
+            model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Any();
+            model.Candidate.HasTrainingHistory = model.Candidate.TrainingHistory.Any();
 
             return model;
         }

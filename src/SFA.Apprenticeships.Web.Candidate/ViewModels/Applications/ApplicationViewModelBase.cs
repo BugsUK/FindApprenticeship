@@ -13,11 +13,15 @@
         //Constants used on application form
         public string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
         public int CurrentYear = DateTime.Now.Year;
+
         public int DefaultQualificationRows = 5;
         public int DefaultWorkExperienceRows = 3;
+        public int DefaultTrainingHistoryRows = 3;
+
         public string FourDigitYearRegex = Whitelists.YearRangeWhiteList.RegularExpression();
-        public double SessionTimeout;
         public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
+
+        public double SessionTimeout;
 
         protected ApplicationViewModelBase()
         {

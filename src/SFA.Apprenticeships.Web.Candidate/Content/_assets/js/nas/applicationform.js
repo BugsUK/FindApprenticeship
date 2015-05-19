@@ -1,5 +1,5 @@
 ﻿(function () {
-    //Qualification Validation Messages
+    // Qualification Validation Messages
     var validationMessageSelectQualificationType = "Please select qualification type";
     var validationMessageOtherQualificationRequired = "Please enter other qualification";
     var validationMessageOtherQualificationContainsInvalidCharacters = "Other qualification can't contain invalid characters, eg '/'";
@@ -12,7 +12,7 @@
     var validationMessageGradeContainsInvalidCharacters = "Grade can't contain invalid characters, eg '/'";
     var validationMessageQualificationFutureYear = "Please select 'Predicted' if you're adding a grade in the future";
 
-    //Work Experience Validation Messages
+    // Work Experience Validation Messages
     var validationMessageEmployerRequired = "Please enter employer name";
     var validationMessageEmployerExceedsFiftyCharacters = "Employer name can't exceed 50 characters";
     var validationMessageEmployerContainsInvalidCharacters = "Employer name can't contain invalid characters, eg '/'";
@@ -34,6 +34,14 @@
     var validationMessageToYearMustBeAfterFromYear = 'Year finished must be after year started';
     var validationMessageYearMustBeAfter = "Year must be 4 digits, and not before 1915";
     var validationMessageDateFinishedMustBeAfterDateStarted = "Date finished must be after date started";
+
+    // Training History Validation Messages
+    var validationMessageProviderRequired = "TODO: Please enter provider name";
+    var validationMessageProviderExceedsFiftyCharacters = "TODO: Provider name can't exceed 50 characters";
+    var validationMessageProviderContainsInvalidCharacters = "TODO: Provider name can't contain invalid characters, eg '/'";
+    var validationMessageCourseTitleRequired = "TODO: Please enter course title";
+    var validationMessageCourseTitleExceedsFiftyCharacters = "TODO: Course title can't exceed 50 characters";
+    var validationMessageCourseTitleContainsInvalidCharacters = "TODO: Course title can't contain invalid characters, eg '/'";
 
     var qualificationTypeModel = function (name) {
         var self = this;
@@ -770,6 +778,304 @@
         };
 
     };
+
+    // ---------- TODO: AG: BEGIN: US786.
+
+    var trainingHistoryItemModel = function (itemProvider, itemCourseTitle, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemCurrentYear, itemRegex, itemYearRegexPattern) {
+        var self = this;
+
+        self.itemRegexPattern = ko.observable(itemRegex);
+        self.itemYearRegexPattern = ko.observable(itemYearRegexPattern);
+
+        self.itemProvider = ko.observable(itemProvider).extend({
+            required: { message: validationMessageProviderRequired }
+        }).extend({
+            maxLength: {
+                message: validationMessageProviderExceedsFiftyCharacters,
+                params: 50
+            }
+        }).extend({
+            pattern: {
+                message: validationMessageProviderContainsInvalidCharacters,
+                params: self.itemRegexPattern
+            }
+        });
+
+        self.itemCourseTitle = ko.observable(itemCourseTitle).extend({
+            required: { message: validationMessageCourseTitleRequired }
+        }).extend({
+            maxLength: {
+                message: validationMessageCourseTitleExceedsFiftyCharacters,
+                params: 50
+            }
+        }).extend({
+            pattern: {
+                message: validationMessageCourseTitleContainsInvalidCharacters,
+                params: self.itemRegexPattern
+            }
+        });
+
+        self.itemCurrentYear = ko.observable(itemCurrentYear);
+
+        self.itemFromMonth = ko.observable(itemFromMonth).extend({ required: { message: validationMessageFromMonthRequired } });
+
+        self.itemFromYear = ko.observable(itemFromYear).extend({
+            required: { message: validationMessageFromYearRequired }
+        }).extend({
+            number: {
+                message: validationMessageFromYearMustBeNumeric
+            }
+        }).extend({
+            min: {
+                message: validationMessageYearMustBeAfter,
+                params: new Date().getFullYear() - 100
+            }
+        }).extend({
+            max: {
+                message: validationMessageFromYearMustNotBeInFuture,
+                params: self.itemCurrentYear
+            }
+        });
+
+        self.itemToYear = ko.observable(itemToYear).extend({
+            required: { message: validationMessageToYearRequired }
+        }).extend({
+            number: {
+                message: validationMessageToYearMustBeNumeric
+            }
+        }).extend({
+            min: {
+                message: validationMessageYearMustBeAfter,
+                params: new Date().getFullYear() - 100
+            }
+        }).extend({
+            max: {
+                message: validationMessageToYearMustNotBeInFuture,
+                params: self.itemCurrentYear
+            }
+        }).extend({
+            validation: {
+                validator: function (val, fromYearValue) {
+                    return val >= fromYearValue;
+                },
+                message: validationMessageToYearMustBeAfterFromYear,
+                params: self.fromYear
+            }
+        });
+
+        self.itemToMonth = ko.observable(itemToMonth).extend({
+            required: {
+                message: validationMessageToMonthRequired
+            }
+        }).extend({
+            validation: {
+                validator: function (val, fromMonthValue) {
+                    return val >= fromMonthValue;
+                },
+                message: validationMessageDateFinishedMustBeAfterDateStarted,
+                params: self.itemFromMonth,
+                onlyIf: function () {
+                    return (self.itemFromYear() === self.itemToYear());
+                }
+            }
+        });
+
+        self.readOnly = ko.observable("readonly");
+        self.showEditButton = ko.observable(true);
+
+        self.toItemDateReadonly = ko.observable(undefined);
+
+        self.itemErrors = ko.validation.group(self);
+    }
+
+    var trainingHistoryViewModel = function () {
+        var self = this;
+
+        //TODO get this from config too
+        self.months = ko.observableArray([
+            new monthOfTheYear('Jan', 1), new monthOfTheYear('Feb', 2), new monthOfTheYear('Mar', 3),
+            new monthOfTheYear('Apr', 4), new monthOfTheYear('May', 5), new monthOfTheYear('June', 6),
+            new monthOfTheYear('July', 7), new monthOfTheYear('Aug', 8), new monthOfTheYear('Sept', 9),
+            new monthOfTheYear('Oct', 10), new monthOfTheYear('Nov', 11), new monthOfTheYear('Dec', 12)
+        ]);
+
+        self.hasTrainingHistory = ko.observable(undefined);
+        self.hasNoTrainingHistory = ko.observable(undefined);
+        self.showTrainingHistory = ko.observable(false);
+
+        self.trainingHistoryStatus = ko.computed(function () {
+            return self.showTrainingHistory() ? "block" : "none";
+        }, self);
+
+        self.regexPattern = ko.observable();
+        self.yearRegexPattern = ko.observable();
+
+        self.provider = ko.observable().extend({
+            required: { message: validationMessageProviderRequired }
+        }).extend({
+            maxLength: {
+                message: validationMessageProviderExceedsFiftyCharacters,
+                params: 50
+            }
+        }).extend({
+            pattern: {
+                message: validationMessageProviderContainsInvalidCharacters,
+                params: self.regexPattern
+            }
+        });
+
+        self.courseTitle = ko.observable().extend({
+            required: { message: validationMessageCourseTitleRequired }
+        }).extend({
+            maxLength: {
+                message: validationMessageCourseTitleExceedsFiftyCharacters,
+                params: 50
+            }
+        }).extend({
+            pattern: {
+                message: validationMessageCourseTitleContainsInvalidCharacters,
+                params: self.regexPattern
+            }
+        });
+
+        self.currentYear = ko.observable();
+
+        self.fromMonth = ko.observable().extend({
+            required: { message: validationMessageFromMonthRequired }
+        });
+
+        self.fromYear = ko.observable().extend({
+            required: { message: validationMessageFromYearRequired }
+        }).extend({
+            number: {
+                message: validationMessageFromYearMustBeNumeric
+            }
+        }).extend({
+            max: {
+                message: validationMessageFromYearMustNotBeInFuture,
+                params: self.currentYear
+            }
+        }).extend({
+            min: {
+                message: validationMessageYearMustBeAfter,
+                params: new Date().getFullYear() - 100
+            }
+        });
+
+        self.toMonth = ko.observable().extend({
+            required: { message: validationMessageToMonthRequired }
+        }).extend({
+            validation: {
+                validator: function (val, fromMonthValue) {
+                    return val >= fromMonthValue;
+                },
+                message: validationMessageDateFinishedMustBeAfterDateStarted,
+                params: self.fromMonth,
+                onlyIf: function () {
+                    return (self.fromYear() === self.toYear());
+                }
+            }
+        });
+
+        self.toYear = ko.observable().extend({
+            required: { message: validationMessageToYearRequired }
+        }).extend({
+            number: { message: validationMessageToYearMustBeNumeric }
+        }).extend({
+            max: {
+                message: validationMessageToYearMustNotBeInFuture,
+                params: self.currentYear
+            }
+        }).extend({
+            min: {
+                message: validationMessageYearMustBeAfter,
+                params: new Date().getFullYear() - 100
+            }
+        }).extend({
+            validation: {
+                validator: function (val, fromYearValue) {
+                    return val >= fromYearValue;
+                },
+                message: validationMessageToYearMustBeAfterFromYear,
+                params: self.fromYear
+            }
+        });
+
+        self.trainingHistoryItems = ko.observableArray();
+
+        self.errors = ko.validation.group(self);
+
+        self.addTrainingHistory = function () {
+            if (self.errors().length == 0) {
+                var toMonth = self.toMonth();
+                var toYear = self.toYear();
+
+                var model = new trainingHistoryItemModel(self.provider(), self.courseTitle(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.currentYear(), self.regexPattern(), self.yearRegexPattern());
+
+                self.trainingHistoryItems.push(model);
+
+                self.provider("");
+                self.courseTitle("");
+                self.fromYear(null);
+                self.toYear(null);
+
+                self.errors.showAllMessages(false);
+
+                $('#trainingHistoryAddConfirmText').text("TODO: Training course has been added to table below");
+
+            } else {
+                self.errors.showAllMessages();
+                $('#trainingHistoryAddConfirmText').text("TODO: There has been a problem adding training course, check you've entered all details correctly");
+            }
+
+        };
+
+        self.editTrainingHistory = function (trainingHistory) {
+            trainingHistory.readOnly(undefined);
+            trainingHistory.showEditButton(false);
+        };
+
+        self.saveTrainingHistory = function (trainingHistory) {
+            if (trainingHistory.itemErrors().length == 0) {
+                trainingHistory.readOnly('readonly');
+                trainingHistory.showEditButton(true);
+            } else {
+                trainingHistory.itemErrors.showAllMessages();
+            }
+        };
+
+        self.removeTrainingHistory = function (trainingHistory) {
+            self.trainingHistoryItems.remove(trainingHistory);
+        };
+
+        self.checkHasNoTrainingHistory = function () {
+            self.showTrainingHistory(false);
+            self.hasTrainingHistory(undefined);
+            self.hasNoTrainingHistory("checked");
+        };
+
+        self.getTrainingHistoryItems = function (data) {
+            $(data).each(function (index, item) {
+                var model = new trainingHistoryItemModel(item.Provider, item.CourseTitle, item.FromMonth, item.FromYear, item.ToMonth, item.ToYear, self.currentYear(), self.regexPattern(), self.yearRegexPattern());
+
+                self.trainingHistoryItems.push(model);
+            });
+
+            if (self.trainingHistoryItems().length > 0) {
+                self.showTrainingHistory(true);
+                self.hasTrainingHistory("checked");
+                self.hasNoTrainingHistory(undefined);
+
+            } else {
+                self.checkHasNoTrainingHistory();
+            }
+
+        };
+
+    };
+
+    // ---------- TODO: AG: END: US786.
+
     //Change this to modify where the vertical bar is placed
     ko.bindingHandlers.parentvalElement = {
         update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
@@ -794,11 +1100,11 @@
             span.className = "field-validation-error";
             $(span).attr('aria-live', 'polite');
 
-            var inputFormControls = $(element).closest(".form-control");
+            var inputFormControlParent = $(element).closest(".form-control").parent();
 
-            if (inputFormControls.length > 0) {
+            if (inputFormControlParent.length > 0) {
 
-                $(span).insertAfter(inputFormControls);
+                $(span).insertAfter(inputFormControlParent);
 
             } else {
                 element.parentNode.insertBefore(span, element.nextSibling);
@@ -821,25 +1127,28 @@
 
         var qualificationModel = new qualificationViewModel();
         var experienceViewModel = new workExperienceViewModel();
+        var trainingViewModel = new trainingHistoryViewModel();
 
         if (window.getCurrentYear()) {
             experienceViewModel.currentYear(window.getCurrentYear());
+            trainingViewModel.currentYear(window.getCurrentYear());
         }
 
         if (window.getWhiteListRegex()) {
             qualificationModel.regexPattern(window.getWhiteListRegex());
             experienceViewModel.regexPattern(window.getWhiteListRegex());
+            trainingViewModel.regexPattern(window.getWhiteListRegex());
         }
 
         if (window.getYearRegex()) {
             qualificationModel.yearRegexPattern(window.getYearRegex());
             experienceViewModel.yearRegexPattern(window.getYearRegex());
+            trainingViewModel.yearRegexPattern(window.getYearRegex());
         }
 
         if (window.getQualificationData()) {
             qualificationModel.getqualifications(window.getQualificationData());
-        }
-        else {
+        } else {
             qualificationModel.checkHasNoQualifications();
         }
 
@@ -849,19 +1158,30 @@
             experienceViewModel.checkHasNoWorkExperience();
         }
 
+        if (window.getTrainingHistoryData()) {
+            trainingViewModel.getTrainingHistoryItems(window.getTrainingHistoryData());
+        } else {
+            trainingViewModel.checkHasNoTrainingHistory();
+        }
+
         ko.applyBindings(qualificationModel, document.getElementById('applyQualifications'));
-
         ko.applyBindings(experienceViewModel, document.getElementById('applyWorkExperience'));
-
+        ko.applyBindings(trainingViewModel, document.getElementById('applyTrainingHistory'));
     });
 
+    /******
+     * Qualifications
+     */
     $('#qualifications-panel').on('keyup', '#subject-name, #subject-grade', function () {
         $('#qualEntry').removeClass('panel-danger');
-        $('#unsavedQuals').hide();
         $('#apply-button').text('Save and continue');
-        if ($('#unsavedWorkExp').is(':hidden')) {
-            $('#unsavedQualsWorkExp').hide();
+
+        $('#unsavedQuals').hide();
+
+        if ($('#unsavedWorkExp').is(':hidden') && $('#unsavedTrainingHistory').is(':hidden')) {
+            $('#unsavedChanges').hide();
         }
+
         if ($(this).val() != "") {
             $('#apply-button').addClass('dirtyQuals');
         } else if ($('#subject-name, #subject-grade').val() == "") {
@@ -871,28 +1191,36 @@
 
     $('.content-container').on('click', '.dirtyQuals', function (e) {
         $(this).removeClass('disabled dirtyQuals').text('Continue anyway');
-        $('#unsavedQualsWorkExp, #unsavedQuals').show();
+        $('#unsavedChanges, #unsavedQuals').show();
+        $('#qualEntry').addClass('panel-danger').css({ 'margin-bottom': '0', 'padding-top': '0', 'padding-bottom': '0' });
 
-        $('#qualEntry').addClass('panel-danger').css({'margin-bottom':'0', 'padding-top': '0', 'padding-bottom':'0'});
         e.preventDefault();
     });
 
     $('#saveQualification').on('click', function () {
         $('#qualEntry').removeClass('panel-danger');
-        $('#unsavedQuals').hide();
         $('#apply-button').removeClass('dirtyQuals').text('Save and continue');
-        if ($('#unsavedWorkExp').is(':hidden')) {
-            $('#unsavedQualsWorkExp').hide();
+
+        $('#unsavedQuals').hide();
+
+        if ($('#unsavedWorkExp').is(':hidden') && $('#unsavedTrainingHistory').is(':hidden')) {
+            $('#unsavedChanges').hide();
         }
     });
 
+    /******
+     * Work Experience
+     */
     $('#workexperience-apply').on('keyup', '#work-employer, #work-title, #work-role, #work-from-year, #work-to-year', function () {
         $('#workexperience-apply').removeClass('panel-danger');
-        $('#unsavedWorkExp').hide();
         $('#apply-button').text('Save and continue');
-        if ($('#unsavedQuals').is(':hidden')) {
-            $('#unsavedQualsWorkExp').hide();
+
+        $('#unsavedWorkExp').hide();
+
+        if ($('#unsavedQuals').is(':hidden') && $('#unsavedTrainingHistory').is(':hidden')) {
+            $('#unsavedChanges').hide();
         }
+
         if ($(this).val() != "") {
             $('#apply-button').addClass('dirtyWorkExp');
         } else if ($('#work-employer, #work-title, #work-role, #work-from-year, #work-to-year').val() == "") {
@@ -902,21 +1230,61 @@
 
     $('.content-container').on('click', '.dirtyWorkExp', function (e) {
         $(this).removeClass('disabled dirtyWorkExp').text('Continue anyway');
-        $('#unsavedQualsWorkExp, #unsavedWorkExp').show();
-
+        $('#unsavedChanges, #unsavedWorkExp').show();
         $('#workexperience-apply').addClass('panel-danger').css({ 'margin-bottom': '0', 'padding-top': '0', 'padding-bottom': '0' });
+
         e.preventDefault();
     });
 
     $('#addWorkBtn').on('click', function () {
         $('#workexperience-apply').removeClass('panel-danger');
-        $('#unsavedWorkExp').hide();
         $('#apply-button').removeClass('dirtyWorkExp');
         $('#apply-button').removeClass('dirtyWorkExp').text('Save and continue');
-        if ($('#unsavedQuals').is(':hidden')) {
-            $('#unsavedQualsWorkExp').hide();
+
+        $('#unsavedWorkExp').hide();
+
+        if ($('#unsavedQuals').is(':hidden') && $('#unsavedTrainingHistory').is(':hidden')) {
+            $('#unsavedChanges').hide();
         }
     });
 
+    /******
+     * Training History
+     */
+    $('#training-history-apply').on('keyup', '#training-history-provider, #training-history-course-title, #training-history-from-year, #training-history-to-year', function () {
+        $('#training-history-apply').removeClass('panel-danger');
+        $('#apply-button').text('Save and continue');
 
+        $('#unsavedTrainingHistory').hide();
+
+        if ($('#unsavedQuals').is(':hidden') && $('#unsavedWorkExp').is(':hidden')) {
+            $('#unsavedChanges').hide();
+        }
+
+        if ($(this).val() != "") {
+            $('#apply-button').addClass('dirtyTrainingHistory');
+        } else if ($('#training-history-provider, #training-history-course-title, #training-history-from-year, #training-history-to-year').val() == "") {
+            $('#apply-button').removeClass('dirtyTrainingHistory');
+        }
+    });
+
+    $('.content-container').on('click', '.dirtyTrainingHistory', function (e) {
+        $(this).removeClass('disabled dirtyTrainingHistory').text('Continue anyway');
+        $('#unsavedChanges, #unsavedTrainingHistory').show();
+        $('#training-history-apply').addClass('panel-danger').css({ 'margin-bottom': '0', 'padding-top': '0', 'padding-bottom': '0' });
+
+        e.preventDefault();
+    });
+
+    $('#addTrainingHistoryBtn').on('click', function () {
+        $('#training-history-apply').removeClass('panel-danger');
+        $('#apply-button').removeClass('dirtyTrainingHistory');
+        $('#apply-button').removeClass('dirtyTrainingHistory').text('Save and continue');
+
+        $('#unsavedTrainingHistory').hide();
+
+        if ($('#unsavedQuals').is(':hidden') && $('#unsavedWorkExp').is(':hidden')) {
+            $('#unsavedChanges').hide();
+        }
+    });
 }());

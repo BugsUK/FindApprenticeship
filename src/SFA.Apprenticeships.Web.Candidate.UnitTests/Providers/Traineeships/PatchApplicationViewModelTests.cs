@@ -51,11 +51,14 @@
         {
             var candidateId = Guid.NewGuid();
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().Build();
-
             var savedTraineeshipViewModel = new TraineeshipApplicationViewModelBuilder().Build();
-            var workExperience = new List<WorkExperienceViewModel> { new WorkExperienceViewModelBuilder().WithDescription("Work").WithEmployer("Employer").Build() };
-            var traineeshipViewModel = new TraineeshipApplicationViewModelBuilder().WithWorkExperience(workExperience).Build();
 
+            var workExperience = new List<WorkExperienceViewModel>
+            {
+                new WorkExperienceViewModelBuilder().WithDescription("Work").WithEmployer("Employer").Build() 
+            };
+ 
+            var traineeshipViewModel = new TraineeshipApplicationViewModelBuilder().WithWorkExperience(workExperience).Build();
             var viewModel = traineeshipApplicationProvider.PatchApplicationViewModel(candidateId, savedTraineeshipViewModel, traineeshipViewModel);
 
             viewModel.Should().NotBeNull();
@@ -63,6 +66,35 @@
             viewModel.HasError().Should().BeFalse();
             viewModel.Candidate.HasWorkExperience.Should().BeTrue();
             viewModel.Candidate.WorkExperience.Should().Equal(workExperience);
+        }
+
+        [Test]
+        public void TrainingHistoryChanges()
+        {
+            var candidateId = Guid.NewGuid();
+            var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().Build();
+            var savedTraineeshipViewModel = new TraineeshipApplicationViewModelBuilder().Build();
+
+            var trainingHistory = new List<TrainingHistoryViewModel>
+            {
+                new TrainingHistoryViewModelBuilder()
+                    .WithDescription("Course description")
+                    .WithProvider("Provider")
+                    .Build()
+            };
+
+            var traineeshipViewModel = new TraineeshipApplicationViewModelBuilder()
+                .WithTrainingHistory(trainingHistory)
+                .Build();
+
+            var viewModel = traineeshipApplicationProvider
+                .PatchApplicationViewModel(candidateId, savedTraineeshipViewModel, traineeshipViewModel);
+
+            viewModel.Should().NotBeNull();
+            viewModel.ViewModelMessage.Should().BeNull();
+            viewModel.HasError().Should().BeFalse();
+            viewModel.Candidate.HasTrainingHistory.Should().BeTrue();
+            viewModel.Candidate.TrainingHistory.Should().Equal(trainingHistory);
         }
     }
 }

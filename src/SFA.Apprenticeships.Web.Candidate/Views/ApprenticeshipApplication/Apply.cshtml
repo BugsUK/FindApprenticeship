@@ -54,7 +54,9 @@
     Html.RenderPartial("_workExperiencesJS", Model);   
 
     Html.RenderPartial("_workExperiencesNonJS", Model);
-    
+
+    Html.RenderPartial("_trainingHistoryJS", Model);
+
     @Html.EditorFor(m => m.Candidate.AboutYou)
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
     @Html.EditorFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability")
@@ -62,12 +64,15 @@
     <div class="form-group">
         @*The buttons below need the values so the controller knows what action to perform if restyling*@
         <button id="apply-button" type="submit" name="ApplicationAction:Preview" class="button no-check-for-dirty-form" value="Preview">Save and continue</button>
-        <div class="panel-danger toggle-content hide-nojs" id="unsavedQualsWorkExp">
+        <div class="panel-danger toggle-content hide-nojs" id="unsavedChanges">
             <div class="text toggle-content hide-nojs" id="unsavedQuals">
                 <p>You've still got <a href="#qualifications-panel">unsaved qualifications</a>. Make sure you click "Save this qualification" after entering each one.</p>
             </div>
             <div class="text toggle-content hide-nojs" id="unsavedWorkExp">
                 <p>You've still got <a href="#workexperience-panel">unsaved work experience</a>. Make sure you click "Save this work experience" after entering each one.</p>
+            </div>
+            <div class="text toggle-content hide-nojs" id="unsavedTrainingHistory">
+                <p>TODO: You've still got <a href="#training-history-panel">unsaved training history</a>. Make sure you click "Save this training history" after entering each one.</p>
             </div>
         </div>
         <p id="saveApplication">
@@ -93,6 +98,7 @@
 
         var qualificationData = null;
         var workExperienceData = null;
+        var trainingHistoryData = null;
         var currentYear = null;
         var whitelistregex = null;
         var yearRegex = null;
@@ -104,11 +110,13 @@
 
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
+            trainingHistoryData = @Html.Raw(Json.Encode(Model.Candidate.TrainingHistory));
+
             currentYear = @Html.Raw(Model.CurrentYear);
             whitelistregex = @Html.Raw(Json.Encode(Model.WhiteListRegex));
             yearRegex = @Html.Raw(Json.Encode(Model.FourDigitYearRegex));
 
-            autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeInMiutes)) * 60 * 1000;
+            autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeInMinutes)) * 60 * 1000;
 
             $(window).on('load', function() {
                 dirtyFormDialog.initialise({
@@ -200,6 +208,10 @@
             return workExperienceData;
         }
 
+        function getTrainingHistoryData() {
+            return trainingHistoryData;
+        }
+
         function getWhiteListRegex() {
             return whitelistregex;
         }
@@ -209,7 +221,6 @@
         }
 
         function getMonthLabel(index) {
-
             var month = "";
 
             if (index === 0) {

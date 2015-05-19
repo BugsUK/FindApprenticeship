@@ -12,6 +12,7 @@
     using Common.Models.Application;
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
+    // TODO: AG: US786: review TrainingHistory references.
     //TODO: DFSW/AG This whole class needs refactoring or possibly reimplementing plus unit tests.
     public class TraineeshipApplicationProvider : ITraineeshipApplicationProvider
     {
@@ -191,8 +192,10 @@
             }
         }
 
-        public TraineeshipApplicationViewModel PatchApplicationViewModel(Guid candidateId,
-            TraineeshipApplicationViewModel savedModel, TraineeshipApplicationViewModel submittedModel)
+        public TraineeshipApplicationViewModel PatchApplicationViewModel(
+            Guid candidateId,
+            TraineeshipApplicationViewModel savedModel,
+            TraineeshipApplicationViewModel submittedModel)
         {
             _logger.Debug(
                 "Calling TraineeshipApplicationProvider to patch the Application View Model for candidate ID: {0}.",
@@ -209,6 +212,8 @@
                 savedModel.Candidate.Qualifications = submittedModel.Candidate.Qualifications;
                 savedModel.Candidate.HasWorkExperience = submittedModel.Candidate.HasWorkExperience;
                 savedModel.Candidate.WorkExperience = submittedModel.Candidate.WorkExperience;
+                savedModel.Candidate.HasTrainingHistory = submittedModel.Candidate.HasTrainingHistory;
+                savedModel.Candidate.TrainingHistory = submittedModel.Candidate.TrainingHistory;
                 savedModel.Candidate.EmployerQuestionAnswers = submittedModel.Candidate.EmployerQuestionAnswers;
 
                 return savedModel;

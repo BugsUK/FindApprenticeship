@@ -165,8 +165,11 @@
         }
 
         private static CreateApplicationRequest CreateRequest(
-            ApprenticeshipApplicationDetail apprenticeshipApplicationDetail, int legacyCandidateId)
+            ApprenticeshipApplicationDetail apprenticeshipApplicationDetail,
+            int legacyCandidateId)
         {
+            var candidateInformation = apprenticeshipApplicationDetail.CandidateInformation;
+
             return new CreateApplicationRequest
             {
                 Application = new Application
@@ -175,20 +178,24 @@
                     VacancyRef = null, // not required if VacancyId is supplied.
                     CandidateId = legacyCandidateId,
                     School = MapSchool(apprenticeshipApplicationDetail),
-                    EducationResults = MapQualifications(apprenticeshipApplicationDetail.CandidateInformation.Qualifications),
-                    WorkExperiences = MapWorkExperience(apprenticeshipApplicationDetail.CandidateInformation.WorkExperience),
+                    EducationResults = MapQualifications(candidateInformation.Qualifications),
+                    WorkExperiences = MapWorkExperience(candidateInformation.WorkExperience, candidateInformation.TrainingHistory),
                     AdditionalQuestion1Answer = apprenticeshipApplicationDetail.AdditionalQuestion1Answer ?? string.Empty,
                     AdditionalQuestion2Answer = apprenticeshipApplicationDetail.AdditionalQuestion2Answer ?? string.Empty,
-                    Strengths = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Strengths ?? string.Empty,
-                    Improvements = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Improvements ?? string.Empty,
-                    HobbiesAndInterests = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.HobbiesAndInterests ?? string.Empty,
-                    InterviewSupport = apprenticeshipApplicationDetail.CandidateInformation.AboutYou.Support ?? string.Empty
+                    Strengths = candidateInformation.AboutYou.Strengths ?? string.Empty,
+                    Improvements = candidateInformation.AboutYou.Improvements ?? string.Empty,
+                    HobbiesAndInterests = candidateInformation.AboutYou.HobbiesAndInterests ?? string.Empty,
+                    InterviewSupport = candidateInformation.AboutYou.Support ?? string.Empty
                 }
             };
         }
 
-        private static CreateApplicationRequest CreateRequest(TraineeshipApplicationDetail traineeshipApplicationDetail, int legacyCandidateId)
+        private static CreateApplicationRequest CreateRequest(
+            TraineeshipApplicationDetail traineeshipApplicationDetail,
+            int legacyCandidateId)
         {
+            var candidateInformation = traineeshipApplicationDetail.CandidateInformation;
+
             return new CreateApplicationRequest
             {
                 Application = new Application
@@ -197,17 +204,17 @@
                     VacancyRef = null, // not required if VacancyId is supplied.
                     CandidateId = legacyCandidateId,
                     School = MapSchool(),
-                    EducationResults = MapQualifications(traineeshipApplicationDetail.CandidateInformation.Qualifications),
-                    WorkExperiences = MapWorkExperience(traineeshipApplicationDetail.CandidateInformation.WorkExperience),
+                    EducationResults = MapQualifications(candidateInformation.Qualifications),
+                    WorkExperiences = MapWorkExperience(candidateInformation.WorkExperience, candidateInformation.TrainingHistory),
                     AdditionalQuestion1Answer = traineeshipApplicationDetail.AdditionalQuestion1Answer ?? string.Empty,
                     AdditionalQuestion2Answer = traineeshipApplicationDetail.AdditionalQuestion2Answer ?? string.Empty
                 }
             };
         }
 
-        private static School MapSchool(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
+        private static School MapSchool(ApplicationDetail applicationDetail)
         {
-            var educationHistory = apprenticeshipApplicationDetail.CandidateInformation.EducationHistory;
+            var educationHistory = applicationDetail.CandidateInformation.EducationHistory;
 
             if (educationHistory == null)
             {
@@ -254,19 +261,36 @@
         }
 
         private static GatewayServiceProxy.WorkExperience[] MapWorkExperience(
-            IEnumerable<Domain.Entities.Candidates.WorkExperience> workExperience)
+            IEnumerable<Domain.Entities.Candidates.WorkExperience> workExperience,
+            IEnumerable<TrainingHistory> trainingHistory)
         {
-            const int maxTypeOfWorkLength = 200;
-
             return workExperience.Select(each => new GatewayServiceProxy.WorkExperience
             {
                 Employer = each.Employer,
                 FromDate = each.FromDate,
                 ToDate = each.ToDate,
-                TypeOfWork = each.Description.Substring(0, Math.Min(each.Description.Length, maxTypeOfWorkLength)),
+                TypeOfWork = MapWorkExperienceDescription(each.Description),
                 PartialCompletion = false, // no mapping available.
                 Voluntary = false // no mapping available.
-            }).ToArray();
+            })
+            .Union(trainingHistory.Select(each => new GatewayServiceProxy.WorkExperience
+            {
+                // TODO: AG: US786: confirm mappings during (or before) end to end testing with AV.
+                Employer = each.Provider,
+                FromDate = each.FromDate,
+                ToDate = each.ToDate,
+                TypeOfWork = MapWorkExperienceDescription(each.CourseTitle),
+                PartialCompletion = false, // no mapping available.
+                Voluntary = false // no mapping available.
+            }))
+            .ToArray();
+        }
+
+        private static string MapWorkExperienceDescription(string description)
+        {
+            const int maxTypeOfWorkLength = 200;
+
+            return description.Substring(0, Math.Min(description.Length, maxTypeOfWorkLength));
         }
 
         private static DateTime MapYearToDate(int year)

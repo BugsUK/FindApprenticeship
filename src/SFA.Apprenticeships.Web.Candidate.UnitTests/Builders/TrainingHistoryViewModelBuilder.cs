@@ -2,65 +2,64 @@
 {
     using Candidate.ViewModels.Candidate;
 
-    public class WorkExperienceViewModelBuilder
+    public class TrainingHistoryViewModelBuilder
     {
+        private string _provider;
+        private string _courseTitle;
         private string _description;
-        private string _employer;
-        private string _jobTitle;
         private int _fromMonth;
         private string _fromYear;
         private int _toMonth;
         private string _toYear;
 
-        public WorkExperienceViewModelBuilder WithDescription(string description)
+        public TrainingHistoryViewModelBuilder WithDescription(string description)
         {
             _description = description;
             return this;
         }
 
-        public WorkExperienceViewModelBuilder WithEmployer(string employer)
+        public TrainingHistoryViewModelBuilder WithProvider(string provider)
         {
-            _employer = employer;
+            _provider = provider;
             return this;
         }
 
-        public WorkExperienceViewModelBuilder WithJobTitle(string jobTitle)
+        public TrainingHistoryViewModelBuilder WithCourseTitle(string courseTitle)
         {
-            _jobTitle = jobTitle;
+            _courseTitle = courseTitle;
             return this;
         }
 
-        public WorkExperienceViewModelBuilder WithFromMonth(int fromMonth)
+        public TrainingHistoryViewModelBuilder WithFromMonth(int fromMonth)
         {
             _fromMonth = fromMonth;
             return this;
         }
 
-        public WorkExperienceViewModelBuilder WithFromYear(string fromYear)
+        public TrainingHistoryViewModelBuilder WithFromYear(string fromYear)
         {
             _fromYear = fromYear;
             return this;
         }
 
-        public WorkExperienceViewModelBuilder WithToMonth(int toMonth)
+        public TrainingHistoryViewModelBuilder WithToMonth(int toMonth)
         {
             _toMonth = toMonth;
             return this;
         }
 
-        public WorkExperienceViewModelBuilder WithToYear(string toYear)
+        public TrainingHistoryViewModelBuilder WithToYear(string toYear)
         {
             _toYear = toYear;
             return this;
         }
 
-        public WorkExperienceViewModel Build()
+        public TrainingHistoryViewModel Build()
         {
-            return new WorkExperienceViewModel
+            return new TrainingHistoryViewModel
             {
-                Description = _description,
-                Employer = _employer,
-                JobTitle = _jobTitle,
+                Provider = _provider,
+                CourseTitle = _courseTitle,
                 FromMonth = _fromMonth,
                 FromYear = _fromYear,
                 ToMonth = _toMonth,

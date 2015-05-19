@@ -30,6 +30,11 @@
             public const string Ok = "ApprenticeshipApplication.AddEmptyWorkExperienceRows.Ok";
         }
 
+        public class AddEmptyTrainingHistoryRows
+        {
+            public const string Ok = "ApprenticeshipApplication.AddEmptyTrainingHistoryRows.Ok";
+        }
+
         public class WhatHappensNext
         {
             public const string VacancyNotFound = "ApprenticeshipApplication.WhatHappensNext.VacancyNotFound";

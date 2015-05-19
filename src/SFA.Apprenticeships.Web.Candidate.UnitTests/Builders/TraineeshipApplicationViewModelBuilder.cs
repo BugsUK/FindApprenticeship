@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
     using Candidate.ViewModels.VacancySearch;
@@ -14,6 +15,7 @@
 
         private IEnumerable<QualificationsViewModel> _qualifications;
         private IEnumerable<WorkExperienceViewModel> _workExperience;
+        private IEnumerable<TrainingHistoryViewModel> _trainingHistory;
         private VacancyStatuses _vacancyStatus;
 
         public TraineeshipApplicationViewModelBuilder WithMessage(string message)
@@ -34,6 +36,12 @@
             return this;
         }
 
+        public TraineeshipApplicationViewModelBuilder WithTrainingHistory(List<TrainingHistoryViewModel> trainingHistory)
+        {
+            _trainingHistory = trainingHistory;
+            return this;
+        }
+ 
         public TraineeshipApplicationViewModelBuilder HasError(ApplicationViewModelStatus viewModelStatus, string viewModelMessage)
         {
             _viewModelStatus = viewModelStatus;
@@ -49,7 +57,7 @@
 
         public TraineeshipApplicationViewModel Build()
         {
-            var viewModel = new TraineeshipApplicationViewModel
+            return  new TraineeshipApplicationViewModel
             {
                 ViewModelMessage = _viewModelMessage,
                 ViewModelStatus = _viewModelStatus,
@@ -57,15 +65,16 @@
                 {
                     HasQualifications = _qualifications != null,
                     Qualifications = _qualifications,
-                    HasWorkExperience = _workExperience != null,
-                    WorkExperience = _workExperience
+                    HasWorkExperience = _workExperience != null && _workExperience.Any(),
+                    WorkExperience = _workExperience,
+                    HasTrainingHistory = _trainingHistory != null && _trainingHistory.Any(),
+                    TrainingHistory = _trainingHistory
                 },
                 VacancyDetail = new TraineeshipVacancyDetailViewModel
                 {
                     VacancyStatus = _vacancyStatus
                 }
             };
-            return viewModel;
         }
-    }
+   }
 }

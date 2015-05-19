@@ -185,6 +185,7 @@
     <Compile Include="Builders\TraineeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipVacancyDetailViewModelBuilder.cs" />
     <Compile Include="Builders\VerifyMobileViewModelBuilder.cs" />
+    <Compile Include="Builders\TrainingHistoryViewModelBuilder.cs" />
     <Compile Include="Builders\WorkExperienceViewModelBuilder.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
@@ -210,6 +211,7 @@
     <Compile Include="Mediators\Account\VerifyMobileTests.cs" />
     <Compile Include="Mediators\Account\VerifyUpdatedEmailAddressTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyQualificationRowsTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyTrainingHistoryRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ApplyTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ApprenticeshipApplicationMediatorBuilder.cs" />

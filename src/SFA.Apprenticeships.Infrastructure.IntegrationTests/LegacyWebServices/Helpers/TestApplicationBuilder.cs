@@ -20,13 +20,7 @@
                 _candidateInformation = new ApplicationTemplate
                 {
                     AboutYou = new AboutYou(),
-                    EducationHistory = null,
-                    Qualifications = new Qualification[]
-                    {
-                    },
-                    WorkExperience = new WorkExperience[]
-                    {
-                    }
+                    EducationHistory = null
                 };
             }
             return new ApprenticeshipApplicationDetail
@@ -50,7 +44,8 @@
                 AboutYou = CreateFakeAboutYou(),
                 EducationHistory = CreateFakeEducationHistory(),
                 Qualifications = CreateFakeQualifications(),
-                WorkExperience = CreateFakeWorkExperience()
+                WorkExperience = CreateFakeWorkExperience(),
+                TrainingHistory = CreateFakeTrainingHistory(),
             };
 
             return this;
@@ -95,13 +90,7 @@
                 CandidateInformation = new ApplicationTemplate
                 {
                     AboutYou = null,
-                    EducationHistory = null,
-                    Qualifications = new Qualification[]
-                    {
-                    },
-                    WorkExperience = new WorkExperience[]
-                    {
-                    }
+                    EducationHistory = null
                 }
             };
         }
@@ -152,6 +141,28 @@
                     FromDate = new DateTime(2011, 1, 1),
                     ToDate = DateTime.MinValue,
                     Description = "Counter Staff"
+                }
+            };
+        }
+
+
+        private static List<TrainingHistory> CreateFakeTrainingHistory()
+        {
+            return new List<TrainingHistory>
+            {
+                new TrainingHistory
+                {
+                    Provider = "Serbian Language Institute",
+                    CourseTitle = "Conversational Serbian",
+                    FromDate = new DateTime(2011, 1, 1),
+                    ToDate = new DateTime(2012, 1, 1),
+                },
+                new TrainingHistory
+                {
+                    Provider = "Woodworking Inc.",
+                    CourseTitle = "See Saw",
+                    FromDate = new DateTime(2011, 1, 1),
+                    ToDate = new DateTime(2012, 1, 1),
                 }
             };
         }

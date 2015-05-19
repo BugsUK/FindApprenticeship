@@ -98,6 +98,7 @@
     <Compile Include="Candidates\MonitoringInformation.cs" />
     <Compile Include="Candidates\SavedSearch.cs" />
     <Compile Include="Candidates\SavedSearchHelper.cs" />
+    <Compile Include="Candidates\TrainingHistory.cs" />
     <Compile Include="Communication\SavedSearchAlert.cs" />
     <Compile Include="Communication\ContactMessage.cs" />
     <Compile Include="Communication\ApplicationStatusAlert.cs" />
