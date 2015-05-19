@@ -47,7 +47,7 @@
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, true);
 
             response.ViewModel.DefaultQualificationRows.Should().Be(0);
-            response.ViewModel.DefaultWorkExperienceRows.Should().Be(3);
+            response.ViewModel.DefaultWorkExperienceRows.Should().Be(0);
             response.ViewModel.DefaultTrainingHistoryRows.Should().Be(3);
         }
 

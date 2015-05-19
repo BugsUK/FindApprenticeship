@@ -702,6 +702,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_trainingHistoryJS.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_trainingHistoryNonJS.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1054,6 +1058,11 @@
     </Compile>
     <Compile Include="Views\ApprenticeshipApplication\_trainingHistoryJS.generated.cs">
       <DependentUpon>_trainingHistoryJS.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipApplication\_trainingHistoryNonJS.generated.cs">
+      <DependentUpon>_trainingHistoryNonJS.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
