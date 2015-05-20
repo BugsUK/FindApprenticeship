@@ -39,10 +39,6 @@ $(function () {
         this.directionsService = new google.maps.DirectionsService();
         this.marker = null;
 
-        this.IsSameLocation = function(otherLocation) {
-            return (this.lat == otherLocation.lat && this.lon == otherLocation.lon);
-        }
-
         //TODO: perhaps replace server side
         var mapLinkHref = resultItem.find(".map-links:first");
         mapLinkHref.attr("href", mapLinkHref.attr("href").replace('LocationLatLon', theLatLon));
