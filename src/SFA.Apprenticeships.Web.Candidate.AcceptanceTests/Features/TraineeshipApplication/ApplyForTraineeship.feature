@@ -23,6 +23,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 	Then I am on the TraineeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the TraineeshipApplicationPage page
+
+	# Qualifications
 	When I choose QualificationsYes
 	And I choose SaveQualification
 	Then I see
@@ -56,6 +58,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 	Then I see
         | Field                 | Rule           | Value |
         | QualificationsSummary | Does Not Exist |       |
+
+	# Work Experience
 	When I choose WorkExperienceYes
 	And I choose SaveWorkExperience
 	Then I see
@@ -80,12 +84,40 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| Employer   | Equals | WorkEmployer |
 		| JobTitle   | Equals | WorkTitle    |
 		| MainDuties | Equals | WorkRole     |
-	When I choose RemoveLink
+	When I choose RemoveWorkExperienceLink
 	And I am on the TraineeshipApplicationPage page
 	Then I see
         | Field                 | Rule           | Value |
         | WorkExperienceSummary | Does Not Exist |       |
-#Enter data to save
+
+	# Training History
+	When I choose TrainingHistoryYes
+	And I choose SaveTrainingHistory
+	Then I see
+		| Field                                | Rule   | Value |
+		| TrainingHistoryValidationErrorsCount | Equals | 4     |
+	When I enter data
+		| Field                      | Value                      |
+		| TrainingHistoryProvider    | TrainingHistoryProvider    |
+		| TrainingHistoryCourseTitle | TrainingHistoryCourseTitle |
+		| TrainingHistoryFromYear    | 2011                       |
+		| TrainingHistoryToYear      | 2012                       |
+	And I choose SaveTrainingHistory
+	Then I wait for 30 seconds to see TrainingHistorySummary
+	Then I see
+        | Field                | Rule   | Value |
+        | TrainingHistoryCount | Equals | 1     |
+	And I am on TrainingHistorySummaryItems list item matching criteria
+		| Field       | Rule   | Value                      |
+		| Provider    | Equals | TrainingHistoryProvider    |
+		| CourseTitle | Equals | TrainingHistoryCourseTitle |
+	When I choose RemoveTrainingHistoryLink
+	And I am on the TraineeshipApplicationPage page
+	Then I see
+        | Field                  | Rule           | Value |
+        | TrainingHistorySummary | Does Not Exist |       |
+
+	#Enter data to save
 	When I enter employer question data if present
 		| Field                                              | Value |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
@@ -102,6 +134,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| SubjectName  | SubjectName  |
 		| SubjectGrade | SubjectGrade |
 	And I choose SaveQualification
+
 	When I choose WorkExperienceYes
 	And I enter data
 		| Field        | Value        |
@@ -111,6 +144,16 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| WorkFromYear | 2011         |
 		| WorkToYear   | 2012         |
 	And I choose SaveWorkExperience
+
+	When I choose TrainingHistoryYes
+	And I enter data
+		| Field                      | Value                      |
+		| TrainingHistoryProvider    | TrainingHistoryProvider    |
+		| TrainingHistoryCourseTitle | TrainingHistoryCourseTitle |
+		| TrainingHistoryFromYear    | 2011                       |
+		| TrainingHistoryToYear      | 2012                       |
+	And I choose SaveTrainingHistory
+
 	When I am on the TraineeshipApplicationPage page
 	And I choose ApplyButton
 	Then I am on the TraineeshipWhatsNextPage page

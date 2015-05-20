@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application.SummaryItems
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application
 {
     using OpenQA.Selenium;
     using SpecBind.Pages;
     using SpecBind.Selenium;
-    using System.Linq;
 
     [ElementLocator(TagName = "tr")]
     public class QualificationSummaryItem : WebElement

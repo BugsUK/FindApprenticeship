@@ -437,7 +437,7 @@ WriteLiteral(" maxlength=\"50\"");
 WriteLiteral(" />\r\n                                                </div>\r\n                    " +
 "                            <span");
 
-WriteLiteral(" class=\"cell-span training-history-course-provider-span\"");
+WriteLiteral(" class=\"cell-span training-history-provider-span\"");
 
 WriteLiteral(" data-bind=\"visible: showEditButton, text: itemProvider, attr:{\'id\':\'candidate_tr" +
 "aininghistory_\'+ $index() + \'__provider\'}\"");

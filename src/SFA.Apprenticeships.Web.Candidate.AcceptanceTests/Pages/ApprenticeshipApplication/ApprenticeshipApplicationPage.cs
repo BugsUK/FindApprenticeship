@@ -2,8 +2,8 @@
 {
     using System.Globalization;
     using System.Linq;
+    using Application;
     using OpenQA.Selenium;
-    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application.SummaryItems;
     using SpecBind.Pages;
     using SpecBind.Selenium;
 
@@ -147,6 +147,17 @@
             }
         }
 
+        [ElementLocator(Id = "qualifications-panel")]
+        public WorkExperiencePanel QualificationsPanel { get; set; }
+
+        public string QualificationsValidationErrorsCount
+        {
+            get
+            {
+                return QualificationsPanel.ValidationErrorsCount;
+            }
+        }
+
         [ElementLocator(Class="field-validation-error")]
         public IWebElement FieldValidationError { get; set; }
 
@@ -195,17 +206,6 @@
             }
         }
 
-        [ElementLocator(Id = "qualifications-panel")]
-        public WorkExperiencePanel QualificationsPanel { get; set; }
-
-        public string QualificationsValidationErrorsCount
-        {
-            get
-            {
-                return QualificationsPanel.ValidationErrorsCount;
-            }
-        }
-
         [ElementLocator(Id = "workexperience-panel")]
         public WorkExperiencePanel WorkExperiencePanel { get; set; }
 
@@ -219,6 +219,59 @@
 
         [ElementLocator(Id = "work-experience-save-warning")]
         public IWebElement WorkExperienceSaveWarning { get; set; }
+
+        #endregion
+
+        #region Training History
+
+        [ElementLocator(Id = "training-history-yes")]
+        public IWebElement TrainingHistoryYes { get; set; }
+
+        [ElementLocator(Id = "training-history-no")]
+        public IWebElement TrainingHistoryNo { get; set; }
+
+        [ElementLocator(Id = "addTrainingHistoryBtn")]
+        public IWebElement SaveTrainingHistory { get; set; }
+
+        [ElementLocator(Id = "training-history-provider")]
+        public IWebElement TrainingHistoryProvider { get; set; }
+
+        [ElementLocator(Id = "training-history-course-title")]
+        public IWebElement TrainingHistoryCourseTitle { get; set; }
+
+        [ElementLocator(Id = "training-history-from-year")]
+        public IWebElement TrainingHistoryFromYear { get; set; }
+
+        [ElementLocator(Id = "training-history-to-year")]
+        public IWebElement TrainingHistoryToYear { get; set; }
+
+        [ElementLocator(Id = "training-history-summary")]
+        public IWebElement TrainingHistorySummary { get; set; }
+
+        [ElementLocator(Id = "training-history-summary")]
+        public IElementList<IWebElement, TrainingHistorySummaryItem> TrainingHistorySummaryItems { get; set; }
+
+        public string TrainingHistoryCount
+        {
+            get
+            {
+                return TrainingHistorySummaryItems.Count().ToString(CultureInfo.InvariantCulture);
+            }
+        }
+
+        [ElementLocator(Id = "training-history-panel")]
+        public WorkExperiencePanel TrainingHistoryPanel { get; set; }
+
+        public string TrainingHistoryValidationErrorsCount
+        {
+            get
+            {
+                return TrainingHistoryPanel.ValidationErrorsCount;
+            }
+        }
+
+        [ElementLocator(Id = "training-history-save-warning")]
+        public IWebElement TrainingHistorySaveWarning { get; set; }
 
         #endregion
 
@@ -257,26 +310,6 @@
         }
     }
 
-    
-    public class WorkExperiencePanel : WebElement
-    {
-        public WorkExperiencePanel(ISearchContext parent) : base(parent)
-        {
-        }
-    
-        public string ValidationErrorsCount
-        {
-            get
-            {
-                var count = FindElements(By.ClassName("field-validation-error"))
-                    .Count(fve => fve.GetCssValue("display") != "none")
-                    .ToString(CultureInfo.InvariantCulture);
-                return count;
-                //GetCssValue("color").ToLower() == "rgba(223, 48, 52, 1)".ToLower()).Count().ToString();
-            }
-        }
-    }
-
     public class QualificationsPanel : WebElement
     {
         public QualificationsPanel(ISearchContext parent)
@@ -288,11 +321,44 @@
         {
             get
             {
-                var count = FindElements(By.ClassName("field-validation-error"))
+                return FindElements(By.ClassName("field-validation-error"))
                     .Count(fve => fve.GetCssValue("display") != "none")
                     .ToString(CultureInfo.InvariantCulture);
-                return count;
-                //GetCssValue("color").ToLower() == "rgba(223, 48, 52, 1)".ToLower()).Count().ToString();
+            }
+        }
+    }
+    
+    public class WorkExperiencePanel : WebElement
+    {
+        public WorkExperiencePanel(ISearchContext parent) : base(parent)
+        {
+        }
+    
+        public string ValidationErrorsCount
+        {
+            get
+            {
+                return FindElements(By.ClassName("field-validation-error"))
+                    .Count(fve => fve.GetCssValue("display") != "none")
+                    .ToString(CultureInfo.InvariantCulture);
+            }
+        }
+    }
+
+    public class TrainingHistoryPanel : WebElement
+    {
+        public TrainingHistoryPanel(ISearchContext parent)
+            : base(parent)
+        {
+        }
+
+        public string ValidationErrorsCount
+        {
+            get
+            {
+                return FindElements(By.ClassName("field-validation-error"))
+                    .Count(fve => fve.GetCssValue("display") != "none")
+                    .ToString(CultureInfo.InvariantCulture);
             }
         }
     }

@@ -1,14 +1,14 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application.SummaryItems
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application
 {
     using OpenQA.Selenium;
     using SpecBind.Pages;
     using SpecBind.Selenium;
-    using System.Linq;
 
-    [ElementLocator(Class= "work-history-item")]
+    [ElementLocator(Class = "work-history-item")]
     public class WorkExperienceSummaryItem : WebElement
     {
-        public WorkExperienceSummaryItem(ISearchContext parent) : base(parent)
+        public WorkExperienceSummaryItem(ISearchContext parent)
+            : base(parent)
         {
         }
 
@@ -22,6 +22,6 @@
         public IWebElement MainDuties { get; set; }
 
         [ElementLocator(Class = "remove-work-experience-link")]
-        public IWebElement RemoveLink    { get; set; }
+        public IWebElement RemoveWorkExperienceLink { get; set; }
     }
 }

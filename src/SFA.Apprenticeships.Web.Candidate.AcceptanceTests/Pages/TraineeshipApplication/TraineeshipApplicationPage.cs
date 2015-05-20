@@ -2,7 +2,7 @@
 {
     using System.Globalization;
     using System.Linq;
-    using Application.SummaryItems;
+    using Application;
     using ApprenticeshipApplication;
     using OpenQA.Selenium;
     using SpecBind.Pages;
@@ -189,6 +189,59 @@
 
         [ElementLocator(Id = "work-experience-save-warning")]
         public IWebElement WorkExperienceSaveWarning { get; set; }
+
+        #endregion
+
+        #region Training History
+
+        [ElementLocator(Id = "training-history-yes")]
+        public IWebElement TrainingHistoryYes { get; set; }
+
+        [ElementLocator(Id = "training-history-no")]
+        public IWebElement TrainingHistoryNo { get; set; }
+
+        [ElementLocator(Id = "addTrainingHistoryBtn")]
+        public IWebElement SaveTrainingHistory { get; set; }
+
+        [ElementLocator(Id = "training-history-provider")]
+        public IWebElement TrainingHistoryProvider { get; set; }
+
+        [ElementLocator(Id = "training-history-course-title")]
+        public IWebElement TrainingHistoryCourseTitle { get; set; }
+
+        [ElementLocator(Id = "training-history-from-year")]
+        public IWebElement TrainingHistoryFromYear { get; set; }
+
+        [ElementLocator(Id = "training-history-to-year")]
+        public IWebElement TrainingHistoryToYear { get; set; }
+
+        [ElementLocator(Id = "training-history-summary")]
+        public IWebElement TrainingHistorySummary { get; set; }
+
+        [ElementLocator(Id = "training-history-summary")]
+        public IElementList<IWebElement, TrainingHistorySummaryItem> TrainingHistorySummaryItems { get; set; }
+
+        public string TrainingHistoryCount
+        {
+            get
+            {
+                return TrainingHistorySummaryItems.Count().ToString(CultureInfo.InvariantCulture);
+            }
+        }
+
+        [ElementLocator(Id = "training-history-panel")]
+        public WorkExperiencePanel TrainingHistoryPanel { get; set; }
+
+        public string TrainingHistoryValidationErrorsCount
+        {
+            get
+            {
+                return TrainingHistoryPanel.ValidationErrorsCount;
+            }
+        }
+
+        [ElementLocator(Id = "training-history-save-warning")]
+        public IWebElement TrainingHistorySaveWarning { get; set; }
 
         #endregion
     }
