@@ -262,6 +262,10 @@
     <Content Include="Content\_assets\img\icon-sms.svg" />
     <Content Include="Content\_assets\img\logo-ticks-2x.png" />
     <Content Include="Content\_assets\img\logo-ticks-small-2x.png" />
+    <Content Include="Content\_assets\js\nas\application\shared.js" />
+    <Content Include="Content\_assets\js\nas\application\trainingHistory.js" />
+    <Content Include="Content\_assets\js\nas\application\workExperience.js" />
+    <Content Include="Content\_assets\js\nas\application\qualifications.js" />
     <Content Include="Content\_assets\js\nas\geoLocater.js" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Configs\dataCacheClient.config">
@@ -289,7 +293,7 @@
     <Content Include="Content\_assets\img\icon-location.png" />
     <Content Include="Content\_assets\img\performance-icon-2x.png" />
     <Content Include="Content\_assets\img\performance-icon.png" />
-    <Content Include="Content\_assets\js\nas\dirtyFormDialog.js" />
+    <Content Include="Content\_assets\js\nas\application\dirtyFormDialog.js" />
     <Content Include="Content\_assets\js\nas\resultsMap.js" />
     <Content Include="Content\_assets\js\nas\webTrendsInlineTrack.js" />
     <Content Include="Content\_assets\js\scripts.js" />
@@ -319,7 +323,7 @@
     </Content>
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
-    <Content Include="Content\_assets\js\nas\applicationform.js" />
+    <Content Include="Content\_assets\js\nas\application\applicationform.js" />
     <Content Include="Content\_assets\js\nas\lookupService.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\nas\locationAutocomplete.js" />

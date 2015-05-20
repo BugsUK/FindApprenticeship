@@ -71,7 +71,7 @@
                 <p>You've still got <a href="#workexperience-panel">unsaved work experience</a>. Make sure you click "Save this work experience" after entering each one.</p>
             </div>
             <div class="text toggle-content hide-nojs" id="unsavedTrainingHistory">
-                <p>TODO: You've still got <a href="#training-history-panel">unsaved training history</a>. Make sure you click "Save this training history" after entering each one.</p>
+                <p>You've still got an <a href="#training-history-panel">unsaved training course</a>. Make sure you click "Save this training history" after entering each one.</p>
             </div>
         </div>
         <p id="saveApplication">
@@ -104,7 +104,6 @@
         var autoSaveTimeout = null;
 
         $(function() {
-
             document.getElementById("hidden-flag-javascript").value = "True";
 
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
@@ -234,5 +233,5 @@
 
     </script>
         
-    @Scripts.Render("~/bundles/nas/applicationform")
+    @Scripts.Render("~/bundles/nas/application")
 }

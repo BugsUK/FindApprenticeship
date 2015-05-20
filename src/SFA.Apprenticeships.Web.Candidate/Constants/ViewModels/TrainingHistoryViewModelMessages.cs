@@ -5,20 +5,12 @@
 
     public static class TrainingHistoryViewModelMessages
     {
-        public static class DescriptionMessages
-        {
-            public const string RequiredErrorText = "TODO: Please describe your course";
-            public const string TooLongErrorText = "TODO: Course description mustn’t exceed 200 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "TODO: Course description " + Whitelists.FreetextWhitelist.ErrorText;
-        }
-
         public static class ProviderMessages
         {
-            public const string RequiredErrorText = "TODO: Please enter name of provider";
-            public const string TooLongErrorText = "TODO: Provider name mustn’t exceed 50 characters";
+            public const string RequiredErrorText = "Please enter name of provider";
+            public const string TooLongErrorText = "Provider name mustn’t exceed 50 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "TODO: Provider name " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Provider name " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class FromYearMessages
@@ -34,10 +26,10 @@
 
         public static class CourseTitleMessages
         {
-            public const string RequiredErrorText = "TODO: Please enter course title";
-            public const string TooLongErrorText = "TODO: Course title mustn’t exceed 50 characters";
+            public const string RequiredErrorText = "Please enter course title";
+            public const string TooLongErrorText = "Course title mustn’t exceed 50 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "TODO: Course title " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Course title " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class ToYearMessages

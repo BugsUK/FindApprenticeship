@@ -12,33 +12,33 @@
 
     [Validator(typeof(ApprenticeshipApplicationViewModelClientValidator))]
     [Serializable]
-    public class ApprenticeshipApplicationViewModel : ApplicationViewModelBase
+    public class ApprenticeshipApplicationViewModel : ApplicationViewModelBase<ApprenticeshipCandidateViewModel>
     {
-        //Constants used on application form
-        public string AutoSaveTimeInMinutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
-
-        public ApplicationStatuses Status { get; set; }
-
-        public ApprenticeshipCandidateViewModel Candidate { get; set; }
-
-        public ApprenticeshipVacancyDetailViewModel VacancyDetail { get; set; }
+        public readonly string AutoSaveTimeInMinutes = ConfigurationManager.AppSettings["AutoSaveTimeInMinutes"];
 
         public ApprenticeshipApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus)
             : base(message, viewModelStatus)
         {
         }
 
-        public ApprenticeshipApplicationViewModel(string message) : base(message)
+        public ApprenticeshipApplicationViewModel(string message)
+            : base(message)
         {
         }
 
-        public ApprenticeshipApplicationViewModel(ApplicationViewModelStatus viewModelStatus) : base(viewModelStatus)
+        public ApprenticeshipApplicationViewModel(ApplicationViewModelStatus viewModelStatus)
+            : base(viewModelStatus)
         {
         }
 
         public ApprenticeshipApplicationViewModel()
         {
         }
+
+        public ApplicationStatuses Status { get; set; }
+
+        public ApprenticeshipVacancyDetailViewModel VacancyDetail { get; set; }
+
 
         //TODO: Think of a better name
         public bool IsExpiredOrWithdrawn()

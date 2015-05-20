@@ -12,7 +12,6 @@
     using Common.Models.Application;
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
-    // TODO: AG: US786: review TrainingHistory references.
     //TODO: DFSW/AG This whole class needs refactoring or possibly reimplementing plus unit tests.
     public class TraineeshipApplicationProvider : ITraineeshipApplicationProvider
     {

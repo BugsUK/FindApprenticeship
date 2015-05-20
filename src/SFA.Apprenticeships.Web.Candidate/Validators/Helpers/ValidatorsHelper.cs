@@ -23,7 +23,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators.Helpers
             return true;
         }
 
-        // TODO: AG: US786: rationalise duplicate code.
         public static bool WorkExperienceYearBeBeforeOrEqual(WorkExperienceViewModel instance, string toYear)
         {
             if (string.IsNullOrEmpty(toYear))

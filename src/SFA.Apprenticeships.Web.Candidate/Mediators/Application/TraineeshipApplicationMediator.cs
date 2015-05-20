@@ -58,7 +58,6 @@
 
             if (savedModel.HasError())
             {
-                // TODO: change this to something specific to traineeships?
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Submit.Error, viewModel, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
             }
 
@@ -79,7 +78,6 @@
             }
             if (submittedApplicationModel.ViewModelStatus == ApplicationViewModelStatus.Error)
             {
-                // TODO: change this to something specific to traineeships?
                 return GetMediatorResponse(TraineeshipApplicationMediatorCodes.Submit.Error, viewModel, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
             }
 
@@ -139,7 +137,6 @@
 
             var model = _traineeshipApplicationProvider.GetWhatHappensNextViewModel(candidateId, vacancyId);
 
-            // TODO: change to something specific to traineeships?
             if (model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
             {
                 return GetMediatorResponse<WhatHappensNextTraineeshipViewModel>(TraineeshipApplicationMediatorCodes.WhatHappensNext.VacancyNotFound);

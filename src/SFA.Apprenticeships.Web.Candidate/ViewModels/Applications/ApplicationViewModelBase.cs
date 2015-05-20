@@ -3,31 +3,34 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Candidate;
     using Common.Constants;
     using Common.Models.Application;
     using Constants.Pages;
 
     [Serializable]
-    public abstract class ApplicationViewModelBase : ViewModelBase
+    public abstract class ApplicationViewModelBase<TCandidateViewModel> : ViewModelBase
+        where TCandidateViewModel : CandidateViewModelBase
     {
-        //Constants used on application form
-        public string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
-        public int CurrentYear = DateTime.Now.Year;
-
-        public int DefaultQualificationRows = 5;
-        public int DefaultWorkExperienceRows = 3;
-        public int DefaultTrainingHistoryRows = 3;
-
-        public string FourDigitYearRegex = Whitelists.YearRangeWhiteList.RegularExpression();
-        public string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
+        public readonly string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
+        public readonly int CurrentYear = DateTime.Now.Year;
+        public readonly string FourDigitYearRegex = Whitelists.YearRangeWhiteList.RegularExpression();
+        public readonly string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
 
         public double SessionTimeout;
 
         protected ApplicationViewModelBase()
+            : this(null)
         {
         }
 
-        protected ApplicationViewModelBase(string message, ApplicationViewModelStatus viewModelStatus) : base(message)
+        protected ApplicationViewModelBase(ApplicationViewModelStatus viewModelStatus) :
+            this(null, viewModelStatus)
+        {
+        }
+
+        protected ApplicationViewModelBase(string message, ApplicationViewModelStatus viewModelStatus)
+            : this(message)
         {
             ViewModelStatus = viewModelStatus;
         }
@@ -35,12 +38,18 @@
         protected ApplicationViewModelBase(string message)
             : base(message)
         {
+            DefaultQualificationRows = 5;
+            DefaultWorkExperienceRows = 3;
+            DefaultTrainingHistoryRows = 3;
         }
 
-        protected ApplicationViewModelBase(ApplicationViewModelStatus viewModelStatus)
-        {
-            ViewModelStatus = viewModelStatus;
-        }
+        public TCandidateViewModel Candidate { get; set; }
+
+        public int DefaultQualificationRows { get; set; }
+
+        public int DefaultWorkExperienceRows { get; set; }
+
+        public int DefaultTrainingHistoryRows { get; set; }
 
         public IEnumerable<SelectListItem> Months
         {
@@ -75,5 +84,5 @@
         public ApplicationViewModelStatus ViewModelStatus { get; set; }
 
         public DateTime DateApplied { get; set; }
-   }
+    }
 }

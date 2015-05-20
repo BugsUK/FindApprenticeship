@@ -57,7 +57,7 @@ WriteLiteral(" class=\"hide-nojs\"");
 WriteLiteral(" data-bind=\"visible: selectedSection() === \'applyTrainingHistory\', stopBinding: t" +
 "rue\"");
 
-WriteLiteral(">\r\n    \r\n    <fieldset");
+WriteLiteral(">    \r\n    <fieldset");
 
 WriteLiteral(" id=\"applyTrainingHistory\"");
 
@@ -101,7 +101,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 14 "..\..\Views\ApprenticeshipApplication\_trainingHistoryJS.cshtml"
+            #line 13 "..\..\Views\ApprenticeshipApplication\_trainingHistoryJS.cshtml"
                Write(Html.RadioButtonFor(m => m.Candidate.HasTrainingHistory, true, new { id = "training-history-yes", data_bind = "attr:{'checked': hasTrainingHistory() }", aria_controls = "training-history-panel", aria_expanded = "false", aria_labelledby = "trainingHistoryQuestion" }));
 
             
@@ -120,7 +120,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 18 "..\..\Views\ApprenticeshipApplication\_trainingHistoryJS.cshtml"
+            #line 17 "..\..\Views\ApprenticeshipApplication\_trainingHistoryJS.cshtml"
                Write(Html.RadioButtonFor(m => m.Candidate.HasTrainingHistory, false, new { id = "training-history-no", data_bind = "attr:{'checked': hasNoTrainingHistory() }", aria_labelledby = "hasNoTrainingHistoryQuestion" }));
 
             
@@ -218,7 +218,7 @@ WriteLiteral(">Month</span>\r\n                                <select");
 WriteLiteral(" id=\"training-history-from-month\"");
 
 WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsValue: \'monthNumber" +
-"\',value: fromMonth\"");
+"\', value: fromMonth\"");
 
 WriteLiteral("></select>\r\n                            </div>\r\n                            <div");
 

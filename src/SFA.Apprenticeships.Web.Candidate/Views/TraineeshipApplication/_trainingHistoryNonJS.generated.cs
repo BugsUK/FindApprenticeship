@@ -617,8 +617,8 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" name=\"ApplicationAction:AddEmptyTrainingHistoryRows\"");
 
-WriteLiteral(">TODO: Add 1 more training course</button>\r\n                </div>\r\n            <" +
-"/div>\r\n        </div>\r\n    </fieldset>\r\n</noscript>");
+WriteLiteral(">Add 1 more training course</button>\r\n                </div>\r\n            </div>\r" +
+"\n        </div>\r\n    </fieldset>\r\n</noscript>");
 
         }
     }

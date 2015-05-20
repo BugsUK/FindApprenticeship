@@ -4,10 +4,8 @@
     using Common.Models.Application;
     using VacancySearch;
 
-    public class TraineeshipApplicationViewModel : ApplicationViewModelBase
+    public class TraineeshipApplicationViewModel : ApplicationViewModelBase<TraineeshipCandidateViewModel>
     {
-        public TraineeshipCandidateViewModel Candidate { get; set; }
-
         public TraineeshipVacancyDetailViewModel VacancyDetail { get; set; }
 
         public TraineeshipApplicationViewModel(string message, ApplicationViewModelStatus viewModelStatus)
@@ -15,11 +13,13 @@
         {
         }
 
-        public TraineeshipApplicationViewModel(string message) : base(message)
+        public TraineeshipApplicationViewModel(string message)
+            : base(message)
         {
         }
 
-        public TraineeshipApplicationViewModel(ApplicationViewModelStatus viewModelStatus) : base(viewModelStatus)
+        public TraineeshipApplicationViewModel(ApplicationViewModelStatus viewModelStatus)
+            : base(viewModelStatus)
         {
         }
 

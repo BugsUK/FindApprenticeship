@@ -1,7 +1,6 @@
 ﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
 
-<div class="hide-nojs" data-bind="visible: selectedSection() === 'applyTrainingHistory', stopBinding: true">
-    
+<div class="hide-nojs" data-bind="visible: selectedSection() === 'applyTrainingHistory', stopBinding: true">    
     <fieldset id="applyTrainingHistory" class="fieldset-with-border">
         <legend class="heading-large">Training courses</legend>
         <p class="hide-nojs form-label text" id="trainingHistoryQuestion">Have you been on a training course?</p>
@@ -34,7 +33,7 @@
                             <label for="training-history-from-month" class="form-label">From</label>
                             <div class="form-group form-group-compound">
                                 <span class="form-hint">Month</span>
-                                <select id="training-history-from-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: fromMonth"></select>
+                                <select id="training-history-from-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: fromMonth"></select>
                             </div>
                             <div class="form-group form-group-compound" data-bind="parentvalElement: fromYear">
                                 <label for="training-history-from-year" class="form-hint">Year</label>

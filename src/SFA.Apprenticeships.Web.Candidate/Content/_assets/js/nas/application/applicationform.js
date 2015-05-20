@@ -36,12 +36,12 @@
     var validationMessageDateFinishedMustBeAfterDateStarted = "Date finished must be after date started";
 
     // Training History Validation Messages
-    var validationMessageProviderRequired = "TODO: Please enter provider name";
-    var validationMessageProviderExceedsFiftyCharacters = "TODO: Provider name can't exceed 50 characters";
-    var validationMessageProviderContainsInvalidCharacters = "TODO: Provider name can't contain invalid characters, eg '/'";
-    var validationMessageCourseTitleRequired = "TODO: Please enter course title";
-    var validationMessageCourseTitleExceedsFiftyCharacters = "TODO: Course title can't exceed 50 characters";
-    var validationMessageCourseTitleContainsInvalidCharacters = "TODO: Course title can't contain invalid characters, eg '/'";
+    var validationMessageProviderRequired = "Please enter provider name";
+    var validationMessageProviderExceedsFiftyCharacters = "Provider name can't exceed 50 characters";
+    var validationMessageProviderContainsInvalidCharacters = "Provider name can't contain invalid characters, eg '/'";
+    var validationMessageCourseTitleRequired = "Please enter course title";
+    var validationMessageCourseTitleExceedsFiftyCharacters = "Course title can't exceed 50 characters";
+    var validationMessageCourseTitleContainsInvalidCharacters = "Course title can't contain invalid characters, eg '/'";
 
     var qualificationTypeModel = function (name) {
         var self = this;
@@ -180,7 +180,7 @@
         self.regexPattern = ko.observable();
         self.yearRegexPattern = ko.observable();
 
-        //TODO get values from config.
+        // TODO: get values from config.
         self.qualificationTypes = ko.observableArray([
             new qualificationTypeModel("GCSE"),
             new qualificationTypeModel("AS Level"),
@@ -533,7 +533,7 @@
     var workExperienceViewModel = function () {
 
         var self = this;
-        //TODO get this from config too
+        // TODO: get this from config too.
         self.months = ko.observableArray([
             new monthOfTheYear('Jan', 1), new monthOfTheYear('Feb', 2), new monthOfTheYear('Mar', 3),
             new monthOfTheYear('Apr', 4), new monthOfTheYear('May', 5), new monthOfTheYear('June', 6),
@@ -779,8 +779,6 @@
 
     };
 
-    // ---------- TODO: AG: BEGIN: US786.
-
     var trainingHistoryItemModel = function (itemProvider, itemCourseTitle, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemCurrentYear, itemRegex, itemYearRegexPattern) {
         var self = this;
 
@@ -891,7 +889,7 @@
     var trainingHistoryViewModel = function () {
         var self = this;
 
-        //TODO get this from config too
+        // TODO: get this from config too.
         self.months = ko.observableArray([
             new monthOfTheYear('Jan', 1), new monthOfTheYear('Feb', 2), new monthOfTheYear('Mar', 3),
             new monthOfTheYear('Apr', 4), new monthOfTheYear('May', 5), new monthOfTheYear('June', 6),
@@ -1021,11 +1019,11 @@
 
                 self.errors.showAllMessages(false);
 
-                $('#trainingHistoryAddConfirmText').text("TODO: Training course has been added to table below");
+                $('#trainingHistoryAddConfirmText').text("Training course has been added to table below");
 
             } else {
                 self.errors.showAllMessages();
-                $('#trainingHistoryAddConfirmText').text("TODO: There has been a problem adding training course, check you've entered all details correctly");
+                $('#trainingHistoryAddConfirmText').text("There has been a problem adding training course, check you've entered all details correctly");
             }
 
         };
@@ -1073,8 +1071,6 @@
         };
 
     };
-
-    // ---------- TODO: AG: END: US786.
 
     //Change this to modify where the vertical bar is placed
     ko.bindingHandlers.parentvalElement = {

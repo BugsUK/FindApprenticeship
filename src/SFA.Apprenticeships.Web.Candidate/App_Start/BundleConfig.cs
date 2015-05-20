@@ -2,6 +2,8 @@
 
 namespace SFA.Apprenticeships.Web.Candidate
 {
+    using System.Collections.Generic;
+
     public class BundleConfig
     {
         /// <summary>
@@ -47,9 +49,19 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/nas/passwordstrength").Include(
                 "~/Content/_assets/js/vendor/zxcvbn-async.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/nas/applicationform").Include(
-                "~/Content/_assets/js/nas/applicationform.js",
-                "~/Content/_assets/js/nas/dirtyFormDialog.js"));
+            {
+                var bundle = new ScriptBundle("~/bundles/nas/application").Include(
+                    "~/Content/_assets/js/nas/application/applicationform.js",
+                    "~/Content/_assets/js/nas/application/dirtyFormDialog.js");
+                    
+                    // TODO: US786: refactoring wip.
+                    // "~/Content/_assets/js/nas/application/qualifications.js",
+                    // "~/Content/_assets/js/nas/application/workExperience.js",
+                    // "~/Content/_assets/js/nas/application/trainingHistory.js");
+
+                // bundle.Orderer = new NonOrderingBundleOrderer();
+                bundles.Add(bundle);
+            }
 
             bundles.Add(new ScriptBundle("~/bundles/nas/locationsearch").Include(
                 "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
@@ -67,6 +79,14 @@ namespace SFA.Apprenticeships.Web.Candidate
 
             bundles.Add(new ScriptBundle("~/bundles/nas/searchTour").Include(
                 "~/Content/_assets/js/nas/searchTour.js"));
+        }
+
+        private class NonOrderingBundleOrderer : IBundleOrderer
+        {
+            public IEnumerable<BundleFile> OrderFiles(BundleContext context, IEnumerable<BundleFile> files)
+            {
+                return files;
+            }
         }
     }
 }

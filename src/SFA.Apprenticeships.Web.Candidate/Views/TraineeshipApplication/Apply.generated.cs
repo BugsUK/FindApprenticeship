@@ -481,7 +481,7 @@ WriteLiteral("    ");
 
             
             #line 129 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-Write(Scripts.Render("~/bundles/nas/applicationform"));
+Write(Scripts.Render("~/bundles/nas/application"));
 
             
             #line default
