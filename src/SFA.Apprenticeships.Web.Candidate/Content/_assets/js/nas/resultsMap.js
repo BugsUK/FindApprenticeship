@@ -195,7 +195,7 @@ $(function () {
         }
     }
 
-    $(document).on('click', '.mob-map-trigger.map-closed', function () {
+    $(document).on('click', '.mob-map-trigger', function () {
         var showMapLink = $(this);
         checkGoogleMapsApiScriptLoaded();
 
