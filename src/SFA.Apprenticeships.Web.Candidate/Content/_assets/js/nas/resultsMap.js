@@ -4,284 +4,219 @@
 
 $(function () {
 
-    /*Show map with radius in results*/
-
-    var apiScriptLoaded    = false,
-		apiScriptLoading   = false,
-        $window            = $(window),
-        $body              = $('body'),
-        apprLatitude       = Number($('#Latitude').val()),
-        apprLongitude      = Number($('#Longitude').val()),
-        apprMiles          = Number($('#loc-within').val()),
-        //resultsPage        = $('#results-per-page').val(),  
-        //numberOfResults    = $('.vacancy-link').length,
-        //distanceOfLast     = $('.search-results__item:last-child .distance-value').html(),
-        firstLat, //           = $('.vacancy-link:first-of-type').attr('data-lat'),
-        firstLon, //           = $('.vacancy-link:first-of-type').attr('data-lon'),
-        //sortResultsControl = $('#sort-results').val(),
-        apprZoom           = 9,
+    var apiScriptLoaded = false,
+        apiScriptLoading = false,
+        $window = $(window),
+        $body = $('body'),
+        apprLatitude = Number($('#Latitude').val()),
+        apprLongitude = Number($('#Longitude').val()),
+        apprMiles = Number($('#loc-within').val()),
+        apprZoom = 9,
         radiusCircle,
-        vacancyLinks       = [],
-        vacancies          = [],
-        //vacancy            = [],
-        theMarkers         = [],
-        theMaps            = [],
-        directionsDisplay  = [],
-        directionsService  = [],
-        mapCenter          = { lat: apprLatitude, lng: apprLongitude },
-        bounds,
+        mapCenter = { lat: apprLatitude, lng: apprLongitude },
+        theLatLon = apprLatitude + ',' + apprLongitude,
         originLocation,
-        latLngList         = [],
-        theLatLon          = apprLatitude + ',' + apprLongitude,
         markerIcon,
         selectedIcon,
-        vacanciesSame      = true;
+        resultMaps = [];
+
+    var ResultMap = function (resultItem) {
+        this.resultItem = resultItem[0];
+        this.resultItem.resultMap = this;
+        this.container = resultItem.find(".map-container");
+        this.map = resultItem.find(".map");
+        this.map[0].resultMap = this;
+        this.link = resultItem.find('.vacancy-link');
+        this.title = this.link.html();
+        this.vacancyId = this.link.attr('data-vacancy-id');
+        this.lat = this.link.attr('data-lat');
+        this.lon = this.link.attr('data-lon');
+        this.latlng = new google.maps.LatLng(this.lat, this.lon);
+        this.duration = resultItem.find('.journey-time');
+        this.travelMode = resultItem.find('.select-mode');
+        this.journeyTime = resultItem.find('.journey-time');
+        this.directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
+        this.directionsService = new google.maps.DirectionsService();
+        this.marker = null;
+
+        this.IsSameLocation = function(otherLocation) {
+            return (this.lat == otherLocation.lat && this.lon == otherLocation.lon);
+        }
+
+        //TODO: perhaps replace server side
+        var mapLinkHref = resultItem.find(".map-links:first");
+        mapLinkHref.attr("href", mapLinkHref.attr("href").replace('LocationLatLon', theLatLon));
+
+        resultItem.mouseover(function () {
+            if (this.resultMap != null && this.resultMap.marker != null) {
+                this.resultMap.marker.setIcon(selectedIcon);
+                this.resultMap.marker.setZIndex(1000);
+            }
+        }).mouseleave(function () {
+            if (this.resultMap != null && this.resultMap.marker != null) {
+                this.resultMap.marker.setIcon(markerIcon);
+                this.resultMap.marker.setZIndex(0);
+            }
+        });
+    }
+
+    function getResultMap(element) {
+        var vacancyId = element.closest(".search-results__item").find(".vacancy-link").attr('data-vacancy-id');
+        return _.find(resultMaps, function(resultMap) {
+            return resultMap.vacancyId == vacancyId;
+        });
+    }
+
+    function allResultsAreSameLocation() {
+        var matching = _.where(resultMaps, { lat: resultMaps[0].lat, lon: resultMaps[0].lon });
+        return matching.length == resultMaps.length;
+    }
+
+    function checkGoogleMapsApiScriptLoaded() {
+        if (!apiScriptLoaded && !apiScriptLoading) {
+            apiScriptLoading = true;
+            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
+        }
+    }
 
     $window.on('googleMapsScriptLoaded', function () {
         apiScriptLoaded = true;
-        bounds = new google.maps.LatLngBounds();
         originLocation = new google.maps.LatLng(apprLatitude, apprLongitude);
         markerIcon = new google.maps.MarkerImage('/Content/_assets/img/icon-location.png', null, null, null, new google.maps.Size(20, 32));
         selectedIcon = new google.maps.MarkerImage('/Content/_assets/img/icon-location-selected.png', null, null, null, new google.maps.Size(20, 32));
-
-        firstLat = $('.vacancy-link:first-of-type').attr('data-lat');
-        firstLon = $('.vacancy-link:first-of-type').attr('data-lon');
-        vacancyLinks = $('.vacancy-link').toArray();
-
-        theMaps = [];
-
-        $('.map-links').each(function () {
-            var $this = $(this),
-            aHref = $this.attr('href');
-            $this.attr('href', aHref.replace('LocationLatLon', theLatLon));
-        });
 
         if (apprLatitude == 0 || apprLongitude == 0) {
             $('#map-canvas').parent().hide();
         }
 
-        lazyLoadMaps();
-        setGoogDirectionsServices();
         initialize();
-        loadScript();
+        lazyLoadMaps();
     });
-
-    function setGoogDirectionsServices() {
-        for (var i = 0; i < vacancyLinks.length; i++) {
-            directionsDisplay[i] = new google.maps.DirectionsRenderer({ suppressMarkers: true });
-            directionsService[i] = new google.maps.DirectionsService();
-        }
-    }
-
-    for (var i = 0; i < vacancyLinks.length; i++) {
-        var lat = $(vacancyLinks[i]).attr('data-lat'),
-            longi = $(vacancyLinks[i]).attr('data-lon'),
-            title = $(vacancyLinks[i]).html(),
-            id = $(vacancyLinks[i]).attr('data-vacancy-id');
-
-        vacancies[i] = [lat, longi, title, id];
-
-        if (lat != firstLat && longi != firstLon) {
-            vacanciesSame = false;
-        }
-    }
 
     function initialize() {
 
-        if (!apiScriptLoaded && !apiScriptLoading) {
-            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
-            apiScriptLoading = true;
-        }
+        checkGoogleMapsApiScriptLoaded();
+        if (!apiScriptLoaded) return;
 
-        if (!apiScriptLoaded) return true;
+        resultMaps = [];
+        $(".search-results__item").each(function() {
+             resultMaps.push(new ResultMap($(this)));
+        });
 
-        var mapOptions = {
-            center: mapCenter,
-            zoom: apprZoom,
-            panControl: false,
-            zoomControl: true,
-            mapTypeControl: false,
-            scaleControl: false,
-            streetViewControl: false,
-            overviewMapControl: false,
-            scrollwheel: false
-        };
+        var mapOptions = { center: mapCenter, zoom: apprZoom, panControl: false, zoomControl: true, mapTypeControl: false, scaleControl: false, streetViewControl: false, overviewMapControl: false, scrollwheel: false };
+        var summaryMap = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
-        var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
-
-        var distanceCircle = {
-            strokeColor: '#005ea5',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            fillColor: '#005ea5',
-            fillOpacity: 0.25,
-            map: map,
-            center: mapOptions.center,
-            radius: apprMiles * 1609.344
-        }
-
+        var distanceCircle = { strokeColor: '#005ea5', strokeOpacity: 0.8, strokeWeight: 2, fillColor: '#005ea5', fillOpacity: 0.25, map: summaryMap, center: mapOptions.center, radius: apprMiles * 1609.344 };
         radiusCircle = new google.maps.Circle(distanceCircle);
 
         var radiusBounds = radiusCircle.getBounds();
+        var bounds = new google.maps.LatLngBounds();
+        _.each(resultMaps, function(resultMap) { bounds.extend(resultMap.latlng); });
+        setMarkers(summaryMap, resultMaps);
 
-        var theZoom = null;
-
-        setMarkers(map, vacancies);
-
-        if (!vacanciesSame && $('#LocationType').val() == 'NonNational') {
-            map.fitBounds(bounds);
+        if (!allResultsAreSameLocation() && $('#LocationType').val() == 'NonNational') {
+            summaryMap.fitBounds(bounds);
         } else if (apprMiles > 0 && $('#LocationType').val() == 'NonNational') {
-            map.fitBounds(radiusBounds);
-
-            zoomChangeBoundsListener =
-                google.maps.event.addListenerOnce(map, 'bounds_changed', function (event) {
-                    if (this.getZoom()) {
-                        theZoom = this.getZoom();
-
-                        this.setZoom(theZoom + 1);
-                    }
-                });
-
+            summaryMap.fitBounds(radiusBounds);
+            var zoomChangeBoundsListener = google.maps.event.addListenerOnce(summaryMap, 'bounds_changed', function() {
+                if (this.getZoom()) {
+                    this.setZoom(this.getZoom() + 1);
+                }
+            });
             setTimeout(function () { google.maps.event.removeListener(zoomChangeBoundsListener) }, 2000);
-
         } else if (apprMiles == 0) {
-            map.setZoom(5);
+            summaryMap.setZoom(5);
         }
-
+        
         if (apprMiles > 0 && $('#LocationType').val() == 'National') {
             map.fitBounds(radiusBounds);
         }
-
     }
 
-    function setMarkers(map, locations) {
+    function setMarkers(summaryMap) {
 
-        for (var i = 0; i < locations.length; i++) {
-            var appship = locations[i];
-            var myLatLng = new google.maps.LatLng(appship[0], appship[1]);
+        for (var i = 0; i < resultMaps.length; i++) {
+            var resultMap = resultMaps[i];
+            var myLatLng = new google.maps.LatLng(resultMap.lat, resultMap.lon);
             var marker = new google.maps.Marker({
                 position: myLatLng,
-                map: map,
+                map: summaryMap,
                 animation: google.maps.Animation.DROP,
                 icon: markerIcon,
-                title: appship[2]
+                title: resultMap.title
             });
 
-            theMarkers.push(marker);
-            latLngList.push(myLatLng);
+            marker.resultItem = resultMap.resultItem;
+            resultMap.marker = marker;
 
-            bounds.extend(latLngList[i]);
-            var vacancyId = appship[3];
-            bindMarkerClick(marker, map, vacancyId);
-            itemHover();
+            google.maps.event.addListener(marker, 'mouseover', function () {
+                this.setIcon(selectedIcon);
+                this.setZIndex(1000);
+            });
+
+            google.maps.event.addListener(marker, 'click', function () {
+                this.setIcon(selectedIcon);
+                this.setZIndex(1000);
+                this.resultItem.scrollIntoView();
+            });
+
+            google.maps.event.addListener(marker, 'mouseout', function () {
+                this.setIcon(markerIcon);
+                this.setZIndex(0);
+            });
         }
-    }
-
-    function bindMarkerClick(marker, map, vacancyId) {
-        google.maps.event.addListener(marker, 'mouseover', function () {
-            marker.setIcon(selectedIcon);
-            marker.setZIndex(1000);
-        });
-
-        google.maps.event.addListener(marker, 'click', function () {
-            marker.setIcon(selectedIcon);
-            marker.setZIndex(1000);
-            $('[data-vacancy-id="' + vacancyId + '"]').closest('.search-results__item')[0].scrollIntoView();
-        });
-
-        google.maps.event.addListener(marker, 'mouseout', function () {
-            marker.setIcon(markerIcon);
-            marker.setZIndex(0);
-        });
-    }
-
-    function itemHover() {
-        $('.search-results__item').mouseover(function () {
-            var thisPosition = $(this).index();
-            theMarkers[thisPosition].setIcon(selectedIcon);
-            theMarkers[thisPosition].setZIndex(1000);
-
-        });
-
-        $('.search-results__item').mouseleave(function () {
-            var thisPosition = $(this).index();
-            theMarkers[thisPosition].setIcon(markerIcon);
-            theMarkers[thisPosition].setZIndex(0);
-        });
     }
 
     function lazyLoadMaps() {
+        //If desktop - load script and set lazy load on all result maps.
         if ($('.content-container').css('font-size') !== '16px' && apiScriptLoaded) {
-            (function ($, window, document) {
-                $('.map').lazyLoadGoogleMaps(
-                    {
-                        api_key: 'gme-skillsfundingagency',
-                        callback: function (container, lazyMap) {
-                            var $container = $(container),
-                                vacancyLink = $container.closest('.search-results__item').find('.vacancy-link'),
-                                vacancyLat = vacancyLink.attr('data-lat'),
-                                vacancyLon = vacancyLink.attr('data-lon'),
-                                latlng = new google.maps.LatLng(vacancyLat, vacancyLon);
+            _.each(resultMaps, function(resultMap) {
+                resultMap.map.lazyLoadGoogleMaps(
+                {
+                    api_key: 'gme-skillsfundingagency',
+                    callback: function(container, lazyMap) {
+                        var lazyOptions = {
+                            zoom: 10,
+                            center: resultMap.latlng,
+                            mapTypeControl: false,
+                            overviewMapControl: false,
+                            panControl: false,
+                            scaleControl: false,
+                            scrollwheel: false,
+                            streetViewControl: false,
+                            zoomControl: true,
+                            zoomControlOptions: {
+                                style: google.maps.ZoomControlStyle.SMALL
+                            }
+                        };
 
-                            var lazyOptions = {
-                                zoom: 10,
-                                center: latlng,
-                                mapTypeControl: false,
-                                overviewMapControl: false,
-                                panControl: false,
-                                scaleControl: false,
-                                scrollwheel: false,
-                                streetViewControl: false,
-                                zoomControl: true,
-                                zoomControlOptions: {
-                                    style: google.maps.ZoomControlStyle.SMALL
-                                }
-                            };
-
-                            lazyMap.setOptions(lazyOptions);
-                            new google.maps.Marker({ position: latlng, map: lazyMap, icon: markerIcon });
-                            theMaps.push(lazyMap);
-                        }
-                    });
-            })(jQuery, window, document);
+                        lazyMap.setOptions(lazyOptions);
+                        new google.maps.Marker({ position: resultMap.latlng, map: lazyMap, icon: markerIcon });
+                        resultMap.directionsDisplay.setMap(lazyMap);
+                    }
+                });
+            });
         }
-    }
-
-    function loadScript() {
-        if (!apiScriptLoaded && !apiScriptLoading) {
-            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
-            apiScriptLoading = true;
-        }
-
-        if (!apiScriptLoaded) return true;
     }
 
     $(document).on('click', '.mob-map-trigger.map-closed', function () {
-        var $this = $(this);
-
-        loadScript();
+        var showMapLink = $(this);
+        checkGoogleMapsApiScriptLoaded();
 
         $window.on('googleMapsScriptLoaded', function () {
-            showHideMaps($this);
+            showMobileMap(showMapLink);
         });
 
         if (apiScriptLoaded) {
-            showHideMaps($this);
+            showMobileMap(showMapLink);
         }
     });
 
-    function showHideMaps(that) {
-        var $this = that,
-            mobVacancyLink = $this.closest('.search-results__item').find('.vacancy-link'),
-            mobVacancyLat = mobVacancyLink.attr('data-lat'),
-            mobVacancyLon = mobVacancyLink.attr('data-lon'),
-            mobLatlng = new google.maps.LatLng(mobVacancyLat, mobVacancyLon),
-            mapContainer = $this.closest('.search-results__item').find('.map-container'),
-            mobMap = mapContainer.find('.map')[0],
-            $mapNumber = $this.closest('.search-results__item').index();
-
-        $this.toggleClass('map-closed');
-        mapContainer.toggle();
+    function showMobileMap(showMapLink) {
+        var resultMap = getResultMap(showMapLink);
+        var mobLatlng = new google.maps.LatLng(resultMap.lat, resultMap.lon);
+        showMapLink.toggleClass('map-closed');
+        resultMap.container.toggle();
 
         var mobMapOptions = {
             zoom: 10,
@@ -298,11 +233,9 @@ $(function () {
             }
         };
 
-        var theMobMap = new google.maps.Map(mobMap, mobMapOptions);
-
+        var theMobMap = new google.maps.Map(resultMap.map[0], mobMapOptions);
         new google.maps.Marker({ position: mobLatlng, map: theMobMap, icon: markerIcon });
-
-        theMaps[$mapNumber] = theMobMap;
+        resultMap.directionsDisplay.setMap(theMobMap);
 
         setTimeout(function () {
             google.maps.event.trigger(theMobMap, 'resize');
@@ -310,71 +243,48 @@ $(function () {
         }, 300);
     }
 
-    function calcRoute(transportMode, thisLat, thisLong, journeyTime, mapNumber, updatedMode) {
-
+    function calcRoute(element, updatedMode) {
+        var resultMap = getResultMap(element);
         var dcsUri = updatedMode ? '/apprenticeships/journeytimechange' : '/apprenticeships/journeytime';
-        directionsDisplay[mapNumber].setMap(theMaps[mapNumber]);
-
-        if (!apiScriptLoaded && !apiScriptLoading) {
-            $body.append('<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&callback=googleMapsScriptLoaded&client=gme-skillsfundingagency&channel=findapprenticeship' + '"></script>');
-            apiScriptLoading = true;
-        }
-
-        if (!apiScriptLoaded) return true;
 
         var request = {
             origin: originLocation,
-            destination: new google.maps.LatLng(thisLat, thisLong),
-            travelMode: google.maps.TravelMode[transportMode]
+            destination: new google.maps.LatLng(resultMap.lat, resultMap.lon),
+            travelMode: google.maps.TravelMode[resultMap.travelMode.val()]
         };
-        directionsService[mapNumber].route(request, function (response, status) {
+        resultMap.directionsService.route(request, function (response, status) {
             if (status == google.maps.DirectionsStatus.OK) {
                 var responseJourneyTime = response.routes[0].legs[0].duration.text;
-                $(journeyTime).text(responseJourneyTime);
-                directionsDisplay[mapNumber].setDirections(response);
-                Webtrends.multiTrack({ argsa: ['DCS.dcsuri', dcsUri, 'WT.dl', '99', 'WT.ti', 'Search Results Journey Time Option', 'journeyMethods', transportMode, 'journeyTime', responseJourneyTime] });
+                resultMap.journeyTime.text(responseJourneyTime);
+                resultMap.directionsDisplay.setDirections(response);
+                Webtrends.multiTrack({ argsa: ['DCS.dcsuri', dcsUri, 'WT.dl', '99', 'WT.ti', 'Search Results Journey Time Option', 'journeyMethods', resultMap.travelMode.val(), 'journeyTime', responseJourneyTime] });
             }
         });
     }
 
     $(document).on('change', '.select-mode', function () {
-        var $this = $(this),
-            $thisVal = $this.val(),
-            $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
-            $thisLat = $thisVacLink.attr('data-lat'),
-            $thisLong = $thisVacLink.attr('data-lon'),
-            $durationElement = $this.next('.journey-time'),
-            $mapNumber = $this.closest('.search-results__item').index();
 
-        loadScript();
+        checkGoogleMapsApiScriptLoaded();
 
         $window.on('googleMapsScriptLoaded', function () {
-            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, true);
+            calcRoute($(this), true);
         });
 
         if (apiScriptLoaded) {
-            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, true);
+            calcRoute($(this), true);
         }
     });
 
     $(document).on('click', '.journey-trigger', function () {
-        var $this = $(this),
-            $thisVal = $this.next('.detail-content').find('.select-mode option:selected').val(),
-            $thisVacLink = $this.closest('.search-results__item').find('.vacancy-link'),
-            //$thisMap = $this.closest('.search-results__item').find('.map'),
-            $thisLat = $thisVacLink.attr('data-lat'),
-            $thisLong = $thisVacLink.attr('data-lon'),
-            $durationElement = $this.next('.detail-content').find('.journey-time'),
-            $mapNumber = $this.closest('.search-results__item').index();
 
-        loadScript();
+        checkGoogleMapsApiScriptLoaded();
 
         $window.on('googleMapsScriptLoaded', function () {
-            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, false);
+            calcRoute($(this), false);
         });
 
         if (apiScriptLoaded) {
-            calcRoute($thisVal, $thisLat, $thisLong, $durationElement, $mapNumber, false);
+            calcRoute($(this), false);
         }
     });
 
@@ -382,7 +292,7 @@ $(function () {
         initialize();
     }
 
-    $('#editSearchToggle').on('click', function () {
+    $('#editSearchToggle').on('click', function () { 
         initialize();
     });
 });
