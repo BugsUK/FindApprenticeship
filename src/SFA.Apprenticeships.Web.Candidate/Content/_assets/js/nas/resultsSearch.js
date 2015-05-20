@@ -19,25 +19,7 @@
     $(document).on('change', '.history #sort-results', function () {
         $('#SearchAction').val("Sort");
         var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
-
-        $('.search-results').addClass('disabled');
-        $('#ajaxLoading').show();
-
-        $.ajax({
-            url: searchQueryUrl,
-            method: 'GET'            
-        }).done(function (response) {
-            $("#pagedList").empty();
-            $("#pagedList").html(response);
-            $(window).trigger('googleMapsScriptLoaded');
-            history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
-
-            $('.search-results').removeClass('disabled');
-            $('#ajaxLoading').hide();
-
-            //TODO: Need to add matraxis multi track here to log page
-        }).fail(function () {
-        });
+        loadResults(searchQueryUrl);
     });
 
     $('.no-history #results-per-page').change(function () {
@@ -48,32 +30,33 @@
     $(document).on('change', '.history #results-per-page', function () {
         $('#SearchAction').val("Sort");
         var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
-
-        $('.search-results').addClass('disabled');
-        $('#ajaxLoading').show();
-
-        $.ajax({
-            url: searchQueryUrl,
-            method: 'GET'
-        }).done(function (response) {
-            $("#pagedList").empty();
-            $("#pagedList").html(response);
-            $(window).trigger('googleMapsScriptLoaded');
-            $(document).scrollTop(0);
-            history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
-
-            $('.search-results').removeClass('disabled');
-            $('#ajaxLoading').hide();
-
-            //TODO: Need to add matraxis multi track here to log page
-        }).fail(function () {
-        });
+        loadResults(searchQueryUrl);
     });
 
     $(document).on('click', '.history .page-navigation__btn', function (e) {
         e.preventDefault();
         var searchQueryUrl = $(this).attr('href');
-        
+        loadResults(searchQueryUrl, true);
+    });
+
+    $(window).on("popstate", function (e) {
+        if (e.originalEvent.state !== null && e.originalEvent.state.searchUrl) {
+            loadResults(e.originalEvent.state.searchUrl, true);
+        }
+    });
+
+    $(document).on('click', '.no-history #search-button', function () {
+        $('#LocationType').val("NonNational");
+    });
+
+    $(document).on('click', '.history #search-button', function () {
+        $('#LocationType').val("NonNational");
+        var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
+        loadResults(searchQueryUrl, true);
+    });
+
+    function loadResults(searchQueryUrl, scrollTop) {
+
         $('.search-results').addClass('disabled');
         $('#ajaxLoading').show();
 
@@ -84,44 +67,19 @@
             $("#pagedList").empty();
             $("#pagedList").html(response);
             $(window).trigger('googleMapsScriptLoaded');
-            $(document).scrollTop(0);
             history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
-            
+
             $('.search-results').removeClass('disabled');
             $('#ajaxLoading').hide();
+
+            if (scrollTop) {
+                $(document).scrollTop(0);
+            }
 
             //TODO: Need to add matraxis multi track here to log page
         }).fail(function () {
         });
-    });
-
-    $(window).on("popstate", function (e) {
-        if (e.originalEvent.state !== null && e.originalEvent.state.searchUrl) {
-            
-            $('.search-results').addClass('disabled');
-            $('#ajaxLoading').show();
-
-            $.ajax({
-                url: e.originalEvent.state.searchUrl,
-                method: 'GET'
-            }).done(function (response) {
-                $("#pagedList").empty();
-                $("#pagedList").html(response);
-                $(window).trigger('googleMapsScriptLoaded');
-                $(document).scrollTop(0);
-                
-                $('.search-results').removeClass('disabled');
-                $('#ajaxLoading').hide();
-
-                //TODO: Need to add matraxis multi track here to log page
-            }).fail(function () {
-            });
-        }
-    });
-
-    $(document).on('click', '#search-button', function () {
-        $('#LocationType').val("NonNational");
-    });
+    }
 
     $(document).on('click', '#receiveSaveSearchAlert', function () {
         var $this = $(this),
