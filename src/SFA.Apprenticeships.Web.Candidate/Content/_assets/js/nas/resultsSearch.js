@@ -66,7 +66,7 @@
         }).done(function (response) {
             $("#pagedList").empty();
             $("#pagedList").html(response);
-            $(window).trigger('googleMapsScriptLoaded');
+            $(window).trigger('resultsReloaded');
             history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
 
             $('.search-results').removeClass('disabled');

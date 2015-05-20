@@ -89,6 +89,11 @@ $(function () {
         lazyLoadMaps();
     });
 
+    $window.on('resultsReloaded', function () {
+        initialize();
+        lazyLoadMaps();
+    });
+
     function initialize() {
 
         checkGoogleMapsApiScriptLoaded();
