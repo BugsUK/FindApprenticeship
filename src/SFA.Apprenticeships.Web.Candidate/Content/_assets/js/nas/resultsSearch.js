@@ -19,7 +19,10 @@
     $(document).on('change', '.history #sort-results', function () {
         $('#SearchAction').val("Sort");
         var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
-        //TODO: HENRY START SPINNER/WAITING
+
+        $('.search-results').addClass('disabled');
+        $('#ajaxLoading').show();
+
         $.ajax({
             url: searchQueryUrl,
             method: 'GET'            
@@ -28,7 +31,10 @@
             $("#pagedList").html(response);
             $(window).trigger('googleMapsScriptLoaded');
             history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
-            //TODO: HENRY STOP SPINNER/WAITING
+
+            $('.search-results').removeClass('disabled');
+            $('#ajaxLoading').hide();
+
             //TODO: Need to add matraxis multi track here to log page
         }).fail(function () {
         });
@@ -42,7 +48,10 @@
     $(document).on('change', '.history #results-per-page', function () {
         $('#SearchAction').val("Sort");
         var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
-        //TODO: HENRY START SPINNER/WAITING
+
+        $('.search-results').addClass('disabled');
+        $('#ajaxLoading').show();
+
         $.ajax({
             url: searchQueryUrl,
             method: 'GET'
@@ -52,7 +61,10 @@
             $(window).trigger('googleMapsScriptLoaded');
             $(document).scrollTop(0);
             history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
-            //TODO: HENRY STOP SPINNER/WAITING
+
+            $('.search-results').removeClass('disabled');
+            $('#ajaxLoading').hide();
+
             //TODO: Need to add matraxis multi track here to log page
         }).fail(function () {
         });
@@ -61,7 +73,10 @@
     $(document).on('click', '.history .page-navigation__btn', function (e) {
         e.preventDefault();
         var searchQueryUrl = $(this).attr('href');
-        //TODO: HENRY START SPINNER/WAITING
+        
+        $('.search-results').addClass('disabled');
+        $('#ajaxLoading').show();
+
         $.ajax({
             url: searchQueryUrl,
             method: 'GET'
@@ -71,7 +86,10 @@
             $(window).trigger('googleMapsScriptLoaded');
             $(document).scrollTop(0);
             history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
-            //TODO: HENRY STOP SPINNER/WAITING
+            
+            $('.search-results').removeClass('disabled');
+            $('#ajaxLoading').hide();
+
             //TODO: Need to add matraxis multi track here to log page
         }).fail(function () {
         });
@@ -79,7 +97,10 @@
 
     $(window).on("popstate", function (e) {
         if (e.originalEvent.state !== null && e.originalEvent.state.searchUrl) {
-            //TODO: HENRY START SPINNER/WAITING
+            
+            $('.search-results').addClass('disabled');
+            $('#ajaxLoading').show();
+
             $.ajax({
                 url: e.originalEvent.state.searchUrl,
                 method: 'GET'
@@ -88,7 +109,10 @@
                 $("#pagedList").html(response);
                 $(window).trigger('googleMapsScriptLoaded');
                 $(document).scrollTop(0);
-                //TODO: HENRY STOP SPINNER/WAITING
+                
+                $('.search-results').removeClass('disabled');
+                $('#ajaxLoading').hide();
+
                 //TODO: Need to add matraxis multi track here to log page
             }).fail(function () {
             });
