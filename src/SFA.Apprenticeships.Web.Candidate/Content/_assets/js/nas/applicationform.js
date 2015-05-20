@@ -1146,19 +1146,19 @@
             trainingViewModel.yearRegexPattern(window.getYearRegex());
         }
 
-        if (window.getQualificationData) {
+        if (window.getQualificationData()) {
             qualificationModel.getqualifications(window.getQualificationData());
         } else {
             qualificationModel.checkHasNoQualifications();
         }
 
-        if (window.getWorkExperienceData) {
+        if (window.getWorkExperienceData()) {
             experienceViewModel.getWorkExperiences(window.getWorkExperienceData());
         } else {
             experienceViewModel.checkHasNoWorkExperience();
         }
 
-        if (window.getTrainingHistoryData) {
+        if (window.getTrainingHistoryData()) {
             trainingViewModel.getTrainingHistoryItems(window.getTrainingHistoryData());
         } else {
             trainingViewModel.checkHasNoTrainingHistory();

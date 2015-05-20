@@ -117,7 +117,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 	Then I see
         | Field                 | Rule           | Value |
         | WorkExperienceSummary | Does Not Exist |       |
-#Enter data to save
+	#Enter data to save
 	When I enter data
 		| Field                   | Value                         |
 		| EducationNameOfSchool   | SchoolName                    |
@@ -185,15 +185,18 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 	And I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPreviewPage page
 	And I see
-		| Field                         | Rule      | Value                 |
-		| ApplicationSavedTopMessage    | Ends With | my applications       |
-		| ApplicationSavedBottomMessage | Ends With | my applications       |
-		| EducationNameOfSchool         | Equals    | SchoolName            |
-		| EducationFromYear             | Equals    | 2010                  |
-		| EducationToYear               | Equals    | 2012                  |
-		| WhatAreYourStrengths          | Equals    | My strengths          |
-		| WhatCanYouImprove             | Equals    | What can I improve    |
-		| HobbiesAndInterests           | Equals    | Hobbies and interests |
+		| Field                         | Rule           | Value                 |
+		| ApplicationSavedTopMessage    | Ends With      | my applications       |
+		| ApplicationSavedBottomMessage | Ends With      | my applications       |
+		| EducationNameOfSchool         | Equals         | SchoolName            |
+		| EducationFromYear             | Equals         | 2010                  |
+		| EducationToYear               | Equals         | 2012                  |
+		| NoQualificationsMessage       | Does Not Exist |                       |
+		| NoWorkExperienceMessage       | Does Not Exist |                       |
+		| NoTrainingHistory             | Exists         |                       |
+		| WhatAreYourStrengths          | Equals         | My strengths          |
+		| WhatCanYouImprove             | Equals         | What can I improve    |
+		| HobbiesAndInterests           | Equals         | Hobbies and interests |
 	When I choose SubmitApplication
 	Then I am on the ApprenticeshipApplicationCompletePage page
 	When I choose MyApplicationsLink

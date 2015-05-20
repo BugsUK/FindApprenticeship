@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.Application
+﻿namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.ApprenticeshipApplication
 {
-    using global::SpecBind.Pages;
     using OpenQA.Selenium;
+    using SpecBind.Pages;
 
     [PageNavigation("/apprenticeship/preview/[0-9]+")]
     [PageAlias("ApprenticeshipApplicationPreviewPage")]
@@ -84,6 +84,13 @@
 
         [ElementLocator(Id = "no-work-experience")]
         public IWebElement NoWorkExperienceMessage { get; set; }
+
+        #endregion
+
+        #region Work Experience
+
+        [ElementLocator(Id = "no-training-history")]
+        public IWebElement NoTrainingHistory { get; set; }
 
         #endregion
 
