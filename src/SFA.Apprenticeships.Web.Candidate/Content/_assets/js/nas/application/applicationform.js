@@ -43,29 +43,29 @@
     var validationMessageCourseTitleExceedsFiftyCharacters = "Course title can't exceed 50 characters";
     var validationMessageCourseTitleContainsInvalidCharacters = "Course title can't contain invalid characters, eg '/'";
 
-    var qualificationTypeModel = function (name) {
+    var qualificationTypeModel = function(name) {
         var self = this;
 
         self.qualificationTypeName = name;
-    }
+    };
 
-    var groupedQualificationsModel = function (key) {
+    var groupedQualificationsModel = function(key) {
         var self = this;
 
         self.groupKey = ko.observable(key);
         self.groupItems = ko.observableArray();
-    }
+    };
 
     groupedQualificationsModel.prototype = {
-        addItem: function (item) {
+        addItem: function(item) {
             var self = this;
             self.groupItems.push(item);
         },
-        removeItem: function (item) {
+        removeItem: function(item) {
             var self = this;
             self.groupItems.remove(item);
         }
-    }
+    };
 
     var listItemModel = function (itemType, itemOtherType, itemYear, itemSubject, itemGrade, itemPredicted, itemRegexPattern, itemYearRegexPattern) {
 
@@ -278,7 +278,7 @@
         self.addQualification = function () {
             self.yearValidationActivated(true);
 
-            if (self.errors().length == 0) {
+            if (self.errors().length === 0) {
 
                 var typeSelected = self.selectedQualification();
                 var typeOther = self.otherQualification();
@@ -313,7 +313,7 @@
 
         self.saveQualificationItem = function (qualification) {
             
-            if (qualification.itemErrors().length == 0) {
+            if (qualification.itemErrors().length === 0) {
                 qualification.readOnly('readonly');
                 qualification.showEditButton(true);
             } else {
@@ -379,7 +379,7 @@
 
     ko.validation.registerExtenders();
 
-    var workExperienceItemModel = function (itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment, itemCurrentYear, itemRegex, itemYearRegexPattern) {
+    var workExperienceItemModel = function(itemEmployer, itemJobTitle, itemDuties, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemIsCurrentEmployment, itemCurrentYear, itemRegex, itemYearRegexPattern) {
 
         var self = this;
 
@@ -454,12 +454,12 @@
         self.itemToYear = ko.observable(itemToYear).extend({
             required: {
                 message: validationMessageToYearRequired,
-                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+                onlyIf: function() { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
             number: {
                 message: validationMessageToYearMustBeNumeric,
-                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+                onlyIf: function() { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
             min: {
@@ -470,18 +470,18 @@
             max: {
                 message: validationMessageToYearMustNotBeInFuture,
                 params: self.itemCurrentYear,
-                onlyIf: function () {
+                onlyIf: function() {
                     return (self.itemIsCurrentEmployment() === false);
                 }
             }
         }).extend({
             validation: {
-                validator: function (val, fromYearValue) {
+                validator: function(val, fromYearValue) {
                     return val >= fromYearValue;
                 },
                 message: validationMessageToYearMustBeAfterFromYear,
                 params: self.fromYear,
-                onlyIf: function () {
+                onlyIf: function() {
                     return (self.itemIsCurrentEmployment() === false);
                 }
             }
@@ -490,16 +490,16 @@
         self.itemToMonth = ko.observable(itemToMonth).extend({
             required: {
                 message: validationMessageToMonthRequired,
-                onlyIf: function () { return (self.itemIsCurrentEmployment() === false); }
+                onlyIf: function() { return (self.itemIsCurrentEmployment() === false); }
             }
         }).extend({
             validation: {
-                validator: function (val, fromMonthValue) {
+                validator: function(val, fromMonthValue) {
                     return val >= fromMonthValue;
                 },
                 message: validationMessageDateFinishedMustBeAfterDateStarted,
                 params: self.itemFromMonth,
-                onlyIf: function () {
+                onlyIf: function() {
                     return (self.itemFromYear() === self.itemToYear());
                 }
             }
@@ -510,7 +510,7 @@
 
         self.toItemDateReadonly = ko.observable(undefined);
 
-        self.itemIsCurrentEmployment.subscribe(function (selectedValue) {
+        self.itemIsCurrentEmployment.subscribe(function(selectedValue) {
 
             if (selectedValue === true) {
                 self.itemToYear(null);
@@ -521,14 +521,14 @@
             }
         });
 
-        self.disableToDateIfCurrent = function() {           
-            if (self.itemIsCurrentEmployment()) {              
+        self.disableToDateIfCurrent = function() {
+            if (self.itemIsCurrentEmployment()) {
                 self.toItemDateReadonly("disabled");
             }
         };
 
         self.itemErrors = ko.validation.group(self);
-    }
+    };
 
     var workExperienceViewModel = function () {
 
@@ -692,7 +692,7 @@
 
         self.addWorkExperience = function () {
 
-            if (self.errors().length == 0) {
+            if (self.errors().length === 0) {
 
                 var toMonth = self.toMonth();
                 var toYear = self.toYear();
@@ -731,7 +731,7 @@
         };
 
         self.saveWorkExperience = function (workExperience) {
-            if (workExperience.itemErrors().length == 0) {
+            if (workExperience.itemErrors().length === 0) {
                 workExperience.readOnly('readonly');
                 workExperience.showEditButton(true);
             } else {
@@ -779,7 +779,7 @@
 
     };
 
-    var trainingHistoryItemModel = function (itemProvider, itemCourseTitle, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemCurrentYear, itemRegex, itemYearRegexPattern) {
+    var trainingHistoryItemModel = function(itemProvider, itemCourseTitle, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemCurrentYear, itemRegex, itemYearRegexPattern) {
         var self = this;
 
         self.itemRegexPattern = ko.observable(itemRegex);
@@ -853,7 +853,7 @@
             }
         }).extend({
             validation: {
-                validator: function (val, fromYearValue) {
+                validator: function(val, fromYearValue) {
                     return val >= fromYearValue;
                 },
                 message: validationMessageToYearMustBeAfterFromYear,
@@ -867,12 +867,12 @@
             }
         }).extend({
             validation: {
-                validator: function (val, fromMonthValue) {
+                validator: function(val, fromMonthValue) {
                     return val >= fromMonthValue;
                 },
                 message: validationMessageDateFinishedMustBeAfterDateStarted,
                 params: self.itemFromMonth,
-                onlyIf: function () {
+                onlyIf: function() {
                     return (self.itemFromYear() === self.itemToYear());
                 }
             }
@@ -884,7 +884,7 @@
         self.toItemDateReadonly = ko.observable(undefined);
 
         self.itemErrors = ko.validation.group(self);
-    }
+    };
 
     var trainingHistoryViewModel = function () {
         var self = this;
@@ -1004,7 +1004,7 @@
         self.errors = ko.validation.group(self);
 
         self.addTrainingHistory = function () {
-            if (self.errors().length == 0) {
+            if (self.errors().length === 0) {
                 var toMonth = self.toMonth();
                 var toYear = self.toYear();
 
@@ -1034,7 +1034,7 @@
         };
 
         self.saveTrainingHistory = function (trainingHistory) {
-            if (trainingHistory.itemErrors().length == 0) {
+            if (trainingHistory.itemErrors().length === 0) {
                 trainingHistory.readOnly('readonly');
                 trainingHistory.showEditButton(true);
             } else {
@@ -1178,9 +1178,9 @@
             $('#unsavedChanges').hide();
         }
 
-        if ($(this).val() != "") {
+        if ($(this).val() !== "") {
             $('#apply-button').addClass('dirtyQuals');
-        } else if ($('#subject-name, #subject-grade').val() == "") {
+        } else if ($('#subject-name, #subject-grade').val() === "") {
             $('#apply-button').removeClass('dirtyQuals');
         }
     });
@@ -1217,9 +1217,9 @@
             $('#unsavedChanges').hide();
         }
 
-        if ($(this).val() != "") {
+        if ($(this).val() !== "") {
             $('#apply-button').addClass('dirtyWorkExp');
-        } else if ($('#work-employer, #work-title, #work-role, #work-from-year, #work-to-year').val() == "") {
+        } else if ($('#work-employer, #work-title, #work-role, #work-from-year, #work-to-year').val() === "") {
             $('#apply-button').removeClass('dirtyWorkExp');
         }
     });
@@ -1257,9 +1257,9 @@
             $('#unsavedChanges').hide();
         }
 
-        if ($(this).val() != "") {
+        if ($(this).val() !== "") {
             $('#apply-button').addClass('dirtyTrainingHistory');
-        } else if ($('#training-history-provider, #training-history-course-title, #training-history-from-year, #training-history-to-year').val() == "") {
+        } else if ($('#training-history-provider, #training-history-course-title, #training-history-from-year, #training-history-to-year').val() === "") {
             $('#apply-button').removeClass('dirtyTrainingHistory');
         }
     });
