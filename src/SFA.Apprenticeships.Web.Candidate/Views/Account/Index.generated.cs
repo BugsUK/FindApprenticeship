@@ -1746,7 +1746,7 @@ WriteLiteral(">");
 
             
             #line 362 "..\..\Views\Account\Index.cshtml"
-                                                     Write(Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = application.VacancyId }));
+                                                     Write(Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId }));
 
             
             #line default

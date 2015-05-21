@@ -359,7 +359,7 @@ else
                                             @Html.ActionLink(application.Title + " with " + @application.EmployerName, "TraineeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
                                         }
                                     </td>
-                                    <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = application.VacancyId })</td>
+                                    <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
                                     <td class="ta-center">
                                         Applied<br />
                                         @Html.DisplayFor(m => application.DateApplied)

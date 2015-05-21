@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
     using System;
+    using System.Globalization;
     using Candidate.ViewModels.Applications;
     using Candidate.Views.Account;
     using FluentAssertions;
@@ -91,6 +92,29 @@
             {
                 traineeshipsCount.Should().BeNull();
                 traineeshipsTable.Should().BeNull();
+            }
+        }
+
+        [Test]
+        public void ShowViewTraineeshipLink()
+        {
+            // Arrange.
+            var myApplications =
+                new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetTraineeships(3)).Build();
+
+            // Act.
+            var view = new Index().RenderAsHtml(myApplications);
+
+            // Assert.
+            foreach (var application in myApplications.TraineeshipApplications)
+            {
+                var id = string.Format("traineeship-view-link-{0}", application.VacancyId);
+                var url = string.Format("traineeship/view/{0}", application.VacancyId);
+
+                var viewTraineeshipLink = view.GetElementbyId(id);
+
+                viewTraineeshipLink.Should().NotBeNull();
+                viewTraineeshipLink.OuterHtml.Should().Contain(url);
             }
         }
     }
