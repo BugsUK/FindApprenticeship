@@ -6,7 +6,6 @@
     using Helpers;
     using ViewModels.Candidate;
 
-    // TODO: AG: US786: unit test.
     public class TrainingHistoryViewModelValidator : AbstractValidator<TrainingHistoryViewModel>
     {
         public TrainingHistoryViewModelValidator()

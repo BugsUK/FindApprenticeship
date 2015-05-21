@@ -288,7 +288,6 @@
             viewModel.Candidate.TrainingHistory = RemoveEmptyRowsFromTrainingHistory(viewModel.Candidate.TrainingHistory);
             viewModel.Candidate.HasTrainingHistory = viewModel.Candidate.TrainingHistory.Any();
 
-            // TODO: AG: US786: unit test AddXxx functions and understand default rows.
             viewModel.DefaultQualificationRows = 0;
             viewModel.DefaultWorkExperienceRows = 0;
             viewModel.DefaultTrainingHistoryRows = 3;
@@ -390,7 +389,6 @@
 
         private static ApprenticeshipApplicationViewModel StripApplicationViewModelBeforeValidation(ApprenticeshipApplicationViewModel model)
         {
-            // TODO: AG: US786: unit test.
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
             model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
             model.Candidate.TrainingHistory = RemoveEmptyRowsFromTrainingHistory(model.Candidate.TrainingHistory);

@@ -7,7 +7,6 @@
     using Search;
     using ViewModels.Candidate;
 
-    // TODO: AG: US786: unit test.
     public abstract class ApplicationMediatorBase : SearchMediatorBase
     {
         protected ApplicationMediatorBase(IConfigurationService configService, IUserDataProvider userDataProvider)

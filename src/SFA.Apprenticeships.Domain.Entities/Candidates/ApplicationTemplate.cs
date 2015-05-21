@@ -19,7 +19,6 @@
 
         public IList<WorkExperience> WorkExperience { get; set; }
 
-        // TODO: US786: add unit tests as per WorkExperience.
         public IList<TrainingHistory> TrainingHistory { get; set; }
 
         public AboutYou AboutYou { get; set; }

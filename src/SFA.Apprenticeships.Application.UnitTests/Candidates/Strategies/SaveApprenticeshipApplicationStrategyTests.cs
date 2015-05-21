@@ -11,8 +11,6 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
-    // TODO: US786: add unit tests for TrainingHistory.
-
     [TestFixture]
     public class SaveApprenticeshipApplicationStrategyTests
     {
@@ -188,6 +186,7 @@
             _candidate.ApplicationTemplate.EducationHistory.Should().Be(_newCandidateInformation.EducationHistory);
             _candidate.ApplicationTemplate.Qualifications.Should().BeEquivalentTo(_newCandidateInformation.Qualifications);
             _candidate.ApplicationTemplate.WorkExperience.Should().BeEquivalentTo(_newCandidateInformation.WorkExperience);
+            _candidate.ApplicationTemplate.TrainingHistory.Should().BeEquivalentTo(_newCandidateInformation.TrainingHistory);
         }
 
         [TestCase(null, null, null)]

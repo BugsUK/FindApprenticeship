@@ -4,6 +4,7 @@
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
 
+    // TODO: AG: add unit tests for this strategy.
     public class SaveTraineeshipApplicationStrategy : ISaveTraineeshipApplicationStrategy
     {
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
