@@ -79,6 +79,18 @@
             {
                 throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
             }
+            catch (FaultException e)
+            {
+                throw new BoundaryException(ErrorCodes.WebServiceFailed, e, new
+                {
+                    faultExceptionAction = e.Action,
+                    faultExceptionName = e.Code == null ? "<null>" : e.Code.Name ?? "<null>",
+                    faultExceptionReason = e.Reason == null ? "<null>" : e.Reason.ToString(),
+                    faultExceptionMessage = e.Message,
+                    faultExceptionSource = e.Source,
+                    faultExceptionStackTrace = e.StackTrace
+                });
+            }
             catch (CommunicationException e)
             {
                 throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
