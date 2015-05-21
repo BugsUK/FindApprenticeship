@@ -18,7 +18,7 @@ $(function () {
         originLocation,
         markerIcon,
         selectedIcon,
-        resultMaps = [];
+        resultMaps;
 
     var ResultMap = function (resultItem) {
         this.resultItem = resultItem[0];
@@ -30,11 +30,11 @@ $(function () {
         this.title = this.link.html();
         this.vacancyId = this.link.attr('data-vacancy-id');
         this.lat = this.link.attr('data-lat');
-        this.lon = this.link.attr('data-lon');
-        this.latlng = new google.maps.LatLng(this.lat, this.lon);
+        this.lon = this.link.attr('data-lon');        
         this.duration = resultItem.find('.journey-time');
         this.travelMode = resultItem.find('.select-mode');
         this.journeyTime = resultItem.find('.journey-time');
+        this.latlng = new google.maps.LatLng(this.lat, this.lon);
         this.directionsDisplay = new google.maps.DirectionsRenderer({ suppressMarkers: true });
         this.directionsService = new google.maps.DirectionsService();
         this.marker = null;
@@ -280,8 +280,10 @@ $(function () {
 
         checkGoogleMapsApiScriptLoaded();
 
+        var $this = $(this);
+
         $window.on('googleMapsScriptLoaded', function () {
-            calcRoute($(this), false);
+            calcRoute($this, false);
         });
 
         if (apiScriptLoaded) {

@@ -49,7 +49,8 @@
         $('#LocationType').val("NonNational");
     });
 
-    $(document).on('click', '.history #search-button', function () {
+    $(document).on('click', '.history #search-button', function (e) {
+        e.preventDefault();
         $('#LocationType').val("NonNational");
         var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
         loadResults(searchQueryUrl, true);
@@ -70,13 +71,13 @@
             history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
 
             $('.search-results').removeClass('disabled');
+            $("#search-button").text('Update results').removeClass('disabled');
             $('#ajaxLoading').hide();
 
             if (scrollTop) {
                 $(document).scrollTop(0);
             }
-
-            //TODO: Need to add matraxis multi track here to log page
+            Webtrends.multiTrack({ argsa: ["DCS.dcsqry", window.location.search] });
         }).fail(function () {
         });
     }

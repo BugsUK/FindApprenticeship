@@ -105,7 +105,7 @@
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Results(ApprenticeshipSearchViewModel model)
         {
-            return await Task.Run<ActionResult>(() =>
+            return await Task.Run(() =>
             {
                 ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
 

@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
 
     public class ApprenticeshipSearchResponseViewModel : ViewModelBase
@@ -79,7 +78,7 @@
             get { return VacancySearch.SortTypes; }
         }
 
-        public ApprenticeshipSearchViewModel[] LocationSearches
+        public IEnumerable<ApprenticeshipSearchViewModel> LocationSearches
         {
             get { return VacancySearch.LocationSearches; }
         }

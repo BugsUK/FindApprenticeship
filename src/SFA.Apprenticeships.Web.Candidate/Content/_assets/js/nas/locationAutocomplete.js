@@ -71,7 +71,12 @@
                         " with " + locationVal + " in the name. Use up and down arrow keys to navigate";
                 }
             },
-            select: function(event, ui) {
+            select: function (event, ui) {
+
+                $("#locationSuggestions").addClass("hidden");
+                $("#locationSuggestions").removeAttr("open");
+                $("#locationSuggestions").removeClass("open");
+
                 this.value = ui.item.value;
                 var longLat = getLonLatFromName(ui.item.value);
 
@@ -136,4 +141,17 @@
         var numSuggestions = $('#location-suggestions li').length;
         $('#locSuggestionsAria').text('There are ' + numSuggestions + ' locations with similar names, tab down to the suggestions, or collapse this panel');
     }
+
+    $(document).on("suggestedLocationsUpdated", function (event, data) {
+        $("#locationSuggestions").removeClass("hidden");
+        $("#locationSuggestions").attr("open", true);
+        $("#locationSuggestions").addClass("open");
+        $("#location-suggestions").empty();
+        _.each(data.locations, function(location) {
+            $("#location-suggestions").append(
+                $("<li>").append(
+                    $("<a>").attr("href", location.Href).append(location.Text)));
+        });
+    });
+
 })(jQuery);

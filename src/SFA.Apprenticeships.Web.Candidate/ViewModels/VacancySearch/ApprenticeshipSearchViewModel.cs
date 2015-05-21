@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Globalization;
+    using System.Linq;
     using System.Web;
     using System.Web.Mvc;
     using Account;
@@ -28,6 +28,7 @@
             DisplayDistance = true;
             DisplayClosingDate = true;
             DisplayStartDate = true;
+            LocationSearches = Enumerable.Empty<ApprenticeshipSearchViewModel>();
         }
 
         public ApprenticeshipSearchViewModel(ApprenticeshipSearchViewModel viewModel) : base (viewModel)
@@ -47,6 +48,7 @@
             DisplayStartDate = DisplayStartDate;
             DisplayApprenticeshipLevel = DisplayApprenticeshipLevel;
             DisplayWage = DisplayWage;
+            LocationSearches = Enumerable.Empty<ApprenticeshipSearchViewModel>();
         }
 
         public ApprenticeshipSearchViewModel(ApprenticeshipSearchParameters searchParameters) : base(searchParameters)
@@ -58,6 +60,7 @@
             SubCategories = searchParameters.SubCategoryCodes;
             SearchMode = string.IsNullOrWhiteSpace(searchParameters.CategoryCode) ? ApprenticeshipSearchMode.Keyword : ApprenticeshipSearchMode.Category;
             SearchField = searchParameters.SearchField.ToString();
+            LocationSearches = Enumerable.Empty<ApprenticeshipSearchViewModel>();
         }
 
         [Display(Name = ApprenticeshipSearchViewModelMessages.KeywordMessages.LabelText, Description = ApprenticeshipSearchViewModelMessages.KeywordMessages.HintText)]
@@ -68,7 +71,7 @@
 
         public ApprenticeshipLocationType LocationType { get; set; }
 
-        public ApprenticeshipSearchViewModel[] LocationSearches { get; set; }
+        public IEnumerable<ApprenticeshipSearchViewModel> LocationSearches { get; set; }
 
         public SelectList ApprenticeshipLevels { get; set; }
 

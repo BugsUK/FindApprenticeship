@@ -69,7 +69,7 @@
             get { return VacancySearch.SortTypes; }
         }
 
-        public TraineeshipSearchViewModel[] LocationSearches
+        public IEnumerable<TraineeshipSearchViewModel> LocationSearches
         {
             get { return VacancySearch.LocationSearches; }
         }

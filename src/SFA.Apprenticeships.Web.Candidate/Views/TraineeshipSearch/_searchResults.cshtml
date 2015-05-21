@@ -69,11 +69,21 @@
 
 @if (Model.TotalHits > 5)
 {
-<div class="form-group">
-    <label for="results-per-page" class="heading-small inline">Display results</label>
-    @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
-    <noscript>
-        <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
-    </noscript>
-</div>
+    <div class="form-group">
+        <label for="results-per-page" class="heading-small inline">Display results</label>
+        @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new {@id = "results-per-page"})
+        <noscript>
+            <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
+        </noscript>
+    </div>
+}
+
+@{
+    if (Request.IsAjaxRequest() && Model.LocationSearches.Any())
+    {
+        <script>
+            var suggestedLocations = @Html.Raw(Json.Encode(Model.LocationSearches.ToList().Select(s => new { Href = @Url.Action("results"), Text = s.Location})))
+            $(document).trigger("suggestedLocationsUpdated", { locations: suggestedLocations });
+        </script>
+    }
 }
