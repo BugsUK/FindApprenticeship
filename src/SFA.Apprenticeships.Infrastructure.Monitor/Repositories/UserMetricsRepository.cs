@@ -41,7 +41,7 @@
 
         public long GetUnactivatedExpiredCodeUserCount()
         {
-            var oldestValidCodeDate = DateTime.UtcNow.AddDays(-30);
+            var oldestValidCodeDate = DateTime.UtcNow;
 
             return Collection
                 .AsQueryable()
