@@ -44,14 +44,14 @@
             writer.Save(application);
 
             //assert
-            var savedApplication = reader.Get(application.LegacyApplicationId);
+            var savedApplication = reader.Get(application.LegacyApplicationId, true);
             savedApplication.Should().NotBeNull();
             savedApplication.EntityId.Should().Be(application.EntityId);
             savedApplication.CandidateDetails.FirstName.Should().Be(application.CandidateDetails.FirstName);
             savedApplication.CandidateDetails.Address.AddressLine1.Should().Be(application.CandidateDetails.Address.AddressLine1);
 
             writer.Delete(savedApplication.EntityId);
-            savedApplication = reader.Get(application.LegacyApplicationId);
+            savedApplication = reader.Get(application.LegacyApplicationId, true);
             savedApplication.Should().BeNull();
         }
 

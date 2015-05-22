@@ -35,7 +35,7 @@
         {
             return Task.Run(() =>
             {
-                var application = _apprenticeshipApplicationReadRepository.Get(applicationStatusChanged.LegacyApplicationId);
+                var application = _apprenticeshipApplicationReadRepository.Get(applicationStatusChanged.LegacyApplicationId, _strictEtlValidation);
                 if (application == null)
                 {
                     _logService.Warn(_strictEtlValidation, string.Format(ApplicationNotFoundMessageFormat, applicationStatusChanged.LegacyApplicationId));

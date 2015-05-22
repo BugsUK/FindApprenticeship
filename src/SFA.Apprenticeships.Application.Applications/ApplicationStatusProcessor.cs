@@ -140,7 +140,7 @@
 
             if (apprenticeshipApplicationDetail == null && applicationStatusSummary.LegacyApplicationId != 0)
             {
-                apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
+                apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId, strictEtlValidation);
             }
 
             if (apprenticeshipApplicationDetail == null && applicationStatusSummary.LegacyCandidateId != 0)

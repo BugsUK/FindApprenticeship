@@ -8,7 +8,7 @@
     {
         ApprenticeshipApplicationDetail Get(Guid id, bool errorIfNotFound);
 
-        ApprenticeshipApplicationDetail Get(int legacyApplicationId);
+        ApprenticeshipApplicationDetail Get(int legacyApplicationId, bool errorIfMultipleFound);
 
         IList<ApprenticeshipApplicationSummary> GetForCandidate(Guid candidateId);
 

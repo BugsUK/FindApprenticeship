@@ -22,7 +22,7 @@
         {
             const int legacyApplicationId = 3456789;
             var repository = new Mock<IApprenticeshipApplicationReadRepository>();
-            repository.Setup(r => r.Get(legacyApplicationId)).Returns((ApprenticeshipApplicationDetail) null);
+            repository.Setup(r => r.Get(legacyApplicationId, true)).Returns((ApprenticeshipApplicationDetail)null);
             var logService = new Mock<ILogService>();
             var consumer = new ApplicationStatusChangedConsumerAsyncBuilder().With(repository).With(logService).Build();
             var applicationStatusChanged = new Fixture().Build<ApplicationStatusChanged>().With(asc => asc.LegacyApplicationId, legacyApplicationId).Create();
@@ -41,7 +41,7 @@
             const string unsuccessfulReason = "You do not have the required grades";
             var applicationReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();
             var apprenticeshipApplicationDetail = new Fixture().Build<ApprenticeshipApplicationDetail>().With(aad => aad.LegacyApplicationId, legacyApplicationId).Create();
-            applicationReadRepository.Setup(r => r.Get(legacyApplicationId)).Returns(apprenticeshipApplicationDetail);
+            applicationReadRepository.Setup(r => r.Get(legacyApplicationId, true)).Returns(apprenticeshipApplicationDetail);
             var statusAlertRepository = new Mock<IApplicationStatusAlertRepository>();
             ApplicationStatusAlert applicationStatusAlert = null;
             statusAlertRepository.Setup(r => r.Save(It.IsAny<ApplicationStatusAlert>())).Callback<ApplicationStatusAlert>(asa => { applicationStatusAlert = asa; });
@@ -80,7 +80,7 @@
                 .With(aad => aad.EntityId, applicationId)
                 .With(aad => aad.LegacyApplicationId, legacyApplicationId)
                 .Create();
-            applicationReadRepository.Setup(r => r.Get(legacyApplicationId)).Returns(apprenticeshipApplicationDetail);
+            applicationReadRepository.Setup(r => r.Get(legacyApplicationId, true)).Returns(apprenticeshipApplicationDetail);
             var existingApplicationStatusAlert = new Fixture().Build<ApplicationStatusAlert>()
                 .With(asa => asa.ApplicationId, applicationId)
                 .With(asa => asa.Status, ApplicationStatuses.Successful)
@@ -119,7 +119,7 @@
                 .With(aad => aad.EntityId, applicationId)
                 .With(aad => aad.LegacyApplicationId, legacyApplicationId)
                 .Create();
-            applicationReadRepository.Setup(r => r.Get(legacyApplicationId)).Returns(apprenticeshipApplicationDetail);
+            applicationReadRepository.Setup(r => r.Get(legacyApplicationId, true)).Returns(apprenticeshipApplicationDetail);
             var existingApplicationStatusAlert = new Fixture().Build<ApplicationStatusAlert>()
                 .With(asa => asa.ApplicationId, applicationId)
                 .With(asa => asa.Status, ApplicationStatuses.Successful)
