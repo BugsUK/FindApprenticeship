@@ -2,7 +2,6 @@
 {
     using System;
     using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
 
     public class SaveApprenticeshipApplicationStrategy : ISaveApprenticeshipApplicationStrategy
@@ -26,35 +25,35 @@
 
         public ApprenticeshipApplicationDetail SaveApplication(Guid candidateId, int vacancyId, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
-            var applicationDetail = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId, true);
+            var currentApplication = _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId, true);
 
-            applicationDetail.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
+            currentApplication.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
 
-            applicationDetail.CandidateInformation = apprenticeshipApplication.CandidateInformation;
-            applicationDetail.AdditionalQuestion1Answer = apprenticeshipApplication.AdditionalQuestion1Answer;
-            applicationDetail.AdditionalQuestion2Answer = apprenticeshipApplication.AdditionalQuestion2Answer;
+            currentApplication.CandidateInformation = apprenticeshipApplication.CandidateInformation;
+            currentApplication.AdditionalQuestion1Answer = apprenticeshipApplication.AdditionalQuestion1Answer;
+            currentApplication.AdditionalQuestion2Answer = apprenticeshipApplication.AdditionalQuestion2Answer;
 
-            var savedApplication = _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+            var savedApplication = _apprenticeshipApplicationWriteRepository.Save(currentApplication);
 
-            SyncToCandidateApplicationTemplate(savedApplication);
+            SyncToCandidateApplicationTemplate(candidateId, savedApplication);
 
             return savedApplication;
         }
 
-        private void SyncToCandidateApplicationTemplate(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
+        private void SyncToCandidateApplicationTemplate(Guid candidateId, ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
-            var candidate = _candidateReadRepository.Get(apprenticeshipApplicationDetail.CandidateId);
+            var candidate = _candidateReadRepository.Get(candidateId);
 
-            candidate.ApplicationTemplate.AboutYou = apprenticeshipApplicationDetail.CandidateInformation.AboutYou;
-            candidate.ApplicationTemplate.EducationHistory = apprenticeshipApplicationDetail.CandidateInformation.EducationHistory;
-            candidate.ApplicationTemplate.Qualifications = apprenticeshipApplicationDetail.CandidateInformation.Qualifications;
-            candidate.ApplicationTemplate.WorkExperience = apprenticeshipApplicationDetail.CandidateInformation.WorkExperience;
-            candidate.ApplicationTemplate.TrainingHistory = apprenticeshipApplicationDetail.CandidateInformation.TrainingHistory;
+            candidate.ApplicationTemplate.AboutYou = apprenticeshipApplication.CandidateInformation.AboutYou;
+            candidate.ApplicationTemplate.EducationHistory = apprenticeshipApplication.CandidateInformation.EducationHistory;
+            candidate.ApplicationTemplate.Qualifications = apprenticeshipApplication.CandidateInformation.Qualifications;
+            candidate.ApplicationTemplate.WorkExperience = apprenticeshipApplication.CandidateInformation.WorkExperience;
+            candidate.ApplicationTemplate.TrainingHistory = apprenticeshipApplication.CandidateInformation.TrainingHistory;
 
             if (!candidate.MonitoringInformation.DisabilityStatus.HasValue &&
-                apprenticeshipApplicationDetail.CandidateInformation.DisabilityStatus.HasValue)
+                apprenticeshipApplication.CandidateInformation.DisabilityStatus.HasValue)
             {
-                candidate.MonitoringInformation.DisabilityStatus = apprenticeshipApplicationDetail.CandidateInformation.DisabilityStatus;
+                candidate.MonitoringInformation.DisabilityStatus = apprenticeshipApplication.CandidateInformation.DisabilityStatus;
             }
 
             _candidateWriteRepository.Save(candidate);

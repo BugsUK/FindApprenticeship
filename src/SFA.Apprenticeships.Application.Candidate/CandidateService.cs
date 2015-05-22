@@ -326,8 +326,8 @@
             _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
         }
 
-        public void SubmitTraineeshipApplication(Guid candidateId, int vacancyId,
-            TraineeshipApplicationDetail traineeshipApplicationDetail)
+        public void SubmitTraineeshipApplication(
+            Guid candidateId, int vacancyId, TraineeshipApplicationDetail traineeshipApplicationDetail)
         {
             Condition.Requires(candidateId);
 
@@ -335,7 +335,8 @@
                 "Calling CandidateService to submit the traineeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
-            var traineeshipDetails = _saveTraineeshipApplicationStrategy.SaveApplication(traineeshipApplicationDetail);
+            var traineeshipDetails = _saveTraineeshipApplicationStrategy.SaveApplication(candidateId, vacancyId, traineeshipApplicationDetail);
+
             _submitTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
         }
 
