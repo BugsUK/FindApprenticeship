@@ -99,7 +99,14 @@
                 }
                 else
                 {
-                    _logger.Warn(message);
+                    if (strictEtlValidation)
+                    {
+                        _logger.Warn(message);
+                    }
+                    else
+                    {
+                        _logger.Info(message);
+                    }
                 }
             }
         }
