@@ -33,12 +33,24 @@
             _vacancyIndexer.ResetCalls();
             _logService.ResetCalls();
             _configurationService.Setup(x => x.Get<ProcessConfiguration>())
-                .Returns(new ProcessConfiguration { VacancyAboutToExpireNotificationHours = VacancyAboutToExpireNotificationHours });
+                .Returns(new ProcessConfiguration
+                {
+                    VacancyAboutToExpireNotificationHours = VacancyAboutToExpireNotificationHours,
+                    StrictEtlValidation = true
+                });
         }
 
-        [Test]
-        public void MismatchedSectorFramework()
+        [TestCase(true)]
+        [TestCase(false)]
+        public void MismatchedSectorFramework(bool strictEtlValidation)
         {
+            _configurationService.Setup(x => x.Get<ProcessConfiguration>())
+                .Returns(new ProcessConfiguration
+                {
+                    VacancyAboutToExpireNotificationHours = VacancyAboutToExpireNotificationHours,
+                    StrictEtlValidation = strictEtlValidation
+                });
+
             var processor = new ApprenticeshipSummaryUpdateProcessor(_configurationService.Object, _vacancyIndexer.Object, _referenceDataService.Object, _messageBus.Object, _logService.Object);
 
             SetupReferenceDataService(_referenceDataService);
@@ -50,7 +62,15 @@
             });
 
             _vacancyIndexer.Verify(vi => vi.Index(It.IsAny<ApprenticeshipSummaryUpdate>()), Times.Once);
-            _logService.Verify(ls => ls.Warn(It.IsAny<string>(), It.IsAny<object[]>()));
+
+            if (strictEtlValidation)
+            {
+                _logService.Verify(ls => ls.Warn(It.IsAny<string>(), It.IsAny<object[]>()));
+            }
+            else
+            {
+                _logService.Verify(ls => ls.Info(It.IsAny<string>(), It.IsAny<object[]>()));
+            }
         }
 
         [Test]

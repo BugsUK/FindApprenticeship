@@ -11,6 +11,7 @@
     using Domain.Interfaces.Messaging;
     using VacancyIndexer;
     using Elastic = Elastic.Common.Entities;
+    using Extensions;
 
     public class ApprenticeshipSummaryUpdateProcessor : IApprenticeshipSummaryUpdateProcessor
     {
@@ -19,17 +20,19 @@
         private readonly ILogService _logService;
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _vacancyIndexerService;
         private readonly int _vacancyAboutToExpireThreshold;
+        private readonly bool _strictEtlValidation;
 
         public ApprenticeshipSummaryUpdateProcessor(
             IConfigurationService configurationService,
             IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> vacancyIndexerService,
             IReferenceDataService referenceDataService, IMessageBus messageBus, ILogService logService)
         {
-            _vacancyAboutToExpireThreshold = configurationService.Get<ProcessConfiguration>().VacancyAboutToExpireNotificationHours;
             _vacancyIndexerService = vacancyIndexerService;
             _referenceDataService = referenceDataService;
             _messageBus = messageBus;
             _logService = logService;
+            _vacancyAboutToExpireThreshold = configurationService.Get<ProcessConfiguration>().VacancyAboutToExpireNotificationHours;
+            _strictEtlValidation = configurationService.Get<ProcessConfiguration>().StrictEtlValidation;
         }
 
         public void Process(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
@@ -55,7 +58,7 @@
             {
                 vacancySummaryToIndex.CategoryCode = "Unknown";
                 vacancySummaryToIndex.SubCategoryCode = "Unknown";
-                _logService.Warn("The vacancy with Id {0} has an unknown Category and SubCategory: {1} | {2}. It is likely these were deprecated", vacancySummaryToIndex.Id, vacancySummaryToIndex.Category, vacancySummaryToIndex.SubCategory);
+                _logService.Warn(_strictEtlValidation, "The vacancy with Id {0} has an unknown Category and SubCategory: {1} | {2}. It is likely these were deprecated", vacancySummaryToIndex.Id, vacancySummaryToIndex.Category, vacancySummaryToIndex.SubCategory);
             }
             else
             {
@@ -67,7 +70,7 @@
                 {
                     vacancySummaryToIndex.CategoryCode = "Unknown";
                     vacancySummaryToIndex.SubCategoryCode = "Unknown";
-                    _logService.Warn("The vacancy with Id {0} has a mismatched Category/SubCategory: {1} | {2}", vacancySummaryToIndex.Id, vacancySummaryToIndex.Category, vacancySummaryToIndex.SubCategory);
+                    _logService.Warn(_strictEtlValidation, "The vacancy with Id {0} has a mismatched Category/SubCategory: {1} | {2}", vacancySummaryToIndex.Id, vacancySummaryToIndex.Category, vacancySummaryToIndex.SubCategory);
                 }
                 else
                 {

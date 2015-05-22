@@ -11,5 +11,7 @@
         public bool EnableVacancyStatusPropagation { get; set; }
 
         public bool EnableVacancySiteMap { get; set; }
+
+        public bool StrictEtlValidation { get; set; }
     }
 }

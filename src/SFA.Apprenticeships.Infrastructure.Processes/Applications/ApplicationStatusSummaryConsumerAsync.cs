@@ -5,6 +5,8 @@
     using System.Threading.Tasks;
     using Application.Applications;
     using Application.Applications.Entities;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using EasyNetQ.AutoSubscribe;
 
@@ -14,13 +16,15 @@
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly ManualResetEvent _applicationStatusSummaryConsumerResetEvent = new ManualResetEvent(true);
         private readonly IMessageBus _messageBus;
+        private readonly bool _strictEtlValidation;
 
         private CancellationToken CancellationToken { get { return _cancellationTokenSource.Token; } }
 
-        public ApplicationStatusSummaryConsumerAsync(IApplicationStatusProcessor applicationStatusProcessor, IMessageBus messageBus)
+        public ApplicationStatusSummaryConsumerAsync(IApplicationStatusProcessor applicationStatusProcessor, IMessageBus messageBus, IConfigurationService configurationService)
         {
             _applicationStatusProcessor = applicationStatusProcessor;
             _messageBus = messageBus;
+            _strictEtlValidation = configurationService.Get<ProcessConfiguration>().StrictEtlValidation;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]
@@ -39,7 +43,7 @@
 
                 try
                 {
-                    _applicationStatusProcessor.ProcessApplicationStatuses(applicationStatusSummaryToProcess);
+                    _applicationStatusProcessor.ProcessApplicationStatuses(applicationStatusSummaryToProcess, _strictEtlValidation);
 
                     // determine whether this message is from an already propagated vacancy status summary
                     var isReprocessing = applicationStatusSummaryToProcess.ApplicationId != Guid.Empty;

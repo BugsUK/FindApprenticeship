@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Domain.Entities.Applications;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
@@ -14,7 +13,6 @@
     public class ApplicationStatusProcessor : IApplicationStatusProcessor
     {
         private readonly ILogService _logger;
-        private readonly IConfigurationService _configurationService;
 
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
@@ -28,7 +26,7 @@
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ICandidateReadRepository candidateReadRepository,
             IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy,
-            IMessageBus messageBus, ILogService logger, IConfigurationService configurationService)
+            IMessageBus messageBus, ILogService logger)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
@@ -37,7 +35,6 @@
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _messageBus = messageBus;
             _logger = logger;
-            _configurationService = configurationService;
         }
 
         public void QueueApplicationStatusesPages(int applicationStatusExtractWindow)
@@ -88,11 +85,11 @@
             _logger.Debug("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
         }
 
-        public void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary)
+        public void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary, bool strictEtlValidation)
         {
             _logger.Debug("Processing application summary status update for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
-            
-            if (!ProcessApprenticeshipApplication(applicationStatusSummary) && !ProcessTraineeshipApplication(applicationStatusSummary))
+
+            if (!ProcessApprenticeshipApplication(applicationStatusSummary, strictEtlValidation) && !ProcessTraineeshipApplication(applicationStatusSummary))
             {
                 var message = string.Format("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}' and application ID '{1}'", applicationStatusSummary.LegacyApplicationId, applicationStatusSummary.ApplicationId);
 
@@ -132,13 +129,13 @@
                 applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
         }
 
-        private bool ProcessApprenticeshipApplication(ApplicationStatusSummary applicationStatusSummary)
+        private bool ProcessApprenticeshipApplication(ApplicationStatusSummary applicationStatusSummary, bool strictEtlValidation)
         {
             var apprenticeshipApplicationDetail = default(ApprenticeshipApplicationDetail);
 
             if (applicationStatusSummary.ApplicationId != Guid.Empty)
             {
-                apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.ApplicationId);
+                apprenticeshipApplicationDetail = _apprenticeshipApplicationReadRepository.Get(applicationStatusSummary.ApplicationId, strictEtlValidation);
             }
 
             if (apprenticeshipApplicationDetail == null && applicationStatusSummary.LegacyApplicationId != 0)

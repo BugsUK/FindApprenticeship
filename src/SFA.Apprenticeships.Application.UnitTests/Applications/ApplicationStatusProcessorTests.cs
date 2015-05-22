@@ -23,7 +23,6 @@
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadMock;
         private Mock<ICandidateReadRepository> _candidateReadMock;
         private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
-        private Mock<IConfigurationService> _configurationServiceMock;
         private Mock<IMessageBus> _bus;
         private Mock<ILogService> _logger;
 
@@ -37,10 +36,9 @@
             _applicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
             _bus = new Mock<IMessageBus>();
             _logger = new Mock<ILogService>();
-            _configurationServiceMock = new Mock<IConfigurationService>();
             _applicationStatusProcessor = new ApplicationStatusProcessor(_legacyApplicationStatusProvider.Object,
                 _apprenticeshipApplicationReadMock.Object, _traineeshipApplicationReadMock.Object, _candidateReadMock.Object, 
-                _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object, _configurationServiceMock.Object);
+                _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object);
         }
 
         [Test]

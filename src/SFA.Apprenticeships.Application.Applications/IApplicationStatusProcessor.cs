@@ -8,7 +8,7 @@
 
         void QueueApplicationStatuses(int applicationStatusExtractWindow, ApplicationUpdatePage applicationStatusSummaryPage);
 
-        void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary);
+        void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary, bool strictEtlValidation);
 
         void ProcessApplicationStatuses(VacancyStatusSummary vacancyStatusSummary);
     }

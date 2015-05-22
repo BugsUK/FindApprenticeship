@@ -5,23 +5,28 @@
     using System.Threading.Tasks;
     using Application.Applications.Entities;
     using Application.Interfaces.Logging;
+    using Configuration;
     using Domain.Entities.Communication;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
+    using Extensions;
 
     public class ApplicationStatusChangedConsumerAsync : IConsumeAsync<ApplicationStatusChanged>
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApplicationStatusAlertRepository _applicationStatusAlertRepository;
         private readonly ILogService _logService;
+        private readonly bool _strictEtlValidation;
 
         public static string ApplicationNotFoundMessageFormat = "Unable to find apprenticeship application with legacy application ID '{0}'";
 
-        public ApplicationStatusChangedConsumerAsync(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IApplicationStatusAlertRepository applicationStatusAlertRepository, ILogService logService)
+        public ApplicationStatusChangedConsumerAsync(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IApplicationStatusAlertRepository applicationStatusAlertRepository, ILogService logService, IConfigurationService configurationService)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _applicationStatusAlertRepository = applicationStatusAlertRepository;
             _logService = logService;
+            _strictEtlValidation = configurationService.Get<ProcessConfiguration>().StrictEtlValidation;
         }
 
         [SubscriptionConfiguration(PrefetchCount = 20)]
@@ -33,7 +38,7 @@
                 var application = _apprenticeshipApplicationReadRepository.Get(applicationStatusChanged.LegacyApplicationId);
                 if (application == null)
                 {
-                    _logService.Warn(string.Format(ApplicationNotFoundMessageFormat, applicationStatusChanged.LegacyApplicationId));
+                    _logService.Warn(_strictEtlValidation, string.Format(ApplicationNotFoundMessageFormat, applicationStatusChanged.LegacyApplicationId));
                     return;
                 }
 
