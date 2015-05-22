@@ -147,6 +147,7 @@
         $("#locationSuggestions").attr("open", true);
         $("#locationSuggestions").addClass("open");
         $("#location-suggestions").empty();
+        $("#Location").val(data.location);
         _.each(data.locations, function(location) {
             $("#location-suggestions").append(
                 $("<li>").append(

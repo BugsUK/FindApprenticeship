@@ -1168,7 +1168,16 @@ WriteLiteral("        <script>\r\n            var suggestedLocations = ");
             #line default
             #line hidden
 WriteLiteral("\r\n            $(document).trigger(\"suggestedLocationsUpdated\", { locations: sugge" +
-"stedLocations });\r\n        </script>        \r\n");
+"stedLocations, location: \"");
+
+            
+            #line 176 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
+                                                                                                     Write(Model.VacancySearch.Location);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\" });\r\n        </script>        \r\n");
 
             
             #line 178 "..\..\Views\ApprenticeshipSearch\_searchResults.cshtml"
