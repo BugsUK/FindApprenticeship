@@ -835,14 +835,25 @@ WriteLiteral(">You can also search by level. Intermediate is equivalent to 5 GCS
 
 WriteLiteral(" data-id=\"reset-search-options-link\"");
 
+WriteLiteral(">\r\n        <p");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">If you want to start with blank fields, you can clear the form with the button.<" +
+"/p>\r\n    </li>\r\n    <li");
+
+WriteLiteral(" class=\"joyride-withborder\"");
+
+WriteLiteral(" data-id=\"headerLinkFAA\"");
+
 WriteLiteral(" data-button=\"Finish\"");
 
 WriteLiteral(">\r\n        <p");
 
 WriteLiteral(" aria-live=\"polite\"");
 
-WriteLiteral(">If you want to start with blank fields, you can clear the form with the button.<" +
-"/p>\r\n    </li>\r\n\r\n</ol>\r\n\r\n<ol");
+WriteLiteral(">At any time, quickly return to the search by clicking this link in the header.</" +
+"p>\r\n    </li>\r\n\r\n</ol>\r\n\r\n<ol");
 
 WriteLiteral(" id=\"browseTour\"");
 
@@ -952,7 +963,7 @@ WriteLiteral("   \r\n");
 WriteLiteral("    ");
 
             
-            #line 214 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 217 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/locationsearch"));
 
             
@@ -961,7 +972,7 @@ Write(Scripts.Render("~/bundles/nas/locationsearch"));
 WriteLiteral("\r\n\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r\n            url: \'");
 
             
-            #line 218 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 221 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
              Write(Url.Action("location", "Location"));
 
             
@@ -970,7 +981,7 @@ WriteLiteral("\r\n\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r
 WriteLiteral("\',\r\n            longitude: \'#");
 
             
-            #line 219 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 222 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                      Write(Html.IdFor(m => m.Longitude));
 
             
@@ -979,7 +990,7 @@ WriteLiteral("\',\r\n            longitude: \'#");
 WriteLiteral("\',\r\n            latitude: \'#");
 
             
-            #line 220 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 223 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                     Write(Html.IdFor(m => m.Latitude));
 
             
@@ -988,7 +999,7 @@ WriteLiteral("\',\r\n            latitude: \'#");
 WriteLiteral("\',\r\n            latlonhash: \'#");
 
             
-            #line 221 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 224 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                       Write(Html.IdFor(m => m.Hash));
 
             
@@ -1015,7 +1026,7 @@ WriteLiteral(@"'
 WriteLiteral("    ");
 
             
-            #line 237 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 240 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/geoLocater"));
 
             
@@ -1026,7 +1037,7 @@ WriteLiteral("\r\n                                                \r\n");
 WriteLiteral("    ");
 
             
-            #line 239 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 242 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
@@ -1037,7 +1048,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 240 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 243 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/searchTour"));
 
             
@@ -1046,13 +1057,13 @@ Write(Scripts.Render("~/bundles/nas/searchTour"));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 242 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 245 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 242 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 245 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
      if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
     {
 
@@ -1077,7 +1088,7 @@ WriteLiteral(@"        <script>
 ");
 
             
-            #line 259 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 262 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
         
     }
 

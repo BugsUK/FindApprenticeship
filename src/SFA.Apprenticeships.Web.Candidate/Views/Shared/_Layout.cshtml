@@ -73,7 +73,7 @@
         @if (ViewBag.UserJourney == UserJourney.Apprenticeship)
         {
             <div class="global-header__nav">
-                <div id="global-header-title" class="global-header__title"><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">Find an apprenticeship</a></div>
+                <div id="global-header-title" class="global-header__title"><a id="headerLinkFAA" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)">Find an apprenticeship</a></div>
             </div>
         }
         else if (ViewBag.UserJourney == UserJourney.Traineeship)
