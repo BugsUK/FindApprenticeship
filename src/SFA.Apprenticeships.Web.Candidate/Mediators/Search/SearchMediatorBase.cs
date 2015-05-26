@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
@@ -136,6 +137,23 @@
             vacancyIdString = match.Groups[1].Value;
             
             return int.TryParse(vacancyIdString, out vacancyId);
+        }
+
+        /// <summary>
+        /// Splits location search into text, lat and lon which are pipe delimited in the cookie
+        /// </summary>
+        /// <param name="searchLocation"></param>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        protected string SplitSearchLocation(string searchLocation, int index)
+        {
+            if (string.IsNullOrWhiteSpace(searchLocation))
+            {
+                return null;
+            }
+
+            var split = searchLocation.Split('|');
+            return split.Length > index ? split[index] : null;
         }
     }
 }

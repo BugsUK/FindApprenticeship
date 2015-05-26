@@ -209,6 +209,12 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         private void SearchForAnApprenticeshipVacancyIn(string location)
         {
             Given("I navigated to the ApprenticeshipSearchPage page");
+
+            //Clear as will be set by user's postcode if logged in
+            var table = new Table("Field", "Rule", "Value");
+            table.AddRow(new[] { "ClearLocation", "Equals", "Cleared" });
+            Then("I see", table);
+
             When("I enter data", GetVacancySearchData(location));
             And("I choose Search");
             Then("I am on the ApprenticeshipSearchResultPage page");
@@ -219,6 +225,12 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         private void SearchForATraineeshipVacancyIn(string location)
         {
             Given("I navigated to the TraineeshipSearchPage page");
+
+            //Clear as will be set by user's postcode if logged in
+            var table = new Table("Field", "Rule", "Value");
+            table.AddRow(new[] { "ClearLocation", "Equals", "Cleared" });
+            Then("I see", table);
+
             When("I enter data", GetVacancySearchData(location));
             And("I choose Search");
             Then("I am on the TraineeshipSearchResultPage page");

@@ -5,6 +5,7 @@
     using System.Linq;
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Constants;
+    using Common.Framework;
     using Common.Providers;
     using Constants;
     using Domain.Entities.Vacancies;
@@ -19,6 +20,7 @@
         private readonly TraineeshipSearchViewModelServerValidator _searchRequestValidator;
         private readonly TraineeshipSearchViewModelLocationValidator _searchLocationValidator;
         private readonly ITraineeshipVacancyProvider _traineeshipVacancyProvider;
+        private readonly ICandidateServiceProvider _candidateServiceProvider;
 
         public TraineeshipSearchMediator(
             IConfigurationService configService,
@@ -26,24 +28,36 @@
             IUserDataProvider userDataProvider,
             TraineeshipSearchViewModelServerValidator searchRequestValidator,
             TraineeshipSearchViewModelLocationValidator searchLocationValidator,
-            ITraineeshipVacancyProvider traineeshipVacancyProvider)
+            ITraineeshipVacancyProvider traineeshipVacancyProvider,
+            ICandidateServiceProvider candidateServiceProvider)
             : base(configService, userDataProvider)
         {
             _searchProvider = searchProvider;
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _traineeshipVacancyProvider = traineeshipVacancyProvider;
+            _candidateServiceProvider = candidateServiceProvider;
         }
 
-        public MediatorResponse<TraineeshipSearchViewModel> Index()
+        public MediatorResponse<TraineeshipSearchViewModel> Index(Guid? candidateId)
         {
+            var lastSearchedLocation = UserDataProvider.Get(UserDataItemNames.LastSearchedLocation);
+            if (string.IsNullOrWhiteSpace(lastSearchedLocation) && candidateId.HasValue)
+            {
+                var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
+                UserDataProvider.Push(UserDataItemNames.LastSearchedLocation, lastSearchedLocation = candidate.RegistrationDetails.Address.Postcode);
+            }
+
             var traineeshipSearchViewModel = new TraineeshipSearchViewModel
             {
                 WithinDistance = 40,
                 Distances = GetDistances(false),
                 SortTypes = GetSortTypes(),
                 SortType = VacancySearchSortType.Distance,
-                ResultsPerPage = GetResultsPerPage()
+                ResultsPerPage = GetResultsPerPage(),
+                Location = SplitSearchLocation(lastSearchedLocation, 0),
+                Latitude = SplitSearchLocation(lastSearchedLocation, 1).GetValueOrNull<double>(),
+                Longitude = SplitSearchLocation(lastSearchedLocation, 2).GetValueOrNull<double>(),
             };
 
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Index.Ok, traineeshipSearchViewModel);
@@ -115,6 +129,7 @@
                 return GetMediatorResponse(TraineeshipSearchMediatorCodes.Results.Ok, new TraineeshipSearchResponseViewModel { VacancySearch = model });
             }
 
+            UserDataProvider.Push(UserDataItemNames.LastSearchedLocation, string.Join("|", model.Location, model.Latitude, model.Longitude));
             var traineeshipSearchResponseViewModel = _traineeshipVacancyProvider.FindVacancies(model);
 
             traineeshipSearchResponseViewModel.VacancySearch.SortTypes = GetSortTypes(model.SortType);

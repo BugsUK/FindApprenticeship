@@ -4,10 +4,16 @@
     using System.Collections.Generic;
     using System.Linq;
     using Candidate.Mediators.Search;
+    using Candidate.Providers;
+    using Common.Constants;
+    using Common.Providers;
     using Constants;
+    using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
 
     [TestFixture]
@@ -21,6 +27,12 @@
             var candidateId = searchMode == ApprenticeshipSearchMode.SavedSearches
                 ? Guid.NewGuid()
                 : default(Guid?);
+
+            var candidate = new Domain.Entities.Candidates.Candidate
+            {
+                RegistrationDetails = new RegistrationDetails {Address = new Address {Postcode = "CANDIDATE POSTCODE"}}
+            };
+            CandidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
 
             var response = Mediator.Index(candidateId, searchMode, false);
 
@@ -115,6 +127,36 @@
             viewModel.Distances.Last().Text.Should().Be("England");
             viewModel.Distances.Last().Value.Should().Be("0");
         }
+
+        [Test]
+        public void PoputlateLocationWithUsersPostcode()
+        {
+            var candidate = new Domain.Entities.Candidates.Candidate
+            {
+                RegistrationDetails = new RegistrationDetails {Address = new Address {Postcode = "CANDIDATE POSTCODE"}}
+            };
+
+            CandidateServiceProvider.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(candidate);
+
+            var response = Mediator.Index(Guid.NewGuid(), ApprenticeshipSearchMode.Keyword, true);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
+            response.ViewModel.Location.Should().Be("CANDIDATE POSTCODE");
+
+            UserDataProvider.Verify(x => x.Push(UserDataItemNames.LastSearchedLocation, "CANDIDATE POSTCODE"), Times.Once);
+            CandidateServiceProvider.Verify(x => x.GetCandidate(It.IsAny<Guid>()), Times.Once);
+        }
+
+        [Test]
+        public void PoputlateLocationCookieWithSearchedLocation()
+        {
+            UserDataProvider.Setup(x => x.Get(UserDataItemNames.LastSearchedLocation)).Returns("TEST COOKIE LOCATION");
+
+            var response = Mediator.Index(null, ApprenticeshipSearchMode.Keyword, false);
+            response.AssertCode(ApprenticeshipSearchMediatorCodes.Index.Ok, true);
+            response.ViewModel.Location.Should().Be("TEST COOKIE LOCATION");
+            CandidateServiceProvider.Verify(x => x.GetCandidate(It.IsAny<Guid>()), Times.Never);
+        }
+
 
         private static IEnumerable<Category> GetCategories()
         {

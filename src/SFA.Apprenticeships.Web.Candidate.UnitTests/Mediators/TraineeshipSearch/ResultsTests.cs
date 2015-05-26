@@ -190,6 +190,20 @@
             viewModel.VacancySearch.ShouldBeEquivalentTo(searchViewModel);
         }
 
+        [Test]
+        public void SaveLocationSearchToCookie()
+        {
+            var mediator = GetMediator();
+            
+            var searchViewModel = new TraineeshipSearchViewModel
+            {
+                Location = "Entered loaction"
+            };
+            
+            var response = mediator.Results(searchViewModel);
+            _userData[UserDataItemNames.LastSearchedLocation].Should().Be(searchViewModel.Location);
+        }
+
         private static Mock<ISearchProvider> GetSearchProvider()
         {
             var searchProvider = new Mock<ISearchProvider>();
@@ -253,11 +267,13 @@
         private ITraineeshipSearchMediator GetMediator(ISearchProvider searchProvider, ITraineeshipVacancyProvider traineeshipVacancyProvider)
         {
             var configurationService = new Mock<IConfigurationService>();
+            var candidateServiceProvider = new Mock<ICandidateServiceProvider>();
+
             configurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration() { VacancyResultsPerPage = 5 });
             var userDataProvider = GetUserDataProvider();
 
-            var mediator = GetMediator(configurationService.Object, searchProvider, userDataProvider.Object, traineeshipVacancyProvider);
+            var mediator = GetMediator(configurationService.Object, searchProvider, userDataProvider.Object, traineeshipVacancyProvider, candidateServiceProvider.Object);
             return mediator;
         }
     }

@@ -26,6 +26,7 @@ Scenario: As a registered user when I logout I want my cookies to be cleared
 	And I have the cookie 'User.Data' with a populated value 'UserJourney'
 	And I have the cookie 'User.Data' with a populated value 'Data.VacancyDistance'
 	And I have the cookie 'User.Data' with a populated value 'Data.LastVacancyID'
+	And I have the cookie 'User.Data' with a populated value 'Data.LastSearchedLocation'
 	And I have the cookie 'User.Data' with a populated value 'SearchReturnUrl'
 	When I Logout
 	Then I am on the LoginPage page
@@ -34,6 +35,7 @@ Scenario: As a registered user when I logout I want my cookies to be cleared
 	And I have the cookie 'User.Data' without a value 'Data.VacancyDistance'
 	And I have the cookie 'User.Data' without a value 'Data.LastVacancyID'
 	And I have the cookie 'User.Data' without a value 'SearchReturnUrl'
+	And I have the cookie 'User.Data' with a populated value 'Data.LastSearchedLocation'
 	And I have the cookie 'User.Data' with a populated value 'UserJourney'
 	And I have the cookie 'User.Data' with a populated value 'Data.SessionId'
 	And I have the cookie 'User.Data' with a populated value 'Data.ResultsPerPage'

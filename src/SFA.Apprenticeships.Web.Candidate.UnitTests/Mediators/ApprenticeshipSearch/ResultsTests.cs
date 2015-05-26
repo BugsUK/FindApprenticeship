@@ -623,5 +623,17 @@
             viewModel.SortTypes.Last().Text.Should().Be("Recently added");
             viewModel.SortTypes.Last().Value.Should().Be(VacancySearchSortType.RecentlyAdded.ToString());
         }
+
+        [Test]
+        public void SaveLocationSearchToCookie()
+        {
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Location = ACityWithOneSuggestedLocation
+            };
+
+            var response = Mediator.Results(null, searchViewModel);            
+            UserDataProvider.Verify(x => x.Push(UserDataItemNames.LastSearchedLocation, ACityWithOneSuggestedLocation), Times.Once);
+        }
     }
 }

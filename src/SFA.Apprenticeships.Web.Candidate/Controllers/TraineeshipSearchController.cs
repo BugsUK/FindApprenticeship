@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Globalization;
     using System.Threading.Tasks;
     using System.Web.Mvc;
@@ -34,7 +35,8 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _traineeshipSearchMediator.Index();
+                var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
+                var response = _traineeshipSearchMediator.Index(candidateId);
 
                 return View(response.ViewModel);
             });

@@ -7,6 +7,8 @@
     using System.Web;
     using Candidate.ViewModels.Account;
     using Candidate.Views.ApprenticeshipSearch;
+    using Domain.Entities.Locations;
+    using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
@@ -162,6 +164,14 @@
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
 
+            var candidate = new Domain.Entities.Candidates.Candidate
+            {
+                RegistrationDetails = new RegistrationDetails { Address = new Address { Postcode = "CANDIDATE POSTCODE" } }
+            };
+
+            CandidateServiceProvider
+                .Setup(p => p.GetCandidate(candidateId)).Returns(candidate);
+
             var searchViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
             var view = index.RenderAsHtml(CreateMockHttpContext(true), searchViewModel);
 
@@ -189,6 +199,14 @@
             var mockViewModel = new List<SavedSearchViewModel>();
 
             CandidateServiceProvider.Setup(mock => mock.GetSavedSearches(candidateId)).Returns(mockViewModel);
+
+            var candidate = new Domain.Entities.Candidates.Candidate
+            {
+                RegistrationDetails = new RegistrationDetails { Address = new Address { Postcode = "CANDIDATE POSTCODE" } }
+            };
+
+            CandidateServiceProvider
+                .Setup(p => p.GetCandidate(candidateId)).Returns(candidate);
 
             var searchViewModel = Mediator.Index(candidateId, ApprenticeshipSearchMode.SavedSearches, false).ViewModel;
             var view = index.RenderAsHtml(CreateMockHttpContext(true), searchViewModel);

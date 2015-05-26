@@ -5,6 +5,8 @@
     using Candidate.Mediators.Search;
     using Candidate.Providers;
     using Candidate.ViewModels.Account;
+    using Domain.Entities.Locations;
+    using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
@@ -29,6 +31,14 @@
             candidateServiceProvider
                 .Setup(p => p.GetSavedSearches(candidateId)).Returns(savedSearches);
 
+            var candidate = new Domain.Entities.Candidates.Candidate
+            {
+                RegistrationDetails = new RegistrationDetails { Address = new Address { Postcode = "CANDIDATE POSTCODE" } }
+            };
+
+            candidateServiceProvider
+                .Setup(p => p.GetCandidate(candidateId)).Returns(candidate);
+
             var mediator = new ApprenticeshipSearchMediatorBuilder()
                 .With(candidateServiceProvider).Build();
 
@@ -52,6 +62,14 @@
 
             candidateServiceProvider
                 .Setup(p => p.GetSavedSearches(candidateId)).Returns(savedSearches);
+
+            var candidate = new Domain.Entities.Candidates.Candidate
+            {
+                RegistrationDetails = new RegistrationDetails { Address = new Address { Postcode = "CANDIDATE POSTCODE" } }
+            };
+
+            candidateServiceProvider
+                .Setup(p => p.GetCandidate(candidateId)).Returns(candidate);
 
             var mediator = new ApprenticeshipSearchMediatorBuilder()
                 .With(candidateServiceProvider).Build();

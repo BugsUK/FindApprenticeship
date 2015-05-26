@@ -211,6 +211,7 @@
             var userJourneyValue = UserData.Get(UserJourneyContextAttribute.UserJourneyKey);
             var resultPerPageValue = UserData.Get(UserDataItemNames.ResultsPerPage);
             var loggingSessionIdValue = UserData.Get(UserDataItemNames.LoggingSessionId);
+            var lastSearchedLocationValue = UserData.Get(UserDataItemNames.LastSearchedLocation);
 
             FormsAuthentication.SignOut();
 
@@ -230,6 +231,7 @@
             UserData.Push(UserJourneyContextAttribute.UserJourneyKey, userJourneyValue);
             UserData.Push(UserDataItemNames.ResultsPerPage, resultPerPageValue);
             UserData.Push(UserDataItemNames.LoggingSessionId, loggingSessionIdValue);
+            UserData.Push(UserDataItemNames.LastSearchedLocation, lastSearchedLocationValue);
 
             if (ViewBag.FeedbackUrl == returnUrl)
             {

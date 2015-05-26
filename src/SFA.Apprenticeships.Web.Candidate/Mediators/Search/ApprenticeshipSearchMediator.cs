@@ -9,6 +9,7 @@
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Configuration;
     using Common.Constants;
+    using Common.Framework;
     using Common.Providers;
     using Constants;
     using Constants.Pages;
@@ -55,6 +56,13 @@
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index(Guid? candidateId, ApprenticeshipSearchMode searchMode, bool reset)
         {
+            var lastSearchedLocation = UserDataProvider.Get(UserDataItemNames.LastSearchedLocation);
+            if (string.IsNullOrWhiteSpace(lastSearchedLocation) && candidateId.HasValue)
+            {
+                var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
+                UserDataProvider.Push(UserDataItemNames.LastSearchedLocation, lastSearchedLocation = candidate.RegistrationDetails.Address.Postcode);
+            }
+
             if (!candidateId.HasValue && searchMode == ApprenticeshipSearchMode.SavedSearches)
             {
                 searchMode = ApprenticeshipSearchMode.Keyword;
@@ -73,6 +81,9 @@
             {
                 WithinDistance = 5,
                 LocationType = ApprenticeshipLocationType.NonNational,
+                Location = SplitSearchLocation(lastSearchedLocation, 0),
+                Latitude = SplitSearchLocation(lastSearchedLocation, 1).GetValueOrNull<double>(),
+                Longitude = SplitSearchLocation(lastSearchedLocation, 2).GetValueOrNull<double>(),
                 Distances = distances,
                 SortTypes = sortTypes,
                 ResultsPerPage = resultsPerPage,
@@ -181,17 +192,16 @@
             if (model.ResultsPerPage == 0)
             {
                 model.ResultsPerPage = GetResultsPerPage();
-            }
-
-            UserDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
+            }            
 
             if (string.IsNullOrEmpty(model.ApprenticeshipLevel))
             {
                 model.ApprenticeshipLevel = GetApprenticeshipLevel(false);
             }
 
+            UserDataProvider.Push(UserDataItemNames.ResultsPerPage, model.ResultsPerPage.ToString(CultureInfo.InvariantCulture));
             UserDataProvider.Push(CandidateDataItemNames.ApprenticeshipLevel, model.ApprenticeshipLevel.ToString(CultureInfo.InvariantCulture));
-
+            
             if (model.SearchAction == SearchAction.Search && model.LocationType != ApprenticeshipLocationType.NonNational)
             {
                 model.LocationType = ApprenticeshipLocationType.NonNational;
@@ -262,6 +272,8 @@
                 return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, new ApprenticeshipSearchResponseViewModel { VacancySearch = model });
             }
 
+            UserDataProvider.Push(UserDataItemNames.LastSearchedLocation, string.Join("|", model.Location, model.Latitude, model.Longitude));
+            
             RemoveInvalidSubCategories(model);
 
             var searchModel = GetSearchModel(model);
@@ -304,7 +316,7 @@
             {
                 SetSavedVacancyStatuses(candidateId.Value, results);
             }
-
+            
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
         }
 

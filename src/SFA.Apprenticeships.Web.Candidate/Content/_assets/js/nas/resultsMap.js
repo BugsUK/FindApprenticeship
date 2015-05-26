@@ -64,6 +64,7 @@ $(function () {
     }
 
     function allResultsAreSameLocation() {
+        if (!resultMaps || resultMaps == null || resultMaps.length == 0) { return false; }
         var matching = _.where(resultMaps, { lat: resultMaps[0].lat, lon: resultMaps[0].lon });
         return matching.length == resultMaps.length;
     }

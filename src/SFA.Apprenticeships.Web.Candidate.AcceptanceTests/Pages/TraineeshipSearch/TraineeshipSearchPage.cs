@@ -19,6 +19,15 @@
         [ElementLocator(Id = "Location")]
         public IWebElement Location { get; set; }
 
+        public string ClearLocation
+        {
+            get
+            {
+                Location.Clear();
+                return "Cleared";
+            }
+        }
+
         [ElementLocator(Id = "search-button")]
         public IWebElement Search { get; set; }
 
