@@ -3,7 +3,7 @@
     using System;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class AuditItem<T>
+    public class AuditItem
     {
         [BsonId]
         public Guid Id { get; set; }
@@ -11,6 +11,6 @@
         public string EventType { get; set; }
         public Guid PrimaryEntityId { get; set; }
         public Guid? SecondaryEntityId { get; set; }
-        public T Data { get; set; }
+        public object Data { get; set; }
     }
 }

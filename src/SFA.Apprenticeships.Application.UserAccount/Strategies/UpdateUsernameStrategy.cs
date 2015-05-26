@@ -76,7 +76,7 @@
             }
 
             _logService.Info("UpdateUsername updating from '{0}' to '{1}'", user.Username, user.PendingUsername);
-            _auditRepository.Audit(user, AuditEventTypes.UsernameChanged);
+            _auditRepository.Audit(user, AuditEventTypes.UsernameChanged, user.EntityId);
             user.Username = user.PendingUsername;
             user.PendingUsername = null;
             user.PendingUsernameCode = null;

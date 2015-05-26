@@ -59,7 +59,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 user.SetStateActive();
 
                 _userWriteRepository.Save(user);
-                _auditRepository.Audit(user, AuditEventTypes.UserResetPassword);
+                _auditRepository.Audit(user, AuditEventTypes.UserResetPassword, user.EntityId);
 
                 SendPasswordResetConfirmationMessage(candidate);
             }

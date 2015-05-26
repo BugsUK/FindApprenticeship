@@ -26,24 +26,25 @@
         {
             if (user.Status == UserStatuses.PendingDeletion)
             {
-                _logService.Info("Hard deleting User: {0}", user.EntityId);
+                var candidateUser = new {User = user, Candidate = candidate};
 
-                _auditRepository.Audit(user, AuditEventTypes.HardDeleteUser);
+                _auditRepository.Audit(candidateUser, AuditEventTypes.HardDeleteCandidateUser, user.EntityId);
 
-                _userWriteRepository.Delete(user.EntityId);
-
-                _logService.Info("Hard deleted User: {0}", user.EntityId);
-
+                //This isn't transactional however the code can cope with a missing candidate and so will self heal over time in the unlikely event of partial failure
                 if (candidate != null)
                 {
                     _logService.Info("Hard deleting Candidate: {0}", candidate.EntityId);
-
-                    _auditRepository.Audit(candidate, AuditEventTypes.HardDeleteCandidate);
 
                     _candidateWriteRepository.Delete(candidate.EntityId);
 
                     _logService.Info("Hard deleted Candidate: {0}", candidate.EntityId);
                 }
+
+                _logService.Info("Hard deleting User: {0}", user.EntityId);
+
+                _userWriteRepository.Delete(user.EntityId);
+
+                _logService.Info("Hard deleted User: {0}", user.EntityId);
 
                 return true;
             }

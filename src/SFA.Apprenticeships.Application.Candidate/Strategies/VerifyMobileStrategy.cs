@@ -36,7 +36,7 @@
                 candidate.CommunicationPreferences.VerifiedMobile = true;
 
                 _candidateWriteRepository.Save(candidate);
-                _auditRepository.Audit(candidate, AuditEventTypes.CandidateVerifiedMobileNumber);
+                _auditRepository.Audit(candidate, AuditEventTypes.CandidateVerifiedMobileNumber, candidate.EntityId);
             }
             else
             {

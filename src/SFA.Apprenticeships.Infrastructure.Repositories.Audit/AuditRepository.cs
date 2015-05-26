@@ -16,8 +16,7 @@
 
         private readonly ILogService _logger;
         private readonly MongoDatabase _database;
-        private MongoCollection<AuditItem<User>> _userCollection;
-        private MongoCollection<AuditItem<Candidate>> _candidateCollection;
+        private MongoCollection<AuditItem> _collection;
 
         public AuditRepository(IConfigurationService configurationService, ILogService logger)
         {
@@ -30,56 +29,31 @@
             _database = new MongoClient(config.AuditDb).GetServer().GetDatabase(mongoDbName);
         }
 
-        private MongoCollection<AuditItem<User>> UserCollection
+        private MongoCollection<AuditItem> Collection
         {
             get
             {
-                return _userCollection ?? (_userCollection = _database.GetCollection<AuditItem<User>>(CollectionName));
+                return _collection ?? (_collection = _database.GetCollection<AuditItem>(CollectionName));
             }
         }
 
-        private MongoCollection<AuditItem<Candidate>> CandidateCollection
+        public void Audit(object data, string eventType, Guid primaryEntityId, Guid? secondaryEntityId = null)
         {
-            get
-            {
-                return _candidateCollection ?? (_candidateCollection = _database.GetCollection<AuditItem<Candidate>>(CollectionName));
-            }
-        }
-
-        public void Audit(User user, string eventType)
-        {
-            var auditItem = new AuditItem<User>
+            var auditItem = new AuditItem
             {
                 Id = Guid.NewGuid(),
                 EventDate = DateTime.UtcNow,
                 EventType = eventType,
-                PrimaryEntityId = user.EntityId,
-                Data = user
+                PrimaryEntityId = primaryEntityId,
+                SecondaryEntityId = secondaryEntityId,
+                Data = data
             };
 
-            _logger.Debug("Called Mongodb to save audit item for user with Id={0}", user.EntityId);
+            _logger.Debug("Called Mongodb to save audit item for data with PrimaryEntityId={0}, SecondaryEntityId={1}", primaryEntityId, secondaryEntityId);
 
-            UserCollection.Save(auditItem);
+            Collection.Save(auditItem);
 
-            _logger.Debug("Saved audit item for user with Id={0}", user.EntityId);
-        }
-
-        public void Audit(Candidate candidate, string eventType)
-        {
-            var auditItem = new AuditItem<Candidate>
-            {
-                Id = Guid.NewGuid(),
-                EventDate = DateTime.UtcNow,
-                EventType = eventType,
-                PrimaryEntityId = candidate.EntityId,
-                Data = candidate
-            };
-
-            _logger.Debug("Called Mongodb to save audit item for candidate with Id={0}", candidate.EntityId);
-
-            CandidateCollection.Save(auditItem);
-
-            _logger.Debug("Saved audit item for candidate with Id={0}", candidate.EntityId);
+            _logger.Debug("Saved audit item for data with PrimaryEntityId={0}, SecondaryEntityId={1}", primaryEntityId, secondaryEntityId);
         }
     }
 }

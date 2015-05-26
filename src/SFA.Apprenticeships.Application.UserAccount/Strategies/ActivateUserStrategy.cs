@@ -36,7 +36,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             user.ActivationDate = DateTime.UtcNow;
 
             _userWriteRepository.Save(user);
-            _auditRepository.Audit(user, AuditEventTypes.UserActivatedAccount);
+            _auditRepository.Audit(user, AuditEventTypes.UserActivatedAccount, user.EntityId);
         }
     }
 }
