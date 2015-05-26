@@ -201,7 +201,7 @@
             };
             
             var response = mediator.Results(searchViewModel);
-            _userData[UserDataItemNames.LastSearchedLocation].Should().Be(searchViewModel.Location);
+            _userData[UserDataItemNames.LastSearchedLocation].Should().Be(searchViewModel.Location + "|0|0");
         }
 
         private static Mock<ISearchProvider> GetSearchProvider()

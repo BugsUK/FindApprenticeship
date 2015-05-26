@@ -632,8 +632,9 @@
                 Location = ACityWithOneSuggestedLocation
             };
 
-            var response = Mediator.Results(null, searchViewModel);            
-            UserDataProvider.Verify(x => x.Push(UserDataItemNames.LastSearchedLocation, ACityWithOneSuggestedLocation), Times.Once);
+            UserDataProvider.Setup(x => x.Push(It.IsAny<string>(), It.IsAny<string>()));
+            var response = Mediator.Results(null, searchViewModel);
+            UserDataProvider.Verify(x => x.Push(UserDataItemNames.LastSearchedLocation, ACityWithOneSuggestedLocation + "|0|0"), Times.Once);
         }
     }
 }
