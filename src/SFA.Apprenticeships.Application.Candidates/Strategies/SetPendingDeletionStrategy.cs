@@ -28,7 +28,7 @@
 
             if (user.Status != UserStatuses.PendingActivation) return false;
 
-            var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSinceCreation(user);
+            var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSince(user.DateCreated);
 
             if (housekeepingCyclesSinceCreation >= Configuration.SetPendingDeletionAfterCycles)
             {

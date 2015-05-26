@@ -50,6 +50,7 @@
         [TestCase(MessageTypes.SendAccountUnlockCode)]
         [TestCase(MessageTypes.SendActivationCode)]
         [TestCase(MessageTypes.SendMobileVerificationCode)]
+        [TestCase(MessageTypes.SendMobileVerificationCodeReminder)]
         [TestCase(MessageTypes.SendPasswordResetCode)]
         [TestCase(MessageTypes.TraineeshipApplicationSubmitted)]
         [TestCase(MessageTypes.SendPendingUsernameCode)]

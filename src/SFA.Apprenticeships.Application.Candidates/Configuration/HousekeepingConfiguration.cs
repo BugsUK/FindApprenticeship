@@ -6,6 +6,7 @@
         public SendAccountReminderStrategyA SendAccountReminderStrategyA { get; set; }
         public SendAccountReminderStrategyB SendAccountReminderStrategyB { get; set; }
         public int SetPendingDeletionAfterCycles { get; set; }
+        public int SendMobileVerificationCodeReminderAfterCycles { get; set; }
     }
 
     public class SendAccountReminderStrategyA

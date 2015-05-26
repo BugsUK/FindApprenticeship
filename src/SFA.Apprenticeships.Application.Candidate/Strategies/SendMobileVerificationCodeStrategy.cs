@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
+    using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
@@ -31,6 +32,8 @@
             if (string.IsNullOrEmpty(candidate.CommunicationPreferences.MobileVerificationCode))
             {
                 candidate.CommunicationPreferences.MobileVerificationCode = _codeGenerator.GenerateNumeric();
+                candidate.CommunicationPreferences.MobileVerificationCodeDateCreated = DateTime.UtcNow;
+
                 _candidateWriteRepository.Save(candidate);
             }
 

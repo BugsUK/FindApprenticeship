@@ -6,6 +6,7 @@
     public interface IUserReadRepository : IReadRepository<User>
     {
         User Get(string username, bool errorIfNotFound = true);
+
         IEnumerable<User> GetUsersWithStatus(UserStatuses[] userStatuses);
     }
 

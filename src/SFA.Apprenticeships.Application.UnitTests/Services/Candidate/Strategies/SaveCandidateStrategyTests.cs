@@ -129,11 +129,16 @@
             if (verifiedMobile || !enableText)
             {
                 candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
+                candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.Should().NotHaveValue();
                 communicationService.Verify(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Never);
             }
             else
             {
                 candidate.CommunicationPreferences.MobileVerificationCode.Should().Be(mobileVerificationCode);
+                candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.Should().HaveValue();
+                // ReSharper disable once PossibleInvalidOperationException
+                candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.Value.Should().BeCloseTo(DateTime.UtcNow, 500);
+
                 communicationService.Verify(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Once);
 
                 var communicationTokensList = communicationTokens.ToList();

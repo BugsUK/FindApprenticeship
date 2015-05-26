@@ -50,6 +50,7 @@
                 case MessageTypes.SendAccountUnlockCode:
                 case MessageTypes.PasswordChanged:
                 case MessageTypes.SendMobileVerificationCode:
+                case MessageTypes.SendMobileVerificationCodeReminder:
                 case MessageTypes.SendEmailReminder:
                 case MessageTypes.SendActivationCodeReminder:
                     _sendCandidateCommunicationStrategy.Send(candidateId, messageType, tokens);

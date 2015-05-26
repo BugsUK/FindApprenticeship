@@ -74,6 +74,9 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="SFA.Apprenticeships.Application.Candidate">
+      <HintPath>..\SFA.Apprenticeships.Application.Candidate\bin\Dev\SFA.Apprenticeships.Application.Candidate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -93,6 +96,7 @@
     <Compile Include="Strategies\SendAccountRemindersStrategy.cs" />
     <Compile Include="Strategies\SendAccountRemindersStrategyA.cs" />
     <Compile Include="Strategies\SendAccountRemindersStrategyB.cs" />
+    <Compile Include="Strategies\SendMobileVerificationCodeReminderStrategy.cs" />
     <Compile Include="Strategies\SetPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\TerminatingHousekeepingStrategy.cs" />
   </ItemGroup>

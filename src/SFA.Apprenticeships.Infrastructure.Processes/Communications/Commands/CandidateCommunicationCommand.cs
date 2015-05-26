@@ -36,6 +36,7 @@
                 MessageTypes.SendPasswordResetCode,
                 MessageTypes.SendAccountUnlockCode,
                 MessageTypes.SendMobileVerificationCode,
+                MessageTypes.SendMobileVerificationCodeReminder,
                 MessageTypes.ApprenticeshipApplicationSubmitted,
                 MessageTypes.TraineeshipApplicationSubmitted,
                 MessageTypes.PasswordChanged,

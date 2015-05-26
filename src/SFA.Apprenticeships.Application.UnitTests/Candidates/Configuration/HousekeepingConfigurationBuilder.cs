@@ -17,7 +17,8 @@
                 SendAccountReminderAfterCycles = 1,
                 SendAccountReminderEveryCycles = 7
             },
-            SetPendingDeletionAfterCycles = 31
+            SetPendingDeletionAfterCycles = 31,
+            SendMobileVerificationCodeReminderAfterCycles = 1
         };
 
         public HousekeepingConfiguration Build()
@@ -42,6 +43,14 @@
             _configuration.SendAccountReminderStrategyB.SendAccountReminderEveryCycles = sendAccountReminderEveryCycles;
             _configuration.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
 
+            return this;
+        }
+
+        public HousekeepingConfigurationBuilder SendMobileVerificationCodeReminderStrategy(int housekeepingCycleInHours, int sendMobileVerificationCodeReminderAfterCycles)
+        {
+            _configuration.HousekeepingCycleInHours = housekeepingCycleInHours;
+            _configuration.SendMobileVerificationCodeReminderAfterCycles = sendMobileVerificationCodeReminderAfterCycles;
+ 
             return this;
         }
     }

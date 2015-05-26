@@ -38,6 +38,8 @@
 
         [TestCase(CommunicationChannels.Email, MessageTypes.SendMobileVerificationCode, false)]
         [TestCase(CommunicationChannels.Sms, MessageTypes.SendMobileVerificationCode, true)]
+        [TestCase(CommunicationChannels.Email, MessageTypes.SendMobileVerificationCodeReminder, false)]
+        [TestCase(CommunicationChannels.Sms, MessageTypes.SendMobileVerificationCodeReminder, true)]
         public void ShouldSendMandatoryMobileVerificationCodeViaSmsOnly(
             CommunicationChannels communicationChannel, MessageTypes messageType, bool expectedResult)
         {

@@ -62,6 +62,7 @@
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSubmitted, new SmsApprenticeshipApplicationSubmittedMessageFormatter(configurationService)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new SmsTraineeshipApplicationSubmittedMessageFormatter(configurationService)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCode, new SmsSendMobileVerificationCodeMessageFormatter(configurationService)),
+                new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.SendMobileVerificationCodeReminder, new SmsSendMobileVerificationCodeReminderMessageFormatter(configurationService)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationSuccessful, new SmsApprenticeshipApplicationSuccessfulMessageFormatter(configurationService)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationUnsuccessful, new SmsApprenticeshipApplicationUnsuccessfulMessageFormatter(configurationService)),
                 new KeyValuePair<MessageTypes, SmsMessageFormatter>(MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary, new SmsApprenticeshipApplicationsUnsuccessfulSummaryMessageFormatter(configurationService)),

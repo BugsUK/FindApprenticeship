@@ -5,12 +5,12 @@
     using Application.Interfaces.Communications;
     using Domain.Interfaces.Configuration;
 
-    public class SmsSendMobileVerificationCodeMessageFormatter : SmsMessageFormatter
+    public class SmsSendMobileVerificationCodeReminderMessageFormatter : SmsMessageFormatter
     {
-        public SmsSendMobileVerificationCodeMessageFormatter(IConfigurationService configurationService)
+        public SmsSendMobileVerificationCodeReminderMessageFormatter(IConfigurationService configurationService)
             : base(configurationService)
         {
-            Message = GetTemplateConfiguration("MessageTypes.SendMobileVerificationCode").Message;
+            Message = GetTemplateConfiguration("MessageTypes.SendMobileVerificationCodeReminder").Message;
         }
 
         public override string GetMessage(IEnumerable<CommunicationToken> communicationTokens)

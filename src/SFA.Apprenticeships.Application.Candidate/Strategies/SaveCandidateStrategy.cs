@@ -45,6 +45,8 @@
             if (candidate.MobileVerificationRequired())
             {
                 candidate.CommunicationPreferences.MobileVerificationCode = _codeGenerator.GenerateNumeric();
+                candidate.CommunicationPreferences.MobileVerificationCodeDateCreated = DateTime.UtcNow;
+
                 _sendMobileVerificationCodeStrategy.SendMobileVerificationCode(candidate);
             }
 

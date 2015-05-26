@@ -107,11 +107,14 @@
             var sendAccountRemindersStrategyB = new SendAccountRemindersStrategyB(configurationService, communicationService, logService);
             var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, logService);
             var hardDeleteStrategy = new HardDeleteStrategy(configurationService, userWriteRepository, candidateWriteRepository, auditRepository, logService);
+            var sendMobileVerificationCodeReminder = new SendMobileVerificationCodeReminderStrategy(logService, configurationService, communicationService);
+            var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
 
             sendAccountRemindersStrategyA.SetSuccessor(sendAccountRemindersStrategyB);
             sendAccountRemindersStrategyB.SetSuccessor(setPendingDeletionStrategy);
             setPendingDeletionStrategy.SetSuccessor(hardDeleteStrategy);
-            hardDeleteStrategy.SetSuccessor(new TerminatingHousekeepingStrategy(configurationService));
+            hardDeleteStrategy.SetSuccessor(sendMobileVerificationCodeReminder);
+            sendMobileVerificationCodeReminder.SetSuccessor(terminatingHousekeepingStrategy);
 
             return sendAccountRemindersStrategyA;
         }

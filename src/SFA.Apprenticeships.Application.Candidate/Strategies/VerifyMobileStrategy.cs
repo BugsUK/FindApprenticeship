@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Application.Candidate.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using System;
     using Candidates;
@@ -30,17 +29,18 @@ namespace SFA.Apprenticeships.Application.Candidate.Strategies
                 throw new CustomException(message, Domain.Entities.ErrorCodes.EntityStateError);
             }
 
-
             if (candidate.CommunicationPreferences.MobileVerificationCode == verificationCode)
             {
                 candidate.CommunicationPreferences.MobileVerificationCode = string.Empty;
+                candidate.CommunicationPreferences.MobileVerificationCodeDateCreated = null;
                 candidate.CommunicationPreferences.VerifiedMobile = true;
+
                 _candidateWriteRepository.Save(candidate);
                 _auditRepository.Audit(candidate, AuditEventTypes.CandidateVerifiedMobileNumber);
             }
             else
             {
-                var errorMessage =string.Format("Mobile verification code {0} is invalid for candidate {1} with mobile number {2}", verificationCode, candidateId, candidate.RegistrationDetails.PhoneNumber);
+                var errorMessage = string.Format("Mobile verification code {0} is invalid for candidate {1} with mobile number {2}", verificationCode, candidateId, candidate.RegistrationDetails.PhoneNumber);
                 throw new CustomException(errorMessage, Interfaces.Users.ErrorCodes.MobileCodeVerificationFailed);
             }
         }

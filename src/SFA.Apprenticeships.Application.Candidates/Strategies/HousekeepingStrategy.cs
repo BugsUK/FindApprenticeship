@@ -34,13 +34,11 @@
             get { return _configurationService.Get<HousekeepingConfiguration>(); }
         }
 
-        protected int GetHousekeepingCyclesSinceCreation(User user)
+        protected int GetHousekeepingCyclesSince(DateTime date)
         {
-            var timeSinceCreation = DateTime.UtcNow - user.DateCreated;
+            var timeSince = DateTime.UtcNow - date;
 
-            var housekeepingCyclesSinceCreation = (int)(timeSinceCreation.TotalHours / Configuration.HousekeepingCycleInHours);
-
-            return housekeepingCyclesSinceCreation;
+            return (int)(timeSince.TotalHours / Configuration.HousekeepingCycleInHours);
         }
 
         protected abstract bool DoHandle(User user, Candidate candidate);

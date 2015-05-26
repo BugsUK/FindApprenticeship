@@ -13,6 +13,7 @@
 
         private string _mobileVerificationCode;
         private bool _verifiedMobile;
+        private DateTime? _mobileVerificationCodeDate;
 
         private bool _allowTraineeshipPrompts;
 
@@ -30,7 +31,7 @@
 
         private HelpPreferences _helpPreferences;
         private ApplicationTemplate _applicationTemplate;
-        
+
         private Gender? _gender;
         private DisabilityStatus _disabilityStatus;
         private int? _ethnicity;
@@ -65,6 +66,12 @@
         public CandidateBuilder VerifiedMobile(bool verifiedMobile)
         {
             _verifiedMobile = verifiedMobile;
+            return this;
+        }
+
+        public CandidateBuilder MobileVerificationCodeDateCreated(DateTime? mobileVerificationCodeDate)
+        {
+            _mobileVerificationCodeDate = mobileVerificationCodeDate;
             return this;
         }
 
@@ -150,7 +157,7 @@
         public CandidateBuilder EnableAllCommunications(bool enable = true)
         {
             VerifiedMobile(enable);
-            
+
             EnableApplicationStatusChangeAlertsViaEmail(enable);
             EnableApplicationStatusChangeAlertsViaText(enable);
 
@@ -212,6 +219,7 @@
                 {
                     VerifiedMobile = _verifiedMobile,
                     MobileVerificationCode = _mobileVerificationCode,
+                    MobileVerificationCodeDateCreated = _mobileVerificationCodeDate,
                     AllowTraineeshipPrompts = _allowTraineeshipPrompts,
                     ApplicationStatusChangePreferences = new CommunicationPreference
                     {
@@ -234,7 +242,7 @@
                         EnableText = _enableMarketingViaText
                     }
                 },
-                
+
                 HelpPreferences = _helpPreferences,
                 ApplicationTemplate = _applicationTemplate,
 

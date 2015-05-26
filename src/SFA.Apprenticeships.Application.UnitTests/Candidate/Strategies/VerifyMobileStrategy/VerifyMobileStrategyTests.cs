@@ -21,10 +21,12 @@
 
             var candidate = new CandidateBuilder(candidateId)
                 .MobileVerificationCode(verificationCode)
+                .MobileVerificationCodeDateCreated(DateTime.UtcNow)
                 .EnableApplicationStatusChangeAlertsViaText(true)
                 .VerifiedMobile(false).Build();
 
             var candidateReadRepository = new Mock<ICandidateReadRepository>();
+
             candidateReadRepository.Setup(r => r.Get(candidateId)).Returns(candidate);
 
             var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
@@ -43,6 +45,7 @@
             candidateWriteRepository.Verify(r => r.Save(It.IsAny<Candidate>()), Times.Once);
             candidate.CommunicationPreferences.ApplicationStatusChangePreferences.EnableText.Should().BeTrue();
             candidate.CommunicationPreferences.MobileVerificationCode.Should().BeNullOrEmpty();
+            candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.Should().NotHaveValue();
             candidate.CommunicationPreferences.VerifiedMobile.Should().BeTrue();
             candidate.MobileVerificationRequired().Should().BeFalse();
         }
@@ -93,7 +96,7 @@
             const string actualVerificationCode = "1234";
             const string enteredVerificationCode = "5678";
 
-            Candidate candidate = new CandidateBuilder(candidateId)
+            var candidate = new CandidateBuilder(candidateId)
                 .MobileVerificationCode(actualVerificationCode)
                 .EnableApplicationStatusChangeAlertsViaText(true)
                 .VerifiedMobile(false)

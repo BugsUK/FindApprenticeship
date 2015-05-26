@@ -119,6 +119,25 @@
             return candidates;
         }
 
+        public IEnumerable<Candidate> GetCandidatesWithPendingMobileVerification()
+        {
+            _logger.Debug("Calling repository to get candidates with pending mobile verification");
+
+            var query = Query.And(
+                Query<MongoCandidate>.EQ(o => o.CommunicationPreferences.VerifiedMobile, false),
+                Query<MongoCandidate>.NE(o => o.CommunicationPreferences.MobileVerificationCode, null),
+                Query<MongoCandidate>.NE(o => o.CommunicationPreferences.MobileVerificationCode, string.Empty));
+
+            var candidates = Collection
+                .Find(query)
+                .Select(e => _mapper.Map<MongoCandidate, Candidate>(e))
+                .ToList();
+
+            _logger.Debug(string.Format("Found {0} candidates with pending mobile verification", candidates.Count));
+
+            return candidates;
+        }
+
         public Candidate GetBySubscriberId(Guid subscriberId, bool errorIfNotFound = true)
         {
             _logger.Debug("Calling repository to get candidate with subscriberId='{0}'", subscriberId);

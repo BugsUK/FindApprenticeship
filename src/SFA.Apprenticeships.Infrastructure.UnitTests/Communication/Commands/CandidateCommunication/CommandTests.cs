@@ -26,6 +26,7 @@
         [TestCase(MessageTypes.SendAccountUnlockCode)]
         [TestCase(MessageTypes.SendActivationCode)]
         [TestCase(MessageTypes.SendMobileVerificationCode)]
+        [TestCase(MessageTypes.SendMobileVerificationCodeReminder)]
         [TestCase(MessageTypes.SendPasswordResetCode)]
         [TestCase(MessageTypes.TraineeshipApplicationSubmitted)]
         [TestCase(MessageTypes.SendPendingUsernameCode)]
@@ -146,6 +147,8 @@
 
         [TestCase(MessageTypes.SendMobileVerificationCode, true)]
         [TestCase(MessageTypes.SendMobileVerificationCode, false)]
+        [TestCase(MessageTypes.SendMobileVerificationCodeReminder, true)]
+        [TestCase(MessageTypes.SendMobileVerificationCodeReminder, false)]
         public void ShouldNotQueueEmailMessageForSmsOnlyMessageType(MessageTypes messageType, bool verifiedMobile)
         {
             // Arrange.

@@ -18,7 +18,7 @@
     [TestFixture]
     public class SendAccountRemindersStrategyATests
     {
-        private Guid CandidateId = Guid.Parse("727d9d37-3962-43d7-bcf2-a96e1bd93397");
+        private readonly Guid _candidateId = Guid.Parse("727d9d37-3962-43d7-bcf2-a96e1bd93397");
 
         [TestCase(1, true)]
         [TestCase(2, false)]
@@ -30,8 +30,8 @@
 
             var dateCreated = DateTime.UtcNow.AddDays(-7);
 
-            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).WithDateOfBirth(dateOfBirth).Build();
+            var user = new UserBuilder(_candidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(_candidateId).WithDateOfBirth(dateOfBirth).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -45,8 +45,8 @@
         {
             var dateCreated = DateTime.UtcNow;
 
-            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(true).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var user = new UserBuilder(_candidateId).WithDateCreated(dateCreated).Activated(true).Build();
+            var candidate = new CandidateBuilder(_candidateId).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -60,8 +60,8 @@
         {
             var dateCreated = DateTime.UtcNow;
 
-            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var user = new UserBuilder(_candidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(_candidateId).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -75,8 +75,8 @@
         {
             var dateCreated = DateTime.UtcNow.AddDays(-7);
 
-            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var user = new UserBuilder(_candidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(_candidateId).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -90,8 +90,8 @@
         {
             var dateCreated = DateTime.UtcNow.AddDays(-20);
 
-            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var user = new UserBuilder(_candidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(_candidateId).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -105,8 +105,8 @@
         {
             var dateCreated = DateTime.UtcNow.AddDays(-21);
 
-            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var user = new UserBuilder(_candidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(_candidateId).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -160,8 +160,8 @@
         {
             var dateCreated = DateTime.UtcNow.AddDays(-days).AddHours(-12);
 
-            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var user = new UserBuilder(_candidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(_candidateId).Build();
 
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
@@ -185,8 +185,8 @@
         {
             var dateCreated = DateTime.UtcNow.AddHours(-hours).AddMinutes(-30);
 
-            var user = new UserBuilder(CandidateId).WithDateCreated(dateCreated).Activated(false).Build();
-            var candidate = new CandidateBuilder(CandidateId).Build();
+            var user = new UserBuilder(_candidateId).WithDateCreated(dateCreated).Activated(false).Build();
+            var candidate = new CandidateBuilder(_candidateId).Build();
 
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(s => s.Get<HousekeepingConfiguration>()).Returns(new HousekeepingConfigurationBuilder().WithStrategyA(1, 2, 4, 6).Build());

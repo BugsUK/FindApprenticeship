@@ -1,5 +1,8 @@
 namespace SFA.Apprenticeships.Application.Candidates
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Domain.Entities.Users;
@@ -10,33 +13,57 @@ namespace SFA.Apprenticeships.Application.Candidates
 
     public class CandidateProcessor : ICandidateProcessor
     {
-        private readonly IUserReadRepository _userReadRepository;
-        private readonly IMessageBus _messageBus;
         private readonly ILogService _logService;
+        private readonly IMessageBus _messageBus;
+        private readonly IUserReadRepository _userReadRepository;
+        private readonly ICandidateReadRepository _candidateReadRepository;
 
-        public CandidateProcessor(IUserReadRepository userReadRepository, IMessageBus messageBus, ILogService logService)
+        public CandidateProcessor(
+            ILogService logService,
+            IMessageBus messageBus,
+            IUserReadRepository userReadRepository,
+            ICandidateReadRepository candidateReadRepository)
         {
-            _userReadRepository = userReadRepository;
-            _messageBus = messageBus;
             _logService = logService;
+            _messageBus = messageBus;
+            _userReadRepository = userReadRepository;
+            _candidateReadRepository = candidateReadRepository;
         }
 
         public void QueueCandidates()
         {
-            var users = _userReadRepository.GetUsersWithStatus(new[] { UserStatuses.PendingActivation, UserStatuses.PendingDeletion });
-            
+            var candidateIds =
+                GetCandidatesPendingActivationOrDeletion()
+                .Union(GetCandidatesPendingMobileVerification());
+
             var counter = 0;
-            Parallel.ForEach(users, user =>
+
+            Parallel.ForEach(candidateIds, candidateId =>
             {
                 var candidateHousekeeping = new CandidateHousekeeping
                 {
-                    CandidateId = user.EntityId
+                    CandidateId = candidateId
                 };
+
                 _messageBus.PublishMessage(candidateHousekeeping);
                 Interlocked.Increment(ref counter);
             });
 
             _logService.Debug("Queued {0} candidates for Housekeeping", counter);
+        }
+
+        private IEnumerable<Guid> GetCandidatesPendingActivationOrDeletion()
+        {
+            var userStatuses = new[] { UserStatuses.PendingActivation, UserStatuses.PendingDeletion };
+
+            return _userReadRepository.GetUsersWithStatus(userStatuses)
+                .Select(each => each.EntityId);
+        }
+
+        private IEnumerable<Guid> GetCandidatesPendingMobileVerification()
+        {
+            return _candidateReadRepository.GetCandidatesWithPendingMobileVerification()
+                .Select(each => each.EntityId);
         }
     }
 }

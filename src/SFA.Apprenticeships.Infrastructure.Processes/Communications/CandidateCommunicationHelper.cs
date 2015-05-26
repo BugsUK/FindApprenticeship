@@ -22,6 +22,7 @@
                     return communicationChannel == CommunicationChannels.Email;
 
                 case MessageTypes.SendMobileVerificationCode:
+                case MessageTypes.SendMobileVerificationCodeReminder:
                 case MessageTypes.SendEmailReminder:
                     return communicationChannel == CommunicationChannels.Sms;
 

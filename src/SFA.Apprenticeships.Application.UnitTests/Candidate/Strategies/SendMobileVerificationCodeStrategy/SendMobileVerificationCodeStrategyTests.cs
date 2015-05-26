@@ -65,6 +65,10 @@
             strategy.SendMobileVerificationCode(candidate);
 
             candidate.CommunicationPreferences.MobileVerificationCode.Should().Be(mobileVerificationCode);
+            candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.Should().HaveValue();
+            // ReSharper disable once PossibleInvalidOperationException
+            candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.Value.Should().BeCloseTo(DateTime.UtcNow, 500);
+
             candidateWriteRepository.Verify(r => r.Save(candidate), Times.Once);
         }
 
@@ -75,11 +79,13 @@
             
             const string phoneNumber = "0123456789";
             const string mobileVerificationCode = "1234";
+            var mobileVerificationCodeDateCreated = DateTime.UtcNow.AddDays(-1);
 
             var candidate = new CandidateBuilder(candidateId)
                 .EnableApplicationStatusChangeAlertsViaText(true)
                 .VerifiedMobile(false)
                 .MobileVerificationCode(mobileVerificationCode)
+                .MobileVerificationCodeDateCreated(mobileVerificationCodeDateCreated)
                 .PhoneNumber(phoneNumber)
                 .Build();
 
@@ -95,9 +101,13 @@
 
             strategy.SendMobileVerificationCode(candidate);
 
-            candidate.CommunicationPreferences.MobileVerificationCode.Should().Be(mobileVerificationCode);
             candidateWriteRepository.Verify(r => r.Save(candidate), Times.Never);
+
             candidate.CommunicationPreferences.MobileVerificationCode.Should().Be(mobileVerificationCode);
+            candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.Should().HaveValue();
+            // ReSharper disable once PossibleInvalidOperationException
+            candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.Value.Should().Be(mobileVerificationCodeDateCreated);
+            
             communicationService.Verify(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Once);
 
             var communicationTokensList = communicationTokens.ToList();

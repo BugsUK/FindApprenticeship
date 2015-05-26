@@ -23,7 +23,7 @@
 
             if (user.Status != UserStatuses.PendingActivation) return false;
 
-            var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSinceCreation(user);
+            var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSince(user.DateCreated);
 
             var configuration = Configuration.SendAccountReminderStrategyB;
 

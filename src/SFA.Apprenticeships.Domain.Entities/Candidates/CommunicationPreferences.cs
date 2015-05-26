@@ -1,11 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Candidates
 {
+    using System;
+
     public class CommunicationPreferences
     {
         public CommunicationPreferences()
         {
             VerifiedMobile = false;
             MobileVerificationCode = string.Empty;
+            MobileVerificationCodeDateCreated = null;
+
             AllowTraineeshipPrompts = true;
 
             ApplicationStatusChangePreferences = new CommunicationPreference
@@ -13,7 +17,7 @@
                 EnableEmail = true,
                 EnableText = false
             };
-            
+
             ExpiringApplicationPreferences = new CommunicationPreference
             {
                 EnableEmail = true,
@@ -33,9 +37,12 @@
             };
         }
 
+        // TODO: DEBT: move mobile verification fields into a new type (MobileVerification?).
         public bool VerifiedMobile { get; set; }
 
         public string MobileVerificationCode { get; set; }
+
+        public DateTime? MobileVerificationCodeDateCreated { get; set; }
 
         public bool AllowTraineeshipPrompts { get; set; }
 
