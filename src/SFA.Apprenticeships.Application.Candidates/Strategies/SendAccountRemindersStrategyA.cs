@@ -25,11 +25,11 @@
 
             var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSince(user.DateCreated);
 
-            var configuration = Configuration.SendAccountReminderStrategyA;
+            var configuration = Configuration.ActivationReminderStrategy.SendAccountReminderStrategyA;
 
             //Only remind if enough time has passed and not due for deletion
             if (housekeepingCyclesSinceCreation < configuration.SendAccountReminderOneAfterCycles
-                || housekeepingCyclesSinceCreation >= Configuration.SetPendingDeletionAfterCycles)
+                || housekeepingCyclesSinceCreation >= Configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles)
             {
                 return false;
             }

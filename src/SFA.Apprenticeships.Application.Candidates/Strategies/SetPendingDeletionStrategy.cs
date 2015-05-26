@@ -30,7 +30,7 @@
 
             var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSince(user.DateCreated);
 
-            if (housekeepingCyclesSinceCreation >= Configuration.SetPendingDeletionAfterCycles)
+            if (housekeepingCyclesSinceCreation >= Configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles)
             {
                 return SetUserStatusPendingDeletion(user);
             }
