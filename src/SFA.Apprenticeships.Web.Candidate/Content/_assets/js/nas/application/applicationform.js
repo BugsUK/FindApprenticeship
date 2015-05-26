@@ -1096,11 +1096,10 @@
             span.className = "field-validation-error";
             $(span).attr('aria-live', 'polite');
 
-            var inputFormControlParent = $(element).closest(".form-control").parent();
+            var inputFormControlParent = $(element).closest(".validation-message-parent").find('.validation-message-container');
 
             if (inputFormControlParent.length > 0) {
-
-                $(span).insertAfter(inputFormControlParent);
+                inputFormControlParent.append(span);
 
             } else {
                 element.parentNode.insertBefore(span, element.nextSibling);
