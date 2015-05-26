@@ -192,7 +192,7 @@
             {
                 var user = _userAccountService.GetUser(model.EmailAddress, false);
 
-                if (user == null)
+                if (user == null || user.Status == UserStatuses.PendingDeletion)
                 {
                     return GetAuthenticationFailedViewModel(model);
                 }

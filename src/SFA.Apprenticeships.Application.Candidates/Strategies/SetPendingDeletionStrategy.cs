@@ -47,7 +47,7 @@
 
             _logService.Info("Set User: {0} Status to PendingDeletion", user.EntityId);
 
-            return false;
+            return true;
         }
     }
 }

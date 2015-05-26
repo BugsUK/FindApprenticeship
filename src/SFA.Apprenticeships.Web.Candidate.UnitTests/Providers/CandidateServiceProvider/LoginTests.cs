@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.CandidateServiceProvider
+﻿using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
+using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
+
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.CandidateServiceProvider
 {
     using System;
     using Application.Interfaces.Candidates;
@@ -74,6 +77,36 @@
 
             // Assert.
             resultViewModel.PendingUsernameVerificationRequired.Should().Be(expectedResult);
+        }
+
+        [Test]
+        public void ShouldNotAllowLoginIfPendingDeletion()
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var userAccountService = new Mock<IUserAccountService>();
+
+            userAccountService
+                .Setup(s => s.GetUser(LoginViewModelBuilder.ValidEmailAddress, false))
+                .Returns(new User
+                {
+                    Status = UserStatuses.PendingDeletion
+                });
+
+            var provider = new CandidateServiceProviderBuilder().With(userAccountService).Build();
+            var viewModel = new LoginViewModelBuilder().WithValidCredentials().Build();
+
+            // Act.
+            var resultViewModel = provider.Login(viewModel);
+
+            /*return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
+            {
+                EmailAddress = model.EmailAddress,
+                UserStatus = userStatus
+            };*/
+
+            // Assert.
+            resultViewModel.ViewModelMessage.Should().Be(LoginPageMessages.InvalidUsernameOrPasswordErrorText);
         }
     }
 }

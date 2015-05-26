@@ -41,7 +41,11 @@
         {
             _logger.Debug("Called Mongodb to get user with username={0}", username);
 
-            var mongoEntity = Collection.AsQueryable().FirstOrDefault(u => u.Username == username.ToLower() && u.Status != UserStatuses.PendingDeletion);
+            //Note that setting a user to pending deletion doesn't prevent it from being retrieved.
+            //The login process checks the user status and prevents login if user is set to pending deletion.
+            //The username cannot be reused until the user account is hard deleted
+            //This is to prevent violation of uniqueness constraints in the repository
+            var mongoEntity = Collection.FindOne(Query.EQ("Username", username.ToLower()));
 
             if (mongoEntity == null && errorIfNotFound)
             {

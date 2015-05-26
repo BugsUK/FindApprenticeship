@@ -216,21 +216,23 @@
                 //Message was sent
                 communicationService.Verify(s => s.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendActivationCodeReminder, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Once);
                 communicationTokens.Should().NotBeNull();
-                communicationTokens.Length.Should().Be(4);
-                communicationTokens[0].Key.Should().Be(CommunicationTokens.CandidateFirstName);
-                communicationTokens[0].Value.Should().Be(candidate.RegistrationDetails.FirstName);
-                communicationTokens[1].Key.Should().Be(CommunicationTokens.ActivationCode);
-                communicationTokens[1].Value.Should().Be(user.ActivationCode);
-                communicationTokens[2].Key.Should().Be(CommunicationTokens.ActivationCodeExpiryDays);
+                
                 var activationCodeExpiryInDays = user.ActivateCodeExpiry.HasValue ? (user.ActivateCodeExpiry.Value - DateTime.UtcNow).Days : 0;
                 var activationCodeExpiryInDaysFormatted = activationCodeExpiryInDays == 1 ? "1 day" : string.Format("{0} days", activationCodeExpiryInDays);
                 if (user.ActivateCodeExpiry != null)
                 {
                     activationCodeExpiryInDaysFormatted += " on " + user.ActivateCodeExpiry.Value.ToLongDateString();
                 }
-                communicationTokens[2].Value.Should().Be(activationCodeExpiryInDaysFormatted);
-                communicationTokens[3].Key.Should().Be(CommunicationTokens.Username);
-                communicationTokens[3].Value.Should().Be(candidate.RegistrationDetails.EmailAddress);
+
+                var expectedCommunicationTokens = new[]
+                {
+                    new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
+                    new CommunicationToken(CommunicationTokens.ActivationCode, user.ActivationCode),
+                    new CommunicationToken(CommunicationTokens.ActivationCodeExpiryDays, activationCodeExpiryInDaysFormatted),
+                    new CommunicationToken(CommunicationTokens.Username, candidate.RegistrationDetails.EmailAddress)
+                };
+
+                communicationTokens.ShouldBeEquivalentTo(expectedCommunicationTokens);
             }
             else
             {
