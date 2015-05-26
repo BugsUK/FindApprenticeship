@@ -42,7 +42,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| SubjectGrade | SubjectGrade |
 	And I am on the TraineeshipApplicationPage page
 	And I choose SaveQualification
-	#Should be removed when it works properly
+	# Should be removed when it works properly
 	And I choose SaveQualification
 	And I wait for 30 seconds to see QualificationsSummary
 	Then I see
@@ -73,7 +73,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| WorkFromYear | 2011         |
 		| WorkToYear   | 2012         |
 	And I choose SaveWorkExperience
-	#Should be removed when it works properly
+	# Should be removed when it works properly
 	And I choose SaveWorkExperience
 	Then I wait for 30 seconds to see WorkExperienceSummary
 	Then I see
@@ -117,7 +117,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
         | Field                  | Rule           | Value |
         | TrainingHistorySummary | Does Not Exist |       |
 
-	#Enter data to save
+	# Enter data to save
 	When I enter employer question data if present
 		| Field                                              | Value |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |

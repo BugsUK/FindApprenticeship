@@ -14,13 +14,11 @@
     [TestFixture]
     public class SaveTraineeshipApplicationStrategyTests
     {
-        private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadRepository;
         private Mock<ITraineeshipApplicationWriteRepository> _traineeshipApplicationWriteRepository;
         private Mock<ICandidateReadRepository> _candidateReadRepository;
         private Mock<ICandidateWriteRepository> _candidateWriteRepository;
         private SaveTraineeshipApplicationStrategy _strategy;
-        private TraineeshipApplicationDetail _newApplication;
-        private TraineeshipApplicationDetail _oldApplication;
+        private TraineeshipApplicationDetail _application;
         private ApplicationTemplate _newCandidateInformation;
 
         private const int VacancyId = 42;
@@ -34,7 +32,6 @@
         [SetUp]
         public void SetUp()
         {
-            _traineeshipApplicationReadRepository = new Mock<ITraineeshipApplicationReadRepository>();
             _traineeshipApplicationWriteRepository = new Mock<ITraineeshipApplicationWriteRepository>();
             _candidateReadRepository = new Mock<ICandidateReadRepository>();
             _candidateWriteRepository = new Mock<ICandidateWriteRepository>();
@@ -42,17 +39,9 @@
             _candidateId = Guid.NewGuid();
 
             _strategy = new SaveTraineeshipApplicationStrategy(
-                _traineeshipApplicationReadRepository.Object,
                 _traineeshipApplicationWriteRepository.Object,
                 _candidateReadRepository.Object,
                 _candidateWriteRepository.Object);
-
-            _oldApplication = new Fixture()
-                .Build<TraineeshipApplicationDetail>()
-                .With(fixture => fixture.CandidateId, _candidateId)
-                .With(fixture => fixture.Status, ApplicationStatuses.Draft)
-                .With(fixture => fixture.DateApplied, null)
-                .Create();
 
             _newCandidateInformation = new Fixture()
                 .Build<ApplicationTemplate>()
@@ -62,7 +51,7 @@
                 .Build<Candidate>()
                 .Create();
 
-            _newApplication = new Fixture()
+            _application = new Fixture()
                 .Build<TraineeshipApplicationDetail>()
                 .With(fixture => fixture.CandidateId, _candidateId)
                 .With(fixture => fixture.DateApplied, null)
@@ -79,51 +68,39 @@
         [Test]
         public void ShouldSaveApplication()
         {
-            // Arrange.
-            _traineeshipApplicationReadRepository
-                .Setup(mock => mock.GetForCandidate(_candidateId, VacancyId, true))
-                .Returns(_oldApplication);
-
             _traineeshipApplicationWriteRepository
-                .Setup(mock => mock.Save(_oldApplication))
-                .Returns(_oldApplication);
+                .Setup(mock => mock.Save(_application))
+                .Returns(_application);
 
             _candidateReadRepository
                 .Setup(mock => mock.Get(_candidateId))
                 .Returns(_candidate);
 
             // Act.
-            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _newApplication);
+            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _application);
 
             // Assert.
             savedApplication.Should().NotBeNull();
-            savedApplication.Should().Be(_oldApplication);
-
-            _traineeshipApplicationReadRepository
-                .Verify(mock => mock.GetForCandidate(_candidateId, VacancyId, true), Times.Once);
+            savedApplication.Should().Be(_application);
 
             _traineeshipApplicationWriteRepository
-                .Verify(mock => mock.Save(_oldApplication), Times.Once);
+                .Verify(mock => mock.Save(_application), Times.Once);
         }
 
         [Test]
         public void ShouldSetDateApplied()
         {
             // Arrange.
-            _traineeshipApplicationReadRepository
-                .Setup(mock => mock.GetForCandidate(_candidateId, VacancyId, true))
-                .Returns(_oldApplication);
-
             _traineeshipApplicationWriteRepository
-                .Setup(mock => mock.Save(_oldApplication))
-                .Returns(_oldApplication);
+                .Setup(mock => mock.Save(_application))
+                .Returns(_application);
 
             _candidateReadRepository
                 .Setup(mock => mock.Get(_candidateId))
                 .Returns(_candidate);
 
             // Act.
-            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _newApplication);
+            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _application);
 
             // Assert.
             savedApplication.Should().NotBeNull();
@@ -134,20 +111,16 @@
         public void ShouldUpdateAdditionalQuestionAnswers()
         {
             // Arrange.
-            _traineeshipApplicationReadRepository
-                .Setup(mock => mock.GetForCandidate(_candidateId, VacancyId, true))
-                .Returns(_oldApplication);
-
             _traineeshipApplicationWriteRepository
-                .Setup(mock => mock.Save(_oldApplication))
-                .Returns(_oldApplication);
+                .Setup(mock => mock.Save(_application))
+                .Returns(_application);
 
             _candidateReadRepository
                 .Setup(mock => mock.Get(_candidateId))
                 .Returns(_candidate);
 
             // Act.
-            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _newApplication);
+            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _application);
 
             // Assert.
             savedApplication.Should().NotBeNull();
@@ -159,20 +132,16 @@
         public void ShouldUpdateCandidateInformation()
         {
             // Arrange.
-            _traineeshipApplicationReadRepository
-                .Setup(mock => mock.GetForCandidate(_candidateId, VacancyId, true))
-                .Returns(_oldApplication);
-
             _traineeshipApplicationWriteRepository
-                .Setup(mock => mock.Save(_oldApplication))
-                .Returns(_oldApplication);
+                .Setup(mock => mock.Save(_application))
+                .Returns(_application);
 
             _candidateReadRepository
                 .Setup(mock => mock.Get(_candidateId))
                 .Returns(_candidate);
 
             // Act.
-            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _newApplication);
+            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _application);
 
             // Assert.
             savedApplication.Should().NotBeNull();
@@ -183,20 +152,16 @@
         public void ShouldSyncToCandidateApplicationTemplate()
         {
             // Arrange.
-            _traineeshipApplicationReadRepository
-                .Setup(mock => mock.GetForCandidate(_candidateId, VacancyId, true))
-                .Returns(_oldApplication);
-
             _traineeshipApplicationWriteRepository
-                .Setup(mock => mock.Save(_oldApplication))
-                .Returns(_oldApplication);
+                .Setup(mock => mock.Save(_application))
+                .Returns(_application);
 
             _candidateReadRepository
                 .Setup(mock => mock.Get(_candidateId))
                 .Returns(_candidate);
 
             // Act.
-            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _newApplication);
+            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _application);
 
             // Assert.
             savedApplication.Should().NotBeNull();
@@ -225,23 +190,19 @@
             DisabilityStatus? expectedCandidateDisabilityStatus)
         {
             // Arrange.
-            _newApplication.CandidateInformation.DisabilityStatus = applicationDisabilityStatus;
+            _application.CandidateInformation.DisabilityStatus = applicationDisabilityStatus;
             _candidate.MonitoringInformation.DisabilityStatus = originalCandidateDisabilityStatus;
 
-            _traineeshipApplicationReadRepository
-                .Setup(mock => mock.GetForCandidate(_candidateId, VacancyId, true))
-                .Returns(_oldApplication);
-
             _traineeshipApplicationWriteRepository
-                .Setup(mock => mock.Save(_oldApplication))
-                .Returns(_oldApplication);
+                .Setup(mock => mock.Save(_application))
+                .Returns(_application);
 
             _candidateReadRepository
                 .Setup(mock => mock.Get(_candidateId))
                 .Returns(_candidate);
 
             // Act.
-            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _newApplication);
+            var savedApplication = _strategy.SaveApplication(_candidateId, VacancyId, _application);
 
             // Assert.
             savedApplication.Should().NotBeNull();

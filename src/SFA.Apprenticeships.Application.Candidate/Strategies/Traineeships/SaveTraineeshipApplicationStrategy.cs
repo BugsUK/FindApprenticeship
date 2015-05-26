@@ -6,18 +6,15 @@
 
     public class SaveTraineeshipApplicationStrategy : ISaveTraineeshipApplicationStrategy
     {
-        private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
 
         public SaveTraineeshipApplicationStrategy(
-            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
             ICandidateWriteRepository candidateWriteRepository)
         {
-            _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
@@ -26,17 +23,11 @@
         public TraineeshipApplicationDetail SaveApplication(
             Guid candidateId, int vacancyId, TraineeshipApplicationDetail traineeshipApplication)
         {
-            var currentApplication = _traineeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId, true);
-
-            currentApplication.CandidateInformation = traineeshipApplication.CandidateInformation;
-            currentApplication.AdditionalQuestion1Answer = traineeshipApplication.AdditionalQuestion1Answer;
-            currentApplication.AdditionalQuestion2Answer = traineeshipApplication.AdditionalQuestion2Answer;
-
             // Set date applied when saving a traineeship application. Unlike apprenticeship applications, there are no intermediate states,
             // Draft, Submitting etc.
-            currentApplication.DateApplied = DateTime.UtcNow;
+            traineeshipApplication.DateApplied = DateTime.UtcNow;
 
-            var savedApplication = _traineeshipApplicationWriteRepository.Save(currentApplication);
+            var savedApplication = _traineeshipApplicationWriteRepository.Save(traineeshipApplication);
 
             SyncToCandidatesApplicationTemplate(candidateId, savedApplication);
 
