@@ -750,7 +750,7 @@ WriteLiteral(" data-bind=\"visible: showEditButton, text: itemToYear() <= 1 || i
 
 WriteLiteral("></span>\r\n                                                <div");
 
-WriteLiteral(" class=\"validation-message-parent\"");
+WriteLiteral(" class=\"validation-message-container\"");
 
 WriteLiteral(@"></div>
                                             </td>
