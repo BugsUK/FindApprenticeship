@@ -55,8 +55,25 @@
                 .Count(each => each.LastLogin != null && each.LastLogin >= activeFrom);
         }
 
-        public IEnumerable<BsonDocument> GetUserActivityMetrics()
+        public IEnumerable<BsonDocument> GetUserActivityMetrics(DateTime dateCreatedStart, DateTime dateCreatedEnd)
         {
+            var match = new BsonDocument
+            {
+                {
+                    "$match",
+                    new BsonDocument
+                    {
+                        {
+                            "$and",
+                            new BsonArray
+                            {
+                                new BsonDocument {{"DateCreated", new BsonDocument {{"$gte", dateCreatedStart}}}},
+                                new BsonDocument {{"DateCreated", new BsonDocument {{"$lte", dateCreatedEnd}}}}
+                            }
+                        }
+                    }
+                }
+            };
             var group = new BsonDocument
             {
                 {
@@ -68,7 +85,7 @@
                 }
             };
 
-            var pipeline = new[] { group };
+            var pipeline = new[] { match, group };
 
             var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
 
