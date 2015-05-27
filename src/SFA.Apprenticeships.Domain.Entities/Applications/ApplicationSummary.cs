@@ -19,6 +19,8 @@
 
         public string EmployerName { get; set; }
 
+        public bool IsPositiveAboutDisability { get; set; }
+
         public DateTime ClosingDate { get; set; }
 
         public bool IsArchived { get; set; }

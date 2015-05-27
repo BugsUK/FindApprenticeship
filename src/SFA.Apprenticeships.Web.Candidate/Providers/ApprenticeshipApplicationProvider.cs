@@ -407,7 +407,7 @@
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
                 var candidate = _candidateService.GetCandidate(candidateId);
-                RecalculateSavedAndDraftCount(candidateId, null);
+                var savedAndDraftCount = RecalculateSavedAndDraftCount(candidateId, null);
 
                 if (applicationDetails == null || candidate == null)
                 {
@@ -437,7 +437,10 @@
                     ProviderContactInfo = patchedModel.VacancyDetail.Contact
                 };
 
-                return WhatHappensNextSuggestions(whatHappensNextViewModel, candidateId, applicationDetails.Vacancy.Id, searchReturnUrl);
+
+                whatHappensNextViewModel = WhatHappensNextSavedAndDrafts(whatHappensNextViewModel, candidateId);
+                whatHappensNextViewModel = WhatHappensNextSuggestions(whatHappensNextViewModel, candidateId, applicationDetails.Vacancy.Id, searchReturnUrl);
+                return whatHappensNextViewModel;
             }
             catch (Exception e)
             {
@@ -449,6 +452,14 @@
 
                 return new WhatHappensNextApprenticeshipViewModel(MyApplicationsPageMessages.CreateOrRetrieveApplicationFailed);
             }
+        }
+
+        private WhatHappensNextApprenticeshipViewModel WhatHappensNextSavedAndDrafts(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, Guid candidateId)
+        {
+            var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId);
+            var savedAndDraftApplications = apprenticeshipApplicationSummaries.Where(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved).OrderByDescending(a => a.ClosingDate);
+            whatHappensNextViewModel.SavedAndDraftApplications = savedAndDraftApplications.Select(s => new MyApprenticeshipApplicationViewModel(s)).ToList();
+            return whatHappensNextViewModel;
         }
 
         private WhatHappensNextApprenticeshipViewModel WhatHappensNextSuggestions(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, Guid candidateId, int vacancyId, string searchReturnUrl)
@@ -483,6 +494,7 @@
                 {
                     VacancyId = x.Id,
                     VacancyTitle = x.Title,
+                    IsPositiveAboutDisability = x.IsPositiveAboutDisability,
                     Distance = Math.Round(x.Distance, 1, MidpointRounding.AwayFromZero).ToString(CultureInfo.InvariantCulture)
                 }).ToList();
 
@@ -500,19 +512,7 @@
                 RecalculateSavedAndDraftCount(candidateId, apprenticeshipApplicationSummaries);
 
                 var apprenticeshipApplications = apprenticeshipApplicationSummaries
-                    .Select(each => new MyApprenticeshipApplicationViewModel
-                    {
-                        VacancyId = each.LegacyVacancyId,
-                        Title = each.Title,
-                        EmployerName = each.EmployerName,
-                        UnsuccessfulReason = each.UnsuccessfulReason,
-                        ApplicationStatus = each.Status,
-                        VacancyStatus = each.VacancyStatus,
-                        IsArchived = each.IsArchived,
-                        DateApplied = each.DateApplied,
-                        ClosingDate = each.ClosingDate,
-                        DateUpdated = each.DateUpdated
-                    })
+                    .Select(each => new MyApprenticeshipApplicationViewModel(each))
                     .ToList();
 
                 var traineeshipApplicationSummaries = _candidateService.GetTraineeshipApplications(candidateId);
@@ -646,11 +646,12 @@
             return apprenticeshipApplicationViewModel;
         }
 
-        private void RecalculateSavedAndDraftCount(Guid candidateId, IList<ApprenticeshipApplicationSummary> summaries)
+        private int RecalculateSavedAndDraftCount(Guid candidateId, IList<ApprenticeshipApplicationSummary> summaries)
         {
             var apprenticeshipApplicationSummaries = summaries ?? _candidateService.GetApprenticeshipApplications(candidateId) ?? new List<ApprenticeshipApplicationSummary>();
             var savedOrDraft = apprenticeshipApplicationSummaries.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
             _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedOrDraft.ToString(CultureInfo.InvariantCulture));
+            return savedOrDraft;
         }
 
         #endregion

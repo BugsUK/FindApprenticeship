@@ -7,11 +7,33 @@
 
     public class MyApprenticeshipApplicationViewModel
     {
+        public MyApprenticeshipApplicationViewModel()
+        {    
+        }
+
+        public MyApprenticeshipApplicationViewModel(ApprenticeshipApplicationSummary applicationSummary)
+        {
+            VacancyId = applicationSummary.LegacyVacancyId;
+            Title = applicationSummary.Title;
+            EmployerName = applicationSummary.EmployerName;
+            
+            UnsuccessfulReason = applicationSummary.UnsuccessfulReason;
+            ApplicationStatus = applicationSummary.Status;
+            VacancyStatus = applicationSummary.VacancyStatus;
+            IsArchived = applicationSummary.IsArchived;
+            DateApplied = applicationSummary.DateApplied;
+            ClosingDate = applicationSummary.ClosingDate;
+            DateUpdated = applicationSummary.DateUpdated;
+            IsPositiveAboutDisability = applicationSummary.IsPositiveAboutDisability;
+        }
+
         public int VacancyId { get; set; }
 
         public string Title { get; set; }
 
         public string EmployerName { get; set; }
+
+        public bool IsPositiveAboutDisability { get; set; }
 
         public ApplicationStatuses ApplicationStatus { get; set; }
 

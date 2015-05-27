@@ -2,7 +2,9 @@
 {
     using System.Linq;
     using Candidate.ViewModels.Applications;
+    using Candidate.ViewModels.MyApplications;
     using Candidate.ViewModels.VacancySearch;
+    using Common.Framework;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -33,13 +35,10 @@
         }
 
         [Test]
-        public void ShowsFindApprenticeshipButtonIfNoSuggestedVacancies()
+        public void ShowPlainFindApprenticeshipButtonWhenNoSavedDraftsOrSuggestedVacancies()
         {
             //Arrange
-            var whatHappensNextViewModel = new WhatHappensNextApprenticeshipViewModel
-            {
-                SuggestedVacanciesSearchViewModel = new ApprenticeshipSearchViewModel()
-            };
+            var whatHappensNextViewModel = new WhatHappensNextApprenticeshipViewModel();
             var whatHappendNextView = new WhatHappensNextViewBuilder().Build();
 
             //Act
@@ -73,6 +72,36 @@
                 var suggestedVac = whatHappendNextView.GetElementbyId("suggested-vacancy-" + suggestedViewModels[i].VacancyId);
                 suggestedVac.InnerText.Should().Contain(suggestedViewModels[i].VacancyTitle);
                 suggestedVac.InnerText.Should().Contain(suggestedViewModels[i].Distance);
+            }
+        }
+
+        [Test]
+        public void ShowsSavedAndDraftApprenticeshipsAndSuggestedSearchUrl()
+        {
+            //Arrange            
+            var fixture = new Fixture();
+            var savedDraftViewModels = fixture.CreateMany<MyApprenticeshipApplicationViewModel>().ToList();
+            var suggestedViewModels = fixture.CreateMany<SuggestedVacancyViewModel>().ToList();
+            var whatHappensNextViewModel = new WhatHappensNextApprenticeshipViewModel
+            {
+                SuggestedVacancies = suggestedViewModels,
+                SuggestedVacanciesSearchViewModel = new ApprenticeshipSearchViewModel(),
+                SavedAndDraftApplications = savedDraftViewModels
+            };
+
+            //Act
+            var whatHappendNextView = new WhatHappensNextViewBuilder().With(whatHappensNextViewModel).RenderAsHtml();
+            whatHappendNextView.Should().NotBeNull();
+
+            //Assert
+            for (int i = 0; i < 3; i++)
+            {
+                var savedDraft = whatHappendNextView.GetElementbyId("saved-vacancy-" + savedDraftViewModels[i].VacancyId);
+                var suggestedVac = whatHappendNextView.GetElementbyId("suggested-vacancy-" + suggestedViewModels[i].VacancyId);
+                suggestedVac.Should().BeNull();
+                savedDraft.Should().NotBeNull();
+                savedDraft.InnerText.Should().Contain(savedDraftViewModels[i].Title);
+                savedDraft.InnerText.Should().Contain(savedDraftViewModels[i].ClosingDate.ToFriendlyClosingToday());
             }
         }
     }
