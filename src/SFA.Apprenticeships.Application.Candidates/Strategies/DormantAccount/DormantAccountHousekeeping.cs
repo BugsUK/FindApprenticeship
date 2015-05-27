@@ -11,9 +11,9 @@
     {
         private readonly IHousekeepingStrategy _strategy;
 
-        public DormantAccountHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserWriteRepository userWriteRepository, ILogService logService)
+        public DormantAccountHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserWriteRepository userWriteRepository, ICandidateWriteRepository candidateWriteRepository, ILogService logService)
         {
-            var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, communicationService);
+            var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, userWriteRepository, candidateWriteRepository, communicationService, logService);
             var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, logService);
             var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
 

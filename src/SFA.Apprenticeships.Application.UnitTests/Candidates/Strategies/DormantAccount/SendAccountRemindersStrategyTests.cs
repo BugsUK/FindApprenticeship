@@ -8,6 +8,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
     using Moq;
@@ -21,7 +22,7 @@
         [TestCase(UserStatuses.Active, true)]
         [TestCase(UserStatuses.Inactive, false)]
         [TestCase(UserStatuses.Locked, true)]
-        [TestCase(UserStatuses.Dormant, false)]
+        [TestCase(UserStatuses.Dormant, true)]
         [TestCase(UserStatuses.PendingDeletion, false)]
         public void StatusChecks(UserStatuses userStatus, bool shouldSendReminder)
         {
@@ -30,12 +31,15 @@
             var candidateId = Guid.NewGuid();
             var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(userStatus).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
+            candidate.EnableAllOptionalCommunications();
 
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).Build();
+            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
 
-            Assert(shouldSendReminder, strategy, successor, communicationService, user, candidate);
+            Assert(shouldSendReminder, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
         }
 
         [Test]
@@ -46,12 +50,15 @@
             var candidateId = Guid.NewGuid();
             var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Active).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
+            candidate.EnableAllOptionalCommunications();
 
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).Build();
+            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
 
-            Assert(false, strategy, successor, communicationService, user, candidate);
+            Assert(false, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
         }
 
         [Test]
@@ -62,12 +69,15 @@
             var candidateId = Guid.NewGuid();
             var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Active).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
+            candidate.EnableAllOptionalCommunications();
 
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).Build();
+            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
 
-            Assert(true, strategy, successor, communicationService, user, candidate);
+            Assert(true, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
         }
 
         [Test]
@@ -78,12 +88,15 @@
             var candidateId = Guid.NewGuid();
             var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Active).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
+            candidate.EnableAllOptionalCommunications();
 
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).Build();
+            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
 
-            Assert(false, strategy, successor, communicationService, user, candidate);
+            Assert(false, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
         }
 
         [Test]
@@ -94,16 +107,24 @@
             var candidateId = Guid.NewGuid();
             var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Active).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
+            candidate.EnableAllOptionalCommunications();
 
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
             var communicationService = new Mock<ICommunicationService>();
             var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).Build();
+            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
 
-            Assert(true, strategy, successor, communicationService, user, candidate);
+            Assert(true, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
         }
 
-        private static void Assert(bool shouldSendReminder, SendAccountRemindersStrategy strategy, Mock<IHousekeepingStrategy> successor, Mock<ICommunicationService> communicationService, User user, Candidate candidate)
+        private static void Assert(bool shouldSendReminder, SendAccountRemindersStrategy strategy, Mock<IHousekeepingStrategy> successor, Mock<IUserWriteRepository> userWriteRepository, Mock<ICandidateWriteRepository> candidateWriteRepository, Mock<ICommunicationService> communicationService, User user, Candidate candidate)
         {
+            User savedUser = null;
+            userWriteRepository.Setup(r => r.Save(It.IsAny<User>())).Callback<User>(u => savedUser = u);
+            Candidate savedCandidate = null;
+            candidateWriteRepository.Setup(r => r.Save(It.IsAny<Candidate>())).Callback<Candidate>(c => savedCandidate = c);
+
             CommunicationToken[] communicationTokens = null;
             communicationService.Setup(s => s.SendMessageToCandidate(user.EntityId, MessageTypes.SendDormantAccountReminder, It.IsAny<IEnumerable<CommunicationToken>>()))
                 .Callback<Guid, MessageTypes, IEnumerable<CommunicationToken>>((id, mt, ct) =>
@@ -117,6 +138,19 @@
             {
                 //Strategy handled the request
                 successor.Verify(s => s.Handle(user, candidate), Times.Never);
+
+                //User and Candidate were updated
+                userWriteRepository.Verify(r => r.Save(It.IsAny<User>()), Times.Once);
+                savedUser.Should().NotBeNull();
+                candidateWriteRepository.Verify(r => r.Save(It.IsAny<Candidate>()), Times.Once);
+                savedCandidate.Should().NotBeNull();
+
+                //User was set as dormant and comms were disabled
+                savedUser.Status.Should().Be(UserStatuses.Dormant);
+                CandidateHelper.IndividualCommunicationPreferences(savedCandidate.CommunicationPreferences)
+                    .Any(p => p.EnableEmail && p.EnableText)
+                    .Should()
+                    .BeFalse();
 
                 //Message was sent
                 communicationService.Verify(s => s.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendDormantAccountReminder, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Once);
@@ -140,6 +174,13 @@
             {
                 //Strategy did not handle the request
                 successor.Verify(s => s.Handle(user, candidate), Times.Once);
+
+                //User and Candidate were not updated
+                userWriteRepository.Verify(r => r.Save(It.IsAny<User>()), Times.Never);
+                candidateWriteRepository.Verify(r => r.Save(It.IsAny<Candidate>()), Times.Never);
+
+                savedUser.Should().BeNull();
+                savedCandidate.Should().BeNull();
 
                 //Message was not sent
                 communicationService.Verify(s => s.SendMessageToCandidate(user.EntityId, MessageTypes.SendActivationCodeReminder, It.IsAny<IEnumerable<CommunicationToken>>()), Times.Never);
