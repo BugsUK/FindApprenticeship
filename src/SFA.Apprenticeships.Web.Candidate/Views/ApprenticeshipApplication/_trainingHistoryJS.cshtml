@@ -127,7 +127,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
+                                            <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
                                                     <select title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemFromMonth, attr:{'name':'Candidate.TrainingHistory[' + $index() +'].FromMonth'} "></select>
                                                 </div>
@@ -136,8 +136,9 @@
                                                 </div>
                                                 <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemFromMonth()), attr:{'id':'candidate_traininghistory_'+ $index() + '__frommonth'}"></span>
                                                 <span class="cell-span" data-bind="visible: showEditButton, text: itemFromYear, attr:{'id':'candidate_traininghistory'+ $index() + '__fromyear'}"></span>
+                                                <div class="validation-message-container"></div>
                                             </td>
-                                            <td>
+                                            <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
                                                     <select title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemToMonth, attr:{'name':'Candidate.TrainingHistory[' + $index() +'].ToMonth'}"></select>
                                                 </div>
@@ -146,6 +147,7 @@
                                                 </div>
                                                 <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemToMonth()), attr:{'id':'candidate_traininghistory'+ $index() + '__tomonth'}"></span>
                                                 <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear, attr:{'id':'candidate_traininghistory'+ $index() + '__toyear'}"></span>
+                                                <div class="validation-message-container"></div>
                                             </td>
                                             <td></td>
                                             <td></td>

@@ -535,8 +535,11 @@ WriteLiteral(@">To</span>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
-                                                <div");
+                                            <td");
+
+WriteLiteral(" class=\"validation-message-parent\"");
+
+WriteLiteral(">\r\n                                                <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -587,9 +590,16 @@ WriteLiteral(" class=\"cell-span\"");
 WriteLiteral(" data-bind=\"visible: showEditButton, text: itemFromYear, attr:{\'id\':\'candidate_tr" +
 "aininghistory\'+ $index() + \'__fromyear\'}\"");
 
-WriteLiteral("></span>\r\n                                            </td>\r\n                    " +
-"                        <td>\r\n                                                <d" +
-"iv");
+WriteLiteral("></span>\r\n                                                <div");
+
+WriteLiteral(" class=\"validation-message-container\"");
+
+WriteLiteral("></div>\r\n                                            </td>\r\n                     " +
+"                       <td");
+
+WriteLiteral(" class=\"validation-message-parent\"");
+
+WriteLiteral(">\r\n                                                <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -640,7 +650,11 @@ WriteLiteral(" class=\"cell-span\"");
 WriteLiteral(" data-bind=\"visible: showEditButton, text: itemToYear, attr:{\'id\':\'candidate_trai" +
 "ninghistory\'+ $index() + \'__toyear\'}\"");
 
-WriteLiteral(@"></span>
+WriteLiteral("></span>\r\n                                                <div");
+
+WriteLiteral(" class=\"validation-message-container\"");
+
+WriteLiteral(@"></div>
                                             </td>
                                             <td></td>
                                             <td></td>

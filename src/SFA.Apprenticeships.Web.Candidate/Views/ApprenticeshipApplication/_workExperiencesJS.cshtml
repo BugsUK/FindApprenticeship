@@ -145,7 +145,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
+                                            <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
                                                     <select title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemFromMonth, attr:{'name':'Candidate.WorkExperience[' + $index() +'].FromMonth'} "></select>
 
@@ -157,8 +157,9 @@
 
                                                 <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemFromMonth()), attr:{'id':'candidate_workexperience_'+ $index() + '__frommonth'}"></span>
                                                 <span class="cell-span" data-bind="visible: showEditButton, text: itemFromYear, attr:{'id':'candidate_workexperience_'+ $index() + '__fromyear'}"></span>
+                                                <div class="validation-message-container"></div>
                                             </td>
-                                            <td>
+                                            <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
                                                     <select title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemToMonth, attr:{'disabled': toItemDateReadonly,'name':'Candidate.WorkExperience[' + $index() +'].ToMonth'}"></select>
 
@@ -174,6 +175,7 @@
                                                 </div>
                                                 <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() <= 1 || itemToYear() === null ? 'Current' : getMonthLabel(itemToMonth()), attr:{'id':'candidate_workexperience_'+ $index() + '__tomonth'}"></span>
                                                 <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear() <= 1 || itemToYear() === null ? '' : itemToYear , attr:{'id':'candidate_workexperience_'+ $index() + '__toyear'}"></span>
+                                                <div class="validation-message-parent"></div>
                                             </td>
                                             <td></td>
                                             <td></td>
