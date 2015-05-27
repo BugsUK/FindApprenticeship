@@ -2,13 +2,10 @@
 {
     using Application.Applications;
     using Application.Applications.Strategies;
-    using Application.Candidates.Strategies;
-    using Application.Candidates.Strategies.ActivationReminder;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
-    using Application.Interfaces.Logging;
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
@@ -22,7 +19,6 @@
     using Communications.Commands;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
-    using Domain.Interfaces.Repositories;
     using Logging.IoC;
     using StructureMap;
     using StructureMap.Configuration.DSL;
@@ -89,35 +85,10 @@
             // candidates
             For<CandidateSavedSearchesConsumerAsync>().Use<CandidateSavedSearchesConsumerAsync>();
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
-            For<CandidateAccountHousekeepingConsumerAsync>().Use<CandidateAccountHousekeepingConsumerAsync>().Ctor<IHousekeepingStrategy>().Is(context => BuildHousekeepingChainOfResponsibility(context));
+            For<CandidateAccountHousekeepingConsumerAsync>().Use<CandidateAccountHousekeepingConsumerAsync>();
 
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
-        }
-
-        private static IHousekeepingStrategy BuildHousekeepingChainOfResponsibility(IContext context)
-        {
-            var configurationService = context.GetInstance<IConfigurationService>();
-            var communicationService = context.GetInstance<ICommunicationService>();
-            var logService = context.GetInstance<ILogService>();
-            var userWriteRepository = context.GetInstance<IUserWriteRepository>();
-            var candidateWriteRepository = context.GetInstance<ICandidateWriteRepository>();
-            var auditRepository = context.GetInstance<IAuditRepository>();
-
-            var sendAccountRemindersStrategyA = new SendAccountRemindersStrategyA(configurationService, communicationService, logService);
-            var sendAccountRemindersStrategyB = new SendAccountRemindersStrategyB(configurationService, communicationService, logService);
-            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, logService);
-            var hardDeleteStrategy = new HardDeleteStrategy(configurationService, userWriteRepository, candidateWriteRepository, auditRepository, logService);
-            var sendMobileVerificationCodeReminder = new SendMobileVerificationCodeReminderStrategy(logService, configurationService, communicationService);
-            var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
-
-            sendAccountRemindersStrategyA.SetSuccessor(sendAccountRemindersStrategyB);
-            sendAccountRemindersStrategyB.SetSuccessor(setPendingDeletionStrategy);
-            setPendingDeletionStrategy.SetSuccessor(hardDeleteStrategy);
-            hardDeleteStrategy.SetSuccessor(sendMobileVerificationCodeReminder);
-            sendMobileVerificationCodeReminder.SetSuccessor(terminatingHousekeepingStrategy);
-
-            return sendAccountRemindersStrategyA;
         }
     }
 }

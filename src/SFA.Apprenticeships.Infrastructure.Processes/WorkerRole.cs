@@ -4,9 +4,9 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using System.Net;
     using System.Reflection;
     using System.Threading;
+    using Application.Candidates;
     using Application.Interfaces.Logging;
     using Azure.Common.IoC;
-    using Caching.Azure.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
@@ -113,6 +113,11 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
+                x.Scan(y =>
+                {
+                    y.AssemblyContainingType<IHousekeepingChainOfResponsibility>();
+                    y.AddAllTypesOf<IHousekeepingChainOfResponsibility>();
+                });
             });
 
             _logger = _container.GetInstance<ILogService>();
