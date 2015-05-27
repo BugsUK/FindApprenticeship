@@ -20,9 +20,7 @@
         {
             if (user.Status != UserStatuses.Active && user.Status != UserStatuses.Locked) return false;
 
-            if (!user.LastLogin.HasValue) return false;
-
-            var housekeepingCyclesSinceLastLogin = GetHousekeepingCyclesSince(user.LastLogin.Value);
+            var housekeepingCyclesSinceLastLogin = GetHousekeepingCyclesSince(user.GetLastLogin());
 
             var configuration = Configuration.DormantAccountStrategy;
 

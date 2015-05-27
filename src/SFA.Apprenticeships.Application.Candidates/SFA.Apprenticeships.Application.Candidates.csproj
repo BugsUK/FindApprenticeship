@@ -95,6 +95,7 @@
     <Compile Include="Strategies\DormantAccount\DormantAccountHousekeeping.cs" />
     <Compile Include="Strategies\DormantAccount\SendAccountRemindersStrategy.cs" />
     <Compile Include="Strategies\DormantAccount\SetPendingDeletionStrategy.cs" />
+    <Compile Include="Strategies\DormantAccount\UserExtensions.cs" />
     <Compile Include="Strategies\HardDeleteHousekeeping.cs" />
     <Compile Include="Strategies\HardDeleteStrategy.cs" />
     <Compile Include="Strategies\HousekeepingStrategy.cs" />

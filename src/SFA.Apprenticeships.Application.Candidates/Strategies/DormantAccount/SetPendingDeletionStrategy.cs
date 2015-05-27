@@ -22,9 +22,7 @@
         {
             if (user.Status != UserStatuses.Dormant) return false;
 
-            if (!user.LastLogin.HasValue) return false;
-
-            var housekeepingCyclesSinceLastLogin = GetHousekeepingCyclesSince(user.LastLogin.Value);
+            var housekeepingCyclesSinceLastLogin = GetHousekeepingCyclesSince(user.GetLastLogin());
 
             if (housekeepingCyclesSinceLastLogin >= Configuration.DormantAccountStrategy.SetPendingDeletionAfterCycles)
             {
