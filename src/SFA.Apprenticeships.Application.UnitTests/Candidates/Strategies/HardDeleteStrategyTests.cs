@@ -11,10 +11,11 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
     public class HardDeleteStrategyTests
     {
         [Test]
-        public void UsersPendingDeletionAreImmediatelyDeleted()
+        public void UsersPendingDeletionAreNotImmediatelyDeleted()
         {
+            var dateUpdated = DateTime.UtcNow;
             var candidateId = Guid.NewGuid();
-            var user = new UserBuilder(candidateId).WithStatus(UserStatuses.PendingDeletion).Build();
+            var user = new UserBuilder(candidateId).WithStatus(UserStatuses.PendingDeletion).WithDateUpdated(dateUpdated).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
 
             var successor = new Mock<IHousekeepingStrategy>();
@@ -22,8 +23,36 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 
             strategy.Handle(user, candidate);
 
-            //Strategy handled the request
-            successor.Verify(s => s.Handle(user, null), Times.Never);
+            //Strategy did not handle the request
+            successor.Verify(s => s.Handle(user, candidate), Times.Once);
+        }
+
+        [TestCase(0, false)]
+        [TestCase(13, false)]
+        [TestCase(14, true)]
+        [TestCase(15, true)]
+        public void UsersPendingDeletionAreHardDeletedAfter14Days(int days, bool shouldBeHardDeleted)
+        {
+            var dateUpdated = DateTime.UtcNow.AddDays(-days);
+            var candidateId = Guid.NewGuid();
+            var user = new UserBuilder(candidateId).WithStatus(UserStatuses.PendingDeletion).WithDateUpdated(dateUpdated).Build();
+            var candidate = new CandidateBuilder(candidateId).Build();
+
+            var successor = new Mock<IHousekeepingStrategy>();
+            var strategy = new HardDeleteStrategyBuilder().With(successor.Object).Build();
+
+            strategy.Handle(user, candidate);
+
+            if (shouldBeHardDeleted)
+            {
+                //Strategy handled the request
+                successor.Verify(s => s.Handle(user, null), Times.Never);
+            }
+            else
+            {
+                //Strategy did not handle the request
+                successor.Verify(s => s.Handle(user, candidate), Times.Once);
+            }
         }
 
         [Test]

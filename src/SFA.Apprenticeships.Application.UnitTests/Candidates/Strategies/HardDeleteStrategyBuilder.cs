@@ -6,6 +6,9 @@ using SFA.Apprenticeships.Domain.Interfaces.Repositories;
 
 namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 {
+    using Application.Candidates.Configuration;
+    using Configuration;
+
     public class HardDeleteStrategyBuilder
     {
         private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
@@ -18,6 +21,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 
         public HardDeleteStrategyBuilder()
         {
+            _configurationService.Setup(s => s.Get<HousekeepingConfiguration>()).Returns(new HousekeepingConfigurationBuilder().Build());
             _successor = new TerminatingHousekeepingStrategy(_configurationService.Object);
         }
 

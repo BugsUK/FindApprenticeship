@@ -19,10 +19,16 @@
                     SendAccountReminderAfterCycles = 1,
                     SendAccountReminderEveryCycles = 7
                 },
-                SetPendingDeletionAfterCycles = 31,
-                HardDeleteAccountAfterCycles = 42
+                SetPendingDeletionAfterCycles = 31
             },
-            SendMobileVerificationCodeReminderAfterCycles = 1
+            SendMobileVerificationCodeReminderAfterCycles = 1,
+            DormantAccountStrategy = new DormantAccountStrategy
+            {
+                SendReminderAfterCycles = 90,
+                SendFinalReminderAfterCycles = 330,
+                SetPendingDeletionAfterCycles = 365
+            },
+            HardDeleteAccountAfterCycles = 14
         };
 
         public HousekeepingConfiguration Build()

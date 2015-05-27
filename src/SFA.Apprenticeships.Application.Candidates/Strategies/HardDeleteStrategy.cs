@@ -24,32 +24,35 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
-            if (user.Status == UserStatuses.PendingDeletion)
+            if (user.Status != UserStatuses.PendingDeletion) return false;
+
+            if (!user.DateUpdated.HasValue) return false;
+
+            var housekeepingCyclesSinceDateUpdated = GetHousekeepingCyclesSince(user.DateUpdated.Value);
+
+            if(housekeepingCyclesSinceDateUpdated < Configuration.HardDeleteAccountAfterCycles) return false;
+
+            var candidateUser = new {User = user, Candidate = candidate};
+
+            _auditRepository.Audit(candidateUser, AuditEventTypes.HardDeleteCandidateUser, user.EntityId);
+
+            //This isn't transactional however the code can cope with a missing candidate and so will self heal over time in the unlikely event of partial failure
+            if (candidate != null)
             {
-                var candidateUser = new {User = user, Candidate = candidate};
+                _logService.Info("Hard deleting Candidate: {0}", candidate.EntityId);
 
-                _auditRepository.Audit(candidateUser, AuditEventTypes.HardDeleteCandidateUser, user.EntityId);
+                _candidateWriteRepository.Delete(candidate.EntityId);
 
-                //This isn't transactional however the code can cope with a missing candidate and so will self heal over time in the unlikely event of partial failure
-                if (candidate != null)
-                {
-                    _logService.Info("Hard deleting Candidate: {0}", candidate.EntityId);
-
-                    _candidateWriteRepository.Delete(candidate.EntityId);
-
-                    _logService.Info("Hard deleted Candidate: {0}", candidate.EntityId);
-                }
-
-                _logService.Info("Hard deleting User: {0}", user.EntityId);
-
-                _userWriteRepository.Delete(user.EntityId);
-
-                _logService.Info("Hard deleted User: {0}", user.EntityId);
-
-                return true;
+                _logService.Info("Hard deleted Candidate: {0}", candidate.EntityId);
             }
 
-            return false;
+            _logService.Info("Hard deleting User: {0}", user.EntityId);
+
+            _userWriteRepository.Delete(user.EntityId);
+
+            _logService.Info("Hard deleted User: {0}", user.EntityId);
+
+            return true;
         }
     }
 }

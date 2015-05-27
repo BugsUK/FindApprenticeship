@@ -10,6 +10,7 @@
         private UserStatuses _userStatus;
         private string _activationCode;
         private DateTime? _activateCodeExpiry;
+        private DateTime _dateUpdated;
 
         public UserBuilder(Guid userId)
         {
@@ -22,6 +23,7 @@
             var user = new User
             {
                 DateCreated = _dateCreated,
+                DateUpdated = _dateUpdated,
                 EntityId = _userId,
                 Status = _userStatus,
                 ActivationCode = _activationCode,
@@ -48,6 +50,12 @@
             _userStatus = activated ? UserStatuses.Active : UserStatuses.PendingActivation;
             _activationCode = activated ? null : "ABC123";
             _activateCodeExpiry = activated ? (DateTime?)null : _dateCreated.AddDays(30).AddMinutes(-30);
+            return this;
+        }
+
+        public UserBuilder WithDateUpdated(DateTime dateUpdated)
+        {
+            _dateUpdated = dateUpdated;
             return this;
         }
     }
