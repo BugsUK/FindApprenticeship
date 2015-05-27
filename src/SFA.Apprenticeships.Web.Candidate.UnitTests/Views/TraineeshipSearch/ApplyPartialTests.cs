@@ -106,7 +106,7 @@
         }
 
         [Test]
-        public void ShouldShowDateAppliedForApplication()
+        public void ShouldShowDateAppliedIfCandidateHasSubmittedApplication()
         {
             // Arrange.
             var index = new Apply();
@@ -122,6 +122,29 @@
 
             // Assert.
             view.GetElementbyId("date-applied").Should().NotBeNull();
+        }
+
+        [Test]
+        public void ShouldShowViewApplicationLinkIfCandidateHasSubmittedApplication()
+        {
+            // Arrange.
+            var index = new Apply();
+            var vm = new TraineeshipVacancyDetailViewModel
+            {
+                Id = 42,
+                CandidateApplicationStatus = ApplicationStatuses.Submitted,
+                DateApplied = DateTime.Today.AddDays(-1)
+            };
+
+            // Act.
+            var httpContext = CreateMockContext(true);
+            var view = index.RenderAsHtml(httpContext, vm);
+
+            // Assert.
+            var element = view.GetElementbyId("view-application-link");
+
+            element.Should().NotBeNull();
+            element.OuterHtml.Should().Contain("traineeship/view/" + vm.Id);
         }
 
         [Test]

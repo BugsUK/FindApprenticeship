@@ -24,6 +24,7 @@ else if (Request.IsAuthenticated)
     if (Model.DateApplied.HasValue)
     {
         <p id="date-applied" class="no-btm-margin">You applied on @Html.DisplayFor(m => m.DateApplied, "Date").</p>
+        <p>@Html.RouteLink("View application", CandidateRouteNames.TraineeshipView, new { id = Model.Id }, new { @id = "view-application-link" })</p>
     }
     else if (Model.VacancyStatus == VacancyStatuses.Live)
     {
