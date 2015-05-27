@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.ActivationReminder
 {
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;

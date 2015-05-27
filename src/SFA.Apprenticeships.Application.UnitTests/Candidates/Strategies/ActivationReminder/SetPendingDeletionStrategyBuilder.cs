@@ -1,13 +1,14 @@
-﻿using Moq;
-using SFA.Apprenticeships.Application.Candidates.Configuration;
-using SFA.Apprenticeships.Application.Candidates.Strategies;
-using SFA.Apprenticeships.Application.Interfaces.Logging;
-using SFA.Apprenticeships.Application.UnitTests.Candidates.Configuration;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-using SFA.Apprenticeships.Domain.Interfaces.Repositories;
-
-namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.ActivationReminder
 {
+    using Application.Candidates.Configuration;
+    using Application.Candidates.Strategies;
+    using Application.Candidates.Strategies.ActivationReminder;
+    using Configuration;
+    using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Repositories;
+    using Interfaces.Logging;
+    using Moq;
+
     public class SetPendingDeletionStrategyBuilder
     {
         private Mock<IConfigurationService> _configurationService;

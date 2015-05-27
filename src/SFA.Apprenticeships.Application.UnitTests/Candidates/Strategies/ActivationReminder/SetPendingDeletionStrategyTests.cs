@@ -1,12 +1,12 @@
-﻿using System;
-using Moq;
-using NUnit.Framework;
-using SFA.Apprenticeships.Application.Candidates.Strategies;
-using SFA.Apprenticeships.Domain.Entities.UnitTests.Builder;
-using SFA.Apprenticeships.Domain.Interfaces.Repositories;
-
-namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.ActivationReminder
 {
+    using System;
+    using Application.Candidates.Strategies;
+    using Domain.Entities.UnitTests.Builder;
+    using Domain.Interfaces.Repositories;
+    using Moq;
+    using NUnit.Framework;
+
     [TestFixture]
     public class SetPendingDeletionStrategyTests
     {

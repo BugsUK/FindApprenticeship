@@ -1,15 +1,14 @@
-﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.ActivationReminder
 {
-    using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Interfaces.Communications;
     using Interfaces.Logging;
 
-    public class SendAccountRemindersStrategyB : SendAccountRemindersStrategy
+    public class SendAccountRemindersStrategyA : SendAccountRemindersStrategy
     {
-        public SendAccountRemindersStrategyB(IConfigurationService configurationService, ICommunicationService communicationService, ILogService logService)
+        public SendAccountRemindersStrategyA(IConfigurationService configurationService, ICommunicationService communicationService, ILogService logService)
             : base(configurationService, communicationService, logService)
         {
         }
@@ -19,31 +18,30 @@
             if (user == null || candidate == null) return false;
 
             //Only handle 50% of the users based on date of birth
-            if (candidate.RegistrationDetails.DateOfBirth.Day%2 == 1) return false;
+            if (candidate.RegistrationDetails.DateOfBirth.Day%2 == 0) return false;
 
             if (user.Status != UserStatuses.PendingActivation) return false;
 
             var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSince(user.DateCreated);
 
-            var configuration = Configuration.ActivationReminderStrategy.SendAccountReminderStrategyB;
+            var configuration = Configuration.ActivationReminderStrategy.SendAccountReminderStrategyA;
 
             //Only remind if enough time has passed and not due for deletion
-            if (housekeepingCyclesSinceCreation < configuration.SendAccountReminderAfterCycles
+            if (housekeepingCyclesSinceCreation < configuration.SendAccountReminderOneAfterCycles
                 || housekeepingCyclesSinceCreation >= Configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles)
             {
                 return false;
             }
 
             //Remind on the first cycle
-            if (housekeepingCyclesSinceCreation == configuration.SendAccountReminderAfterCycles)
+            if (housekeepingCyclesSinceCreation == configuration.SendAccountReminderOneAfterCycles)
             {
                 SendAccountReminder(user, candidate);
                 return true;
             }
 
-            //Then every X cycles after that
-            if ((housekeepingCyclesSinceCreation - configuration.SendAccountReminderAfterCycles) %
-                configuration.SendAccountReminderEveryCycles == 0)
+            //Remind on the second cycle
+            if (housekeepingCyclesSinceCreation == configuration.SendAccountReminderTwoAfterCycles)
             {
                 SendAccountReminder(user, candidate);
                 return true;

@@ -3,6 +3,7 @@
     using Application.Applications;
     using Application.Applications.Strategies;
     using Application.Candidates.Strategies;
+    using Application.Candidates.Strategies.ActivationReminder;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Interfaces.Communications;

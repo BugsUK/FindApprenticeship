@@ -1,7 +1,8 @@
-﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.ActivationReminder
 {
     using Application.Candidates.Configuration;
     using Application.Candidates.Strategies;
+    using Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
     using Domain.Interfaces.Configuration;
     using Interfaces.Communications;
