@@ -26,13 +26,6 @@
 
             var configuration = Configuration.ActivationReminderStrategy.SendAccountReminderStrategyA;
 
-            //Only remind if enough time has passed and not due for deletion
-            if (housekeepingCyclesSinceCreation < configuration.SendAccountReminderOneAfterCycles
-                || housekeepingCyclesSinceCreation >= Configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles)
-            {
-                return false;
-            }
-
             //Remind on the first cycle
             if (housekeepingCyclesSinceCreation == configuration.SendAccountReminderOneAfterCycles)
             {

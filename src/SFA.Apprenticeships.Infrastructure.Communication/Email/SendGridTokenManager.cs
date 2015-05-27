@@ -90,6 +90,12 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.CandidateSubscriptionType:
                     emailTemplateToken = "Candidate.SubscriptionType";
                     break;
+                case CommunicationTokens.LastLogin:
+                    emailTemplateToken = "Candidate.LastLogin";
+                    break;
+                case CommunicationTokens.AccountExpiryDate:
+                    emailTemplateToken = "Candidate.AccountExpiryDate";
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException("key", key, string.Format("Unknown communication token '{0}'.", key));
             }

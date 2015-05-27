@@ -32,6 +32,8 @@
         UserPendingUsernameCode = 27,
         CandidateSiteDomainName = 28,
         CandidateSubscriberId = 29,
-        CandidateSubscriptionType = 30
+        CandidateSubscriptionType = 30,
+        LastLogin = 31,
+        AccountExpiryDate = 32
     }
 }

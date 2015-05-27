@@ -90,7 +90,7 @@
     <Compile Include="Entities\CandidateHousekeeping.cs" />
     <Compile Include="ICandidateProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\DormantAccount\SendAccountReminderStrategy.cs" />
+    <Compile Include="Strategies\DormantAccount\SendAccountRemindersStrategy.cs" />
     <Compile Include="Strategies\DormantAccount\SetPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\HardDeleteStrategy.cs" />
     <Compile Include="Strategies\HousekeepingStrategy.cs" />
