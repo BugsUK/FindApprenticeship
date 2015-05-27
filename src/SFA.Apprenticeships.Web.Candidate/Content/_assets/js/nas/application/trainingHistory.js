@@ -14,7 +14,6 @@
         toMonthRequired: "Please enter month you finished",
         toYearRequired: "Please enter year finished",
         toYearMustBeNumeric: "Year finished must contain 4 digits, eg 1990",
-        toYearMustNotBeInFuture: "Year finished can't be in the future",
         toYearMustBeAfterFromYear: 'Year finished must be after year started',
         yearMustBeAfter: "Year must be 4 digits, and not before 1915",
         dateFinishedMustBeAfterDateStarted: "Date finished must be after date started"
@@ -88,11 +87,6 @@
             min: {
                 message: trainingHistoryMessages.yearMustBeAfter,
                 params: new Date().getFullYear() - 100
-            }
-        }).extend({
-            max: {
-                message: trainingHistoryMessages.toYearMustNotBeInFuture,
-                params: self.itemCurrentYear
             }
         }).extend({
             validation: {
@@ -226,11 +220,6 @@
             required: { message: trainingHistoryMessages.toYearRequired }
         }).extend({
             number: { message: trainingHistoryMessages.toYearMustBeNumeric }
-        }).extend({
-            max: {
-                message: trainingHistoryMessages.toYearMustNotBeInFuture,
-                params: self.currentYear
-            }
         }).extend({
             min: {
                 message: trainingHistoryMessages.yearMustBeAfter,

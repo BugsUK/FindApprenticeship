@@ -847,11 +847,6 @@
                 params: new Date().getFullYear() - 100
             }
         }).extend({
-            max: {
-                message: validationMessageToYearMustNotBeInFuture,
-                params: self.itemCurrentYear
-            }
-        }).extend({
             validation: {
                 validator: function(val, fromYearValue) {
                     return val >= fromYearValue;
@@ -979,11 +974,6 @@
             required: { message: validationMessageToYearRequired }
         }).extend({
             number: { message: validationMessageToYearMustBeNumeric }
-        }).extend({
-            max: {
-                message: validationMessageToYearMustNotBeInFuture,
-                params: self.currentYear
-            }
         }).extend({
             min: {
                 message: validationMessageYearMustBeAfter,

@@ -27,6 +27,7 @@
                 .WithMessage(TrainingHistoryViewModelMessages.CourseTitleMessages.WhiteListErrorText);
 
             var maxYear = Convert.ToString(DateTime.Now.Year - 100);
+
             RuleFor(x => x.FromYear)
                 .NotEmpty()
                 .WithMessage(TrainingHistoryViewModelMessages.FromYearMessages.RequiredErrorText)
@@ -40,8 +41,6 @@
             RuleFor(x => x.ToYear)
                 .Matches(TrainingHistoryViewModelMessages.ToYearMessages.WhiteListRegularExpression)
                 .WithMessage(TrainingHistoryViewModelMessages.ToYearMessages.WhiteListErrorText)
-                .Must(ValidatorsHelper.BeNowOrInThePast)
-                .WithMessage(TrainingHistoryViewModelMessages.ToYearMessages.CanNotBeInTheFutureErrorText)
                 .GreaterThanOrEqualTo(maxYear)
                 .WithMessage(TrainingHistoryViewModelMessages.FromYearMessages.MustBeGreaterThan(maxYear))
                 .Must(ValidatorsHelper.TrainingYearBeBeforeOrEqual)

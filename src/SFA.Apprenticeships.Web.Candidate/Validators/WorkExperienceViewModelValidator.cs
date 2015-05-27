@@ -35,6 +35,7 @@
                 .WithMessage(WorkExperienceViewModelMessages.JobTitleMessages.WhiteListErrorText);
 
             var maxYear = Convert.ToString(DateTime.Now.Year - 100);
+
             RuleFor(x => x.FromYear)
                 .NotEmpty()
                 .WithMessage(WorkExperienceViewModelMessages.FromYearMessages.RequiredErrorText)
