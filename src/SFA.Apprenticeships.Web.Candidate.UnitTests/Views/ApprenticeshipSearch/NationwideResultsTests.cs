@@ -31,7 +31,7 @@
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
-                    .Contain("We've also found <a id='nationwideLocationTypeLink'")
+                    .Contain("We've also found <a id='nationwideLocationTypeLink' class='update-results'")
                     .And.Contain("3 apprenticeships with positions across England</a>.");
         }
 
@@ -52,7 +52,7 @@
 
             view.GetElementbyId("result-message")
                     .InnerHtml.Should()
-                    .Contain("We've found <b class=\"bold-medium\">2</b> <a id='localLocationTypeLink' href=")
+                    .Contain("We've found <b class=\"bold-medium\">2</b> <a id='localLocationTypeLink' class='update-results' href=")
                     .And.Contain("apprenticeships in your selected area</a>.");
 
             view.GetElementbyId("national-results-message")
@@ -81,7 +81,7 @@
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
-                    .Contain("We've also found <a id='nationwideLocationTypeLink'")
+                    .Contain("We've also found <a id='nationwideLocationTypeLink' class='update-results'")
                     .And.Contain("2 apprenticeships with positions across England</a>.");
         }
 
@@ -102,7 +102,7 @@
 
             view.GetElementbyId("result-message")
                     .InnerHtml.Should()
-                    .Contain("We've found <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' href=")
+                    .Contain("We've found <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' class='update-results' href=")
                     .And.Contain("apprenticeship in your selected area</a>.");
 
             view.GetElementbyId("national-results-message")
@@ -130,7 +130,7 @@
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
-                    .Contain("We've found <a id='nationwideLocationTypeLink'")
+                    .Contain("We've found <a id='nationwideLocationTypeLink' class='update-results'")
                     .And.Contain("2 apprenticeships with positions across England</a>.");
         }
 
@@ -178,7 +178,7 @@
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
-                    .Contain("We've also found <a id='nationwideLocationTypeLink'")
+                    .Contain("We've also found <a id='nationwideLocationTypeLink' class='update-results'")
                     .And.Contain("1 apprenticeship with positions across England</a>.");
         }
 
@@ -199,7 +199,7 @@
 
             view.GetElementbyId("result-message")
                     .InnerHtml.Should()
-                    .Contain("We've found <b class=\"bold-medium\">3</b> <a id='localLocationTypeLink' href=")
+                    .Contain("We've found <b class=\"bold-medium\">3</b> <a id='localLocationTypeLink' class='update-results' href=")
                     .And.Contain("apprenticeships in your selected area</a>.");
 
             view.GetElementbyId("national-results-message")
@@ -247,7 +247,7 @@
 
             view.GetElementbyId("result-message")
                     .InnerHtml.Should()
-                    .Contain("We've found <b class=\"bold-medium\">3</b> <a id='localLocationTypeLink' href=")
+                    .Contain("We've found <b class=\"bold-medium\">3</b> <a id='localLocationTypeLink' class='update-results' href=")
                     .And.Contain("apprenticeships in your selected area</a>.");
 
             view.GetElementbyId("national-results-message")

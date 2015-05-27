@@ -9,6 +9,7 @@
     ViewBag.Title = "Results - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
+    //Any copy changes here also need reflected in the resultsSearch.js file.
     var locationTypeLink = Model.VacancySearch.LocationType == ApprenticeshipLocationType.National 
             ? Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, new ApprenticeshipSearchViewModel(Model.VacancySearch) {LocationType = ApprenticeshipLocationType.NonNational, SearchAction = SearchAction.LocationTypeChanged, PageNumber = 1}) 
             : Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, new ApprenticeshipSearchViewModel(Model.VacancySearch) {LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, SortType = VacancySearchSortType.Distance, PageNumber = 1});
@@ -24,7 +25,7 @@
     {
         if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.National)
         {
-            resultMessage = "We've found <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">apprenticeship in your selected area</a>.";
+            resultMessage = "We've found <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' class='update-results' href=" + locationTypeLink + ">apprenticeship in your selected area</a>.";
         }
         else
         {
@@ -35,7 +36,7 @@
     {
         if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.National)
         {
-            var message = "We've found <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' href=" + locationTypeLink + ">apprenticeships in your selected area</a>.";
+            var message = "We've found <b class=\"bold-medium\">{0}</b> <a id='localLocationTypeLink' class='update-results' href=" + locationTypeLink + ">apprenticeships in your selected area</a>.";
             resultMessage = string.Format(message, Model.TotalLocalHits);
         }
         else
@@ -57,7 +58,7 @@
 
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' href={0}>1 apprenticeship with positions across England</a>.", locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' class='update-results' href={0}>1 apprenticeship with positions across England</a>.", locationTypeLink, nationalResultsMessagePrefix);
             }
             else
             {
@@ -68,7 +69,7 @@
         {
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' href={1}>{0} apprenticeships with positions across England</a>.", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' class='update-results' href={1}>{0} apprenticeships with positions across England</a>.", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
             }
             else
             {
@@ -89,7 +90,7 @@
         <h1 class="heading-xlarge">Search results</h1>
         <div id="vacancy-result-summary">
             <p id="result-message" class="small-btm-margin">@Html.Raw(resultMessage)</p>
-            <p id="national-results-message">@Html.Raw(nationalResultsMessage)</p>
+            <p id="national-results-message" class="">@Html.Raw(nationalResultsMessage)</p>
             @if (!string.IsNullOrEmpty(Model.VacancySearch.Location))
             {
                 <p class="small-btm-margin">
@@ -107,48 +108,9 @@
         Html.RenderPartial("_searchUpdate", Model.VacancySearch);
 
         <section class="grid grid-2-3">
-            @{
-                if (Model.TotalLocalHits == 0 && Model.TotalNationalHits == 0)
-                {
-                    <p id="search-no-results-title">There are currently no apprenticeships that match your search.</p>
-                    <p>Try editing your search:</p>
-                    <ul id="search-no-results">
-                        @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Keyword)
-                        {
-                            if (VacancyHelper.IsVacancyReference(Model.VacancySearch.Keywords))
-                            {
-                                <li id="search-no-results-reference-number">try a different reference number</li>
-                            }
-                            else
-                            {
-                                <li id="search-no-results-keywords">using different keywords</li>
-                            }
-                        }
-                        @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
-                        {
-                            if (Model.VacancySearch.SubCategories == null || Model.VacancySearch.SubCategories.Length == 0)
-                            {
-                                <li id="search-no-results-category">try a different category</li>
-                            }
-                            else
-                            {
-                                <li id="search-no-results-sub-category">select a different sub-category or sub-categories</li>
-                            }
-                        }
-                        <li>expanding your search location</li>
-                        @if (Model.VacancySearch.ApprenticeshipLevel != "All")
-                        {
-                            <li id="search-no-results-apprenticeship-levels">using a different level, or change to all levels</li>
-                        }
-                    </ul>
-                }
-                else
-                {
-                    <div id="pagedList">
-                        @{ Html.RenderPartial("_searchResults", Model); }
-                    </div>
-                }
-            }
+            <div id="pagedList">
+                @{ Html.RenderPartial("_searchResults", Model); }
+            </div>
         </section>
     }
 </div>

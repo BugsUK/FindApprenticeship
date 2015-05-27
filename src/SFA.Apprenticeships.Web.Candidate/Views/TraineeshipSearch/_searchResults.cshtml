@@ -1,13 +1,18 @@
 ﻿@model TraineeshipSearchResponseViewModel
 
-@if (Model.TotalHits > 0 )
+@if (Model.TotalHits == 0)
+{
+    <p id="search-no-results-title">There are currently no traineeships that match your search.</p>
+    <p>Try a different location, or expanding your search to 40 miles</p>
+}
+else
 {
     <fieldset>
         <legend class="visuallyhidden">Search items</legend>
         <div class="float-right-wrap">
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" })
+                @Html.DropDownList("sortType", Model.SortTypes, new {@id = "sort-results"})
                 <noscript>
                     <button class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
                 </noscript>
@@ -15,73 +20,78 @@
             </div>
         </div>
     </fieldset>
-}
-<ul class="search-results">
-    @if (Model.Vacancies != null)
-    {
-        var itemPosition = 1 + (Model.PageSize * Model.PrevPage);
-        foreach (var vacancy in Model.Vacancies)
+
+    <ul class="search-results">
+        @if (Model.Vacancies != null)
         {
-            var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Traineeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
-            <li class="search-results__item section-border">
-                <div class="hgroup-medium">
-                    <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
-                    <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
-                </div>
-                <p>@vacancy.Description</p>
-                <div class="grid-wrapper">
-                    <div class="grid grid-2-3">
-                        <ul class="list-text no-btm-margin">
-                            <li>
-                                <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<span class="summary-style fake-link hide-nojs journey-trigger">Journey time</span>
-                                <div class="detail-content toggle-content hide-nojs">
-                                    <select class="select-mode" name="">
-                                        <option value="DRIVING">Driving</option>
-                                        <option value="TRANSIT">Bus/Train</option>
-                                        <option value="WALKING">Walking</option>
-                                        <option value="BICYCLING">Cycling</option>
-                                    </select>
+            var itemPosition = 1 + (Model.PageSize * Model.PrevPage);
+            foreach (var vacancy in Model.Vacancies)
+            {
+                var webTrendItemPositionTracker = "Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/results/itemposition/" + vacancy.Id + "', 'WT.dl', '99', 'WT.ti', 'Traineeships Search – Item Position Clicked', 'DCSext.ipos', '" + itemPosition + "'] })";
+                <li class="search-results__item section-border">
+                    <div class="hgroup-medium">
+                        <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
+                        <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
+                    </div>
+                    <p>@vacancy.Description</p>
+                    <div class="grid-wrapper">
+                        <div class="grid grid-2-3">
+                            <ul class="list-text no-btm-margin">
+                                <li>
+                                    <b>Distance:</b> <span class="distance-value">@vacancy.DistanceAsString</span> miles<span class="summary-style fake-link hide-nojs journey-trigger">Journey time</span>
+                                    <div class="detail-content toggle-content hide-nojs">
+                                        <select class="select-mode" name="">
+                                            <option value="DRIVING">Driving</option>
+                                            <option value="TRANSIT">Bus/Train</option>
+                                            <option value="WALKING">Walking</option>
+                                            <option value="BICYCLING">Cycling</option>
+                                        </select>
 
-                                    <span class="journey-time"></span>
-                                </div>
-                            </li>
-                            <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
-                            <li><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
-                        </ul>
+                                        <span class="journey-time"></span>
+                                    </div>
+                                </li>
+                                <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
+                                <li><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
+                            </ul>
+                        </div>
+                        <div class="hide-tablet">
+                            <span style="margin-left: 0;" class="summary-style fake-link mob-map-trigger map-closed">Show/hide map</span>
+                        </div>
+                        <div class="grid grid-1-3 map-container hide-nojs small-btm-margin toggle-content--mob">
+                            <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
+                            <div class="map"></div>
+                        </div>
                     </div>
-                    <div class="hide-tablet">
-                        <span style="margin-left: 0;" class="summary-style fake-link mob-map-trigger map-closed">Show/hide map</span>
-                    </div>
-                    <div class="grid grid-1-3 map-container hide-nojs small-btm-margin toggle-content--mob">
-                        <a href="https://www.google.com/maps/dir/LocationLatLon/'@vacancy.Location.Latitude,@vacancy.Location.Longitude'" target="_blank" rel="external" class="map-links fake-link font-xxsmall view-googlemaps">Open map</a>
-                        <div class="map"></div>
-                    </div>
-                </div>
-            </li>
-            itemPosition++;
+                </li>
+                itemPosition++;
+            }
         }
+    </ul>
+
+    Html.RenderPartial("_pagination", Model);
+
+    if (Model.TotalHits > 5)
+    {
+        <div class="form-group">
+            <label for="results-per-page" class="heading-small inline">Display results</label>
+            @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
+            <noscript>
+                <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
+            </noscript>
+        </div>
     }
-</ul>
-
-@{ Html.RenderPartial("_pagination", Model); }
-
-@if (Model.TotalHits > 5)
-{
-    <div class="form-group">
-        <label for="results-per-page" class="heading-small inline">Display results</label>
-        @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new {@id = "results-per-page"})
-        <noscript>
-            <button class="button show-nojs" name="ChangeResultsPerPageAction" value="ResultsPerPage">View</button>
-        </noscript>
-    </div>
 }
 
 @{
-    if (Request.IsAjaxRequest() && Model.LocationSearches.Any())
+    if (Request.IsAjaxRequest())
     {
         <script>
-    var suggestedLocations = @Html.Raw(Json.Encode(Model.LocationSearches.ToList().Select(s => new { Href = @Url.Action("results"), Text = s.Location})))
-            $(document).trigger("suggestedLocationsUpdated", { locations: suggestedLocations, location: "@(Model.VacancySearch.Location)" });
+            @if (Model.LocationSearches.Any())
+            {
+                @:var suggestedLocations = @Html.Raw(Json.Encode(Model.LocationSearches.ToList().Select(s => new {Href = @Url.Action("results"), Text = s.Location})));
+                @:$(document).trigger("suggestedLocationsUpdated", { locations: suggestedLocations, location: "@(Model.VacancySearch.Location)" });
+            }
+            $("#total-hits-count").html("@(Model.TotalHits)");
         </script>
     }
 }

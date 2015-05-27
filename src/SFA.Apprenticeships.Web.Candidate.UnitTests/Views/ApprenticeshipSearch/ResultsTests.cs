@@ -14,7 +14,7 @@
         [Test]
         public void Category_NoResults()
         {
-            var results = new Results();
+            var results = new searchResults();
 
             var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category, false).ViewModel;
             searchViewModel.Category = "1";
@@ -29,7 +29,7 @@
         [Test]
         public void SubCategory_NoResults()
         {
-            var results = new Results();
+            var results = new searchResults();
 
             var searchViewModel = Mediator.Index(null, ApprenticeshipSearchMode.Category, false).ViewModel;
             searchViewModel.Category = "1";
@@ -45,7 +45,7 @@
         [Test]
         public void NoResults()
         {
-            var results = new Results();
+            var results = new searchResults();
 
             var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
             {
@@ -59,7 +59,7 @@
         [Test]
         public void ShowApprenticeshipLevelAdvice()
         {
-            var results = new Results();
+            var results = new searchResults();
 
             var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
             {
@@ -91,7 +91,7 @@
         [Test]
         public void ShowNoResultsReferenceNumber()
         {
-            var results = new Results();
+            var results = new searchResults();
 
             var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
             {
@@ -109,7 +109,7 @@
         [Test]
         public void ShowNoResultsKeywords()
         {
-            var results = new Results();
+            var results = new searchResults();
 
             var view = results.RenderAsHtml(new ApprenticeshipSearchResponseViewModel
             {

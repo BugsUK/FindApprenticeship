@@ -25,7 +25,9 @@ $(function () {
         this.resultItem.resultMap = this;
         this.container = resultItem.find(".map-container");
         this.map = resultItem.find(".map");
-        this.map[0].resultMap = this;
+        if (this.map && this.map.length) {
+            this.map[0].resultMap = this;
+        }
         this.link = resultItem.find('.vacancy-link');
         this.title = this.link.html();
         this.vacancyId = this.link.attr('data-vacancy-id');
@@ -41,7 +43,9 @@ $(function () {
 
         //TODO: perhaps replace server side
         var mapLinkHref = resultItem.find(".map-links:first");
-        mapLinkHref.attr("href", mapLinkHref.attr("href").replace('LocationLatLon', theLatLon));
+        if (mapLinkHref.attr("href")) {
+            mapLinkHref.attr("href", mapLinkHref.attr("href").replace('LocationLatLon', theLatLon));
+        }
 
         resultItem.mouseover(function () {
             if (this.resultMap != null && this.resultMap.marker != null) {
@@ -131,7 +135,7 @@ $(function () {
         }
         
         if (apprMiles > 0 && $('#LocationType').val() == 'National') {
-            map.fitBounds(radiusBounds);
+            summaryMap.fitBounds(radiusBounds);
         }
     }
 

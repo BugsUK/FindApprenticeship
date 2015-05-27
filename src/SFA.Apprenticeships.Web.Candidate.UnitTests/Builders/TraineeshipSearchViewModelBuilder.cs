@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
+    using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
     using Candidate.ViewModels.VacancySearch;
 
@@ -12,6 +13,7 @@
             var viewModel = new TraineeshipSearchViewModel
             {
                 SortType = _sortType,
+                SortTypes = new SelectList(new string[0])
             };
 
             return viewModel;

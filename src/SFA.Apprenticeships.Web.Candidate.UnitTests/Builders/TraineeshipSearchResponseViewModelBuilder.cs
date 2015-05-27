@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
     using System.Linq;
+    using System.Web.Mvc;
     using Candidate.ViewModels.VacancySearch;
     using Ploeh.AutoFixture;
 
@@ -36,7 +37,8 @@
             var viewModel = new TraineeshipSearchResponseViewModel
             {
                 VacancySearch = _vacancySearchViewModel,
-                Vacancies = vacancies
+                Vacancies = vacancies,
+                TotalHits = _totalHits,
             };
 
             return viewModel;
