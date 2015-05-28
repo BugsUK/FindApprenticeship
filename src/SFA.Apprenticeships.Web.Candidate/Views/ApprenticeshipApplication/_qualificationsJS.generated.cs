@@ -77,6 +77,8 @@ WriteLiteral(">Do you have any qualifications?</p>\r\n        <p");
 
 WriteLiteral(" class=\"form-hint text\"");
 
+WriteLiteral(" id=\"appTourQuals\"");
+
 WriteLiteral(">\r\n            If you don\'t know your results yet, enter your predicted grades. T" +
 "hese are grades your teacher expects you to get.\r\n        </p>\r\n        <div");
 

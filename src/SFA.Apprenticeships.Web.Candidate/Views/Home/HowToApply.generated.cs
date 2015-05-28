@@ -95,24 +95,6 @@ WriteLiteral(" class=\"hide-tablet\"");
 
 WriteLiteral("> of 3</span>.\r\n            Submitted\r\n        </li>\r\n    </ul>\r\n</div>\r\n<div");
 
-WriteLiteral(" id=\"savedInfo\"");
-
-WriteLiteral(" class=\"toggle-content panel-info\"");
-
-WriteLiteral(">\r\n    <p");
-
-WriteLiteral(" class=\"autosave\"");
-
-WriteLiteral(" id=\"applicationSavedTopMessage\"");
-
-WriteLiteral(">\r\n        Last saved at 12:00 on 12th Oct 2014 to <a");
-
-WriteLiteral(" href=\"dashboard.html\"");
-
-WriteLiteral(" title=\"My Applications\"");
-
-WriteLiteral(">my applications</a>\r\n    </p>\r\n</div>\r\n<div");
-
 WriteLiteral(" class=\"grid-wrapper\"");
 
 WriteLiteral(">\r\n    <div");
@@ -129,9 +111,7 @@ WriteLiteral(">Application form</h1>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"grid grid-1-3\"");
 
-WriteLiteral(@">
-        <!-- <a class=""page-link"" href=""https://nationalcareersservice.direct.gov.uk/advice/courses/typesoflearning/Pages/apprenticeship-application-help.aspx"" rel=""external"" target=""_blank"">Help with your apprenticeship application</a> -->
-        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"page-link\"");
 
@@ -145,13 +125,8 @@ WriteLiteral("><i");
 
 WriteLiteral(" class=\"fa fa-question-circle\"");
 
-WriteLiteral("></i>How to apply for an apprenticeship</a>\r\n            <div");
-
-WriteLiteral(" class=\"inl-block\"");
-
-WriteLiteral(">(interactive walkthrough)</div>\r\n            <!-- <p>\r\n                <a href=\"" +
-"\"><i class=\"fa fa-print\"></i>Print this page</a>\r\n            </p> -->\r\n        " +
-"</div>\r\n    </div>\r\n</div>\r\n<section");
+WriteLiteral("></i>How to apply for an apprenticeship</a>\r\n            <p>(interactive walkthro" +
+"ugh)</p>\r\n        </div>\r\n    </div>\r\n</div>\r\n<section");
 
 WriteLiteral(" class=\"section-border\"");
 
@@ -3994,23 +3969,6 @@ WriteLiteral(@">
     </li>
     <li");
 
-WriteLiteral(" data-id=\"appTourFew\"");
-
-WriteLiteral(">\r\n        <div");
-
-WriteLiteral(" aria-live=\"polite\"");
-
-WriteLiteral(@">
-            <p>
-                The Skills Funding Agency aims to make apprenticeships and traineeships
-                inclusive, by identifying and removing barriers. Telling us information
-                about yourself will help us do this and also to meet our obligations
-                under the Equality Act 2010.
-            </p>
-        </div>
-    </li>
-    <li");
-
 WriteLiteral(" data-id=\"applyPreviewBtn\"");
 
 WriteLiteral(">\r\n        <div");
@@ -4086,7 +4044,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 1301 "..\..\Views\Home\HowToApply.cshtml"
+            #line 1282 "..\..\Views\Home\HowToApply.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
@@ -4099,7 +4057,7 @@ WriteLiteral(@"
                 $('#appFormTour').joyride({
                     'autoStart': true,
                     'nextButton': true,
-                    'prevButton': true,
+                    'prev_button': true,
                     'tipAnimation': 'pop'
                 });
             }

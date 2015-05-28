@@ -77,6 +77,8 @@ WriteLiteral(">Do you have any work experience?</p>\r\n        <p");
 
 WriteLiteral(" class=\"form-hint text\"");
 
+WriteLiteral(" id=\"appTourWork\"");
+
 WriteLiteral(">\r\n            Please include any work, whether paid or voluntary\r\n        </p>\r\n" +
 "        <div");
 

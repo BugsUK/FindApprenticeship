@@ -19,23 +19,14 @@
         </li>
     </ul>
 </div>
-<div id="savedInfo" class="toggle-content panel-info">
-    <p class="autosave" id="applicationSavedTopMessage">
-        Last saved at 12:00 on 12th Oct 2014 to <a href="dashboard.html" title="My Applications">my applications</a>
-    </p>
-</div>
 <div class="grid-wrapper">
     <div class="grid grid-2-3">
         <h1 class="heading-xlarge" id="appTourStart">Application form</h1>
     </div>
     <div class="grid grid-1-3">
-        <!-- <a class="page-link" href="https://nationalcareersservice.direct.gov.uk/advice/courses/typesoflearning/Pages/apprenticeship-application-help.aspx" rel="external" target="_blank">Help with your apprenticeship application</a> -->
         <div class="page-link">
             <a href="#" id="runApplyTour"><i class="fa fa-question-circle"></i>How to apply for an apprenticeship</a>
-            <div class="inl-block">(interactive walkthrough)</div>
-            <!-- <p>
-                <a href=""><i class="fa fa-print"></i>Print this page</a>
-            </p> -->
+            <p>(interactive walkthrough)</p>
         </div>
     </div>
 </div>
@@ -1236,16 +1227,6 @@
             </p>
         </div>
     </li>
-    <li data-id="appTourFew">
-        <div aria-live="polite">
-            <p>
-                The Skills Funding Agency aims to make apprenticeships and traineeships
-                inclusive, by identifying and removing barriers. Telling us information
-                about yourself will help us do this and also to meet our obligations
-                under the Equality Act 2010.
-            </p>
-        </div>
-    </li>
     <li data-id="applyPreviewBtn">
         <div aria-live="polite">
             <p>
@@ -1305,7 +1286,7 @@
                 $('#appFormTour').joyride({
                     'autoStart': true,
                     'nextButton': true,
-                    'prevButton': true,
+                    'prev_button': true,
                     'tipAnimation': 'pop'
                 });
             }

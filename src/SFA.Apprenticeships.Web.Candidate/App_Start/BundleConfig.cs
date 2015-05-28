@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/underscore", "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js").Include(
                 "~/Content/_assets/js/vendor/underscore-1.7.0.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/joyride", "//cdnjs.cloudflare.com/ajax/libs/joyride/2.1.0/jquery.joyride.js").Include(
+            bundles.Add(new ScriptBundle("~/bundles/joyride").Include(
                 "~/Content/_assets/js/vendor/jquery.joyride.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/cookie", "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(

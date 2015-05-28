@@ -3,7 +3,7 @@
 @if (Model != null && (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1) || !string.IsNullOrWhiteSpace(Model.SupplementaryQuestion2)))
 {
     <fieldset id="applyEmployerQuestionAnswers">
-        <legend class="heading-large">Additional questions</legend>
+        <legend class="heading-large" id="appTourAdditional1">Additional questions</legend>
 
         @if (!string.IsNullOrWhiteSpace(Model.SupplementaryQuestion1))
         {
