@@ -22,13 +22,17 @@
         {
             var alerts = new ApplicationStatusAlertsBuilder().WithApplicationStatusAlerts(1, applicationStatus).Build();
             var emailRequest = new DailyDigestEmailRequestBuilder().WithApplicationStatusAlerts(alerts).Build();
+            
             List<SendGridMessageSubstitution> sendGridMessageSubstitutions;
+            
             var sendGridMessage = GetSendGridMessage(out sendGridMessageSubstitutions);
 
             var emailMessageFormatter = new EmailDailyDigestMessageFormatterBuilder().Build();
+            
             emailMessageFormatter.PopulateMessage(emailRequest, sendGridMessage.Object);
 
             var applicationStatusAlertTagSubstitution = sendGridMessageSubstitutions.Single(s => s.ReplacementTag == ApplicationStatusAlertTag);
+
             applicationStatusAlertTagSubstitution.SubstitutionValues.Count.Should().Be(1);
             applicationStatusAlertTagSubstitution.SubstitutionValues.Single().Should().Be(GetExpectedInfoSubstitution(alerts));
         }
