@@ -678,33 +678,49 @@ WriteLiteral("></i>How to search for an apprenticeship</a> <span");
 
 WriteLiteral(" class=\"inl-block\"");
 
-WriteLiteral(">(interactive walkthrough)</span></li>\r\n                        <li>\r\n           " +
-"                 <a");
-
-WriteLiteral(" href=\"https://www.gov.uk/apprenticeships-guide\"");
-
-WriteLiteral(" target=\"_blank\"");
-
-WriteLiteral(">About apprenticeships</a>\r\n                        </li>\r\n                    </" +
-"ul>\r\n                    <ul");
+WriteLiteral(">(interactive walkthrough)</span></li>\r\n                        \r\n               " +
+"     </ul>\r\n                    <ul");
 
 WriteLiteral(" class=\"list-text\"");
 
 WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
 "");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8451), Tuple.Create("\'", 8501)
+WriteAttribute("href", Tuple.Create(" href=\'", 8294), Tuple.Create("\'", 8344)
             
-            #line 126 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 8458), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+            #line 124 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+, Tuple.Create(Tuple.Create("", 8301), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 8458), false)
+, 8301), false)
 );
 
-WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    \r\n          " +
-"      </div>\r\n            </div>\r\n        </aside>\r\n    </div>\r\n</div>\r\n\r\n<ol");
+WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    <ul");
+
+WriteLiteral(" class=\"list-text\"");
+
+WriteLiteral(">\r\n                        <li>\r\n                            <a");
+
+WriteLiteral(" href=\"https://www.gov.uk/apprenticeships-guide\"");
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(">About apprenticeships</a>\r\n                        </li>\r\n                      " +
+"  <li>\r\n");
+
+WriteLiteral("                            ");
+
+            
+            #line 131 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+                       Write(Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        </li>\r\n                    </ul>\r\n                    \r" +
+"\n                </div>\r\n            </div>\r\n        </aside>\r\n    </div>\r\n</div" +
+">\r\n\r\n<ol");
 
 WriteLiteral(" id=\"firstSearchTour\"");
 
@@ -963,7 +979,7 @@ WriteLiteral("   \r\n");
 WriteLiteral("    ");
 
             
-            #line 217 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 223 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/locationsearch"));
 
             
@@ -972,7 +988,7 @@ Write(Scripts.Render("~/bundles/nas/locationsearch"));
 WriteLiteral("\r\n\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r\n            url: \'");
 
             
-            #line 221 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 227 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
              Write(Url.Action("location", "Location"));
 
             
@@ -981,7 +997,7 @@ WriteLiteral("\r\n\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r
 WriteLiteral("\',\r\n            longitude: \'#");
 
             
-            #line 222 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 228 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                      Write(Html.IdFor(m => m.Longitude));
 
             
@@ -990,7 +1006,7 @@ WriteLiteral("\',\r\n            longitude: \'#");
 WriteLiteral("\',\r\n            latitude: \'#");
 
             
-            #line 223 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 229 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                     Write(Html.IdFor(m => m.Latitude));
 
             
@@ -999,7 +1015,7 @@ WriteLiteral("\',\r\n            latitude: \'#");
 WriteLiteral("\',\r\n            latlonhash: \'#");
 
             
-            #line 224 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 230 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                       Write(Html.IdFor(m => m.Hash));
 
             
@@ -1026,7 +1042,7 @@ WriteLiteral(@"'
 WriteLiteral("    ");
 
             
-            #line 240 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 246 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/geoLocater"));
 
             
@@ -1037,7 +1053,7 @@ WriteLiteral("\r\n                                                \r\n");
 WriteLiteral("    ");
 
             
-            #line 242 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 248 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
@@ -1048,7 +1064,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 243 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 249 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/searchTour"));
 
             
@@ -1057,13 +1073,13 @@ Write(Scripts.Render("~/bundles/nas/searchTour"));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 245 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 251 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 245 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 251 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
      if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
     {
 
@@ -1088,7 +1104,7 @@ WriteLiteral(@"        <script>
 ");
 
             
-            #line 262 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 268 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
         
     }
 
