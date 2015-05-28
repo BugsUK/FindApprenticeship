@@ -10,9 +10,20 @@
     {
         private readonly IHousekeepingStrategy _strategy;
 
-        public HardDeleteHousekeeping(IConfigurationService configurationService, IUserWriteRepository userWriteRepository, ICandidateWriteRepository candidateWriteRepository, IAuditRepository auditRepository, ILogService logService)
+        public HardDeleteHousekeeping(IConfigurationService configurationService,
+            IUserWriteRepository userWriteRepository, IAuthenticationRepository authenticationRepository, ICandidateWriteRepository candidateWriteRepository,
+            ISavedSearchReadRepository savedSearchReadRepository,
+            ISavedSearchWriteRepository savedSearchWriteRepository,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
+            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
+            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
+            IAuditRepository auditRepository, ILogService logService)
         {
-            var hardDeleteStrategy = new HardDeleteStrategy(configurationService, userWriteRepository, candidateWriteRepository, auditRepository, logService);
+            var hardDeleteStrategy = new HardDeleteStrategy(configurationService, userWriteRepository, authenticationRepository,
+                candidateWriteRepository, savedSearchReadRepository, savedSearchWriteRepository, apprenticeshipApplicationReadRepository,
+                apprenticeshipApplicationWriteRepository, traineeshipApplicationReadRepository,
+                traineeshipApplicationWriteRepository, auditRepository, logService);
             var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
 
             hardDeleteStrategy.SetSuccessor(terminatingHousekeepingStrategy);

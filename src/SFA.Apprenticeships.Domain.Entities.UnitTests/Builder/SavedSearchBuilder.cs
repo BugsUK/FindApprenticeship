@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.UnitTests.Builder
 {
+    using System;
     using Entities.Candidates;
     using Entities.Vacancies.Apprenticeships;
 
@@ -23,6 +24,7 @@
         {
             var savedSearch = new SavedSearch
             {
+                EntityId = Guid.NewGuid(),
                 SearchMode = _searchMode,
                 Keywords = _keywords,
                 Location = _location,

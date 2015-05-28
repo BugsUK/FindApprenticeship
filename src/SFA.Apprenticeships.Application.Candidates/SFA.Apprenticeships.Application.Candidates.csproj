@@ -74,6 +74,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="SFA.Apprenticeships.Application.Candidate">
       <HintPath>..\SFA.Apprenticeships.Application.Candidate\bin\Dev\SFA.Apprenticeships.Application.Candidate.dll</HintPath>
     </Reference>
