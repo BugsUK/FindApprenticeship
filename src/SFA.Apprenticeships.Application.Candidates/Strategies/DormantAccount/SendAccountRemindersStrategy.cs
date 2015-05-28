@@ -32,43 +32,55 @@
 
             var configuration = Configuration.DormantAccountStrategy;
 
+            //Ensure accounts are set to dormant if cycle was missed
+            if (user.Status != UserStatuses.Dormant && housekeepingCyclesSinceLastLogin >= configuration.SendReminderAfterCycles)
+            {
+                SetAccountDormant(user, candidate);
+            }
+
             //Remind on the first cycle
             if (housekeepingCyclesSinceLastLogin == configuration.SendReminderAfterCycles)
             {
-                SetAccountDormant(user, candidate, configuration);
+                SendAccountReminder(user, candidate, configuration);
                 return true;
             }
 
             //Remind on the second cycle
             if (housekeepingCyclesSinceLastLogin == configuration.SendFinalReminderAfterCycles)
             {
-                SetAccountDormant(user, candidate, configuration);
+                SendAccountReminder(user, candidate, configuration);
                 return true;
             }
 
             return false;
         }
 
-        protected void SetAccountDormant(User user, Candidate candidate, DormantAccountStrategy configuration)
+        protected void SetAccountDormant(User user, Candidate candidate)
         {
             user.Status = UserStatuses.Dormant;
             _userWriteRepository.Save(user);
 
             candidate.DisableAllOptionalCommunications();
             _candidateWriteRepository.Save(candidate);
+        }
 
-            //TODO: Ensure successfull login removes dormancy
+        protected void SendAccountReminder(User user, Candidate candidate, DormantAccountStrategy configuration)
+        {
+            var lastLogin = user.GetLastLogin();
+            var lastLoginDelta = DateTime.UtcNow - lastLogin;
+            var lastLoginInCycles = lastLoginDelta.TotalHours / Configuration.HousekeepingCycleInHours;
+            var lastLoginInDays = lastLoginDelta.Days;
+            var lastLoginInDaysFormatted = lastLoginInCycles >= configuration.SendFinalReminderAfterCycles ? "almost a year" : string.Format("{0} days", lastLoginInDays);
 
-            var lastLogin = user.LastLogin ?? DateTime.UtcNow;
-            var lastLoginInDays = (DateTime.UtcNow - lastLogin).Days;
-            var lastLoginInDaysFormatted = lastLoginInDays >= configuration.SendFinalReminderAfterCycles ? "almost a year" : string.Format("{0} days", lastLoginInDays);
+            var pendingDeletionAfterHours = configuration.SetPendingDeletionAfterCycles*
+                                            Configuration.HousekeepingCycleInHours;
 
             _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendDormantAccountReminder,
                 new[]
                 {
                     new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
                     new CommunicationToken(CommunicationTokens.LastLogin, lastLoginInDaysFormatted),
-                    new CommunicationToken(CommunicationTokens.AccountExpiryDate, lastLogin.AddDays(configuration.SetPendingDeletionAfterCycles).ToLongDateString()),
+                    new CommunicationToken(CommunicationTokens.AccountExpiryDate, lastLogin.AddHours(pendingDeletionAfterHours).ToLongDateString()),
                     new CommunicationToken(CommunicationTokens.Username, candidate.RegistrationDetails.EmailAddress)
                 });
         }

@@ -25,6 +25,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Audit.IoC;
+    using Repositories.Authentication.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
@@ -118,6 +119,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                     y.AssemblyContainingType<IHousekeepingChainOfResponsibility>();
                     y.AddAllTypesOf<IHousekeepingChainOfResponsibility>();
                 });
+                x.AddRegistry<AuthenticationRepositoryRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();

@@ -69,15 +69,26 @@
             return userIds;
         }
 
-        public IEnumerable<Guid> GetPotentiallyDormantUsers(DateTime dormantAfterDateTime)
+        public IEnumerable<Guid> GetPotentiallyDormantUsers(DateTime lastValidLogin)
         {
             _logger.Debug("Calling repository to get all the users which could be dormant");
 
             var userStatuses = new[] {UserStatuses.Active, UserStatuses.Locked};
 
-            var userIds = Collection.AsQueryable().Where(u => userStatuses.Contains(u.Status) && !(u.LastLogin.HasValue || u.LastLogin <= dormantAfterDateTime)).Select(u => u.Id);
+            var userIds = Collection.AsQueryable().Where(u => userStatuses.Contains(u.Status) && (u.LastLogin == null || u.LastLogin <= lastValidLogin)).Select(u => u.Id);
 
             _logger.Debug("Called repository to get all the users which could be dormant");
+
+            return userIds;
+        }
+
+        public IEnumerable<Guid> GetDormantUsersPotentiallyEligibleForSoftDelete(DateTime dormantAfterDateTime)
+        {
+            _logger.Debug("Calling repository to get all the users which are dormant and could be eligible for soft delete");
+
+            var userIds = Collection.AsQueryable().Where(u => u.Status == UserStatuses.Dormant && (u.LastLogin == null || u.LastLogin <= dormantAfterDateTime)).Select(u => u.Id);
+
+            _logger.Debug("Called repository to get all the users which are dormant and could be eligible for soft delete");
 
             return userIds;
         }

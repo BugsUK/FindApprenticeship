@@ -50,7 +50,7 @@
                 .ToList();
 
             var candidateIds = new List<Guid>();
-            var userStatuses = new[] { UserStatuses.PendingActivation, UserStatuses.Dormant, UserStatuses.PendingDeletion };
+            var userStatuses = new[] { UserStatuses.PendingActivation, UserStatuses.PendingDeletion };
 
             _mockUserReadRepository.Setup(mock =>
                 mock.GetUsersWithStatus(userStatuses))
@@ -124,7 +124,7 @@
             users.First().EntityId = candidates.Last().EntityId = Guid.NewGuid();
 
             var candidateIds = new List<Guid>();
-            var userStatuses = new[] { UserStatuses.PendingActivation, UserStatuses.Dormant, UserStatuses.PendingDeletion };
+            var userStatuses = new[] { UserStatuses.PendingActivation, UserStatuses.PendingDeletion };
 
             var uniqueCandidateIds = candidates
                 .Select(each => each.EntityId)

@@ -79,14 +79,15 @@
 
         private void Audit(User user, Candidate candidate, IList<SavedSearch> savedSearches, IList<ApprenticeshipApplicationSummary> apprenticeshipApplications, IList<TraineeshipApplicationSummary> traineeshipApplications)
         {
-            //For unit testing
-            //http://stackoverflow.com/questions/2630370/c-sharp-dynamic-cannot-access-properties-from-anonymous-types-declared-in-anot
-            dynamic candidateUser = new ExpandoObject();
-            candidateUser.User = user;
-            candidateUser.Candidate = candidate;
-            candidateUser.SavedSearches = savedSearches;
-            candidateUser.ApprenticeshipApplications = apprenticeshipApplications;
-            candidateUser.TraineeshipApplications = traineeshipApplications;
+            var candidateUser = new
+                {
+                    User = user,
+                    Candidate = candidate,
+                    SavedSearches = savedSearches,
+                    ApprenticeshipApplications = apprenticeshipApplications,
+                    TraineeshipApplications = traineeshipApplications
+                };
+
             _auditRepository.Audit(candidateUser, AuditEventTypes.HardDeleteCandidateUser, user.EntityId);
         }
 

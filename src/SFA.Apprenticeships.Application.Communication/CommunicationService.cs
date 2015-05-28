@@ -53,6 +53,7 @@
                 case MessageTypes.SendMobileVerificationCodeReminder:
                 case MessageTypes.SendEmailReminder:
                 case MessageTypes.SendActivationCodeReminder:
+                case MessageTypes.SendDormantAccountReminder:
                     _sendCandidateCommunicationStrategy.Send(candidateId, messageType, tokens);
                     break;
                 case MessageTypes.SendPendingUsernameCode:

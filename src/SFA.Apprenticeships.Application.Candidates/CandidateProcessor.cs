@@ -38,8 +38,9 @@ namespace SFA.Apprenticeships.Application.Candidates
         public void QueueCandidates()
         {
             var candidateIds =
-                GetUsersPendingActivationDormantOrDeletion()
+                GetUsersPendingActivationOrDeletion()
                 .Union(GetPotentiallyDormantUsers())
+                .Union(GetDormantUsersPotentiallyEligibleForSoftDelete())
                 .Union(GetCandidatesPendingMobileVerification());
 
             var counter = 0;
@@ -58,9 +59,9 @@ namespace SFA.Apprenticeships.Application.Candidates
             _logService.Debug("Queued {0} candidates for Housekeeping", counter);
         }
 
-        private IEnumerable<Guid> GetUsersPendingActivationDormantOrDeletion()
+        private IEnumerable<Guid> GetUsersPendingActivationOrDeletion()
         {
-            var userStatuses = new[] { UserStatuses.PendingActivation, UserStatuses.Dormant, UserStatuses.PendingDeletion };
+            var userStatuses = new[] { UserStatuses.PendingActivation, UserStatuses.PendingDeletion };
 
             return _userReadRepository.GetUsersWithStatus(userStatuses);
         }
@@ -68,11 +69,21 @@ namespace SFA.Apprenticeships.Application.Candidates
         private IEnumerable<Guid> GetPotentiallyDormantUsers()
         {
             var configuration = _configurationService.Get<HousekeepingConfiguration>();
-            var potentiallyDormantHours = configuration.DormantAccountStrategy.SendReminderAfterCycles*
-                                          configuration.HousekeepingCycleInHours;
-            var dormantAfterDateTime = DateTime.UtcNow.AddHours(potentiallyDormantHours);
+            var lastValidLoginHours = configuration.DormantAccountStrategy.SendReminderAfterCycles*
+                                      configuration.HousekeepingCycleInHours;
+            var lastValidLogin = DateTime.UtcNow.AddHours(-lastValidLoginHours);
 
-            return _userReadRepository.GetPotentiallyDormantUsers(dormantAfterDateTime);
+            return _userReadRepository.GetPotentiallyDormantUsers(lastValidLogin);
+        }
+
+        private IEnumerable<Guid> GetDormantUsersPotentiallyEligibleForSoftDelete()
+        {
+            var configuration = _configurationService.Get<HousekeepingConfiguration>();
+            var potentiallyDormantHours = configuration.DormantAccountStrategy.SendFinalReminderAfterCycles*
+                                          configuration.HousekeepingCycleInHours;
+            var dormantAfterDateTime = DateTime.UtcNow.AddHours(-potentiallyDormantHours);
+
+            return _userReadRepository.GetDormantUsersPotentiallyEligibleForSoftDelete(dormantAfterDateTime);
         }
 
         private IEnumerable<Guid> GetCandidatesPendingMobileVerification()

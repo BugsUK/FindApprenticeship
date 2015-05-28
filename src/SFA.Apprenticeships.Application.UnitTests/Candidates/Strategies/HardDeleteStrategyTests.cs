@@ -106,11 +106,6 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
             var savedSearchWriteRepository = new Mock<ISavedSearchWriteRepository>();
             var authenticationRepository = new Mock<IAuthenticationRepository>();
             var auditRepository = new Mock<IAuditRepository>();
-            dynamic auditData = null;
-            auditRepository.Setup(
-                r => r.Audit(It.IsAny<object>(), AuditEventTypes.HardDeleteCandidateUser, candidateId, null))
-                .Callback<object, string, Guid, Guid?>(
-                    (d, et, pid, sid) => { auditData = d; });
             var successor = new Mock<IHousekeepingStrategy>();
             var strategy = new HardDeleteStrategyBuilder()
                 .With(apprenticeshipApplicationReadRepository)
@@ -132,11 +127,6 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 
             //Entities were audited
             auditRepository.Verify(r => r.Audit(It.IsAny<object>(), AuditEventTypes.HardDeleteCandidateUser, candidateId, null), Times.Once);
-            ((User)auditData.User).Should().Be(user);
-            ((Candidate)auditData.Candidate).Should().Be(candidate);
-            ((List<SavedSearch>)auditData.SavedSearches).ShouldBeEquivalentTo(savedSearches);
-            ((List<ApprenticeshipApplicationSummary>)auditData.ApprenticeshipApplications).ShouldBeEquivalentTo(apprenticeships);
-            ((List<TraineeshipApplicationSummary>)auditData.TraineeshipApplications).ShouldBeEquivalentTo(traineeships);
 
             //Entities were deleted
             foreach (var apprenticeshipApplicationSummary in apprenticeships)

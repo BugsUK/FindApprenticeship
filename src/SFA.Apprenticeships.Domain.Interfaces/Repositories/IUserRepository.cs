@@ -10,7 +10,9 @@
 
         IEnumerable<Guid> GetUsersWithStatus(UserStatuses[] userStatuses);
 
-        IEnumerable<Guid> GetPotentiallyDormantUsers(DateTime dormantAfterDateTime);
+        IEnumerable<Guid> GetPotentiallyDormantUsers(DateTime lastValidLogin);
+
+        IEnumerable<Guid> GetDormantUsersPotentiallyEligibleForSoftDelete(DateTime dormantAfterDateTime);
     }
 
     public interface IUserWriteRepository : IWriteRepository<User> {}

@@ -18,6 +18,7 @@
                 case MessageTypes.PasswordChanged:
                 case MessageTypes.SendPendingUsernameCode:
                 case MessageTypes.SendActivationCodeReminder:
+                case MessageTypes.SendDormantAccountReminder:
                     // Currently sent via email only, candidate cannot opt out of these mandatory communications.
                     return communicationChannel == CommunicationChannels.Email;
 
