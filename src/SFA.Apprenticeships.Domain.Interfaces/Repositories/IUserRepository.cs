@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using Entities.Users;
 
@@ -7,7 +8,9 @@
     {
         User Get(string username, bool errorIfNotFound = true);
 
-        IEnumerable<User> GetUsersWithStatus(UserStatuses[] userStatuses);
+        IEnumerable<Guid> GetUsersWithStatus(UserStatuses[] userStatuses);
+
+        IEnumerable<Guid> GetPotentiallyDormantUsers(DateTime dormantAfterDateTime);
     }
 
     public interface IUserWriteRepository : IWriteRepository<User> {}
