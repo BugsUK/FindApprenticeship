@@ -11,6 +11,7 @@
         long GetUnactivatedUserCount();
         long GetUnactivatedExpiredCodeUserCount();
         long GetActiveUserCount(DateTime activeFrom);
+        long GetDormantUserCount();
         IEnumerable<BsonDocument> GetUserActivityMetrics(DateTime dateCreatedStart, DateTime dateCreatedEnd);
     }
 }

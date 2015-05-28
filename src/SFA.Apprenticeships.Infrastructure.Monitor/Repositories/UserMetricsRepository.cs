@@ -55,6 +55,13 @@
                 .Count(each => each.LastLogin != null && each.LastLogin >= activeFrom);
         }
 
+        public long GetDormantUserCount()
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.Status == UserStatuses.Dormant);
+        }
+
         public IEnumerable<BsonDocument> GetUserActivityMetrics(DateTime dateCreatedStart, DateTime dateCreatedEnd)
         {
             var match = new BsonDocument

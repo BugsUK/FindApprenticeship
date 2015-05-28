@@ -316,6 +316,10 @@
       <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
       <Name>SFA.Apprenticeships.Application.Authentication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj">
+      <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidates</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
       <Project>{984f8cd2-61b3-48a4-b0cc-5d05e235983d}</Project>
       <Name>SFA.Apprenticeships.Application.Candidate</Name>
@@ -391,6 +395,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Audit\SFA.Apprenticeships.Infrastructure.Repositories.Audit.csproj">
+      <Project>{1CD7F494-A6BC-448A-AF1E-ECFAF03A66FC}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Audit</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Authentication\SFA.Apprenticeships.Infrastructure.Repositories.Authentication.csproj">
       <Project>{2D21EA2D-CE77-4795-B2F0-A172E59AC491}</Project>

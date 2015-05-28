@@ -1,14 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Audit
 {
     using System;
+    using System.Linq;
     using Application.Interfaces.Logging;
-    using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common.Configuration;
     using MongoDB.Driver;
+    using MongoDB.Driver.Linq;
 
     public class AuditRepository : IAuditRepository
     {
@@ -54,6 +55,13 @@
             Collection.Save(auditItem);
 
             _logger.Debug("Saved audit item for data with PrimaryEntityId={0}, SecondaryEntityId={1}", primaryEntityId, secondaryEntityId);
+        }
+
+        public long GetAuditCount(string auditEventTypes)
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.EventType == auditEventTypes);
         }
     }
 }

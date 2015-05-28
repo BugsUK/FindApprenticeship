@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Consumers;
     using Elastic.Common.IoC;
     using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Audit.IoC;
     using Infrastructure.Repositories.Authentication.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
     using Infrastructure.Repositories.Users.IoC;
@@ -128,6 +129,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<MonitorRegistry>();
+                x.AddRegistry<AuditRepositoryRegistry>();
             });
 
             _logger = _container.GetInstance<ILogService>();
