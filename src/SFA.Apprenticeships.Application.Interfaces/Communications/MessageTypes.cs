@@ -21,6 +21,7 @@
         SendEmailReminder = 16,
         SendActivationCodeReminder = 17,
         //EmployerContactMessage
-        SendMobileVerificationCodeReminder = 18
+        SendMobileVerificationCodeReminder = 18,
+        SendDormantAccountReminder = 19
     }
 }

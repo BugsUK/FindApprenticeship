@@ -74,6 +74,7 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="SFA.Apprenticeships.Application.Candidate">
       <HintPath>..\SFA.Apprenticeships.Application.Candidate\bin\Dev\SFA.Apprenticeships.Application.Candidate.dll</HintPath>
     </Reference>
@@ -89,15 +90,23 @@
     <Compile Include="Configuration\HousekeepingConfiguration.cs" />
     <Compile Include="Entities\CandidateHousekeeping.cs" />
     <Compile Include="ICandidateProcessor.cs" />
+    <Compile Include="IHousekeepingChainOfResponsibility.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\ActivationReminder\ActivationReminderHousekeeping.cs" />
+    <Compile Include="Strategies\DormantAccount\DormantAccountHousekeeping.cs" />
+    <Compile Include="Strategies\DormantAccount\SendAccountRemindersStrategy.cs" />
+    <Compile Include="Strategies\DormantAccount\SetPendingDeletionStrategy.cs" />
+    <Compile Include="Strategies\DormantAccount\UserExtensions.cs" />
+    <Compile Include="Strategies\HardDeleteHousekeeping.cs" />
     <Compile Include="Strategies\HardDeleteStrategy.cs" />
     <Compile Include="Strategies\HousekeepingStrategy.cs" />
     <Compile Include="Strategies\IHousekeepingStrategy.cs" />
-    <Compile Include="Strategies\SendAccountRemindersStrategy.cs" />
-    <Compile Include="Strategies\SendAccountRemindersStrategyA.cs" />
-    <Compile Include="Strategies\SendAccountRemindersStrategyB.cs" />
+    <Compile Include="Strategies\ActivationReminder\SendAccountRemindersStrategy.cs" />
+    <Compile Include="Strategies\ActivationReminder\SendAccountRemindersStrategyA.cs" />
+    <Compile Include="Strategies\ActivationReminder\SendAccountRemindersStrategyB.cs" />
+    <Compile Include="Strategies\MobileVerificationCodeReminderHousekeeping.cs" />
     <Compile Include="Strategies\SendMobileVerificationCodeReminderStrategy.cs" />
-    <Compile Include="Strategies\SetPendingDeletionStrategy.cs" />
+    <Compile Include="Strategies\ActivationReminder\SetPendingDeletionStrategy.cs" />
     <Compile Include="Strategies\TerminatingHousekeepingStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

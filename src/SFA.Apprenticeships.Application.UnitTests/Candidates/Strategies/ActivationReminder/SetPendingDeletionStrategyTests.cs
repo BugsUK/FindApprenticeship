@@ -1,12 +1,14 @@
-﻿using System;
-using Moq;
-using NUnit.Framework;
-using SFA.Apprenticeships.Application.Candidates.Strategies;
-using SFA.Apprenticeships.Domain.Entities.UnitTests.Builder;
-using SFA.Apprenticeships.Domain.Interfaces.Repositories;
-
-namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.ActivationReminder
 {
+    using System;
+    using Application.Candidates.Strategies;
+    using Domain.Entities.UnitTests.Builder;
+    using Domain.Entities.Users;
+    using Domain.Interfaces.Repositories;
+    using FluentAssertions;
+    using Moq;
+    using NUnit.Framework;
+
     [TestFixture]
     public class SetPendingDeletionStrategyTests
     {
@@ -20,6 +22,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
             var candidate = new CandidateBuilder(candidateId).Build();
 
             var userWriteRepository = new Mock<IUserWriteRepository>();
+            User savedUser = null;
+            userWriteRepository.Setup(r => r.Save(It.IsAny<User>())).Callback<User>(u => savedUser = u);
             var successor = new Mock<IHousekeepingStrategy>();
             var strategy = new SetPendingDeletionStrategyBuilder().With(userWriteRepository).With(successor.Object).Build();
 
@@ -27,6 +31,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 
             //Strategy did not handle the request
             successor.Verify(s => s.Handle(user, candidate), Times.Once);
+            savedUser.Should().BeNull();
         }
 
         [Test]
@@ -39,6 +44,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
             var candidate = new CandidateBuilder(candidateId).Build();
 
             var userWriteRepository = new Mock<IUserWriteRepository>();
+            User savedUser = null;
+            userWriteRepository.Setup(r => r.Save(It.IsAny<User>())).Callback<User>(u => savedUser = u);
             var successor = new Mock<IHousekeepingStrategy>();
             var strategy = new SetPendingDeletionStrategyBuilder().With(userWriteRepository).With(successor.Object).Build();
 
@@ -46,6 +53,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 
             //Strategy did not handle the request
             successor.Verify(s => s.Handle(user, candidate), Times.Once);
+            savedUser.Should().BeNull();
         }
 
         [Test]
@@ -57,6 +65,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
             var user = new UserBuilder(candidateId).WithDateCreated(dateCreated).Activated(true).Build();
 
             var userWriteRepository = new Mock<IUserWriteRepository>();
+            User savedUser = null;
+            userWriteRepository.Setup(r => r.Save(It.IsAny<User>())).Callback<User>(u => savedUser = u);
             var successor = new Mock<IHousekeepingStrategy>();
             var strategy = new SetPendingDeletionStrategyBuilder().With(userWriteRepository).With(successor.Object).Build();
 
@@ -64,6 +74,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 
             //Strategy handled the request
             successor.Verify(s => s.Handle(user, null), Times.Never);
+            savedUser.Should().NotBeNull();
+            savedUser.Status.Should().Be(UserStatuses.PendingDeletion);
         }
 
         [Test]
@@ -76,6 +88,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
             var candidate = new CandidateBuilder(candidateId).Build();
 
             var userWriteRepository = new Mock<IUserWriteRepository>();
+            User savedUser = null;
+            userWriteRepository.Setup(r => r.Save(It.IsAny<User>())).Callback<User>(u => savedUser = u);
             var successor = new Mock<IHousekeepingStrategy>();
             var strategy = new SetPendingDeletionStrategyBuilder().With(userWriteRepository).With(successor.Object).Build();
 
@@ -83,6 +97,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 
             //Strategy handled the request
             successor.Verify(s => s.Handle(user, candidate), Times.Never);
+            savedUser.Should().NotBeNull();
+            savedUser.Status.Should().Be(UserStatuses.PendingDeletion);
         }
     }
 }

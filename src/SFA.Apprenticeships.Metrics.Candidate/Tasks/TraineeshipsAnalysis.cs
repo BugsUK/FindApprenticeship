@@ -14,7 +14,9 @@
         private readonly IApprenticeshipMetricsRepository _apprenticeshipMetricsRepository;
         private readonly ITraineeshipMetricsRepository _traineeshipMetricsRepository;
 
-        private const string fileNamePrefix = "../Sit_";
+        private const string FileNamePrefix = "../Prod_";
+
+        private readonly DateTime _oldestValidDate = new DateTime(2014, 12, 1);
 
         public TraineeshipsAnalysis(IUserMetricsRepository userMetricsRepository, ICandidateMetricsRepository candidateMetricsRepository, IApprenticeshipMetricsRepository apprenticeshipMetricsRepository, ITraineeshipMetricsRepository traineeshipMetricsRepository)
         {
@@ -53,7 +55,7 @@
 
         private static void WriteTraineeshipAnalysisCsv(Dictionary<Guid, UserApplicationMetrics> userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("{1}TraineeshipAnalysis_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), fileNamePrefix);
+            var fileName = string.Format("{1}TraineeshipAnalysis_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), FileNamePrefix);
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.Values);
@@ -63,7 +65,7 @@
 
         private static void WriteApprenticeshipApplicationMetricsCsv(ApprenticeshipApplicationMetrics userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("{1}ApprenticeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), fileNamePrefix);
+            var fileName = string.Format("{1}ApprenticeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), FileNamePrefix);
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.ApprenticeshipMetrics.Values);
@@ -73,7 +75,7 @@
 
         private static void WriteTraineeshipApplicationMetricsCsv(TraineeshipApplicationMetrics userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("{1}TraineeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), fileNamePrefix);
+            var fileName = string.Format("{1}TraineeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), FileNamePrefix);
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.TraineeshipMetrics.Values);
@@ -83,26 +85,32 @@
 
         private void AddUserActivityMetrics(Dictionary<Guid, UserApplicationMetrics> userApplicationMetrics)
         {
-            var userActivityMetrics = _userMetricsRepository.GetUserActivityMetrics();
-            foreach (var userActivityMetric in userActivityMetrics)
+            var dateTime = DateTime.UtcNow;
+            while (dateTime > _oldestValidDate)
             {
-                var groupComponents = userActivityMetric["_id"].AsBsonDocument;
-                var candidateId = groupComponents["CandidateId"].AsGuid;
-                var dateCreated = groupComponents["DateCreated"].ToUniversalTime();
-                var activated = userActivityMetric["Activated"].AsBoolean;
-                var activateCodeExpiry = groupComponents["ActivateCodeExpiry"].ToNullableUniversalTime();
-                var activationDate = groupComponents.ToNullableUniversalTime("ActivationDate");
-                var lastLogin = groupComponents.ToNullableUniversalTime("LastLogin");
-
-                userApplicationMetrics[candidateId] = new UserApplicationMetrics
+                var userActivityMetrics = _userMetricsRepository.GetUserActivityMetrics(dateTime.AddDays(-30), dateTime);
+                foreach (var userActivityMetric in userActivityMetrics)
                 {
-                    CandidateId = candidateId,
-                    DateCreated = dateCreated,
-                    Activated = activated,
-                    ActivateCodeExpiry = activateCodeExpiry,
-                    ActivationDate = activationDate,
-                    LastLogin = lastLogin
-                };
+                    var groupComponents = userActivityMetric["_id"].AsBsonDocument;
+                    var candidateId = groupComponents["CandidateId"].AsGuid;
+                    var dateCreated = groupComponents["DateCreated"].ToUniversalTime();
+                    var activated = userActivityMetric["Activated"].AsBoolean;
+                    var activateCodeExpiry = groupComponents["ActivateCodeExpiry"].ToNullableUniversalTime();
+                    var activationDate = groupComponents.ToNullableUniversalTime("ActivationDate");
+                    var lastLogin = groupComponents.ToNullableUniversalTime("LastLogin");
+
+                    userApplicationMetrics[candidateId] = new UserApplicationMetrics
+                    {
+                        CandidateId = candidateId,
+                        DateCreated = dateCreated,
+                        Activated = activated,
+                        ActivateCodeExpiry = activateCodeExpiry,
+                        ActivationDate = activationDate,
+                        LastLogin = lastLogin
+                    };
+                }
+
+                dateTime = dateTime.AddDays(-30);
             }
         }
 
@@ -128,7 +136,17 @@
                     Successful = successfulApplicationCount,
                 };
 
-                userApplicationMetrics[candidateId].CandidateApprenticeshipApplicationMetrics = apprenticeshipApplicationMetrics;
+                if (userApplicationMetrics.ContainsKey(candidateId))
+                {
+                    userApplicationMetrics[candidateId].CandidateApprenticeshipApplicationMetrics = apprenticeshipApplicationMetrics;
+                }
+                else
+                {
+                    userApplicationMetrics[candidateId] = new UserApplicationMetrics
+                    {
+                        CandidateApprenticeshipApplicationMetrics = apprenticeshipApplicationMetrics
+                    };
+                }
             }
         }
 

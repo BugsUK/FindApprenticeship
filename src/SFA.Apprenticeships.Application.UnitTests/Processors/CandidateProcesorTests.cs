@@ -4,8 +4,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Candidates;
+    using Application.Candidates.Configuration;
     using Application.Candidates.Entities;
+    using Candidates.Configuration;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
@@ -21,6 +24,7 @@
         private Mock<IMessageBus> _mockMessageBus;
         private Mock<IUserReadRepository> _mockUserReadRepository;
         private Mock<ICandidateReadRepository> _mockCandidateReadRepository;
+        private Mock<IConfigurationService> _mockConfigurationService;
 
         [SetUp]
         public void SetUp()
@@ -29,14 +33,16 @@
             _mockMessageBus = new Mock<IMessageBus>();
             _mockUserReadRepository = new Mock<IUserReadRepository>();
             _mockCandidateReadRepository = new Mock<ICandidateReadRepository>();
+            _mockConfigurationService = new Mock<IConfigurationService>();
+            _mockConfigurationService.Setup(s => s.Get<HousekeepingConfiguration>()).Returns(new HousekeepingConfigurationBuilder().Build());
         }
 
         [Test]
-        public void ShouldQueueCandidatesPendingActivationOrDeletion()
+        public void ShouldQueueCandidatesPendingActivationDormantOrDeletion()
         {
             // Arrange.
             var processor = new CandidateProcessor(
-                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object);
+                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object, _mockConfigurationService.Object);
 
             var users = new Fixture()
                 .Build<User>()
@@ -48,7 +54,7 @@
 
             _mockUserReadRepository.Setup(mock =>
                 mock.GetUsersWithStatus(userStatuses))
-                .Returns(users);
+                .Returns(users.Select(u => u.EntityId));
 
             _mockMessageBus.Setup(mock =>
                 mock.PublishMessage(It.IsAny<CandidateHousekeeping>()))
@@ -70,7 +76,7 @@
         {
             // Arrange.
             var processor = new CandidateProcessor(
-                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object);
+                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object, _mockConfigurationService.Object);
 
             var candidates = new Fixture()
                 .Build<Domain.Entities.Candidates.Candidate>()
@@ -103,7 +109,7 @@
         {
             // Arrange.
             var processor = new CandidateProcessor(
-                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object);
+                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object, _mockConfigurationService.Object);
 
             var users = new Fixture()
                 .Build<User>()
@@ -127,7 +133,7 @@
 
             _mockUserReadRepository.Setup(mock =>
                 mock.GetUsersWithStatus(userStatuses))
-                .Returns(users);
+                .Returns(users.Select(u => u.EntityId));
 
             _mockCandidateReadRepository.Setup(mock =>
                 mock.GetCandidatesWithPendingMobileVerification())

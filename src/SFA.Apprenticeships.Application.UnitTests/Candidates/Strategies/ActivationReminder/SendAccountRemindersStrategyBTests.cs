@@ -1,10 +1,11 @@
-﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.ActivationReminder
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Candidates.Configuration;
     using Application.Candidates.Strategies;
+    using Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;

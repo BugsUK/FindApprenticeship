@@ -58,15 +58,39 @@
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
         }
 
-        public IEnumerable<User> GetUsersWithStatus(UserStatuses[] userStatuses)
+        public IEnumerable<Guid> GetUsersWithStatus(UserStatuses[] userStatuses)
         {
-            _logger.Debug("Calling repository to get the ids for all candidates that have saved searches with alerts enabled");
+            _logger.Debug("Calling repository to get all the users with the following statuses: {0}", string.Join(", ", userStatuses));
 
-            var candidateIds = Collection.AsQueryable().Where(u => userStatuses.Contains(u.Status));
+            var userIds = Collection.AsQueryable().Where(u => userStatuses.Contains(u.Status)).Select(u => u.Id);
 
-            _logger.Debug("Called repository to get the ids for all candidates that have saved searches with alerts enabled");
+            _logger.Debug("Called repository to get all the users with the following statuses: {0}", string.Join(", ", userStatuses));
 
-            return candidateIds;
+            return userIds;
+        }
+
+        public IEnumerable<Guid> GetPotentiallyDormantUsers(DateTime lastValidLogin)
+        {
+            _logger.Debug("Calling repository to get all the users which could be dormant");
+
+            var userStatuses = new[] {UserStatuses.Active, UserStatuses.Locked};
+
+            var userIds = Collection.AsQueryable().Where(u => userStatuses.Contains(u.Status) && (u.LastLogin == null || u.LastLogin <= lastValidLogin)).Select(u => u.Id);
+
+            _logger.Debug("Called repository to get all the users which could be dormant");
+
+            return userIds;
+        }
+
+        public IEnumerable<Guid> GetDormantUsersPotentiallyEligibleForSoftDelete(DateTime dormantAfterDateTime)
+        {
+            _logger.Debug("Calling repository to get all the users which are dormant and could be eligible for soft delete");
+
+            var userIds = Collection.AsQueryable().Where(u => u.Status == UserStatuses.Dormant && (u.LastLogin == null || u.LastLogin <= dormantAfterDateTime)).Select(u => u.Id);
+
+            _logger.Debug("Called repository to get all the users which are dormant and could be eligible for soft delete");
+
+            return userIds;
         }
 
         public void Delete(Guid id)

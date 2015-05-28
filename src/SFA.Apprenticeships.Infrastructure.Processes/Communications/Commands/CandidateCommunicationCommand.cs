@@ -43,7 +43,8 @@
                 MessageTypes.SavedSearchAlert,
                 MessageTypes.SendPendingUsernameCode,
                 MessageTypes.SendEmailReminder,
-                MessageTypes.SendActivationCodeReminder
+                MessageTypes.SendActivationCodeReminder,
+                MessageTypes.SendDormantAccountReminder
             };
 
             return messageTypes.Contains(communicationRequest.MessageType);
@@ -55,7 +56,7 @@
             var user = _userReadRepository.Get(candidateId);
             var candidate = _candidateReadRepository.Get(candidateId);
 
-            if (!ShouldCommunicateWithUser(user))
+            if (communicationRequest.MessageType != MessageTypes.SendDormantAccountReminder && !ShouldCommunicateWithUser(user))
             {
                 _logService.Info("Will NOT send any messages to user '{0}' email '{1}' in state '{2}'",
                     user.EntityId, user.Username, user.Status);

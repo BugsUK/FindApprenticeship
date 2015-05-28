@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.ActivationReminder
 {
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -9,12 +9,14 @@
     public class SetPendingDeletionStrategy : HousekeepingStrategy
     {
         private readonly IUserWriteRepository _userWriteRepository;
+        private readonly IAuditRepository _auditRepository;
         private readonly ILogService _logService;
 
-        public SetPendingDeletionStrategy(IConfigurationService configurationService, IUserWriteRepository userWriteRepository, ILogService logService)
+        public SetPendingDeletionStrategy(IConfigurationService configurationService, IUserWriteRepository userWriteRepository, IAuditRepository auditRepository, ILogService logService)
             : base(configurationService)
         {
             _userWriteRepository = userWriteRepository;
+            _auditRepository = auditRepository;
             _logService = logService;
         }
 
@@ -30,7 +32,7 @@
 
             var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSince(user.DateCreated);
 
-            if (housekeepingCyclesSinceCreation >= Configuration.SetPendingDeletionAfterCycles)
+            if (housekeepingCyclesSinceCreation >= Configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles)
             {
                 return SetUserStatusPendingDeletion(user);
             }
@@ -41,6 +43,8 @@
         private bool SetUserStatusPendingDeletion(User user)
         {
             _logService.Info("Setting User: {0} Status to PendingDeletion", user.EntityId);
+
+            _auditRepository.Audit(user, AuditEventTypes.UserSoftDelete, user.EntityId);
 
             user.Status = UserStatuses.PendingDeletion;
             _userWriteRepository.Save(user);

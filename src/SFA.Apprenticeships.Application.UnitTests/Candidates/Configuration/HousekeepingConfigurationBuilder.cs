@@ -7,18 +7,28 @@
         private readonly HousekeepingConfiguration _configuration = new HousekeepingConfiguration
         {
             HousekeepingCycleInHours = 24,
-            SendAccountReminderStrategyA = new SendAccountReminderStrategyA
+            ActivationReminderStrategy = new ActivationReminderStrategy
             {
-                SendAccountReminderOneAfterCycles = 7,
-                SendAccountReminderTwoAfterCycles = 21
+                SendAccountReminderStrategyA = new SendAccountReminderStrategyA
+                {
+                    SendAccountReminderOneAfterCycles = 7,
+                    SendAccountReminderTwoAfterCycles = 21
+                },
+                SendAccountReminderStrategyB = new SendAccountReminderStrategyB
+                {
+                    SendAccountReminderAfterCycles = 1,
+                    SendAccountReminderEveryCycles = 7
+                },
+                SetPendingDeletionAfterCycles = 31
             },
-            SendAccountReminderStrategyB = new SendAccountReminderStrategyB
+            SendMobileVerificationCodeReminderAfterCycles = 1,
+            DormantAccountStrategy = new DormantAccountStrategy
             {
-                SendAccountReminderAfterCycles = 1,
-                SendAccountReminderEveryCycles = 7
+                SendReminderAfterCycles = 90,
+                SendFinalReminderAfterCycles = 330,
+                SetPendingDeletionAfterCycles = 365
             },
-            SetPendingDeletionAfterCycles = 31,
-            SendMobileVerificationCodeReminderAfterCycles = 1
+            HardDeleteAccountAfterCycles = 14
         };
 
         public HousekeepingConfiguration Build()
@@ -29,9 +39,9 @@
         public HousekeepingConfigurationBuilder WithStrategyA(int housekeepingCycleInHours, int sendAccountReminderOneAfterCycles, int sendAccountReminderTwoAfterCycles, int setPendingDeletionAfterCycles)
         {
             _configuration.HousekeepingCycleInHours = housekeepingCycleInHours;
-            _configuration.SendAccountReminderStrategyA.SendAccountReminderOneAfterCycles = sendAccountReminderOneAfterCycles;
-            _configuration.SendAccountReminderStrategyA.SendAccountReminderTwoAfterCycles = sendAccountReminderTwoAfterCycles;
-            _configuration.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
+            _configuration.ActivationReminderStrategy.SendAccountReminderStrategyA.SendAccountReminderOneAfterCycles = sendAccountReminderOneAfterCycles;
+            _configuration.ActivationReminderStrategy.SendAccountReminderStrategyA.SendAccountReminderTwoAfterCycles = sendAccountReminderTwoAfterCycles;
+            _configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
 
             return this;
         }
@@ -39,9 +49,9 @@
         public HousekeepingConfigurationBuilder WithStrategyB(int housekeepingCycleInHours, int sendAccountReminderAfterCycles, int sendAccountReminderEveryCycles, int setPendingDeletionAfterCycles)
         {
             _configuration.HousekeepingCycleInHours = housekeepingCycleInHours;
-            _configuration.SendAccountReminderStrategyB.SendAccountReminderAfterCycles = sendAccountReminderAfterCycles;
-            _configuration.SendAccountReminderStrategyB.SendAccountReminderEveryCycles = sendAccountReminderEveryCycles;
-            _configuration.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
+            _configuration.ActivationReminderStrategy.SendAccountReminderStrategyB.SendAccountReminderAfterCycles = sendAccountReminderAfterCycles;
+            _configuration.ActivationReminderStrategy.SendAccountReminderStrategyB.SendAccountReminderEveryCycles = sendAccountReminderEveryCycles;
+            _configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
 
             return this;
         }
@@ -50,7 +60,7 @@
         {
             _configuration.HousekeepingCycleInHours = housekeepingCycleInHours;
             _configuration.SendMobileVerificationCodeReminderAfterCycles = sendMobileVerificationCodeReminderAfterCycles;
- 
+
             return this;
         }
     }

@@ -42,7 +42,7 @@
             return IndividualCommunicationPreferences(communicationPreferences).Any(each => each.EnableText);
         }
 
-        private static IEnumerable<CommunicationPreference> IndividualCommunicationPreferences(
+        public static IEnumerable<CommunicationPreference> IndividualCommunicationPreferences(
             CommunicationPreferences communicationPreferences)
         {
             return new[]
@@ -52,6 +52,24 @@
                 communicationPreferences.SavedSearchPreferences,
                 communicationPreferences.MarketingPreferences
             };
+        }
+
+        public static void EnableAllOptionalCommunications(this Candidate candidate)
+        {
+            foreach (var communicationPreference in IndividualCommunicationPreferences(candidate.CommunicationPreferences))
+            {
+                communicationPreference.EnableText = true;
+                communicationPreference.EnableEmail = true;
+            }
+        }
+
+        public static void DisableAllOptionalCommunications(this Candidate candidate)
+        {
+            foreach (var communicationPreference in IndividualCommunicationPreferences(candidate.CommunicationPreferences))
+            {
+                communicationPreference.EnableText = false;
+                communicationPreference.EnableEmail = false;
+            }
         }
 
         #endregion

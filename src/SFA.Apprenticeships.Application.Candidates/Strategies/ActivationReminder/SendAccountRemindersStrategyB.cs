@@ -1,6 +1,5 @@
-﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.ActivationReminder
 {
-    using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -25,11 +24,11 @@
 
             var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSince(user.DateCreated);
 
-            var configuration = Configuration.SendAccountReminderStrategyB;
+            var configuration = Configuration.ActivationReminderStrategy.SendAccountReminderStrategyB;
 
             //Only remind if enough time has passed and not due for deletion
-            if (housekeepingCyclesSinceCreation < configuration.SendAccountReminderAfterCycles 
-                || housekeepingCyclesSinceCreation >= Configuration.SetPendingDeletionAfterCycles)
+            if (housekeepingCyclesSinceCreation < configuration.SendAccountReminderAfterCycles
+                || housekeepingCyclesSinceCreation >= Configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles)
             {
                 return false;
             }

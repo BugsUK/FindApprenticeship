@@ -40,7 +40,7 @@
 
             if (user != null)
             {
-                user.AssertState("Authenticate user", UserStatuses.Active, UserStatuses.PendingActivation, UserStatuses.Locked);
+                user.AssertState("Authenticate user", UserStatuses.Active, UserStatuses.PendingActivation, UserStatuses.Locked, UserStatuses.Dormant);
 
                 if (_authenticationService.AuthenticateUser(user.EntityId, password))
                 {
@@ -49,6 +49,11 @@
                     if (user.LoginIncorrectAttempts > 0)
                     {
                         user.LoginIncorrectAttempts = 0;
+                    }
+
+                    if (user.Status == UserStatuses.Dormant)
+                    {
+                        user.Status = UserStatuses.Active;
                     }
 
                     user.LastLogin = DateTime.UtcNow;
