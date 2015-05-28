@@ -235,11 +235,11 @@ WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral("></span>\r\n                    </div>\r\n                    <div");
 
-WriteLiteral(" class=\"form-group form-group-compound inline-fixed\"");
+WriteLiteral(" class=\"form-group inline-fixed validation-message-parent\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"form-group form-group-compound error-wrapper vert-align-top\"");
+WriteLiteral(" class=\"form-group error-wrapper vert-align-top no-btm-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
@@ -249,7 +249,7 @@ WriteLiteral(" class=\"form-label\"");
 
 WriteLiteral(">Started</label>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound\"");
+WriteLiteral(" class=\"form-group no-btm-margin\"");
 
 WriteLiteral(">\r\n                                <span");
 
@@ -265,7 +265,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 WriteLiteral("></select>\r\n\r\n                            </div>\r\n                            <di" +
 "v");
 
-WriteLiteral(" class=\"form-group form-group-compound\"");
+WriteLiteral(" class=\"form-group no-btm-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: fromYear\"");
 
@@ -292,7 +292,7 @@ WriteLiteral(" data-bind=\"value: fromYear\"");
 WriteLiteral(">\r\n                            </div>\r\n                        </div>\r\n          " +
 "              <div");
 
-WriteLiteral(" class=\"form-group error-wrapper vert-align-top\"");
+WriteLiteral(" class=\"form-group error-wrapper vert-align-top no-btm-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
@@ -302,7 +302,7 @@ WriteLiteral(" class=\"form-label\"");
 
 WriteLiteral(">Finished</label>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound\"");
+WriteLiteral(" class=\"form-group no-btm-margin\"");
 
 WriteLiteral(">\r\n                                <span");
 
@@ -318,7 +318,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 WriteLiteral("></select>\r\n\r\n                            </div>\r\n                            <di" +
 "v");
 
-WriteLiteral(" class=\"form-group form-group-compound\"");
+WriteLiteral(" class=\"form-group no-btm-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: toYear\"");
 
@@ -344,7 +344,7 @@ WriteLiteral(" data-bind=\"value: toYear, attr:{\'disabled\':toDateReadonly() }\
 
 WriteLiteral(" />\r\n                            </div>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound\"");
+WriteLiteral(" class=\"form-group no-btm-margin\"");
 
 WriteLiteral(">\r\n                                <input");
 
@@ -359,7 +359,11 @@ WriteLiteral(" />\r\n                                <label");
 WriteLiteral(" for=\"work-current\"");
 
 WriteLiteral(">Current</label>\r\n                            </div>\r\n                        </d" +
-"iv>\r\n                    </div>\r\n                    <div");
+"iv>\r\n                        <div");
+
+WriteLiteral(" class=\"validation-message-container\"");
+
+WriteLiteral("></div>\r\n                    </div>\r\n                    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -610,8 +614,11 @@ WriteLiteral(@">Finished</span>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>
-                                                <div");
+                                            <td");
+
+WriteLiteral(" class=\"validation-message-parent\"");
+
+WriteLiteral(">\r\n                                                <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -662,9 +669,16 @@ WriteLiteral(" class=\"cell-span\"");
 WriteLiteral(" data-bind=\"visible: showEditButton, text: itemFromYear, attr:{\'id\':\'candidate_wo" +
 "rkexperience_\'+ $index() + \'__fromyear\'}\"");
 
-WriteLiteral("></span>\r\n                                            </td>\r\n                    " +
-"                        <td>\r\n                                                <d" +
-"iv");
+WriteLiteral("></span>\r\n                                                <div");
+
+WriteLiteral(" class=\"validation-message-container\"");
+
+WriteLiteral("></div>\r\n                                            </td>\r\n                     " +
+"                       <td");
+
+WriteLiteral(" class=\"validation-message-parent\"");
+
+WriteLiteral(">\r\n                                                <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -734,7 +748,11 @@ WriteLiteral(" data-bind=\"visible: showEditButton, text: itemToYear() <= 1 || i
 "null ? \'\' : itemToYear , attr:{\'id\':\'candidate_workexperience_\'+ $index() + \'__t" +
 "oyear\'}\"");
 
-WriteLiteral(@"></span>
+WriteLiteral("></span>\r\n                                                <div");
+
+WriteLiteral(" class=\"validation-message-container\"");
+
+WriteLiteral(@"></div>
                                             </td>
                                             <td></td>
                                             <td></td>

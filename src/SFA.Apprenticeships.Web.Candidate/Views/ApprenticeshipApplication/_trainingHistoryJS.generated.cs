@@ -197,7 +197,7 @@ WriteLiteral(" class=\"form-group inline-fixed validation-message-parent\"");
 
 WriteLiteral(">\r\n                        <div");
 
-WriteLiteral(" class=\"form-group form-group-compound error-wrapper vert-align-top\"");
+WriteLiteral(" class=\"form-group error-wrapper vert-align-top no-btm-margin\"");
 
 WriteLiteral(">\r\n                            <label");
 
@@ -222,7 +222,7 @@ WriteLiteral(" data-bind=\"options: months, optionsText: \'monthName\', optionsV
 
 WriteLiteral("></select>\r\n                            </div>\r\n                            <div");
 
-WriteLiteral(" class=\"form-group form-group-compound no-btm-margin\"");
+WriteLiteral(" class=\"form-group no-btm-margin\"");
 
 WriteLiteral(" data-bind=\"parentvalElement: fromYear\"");
 

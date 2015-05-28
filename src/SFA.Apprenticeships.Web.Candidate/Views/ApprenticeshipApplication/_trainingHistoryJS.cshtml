@@ -29,13 +29,13 @@
                         <input type="text" class="form-control" id="training-history-course-title" data-bind="value: courseTitle" maxlength="50">
                     </div>
                     <div class="form-group inline-fixed validation-message-parent">
-                        <div class="form-group form-group-compound error-wrapper vert-align-top">
+                        <div class="form-group error-wrapper vert-align-top no-btm-margin">
                             <label for="training-history-from-month" class="form-label">From</label>
                             <div class="form-group form-group-compound no-btm-margin">
                                 <span class="form-hint">Month</span>
                                 <select id="training-history-from-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: fromMonth"></select>
                             </div>
-                            <div class="form-group form-group-compound no-btm-margin" data-bind="parentvalElement: fromYear">
+                            <div class="form-group no-btm-margin" data-bind="parentvalElement: fromYear">
                                 <label for="training-history-from-year" class="form-hint">Year</label>
                                 <input type="tel" class="form-control form-control-small" pattern="[0-9]*" maxlength="4" id="training-history-from-year" data-bind="value: fromYear">
                             </div>
