@@ -30,5 +30,6 @@
         public const string TraineeshipWhatNext = "TraineeshipWhatNext";
         public const string TraineeshipView = "TraineeshipView";
         public const string Unsubscribe = "Unsubscribe";
+        public const string HowToApply = "HowToApply";
     }
 }

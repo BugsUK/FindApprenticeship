@@ -111,6 +111,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.HowToApply,
+                url: "howtoapply",
+                defaults: new { controller = "Home", action = "HowToApply" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipResults,
                 url: "apprenticeships",
                 defaults: new { controller = "ApprenticeshipSearch", action = "Results" }

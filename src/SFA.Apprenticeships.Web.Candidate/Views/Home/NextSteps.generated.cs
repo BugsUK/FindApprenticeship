@@ -43,7 +43,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Home/NextSteps.cshtml")]
-    public partial class NextSteps : System.Web.Mvc.WebViewPage<object>
+    public partial class NextSteps : System.Web.Mvc.WebViewPage<dynamic>
     {
         public NextSteps()
         {
@@ -51,7 +51,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
         public override void Execute()
         {
             
-            #line 2 "..\..\Views\Home\NextSteps.cshtml"
+            #line 1 "..\..\Views\Home\NextSteps.cshtml"
   
     ViewBag.Title = "Next steps - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -59,7 +59,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Home
             
             #line default
             #line hidden
-WriteLiteral("\r\n<main");
+WriteLiteral("\r\n\r\n<main");
 
 WriteLiteral(" role=\"main\"");
 
@@ -88,25 +88,25 @@ WriteLiteral("\r\n                        rel=\"external\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral(@">National Careers Service’s application guide</a> if
-            you'd like more advice.
-        </p>
-        <p>
-            To help you write a better application you can take a guided tour of
-            the application form.
-        </p>
-        <div");
+WriteLiteral(">National Careers Service’s application guide</a> if you\'d like more advice.\r\n   " +
+"     </p>\r\n        <p>\r\n            To help you write a better application you c" +
+"an take a guided tour of\r\n            the application form.\r\n        </p>\r\n     " +
+"   <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n            <!-- TODO: US788: link to static application form tour -->\r\n      " +
-"      <a");
+WriteLiteral(">\r\n");
 
-WriteLiteral(" class=\"button\"");
+WriteLiteral("            ");
 
-WriteLiteral(" href=\"apply-index.html?Tour=start\"");
+            
+            #line 24 "..\..\Views\Home\NextSteps.cshtml"
+       Write(Html.RouteLink("Start tour", CandidateRouteNames.HowToApply, null, new { @class = "button" }));
 
-WriteLiteral(">Start tour</a>\r\n        </div>\r\n    </div>\r\n    <div");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"text\"");
 
@@ -258,12 +258,11 @@ WriteLiteral(@">
 
 WriteLiteral(" href=\"https://nationalcareersservice.direct.gov.uk/advice/Pages/default.aspx\"");
 
-WriteLiteral(" rel=\"external\"");
+WriteLiteral("\r\n               rel=\"external\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral(">\r\n                National Careers Service\r\n            </a>.\r\n        </p>\r\n   " +
-"     <div");
+WriteLiteral(">National Careers Service</a>.\r\n        </p>\r\n        <div");
 
 WriteLiteral(" class=\"get-started\"");
 
@@ -274,7 +273,7 @@ WriteLiteral(" class=\"get-started\"");
 WriteLiteral(">");
 
             
-            #line 126 "..\..\Views\Home\NextSteps.cshtml"
+            #line 123 "..\..\Views\Home\NextSteps.cshtml"
                                 Write(Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "find-apprenticeship-button", @class = "button" }));
 
             

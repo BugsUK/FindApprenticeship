@@ -1,8 +1,8 @@
-﻿@model object
-@{
+﻿@{
     ViewBag.Title = "Next steps - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <main role="main" id="main">
     <h2 class="heading-xlarge">Next steps</h2>
     <div class="text">
@@ -14,16 +14,14 @@
     <div class="text">
         <p>
             Read the <a href="https://nationalcareersservice.direct.gov.uk/advice/courses/typesoflearning/Pages/apprenticeship-application-help.aspx"
-                        rel="external" target="_blank">National Careers Service’s application guide</a> if
-            you'd like more advice.
+                        rel="external" target="_blank">National Careers Service’s application guide</a> if you'd like more advice.
         </p>
         <p>
             To help you write a better application you can take a guided tour of
             the application form.
         </p>
         <div class="form-group">
-            <!-- TODO: US788: link to static application form tour -->
-            <a class="button" href="apply-index.html?Tour=start">Start tour</a>
+            @Html.RouteLink("Start tour", CandidateRouteNames.HowToApply, null, new { @class = "button" })
         </div>
     </div>
     <div class="text">
@@ -118,9 +116,8 @@
         </details>
         <p>
             If you'd like more advice on careers contact the
-            <a href="https://nationalcareersservice.direct.gov.uk/advice/Pages/default.aspx" rel="external" target="_blank">
-                National Careers Service
-            </a>.
+            <a href="https://nationalcareersservice.direct.gov.uk/advice/Pages/default.aspx"
+               rel="external" target="_blank">National Careers Service</a>.
         </p>
         <div class="get-started">
             <div class="get-started">@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "find-apprenticeship-button", @class = "button" })</div>

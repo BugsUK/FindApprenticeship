@@ -94,7 +94,6 @@
 
                 throw new InvalidMediatorCodeException(response.Code);
             });
-
         }
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
@@ -105,6 +104,12 @@
 
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         public async Task<ActionResult> NextSteps()
+        {
+            return await Task.Run<ActionResult>(() => View());
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
+        public async Task<ActionResult> HowToApply()
         {
             return await Task.Run<ActionResult>(() => View());
         }
