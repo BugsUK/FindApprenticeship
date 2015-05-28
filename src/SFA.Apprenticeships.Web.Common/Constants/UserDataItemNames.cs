@@ -10,5 +10,7 @@
         public const string UnlockEmailAddress = "Data.UnlockEmail";
         public const string LoggingSessionId = "Data.SessionId";
         public const string SavedAndDraftCount = "Data.SavedAndDraftCount";
+        public const string LastApplicationStatusNotification = "Data.LastApplicationStatusNotification";
+        public const string ApplicationStatusChangeCount = "Data.ApplicationStatusChangeCount";
     }
 }

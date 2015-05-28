@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Logging;
@@ -208,6 +209,9 @@
                 {
                     // User is authentic.
                     _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), _userAccountService.GetRoleNames(candidate.EntityId));
+
+                    _userDataProvider.Push(UserDataItemNames.LastApplicationStatusNotification,
+                        user.LastLogin.HasValue ? user.LastLogin.Value.ToString("o", CultureInfo.InvariantCulture) : DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture));
 
                     return new LoginResultViewModel
                     {

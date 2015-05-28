@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Applications;
@@ -10,7 +11,8 @@
         public MyApplicationsViewModel(
             IEnumerable<MyApprenticeshipApplicationViewModel> apprenticeshipApplications,
             IEnumerable<MyTraineeshipApplicationViewModel> traineeshipApplications, 
-            TraineeshipFeatureViewModel traineeshipFeature)
+            TraineeshipFeatureViewModel traineeshipFeature,
+            DateTime? lastApplicationStatusNotification)
         {
             AllApprenticeshipApplications = apprenticeshipApplications
                 .Where(a => !a.IsArchived)
@@ -21,7 +23,11 @@
                 .OrderByDescending(a => a.DateApplied);
 
             TraineeshipFeature = traineeshipFeature;
+
+            LastApplicationStatusNotification = lastApplicationStatusNotification;
         }
+
+        public DateTime? LastApplicationStatusNotification { get; private set; }
 
         public IEnumerable<MyApprenticeshipApplicationViewModel> AllApprenticeshipApplications { get; private set; }
 
@@ -53,6 +59,23 @@
                     .Where(each =>
                         each.ApplicationStatus == ApplicationStatuses.Unsuccessful ||
                         (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && each.DateApplied.HasValue));
+            }
+        }
+
+
+        public IEnumerable<MyApprenticeshipApplicationViewModel> ApplicationStatusNotifications
+        {
+            get
+            {
+                if (!LastApplicationStatusNotification.HasValue)
+                {
+                    return Enumerable.Empty<MyApprenticeshipApplicationViewModel>();
+                }
+
+                return
+                    SuccessfulApprenticeshipApplications.Union(UnsuccessfulApplications)
+                        .Where(a => a.DateUpdated >= LastApplicationStatusNotification.Value)
+                        .OrderByDescending(a => a.DateApplied);
             }
         }
 

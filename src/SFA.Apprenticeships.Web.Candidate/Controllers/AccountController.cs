@@ -23,13 +23,16 @@
     {
         private readonly IAccountMediator _accountMediator;
         private readonly IDismissPlannedOutageMessageCookieProvider _dismissPlannedOutageMessageCookieProvider;
+        private readonly IUserDataProvider _userDataProvider;
 
         public AccountController(IAccountMediator accountMediator, 
             IDismissPlannedOutageMessageCookieProvider dismissPlannedOutageMessageCookieProvider,
-            IConfigurationService configurationService) : base(configurationService)
+            IConfigurationService configurationService,
+            IUserDataProvider userDataProvider) : base(configurationService)
         {
             _accountMediator = accountMediator;
             _dismissPlannedOutageMessageCookieProvider = dismissPlannedOutageMessageCookieProvider;
+            _userDataProvider = userDataProvider;
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
@@ -39,6 +42,17 @@
             {
                 var response = _accountMediator.Index(UserContext.CandidateId, UserData.Pop(CandidateDataItemNames.DeletedVacancyId), UserData.Pop(CandidateDataItemNames.DeletedVacancyTitle));
                 return View(response.ViewModel);
+            });
+        }
+
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        public async Task<ActionResult> DismissApplicationNotifications()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                _userDataProvider.Push(UserDataItemNames.LastApplicationStatusNotification, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
+                _userDataProvider.Pop(UserDataItemNames.ApplicationStatusChangeCount);
+                return RedirectToRoute(CandidateRouteNames.MyApplications);
             });
         }
 

@@ -63,6 +63,12 @@
                 filterContext.Controller.ViewBag.SavedAndDraftCount = savedAndDraftCount;
             }
 
+            var applicationStatusChangeCount = UserDataProvider.Get(UserDataItemNames.ApplicationStatusChangeCount);
+            if (!string.IsNullOrWhiteSpace(savedAndDraftCount))
+            {
+                filterContext.Controller.ViewBag.ApplicationStatusChangeCount = applicationStatusChangeCount;
+            }
+
             base.OnActionExecuted(filterContext);
         }
     }

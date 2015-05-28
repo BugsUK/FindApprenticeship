@@ -16,7 +16,7 @@
         [Test]
         public void SuccessTest()
         {
-            var emptyMyApplicationsView = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(), new List<MyTraineeshipApplicationViewModel>(), new TraineeshipFeatureViewModel());
+            var emptyMyApplicationsView = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(), new List<MyTraineeshipApplicationViewModel>(), new TraineeshipFeatureViewModel(), null);
             var apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
             apprenticeshipApplicationProviderMock.Setup(x => x.GetMyApplications(It.IsAny<Guid>())).Returns(emptyMyApplicationsView);
             var accountMediator = new AccountMediatorBuilder().With(apprenticeshipApplicationProviderMock).Build();

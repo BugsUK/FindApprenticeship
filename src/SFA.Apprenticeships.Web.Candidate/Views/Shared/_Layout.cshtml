@@ -196,18 +196,23 @@
             var request = $.ajax({
                 type: "GET",
                 url: '@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = true })'
-                });
-
-                request.done(function () {
-
-                    $("#planned-outage-message").hide();
-
-                });
             });
+
+            request.done(function () {
+
+                $("#planned-outage-message").hide();
+
+            });
+        });
 
         @if (ViewBag.SavedAndDraftCount != null)
         {
             @:UpdateSavedAndDraftCount(@ViewBag.SavedAndDraftCount);
+        }
+
+        @if (ViewBag.ApplicationStatusChangeCount != null)
+        {
+            @:UpdateApplicationStatusChangeCount(@ViewBag.ApplicationStatusChangeCount);
         }
         });
     </script>

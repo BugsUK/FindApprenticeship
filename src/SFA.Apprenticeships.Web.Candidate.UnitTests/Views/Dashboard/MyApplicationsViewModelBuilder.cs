@@ -1,5 +1,6 @@
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
+    using System;
     using System.Collections.Generic;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.MyApplications;
@@ -9,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
         private List<MyApprenticeshipApplicationViewModel> _apprenticeshipApplicationViewModels;
         private List<MyTraineeshipApplicationViewModel> _traineeshipApplicationViewModels;
         private TraineeshipFeatureViewModel _traineeshipFeatureViewModel;
+        private DateTime? _lastApplicationStatusNotification = null;
 
         public MyApplicationsViewModelBuilder()
         {
@@ -37,10 +39,16 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
             return this;
         }
 
+        public MyApplicationsViewModelBuilder With(DateTime? lastApplicationStatusNotification)
+        {
+            _lastApplicationStatusNotification = lastApplicationStatusNotification;
+            return this;
+        }
+
         public MyApplicationsViewModel Build()
         {
             return new MyApplicationsViewModel(_apprenticeshipApplicationViewModels, _traineeshipApplicationViewModels,
-                _traineeshipFeatureViewModel);
+                _traineeshipFeatureViewModel, _lastApplicationStatusNotification);
         }
     }
 }

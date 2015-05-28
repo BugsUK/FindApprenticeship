@@ -4,6 +4,10 @@
     lastScrollTop = 0,
     delta = 5;
 
+function UpdateApplicationStatusChangeCount(applicationStatusChangeCount) {
+    $("#dashUpdatesNumber").text(" (" + applicationStatusChangeCount + ")");
+}
+
 function UpdateSavedAndDraftCount(savedAndDraftCount) {
     var savedSearchTitle = $("#savedapplications-link");
     if (savedAndDraftCount != 0) {

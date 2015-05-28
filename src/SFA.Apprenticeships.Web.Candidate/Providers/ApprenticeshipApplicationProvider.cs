@@ -530,9 +530,15 @@
                     .ToList();
 
                 var traineeshipFeatureViewModel = GetTraineeshipFeatureViewModel(candidateId, apprenticeshipApplicationSummaries, traineeshipApplicationSummaries);
+                var lastApplicationStatusNotification = _userDataProvider.Get(UserDataItemNames.LastApplicationStatusNotification);
+                DateTime? lastApplicationStatusNotificationDateTime = null;
 
-                return new MyApplicationsViewModel(
-                    apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel);
+                if (!string.IsNullOrWhiteSpace(lastApplicationStatusNotification))
+                {
+                    lastApplicationStatusNotificationDateTime = DateTime.Parse(lastApplicationStatusNotification);
+                }
+
+                return new MyApplicationsViewModel(apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel, lastApplicationStatusNotificationDateTime);
             }
             catch (Exception e)
             {

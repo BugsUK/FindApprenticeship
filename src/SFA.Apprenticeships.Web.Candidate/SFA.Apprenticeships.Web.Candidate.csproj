@@ -281,7 +281,7 @@
     <Content Include="Content\_assets\js\nas\apprenticeships\saveVacancy.js" />
     <Content Include="Content\_assets\js\nas\refineSearch.js" />
     <Content Include="Content\_assets\js\nas\resultsSearch.js" />
-    <Content Include="Content\_assets\js\nas\savedAndDraftCount.js" />
+    <Content Include="Content\_assets\js\nas\headerContext.js" />
     <Content Include="Content\_assets\js\nas\searchTour.js" />
     <Content Include="Content\_assets\js\vendor\jquery.joyride.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
 {
+    using System;
     using System.Globalization;
     using System.Linq;
     using Common.Configuration;
@@ -83,11 +84,8 @@
                         return GetMediatorResponse(LoginMediatorCodes.Index.PendingActivation, result);
                     }
 
-                    // Set number of saved/draft vacancies
                     var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
-                    var applications = _candidateServiceProvider.GetApprenticeshipApplications(candidate.EntityId);
-                    var savedAndDraftAppCount = applications.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
-                    _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedAndDraftAppCount.ToString(CultureInfo.InvariantCulture));
+                    SetUsersApplicationContext(candidate);
 
                     // Redirect to session return URL (if any).
                     var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
@@ -247,13 +245,31 @@
             }
 
             var candidate = _candidateServiceProvider.GetCandidate(resetViewModel.EmailAddress);
+            SetUsersApplicationContext(candidate);
             _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Activated);
 
+            return GetMediatorResponse(LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
+        }
+
+        private void SetUsersApplicationContext(Domain.Entities.Candidates.Candidate candidate)
+        {
             var applications = _candidateServiceProvider.GetApprenticeshipApplications(candidate.EntityId);
             var savedAndDraftAppCount = applications.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
             _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedAndDraftAppCount.ToString(CultureInfo.InvariantCulture));
 
-            return GetMediatorResponse(LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
+            var lastAppStatusNotification = _userDataProvider.Get(UserDataItemNames.LastApplicationStatusNotification);
+
+            if (!string.IsNullOrWhiteSpace(lastAppStatusNotification))
+            {
+                var lastAppStatusNotificationDate = DateTime.Parse(lastAppStatusNotification);
+                var updatedSubmittedApplications = applications.Count(a => a.DateUpdated > lastAppStatusNotificationDate &&
+                            (a.Status == ApplicationStatuses.Successful || a.Status == ApplicationStatuses.Unsuccessful));
+
+                if (updatedSubmittedApplications > 0)
+                {
+                    _userDataProvider.Push(UserDataItemNames.ApplicationStatusChangeCount, updatedSubmittedApplications.ToString(CultureInfo.InvariantCulture));
+                }
+            }
         }
     }
 }
