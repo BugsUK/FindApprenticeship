@@ -52,7 +52,7 @@
                 if (searchParameters.Location.GeoPoint == null || (searchParameters.Location.GeoPoint.Latitude == 0 && searchParameters.Location.GeoPoint.Longitude == 0))
                 {
                     var locations = _locationSearchService.FindLocation(searchParameters.Location.Name);
-                    searchParameters.Location = locations != null ? locations.First() : null;
+                    searchParameters.Location = locations != null ? locations.FirstOrDefault() : null;
                 }
             }
 
