@@ -13,13 +13,16 @@
     {
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly ICandidateWriteRepository _candidateWriteRepository;
+        private readonly IAuditRepository _auditRepository;
         private readonly ICommunicationService _communicationService;
         private readonly ILogService _logService;
 
-        public SendAccountRemindersStrategy(IConfigurationService configurationService, IUserWriteRepository userWriteRepository, ICandidateWriteRepository candidateWriteRepository, ICommunicationService communicationService, ILogService logService) : base(configurationService)
+        public SendAccountRemindersStrategy(IConfigurationService configurationService, IUserWriteRepository userWriteRepository, ICandidateWriteRepository candidateWriteRepository, IAuditRepository auditRepository, ICommunicationService communicationService, ILogService logService)
+            : base(configurationService)
         {
             _userWriteRepository = userWriteRepository;
             _candidateWriteRepository = candidateWriteRepository;
+            _auditRepository = auditRepository;
             _communicationService = communicationService;
             _logService = logService;
         }
@@ -57,11 +60,23 @@
 
         protected void SetAccountDormant(User user, Candidate candidate)
         {
+            _logService.Info("Setting User with Id: {0} to Dormant and disabling comms", user.EntityId);
+
+            var candidateUser = new
+            {
+                User = user,
+                Candidate = candidate
+            };
+
+            _auditRepository.Audit(candidateUser, AuditEventTypes.CandidateUserMakeDormant, user.EntityId);
+
             user.Status = UserStatuses.Dormant;
             _userWriteRepository.Save(user);
 
             candidate.DisableAllOptionalCommunications();
             _candidateWriteRepository.Save(candidate);
+
+            _logService.Info("Set User with Id: {0} to Dormant and disabled comms", user.EntityId);
         }
 
         protected void SendAccountReminder(User user, Candidate candidate, DormantAccountStrategy configuration)

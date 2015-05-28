@@ -13,6 +13,7 @@
     {
         private readonly Mock<IConfigurationService> _configurationService;
         private Mock<IUserWriteRepository> _userWriteRepository;
+        private readonly Mock<IAuditRepository> _auditRepository = new Mock<IAuditRepository>();
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
 
         private IHousekeepingStrategy _successor;
@@ -27,7 +28,7 @@
 
         public SetPendingDeletionStrategy Build()
         {
-            var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userWriteRepository.Object, _logService.Object);
+            var strategy = new SetPendingDeletionStrategy(_configurationService.Object, _userWriteRepository.Object, _auditRepository.Object, _logService.Object);
             strategy.SetSuccessor(_successor);
             return strategy;
         }

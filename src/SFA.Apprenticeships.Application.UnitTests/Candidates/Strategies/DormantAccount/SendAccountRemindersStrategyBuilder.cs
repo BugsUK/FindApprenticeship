@@ -14,8 +14,9 @@
     {
         private readonly Mock<IConfigurationService> _configurationService;
         private Mock<IUserWriteRepository> _userWriteRepository; 
-        private Mock<ICandidateWriteRepository> _candidateWriteRepository; 
+        private Mock<ICandidateWriteRepository> _candidateWriteRepository;
         private Mock<ICommunicationService> _communicationService;
+        private readonly Mock<IAuditRepository> _auditRepository = new Mock<IAuditRepository>();
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
 
         private IHousekeepingStrategy _successor;
@@ -32,7 +33,7 @@
 
         public SendAccountRemindersStrategy Build()
         {
-            var strategy = new SendAccountRemindersStrategy(_configurationService.Object, _userWriteRepository.Object, _candidateWriteRepository.Object, _communicationService.Object, _logService.Object);
+            var strategy = new SendAccountRemindersStrategy(_configurationService.Object, _userWriteRepository.Object, _candidateWriteRepository.Object, _auditRepository.Object, _communicationService.Object, _logService.Object);
             strategy.SetSuccessor(_successor);
             return strategy;
         }

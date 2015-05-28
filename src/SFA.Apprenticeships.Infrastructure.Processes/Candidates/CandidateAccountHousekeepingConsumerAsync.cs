@@ -23,7 +23,7 @@
             _logService = logService;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 1)]
+        [SubscriptionConfiguration(PrefetchCount = 20)]
         [AutoSubscriberConsumer(SubscriptionId = "CandidateAccountHousekeepingConsumerAsync")]
         public Task Consume(CandidateHousekeeping candidateHousekeeping)
         {

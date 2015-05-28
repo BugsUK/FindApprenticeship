@@ -11,10 +11,10 @@
     {
         private readonly IHousekeepingStrategy _strategy;
 
-        public DormantAccountHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserWriteRepository userWriteRepository, ICandidateWriteRepository candidateWriteRepository, ILogService logService)
+        public DormantAccountHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserWriteRepository userWriteRepository, ICandidateWriteRepository candidateWriteRepository, IAuditRepository auditRepository, ILogService logService)
         {
-            var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, userWriteRepository, candidateWriteRepository, communicationService, logService);
-            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, logService);
+            var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, userWriteRepository, candidateWriteRepository, auditRepository, communicationService, logService);
+            var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, auditRepository, logService);
             var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
 
             sendAccountRemindersStrategy.SetSuccessor(setPendingDeletionStrategy);
