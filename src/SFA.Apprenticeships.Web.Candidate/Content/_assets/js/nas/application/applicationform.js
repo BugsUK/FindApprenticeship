@@ -162,11 +162,9 @@
         }
 
         return qualificationArrays;
-        
     }
 
     var qualificationViewModel = function () {
-
         var self = this;
 
         self.hasQualifications = ko.observable(undefined);
@@ -476,11 +474,11 @@
             }
         }).extend({
             validation: {
-                validator: function(val, fromYearValue) {
+                validator: function (val, fromYearValue) {
                     return val >= fromYearValue;
                 },
                 message: validationMessageToYearMustBeAfterFromYear,
-                params: self.fromYear,
+                params: self.itemFromYear,
                 onlyIf: function() {
                     return (self.itemIsCurrentEmployment() === false);
                 }
@@ -852,7 +850,7 @@
                     return val >= fromYearValue;
                 },
                 message: validationMessageToYearMustBeAfterFromYear,
-                params: self.fromYear
+                params: self.itemFromYear
             }
         });
 
