@@ -8,6 +8,7 @@
         public const string Privacy = "Privacy";
         public const string Helpdesk = "Helpdesk";
         public const string Terms = "Terms";
+        public const string NextSteps = "NextSteps";
         public const string Maintenance = "Maintenance";
         public const string MyApplications = "MyApplications";
         public const string ApprenticeshipSearch = "ApprenticeshipSearch";

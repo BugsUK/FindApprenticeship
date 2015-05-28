@@ -102,5 +102,11 @@
         {
             return await Task.Run<ActionResult>(() => View());
         }
+
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
+        public async Task<ActionResult> NextSteps()
+        {
+            return await Task.Run<ActionResult>(() => View());
+        }
     }
 }

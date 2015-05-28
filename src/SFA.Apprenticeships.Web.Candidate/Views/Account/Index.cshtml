@@ -212,7 +212,10 @@ else
                             {
                                 <div class="panel-indent font-xxsmall" id="candidate-support-message">
                                     <p>Some of your applications have been unsuccessful. Please contact the training provider for further information.</p>
-                                    <p>For careers advice and support visit the <a rel="external" target="_blank" href="https://nationalcareersservice.direct.gov.uk/pages/home.aspx">National Careers Service</a>.</p>
+                                    <p>
+                                        For advice on how to ensure your application has a better chance
+                                        of being successful @Html.RouteLink("see the next steps page", CandidateRouteNames.NextSteps).
+                                    </p>
                                 </div>
                             }
                             <table class="vert-middle">
