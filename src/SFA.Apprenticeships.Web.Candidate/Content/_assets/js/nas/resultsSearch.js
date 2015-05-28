@@ -59,6 +59,8 @@
     $(document).on('click', '.history .update-results', function (e) {
         e.preventDefault();
         loadResults($(this).attr("href"), true);
+        var queryStringParams = $.getQueryParameters($(this).attr("href"));
+        $("#LocationType").val(queryStringParams.LocationType);
     });
 
     function loadResults(searchQueryUrl, scrollTop) {
