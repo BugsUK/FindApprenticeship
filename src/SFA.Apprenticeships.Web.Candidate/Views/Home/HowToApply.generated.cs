@@ -3338,10 +3338,10 @@ WriteLiteral(" rows=\"4\"");
 
 WriteLiteral(" data-val-length-max=\"4000\"");
 
-WriteLiteral(@"
-                    data-value=""I feel that one of my main strengths is that I've got good communication skills. I am captain of my local Rugby team and I constantly have to be confident and constantly communicate with my team members. I've also held the position of customer service assistant on a helpdesk, so I have had to communicate with our customers over the phone on a daily basis.""");
+WriteLiteral("\r\n                    data-value=\"\"");
 
-WriteLiteral("></textarea>\r\n        <span");
+WriteLiteral(@">I feel that one of my main strengths is that I've got good communication skills. I am captain of my local Rugby team and I constantly have to be confident and constantly communicate with my team members. I've also held the position of customer service assistant on a helpdesk, so I have had to communicate with our customers over the phone on a daily basis.</textarea>
+        <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
@@ -3387,11 +3387,11 @@ WriteLiteral(" rows=\"4\"");
 
 WriteLiteral(" data-val-length-max=\"4000\"");
 
-WriteLiteral("\r\n                    data-value=\"I would like to improve my knowledge of the lat" +
-"est cutting and colouring techniques being used within the fashion industry and " +
-"how these could be adapted to suit high street fashion trends.\"");
+WriteLiteral("\r\n                    data-value=\"\"");
 
-WriteLiteral("></textarea>\r\n        <span");
+WriteLiteral(">I would like to improve my knowledge of the latest cutting and colouring techniq" +
+"ues being used within the fashion industry and how these could be adapted to sui" +
+"t high street fashion trends.</textarea>\r\n        <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
@@ -3435,10 +3435,10 @@ WriteLiteral(" rows=\"4\"");
 
 WriteLiteral(" data-val-length-max=\"4000\"");
 
-WriteLiteral(@"
-                    data-value=""I play the piano to a Grade 6 level, I feel that the passion and dedication that I've shown towards learning the piano proves that I could transfer these skills to my apprenticeship. Having to practice every day and seeing the results has been a very rewarding process.""");
+WriteLiteral("\r\n                    data-value=\"\"");
 
-WriteLiteral("></textarea>\r\n        <span");
+WriteLiteral(@">I play the piano to a Grade 6 level, I feel that the passion and dedication that I've shown towards learning the piano proves that I could transfer these skills to my apprenticeship. Having to practice every day and seeing the results has been a very rewarding process.</textarea>
+        <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
@@ -3488,10 +3488,10 @@ WriteLiteral(" rows=\"4\"");
 
 WriteLiteral(" data-val-length-max=\"4000\"");
 
-WriteLiteral(@"
-                    data-value=""I'd like to become an apprentice so that I can gain the skills and qualities that I need to enjoy a long and successful career. I didn't feel like University was the right route for me, even though I've received offers from 3 Universities.""");
+WriteLiteral("\r\n                    data-value=\"\"");
 
-WriteLiteral("></textarea>\r\n        <span");
+WriteLiteral(@">I'd like to become an apprentice so that I can gain the skills and qualities that I need to enjoy a long and successful career. I didn't feel like University was the right route for me, even though I've received offers from 3 Universities.</textarea>
+        <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
@@ -3531,11 +3531,11 @@ WriteLiteral(" rows=\"4\"");
 
 WriteLiteral(" data-val-length-max=\"4000\"");
 
-WriteLiteral("\r\n                    data-value=\"In 3 years time I would like to be a team leade" +
-"r, or maybe even assistant manager. As I\'m a quick learner I think that this is " +
-"a realistic target.\"");
+WriteLiteral("\r\n                    data-value=\"\"");
 
-WriteLiteral("></textarea>\r\n        <span");
+WriteLiteral(">In 3 years time I would like to be a team leader, or maybe even assistant manage" +
+"r. As I\'m a quick learner I think that this is a realistic target.</textarea>\r\n " +
+"       <span");
 
 WriteLiteral(" class=\"form-hint\"");
 
@@ -3807,11 +3807,13 @@ WriteLiteral(">\r\n            <p");
 
 WriteLiteral(" class=\"small-btm-margin\"");
 
+WriteLiteral(">\r\n                Before you start your application, print off a copy of anythin" +
+"g that\r\n                might help you, such as:\r\n            </p>\r\n            " +
+"<ul");
+
+WriteLiteral(" class=\"list-bullet\"");
+
 WriteLiteral(@">
-                Before you start your application, print off a copy of anything that
-                might help you, such as:
-            </p>
-            <ul>
                 <li>your curriculum vitae (CV)</li>
                 <li>any practice application forms you have completed</li>
                 <li>personal statement</li>
