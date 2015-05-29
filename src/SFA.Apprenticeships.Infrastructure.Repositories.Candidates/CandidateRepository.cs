@@ -119,7 +119,7 @@
             return candidates;
         }
 
-        public IEnumerable<Candidate> GetCandidatesWithPendingMobileVerification()
+        public IEnumerable<Guid> GetCandidatesWithPendingMobileVerification()
         {
             _logger.Debug("Calling repository to get candidates with pending mobile verification");
 
@@ -128,14 +128,14 @@
                 Query<MongoCandidate>.NE(o => o.CommunicationPreferences.MobileVerificationCode, null),
                 Query<MongoCandidate>.NE(o => o.CommunicationPreferences.MobileVerificationCode, string.Empty));
 
-            var candidates = Collection
+            var candidateIds = Collection
                 .Find(query)
-                .Select(e => _mapper.Map<MongoCandidate, Candidate>(e))
+                .Select(u => u.Id)
                 .ToList();
 
-            _logger.Debug(string.Format("Found {0} candidates with pending mobile verification", candidates.Count));
+            _logger.Debug(string.Format("Found {0} candidates with pending mobile verification", candidateIds.Count));
 
-            return candidates;
+            return candidateIds;
         }
 
         public Candidate GetBySubscriberId(Guid subscriberId, bool errorIfNotFound = true)

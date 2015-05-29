@@ -88,8 +88,7 @@ namespace SFA.Apprenticeships.Application.Candidates
 
         private IEnumerable<Guid> GetCandidatesPendingMobileVerification()
         {
-            return _candidateReadRepository.GetCandidatesWithPendingMobileVerification()
-                .Select(each => each.EntityId);
+            return _candidateReadRepository.GetCandidatesWithPendingMobileVerification();
         }
     }
 }

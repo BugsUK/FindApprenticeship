@@ -87,7 +87,7 @@
 
             _mockCandidateReadRepository.Setup(mock =>
                 mock.GetCandidatesWithPendingMobileVerification())
-                .Returns(candidates);
+                .Returns(candidates.Select(c => c.EntityId));
 
             _mockMessageBus.Setup(mock =>
                 mock.PublishMessage(It.IsAny<CandidateHousekeeping>()))
@@ -137,7 +137,7 @@
 
             _mockCandidateReadRepository.Setup(mock =>
                 mock.GetCandidatesWithPendingMobileVerification())
-                .Returns(candidates);
+                .Returns(candidates.Select(c => c.EntityId));
 
             _mockMessageBus.Setup(mock =>
                 mock.PublishMessage(It.IsAny<CandidateHousekeeping>()))

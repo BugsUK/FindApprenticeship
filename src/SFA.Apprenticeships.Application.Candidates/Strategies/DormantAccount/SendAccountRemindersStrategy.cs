@@ -33,36 +33,38 @@
 
             if (user.Status != UserStatuses.Active && user.Status != UserStatuses.Locked && user.Status != UserStatuses.Dormant) return false;
 
-            var housekeepingCyclesSinceLastLogin = GetHousekeepingCyclesSince(user.GetLastLogin());
+            var lastLogin = user.GetLastLogin();
+
+            var housekeepingCyclesSinceLastLogin = GetHousekeepingCyclesSince(lastLogin);
 
             var configuration = Configuration.DormantAccountStrategy;
 
             //Ensure accounts are set to dormant if cycle was missed
             if (user.Status != UserStatuses.Dormant && housekeepingCyclesSinceLastLogin >= configuration.SendReminderAfterCycles)
             {
-                SetAccountDormant(user, candidate);
-                SendAccountReminder(user, candidate, configuration);
+                SetAccountDormant(user, candidate, lastLogin);
+                SendAccountReminder(user, candidate, configuration, lastLogin);
                 return true;
             }
 
             //Remind on the first cycle
             if (housekeepingCyclesSinceLastLogin == configuration.SendReminderAfterCycles)
             {
-                SendAccountReminder(user, candidate, configuration);
+                SendAccountReminder(user, candidate, configuration, lastLogin);
                 return true;
             }
 
             //Remind on the second cycle
             if (housekeepingCyclesSinceLastLogin == configuration.SendFinalReminderAfterCycles)
             {
-                SendAccountReminder(user, candidate, configuration);
+                SendAccountReminder(user, candidate, configuration, lastLogin);
                 return true;
             }
 
             return false;
         }
 
-        protected void SetAccountDormant(User user, Candidate candidate)
+        protected void SetAccountDormant(User user, Candidate candidate, DateTime lastLogin)
         {
             _logService.Info("Setting User with Id: {0} to Dormant and disabling comms", user.EntityId);
 
@@ -74,6 +76,10 @@
 
             _auditRepository.Audit(candidateUser, AuditEventTypes.CandidateUserMakeDormant, user.EntityId);
 
+            if (!user.LastLogin.HasValue)
+            {
+                user.LastLogin = lastLogin;
+            }
             user.Status = UserStatuses.Dormant;
             _userWriteRepository.Save(user);
 
@@ -83,9 +89,8 @@
             _logService.Info("Set User with Id: {0} to Dormant and disabled comms", user.EntityId);
         }
 
-        protected void SendAccountReminder(User user, Candidate candidate, DormantAccountStrategy configuration)
+        protected void SendAccountReminder(User user, Candidate candidate, DormantAccountStrategy configuration, DateTime lastLogin)
         {
-            var lastLogin = user.GetLastLogin();
             var lastLoginDelta = DateTime.UtcNow - lastLogin;
             var lastLoginInCycles = lastLoginDelta.TotalHours / Configuration.HousekeepingCycleInHours;
             var lastLoginInDays = lastLoginDelta.Days;
@@ -94,12 +99,19 @@
             var pendingDeletionAfterHours = configuration.SetPendingDeletionAfterCycles*
                                             Configuration.HousekeepingCycleInHours;
 
+            var tomorrow = DateTime.UtcNow.AddDays(1);
+            var accountExpiryDate = lastLogin.AddHours(pendingDeletionAfterHours);
+            if (accountExpiryDate < tomorrow)
+            {
+                accountExpiryDate = tomorrow;
+            }
+
             _communicationService.SendMessageToCandidate(candidate.EntityId, MessageTypes.SendDormantAccountReminder,
                 new[]
                 {
                     new CommunicationToken(CommunicationTokens.CandidateFirstName, candidate.RegistrationDetails.FirstName),
                     new CommunicationToken(CommunicationTokens.LastLogin, lastLoginInDaysFormatted),
-                    new CommunicationToken(CommunicationTokens.AccountExpiryDate, lastLogin.AddHours(pendingDeletionAfterHours).ToLongDateString()),
+                    new CommunicationToken(CommunicationTokens.AccountExpiryDate, accountExpiryDate.ToLongDateString()),
                     new CommunicationToken(CommunicationTokens.Username, candidate.RegistrationDetails.EmailAddress)
                 });
         }

@@ -14,7 +14,7 @@
         
         IEnumerable<Candidate> GetAllCandidatesWithPhoneNumber(string phoneNumber, bool errorIfNotFound = true);
 
-        IEnumerable<Candidate> GetCandidatesWithPendingMobileVerification();
+        IEnumerable<Guid> GetCandidatesWithPendingMobileVerification();
 
         Candidate GetBySubscriberId(Guid subscriberId, bool errorIfNotFound = true);
     }
