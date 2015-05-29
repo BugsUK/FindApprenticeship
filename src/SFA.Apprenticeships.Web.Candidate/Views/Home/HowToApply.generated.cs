@@ -113,7 +113,7 @@ WriteLiteral(" class=\"grid grid-1-3\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteLiteral(" class=\"page-link\"");
+WriteLiteral(" class=\"page-link hide-nojs\"");
 
 WriteLiteral(">\r\n            <a");
 

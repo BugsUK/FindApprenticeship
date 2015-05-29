@@ -86,7 +86,7 @@ WriteLiteral(">National Careers Service’s application guide</a> if you\'d like
 " </p>\r\n    <p>\r\n        To help you write a better application you can take a gu" +
 "ided tour of\r\n        the application form.\r\n    </p>\r\n    <div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group hide-nojs\"");
 
 WriteLiteral(">\r\n");
 
