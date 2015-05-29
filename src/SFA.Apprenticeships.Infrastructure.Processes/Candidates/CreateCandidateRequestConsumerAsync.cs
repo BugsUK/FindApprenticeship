@@ -65,7 +65,7 @@
                 _logger.Debug("Creating candidate Id: {0}", request.CandidateId);
 
                 var user = _userReadRepository.Get(request.CandidateId);
-                user.AssertState("Create legacy user", UserStatuses.Active, UserStatuses.Locked);
+                user.AssertState("Create legacy user", UserStatuses.Active, UserStatuses.Locked, UserStatuses.Dormant);
 
                 var candidate = _candidateReadRepository.Get(request.CandidateId, true);
                 if (candidate.LegacyCandidateId == 0)
