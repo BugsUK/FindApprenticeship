@@ -25,6 +25,11 @@
             _strategy = sendAccountRemindersStrategyA;
         }
 
+        public int Order
+        {
+            get { return 1; }
+        }
+
         public void Handle(User user, Candidate candidate)
         {
             _strategy.Handle(user, candidate);

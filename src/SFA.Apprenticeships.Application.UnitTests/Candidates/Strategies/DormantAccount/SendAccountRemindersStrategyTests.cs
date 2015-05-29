@@ -39,7 +39,7 @@
             var successor = new Mock<IHousekeepingStrategy>();
             var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
 
-            Assert(shouldSendReminder, shouldSendReminder, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
+            Assert(shouldSendReminder && userStatus != UserStatuses.Dormant, shouldSendReminder, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
         }
 
         [Test]
@@ -81,12 +81,12 @@
         }
 
         [Test]
-        public void DoNotSendReminderBefore330Days()
+        public void DoNotSendReminderAfter91Days()
         {
-            var lastLogin = DateTime.UtcNow.AddDays(-329);
+            var lastLogin = DateTime.UtcNow.AddDays(-91);
 
             var candidateId = Guid.NewGuid();
-            var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Active).Build();
+            var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Dormant).Build();
             var candidate = new CandidateBuilder(candidateId).Build();
             candidate.EnableAllOptionalCommunications();
 
@@ -96,13 +96,13 @@
             var successor = new Mock<IHousekeepingStrategy>();
             var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
 
-            Assert(true, false, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
+            Assert(false, false, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
         }
 
         [Test]
-        public void SendReminderAfter330Days()
+        public void SendReminderAfter91DaysIfNotDormant()
         {
-            var lastLogin = DateTime.UtcNow.AddDays(-330);
+            var lastLogin = DateTime.UtcNow.AddDays(-91);
 
             var candidateId = Guid.NewGuid();
             var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Active).Build();
@@ -116,6 +116,44 @@
             var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
 
             Assert(true, true, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
+        }
+
+        [Test]
+        public void DoNotSendReminderBefore330Days()
+        {
+            var lastLogin = DateTime.UtcNow.AddDays(-329);
+
+            var candidateId = Guid.NewGuid();
+            var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Dormant).Build();
+            var candidate = new CandidateBuilder(candidateId).Build();
+            candidate.EnableAllOptionalCommunications();
+
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
+            var communicationService = new Mock<ICommunicationService>();
+            var successor = new Mock<IHousekeepingStrategy>();
+            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
+
+            Assert(false, false, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
+        }
+
+        [Test]
+        public void SendReminderAfter330Days()
+        {
+            var lastLogin = DateTime.UtcNow.AddDays(-330);
+
+            var candidateId = Guid.NewGuid();
+            var user = new UserBuilder(candidateId).WithLastLogin(lastLogin).WithStatus(UserStatuses.Dormant).Build();
+            var candidate = new CandidateBuilder(candidateId).Build();
+            candidate.EnableAllOptionalCommunications();
+
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
+            var communicationService = new Mock<ICommunicationService>();
+            var successor = new Mock<IHousekeepingStrategy>();
+            var strategy = new SendAccountRemindersStrategyBuilder().With(successor.Object).With(communicationService).With(userWriteRepository).With(candidateWriteRepository).Build();
+
+            Assert(false, true, strategy, successor, userWriteRepository, candidateWriteRepository, communicationService, user, candidate);
         }
 
         private static void Assert(bool shouldSetDormant, bool shouldSendReminder, SendAccountRemindersStrategy strategy, Mock<IHousekeepingStrategy> successor, Mock<IUserWriteRepository> userWriteRepository, Mock<ICandidateWriteRepository> candidateWriteRepository, Mock<ICommunicationService> communicationService, User user, Candidate candidate)
@@ -137,20 +175,17 @@
             if (shouldSetDormant)
             {
                 //User and Candidate were updated
-                if (user.Status != UserStatuses.Dormant)
-                {
-                    userWriteRepository.Verify(r => r.Save(It.IsAny<User>()), Times.Once);
-                    savedUser.Should().NotBeNull();
-                    candidateWriteRepository.Verify(r => r.Save(It.IsAny<Candidate>()), Times.Once);
-                    savedCandidate.Should().NotBeNull();
+                userWriteRepository.Verify(r => r.Save(It.IsAny<User>()), Times.Once);
+                savedUser.Should().NotBeNull();
+                candidateWriteRepository.Verify(r => r.Save(It.IsAny<Candidate>()), Times.Once);
+                savedCandidate.Should().NotBeNull();
 
-                    //User was set as dormant and comms were disabled
-                    savedUser.Status.Should().Be(UserStatuses.Dormant);
-                    CandidateHelper.IndividualCommunicationPreferences(savedCandidate.CommunicationPreferences)
-                        .Any(p => p.EnableEmail && p.EnableText)
-                        .Should()
-                        .BeFalse();
-                }
+                //User was set as dormant and comms were disabled
+                savedUser.Status.Should().Be(UserStatuses.Dormant);
+                CandidateHelper.IndividualCommunicationPreferences(savedCandidate.CommunicationPreferences)
+                    .Any(p => p.EnableEmail && p.EnableText)
+                    .Should()
+                    .BeFalse();
             }
             else
             {
@@ -173,7 +208,7 @@
 
                 var lastLogin = user.LastLogin ?? DateTime.UtcNow;
                 var lastLoginInDays = (DateTime.UtcNow - lastLogin).Days;
-                var lastLoginInDaysFormatted = lastLoginInDays > 270 ? "almost a year" : "90 days";
+                var lastLoginInDaysFormatted = lastLoginInDays > 270 ? "almost a year" : string.Format("{0} days", lastLoginInDays);
 
                 var expectedCommunicationTokens = new[]
                 {

@@ -23,6 +23,8 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
+            if (user == null || candidate == null) return false;
+
             if (!candidate.CommunicationPreferences.MobileVerificationCodeDateCreated.HasValue ||
                 string.IsNullOrWhiteSpace(candidate.CommunicationPreferences.MobileVerificationCode))
             {

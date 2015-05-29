@@ -29,6 +29,8 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
+            if (user == null || candidate == null) return false;
+
             if (user.Status != UserStatuses.Active && user.Status != UserStatuses.Locked && user.Status != UserStatuses.Dormant) return false;
 
             var housekeepingCyclesSinceLastLogin = GetHousekeepingCyclesSince(user.GetLastLogin());
@@ -39,6 +41,8 @@
             if (user.Status != UserStatuses.Dormant && housekeepingCyclesSinceLastLogin >= configuration.SendReminderAfterCycles)
             {
                 SetAccountDormant(user, candidate);
+                SendAccountReminder(user, candidate, configuration);
+                return true;
             }
 
             //Remind on the first cycle

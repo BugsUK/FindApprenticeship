@@ -20,6 +20,11 @@
             _strategy = sendMobileVerificationCodeReminder;
         }
 
+        public int Order
+        {
+            get { return 0; }
+        }
+
         public void Handle(User user, Candidate candidate)
         {
             _strategy.Handle(user, candidate);

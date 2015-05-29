@@ -22,6 +22,8 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
+            if (user == null || candidate == null) return false;
+
             if (user.Status != UserStatuses.Dormant) return false;
 
             var housekeepingCyclesSinceLastLogin = GetHousekeepingCyclesSince(user.GetLastLogin());

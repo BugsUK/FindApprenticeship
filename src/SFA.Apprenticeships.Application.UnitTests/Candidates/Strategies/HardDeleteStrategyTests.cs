@@ -1,19 +1,17 @@
-﻿using System;
-using Moq;
-using NUnit.Framework;
-using SFA.Apprenticeships.Application.Candidates.Strategies;
-using SFA.Apprenticeships.Domain.Entities.UnitTests.Builder;
-using SFA.Apprenticeships.Domain.Entities.Users;
-
-namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Candidates;
+    using Application.Candidates.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.UnitTests.Builder;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
-    using FluentAssertions;
+    using Moq;
+    using NUnit.Framework;
     using Ploeh.AutoFixture;
 
     [TestFixture]
@@ -79,6 +77,55 @@ namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 
             //Strategy did not handle the request
             successor.Verify(s => s.Handle(user, candidate), Times.Once);
+        }
+
+        [Test]
+        public void DeleteIfUserIsNull()
+        {
+            var candidateId = Guid.NewGuid();
+            User user = null;
+            var candidate = new CandidateBuilder(candidateId).Build();
+
+            var successor = new Mock<IHousekeepingStrategy>();
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
+            var authenticationRepository = new Mock<IAuthenticationRepository>();
+            var strategy = new HardDeleteStrategyBuilder().With(userWriteRepository).With(candidateWriteRepository).With(authenticationRepository).With(successor.Object).Build();
+
+            strategy.Handle(user, candidate);
+
+            //Strategy handled the request
+            successor.Verify(s => s.Handle(user, candidate), Times.Never);
+
+            //Entities were deleted
+            candidateWriteRepository.Verify(r => r.Delete(candidateId), Times.Once);
+            authenticationRepository.Verify(r => r.Delete(candidateId), Times.Once);
+            userWriteRepository.Verify(r => r.Delete(candidateId), Times.Once);
+        }
+
+        [Test]
+        public void DeleteIfCandidateIsNull()
+        {
+            var dateUpdated = DateTime.UtcNow.AddDays(-14);
+            var candidateId = Guid.NewGuid();
+            var user = new UserBuilder(candidateId).WithStatus(UserStatuses.PendingActivation).WithDateUpdated(dateUpdated).Build();
+            Candidate candidate = null;
+
+            var successor = new Mock<IHousekeepingStrategy>();
+            var userWriteRepository = new Mock<IUserWriteRepository>();
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
+            var authenticationRepository = new Mock<IAuthenticationRepository>();
+            var strategy = new HardDeleteStrategyBuilder().With(userWriteRepository).With(candidateWriteRepository).With(authenticationRepository).With(successor.Object).Build();
+
+            strategy.Handle(user, candidate);
+
+            //Strategy handled the request
+            successor.Verify(s => s.Handle(user, candidate), Times.Never);
+
+            //Entities were deleted
+            candidateWriteRepository.Verify(r => r.Delete(candidateId), Times.Once);
+            authenticationRepository.Verify(r => r.Delete(candidateId), Times.Once);
+            userWriteRepository.Verify(r => r.Delete(candidateId), Times.Once);
         }
 
         [Test]

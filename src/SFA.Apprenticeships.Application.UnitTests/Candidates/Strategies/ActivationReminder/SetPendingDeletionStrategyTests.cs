@@ -57,28 +57,6 @@
         }
 
         [Test]
-        public void SetUserPendingDeletionIfNoCandidateRecord()
-        {
-            var dateCreated = DateTime.UtcNow;
-
-            var candidateId = Guid.NewGuid();
-            var user = new UserBuilder(candidateId).WithDateCreated(dateCreated).Activated(true).Build();
-
-            var userWriteRepository = new Mock<IUserWriteRepository>();
-            User savedUser = null;
-            userWriteRepository.Setup(r => r.Save(It.IsAny<User>())).Callback<User>(u => savedUser = u);
-            var successor = new Mock<IHousekeepingStrategy>();
-            var strategy = new SetPendingDeletionStrategyBuilder().With(userWriteRepository).With(successor.Object).Build();
-
-            strategy.Handle(user, null);
-
-            //Strategy handled the request
-            successor.Verify(s => s.Handle(user, null), Times.Never);
-            savedUser.Should().NotBeNull();
-            savedUser.Status.Should().Be(UserStatuses.PendingDeletion);
-        }
-
-        [Test]
         public void SetPendingDeletionEndsChainOfResponsibility()
         {
             var dateCreated = DateTime.UtcNow.AddDays(-31);

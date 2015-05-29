@@ -33,7 +33,7 @@
             }
         }
 
-        protected void UpdateEntityTimestamps(T entity)
+        protected void UpdateEntityTimestamps(BaseEntity entity)
         {
             // determine whether this is a "new" entity being saved for the first time
             if (entity.DateCreated == DateTime.MinValue)

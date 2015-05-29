@@ -5,6 +5,8 @@
 
     public interface IHousekeepingChainOfResponsibility
     {
+        int Order { get; }
+
         void Handle(User user, Candidate candidate); 
     }
 }

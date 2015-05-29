@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
 {
+    using System;
     using System.Collections.Generic;
-    using System.Dynamic;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
@@ -48,19 +48,35 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
-            if (user.Status != UserStatuses.PendingDeletion) return false;
+            Guid entityId;
 
-            if (!user.DateUpdated.HasValue) return false;
+            if (user == null)
+            {
+                //If user is null, the candidate should be deleted as an orphaned record
+                entityId = candidate.EntityId;
+            }
+            else
+            {
+                entityId = user.EntityId;
 
-            var housekeepingCyclesSinceDateUpdated = GetHousekeepingCyclesSince(user.DateUpdated.Value);
+                //A null candidate record means the user is orphaned and so should be deleted
+                if (candidate != null)
+                {
+                    if (user.Status != UserStatuses.PendingDeletion) return false;
 
-            if(housekeepingCyclesSinceDateUpdated < Configuration.HardDeleteAccountAfterCycles) return false;
+                    if (!user.DateUpdated.HasValue) return false;
 
-            var savedSearches = _savedSearchReadRepository.GetForCandidate(user.EntityId);
-            var apprenticeshipApplications = _apprenticeshipApplicationReadRepository.GetForCandidate(user.EntityId);
-            var traineeshipApplications = _traineeshipApplicationReadRepository.GetForCandidate(user.EntityId);
+                    var housekeepingCyclesSinceDateUpdated = GetHousekeepingCyclesSince(user.DateUpdated.Value);
 
-            Audit(user, candidate, savedSearches, apprenticeshipApplications, traineeshipApplications);
+                    if (housekeepingCyclesSinceDateUpdated < Configuration.HardDeleteAccountAfterCycles) return false;
+                }
+            }
+
+            var savedSearches = _savedSearchReadRepository.GetForCandidate(entityId);
+            var apprenticeshipApplications = _apprenticeshipApplicationReadRepository.GetForCandidate(entityId);
+            var traineeshipApplications = _traineeshipApplicationReadRepository.GetForCandidate(entityId);
+
+            Audit(entityId, user, candidate, savedSearches, apprenticeshipApplications, traineeshipApplications);
 
             //These methods aren't transactional however the code can cope with missing entities and so will self heal over time in the unlikely event of partial failure
 
@@ -70,14 +86,16 @@
 
             DeleteSavedSearches(savedSearches);
 
-            DeleteCandidate(candidate);
+            DeleteCandidate(entityId);
 
-            DeleteUser(user);
+            DeleteAuthentication(entityId);
+
+            DeleteUser(entityId);
 
             return true;
         }
 
-        private void Audit(User user, Candidate candidate, IList<SavedSearch> savedSearches, IList<ApprenticeshipApplicationSummary> apprenticeshipApplications, IList<TraineeshipApplicationSummary> traineeshipApplications)
+        private void Audit(Guid entityId, User user, Candidate candidate, IList<SavedSearch> savedSearches, IList<ApprenticeshipApplicationSummary> apprenticeshipApplications, IList<TraineeshipApplicationSummary> traineeshipApplications)
         {
             var candidateUser = new
                 {
@@ -88,7 +106,7 @@
                     TraineeshipApplications = traineeshipApplications
                 };
 
-            _auditRepository.Audit(candidateUser, AuditEventTypes.HardDeleteCandidateUser, user.EntityId);
+            _auditRepository.Audit(candidateUser, AuditEventTypes.HardDeleteCandidateUser, entityId);
         }
 
         private void DeleteApprenticeshipApplications(IList<ApprenticeshipApplicationSummary> apprenticeshipApplications)
@@ -136,31 +154,31 @@
             }
         }
 
-        private void DeleteCandidate(Candidate candidate)
+        private void DeleteCandidate(Guid entityId)
         {
-            if (candidate != null)
-            {
-                _logService.Info("Hard deleting Candidate: {0}", candidate.EntityId);
+            _logService.Info("Hard deleting Candidate: {0}", entityId);
 
-                _candidateWriteRepository.Delete(candidate.EntityId);
+            _candidateWriteRepository.Delete(entityId);
 
-                _logService.Info("Hard deleted Candidate: {0}", candidate.EntityId);
-            }
+            _logService.Info("Hard deleted Candidate: {0}", entityId);
         }
 
-        private void DeleteUser(User user)
+        private void DeleteAuthentication(Guid entityId)
         {
-            _logService.Info("Hard deleting User Credentials: {0}", user.EntityId);
+            _logService.Info("Hard deleting User Credentials: {0}", entityId);
 
-            _authenticationRepository.Delete(user.EntityId);
+            _authenticationRepository.Delete(entityId);
 
-            _logService.Info("Hard deleted User Credentials: {0}", user.EntityId);
+            _logService.Info("Hard deleted User Credentials: {0}", entityId);
+        }
 
-            _logService.Info("Hard deleting User: {0}", user.EntityId);
+        private void DeleteUser(Guid entityId)
+        {
+            _logService.Info("Hard deleting User: {0}", entityId);
 
-            _userWriteRepository.Delete(user.EntityId);
+            _userWriteRepository.Delete(entityId);
 
-            _logService.Info("Hard deleted User: {0}", user.EntityId);
+            _logService.Info("Hard deleted User: {0}", entityId);
         }
     }
 }

@@ -170,9 +170,9 @@
         {
             _logger.Debug("Calling repository to save candidate with Id={0}, FirstName={1}, EmailAddress={2}", entity.EntityId, entity.RegistrationDetails.FirstName, entity.RegistrationDetails.EmailAddress);
 
-            var mongoEntity = _mapper.Map<Candidate, MongoCandidate>(entity);
+            UpdateEntityTimestamps(entity);
 
-            UpdateEntityTimestamps(mongoEntity);
+            var mongoEntity = _mapper.Map<Candidate, MongoCandidate>(entity);
 
             Collection.Save(mongoEntity);
 

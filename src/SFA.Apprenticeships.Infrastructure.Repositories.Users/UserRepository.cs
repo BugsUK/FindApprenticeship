@@ -106,9 +106,9 @@
         {
             _logger.Debug("Called Mongodb to save user with username={0}", entity.Username);
 
-            var mongoEntity = _mapper.Map<User, MongoUser>(entity);
+            UpdateEntityTimestamps(entity);
 
-            UpdateEntityTimestamps(mongoEntity);
+            var mongoEntity = _mapper.Map<User, MongoUser>(entity);
 
             Collection.Save(mongoEntity);
 

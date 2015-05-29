@@ -22,11 +22,7 @@
 
         protected override bool DoHandle(User user, Candidate candidate)
         {
-            if (candidate == null)
-            {
-                _logService.Warn("Setting user status to PendingDeletion for user with Id: {0} as it is associated with a null candidate", user.EntityId);
-                return SetUserStatusPendingDeletion(user);
-            }
+            if (user == null || candidate == null) return false;
 
             if (user.Status != UserStatuses.PendingActivation) return false;
 
