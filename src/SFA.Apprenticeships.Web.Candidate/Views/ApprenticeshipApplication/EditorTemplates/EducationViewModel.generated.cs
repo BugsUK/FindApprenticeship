@@ -66,7 +66,7 @@ WriteLiteral("    ");
 
             
             #line 5 "..\..\Views\ApprenticeshipApplication\EditorTemplates\EducationViewModel.cshtml"
-Write(Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, controlHtmlAttributes: new { id = "school-name" }));
+Write(Html.FormTextFor(m => m.NameOfMostRecentSchoolCollege, controlHtmlAttributes: new { @class = "school-name" }));
 
             
             #line default

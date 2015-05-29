@@ -100,7 +100,7 @@ WriteLiteral("    ");
 
             
             #line 16 "..\..\Views\ApprenticeshipApplication\EditorTemplates\AboutYouViewModel.cshtml"
-Write(Html.FormTextAreaFor(m => m.WhatAreYourStrengths, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", id = "appTourStrengths" }, hintHtmlAttributes: new { @class = "text" }));
+Write(Html.FormTextAreaFor(m => m.WhatAreYourStrengths, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", @class = "appTourStrengths" }, hintHtmlAttributes: new { @class = "text" }));
 
             
             #line default
@@ -111,7 +111,7 @@ WriteLiteral("    ");
 
             
             #line 17 "..\..\Views\ApprenticeshipApplication\EditorTemplates\AboutYouViewModel.cshtml"
-Write(Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", id = "appTourSkills" }, hintHtmlAttributes: new { @class = "text" }));
+Write(Html.FormTextAreaFor(m => m.WhatDoYouFeelYouCouldImprove, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", @class = "appTourSkills" }, hintHtmlAttributes: new { @class = "text" }));
 
             
             #line default
@@ -122,7 +122,7 @@ WriteLiteral("    ");
 
             
             #line 18 "..\..\Views\ApprenticeshipApplication\EditorTemplates\AboutYouViewModel.cshtml"
-Write(Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", id = "appTourHobbies" }, hintHtmlAttributes: new { @class = "text" }));
+Write(Html.FormTextAreaFor(m => m.WhatAreYourHobbiesInterests, controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true", @class = "appTourHobbies" }, hintHtmlAttributes: new { @class = "text" }));
 
             
             #line default

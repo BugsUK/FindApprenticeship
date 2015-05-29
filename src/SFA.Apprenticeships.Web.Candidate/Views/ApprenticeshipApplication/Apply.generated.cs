@@ -682,7 +682,7 @@ WriteLiteral(@">
     </li>
     <li");
 
-WriteLiteral(" data-id=\"school-name\"");
+WriteLiteral(" data-class=\"school-name\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -753,7 +753,7 @@ WriteLiteral(@">
     </li>
     <li");
 
-WriteLiteral(" data-id=\"appTourStrengths\"");
+WriteLiteral(" data-class=\"appTourStrengths\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -776,7 +776,7 @@ WriteLiteral(@">
     </li>
     <li");
 
-WriteLiteral(" data-id=\"appTourSkills\"");
+WriteLiteral(" data-class=\"appTourSkills\"");
 
 WriteLiteral(">\r\n        <div");
 
@@ -801,7 +801,7 @@ WriteLiteral(@">
     </li>
     <li");
 
-WriteLiteral(" data-id=\"appTourHobbies\"");
+WriteLiteral(" data-class=\"appTourHobbies\"");
 
 WriteLiteral(">\r\n        <div");
 
