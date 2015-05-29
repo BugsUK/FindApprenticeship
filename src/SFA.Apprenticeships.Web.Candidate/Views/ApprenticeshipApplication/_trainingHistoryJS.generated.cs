@@ -77,6 +77,8 @@ WriteLiteral(">Have you been on a training course?</p>\r\n        <p");
 
 WriteLiteral(" class=\"form-hint text\"");
 
+WriteLiteral(" id=\"appTourTraining\"");
+
 WriteLiteral(">\r\n            Include any courses you\'ve received, in or outside of work\r\n      " +
 "  </p>\r\n        <div");
 

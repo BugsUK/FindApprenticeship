@@ -2216,7 +2216,7 @@ WriteLiteral(">Have you been on a training course?</p>\r\n    <p");
 
 WriteLiteral(" class=\"form-hint text\"");
 
-WriteLiteral(" id=\"appTourWork\"");
+WriteLiteral(" id=\"appTourTraining\"");
 
 WriteLiteral(">\r\n        Include any courses you\'ve received, in or outside of work\r\n    </p>\r\n" +
 "    <div");
@@ -3860,6 +3860,16 @@ WriteLiteral(@">
     </li>
     <li");
 
+WriteLiteral(" data-id=\"appTourTraining\"");
+
+WriteLiteral(">\r\n        <div");
+
+WriteLiteral(" aria-live=\"polite\"");
+
+WriteLiteral(">\r\n            <p>Here you\'re able to add any training courses that you\'ve been o" +
+"n, these might be courses that you\'ve been on through work, or something you\'ve " +
+"paid for yourself.</p>\r\n        </div>\r\n    </li>\r\n    <li");
+
 WriteLiteral(" data-id=\"appTourAbout\"");
 
 WriteLiteral(">\r\n        <div");
@@ -4044,7 +4054,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 1282 "..\..\Views\Home\HowToApply.cshtml"
+            #line 1287 "..\..\Views\Home\HowToApply.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
