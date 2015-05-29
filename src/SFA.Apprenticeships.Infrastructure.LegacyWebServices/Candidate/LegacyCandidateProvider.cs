@@ -64,7 +64,7 @@
             {
                 _logger.Debug("Calling Legacy.UpdateCandidate for candidate id='{0}'", candidate.EntityId);
 
-                InternalUpdateCandidate(candidate);
+                UpdateLegacyCandidate(candidate);
 
                 _logger.Debug("Legacy.UpdateCandidate succeeded for candidate id='{0}'", candidate.EntityId);
             }
@@ -95,23 +95,53 @@
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
                 string message;
+                string errorCode;
 
                 if (response == null)
                 {
                     message = "No response";
+                    errorCode = ErrorCodes.CreateCandidateFailed;
                 }
                 else
                 {
-                    message = string.Format("{0} validation error(s): {1}", response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
+                    ParseValidationError(response, out message, out errorCode);
                 }
 
-                throw new DomainException(ErrorCodes.CreateCandidateFailed, new { message, candidateId = candidate.EntityId });
+                throw new DomainException(errorCode, new { message, candidateId = candidate.EntityId });
             }
 
             return response.CandidateId;
         }
 
-        private void InternalUpdateCandidate(Domain.Entities.Candidates.Candidate candidate)
+        private static void ParseValidationError(CreateCandidateResponse response, out string message, out string errorCode)
+        {
+            var map = new Dictionary<string, string>
+            {
+                { ValidationErrorCodes.InvalidCandidateState, ErrorCodes.CandidateStateError },
+                { ValidationErrorCodes.CandidateNotFound, ErrorCodes.CandidateNotFoundError },
+                { ValidationErrorCodes.UnknownCandidate, ErrorCodes.CandidateNotFoundError }
+            };
+
+            foreach (var pair in map)
+            {
+                var validationError = response.ValidationErrors.FirstOrDefault(each => each.ErrorCode == pair.Key);
+
+                if (validationError != null)
+                {
+                    message = string.Format("{0} (ErrorCode='{1}')", validationError.Message, pair.Key);
+                    errorCode = pair.Value;
+                    return;
+                }
+            }
+
+            // Failed to parse expected validation error.
+            message = string.Format("{0} unexpected validation error(s): {1}",
+                response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
+
+            errorCode = ErrorCodes.CreateCandidateFailed;
+        }
+
+        private void UpdateLegacyCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
             var request = new UpdateCandidateRequest { Candidate = CreateLegacyCandidate(candidate) };
             request.Candidate.Id = candidate.LegacyCandidateId;

@@ -177,6 +177,7 @@
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="Processes\ApplicationStatusChangedConsumerAsyncTests.cs" />
     <Compile Include="Processes\Builders\ApplicationStatusChangedConsumerAsyncBuilder.cs" />
+    <Compile Include="Processes\SaveCandidateRequestConsumerAsyncTests.cs" />
     <Compile Include="Processes\SubmitTraineeshipApplicationRequestConsumerAsyncTests.cs" />
     <Compile Include="Processes\SubmitApprenticeshipApplicationRequestConsumerAsyncTests.cs" />
     <Compile Include="Processes\VacancyStatusSummaryConsumerAsyncTests.cs" />

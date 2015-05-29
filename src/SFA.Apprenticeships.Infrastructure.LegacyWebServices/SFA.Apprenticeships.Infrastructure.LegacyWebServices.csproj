@@ -150,6 +150,7 @@
     <Compile Include="Vacancy\LegacyVacancyDataProvider.cs" />
     <Compile Include="Vacancy\VacancyDataServiceCacheKeyEntry.cs" />
     <Compile Include="Vacancy\LegacyVacancyIndexDataProvider.cs" />
+    <Compile Include="ValidationErrorCodes.cs" />
     <Compile Include="Wcf\IWcfService.cs" />
     <Compile Include="Wcf\WcfService.cs" />
   </ItemGroup>
