@@ -407,7 +407,7 @@
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
                 var candidate = _candidateService.GetCandidate(candidateId);
-                var savedAndDraftCount = RecalculateSavedAndDraftCount(candidateId, null);
+                RecalculateSavedAndDraftCount(candidateId, null);
 
                 if (applicationDetails == null || candidate == null)
                 {
@@ -457,7 +457,7 @@
         private WhatHappensNextApprenticeshipViewModel WhatHappensNextSavedAndDrafts(WhatHappensNextApprenticeshipViewModel whatHappensNextViewModel, Guid candidateId)
         {
             var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId);
-            var savedAndDraftApplications = apprenticeshipApplicationSummaries.Where(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved).OrderByDescending(a => a.ClosingDate);
+            var savedAndDraftApplications = apprenticeshipApplicationSummaries.Where(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved).OrderBy(a => a.ClosingDate);
             whatHappensNextViewModel.SavedAndDraftApplications = savedAndDraftApplications.Select(s => new MyApprenticeshipApplicationViewModel(s)).ToList();
             return whatHappensNextViewModel;
         }
@@ -652,12 +652,11 @@
             return apprenticeshipApplicationViewModel;
         }
 
-        private int RecalculateSavedAndDraftCount(Guid candidateId, IList<ApprenticeshipApplicationSummary> summaries)
+        private void RecalculateSavedAndDraftCount(Guid candidateId, IList<ApprenticeshipApplicationSummary> summaries)
         {
             var apprenticeshipApplicationSummaries = summaries ?? _candidateService.GetApprenticeshipApplications(candidateId) ?? new List<ApprenticeshipApplicationSummary>();
             var savedOrDraft = apprenticeshipApplicationSummaries.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
             _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedOrDraft.ToString(CultureInfo.InvariantCulture));
-            return savedOrDraft;
         }
 
         #endregion

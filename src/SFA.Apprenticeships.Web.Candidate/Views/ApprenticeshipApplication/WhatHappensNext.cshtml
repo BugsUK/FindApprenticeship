@@ -61,11 +61,11 @@
                             <p><b>Closing date:</b> @Model.SavedAndDraftApplications[i].ClosingDate.ToFriendlyClosingToday()</p>
                             @if (@Model.SavedAndDraftApplications[i].ApplicationStatus == ApplicationStatuses.Saved)
                             {
-                                <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})">Resume application</a></p>
+                                <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString()})">Apply</a></p>
                             }
                             else
                             {
-                                <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })">Apply</a></p>
+                                <p><a href="@Url.Action("Resume", "ApprenticeshipApplication", new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })">Resume</a></p>
                             }
                         </div>
                     </div>
