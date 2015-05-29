@@ -4,14 +4,9 @@
         history.replaceState({ searchUrl: location.href }, location.href);
     };
 
-    $("#Location").locationMatch({
-        url: locationUrl,
-        longitude: '#Longitude',
-        latitude: '#Latitude',
-        latlonhash: '#Hash'
-    });
+    $("#Location").locationMatch({url: locationUrl, longitude: '#Longitude', latitude: '#Latitude', latlonhash: '#Hash'});
 
-    $('.no-history #sort-results').change(function () {
+    $(document).on('change', '.no-history #sort-results', function () {
         $('#SearchAction').val("Sort");
         $("form").submit();
     });
@@ -22,7 +17,7 @@
         loadResults(searchQueryUrl);
     });
 
-    $('.no-history #results-per-page').change(function () {
+    $(document).on('change', '.no-history #results-per-page', function () {
         $('#SearchAction').val("Sort");
         $("form").submit();
     });
@@ -59,8 +54,6 @@
     $(document).on('click', '.history .update-results', function (e) {
         e.preventDefault();
         loadResults($(this).attr("href"), true);
-        var queryStringParams = $.getQueryParameters($(this).attr("href"));
-        $("#LocationType").val(queryStringParams.LocationType);
     });
 
     function loadResults(searchQueryUrl, scrollTop) {
@@ -72,18 +65,16 @@
             url: searchQueryUrl,
             method: 'GET'
         }).done(function (response) {
-            $("#pagedList").empty();
-            $("#pagedList").html(response);
+
+            var main = $(response).find("#main");
+            $("#main").html(main.html());
             $(window).trigger('resultsReloaded');
             history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
-
-            $('.search-results').removeClass('disabled');
-            $("#search-button").text('Update results').removeClass('disabled');
-            $('#ajaxLoading').hide();
 
             if (scrollTop) {
                 $(document).scrollTop(0);
             }
+            $("#Location").locationMatch({ url: locationUrl, longitude: '#Longitude', latitude: '#Latitude', latlonhash: '#Hash' });
             Webtrends.multiTrack({ argsa: ["DCS.dcsqry", window.location.search] });
         }).fail(function () {
         });
@@ -124,78 +115,6 @@
 
         //Write the new, complete cookie with the current view of the display settings
         SetSearchResultsDetailsCookieValue();
-    });
-
-
-    $(document).on("apprenticeshipResultsUpdated", function(event, data) {
-        //Any copy changes here also need reflected in the Apprenticeship Application Results.cshtml file.
-        var resultMessage, nationalResultsMessage;
-
-        if (data.totalLocalHits == 0)
-        {
-            resultMessage = "";
-        }
-        else if (data.totalLocalHits == 1)
-        {
-            if (data.locationType == "National")
-            {
-                resultMessage = "We've found <b class=\"bold-medium\">1</b> <a id='localLocationTypeLink' class='update-results' href=" + data.locationTypeLink + ">apprenticeship in your selected area</a>.";
-            }
-            else
-            {
-                resultMessage = "We've found <b class=\"bold-medium\">1</b> apprenticeship in your selected area.";
-            }
-        }
-        else
-        {
-            if (data.locationType == "National")
-            {
-                resultMessage = "We've found <b class=\"bold-medium\">" + data.totalLocalHits + "</b> <a id='localLocationTypeLink' class='update-results' href=" + data.locationTypeLink + ">apprenticeships in your selected area</a>.";
-            }
-            else
-            {
-                resultMessage = "We've found <b class=\"bold-medium\">" + data.totalLocalHits +  "</b> apprenticeships in your selected area.";
-            }
-        }
-
-        if (data.totalNationalHits == 0)
-        {
-            nationalResultsMessage = "";
-        }
-        else
-        {
-            var nationalResultsMessagePrefix = data.totalLocalHits == 0 ? "We've found" : "We've also found";
-
-            if (data.totalNationalHits == 1)
-            {
-
-                if (data.locationType == "NonNational")
-                {
-                    nationalResultsMessage = nationalResultsMessagePrefix + " <a id='nationwideLocationTypeLink' class='update-results' href=" + data.locationTypeLink + ">1 apprenticeship with positions across England</a>.";
-                }
-                else
-                {
-                    nationalResultsMessage = nationalResultsMessagePrefix + " 1 apprenticeship with positions across England.";
-                }
-            }
-            else
-            {
-                if (data.locationType == "NonNational")
-                {
-                    nationalResultsMessage = nationalResultsMessagePrefix + " <a id='nationwideLocationTypeLink' class='update-results' href=" + data.locationTypeLink + ">" + data.totalNationalHits + " apprenticeships with positions across England</a>.";
-                }
-                else
-                {
-                    nationalResultsMessage = nationalResultsMessagePrefix + " " + data.totalNationalHits + " apprenticeships with positions across England.";
-                }
-            }
-        }
-        $("#result-message").html(resultMessage);
-        $("#national-results-message").html(nationalResultsMessage);
-
-        if ($("#receiveSaveSearchAlert").length) {
-            $("#receiveSaveSearchAlert").attr("href", data.saveSearchUrl);
-        }
     });
 });
 

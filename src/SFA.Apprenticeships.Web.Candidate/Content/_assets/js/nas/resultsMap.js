@@ -8,13 +8,11 @@ $(function () {
         apiScriptLoading = false,
         $window = $(window),
         $body = $('body'),
-        apprLatitude = Number($('#Latitude').val()),
-        apprLongitude = Number($('#Longitude').val()),
-        apprMiles = Number($('#loc-within').val()),
+        apprLatitude,
+        apprLongitude,        
         apprZoom = 9,
         radiusCircle,
-        mapCenter = { lat: apprLatitude, lng: apprLongitude },
-        theLatLon = apprLatitude + ',' + apprLongitude,
+        theLatLon,
         originLocation,
         markerIcon,
         selectedIcon,
@@ -104,11 +102,17 @@ $(function () {
         checkGoogleMapsApiScriptLoaded();
         if (!apiScriptLoaded) return;
 
+        var apprMiles = Number($('#loc-within').val());
+        apprLatitude = Number($('#Latitude').val());
+        apprLongitude = Number($('#Longitude').val());
+        theLatLon = apprLatitude + ',' + apprLongitude;
+
         resultMaps = [];
         $(".search-results__item").each(function() {
              resultMaps.push(new ResultMap($(this)));
         });
 
+        var mapCenter = { lat: apprLatitude, lng: apprLongitude };
         var mapOptions = { center: mapCenter, zoom: apprZoom, panControl: false, zoomControl: true, mapTypeControl: false, scaleControl: false, streetViewControl: false, overviewMapControl: false, scrollwheel: false };
         var summaryMap = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 

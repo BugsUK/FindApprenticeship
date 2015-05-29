@@ -1,7 +1,8 @@
 ﻿// TODO: get 'postcode' messages from C#
 
 $(document).ready(function () {
-    $("#address-select").change(function () {
+
+    $(document).on("change", "#address-select", function () {
         var option = $(this);
         var selected = $(this).find('option:selected');
         if (option && option.val() !== "") {
@@ -18,7 +19,7 @@ $(document).ready(function () {
         //TODO: if needing validation groups this should be refactored too
     });
 
-    $(".address-item").change(function() {
+    $(document).on("change", ".address-item", function() {
         $("#Address_Uprn").val("");
         $("#Address_GeoPoint_Latitude").val("");
         $("#Address_GeoPoint_Longitude").val("");
@@ -238,5 +239,4 @@ $(document).ready(function () {
             $('#display-message').html('');
         });
     };
-
 })(jQuery);

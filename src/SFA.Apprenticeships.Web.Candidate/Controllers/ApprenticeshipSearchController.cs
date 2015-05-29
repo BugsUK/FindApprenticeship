@@ -105,7 +105,7 @@
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Results(ApprenticeshipSearchViewModel model)
         {
-            return await Task.Run(() =>
+            return await Task.Run<ActionResult>(() =>
             {
                 ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
 
@@ -130,7 +130,7 @@
                         ModelState.Remove("Latitude");
                         ModelState.Remove("Longitude");
                         ModelState.Remove("SortType");
-                        return Request.IsAjaxRequest() ? (ActionResult)PartialView("_searchResults", response.ViewModel) : View(response.ViewModel);
+                        return View(response.ViewModel);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
