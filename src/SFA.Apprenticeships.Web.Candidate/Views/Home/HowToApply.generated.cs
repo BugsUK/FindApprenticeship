@@ -391,7 +391,7 @@ WriteLiteral(" for=\"qualifications-yes\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n                <input");
+WriteLiteral(">\r\n                <input checked");
 
 WriteLiteral(" aria-controls=\"qualifications-panel\"");
 
@@ -399,7 +399,7 @@ WriteLiteral(" aria-expanded=\"false\"");
 
 WriteLiteral(" name=\"quals\"");
 
-WriteLiteral("\r\n                        type=\"radio\"");
+WriteLiteral("\r\n                       type=\"radio\"");
 
 WriteLiteral(" id=\"qualifications-yes\"");
 
@@ -409,7 +409,7 @@ WriteLiteral(" for=\"qualifications-no\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n                <input checked");
+WriteLiteral(">\r\n                <input");
 
 WriteLiteral(" name=\"quals\"");
 
@@ -620,6 +620,10 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"qualification-table toggle-content\"");
 
+WriteLiteral(" id=\"gcse\"");
+
+WriteLiteral(" style=\"display: block;\"");
+
 WriteLiteral(">\r\n                    <div");
 
 WriteLiteral(" class=\"hgroup-small\"");
@@ -628,7 +632,7 @@ WriteLiteral(">\r\n                        <h3");
 
 WriteLiteral(" class=\"heading-small heading-qualType\"");
 
-WriteLiteral("></h3>\r\n                    </div>\r\n                    <table");
+WriteLiteral(">GCSE</h3>\r\n                    </div>\r\n                    <table");
 
 WriteLiteral(" class=\"grid-3-4\"");
 
@@ -686,433 +690,635 @@ WriteLiteral(">Year</span>\r\n                                </th>\r\n         
 
 WriteLiteral(" class=\"tbody-qual\"");
 
-WriteLiteral("></tbody>\r\n                    </table>\r\n                </div>\r\n            </di" +
-"v>\r\n        </div>\r\n    </div>\r\n    <div");
+WriteLiteral("><tr");
 
-WriteLiteral(" class=\"show-nojs\"");
+WriteLiteral(" class=\"tr-qualRow\"");
 
-WriteLiteral(">\r\n        <table>\r\n            <colgroup>\r\n                <col");
+WriteLiteral("><td");
 
-WriteLiteral(" class=\"t30\"");
+WriteLiteral(" class=\"td-qualcell\"");
 
-WriteLiteral(">\r\n                <col");
+WriteLiteral("><input");
 
-WriteLiteral(" class=\"t30\"");
+WriteLiteral(" class=\"form-control qual-input-edit\"");
 
-WriteLiteral(">\r\n                <col");
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"Maths\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"B\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"2015\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualEdit ta-center\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"fake-link cell-span\"");
+
+WriteLiteral(">Edit</span></td><td");
+
+WriteLiteral(" class=\"qualRemove ta-center\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"cell-span\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+
+WriteLiteral("></i><i");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove</i></i></td></tr><tr");
+
+WriteLiteral(" class=\"tr-qualRow\"");
+
+WriteLiteral("><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"English\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"B\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"2015\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualEdit ta-center\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"fake-link cell-span\"");
+
+WriteLiteral(">Edit</span></td><td");
+
+WriteLiteral(" class=\"qualRemove ta-center\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"cell-span\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+
+WriteLiteral("></i><i");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove</i></i></td></tr><tr");
+
+WriteLiteral(" class=\"tr-qualRow\"");
+
+WriteLiteral("><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"Science\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"BB\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"2015\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualEdit ta-center\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"fake-link cell-span\"");
+
+WriteLiteral(">Edit</span></td><td");
+
+WriteLiteral(" class=\"qualRemove ta-center\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"cell-span\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+
+WriteLiteral("></i><i");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove</i></i></td></tr><tr");
+
+WriteLiteral(" class=\"tr-qualRow\"");
+
+WriteLiteral("><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"Geography\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"C\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"2015\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualEdit ta-center\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"fake-link cell-span\"");
+
+WriteLiteral(">Edit</span></td><td");
+
+WriteLiteral(" class=\"qualRemove ta-center\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"cell-span\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+
+WriteLiteral("></i><i");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove</i></i></td></tr><tr");
+
+WriteLiteral(" class=\"tr-qualRow\"");
+
+WriteLiteral("><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"History\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"B\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"2015\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualEdit ta-center\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"fake-link cell-span\"");
+
+WriteLiteral(">Edit</span></td><td");
+
+WriteLiteral(" class=\"qualRemove ta-center\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"cell-span\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+
+WriteLiteral("></i><i");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove</i></i></td></tr><tr");
+
+WriteLiteral(" class=\"tr-qualRow\"");
+
+WriteLiteral("><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"Spanish\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"C\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
+
+WriteLiteral(" type=\"text\"");
+
+WriteLiteral(" value=\"2015\"");
+
+WriteLiteral(" readonly=\"\"");
+
+WriteLiteral("></td><td");
+
+WriteLiteral(" class=\"td-qualEdit ta-center\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"fake-link cell-span\"");
+
+WriteLiteral(">Edit</span></td><td");
+
+WriteLiteral(" class=\"qualRemove ta-center\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"cell-span\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+
+WriteLiteral("></i><i");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove</i></i></td></tr></tbody>\r\n                    </table>\r\n                " +
+"</div>\r\n                <div");
+
+WriteLiteral(" class=\"qualification-table\"");
+
+WriteLiteral(" id=\"a-level\"");
+
+WriteLiteral("><div");
+
+WriteLiteral(" class=\"hgroup-small\"");
+
+WriteLiteral("><h3");
+
+WriteLiteral(" class=\"heading-small heading-qualType\"");
+
+WriteLiteral(">A Level</h3></div><table");
+
+WriteLiteral(" class=\"grid-3-4\"");
+
+WriteLiteral("><colgroup><col");
+
+WriteLiteral(" class=\"t40\"");
+
+WriteLiteral("><col");
+
+WriteLiteral(" class=\"t25\"");
+
+WriteLiteral("><col");
+
+WriteLiteral(" class=\"t15\"");
+
+WriteLiteral("><col");
 
 WriteLiteral(" class=\"t10\"");
 
-WriteLiteral(">\r\n                <col");
+WriteLiteral("><col");
 
 WriteLiteral(" class=\"t10\"");
 
-WriteLiteral(">\r\n                <col");
+WriteLiteral("><col></colgroup><thead><tr><th");
 
-WriteLiteral(" class=\"t20\"");
+WriteLiteral(" class=\"th-qualSubject\"");
 
-WriteLiteral(@">
-                <col>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>Subject</th>
-                    <th>Qualification</th>
-                    <th>Year</th>
-                    <th>Grade</th>
-                    <th>Predicted?</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <label");
+WriteLiteral("><span");
 
-WriteLiteral(" for=\"subject1\"");
+WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(" class=\"visuallyhidden\"");
+WriteLiteral(">Subject</span></th><th");
 
-WriteLiteral(">Subject</label>\r\n                        <input");
+WriteLiteral(" class=\"th-qualGrade\"");
 
-WriteLiteral(" type=\"text\"");
+WriteLiteral("><span");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(" id=\"subject1\"");
+WriteLiteral(">Grade</span></th><th");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
+WriteLiteral(" class=\"th-qualYear\"");
 
-WriteLiteral(" for=\"qualification1\"");
+WriteLiteral("><span");
 
-WriteLiteral(" class=\"visuallyhidden\"");
+WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Qualification</label>\r\n                        <input");
+WriteLiteral(">Year</span></th><th></th><th></th></tr></thead><tbody");
+
+WriteLiteral(" class=\"tbody-qual\"");
+
+WriteLiteral("><tr");
+
+WriteLiteral(" class=\"tr-qualRow\"");
+
+WriteLiteral("><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" value=\"Biology\"");
 
-WriteLiteral(" id=\"qualification1\"");
+WriteLiteral(" readonly=\"\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
+WriteLiteral("></td><td");
 
-WriteLiteral(" for=\"year1\"");
+WriteLiteral(" class=\"td-qualcell\"");
 
-WriteLiteral(" class=\"visuallyhidden\"");
+WriteLiteral("><input");
 
-WriteLiteral(">Year</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"year1\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"grade1\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Grade</label>\r\n                        <input");
+WriteLiteral(" class=\"form-control qual-input-edit\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" value=\"C (Predicted)\"");
 
-WriteLiteral(" id=\"grade1\"");
+WriteLiteral(" readonly=\"\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td");
+WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"va-middle\"");
+WriteLiteral(" class=\"td-qualcell\"");
 
-WriteLiteral(">\r\n                        <label");
+WriteLiteral("><input");
 
-WriteLiteral(" for=\"predicted1\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Predicted?</label>\r\n                        <input");
-
-WriteLiteral(" type=\"checkbox\"");
-
-WriteLiteral(" id=\"predicted1\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td>\r\n                        <label");
-
-WriteLiteral(" for=\"subject2\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Subject</label>\r\n                        <input");
+WriteLiteral(" class=\"form-control qual-input-edit\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" value=\"2016\"");
 
-WriteLiteral(" id=\"subject2\"");
+WriteLiteral(" readonly=\"\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
+WriteLiteral("></td><td");
 
-WriteLiteral(" for=\"qualification2\"");
+WriteLiteral(" class=\"td-qualEdit ta-center\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"fake-link cell-span\"");
+
+WriteLiteral(">Edit</span></td><td");
+
+WriteLiteral(" class=\"qualRemove ta-center\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"cell-span\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+
+WriteLiteral("></i><i");
 
 WriteLiteral(" class=\"visuallyhidden\"");
 
-WriteLiteral(">Qualification</label>\r\n                        <input");
+WriteLiteral(">Remove</i></i></td></tr><tr");
+
+WriteLiteral(" class=\"tr-qualRow\"");
+
+WriteLiteral("><td");
+
+WriteLiteral(" class=\"td-qualcell\"");
+
+WriteLiteral("><input");
+
+WriteLiteral(" class=\"form-control qual-input-edit\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" value=\"Business Studies\"");
 
-WriteLiteral(" id=\"qualification2\"");
+WriteLiteral(" readonly=\"\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
+WriteLiteral("></td><td");
 
-WriteLiteral(" for=\"year2\"");
+WriteLiteral(" class=\"td-qualcell\"");
 
-WriteLiteral(" class=\"visuallyhidden\"");
+WriteLiteral("><input");
 
-WriteLiteral(">Year</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"year2\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"grade2\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Grade</label>\r\n                        <input");
+WriteLiteral(" class=\"form-control qual-input-edit\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" value=\"B (Predicted)\"");
 
-WriteLiteral(" id=\"grade2\"");
+WriteLiteral(" readonly=\"\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td");
+WriteLiteral("></td><td");
 
-WriteLiteral(" class=\"va-middle\"");
+WriteLiteral(" class=\"td-qualcell\"");
 
-WriteLiteral(">\r\n                        <label");
+WriteLiteral("><input");
 
-WriteLiteral(" for=\"predicted2\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Predicted?</label>\r\n                        <input");
-
-WriteLiteral(" type=\"checkbox\"");
-
-WriteLiteral(" id=\"predicted2\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td>\r\n                        <label");
-
-WriteLiteral(" for=\"subject3\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Subject</label>\r\n                        <input");
+WriteLiteral(" class=\"form-control qual-input-edit\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" value=\"2016\"");
 
-WriteLiteral(" id=\"subject3\"");
+WriteLiteral(" readonly=\"\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
+WriteLiteral("></td><td");
 
-WriteLiteral(" for=\"qualification3\"");
+WriteLiteral(" class=\"td-qualEdit ta-center\"");
 
-WriteLiteral(" class=\"visuallyhidden\"");
+WriteLiteral("><span");
 
-WriteLiteral(">Qualification</label>\r\n                        <input");
+WriteLiteral(" class=\"fake-link cell-span\"");
 
-WriteLiteral(" type=\"text\"");
+WriteLiteral(">Edit</span></td><td");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" class=\"qualRemove ta-center\"");
 
-WriteLiteral(" id=\"qualification3\"");
+WriteLiteral("><i");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
+WriteLiteral(" class=\"cell-span\"");
 
-WriteLiteral(" for=\"year3\"");
+WriteLiteral("><i");
 
-WriteLiteral(" class=\"visuallyhidden\"");
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
 
-WriteLiteral(">Year</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"year3\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"grade3\"");
+WriteLiteral("></i><i");
 
 WriteLiteral(" class=\"visuallyhidden\"");
 
-WriteLiteral(">Grade</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"grade3\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td");
-
-WriteLiteral(" class=\"va-middle\"");
-
-WriteLiteral(">\r\n                        <label");
-
-WriteLiteral(" for=\"predicted3\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Predicted?</label>\r\n                        <input");
-
-WriteLiteral(" type=\"checkbox\"");
-
-WriteLiteral(" id=\"predicted3\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td>\r\n                        <label");
-
-WriteLiteral(" for=\"subject4\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Subject</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"subject4\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"qualification4\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Qualification</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"qualification4\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"year4\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Year</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"year4\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"grade4\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Grade</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"grade4\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td");
-
-WriteLiteral(" class=\"va-middle\"");
-
-WriteLiteral(">\r\n                        <label");
-
-WriteLiteral(" for=\"predicted4\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Predicted?</label>\r\n                        <input");
-
-WriteLiteral(" type=\"checkbox\"");
-
-WriteLiteral(" id=\"predicted4\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td>\r\n                        <label");
-
-WriteLiteral(" for=\"subject5\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Subject</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"subject5\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"qualification5\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Qualification</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"qualification5\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"year5\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Year</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"year5\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"grade5\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Grade</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(" id=\"grade5\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td");
-
-WriteLiteral(" class=\"va-middle\"");
-
-WriteLiteral(">\r\n                        <label");
-
-WriteLiteral(" for=\"predicted5\"");
-
-WriteLiteral(" class=\"visuallyhidden\"");
-
-WriteLiteral(">Predicted?</label>\r\n                        <input");
-
-WriteLiteral(" type=\"checkbox\"");
-
-WriteLiteral(" id=\"predicted5\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n            </tbody>\r\n      " +
-"  </table>\r\n        <a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(" class=\"button\"");
-
-WriteLiteral(">Add 5 more qualifications</a>\r\n    </div>\r\n</fieldset>\r\n<fieldset");
+WriteLiteral(">Remove</i></i></td></tr></tbody></table></div>\r\n            </div>\r\n        </di" +
+"v>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
 WriteLiteral(" class=\"fieldset-with-border\"");
 
@@ -1149,7 +1355,7 @@ WriteLiteral(" for=\"workexp-yes\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n                <input");
+WriteLiteral(">\r\n                <input checked");
 
 WriteLiteral(" name=\"workexp\"");
 
@@ -1163,7 +1369,7 @@ WriteLiteral(" for=\"workexp-no\"");
 
 WriteLiteral(" class=\"block-label\"");
 
-WriteLiteral(">\r\n                <input checked");
+WriteLiteral(">\r\n                <input");
 
 WriteLiteral(" name=\"workexp\"");
 
@@ -1266,7 +1472,7 @@ WriteLiteral(" for=\"work-from\"");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">From</label>\r\n                        <div");
+WriteLiteral(">Started</label>\r\n                        <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -1360,7 +1566,7 @@ WriteLiteral(" for=\"work-to\"");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">To</label>\r\n                        <div");
+WriteLiteral(">Finished</label>\r\n                        <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
@@ -1475,730 +1681,309 @@ WriteLiteral(">Save this work experience</a>\r\n                </div>\r\n      
 
 WriteLiteral(" class=\"work-history-wrapper grid-3-4\"");
 
-WriteLiteral(">\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div");
+WriteLiteral(">\r\n                <div");
 
-WriteLiteral(" class=\"show-nojs\"");
+WriteLiteral(" class=\"grid-wrapper work-history-item\"");
 
-WriteLiteral(">\r\n        <section");
+WriteLiteral("><div");
 
-WriteLiteral(" class=\"grid-wrapper section-border\"");
+WriteLiteral(" class=\"work-controls\"");
 
-WriteLiteral(">\r\n            <table");
+WriteLiteral("><div");
 
-WriteLiteral(" class=\"grid grid-2-3 no-btm-border no-btm-margin\"");
+WriteLiteral(" class=\"work-edit ta-center\"");
 
-WriteLiteral(">\r\n                <tr>\r\n                    <td>\r\n                        <label" +
-"");
+WriteLiteral("><span");
 
-WriteLiteral(" for=\"employer1\"");
+WriteLiteral(" class=\"cell-span fake-link\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(">Edit</span></div><div");
 
-WriteLiteral(">Employer</label>\r\n                        <input");
+WriteLiteral(" class=\"work-delete ta-center\"");
+
+WriteLiteral("><span");
+
+WriteLiteral(" class=\"cell-span\"");
+
+WriteLiteral("><i");
+
+WriteLiteral(" class=\"copy-16 fa fa-times-circle icon-black\"");
+
+WriteLiteral("></i><i");
+
+WriteLiteral(" class=\"visuallyhidden\"");
+
+WriteLiteral(">Remove</i></span></div></div><div");
+
+WriteLiteral(" class=\"grid grid-1-2\"");
+
+WriteLiteral("><table");
+
+WriteLiteral(" class=\"table-no-btm-border table-compound\"");
+
+WriteLiteral("><colgroup><col");
+
+WriteLiteral(" class=\"t100\"");
+
+WriteLiteral("><col></colgroup><thead><tr><th><span");
+
+WriteLiteral(" class=\"heading-span\"");
+
+WriteLiteral(">Work experience</span></th></tr></thead><tbody><tr><td><input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" id=\"employer1\"");
+WriteLiteral(" class=\"form-control toggle-content inline width-all-49 editable-work-input\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" value=\"Boots\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
+WriteLiteral("><span");
 
-WriteLiteral(" for=\"jobTitle1\"");
+WriteLiteral(" class=\"cell-span editable-work\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(">Boots</span><span");
 
-WriteLiteral(">Job title</label>\r\n                        <input");
+WriteLiteral(" class=\"cell-span work-hyphen\"");
+
+WriteLiteral(">-</span><input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" id=\"jobTitle1\"");
+WriteLiteral(" class=\"form-control toggle-content inline width-all-49 editable-work-input no-ri" +
+"ght-margin\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" value=\"Customer service\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td");
+WriteLiteral("><span");
 
-WriteLiteral(" colspan=\"2\"");
+WriteLiteral(" class=\"cell-span editable-work\"");
 
-WriteLiteral(">\r\n                        <label");
+WriteLiteral(">Customer service</span><div></div><textarea");
 
-WriteLiteral(" for=\"mainDuties1\"");
+WriteLiteral(" rows=\"3\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-control toggle-content editable-work-input\"");
 
-WriteLiteral(">Main duties</label>\r\n                        <textarea");
+WriteLiteral(">Helping customers with their queries, handling complaints. Working at the checko" +
+"ut to process purchases</textarea><span");
 
-WriteLiteral(" id=\"mainDuties1\"");
+WriteLiteral(" class=\"cell-span editable-work\"");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(">Helping customers with their queries, handling complaints. Working at the checko" +
+"ut to process purchases</span></td></tr></tbody></table></div><div");
 
-WriteLiteral("></textarea>\r\n                        <span");
+WriteLiteral(" class=\"grid grid-1-2\"");
 
-WriteLiteral(" class=\"form-hint maxchar-count\"");
+WriteLiteral("><table");
 
-WriteLiteral(">200</span>\r\n                    </td>\r\n                </tr>\r\n            </tabl" +
-"e>\r\n            <table");
+WriteLiteral(" class=\"table-no-btm-border table-compound\"");
 
-WriteLiteral(" class=\"grid grid-1-3 no-btm-border no-btm-margin\"");
+WriteLiteral("><colgroup><col");
 
-WriteLiteral(">\r\n                <tr>\r\n                    <td");
+WriteLiteral(" class=\"t30\"");
 
-WriteLiteral(" class=\"inline\"");
+WriteLiteral("><col");
 
-WriteLiteral(">\r\n                        <div");
+WriteLiteral(" class=\"t30\"");
 
-WriteLiteral(" class=\"form-group no-btm-margin\"");
+WriteLiteral("><col");
 
-WriteLiteral(">\r\n                            <label");
+WriteLiteral(" class=\"t25\"");
 
-WriteLiteral(" for=\"fromMonth1\"");
+WriteLiteral("><col");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"t15\"");
 
-WriteLiteral(">From</label>\r\n                            <select");
+WriteLiteral("><col></colgroup><thead><tr><th><span");
 
-WriteLiteral(" id=\"fromMonth1\"");
+WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">\r\n                                <option");
+WriteLiteral(">From</span></th><th><span");
+
+WriteLiteral(" class=\"heading-span\"");
+
+WriteLiteral(">To</span></th><th></th><th></th></tr></thead><tbody><tr><td><div");
+
+WriteLiteral(" class=\"toggle-content\"");
+
+WriteLiteral("><div");
+
+WriteLiteral(" class=\"form-group form-group-compound\"");
+
+WriteLiteral("><select");
+
+WriteLiteral(" class=\"work-month-select\"");
+
+WriteLiteral(" id=\"workFromSelect\"");
+
+WriteLiteral("><option");
 
 WriteLiteral(" value=\"Jan\"");
 
-WriteLiteral(">Jan</option>\r\n                                <option");
+WriteLiteral(">Jan</option><option");
 
 WriteLiteral(" value=\"Feb\"");
 
-WriteLiteral(">Feb</option>\r\n                                <option");
+WriteLiteral(">Feb</option><option");
 
 WriteLiteral(" value=\"Mar\"");
 
-WriteLiteral(">Mar</option>\r\n                                <option");
+WriteLiteral(">Mar</option><option");
 
 WriteLiteral(" value=\"Apr\"");
 
-WriteLiteral(">Apr</option>\r\n                                <option");
+WriteLiteral(">Apr</option><option");
 
 WriteLiteral(" value=\"May\"");
 
-WriteLiteral(">May</option>\r\n                                <option");
+WriteLiteral(">May</option><option");
 
 WriteLiteral(" value=\"June\"");
 
-WriteLiteral(">June</option>\r\n                                <option");
+WriteLiteral(">June</option><option");
 
 WriteLiteral(" value=\"July\"");
 
-WriteLiteral(">July</option>\r\n                                <option");
+WriteLiteral(">July</option><option");
 
 WriteLiteral(" value=\"Aug\"");
 
-WriteLiteral(">Aug</option>\r\n                                <option");
+WriteLiteral(">Aug</option><option");
 
 WriteLiteral(" value=\"Sept\"");
 
-WriteLiteral(">Sept</option>\r\n                                <option");
+WriteLiteral(">Sept</option><option");
 
 WriteLiteral(" value=\"Oct\"");
 
-WriteLiteral(">Oct</option>\r\n                                <option");
+WriteLiteral(">Oct</option><option");
 
 WriteLiteral(" value=\"Nov\"");
 
-WriteLiteral(">Nov</option>\r\n                                <option");
+WriteLiteral(">Nov</option><option");
 
 WriteLiteral(" value=\"Dec\"");
 
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
+WriteLiteral(">Dec</option></select></div><div");
 
-WriteLiteral(" class=\"form-group no-btm-margin\"");
+WriteLiteral(" class=\"form-group form-group-compound\"");
 
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromYear1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
+WriteLiteral("><input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control form-control-medium\"");
+WriteLiteral(" class=\"form-control toggle-content work-year-input\"");
 
-WriteLiteral(" id=\"fromYear1\"");
+WriteLiteral(" value=\"2013\"");
 
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n                <tr>\r\n                    <td");
+WriteLiteral("></div></div><span");
 
-WriteLiteral(" class=\"inline\"");
+WriteLiteral(" class=\"cell-span editable-work work-month work-from-month\"");
 
-WriteLiteral(">\r\n                        <div");
+WriteLiteral(">Jan</span><span");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"cell-span editable-work work-year\"");
 
-WriteLiteral(">\r\n                            <label");
+WriteLiteral(">2013</span></td><td><div");
 
-WriteLiteral(" for=\"toMonth1\"");
+WriteLiteral(" class=\"toggle-content\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral("><div");
 
-WriteLiteral(">To</label>\r\n                            <select");
+WriteLiteral(" class=\"form-group form-group-compound disabled\"");
 
-WriteLiteral(" id=\"toMonth1\"");
+WriteLiteral("><select");
 
-WriteLiteral(">\r\n                                <option");
+WriteLiteral(" class=\"editable-current work-month-select\"");
+
+WriteLiteral(" id=\"workToSelect\"");
+
+WriteLiteral(" disabled=\"\"");
+
+WriteLiteral("><option");
 
 WriteLiteral(" value=\"Jan\"");
 
-WriteLiteral(">Jan</option>\r\n                                <option");
+WriteLiteral(">Jan</option><option");
 
 WriteLiteral(" value=\"Feb\"");
 
-WriteLiteral(">Feb</option>\r\n                                <option");
+WriteLiteral(">Feb</option><option");
 
 WriteLiteral(" value=\"Mar\"");
 
-WriteLiteral(">Mar</option>\r\n                                <option");
+WriteLiteral(">Mar</option><option");
 
 WriteLiteral(" value=\"Apr\"");
 
-WriteLiteral(">Apr</option>\r\n                                <option");
+WriteLiteral(">Apr</option><option");
 
 WriteLiteral(" value=\"May\"");
 
-WriteLiteral(">May</option>\r\n                                <option");
+WriteLiteral(">May</option><option");
 
 WriteLiteral(" value=\"June\"");
 
-WriteLiteral(">June</option>\r\n                                <option");
+WriteLiteral(">June</option><option");
 
 WriteLiteral(" value=\"July\"");
 
-WriteLiteral(">July</option>\r\n                                <option");
+WriteLiteral(">July</option><option");
 
 WriteLiteral(" value=\"Aug\"");
 
-WriteLiteral(">Aug</option>\r\n                                <option");
+WriteLiteral(">Aug</option><option");
 
 WriteLiteral(" value=\"Sept\"");
 
-WriteLiteral(">Sept</option>\r\n                                <option");
+WriteLiteral(">Sept</option><option");
 
 WriteLiteral(" value=\"Oct\"");
 
-WriteLiteral(">Oct</option>\r\n                                <option");
+WriteLiteral(">Oct</option><option");
 
 WriteLiteral(" value=\"Nov\"");
 
-WriteLiteral(">Nov</option>\r\n                                <option");
+WriteLiteral(">Nov</option><option");
 
 WriteLiteral(" value=\"Dec\"");
 
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
+WriteLiteral(">Dec</option></select></div><div");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral(" class=\"form-group form-group-compound disabled\"");
 
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toYear1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
+WriteLiteral("><input");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control form-control-medium\"");
+WriteLiteral(" class=\"editable-current form-control toggle-content work-year-input\"");
 
-WriteLiteral(" id=\"toYear1\"");
+WriteLiteral(" value=\"\"");
 
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n            </table>\r\n        </section>\r\n        <section");
+WriteLiteral(" disabled=\"\"");
 
-WriteLiteral(" class=\"grid-wrapper section-border\"");
+WriteLiteral("></div><div");
 
-WriteLiteral(">\r\n            <table");
+WriteLiteral(" class=\"form-group form-group-compound\"");
 
-WriteLiteral(" class=\"grid grid-2-3 no-btm-border no-btm-margin\"");
+WriteLiteral("><label><input");
 
-WriteLiteral(">\r\n                <tr>\r\n                    <td>\r\n                        <label" +
-"");
+WriteLiteral(" checked=\"\"");
 
-WriteLiteral(" for=\"employer2\"");
+WriteLiteral(" type=\"checkbox\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" id=\"edit-current\"");
 
-WriteLiteral(">Employer</label>\r\n                        <input");
+WriteLiteral("> Current</label></div></div><span");
 
-WriteLiteral(" type=\"text\"");
+WriteLiteral(" class=\"cell-span editable-work work-to-span work-month work-to-month\"");
 
-WriteLiteral(" id=\"employer2\"");
+WriteLiteral("></span><span");
 
-WriteLiteral(" class=\"form-control\"");
+WriteLiteral(" class=\"cell-span editable-work work-to-span work-year\"");
 
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"jobTitle2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Job title</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"jobTitle2\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td");
-
-WriteLiteral(" colspan=\"2\"");
-
-WriteLiteral(">\r\n                        <label");
-
-WriteLiteral(" for=\"mainDuties2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Main duties</label>\r\n                        <textarea");
-
-WriteLiteral(" id=\"mainDuties2\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral("></textarea>\r\n                        <span");
-
-WriteLiteral(" class=\"form-hint maxchar-count\"");
-
-WriteLiteral(">200</span>\r\n                    </td>\r\n                </tr>\r\n            </tabl" +
-"e>\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-1-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromMonth2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Started</label>\r\n                            <select");
-
-WriteLiteral(" id=\"fromMonth2\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromYear2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"fromYear2\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toMonth2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Finished</label>\r\n                            <select");
-
-WriteLiteral(" id=\"toMonth2\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toYear2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"toYear2\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n            </table>\r\n        </section>\r\n        <section");
-
-WriteLiteral(" class=\"grid-wrapper\"");
-
-WriteLiteral(">\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-2-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td>\r\n                        <label" +
-"");
-
-WriteLiteral(" for=\"employer3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Employer</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"employer3\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"jobTitle3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Job title</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"jobTitle3\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td");
-
-WriteLiteral(" colspan=\"2\"");
-
-WriteLiteral(">\r\n                        <label");
-
-WriteLiteral(" for=\"mainDuties3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Main duties</label>\r\n                        <textarea");
-
-WriteLiteral(" id=\"mainDuties3\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral("></textarea>\r\n                        <span");
-
-WriteLiteral(" class=\"form-hint maxchar-count\"");
-
-WriteLiteral(">200</span>\r\n                    </td>\r\n                </tr>\r\n            </tabl" +
-"e>\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-1-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromMonth3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">From</label>\r\n                            <select");
-
-WriteLiteral(" id=\"fromMonth3\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromYear3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"fromYear3\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toMonth3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">To</label>\r\n                            <select");
-
-WriteLiteral(" id=\"toMonth3\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toYear3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"toYear3\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n            </table>\r\n        </section>\r\n        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n            <a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(" class=\"button\"");
-
-WriteLiteral(">Add 1 more work experience</a>\r\n        </div>\r\n    </div>\r\n</fieldset>\r\n<fields" +
-"et");
+WriteLiteral(">Current</span></td><td></td><td></td></tr></tbody></table></div></div>\r\n        " +
+"    </div>\r\n        </div>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
 WriteLiteral(" class=\"fieldset-with-border\"");
 
@@ -2237,7 +2022,7 @@ WriteLiteral(" class=\"block-label\"");
 
 WriteLiteral(">\r\n                <input");
 
-WriteLiteral(" name=\"training\"");
+WriteLiteral("  name=\"training\"");
 
 WriteLiteral(" type=\"radio\"");
 
@@ -2522,730 +2307,7 @@ WriteLiteral(">Save this training course</a>\r\n                </div>\r\n      
 
 WriteLiteral(" class=\"training-wrapper grid-3-4\"");
 
-WriteLiteral(">\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div");
-
-WriteLiteral(" class=\"show-nojs\"");
-
-WriteLiteral(">\r\n        <section");
-
-WriteLiteral(" class=\"grid-wrapper section-border\"");
-
-WriteLiteral(">\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-2-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td>\r\n                        <label" +
-"");
-
-WriteLiteral(" for=\"employer1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Employer</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"employer1\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"jobTitle1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Job title</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"jobTitle1\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td");
-
-WriteLiteral(" colspan=\"2\"");
-
-WriteLiteral(">\r\n                        <label");
-
-WriteLiteral(" for=\"mainDuties1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Main duties</label>\r\n                        <textarea");
-
-WriteLiteral(" id=\"mainDuties1\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral("></textarea>\r\n                        <span");
-
-WriteLiteral(" class=\"form-hint maxchar-count\"");
-
-WriteLiteral(">200</span>\r\n                    </td>\r\n                </tr>\r\n            </tabl" +
-"e>\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-1-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromMonth1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">From</label>\r\n                            <select");
-
-WriteLiteral(" id=\"fromMonth1\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromYear1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"fromYear1\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toMonth1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">To</label>\r\n                            <select");
-
-WriteLiteral(" id=\"toMonth1\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toYear1\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"toYear1\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n            </table>\r\n        </section>\r\n        <section");
-
-WriteLiteral(" class=\"grid-wrapper section-border\"");
-
-WriteLiteral(">\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-2-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td>\r\n                        <label" +
-"");
-
-WriteLiteral(" for=\"employer2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Employer</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"employer2\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"jobTitle2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Job title</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"jobTitle2\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td");
-
-WriteLiteral(" colspan=\"2\"");
-
-WriteLiteral(">\r\n                        <label");
-
-WriteLiteral(" for=\"mainDuties2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Main duties</label>\r\n                        <textarea");
-
-WriteLiteral(" id=\"mainDuties2\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral("></textarea>\r\n                        <span");
-
-WriteLiteral(" class=\"form-hint maxchar-count\"");
-
-WriteLiteral(">200</span>\r\n                    </td>\r\n                </tr>\r\n            </tabl" +
-"e>\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-1-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromMonth2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Started</label>\r\n                            <select");
-
-WriteLiteral(" id=\"fromMonth2\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromYear2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"fromYear2\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toMonth2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Finished</label>\r\n                            <select");
-
-WriteLiteral(" id=\"toMonth2\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toYear2\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"toYear2\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n            </table>\r\n        </section>\r\n        <section");
-
-WriteLiteral(" class=\"grid-wrapper\"");
-
-WriteLiteral(">\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-2-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td>\r\n                        <label" +
-"");
-
-WriteLiteral(" for=\"employer3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Employer</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"employer3\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                    <td>\r\n                        <" +
-"label");
-
-WriteLiteral(" for=\"jobTitle3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Job title</label>\r\n                        <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" id=\"jobTitle3\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral(">\r\n                    </td>\r\n                </tr>\r\n                <tr>\r\n      " +
-"              <td");
-
-WriteLiteral(" colspan=\"2\"");
-
-WriteLiteral(">\r\n                        <label");
-
-WriteLiteral(" for=\"mainDuties3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Main duties</label>\r\n                        <textarea");
-
-WriteLiteral(" id=\"mainDuties3\"");
-
-WriteLiteral(" class=\"form-control\"");
-
-WriteLiteral("></textarea>\r\n                        <span");
-
-WriteLiteral(" class=\"form-hint maxchar-count\"");
-
-WriteLiteral(">200</span>\r\n                    </td>\r\n                </tr>\r\n            </tabl" +
-"e>\r\n            <table");
-
-WriteLiteral(" class=\"grid grid-1-3 no-btm-border no-btm-margin\"");
-
-WriteLiteral(">\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromMonth3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">From</label>\r\n                            <select");
-
-WriteLiteral(" id=\"fromMonth3\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group no-btm-margin\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"fromYear3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"fromYear3\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n                <tr>\r\n                    <td");
-
-WriteLiteral(" class=\"inline\"");
-
-WriteLiteral(">\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toMonth3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">To</label>\r\n                            <select");
-
-WriteLiteral(" id=\"toMonth3\"");
-
-WriteLiteral(">\r\n                                <option");
-
-WriteLiteral(" value=\"Jan\"");
-
-WriteLiteral(">Jan</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Feb\"");
-
-WriteLiteral(">Feb</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Mar\"");
-
-WriteLiteral(">Mar</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Apr\"");
-
-WriteLiteral(">Apr</option>\r\n                                <option");
-
-WriteLiteral(" value=\"May\"");
-
-WriteLiteral(">May</option>\r\n                                <option");
-
-WriteLiteral(" value=\"June\"");
-
-WriteLiteral(">June</option>\r\n                                <option");
-
-WriteLiteral(" value=\"July\"");
-
-WriteLiteral(">July</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Aug\"");
-
-WriteLiteral(">Aug</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Sept\"");
-
-WriteLiteral(">Sept</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Oct\"");
-
-WriteLiteral(">Oct</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Nov\"");
-
-WriteLiteral(">Nov</option>\r\n                                <option");
-
-WriteLiteral(" value=\"Dec\"");
-
-WriteLiteral(">Dec</option>\r\n                            </select>\r\n                        </d" +
-"iv>\r\n                        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n                            <label");
-
-WriteLiteral(" for=\"toYear3\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Year</label>\r\n                            <input");
-
-WriteLiteral(" type=\"text\"");
-
-WriteLiteral(" class=\"form-control form-control-medium\"");
-
-WriteLiteral(" id=\"toYear3\"");
-
-WriteLiteral(">\r\n                        </div>\r\n                    </td>\r\n                </t" +
-"r>\r\n            </table>\r\n        </section>\r\n        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n            <a");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(" class=\"button\"");
-
-WriteLiteral(">Add 1 more training experience</a>\r\n        </div>\r\n    </div>\r\n</fieldset>\r\n<fi" +
-"eldset");
+WriteLiteral(">\r\n            </div>\r\n        </div>\r\n    </div>\r\n    \r\n</fieldset>\r\n<fieldset");
 
 WriteLiteral(" class=\"fieldset-with-border\"");
 
@@ -4054,7 +3116,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 1287 "..\..\Views\Home\HowToApply.cshtml"
+            #line 710 "..\..\Views\Home\HowToApply.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
