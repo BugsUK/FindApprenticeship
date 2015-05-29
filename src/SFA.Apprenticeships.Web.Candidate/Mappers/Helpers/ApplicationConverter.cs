@@ -67,13 +67,13 @@
         }
 
 
-        public static IEnumerable<TrainingHistoryViewModel> GetTrainingHistoryViewModels(
-            IEnumerable<TrainingHistory> trainingHistory)
+        public static IEnumerable<TrainingCourseViewModel> GetTrainingCourseViewModels(
+            IEnumerable<TrainingCourse> trainingCourses)
         {
-            return trainingHistory.Select(m => new TrainingHistoryViewModel
+            return trainingCourses.Select(m => new TrainingCourseViewModel
             {
                 Provider = m.Provider,
-                CourseTitle = m.CourseTitle,
+                Title = m.Title,
                 FromMonth = m.FromDate.Month,
                 FromYear = ConvertYearIntToString(m.FromDate.Year),
                 ToMonth = m.ToDate.Month,
@@ -189,17 +189,17 @@
             }).ToList();
         }
 
-        public static IList<TrainingHistory> GetTrainingHistory(IEnumerable<TrainingHistoryViewModel> trainingHistoryViewModels)
+        public static IList<TrainingCourse> GetTrainingCourses(IEnumerable<TrainingCourseViewModel> trainingCourseViewModels)
         {
-            if (trainingHistoryViewModels == null)
+            if (trainingCourseViewModels == null)
             {
-                return new List<TrainingHistory>();
+                return new List<TrainingCourse>();
             }
 
-            return trainingHistoryViewModels.Select(model => new TrainingHistory
+            return trainingCourseViewModels.Select(model => new TrainingCourse
             {
                 Provider = model.Provider,
-                CourseTitle = model.CourseTitle,
+                Title = model.Title,
                 FromDate =
                     ConvertYearStringToInt(model.FromYear) != 0
                         ? new DateTime(ConvertYearStringToInt(model.FromYear), model.FromMonth, 1)

@@ -391,8 +391,8 @@ Write(Html.HiddenFor(m => m.IsJavascript, new{ @id="hidden-flag-javascript"}));
     Html.RenderPartial("_workExperiencesJS", Model);   
     Html.RenderPartial("_workExperiencesNonJS", Model);
 
-    Html.RenderPartial("_trainingHistoryJS", Model);
-    Html.RenderPartial("_trainingHistoryNonJS", Model);
+    Html.RenderPartial("_trainingCoursesJS", Model);
+    Html.RenderPartial("_trainingCoursesNonJS", Model);
 
     
             
@@ -491,14 +491,14 @@ WriteLiteral(">unsaved work experience</a>. Make sure you click \"Save this work
 
 WriteLiteral(" class=\"text toggle-content hide-nojs\"");
 
-WriteLiteral(" id=\"unsavedTrainingHistory\"");
+WriteLiteral(" id=\"unsavedTrainingCourse\"");
 
 WriteLiteral(">\r\n                <p>You\'ve still got an <a");
 
 WriteLiteral(" href=\"#training-history-panel\"");
 
-WriteLiteral(">unsaved training course</a>. Make sure you click \"Save this training history\" af" +
-"ter entering each one.</p>\r\n            </div>\r\n        </div>\r\n        <p");
+WriteLiteral(">unsaved training course</a>. Make sure you click \"Save this training course\" aft" +
+"er entering each one.</p>\r\n            </div>\r\n        </div>\r\n        <p");
 
 WriteLiteral(" id=\"saveApplication\"");
 
@@ -514,30 +514,30 @@ WriteLiteral(" class=\"button-link no-check-for-dirty-form cancel\"");
 
 WriteLiteral(" value=\"Save\"");
 
-WriteAttribute("onclick", Tuple.Create(" onclick=\'", 4717), Tuple.Create("\'", 4902)
-, Tuple.Create(Tuple.Create("", 4727), Tuple.Create("Webtrends.multiTrack({", 4727), true)
-, Tuple.Create(Tuple.Create(" ", 4749), Tuple.Create("element:", 4750), true)
-, Tuple.Create(Tuple.Create(" ", 4758), Tuple.Create("this,", 4759), true)
-, Tuple.Create(Tuple.Create(" ", 4764), Tuple.Create("argsa:", 4765), true)
-, Tuple.Create(Tuple.Create(" ", 4771), Tuple.Create("[\"DCS.dcsuri\",", 4772), true)
-, Tuple.Create(Tuple.Create(" ", 4786), Tuple.Create("\"/apprenticeship/apply/savedraft/", 4787), true)
+WriteAttribute("onclick", Tuple.Create(" onclick=\'", 4279), Tuple.Create("\'", 4464)
+, Tuple.Create(Tuple.Create("", 4289), Tuple.Create("Webtrends.multiTrack({", 4289), true)
+, Tuple.Create(Tuple.Create(" ", 4311), Tuple.Create("element:", 4312), true)
+, Tuple.Create(Tuple.Create(" ", 4320), Tuple.Create("this,", 4321), true)
+, Tuple.Create(Tuple.Create(" ", 4326), Tuple.Create("argsa:", 4327), true)
+, Tuple.Create(Tuple.Create(" ", 4333), Tuple.Create("[\"DCS.dcsuri\",", 4334), true)
+, Tuple.Create(Tuple.Create(" ", 4348), Tuple.Create("\"/apprenticeship/apply/savedraft/", 4349), true)
             
             #line 88 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                                                                                                                                                                       , Tuple.Create(Tuple.Create("", 4820), Tuple.Create<System.Object, System.Int32>(Model.VacancyId
+                                                                                                                                                                       , Tuple.Create(Tuple.Create("", 4382), Tuple.Create<System.Object, System.Int32>(Model.VacancyId
             
             #line default
             #line hidden
-, 4820), false)
-, Tuple.Create(Tuple.Create("", 4836), Tuple.Create("\",", 4836), true)
-, Tuple.Create(Tuple.Create(" ", 4838), Tuple.Create("\"WT.dl\",", 4839), true)
-, Tuple.Create(Tuple.Create(" ", 4847), Tuple.Create("\"99\",", 4848), true)
-, Tuple.Create(Tuple.Create(" ", 4853), Tuple.Create("\"WT.ti\",", 4854), true)
-, Tuple.Create(Tuple.Create(" ", 4862), Tuple.Create("\"Apprenticeship", 4863), true)
-, Tuple.Create(Tuple.Create(" ", 4878), Tuple.Create("–", 4879), true)
-, Tuple.Create(Tuple.Create(" ", 4880), Tuple.Create("Save", 4881), true)
-, Tuple.Create(Tuple.Create(" ", 4885), Tuple.Create("Draft", 4886), true)
-, Tuple.Create(Tuple.Create(" ", 4891), Tuple.Create("Form\"]", 4892), true)
-, Tuple.Create(Tuple.Create(" ", 4898), Tuple.Create("});", 4899), true)
+, 4382), false)
+, Tuple.Create(Tuple.Create("", 4398), Tuple.Create("\",", 4398), true)
+, Tuple.Create(Tuple.Create(" ", 4400), Tuple.Create("\"WT.dl\",", 4401), true)
+, Tuple.Create(Tuple.Create(" ", 4409), Tuple.Create("\"99\",", 4410), true)
+, Tuple.Create(Tuple.Create(" ", 4415), Tuple.Create("\"WT.ti\",", 4416), true)
+, Tuple.Create(Tuple.Create(" ", 4424), Tuple.Create("\"Apprenticeship", 4425), true)
+, Tuple.Create(Tuple.Create(" ", 4440), Tuple.Create("–", 4441), true)
+, Tuple.Create(Tuple.Create(" ", 4442), Tuple.Create("Save", 4443), true)
+, Tuple.Create(Tuple.Create(" ", 4447), Tuple.Create("Draft", 4448), true)
+, Tuple.Create(Tuple.Create(" ", 4453), Tuple.Create("Form\"]", 4454), true)
+, Tuple.Create(Tuple.Create(" ", 4460), Tuple.Create("});", 4461), true)
 );
 
 WriteLiteral(">Save</button>\r\n        </p>\r\n");
@@ -573,14 +573,14 @@ WriteLiteral(">Last saved at ");
             #line hidden
 WriteLiteral(" to <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5119), Tuple.Create("\"", 5175)
+WriteAttribute("href", Tuple.Create(" href=\"", 4681), Tuple.Create("\"", 4737)
             
             #line 92 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 5126), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+                                                            , Tuple.Create(Tuple.Create("", 4688), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 5126), false)
+, 4688), false)
 );
 
 WriteLiteral(" title=\"My Applications\"");
@@ -932,7 +932,7 @@ WriteLiteral(@">
 
         var qualificationData = null;
         var workExperienceData = null;
-        var trainingHistoryData = null;
+        var trainingCourseData = null;
         var currentYear = null;
         var whitelistregex = null;
         var yearRegex = null;
@@ -959,11 +959,11 @@ WriteLiteral(";\r\n            workExperienceData = ");
             
             #line default
             #line hidden
-WriteLiteral(";\r\n            trainingHistoryData = ");
+WriteLiteral(";\r\n            trainingCourseData = ");
 
             
             #line 310 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
-                             Write(Html.Raw(Json.Encode(Model.Candidate.TrainingHistory)));
+                            Write(Html.Raw(Json.Encode(Model.Candidate.TrainingCourses)));
 
             
             #line default
@@ -1132,15 +1132,15 @@ WriteLiteral("\" title=\"My Applications\">my applications</a>\';\r\n           
 " }\r\n\r\n        function getCurrentYear() {\r\n            return currentYear;\r\n    " +
 "    }\r\n\r\n        function getQualificationData() {\r\n            return qualifica" +
 "tionData;\r\n        }\r\n\r\n        function getWorkExperienceData() {\r\n            " +
-"return workExperienceData;\r\n        }\r\n\r\n        function getTrainingHistoryData" +
-"() {\r\n            return trainingHistoryData;\r\n        }\r\n\r\n        function get" +
-"WhiteListRegex() {\r\n            return whitelistregex;\r\n        }\r\n\r\n        fun" +
-"ction getYearRegex() {\r\n            return yearRegex;\r\n        }\r\n\r\n        func" +
-"tion getMonthLabel(index) {\r\n            var month = \"\";\r\n\r\n            if (inde" +
-"x === 0) {\r\n\r\n            } else {\r\n                var mths = [\'Jan\', \'Feb\', \'M" +
-"ar\', \'Apr\', \'May\', \'June\', \'July\', \'Aug\', \'Sept\', \'Oct\', \'Nov\', \'Dec\'];\r\n       " +
-"         month = mths[index - 1];\r\n            }\r\n\r\n            return month;\r\n " +
-"       }\r\n\r\n    </script>\r\n        \r\n");
+"return workExperienceData;\r\n        }\r\n\r\n        function getTrainingCourseData(" +
+") {\r\n            return trainingCourseData;\r\n        }\r\n\r\n        function getWh" +
+"iteListRegex() {\r\n            return whitelistregex;\r\n        }\r\n\r\n        funct" +
+"ion getYearRegex() {\r\n            return yearRegex;\r\n        }\r\n\r\n        functi" +
+"on getMonthLabel(index) {\r\n            var month = \"\";\r\n\r\n            if (index " +
+"=== 0) {\r\n\r\n            } else {\r\n                var mths = [\'Jan\', \'Feb\', \'Mar" +
+"\', \'Apr\', \'May\', \'June\', \'July\', \'Aug\', \'Sept\', \'Oct\', \'Nov\', \'Dec\'];\r\n         " +
+"       month = mths[index - 1];\r\n            }\r\n\r\n            return month;\r\n   " +
+"     }\r\n\r\n    </script>\r\n        \r\n");
 
 WriteLiteral("    ");
 

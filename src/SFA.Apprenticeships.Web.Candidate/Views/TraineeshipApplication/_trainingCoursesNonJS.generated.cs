@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication
+namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
 {
     using System;
     using System.Collections.Generic;
@@ -42,10 +42,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipApplication/_trainingHistoryNonJS.cshtml")]
-    public partial class trainingHistoryNonJS : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/_trainingCoursesNonJS.cshtml")]
+    public partial class trainingCoursesNonJS : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.TraineeshipApplicationViewModel>
     {
-        public trainingHistoryNonJS()
+        public trainingCoursesNonJS()
         {
         }
         public override void Execute()
@@ -54,7 +54,7 @@ WriteLiteral("<noscript>\r\n    <fieldset");
 
 WriteLiteral(" class=\"fieldset-with-border\"");
 
-WriteLiteral(" id=\"applyTrainingHistory\"");
+WriteLiteral(" id=\"applyTrainingCourses\"");
 
 WriteLiteral(">\r\n        <legend");
 
@@ -67,16 +67,16 @@ WriteLiteral(" class=\"clearfix\"");
 WriteLiteral(">\r\n            <div>\r\n");
 
             
-            #line 8 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
+            #line 8 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                 for (var i = 0; i < Model.Candidate.TrainingHistory.Count() + Model.DefaultTrainingHistoryRows; i++)
+            #line 8 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                 for (var i = 0; i < Model.Candidate.TrainingCourses.Count() + Model.DefaultTrainingCourseRows; i++)
                 {
-                    if (i < Model.Candidate.TrainingHistory.Count())
+                    if (i < Model.Candidate.TrainingCourses.Count())
                     {
 
             
@@ -122,8 +122,8 @@ WriteLiteral(">Provider</span>\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 27 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingHistory.ToList()[i].Provider, new { @id = "candidate_traininghistory_" + i + "__provider", Name = "Candidate.TrainingHistory[" + i + "].Provider", @class = "form-control", @maxlength = 50 }));
+            #line 27 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Provider, new { @id = "candidate_trainingcourse_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 }));
 
             
             #line default
@@ -133,8 +133,8 @@ WriteLiteral("\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 28 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.ValidationMessage("Candidate.TrainingHistory[" + i + "].Provider"));
+            #line 28 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].Provider"));
 
             
             #line default
@@ -154,8 +154,8 @@ WriteLiteral(">Course Title</span>\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 32 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingHistory.ToList()[i].CourseTitle, new { @id = "candidate_traininghistory_" + i + "__coursetitle", Name = "Candidate.TrainingHistory[" + i + "].CourseTitle", @class = "form-control", @maxlength = 50 }));
+            #line 32 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Title, new { @id = "candidate_trainingcourse_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 }));
 
             
             #line default
@@ -165,8 +165,8 @@ WriteLiteral("\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 33 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.ValidationMessage("Candidate.TrainingHistory[" + i + "].CourseTitle"));
+            #line 33 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].Title"));
 
             
             #line default
@@ -241,8 +241,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 66 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingHistory.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingHistory.ToList()[i].FromMonth), new { @id = "candidate_traininghistory_" + i + "__frommonth", Name = "Candidate.TrainingHistory[" + i + "].FromMonth" }));
+            #line 66 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourse_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" }));
 
             
             #line default
@@ -257,8 +257,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 70 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingHistory.ToList()[i].FromYear, new { @id = "candidate_traininghistory_" + i + "__fromyear", Name = "Candidate.TrainingHistory[" + i + "].FromYear", @class = "form-control", @maxlength = 4 }));
+            #line 70 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromYear, new { @id = "candidate_trainingcourse_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 }));
 
             
             #line default
@@ -268,8 +268,8 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 72 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.ValidationMessage("Candidate.TrainingHistory[" + i + "].FromYear"));
+            #line 72 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].FromYear"));
 
             
             #line default
@@ -289,8 +289,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 78 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingHistory.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingHistory.ToList()[i].ToMonth), new { @id = "candidate_traininghistory_" + i + "__tomonth", Name = "Candidate.TrainingHistory[" + i + "].ToMonth" }));
+            #line 78 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourse_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" }));
 
             
             #line default
@@ -305,8 +305,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 82 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingHistory.ToList()[i].ToYear, new { @id = "candidate_traininghistory_" + i + "__toyear", Name = "Candidate.TrainingHistory[" + i + "].ToYear", @class = "form-control", @maxlength = 4 }));
+            #line 82 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToYear, new { @id = "candidate_trainingcourse_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 }));
 
             
             #line default
@@ -316,8 +316,8 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 84 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.ValidationMessage("Candidate.TrainingHistory[" + i + "].ToYear"));
+            #line 84 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].ToYear"));
 
             
             #line default
@@ -335,7 +335,7 @@ WriteLiteral(@"
 ");
 
             
-            #line 94 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
+            #line 94 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
                     }
                     else
                     {
@@ -383,8 +383,8 @@ WriteLiteral(">Provider</span>\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 112 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.TextBox("Candidate.TrainingHistory[" + i + "].Provider", "", new { @id = "candidate_traininghistory_" + i + "__provider", Name = "Candidate.TrainingHistory[" + i + "].Provider", @class = "form-control", @maxlength = 50 }));
+            #line 112 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].Provider", "", new { @id = "candidate_trainingcourse_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 }));
 
             
             #line default
@@ -394,8 +394,8 @@ WriteLiteral("\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 113 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.ValidationMessage("Candidate.TrainingHistory[" + i + "].Provider"));
+            #line 113 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].Provider"));
 
             
             #line default
@@ -415,8 +415,8 @@ WriteLiteral(">Course Title</span>\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 117 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.TextBox("Candidate.TrainingHistory[" + i + "].CourseTitle", "", new { @id = "candidate_traininghistory_" + i + "__coursetitle", Name = "Candidate.TrainingHistory[" + i + "].CourseTitle", @class = "form-control", @maxlength = 50 }));
+            #line 117 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].Title", "", new { @id = "candidate_trainingcourse_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 }));
 
             
             #line default
@@ -426,8 +426,8 @@ WriteLiteral("\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 118 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.ValidationMessage("Candidate.TrainingHistory[" + i + "].CourseTitle"));
+            #line 118 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].Title"));
 
             
             #line default
@@ -502,8 +502,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 151 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.DropDownList("Candidate.TrainingHistory[" + i + "].FromMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_traininghistory_" + i + "__frommonth", Name = "Candidate.TrainingHistory[" + i + "].FromMonth" }));
+            #line 151 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.DropDownList("Candidate.TrainingCourses[" + i + "].FromMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourse_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" }));
 
             
             #line default
@@ -518,8 +518,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 155 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.TextBox("Candidate.TrainingHistory[" + i + "].FromYear", "", new { @id = "candidate_traininghistory_" + i + "__fromyear", Name = "Candidate.TrainingHistory[" + i + "].FromYear", @class = "form-control", @maxlength = 4 }));
+            #line 155 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].FromYear", "", new { @id = "candidate_trainingcourse_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 }));
 
             
             #line default
@@ -529,8 +529,8 @@ WriteLiteral("\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 156 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.ValidationMessage("Candidate.TrainingHistory[" + i + "].FromYear"));
+            #line 156 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].FromYear"));
 
             
             #line default
@@ -550,8 +550,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 162 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.DropDownList("Candidate.TrainingHistory[" + i + "].ToMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_traininghistory_" + i + "__tomonth", Name = "Candidate.TrainingHistory[" + i + "].ToMonth" }));
+            #line 162 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.DropDownList("Candidate.TrainingCourses[" + i + "].ToMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourse_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" }));
 
             
             #line default
@@ -566,8 +566,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 166 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.TextBox("Candidate.TrainingHistory[" + i + "].ToYear", "", new { @id = "candidate_traininghistory_" + i + "__toyear", Name = "Candidate.TrainingHistory[" + i + "].ToYear", @class = "form-control", @maxlength = 4 }));
+            #line 166 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].ToYear", "", new { @id = "candidate_trainingcourse_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 }));
 
             
             #line default
@@ -577,8 +577,8 @@ WriteLiteral("\r\n");
 WriteLiteral("                                                    ");
 
             
-            #line 167 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
-                                               Write(Html.ValidationMessage("Candidate.TrainingHistory[" + i + "].ToYear"));
+            #line 167 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
+                                               Write(Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].ToYear"));
 
             
             #line default
@@ -596,7 +596,7 @@ WriteLiteral(@"
 ");
 
             
-            #line 177 "..\..\Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml"
+            #line 177 "..\..\Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml"
                     }
                 }
 
@@ -609,13 +609,13 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                    <button");
 
-WriteLiteral(" id=\"add-traininghistory-rows-button\"");
+WriteLiteral(" id=\"add-training-history-rows-button\"");
 
 WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"ApplicationAction:AddEmptyTrainingHistoryRows\"");
+WriteLiteral(" name=\"ApplicationAction:AddEmptyTrainingCourseRows\"");
 
 WriteLiteral(">Add 1 more training course</button>\r\n                </div>\r\n            </div>\r" +
 "\n        </div>\r\n    </fieldset>\r\n</noscript>");

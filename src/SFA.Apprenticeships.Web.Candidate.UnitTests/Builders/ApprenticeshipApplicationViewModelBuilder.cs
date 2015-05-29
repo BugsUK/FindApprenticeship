@@ -22,7 +22,7 @@
         private string _anythingWeCanDoToSupportYourInterview;
 
         private WorkExperienceViewModel[] _workExperience;
-        private TrainingHistoryViewModel[] _trainingHistory;
+        private TrainingCourseViewModel[] _trainingCourses;
 
         public ApprenticeshipApplicationViewModelBuilder RequiresSupportForInterview()
         {
@@ -86,9 +86,9 @@
             return this;
         }
 
-        public ApprenticeshipApplicationViewModelBuilder WithTrainingHistory(TrainingHistoryViewModel[] trainingHistory)
+        public ApprenticeshipApplicationViewModelBuilder WithTrainingCourses(TrainingCourseViewModel[] trainingCourses)
         {
-            _trainingHistory = trainingHistory;
+            _trainingCourses = trainingCourses;
             return this;
         }
 
@@ -114,8 +114,8 @@
                     },
                     HasWorkExperience = _workExperience != null && _workExperience.Any(),
                     WorkExperience = _workExperience,
-                    HasTrainingHistory = _trainingHistory != null && _trainingHistory.Any(),
-                    TrainingHistory = _trainingHistory
+                    HasTrainingCourses = _trainingCourses != null && _trainingCourses.Any(),
+                    TrainingCourses = _trainingCourses
                 },
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel
                 {

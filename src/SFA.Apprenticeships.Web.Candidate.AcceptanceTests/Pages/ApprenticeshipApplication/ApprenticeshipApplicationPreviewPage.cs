@@ -90,7 +90,7 @@
         #region Work Experience
 
         [ElementLocator(Id = "no-training-history")]
-        public IWebElement NoTrainingHistory { get; set; }
+        public IWebElement NoTrainingCoursesMessage { get; set; }
 
         #endregion
 

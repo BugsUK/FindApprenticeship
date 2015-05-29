@@ -22,9 +22,9 @@
             RuleFor(x => x.WorkExperience)
                 .SetCollectionValidator(new WorkExperienceViewModelValidator())
                 .When(x => x.HasWorkExperience);
-            RuleFor(x => x.TrainingHistory)
-                .SetCollectionValidator(new TrainingHistoryViewModelValidator())
-                .When(x => x.HasTrainingHistory);
+            RuleFor(x => x.TrainingCourses)
+                .SetCollectionValidator(new TrainingCourseViewModelValidator())
+                .When(x => x.HasTrainingCourses);
         }
     }
 }

@@ -49,7 +49,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators.Helpers
             return true;
         }
 
-        public static bool TrainingYearBeBeforeOrEqual(TrainingHistoryViewModel instance, string toYear)
+        public static bool TrainingYearBeBeforeOrEqual(TrainingCourseViewModel instance, string toYear)
         {
             if (string.IsNullOrEmpty(toYear))
             {

@@ -1,11 +1,11 @@
-﻿@model IEnumerable<TrainingHistoryViewModel>
+﻿@model IEnumerable<TrainingCourseViewModel>
 
 <section class="section-border">
     <h2 class="heading-large">
         Training courses
         @if (ViewBag.VacancyId != null)
         {
-            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyTrainingHistory">
+            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyTrainingCourses">
                 <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
             </a>
         }
@@ -39,7 +39,7 @@
                                 <td>
                                     <span class="form-prepopped cell-span">@each.Provider</span>
                                     <span class="form-prepopped cell-span training-hyphen">-</span>
-                                    <span class="form-prepopped cell-span">@each.CourseTitle</span>
+                                    <span class="form-prepopped cell-span">@each.Title</span>
                                 </td>
                             </tr>
                         </tbody>

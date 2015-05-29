@@ -9,7 +9,7 @@
             // note: might become a collection, for now allow to be null: EducationHistory = new Education();
             Qualifications = new List<Qualification>();
             WorkExperience = new List<WorkExperience>();
-            TrainingHistory = new List<TrainingHistory>();
+            TrainingCourses = new List<TrainingCourse>();
             AboutYou = new AboutYou();
         }
 
@@ -19,7 +19,7 @@
 
         public IList<WorkExperience> WorkExperience { get; set; }
 
-        public IList<TrainingHistory> TrainingHistory { get; set; }
+        public IList<TrainingCourse> TrainingCourses { get; set; }
 
         public AboutYou AboutYou { get; set; }
         

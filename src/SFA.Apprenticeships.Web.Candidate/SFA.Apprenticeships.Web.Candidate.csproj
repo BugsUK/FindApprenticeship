@@ -262,10 +262,6 @@
     <Content Include="Content\_assets\img\icon-sms.svg" />
     <Content Include="Content\_assets\img\logo-ticks-2x.png" />
     <Content Include="Content\_assets\img\logo-ticks-small-2x.png" />
-    <Content Include="Content\_assets\js\nas\application\shared.js" />
-    <Content Include="Content\_assets\js\nas\application\trainingHistory.js" />
-    <Content Include="Content\_assets\js\nas\application\workExperience.js" />
-    <Content Include="Content\_assets\js\nas\application\qualifications.js" />
     <Content Include="Content\_assets\js\nas\geoLocater.js" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff2" />
     <Content Include="Configs\dataCacheClient.config">
@@ -699,25 +695,25 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>View.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml">
+    <Content Include="Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>TrainingHistory.generated.cs</LastGenOutput>
+      <LastGenOutput>TrainingCourses.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ApprenticeshipApplication\_trainingHistoryJS.cshtml">
+    <Content Include="Views\ApprenticeshipApplication\_trainingCoursesJS.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_trainingHistoryJS.generated.cs</LastGenOutput>
+      <LastGenOutput>_trainingCoursesJS.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ApprenticeshipApplication\_trainingHistoryNonJS.cshtml">
+    <Content Include="Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_trainingHistoryNonJS.generated.cs</LastGenOutput>
+      <LastGenOutput>_trainingCoursesNonJS.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\TraineeshipApplication\_trainingHistoryJS.cshtml">
+    <Content Include="Views\TraineeshipApplication\_trainingCoursesJS.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_trainingHistoryJS.generated.cs</LastGenOutput>
+      <LastGenOutput>_trainingCoursesJS.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\TraineeshipApplication\_trainingHistoryNonJS.cshtml">
+    <Content Include="Views\TraineeshipApplication\_trainingCoursesNonJS.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_trainingHistoryNonJS.generated.cs</LastGenOutput>
+      <LastGenOutput>_trainingCoursesNonJS.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Home\NextSteps.cshtml">
       <Generator>RazorGenerator</Generator>
@@ -824,7 +820,7 @@
     <Compile Include="Constants\ViewModels\ForgottenEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyUpdatedEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyMobileViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\TrainingHistoryViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\TrainingCourseViewModelMessages.cs" />
     <Compile Include="Controllers\SiteMapController.cs" />
     <Compile Include="Controllers\UnsubscribeController.cs" />
     <Compile Include="DependencyResolution\ControllerConvention.cs" />
@@ -852,7 +848,7 @@
     <Compile Include="Validators\MonitoringInformationViewModelValidator.cs" />
     <Compile Include="Validators\VerifyUpdatedEmailViewModelClientValidator.cs" />
     <Compile Include="Validators\VerifyMobileViewModelValidator.cs" />
-    <Compile Include="Validators\TrainingHistoryViewModelValidator.cs" />
+    <Compile Include="Validators\TrainingCourseViewModelValidator.cs" />
     <Compile Include="ViewModels\Account\SavedSearchViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileState.cs" />
     <Compile Include="ViewModels\Account\EmailViewModel.cs" />
@@ -876,7 +872,7 @@
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextApprenticeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\MonitoringInformationViewModel.cs" />
-    <Compile Include="ViewModels\Candidate\TrainingHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Candidate\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenCredentialsViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenEmailViewModel.cs" />
@@ -1087,13 +1083,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EmployerQuestionAnswersViewModel.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ApprenticeshipApplication\_trainingHistoryJS.generated.cs">
-      <DependentUpon>_trainingHistoryJS.cshtml</DependentUpon>
+    <Compile Include="Views\ApprenticeshipApplication\_trainingCoursesJS.generated.cs">
+      <DependentUpon>_trainingCoursesJS.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\ApprenticeshipApplication\_trainingHistoryNonJS.generated.cs">
-      <DependentUpon>_trainingHistoryNonJS.cshtml</DependentUpon>
+    <Compile Include="Views\ApprenticeshipApplication\_trainingCoursesNonJS.generated.cs">
+      <DependentUpon>_trainingCoursesNonJS.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -1102,8 +1098,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Qualifications.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\DisplayTemplates\Application\TrainingHistory.generated.cs">
-      <DependentUpon>TrainingHistory.cshtml</DependentUpon>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\TrainingCourses.generated.cs">
+      <DependentUpon>TrainingCourses.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -1405,13 +1401,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_qualificationsNonJS.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TraineeshipApplication\_trainingHistoryJS.generated.cs">
-      <DependentUpon>_trainingHistoryJS.cshtml</DependentUpon>
+    <Compile Include="Views\TraineeshipApplication\_trainingCoursesJS.generated.cs">
+      <DependentUpon>_trainingCoursesJS.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\TraineeshipApplication\_trainingHistoryNonJS.generated.cs">
-      <DependentUpon>_trainingHistoryNonJS.cshtml</DependentUpon>
+    <Compile Include="Views\TraineeshipApplication\_trainingCoursesNonJS.generated.cs">
+      <DependentUpon>_trainingCoursesNonJS.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>

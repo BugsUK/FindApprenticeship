@@ -39,8 +39,8 @@
     Html.RenderPartial("_workExperiencesJS", Model);   
     Html.RenderPartial("_workExperiencesNonJS", Model);
 
-    Html.RenderPartial("_trainingHistoryJS", Model);
-    Html.RenderPartial("_trainingHistoryNonJS", Model);   
+    Html.RenderPartial("_trainingCoursesJS", Model);
+    Html.RenderPartial("_trainingCoursesNonJS", Model);   
     
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
     
@@ -60,7 +60,7 @@
 
     var qualificationData = null;
     var workExperienceData = null;
-    var trainingHistoryData = null;
+    var trainingCourseData = null;
     var currentYear = null;
     var whitelistregex = null;
     var yearRegex = null;
@@ -72,7 +72,7 @@
 
         qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
         workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
-        trainingHistoryData = @Html.Raw(Json.Encode(Model.Candidate.TrainingHistory));
+        trainingCourseData = @Html.Raw(Json.Encode(Model.Candidate.TrainingCourses));
         currentYear = @Html.Raw(Model.CurrentYear);
         whitelistregex =  @Html.Raw(Json.Encode(Model.WhiteListRegex));
         yearRegex =  @Html.Raw(Json.Encode(Model.FourDigitYearRegex));
@@ -99,8 +99,8 @@
         return workExperienceData;
     }
 
-    function getTrainingHistoryData() {
-        return trainingHistoryData;
+    function getTrainingCourseData() {
+        return trainingCourseData;
     }
 
     function getWhiteListRegex() {

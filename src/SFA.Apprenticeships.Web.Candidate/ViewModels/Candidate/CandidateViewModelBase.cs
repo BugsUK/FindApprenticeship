@@ -41,9 +41,9 @@
 
         public IEnumerable<WorkExperienceViewModel> WorkExperience { get; set; }
 
-        public bool HasTrainingHistory { get; set; }
+        public bool HasTrainingCourses { get; set; }
 
-        public IEnumerable<TrainingHistoryViewModel> TrainingHistory { get; set; }
+        public IEnumerable<TrainingCourseViewModel> TrainingCourses { get; set; }
 
         public EmployerQuestionAnswersViewModel EmployerQuestionAnswers { get; set; }
 

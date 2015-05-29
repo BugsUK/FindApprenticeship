@@ -431,16 +431,16 @@ this.FeatureBackground();
 #line 121
  testRunner.Then("I see", ((string)(null)), table15, "Then ");
 #line 126
- testRunner.When("I choose TrainingHistoryYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I choose TrainingCoursesYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 127
- testRunner.And("I choose SaveTrainingHistory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I choose SaveTrainingCourseButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table16.AddRow(new string[] {
-                        "TrainingHistoryValidationErrorsCount",
+                        "TrainingCourseValidationErrorsCount",
                         "Equals",
                         "4"});
 #line 128
@@ -450,30 +450,30 @@ this.FeatureBackground();
                         "Field",
                         "Value"});
             table17.AddRow(new string[] {
-                        "TrainingHistoryProvider",
-                        "TrainingHistoryProvider"});
+                        "TrainingCourseProvider",
+                        "TrainingCourseProvider"});
             table17.AddRow(new string[] {
-                        "TrainingHistoryCourseTitle",
-                        "TrainingHistoryCourseTitle"});
+                        "TrainingCourseTitle",
+                        "TrainingCourseTitle"});
             table17.AddRow(new string[] {
-                        "TrainingHistoryFromYear",
+                        "TrainingCourseFromYear",
                         "2011"});
             table17.AddRow(new string[] {
-                        "TrainingHistoryToYear",
+                        "TrainingCourseToYear",
                         "2012"});
 #line 131
  testRunner.When("I enter data", ((string)(null)), table17, "When ");
 #line 137
- testRunner.And("I choose SaveTrainingHistory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I choose SaveTrainingCourseButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 138
- testRunner.Then("I wait for 30 seconds to see TrainingHistorySummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("I wait for 30 seconds to see TrainingCourseSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Rule",
                         "Value"});
             table18.AddRow(new string[] {
-                        "TrainingHistoryCount",
+                        "TrainingCourseCount",
                         "Equals",
                         "1"});
 #line 139
@@ -486,15 +486,15 @@ this.FeatureBackground();
             table19.AddRow(new string[] {
                         "Provider",
                         "Equals",
-                        "TrainingHistoryProvider"});
+                        "TrainingCourseProvider"});
             table19.AddRow(new string[] {
                         "CourseTitle",
                         "Equals",
-                        "TrainingHistoryCourseTitle"});
+                        "TrainingCourseTitle"});
 #line 142
- testRunner.And("I am on TrainingHistorySummaryItems list item matching criteria", ((string)(null)), table19, "And ");
+ testRunner.And("I am on TrainingCourseSummaryItems list item matching criteria", ((string)(null)), table19, "And ");
 #line 146
- testRunner.When("I choose RemoveTrainingHistoryLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I choose RemoveTrainingCourseLink", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 147
  testRunner.And("I am on the ApprenticeshipApplicationPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -503,7 +503,7 @@ this.FeatureBackground();
                         "Rule",
                         "Value"});
             table20.AddRow(new string[] {
-                        "TrainingHistorySummary",
+                        "TrainingCourseSummary",
                         "Does Not Exist",
                         ""});
 #line 148
@@ -604,27 +604,27 @@ this.FeatureBackground();
 #line 185
  testRunner.And("I choose SaveWorkExperience", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 187
- testRunner.When("I choose TrainingHistoryYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I choose TrainingCoursesYes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
                         "Value"});
             table26.AddRow(new string[] {
-                        "TrainingHistoryProvider",
-                        "TrainingHistoryProvider"});
+                        "TrainingCourseProvider",
+                        "TrainingProvider"});
             table26.AddRow(new string[] {
-                        "TrainingHistoryCourseTitle",
-                        "TrainingHistoryCourseTitle"});
+                        "TrainingCourseTitle",
+                        "TrainingCourseTitle"});
             table26.AddRow(new string[] {
-                        "TrainingHistoryFromYear",
+                        "TrainingCourseFromYear",
                         "2011"});
             table26.AddRow(new string[] {
-                        "TrainingHistoryToYear",
+                        "TrainingCourseToYear",
                         "2012"});
 #line 188
  testRunner.And("I enter data", ((string)(null)), table26, "And ");
 #line 194
- testRunner.And("I choose SaveTrainingHistory", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I choose SaveTrainingCourseButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 196
  testRunner.And("I choose SaveButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 197
@@ -763,7 +763,7 @@ this.FeatureBackground();
                         "Does Not Exist",
                         ""});
             table33.AddRow(new string[] {
-                        "NoTrainingHistory",
+                        "NoTrainingCoursesMessage",
                         "Does Not Exist",
                         ""});
             table33.AddRow(new string[] {

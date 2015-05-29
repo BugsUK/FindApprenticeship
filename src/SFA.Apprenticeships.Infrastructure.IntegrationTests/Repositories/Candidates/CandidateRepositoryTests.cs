@@ -82,10 +82,10 @@
                         new WorkExperience { Employer = "Some employer", JobTitle = "Beer Tester", Description = "Tested beer at the brewery", FromDate = new DateTime(2000, 1, 1), ToDate = new DateTime(2001, 12, 31) },
                         new WorkExperience { Employer = "Another employer", JobTitle = "Barman", Description = "Served drinks and swept up behind the bar", FromDate = new DateTime(2002, 1, 1), ToDate = new DateTime(2002, 12, 31) }
                     },
-                    TrainingHistory = 
+                    TrainingCourses = 
                     {
-                        new TrainingHistory { Provider = "Some provider", CourseTitle = "Being awesome", FromDate = new DateTime(2001, 1, 1), ToDate = new DateTime(2003, 12, 31) },
-                        new TrainingHistory { Provider = "Another provider", CourseTitle = "How to win friends and influence people", FromDate = new DateTime(2004, 1, 1), ToDate = new DateTime(2005, 12, 31) }
+                        new TrainingCourse { Provider = "Some provider", Title = "Being awesome", FromDate = new DateTime(2001, 1, 1), ToDate = new DateTime(2003, 12, 31) },
+                        new TrainingCourse { Provider = "Another provider", Title = "How to win friends and influence people", FromDate = new DateTime(2004, 1, 1), ToDate = new DateTime(2005, 12, 31) }
                     }
                 }
             };

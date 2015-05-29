@@ -1,32 +1,32 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.TraineeshipApplicationViewModel
 
-<div class="hide-nojs" data-bind="visible: selectedSection() === 'applyTrainingHistory', stopBinding: true">    
-    <fieldset id="applyTrainingHistory" class="fieldset-with-border">
+<div class="hide-nojs" data-bind="visible: selectedSection() === 'applyTrainingCourses', stopBinding: true">
+    <fieldset id="applyTrainingCourses" class="fieldset-with-border">
         <legend class="heading-large">Training courses</legend>
-        <p class="hide-nojs form-label text" id="trainingHistoryQuestion">Have you been on a training course?</p>
-        <p class="form-hint text" id="appTourTraining">
+        <p class="hide-nojs form-label text" id="trainingCoursesQuestion">Have you been on a training course?</p>
+        <p class="form-hint text">
             Include any courses you've received, in or outside of work
         </p>
         <div class="hide-nojs">
             <div class="form-group inline clearfix">
-                <label data-target="training-history-panel" for="training-history-yes" class="block-label" data-bind="css: {selected: showTrainingHistory()}">
-                    @Html.RadioButtonFor(m => m.Candidate.HasTrainingHistory, true, new { id = "training-history-yes", data_bind = "attr:{'checked': hasTrainingHistory() }", aria_controls = "training-history-panel", aria_expanded = "false", aria_labelledby = "trainingHistoryQuestion" })
+                <label data-target="training-history-panel" for="training-history-yes" class="block-label" data-bind="css: {selected: showTrainingCourses()}">
+                    @Html.RadioButtonFor(m => m.Candidate.HasTrainingCourses, true, new { id = "training-history-yes", data_bind = "attr:{'checked': hasTrainingCourses() }", aria_controls = "training-history-panel", aria_expanded = "false", aria_labelledby = "trainingCoursesQuestion" })
                     Yes
                 </label>
-                <label for="training-history-no" class="block-label" data-bind="css: {selected: !showTrainingHistory()}">
-                    @Html.RadioButtonFor(m => m.Candidate.HasTrainingHistory, false, new { id = "training-history-no", data_bind = "attr:{'checked': hasNoTrainingHistory() }", aria_labelledby = "hasNoTrainingHistoryQuestion" })
+                <label for="training-history-no" class="block-label" data-bind="css: {selected: !showTrainingCourses()}">
+                    @Html.RadioButtonFor(m => m.Candidate.HasTrainingCourses, false, new { id = "training-history-no", data_bind = "attr:{'checked': hasNoTrainingCourses() }", aria_labelledby = "hasNoTrainingCoursesQuestion" })
                     No
                 </label>
             </div>
-            <div id="training-history-panel" class="toggle-content" data-bind="style: {'display': trainingHistoryStatus() }" aria-hidden="true">
+            <div id="training-history-panel" class="toggle-content" data-bind="style: {'display': trainingCoursesStatus() }" aria-hidden="true">
                 <div id="training-history-apply" class="clearfix">
                     <div class="form-group form-group-compound" data-bind="parentvalElement: provider">
                         <label for="training-history-provider" class="form-label">Provider</label>
                         <input type="text" class="form-control" id="training-history-provider" data-bind="value: provider" maxlength="50">
                     </div>
-                    <div class="form-group form-group-compound" data-bind="parentvalElement: courseTitle">
+                    <div class="form-group form-group-compound" data-bind="parentvalElement: title">
                         <label for="training-history-course-title" class="form-label">Course title</label>
-                        <input type="text" class="form-control" id="training-history-course-title" data-bind="value: courseTitle" maxlength="50">
+                        <input type="text" class="form-control" id="training-history-course-title" data-bind="value: title" maxlength="50">
                     </div>
                     <div class="form-group inline-fixed validation-message-parent">
                         <div class="form-group error-wrapper vert-align-top no-btm-margin">
@@ -44,7 +44,7 @@
                             <label for="training-history-to-month" class="form-label">To</label>
                             <div class="form-group form-group-compound no-btm-margin">
                                 <span class="form-hint">Month</span>
-                                <select id="training-history-to-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber',value: toMonth"></select>
+                                <select id="training-history-to-month" data-bind="options: months, optionsText: 'monthName', optionsValue: 'monthNumber', value: toMonth"></select>
                             </div>
                             <div class="form-group form-group-compound no-btm-margin" data-bind="parentvalElement: toYear">
                                 <label for="training-history-to-year" class="form-hint">Year</label>
@@ -55,21 +55,21 @@
                         <div class="validation-message-container"></div>
                     </div>
                     <div class="form-group">
-                        <a role="button" href="#" class="button" id="addTrainingHistoryBtn" data-bind="click: addTrainingHistory">Save this training course</a>
-                        <span class="visuallyhidden" aria-live="polite" id="trainingHistoryAddConfirmText"></span>
+                        <a role="button" href="#" class="button" id="addTrainingCourseBtn" data-bind="click: addTrainingCourse">Save this training course</a>
+                        <span class="visuallyhidden" aria-live="polite" id="trainingCourseAddConfirmText"></span>
                     </div>
                 </div>
-                <div id="training-history-summary" data-bind="foreach: trainingHistoryItems">
+                <div id="training-history-summary" data-bind="foreach: trainingCourseItems">
                     <div class="grid-3-4">
                         <div id="training-history-item" class="grid-wrapper training-history-item">
                             <div class="training-controls">
                                 <div class="training-edit ta-center">
-                                    <a href="#" class="fake-link cell-span" data-bind="if: showEditButton, click: $parent.editTrainingHistory">Edit</a>
-                                    <a href="#" class="fake-link cell-span" data-bind="ifnot: showEditButton,click: $parent.saveTrainingHistory">Save</a>
+                                    <a href="#" class="fake-link cell-span" data-bind="if: showEditButton, click: $parent.editTrainingCourse">Edit</a>
+                                    <a href="#" class="fake-link cell-span" data-bind="ifnot: showEditButton,click: $parent.saveTrainingCourse">Save</a>
                                 </div>
                                 <div class="training-delete ta-center">
                                     <span class="cell-span">
-                                        <i class="copy-16 fa fa-times-circle icon-black remove-training-history-item-link" data-bind="click: $parent.removeTrainingHistory"></i>
+                                        <i class="copy-16 fa fa-times-circle icon-black remove-training-history-item-link" data-bind="click: $parent.removeTrainingCourse"></i>
                                         <i class="visuallyhidden">Remove</i>
                                     </span>
                                 </div>
@@ -91,14 +91,14 @@
                                         <tr>
                                             <td>
                                                 <div class="form-group form-group-compound inline-float width-all-49" data-bind="visible: !showEditButton()">
-                                                    <input type="text" title="Provider" class="form-control" data-bind="value: itemProvider, attr:{'name':'Candidate.TrainingHistory[' + $index() +'].Provider'}" maxlength="50" />
+                                                    <input type="text" title="Provider" class="form-control" data-bind="value: itemProvider, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].Provider'}" maxlength="50" />
                                                 </div>
-                                                <span class="cell-span training-history-provider-span" data-bind="visible: showEditButton, text: itemProvider, attr:{'id':'candidate_traininghistory_'+ $index() + '__provider'}"></span>
+                                                <span class="cell-span training-history-provider-span" data-bind="visible: showEditButton, text: itemProvider, attr:{'id':'candidate_trainingcourse_'+ $index() + '__provider'}"></span>
                                                 <span class="cell-span training-hyphen" data-bind="visible: showEditButton">-</span>
                                                 <div class="form-group form-group-compound inline-float width-all-49 no-right-margin" data-bind="visible: !showEditButton()">
-                                                    <input type="text" title="Training course title" class="form-control" data-bind="value: itemCourseTitle, attr:{'name':'Candidate.TrainingHistory[' + $index() +'].CourseTitle'}" maxlength="50" />
+                                                    <input type="text" title="Training course title" class="form-control" data-bind="value: itemTitle, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].Title'}" maxlength="50" />
                                                 </div>
-                                                <span class="cell-span training-history-course-title-span" data-bind="visible: showEditButton, text: itemCourseTitle, attr:{'id':'candidate_traininghistory_'+ $index() + '__coursetitle'}"></span>
+                                                <span class="cell-span training-history-course-title-span" data-bind="visible: showEditButton, text: itemTitle, attr:{'id':'candidate_trainingcourse_'+ $index() + '__title'}"></span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -129,24 +129,24 @@
                                         <tr>
                                             <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <select title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemFromMonth, attr:{'name':'Candidate.TrainingHistory[' + $index() +'].FromMonth'} "></select>
+                                                    <select title="From month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber', value: itemFromMonth, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].FromMonth'} "></select>
                                                 </div>
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <input title="From year" type="text" class="form-control" data-bind="value: itemFromYear, attr:{'name':'Candidate.TrainingHistory[' + $index() +'].FromYear'}" pattern="[0-9]*" maxlength="4">
+                                                    <input title="From year" type="text" class="form-control" data-bind="value: itemFromYear, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].FromYear'}" pattern="[0-9]*" maxlength="4">
                                                 </div>
-                                                <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemFromMonth()), attr:{'id':'candidate_traininghistory_'+ $index() + '__frommonth'}"></span>
-                                                <span class="cell-span" data-bind="visible: showEditButton, text: itemFromYear, attr:{'id':'candidate_traininghistory'+ $index() + '__fromyear'}"></span>
+                                                <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemFromMonth()), attr:{'id':'candidate_trainingcourse_'+ $index() + '__frommonth'}"></span>
+                                                <span class="cell-span" data-bind="visible: showEditButton, text: itemFromYear, attr:{'id':'candidate_trainingcourse'+ $index() + '__fromyear'}"></span>
                                                 <div class="validation-message-container"></div>
                                             </td>
                                             <td class="validation-message-parent">
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <select title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber',value: itemToMonth, attr:{'name':'Candidate.TrainingHistory[' + $index() +'].ToMonth'}"></select>
+                                                    <select title="To month" data-bind="options: $parent.months, optionsText: 'monthName', optionsValue: 'monthNumber', value: itemToMonth, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].ToMonth'}"></select>
                                                 </div>
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
-                                                    <input title="To year" type="text" class="form-control" data-bind="value: itemToYear, attr:{'name':'Candidate.TrainingHistory[' + $index() +'].ToYear'}" pattern="[0-9]*" maxlength="4">
+                                                    <input title="To year" type="text" class="form-control" data-bind="value: itemToYear, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].ToYear'}" pattern="[0-9]*" maxlength="4">
                                                 </div>
-                                                <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemToMonth()), attr:{'id':'candidate_traininghistory'+ $index() + '__tomonth'}"></span>
-                                                <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear, attr:{'id':'candidate_traininghistory'+ $index() + '__toyear'}"></span>
+                                                <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemToMonth()), attr:{'id':'candidate_trainingcourse'+ $index() + '__tomonth'}"></span>
+                                                <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear, attr:{'id':'candidate_trainingcourse'+ $index() + '__toyear'}"></span>
                                                 <div class="validation-message-container"></div>
                                             </td>
                                             <td></td>

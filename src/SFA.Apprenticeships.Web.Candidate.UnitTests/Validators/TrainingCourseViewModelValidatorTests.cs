@@ -6,33 +6,33 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class TrainingHistoryViewModelValidatorTests
+    public class TrainingCourseViewModelValidatorTests
     {
-        private TrainingHistoryViewModel _viewModel;
-        private TrainingHistoryViewModelValidator _validator;
+        private TrainingCourseViewModel _viewModel;
+        private TrainingCourseViewModelValidator _validator;
 
         [SetUp]
         public void SetUp()
         {
             // Start with a valid view model and break things.
-            _viewModel = new TrainingHistoryViewModel
+            _viewModel = new TrainingCourseViewModel
             {
                 Provider = "Acme Training Ltd",
-                CourseTitle = "Being Awesome",
+                Title = "Being Awesome",
                 FromYear = "2011",
                 FromMonth = 1,
                 ToYear = "2013",
                 ToMonth = 6
             };
 
-            _validator = new TrainingHistoryViewModelValidator();
+            _validator = new TrainingCourseViewModelValidator();
         }
 
         [Test]
         public void ShouldValidateValidViewModel()
         {
             _validator.ShouldNotHaveValidationErrorFor(x => x.Provider, _viewModel);
-            _validator.ShouldNotHaveValidationErrorFor(x => x.CourseTitle, _viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(x => x.Title, _viewModel);
             _validator.ShouldNotHaveValidationErrorFor(x => x.FromMonth, _viewModel);
             _validator.ShouldNotHaveValidationErrorFor(x => x.FromYear, _viewModel);
             _validator.ShouldNotHaveValidationErrorFor(x => x.ToMonth, _viewModel);
@@ -57,23 +57,23 @@
         [TestCase(0, false)]
         [TestCase(50, true)]
         [TestCase(51, false)]
-        public void ShouldValidateCourseTitle(int? length, bool isValid)
+        public void ShouldValidateTitle(int? length, bool isValid)
         {
-            _viewModel.CourseTitle = length.HasValue ? new string('X', length.Value) : default(string);
+            _viewModel.Title = length.HasValue ? new string('X', length.Value) : default(string);
 
             if (isValid)
-                _validator.ShouldNotHaveValidationErrorFor(x => x.CourseTitle, _viewModel);
+                _validator.ShouldNotHaveValidationErrorFor(x => x.Title, _viewModel);
             else
-                _validator.ShouldHaveValidationErrorFor(x => x.CourseTitle, _viewModel);
+                _validator.ShouldHaveValidationErrorFor(x => x.Title, _viewModel);
         }
 
         [Test]
         public void ShouldNotAllowNonWhitelistedCharacters()
         {
-            _viewModel.CourseTitle = _viewModel.Provider = "<script>";
+            _viewModel.Title = _viewModel.Provider = "<script>";
 
             _validator.ShouldHaveValidationErrorFor(x => x.Provider, _viewModel);
-            _validator.ShouldHaveValidationErrorFor(x => x.CourseTitle, _viewModel);
+            _validator.ShouldHaveValidationErrorFor(x => x.Title, _viewModel);
         }
 
         [TestCase(null, false)]

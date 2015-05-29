@@ -260,8 +260,8 @@ Write(Html.HiddenFor(m => m.IsJavascript, new{ @id="hidden-flag-javascript"}));
     Html.RenderPartial("_workExperiencesJS", Model);   
     Html.RenderPartial("_workExperiencesNonJS", Model);
 
-    Html.RenderPartial("_trainingHistoryJS", Model);
-    Html.RenderPartial("_trainingHistoryNonJS", Model);   
+    Html.RenderPartial("_trainingCoursesJS", Model);
+    Html.RenderPartial("_trainingCoursesNonJS", Model);   
     
     
             
@@ -347,7 +347,7 @@ WriteLiteral(@">
 
     var qualificationData = null;
     var workExperienceData = null;
-    var trainingHistoryData = null;
+    var trainingCourseData = null;
     var currentYear = null;
     var whitelistregex = null;
     var yearRegex = null;
@@ -375,11 +375,11 @@ WriteLiteral(";\r\n        workExperienceData = ");
             
             #line default
             #line hidden
-WriteLiteral(";\r\n        trainingHistoryData = ");
+WriteLiteral(";\r\n        trainingCourseData = ");
 
             
             #line 75 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-                         Write(Html.Raw(Json.Encode(Model.Candidate.TrainingHistory)));
+                        Write(Html.Raw(Json.Encode(Model.Candidate.TrainingCourses)));
 
             
             #line default
@@ -448,8 +448,8 @@ WriteLiteral(@"'
         return workExperienceData;
     }
 
-    function getTrainingHistoryData() {
-        return trainingHistoryData;
+    function getTrainingCourseData() {
+        return trainingCourseData;
     }
 
     function getWhiteListRegex() {

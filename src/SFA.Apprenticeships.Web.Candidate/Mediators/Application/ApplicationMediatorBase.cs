@@ -30,17 +30,17 @@
                 IsTrimmedNullOrWhitespace(vm.ToYear));
         }
 
-        protected static IEnumerable<TrainingHistoryViewModel> RemoveEmptyRowsFromTrainingHistory(
-            IEnumerable<TrainingHistoryViewModel> trainingHistoryViewModels)
+        protected static IEnumerable<TrainingCourseViewModel> RemoveEmptyRowsFromTrainingCourses(
+            IEnumerable<TrainingCourseViewModel> trainingCourseViewModels)
         {
-            if (trainingHistoryViewModels == null)
+            if (trainingCourseViewModels == null)
             {
-                return new List<TrainingHistoryViewModel>();
+                return new List<TrainingCourseViewModel>();
             }
 
-            return trainingHistoryViewModels.Where(vm =>
+            return trainingCourseViewModels.Where(vm =>
                 IsTrimmedNullOrWhitespace(vm.Provider) ||
-                IsTrimmedNullOrWhitespace(vm.CourseTitle) ||
+                IsTrimmedNullOrWhitespace(vm.Title) ||
                 IsTrimmedNullOrWhitespace(vm.FromYear) ||
                 IsTrimmedNullOrWhitespace(vm.ToYear));
         }

@@ -40,7 +40,7 @@
 
             candidate.ApplicationTemplate.Qualifications = traineeshipApplication.CandidateInformation.Qualifications;
             candidate.ApplicationTemplate.WorkExperience = traineeshipApplication.CandidateInformation.WorkExperience;
-            candidate.ApplicationTemplate.TrainingHistory = traineeshipApplication.CandidateInformation.TrainingHistory;
+            candidate.ApplicationTemplate.TrainingCourses = traineeshipApplication.CandidateInformation.TrainingCourses;
 
             if (!candidate.MonitoringInformation.DisabilityStatus.HasValue &&
                 traineeshipApplication.CandidateInformation.DisabilityStatus.HasValue)

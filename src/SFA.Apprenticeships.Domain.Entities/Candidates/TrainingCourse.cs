@@ -2,10 +2,10 @@
 {
     using System;
 
-    public class TrainingHistory
+    public class TrainingCourse
     {
         public string Provider { get; set; }
-        public string CourseTitle { get; set; }
+        public string Title { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
     }

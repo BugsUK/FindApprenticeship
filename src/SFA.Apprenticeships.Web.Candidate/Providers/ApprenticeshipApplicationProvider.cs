@@ -184,8 +184,8 @@
                 savedModel.Candidate.Qualifications = submittedModel.Candidate.Qualifications;
                 savedModel.Candidate.HasWorkExperience = submittedModel.Candidate.HasWorkExperience;
                 savedModel.Candidate.WorkExperience = submittedModel.Candidate.WorkExperience;
-                savedModel.Candidate.HasTrainingHistory = submittedModel.Candidate.HasTrainingHistory;
-                savedModel.Candidate.TrainingHistory = submittedModel.Candidate.TrainingHistory;
+                savedModel.Candidate.HasTrainingCourses = submittedModel.Candidate.HasTrainingCourses;
+                savedModel.Candidate.TrainingCourses = submittedModel.Candidate.TrainingCourses;
                 savedModel.Candidate.EmployerQuestionAnswers = submittedModel.Candidate.EmployerQuestionAnswers;
 
                 return savedModel;

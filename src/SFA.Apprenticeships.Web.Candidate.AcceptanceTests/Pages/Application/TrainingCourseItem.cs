@@ -5,9 +5,9 @@
     using SpecBind.Selenium;
 
     [ElementLocator(Class = "training-history-item")]
-    public class TrainingHistorySummaryItem : WebElement
+    public class TrainingCourseItem : WebElement
     {
-        public TrainingHistorySummaryItem(ISearchContext parent)
+        public TrainingCourseItem(ISearchContext parent)
             : base(parent)
         {
         }
@@ -19,6 +19,6 @@
         public IWebElement CourseTitle { get; set; }
 
         [ElementLocator(Class = "remove-training-history-item-link")]
-        public IWebElement RemoveTrainingHistoryLink { get; set; }
+        public IWebElement RemoveTrainingCourseLink { get; set; }
     }
 }

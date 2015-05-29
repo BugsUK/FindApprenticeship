@@ -175,7 +175,7 @@
             _candidate.ApplicationTemplate.Should().NotBeNull();
             _candidate.ApplicationTemplate.Qualifications.Should().BeEquivalentTo(_newCandidateInformation.Qualifications);
             _candidate.ApplicationTemplate.WorkExperience.Should().BeEquivalentTo(_newCandidateInformation.WorkExperience);
-            _candidate.ApplicationTemplate.TrainingHistory.Should().BeEquivalentTo(_newCandidateInformation.TrainingHistory);
+            _candidate.ApplicationTemplate.TrainingCourses.Should().BeEquivalentTo(_newCandidateInformation.TrainingCourses);
         }
 
         [TestCase(null, null, null)]

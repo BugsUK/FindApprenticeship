@@ -266,7 +266,7 @@
 
             viewModel.DefaultQualificationRows = 5;
             viewModel.DefaultWorkExperienceRows = 0;
-            viewModel.DefaultTrainingHistoryRows = 0;
+            viewModel.DefaultTrainingCourseRows = 0;
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyQualificationRows.Ok, viewModel);
         }
@@ -278,21 +278,21 @@
 
             viewModel.DefaultQualificationRows = 0;
             viewModel.DefaultWorkExperienceRows = 3;
-            viewModel.DefaultTrainingHistoryRows = 0;
+            viewModel.DefaultTrainingCourseRows = 0;
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyWorkExperienceRows.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyTrainingHistoryRows(ApprenticeshipApplicationViewModel viewModel)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyTrainingCourseRows(ApprenticeshipApplicationViewModel viewModel)
         {
-            viewModel.Candidate.TrainingHistory = RemoveEmptyRowsFromTrainingHistory(viewModel.Candidate.TrainingHistory);
-            viewModel.Candidate.HasTrainingHistory = viewModel.Candidate.TrainingHistory.Any();
+            viewModel.Candidate.TrainingCourses = RemoveEmptyRowsFromTrainingCourses(viewModel.Candidate.TrainingCourses);
+            viewModel.Candidate.HasTrainingCourses = viewModel.Candidate.TrainingCourses.Any();
 
             viewModel.DefaultQualificationRows = 0;
             viewModel.DefaultWorkExperienceRows = 0;
-            viewModel.DefaultTrainingHistoryRows = 3;
+            viewModel.DefaultTrainingCourseRows = 3;
 
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingHistoryRows.Ok, viewModel);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingCourseRows.Ok, viewModel);
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Preview(Guid candidateId, int vacancyId)
@@ -391,11 +391,11 @@
         {
             model.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(model.Candidate.Qualifications);
             model.Candidate.WorkExperience = RemoveEmptyRowsFromWorkExperience(model.Candidate.WorkExperience);
-            model.Candidate.TrainingHistory = RemoveEmptyRowsFromTrainingHistory(model.Candidate.TrainingHistory);
+            model.Candidate.TrainingCourses = RemoveEmptyRowsFromTrainingCourses(model.Candidate.TrainingCourses);
 
             model.DefaultQualificationRows = 0;
             model.DefaultWorkExperienceRows = 0;
-            model.DefaultTrainingHistoryRows = 0;
+            model.DefaultTrainingCourseRows = 0;
 
             if (model.IsJavascript)
             {
@@ -404,7 +404,7 @@
 
             model.Candidate.HasQualifications = model.Candidate.Qualifications.Any();
             model.Candidate.HasWorkExperience = model.Candidate.WorkExperience.Any();
-            model.Candidate.HasTrainingHistory = model.Candidate.TrainingHistory.Any();
+            model.Candidate.HasTrainingCourses = model.Candidate.TrainingCourses.Any();
 
             return model;
         }

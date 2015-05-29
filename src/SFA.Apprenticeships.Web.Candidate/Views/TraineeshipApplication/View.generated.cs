@@ -217,7 +217,7 @@ WriteLiteral("\r\n");
 
             
             #line 43 "..\..\Views\TraineeshipApplication\View.cshtml"
-Write(Html.DisplayFor(m => m.Candidate.TrainingHistory, "Application/TrainingHistory"));
+Write(Html.DisplayFor(m => m.Candidate.TrainingCourses, "Application/TrainingCourses"));
 
             
             #line default

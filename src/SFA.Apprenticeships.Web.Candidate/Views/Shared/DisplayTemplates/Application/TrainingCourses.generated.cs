@@ -42,10 +42,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates.Applic
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Application/TrainingHistory.cshtml")]
-    public partial class TrainingHistory : System.Web.Mvc.WebViewPage<IEnumerable<TrainingHistoryViewModel>>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Application/TrainingCourses.cshtml")]
+    public partial class TrainingCourses : System.Web.Mvc.WebViewPage<IEnumerable<TrainingCourseViewModel>>
     {
-        public TrainingHistory()
+        public TrainingCourses()
         {
         }
         public override void Execute()
@@ -61,13 +61,13 @@ WriteLiteral(" class=\"heading-large\"");
 WriteLiteral(">\r\n        Training courses\r\n");
 
             
-            #line 6 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 6 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 6 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 6 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
          if (ViewBag.VacancyId != null)
         {
 
@@ -78,15 +78,15 @@ WriteLiteral("            <a");
 
 WriteLiteral(" class=\"icon-with-text\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 229), Tuple.Create("\"", 341)
+WriteAttribute("href", Tuple.Create(" href=\"", 228), Tuple.Create("\"", 340)
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
-, Tuple.Create(Tuple.Create("", 236), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
+            #line 8 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+, Tuple.Create(Tuple.Create("", 235), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})
             
             #line default
             #line hidden
-, 236), false)
-, Tuple.Create(Tuple.Create("", 320), Tuple.Create("#applyTrainingHistory", 320), true)
+, 235), false)
+, Tuple.Create(Tuple.Create("", 319), Tuple.Create("#applyTrainingCourses", 319), true)
 );
 
 WriteLiteral(">\r\n                <i");
@@ -100,7 +100,7 @@ WriteLiteral(" class=\"the-text\"");
 WriteLiteral(">Edit section</span>\r\n            </a>\r\n");
 
             
-            #line 11 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 11 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
         }
 
             
@@ -109,13 +109,13 @@ WriteLiteral(">Edit section</span>\r\n            </a>\r\n");
 WriteLiteral("    </h2>\r\n\r\n");
 
             
-            #line 14 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 14 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 14 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
      if (!Model.Any())
     {
 
@@ -129,7 +129,7 @@ WriteLiteral(" id=\"no-training-history\"");
 WriteLiteral(">I have not been on any training courses</p>\r\n");
 
             
-            #line 17 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 17 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
     }
 
             
@@ -138,13 +138,13 @@ WriteLiteral(">I have not been on any training courses</p>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 19 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 19 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 19 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
      foreach (var each in Model)
     {
 
@@ -193,7 +193,7 @@ WriteLiteral(" class=\"form-prepopped cell-span\"");
 WriteLiteral(">");
 
             
-            #line 40 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 40 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
                                                                       Write(each.Provider);
 
             
@@ -210,8 +210,8 @@ WriteLiteral(" class=\"form-prepopped cell-span\"");
 WriteLiteral(">");
 
             
-            #line 42 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
-                                                                      Write(each.CourseTitle);
+            #line 42 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
+                                                                      Write(each.Title);
 
             
             #line default
@@ -269,7 +269,7 @@ WriteLiteral(" class=\"form-prepopped cell-span\"");
 WriteLiteral(">");
 
             
-            #line 72 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 72 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
                                                                       Write(Html.GetMonthYearLabel(each.FromMonth, each.FromYear));
 
             
@@ -283,7 +283,7 @@ WriteLiteral(" class=\"form-prepopped cell-span\"");
 WriteLiteral(">");
 
             
-            #line 75 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 75 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
                                                                       Write(Html.GetMonthYearLabel(each.ToMonth, each.ToYear));
 
             
@@ -302,7 +302,7 @@ WriteLiteral(@"</span>
 ");
 
             
-            #line 85 "..\..\Views\Shared\DisplayTemplates\Application\TrainingHistory.cshtml"
+            #line 85 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
     }
 
             

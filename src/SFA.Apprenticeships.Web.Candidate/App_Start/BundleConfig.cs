@@ -53,13 +53,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 var bundle = new ScriptBundle("~/bundles/nas/application").Include(
                     "~/Content/_assets/js/nas/application/applicationform.js",
                     "~/Content/_assets/js/nas/application/dirtyFormDialog.js");
-                    
-                    // TODO: US786: refactoring wip.
-                    // "~/Content/_assets/js/nas/application/qualifications.js",
-                    // "~/Content/_assets/js/nas/application/workExperience.js",
-                    // "~/Content/_assets/js/nas/application/trainingHistory.js");
 
-                // bundle.Orderer = new NonOrderingBundleOrderer();
                 bundles.Add(bundle);
             }
 
@@ -79,14 +73,6 @@ namespace SFA.Apprenticeships.Web.Candidate
 
             bundles.Add(new ScriptBundle("~/bundles/nas/searchTour").Include(
                 "~/Content/_assets/js/nas/searchTour.js"));
-        }
-
-        private class NonOrderingBundleOrderer : IBundleOrderer
-        {
-            public IEnumerable<BundleFile> OrderFiles(BundleContext context, IEnumerable<BundleFile> files)
-            {
-                return files;
-            }
         }
     }
 }

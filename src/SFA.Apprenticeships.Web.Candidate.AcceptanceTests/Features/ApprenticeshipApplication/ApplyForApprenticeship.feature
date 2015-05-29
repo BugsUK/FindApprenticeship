@@ -122,32 +122,32 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
         | Field                 | Rule           | Value |
         | WorkExperienceSummary | Does Not Exist |       |
 
-	# Training History
-	When I choose TrainingHistoryYes
-	And I choose SaveTrainingHistory
+	# Training Courses
+	When I choose TrainingCoursesYes
+	And I choose SaveTrainingCourseButton
 	Then I see
 		| Field                                | Rule   | Value |
-		| TrainingHistoryValidationErrorsCount | Equals | 4     |
+		| TrainingCourseValidationErrorsCount | Equals | 4     |
 	When I enter data
-		| Field                      | Value                      |
-		| TrainingHistoryProvider    | TrainingHistoryProvider    |
-		| TrainingHistoryCourseTitle | TrainingHistoryCourseTitle |
-		| TrainingHistoryFromYear    | 2011                       |
-		| TrainingHistoryToYear      | 2012                       |
-	And I choose SaveTrainingHistory
-	Then I wait for 30 seconds to see TrainingHistorySummary
+		| Field                  | Value                  |
+		| TrainingCourseProvider | TrainingCourseProvider |
+		| TrainingCourseTitle    | TrainingCourseTitle    |
+		| TrainingCourseFromYear | 2011                   |
+		| TrainingCourseToYear   | 2012                   |
+	And I choose SaveTrainingCourseButton
+	Then I wait for 30 seconds to see TrainingCourseSummary
 	Then I see
-        | Field                | Rule   | Value |
-        | TrainingHistoryCount | Equals | 1     |
-	And I am on TrainingHistorySummaryItems list item matching criteria
-		| Field       | Rule   | Value                      |
-		| Provider    | Equals | TrainingHistoryProvider    |
-		| CourseTitle | Equals | TrainingHistoryCourseTitle |
-	When I choose RemoveTrainingHistoryLink
+        | Field               | Rule   | Value |
+        | TrainingCourseCount | Equals | 1     |
+	And I am on TrainingCourseSummaryItems list item matching criteria
+		| Field       | Rule   | Value                  |
+		| Provider    | Equals | TrainingCourseProvider |
+		| CourseTitle | Equals | TrainingCourseTitle    |
+	When I choose RemoveTrainingCourseLink
 	And I am on the ApprenticeshipApplicationPage page
 	Then I see
-        | Field                  | Rule           | Value |
-        | TrainingHistorySummary | Does Not Exist |       |
+        | Field                 | Rule           | Value |
+        | TrainingCourseSummary | Does Not Exist |       |
 
 	#Enter data to save
 	When I enter data
@@ -184,14 +184,14 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| WorkToYear   | 2012         |
 	And I choose SaveWorkExperience
 
-	When I choose TrainingHistoryYes
+	When I choose TrainingCoursesYes
 	And I enter data
-		| Field                      | Value                      |
-		| TrainingHistoryProvider    | TrainingHistoryProvider    |
-		| TrainingHistoryCourseTitle | TrainingHistoryCourseTitle |
-		| TrainingHistoryFromYear    | 2011                       |
-		| TrainingHistoryToYear      | 2012                       |
-	And I choose SaveTrainingHistory
+		| Field                  | Value               |
+		| TrainingCourseProvider | TrainingProvider    |
+		| TrainingCourseTitle    | TrainingCourseTitle |
+		| TrainingCourseFromYear | 2011                |
+		| TrainingCourseToYear   | 2012                |
+	And I choose SaveTrainingCourseButton
 
 	And I choose SaveButton
 	Then I wait to see ApplicationSavedMessage
@@ -235,7 +235,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| EducationToYear               | Equals         | 2012                  |
 		| NoQualificationsMessage       | Does Not Exist |                       |
 		| NoWorkExperienceMessage       | Does Not Exist |                       |
-		| NoTrainingHistory             | Does Not Exist |                       |
+		| NoTrainingCoursesMessage      | Does Not Exist |                       |
 		| WhatAreYourStrengths          | Equals         | My strengths          |
 		| WhatCanYouImprove             | Equals         | What can I improve    |
 		| HobbiesAndInterests           | Equals         | Hobbies and interests |

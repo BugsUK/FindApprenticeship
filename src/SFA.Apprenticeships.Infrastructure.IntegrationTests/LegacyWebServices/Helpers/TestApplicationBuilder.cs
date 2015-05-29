@@ -45,7 +45,7 @@
                 EducationHistory = CreateFakeEducationHistory(),
                 Qualifications = CreateFakeQualifications(),
                 WorkExperience = CreateFakeWorkExperience(),
-                TrainingHistory = CreateFakeTrainingHistory(),
+                TrainingCourses = CreateFakeTrainingCourses(),
             };
 
             return this;
@@ -146,21 +146,21 @@
         }
 
 
-        private static List<TrainingHistory> CreateFakeTrainingHistory()
+        private static List<TrainingCourse> CreateFakeTrainingCourses()
         {
-            return new List<TrainingHistory>
+            return new List<TrainingCourse>
             {
-                new TrainingHistory
+                new TrainingCourse
                 {
                     Provider = "Serbian Language Institute",
-                    CourseTitle = "Conversational Serbian",
+                    Title = "Conversational Serbian",
                     FromDate = new DateTime(2011, 1, 1),
                     ToDate = new DateTime(2012, 1, 1),
                 },
-                new TrainingHistory
+                new TrainingCourse
                 {
                     Provider = "Woodworking Inc.",
-                    CourseTitle = "See Saw",
+                    Title = "See Saw",
                     FromDate = new DateTime(2011, 1, 1),
                     ToDate = new DateTime(2012, 1, 1),
                 }

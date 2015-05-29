@@ -2,64 +2,57 @@
 {
     using Candidate.ViewModels.Candidate;
 
-    public class TrainingHistoryViewModelBuilder
+    public class TrainingCourseViewModelBuilder
     {
         private string _provider;
-        private string _courseTitle;
-        private string _description;
+        private string _title;
         private int _fromMonth;
         private string _fromYear;
         private int _toMonth;
         private string _toYear;
 
-        public TrainingHistoryViewModelBuilder WithDescription(string description)
-        {
-            _description = description;
-            return this;
-        }
-
-        public TrainingHistoryViewModelBuilder WithProvider(string provider)
+        public TrainingCourseViewModelBuilder WithProvider(string provider)
         {
             _provider = provider;
             return this;
         }
 
-        public TrainingHistoryViewModelBuilder WithCourseTitle(string courseTitle)
+        public TrainingCourseViewModelBuilder WithTitle(string title)
         {
-            _courseTitle = courseTitle;
+            _title = title;
             return this;
         }
 
-        public TrainingHistoryViewModelBuilder WithFromMonth(int fromMonth)
+        public TrainingCourseViewModelBuilder WithFromMonth(int fromMonth)
         {
             _fromMonth = fromMonth;
             return this;
         }
 
-        public TrainingHistoryViewModelBuilder WithFromYear(string fromYear)
+        public TrainingCourseViewModelBuilder WithFromYear(string fromYear)
         {
             _fromYear = fromYear;
             return this;
         }
 
-        public TrainingHistoryViewModelBuilder WithToMonth(int toMonth)
+        public TrainingCourseViewModelBuilder WithToMonth(int toMonth)
         {
             _toMonth = toMonth;
             return this;
         }
 
-        public TrainingHistoryViewModelBuilder WithToYear(string toYear)
+        public TrainingCourseViewModelBuilder WithToYear(string toYear)
         {
             _toYear = toYear;
             return this;
         }
 
-        public TrainingHistoryViewModel Build()
+        public TrainingCourseViewModel Build()
         {
-            return new TrainingHistoryViewModel
+            return new TrainingCourseViewModel
             {
                 Provider = _provider,
-                CourseTitle = _courseTitle,
+                Title = _title,
                 FromMonth = _fromMonth,
                 FromYear = _fromYear,
                 ToMonth = _toMonth,

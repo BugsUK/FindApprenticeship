@@ -48,7 +48,7 @@
             candidate.ApplicationTemplate.EducationHistory = apprenticeshipApplication.CandidateInformation.EducationHistory;
             candidate.ApplicationTemplate.Qualifications = apprenticeshipApplication.CandidateInformation.Qualifications;
             candidate.ApplicationTemplate.WorkExperience = apprenticeshipApplication.CandidateInformation.WorkExperience;
-            candidate.ApplicationTemplate.TrainingHistory = apprenticeshipApplication.CandidateInformation.TrainingHistory;
+            candidate.ApplicationTemplate.TrainingCourses = apprenticeshipApplication.CandidateInformation.TrainingCourses;
 
             if (!candidate.MonitoringInformation.DisabilityStatus.HasValue &&
                 apprenticeshipApplication.CandidateInformation.DisabilityStatus.HasValue)

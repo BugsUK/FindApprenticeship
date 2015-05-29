@@ -40,7 +40,7 @@
         {
             DefaultQualificationRows = 5;
             DefaultWorkExperienceRows = 3;
-            DefaultTrainingHistoryRows = 3;
+            DefaultTrainingCourseRows = 3;
         }
 
         public TCandidateViewModel Candidate { get; set; }
@@ -49,7 +49,7 @@
 
         public int DefaultWorkExperienceRows { get; set; }
 
-        public int DefaultTrainingHistoryRows { get; set; }
+        public int DefaultTrainingCourseRows { get; set; }
 
         public IEnumerable<SelectListItem> Months
         {

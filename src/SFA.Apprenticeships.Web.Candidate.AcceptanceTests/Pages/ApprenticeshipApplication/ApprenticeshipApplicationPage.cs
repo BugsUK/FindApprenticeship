@@ -225,53 +225,53 @@
         #region Training History
 
         [ElementLocator(Id = "training-history-yes")]
-        public IWebElement TrainingHistoryYes { get; set; }
+        public IWebElement TrainingCoursesYes { get; set; }
 
         [ElementLocator(Id = "training-history-no")]
-        public IWebElement TrainingHistoryNo { get; set; }
+        public IWebElement TrainingCoursesNo { get; set; }
 
-        [ElementLocator(Id = "addTrainingHistoryBtn")]
-        public IWebElement SaveTrainingHistory { get; set; }
+        [ElementLocator(Id = "addTrainingCourseBtn")]
+        public IWebElement SaveTrainingCourseButton { get; set; }
 
         [ElementLocator(Id = "training-history-provider")]
-        public IWebElement TrainingHistoryProvider { get; set; }
+        public IWebElement TrainingCourseProvider { get; set; }
 
         [ElementLocator(Id = "training-history-course-title")]
-        public IWebElement TrainingHistoryCourseTitle { get; set; }
+        public IWebElement TrainingCourseTitle { get; set; }
 
         [ElementLocator(Id = "training-history-from-year")]
-        public IWebElement TrainingHistoryFromYear { get; set; }
+        public IWebElement TrainingCourseFromYear { get; set; }
 
         [ElementLocator(Id = "training-history-to-year")]
-        public IWebElement TrainingHistoryToYear { get; set; }
+        public IWebElement TrainingCourseToYear { get; set; }
 
         [ElementLocator(Id = "training-history-summary")]
-        public IWebElement TrainingHistorySummary { get; set; }
+        public IWebElement TrainingCourseSummary { get; set; }
 
         [ElementLocator(Id = "training-history-summary")]
-        public IElementList<IWebElement, TrainingHistorySummaryItem> TrainingHistorySummaryItems { get; set; }
+        public IElementList<IWebElement, TrainingCourseItem> TrainingCourseSummaryItems { get; set; }
 
-        public string TrainingHistoryCount
+        public string TrainingCourseCount
         {
             get
             {
-                return TrainingHistorySummaryItems.Count().ToString(CultureInfo.InvariantCulture);
+                return TrainingCourseSummaryItems.Count().ToString(CultureInfo.InvariantCulture);
             }
         }
 
         [ElementLocator(Id = "training-history-panel")]
-        public WorkExperiencePanel TrainingHistoryPanel { get; set; }
+        public WorkExperiencePanel TrainingCoursePanel { get; set; }
 
-        public string TrainingHistoryValidationErrorsCount
+        public string TrainingCourseValidationErrorsCount
         {
             get
             {
-                return TrainingHistoryPanel.ValidationErrorsCount;
+                return TrainingCoursePanel.ValidationErrorsCount;
             }
         }
 
         [ElementLocator(Id = "training-history-save-warning")]
-        public IWebElement TrainingHistorySaveWarning { get; set; }
+        public IWebElement TrainingCourseSaveWarning { get; set; }
 
         #endregion
 
@@ -345,9 +345,9 @@
         }
     }
 
-    public class TrainingHistoryPanel : WebElement
+    public class TrainingCoursePanel : WebElement
     {
-        public TrainingHistoryPanel(ISearchContext parent)
+        public TrainingCoursePanel(ISearchContext parent)
             : base(parent)
         {
         }

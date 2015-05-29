@@ -63,8 +63,8 @@
     Html.RenderPartial("_workExperiencesJS", Model);   
     Html.RenderPartial("_workExperiencesNonJS", Model);
 
-    Html.RenderPartial("_trainingHistoryJS", Model);
-    Html.RenderPartial("_trainingHistoryNonJS", Model);
+    Html.RenderPartial("_trainingCoursesJS", Model);
+    Html.RenderPartial("_trainingCoursesNonJS", Model);
 
     @Html.EditorFor(m => m.Candidate.AboutYou)
     @Html.EditorFor(m => m.Candidate.EmployerQuestionAnswers)
@@ -80,8 +80,8 @@
             <div class="text toggle-content hide-nojs" id="unsavedWorkExp">
                 <p>You've still got <a href="#workexperience-panel">unsaved work experience</a>. Make sure you click "Save this work experience" after entering each one.</p>
             </div>
-            <div class="text toggle-content hide-nojs" id="unsavedTrainingHistory">
-                <p>You've still got an <a href="#training-history-panel">unsaved training course</a>. Make sure you click "Save this training history" after entering each one.</p>
+            <div class="text toggle-content hide-nojs" id="unsavedTrainingCourse">
+                <p>You've still got an <a href="#training-history-panel">unsaved training course</a>. Make sure you click "Save this training course" after entering each one.</p>
             </div>
         </div>
         <p id="saveApplication">
@@ -296,7 +296,7 @@
 
         var qualificationData = null;
         var workExperienceData = null;
-        var trainingHistoryData = null;
+        var trainingCourseData = null;
         var currentYear = null;
         var whitelistregex = null;
         var yearRegex = null;
@@ -307,7 +307,7 @@
 
             qualificationData = @Html.Raw(Json.Encode(Model.Candidate.Qualifications));
             workExperienceData = @Html.Raw(Json.Encode(Model.Candidate.WorkExperience));
-            trainingHistoryData = @Html.Raw(Json.Encode(Model.Candidate.TrainingHistory));
+            trainingCourseData = @Html.Raw(Json.Encode(Model.Candidate.TrainingCourses));
 
             currentYear = @Html.Raw(Model.CurrentYear);
             whitelistregex = @Html.Raw(Json.Encode(Model.WhiteListRegex));
@@ -405,8 +405,8 @@
             return workExperienceData;
         }
 
-        function getTrainingHistoryData() {
-            return trainingHistoryData;
+        function getTrainingCourseData() {
+            return trainingCourseData;
         }
 
         function getWhiteListRegex() {

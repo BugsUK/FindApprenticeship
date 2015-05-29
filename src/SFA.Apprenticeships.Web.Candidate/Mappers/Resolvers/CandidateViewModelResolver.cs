@@ -24,8 +24,8 @@
             candidateViewModel.WorkExperience = ApplicationConverter.GetWorkExperiencesViewModels(applicationDetail.CandidateInformation.WorkExperience);
             candidateViewModel.HasWorkExperience = candidateViewModel.WorkExperience.Any();
             
-            candidateViewModel.TrainingHistory = ApplicationConverter.GetTrainingHistoryViewModels(applicationDetail.CandidateInformation.TrainingHistory);
-            candidateViewModel.HasTrainingHistory = candidateViewModel.TrainingHistory.Any();
+            candidateViewModel.TrainingCourses = ApplicationConverter.GetTrainingCourseViewModels(applicationDetail.CandidateInformation.TrainingCourses);
+            candidateViewModel.HasTrainingCourses = candidateViewModel.TrainingCourses.Any();
 
             candidateViewModel.MonitoringInformation = ApplicationConverter.GetMonitoringInformationViewModel(applicationDetail.CandidateInformation.AboutYou, applicationDetail.CandidateInformation.DisabilityStatus);
             candidateViewModel.EmployerQuestionAnswers = new EmployerQuestionAnswersViewModel

@@ -35,7 +35,7 @@
     var validationMessageYearMustBeAfter = "Year must be 4 digits, and not before 1915";
     var validationMessageDateFinishedMustBeAfterDateStarted = "Date finished must be after date started";
 
-    // Training History Validation Messages
+    // Training Course Validation Messages
     var validationMessageProviderRequired = "Please enter provider name";
     var validationMessageProviderExceedsFiftyCharacters = "Provider name can't exceed 50 characters";
     var validationMessageProviderContainsInvalidCharacters = "Provider name can't contain invalid characters, eg '/'";
@@ -777,7 +777,7 @@
 
     };
 
-    var trainingHistoryItemModel = function(itemProvider, itemCourseTitle, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemCurrentYear, itemRegex, itemYearRegexPattern) {
+    var trainingCourseItemModel = function(itemProvider, itemTitle, itemFromMonth, itemFromYear, itemToMonth, itemToYear, itemCurrentYear, itemRegex, itemYearRegexPattern) {
         var self = this;
 
         self.itemRegexPattern = ko.observable(itemRegex);
@@ -797,7 +797,7 @@
             }
         });
 
-        self.itemCourseTitle = ko.observable(itemCourseTitle).extend({
+        self.itemTitle = ko.observable(itemTitle).extend({
             required: { message: validationMessageCourseTitleRequired }
         }).extend({
             maxLength: {
@@ -879,7 +879,7 @@
         self.itemErrors = ko.validation.group(self);
     };
 
-    var trainingHistoryViewModel = function () {
+    var trainingCourseViewModel = function () {
         var self = this;
 
         // TODO: get this from config too.
@@ -890,12 +890,12 @@
             new monthOfTheYear('Oct', 10), new monthOfTheYear('Nov', 11), new monthOfTheYear('Dec', 12)
         ]);
 
-        self.hasTrainingHistory = ko.observable(undefined);
-        self.hasNoTrainingHistory = ko.observable(undefined);
-        self.showTrainingHistory = ko.observable(false);
+        self.hasTrainingCourses = ko.observable(undefined);
+        self.hasNoTrainingCourses = ko.observable(undefined);
+        self.showTrainingCourses = ko.observable(false);
 
-        self.trainingHistoryStatus = ko.computed(function () {
-            return self.showTrainingHistory() ? "block" : "none";
+        self.trainingCoursesStatus = ko.computed(function () {
+            return self.showTrainingCourses() ? "block" : "none";
         }, self);
 
         self.regexPattern = ko.observable();
@@ -915,7 +915,7 @@
             }
         });
 
-        self.courseTitle = ko.observable().extend({
+        self.title = ko.observable().extend({
             required: { message: validationMessageCourseTitleRequired }
         }).extend({
             maxLength: {
@@ -987,73 +987,73 @@
             }
         });
 
-        self.trainingHistoryItems = ko.observableArray();
+        self.trainingCourseItems = ko.observableArray();
 
         self.errors = ko.validation.group(self);
 
-        self.addTrainingHistory = function () {
+        self.addTrainingCourse = function () {
             if (self.errors().length === 0) {
                 var toMonth = self.toMonth();
                 var toYear = self.toYear();
 
-                var model = new trainingHistoryItemModel(self.provider(), self.courseTitle(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.currentYear(), self.regexPattern(), self.yearRegexPattern());
+                var model = new trainingCourseItemModel(self.provider(), self.title(), self.fromMonth(), self.fromYear(), toMonth, toYear, self.currentYear(), self.regexPattern(), self.yearRegexPattern());
 
-                self.trainingHistoryItems.push(model);
+                self.trainingCourseItems.push(model);
 
                 self.provider("");
-                self.courseTitle("");
+                self.title("");
                 self.fromYear(null);
                 self.toYear(null);
 
                 self.errors.showAllMessages(false);
 
-                $('#trainingHistoryAddConfirmText').text("Training course has been added to table below");
+                $('#trainingCourseAddConfirmText').text("Training course has been added to table below");
 
             } else {
                 self.errors.showAllMessages();
-                $('#trainingHistoryAddConfirmText').text("There has been a problem adding training course, check you've entered all details correctly");
+                $('#trainingCourseAddConfirmText').text("There has been a problem adding training course, check you've entered all details correctly");
             }
 
         };
 
-        self.editTrainingHistory = function (trainingHistory) {
-            trainingHistory.readOnly(undefined);
-            trainingHistory.showEditButton(false);
+        self.editTrainingCourse = function (trainingCourse) {
+            trainingCourse.readOnly(undefined);
+            trainingCourse.showEditButton(false);
         };
 
-        self.saveTrainingHistory = function (trainingHistory) {
-            if (trainingHistory.itemErrors().length === 0) {
-                trainingHistory.readOnly('readonly');
-                trainingHistory.showEditButton(true);
+        self.saveTrainingCourse = function (trainingCourse) {
+            if (trainingCourse.itemErrors().length === 0) {
+                trainingCourse.readOnly('readonly');
+                trainingCourse.showEditButton(true);
             } else {
-                trainingHistory.itemErrors.showAllMessages();
+                trainingCourse.itemErrors.showAllMessages();
             }
         };
 
-        self.removeTrainingHistory = function (trainingHistory) {
-            self.trainingHistoryItems.remove(trainingHistory);
+        self.removeTrainingCourse = function (trainingCourse) {
+            self.trainingCourseItems.remove(trainingCourse);
         };
 
-        self.checkHasNoTrainingHistory = function () {
-            self.showTrainingHistory(false);
-            self.hasTrainingHistory(undefined);
-            self.hasNoTrainingHistory("checked");
+        self.checkHasNoTrainingCourses = function () {
+            self.showTrainingCourses(false);
+            self.hasTrainingCourses(undefined);
+            self.hasNoTrainingCourses("checked");
         };
 
-        self.getTrainingHistoryItems = function (data) {
+        self.getTrainingCourseItems = function (data) {
             $(data).each(function (index, item) {
-                var model = new trainingHistoryItemModel(item.Provider, item.CourseTitle, item.FromMonth, item.FromYear, item.ToMonth, item.ToYear, self.currentYear(), self.regexPattern(), self.yearRegexPattern());
+                var model = new trainingCourseItemModel(item.Provider, item.Title, item.FromMonth, item.FromYear, item.ToMonth, item.ToYear, self.currentYear(), self.regexPattern(), self.yearRegexPattern());
 
-                self.trainingHistoryItems.push(model);
+                self.trainingCourseItems.push(model);
             });
 
-            if (self.trainingHistoryItems().length > 0) {
-                self.showTrainingHistory(true);
-                self.hasTrainingHistory("checked");
-                self.hasNoTrainingHistory(undefined);
+            if (self.trainingCourseItems().length > 0) {
+                self.showTrainingCourses(true);
+                self.hasTrainingCourses("checked");
+                self.hasNoTrainingCourses(undefined);
 
             } else {
-                self.checkHasNoTrainingHistory();
+                self.checkHasNoTrainingCourses();
             }
 
         };
@@ -1110,7 +1110,7 @@
 
         var qualificationModel = new qualificationViewModel();
         var experienceViewModel = new workExperienceViewModel();
-        var trainingViewModel = new trainingHistoryViewModel();
+        var trainingViewModel = new trainingCourseViewModel();
 
         if (window.getCurrentYear()) {
             experienceViewModel.currentYear(window.getCurrentYear());
@@ -1141,15 +1141,15 @@
             experienceViewModel.checkHasNoWorkExperience();
         }
 
-        if (window.getTrainingHistoryData()) {
-            trainingViewModel.getTrainingHistoryItems(window.getTrainingHistoryData());
+        if (window.getTrainingCourseData()) {
+            trainingViewModel.getTrainingCourseItems(window.getTrainingCourseData());
         } else {
-            trainingViewModel.checkHasNoTrainingHistory();
+            trainingViewModel.checkHasNoTrainingCourses();
         }
 
         ko.applyBindings(qualificationModel, document.getElementById('applyQualifications'));
         ko.applyBindings(experienceViewModel, document.getElementById('applyWorkExperience'));
-        ko.applyBindings(trainingViewModel, document.getElementById('applyTrainingHistory'));
+        ko.applyBindings(trainingViewModel, document.getElementById('applyTrainingCourses'));
     });
 
     /******
@@ -1161,7 +1161,7 @@
 
         $('#unsavedQuals').hide();
 
-        if ($('#unsavedWorkExp').is(':hidden') && $('#unsavedTrainingHistory').is(':hidden')) {
+        if ($('#unsavedWorkExp').is(':hidden') && $('#unsavedTrainingCourse').is(':hidden')) {
             $('#unsavedChanges').hide();
         }
 
@@ -1186,7 +1186,7 @@
 
         $('#unsavedQuals').hide();
 
-        if ($('#unsavedWorkExp').is(':hidden') && $('#unsavedTrainingHistory').is(':hidden')) {
+        if ($('#unsavedWorkExp').is(':hidden') && $('#unsavedTrainingCourse').is(':hidden')) {
             $('#unsavedChanges').hide();
         }
     });
@@ -1200,7 +1200,7 @@
 
         $('#unsavedWorkExp').hide();
 
-        if ($('#unsavedQuals').is(':hidden') && $('#unsavedTrainingHistory').is(':hidden')) {
+        if ($('#unsavedQuals').is(':hidden') && $('#unsavedTrainingCourse').is(':hidden')) {
             $('#unsavedChanges').hide();
         }
 
@@ -1226,45 +1226,45 @@
 
         $('#unsavedWorkExp').hide();
 
-        if ($('#unsavedQuals').is(':hidden') && $('#unsavedTrainingHistory').is(':hidden')) {
+        if ($('#unsavedQuals').is(':hidden') && $('#unsavedTrainingCourse').is(':hidden')) {
             $('#unsavedChanges').hide();
         }
     });
 
     /******
-     * Training History
+     * Training Courses
      */
     $('#training-history-apply').on('keyup', '#training-history-provider, #training-history-course-title, #training-history-from-year, #training-history-to-year', function () {
         $('#training-history-apply').removeClass('panel-danger');
         $('#apply-button').text('Save and continue');
 
-        $('#unsavedTrainingHistory').hide();
+        $('#unsavedTrainingCourse').hide();
 
         if ($('#unsavedQuals').is(':hidden') && $('#unsavedWorkExp').is(':hidden')) {
             $('#unsavedChanges').hide();
         }
 
         if ($(this).val() !== "") {
-            $('#apply-button').addClass('dirtyTrainingHistory');
+            $('#apply-button').addClass('dirtyTrainingCourse');
         } else if ($('#training-history-provider, #training-history-course-title, #training-history-from-year, #training-history-to-year').val() === "") {
-            $('#apply-button').removeClass('dirtyTrainingHistory');
+            $('#apply-button').removeClass('dirtyTrainingCourse');
         }
     });
 
-    $('.content-container').on('click', '.dirtyTrainingHistory', function (e) {
-        $(this).removeClass('disabled dirtyTrainingHistory').text('Continue anyway');
-        $('#unsavedChanges, #unsavedTrainingHistory').show();
+    $('.content-container').on('click', '.dirtyTrainingCourse', function (e) {
+        $(this).removeClass('disabled dirtyTrainingCourse').text('Continue anyway');
+        $('#unsavedChanges, #unsavedTrainingCourse').show();
         $('#training-history-apply').addClass('panel-danger').css({ 'margin-bottom': '0', 'padding-top': '0', 'padding-bottom': '0' });
 
         e.preventDefault();
     });
 
-    $('#addTrainingHistoryBtn').on('click', function () {
+    $('#addTrainingCourseBtn').on('click', function () {
         $('#training-history-apply').removeClass('panel-danger');
-        $('#apply-button').removeClass('dirtyTrainingHistory');
-        $('#apply-button').removeClass('dirtyTrainingHistory').text('Save and continue');
+        $('#apply-button').removeClass('dirtyTrainingCourse');
+        $('#apply-button').removeClass('dirtyTrainingCourse').text('Save and continue');
 
-        $('#unsavedTrainingHistory').hide();
+        $('#unsavedTrainingCourse').hide();
 
         if ($('#unsavedQuals').is(':hidden') && $('#unsavedWorkExp').is(':hidden')) {
             $('#unsavedChanges').hide();

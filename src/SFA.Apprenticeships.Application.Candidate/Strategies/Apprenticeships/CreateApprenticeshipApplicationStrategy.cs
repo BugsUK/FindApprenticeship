@@ -85,7 +85,7 @@
                     EducationHistory = candidate.ApplicationTemplate.EducationHistory,
                     Qualifications = candidate.ApplicationTemplate.Qualifications,
                     WorkExperience = candidate.ApplicationTemplate.WorkExperience,
-                    TrainingHistory = candidate.ApplicationTemplate.TrainingHistory,
+                    TrainingCourses = candidate.ApplicationTemplate.TrainingCourses,
                     AboutYou = candidate.ApplicationTemplate.AboutYou,
                     DisabilityStatus = candidate.MonitoringInformation.DisabilityStatus
                 };

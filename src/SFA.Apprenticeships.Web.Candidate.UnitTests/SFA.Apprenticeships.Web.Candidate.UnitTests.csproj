@@ -185,7 +185,7 @@
     <Compile Include="Builders\TraineeshipApplicationViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipVacancyDetailViewModelBuilder.cs" />
     <Compile Include="Builders\VerifyMobileViewModelBuilder.cs" />
-    <Compile Include="Builders\TrainingHistoryViewModelBuilder.cs" />
+    <Compile Include="Builders\TrainingCourseViewModelBuilder.cs" />
     <Compile Include="Builders\WorkExperienceViewModelBuilder.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
@@ -212,7 +212,7 @@
     <Compile Include="Mediators\Account\VerifyMobileTests.cs" />
     <Compile Include="Mediators\Account\VerifyUpdatedEmailAddressTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyQualificationRowsTests.cs" />
-    <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyTrainingHistoryRowsTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyTrainingCourseRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ApplyTests.cs" />
     <Compile Include="Mediators\ApprenticeshipApplication\ApprenticeshipApplicationMediatorBuilder.cs" />
@@ -252,7 +252,7 @@
     <Compile Include="Mediators\Login\ResetPasswordTests.cs" />
     <Compile Include="Mediators\SearchMediatorBaseTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\AddEmptyQualificationRowsTests.cs" />
-    <Compile Include="Mediators\TraineeshipApplication\AddEmptyTrainingHistoryRowsTests.cs" />
+    <Compile Include="Mediators\TraineeshipApplication\AddEmptyTrainingCourseRowsTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\AddEmptyWorkExperienceRowsTests.cs" />
     <Compile Include="Mediators\TraineeshipApplication\TraineeshipApplicationMediatorBuilder.cs" />
     <Compile Include="Mediators\TraineeshipApplication\ViewTests.cs" />
@@ -314,7 +314,7 @@
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
     <Compile Include="Validators\SettingsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\WorkExperienceViewModelValidatorTests.cs" />
-    <Compile Include="Validators\TrainingHistoryViewModelValidatorTests.cs" />
+    <Compile Include="Validators\TrainingCourseViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
     <Compile Include="ViewModels\ApprenticeshipSearchViewModelTests.cs" />
     <Compile Include="ViewModels\PaginationTests.cs" />

@@ -3,7 +3,7 @@
     using System;
     using Common.Constants;
 
-    public static class TrainingHistoryViewModelMessages
+    public static class TrainingCourseViewModelMessages
     {
         public static class ProviderMessages
         {
@@ -24,7 +24,7 @@
             public static Func<string, string> MustBeGreaterThan = year => "Year must be 4 digits, and not before " + year;
         }
 
-        public static class CourseTitleMessages
+        public static class TitleMessages
         {
             public const string RequiredErrorText = "Please enter course title";
             public const string TooLongErrorText = "Course title mustn’t exceed 50 characters";

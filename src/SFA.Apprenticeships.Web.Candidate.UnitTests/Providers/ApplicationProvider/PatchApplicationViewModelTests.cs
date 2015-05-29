@@ -95,22 +95,21 @@
         }
 
         [Test]
-        public void ShouldPatchTrainingHistoryChanges()
+        public void ShouldPatchTrainingCourseChanges()
         {
             var candidateId = Guid.NewGuid();
             var traineeshipApplicationProvider = new ApprenticeshipApplicationProviderBuilder().Build();
             var savedTraineeshipViewModel = new ApprenticeshipApplicationViewModelBuilder().Build();
 
-            var trainingHistory = new[]
+            var trainingCourses = new[]
             {
-                new TrainingHistoryViewModelBuilder()
-                    .WithDescription("Course description")
+                new TrainingCourseViewModelBuilder()
                     .WithProvider("Provider")
                     .Build()
             };
 
             var traineeshipViewModel = new ApprenticeshipApplicationViewModelBuilder()
-                .WithTrainingHistory(trainingHistory)
+                .WithTrainingCourses(trainingCourses)
                 .Build();
 
             var viewModel = traineeshipApplicationProvider
@@ -119,8 +118,8 @@
             viewModel.Should().NotBeNull();
             viewModel.ViewModelMessage.Should().BeNull();
             viewModel.HasError().Should().BeFalse();
-            viewModel.Candidate.HasTrainingHistory.Should().BeTrue();
-            viewModel.Candidate.TrainingHistory.Should().Equal(trainingHistory);
+            viewModel.Candidate.HasTrainingCourses.Should().BeTrue();
+            viewModel.Candidate.TrainingCourses.Should().Equal(trainingCourses);
         }
     }
 }

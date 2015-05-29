@@ -170,7 +170,7 @@
                     CandidateId = legacyCandidateId,
                     School = MapSchool(apprenticeshipApplicationDetail),
                     EducationResults = MapQualifications(candidateInformation.Qualifications),
-                    WorkExperiences = MapWorkExperience(candidateInformation.WorkExperience, candidateInformation.TrainingHistory),
+                    WorkExperiences = MapWorkExperience(candidateInformation.WorkExperience, candidateInformation.TrainingCourses),
                     AdditionalQuestion1Answer = apprenticeshipApplicationDetail.AdditionalQuestion1Answer ?? string.Empty,
                     AdditionalQuestion2Answer = apprenticeshipApplicationDetail.AdditionalQuestion2Answer ?? string.Empty,
                     Strengths = candidateInformation.AboutYou.Strengths ?? string.Empty,
@@ -196,7 +196,7 @@
                     CandidateId = legacyCandidateId,
                     School = MapSchool(),
                     EducationResults = MapQualifications(candidateInformation.Qualifications),
-                    WorkExperiences = MapWorkExperience(candidateInformation.WorkExperience, candidateInformation.TrainingHistory),
+                    WorkExperiences = MapWorkExperience(candidateInformation.WorkExperience, candidateInformation.TrainingCourses),
                     AdditionalQuestion1Answer = traineeshipApplicationDetail.AdditionalQuestion1Answer ?? string.Empty,
                     AdditionalQuestion2Answer = traineeshipApplicationDetail.AdditionalQuestion2Answer ?? string.Empty
                 }
@@ -253,7 +253,7 @@
 
         private static GatewayServiceProxy.WorkExperience[] MapWorkExperience(
             IEnumerable<Domain.Entities.Candidates.WorkExperience> workExperience,
-            IEnumerable<TrainingHistory> trainingHistory)
+            IEnumerable<TrainingCourse> trainingCourses)
         {
             return workExperience.Select(each => new GatewayServiceProxy.WorkExperience
             {
@@ -264,13 +264,12 @@
                 PartialCompletion = false, // no mapping available.
                 Voluntary = false // no mapping available.
             })
-            .Union(trainingHistory.Select(each => new GatewayServiceProxy.WorkExperience
+            .Union(trainingCourses.Select(each => new GatewayServiceProxy.WorkExperience
             {
-                // TODO: AG: US786: confirm mappings during (or before) end to end testing with AV.
                 Employer = each.Provider,
                 FromDate = each.FromDate,
                 ToDate = each.ToDate,
-                TypeOfWork = MapWorkExperienceDescription(each.CourseTitle),
+                TypeOfWork = MapWorkExperienceDescription(each.Title),
                 PartialCompletion = false, // no mapping available.
                 Voluntary = false // no mapping available.
             }))
