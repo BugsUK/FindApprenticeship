@@ -77,6 +77,7 @@
         [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Active)]
         [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Locked)]
         [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.PendingActivation)]
+        [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Dormant)]
         public void ShouldQueueEmailAndSmsForActiveCandidate(MessageTypes messageType, UserStatuses userStatus)
         {
             // Arrange.
@@ -104,7 +105,6 @@
         }
 
         [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Inactive)]
-        [TestCase(MessageTypes.SavedSearchAlert, UserStatuses.Dormant)]
         public void ShouldNotQueueEmailOrSmsForInactiveCandidate(MessageTypes messageType, UserStatuses userStatus)
         {
             // Arrange.

@@ -56,7 +56,7 @@
             var user = _userReadRepository.Get(candidateId);
             var candidate = _candidateReadRepository.Get(candidateId);
 
-            if (communicationRequest.MessageType != MessageTypes.SendDormantAccountReminder && !ShouldCommunicateWithUser(user))
+            if (!ShouldCommunicateWithUser(user))
             {
                 _logService.Info("Will NOT send any messages to user '{0}' email '{1}' in state '{2}'",
                     user.EntityId, user.Username, user.Status);
@@ -118,7 +118,7 @@
 
         private static bool ShouldCommunicateWithUser(User user)
         {
-            return user.IsActive() || user.Status == UserStatuses.PendingActivation;
+            return user.IsActive() || user.Status == UserStatuses.PendingActivation || user.Status == UserStatuses.Dormant;
         }
 
         #endregion
