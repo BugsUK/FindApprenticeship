@@ -58,6 +58,8 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
                 user.SetStateActive();
 
+                user.LastLogin = DateTime.UtcNow;
+
                 _userWriteRepository.Save(user);
                 _auditRepository.Audit(user, AuditEventTypes.UserResetPassword, user.EntityId);
 
