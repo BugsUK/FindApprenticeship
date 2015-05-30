@@ -2,6 +2,7 @@ namespace SFA.Apprenticeships.Application.Candidates
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
@@ -37,11 +38,16 @@ namespace SFA.Apprenticeships.Application.Candidates
 
         public void QueueCandidates()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var candidateIds =
                 GetUsersPendingActivationOrDeletion()
                 .Union(GetPotentiallyDormantUsers())
                 .Union(GetDormantUsersPotentiallyEligibleForSoftDelete())
                 .Union(GetCandidatesPendingMobileVerification());
+
+            var message = string.Format("Querying candidates for housekeeping took {0}", stopwatch.Elapsed);
 
             var counter = 0;
 
@@ -56,7 +62,16 @@ namespace SFA.Apprenticeships.Application.Candidates
                 Interlocked.Increment(ref counter);
             });
 
-            _logService.Debug("Queued {0} candidates for Housekeeping", counter);
+            stopwatch.Stop();
+            message += string.Format(". Queuing {0} candidates for housekeeping took {1}", counter, stopwatch.Elapsed);
+            if (stopwatch.ElapsedMilliseconds > 60000)
+            {
+                _logService.Warn(message);
+            }
+            else
+            {
+                _logService.Info(message);
+            }
         }
 
         private IEnumerable<Guid> GetUsersPendingActivationOrDeletion()
