@@ -89,23 +89,23 @@
         $this.attr('href', $href);
     });
 
+    //Write the new, complete cookie with the current view of the display settings
+    SetSearchResultsDetailsCookieValue();
+
     $('#chooseDetails input').each(function () {
         var $this = $(this),
             $thisId = $this.attr('id');
 
-        var $value = GetSearchResultsDetailsValue($thisId);
+        var $showValue = GetSearchResultsDetailsValue($thisId);
 
-        if ($value != null) {
-            var $currentlyChecked = $this.is(':checked');
-            $this.prop("checked", $value);
-            if ($currentlyChecked !== $value) {
-                $('[data-show="' + $thisId + '"]').toggle();
-            }
+        if ($showValue) {
+            $('[data-show="' + $thisId + '"]').show();
+            $this.prop("checked", true);
+        } else {
+            $('[data-show="' + $thisId + '"]').hide();
+            $this.prop("checked", false);
         }
     });
-
-    //Write the new, complete cookie with the current view of the display settings
-    SetSearchResultsDetailsCookieValue();
 
     $(document).on('change', '#chooseDetails input', function () {
         var $this = $(this),
