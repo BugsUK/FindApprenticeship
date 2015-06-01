@@ -1,4 +1,2 @@
-User-agent: SortSite
-Allow: /
 User-agent: *
 Disallow: /
