@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Service unavailable - Find an apprenticeship</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="NOINDEX, NOFOLLOW">
     <!--[if gt IE 8]><!--><link href="//az693499.vo.msecnd.net/prod/css/main.css" rel="stylesheet" /><!--<![endif]-->
     <!--[if lte IE 8]><link href="//az693499.vo.msecnd.net/prod/css/main-ie8.css" rel="stylesheet" /><![endif]-->
     <!--[if lte IE 8]><link href="//az693499.vo.msecnd.net/prod/css/fonts-ie8.css" rel="stylesheet" /><![endif]-->

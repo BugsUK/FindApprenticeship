@@ -19,6 +19,7 @@
     <meta name="format-detection" content="date=no">
     <meta name="format-detection" content="address=no">
     <meta name="DCSext.Authenticated" content="@(Request.IsAuthenticated ? "Yes" : "No")" />
+    <meta name="ROBOTS" content="NOFOLLOW">
     @RenderSection("metatags", false)
     <!--[if gt IE 8]><!-->@Styles.Render(Url.CdnContent("css/main-1.11.0.2251.css", "~/Content/_assets"))<!--<![endif]-->
     <!--[if lte IE 8]>@Styles.Render(Url.CdnContent("css/main-ie8-1.11.0.2251.css", "~/Content/_assets"))<![endif]-->
