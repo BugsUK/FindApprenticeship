@@ -39,50 +39,50 @@
 
         public void QueueApplicationStatusesPages(int applicationStatusExtractWindow)
         {
-            _logger.Debug("Starting to queue application summary status update pages");
+            _logger.Info("Starting to queue application summary status update pages");
 
             var pageCount = _legacyApplicationStatusesProvider.GetApplicationStatusesPageCount(applicationStatusExtractWindow);
 
             if (pageCount == 0)
             {
-                _logger.Debug("No application status update pages to queue");
+                _logger.Info("No application status update pages to queue");
                 return;
             }
 
             var pages = Enumerable.Range(1, pageCount)
                 .Select(i => new ApplicationUpdatePage {PageNumber = i, TotalPages = pageCount});
 
-            _logger.Debug("Queuing {0} application summary status update pages", pageCount);
+            _logger.Info("Queuing {0} application summary status update pages", pageCount);
 
             Parallel.ForEach(
                 pages,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 page => _messageBus.PublishMessage(page));
 
-            _logger.Debug("Queued {0} application status update pages", pageCount);
+            _logger.Info("Queued {0} application status update pages", pageCount);
         }
 
         public void QueueApplicationStatuses(int applicationStatusExtractWindow, ApplicationUpdatePage applicationStatusSummaryPage)
         {
-            _logger.Debug("Starting to queue application status updates for page {0} of {1}", applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
+            _logger.Info("Starting to queue application status updates for page {0} of {1}", applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
 
             // retrieve page of status updates from legacy... then queue each one for subsequent processing
             var applicationStatusSummaries = _legacyApplicationStatusesProvider.GetAllApplicationStatuses(applicationStatusSummaryPage.PageNumber, applicationStatusExtractWindow).ToList();
 
             if (!applicationStatusSummaries.Any())
             {
-                _logger.Debug("No application status updates to queue");
+                _logger.Info("No application status updates to queue");
                 return;
             }
 
-            _logger.Debug("Queuing {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
+            _logger.Info("Queuing {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
 
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
                 applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
 
-            _logger.Debug("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
+            _logger.Info("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
         }
 
         public void ProcessApplicationStatuses(ApplicationStatusSummary applicationStatusSummary, bool strictEtlValidation)

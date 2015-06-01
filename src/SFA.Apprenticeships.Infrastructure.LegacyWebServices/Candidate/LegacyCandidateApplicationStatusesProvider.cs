@@ -64,11 +64,11 @@
 
             try
             {
-                _logger.Debug("Calling Legacy.GetApplicationsStatus for page count");
+                _logger.Info("Calling Legacy.GetApplicationsStatus for page count");
 
                 var totalPages = InternalGetApplicationStatusesPageCount(applicationStatusExtractWindow);
 
-                _logger.Debug("Application statuses page count retrieved from Legacy.GetApplicationsStatus ({0})", totalPages);
+                _logger.Info("Application statuses page count retrieved from Legacy.GetApplicationsStatus ({0})", totalPages);
 
                 return totalPages;
             }
@@ -95,11 +95,11 @@
 
             try
             {
-                _logger.Debug("Calling Legacy.GetApplicationsStatus for page {0}", pageNumber);
+                _logger.Info("Calling Legacy.GetApplicationsStatus for page {0}", pageNumber);
 
                 var applicationStatuses = InternalGetAllApplicationStatuses(pageNumber, applicationStatusExtractWindow);
 
-                _logger.Debug("Application statuses (page {0}) were successfully retrieved from Legacy.GetApplicationsStatus ({1})", pageNumber, applicationStatuses.Count());
+                _logger.Info("Application statuses (page {0}) were successfully retrieved from Legacy.GetApplicationsStatus ({1})", pageNumber, applicationStatuses.Count());
 
                 return applicationStatuses;
             }
