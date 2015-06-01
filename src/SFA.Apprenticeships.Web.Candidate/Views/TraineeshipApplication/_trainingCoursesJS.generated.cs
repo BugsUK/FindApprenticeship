@@ -444,7 +444,7 @@ WriteLiteral(" />\r\n                                                </div>\r\n 
 WriteLiteral(" class=\"cell-span training-history-provider-span\"");
 
 WriteLiteral(" data-bind=\"visible: showEditButton, text: itemProvider, attr:{\'id\':\'candidate_tr" +
-"ainingcourse_\'+ $index() + \'__provider\'}\"");
+"ainingcourses_\' + $index() + \'__provider\'}\"");
 
 WriteLiteral("></span>\r\n                                                <span");
 
@@ -478,7 +478,7 @@ WriteLiteral(" />\r\n                                                </div>\r\n 
 WriteLiteral(" class=\"cell-span training-history-course-title-span\"");
 
 WriteLiteral(" data-bind=\"visible: showEditButton, text: itemTitle, attr:{\'id\':\'candidate_train" +
-"ingcourse_\'+ $index() + \'__title\'}\"");
+"ingcourses_\' + $index() + \'__title\'}\"");
 
 WriteLiteral(@"></span>
                                             </td>
@@ -581,14 +581,14 @@ WriteLiteral(">\r\n                                                </div>\r\n   
 WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral(" data-bind=\"visible: showEditButton, text: getMonthLabel(itemFromMonth()), attr:{" +
-"\'id\':\'candidate_trainingcourse_\'+ $index() + \'__frommonth\'}\"");
+"\'id\':\'candidate_trainingcourses_\' + $index() + \'__frommonth\'}\"");
 
 WriteLiteral("></span>\r\n                                                <span");
 
 WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral(" data-bind=\"visible: showEditButton, text: itemFromYear, attr:{\'id\':\'candidate_tr" +
-"ainingcourse\'+ $index() + \'__fromyear\'}\"");
+"ainingcourses_\' + $index() + \'__fromyear\'}\"");
 
 WriteLiteral("></span>\r\n                                                <div");
 
@@ -641,14 +641,14 @@ WriteLiteral(">\r\n                                                </div>\r\n   
 WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral(" data-bind=\"visible: showEditButton, text: getMonthLabel(itemToMonth()), attr:{\'i" +
-"d\':\'candidate_trainingcourse\'+ $index() + \'__tomonth\'}\"");
+"d\':\'candidate_trainingcourses_\' + $index() + \'__tomonth\'}\"");
 
 WriteLiteral("></span>\r\n                                                <span");
 
 WriteLiteral(" class=\"cell-span\"");
 
 WriteLiteral(" data-bind=\"visible: showEditButton, text: itemToYear, attr:{\'id\':\'candidate_trai" +
-"ningcourse\'+ $index() + \'__toyear\'}\"");
+"ningcourses_\' + $index() + \'__toyear\'}\"");
 
 WriteLiteral("></span>\r\n                                                <div");
 

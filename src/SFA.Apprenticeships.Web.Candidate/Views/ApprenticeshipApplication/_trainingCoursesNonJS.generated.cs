@@ -123,7 +123,7 @@ WriteLiteral("                                                    ");
 
             
             #line 27 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Provider, new { @id = "candidate_trainingcourse_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 }));
+                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Provider, new { @id = "candidate_trainingcourses_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 }));
 
             
             #line default
@@ -155,7 +155,7 @@ WriteLiteral("                                                    ");
 
             
             #line 32 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Title, new { @id = "candidate_trainingcourse_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 }));
+                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Title, new { @id = "candidate_trainingcourses_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 }));
 
             
             #line default
@@ -242,7 +242,7 @@ WriteLiteral("                                                    ");
 
             
             #line 66 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourse_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" }));
+                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourses_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" }));
 
             
             #line default
@@ -258,7 +258,7 @@ WriteLiteral("                                                    ");
 
             
             #line 70 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromYear, new { @id = "candidate_trainingcourse_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 }));
+                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromYear, new { @id = "candidate_trainingcourses_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 }));
 
             
             #line default
@@ -290,7 +290,7 @@ WriteLiteral("                                                    ");
 
             
             #line 78 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourse_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" }));
+                                               Write(Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourses_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" }));
 
             
             #line default
@@ -306,7 +306,7 @@ WriteLiteral("                                                    ");
 
             
             #line 82 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToYear, new { @id = "candidate_trainingcourse_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 }));
+                                               Write(Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToYear, new { @id = "candidate_trainingcourses_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 }));
 
             
             #line default
@@ -384,7 +384,7 @@ WriteLiteral("                                                    ");
 
             
             #line 112 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].Provider", "", new { @id = "candidate_trainingcourse_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 }));
+                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].Provider", "", new { @id = "candidate_trainingcourses_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 }));
 
             
             #line default
@@ -416,7 +416,7 @@ WriteLiteral("                                                    ");
 
             
             #line 117 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].Title", "", new { @id = "candidate_trainingcourse_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 }));
+                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].Title", "", new { @id = "candidate_trainingcourses_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 }));
 
             
             #line default
@@ -503,7 +503,7 @@ WriteLiteral("                                                    ");
 
             
             #line 151 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.DropDownList("Candidate.TrainingCourses[" + i + "].FromMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourse_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" }));
+                                               Write(Html.DropDownList("Candidate.TrainingCourses[" + i + "].FromMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourses_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" }));
 
             
             #line default
@@ -519,7 +519,7 @@ WriteLiteral("                                                    ");
 
             
             #line 155 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].FromYear", "", new { @id = "candidate_trainingcourse_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 }));
+                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].FromYear", "", new { @id = "candidate_trainingcourses_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 }));
 
             
             #line default
@@ -551,7 +551,7 @@ WriteLiteral("                                                    ");
 
             
             #line 162 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.DropDownList("Candidate.TrainingCourses[" + i + "].ToMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourse_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" }));
+                                               Write(Html.DropDownList("Candidate.TrainingCourses[" + i + "].ToMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourses_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" }));
 
             
             #line default
@@ -567,7 +567,7 @@ WriteLiteral("                                                    ");
 
             
             #line 166 "..\..\Views\ApprenticeshipApplication\_trainingCoursesNonJS.cshtml"
-                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].ToYear", "", new { @id = "candidate_trainingcourse_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 }));
+                                               Write(Html.TextBox("Candidate.TrainingCourses[" + i + "].ToYear", "", new { @id = "candidate_trainingcourses_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 }));
 
             
             #line default

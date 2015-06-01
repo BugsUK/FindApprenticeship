@@ -39,6 +39,8 @@
                 .WithMessage(TrainingCourseViewModelMessages.FromYearMessages.MustBeGreaterThan(maxYear));
 
             RuleFor(x => x.ToYear)
+                .NotEmpty()
+                .WithMessage(TrainingCourseViewModelMessages.ToYearMessages.RequiredErrorText)
                 .Matches(TrainingCourseViewModelMessages.ToYearMessages.WhiteListRegularExpression)
                 .WithMessage(TrainingCourseViewModelMessages.ToYearMessages.WhiteListErrorText)
                 .GreaterThanOrEqualTo(maxYear)

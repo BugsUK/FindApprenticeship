@@ -24,12 +24,12 @@
                                             <td>
                                                 <div class="form-group form-group-compound inline-float width-all-49">
                                                     <span class="cell-span">Provider</span>
-                                                    @Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Provider, new { @id = "candidate_trainingcourse_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 })
+                                                    @Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Provider, new { @id = "candidate_trainingcourses_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 })
                                                     @Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].Provider")
                                                 </div>
                                                 <div class="form-group form-group-compound inline-float width-all-49 no-right-margin">
                                                     <span class="cell-span">Course Title</span>
-                                                    @Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Title, new { @id = "candidate_trainingcourse_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 })
+                                                    @Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].Title, new { @id = "candidate_trainingcourses_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 })
                                                     @Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].Title")
                                                 </div>
                                             </td>
@@ -63,11 +63,11 @@
                                             <td>
                                                 <span class="cell-span">From</span>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourse_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" })
+                                                    @Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].FromMonth), new { @id = "candidate_trainingcourses_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" })
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromYear, new { @id = "candidate_trainingcourse_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 })
+                                                    @Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].FromYear, new { @id = "candidate_trainingcourses_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 })
 
                                                     @Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].FromYear")
                                                 </div>
@@ -75,11 +75,11 @@
                                             <td>
                                                 <span class="cell-span">To</span>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourse_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" })
+                                                    @Html.DropDownListFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToMonth, new SelectList(Model.Months, "Value", "Text", Model.Candidate.TrainingCourses.ToList()[i].ToMonth), new { @id = "candidate_trainingcourses_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" })
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToYear, new { @id = "candidate_trainingcourse_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 })
+                                                    @Html.TextBoxFor(m => Model.Candidate.TrainingCourses.ToList()[i].ToYear, new { @id = "candidate_trainingcourses_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 })
 
                                                     @Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].ToYear")
                                                 </div>
@@ -109,12 +109,12 @@
                                             <td>
                                                 <div class="form-group form-group-compound inline-float width-all-49">
                                                     <span class="cell-span">Provider</span>
-                                                    @Html.TextBox("Candidate.TrainingCourses[" + i + "].Provider", "", new { @id = "candidate_trainingcourse_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 })
+                                                    @Html.TextBox("Candidate.TrainingCourses[" + i + "].Provider", "", new { @id = "candidate_trainingcourses_" + i + "__provider", Name = "Candidate.TrainingCourses[" + i + "].Provider", @class = "form-control", @maxlength = 50 })
                                                     @Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].Provider")
                                                 </div>
                                                 <div class="form-group form-group-compound inline-float width-all-49 no-right-margin">
                                                     <span class="cell-span">Course Title</span>
-                                                    @Html.TextBox("Candidate.TrainingCourses[" + i + "].Title", "", new { @id = "candidate_trainingcourse_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 })
+                                                    @Html.TextBox("Candidate.TrainingCourses[" + i + "].Title", "", new { @id = "candidate_trainingcourses_" + i + "__title", Name = "Candidate.TrainingCourses[" + i + "].Title", @class = "form-control", @maxlength = 50 })
                                                     @Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].Title")
                                                 </div>
                                             </td>
@@ -148,22 +148,22 @@
                                             <td>
                                                 <span class="cell-span">From</span>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.DropDownList("Candidate.TrainingCourses[" + i + "].FromMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourse_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" })
+                                                    @Html.DropDownList("Candidate.TrainingCourses[" + i + "].FromMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourses_" + i + "__frommonth", Name = "Candidate.TrainingCourses[" + i + "].FromMonth" })
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBox("Candidate.TrainingCourses[" + i + "].FromYear", "", new { @id = "candidate_trainingcourse_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 })
+                                                    @Html.TextBox("Candidate.TrainingCourses[" + i + "].FromYear", "", new { @id = "candidate_trainingcourses_" + i + "__fromyear", Name = "Candidate.TrainingCourses[" + i + "].FromYear", @class = "form-control", @maxlength = 4 })
                                                     @Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].FromYear")
                                                 </div>
                                             </td>
                                             <td>
                                                 <span class="cell-span">To</span>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.DropDownList("Candidate.TrainingCourses[" + i + "].ToMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourse_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" })
+                                                    @Html.DropDownList("Candidate.TrainingCourses[" + i + "].ToMonth", new SelectList(Model.Months, "Value", "Text", 1), new { @id = "candidate_trainingcourses_" + i + "__tomonth", Name = "Candidate.TrainingCourses[" + i + "].ToMonth" })
 
                                                 </div>
                                                 <div class="form-group form-group-compound">
-                                                    @Html.TextBox("Candidate.TrainingCourses[" + i + "].ToYear", "", new { @id = "candidate_trainingcourse_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 })
+                                                    @Html.TextBox("Candidate.TrainingCourses[" + i + "].ToYear", "", new { @id = "candidate_trainingcourses_" + i + "__toyear", Name = "Candidate.TrainingCourses[" + i + "].ToYear", @class = "form-control", @maxlength = 4 })
                                                     @Html.ValidationMessage("Candidate.TrainingCourses[" + i + "].ToYear")
                                                 </div>
                                             </td>

@@ -93,12 +93,12 @@
                                                 <div class="form-group form-group-compound inline-float width-all-49" data-bind="visible: !showEditButton()">
                                                     <input type="text" title="Provider" class="form-control" data-bind="value: itemProvider, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].Provider'}" maxlength="50" />
                                                 </div>
-                                                <span class="cell-span training-history-provider-span" data-bind="visible: showEditButton, text: itemProvider, attr:{'id':'candidate_trainingcourse_'+ $index() + '__provider'}"></span>
+                                                <span class="cell-span training-history-provider-span" data-bind="visible: showEditButton, text: itemProvider, attr:{'id':'candidate_trainingcourses_' + $index() + '__provider'}"></span>
                                                 <span class="cell-span training-hyphen" data-bind="visible: showEditButton">-</span>
                                                 <div class="form-group form-group-compound inline-float width-all-49 no-right-margin" data-bind="visible: !showEditButton()">
                                                     <input type="text" title="Training course title" class="form-control" data-bind="value: itemTitle, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].Title'}" maxlength="50" />
                                                 </div>
-                                                <span class="cell-span training-history-course-title-span" data-bind="visible: showEditButton, text: itemTitle, attr:{'id':'candidate_trainingcourse_'+ $index() + '__title'}"></span>
+                                                <span class="cell-span training-history-course-title-span" data-bind="visible: showEditButton, text: itemTitle, attr:{'id':'candidate_trainingcourses_' + $index() + '__title'}"></span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -134,8 +134,8 @@
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
                                                     <input title="From year" type="text" class="form-control" data-bind="value: itemFromYear, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].FromYear'}" pattern="[0-9]*" maxlength="4">
                                                 </div>
-                                                <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemFromMonth()), attr:{'id':'candidate_trainingcourse_'+ $index() + '__frommonth'}"></span>
-                                                <span class="cell-span" data-bind="visible: showEditButton, text: itemFromYear, attr:{'id':'candidate_trainingcourse'+ $index() + '__fromyear'}"></span>
+                                                <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemFromMonth()), attr:{'id':'candidate_trainingcourses_' + $index() + '__frommonth'}"></span>
+                                                <span class="cell-span" data-bind="visible: showEditButton, text: itemFromYear, attr:{'id':'candidate_trainingcourses_' + $index() + '__fromyear'}"></span>
                                                 <div class="validation-message-container"></div>
                                             </td>
                                             <td class="validation-message-parent">
@@ -145,8 +145,8 @@
                                                 <div class="form-group form-group-compound" data-bind="visible: !showEditButton()">
                                                     <input title="To year" type="text" class="form-control" data-bind="value: itemToYear, attr:{'name':'Candidate.TrainingCourses[' + $index() +'].ToYear'}" pattern="[0-9]*" maxlength="4">
                                                 </div>
-                                                <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemToMonth()), attr:{'id':'candidate_trainingcourse'+ $index() + '__tomonth'}"></span>
-                                                <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear, attr:{'id':'candidate_trainingcourse'+ $index() + '__toyear'}"></span>
+                                                <span class="cell-span" data-bind="visible: showEditButton, text: getMonthLabel(itemToMonth()), attr:{'id':'candidate_trainingcourses_' + $index() + '__tomonth'}"></span>
+                                                <span class="cell-span" data-bind="visible: showEditButton, text: itemToYear, attr:{'id':'candidate_trainingcourses_' + $index() + '__toyear'}"></span>
                                                 <div class="validation-message-container"></div>
                                             </td>
                                             <td></td>

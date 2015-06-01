@@ -17,7 +17,7 @@
         {
             public const string BeforeOrEqualErrorText = "Year started can’t be after year finished";
             public const string RequiredErrorText = "Please enter year started";
-            public const string MustBeNumericText = "Please enter year started";
+            public const string MustBeNumericText = "Year started must be a number";
             public const string CanNotBeInTheFutureErrorText = "Year started can’t be in the future";
             public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Year started " + Whitelists.YearWhitelist.ErrorText; 
@@ -34,11 +34,11 @@
 
         public static class ToYearMessages
         {
+            public const string RequiredErrorText = "Please enter year finished";
             public const string MustBeNumericText = "Year finished must be a number";
             public const string WhiteListRegularExpression = Whitelists.YearWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Year finished " + Whitelists.YearWhitelist.ErrorText;
             public static Func<string, string> MustBeGreaterThan = year => "Year must be 4 digits, and not before " + year;
-            public static string CanNotBeInTheFutureErrorText = "Year finished can’t be in the future";
         }
     }
 }
