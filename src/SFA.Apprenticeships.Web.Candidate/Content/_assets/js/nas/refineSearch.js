@@ -1,20 +1,23 @@
 ﻿// moves html to correct location for refining search without the need
 // to make large changes to the control library
 $(document).ready(function () {
-    var $keywordsInput = $("#Keywords"),
-        $searchField = $("#SearchField");
 
-    if ($('#searchHome').length > 0) {
-        $keywordsInput.wrap('<div class="input-withlink input-withlink--all-select"></div>');
+    function setRefineSearch() {
+        var $keywordsInput = $("#Keywords"),
+            $searchField = $("#SearchField");
 
-        $searchField.insertBefore($keywordsInput).removeClass('hidden');
+        if ($('#searchHome').length > 0) {
+            $keywordsInput.wrap('<div class="input-withlink input-withlink--all-select"></div>');
 
-        setSelectControl($('#SearchField'));
-    } else {
-        $searchField.insertBefore($keywordsInput).removeClass('hidden');
+            $searchField.insertBefore($keywordsInput).removeClass('hidden');
 
-        if ($searchField.find('option:last-child').text() == "-- Refine search --") {
-            $searchField.find('option:last-child').attr('disabled', true);
+            setSelectControl($('#SearchField'));
+        } else {
+            $searchField.insertBefore($keywordsInput).removeClass('hidden');
+
+            if ($searchField.find('option:last-child').text() == "-- Refine search --") {
+                $searchField.find('option:last-child').attr('disabled', true);
+            }
         }
     }
 
@@ -33,10 +36,15 @@ $(document).ready(function () {
         }
     }
 
-    $('.all-select').on('change', function () {
+    $(document).on('change', '.all-select', function () {
         var $this = $(this);
-
         setSelectControl($this);
+    });
+
+    setRefineSearch();
+
+    $(document).on("setRefineSearch", function() {
+        setRefineSearch();
     });
 
 });

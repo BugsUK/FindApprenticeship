@@ -14,7 +14,7 @@
     $(document).on('change', '.history #sort-results', function () {
         $('#SearchAction').val("Sort");
         var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
-        loadResults(searchQueryUrl);
+        loadResults(searchQueryUrl, true);
     });
 
     $(document).on('change', '.no-history #results-per-page', function () {
@@ -25,18 +25,18 @@
     $(document).on('change', '.history #results-per-page', function () {
         $('#SearchAction').val("Sort");
         var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
-        loadResults(searchQueryUrl);
+        loadResults(searchQueryUrl, true);
     });
 
     $(document).on('click', '.history .page-navigation__btn', function (e) {
         e.preventDefault();
         var searchQueryUrl = $(this).attr('href');
-        loadResults(searchQueryUrl, true);
+        loadResults(searchQueryUrl, true, true);
     });
 
     $(window).on("popstate", function (e) {
         if (e.originalEvent.state !== null && e.originalEvent.state.searchUrl) {
-            loadResults(e.originalEvent.state.searchUrl, true);
+            loadResults(e.originalEvent.state.searchUrl, false, true);
         }
     });
 
@@ -48,15 +48,15 @@
         e.preventDefault();
         $('#LocationType').val("NonNational");
         var searchQueryUrl = searchUrl + "?" + $('form').serialize() + "&" + GetSearchResultsDetailsValues();
-        loadResults(searchQueryUrl, true);
+        loadResults(searchQueryUrl, true, true);
     });
 
     $(document).on('click', '.history .update-results', function (e) {
         e.preventDefault();
-        loadResults($(this).attr("href"), true);
+        loadResults($(this).attr("href"), true, true);
     });
 
-    function loadResults(searchQueryUrl, scrollTop) {
+    function loadResults(searchQueryUrl, addHistory, scrollTop) {
 
         $('.search-results').addClass('disabled');
         $('#ajaxLoading').show();
@@ -69,8 +69,10 @@
             var main = $(response).find("#main");
             $("#main").html(main.html());
             $(window).trigger('resultsReloaded');
-            history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
-
+            $(document).trigger("setRefineSearch");
+            if (addHistory) {
+                history.pushState({ searchUrl: searchQueryUrl }, '', searchQueryUrl);
+            }
             if (scrollTop) {
                 $(document).scrollTop(0);
             }
