@@ -65,8 +65,8 @@
                 var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}<br/><b>Reason: </b>{2}</li>", d.Title, d.EmployerName, d.UnsuccessfulReason));
                 
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", unsuccessfulLineItems)));
-                stringBuilder.Append("<p>For unsuccessful applications please contact the training provider for further information.</p>");
-                stringBuilder.AppendFormat("<p>For advice on how to ensure your application has a better chance of being successful <a href=\"https://{0}/nextsteps\">see the next steps page</a>.</p>", SiteDomainName);
+                stringBuilder.Append("<p>If your application's unsuccessful ask your college or training provider for feedback.</p>");
+                stringBuilder.AppendFormat("<p>For advice on writing better applications visit the <a href=\"https://{0}/nextsteps\">next steps page</a>.</p>", SiteDomainName);
             }
 
             return stringBuilder.ToString();
