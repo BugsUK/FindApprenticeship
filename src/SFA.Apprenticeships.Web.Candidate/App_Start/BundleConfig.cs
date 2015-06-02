@@ -49,13 +49,9 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/nas/passwordstrength").Include(
                 "~/Content/_assets/js/vendor/zxcvbn-async.js"));
 
-            {
-                var bundle = new ScriptBundle("~/bundles/nas/application").Include(
-                    "~/Content/_assets/js/nas/application/applicationform.js",
-                    "~/Content/_assets/js/nas/application/dirtyFormDialog.js");
-
-                bundles.Add(bundle);
-            }
+            bundles.Add(new ScriptBundle("~/bundles/nas/application").Include(
+                "~/Content/_assets/js/nas/application/applicationform.js",
+                "~/Content/_assets/js/nas/application/dirtyFormDialog.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/locationsearch").Include(
                 "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",

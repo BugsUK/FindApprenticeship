@@ -91,9 +91,6 @@
         $this.attr('href', $href);
     });
 
-    //Write the new, complete cookie with the current view of the display settings
-    SetSearchResultsDetailsCookieValue();
-
     $('#chooseDetails input').each(function () {
         var $this = $(this),
             $thisId = $this.attr('id');
@@ -108,6 +105,9 @@
             $this.prop("checked", false);
         }
     });
+
+    //Write the new, complete cookie with the current view of the display settings
+    SetSearchResultsDetailsCookieValue();
 
     $(document).on('change', '#chooseDetails input', function () {
         var $this = $(this),
