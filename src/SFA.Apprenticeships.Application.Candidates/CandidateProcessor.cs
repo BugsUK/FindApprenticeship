@@ -53,6 +53,8 @@ namespace SFA.Apprenticeships.Application.Candidates
 
             Parallel.ForEach(candidateIds, candidateId =>
             {
+                if (counter > 1000) return;
+
                 var candidateHousekeeping = new CandidateHousekeeping
                 {
                     CandidateId = candidateId
