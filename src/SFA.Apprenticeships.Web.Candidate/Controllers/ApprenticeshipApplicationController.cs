@@ -242,6 +242,23 @@
             });
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
+        [ClearSearchReturnUrl(false)]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyTrainingCourseRows")]
+        public async Task<ActionResult> AddEmptyTrainingCourseRows(int id, ApprenticeshipApplicationViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _apprenticeshipApplicationMediator.AddEmptyTrainingCourseRows(model);
+
+                ModelState.Clear();
+
+                return View("Apply", response.ViewModel);
+            });
+        }
+
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Preview(int id)
