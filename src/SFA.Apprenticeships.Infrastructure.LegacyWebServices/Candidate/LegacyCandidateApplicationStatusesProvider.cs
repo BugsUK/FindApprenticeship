@@ -159,7 +159,7 @@
             var request = new GetApplicationsStatusRequest
             {
                 PageNumber = 1,
-                RangeTo = DateTime.UtcNow,
+                RangeTo = DateTime.UtcNow.AddHours(1), // TODO: AG: this is a temporary workaround to fix an off-by-one hour issue.
                 RangeFrom = DateTime.UtcNow.AddMinutes(applicationStatusExtractWindow * -1)
             };
 
@@ -182,7 +182,7 @@
             var request = new GetApplicationsStatusRequest
             {
                 PageNumber = pageNumber,
-                RangeTo = DateTime.UtcNow,
+                RangeTo = DateTime.UtcNow.AddHours(1), // TODO: AG: this is a temporary workaround to fix an off-by-one hour issue.
                 RangeFrom = DateTime.UtcNow.AddMinutes(applicationStatusExtractWindow * -1)
             };
 
