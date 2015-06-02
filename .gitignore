@@ -116,6 +116,7 @@ settings.json
 emailSettings.config
 *.azurePubxml
 diagnostics.wadcfg
+robots.txt
 
 # App Insight Configuration Files
 ApplicationInsights.config
