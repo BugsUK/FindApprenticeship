@@ -14,7 +14,8 @@
             _dispatcher = dispatcher;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 20)]
+        //TODO: Potentially up this value once we stop seeing errors
+        [SubscriptionConfiguration(PrefetchCount = 5)]
         [AutoSubscriberConsumer(SubscriptionId = "EmailRequestConsumerAsync")]
         public Task Consume(EmailRequest request)
         {

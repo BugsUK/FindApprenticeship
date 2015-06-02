@@ -8,11 +8,9 @@
 
     public abstract class HousekeepingStrategy : IHousekeepingStrategy
     {
-        private readonly IConfigurationService _configurationService;
-
         protected HousekeepingStrategy(IConfigurationService configurationService)
         {
-            _configurationService = configurationService;
+            Configuration = configurationService.Get<HousekeepingConfiguration>();
         }
 
         public IHousekeepingStrategy Successor { get; private set; }
@@ -29,10 +27,7 @@
             Successor.Handle(user, candidate);
         }
 
-        protected HousekeepingConfiguration Configuration
-        {
-            get { return _configurationService.Get<HousekeepingConfiguration>(); }
-        }
+        protected HousekeepingConfiguration Configuration { get; private set; }
 
         protected int GetHousekeepingCyclesSince(DateTime date)
         {
