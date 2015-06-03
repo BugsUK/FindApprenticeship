@@ -110,6 +110,23 @@
             });
         }
 
+        [HttpPost]
+        [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyTrainingCourseRows")]
+        [ValidateInput(false)]
+        [ClearSearchReturnUrl(false)]
+        public async Task<ActionResult> AddEmptyTrainingCourseRows(int id, TraineeshipApplicationViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _traineeshipApplicationMediator.AddEmptyTrainingCourseRows(model);
+
+                ModelState.Clear();
+
+                return View("Apply", response.ViewModel);
+            });
+        }
+
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
