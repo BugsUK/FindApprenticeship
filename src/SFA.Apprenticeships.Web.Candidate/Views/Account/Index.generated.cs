@@ -280,10 +280,10 @@ WriteLiteral(".\r\n                </p>\r\n");
             #line hidden
 WriteLiteral("            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2917), Tuple.Create("\"", 2970)
+WriteAttribute("href", Tuple.Create(" href=\"", 2917), Tuple.Create("\"", 3054)
             
             #line 57 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 2924), Tuple.Create<System.Object, System.Int32>(Url.Action("DismissApplicationNotifications")
+, Tuple.Create(Tuple.Create("", 2924), Tuple.Create<System.Object, System.Int32>(Url.Action("DismissApplicationNotifications", new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
@@ -837,14 +837,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black archive-successful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8558), Tuple.Create("\"", 8634)
+WriteAttribute("href", Tuple.Create(" href=\"", 8642), Tuple.Create("\"", 8718)
             
             #line 163 "..\..\Views\Account\Index.cshtml"
-                                               , Tuple.Create(Tuple.Create("", 8565), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
+                                               , Tuple.Create(Tuple.Create("", 8649), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 8565), false)
+, 8649), false)
 );
 
 WriteLiteral("><i");
@@ -1313,14 +1313,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black archive-unsuccessful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15377), Tuple.Create("\"", 15453)
+WriteAttribute("href", Tuple.Create(" href=\"", 15461), Tuple.Create("\"", 15537)
             
             #line 264 "..\..\Views\Account\Index.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 15384), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
+                                                    , Tuple.Create(Tuple.Create("", 15468), Tuple.Create<System.Object, System.Int32>(Url.Action("Archive", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 15384), false)
+, 15468), false)
 );
 
 WriteLiteral("><i");
@@ -1686,14 +1686,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 21107), Tuple.Create("\"", 21182)
+WriteAttribute("href", Tuple.Create(" href=\"", 21191), Tuple.Create("\"", 21266)
             
             #line 353 "..\..\Views\Account\Index.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 21114), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
+                                    , Tuple.Create(Tuple.Create("", 21198), Tuple.Create<System.Object, System.Int32>(Url.Action("Delete", "Account", new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 21114), false)
+, 21198), false)
 );
 
 WriteLiteral("><i");

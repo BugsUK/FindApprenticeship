@@ -535,7 +535,7 @@
 
                 if (!string.IsNullOrWhiteSpace(lastApplicationStatusNotification))
                 {
-                    lastApplicationStatusNotificationDateTime = DateTime.Parse(lastApplicationStatusNotification);
+                    lastApplicationStatusNotificationDateTime = new DateTime(long.Parse(lastApplicationStatusNotification), DateTimeKind.Utc);
                 }
 
                 return new MyApplicationsViewModel(apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel, lastApplicationStatusNotificationDateTime);
