@@ -12,9 +12,11 @@
             switch (cacheConfiguration.DefaultCache)
             {
                 case AzureCacheRegistry.AzureCacheName:
+                    configurationExpression.AddRegistry<MemoryCacheRegistry>();
                     configurationExpression.AddRegistry(new AzureCacheRegistry(cacheConfiguration.CacheName));
                     break;
                 case MemoryCacheRegistry.MemoryCacheName:
+                    configurationExpression.AddRegistry(new AzureCacheRegistry(cacheConfiguration.CacheName));
                     configurationExpression.AddRegistry<MemoryCacheRegistry>();
                     break;
             }            
