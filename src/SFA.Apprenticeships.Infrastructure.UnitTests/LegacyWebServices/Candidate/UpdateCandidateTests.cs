@@ -39,7 +39,7 @@
 
             var exception = updateCandidateAction.ShouldThrow<DomainException>().Which;
             exception.Code.Should().Be(Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.UpdateCandidateFailed);
-            exception.Data["message"].Should().Be("1 validation error(s): {\"ValidationErrors\":[{\"ErrorCode\":\"000\",\"KeyData\":\"Error\",\"Message\":\"An error has occurred\"}]}");
+            exception.Data["message"].Should().Be("1 unexpected validation error(s): {\"ValidationErrors\":[{\"ErrorCode\":\"000\",\"KeyData\":\"Error\",\"Message\":\"An error has occurred\"}]}");
             exception.Data["candidateId"].Should().Be(candidate.EntityId);
         }
 
