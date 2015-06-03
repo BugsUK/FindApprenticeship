@@ -211,7 +211,7 @@
                     _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), _userAccountService.GetRoleNames(candidate.EntityId));
 
                     _userDataProvider.Push(UserDataItemNames.LastApplicationStatusNotification,
-                        user.LastLogin.HasValue ? user.LastLogin.Value.ToString("o", CultureInfo.InvariantCulture) : DateTime.UtcNow.ToString("o", CultureInfo.InvariantCulture));
+                        user.LastLogin.HasValue ? user.LastLogin.Value.Ticks.ToString(CultureInfo.InvariantCulture) : DateTime.UtcNow.Ticks.ToString(CultureInfo.InvariantCulture));
 
                     return new LoginResultViewModel
                     {

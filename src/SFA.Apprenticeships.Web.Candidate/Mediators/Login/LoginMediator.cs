@@ -261,7 +261,7 @@
 
             if (!string.IsNullOrWhiteSpace(lastAppStatusNotification))
             {
-                var lastAppStatusNotificationDate = DateTime.Parse(lastAppStatusNotification);
+                var lastAppStatusNotificationDate = new DateTime(long.Parse(lastAppStatusNotification), DateTimeKind.Utc);
                 var updatedSubmittedApplications = applications.Count(a => a.DateUpdated > lastAppStatusNotificationDate &&
                             (a.Status == ApplicationStatuses.Successful || a.Status == ApplicationStatuses.Unsuccessful));
 

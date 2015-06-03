@@ -54,7 +54,7 @@
                 </p>
             }
             <p>
-                <a href="@Url.Action("DismissApplicationNotifications")" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
+                <a href="@Url.Action("DismissApplicationNotifications", new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
             </p>
         </div>
     </div>

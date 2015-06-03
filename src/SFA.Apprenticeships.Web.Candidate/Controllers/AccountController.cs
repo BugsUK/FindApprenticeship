@@ -46,11 +46,12 @@
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public async Task<ActionResult> DismissApplicationNotifications()
+        public async Task<ActionResult> DismissApplicationNotifications(long lastupdated)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                _userDataProvider.Push(UserDataItemNames.LastApplicationStatusNotification, DateTime.UtcNow.ToString(CultureInfo.InvariantCulture));
+                var utcDateTime = new DateTime(lastupdated + 1, DateTimeKind.Utc);
+                _userDataProvider.Push(UserDataItemNames.LastApplicationStatusNotification, utcDateTime.Ticks.ToString(CultureInfo.InvariantCulture));
                 _userDataProvider.Pop(UserDataItemNames.ApplicationStatusChangeCount);
                 return RedirectToRoute(CandidateRouteNames.MyApplications);
             });

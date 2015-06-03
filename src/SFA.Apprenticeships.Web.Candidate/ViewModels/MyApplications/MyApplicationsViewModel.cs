@@ -79,6 +79,15 @@
             }
         }
 
+        public long ApplicationStatusNotificationsLastUpdatedDateTimeTicks
+        {
+            get
+            {
+                var lastAppUpdated = ApplicationStatusNotifications.FirstOrDefault();
+                return lastAppUpdated == null ? 0 : lastAppUpdated.DateUpdated.Ticks;
+            }
+        }
+
         public IEnumerable<MyApprenticeshipApplicationViewModel> DraftApprenticeshipApplications
         {
             get
