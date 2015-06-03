@@ -16,6 +16,13 @@
 
     public class LegacyCandidateProvider : ILegacyCandidateProvider
     {
+        private readonly static Dictionary<string, string> LegacyCandidateServiceErrorsMap = new Dictionary<string, string>
+        {
+            {ValidationErrorCodes.InvalidCandidateState, ErrorCodes.CandidateStateError},
+            {ValidationErrorCodes.CandidateNotFound, ErrorCodes.CandidateNotFoundError},
+            {ValidationErrorCodes.UnknownCandidate, ErrorCodes.CandidateNotFoundError}
+        };
+
         private readonly ILogService _logger;
         private readonly IWcfService<GatewayServiceContract> _service;
 
@@ -25,6 +32,8 @@
             _logger = logger;
         }
 
+        #region Create Candidate
+
         public int CreateCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
             var context = new { candidateId = candidate.EntityId };
@@ -33,7 +42,7 @@
             {
                 _logger.Debug("Calling Legacy.CreateCandidate for candidate id='{0}'", candidate.EntityId);
 
-                var legacyCandidateId = InternalCreateCandidate(candidate);
+                var legacyCandidateId = CreateLegacyCandidate(candidate);
 
                 _logger.Debug("Legacy.CreateCandidate succeeded for candidate id='{0}', legacy candidate id='{1}'", candidate.EntityId, legacyCandidateId);
 
@@ -55,6 +64,57 @@
                 throw;
             }
         }
+
+        private int CreateLegacyCandidate(Domain.Entities.Candidates.Candidate candidate)
+        {
+            var request = new CreateCandidateRequest { Candidate = MapLegacyCandidate(candidate) };
+            var response = default(CreateCandidateResponse);
+
+            _service.Use("SecureService", client => response = client.CreateCandidate(request));
+
+            if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
+            {
+                string message;
+                string errorCode;
+
+                if (response == null)
+                {
+                    message = "No response";
+                    errorCode = ErrorCodes.CreateCandidateFailed;
+                }
+                else
+                {
+                    ParseCreateCandidateResponseValidationError(response, out message, out errorCode);
+                }
+
+                throw new DomainException(errorCode, new { message, candidateId = candidate.EntityId });
+            }
+
+            return response.CandidateId;
+        }
+
+        private static void ParseCreateCandidateResponseValidationError(CreateCandidateResponse response, out string message, out string errorCode)
+        {
+            foreach (var pair in LegacyCandidateServiceErrorsMap)
+            {
+                var validationError = response.ValidationErrors.FirstOrDefault(each => each.ErrorCode == pair.Key);
+
+                if (validationError != null)
+                {
+                    message = string.Format("{0} (ErrorCode='{1}')", validationError.Message, pair.Key);
+                    errorCode = pair.Value;
+                    return;
+                }
+            }
+
+            // Failed to parse expected validation error.
+            message = string.Format("{0} unexpected validation error(s): {1}", response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
+            errorCode = ErrorCodes.CreateCandidateFailed;
+        }
+
+        #endregion
+
+        #region Update Candidate
 
         public void UpdateCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
@@ -85,12 +145,15 @@
             }
         }
 
-        private int InternalCreateCandidate(Domain.Entities.Candidates.Candidate candidate)
+        private void UpdateLegacyCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
-            var request = new CreateCandidateRequest { Candidate = CreateLegacyCandidate(candidate) };
-            var response = default(CreateCandidateResponse);
+            var request = new UpdateCandidateRequest { Candidate = MapLegacyCandidate(candidate) };
+            request.Candidate.Id = candidate.LegacyCandidateId;
+            request.Candidate.IdSpecified = true;
 
-            _service.Use("SecureService", client => response = client.CreateCandidate(request));
+            var response = default(UpdateCandidateResponse);
+
+            _service.Use("SecureService", client => response = client.UpdateCandidate(request));
 
             if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
             {
@@ -100,29 +163,20 @@
                 if (response == null)
                 {
                     message = "No response";
-                    errorCode = ErrorCodes.CreateCandidateFailed;
+                    errorCode = ErrorCodes.UpdateCandidateFailed;
                 }
                 else
                 {
-                    ParseValidationError(response, out message, out errorCode);
+                    ParseUpdateCandidateResponseValidationError(response, out message, out errorCode);
                 }
 
                 throw new DomainException(errorCode, new { message, candidateId = candidate.EntityId });
             }
-
-            return response.CandidateId;
         }
 
-        private static void ParseValidationError(CreateCandidateResponse response, out string message, out string errorCode)
+        private static void ParseUpdateCandidateResponseValidationError(UpdateCandidateResponse response, out string message, out string errorCode)
         {
-            var map = new Dictionary<string, string>
-            {
-                { ValidationErrorCodes.InvalidCandidateState, ErrorCodes.CandidateStateError },
-                { ValidationErrorCodes.CandidateNotFound, ErrorCodes.CandidateNotFoundError },
-                { ValidationErrorCodes.UnknownCandidate, ErrorCodes.CandidateNotFoundError }
-            };
-
-            foreach (var pair in map)
+            foreach (var pair in LegacyCandidateServiceErrorsMap)
             {
                 var validationError = response.ValidationErrors.FirstOrDefault(each => each.ErrorCode == pair.Key);
 
@@ -135,40 +189,15 @@
             }
 
             // Failed to parse expected validation error.
-            message = string.Format("{0} unexpected validation error(s): {1}",
-                response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
-
-            errorCode = ErrorCodes.CreateCandidateFailed;
+            message = string.Format("{0} unexpected validation error(s): {1}", response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
+            errorCode = ErrorCodes.UpdateCandidateFailed;
         }
 
-        private void UpdateLegacyCandidate(Domain.Entities.Candidates.Candidate candidate)
-        {
-            var request = new UpdateCandidateRequest { Candidate = CreateLegacyCandidate(candidate) };
-            request.Candidate.Id = candidate.LegacyCandidateId;
-            request.Candidate.IdSpecified = true;
+        #endregion
 
-            var response = default(UpdateCandidateResponse);
+        #region Helpers/Mappers
 
-            _service.Use("SecureService", client => response = client.UpdateCandidate(request));
-
-            if (response == null || (response.ValidationErrors != null && response.ValidationErrors.Any()))
-            {
-                string message;
-
-                if (response == null)
-                {
-                    message = "No response";
-                }
-                else
-                {
-                    message = string.Format("{0} validation error(s): {1}", response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
-                }
-
-                throw new DomainException(ErrorCodes.UpdateCandidateFailed, new { message, candidateId = candidate.EntityId });
-            }
-        }
-
-        private static Candidate CreateLegacyCandidate(Domain.Entities.Candidates.Candidate candidate)
+        private static Candidate MapLegacyCandidate(Domain.Entities.Candidates.Candidate candidate)
         {
             var disabilityStatus = MapDisabilityStatus(candidate);
             var ethnicity = MapEthnicity(candidate);
@@ -299,5 +328,7 @@
 
             return null;
         }
+
+        #endregion
     }
 }
