@@ -41,13 +41,13 @@
             SearchMode = viewModel.SearchMode;
             SearchField = viewModel.SearchField;
             SavedSearches = viewModel.SavedSearches;
-            DisplaySubCategory = DisplaySubCategory;
-            DisplayDescription = DisplayDescription;
-            DisplayDistance = DisplayDistance;
-            DisplayClosingDate = DisplayClosingDate;
-            DisplayStartDate = DisplayStartDate;
-            DisplayApprenticeshipLevel = DisplayApprenticeshipLevel;
-            DisplayWage = DisplayWage;
+            DisplaySubCategory = viewModel.DisplaySubCategory;
+            DisplayDescription = viewModel.DisplayDescription;
+            DisplayDistance = viewModel.DisplayDistance;
+            DisplayClosingDate = viewModel.DisplayClosingDate;
+            DisplayStartDate = viewModel.DisplayStartDate;
+            DisplayApprenticeshipLevel = viewModel.DisplayApprenticeshipLevel;
+            DisplayWage = viewModel.DisplayWage;
             LocationSearches = Enumerable.Empty<ApprenticeshipSearchViewModel>();
         }
 

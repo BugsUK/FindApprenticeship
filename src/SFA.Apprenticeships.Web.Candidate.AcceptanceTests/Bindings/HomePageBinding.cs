@@ -25,8 +25,10 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                 var signoutLink = _driver.FindElement(By.Id("signout-link"));
                 signoutLink.Click();
             }
-            catch (NoSuchElementException)
+            catch (NoSuchElementException){ }
+            finally
             {
+                _driver.Manage().Cookies.DeleteAllCookies();
             }
         }
     }

@@ -618,7 +618,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Hooks\" />
     <Folder Include="Pages\ApprenticeshipApplication\SummaryItems\" />
   </ItemGroup>
   <Choose>
