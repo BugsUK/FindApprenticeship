@@ -180,8 +180,8 @@ function GetSearchResultsDetailsValue(searchResultDetail) {
         return cookieValue.toLowerCase() === 'true';
     }
 
-    //Otherwise use defaults
-    return null;
+    //Otherwise use defaults returned from server.
+    return $('#' + searchResultDetail).is(':checked');
 }
 
 function GetSearchResultsDetailsValues() {
