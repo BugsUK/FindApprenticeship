@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
+    using Caching.Memory.IoC;
     using Configuration;
     using Domain.Interfaces.Caching;
     using Domain.Interfaces.Configuration;
@@ -23,7 +24,7 @@
                     .Named("ConfigurationService")
                     .Ctor<ICacheService>()
                     .IsTheDefault()
-                    .Named(cacheConfiguration.DefaultCache);
+                    .Named(MemoryCacheRegistry.MemoryCacheName);
             }
         }
     }

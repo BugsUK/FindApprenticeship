@@ -8,10 +8,12 @@
     {
         public static void AddCachingRegistry(this ConfigurationExpression configurationExpression, CacheConfiguration cacheConfiguration)
         {
-            // either one of the other is used
             switch (cacheConfiguration.DefaultCache)
             {
                 case AzureCacheRegistry.AzureCacheName:
+                    // Ordering of cache registration is important as last cache registered will be used by default. Memory cache is
+                    // used selectively when running under Azure (e.g. to cache configuration).
+                    configurationExpression.AddRegistry<MemoryCacheRegistry>();
                     configurationExpression.AddRegistry(new AzureCacheRegistry(cacheConfiguration.CacheName));
                     break;
                 case MemoryCacheRegistry.MemoryCacheName:
