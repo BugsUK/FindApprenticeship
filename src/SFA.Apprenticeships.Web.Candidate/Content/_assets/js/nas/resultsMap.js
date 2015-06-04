@@ -80,7 +80,11 @@ $(function () {
 
     $window.on('googleMapsScriptLoaded', function () {
         apiScriptLoaded = true;
+
+        apprLatitude = Number($('#Latitude').val());
+        apprLongitude = Number($('#Longitude').val());
         originLocation = new google.maps.LatLng(apprLatitude, apprLongitude);
+
         markerIcon = new google.maps.MarkerImage('/Content/_assets/img/icon-location.png', null, null, null, new google.maps.Size(20, 32));
         selectedIcon = new google.maps.MarkerImage('/Content/_assets/img/icon-location-selected.png', null, null, null, new google.maps.Size(20, 32));
 
@@ -103,8 +107,6 @@ $(function () {
         if (!apiScriptLoaded) return;
 
         var apprMiles = Number($('#loc-within').val());
-        apprLatitude = Number($('#Latitude').val());
-        apprLongitude = Number($('#Longitude').val());
         theLatLon = apprLatitude + ',' + apprLongitude;
 
         resultMaps = [];
