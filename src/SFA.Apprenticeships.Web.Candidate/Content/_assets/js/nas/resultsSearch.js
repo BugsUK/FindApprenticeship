@@ -76,6 +76,7 @@
             if (scrollTop) {
                 $(document).scrollTop(0);
             }
+            setDetailsView();
             $("#Location").locationMatch({ url: locationUrl, longitude: '#Longitude', latitude: '#Latitude', latlonhash: '#Hash' });
             Webtrends.multiTrack({ argsa: ["DCS.dcsqry", window.location.search] });
         }).fail(function () {
@@ -91,21 +92,24 @@
         $this.attr('href', $href);
     });
 
-    $('#chooseDetails input').each(function () {
-        var $this = $(this),
-            $thisId = $this.attr('id');
+    function setDetailsView() {
+        $('#chooseDetails input').each(function() {
+            var $this = $(this),
+                $thisId = $this.attr('id');
 
-        var $showValue = GetSearchResultsDetailsValue($thisId);
+            var $showValue = GetSearchResultsDetailsValue($thisId);
 
-        if ($showValue) {
-            $('[data-show="' + $thisId + '"]').show();
-            $this.prop("checked", true);
-        } else {
-            $('[data-show="' + $thisId + '"]').hide();
-            $this.prop("checked", false);
-        }
-    });
+            if ($showValue) {
+                $('[data-show="' + $thisId + '"]').show();
+                $this.prop("checked", true);
+            } else {
+                $('[data-show="' + $thisId + '"]').hide();
+                $this.prop("checked", false);
+            }
+        });
+    }
 
+    setDetailsView();
     //Write the new, complete cookie with the current view of the display settings
     SetSearchResultsDetailsCookieValue();
 
