@@ -207,6 +207,12 @@
                     return new TraineeshipApplicationViewModel(ApplicationPageMessages.SubmitApplicationFailed);
                 }
 
+                if (!submittedModel.Candidate.MonitoringInformation.RequiresSupportForInterview)
+                {
+                    submittedModel.Candidate.MonitoringInformation.AnythingWeCanDoToSupportYourInterview = string.Empty;
+                }
+
+                savedModel.Candidate.MonitoringInformation = submittedModel.Candidate.MonitoringInformation;
                 savedModel.Candidate.HasQualifications = submittedModel.Candidate.HasQualifications;
                 savedModel.Candidate.Qualifications = submittedModel.Candidate.Qualifications;
                 savedModel.Candidate.HasWorkExperience = submittedModel.Candidate.HasWorkExperience;

@@ -17,6 +17,7 @@
         private IEnumerable<WorkExperienceViewModel> _workExperience;
         private IEnumerable<TrainingCourseViewModel> _trainingCourses;
         private VacancyStatuses _vacancyStatus;
+        private MonitoringInformationViewModel _monitoringInformationViewModel;
 
         public TraineeshipApplicationViewModelBuilder WithMessage(string message)
         {
@@ -54,6 +55,12 @@
             _vacancyStatus = vacancyStatus;
             return this;
         }
+        
+        public TraineeshipApplicationViewModelBuilder WithMonitoringInformation(MonitoringInformationViewModel monitoringInformationViewModel)
+        {
+            _monitoringInformationViewModel = monitoringInformationViewModel;
+            return this;
+        }
 
         public TraineeshipApplicationViewModel Build()
         {
@@ -68,7 +75,8 @@
                     HasWorkExperience = _workExperience != null && _workExperience.Any(),
                     WorkExperience = _workExperience,
                     HasTrainingCourses = _trainingCourses != null && _trainingCourses.Any(),
-                    TrainingCourses = _trainingCourses
+                    TrainingCourses = _trainingCourses,
+                    MonitoringInformation = _monitoringInformationViewModel
                 },
                 VacancyDetail = new TraineeshipVacancyDetailViewModel
                 {
@@ -76,5 +84,5 @@
                 }
             };
         }
-   }
+    }
 }

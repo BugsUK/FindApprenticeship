@@ -2,12 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Builders;
     using Candidate.ViewModels.Candidate;
     using Constants.Pages;
     using FluentAssertions;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class PatchApplicationViewModelTests
@@ -34,8 +34,9 @@
             var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().Build();
 
             var savedTraineeshipViewModel = new TraineeshipApplicationViewModelBuilder().Build();
-            var qualifications = new List<QualificationsViewModel> {new QualificationsViewModelBuilder().WithSubject("Maths").WithGrade("C").WithYear("2015").Build()};
-            var traineeshipViewModel = new TraineeshipApplicationViewModelBuilder().WithQualifications(qualifications).Build();
+            var qualifications = new List<QualificationsViewModel> { new QualificationsViewModelBuilder().WithSubject("Maths").WithGrade("C").WithYear("2015").Build() };
+            var monitoringInformationViewModel = new Fixture().Build<MonitoringInformationViewModel>().Create();
+            var traineeshipViewModel = new TraineeshipApplicationViewModelBuilder().WithQualifications(qualifications).WithMonitoringInformation(monitoringInformationViewModel).Build();
 
             var viewModel = traineeshipApplicationProvider.PatchApplicationViewModel(candidateId, savedTraineeshipViewModel, traineeshipViewModel);
 
@@ -57,8 +58,9 @@
             {
                 new WorkExperienceViewModelBuilder().WithDescription("Work").WithEmployer("Employer").Build() 
             };
- 
-            var traineeshipViewModel = new TraineeshipApplicationViewModelBuilder().WithWorkExperience(workExperience).Build();
+
+            var monitoringInformationViewModel = new Fixture().Build<MonitoringInformationViewModel>().Create();
+            var traineeshipViewModel = new TraineeshipApplicationViewModelBuilder().WithWorkExperience(workExperience).WithMonitoringInformation(monitoringInformationViewModel).Build();
             var viewModel = traineeshipApplicationProvider.PatchApplicationViewModel(candidateId, savedTraineeshipViewModel, traineeshipViewModel);
 
             viewModel.Should().NotBeNull();
@@ -82,8 +84,11 @@
                     .Build()
             };
 
+            var monitoringInformationViewModel = new Fixture().Build<MonitoringInformationViewModel>().Create();
+
             var traineeshipViewModel = new TraineeshipApplicationViewModelBuilder()
                 .WithTrainingCourses(trainingCourses)
+                .WithMonitoringInformation(monitoringInformationViewModel)
                 .Build();
 
             var viewModel = traineeshipApplicationProvider
@@ -94,6 +99,65 @@
             viewModel.HasError().Should().BeFalse();
             viewModel.Candidate.HasTrainingCourses.Should().BeTrue();
             viewModel.Candidate.TrainingCourses.Should().Equal(trainingCourses);
+        }
+
+        [TestCase(true, "Wheelchair access, please")]
+        [TestCase(false, "Wheelchair access, please")]
+        public void ShouldPatchRequiresSupportForInterview(bool requiresSupportForInterview, string anythingWeCanDoToSupportYourInterview)
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().Build();
+            var savedModel = new TraineeshipApplicationViewModelBuilder().Build();
+
+            var submittedModel = new TraineeshipApplicationViewModelBuilder()
+                .WithMonitoringInformation(new MonitoringInformationViewModel
+                {
+                    RequiresSupportForInterview = requiresSupportForInterview,
+                    AnythingWeCanDoToSupportYourInterview = anythingWeCanDoToSupportYourInterview
+                })
+
+                .Build();
+
+            // Act.
+            var patchedViewModel = traineeshipApplicationProvider
+                .PatchApplicationViewModel(candidateId, savedModel, submittedModel);
+
+            patchedViewModel.Should().NotBeNull();
+            patchedViewModel.ViewModelMessage.Should().BeNull();
+            patchedViewModel.HasError().Should().BeFalse();
+
+            // Assert.
+            patchedViewModel.Candidate.MonitoringInformation.AnythingWeCanDoToSupportYourInterview.Should().Be(
+                requiresSupportForInterview ? anythingWeCanDoToSupportYourInterview : string.Empty);
+        }
+
+        [Test]
+        public void ShouldPatchMonitoringInformation()
+        {
+            // Arrange.
+            var candidateId = Guid.NewGuid();
+            var traineeshipApplicationProvider = new TraineeshipApplicationProviderBuilder().Build();
+            var savedViewModel = new TraineeshipApplicationViewModelBuilder().Build();
+
+            var monitoringInformationViewModel = new Fixture()
+                .Build<MonitoringInformationViewModel>()
+                .Create();
+
+            var submittedViewModel = new TraineeshipApplicationViewModelBuilder()
+                .WithMonitoringInformation(monitoringInformationViewModel)
+                .Build();
+
+            // Act.
+            var patchedViewModel = traineeshipApplicationProvider
+                .PatchApplicationViewModel(candidateId, savedViewModel, submittedViewModel);
+
+            patchedViewModel.Should().NotBeNull();
+            patchedViewModel.ViewModelMessage.Should().BeNull();
+            patchedViewModel.HasError().Should().BeFalse();
+
+            // Assert.
+            patchedViewModel.Candidate.MonitoringInformation.Should().Be(monitoringInformationViewModel);
         }
     }
 }
