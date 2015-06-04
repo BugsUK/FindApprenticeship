@@ -83,14 +83,6 @@ $(function () {
         markerIcon = new google.maps.MarkerImage('/Content/_assets/img/icon-location.png', null, null, null, new google.maps.Size(20, 32));
         selectedIcon = new google.maps.MarkerImage('/Content/_assets/img/icon-location-selected.png', null, null, null, new google.maps.Size(20, 32));
 
-        apprLatitude = Number($('#Latitude').val());
-        apprLongitude = Number($('#Longitude').val());
-        originLocation = new google.maps.LatLng(apprLatitude, apprLongitude);
-
-        if (apprLatitude == 0 || apprLongitude == 0) {
-            $('#map-canvas').parent().hide();
-        }
-
         apiScriptLoaded = true;
         initialize();
         lazyLoadMaps();
@@ -105,6 +97,14 @@ $(function () {
 
         checkGoogleMapsApiScriptLoaded();
         if (!apiScriptLoaded) return;
+
+        apprLatitude = Number($('#Latitude').val());
+        apprLongitude = Number($('#Longitude').val());
+        originLocation = new google.maps.LatLng(apprLatitude, apprLongitude);
+
+        if (apprLatitude == 0 || apprLongitude == 0) {
+            $('#map-canvas').parent().hide();
+        }
 
         var apprMiles = Number($('#loc-within').val());
         theLatLon = apprLatitude + ',' + apprLongitude;
