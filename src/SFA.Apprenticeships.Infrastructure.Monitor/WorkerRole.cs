@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Azure.Common.IoC;
     using Common.IoC;
     using Consumers;
+    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Audit.IoC;
@@ -111,6 +112,14 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
         private void InitializeIoC()
         {
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -123,7 +132,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<AuthenticationRepositoryRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
-                x.AddRegistry<AddressRegistry>();
+                x.AddRegistry(new AddressRegistry(configurationService));
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();

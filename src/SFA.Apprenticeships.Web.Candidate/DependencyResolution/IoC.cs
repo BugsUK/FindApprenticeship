@@ -76,7 +76,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
-                x.AddRegistry<AddressRegistry>();
+                x.AddRegistry(new AddressRegistry(configurationService));
                 x.AddRegistry<AuditRepositoryRegistry>();
 
                 // web layer

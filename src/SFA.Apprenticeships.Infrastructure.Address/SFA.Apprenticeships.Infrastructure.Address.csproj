@@ -99,6 +99,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.105.1.0\lib\net451\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.3.1.4.143\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -115,8 +118,17 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AddressSearchProvider.cs" />
+    <Compile Include="Configuration\AddressSearchConfiguration.cs" />
+    <Compile Include="Entities\DeliveryPointAddress.cs" />
+    <Compile Include="Entities\LocalPropertyIdentifier.cs" />
+    <Compile Include="Entities\OrdnanceSurveyClassificationCodes.cs" />
+    <Compile Include="Entities\OrdnanceSurveyResult.cs" />
+    <Compile Include="Entities\OrdnanceSurveyPlacesResponse.cs" />
+    <Compile Include="Extensions\LocalPropertyIdentifierExtensions.cs" />
+    <Compile Include="Extensions\DeliveryPointAddressExtensions.cs" />
     <Compile Include="IoC\AddressRegistry.cs" />
     <Compile Include="Mappers\AddressMapper.cs" />
+    <Compile Include="OrdnanceSurveyAddressSearchProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

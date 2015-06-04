@@ -131,6 +131,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\RabbitMQ.Client.3.4.3\lib\net35\RabbitMQ.Client.dll</HintPath>
     </Reference>
+    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\RestSharp.105.1.0\lib\net451\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="SendGrid.SmtpApi">
       <HintPath>..\packages\SendGrid.SmtpApi.1.2.1\lib\net40\SendGrid.SmtpApi.dll</HintPath>
     </Reference>
@@ -157,6 +161,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Address\OrdnanceSurveyAddressSearchProviderBuilder.cs" />
+    <Compile Include="Address\OrdnanceSurveyAddressSearchProviderTests.cs" />
     <Compile Include="Caching\MemoryCachingTests.cs" />
     <Compile Include="Communication\ReachConfigurationTests.cs" />
     <Compile Include="Communication\ReachSmsDispatcherTests.cs" />
@@ -209,6 +215,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Address\SFA.Apprenticeships.Application.Address.csproj">
+      <Project>{1B386440-4479-4A2C-93CA-42A98426019F}</Project>
+      <Name>SFA.Apprenticeships.Application.Address</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
       <Name>SFA.Apprenticeships.Application.Applications</Name>
@@ -248,6 +258,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Address\SFA.Apprenticeships.Infrastructure.Address.csproj">
+      <Project>{969662B6-BB64-48EE-880D-9646AB6146A4}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Address</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
       <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>
