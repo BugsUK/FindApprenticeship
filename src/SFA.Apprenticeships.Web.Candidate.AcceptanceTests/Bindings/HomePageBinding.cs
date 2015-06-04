@@ -26,10 +26,6 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
                 signoutLink.Click();
             }
             catch (NoSuchElementException){ }
-            finally
-            {
-                _driver.Manage().Cookies.DeleteAllCookies();
-            }
         }
     }
 }
