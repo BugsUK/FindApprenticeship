@@ -135,7 +135,7 @@
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [MultipleFormActionsButton(Name = "LoginAction", Argument = "Unlock")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "LoginAction")]
         public async Task<ActionResult> Unlock(AccountUnlockViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -177,7 +177,7 @@
 
         [HttpPost]
         [AllowReturnUrl(Allow = false)]
-        [MultipleFormActionsButton(Name = "LoginAction", Argument = "Resend")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "LoginAction")]
         public async Task<ActionResult> Resend(AccountUnlockViewModel model)
         {
             return await Task.Run<ActionResult>(() =>

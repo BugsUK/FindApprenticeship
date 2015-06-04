@@ -7,22 +7,18 @@
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class MultipleFormActionsButtonAttribute : ActionNameSelectorAttribute
     {
-        public string Name { get; set; }
-        public string Argument { get; set; }
+        public string SubmitButtonActionName { get; set; }
 
         public override bool IsValidName(ControllerContext controllerContext, string actionName, MethodInfo methodInfo)
         {
-            var keyValue = string.Format("{0}:{1}", Name, Argument);
-            var value = controllerContext.Controller.ValueProvider.GetValue(keyValue);
+            var value = controllerContext.Controller.ValueProvider.GetValue(SubmitButtonActionName);
 
             if (value == null)
             {
-                return false;
+                return methodInfo.Name.Equals(actionName, StringComparison.InvariantCultureIgnoreCase);
             }
 
-            controllerContext.Controller.ControllerContext.RouteData.Values[Name] = Argument;
-
-            return true;
+            return value.AttemptedValue == methodInfo.Name;
         }
     }
 }

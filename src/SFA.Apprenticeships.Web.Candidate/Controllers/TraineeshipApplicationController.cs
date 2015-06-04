@@ -47,7 +47,7 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Submit")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Apply(int id, TraineeshipApplicationViewModel model)
@@ -78,7 +78,7 @@
 
         [HttpPost]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> AddEmptyQualificationRows(int id, TraineeshipApplicationViewModel model)
@@ -95,7 +95,7 @@
 
         [HttpPost]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, TraineeshipApplicationViewModel model)
@@ -112,7 +112,7 @@
 
         [HttpPost]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyTrainingCourseRows")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> AddEmptyTrainingCourseRows(int id, TraineeshipApplicationViewModel model)

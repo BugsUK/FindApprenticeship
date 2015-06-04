@@ -56,6 +56,7 @@
             });
         }
 
+        [HttpGet]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Apply(string id)
@@ -89,7 +90,7 @@
         [ValidateAntiForgeryToken]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Preview")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> Apply(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -125,7 +126,7 @@
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "Save")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> Save(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -212,7 +213,7 @@
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyQualificationRows")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> AddEmptyQualificationRows(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -229,7 +230,7 @@
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyWorkExperienceRows")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> AddEmptyWorkExperienceRows(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -246,7 +247,7 @@
         [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "ApplicationAction", Argument = "AddEmptyTrainingCourseRows")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> AddEmptyTrainingCourseRows(int id, ApprenticeshipApplicationViewModel model)
         {
             return await Task.Run<ActionResult>(() =>

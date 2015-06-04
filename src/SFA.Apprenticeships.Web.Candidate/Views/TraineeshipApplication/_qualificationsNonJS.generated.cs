@@ -363,7 +363,9 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"ApplicationAction:AddEmptyQualificationRows\"");
+WriteLiteral(" name=\"ApplicationAction\"");
+
+WriteLiteral(" value=\"AddEmptyQualificationRows\"");
 
 WriteLiteral(">Add 5 more qualifications</button>\r\n            </div>\r\n        </div>\r\n\r\n    </" +
 "fieldset>\r\n</noscript>");

@@ -170,7 +170,7 @@
         [SmsEnabledToggle]
         [ValidateAntiForgeryToken]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "VerifyMobile")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "VerifyMobileAction")]
         public async Task<ActionResult> VerifyMobile(VerifyMobileViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -209,7 +209,7 @@
         [SmsEnabledToggle]
         [AllowReturnUrl(Allow = false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        [MultipleFormActionsButton(Name = "VerifyMobileAction", Argument = "Resend")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "VerifyMobileAction")]
         public async Task<ActionResult> Resend(VerifyMobileViewModel model)
         {
             return await Task.Run<ActionResult>(() =>

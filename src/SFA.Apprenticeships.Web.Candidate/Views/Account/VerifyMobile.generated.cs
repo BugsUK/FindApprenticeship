@@ -237,7 +237,9 @@ WriteLiteral(" class=\"button hide-button\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"VerifyMobileAction:VerifyMobile\"");
+WriteLiteral(" name=\"VerifyMobileAction\"");
+
+WriteLiteral(" value=\"VerifyMobile\"");
 
 WriteLiteral(" tabindex=\"-1\"");
 
@@ -247,7 +249,7 @@ WriteLiteral(" id=\"ResendMobileVerificationCodeLink\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"VerifyMobileAction:Resend\"");
+WriteLiteral(" name=\"VerifyMobileAction\"");
 
 WriteLiteral(" class=\"button-link\"");
 
@@ -261,7 +263,9 @@ WriteLiteral(" id=\"verify-code-button\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"VerifyMobileAction:VerifyMobile\"");
+WriteLiteral(" name=\"VerifyMobileAction\"");
+
+WriteLiteral(" value=\"VerifyMobile\"");
 
 WriteLiteral(">Verify number</button>\r\n        </p>\r\n    </div>\r\n");
 

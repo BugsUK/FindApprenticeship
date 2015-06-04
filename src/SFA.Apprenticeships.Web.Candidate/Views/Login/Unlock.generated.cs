@@ -158,7 +158,9 @@ WriteLiteral(" class=\"button hide-button\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"LoginAction:Unlock\"");
+WriteLiteral(" name=\"LoginAction\"");
+
+WriteLiteral(" value=\"Unlock\"");
 
 WriteLiteral(" tabindex=\"-1\"");
 
@@ -168,7 +170,7 @@ WriteLiteral(" id=\"ResendAccountUnlockCodeLink\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"LoginAction:Resend\"");
+WriteLiteral(" name=\"LoginAction\"");
 
 WriteLiteral(" class=\"button-link\"");
 
@@ -182,7 +184,9 @@ WriteLiteral(" id=\"verify-code-button\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"LoginAction:Unlock\"");
+WriteLiteral(" name=\"LoginAction\"");
+
+WriteLiteral(" value=\"Unlock\"");
 
 WriteLiteral(">Unlock account</button>\r\n        </p>\r\n    </div>\r\n");
 
