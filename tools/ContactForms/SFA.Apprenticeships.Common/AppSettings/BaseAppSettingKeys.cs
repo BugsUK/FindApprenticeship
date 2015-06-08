@@ -12,5 +12,6 @@
         public const string NetworkPassword = "NetworkPassword";
         public const string IsDemoModeEnabled = "IsDemoModeEnabled";
         public const string EmailDispatcher = "EmailDispatcher";
+        public const string OrdnanceSurveyPlacesApiKey = "OrdnanceSurveyPlacesApiKey";
     }
 }

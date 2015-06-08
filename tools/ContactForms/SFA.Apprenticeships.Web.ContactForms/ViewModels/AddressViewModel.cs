@@ -8,6 +8,7 @@
     [Validator(typeof(AddressViewModelValidators))]
     public class AddressViewModel
     {
+        public string Uprn { get; set; }
         private string _postcode;
         [Display(Name = AddressViewModelMessages.AddressLine1Messages.LabelText)]
         public string AddressLine1 { get; set; }

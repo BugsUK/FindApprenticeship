@@ -1,28 +1,28 @@
-﻿namespace SFA.Apprenticeships.Application.UnitTests.Address
+﻿namespace SFA.Apprenticeships.Web.ContactForms.Tests.Services.LocationSearchService
 {
+    using Application.Services.LocationSearchService.Entities;
+    using Application.Services.LocationSearchService.Extensions;
     using FluentAssertions;
-    using Infrastructure.Address.Entities;
-    using Infrastructure.Address.Extensions;
     using NUnit.Framework;
 
     [TestFixture]
     public class DeliveryPointAddressExtensionsTests
     {
-        [TestCase("C", false)]
-        [TestCase("CE", false)]
+        [TestCase("C", true)]
+        [TestCase("CE", true)]
         [TestCase("L", false)]
         [TestCase("M", false)]
         [TestCase("O", false)]
-        [TestCase("P", true)]
-        [TestCase("R", true)]
-        [TestCase("RD", true)]
+        [TestCase("P", false)]
+        [TestCase("R", false)]
+        [TestCase("RD", false)]
         [TestCase("U", false)]
         [TestCase("X", true)]
         [TestCase("Z", false)]
-        public void IsResidential(string classificationCode, bool isResidential)
+        public void IsCommercial(string classificationCode, bool isCommercial)
         {
             var dpa = new DeliveryPointAddress {ClassificationCode = classificationCode};
-            dpa.IsResidential().Should().Be(isResidential);
+            dpa.IsCommercial().Should().Be(isCommercial);
         }
 
         [Test]
@@ -37,16 +37,16 @@
                 Postcode = "KT17 1NE"
             };
 
-            var address = dpa.ToAddress();
+            var address = dpa.ToLocation().Address;
 
             address.Should().NotBeNull();
 
+            address.CompanyName.Should().BeNullOrEmpty();
             address.AddressLine1.Should().Be("30 West Gardens");
             address.AddressLine2.Should().BeNullOrEmpty();
             address.AddressLine3.Should().BeNullOrEmpty();
-            address.AddressLine4.Should().Be("Epsom");
+            address.City.Should().Be("Epsom");
             address.Postcode.Should().Be("KT17 1NE");
-            address.Uprn.Should().Be("100061368366");
         }
 
         [Test]
@@ -62,16 +62,16 @@
                 Postcode = "DE6 5JA"
             };
 
-            var address = dpa.ToAddress();
+            var address = dpa.ToLocation().Address;
 
             address.Should().NotBeNull();
 
+            address.CompanyName.Should().BeNullOrEmpty();
             address.AddressLine1.Should().Be("Greystones");
             address.AddressLine2.Should().Be("Brook Lane");
             address.AddressLine3.Should().Be("Sutton-On-The-Hill");
-            address.AddressLine4.Should().Be("Ashbourne");
+            address.City.Should().Be("Ashbourne");
             address.Postcode.Should().Be("DE6 5JA");
-            address.Uprn.Should().Be("100030231701");
         }
 
         [Test]
@@ -87,16 +87,16 @@
                 Postcode = "SW2 4NT"
             };
 
-            var address = dpa.ToAddress();
+            var address = dpa.ToLocation().Address;
 
             address.Should().NotBeNull();
 
+            address.CompanyName.Should().BeNullOrEmpty();
             address.AddressLine1.Should().Be("Flat 4");
             address.AddressLine2.Should().Be("66 Killieser Avenue");
             address.AddressLine3.Should().BeNullOrEmpty();
-            address.AddressLine4.Should().Be("London");
+            address.City.Should().Be("London");
             address.Postcode.Should().Be("SW2 4NT");
-            address.Uprn.Should().Be("100023352765");
         }
 
         [Test]
@@ -112,16 +112,16 @@
                 Postcode = "EC2R 7HG"
             };
 
-            var address = dpa.ToAddress();
+            var address = dpa.ToLocation().Address;
 
             address.Should().NotBeNull();
 
-            address.AddressLine1.Should().Be("Executive Offices");
-            address.AddressLine2.Should().Be("41 Lothbury");
+            address.CompanyName.Should().Be("Executive Offices");
+            address.AddressLine1.Should().Be("41 Lothbury");
+            address.AddressLine2.Should().BeNullOrEmpty();
             address.AddressLine3.Should().BeNullOrEmpty();
-            address.AddressLine4.Should().Be("London");
+            address.City.Should().Be("London");
             address.Postcode.Should().Be("EC2R 7HG");
-            address.Uprn.Should().Be("10091781210");
         }
 
         [Test]
@@ -138,16 +138,16 @@
                 Postcode = "CV1 2WT"
             };
 
-            var address = dpa.ToAddress();
+            var address = dpa.ToLocation().Address;
 
             address.Should().NotBeNull();
 
-            address.AddressLine1.Should().Be("Skills Funding Agency");
-            address.AddressLine2.Should().Be("Cheylesmore House");
-            address.AddressLine3.Should().Be("5 Quinton Road");
-            address.AddressLine4.Should().Be("Coventry");
+            address.CompanyName.Should().Be("Skills Funding Agency");
+            address.AddressLine1.Should().Be("Cheylesmore House");
+            address.AddressLine2.Should().Be("5 Quinton Road");
+            address.AddressLine3.Should().BeNullOrEmpty();
+            address.City.Should().Be("Coventry");
             address.Postcode.Should().Be("CV1 2WT");
-            address.Uprn.Should().Be("10023037881");
         }
     }
 }

@@ -1,59 +1,42 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Address.Extensions
+﻿namespace SFA.Apprenticeships.Application.Services.LocationSearchService.Extensions
 {
     using System.Globalization;
-    using Domain.Entities.Locations;
     using Entities;
+    using Domain.Entities;
 
     public static class DeliveryPointAddressExtensions
     {
         private static readonly TextInfo UkTextInfo = new CultureInfo("en-GB", false).TextInfo;
 
-        public static Address ToAddress(this DeliveryPointAddress dpa)
+        public static Location ToLocation(this DeliveryPointAddress dpa)
         {
-            //https://github.com/alphagov/location-data-importer
             var address = new Address
             {
-                AddressLine3 = dpa.Village.ToTitleCase(),
-                AddressLine4 = dpa.TownOrCity.ToTitleCase(),
-                Postcode = dpa.Postcode,
+                CompanyName = dpa.OrganisationName.ToTitleCase(),
+                AddressLine2 = dpa.Village.ToTitleCase(),
+                City = dpa.TownOrCity.ToTitleCase(),
                 Uprn = dpa.Uprn,
-                GeoPoint = new GeoPoint()
+                Postcode = dpa.Postcode
             };
 
-            var companyName = dpa.OrganisationName;
             var buildingName = GetBuildingName(dpa);
             var streetAddress = GetStreetAddress(dpa);
 
-            if (!string.IsNullOrEmpty(companyName))
-            {
-                address.AddressLine1 = companyName.ToTitleCase();
-                if (!string.IsNullOrEmpty(buildingName))
-                {
-                    address.AddressLine2 = buildingName.ToTitleCase();
-                    if (!string.IsNullOrEmpty(streetAddress))
-                    {
-                        address.AddressLine3 = streetAddress.ToTitleCase();
-                    }
-                }
-                else if (!string.IsNullOrEmpty(streetAddress))
-                {
-                    address.AddressLine2 = streetAddress.ToTitleCase();
-                }
-            }
-            else if (!string.IsNullOrEmpty(buildingName))
+            if (!string.IsNullOrEmpty(buildingName))
             {
                 address.AddressLine1 = buildingName.ToTitleCase();
                 if (!string.IsNullOrEmpty(streetAddress))
                 {
                     address.AddressLine2 = streetAddress.ToTitleCase();
+                    address.AddressLine3 = dpa.Village.ToTitleCase();
                 }
             }
             else if (!string.IsNullOrEmpty(streetAddress))
             {
                 address.AddressLine1 = streetAddress.ToTitleCase();
             }
-            
-            return address;
+
+            return new Location {Address = address};
         }
 
         private static string GetBuildingName(DeliveryPointAddress dpa)
@@ -89,6 +72,12 @@
         {
             return dpa.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.ParentShell.PrimaryCode) ||
                    dpa.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.Residential.PrimaryCode) ||
+                   dpa.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.DualUse.PrimaryCode);
+        }
+
+        public static bool IsCommercial(this DeliveryPointAddress dpa)
+        {
+            return dpa.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.Commercial.PrimaryCode) ||
                    dpa.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.DualUse.PrimaryCode);
         }
     }

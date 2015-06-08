@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Address.Entities
+﻿namespace SFA.Apprenticeships.Application.Services.LocationSearchService.Entities
 {
     using RestSharp.Deserializers;
 

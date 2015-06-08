@@ -13,6 +13,7 @@
 
             return new AddressViewModel()
             {
+                Uprn = domain.Uprn,
                 AddressLine1 = domain.AddressLine1,
                 AddressLine2 = domain.AddressLine2,
                 AddressLine3 = domain.AddressLine3,
@@ -27,6 +28,7 @@
 
             return new Address()
             {
+                Uprn = viewModel.Uprn,
                 AddressLine1 = viewModel.AddressLine1,
                 AddressLine2 = viewModel.AddressLine2,
                 AddressLine3 = viewModel.AddressLine3,

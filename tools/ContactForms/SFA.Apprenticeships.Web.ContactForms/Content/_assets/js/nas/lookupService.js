@@ -8,7 +8,7 @@ $(document).ready(function () {
             $("#Address_AddressLine1").val(selected.attr("data-address-line1"));
             $("#Address_AddressLine2").val(selected.attr("data-address-line2"));
             $("#Address_AddressLine3").val(selected.attr("data-address-line3"));
-            $("#Address_AddressLine4").val(selected.attr("data-address-line4"));
+            $("#Address_City").val(selected.attr("data-city"));
             $("#Address_Postcode").val(selected.attr("data-post-code"));
             //$("#Address_Uprn").val(option.val());
             $("#Address_Latitude").val(selected.attr("data-lat"));
@@ -80,7 +80,8 @@ $(document).ready(function () {
             $findAddressButton.removeClass('disabled').text('Find address');
         };
 
-        var $makeAddressOption = function (address) {
+        var $makeAddressOption = function (location) {
+            var address = location.Address;
             var displayVal = address.AddressLine1;
 
             if (address.AddressLine2 && address.AddressLine2 !== "") {
@@ -94,10 +95,10 @@ $(document).ready(function () {
                 .attr("data-address-line1", _.escape(address.AddressLine1))
                 .attr("data-address-line2", _.escape(address.AddressLine2))
                 .attr("data-address-line3", _.escape(address.AddressLine3))
-                .attr("data-address-line4", _.escape(address.AddressLine4))
+                .attr("data-city", _.escape(address.City))
                 .attr("data-post-code", _.escape(address.Postcode))
-                .attr("data-lat", address.Latitude)
-                .attr("data-lon", address.Longitude);
+                .attr("data-lat", location.Latitude)
+                .attr("data-lon", location.Longitude);
         };
 
         var $makeAddressCountOption = function(count) {
@@ -112,18 +113,18 @@ $(document).ready(function () {
             if (response.HasError) {
                 showErrorMessage("Sorry, there’s a problem with the service. Please try entering your address manually.");
             } else {
-                var addresses = response.Addresses;
-                if (addresses != null && addresses.length) {
+                var locations = response.Locations;
+                if (locations != null && locations.length) {
                     $addressSelect.empty();
-                    $addressSelect.append($makeAddressCountOption(addresses.length));
+                    $addressSelect.append($makeAddressCountOption(locations.length));
 
-                    $.each(addresses, function (i, address) {
-                        $addressSelect.append($makeAddressOption(address));
+                    $.each(locations, function (i, location) {
+                        $addressSelect.append($makeAddressOption(location));
                     });
 
                     $addressList.removeClass("toggle-content").removeAttr('hidden');
 
-                    $ariaFoundText.text(addresses.length + ' addresses have been found, please select from the dropdown');
+                    $ariaFoundText.text(locations.length + ' addresses have been found, please select from the dropdown');
 
                 } else {
                     $addressList.addClass("toggle-content").attr('hidden', true);
