@@ -11,23 +11,41 @@
 
     public class LocationSearchService : ILocationSearchService 
     {
+        private const string DatasetDpa = "DPA";
+        private const string DatasetLpi = "LPI";
+
         public IEnumerable<Location> FindAddress(string postcode)
         {
             var restClient = new RestClient("https://api.ordnancesurvey.co.uk/places/v1/addresses/postcode");
 
             var restRequest = new RestRequest(Method.GET);
 
+            var dataset = DatasetDpa;
+            //var dataset = DatasetLpi;
+
             restRequest.AddParameter("postcode", postcode);
-            restRequest.AddParameter("dataset", "DPA");
+            restRequest.AddParameter("dataset", dataset);
             restRequest.AddParameter("format", "json");
             restRequest.AddParameter("key", BaseAppSettingValues.OrdnanceSurveyPlacesApiKey);
 
             var results = restClient.Execute<OrdnanceSurveyPlacesResponse>(restRequest).Data.Results;
 
-            return results
-                    //.Where(r => r.LocalPropertyIdentifier.IsResidential())
+            if (dataset == DatasetDpa)
+            {
+                return results
                     .Select(r => r.DeliveryPointAddress.ToLocation())
-                    .OrderBy(l => l.Address.AddressLine1);
+                    .OrderBy(a => a.Address.AddressLine1);
+            }
+
+            if (dataset == DatasetLpi)
+            {
+                return results
+                    .Where(r => r.LocalPropertyIdentifier.IsResidential() || r.LocalPropertyIdentifier.IsCommercial())
+                    .Select(r => r.LocalPropertyIdentifier.ToLocation())
+                    .OrderBy(a => a.Address.AddressLine1);
+            }
+
+            return Enumerable.Empty<Location>();
         }
     }
 }
