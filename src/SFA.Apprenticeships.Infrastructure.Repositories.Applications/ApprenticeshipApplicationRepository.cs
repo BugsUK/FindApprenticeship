@@ -145,6 +145,34 @@
             return applicationSummaries;
         }
 
+        public IEnumerable<Guid> GetDraftApplicationsForExpiredVacancies(DateTime vacancyExpiryDate)
+        {
+            _logger.Debug("Calling repository to get draft applications for expired vacancies");
+
+            var applicationIds = Collection
+                .AsQueryable()
+                .Where(each => each.DateApplied == null && each.Vacancy.ClosingDate <= vacancyExpiryDate)
+                .Select(each => each.EntityId);
+
+            _logger.Debug("Called repository to get draft applications for expired vacancies");
+
+            return applicationIds;
+        }
+
+        public IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied)
+        {
+            _logger.Debug("Calling repository to get apprenticeship applications submitted on or before: {0}", dateApplied);
+
+            var applicationIds = Collection
+                .AsQueryable()
+                .Where(each => each.DateApplied != null && each.DateApplied <= dateApplied)
+                .Select(each => each.EntityId);
+
+            _logger.Debug("Called repository to get apprenticeship applications submitted on or before: {0}", dateApplied);
+
+            return applicationIds;
+        }
+
         public ApprenticeshipApplicationDetail Get(Guid id)
         {
             _logger.Debug("Calling repository to get ApprenticeshipApplicationDetail with Id={0}", id);

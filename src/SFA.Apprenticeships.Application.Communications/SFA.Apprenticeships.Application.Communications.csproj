@@ -95,6 +95,17 @@
     </Compile>
     <Compile Include="CommunicationProcessor.cs" />
     <Compile Include="CommunicationRequestFactory.cs" />
+    <Compile Include="Housekeeping\CommunicationHousekeepingRequest.cs" />
+    <Compile Include="Housekeeping\CommunicationTypes.cs" />
+    <Compile Include="Housekeeping\ApplicationStatusAlertCommunicationHousekeeper.cs" />
+    <Compile Include="Housekeeping\IApplicationStatusAlertCommunicationHousekeeper.cs" />
+    <Compile Include="Housekeeping\ICommunicationHousekeeper.cs" />
+    <Compile Include="Housekeeping\ExpiringDraftApplicationAlertCommunicationHousekeeper.cs" />
+    <Compile Include="Housekeeping\IExpiringDraftApplicationAlertCommunicationHousekeeper.cs" />
+    <Compile Include="Housekeeping\IRootCommunicationHousekeeper.cs" />
+    <Compile Include="Housekeeping\SavedSearchAlertCommunicationHousekeeper.cs" />
+    <Compile Include="Housekeeping\ISavedSearchAlertCommunicationHousekeeper.cs" />
+    <Compile Include="Housekeeping\RootCommunicationHousekeeper.cs" />
     <Compile Include="ICommunicationProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\ISendDailyDigestsStrategy.cs" />
@@ -103,6 +114,10 @@
     <Compile Include="Strategies\SendSavedSearchAlertsStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj">
+      <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidates</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

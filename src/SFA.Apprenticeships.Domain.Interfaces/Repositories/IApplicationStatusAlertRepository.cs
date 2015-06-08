@@ -6,12 +6,16 @@
 
     public interface IApplicationStatusAlertRepository
     {
+        ApplicationStatusAlert Get(Guid id);
+
         void Save(ApplicationStatusAlert alert);
 
         void Delete(ApplicationStatusAlert alert);
 
-        List<ApplicationStatusAlert> Get(Guid applicationId);
+        List<ApplicationStatusAlert> GetForApplication(Guid applicationId);
 
         Dictionary<Guid, List<ApplicationStatusAlert>> GetCandidatesDailyDigest();
+
+        IEnumerable<Guid> GetAlertsCreatedOnOrBefore(DateTime dateTime);
     }
 }

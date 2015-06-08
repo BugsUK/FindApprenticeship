@@ -15,6 +15,10 @@
         ApprenticeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false);
 
         IEnumerable<ApprenticeshipApplicationSummary> GetApplicationSummaries(int vacancyId);
+
+        IEnumerable<Guid> GetDraftApplicationsForExpiredVacancies(DateTime vacancyExpiryDate);
+
+        IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
     }
 
     public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {

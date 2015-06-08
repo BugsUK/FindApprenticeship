@@ -15,6 +15,8 @@
         TraineeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false);
 
         IEnumerable<TraineeshipApplicationSummary> GetApplicationSummaries(int vacancyId);
+
+        IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
     }
 
     public interface ITraineeshipApplicationWriteRepository : IWriteRepository<TraineeshipApplicationDetail>

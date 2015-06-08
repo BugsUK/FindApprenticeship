@@ -10,5 +10,7 @@
         public const string CandidateUserMakeDormant = "CandidateUser.MakeDormant";
         public const string UserSoftDelete = "User.SoftDelete";
         public const string HardDeleteCandidateUser = "CandidateUser.HardDelete";
+        public const string HardDeleteApprenticeshipApplication = "ApprenticeshipApplication.HardDelete";
+        public const string HardDeleteTraineeshipApplication = "TraineeshipApplication.HardDelete";
     }
 }

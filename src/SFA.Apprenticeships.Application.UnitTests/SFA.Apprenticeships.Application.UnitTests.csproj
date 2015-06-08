@@ -148,11 +148,16 @@
     <Compile Include="Candidate\Strategies\VerifyMobileStrategy\VerifyMobileStrategyTests.cs" />
     <Compile Include="CodeGeneratorTests.cs" />
     <Compile Include="Communications\CommunicationRequestFactoryTests.cs" />
+    <Compile Include="Communications\Housekeeping\RootCommunicationHousekeeperTests.cs" />
+    <Compile Include="Communications\Housekeeping\SavedSearchAlertCommunicationHousekeeperTests.cs" />
+    <Compile Include="Communications\Housekeeping\ExpiringDraftApplicationAlertCommunicationHousekeeperTests.cs" />
+    <Compile Include="Communications\Housekeeping\ApplicationStatusAlertCommunicationHousekeeperTests.cs" />
     <Compile Include="Communications\SavedSearchAlertCommunicationTests.cs" />
     <Compile Include="Communications\ApplicationStatusAlertCommunicationTests.cs" />
     <Compile Include="Builders\SendSavedSearchAlertsStrategyBuilder.cs" />
     <Compile Include="Builders\SendDailyDigestsStrategyBuilder.cs" />
     <Compile Include="Communications\ExpiringDraftCommunicationTests.cs" />
+    <Compile Include="Applications\Housekeeping\SubmittedApplicationHousekeeperTests.cs" />
     <Compile Include="Processors\CandidateProcesorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Candidate\Strategies\AuthenticateCandidateStrategyTests\AuthenticateCandidateStrategyTests.cs" />
@@ -163,6 +168,10 @@
     <Compile Include="Services\Location\LocationSearchServiceTests.cs" />
     <Compile Include="SiteMap\SiteMapVacancyHelperTests.cs" />
     <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyTests.cs" />
+    <Compile Include="Applications\Housekeeping\RootApplicationHousekeeperTests.cs" />
+    <Compile Include="Applications\Housekeeping\DraftApplicationForExpiredVacancyHousekeeperTests.cs" />
+    <Compile Include="Strategies\AuditApplicationDetailStrategyTests.cs" />
+    <Compile Include="Strategies\HardDeleteApplicationStrategyTests.cs" />
     <Compile Include="UserAccount\SendAccountUnlockTests.cs" />
     <Compile Include="UserAccount\UnlockAccountStrategyTests.cs" />
     <Compile Include="Vacancies\Extensions\ApprenticeshipSummaryExtensionsTests.cs" />

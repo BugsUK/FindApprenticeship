@@ -11,6 +11,7 @@
     using Entities;
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
 
     public class ApplicationStatusAlertRepository : CommunicationRepository<ApplicationStatusAlert>, IApplicationStatusAlertRepository
     {
@@ -22,6 +23,18 @@
         {
             _mapper = mapper;
             _logger = logger;
+        }
+
+        public ApplicationStatusAlert Get(Guid id)
+        {
+            _logger.Debug("Calling repository to get application status alert with Id={0}", id);
+
+            var mongoEntity = Collection.FindOneById(id);
+            var message = mongoEntity == null ? "Found no application status alert with Id={0}" : "Found application status alert with Id={0}";
+
+            _logger.Debug(message, id);
+
+            return mongoEntity;
         }
 
         public void Save(ApplicationStatusAlert alert)
@@ -46,7 +59,7 @@
             _logger.Debug("Deleted application status alert with Id={0}", alert.EntityId);
         }
 
-        public List<ApplicationStatusAlert> Get(Guid applicationId)
+        public List<ApplicationStatusAlert> GetForApplication(Guid applicationId)
         {
             _logger.Debug("Calling repository to get all application status alerts for ApplicationId={0}", applicationId);
 
@@ -69,6 +82,20 @@
             _logger.Debug("Found application status alerts for {0} candidates", candidatesDailyDigest.Count);
 
             return candidatesDailyDigest;
+        }
+
+        public IEnumerable<Guid> GetAlertsCreatedOnOrBefore(DateTime dateTime)
+        {
+            _logger.Debug("Calling repository to get all application status alerts created on or before={0}", dateTime);
+
+            var alertIds = Collection
+                .AsQueryable()
+                .Where(each => each.DateCreated <= dateTime)
+                .Select(each => each.EntityId);
+
+            _logger.Debug("Called repository to get all application status alerts created on or before={0}", dateTime);
+
+            return alertIds;
         }
     }
 }

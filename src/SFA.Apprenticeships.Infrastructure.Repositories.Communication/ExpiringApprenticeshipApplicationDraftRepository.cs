@@ -11,6 +11,7 @@
     using Entities;
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
 
     public class ExpiringApprenticeshipApplicationDraftRepository : CommunicationRepository<ExpiringApprenticeshipApplicationDraft>, IExpiringApprenticeshipApplicationDraftRepository
     {
@@ -22,6 +23,18 @@
         {
             _mapper = mapper;
             _logger = logger;
+        }
+
+        public ExpiringApprenticeshipApplicationDraft Get(Guid id)
+        {
+            _logger.Debug("Calling repository to get expiring apprenticeship application draft alert with Id={0}", id);
+
+            var mongoEntity = Collection.FindOneById(id);
+            var message = mongoEntity == null ? "Found no expiring apprenticeship application draft alert with Id={0}" : "Found expiring apprenticeship application draft alert with Id={0}";
+
+            _logger.Debug(message, id);
+
+            return mongoEntity;
         }
 
         public void Save(ExpiringApprenticeshipApplicationDraft expiringDraft)
@@ -69,6 +82,20 @@
             _logger.Debug("Found expiring drafts for {0} candidates", candidatesDailyDigest.Count);
 
             return candidatesDailyDigest;
+        }
+
+        public IEnumerable<Guid> GetAlertsCreatedOnOrBefore(DateTime dateTime)
+        {
+            _logger.Debug("Calling repository to get all expiring apprenticeship application draft alerts created on or before={0}", dateTime);
+
+            var alertIds = Collection
+                .AsQueryable()
+                .Where(each => each.DateCreated <= dateTime)
+                .Select(each => each.EntityId);
+
+            _logger.Debug("Called repository to get all expiring apprenticeship application draft alerts created on or before={0}", dateTime);
+
+            return alertIds;
         }
     }
 }

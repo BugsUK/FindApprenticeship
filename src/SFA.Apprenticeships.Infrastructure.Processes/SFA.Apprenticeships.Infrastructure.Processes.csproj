@@ -181,9 +181,11 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\CommunicationHousekeepingRequestConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusChangedConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusSummaryConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusSummaryPageConsumerAsync.cs" />
+    <Compile Include="Applications\ApplicationHousekeepingRequestConsumerAsync.cs" />
     <Compile Include="Candidates\CandidateAccountHousekeepingConsumerAsync.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesConsumerAsync.cs" />
     <Compile Include="Candidates\SaveCandidateRequestConsumerAsync.cs" />

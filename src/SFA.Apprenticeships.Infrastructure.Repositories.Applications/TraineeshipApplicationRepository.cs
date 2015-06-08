@@ -127,6 +127,20 @@
             return applicationSummaries;
         }
 
+        public IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied)
+        {
+            _logger.Debug("Calling repository to get traineeship applications submitted on or before: {0}", dateApplied);
+
+            var applicationIds = Collection
+                .AsQueryable()
+                .Where(each => each.DateApplied != null && each.DateApplied <= dateApplied)
+                .Select(each => each.EntityId);
+
+            _logger.Debug("Called repository to get traineeship applications submitted on or before: {0}", dateApplied);
+
+            return applicationIds;
+        }
+
         public TraineeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false)
         {
             _logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);

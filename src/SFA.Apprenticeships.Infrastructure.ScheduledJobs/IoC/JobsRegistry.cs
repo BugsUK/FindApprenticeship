@@ -1,9 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.IoC
 {
     using Application.Applications;
+    using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
     using Application.Candidates;
     using Application.Communications;
+    using Application.Communications.Housekeeping;
     using Application.Communications.Strategies;
     using Application.Interfaces.Locations;
     using Application.Interfaces.ReferenceData;
@@ -47,8 +49,18 @@
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
 
-            //Housekeeping
+            //Candidate Housekeeping
             For<ICandidateProcessor>().Use<CandidateProcessor>();
+            
+            //Application Housekeeping
+            For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();
+            For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();
+            For<ISubmittedApplicationHousekeeper>().Use<SubmittedApplicationHousekeeper>();
+
+            For<IRootCommunicationHousekeeper>().Use<RootCommunicationHousekeeper>();
+            For<IApplicationStatusAlertCommunicationHousekeeper>().Use<ApplicationStatusAlertCommunicationHousekeeper>();
+            For<IExpiringDraftApplicationAlertCommunicationHousekeeper>().Use<ExpiringDraftApplicationAlertCommunicationHousekeeper>();
+            For<ISavedSearchAlertCommunicationHousekeeper>().Use<SavedSearchAlertCommunicationHousekeeper>();
 
             For<HousekeepingControlQueueConsumer>().Use<HousekeepingControlQueueConsumer>();
         }

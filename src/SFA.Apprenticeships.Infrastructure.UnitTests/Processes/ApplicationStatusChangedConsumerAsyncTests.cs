@@ -45,7 +45,7 @@
             var statusAlertRepository = new Mock<IApplicationStatusAlertRepository>();
             ApplicationStatusAlert applicationStatusAlert = null;
             statusAlertRepository.Setup(r => r.Save(It.IsAny<ApplicationStatusAlert>())).Callback<ApplicationStatusAlert>(asa => { applicationStatusAlert = asa; });
-            statusAlertRepository.Setup(r => r.Get(It.IsAny<Guid>())).Returns(new List<ApplicationStatusAlert>());
+            statusAlertRepository.Setup(r => r.GetForApplication(It.IsAny<Guid>())).Returns(new List<ApplicationStatusAlert>());
             var consumer = new ApplicationStatusChangedConsumerAsyncBuilder().With(applicationReadRepository).With(statusAlertRepository).Build();
             var applicationStatusChanged = new Fixture().Build<ApplicationStatusChanged>()
                 .With(asc => asc.LegacyApplicationId, legacyApplicationId)
@@ -88,7 +88,7 @@
                 .With(asa => asa.SentDateTime, null)
                 .Create();
             var statusAlertRepository = new Mock<IApplicationStatusAlertRepository>();
-            statusAlertRepository.Setup(r => r.Get(applicationId)).Returns(new List<ApplicationStatusAlert> {existingApplicationStatusAlert});
+            statusAlertRepository.Setup(r => r.GetForApplication(applicationId)).Returns(new List<ApplicationStatusAlert> {existingApplicationStatusAlert});
             ApplicationStatusAlert applicationStatusAlert = null;
             statusAlertRepository.Setup(r => r.Save(It.IsAny<ApplicationStatusAlert>())).Callback<ApplicationStatusAlert>(asa => { applicationStatusAlert = asa; });
             var consumer = new ApplicationStatusChangedConsumerAsyncBuilder().With(applicationReadRepository).With(statusAlertRepository).Build();
@@ -125,7 +125,7 @@
                 .With(asa => asa.Status, ApplicationStatuses.Successful)
                 .Create();
             var statusAlertRepository = new Mock<IApplicationStatusAlertRepository>();
-            statusAlertRepository.Setup(r => r.Get(applicationId)).Returns(new List<ApplicationStatusAlert> {existingApplicationStatusAlert});
+            statusAlertRepository.Setup(r => r.GetForApplication(applicationId)).Returns(new List<ApplicationStatusAlert> {existingApplicationStatusAlert});
             ApplicationStatusAlert applicationStatusAlert = null;
             statusAlertRepository.Setup(r => r.Save(It.IsAny<ApplicationStatusAlert>())).Callback<ApplicationStatusAlert>(asa => { applicationStatusAlert = asa; });
             var consumer = new ApplicationStatusChangedConsumerAsyncBuilder().With(applicationReadRepository).With(statusAlertRepository).Build();

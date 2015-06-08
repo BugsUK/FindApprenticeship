@@ -6,6 +6,8 @@
 
     public interface IExpiringApprenticeshipApplicationDraftRepository
     {
+        ExpiringApprenticeshipApplicationDraft Get(Guid id);
+
         void Save(ExpiringApprenticeshipApplicationDraft expiringDraft);
 
         void Delete(ExpiringApprenticeshipApplicationDraft expiringDraft);
@@ -13,5 +15,7 @@
         List<ExpiringApprenticeshipApplicationDraft> GetExpiringApplications(int vacancyId);
 
         Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>> GetCandidatesDailyDigest();
+
+        IEnumerable<Guid> GetAlertsCreatedOnOrBefore(DateTime dateTime);
     }
 }

@@ -42,7 +42,7 @@
                     return;
                 }
 
-                var applicationStatusAlerts = _applicationStatusAlertRepository.Get(application.EntityId);
+                var applicationStatusAlerts = _applicationStatusAlertRepository.GetForApplication(application.EntityId);
                 var applicationStatusAlert = applicationStatusAlerts.FirstOrDefault(asa => asa.BatchId == null);
                 if (applicationStatusAlert == null)
                 {

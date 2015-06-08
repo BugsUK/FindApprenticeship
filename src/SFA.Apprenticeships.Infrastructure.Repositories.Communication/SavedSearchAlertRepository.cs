@@ -26,6 +26,18 @@
             _logger = logger;
         }
 
+        public SavedSearchAlert Get(Guid id)
+        {
+            _logger.Debug("Calling repository to get saved search alert with Id={0}", id);
+
+            var mongoEntity = Collection.FindOneById(id);
+            var message = mongoEntity == null ? "Found no saved search alert with Id={0}" : "Found saved search alert with Id={0}";
+
+            _logger.Debug(message, id);
+
+            return mongoEntity;
+        }
+
         public SavedSearchAlert GetUnsentSavedSearchAlert(SavedSearch savedSearch)
         {
             _logger.Debug("Calling repository to get unsent saved search alert for saved search Id={0}",
@@ -84,6 +96,20 @@
             _logger.Debug("Found saved search alerts for {0} candidates", candidatesSavedSearchAlerts.Count);
 
             return candidatesSavedSearchAlerts;
+        }
+
+        public IEnumerable<Guid> GetAlertsCreatedOnOrBefore(DateTime dateTime)
+        {
+            _logger.Debug("Calling repository to get all saved search alerts created on or before={0}", dateTime);
+
+            var alertIds = Collection
+                .AsQueryable()
+                .Where(each => each.DateCreated <= dateTime)
+                .Select(each => each.EntityId);
+
+            _logger.Debug("Called repository to get all saved search alerts created on or before={0}", dateTime);
+
+            return alertIds;
         }
     }
 }
