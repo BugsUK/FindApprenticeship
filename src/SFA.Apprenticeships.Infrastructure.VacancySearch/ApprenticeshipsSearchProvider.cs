@@ -165,6 +165,18 @@
                         query = BuildContainer(query, exactMatchClause);
                     }
 
+                    if (_searchConfiguration.ProviderFactors.Enabled
+                        && !string.IsNullOrWhiteSpace(parameters.Keywords)
+                        && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Provider))
+                    {
+                        var exactMatchClause = q.Match(m =>
+                        {
+                            m.OnField(f => f.ProviderName).Query(parameters.Keywords);
+                            BuildFieldQuery(m, _searchConfiguration.ProviderFactors);
+                        });
+                        query = BuildContainer(query, exactMatchClause);
+                    }
+
                     if (!string.IsNullOrWhiteSpace(parameters.CategoryCode))
                     {
                         var querySector = q.Match(m => m.OnField(f => f.CategoryCode).Query(parameters.CategoryCode));

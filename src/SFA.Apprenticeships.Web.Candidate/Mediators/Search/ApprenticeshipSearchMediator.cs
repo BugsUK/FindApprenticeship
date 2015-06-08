@@ -124,6 +124,7 @@
                 new { FieldName = ApprenticeshipSearchField.JobTitle.ToString(), DisplayName = "Job title"},
                 new { FieldName = ApprenticeshipSearchField.Description.ToString(), DisplayName = "Description"},
                 new { FieldName = ApprenticeshipSearchField.Employer.ToString(), DisplayName = "Employer"},
+                new { FieldName = ApprenticeshipSearchField.Provider.ToString(), DisplayName = "Training Provider"},
                 new { FieldName = ApprenticeshipSearchField.ReferenceNumber.ToString(), DisplayName = "Ref. number"},
             };
 

@@ -35,6 +35,9 @@
                 .ForMember(dest => dest.EmployerName,
                     opt => opt.ResolveUsing<LegacyVacancySummaryEmployerNameResolver>().FromMember(src => src))
 
+                .ForMember(dest => dest.ProviderName,
+                    opt => opt.MapFrom(src => src.TrainingProviderName))
+
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.ShortDescription))
 
@@ -93,6 +96,9 @@
 
                 .ForMember(dest => dest.EmployerName,
                     opt => opt.ResolveUsing<LegacyVacancySummaryEmployerNameResolver>().FromMember(src => src))
+
+                .ForMember(dest => dest.ProviderName,
+                    opt => opt.MapFrom(src => src.TrainingProviderName))
 
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.ShortDescription))

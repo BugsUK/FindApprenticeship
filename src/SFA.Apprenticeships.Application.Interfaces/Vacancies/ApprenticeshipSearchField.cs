@@ -5,6 +5,7 @@
         JobTitle,
         Description,
         Employer,
+        Provider,
         ReferenceNumber
     }
 }

@@ -14,6 +14,8 @@
 
         string EmployerName { get; set; }
 
+        string ProviderName { get; set; }
+
         string Description { get; set; }
 
         GeoPoint Location { get; set; }

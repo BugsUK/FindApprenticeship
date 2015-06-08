@@ -24,6 +24,9 @@
         [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "snowballStopwordsBase")]
         public string EmployerName { get; set; }
 
+        [ElasticProperty(Index = FieldIndexOption.Analyzed, Analyzer = "stopwordsBase")]
+        public string ProviderName { get; set; }
+
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string Description { get; set; }
 

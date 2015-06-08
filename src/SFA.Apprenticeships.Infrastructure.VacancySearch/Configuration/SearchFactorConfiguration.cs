@@ -8,6 +8,8 @@
 
         public SearchTermFactors EmployerFactors { get; set; }
 
+        public SearchTermFactors ProviderFactors { get; set; }
+
         public SearchTermFactors DescriptionFactors { get; set; }
     }
 
