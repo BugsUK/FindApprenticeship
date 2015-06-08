@@ -279,29 +279,52 @@ $(function() {
 
   //----------Tabbed content
 
-  $('.tabbed-tab').not('.no-js').attr('href', "#");
+    $('.tabbed-tab').not('.no-js').attr('href', "#");
 
-  $('.tabbed-tab').not('.no-js').on('click', function () {
-      var $this = $(this),
-          $tabId = $this.attr('tab');
+    $('.tabbed-tab').not('.no-js').on('click', function() {
+        tabSelected($(this), true);
+        return false;
+    });
 
-      $this.addClass('active');
+    $(window).on("popstate", function(e) {
+        if (e.originalEvent.state !== null && e.originalEvent.state.tab) {
+            tabSelected($('[tab="' + e.originalEvent.state.tab + '"]'), false, false);
+        }
+    });    
 
-      $('.tabbed-tab').not($('[tab="' + $tabId + '"]')).removeClass('active');
+    if (window.location.hash != "") {
+        tabSelected($('[tab="' + window.location.hash + '"]'), false, false);
+    } else {
+        tabSelected($(".tabbed-tab").first(), false, true);
+    }
 
-      if ($($tabId).length) {
-          $($tabId).show();
+    function tabSelected(tab, pushState, replaceState) {
 
-          $('.tabbed-content').not($tabId).hide();
-      } else {
-          var $tabClass = '.' + $tabId.substr(1);
+        if (tab.hasClass("no-js")){ return; }
 
-          $('.tabbed-element' + $tabClass).show();
-          $('.tabbed-element').not($tabClass).hide();
-      }
+        var tabId = tab.attr('tab');
 
-      return false;
-  });
+        tab.addClass('active');
+        $('.tabbed-tab').not($('[tab="' + tabId + '"]')).removeClass('active');
+
+        if ($(tabId).length) {
+            $(tabId).show();
+            $('.tabbed-content').not(tabId).hide();
+        } else {
+            var tabClass = '.' + tabId.substr(1);
+            $('.tabbed-element' + tabClass).show();
+            $('.tabbed-element').not(tabClass).hide();
+        }
+
+        //Now do history.
+        if (Modernizr.history && pushState) {
+            history.pushState({ tab: tabId }, '', window.location.pathname + tabId);
+        }
+
+        if (Modernizr.history && replaceState) {
+            history.replaceState({ tab: tabId }, '', window.location.pathname);
+        }
+    }
 
   //------- Select to inject content to text input
 

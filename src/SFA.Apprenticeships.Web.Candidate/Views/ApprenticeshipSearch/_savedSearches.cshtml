@@ -6,7 +6,7 @@
     var divClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches ? "active" : "";
 }
 
-<div id="saved-searches" class="tabbed-element tab3 @divClass">
+<div id="saved-searches" class="tabbed-element savedsearchtab @divClass">
     @if (Model.SavedSearches != null && Model.SavedSearches.Any())
     {
 

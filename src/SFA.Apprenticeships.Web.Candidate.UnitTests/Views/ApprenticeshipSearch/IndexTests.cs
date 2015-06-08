@@ -28,35 +28,35 @@
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
+            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
 
             view.GetElementbyId("Location").Should().NotBeNull();
             view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
+            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
 
             view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
 
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
+            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
 
             //Shares parent with loc-within here.
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
 
             view.GetElementbyId("search-button").Should().NotBeNull();
-            view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
+            view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
             view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" active").Should().BeTrue();
 
             view.GetElementbyId("browse-button").Should().NotBeNull();
-            view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
+            view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
             view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" active").Should().BeFalse();
 
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
             view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
         }
 
         [Test]
@@ -68,35 +68,35 @@
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
+            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
 
             view.GetElementbyId("Location").Should().NotBeNull();
             view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
+            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
 
             view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
 
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
+            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
 
             //Shares parent with loc-within here.
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
 
             view.GetElementbyId("search-button").Should().NotBeNull();
-            view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
+            view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
             view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" active").Should().BeFalse();
 
             view.GetElementbyId("browse-button").Should().NotBeNull();
-            view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
+            view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
             view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" active").Should().BeTrue();
 
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
             view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeTrue();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeTrue();
         }
 
         /// <summary>
@@ -113,35 +113,35 @@
             var view = index.RenderAsHtml(searchViewModel);
 
             view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
+            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("Keywords").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
 
             view.GetElementbyId("Location").Should().NotBeNull();
             view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
+            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("Location").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
 
             view.GetElementbyId("saved-searches-tab-control").Should().BeNull();
 
             view.GetElementbyId("loc-within").Should().NotBeNull();
             view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
-            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
+            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
+            view.GetElementbyId("loc-within").ParentNode.ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
 
             //Shares parent with loc-within here.
             view.GetElementbyId("apprenticeship-level").Should().NotBeNull();
 
             view.GetElementbyId("search-button").Should().NotBeNull();
-            view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" tab1").Should().BeTrue();
+            view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" searchtab").Should().BeTrue();
             view.GetElementbyId("search-button").Attributes["class"].Value.Contains(" active").Should().BeFalse();
 
             view.GetElementbyId("browse-button").Should().NotBeNull();
-            view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
+            view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
             view.GetElementbyId("browse-button").Attributes["class"].Value.Contains(" active").Should().BeFalse();
 
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
             view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeTrue();
-            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab2").Should().BeFalse();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" browsetab").Should().BeFalse();
         }
 
         [Test]
@@ -182,12 +182,12 @@
 
             var button = view.GetElementbyId("run-saved-search-button");
 
-            button.Attributes["class"].Value.Should().Contain(" tab3");
+            button.Attributes["class"].Value.Should().Contain(" savedsearchtab");
             button.Attributes["class"].Value.Should().Contain(" active");
 
             view.GetElementbyId("reset-search-options-link").Should().NotBeNull();
             view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" active").Should().BeFalse();
-            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" tab3").Should().BeFalse();
+            view.GetElementbyId("reset-search-options-link").ParentNode.Attributes["class"].Value.Contains(" savedsearchtab").Should().BeFalse();
             view.GetElementbyId("saved-searches-settings-link").Should().NotBeNull();
         }
 

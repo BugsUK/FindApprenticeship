@@ -24,12 +24,12 @@
 
                         var anyCategories = Model.Categories != null && Model.Categories.Any();
                         var categoriesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.Category && anyCategories ? " active" : "";
-                        var categoriesTabClass = anyCategories ? " tab2" : "";
+                        var categoriesTabClass = anyCategories ? " browsetab" : "";
 
                         var showSavedSearches = Request.IsAuthenticated;
                         var anySavedSearches = Model.SavedSearches != null && Model.SavedSearches.Any();
                         var savedSearchesElementControlClass = Model.SearchMode == ApprenticeshipSearchMode.SavedSearches && showSavedSearches ? " active" : "";
-                        var savedSearchesTabClass = showSavedSearches ? " tab3" : "";
+                        var savedSearchesTabClass = showSavedSearches ? " savedsearchtab" : "";
 
                         string elementControlClass = string.Empty;
 
@@ -46,12 +46,12 @@
                         }
                     }
 
-                    @Html.RouteLink("Search", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywords-tab-control", @class = "tabbed-tab" + keywordTabControlClass, tab = "#tab1" })
-                    @Html.RouteLink("Browse", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categories-tab-control", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#tab2" })
+                    @Html.RouteLink("Search", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Keyword }, new { @id = "keywords-tab-control", @class = "tabbed-tab" + keywordTabControlClass, tab = "#searchtab" })
+                    @Html.RouteLink("Browse", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category }, new { @id = "categories-tab-control", @class = "tabbed-tab" + categoriesTabControlClass, tab = "#browsetab" })
                     
                     @if (showSavedSearches)
                     {
-                        @Html.RouteLink("Saved searches", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.SavedSearches }, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabControlClass, tab = "#tab3" })
+                        @Html.RouteLink("Saved searches", CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.SavedSearches }, new { @id = "saved-searches-tab-control", @class = "tabbed-tab" + savedSearchesTabControlClass, tab = "#savedsearchtab" })
                     }
                 </nav>
 
@@ -61,13 +61,13 @@
                     @Html.Partial("_savedSearches", Model)
                     
                     @Html.DropDownListFor(m => m.SearchField, Model.SearchFields, new { @class = "refineSearchOption hidden input-withlink__select all-select" })
-                    @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element tab1" + keywordTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
+                    @Html.FormTextFor(m => m.Keywords, controlHtmlAttributes: new { aria_describedby = "keywordsHint" }, containerHtmlAttributes: new { @class = "tabbed-element searchtab" + keywordTabControlClass }, labelHtmlAttributes: new { id = "keyword-label" }, hintHtmlAttributes: new { id = "keyword-hint" })
 
                     <p class="visuallyhidden" id="keywordsHint">Try words that describe the type of apprenticeship you want, for example “carpentry” or “mechanics”.</p>
                     
-                    @Html.FormTextFor(m => m.Location, containerHtmlAttributes: new { @class = "tabbed-element tab1 " + keywordTabControlClass + categoriesTabClass + elementControlClass }, hintHtmlAttributes: new { id = "geoLocateContainer" })
+                    @Html.FormTextFor(m => m.Location, containerHtmlAttributes: new { @class = "tabbed-element searchtab " + keywordTabControlClass + categoriesTabClass + elementControlClass }, hintHtmlAttributes: new { id = "geoLocateContainer" })
 
-                    <div class="inline tabbed-element tab1 @keywordTabControlClass @categoriesTabClass @elementControlClass">
+                    <div class="inline tabbed-element searchtab @keywordTabControlClass @categoriesTabClass @elementControlClass">
                         <div class="form-group">
                             <label for="loc-within" class="form-label">Within</label>
                             @Html.DropDownListFor(m => m.WithinDistance, Model.Distances, new { @id = "loc-within", @name = "WithinDistance" })
@@ -79,7 +79,7 @@
                     </div>
 
                     <div class="form-group form-group-compound">
-                        <button class="button tabbed-element tab1 @keywordTabControlClass" id="search-button">Search</button>
+                        <button class="button tabbed-element searchtab @keywordTabControlClass" id="search-button">Search</button>
                         <button class="button tabbed-element @categoriesTabClass @categoriesElementControlClass" id="browse-button">Browse</button>
                         
                         @if (anySavedSearches)
@@ -97,7 +97,7 @@
                         </p>
                     }
 
-                    <div class="tabbed-element disp-block form-group tab1 @keywordTabControlClass @categoriesTabClass @categoriesTabControlClass">
+                    <div class="tabbed-element disp-block form-group searchtab @keywordTabControlClass @categoriesTabClass @categoriesTabControlClass">
                         @Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, new { reset = true }, new { @id = "reset-search-options-link" })
                     </div>
 
