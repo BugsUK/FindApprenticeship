@@ -1065,7 +1065,7 @@ WriteLiteral("    ");
 
             
             #line 249 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-Write(Scripts.Render("~/bundles/nas/searchTour"));
+Write(Scripts.Render("~/bundles/nas/search"));
 
             
             #line default
