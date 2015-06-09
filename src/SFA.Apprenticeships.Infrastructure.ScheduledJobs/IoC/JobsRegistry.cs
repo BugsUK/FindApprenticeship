@@ -14,7 +14,9 @@
     using Application.Vacancies;
     using Consumers;
     using Domain.Interfaces.Mapping;
+    using Domain.Interfaces.Repositories;
     using Processes.Vacancies;
+    using Repositories.Audit;
     using StructureMap.Configuration.DSL;
     using VacancyEtlMapper = Mappers.VacancyEtlMapper;
 
@@ -56,6 +58,9 @@
             For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();
             For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();
             For<ISubmittedApplicationHousekeeper>().Use<SubmittedApplicationHousekeeper>();
+            For<IHardDeleteApplicationStrategy>().Use<IHardDeleteApplicationStrategy>();
+            For<IAuditApplicationDetailStrategy>().Use<AuditApplicationDetailStrategy>();
+            For<IAuditRepository>().Use<AuditRepository>();
 
             For<IRootCommunicationHousekeeper>().Use<RootCommunicationHousekeeper>();
             For<IApplicationStatusAlertCommunicationHousekeeper>().Use<ApplicationStatusAlertCommunicationHousekeeper>();
