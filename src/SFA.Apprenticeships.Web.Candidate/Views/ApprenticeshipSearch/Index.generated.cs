@@ -1024,16 +1024,18 @@ WriteLiteral("\',\r\n            latlonhash: \'#");
 WriteLiteral(@"'
         });
 
-        $(""#keywords-tab-control"").click(function () {
-            $(""#SearchMode"").val(""Keyword"");
-        });
-
-        $(""#categories-tab-control"").click(function () {
-            $(""#SearchMode"").val(""Category"");
-        });
-
-        $(""#saved-searches-tab-control"").click(function () {
-            $(""#SearchMode"").val(""SavedSearches"");
+        $(window).on(""tabchanged"", function(event, data) {
+            switch (data.tab) {
+                case ""#searchtab"":
+                    $(""#SearchMode"").val(""Keyword"");
+                    break;
+                case ""#browsetab"":
+                    $(""#SearchMode"").val(""Category"");
+                    break;
+                case ""savedsearchtab"":
+                    $(""#SearchMode"").val(""SavedSearches"");
+                    break;
+            }            
         });
     </script>
 
@@ -1042,7 +1044,7 @@ WriteLiteral(@"'
 WriteLiteral("    ");
 
             
-            #line 246 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 248 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/geoLocater"));
 
             
@@ -1053,7 +1055,7 @@ WriteLiteral("\r\n                                                \r\n");
 WriteLiteral("    ");
 
             
-            #line 248 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 250 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
@@ -1064,7 +1066,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 249 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 251 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/search"));
 
             
@@ -1073,13 +1075,13 @@ Write(Scripts.Render("~/bundles/nas/search"));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 251 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 253 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 251 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 253 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
      if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
     {
 
@@ -1104,7 +1106,7 @@ WriteLiteral(@"        <script>
 ");
 
             
-            #line 268 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 270 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
         
     }
 

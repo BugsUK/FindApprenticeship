@@ -230,16 +230,18 @@
             latlonhash: '#@(Html.IdFor(m => m.Hash))'
         });
 
-        $("#keywords-tab-control").click(function () {
-            $("#SearchMode").val("Keyword");
-        });
-
-        $("#categories-tab-control").click(function () {
-            $("#SearchMode").val("Category");
-        });
-
-        $("#saved-searches-tab-control").click(function () {
-            $("#SearchMode").val("SavedSearches");
+        $(window).on("tabchanged", function(event, data) {
+            switch (data.tab) {
+                case "#searchtab":
+                    $("#SearchMode").val("Keyword");
+                    break;
+                case "#browsetab":
+                    $("#SearchMode").val("Category");
+                    break;
+                case "savedsearchtab":
+                    $("#SearchMode").val("SavedSearches");
+                    break;
+            }            
         });
     </script>
 

@@ -41,4 +41,6 @@ function tabSelected(tab, pushState, replaceState) {
     if (Modernizr.history && replaceState) {
         history.replaceState({ tab: tabId }, '', window.location.pathname);
     }
+
+    $(window).trigger("tabchanged", { tab: tabId });
 }
