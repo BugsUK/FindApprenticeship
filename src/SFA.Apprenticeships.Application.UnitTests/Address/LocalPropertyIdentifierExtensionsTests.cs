@@ -26,6 +26,32 @@
         }
 
         [Test]
+        public void Ampersand()
+        {
+            var lpi = new LocalPropertyIdentifier
+            {
+                Uprn = "22046079",
+                SubBuildingNumber = 28,
+                BuildingName = "OSPREY HOUSE",
+                Street = "SILLWOOD PLACE",
+                TownOrCity = "BRIGHTON",
+                County = "BRIGHTON & HOVE",
+                Postcode = "BN1 2ND"
+            };
+
+            var address = lpi.ToAddress();
+
+            address.Should().NotBeNull();
+
+            address.AddressLine1.Should().Be("28, Osprey House");
+            address.AddressLine2.Should().Be("Sillwood Place");
+            address.AddressLine3.Should().Be("Brighton");
+            address.AddressLine4.Should().Be("Brighton And Hove");
+            address.Postcode.Should().Be("BN1 2ND");
+            address.Uprn.Should().Be("22046079");
+        }
+
+        [Test]
         public void HouseNumber()
         {
             var lpi = new LocalPropertyIdentifier
@@ -34,7 +60,7 @@
                 BuildingNumber = 30,
                 Street = "WEST GARDENS",
                 TownOrCity = "EPSOM",
-                County = "Surrey",
+                County = "SURREY",
                 Postcode = "KT17 1NE"
             };
 

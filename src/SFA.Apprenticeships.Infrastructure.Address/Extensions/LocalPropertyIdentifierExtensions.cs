@@ -89,6 +89,11 @@
         {
             if (string.IsNullOrEmpty(value)) return value;
 
+            if (value.Contains("&"))
+            {
+                value = value.Replace("&", "AND");
+            }
+
             return UkTextInfo.ToTitleCase(UkTextInfo.ToLower(value));
         }
 
