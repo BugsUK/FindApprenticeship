@@ -105,17 +105,17 @@
         [TestCase(1, true)]
         [TestCase(-1, false)]
         public void ShouldHandleSavedSearchAlertDueForHousekeeping(
-            int sentDateTimeOffsetHours, bool shouldHandle)
+            int dateCreatedOffsetHours, bool shouldHandle)
         {
             // Arrange.
             var communicationId = Guid.NewGuid();
-            var sentDateTime = GetHousekeepingDateTime(_housekeepingConfiguration)
-                .AddHours(-sentDateTimeOffsetHours);
+            var dateCreated = GetHousekeepingDateTime(_housekeepingConfiguration)
+                .AddHours(-dateCreatedOffsetHours);
 
             var expiringApprenticeshipApplicationDraft = new Fixture()
                 .Build<ExpiringApprenticeshipApplicationDraft>()
                 .With(fixture => fixture.EntityId, communicationId)
-                .With(fixture => fixture.SentDateTime, sentDateTime)
+                .With(fixture => fixture.DateCreated, dateCreated)
                 .Create();
 
             _mockExpiringApprenticeshipApplicationDraftRepository
@@ -172,13 +172,14 @@
         [Test]
         public void ShouldCallSuccesor()
         {
-            // Act.
+            // Arrange.
             var request = new CommunicationHousekeepingRequest
             {
                 CommunicationId = Guid.NewGuid(),
                 CommunicationType = CommunicationTypes.ApplicationStatusAlert
             };
 
+            // Act.
             _housekeeper.Handle(request);
 
             // Assert.

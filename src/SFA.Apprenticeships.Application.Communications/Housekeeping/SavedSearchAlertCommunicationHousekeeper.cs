@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
                 var housekeepingDateTime = GetHousekeepingDateTime();
                 var savedSearchAlert = _savedSearchAlertRepository.Get(request.CommunicationId);
 
-                if (savedSearchAlert != null && savedSearchAlert.SentDateTime <= housekeepingDateTime)
+                if (savedSearchAlert != null && savedSearchAlert.DateCreated <= housekeepingDateTime)
                 {
                     _savedSearchAlertRepository.Delete(savedSearchAlert);
                 }

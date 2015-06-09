@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
                 var housekeepingDateTime = GetHousekeepingDateTime();
                 var expiringApprenticeshipApplicationDraft = _expiringApprenticeshipApplicationDraftRepository.Get(request.CommunicationId);
 
-                if (expiringApprenticeshipApplicationDraft != null && expiringApprenticeshipApplicationDraft.SentDateTime <= housekeepingDateTime)
+                if (expiringApprenticeshipApplicationDraft != null && expiringApprenticeshipApplicationDraft.DateCreated <= housekeepingDateTime)
                 {
                     _expiringApprenticeshipApplicationDraftRepository.Delete(expiringApprenticeshipApplicationDraft);
                 }

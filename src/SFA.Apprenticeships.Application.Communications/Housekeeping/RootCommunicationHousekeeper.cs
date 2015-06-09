@@ -41,8 +41,9 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
             
             stopwatch.Start();
 
+            // TODO: AG: US794: consider finer-grained logging or using MongoDB log to determine query performance.
             var communications =
-                _applicationStatusAlertCommunicationHousekeeper.GetHousekeepingRequests().ToList()
+                _applicationStatusAlertCommunicationHousekeeper.GetHousekeepingRequests()
                     .Union(_expiringDraftApplicationAlertCommunicationHousekeeper.GetHousekeepingRequests()
                         .Union(_savedSearchAlertCommunicationHousekeeper.GetHousekeepingRequests()));
 
@@ -50,6 +51,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
 
             var count = 0;
 
+            // TODO: AG: US794: consider removing parallelism.
             Parallel.ForEach(communications, communication =>
             {
                 _messageBus.PublishMessage(communication);

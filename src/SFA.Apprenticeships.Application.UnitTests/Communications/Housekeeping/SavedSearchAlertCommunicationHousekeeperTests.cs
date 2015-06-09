@@ -105,17 +105,17 @@
         [TestCase(1, true)]
         [TestCase(-1, false)]
         public void ShouldHandleSavedSearchAlertDueForHousekeeping(
-            int sentDateTimeOffsetHours, bool shouldHandle)
+            int dateCreatedOffsetHours, bool shouldHandle)
         {
             // Arrange.
             var communicationId = Guid.NewGuid();
-            var sentDateTime = GetHousekeepingDateTime(_housekeepingConfiguration)
-                .AddHours(-sentDateTimeOffsetHours);
+            var dateCreated = GetHousekeepingDateTime(_housekeepingConfiguration)
+                .AddHours(-dateCreatedOffsetHours);
 
             var savedSearchAlert = new Fixture()
                 .Build<SavedSearchAlert>()
                 .With(fixture => fixture.EntityId, communicationId)
-                .With(fixture => fixture.SentDateTime, sentDateTime)
+                .With(fixture => fixture.DateCreated, dateCreated)
                 .Create();
 
             _mockSavedSearchAlertRepository

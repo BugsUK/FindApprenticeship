@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
                 var housekeepingDateTime = GetHousekeepingDateTime();
                 var applicationStatusAlert = _applicationStatusAlertRepository.Get(request.CommunicationId);
 
-                if (applicationStatusAlert != null && applicationStatusAlert.SentDateTime <= housekeepingDateTime)
+                if (applicationStatusAlert != null && applicationStatusAlert.DateCreated <= housekeepingDateTime)
                 {
                     _applicationStatusAlertRepository.Delete(applicationStatusAlert);
                 }
