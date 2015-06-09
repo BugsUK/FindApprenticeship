@@ -30,19 +30,23 @@
 
             var results = restClient.Execute<OrdnanceSurveyPlacesResponse>(restRequest).Data.Results;
 
-            if (dataset == DatasetDpa)
+            if (results != null)
             {
-                return results
-                    .Select(r => r.DeliveryPointAddress.ToLocation())
-                    .OrderBy(a => a.Address.AddressLine1);
-            }
+                if (dataset == DatasetDpa)
+                {
+                    return results
+                        .Select(r => r.DeliveryPointAddress.ToLocation())
+                        .OrderBy(a => a.Address.AddressLine1);
+                }
 
-            if (dataset == DatasetLpi)
-            {
-                return results
-                    .Where(r => r.LocalPropertyIdentifier.IsResidential() || r.LocalPropertyIdentifier.IsCommercial())
-                    .Select(r => r.LocalPropertyIdentifier.ToLocation())
-                    .OrderBy(a => a.Address.AddressLine1);
+                if (dataset == DatasetLpi)
+                {
+                    return results
+                        .Where(
+                            r => r.LocalPropertyIdentifier.IsResidential() || r.LocalPropertyIdentifier.IsCommercial())
+                        .Select(r => r.LocalPropertyIdentifier.ToLocation())
+                        .OrderBy(a => a.Address.AddressLine1);
+                }
             }
 
             return Enumerable.Empty<Location>();
