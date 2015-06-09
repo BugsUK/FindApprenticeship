@@ -40,7 +40,7 @@ $(function() {
     return false;
   });
 
-  $('.mob-collpanel-trigger').on('click', function() {
+  $(document).on('click', '.mob-collpanel-trigger', function () {
     $(this).next('.mob-collpanel').toggleClass('panel-open');
     $(this).toggleClass('triggered');
     return false;

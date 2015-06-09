@@ -306,7 +306,7 @@ $(function () {
         initialize();
     }
 
-    $('#editSearchToggle').on('click', function () { 
+    $(document).on('click', '#editSearchToggle', function () {
         initialize();
     });
 });
