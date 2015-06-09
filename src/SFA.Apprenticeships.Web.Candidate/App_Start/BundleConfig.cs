@@ -64,6 +64,9 @@ namespace SFA.Apprenticeships.Web.Candidate
                 "~/Content/_assets/js/vendor/jquery.lazy-load-google-maps.js",
                 "~/Content/_assets/js/nas/resultsMap.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/nas/details").Include(
+                "~/Content/_assets/js/nas/apprenticeships/saveVacancy.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/nas/geoLocater").Include(
                 "~/Content/_assets/js/nas/geoLocater.js"));
 
