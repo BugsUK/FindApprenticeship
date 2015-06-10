@@ -29,12 +29,12 @@
         {
             _logger.Debug("Calling repository to get expiring apprenticeship application draft alert with Id={0}", id);
 
-            var mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.FindOneByIdAs<MongoApprenticeshipApplicationExpiringDraft>(id);
             var message = mongoEntity == null ? "Found no expiring apprenticeship application draft alert with Id={0}" : "Found expiring apprenticeship application draft alert with Id={0}";
 
             _logger.Debug(message, id);
 
-            return mongoEntity;
+            return _mapper.Map<MongoApprenticeshipApplicationExpiringDraft, ExpiringApprenticeshipApplicationDraft>(mongoEntity);
         }
 
         public void Save(ExpiringApprenticeshipApplicationDraft expiringDraft)
@@ -89,7 +89,7 @@
             _logger.Debug("Calling repository to get all expiring apprenticeship application draft alerts created on or before={0}", dateTime);
 
             var alertIds = Collection
-                .AsQueryable()
+                .AsQueryable<MongoApprenticeshipApplicationExpiringDraft>()
                 .Where(each => each.DateCreated <= dateTime)
                 .Select(each => each.EntityId);
 

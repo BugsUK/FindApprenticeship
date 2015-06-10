@@ -29,12 +29,12 @@
         {
             _logger.Debug("Calling repository to get application status alert with Id={0}", id);
 
-            var mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.FindOneByIdAs<MongoApplicationStatusAlert>(id);
             var message = mongoEntity == null ? "Found no application status alert with Id={0}" : "Found application status alert with Id={0}";
 
             _logger.Debug(message, id);
 
-            return mongoEntity;
+            return _mapper.Map<MongoApplicationStatusAlert, ApplicationStatusAlert>(mongoEntity);
         }
 
         public void Save(ApplicationStatusAlert alert)
@@ -89,7 +89,7 @@
             _logger.Debug("Calling repository to get all application status alerts created on or before={0}", dateTime);
 
             var alertIds = Collection
-                .AsQueryable()
+                .AsQueryable<MongoApplicationStatusAlert>()
                 .Where(each => each.DateCreated <= dateTime)
                 .Select(each => each.EntityId);
 

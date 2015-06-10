@@ -133,7 +133,7 @@
 
             var applicationIds = Collection
                 .AsQueryable()
-                .Where(each => each.DateApplied != null && each.DateApplied <= dateApplied)
+                .Where(each => each.DateApplied <= dateApplied)
                 .Select(each => each.EntityId);
 
             _logger.Debug("Called repository to get traineeship applications submitted on or before: {0}", dateApplied);

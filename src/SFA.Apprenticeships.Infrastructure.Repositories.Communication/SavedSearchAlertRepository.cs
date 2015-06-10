@@ -30,12 +30,12 @@
         {
             _logger.Debug("Calling repository to get saved search alert with Id={0}", id);
 
-            var mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.FindOneByIdAs<MongoSavedSearchAlert>(id);
             var message = mongoEntity == null ? "Found no saved search alert with Id={0}" : "Found saved search alert with Id={0}";
 
             _logger.Debug(message, id);
 
-            return mongoEntity;
+            return _mapper.Map<MongoSavedSearchAlert, SavedSearchAlert>(mongoEntity);
         }
 
         public SavedSearchAlert GetUnsentSavedSearchAlert(SavedSearch savedSearch)
@@ -103,7 +103,7 @@
             _logger.Debug("Calling repository to get all saved search alerts created on or before={0}", dateTime);
 
             var alertIds = Collection
-                .AsQueryable()
+                .AsQueryable<MongoSavedSearchAlert>()
                 .Where(each => each.DateCreated <= dateTime)
                 .Select(each => each.EntityId);
 

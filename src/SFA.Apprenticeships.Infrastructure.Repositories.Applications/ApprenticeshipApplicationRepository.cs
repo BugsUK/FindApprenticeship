@@ -151,7 +151,7 @@
 
             var applicationIds = Collection
                 .AsQueryable()
-                .Where(each => each.DateApplied == null && each.Vacancy.ClosingDate <= vacancyExpiryDate)
+                .Where(each => each.Vacancy.ClosingDate <= vacancyExpiryDate && each.DateApplied == null)
                 .Select(each => each.EntityId);
 
             _logger.Debug("Called repository to get draft applications for expired vacancies");
@@ -165,7 +165,7 @@
 
             var applicationIds = Collection
                 .AsQueryable()
-                .Where(each => each.DateApplied != null && each.DateApplied <= dateApplied)
+                .Where(each => each.DateApplied <= dateApplied)
                 .Select(each => each.EntityId);
 
             _logger.Debug("Called repository to get apprenticeship applications submitted on or before: {0}", dateApplied);
