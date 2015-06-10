@@ -159,6 +159,9 @@
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View("Apply", response.ViewModel);
+                    case ApprenticeshipApplicationMediatorCodes.Save.IncorrectState:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.Save.Ok:
                         ModelState.Clear();
                         return View("Apply", response.ViewModel);
@@ -198,6 +201,9 @@
                         ModelState.Clear();
                         return new JsonResult { Data = response.ViewModel };
                     case ApprenticeshipApplicationMediatorCodes.AutoSave.ValidationError:
+                        ModelState.Clear();
+                        return new JsonResult { Data = response.ViewModel };
+                    case ApprenticeshipApplicationMediatorCodes.AutoSave.IncorrectState:
                         ModelState.Clear();
                         return new JsonResult { Data = response.ViewModel };
                     case ApprenticeshipApplicationMediatorCodes.AutoSave.Ok:

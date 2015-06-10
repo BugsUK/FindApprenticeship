@@ -119,5 +119,21 @@
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.Save.OfflineVacancy, false);
         }
+
+        [Test]
+        public void AlreadySubmitted()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Submitted, VacancyDetail = new ApprenticeshipVacancyDetailViewModel() });
+            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
+
+            var response = Mediator.Save(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Save.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info, false);
+        }
     }
 }

@@ -91,7 +91,8 @@
             {
                 Candidate = new ApprenticeshipCandidateViewModel(),
                 VacancyDetail = new ApprenticeshipVacancyDetailViewModel(),
-                DateUpdated = new DateTime(2015, 01, 31)
+                DateUpdated = new DateTime(2015, 01, 31),
+                Status = ApplicationStatuses.Draft
             };
             ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(viewModel);
             ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
@@ -101,6 +102,22 @@
 
             response.AssertCode(ApprenticeshipApplicationMediatorCodes.AutoSave.Ok, true);
             response.ViewModel.DateTimeMessage.Should().Be("12:00:00 AM on 31/1/2015");
+        }
+
+        [Test]
+        public void AlreadySubmitted()
+        {
+            var viewModel = new ApprenticeshipApplicationViewModel
+            {
+                Candidate = new ApprenticeshipCandidateViewModel(),
+                VacancyDetail = new ApprenticeshipVacancyDetailViewModel()
+            };
+            ApprenticeshipApplicationProvider.Setup(p => p.GetApplicationViewModel(It.IsAny<Guid>(), ValidVacancyId)).Returns(new ApprenticeshipApplicationViewModel { Status = ApplicationStatuses.Submitted, VacancyDetail = new ApprenticeshipVacancyDetailViewModel() });
+            ApprenticeshipApplicationProvider.Setup(p => p.PatchApplicationViewModel(It.IsAny<Guid>(), It.IsAny<ApprenticeshipApplicationViewModel>(), It.IsAny<ApprenticeshipApplicationViewModel>())).Returns<Guid, ApprenticeshipApplicationViewModel, ApprenticeshipApplicationViewModel>((cid, svm, vm) => vm);
+
+            var response = Mediator.AutoSave(Guid.NewGuid(), ValidVacancyId, viewModel);
+
+            response.AssertCode(ApprenticeshipApplicationMediatorCodes.AutoSave.IncorrectState);
         }
     }
 }

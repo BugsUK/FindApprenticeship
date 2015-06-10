@@ -75,6 +75,7 @@
             public const string Error = "ApprenticeshipApplication.Save.Error";
             public const string ValidationError = "ApprenticeshipApplication.Save.ValidationError";
             public const string Ok = "ApprenticeshipApplication.Save.Ok";
+            public const string IncorrectState = "ApprenticeshipApplication.Save.IncorrectState";
         }
 
         public class AutoSave
@@ -83,6 +84,7 @@
             public const string ValidationError = "ApprenticeshipApplication.AutoSave.ValidationError";
             public const string HasError = "ApprenticeshipApplication.AutoSave.HasError";
             public const string Ok = "ApprenticeshipApplication.AutoSave.Ok";
+            public const string IncorrectState = "ApprenticeshipApplication.AutoSave.IncorrectState";
         }
 
         public class SaveVacancy

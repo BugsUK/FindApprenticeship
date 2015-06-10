@@ -159,6 +159,11 @@
                 return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Save.OfflineVacancy);
             }
 
+            if (savedModel.Status != ApplicationStatuses.Draft)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Save.IncorrectState, null, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info);
+            }
+
             var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(viewModel);
 
             viewModel = _apprenticeshipApplicationProvider.PatchApplicationViewModel(candidateId, savedModel, viewModel);
@@ -192,6 +197,11 @@
             if (savedModel.HasError())
             {
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AutoSave.HasError, autoSaveResult);
+            }
+
+            if (savedModel.Status != ApplicationStatuses.Draft)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AutoSave.IncorrectState, autoSaveResult);
             }
 
             var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(viewModel);
