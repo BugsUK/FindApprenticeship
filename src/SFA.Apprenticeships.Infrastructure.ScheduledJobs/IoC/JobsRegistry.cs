@@ -58,7 +58,7 @@
             For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();
             For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();
             For<ISubmittedApplicationHousekeeper>().Use<SubmittedApplicationHousekeeper>();
-            For<IHardDeleteApplicationStrategy>().Use<IHardDeleteApplicationStrategy>();
+            For<IHardDeleteApplicationStrategy>().Use<HardDeleteApplicationStrategy>();
             For<IAuditApplicationDetailStrategy>().Use<AuditApplicationDetailStrategy>();
             For<IAuditRepository>().Use<AuditRepository>();
 
