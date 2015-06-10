@@ -18,6 +18,8 @@
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Common.Configuration;
+    using Infrastructure.VacancySearch.Configuration;
     using Providers;
     using Validators;
     using ViewModels.Account;
@@ -26,6 +28,7 @@
     public class ApprenticeshipSearchMediator : SearchMediatorBase, IApprenticeshipSearchMediator
     {
         private readonly ISearchProvider _searchProvider;
+        private readonly IConfigurationService _configService;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly IReferenceDataService _referenceDataService;
         private readonly ApprenticeshipSearchViewModelServerValidator _searchRequestValidator;
@@ -45,6 +48,7 @@
             IApprenticeshipVacancyProvider apprenticeshipVacancyProvider)
             : base(configService, userDataProvider)
         {
+            _configService = configService;
             _candidateServiceProvider = candidateServiceProvider;
             _searchProvider = searchProvider;
             _referenceDataService = referenceDataService;
@@ -116,7 +120,7 @@
             return apprenticeshipLevels;
         }
 
-        protected static SelectList GetSearchFields(bool addRefineOption = false, string selectedValue = "All")
+        protected SelectList GetSearchFields(bool addRefineOption = false, string selectedValue = "All")
         {
             var searchFieldsOptions = new List<object>
             {
@@ -124,9 +128,14 @@
                 new { FieldName = ApprenticeshipSearchField.JobTitle.ToString(), DisplayName = "Job title"},
                 new { FieldName = ApprenticeshipSearchField.Description.ToString(), DisplayName = "Description"},
                 new { FieldName = ApprenticeshipSearchField.Employer.ToString(), DisplayName = "Employer"},
-                new { FieldName = ApprenticeshipSearchField.Provider.ToString(), DisplayName = "Training Provider"},
                 new { FieldName = ApprenticeshipSearchField.ReferenceNumber.ToString(), DisplayName = "Ref. number"},
             };
+
+            var searchFactors = _configService.Get<SearchFactorConfiguration>();
+            if (searchFactors.ProviderFactors.Enabled)
+            {
+                searchFieldsOptions.Insert(4, new { FieldName = ApprenticeshipSearchField.Provider.ToString(), DisplayName = "Training Provider" });
+            }
 
             if (addRefineOption && selectedValue == "All")
             {
