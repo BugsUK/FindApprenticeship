@@ -36,19 +36,19 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
             
             stopwatch.Start();
 
-            var applications =
+            // TODO: AG: US794: consider finer-grained logging or using MongoDB log to determine query performance.
+            var requests =
                 _draftApplicationForExpiredVacancyHousekeeper.GetHousekeepingRequests()
                     .Union(_submittedApplicationHousekeeper.GetHousekeepingRequests());
 
             var message = string.Format("Querying applications for housekeeping took {0}", stopwatch.Elapsed);
-
             var count = 0;
 
-            Parallel.ForEach(applications, application =>
+            foreach (var request in requests)
             {
-                _messageBus.PublishMessage(application);
-                Interlocked.Increment(ref count);
-            });
+                _messageBus.PublishMessage(request);
+                count++;
+            }
 
             stopwatch.Stop();
 

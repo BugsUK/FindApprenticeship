@@ -2,8 +2,6 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
 {
     using System.Diagnostics;
     using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Domain.Interfaces.Messaging;
     using Interfaces.Logging;
 
@@ -42,21 +40,19 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
             stopwatch.Start();
 
             // TODO: AG: US794: consider finer-grained logging or using MongoDB log to determine query performance.
-            var communications =
+            var requests =
                 _applicationStatusAlertCommunicationHousekeeper.GetHousekeepingRequests()
                     .Union(_expiringDraftApplicationAlertCommunicationHousekeeper.GetHousekeepingRequests()
                         .Union(_savedSearchAlertCommunicationHousekeeper.GetHousekeepingRequests()));
 
             var message = string.Format("Querying communications for housekeeping took {0}", stopwatch.Elapsed);
-
             var count = 0;
 
-            // TODO: AG: US794: consider removing parallelism.
-            Parallel.ForEach(communications, communication =>
+            foreach (var request in requests)
             {
-                _messageBus.PublishMessage(communication);
-                Interlocked.Increment(ref count);
-            });
+                _messageBus.PublishMessage(request);
+                count++;
+            }
 
             stopwatch.Stop();
 
