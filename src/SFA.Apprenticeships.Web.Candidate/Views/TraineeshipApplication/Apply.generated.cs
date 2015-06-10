@@ -75,7 +75,7 @@ WriteLiteral(" class=\"button hide-button\"");
 
 WriteLiteral(" type=\"submit\"");
 
-WriteLiteral(" name=\"TraineeshipAction\"");
+WriteLiteral(" name=\"ApplicationAction\"");
 
 WriteLiteral(" value=\"Apply\"");
 
@@ -333,7 +333,7 @@ WriteLiteral(" name=\"ApplicationAction\"");
 
 WriteLiteral(" class=\"button no-check-for-dirty-form\"");
 
-WriteLiteral(" value=\"Submit\"");
+WriteLiteral(" value=\"Apply\"");
 
 WriteLiteral(">Submit application</button>\r\n    </div>\r\n");
 

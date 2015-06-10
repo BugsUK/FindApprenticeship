@@ -7,7 +7,7 @@
 
 @using (Html.BeginForm(null, "TraineeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form", autocomplete = "off" }))
 {
-    <button class="button hide-button" type="submit" name="TraineeshipAction" value="Apply" tabindex="-1">Apply</button>
+    <button class="button hide-button" type="submit" name="ApplicationAction" value="Apply" tabindex="-1">Apply</button>
     @Html.AntiForgeryToken()
     <h1 class="heading-xlarge">Application form</h1>
     <section class="section-border">
@@ -49,7 +49,7 @@
 
     <div class="form-group">
         @*The buttons below need the values so the controller knows what action to perform if restyling*@
-        <button id="apply-button" type="submit" name="ApplicationAction" class="button no-check-for-dirty-form" value="Submit">Submit application</button>
+        <button id="apply-button" type="submit" name="ApplicationAction" class="button no-check-for-dirty-form" value="Apply">Submit application</button>
     </div>
 }
 

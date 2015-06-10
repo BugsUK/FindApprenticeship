@@ -24,6 +24,7 @@
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Apply(string id)
