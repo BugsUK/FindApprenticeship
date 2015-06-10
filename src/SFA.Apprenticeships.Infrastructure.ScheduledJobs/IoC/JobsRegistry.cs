@@ -54,7 +54,7 @@
             //Candidate Housekeeping
             For<ICandidateProcessor>().Use<CandidateProcessor>();
             
-            //Application Housekeeping
+            // Application Housekeeping
             For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();
             For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();
             For<ISubmittedApplicationHousekeeper>().Use<SubmittedApplicationHousekeeper>();
@@ -62,6 +62,7 @@
             For<IAuditApplicationDetailStrategy>().Use<AuditApplicationDetailStrategy>();
             For<IAuditRepository>().Use<AuditRepository>();
 
+            // Communication Housekeeping
             For<IRootCommunicationHousekeeper>().Use<RootCommunicationHousekeeper>();
             For<IApplicationStatusAlertCommunicationHousekeeper>().Use<ApplicationStatusAlertCommunicationHousekeeper>();
             For<IExpiringDraftApplicationAlertCommunicationHousekeeper>().Use<ExpiringDraftApplicationAlertCommunicationHousekeeper>();

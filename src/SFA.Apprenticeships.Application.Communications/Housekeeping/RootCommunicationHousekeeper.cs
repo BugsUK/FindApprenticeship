@@ -56,7 +56,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
 
             stopwatch.Stop();
 
-            message += string.Format(". Queuing {0} communications for housekeeping took {1}", count, stopwatch.Elapsed);
+            message += string.Format(". Queuing {0} communication(s) for housekeeping took {1}", count, stopwatch.Elapsed);
 
             if (stopwatch.ElapsedMilliseconds > 60000)
             {

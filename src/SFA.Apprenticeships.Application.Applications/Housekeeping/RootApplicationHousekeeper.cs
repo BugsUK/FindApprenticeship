@@ -2,8 +2,6 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 {
     using System.Diagnostics;
     using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Domain.Interfaces.Messaging;
     using Interfaces.Logging;
 
@@ -52,7 +50,7 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 
             stopwatch.Stop();
 
-            message += string.Format(". Queuing {0} applications for housekeeping took {1}", count, stopwatch.Elapsed);
+            message += string.Format(". Queuing {0} application(s) for housekeeping took {1}", count, stopwatch.Elapsed);
 
             if (stopwatch.ElapsedMilliseconds > 60000)
             {

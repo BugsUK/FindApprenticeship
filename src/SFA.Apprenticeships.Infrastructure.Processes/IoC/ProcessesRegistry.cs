@@ -1,9 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.IoC
 {
     using Application.Applications;
+    using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
     using Application.Communication;
     using Application.Communication.Strategies;
+    using Application.Communications.Housekeeping;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
     using Application.Interfaces.ReferenceData;
@@ -19,7 +21,9 @@
     using Communications.Commands;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Domain.Interfaces.Repositories;
     using Logging.IoC;
+    using Repositories.Audit;
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Vacancies;
@@ -85,7 +89,23 @@
             // candidates
             For<CandidateSavedSearchesConsumerAsync>().Use<CandidateSavedSearchesConsumerAsync>();
             For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
+
+            // candidate housekeeping
             For<CandidateAccountHousekeepingConsumerAsync>().Use<CandidateAccountHousekeepingConsumerAsync>();
+
+            // application housekeeping
+            For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();
+            For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();
+            For<ISubmittedApplicationHousekeeper>().Use<SubmittedApplicationHousekeeper>();
+            For<IHardDeleteApplicationStrategy>().Use<HardDeleteApplicationStrategy>();
+            For<IAuditApplicationDetailStrategy>().Use<AuditApplicationDetailStrategy>();
+            For<IAuditRepository>().Use<AuditRepository>();
+
+            // communication housekeeping
+            For<IRootCommunicationHousekeeper>().Use<RootCommunicationHousekeeper>();
+            For<IApplicationStatusAlertCommunicationHousekeeper>().Use<ApplicationStatusAlertCommunicationHousekeeper>();
+            For<IExpiringDraftApplicationAlertCommunicationHousekeeper>().Use<ExpiringDraftApplicationAlertCommunicationHousekeeper>();
+            For<ISavedSearchAlertCommunicationHousekeeper>().Use<SavedSearchAlertCommunicationHousekeeper>();
 
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();

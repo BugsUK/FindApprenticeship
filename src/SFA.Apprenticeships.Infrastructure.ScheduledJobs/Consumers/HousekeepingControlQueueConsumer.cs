@@ -36,8 +36,6 @@
                 if (schedulerNotification == null) return;
 
                 _candidateProcessor.QueueCandidates();
-                
-                // TODO: US794: enable housekeeping.
                 _rootApplicationHousekeeper.QueueHousekeepingRequests();
                 _rootCommunicationHousekeeper.QueueHousekeepingRequests();
 
