@@ -44,7 +44,7 @@
         },
         setKeyUpEvent = function(formSelector) {
             $('input').keypress(function(e) {
-                if (e.which == 13) {
+                if (e.which == 13 && !e.isDefaultPrevented()) {
                     hasToShowMessage = false;
                     $(formSelector).submit();
                     return false;

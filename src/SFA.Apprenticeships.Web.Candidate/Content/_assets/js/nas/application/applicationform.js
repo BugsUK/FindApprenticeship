@@ -1270,4 +1270,14 @@
             $('#unsavedChanges').hide();
         }
     });
+
+    $("div[data-enter-action] input:text, div[data-enter-action] input[type=tel]").keypress(function (e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            var subForm = $(this).closest("div[data-enter-action]");
+            var subAction = subForm.attr("data-enter-action");
+            $(subAction).click();
+        }
+    });
+
 }());

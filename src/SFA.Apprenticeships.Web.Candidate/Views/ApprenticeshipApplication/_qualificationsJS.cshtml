@@ -1,6 +1,6 @@
 ﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
 
-<div class="hide-nojs" data-bind="visible: selectedSection() === 'applyQualifications', stopBinding:true">
+<div class="hide-nojs" data-enter-action="#saveQualification" data-bind="visible: selectedSection() === 'applyQualifications', stopBinding:true">
 
     <fieldset class="fieldset-with-border" id="applyQualifications">
         <legend class="heading-large">Qualifications</legend>
