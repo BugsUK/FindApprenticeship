@@ -4,6 +4,7 @@
     using Builders;
     using Candidate.Mediators.Application;
     using Candidate.Providers;
+    using Common.Constants;
     using Common.Models.Application;
     using Constants.Pages;
     using Domain.Entities.Applications;
@@ -41,7 +42,7 @@
             var response = mediator.View(Guid.NewGuid(), ValidVacancyId);
 
             //Should still be able to view the application even if the vacancy is not available
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound, true);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound, ApplicationPageMessages.ViewApplicationFailed, UserMessageLevel.Warning, true);
         }
 
         [Test]

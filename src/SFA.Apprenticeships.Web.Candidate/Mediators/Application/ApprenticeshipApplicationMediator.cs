@@ -352,7 +352,7 @@
 
             if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationNotFound)
             {
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound, model);
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.View.ApplicationNotFound, model, ApplicationPageMessages.ViewApplicationFailed, UserMessageLevel.Warning);
             }
 
             if (model.HasError())
