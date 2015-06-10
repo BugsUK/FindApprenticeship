@@ -38,6 +38,7 @@
     {
         Activated,
         InvalidCode,
-        Error
+        Error,
+        AlreadyActivated
     }
 }

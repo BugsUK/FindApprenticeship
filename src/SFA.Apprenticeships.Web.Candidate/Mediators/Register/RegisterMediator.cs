@@ -86,10 +86,12 @@
                 case ActivateUserState.Activated:
                     return GetMediatorResponse(RegisterMediatorCodes.Activate.SuccessfullyActivated, activationViewModel, ActivationPageMessages.AccountActivated, UserMessageLevel.Success);
                 case ActivateUserState.Error:
-                    return GetMediatorResponse(RegisterMediatorCodes.Activate.SuccessfullyActivated, activationViewModel, activationViewModel.ViewModelMessage, UserMessageLevel.Success);
+                    return GetMediatorResponse(RegisterMediatorCodes.Activate.ErrorActivating, activationViewModel, activationViewModel.ViewModelMessage, UserMessageLevel.Error);
                 case ActivateUserState.InvalidCode:
                     activatedResult = _activationViewModelServerValidator.Validate(activationViewModel);
                     return GetMediatorResponse(RegisterMediatorCodes.Activate.InvalidActivationCode, activationViewModel, activatedResult);
+                case ActivateUserState.AlreadyActivated:
+                    return GetMediatorResponse(RegisterMediatorCodes.Activate.SuccessfullyActivated, activationViewModel, ActivationPageMessages.AlreadyActivated, UserMessageLevel.Info);
                 default:
                     throw new ArgumentOutOfRangeException();
             }

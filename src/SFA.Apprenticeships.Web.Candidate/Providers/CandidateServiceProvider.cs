@@ -153,6 +153,14 @@
 
             try
             {
+                var user = _userAccountService.GetUser(candidateId);
+                if (user.Status == UserStatuses.Active)
+                {
+                    _authenticationTicketService.SetAuthenticationCookie(candidateId.ToString(), UserRoleNames.Activated);
+
+                    return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.AlreadyActivated);
+                }
+
                 var candidate = _candidateService.GetCandidate(candidateId);
                 if (!String.Equals(candidate.RegistrationDetails.EmailAddress, model.EmailAddress, StringComparison.CurrentCultureIgnoreCase))
                 {

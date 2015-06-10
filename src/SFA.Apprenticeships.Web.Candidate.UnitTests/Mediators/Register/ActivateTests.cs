@@ -66,7 +66,7 @@
 
             var response = _registerMediator.Activate(Guid.NewGuid(), activationViewModel);
 
-            response.AssertMessage(RegisterMediatorCodes.Activate.SuccessfullyActivated, SomeErrorMessage, UserMessageLevel.Success, true);
+            response.AssertMessage(RegisterMediatorCodes.Activate.ErrorActivating, SomeErrorMessage, UserMessageLevel.Error, true);
         }
 
         [Test]

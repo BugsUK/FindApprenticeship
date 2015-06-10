@@ -10,5 +10,6 @@
         public const string ActivationFailed = "There's been a problem activating your account. Please try again.";
         public const string ActivationCodeSendingFailure = "There's been a problem with your activation code. Please try again.";
         public const string UpdatingMonitoringInformationFailure = "There's been a problem updating your information. Please try again.";
+        public const string AlreadyActivated = "You have already activated your account. There is no need to activate it again.";
     }
 }
