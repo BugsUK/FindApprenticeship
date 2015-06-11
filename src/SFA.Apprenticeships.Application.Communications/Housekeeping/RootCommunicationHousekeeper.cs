@@ -46,12 +46,21 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
                         .Union(_savedSearchAlertCommunicationHousekeeper.GetHousekeepingRequests()));
 
             var message = string.Format("Querying communications for housekeeping took {0}", stopwatch.Elapsed);
+
+            const int maxCount = 50;
             var count = 0;
 
             foreach (var request in requests)
             {
                 _messageBus.PublishMessage(request);
                 count++;
+
+                // TODO: AG: US794: temporary code to limit number of deletions.
+                if (count > maxCount)
+                {
+                    _logService.Info("Limiting number of communications for housekeeping to {0}", maxCount);
+                    break;
+                }
             }
 
             stopwatch.Stop();
