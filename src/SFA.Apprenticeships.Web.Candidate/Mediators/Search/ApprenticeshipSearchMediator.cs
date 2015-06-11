@@ -132,7 +132,8 @@
             };
 
             var searchFactors = _configService.Get<SearchFactorConfiguration>();
-            if (searchFactors.ProviderFactors.Enabled)
+
+            if (searchFactors != null && searchFactors.ProviderFactors != null && searchFactors.ProviderFactors.Enabled)
             {
                 searchFieldsOptions.Insert(4, new { FieldName = ApprenticeshipSearchField.Provider.ToString(), DisplayName = "Training Provider" });
             }
