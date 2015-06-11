@@ -36,24 +36,28 @@
             restRequest.AddParameter("format", "json");
             restRequest.AddParameter("key", _configuration.ApiKey);
 
-            var results = _restClient.Execute<OrdnanceSurveyPlacesResponse>(restRequest).Data.Results;
-
-            if (results != null)
+            var restResponse = _restClient.Execute<OrdnanceSurveyPlacesResponse>(restRequest);
+            if (restResponse.ResponseStatus == ResponseStatus.Completed)
             {
-                if (_configuration.Dataset == DatasetDpa)
-                {
-                    return results
-                        .Where(r => r.DeliveryPointAddress.IsResidential())
-                        .Select(r => r.DeliveryPointAddress.ToAddress())
-                        .OrderBy(a => a.AddressLine1);
-                }
+                var results = restResponse.Data.Results;
 
-                if (_configuration.Dataset == DatasetLpi)
+                if (results != null)
                 {
-                    return results
-                        .Where(r => r.LocalPropertyIdentifier.IsResidential())
-                        .Select(r => r.LocalPropertyIdentifier.ToAddress())
-                        .OrderBy(a => a.AddressLine1);
+                    if (_configuration.Dataset == DatasetDpa)
+                    {
+                        return results
+                            .Where(r => r.DeliveryPointAddress.IsResidential())
+                            .Select(r => r.DeliveryPointAddress.ToAddress())
+                            .OrderBy(a => a.AddressLine1);
+                    }
+
+                    if (_configuration.Dataset == DatasetLpi)
+                    {
+                        return results
+                            .Where(r => r.LocalPropertyIdentifier.IsResidential())
+                            .Select(r => r.LocalPropertyIdentifier.ToAddress())
+                            .OrderBy(a => a.AddressLine1);
+                    }
                 }
             }
 
