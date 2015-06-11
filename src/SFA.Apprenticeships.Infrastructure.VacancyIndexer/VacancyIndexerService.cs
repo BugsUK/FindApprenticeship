@@ -82,6 +82,9 @@
             {
                 var indexSettings = new IndexSettings();
 
+                var synonymFilter = new SynonymTokenFilter { SynonymsPath = "../config/synonyms.txt" };
+                indexSettings.Analysis.TokenFilters.Add("synonym", synonymFilter);
+
                 //Token filters
                 var snowballTokenFilter = new SnowballTokenFilter { Language = "English" };
                 indexSettings.Analysis.TokenFilters.Add("snowball", snowballTokenFilter);
@@ -96,10 +99,10 @@
                 indexSettings.Analysis.TokenFilters.Add("stopwordsExtendedFilter", stopwordsExtendedFilter);
 
                 //Analysers
-                indexSettings.Analysis.Analyzers.Add("snowballStopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter", "snowball" } });
-                indexSettings.Analysis.Analyzers.Add("snowballStopwordsExtended", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsExtendedFilter", "snowball" } });
+                indexSettings.Analysis.Analyzers.Add("snowballStopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter", "synonym", "snowball" } });
+                indexSettings.Analysis.Analyzers.Add("snowballStopwordsExtended", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsExtendedFilter", "synonym", "snowball" } });
 
-                indexSettings.Analysis.Analyzers.Add("stopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter" } });
+                indexSettings.Analysis.Analyzers.Add("stopwordsBase", new CustomAnalyzer { Tokenizer = "standard", Filter = new[] { "standard", "lowercase", "stopwordsBaseFilter", "synonym" } });
 
                 client.CreateIndex(i => i.Index(newIndexName).InitializeUsing(indexSettings));
 
