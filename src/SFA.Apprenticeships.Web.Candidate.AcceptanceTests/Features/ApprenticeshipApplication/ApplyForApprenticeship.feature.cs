@@ -220,6 +220,7 @@ this.FeatureBackground();
         [NUnit.Framework.CategoryAttribute("US463")]
         [NUnit.Framework.CategoryAttribute("US352")]
         [NUnit.Framework.CategoryAttribute("US354")]
+        [NUnit.Framework.CategoryAttribute("PrimaryTransaction")]
         public virtual void AsACandidateIWantToEnterMyQualificationsAndWorkExperienceInAnApprenticeshipApplication()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I want to enter my qualifications and work experience in an appren" +
@@ -230,7 +231,8 @@ this.FeatureBackground();
                         "US154",
                         "US463",
                         "US352",
-                        "US354"});
+                        "US354",
+                        "PrimaryTransaction"});
 #line 52
 this.ScenarioSetup(scenarioInfo);
 #line 6

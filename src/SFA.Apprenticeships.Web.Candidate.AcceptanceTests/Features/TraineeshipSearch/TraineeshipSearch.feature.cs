@@ -84,10 +84,12 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Traineeship
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Find traineeships and test ordering")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
+        [NUnit.Framework.CategoryAttribute("PrimaryTransaction")]
         public virtual void FindTraineeshipsAndTestOrdering()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find traineeships and test ordering", new string[] {
-                        "SmokeTests"});
+                        "SmokeTests",
+                        "PrimaryTransaction"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 7

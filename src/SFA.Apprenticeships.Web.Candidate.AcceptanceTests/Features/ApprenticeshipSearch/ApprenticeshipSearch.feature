@@ -39,7 +39,7 @@ Scenario: Find apprenticeships and test ordering without keywords
 		# Need the ignore when not present added to specbind - KB talking to Dan Piessens
         #| ResultsAreInBestMatchScoreOrder | Equals | False |
 
-@SmokeTests
+@SmokeTests @PrimaryTransaction
 Scenario: Find apprenticeships and test ordering with keywords
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data

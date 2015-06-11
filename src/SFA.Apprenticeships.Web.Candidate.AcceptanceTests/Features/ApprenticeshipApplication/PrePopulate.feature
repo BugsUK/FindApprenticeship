@@ -9,7 +9,7 @@ Background:
 	And I navigated to the ApprenticeshipSearchPage page
 	Then I am on the ApprenticeshipSearchPage page
 
-@US461
+@US461 @PrimaryTransaction
 Scenario: Pre-populate my Education Qualifications Work Experience About You details
 	Given I have registered a new candidate
 	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website

@@ -163,10 +163,12 @@ this.FeatureBackground();
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Find apprenticeships and test ordering with keywords")]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
+        [NUnit.Framework.CategoryAttribute("PrimaryTransaction")]
         public virtual void FindApprenticeshipsAndTestOrderingWithKeywords()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find apprenticeships and test ordering with keywords", new string[] {
-                        "SmokeTests"});
+                        "SmokeTests",
+                        "PrimaryTransaction"});
 #line 43
 this.ScenarioSetup(scenarioInfo);
 #line 7

@@ -48,7 +48,7 @@ Scenario: As a candidate I want to save my apprenticeship application as a draft
 	When I choose MyApplicationsLink
 	Then I am on the MyApplicationsPage page
 
-@US461 @US362 @US365 @US154 @US463 @US352 @US354
+@US461 @US362 @US365 @US154 @US463 @US352 @US354 @PrimaryTransaction
 Scenario: As a candidate I want to enter my qualifications and work experience in an apprenticeship application
 	Given I have registered a new candidate
 	When I navigate to the details of the apprenticeship vacancy 445650

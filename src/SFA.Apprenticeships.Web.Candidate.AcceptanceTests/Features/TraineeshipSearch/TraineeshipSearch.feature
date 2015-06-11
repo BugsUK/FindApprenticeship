@@ -10,7 +10,7 @@ Background:
 	And I navigated to the TraineeshipSearchPage page
 	Then I am on the TraineeshipSearchPage page
 
-@SmokeTests
+@SmokeTests @PrimaryTransaction
 Scenario: Find traineeships and test ordering
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data

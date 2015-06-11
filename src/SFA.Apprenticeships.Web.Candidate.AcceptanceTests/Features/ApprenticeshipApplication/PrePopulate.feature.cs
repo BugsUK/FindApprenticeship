@@ -82,10 +82,12 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Apprentices
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Pre-populate my Education Qualifications Work Experience About You details")]
         [NUnit.Framework.CategoryAttribute("US461")]
+        [NUnit.Framework.CategoryAttribute("PrimaryTransaction")]
         public virtual void Pre_PopulateMyEducationQualificationsWorkExperienceAboutYouDetails()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Pre-populate my Education Qualifications Work Experience About You details", new string[] {
-                        "US461"});
+                        "US461",
+                        "PrimaryTransaction"});
 #line 13
 this.ScenarioSetup(scenarioInfo);
 #line 6
