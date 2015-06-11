@@ -35,8 +35,8 @@ Scenario: As a new candidate my additional monitoring information is saved
 		| AddressLine4 | Equals | Islington              |
 		| Postcode     | Equals | N7 8LS                 |
 		| Uprn         | Equals | 5300034721             |
-		| Latitude     | Equals | 51.54751633697479      |
-		| Longitude    | Equals | -0.10660693737952387   |
+		| Latitude     | Equals | 0                      |
+		| Longitude    | Equals | 0                      |
 	And I choose WrappedElement
 	And I am on the RegisterCandidatePage page
 	And I choose HasAcceptedTermsAndConditions
