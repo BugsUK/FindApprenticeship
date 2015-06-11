@@ -89,7 +89,7 @@
 
         public static bool IsResidential(this LocalPropertyIdentifier lpi)
         {
-            return (lpi.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.ParentShell.PrimaryCode) ||
+            return (lpi.ClassificationCode == OrdnanceSurveyClassificationCodes.ParentShell.PrimaryCode ||
                    lpi.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.Residential.PrimaryCode) ||
                    lpi.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.DualUse.PrimaryCode)) &&
                    lpi.PostalAddressCode != "N";
