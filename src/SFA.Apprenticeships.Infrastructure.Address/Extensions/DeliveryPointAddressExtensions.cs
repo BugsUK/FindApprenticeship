@@ -87,7 +87,7 @@
 
         public static bool IsResidential(this DeliveryPointAddress dpa)
         {
-            return dpa.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.ParentShell.PrimaryCode) ||
+            return dpa.ClassificationCode == OrdnanceSurveyClassificationCodes.ParentShell.PrimaryCode ||
                    dpa.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.Residential.PrimaryCode) ||
                    dpa.ClassificationCode.StartsWith(OrdnanceSurveyClassificationCodes.DualUse.PrimaryCode);
         }
