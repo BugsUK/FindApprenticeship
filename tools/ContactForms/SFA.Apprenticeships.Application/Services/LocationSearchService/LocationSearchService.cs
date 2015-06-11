@@ -28,24 +28,30 @@
             restRequest.AddParameter("format", "json");
             restRequest.AddParameter("key", BaseAppSettingValues.OrdnanceSurveyPlacesApiKey);
 
-            var results = restClient.Execute<OrdnanceSurveyPlacesResponse>(restRequest).Data.Results;
-
-            if (results != null)
+            var restResponse = restClient.Execute<OrdnanceSurveyPlacesResponse>(restRequest);
+            if (restResponse.ResponseStatus == ResponseStatus.Completed)
             {
-                if (dataset == DatasetDpa)
-                {
-                    return results
-                        .Select(r => r.DeliveryPointAddress.ToLocation())
-                        .OrderBy(a => a.Address.AddressLine1);
-                }
+                var results = restResponse.Data.Results;
 
-                if (dataset == DatasetLpi)
+                if (results != null)
                 {
-                    return results
-                        .Where(
-                            r => r.LocalPropertyIdentifier.IsResidential() || r.LocalPropertyIdentifier.IsCommercial())
-                        .Select(r => r.LocalPropertyIdentifier.ToLocation())
-                        .OrderBy(a => a.Address.AddressLine1);
+                    if (dataset == DatasetDpa)
+                    {
+                        return results
+                            .Select(r => r.DeliveryPointAddress.ToLocation())
+                            .OrderBy(a => a.Address.AddressLine1);
+                    }
+
+                    if (dataset == DatasetLpi)
+                    {
+                        return results
+                            .Where(
+                                r =>
+                                    r.LocalPropertyIdentifier.IsResidential() ||
+                                    r.LocalPropertyIdentifier.IsCommercial())
+                            .Select(r => r.LocalPropertyIdentifier.ToLocation())
+                            .OrderBy(a => a.Address.AddressLine1);
+                    }
                 }
             }
 
