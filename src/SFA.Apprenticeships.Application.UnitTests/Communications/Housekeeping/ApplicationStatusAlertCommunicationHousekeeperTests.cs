@@ -141,7 +141,7 @@
         }
 
         [Test]
-        public void ShouldCallSuccesor()
+        public void ShouldCallSuccessor()
         {
             // Act.
             var request = new CommunicationHousekeepingRequest
@@ -150,6 +150,7 @@
                 CommunicationType = CommunicationTypes.ExpiringDraftApplicationAlert
             };
 
+            // Act.
             _housekeeper.Handle(request);
 
             // Assert.

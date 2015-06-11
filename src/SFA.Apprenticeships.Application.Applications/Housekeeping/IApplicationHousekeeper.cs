@@ -8,6 +8,6 @@
  
         void Handle(ApplicationHousekeepingRequest request);
 
-        IApplicationHousekeeper Succesor { get; set; }
+        IApplicationHousekeeper Successor { get; set; }
     }
 }

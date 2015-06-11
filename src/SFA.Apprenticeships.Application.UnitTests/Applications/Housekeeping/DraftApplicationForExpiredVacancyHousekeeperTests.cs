@@ -11,6 +11,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
+    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -18,6 +19,7 @@
     [TestFixture]
     public class DraftApplicationForExpiredVacancyHousekeeperTests
     {
+        private Mock<ILogService> _mockLogService;
         private Mock<IConfigurationService> _mockConfigurationService;
         private Mock<IApprenticeshipApplicationReadRepository> _mockApprenticeshipApplicationReadRepository;
         private Mock<IHardDeleteApplicationStrategy> _mockHardDeleteApplicationStrategy;
@@ -36,6 +38,8 @@
                 .Build<HousekeepingConfiguration>()
                 .Create();
 
+            _mockLogService = new Mock<ILogService>();
+
             _mockConfigurationService
                 .Setup(mock => mock
                     .Get<HousekeepingConfiguration>())
@@ -45,11 +49,12 @@
             _mockSuccessor = new Mock<IApplicationHousekeeper>();
 
             _housekeeper = new DraftApplicationForExpiredVacancyHousekeeper(
+                _mockLogService.Object,
                 _mockConfigurationService.Object,
                 _mockApprenticeshipApplicationReadRepository.Object,
                 _mockHardDeleteApplicationStrategy.Object)
             {
-                Succesor = _mockSuccessor.Object
+                Successor = _mockSuccessor.Object
             };
         }
 

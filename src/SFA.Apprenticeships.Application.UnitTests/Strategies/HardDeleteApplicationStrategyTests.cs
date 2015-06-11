@@ -5,26 +5,30 @@
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
+    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
     public class HardDeleteApplicationStrategyTests
     {
-        private Mock<IApprenticeshipApplicationWriteRepository> _apprenticeshipApplicationWriteRepository;
-        private Mock<ITraineeshipApplicationWriteRepository> _traineeshipApplicationWriteRepository;
+        private Mock<ILogService> _mockLogService;
+        private Mock<IApprenticeshipApplicationWriteRepository> _mockApprenticeshipApplicationWriteRepository;
+        private Mock<ITraineeshipApplicationWriteRepository> _mockTraineeshipApplicationWriteRepository;
 
         private HardDeleteApplicationStrategy _strategy;
 
         [SetUp]
         public void SetUp()
         {
-            _apprenticeshipApplicationWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
-            _traineeshipApplicationWriteRepository = new Mock<ITraineeshipApplicationWriteRepository>();
+            _mockLogService = new Mock<ILogService>();
+            _mockApprenticeshipApplicationWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
+            _mockTraineeshipApplicationWriteRepository = new Mock<ITraineeshipApplicationWriteRepository>();
 
             _strategy = new HardDeleteApplicationStrategy(
-                _apprenticeshipApplicationWriteRepository.Object,
-                _traineeshipApplicationWriteRepository.Object);
+                _mockLogService.Object,
+                _mockApprenticeshipApplicationWriteRepository.Object,
+                _mockTraineeshipApplicationWriteRepository.Object);
         }
 
         [Test]
@@ -37,7 +41,7 @@
             _strategy.Delete(VacancyType.Apprenticeship, applicationId);
 
             // Assert.
-            _apprenticeshipApplicationWriteRepository.Verify(mock => mock
+            _mockApprenticeshipApplicationWriteRepository.Verify(mock => mock
                 .Delete(applicationId), Times.Once);
         }
 
@@ -51,7 +55,7 @@
             _strategy.Delete(VacancyType.Traineeship, applicationId);
 
             // Assert.
-            _traineeshipApplicationWriteRepository.Verify(mock => mock
+            _mockTraineeshipApplicationWriteRepository.Verify(mock => mock
                 .Delete(applicationId), Times.Once);
         }
 

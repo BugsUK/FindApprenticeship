@@ -11,6 +11,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
+    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -18,6 +19,7 @@
     [TestFixture]
     public class SubmittedApplicationHousekeeperTests
     {
+        private Mock<ILogService> _mockLogService;
         private Mock<IConfigurationService> _mockConfigurationService;
         private Mock<IApprenticeshipApplicationReadRepository> _mockApprenticeshipApplicationReadRepository;
         private Mock<ITraineeshipApplicationReadRepository> _mockTraineeshipApplicationReadRepository;
@@ -39,6 +41,8 @@
                 .Build<HousekeepingConfiguration>()
                 .Create();
 
+            _mockLogService = new Mock<ILogService>();
+
             _mockConfigurationService
                 .Setup(mock => mock
                     .Get<HousekeepingConfiguration>())
@@ -49,13 +53,14 @@
             _mockSuccessor = new Mock<IApplicationHousekeeper>();
 
             _housekeeper = new SubmittedApplicationHousekeeper(
+                _mockLogService.Object,
                 _mockConfigurationService.Object,
                 _mockApprenticeshipApplicationReadRepository.Object,
                 _mockTraineeshipApplicationReadRepository.Object,
                 _mockAuditApplicationDetailStrategy.Object,
                 _mockHardDeleteApplicationStrategy.Object)
             {
-                Succesor = _mockSuccessor.Object
+                Successor = _mockSuccessor.Object
             };
         }
 
@@ -104,7 +109,7 @@
 
             // Assert.
             requests.Select(each => each.ApplicationId).ShouldAllBeEquivalentTo(applicationIds);
-            Assert.That(requests.All(each => each.VacancyType == VacancyType.Apprenticeship));
+            Assert.That(requests.All(each => each.VacancyType == VacancyType.Traineeship));
         }
 
         [TestCase(1)]

@@ -2,7 +2,9 @@
 {
     using System;
     using System.Linq;
+    using Application.Candidates.Configuration;
     using Application.Communications.Housekeeping;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Interfaces.Logging;
@@ -14,6 +16,7 @@
     public class RootCommunicationHousekeeperTests
     {
         private Mock<ILogService> _mockLogService;
+        private Mock<IConfigurationService> _mockConfigurationService;
         private Mock<IMessageBus> _mockMessageBus;
 
         private Mock<IApplicationStatusAlertCommunicationHousekeeper> _mockApplicationStatusAlertCommunicationHousekeeper;
@@ -21,19 +24,36 @@
         private Mock<ISavedSearchAlertCommunicationHousekeeper> _mockSavedSearchAlertCommunicationHousekeeper;
 
         private RootCommunicationHousekeeper _housekeeper;
+        private HousekeepingConfiguration _housekeepingConfiguration;
 
         [SetUp]
         public void SetUp()
         {
             _mockLogService = new Mock<ILogService>();
+            _mockConfigurationService = new Mock<IConfigurationService>();
             _mockMessageBus = new Mock<IMessageBus>();
 
-            _mockApplicationStatusAlertCommunicationHousekeeper = new Mock<IApplicationStatusAlertCommunicationHousekeeper>();
-            _mockExpiringDraftApplicationAlertCommunicationHousekeeper = new Mock<IExpiringDraftApplicationAlertCommunicationHousekeeper>();
-            _mockSavedSearchAlertCommunicationHousekeeper = new Mock<ISavedSearchAlertCommunicationHousekeeper>();
+            _mockApplicationStatusAlertCommunicationHousekeeper =
+                new Mock<IApplicationStatusAlertCommunicationHousekeeper>();
+
+            _mockExpiringDraftApplicationAlertCommunicationHousekeeper =
+                new Mock<IExpiringDraftApplicationAlertCommunicationHousekeeper>();
+
+            _mockSavedSearchAlertCommunicationHousekeeper =
+                new Mock<ISavedSearchAlertCommunicationHousekeeper>();
+
+            _housekeepingConfiguration = new Fixture()
+                .Build<HousekeepingConfiguration>()
+                .Create();
+
+            _mockConfigurationService
+                .Setup(mock => mock
+                    .Get<HousekeepingConfiguration>())
+                .Returns(_housekeepingConfiguration);
 
             _housekeeper = new RootCommunicationHousekeeper(
                 _mockLogService.Object,
+                _mockConfigurationService.Object,
                 _mockMessageBus.Object,
                 _mockApplicationStatusAlertCommunicationHousekeeper.Object,
                 _mockExpiringDraftApplicationAlertCommunicationHousekeeper.Object,
@@ -77,12 +97,13 @@
 
             // Act.
             var count = _housekeeper.QueueHousekeepingRequests();
+
+            // Assert.
             var expectedUniqueCount =
                 statusAlertHousekeepingRequests.Count +
                 expiringDraftAlertHousekeepingRequests.Count +
                 savedSearchAlertHousekeepingRequests.Count - 2;
 
-            // Assert.
             count.Should().Be(expectedUniqueCount);
         }
         
@@ -96,11 +117,49 @@
                 CommunicationType = CommunicationTypes.Unknown
             };
 
-            // Assert.
+            // Act.
             _housekeeper.Handle(request);
 
+            // Assert.
             _mockApplicationStatusAlertCommunicationHousekeeper.Verify(mock => mock
                 .Handle(request), Times.Once);
+        }
+
+        [TestCase(0, 1, 1, 1)]
+        [TestCase(1, 0, 1, 1)]
+        [TestCase(1, 1, 0, 1)]
+        [TestCase(1, 1, 1, 0)]
+        public void ShouldNotQueueHousekeepingRequestsIfConfigurationInvalid(
+            int housekeepingCycleInHours,
+            int hardDeleteApplicationStatusAlertAfterCycles,
+            int hardDeleteExpiringDraftApplicationAlertAfterCycles,
+            int hardDeleteSavedSearchAlertAfterCycles)
+        {
+            // Arrange.
+            _housekeepingConfiguration.HousekeepingCycleInHours = housekeepingCycleInHours;
+
+            _housekeepingConfiguration.Communication = new CommunicationHousekeepingConfiguration
+            {
+                HardDeleteApplicationStatusAlertAfterCycles = hardDeleteApplicationStatusAlertAfterCycles,
+                HardDeleteExpiringDraftApplicationAlertAfterCycles = hardDeleteExpiringDraftApplicationAlertAfterCycles,
+                HardDeleteSavedSearchAlertAfterCycles = hardDeleteSavedSearchAlertAfterCycles
+            };
+
+            // Act.
+            _housekeeper.QueueHousekeepingRequests();
+
+            // Assert.
+            _mockApplicationStatusAlertCommunicationHousekeeper.Verify(mock => mock
+                .GetHousekeepingRequests(), Times.Never);
+
+            _mockExpiringDraftApplicationAlertCommunicationHousekeeper.Verify(mock => mock
+                    .GetHousekeepingRequests(), Times.Never);
+
+            _mockSavedSearchAlertCommunicationHousekeeper.Verify(mock => mock
+                .GetHousekeepingRequests(), Times.Never);
+
+            _mockLogService.Verify(mock => mock
+                .Error(It.IsAny<string>(), It.IsAny<object[]>()), Times.Once());
         }
     }
 }

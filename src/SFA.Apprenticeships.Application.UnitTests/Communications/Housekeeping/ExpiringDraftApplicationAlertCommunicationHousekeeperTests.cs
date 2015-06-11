@@ -170,7 +170,7 @@
         }
 
         [Test]
-        public void ShouldCallSuccesor()
+        public void ShouldCallSuccessor()
         {
             // Arrange.
             var request = new CommunicationHousekeepingRequest

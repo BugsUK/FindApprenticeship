@@ -7,19 +7,23 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
+    using Interfaces.Logging;
     using Strategies;
 
     public class DraftApplicationForExpiredVacancyHousekeeper : IDraftApplicationForExpiredVacancyHousekeeper
     {
+        private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IHardDeleteApplicationStrategy _hardDeleteApplicationStrategy;
 
         public DraftApplicationForExpiredVacancyHousekeeper(
+            ILogService logService,
             IConfigurationService configurationService,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IHardDeleteApplicationStrategy hardDeleteApplicationStrategy)
         {
+            _logService = logService;
             _configurationService = configurationService;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _hardDeleteApplicationStrategy = hardDeleteApplicationStrategy;
@@ -48,6 +52,9 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 
                         if (application == null)
                         {
+                            _logService.Debug("Apprenticeship application no longer exists, no housekeeping to do for id={0}",
+                                request.ApplicationId);
+
                             return;
                         }
 
@@ -69,10 +76,10 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                     throw new InvalidOperationException(string.Format("Unknown vacancy type: {0}.", request.VacancyType));
             }
 
-            Succesor.Handle(request);
+            Successor.Handle(request);
         }
 
-        public IApplicationHousekeeper Succesor { get; set; }
+        public IApplicationHousekeeper Successor { get; set; }
 
         #region Helpers
 

@@ -9,10 +9,12 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
+    using Interfaces.Logging;
     using Strategies;
 
     public class SubmittedApplicationHousekeeper : ISubmittedApplicationHousekeeper
     {
+        private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
@@ -20,12 +22,14 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
         private readonly IHardDeleteApplicationStrategy _hardDeleteApplicationStrategy;
 
         public SubmittedApplicationHousekeeper(
+            ILogService logService,
             IConfigurationService configurationService,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IAuditApplicationDetailStrategy auditApplicationDetailStrategy,
             IHardDeleteApplicationStrategy hardDeleteApplicationStrategy)
         {
+            _logService = logService;
             _configurationService = configurationService;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
@@ -51,7 +55,7 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                 .Select(each => new ApplicationHousekeepingRequest
                 {
                     ApplicationId = each,
-                    VacancyType = VacancyType.Apprenticeship
+                    VacancyType = VacancyType.Traineeship
                 }));
 
             return requests;
@@ -70,6 +74,8 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 
                         if (application == null)
                         {
+                            _logService.Debug("Apprenticeship application no longer exists, no housekeeping to do for id={0}",
+                                request.ApplicationId);
                             return;
                         }
 
@@ -83,6 +89,8 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 
                         if (application == null)
                         {
+                            _logService.Debug("Traineeship application no longer exists, no housekeeping to do for id={0}",
+                                request.ApplicationId);
                             return;
                         }
 
@@ -108,10 +116,10 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                 return;
             }
 
-            Succesor.Handle(request);
+            Successor.Handle(request);
         }
 
-        public IApplicationHousekeeper Succesor { get; set; }
+        public IApplicationHousekeeper Successor { get; set; }
 
         #region Helpers
 

@@ -4,7 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Applications.Housekeeping;
+    using Application.Candidates.Configuration;
     using Domain.Entities.Vacancies;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Interfaces.Logging;
@@ -16,17 +18,20 @@
     public class RootApplicationHousekeeperTests
     {
         private Mock<ILogService> _mockLogService;
+        private Mock<IConfigurationService> _mockConfigurationService;
         private Mock<IMessageBus> _mockMessageBus;
 
         private Mock<IDraftApplicationForExpiredVacancyHousekeeper> _mockDraftApplicationForExpiredVacancyHousekeeper;
         private Mock<ISubmittedApplicationHousekeeper> _mockSubmittedApplicationHousekeeper;
 
         private RootApplicationHousekeeper _housekeeper;
+        private HousekeepingConfiguration _housekeepingConfiguration;
 
         [SetUp]
         public void SetUp()
         {
             _mockLogService = new Mock<ILogService>();
+            _mockConfigurationService = new Mock<IConfigurationService>();
             _mockMessageBus = new Mock<IMessageBus>();
 
             _mockDraftApplicationForExpiredVacancyHousekeeper =
@@ -35,8 +40,18 @@
             _mockSubmittedApplicationHousekeeper =
                 new Mock<ISubmittedApplicationHousekeeper>();
 
+            _housekeepingConfiguration = new Fixture()
+                .Build<HousekeepingConfiguration>()
+                .Create();
+
+            _mockConfigurationService
+                .Setup(mock => mock
+                    .Get<HousekeepingConfiguration>())
+                .Returns(_housekeepingConfiguration);
+
             _housekeeper = new RootApplicationHousekeeper(
                 _mockLogService.Object,
+                _mockConfigurationService.Object,
                 _mockMessageBus.Object,
                 _mockDraftApplicationForExpiredVacancyHousekeeper.Object,
                 _mockSubmittedApplicationHousekeeper.Object);
@@ -163,6 +178,37 @@
 
             _mockDraftApplicationForExpiredVacancyHousekeeper.Verify(mock => mock
                 .Handle(request), Times.Once);
+        }
+
+        [TestCase(0, 1, 1)]
+        [TestCase(1, 0, 1)]
+        [TestCase(1, 1, 0)]
+        public void ShouldNotQueueHousekeepingRequestsIfConfigurationInvalid(
+            int housekeepingCycleInHours,
+            int hardDeleteDraftApplicationForExpiredVacancyAfterCycles,
+            int hardDeleteSubmittedApplicationAfterCycles)
+        {
+            // Arrange.
+            _housekeepingConfiguration.HousekeepingCycleInHours = housekeepingCycleInHours;
+
+            _housekeepingConfiguration.Application = new ApplicationHousekeepingConfiguration
+            {
+                HardDeleteDraftApplicationForExpiredVacancyAfterCycles = hardDeleteDraftApplicationForExpiredVacancyAfterCycles,
+                HardDeleteSubmittedApplicationAfterCycles = hardDeleteSubmittedApplicationAfterCycles
+            };
+
+            // Act.
+            _housekeeper.QueueHousekeepingRequests();
+
+            // Assert.
+            _mockDraftApplicationForExpiredVacancyHousekeeper.Verify(mock => mock
+                .GetHousekeepingRequests(), Times.Never);
+
+            _mockSubmittedApplicationHousekeeper.Verify(mock => mock
+                .GetHousekeepingRequests(), Times.Never);
+
+            _mockLogService.Verify(mock => mock
+                .Error(It.IsAny<string>(), It.IsAny<object[]>()), Times.Once());
         }
     }
 }
