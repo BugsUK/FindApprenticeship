@@ -18,6 +18,8 @@
 
         string Description { get; set; }
 
+        int NumberOfPositions { get; set; }
+
         GeoPoint Location { get; set; }
 
         string VacancyReference { get; set; }

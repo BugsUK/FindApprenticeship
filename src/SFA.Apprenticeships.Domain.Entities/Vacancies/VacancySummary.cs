@@ -19,6 +19,7 @@
             StartDate = vacancySummary.StartDate;
             ClosingDate = vacancySummary.ClosingDate;
             Description = vacancySummary.Description;
+            NumberOfPositions = vacancySummary.NumberOfPositions;
             EmployerName = vacancySummary.EmployerName;
             ProviderName = vacancySummary.ProviderName;
             IsPositiveAboutDisability = vacancySummary.IsPositiveAboutDisability;
@@ -42,6 +43,8 @@
         public DateTime ClosingDate { get; set; }
 
         public string Description { get; set; }
+
+        public int NumberOfPositions { get; set; }
 
         public string EmployerName { get; set; }
 

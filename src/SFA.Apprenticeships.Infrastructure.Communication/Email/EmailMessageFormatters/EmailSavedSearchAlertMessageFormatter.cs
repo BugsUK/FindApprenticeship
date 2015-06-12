@@ -108,6 +108,7 @@
                     subCategory = FullNameFormatter.Format(result.SubCategory),
                     employerName = result.EmployerName,
                     description = result.Description,
+                    numberOfPositions = result.NumberOfPositions,
                     closingDate = FormatDate(result.ClosingDate),
                     postedDate = FormatDate(result.PostedDate),
                     startDate = FormatDate(result.StartDate),

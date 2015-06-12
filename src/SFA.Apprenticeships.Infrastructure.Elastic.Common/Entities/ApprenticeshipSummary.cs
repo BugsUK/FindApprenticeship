@@ -31,6 +31,9 @@
         public string Description { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
+        public int NumberOfPositions { get; set; }
+
+        [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public bool IsPositiveAboutDisability { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.Analyzed)]

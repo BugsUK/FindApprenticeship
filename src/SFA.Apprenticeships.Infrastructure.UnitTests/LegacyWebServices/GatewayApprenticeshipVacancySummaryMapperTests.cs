@@ -28,7 +28,7 @@
                 VacancyLocationType = "Standard",
                 ClosingDate = DateTime.Today.AddDays(1),
                 EmployerName = "EmployerName",
-                VacancyTitle = "VacancyTitle",
+                VacancyTitle = "VacancyTitle"
             };
 
             // Act.
@@ -65,7 +65,7 @@
         public void ShouldMapVacancyLocationTypeMultipleLocation()
         {
             // Arrange.
-            var src = new Infrastructure.LegacyWebServices.GatewayServiceProxy.VacancySummary
+            var src = new VacancySummary
             {
                 VacancyType = "IntermediateLevelApprenticeship",
                 VacancyLocationType = "MultipleLocation"
@@ -150,7 +150,7 @@
             {
                 VacancyReference = 42,
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "MultipleLocation",
+                VacancyLocationType = "MultipleLocation"
             };
 
             // Act.
@@ -169,7 +169,7 @@
             {
                 VacancyReference = null,
                 VacancyType = "IntermediateLevelApprenticeship",
-                VacancyLocationType = "MultipleLocation",
+                VacancyLocationType = "MultipleLocation"
             };
 
             // Act.
@@ -178,6 +178,27 @@
             // Assert.
             dest.Should().NotBeNull();
             dest.VacancyReference.Should().BeNull();
+        }
+
+        [TestCase(5, 5)]
+        [TestCase(null, 1)]
+        public void ShouldMapNumberOfPositions(int? numberOfPositions, int expectedNumberOfPositions)
+        {
+            // Arrange.
+            var src = new VacancySummary
+            {
+                VacancyReference = null,
+                VacancyType = "IntermediateLevelApprenticeship",
+                VacancyLocationType = "MultipleLocation",
+                NumberOfPositions = (short?)numberOfPositions
+            };
+
+            // Act.
+            var dest = new LegacyVacancySummaryMapper().Map<VacancySummary, ApprenticeshipSummary>(src);
+
+            // Assert.
+            dest.Should().NotBeNull();
+            dest.NumberOfPositions.Should().Be(expectedNumberOfPositions);
         }
     }
 }

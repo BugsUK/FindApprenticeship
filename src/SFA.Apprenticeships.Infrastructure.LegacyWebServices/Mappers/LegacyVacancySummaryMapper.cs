@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Mappers
 {
+    using System;
     using Apprenticeships;
     using Common.Mappers;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -41,6 +42,9 @@
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.ShortDescription))
 
+                .ForMember(dest => dest.NumberOfPositions,
+                    opt => opt.MapFrom(src => Convert.ToInt32(src.NumberOfPositions ?? 1)))
+
                 .ForMember(dest => dest.IsPositiveAboutDisability,
                     opt => opt.MapFrom(src => src.IsDisableAllowed))
 
@@ -72,8 +76,6 @@
                 .ForMember(dest => dest.CategoryCode, opt => opt.Ignore())
 
                 .ForMember(dest => dest.SubCategoryCode, opt => opt.Ignore());
-
-
         }
 
         private void CreateTraineeshipSummaryMap()
@@ -102,6 +104,9 @@
 
                 .ForMember(dest => dest.Description,
                     opt => opt.MapFrom(src => src.ShortDescription))
+
+                .ForMember(dest => dest.NumberOfPositions,
+                    opt => opt.MapFrom(src => Convert.ToInt32(src.NumberOfPositions ?? 1)))
 
                 .ForMember(dest => dest.IsPositiveAboutDisability,
                     opt => opt.MapFrom(src => src.IsDisableAllowed))

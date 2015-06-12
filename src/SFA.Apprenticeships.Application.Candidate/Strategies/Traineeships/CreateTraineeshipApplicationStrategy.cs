@@ -53,6 +53,7 @@
                     StartDate = vacancyDetails.StartDate,
                     ClosingDate = vacancyDetails.ClosingDate,
                     Description = vacancyDetails.Description,
+                    NumberOfPositions = vacancyDetails.NumberOfPositions,
                     Location = null // NOTE: no equivalent in legacy vacancy details.
                 },
                 // Populate traineeshipApplication template with candidate's most recent information.
