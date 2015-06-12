@@ -4,8 +4,6 @@ namespace SFA.Apprenticeships.Application.Candidates
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Configuration;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -51,7 +49,7 @@ namespace SFA.Apprenticeships.Application.Candidates
 
             var counter = 0;
 
-            Parallel.ForEach(candidateIds, candidateId =>
+            foreach (var candidateId in candidateIds)
             {
                 var candidateHousekeeping = new CandidateHousekeeping
                 {
@@ -59,11 +57,13 @@ namespace SFA.Apprenticeships.Application.Candidates
                 };
 
                 _messageBus.PublishMessage(candidateHousekeeping);
-                Interlocked.Increment(ref counter);
-            });
+                counter++;
+            }
 
             stopwatch.Stop();
+
             message += string.Format(". Queuing {0} candidates for housekeeping took {1}", counter, stopwatch.Elapsed);
+
             if (stopwatch.ElapsedMilliseconds > 60000)
             {
                 _logService.Warn(message);
