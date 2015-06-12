@@ -18,6 +18,8 @@
 
         public string Description { get; set; }
 
+        public int NumberOfPositions { get; set; }
+
         public GeoPointViewModel Location { get; set; }
 
         public double Distance { get; set; }

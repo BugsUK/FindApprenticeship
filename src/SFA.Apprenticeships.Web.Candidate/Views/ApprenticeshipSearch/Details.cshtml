@@ -83,6 +83,12 @@
 
                     <h3 class="bold-small">Reference number</h3>
                     <p id="vacancy-reference-id">@Model.VacancyReference</p>
+                    
+                    @if (@Model.NumberOfPositions > 0)
+                    {
+                        <h3 class="bold-small">Positions available</h3>
+                        <p id="vacancy-reference-id">@Model.NumberOfPositions positions available</p>
+                    }
                 </div>
             </div>
             <div class="grid grid-2-3">

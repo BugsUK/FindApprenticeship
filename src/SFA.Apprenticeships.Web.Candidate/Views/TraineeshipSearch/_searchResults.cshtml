@@ -33,7 +33,13 @@ else
                         <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
                         <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                     </div>
-                    <p>@vacancy.Description</p>
+                    <p>
+                        @vacancy.Description
+                        @if (vacancy.NumberOfPositions > 1)
+                        {
+                            <span class="font-xsmall inl-block">(@vacancy.NumberOfPositions positions available)</span>
+                        }
+                    </p>
                     <div class="grid-wrapper">
                         <div class="grid grid-2-3">
                             <ul class="list-text no-btm-margin">

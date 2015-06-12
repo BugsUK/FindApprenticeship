@@ -37,6 +37,8 @@
 
         public string Description { get; set; }
 
+        public int NumberOfPositions { get; set; }
+
         public string FullDescription { get; set; }
 
         public string SubCategory { get; set; }
