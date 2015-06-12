@@ -57,9 +57,9 @@
 
             _logger.Debug("Calling UserAccountService to discover if the username {0} is available.", username);
 
-            // check status of user (unactivated account should also be considered "available")
+            // check status of user (unactivated or account pending deletion should also be considered "available")
             var user = _userReadRepository.Get(username, false);
-            return user == null || user.Status == UserStatuses.PendingActivation;
+            return user == null || user.IsInState(UserStatuses.PendingActivation, UserStatuses.PendingDeletion);
         }
 
         public void Register(string username, Guid userId, string activationCode, UserRoles roles)

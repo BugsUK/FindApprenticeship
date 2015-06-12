@@ -97,7 +97,7 @@
         }
 
         [Test]
-        public void ExistingUserMustBePendingActivation()
+        public void ExistingUserMustNotBeActive()
         {
             const string emailAddress = "active@user.com";
             const string password = "Password01";
@@ -275,6 +275,108 @@
             strategy.RegisterCandidate(candidate, password);
 
             communicationService.Verify(s => s.SendMessageToCandidate(candidateId, MessageTypes.SendActivationCode, It.IsAny<CommunicationToken[]>()), Times.Once);
+        }
+
+        [Test]
+        public void RegisteringUserPendingDeletionIsValid()
+        {
+            const string emailAddress = "pendingdeletion@user.com";
+            const string password = "Password01";
+            var candidateId = Guid.NewGuid();
+
+            var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
+            var user = new UserBuilder(emailAddress, candidateId).WithStatus(UserStatuses.PendingDeletion).Build();
+
+            var userReadRepository = new Mock<IUserReadRepository>();
+            userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);
+            var strategy = new RegisterCandidateStrategyBuilder().With(userReadRepository).With(userReadRepository).Build();
+
+            Action action = () => strategy.RegisterCandidate(candidate, password);
+
+            action.ShouldNotThrow<CustomException>();
+        }
+
+        [Test]
+        public void RegisteringUserPendingDeletionCreatesAuthenticationEntity()
+        {
+            const string emailAddress = "pendingdeletion@user.com";
+            const string password = "Password01";
+            var candidateId = Guid.NewGuid();
+
+            var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
+            var user = new UserBuilder(emailAddress, candidateId).WithStatus(UserStatuses.PendingDeletion).Build();
+
+            var userReadRepository = new Mock<IUserReadRepository>();
+            userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);
+            var authenticationService = new Mock<IAuthenticationService>();
+            var strategy = new RegisterCandidateStrategyBuilder().With(userReadRepository).With(authenticationService).Build();
+
+            strategy.RegisterCandidate(candidate, password);
+
+            authenticationService.Verify(s => s.CreateUser(It.Is<Guid>(g => g != Guid.Empty), password), Times.Once);
+        }
+
+        [Test]
+        public void RegisteringUserPendingDeletionRegistersUserAccount()
+        {
+            const string emailAddress = "pendingdeletion@user.com";
+            const string password = "Password01";
+            var candidateId = Guid.NewGuid();
+
+            var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
+            var user = new UserBuilder(emailAddress, candidateId).WithStatus(UserStatuses.PendingDeletion).Build();
+
+            var userReadRepository = new Mock<IUserReadRepository>();
+            userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);
+            var userAccountService = new Mock<IUserAccountService>();
+            var strategy = new RegisterCandidateStrategyBuilder().With(userReadRepository).With(userAccountService).Build();
+
+            strategy.RegisterCandidate(candidate, password);
+
+            userAccountService.Verify(s => s.Register(emailAddress, It.Is<Guid>(g => g != Guid.Empty), It.IsAny<string>(), UserRoles.Candidate), Times.Once);
+        }
+
+        [Test]
+        public void RegisteringUserPendingDeletionCreatesNewGuid()
+        {
+            const string emailAddress = "pendingdeletion@user.com";
+            const string password = "Password01";
+            var candidateId = Guid.NewGuid();
+
+            var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
+            var user = new UserBuilder(emailAddress, candidateId).WithStatus(UserStatuses.PendingDeletion).Build();
+
+            var userReadRepository = new Mock<IUserReadRepository>();
+            userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);
+            var candidateWriteRepository = new Mock<ICandidateWriteRepository>();
+            Candidate savedCandidate = null;
+            candidateWriteRepository.Setup(r => r.Save(It.IsAny<Candidate>())).Returns<Candidate>(c => c).Callback<Candidate>(c => savedCandidate = c);
+            var strategy = new RegisterCandidateStrategyBuilder().With(userReadRepository).With(candidateWriteRepository).Build();
+
+            strategy.RegisterCandidate(candidate, password);
+
+            savedCandidate.Should().NotBeNull();
+            savedCandidate.EntityId.Should().NotBeEmpty();
+        }
+
+        [Test]
+        public void RegisteringUserPendingDeletionSendsActivationCode()
+        {
+            const string emailAddress = "pendingdeletion@user.com";
+            const string password = "Password01";
+            var candidateId = Guid.NewGuid();
+
+            var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
+            var user = new UserBuilder(emailAddress, candidateId).WithStatus(UserStatuses.PendingDeletion).Build();
+
+            var userReadRepository = new Mock<IUserReadRepository>();
+            userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);
+            var communicationService = new Mock<ICommunicationService>();
+            var strategy = new RegisterCandidateStrategyBuilder().With(userReadRepository).With(communicationService).Build();
+
+            strategy.RegisterCandidate(candidate, password);
+
+            communicationService.Verify(s => s.SendMessageToCandidate(It.Is<Guid>(g => g != Guid.Empty), MessageTypes.SendActivationCode, It.IsAny<CommunicationToken[]>()), Times.Once);
         }
     }
 }

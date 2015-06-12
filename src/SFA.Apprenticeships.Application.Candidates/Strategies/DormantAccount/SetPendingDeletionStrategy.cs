@@ -8,13 +8,17 @@
 
     public class SetPendingDeletionStrategy : HousekeepingStrategy
     {
+        private readonly IUserReadRepository _userReadRepository;
         private readonly IUserWriteRepository _userWriteRepository;
         private readonly IAuditRepository _auditRepository;
         private readonly ILogService _logService;
 
-        public SetPendingDeletionStrategy(IConfigurationService configurationService, IUserWriteRepository userWriteRepository, IAuditRepository auditRepository, ILogService logService)
+        public SetPendingDeletionStrategy(IConfigurationService configurationService,
+            IUserReadRepository userReadRepository, IUserWriteRepository userWriteRepository,
+            IAuditRepository auditRepository, ILogService logService)
             : base(configurationService)
         {
+            _userReadRepository = userReadRepository;
             _userWriteRepository = userWriteRepository;
             _auditRepository = auditRepository;
             _logService = logService;
@@ -30,7 +34,12 @@
 
             if (housekeepingCyclesSinceLastLogin >= Configuration.DormantAccountStrategy.SetPendingDeletionAfterCycles)
             {
-                return SetUserStatusPendingDeletion(user);
+                var existingUser = _userReadRepository.Get(user.Username, false);
+
+                if (existingUser == null || !existingUser.IsInState(UserStatuses.PendingDeletion))
+                {
+                    return SetUserStatusPendingDeletion(user);
+                }
             }
 
             return false;

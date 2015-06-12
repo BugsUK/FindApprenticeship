@@ -49,5 +49,18 @@
 
             service.IsUsernameAvailable(username).Should().BeTrue();
         }
+
+        [Test]
+        public void IsUsernameAvailable_ExistingUserPendingDeletion()
+        {
+            const string username = "pendingdeletion@user.com";
+            var user = new UserBuilder(username, Guid.NewGuid()).WithStatus(UserStatuses.PendingDeletion).Build();
+
+            var userReadRepository = new Mock<IUserReadRepository>();
+            userReadRepository.Setup(r => r.Get(username, false)).Returns(user);
+            var service = new UserAccountServiceBuilder().With(userReadRepository).Build();
+
+            service.IsUsernameAvailable(username).Should().BeTrue();
+        }
     }
 }

@@ -78,5 +78,27 @@
             savedUser.Should().NotBeNull();
             savedUser.Status.Should().Be(UserStatuses.PendingDeletion);
         }
+
+        [Test]
+        public void MustNotBeExistingUserPendingDeletion()
+        {
+            const string username = "user@test.com";
+            var lastLogin = DateTime.UtcNow.AddDays(-365);
+
+            var candidateId = Guid.NewGuid();
+            var user = new UserBuilder(username, candidateId).WithStatus(UserStatuses.Dormant).WithLastLogin(lastLogin).Build();
+            var candidate = new CandidateBuilder(candidateId).Build();
+
+            var userReadRepository = new Mock<IUserReadRepository>();
+            var userPendingDeletion = new UserBuilder(username, Guid.NewGuid()).WithStatus(UserStatuses.PendingDeletion).Build();
+            userReadRepository.Setup(r => r.Get(username, false)).Returns(userPendingDeletion);
+            var successor = new Mock<IHousekeepingStrategy>();
+            var strategy = new SetPendingDeletionStrategyBuilder().With(userReadRepository).With(successor.Object).Build();
+
+            strategy.Handle(user, candidate);
+
+            //Strategy did not handle the request
+            successor.Verify(s => s.Handle(user, candidate), Times.Once);
+        }
     }
 }

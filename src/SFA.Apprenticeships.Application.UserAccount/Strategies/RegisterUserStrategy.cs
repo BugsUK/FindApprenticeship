@@ -26,9 +26,9 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
         {
             var user = _userReadRepository.Get(username, false);
 
-            if (user != null && user.Status != UserStatuses.PendingActivation)
+            if (user != null && !user.IsInState(UserStatuses.PendingActivation, UserStatuses.PendingDeletion))
             {
-                throw new CustomException("Username already in use and is not in pending activation status", Domain.Entities.ErrorCodes.EntityStateError);
+                throw new CustomException("Username already in use and is not in pending activation or deletion status", Domain.Entities.ErrorCodes.EntityStateError);
             }
 
             var newUser = new User

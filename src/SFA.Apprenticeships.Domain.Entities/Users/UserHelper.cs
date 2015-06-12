@@ -62,6 +62,11 @@
             return !string.IsNullOrWhiteSpace(user.PendingUsername);
         }
 
+        public static bool IsInState(this User user, params UserStatuses[] allowedUserStatuses)
+        {
+            return allowedUserStatuses.Contains(user.Status);
+        }
+
         #region Helpers
 
         private static void ClearNonRelatedToLockStateUserStateAttributes(User user)

@@ -43,7 +43,7 @@
             
             var user = _userReadRepository.Get(username, false);
 
-            if (user == null)
+            if (user == null || user.IsInState(UserStatuses.PendingDeletion))
             {
                 // Process registration for brand new username
                 var newCandidateId = Guid.NewGuid();
