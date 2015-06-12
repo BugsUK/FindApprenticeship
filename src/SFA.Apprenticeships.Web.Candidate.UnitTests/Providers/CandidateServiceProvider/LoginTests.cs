@@ -1,12 +1,10 @@
-﻿using SFA.Apprenticeships.Web.Candidate.Constants.Pages;
-using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
-
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.CandidateServiceProvider
+﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.CandidateServiceProvider
 {
     using System;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Users;
     using Builders;
+    using Constants.Pages;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
     using FluentAssertions;

@@ -5,6 +5,7 @@
 
     public class UserBuilder
     {
+        private readonly string _username;
         private readonly Guid _userId;
         private DateTime _dateCreated;
         private UserStatuses _userStatus;
@@ -19,10 +20,16 @@
             _dateCreated = DateTime.Now;
         }
 
+        public UserBuilder(string username, Guid userId): this(userId)
+        {
+            _username = username;
+        }
+
         public User Build()
         {
             var user = new User
             {
+                Username = _username,
                 DateCreated = _dateCreated,
                 DateUpdated = _dateUpdated,
                 EntityId = _userId,

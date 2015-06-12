@@ -32,6 +32,8 @@
         {
             _logger.Debug("Called Mongodb to get user with Id={0}", id);
 
+            //Note that setting a user to pending deletion doesn't prevent it from being retrieved.
+            //Code futher up the stack should perform the neccessary logic checks
             var mongoEntity = Collection.FindOneById(id);
 
             return mongoEntity == null ? null : _mapper.Map<MongoUser, User>(mongoEntity);
@@ -42,9 +44,7 @@
             _logger.Debug("Called Mongodb to get user with username={0}", username);
 
             //Note that setting a user to pending deletion doesn't prevent it from being retrieved.
-            //The login process checks the user status and prevents login if user is set to pending deletion.
-            //The username cannot be reused until the user account is hard deleted
-            //This is to prevent violation of uniqueness constraints in the repository
+            //Code futher up the stack should perform the neccessary logic checks
             var mongoEntity = Collection.FindOne(Query.EQ("Username", username.ToLower()));
 
             if (mongoEntity == null && errorIfNotFound)

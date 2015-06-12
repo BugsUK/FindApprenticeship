@@ -136,6 +136,8 @@
     <Compile Include="Candidates\Strategies\SendMobileVerificationCodeReminderStrategyTests.cs" />
     <Compile Include="Candidates\Strategies\ActivationReminder\SetPendingDeletionStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
+    <Compile Include="Candidate\Strategies\RegisterCandidateStrategy\RegisterCandidateStrategyBuilder.cs" />
+    <Compile Include="Candidate\Strategies\RegisterCandidateStrategy\RegisterCandidateStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyBuilder.cs" />
@@ -172,8 +174,12 @@
     <Compile Include="Applications\Housekeeping\DraftApplicationForExpiredVacancyHousekeeperTests.cs" />
     <Compile Include="Strategies\AuditApplicationDetailStrategyTests.cs" />
     <Compile Include="Strategies\HardDeleteApplicationStrategyTests.cs" />
+    <Compile Include="UserAccount\Builders\RegisterUserStrategyBuilder.cs" />
+    <Compile Include="UserAccount\Builders\UserAccountServiceBuilder.cs" />
+    <Compile Include="UserAccount\RegisterUserStrategyTests.cs" />
     <Compile Include="UserAccount\SendAccountUnlockTests.cs" />
     <Compile Include="UserAccount\UnlockAccountStrategyTests.cs" />
+    <Compile Include="UserAccount\UserAccountServiceTests.cs" />
     <Compile Include="Vacancies\Extensions\ApprenticeshipSummaryExtensionsTests.cs" />
     <Compile Include="Vacancies\Factories\SearchParametersFactoryTests.cs" />
     <Compile Include="Vacancies\SavedSearchProcessorTests\SavedSearchProcessorBuilder.cs" />
