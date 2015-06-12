@@ -407,7 +407,7 @@ WriteLiteral("</p>\r\n\r\n");
             #line hidden
             
             #line 64 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                 if (@Model.NumberOfPositions > 0)
+                 if (@Model.NumberOfPositions > 1)
                 {
 
             
