@@ -83,6 +83,11 @@
         <xsl:if test="displayDescription='true'">
           <p>
             <xsl:value-of select="description"/>
+            <xsl:if test="numberOfPositions > 1">
+              <span style="font-size: 19px;">
+                (<xsl:value-of select="numberOfPositions"/> positions available)
+              </span>
+            </xsl:if>
           </p>
         </xsl:if>
         <xsl:if test="displayDistance='true'">
