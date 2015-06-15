@@ -59,7 +59,6 @@
             For<IDraftApplicationForExpiredVacancyHousekeeper>().Use<DraftApplicationForExpiredVacancyHousekeeper>();
             For<ISubmittedApplicationHousekeeper>().Use<SubmittedApplicationHousekeeper>();
             For<IHardDeleteApplicationStrategy>().Use<HardDeleteApplicationStrategy>();
-            For<IAuditApplicationDetailStrategy>().Use<AuditApplicationDetailStrategy>();
             For<IAuditRepository>().Use<AuditRepository>();
 
             // Communication Housekeeping

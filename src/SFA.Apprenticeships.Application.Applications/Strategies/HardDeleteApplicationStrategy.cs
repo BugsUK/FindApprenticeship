@@ -33,7 +33,6 @@
                 case VacancyType.Traineeship:
                     _traineeshipApplicationWriteRepository.Delete(applicationId);
                     break;
-
                 default:
                     throw new InvalidOperationException(string.Format("Unknown vacancy type: {0}.", vacancyType));
             }

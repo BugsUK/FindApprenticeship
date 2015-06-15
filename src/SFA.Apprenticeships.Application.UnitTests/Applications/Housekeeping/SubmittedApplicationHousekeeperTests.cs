@@ -4,7 +4,6 @@
     using System.Linq;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
-    using Application.Candidates;
     using Application.Candidates.Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
@@ -24,7 +23,6 @@
         private Mock<IApprenticeshipApplicationReadRepository> _mockApprenticeshipApplicationReadRepository;
         private Mock<ITraineeshipApplicationReadRepository> _mockTraineeshipApplicationReadRepository;
         private Mock<IHardDeleteApplicationStrategy> _mockHardDeleteApplicationStrategy;
-        private Mock<IAuditApplicationDetailStrategy> _mockAuditApplicationDetailStrategy;
         private Mock<IApplicationHousekeeper> _mockSuccessor;
 
         private HousekeepingConfiguration _housekeepingConfiguration;
@@ -49,7 +47,6 @@
                 .Returns(_housekeepingConfiguration);
 
             _mockHardDeleteApplicationStrategy = new Mock<IHardDeleteApplicationStrategy>();
-            _mockAuditApplicationDetailStrategy = new Mock<IAuditApplicationDetailStrategy>();
             _mockSuccessor = new Mock<IApplicationHousekeeper>();
 
             _housekeeper = new SubmittedApplicationHousekeeper(
@@ -57,7 +54,6 @@
                 _mockConfigurationService.Object,
                 _mockApprenticeshipApplicationReadRepository.Object,
                 _mockTraineeshipApplicationReadRepository.Object,
-                _mockAuditApplicationDetailStrategy.Object,
                 _mockHardDeleteApplicationStrategy.Object)
             {
                 Successor = _mockSuccessor.Object
@@ -174,14 +170,45 @@
             _housekeeper.Handle(request);
 
             // Assert.
-            _mockAuditApplicationDetailStrategy.Verify(mock => mock
-                .Audit(request.VacancyType, applicationId, AuditEventTypes.HardDeleteApprenticeshipApplication), Times.Exactly(shouldHandle ? 1 : 0));
-
             _mockHardDeleteApplicationStrategy.Verify(mock => mock
                 .Delete(request.VacancyType, applicationId), Times.Exactly(shouldHandle ? 1 : 0));
 
             _mockSuccessor.Verify(mock => mock
                 .Handle(request), Times.Exactly(shouldHandle ? 0 : 1));
+        }
+
+        [Test]
+        public void ShouldHandleUnsubmitedApprenticeshipApplication()
+        {
+            // Arrange.
+            var applicationId = Guid.NewGuid();
+
+            var application = new Fixture()
+                .Build<ApprenticeshipApplicationDetail>()
+                .With(fixture => fixture.EntityId, applicationId)
+                .With(fixture => fixture.DateApplied, default(DateTime?))
+                .Create();
+
+            _mockApprenticeshipApplicationReadRepository
+                .Setup(mock => mock
+                    .Get(applicationId, false))
+                .Returns(application);
+
+            // Act.
+            var request = new ApplicationHousekeepingRequest
+            {
+                VacancyType = VacancyType.Apprenticeship,
+                ApplicationId = applicationId
+            };
+
+            _housekeeper.Handle(request);
+
+            // Assert.
+            _mockHardDeleteApplicationStrategy.Verify(mock => mock
+                .Delete(request.VacancyType, applicationId), Times.Exactly(0));
+
+            _mockSuccessor.Verify(mock => mock
+                .Handle(request), Times.Exactly(1));
         }
 
         [TestCase(0, true)]
@@ -216,9 +243,6 @@
             _housekeeper.Handle(request);
 
             // Assert.
-            _mockAuditApplicationDetailStrategy.Verify(mock => mock
-                .Audit(request.VacancyType, applicationId, AuditEventTypes.HardDeleteTraineeshipApplication), Times.Exactly(shouldHandle ? 1 : 0));
-
             _mockHardDeleteApplicationStrategy.Verify(mock => mock
                 .Delete(request.VacancyType, applicationId), Times.Exactly(shouldHandle ? 1 : 0));
 

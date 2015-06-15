@@ -107,12 +107,10 @@
     <Compile Include="Housekeeping\DraftApplicationForExpiredVacancyHousekeeper.cs" />
     <Compile Include="Housekeeping\IRootApplicationHousekeeper.cs" />
     <Compile Include="Housekeeping\IApplicationHousekeeper.cs" />
-    <Compile Include="Strategies\AuditApplicationDetailStrategy.cs" />
     <Compile Include="Strategies\HardDeleteApplicationStrategy.cs" />
     <Compile Include="Strategies\IApplicationStatusAlertStrategy.cs" />
     <Compile Include="Strategies\IApplicationStatusUpdateStrategy.cs" />
     <Compile Include="ApplicationVacancyUpdater.cs" />
-    <Compile Include="Strategies\IAuditApplicationDetailStrategy.cs" />
     <Compile Include="Strategies\IHardDeleteApplicationStrategy.cs" />
   </ItemGroup>
   <ItemGroup>

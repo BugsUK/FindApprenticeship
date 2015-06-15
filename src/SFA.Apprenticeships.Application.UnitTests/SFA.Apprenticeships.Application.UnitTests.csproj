@@ -172,7 +172,6 @@
     <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyTests.cs" />
     <Compile Include="Applications\Housekeeping\RootApplicationHousekeeperTests.cs" />
     <Compile Include="Applications\Housekeeping\DraftApplicationForExpiredVacancyHousekeeperTests.cs" />
-    <Compile Include="Strategies\AuditApplicationDetailStrategyTests.cs" />
     <Compile Include="Strategies\HardDeleteApplicationStrategyTests.cs" />
     <Compile Include="UserAccount\Builders\RegisterUserStrategyBuilder.cs" />
     <Compile Include="UserAccount\Builders\UserAccountServiceBuilder.cs" />

@@ -3,7 +3,6 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Candidates;
     using Candidates.Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
@@ -18,7 +17,6 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
         private readonly IConfigurationService _configurationService;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
-        private readonly IAuditApplicationDetailStrategy _auditApplicationDetailStrategy;
         private readonly IHardDeleteApplicationStrategy _hardDeleteApplicationStrategy;
 
         public SubmittedApplicationHousekeeper(
@@ -26,14 +24,12 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
             IConfigurationService configurationService,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            IAuditApplicationDetailStrategy auditApplicationDetailStrategy,
             IHardDeleteApplicationStrategy hardDeleteApplicationStrategy)
         {
             _logService = logService;
             _configurationService = configurationService;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
-            _auditApplicationDetailStrategy = auditApplicationDetailStrategy;
             _hardDeleteApplicationStrategy = hardDeleteApplicationStrategy;
         }
 
@@ -64,7 +60,6 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
         public void Handle(ApplicationHousekeepingRequest request)
         {
             ApplicationDetail application;
-            string auditEventTypeCode;
 
             switch (request.VacancyType)
             {
@@ -78,8 +73,6 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                                 request.ApplicationId);
                             return;
                         }
-
-                        auditEventTypeCode = AuditEventTypes.HardDeleteApprenticeshipApplication;
                         break;
                     }
 
@@ -93,8 +86,6 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                                 request.ApplicationId);
                             return;
                         }
-
-                        auditEventTypeCode = AuditEventTypes.HardDeleteTraineeshipApplication;
                         break;
                     }
 
@@ -102,13 +93,8 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                     throw new InvalidOperationException(string.Format("Unknown vacancy type: {0}.", request.VacancyType));
             }
 
-            if (application.DateApplied <= GetHousekeepingDate())
+            if (application.DateApplied.HasValue && application.DateApplied <= GetHousekeepingDate())
             {
-                _auditApplicationDetailStrategy.Audit(
-                    request.VacancyType,
-                    request.ApplicationId,
-                    auditEventTypeCode);
-
                 _hardDeleteApplicationStrategy.Delete(
                     request.VacancyType,
                     request.ApplicationId);
