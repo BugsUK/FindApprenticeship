@@ -32,13 +32,14 @@
 
                 if (monitorScheduleMessage != null)
                 {
+                    //Delete message as metrics queries can take a long time and the message can be read several times causing multiple code executions
+                    MessageService.DeleteMessage(ScheduledJobQueues.DailyMetrics, monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
+
                     var monitorConfig = _configurationService.Get<MonitorConfiguration>();
                     if (monitorConfig != null && monitorConfig.IsDailyMetricsEnabled)
                     {
                         _dailyMetricsTasksRunner.RunDailyMetricsTasks();
                     }
-
-                    MessageService.DeleteMessage(ScheduledJobQueues.DailyMetrics, monitorScheduleMessage.MessageId, monitorScheduleMessage.PopReceipt);
                 }
             });
         }
