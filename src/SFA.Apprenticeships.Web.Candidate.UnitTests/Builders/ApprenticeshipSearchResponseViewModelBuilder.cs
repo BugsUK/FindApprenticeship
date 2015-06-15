@@ -12,6 +12,7 @@
         private bool _isPositiveAboutDisability;
 
         private ApprenticeshipSearchViewModel _vacancySearchViewModel;
+        private int _numberOfPositions;
 
         public ApprenticeshipSearchResponseViewModelBuilder()
         {
@@ -42,6 +43,12 @@
             return this;
         }
 
+        public ApprenticeshipSearchResponseViewModelBuilder WithNumberOfPositions(int numberOfPositions)
+        {
+            _numberOfPositions = numberOfPositions;
+            return this;
+        }
+
         public ApprenticeshipSearchResponseViewModel Build()
         {
             var vacancies = new List<ApprenticeshipVacancySummaryViewModel>();
@@ -52,6 +59,7 @@
                 vacancies = new Fixture()
                     .Build<ApprenticeshipVacancySummaryViewModel>()
                     .With(x => x.IsPositiveAboutDisability, _isPositiveAboutDisability)
+                    .With(x => x.NumberOfPositions, _numberOfPositions)
                     .CreateMany(hits)
                     .ToList();                
             }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.TraineeshipSearch
 {
     using System;
+    using System.Globalization;
     using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.TraineeshipSearch;
@@ -260,6 +261,36 @@
 
             element.Should().NotBeNull();
             element.InnerText.Should().Be(friendlyPostedDate);
+        }
+
+        [TestCase(5, true)]
+        [TestCase(1, false)]
+        public void ShowNumberOfPositions(int numberOfPositions, bool shouldShowNumberOfPositions)
+        {
+            // Arrange.
+            var details = new Details();
+
+            var vacancyDetailViewModel = new TraineeshipVacancyDetailViewModel
+            {
+                VacancyAddress = new AddressViewModel(),
+                NumberOfPositions = numberOfPositions
+            };
+
+            // Act.
+            var view = details.RenderAsHtml(vacancyDetailViewModel);
+
+            // Assert.
+            var element = view.GetElementbyId("number-of-positions");
+
+            if (shouldShowNumberOfPositions)
+            {
+                element.Should().NotBeNull();
+                element.InnerText.Should().Contain(numberOfPositions.ToString(CultureInfo.InvariantCulture));
+            }
+            else
+            {
+                element.Should().BeNull();                
+            }
         }
     }
 }

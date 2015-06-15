@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.ApprenticeshipSearch
 {
+    using System.Globalization;
     using System.Linq;
     using Builders;
     using Common.Framework;
@@ -175,6 +176,46 @@
             {
                 var disabledLink = view.GetElementbyId(string.Format("positive-about-disabled-{0}", vacancy.Id));
                 disabledLink.Should().BeNull();
+            }
+        }
+
+        [TestCase(5, true)]
+        [TestCase(1, false)]
+        public void NumberOfPositions(int numberOfPositions, bool shouldShowNumberOfPositions)
+        {
+            // Arrange.
+            const int hits = 5;
+
+            var vacancySearchViewModel = new ApprenticeshipSearchViewModelBuilder()
+                .Build();
+
+            var viewModel = new ApprenticeshipSearchResponseViewModelBuilder()
+                .WithVacancySearch(vacancySearchViewModel)
+                .WithTotalLocalHits(hits)
+                .WithNumberOfPositions(numberOfPositions)
+                .Build();
+
+            // Act.
+            var result = new SearchResultsViewBuilder().With(viewModel).Render();
+
+            // Assert.
+            viewModel.Vacancies.Count().Should().Be(hits);
+
+            foreach (var vacancy in viewModel.Vacancies)
+            {
+                var id = string.Format("number-of-positions-{0}", vacancy.Id);
+
+                var element = result.GetElementbyId(id);
+
+                if (shouldShowNumberOfPositions)
+                {
+                    element.Should().NotBeNull();
+                    element.InnerText.Should().Contain(numberOfPositions.ToString(CultureInfo.InvariantCulture));
+                }
+                else
+                {
+                    element.Should().BeNull();
+                }
             }
         }
     }

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
     using System.Linq;
-    using System.Web.Mvc;
     using Candidate.ViewModels.VacancySearch;
     using Ploeh.AutoFixture;
 
@@ -9,6 +8,7 @@
     {
         private TraineeshipSearchViewModel _vacancySearchViewModel;
         private int _totalHits;
+        private int _numberOfPositions;
 
         public TraineeshipSearchResponseViewModelBuilder()
         {
@@ -27,10 +27,17 @@
             return this;
         }
 
+        public TraineeshipSearchResponseViewModelBuilder WithNumberOfPositions(int numberOfPositions)
+        {
+            _numberOfPositions = numberOfPositions;
+            return this;
+        }
+
         public TraineeshipSearchResponseViewModel Build()
         {
             var vacancies = new Fixture()
                 .Build<TraineeshipVacancySummaryViewModel>()
+                .With(fixture => fixture.NumberOfPositions, _numberOfPositions)
                 .CreateMany(_totalHits)
                 .ToList();
 
