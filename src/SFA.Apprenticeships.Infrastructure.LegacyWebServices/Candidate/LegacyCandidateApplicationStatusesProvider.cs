@@ -156,13 +156,7 @@
         private int InternalGetApplicationStatusesPageCount(int applicationStatusExtractWindow)
         {
             // retrieve application statuses page count so can queue subsequent paged requests
-            var request = new GetApplicationsStatusRequest
-            {
-                PageNumber = 1,
-                RangeTo = DateTime.UtcNow.AddHours(1), // TODO: AG: this is a temporary workaround to fix an off-by-one hour issue.
-                RangeFrom = DateTime.UtcNow.AddMinutes(applicationStatusExtractWindow * -1)
-            };
-
+            var request = CreateGetApplicationsStatusRequest(1, applicationStatusExtractWindow);
             var response = default(GetApplicationsStatusResponse);
 
             _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
@@ -179,13 +173,7 @@
         private IList<ApplicationStatusSummary> InternalGetAllApplicationStatuses(int pageNumber, int applicationStatusExtractWindow)
         {
             // retrieve application statuses for ALL candidates (used in application ETL process)
-            var request = new GetApplicationsStatusRequest
-            {
-                PageNumber = pageNumber,
-                RangeTo = DateTime.UtcNow.AddHours(1), // TODO: AG: this is a temporary workaround to fix an off-by-one hour issue.
-                RangeFrom = DateTime.UtcNow.AddMinutes(applicationStatusExtractWindow * -1)
-            };
-
+            var request = CreateGetApplicationsStatusRequest(pageNumber, applicationStatusExtractWindow);
             var response = default(GetApplicationsStatusResponse);
 
             _service.Use("SecureService", client => response = client.GetApplicationsStatus(request));
@@ -197,6 +185,19 @@
             }
 
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications).ToList();
+        }
+
+        private static GetApplicationsStatusRequest CreateGetApplicationsStatusRequest(int pageNumber, int applicationStatusExtractWindow)
+        {
+            // NAS Gateway uses local time (GMT / BST, not UTC).
+            var rangeTo = DateTime.Now;
+
+            return new GetApplicationsStatusRequest
+            {
+                PageNumber = pageNumber,
+                RangeFrom = rangeTo.AddMinutes(-applicationStatusExtractWindow),
+                RangeTo = rangeTo
+            };
         }
 
         #endregion
