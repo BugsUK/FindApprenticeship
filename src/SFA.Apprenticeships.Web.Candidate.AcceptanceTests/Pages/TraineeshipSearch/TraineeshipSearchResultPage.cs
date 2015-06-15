@@ -116,6 +116,9 @@
             get { return LocationSuggestions.Count().ToString(); }
         }
 
+        [ElementLocator(Id = "ajaxLoading")]
+        public IWebElement AjaxLoading { get; set; }
+
         public string ResultsAreInDistanceOrder
         {
             get

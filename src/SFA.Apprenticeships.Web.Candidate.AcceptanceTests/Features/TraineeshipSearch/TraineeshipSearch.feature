@@ -26,6 +26,7 @@ Scenario: Find traineeships and test ordering
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	And I am on the TraineeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
@@ -46,6 +47,7 @@ Scenario: Find traineeships and change distance
 		| Field          | Value   |
 		| WithInDistance | 2 miles |
 	And I choose Search
+	And I wait 3 seconds
 	Then I am on the TraineeshipSearchResultPage page
 	And I see
         | Field          | Rule   | Value   |

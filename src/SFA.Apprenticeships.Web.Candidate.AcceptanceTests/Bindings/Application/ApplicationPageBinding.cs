@@ -39,6 +39,7 @@
         }
 
         [When(@"I wait (.*) seconds")]
+        [Then(@"I wait (.*) seconds")]
         public void WhenIWaitSeconds(int numSeconds)
         {
             System.Threading.Thread.Sleep(numSeconds * 1000);

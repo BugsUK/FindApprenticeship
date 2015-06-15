@@ -139,6 +139,9 @@
         {
             get { return CategoryItems.Count().ToString(CultureInfo.InvariantCulture); }
         }
+
+        [ElementLocator(Id = "ajaxLoading")]
+        public IWebElement AjaxLoading { get; set; }
         
         public string ResultsAreInDistanceOrder
         {
