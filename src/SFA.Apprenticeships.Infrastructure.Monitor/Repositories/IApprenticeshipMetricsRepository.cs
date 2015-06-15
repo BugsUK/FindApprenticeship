@@ -11,7 +11,6 @@
         int GetApplicationStateCount(ApplicationStatuses applicationStatus);
         int GetApplicationCountPerCandidate();
         int GetApplicationStateCountPerCandidate(ApplicationStatuses applicationStatus);
-        long GetActiveUserCount(DateTime activeFrom);
         int GetCandidatesWithApplicationsInStatusCount(ApplicationStatuses applicationStatus, int minimumCount);
         IEnumerable<BsonDocument> GetApplicationStatusCounts();
         IEnumerable<Guid> GetCandidatesThatWouldHaveSeenTraineeshipPrompt();
