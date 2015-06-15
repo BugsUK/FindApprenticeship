@@ -14,7 +14,6 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Providers;
-    using Register;
     using Validators;
     using ViewModels.Login;
     using ViewModels.Register;
@@ -85,7 +84,7 @@
                     }
 
                     var candidate = _candidateServiceProvider.GetCandidate(result.EmailAddress);
-                    SetUsersApplicationContext(candidate);
+                    SetUsersApplicationContext(candidate.EntityId);
 
                     // Redirect to session return URL (if any).
                     var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
@@ -245,29 +244,41 @@
             }
 
             var candidate = _candidateServiceProvider.GetCandidate(resetViewModel.EmailAddress);
-            SetUsersApplicationContext(candidate);
+            SetUsersApplicationContext(candidate.EntityId);
             _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Activated);
 
             return GetMediatorResponse(LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword, resetViewModel, PasswordResetPageMessages.SuccessfulPasswordReset, UserMessageLevel.Success);
         }
 
-        private void SetUsersApplicationContext(Domain.Entities.Candidates.Candidate candidate)
+        private void SetUsersApplicationContext(Guid candidateId)
         {
-            var applications = _candidateServiceProvider.GetApprenticeshipApplications(candidate.EntityId);
-            var savedAndDraftAppCount = applications.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
-            _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedAndDraftAppCount.ToString(CultureInfo.InvariantCulture));
+            var applications = _candidateServiceProvider.GetApprenticeshipApplications(candidateId).ToList();
+            var savedAndDraftCount = applications.Count(each =>
+                each.Status == ApplicationStatuses.Draft || each.Status == ApplicationStatuses.Saved);
 
-            var lastAppStatusNotification = _userDataProvider.Get(UserDataItemNames.LastApplicationStatusNotification);
+            _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedAndDraftCount.ToString(CultureInfo.InvariantCulture));
 
-            if (!string.IsNullOrWhiteSpace(lastAppStatusNotification))
+            var lastApplicationStatusNotification = _userDataProvider.Get(UserDataItemNames.LastApplicationStatusNotification);
+
+            if (!string.IsNullOrWhiteSpace(lastApplicationStatusNotification))
             {
-                var lastAppStatusNotificationDate = new DateTime(long.Parse(lastAppStatusNotification), DateTimeKind.Utc);
-                var updatedSubmittedApplications = applications.Count(a => a.DateUpdated > lastAppStatusNotificationDate &&
-                            (a.Status == ApplicationStatuses.Successful || a.Status == ApplicationStatuses.Unsuccessful));
-
-                if (updatedSubmittedApplications > 0)
+                var applicationStatuses = new[]
                 {
-                    _userDataProvider.Push(UserDataItemNames.ApplicationStatusChangeCount, updatedSubmittedApplications.ToString(CultureInfo.InvariantCulture));
+                    ApplicationStatuses.Successful,
+                    ApplicationStatuses.Unsuccessful,
+                    ApplicationStatuses.ExpiredOrWithdrawn
+                };
+
+                var lastApplicationStatusNotificationDate = new DateTime(long.Parse(lastApplicationStatusNotification), DateTimeKind.Utc);
+
+                var applicationStatusChangeCount = applications.Count(each =>
+                    each.DateUpdated > lastApplicationStatusNotificationDate &&
+                    each.DateApplied.HasValue &&
+                    applicationStatuses.Any(status => status == each.Status));
+
+                if (applicationStatusChangeCount > 0)
+                {
+                    _userDataProvider.Push(UserDataItemNames.ApplicationStatusChangeCount, applicationStatusChangeCount.ToString(CultureInfo.InvariantCulture));
                 }
             }
         }
