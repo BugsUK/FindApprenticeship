@@ -48,17 +48,6 @@
                 .Count;
         }
 
-        public long GetActiveUserCount(DateTime activeFrom)
-        {
-            return Collection
-                .AsQueryable()
-                .Where(each => each.DateCreated >= activeFrom || each.DateApplied >= activeFrom)
-                .Select(each => each.CandidateId)
-                .Distinct()
-                .ToList()
-                .Count;
-        }
-
         public int GetCandidatesWithApplicationsInStatusCount(ApplicationStatuses applicationStatus, int minimumCount)
         {
             var statusMatch = new BsonDocument {{"$match", new BsonDocument {{"Status", (int) applicationStatus}}}};

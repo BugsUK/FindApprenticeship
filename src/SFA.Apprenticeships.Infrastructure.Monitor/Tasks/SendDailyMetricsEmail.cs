@@ -18,6 +18,8 @@
         private const string DailyMetricsEmailFromSettingName = "Monitor.DailyMetrics.Email.From";
         private const string DailyMetricsEmailToSettingName = "Monitor.DailyMetrics.Email.To";
 
+        private const int UnsuccessfulApplicationsToShowTraineeshipsPrompt = 2;
+
         private readonly MonitorConfiguration _monitorConfiguration;
         private readonly ILogService _logger;
 
@@ -108,13 +110,9 @@
             var fourWeeksAgo = DateTime.UtcNow.AddDays(-28);
             var customDaysAgo = DateTime.UtcNow.AddDays(-_validNumberOfDaysSinceUserActivity);
 
-            sb.AppendFormat(" - Total number of candidates active in the last week based on last login: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActiveUserCount, oneWeekAgo));
-            sb.AppendFormat(" - Total number of candidates active in the last four weeks based on last login: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActiveUserCount, fourWeeksAgo));
-            sb.AppendFormat(" - Total number of candidates active in the last {2} days based on applications: {0} ({1}ms)\n", GetActiveUserCount(_userMetricsRepository.GetActiveUserCount, customDaysAgo));
-
-            sb.AppendFormat(" - Total number of candidates active in the last week based on applications created or submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, oneWeekAgo));
-            sb.AppendFormat(" - Total number of candidates active in the last four weeks based on applications created or submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetActiveUserCount, fourWeeksAgo));
-            sb.AppendFormat(" - Total number of candidates active in the last {2} days based on applications: {0} ({1}ms)\n", GetActiveUserCount(_apprenticeshipMetricsRepository.GetActiveUserCount, customDaysAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last week: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActiveUserCount, oneWeekAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last four weeks: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActiveUserCount, fourWeeksAgo));
+            sb.AppendFormat(" - Total number of candidates active in the last {2} days: {0} ({1}ms)\n", GetActiveUserCount(_userMetricsRepository.GetActiveUserCount, customDaysAgo));
 
             sb.AppendFormat(" - Total number of candidates with verified mobile numbers: {0} ({1}ms)\n", TimedMongoCall(_candidateMetricsRepository.GetVerfiedMobileNumbersCount));
 
@@ -147,7 +145,7 @@
             sb.Append("Traineeships:\n");
             sb.AppendFormat(" - Total number of applications submitted: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetApplicationCount));
             sb.AppendFormat(" - Total number of candidates with applications: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetApplicationsPerCandidateCount));
-            sb.AppendFormat(" - Total number of candidates who would have been shown the traineeship prompt (6+ unsuccessful applications): {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetCandidatesWithApplicationsInStatusCount, ApplicationStatuses.Unsuccessful, 6));
+            sb.AppendFormat(" - Total number of candidates who would have been shown the traineeship prompt (" + UnsuccessfulApplicationsToShowTraineeshipsPrompt + "+ unsuccessful applications): {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetCandidatesWithApplicationsInStatusCount, ApplicationStatuses.Unsuccessful, UnsuccessfulApplicationsToShowTraineeshipsPrompt));
             sb.AppendFormat(" - Total number of candidates who have dismissed the traineeship prompt: {0} ({1}ms)\n", TimedMongoCall(_candidateMetricsRepository.GetDismissedTraineeshipPromptCount));
 
             sb.AppendFormat(" - Total number of Traineeships: {0}\n", _vacancyMetricsProvider.GetTraineeshipsCount());
