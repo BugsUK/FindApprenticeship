@@ -22,6 +22,7 @@ Scenario: After clicking on nationwide apprenticeships I see them
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule           | Value |
         | LocalLocationTypeLink        | Exists         |       |
@@ -40,6 +41,7 @@ Scenario: Nationwide apprenticeships do not show distance
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	Then I see SearchResults list contains
         | Field                | Rule   | Value |
         | DistanceDisplayed    | Equals | False |
@@ -59,6 +61,7 @@ Scenario: Nationwide apprenticeships are in closing date order
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule   | Value |
         | ResultsAreInClosingDateOrder | Equals | True  |
@@ -81,6 +84,7 @@ Scenario: Nationwide apprenticeships found by keyword can be ordered
         | NationwideLocationTypeLink | Exists       |              |
 	When I choose NationwideLocationTypeLink
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                          | Rule           | Value                                  |
         | LocalLocationTypeLink          | Exists         |                                        |
@@ -101,10 +105,12 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the results pe
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	When I enter data
 		| Field                  | Value       |
 		| ResultsPerPageDropDown | 25 per page |
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                      | Rule           | Value |
         | LocalLocationTypeLink      | Exists         |       |
@@ -123,10 +129,12 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the sort order
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	When I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                      | Rule           | Value |
         | LocalLocationTypeLink      | Exists         |       |

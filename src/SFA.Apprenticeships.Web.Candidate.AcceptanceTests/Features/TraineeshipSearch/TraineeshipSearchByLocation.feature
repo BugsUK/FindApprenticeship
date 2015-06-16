@@ -151,6 +151,7 @@ Scenario: User enters location manually then selects from autocomplete then refi
 		 | Location | Cov   |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
@@ -183,6 +184,7 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	And I am on the TraineeshipSearchResultPage page
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see 
         | Field                        | Rule           | Value                    |
         | Location                     | Equals         | Coventry (West Midlands) |
@@ -204,6 +206,7 @@ Scenario: Find traineeships by location and change ordering to closing date
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	And I am on the TraineeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
@@ -225,6 +228,7 @@ Scenario: Find traineeships by location and change ordering to closing date and 
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	And I am on the TraineeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
@@ -233,6 +237,7 @@ Scenario: Find traineeships by location and change ordering to closing date and 
 		| Field                | Value        |
 		| SortOrderingDropDown | Distance |
 	And I am on the TraineeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                     | Rule   | Value |
         | SearchResultItemsCount    | Equals | 5     |

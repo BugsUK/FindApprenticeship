@@ -60,6 +60,7 @@ Scenario: When searching by keyword then removing keyword and searching again th
 	When I clear the Keywords field
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	Then I see
         | Field                          | Rule         | Value                                |
         | SearchResultItemsCount         | Greater Than | 0                                    |
@@ -88,6 +89,7 @@ Scenario: When searching by keyword then changing keyword and searching again th
 		 | Keywords | bricklaying |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	Then I see
         | Field                          | Rule         | Value                 |
         | SearchResultItemsCount         | Greater Than | 0                     |
@@ -112,6 +114,7 @@ Scenario: When searching by location then adding keyword and searching again the
 		 | Keywords       | Mechanical |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	Then I see
         | Field                          | Rule         | Value                                           |
         | SearchResultItemsCount         | Greater Than | 0                                               |
@@ -155,6 +158,7 @@ Scenario: Find apprenticeships by keyword and change ordering to distance
 		| Field                | Value    |
 		| SortOrderingDropDown | Distance |
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                     | Rule   | Value |
         | SearchResultItemsCount    | Equals | 5     |
@@ -178,6 +182,7 @@ Scenario: Find apprenticeships by keyword and change ordering to closing date
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
