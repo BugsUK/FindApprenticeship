@@ -281,6 +281,7 @@
     <Content Include="Content\_assets\js\nas\searchTour.js" />
     <Content Include="Content\_assets\js\vendor\jquery.joyride.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
+    <Content Include="google63f704cde409cb80.html" />
     <Content Include="TraineeshipNotFound.html" />
     <Content Include="Content\_assets\img\icon-external-hover.svg" />
     <Content Include="Content\_assets\img\icon-external.png" />
