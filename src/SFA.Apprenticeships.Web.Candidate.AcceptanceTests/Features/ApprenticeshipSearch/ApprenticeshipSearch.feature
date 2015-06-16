@@ -31,6 +31,7 @@ Scenario: Find apprenticeships and test ordering without keywords
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
@@ -109,18 +110,21 @@ Scenario: Find apprenticeships and test paging
         | PreviousPage | Contains | 1 of  |
 	When I choose NextPage
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	Then I see
         | Field        | Rule     | Value |
         | NextPage     | Contains | 4 of  |
         | PreviousPage | Contains | 2 of  |
 	When I choose PreviousPage
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	Then I see
         | Field        | Rule     | Value |
         | NextPage     | Contains | 3 of  |
         | PreviousPage | Contains | 1 of  |
 	When I choose PreviousPage
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I wait to not see PreviousPage
 	Then I see
         | Field    | Rule     | Value |

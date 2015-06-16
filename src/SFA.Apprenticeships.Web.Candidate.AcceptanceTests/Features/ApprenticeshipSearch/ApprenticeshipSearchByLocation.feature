@@ -155,6 +155,7 @@ Scenario: User enters location manually then selects from autocomplete then refi
 		 | Location | Cov   |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
@@ -187,6 +188,7 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	And I am on the ApprenticeshipSearchResultPage page
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see 
         | Field                        | Rule           | Value                    |
         | Location                     | Equals         | Coventry (West Midlands) |
@@ -210,6 +212,7 @@ Scenario: Find apprenticeships by location and change ordering to closing date
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
@@ -233,6 +236,7 @@ Scenario: Find apprenticeships by location and change ordering to closing date a
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
@@ -241,6 +245,7 @@ Scenario: Find apprenticeships by location and change ordering to closing date a
 		| Field                | Value        |
 		| SortOrderingDropDown | Distance |
 	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                     | Rule   | Value |
         | SearchResultItemsCount    | Equals | 5     |
