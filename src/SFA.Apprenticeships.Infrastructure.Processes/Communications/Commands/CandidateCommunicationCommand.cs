@@ -1,11 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Communications.Commands
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Logging;
+    using Communication.Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Newtonsoft.Json;
@@ -13,17 +16,20 @@
     public class CandidateCommunicationCommand : CommunicationCommand
     {
         private readonly ILogService _logService;
+        private readonly IConfigurationService _configurationService;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
 
         public CandidateCommunicationCommand(
             ILogService logService,
+            IConfigurationService configurationService,
             IMessageBus messageBus,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository)
             : base(messageBus)
         {
             _logService = logService;
+            _configurationService = configurationService;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
         }
@@ -75,6 +81,7 @@
 
             if (sendMessage)
             {
+                AddCommonTokens(communicationRequest);
                 QueueEmailMessage(communicationRequest);
             }
         }
@@ -87,6 +94,7 @@
 
             if (sendMessage)
             {
+                AddCommonTokens(communicationRequest);
                 QueueSmsMessage(communicationRequest);
             }
         }
@@ -119,6 +127,28 @@
         private static bool ShouldCommunicateWithUser(User user)
         {
             return user.IsActive() || user.Status == UserStatuses.PendingActivation || user.Status == UserStatuses.Dormant;
+        }
+
+
+        private void AddCommonTokens(CommunicationRequest communicationRequest)
+        {
+            var tokens = communicationRequest.Tokens.ToList();
+
+            AddCandidateSiteDomainNameToken(tokens);
+
+            communicationRequest.Tokens = tokens;
+        }
+
+        private void AddCandidateSiteDomainNameToken(ICollection<CommunicationToken> tokens)
+        {
+            if (tokens.Any(each => each.Key == CommunicationTokens.CandidateSiteDomainName))
+            {
+                return;
+            }
+
+            tokens.Add(new CommunicationToken(
+                CommunicationTokens.CandidateSiteDomainName,
+                _configurationService.Get<CommunicationConfiguration>().SiteDomainName));
         }
 
         #endregion

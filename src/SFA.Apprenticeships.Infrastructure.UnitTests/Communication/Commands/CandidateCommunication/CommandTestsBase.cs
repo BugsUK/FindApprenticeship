@@ -5,8 +5,10 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Infrastructure.Communication.Configuration;
     using Infrastructure.Processes.Communications.Commands;
     using Builders;
     using Moq;
@@ -14,6 +16,7 @@
     public abstract class CommandTestsBase
     {
         protected Mock<ILogService> LogService;
+        protected Mock<IConfigurationService> ConfigurationService;
         protected Mock<IMessageBus> MessageBus;
         protected Mock<ICandidateReadRepository> CandidateRepository;
         protected Mock<IUserReadRepository> UserRepository;
@@ -23,6 +26,7 @@
         protected CommandTestsBase()
         {
             LogService = new Mock<ILogService>();
+            ConfigurationService = new Mock<IConfigurationService>();
             MessageBus = new Mock<IMessageBus>();
             UserRepository = new Mock<IUserReadRepository>();
             CandidateRepository = new Mock<ICandidateReadRepository>();
@@ -33,9 +37,17 @@
             Command = command;
 
             LogService.ResetCalls();
+            ConfigurationService.ResetCalls();
             MessageBus.ResetCalls();
             UserRepository.ResetCalls();
             CandidateRepository.ResetCalls();
+
+            ConfigurationService.Setup(mock =>
+                mock.Get<CommunicationConfiguration>())
+                .Returns(new CommunicationConfiguration
+                {
+                    SiteDomainName = "www.example.com"
+                });
         }
 
         protected void ShouldQueueEmail(MessageTypes messageType, int expectedCount, string emailAddress = CommunicationRequestBuilder.DefaultTestEmailAddress)

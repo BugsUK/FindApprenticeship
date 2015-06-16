@@ -24,6 +24,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.ActivationCode, TestActivationCode),
                 new CommunicationToken(CommunicationTokens.Username, TestUsername),
@@ -35,6 +36,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.Username, TestUsername),
                 new CommunicationToken(CommunicationTokens.AccountUnlockCode, TestActivationCode),
@@ -46,6 +48,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.Username, TestUsername)
             };
@@ -55,6 +58,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.Username, TestUsername),
                 new CommunicationToken(CommunicationTokens.PasswordResetCode, TestActivationCode),
@@ -66,6 +70,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle,
                     "Application Vacancy Title"),
@@ -80,6 +85,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.ApplicationVacancyTitle,
                     "Application Vacancy Title"),
@@ -96,6 +102,7 @@
         {
             var tokens = new List<CommunicationToken>
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.ApplicationStatusAlerts, string.Empty),
                 new CommunicationToken(CommunicationTokens.CandidateSubscriberId, Guid.NewGuid().ToString()),
@@ -117,6 +124,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.UserEmailAddress, TestUsername),
                 new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
                 new CommunicationToken(CommunicationTokens.UserEnquiry, "User enquiry"),
@@ -128,8 +136,8 @@
         {
             var tokens = new List<CommunicationToken>
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
-                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "http://example.com"),
                 new CommunicationToken(CommunicationTokens.CandidateSubscriberId, Guid.NewGuid().ToString()),
                 new CommunicationToken(CommunicationTokens.CandidateSubscriptionType, ((int)SubscriptionTypes.SavedSearchAlertsViaEmail).ToString(CultureInfo.InvariantCulture))
             };
@@ -166,6 +174,7 @@
         {
             var tokens = new List<CommunicationToken>
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
             };
 
@@ -181,6 +190,7 @@
         {
             var tokens = new List<CommunicationToken>
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
             };
 
@@ -199,6 +209,7 @@
         {
             var tokens = new List<CommunicationToken>
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
             };
 
@@ -214,6 +225,7 @@
         {
             var tokens = new List<CommunicationToken>
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
             };
 
@@ -232,6 +244,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.MobileVerificationCode, TestMobileVerificationCode)
             };
@@ -241,6 +254,7 @@
         {
             return new[]
             {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.UserPendingUsername, TestPendingUsername),
                 new CommunicationToken(CommunicationTokens.UserPendingUsernameCode, TestPendingUsernameCode)

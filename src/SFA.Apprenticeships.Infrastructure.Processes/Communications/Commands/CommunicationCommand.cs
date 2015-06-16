@@ -18,39 +18,40 @@
 
         public abstract void Handle(CommunicationRequest communicationRequest);
 
-        protected void QueueEmailMessage(CommunicationRequest message)
+        protected void QueueEmailMessage(CommunicationRequest communicationRequest)
         {
-            var toEmail = message.Tokens.First(token => token.Key == CommunicationTokens.RecipientEmailAddress).Value;
+            var toEmail = communicationRequest.Tokens.First(token => token.Key == CommunicationTokens.RecipientEmailAddress).Value;
 
             var request = new EmailRequest
             {
                 ToEmail = toEmail,
-                MessageType = message.MessageType,
-                Tokens = GetChannelAgnosticTokens(message),
+                MessageType = communicationRequest.MessageType,
+                Tokens = GetMessageTokens(communicationRequest),
             };
 
             _messageBus.PublishMessage(request);
         }
 
-        protected void QueueSmsMessage(CommunicationRequest message)
+        protected void QueueSmsMessage(CommunicationRequest communicationRequest)
         {
-            var toMobile = message.Tokens.First(token => token.Key == CommunicationTokens.CandidateMobileNumber).Value;
+            var toMobile = communicationRequest.Tokens.First(token => token.Key == CommunicationTokens.CandidateMobileNumber).Value;
 
             var request = new SmsRequest
             {
                 ToNumber = toMobile,
-                MessageType = message.MessageType,
-                Tokens = GetChannelAgnosticTokens(message),
+                MessageType = communicationRequest.MessageType,
+                Tokens = GetMessageTokens(communicationRequest),
             };
 
             _messageBus.PublishMessage(request);
         }
 
-        private static IEnumerable<CommunicationToken> GetChannelAgnosticTokens(CommunicationRequest message)
+        private IEnumerable<CommunicationToken> GetMessageTokens(CommunicationRequest communicationRequest)
         {
-            return message.Tokens
-                .Where(token => token.Key != CommunicationTokens.RecipientEmailAddress &&
-                    token.Key != CommunicationTokens.CandidateMobileNumber);
+            return communicationRequest.Tokens
+                 .Where(token =>
+                     token.Key != CommunicationTokens.RecipientEmailAddress &&
+                     token.Key != CommunicationTokens.CandidateMobileNumber);
         }
     }
 }

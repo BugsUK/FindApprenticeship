@@ -7,6 +7,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Newtonsoft.Json;
@@ -15,10 +16,11 @@
     {
         public CandidateDailyDigestCommunicationCommand(
             ILogService logService,
+            IConfigurationService configurationService,
             IMessageBus messageBus,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository)
-            : base(logService, messageBus, candidateReadRepository, userReadRepository)
+            : base(logService, configurationService, messageBus, candidateReadRepository, userReadRepository)
         {
         }
 
@@ -26,7 +28,6 @@
         {
             return communicationRequest.MessageType == MessageTypes.DailyDigest;
         }
-
 
         protected override void HandleSmsMessage(Candidate candidate, CommunicationRequest communicationRequest)
         {

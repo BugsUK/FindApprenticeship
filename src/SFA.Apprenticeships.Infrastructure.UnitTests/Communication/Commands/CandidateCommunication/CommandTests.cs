@@ -16,7 +16,7 @@
         public void SetUp()
         {
             var command = new CandidateCommunicationCommand(
-                LogService.Object, MessageBus.Object, CandidateRepository.Object, UserRepository.Object);
+                LogService.Object, ConfigurationService.Object, MessageBus.Object, CandidateRepository.Object, UserRepository.Object);
 
             base.SetUp(command);
         }
@@ -30,7 +30,7 @@
         [TestCase(MessageTypes.SendPasswordResetCode)]
         [TestCase(MessageTypes.TraineeshipApplicationSubmitted)]
         [TestCase(MessageTypes.SendPendingUsernameCode)]
-        public void ShouldHandleMostCandidateMessagesTypes(MessageTypes messageType)
+        public void ShouldHandleSimpleCandidateMessagesTypes(MessageTypes messageType)
         {
             // Arrange.
             var communicationRequest = new CommunicationRequestBuilder(messageType, Guid.NewGuid()).Build();
