@@ -96,6 +96,9 @@
 
         private string ComposeBody()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+
             var sb = new StringBuilder();
 
             sb.Append("General:\n");
@@ -156,6 +159,19 @@
             sb.AppendFormat(" - Number of application status alerts processed today: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusAlertsProcessedToday));
             sb.AppendFormat(" - Number of saved search alerts processed today: {0} ({1}ms)\n", TimedMongoCall(_savedSearchAlertMetricsRepository.GetSavedSearchAlertsProcessedToday));
             sb.AppendFormat(" - Number of contact us emails sent today: {0} ({1}ms)\n", TimedMongoCall(_contactMessagesMetricsRepository.GetContactMessagesSentToday));
+
+            stopwatch.Stop();
+
+            var message = string.Format("Daily metrics queries took {0}", stopwatch.Elapsed);
+
+            if (stopwatch.ElapsedMilliseconds > 120000)
+            {
+                _logger.Warn(message);
+            }
+            else
+            {
+                _logger.Info(message);
+            }
 
             return sb.ToString();
         }
