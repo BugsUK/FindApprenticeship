@@ -354,13 +354,13 @@ this.FeatureBackground();
 #line 102
  testRunner.And("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 103
- testRunner.And("I wait to not see PreviousPage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 104
  testRunner.And("I choose NextPage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 105
  testRunner.And("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 106
- testRunner.And("I wait to see PreviousPage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",

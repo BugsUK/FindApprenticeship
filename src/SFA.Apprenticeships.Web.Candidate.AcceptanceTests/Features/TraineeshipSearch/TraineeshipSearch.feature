@@ -61,17 +61,17 @@ Scenario: Find traineeships and test paging
 		 | Location | Coventry |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
-	And I wait to not see PreviousPage
+	And I wait 3 seconds
 	And I choose NextPage
 	And I am on the TraineeshipSearchResultPage page
-	And I wait to see PreviousPage
+	And I wait 3 seconds
 	Then I see
         | Field        | Rule     | Value |
         | NextPage     | Contains | 3 of  |
         | PreviousPage | Contains | 1 of  |
 	When I choose PreviousPage
 	And I am on the TraineeshipSearchResultPage page
-	And I wait to not see PreviousPage
+	And I wait 3 seconds
 	Then I see
         | Field    | Rule     | Value |
         | NextPage | Contains | 2 of  |
@@ -129,7 +129,7 @@ Scenario: Different results per page
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
-		 | Location       | London   |
+		 | Location       | Coventry   |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see
@@ -139,6 +139,7 @@ Scenario: Different results per page
 		| Field                  | Value       |
 		| ResultsPerPageDropDown | 10 per page |
 	Then I am on the TraineeshipSearchResultPage page
+	And I wait 3 seconds
 	And I see
         | Field                  | Rule   | Value |
         | SearchResultItemsCount | Equals | 10    |

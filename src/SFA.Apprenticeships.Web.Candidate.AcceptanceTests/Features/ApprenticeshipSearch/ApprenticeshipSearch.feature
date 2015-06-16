@@ -100,10 +100,10 @@ Scenario: Find apprenticeships and test paging
 		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
-	And I wait to not see PreviousPage
+	And I wait 3 seconds
 	And I choose NextPage
 	And I am on the ApprenticeshipSearchResultPage page
-	And I wait to see PreviousPage
+	And I wait 3 seconds
 	Then I see
         | Field        | Rule     | Value |
         | NextPage     | Contains | 3 of  |

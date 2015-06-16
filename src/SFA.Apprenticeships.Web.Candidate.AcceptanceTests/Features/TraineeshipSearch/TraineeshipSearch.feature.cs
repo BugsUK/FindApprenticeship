@@ -250,13 +250,13 @@ this.FeatureBackground();
 #line 63
  testRunner.And("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 64
- testRunner.And("I wait to not see PreviousPage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 65
  testRunner.And("I choose NextPage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 66
  testRunner.And("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 67
- testRunner.And("I wait to see PreviousPage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -277,7 +277,7 @@ this.FeatureBackground();
 #line 73
  testRunner.And("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 74
- testRunner.And("I wait to not see PreviousPage", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -473,7 +473,7 @@ this.FeatureBackground();
                         "Value"});
             table20.AddRow(new string[] {
                         "Location",
-                        "London"});
+                        "Coventry"});
 #line 130
  testRunner.When("I enter data", ((string)(null)), table20, "When ");
 #line 133
@@ -502,6 +502,8 @@ this.FeatureBackground();
  testRunner.When("I enter data", ((string)(null)), table22, "When ");
 #line 141
  testRunner.Then("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 142
+ testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -511,7 +513,7 @@ this.FeatureBackground();
                         "SearchResultItemsCount",
                         "Equals",
                         "10"});
-#line 142
+#line 143
  testRunner.And("I see", ((string)(null)), table23, "And ");
 #line hidden
             this.ScenarioCleanup();
