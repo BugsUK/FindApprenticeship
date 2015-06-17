@@ -1050,12 +1050,12 @@ Write(Scripts.Render("~/bundles/nas/geoLocater"));
             
             #line default
             #line hidden
-WriteLiteral("\r\n                                                \r\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 250 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 249 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
@@ -1066,7 +1066,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 251 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 250 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/search"));
 
             
@@ -1075,13 +1075,13 @@ Write(Scripts.Render("~/bundles/nas/search"));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 253 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 252 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 253 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 252 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
      if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
     {
 
@@ -1106,15 +1106,12 @@ WriteLiteral(@"        <script>
 ");
 
             
-            #line 270 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-        
+            #line 269 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
     }
 
             
             #line default
             #line hidden
-WriteLiteral("    \r\n");
-
 });
 
         }

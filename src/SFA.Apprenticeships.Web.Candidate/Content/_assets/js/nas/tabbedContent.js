@@ -11,14 +11,13 @@ $(window).on("popstate", function (e) {
     }
 });
 
-if (window.location.hash != "") {
+if (window.location.hash !== "") {
     tabSelected($('[tab="' + window.location.hash + '"]'), false, false);
 } else {
-    tabSelected($(".tabbed-tab").first(), false, true);
+    tabSelected($(".tabbed-tab.active").first(), false, true);
 }
 
 function tabSelected(tab, pushState, replaceState) {
-
     var tabId = tab.attr('tab');
 
     tab.addClass('active');
