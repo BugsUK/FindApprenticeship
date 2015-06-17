@@ -75,9 +75,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="SFA.Apprenticeships.Application.Candidate">
-      <HintPath>..\SFA.Apprenticeships.Application.Candidate\bin\Dev\SFA.Apprenticeships.Application.Candidate.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
