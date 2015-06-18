@@ -149,10 +149,6 @@
                         return View(model);
                 }
 
-                //Following registration, user should be prompted to verify their mobile number
-                var message = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.Action("VerifyMobile", "Account")).Message;
-                SetUserMessage(message.Text, message.Level);
-
                 //Redirects even if fails for unknown reason, don't hinder user.
                 return RedirectToAction("SkipMonitoringInformation");
             });
@@ -165,12 +161,12 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                //Following registration, user should be prompted to verify their mobile number
-                var message = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.Action("VerifyMobile", "Account")).Message;
-                SetUserMessage(message.Text, message.Level);
-             
                 // ReturnUrl takes precedence over last view vacancy id.
                 var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
+
+                //Following registration, user should be prompted to verify their mobile number
+                var message = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.Action("VerifyMobile", "Account", new RouteValueDictionary { { "ReturnUrl", returnUrl } })).Message;
+                SetUserMessage(message.Text, message.Level);
 
                 // Clear last viewed vacancy and distance (if any).
                 var lastViewedVacancyId = UserData.Pop(CandidateDataItemNames.LastViewedVacancyId);
