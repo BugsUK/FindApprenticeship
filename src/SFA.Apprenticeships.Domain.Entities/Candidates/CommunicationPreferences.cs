@@ -15,13 +15,13 @@
             ApplicationStatusChangePreferences = new CommunicationPreference
             {
                 EnableEmail = true,
-                EnableText = false
+                EnableText = true
             };
 
             ExpiringApplicationPreferences = new CommunicationPreference
             {
                 EnableEmail = true,
-                EnableText = false
+                EnableText = true
             };
 
             SavedSearchPreferences = new CommunicationPreference
@@ -33,7 +33,7 @@
             MarketingPreferences = new CommunicationPreference
             {
                 EnableEmail = true,
-                EnableText = false
+                EnableText = true
             };
         }
 

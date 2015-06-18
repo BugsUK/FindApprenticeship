@@ -155,6 +155,10 @@
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
 
                 _candidateService.SaveCandidate(candidate);
+                if (candidate.MobileVerificationRequired())
+                {
+                    _candidateService.SendMobileVerificationCode(candidate);
+                }
 
                 if (model.SavedSearches != null && model.SavedSearches.Count > 0)
                 {

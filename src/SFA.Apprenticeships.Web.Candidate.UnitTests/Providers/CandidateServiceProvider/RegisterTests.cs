@@ -11,7 +11,7 @@
     public class RegisterTests
     {
         [Test]
-        public void Us616_Ac1_DefaultCommunicationPreferencesEmailOnly()
+        public void Us796_Ac1_DefaultCommunicationPreferences()
         {
             Candidate candidate = null;
             var candidateService = new Mock<ICandidateService>();
@@ -31,7 +31,7 @@
                     
                 preferences.Should().NotBeNull();
                 preferences.EnableEmail.Should().BeTrue();
-                preferences.EnableText.Should().BeFalse();
+                preferences.EnableText.Should().BeTrue();
             }
 
             {
@@ -39,7 +39,7 @@
                     
                 preferences.Should().NotBeNull();
                 preferences.EnableEmail.Should().BeTrue();
-                preferences.EnableText.Should().BeFalse();
+                preferences.EnableText.Should().BeTrue();
             }
 
             {
@@ -47,7 +47,7 @@
 
                 preferences.Should().NotBeNull();
                 preferences.EnableEmail.Should().BeTrue();
-                preferences.EnableText.Should().BeFalse();
+                preferences.EnableText.Should().BeTrue();
             }
 
             {

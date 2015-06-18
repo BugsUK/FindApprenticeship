@@ -23,6 +23,8 @@
 
         public string AcceptedTermsAndConditionsVersion { get; set; }
 
+        public string PhoneNumber { get; set; }
+
         public bool MobileVerificationRequired { get; set; }
 
         public bool PendingUsernameVerificationRequired { get; set; }

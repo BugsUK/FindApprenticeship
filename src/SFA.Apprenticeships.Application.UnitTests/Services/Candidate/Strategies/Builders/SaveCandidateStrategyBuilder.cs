@@ -17,7 +17,6 @@
         private Mock<IApprenticeshipApplicationWriteRepository> _apprenticeshipApplicationWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();
         private ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy = new Mock<ISendMobileVerificationCodeStrategy>().Object;
-        private Mock<ICodeGenerator> _codeGenerator = new Mock<ICodeGenerator>();
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
 
         public SaveCandidateStrategyBuilder()
@@ -27,7 +26,7 @@
 
         public ISaveCandidateStrategy Build()
         {
-            var strategy = new SaveCandidateStrategy(_candidateWriteRepository.Object, _getCandidateApplicationsStrategy.Object, _candidateReadRepository.Object, _apprenticeshipApplicationWriteRepository.Object, _apprenticeshipApplicationReadRepository.Object, _codeGenerator.Object, _sendMobileVerificationCodeStrategy, _logService.Object);
+            var strategy = new SaveCandidateStrategy(_candidateWriteRepository.Object, _getCandidateApplicationsStrategy.Object, _candidateReadRepository.Object, _apprenticeshipApplicationWriteRepository.Object, _apprenticeshipApplicationReadRepository.Object, _sendMobileVerificationCodeStrategy, _logService.Object);
             return strategy;
         }
 
@@ -58,12 +57,6 @@
         public SaveCandidateStrategyBuilder With(SendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy)
         {
             _sendMobileVerificationCodeStrategy = sendMobileVerificationCodeStrategy;
-            return this;
-        }
-
-        public SaveCandidateStrategyBuilder With(Mock<ICodeGenerator> codeGenerator)
-        {
-            _codeGenerator = codeGenerator;
             return this;
         }
     }

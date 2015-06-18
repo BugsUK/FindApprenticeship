@@ -416,7 +416,7 @@
         {
             if (viewModel.MobileVerificationRequired)
             {
-                var message = string.Format(LoginPageMessages.MobileVerificationRequiredText,
+                var message = string.Format(LoginPageMessages.MobileVerificationRequiredText, viewModel.PhoneNumber,
                     Url.Action("VerifyMobile", "Account",
                         new RouteValueDictionary
                         {

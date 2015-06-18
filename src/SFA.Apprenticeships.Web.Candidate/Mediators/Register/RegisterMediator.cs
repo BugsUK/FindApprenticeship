@@ -2,9 +2,7 @@
 {
     using System;
     using Common.Constants;
-    using Common.Services;
     using Constants.Pages;
-    using Domain.Entities.Users;
     using Providers;
     using Validators;
     using ViewModels;
@@ -114,6 +112,13 @@
             catch{
                 return GetMediatorResponse(RegisterMediatorCodes.UpdateMonitoringInformation.ErrorUpdating, ActivationPageMessages.UpdatingMonitoringInformationFailure, UserMessageLevel.Error);
             }
+        }
+
+        public MediatorResponse SendMobileVerificationCode(Guid candidateId, string verifyMobileUrl)
+        {
+            var phoneNumber = _candidateServiceProvider.SendMobileVerificationCode(candidateId);
+            var message = string.Format(LoginPageMessages.MobileVerificationRequiredText, phoneNumber, verifyMobileUrl);
+            return GetMediatorResponse(RegisterMediatorCodes.SendMobileVerificationCode.Success, message, UserMessageLevel.Info);
         }
     }
 }

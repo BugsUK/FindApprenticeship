@@ -14,7 +14,6 @@
         private readonly ILogService _logger;
 
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
-        private readonly ICodeGenerator _codeGenerator;
         private readonly ISendMobileVerificationCodeStrategy _sendMobileVerificationCodeStrategy;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
@@ -26,7 +25,6 @@
             ICandidateReadRepository candidateReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
-            ICodeGenerator codeGenerator,
             ISendMobileVerificationCodeStrategy sendMobileVerificationCodeStrategy,
             ILogService logger)
         {
@@ -35,21 +33,12 @@
             _candidateReadRepository = candidateReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
-            _codeGenerator = codeGenerator;
             _sendMobileVerificationCodeStrategy = sendMobileVerificationCodeStrategy;
             _logger = logger;
         }
 
         public Candidate SaveCandidate(Candidate candidate)
         {
-            if (candidate.MobileVerificationRequired())
-            {
-                candidate.CommunicationPreferences.MobileVerificationCode = _codeGenerator.GenerateNumeric();
-                candidate.CommunicationPreferences.MobileVerificationCodeDateCreated = DateTime.UtcNow;
-
-                _sendMobileVerificationCodeStrategy.SendMobileVerificationCode(candidate);
-            }
-
             var result = _candidateWriteRepository.Save(candidate);
             var reloadedCandidate = _candidateReadRepository.Get(candidate.EntityId);
 

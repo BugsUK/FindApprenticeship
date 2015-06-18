@@ -23,5 +23,10 @@
             public const string FailedValidation = "RegisterMediatorCodes.UpdateMonitoringInformation.FailedValidation";
             public const string ErrorUpdating = "RegisterMediatorCodes.UpdateMonitoringInformation.ErrorUpdating";
         }
+
+        public class SendMobileVerificationCode
+        {
+            public const string Success = "RegisterMediatorCodes.SendMobileVerificationCode.Success";
+        }
     }
 }

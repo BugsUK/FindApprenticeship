@@ -2,6 +2,7 @@
 {
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using System.Web.Routing;
     using Attributes;
     using Common.Attributes;
     using Common.Configuration;
@@ -148,6 +149,10 @@
                         return View(model);
                 }
 
+                //Following registration, user should be prompted to verify their mobile number
+                var message = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.Action("VerifyMobile", "Account")).Message;
+                SetUserMessage(message.Text, message.Level);
+
                 //Redirects even if fails for unknown reason, don't hinder user.
                 return RedirectToAction("SkipMonitoringInformation");
             });
@@ -160,7 +165,11 @@
         {
             return await Task.Run<ActionResult>(() =>
             {
-                // ReturnUrl takes precedence over last view vacnacy id.
+                //Following registration, user should be prompted to verify their mobile number
+                var message = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.Action("VerifyMobile", "Account")).Message;
+                SetUserMessage(message.Text, message.Level);
+             
+                // ReturnUrl takes precedence over last view vacancy id.
                 var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
 
                 // Clear last viewed vacancy and distance (if any).

@@ -106,6 +106,18 @@
                     {
                         EnableText = enableText
                     },
+                    ExpiringApplicationPreferences = new CommunicationPreference
+                    {
+                        EnableText = enableText
+                    },
+                    SavedSearchPreferences = new CommunicationPreference
+                    {
+                        EnableText = enableText
+                    },
+                    MarketingPreferences = new CommunicationPreference
+                    {
+                        EnableText = enableText
+                    },
                     VerifiedMobile = verifiedMobile
                 }
             };
@@ -121,10 +133,14 @@
 
             communicationService.Setup(cs => cs.SendMessageToCandidate(candidateId, MessageTypes.SendMobileVerificationCode, It.IsAny<IEnumerable<CommunicationToken>>())).Callback<Guid, MessageTypes, IEnumerable<CommunicationToken>>((cid, mt, ct) => { communicationTokens = ct; });
 
-            var sendMobileVerificationCodeStrategy = new SendMobileVerificationCodeStrategyBuilder().With(communicationService).Build();
-            var saveCandidateStrategy = new SaveCandidateStrategyBuilder().With(sendMobileVerificationCodeStrategy).With(codeGenerator).Build();
+            var sendMobileVerificationCodeStrategy = new SendMobileVerificationCodeStrategyBuilder().With(communicationService).With(codeGenerator).Build();
+            var saveCandidateStrategy = new SaveCandidateStrategyBuilder().With(sendMobileVerificationCodeStrategy).Build();
 
             saveCandidateStrategy.SaveCandidate(candidate);
+            if (candidate.MobileVerificationRequired())
+            {
+                sendMobileVerificationCodeStrategy.SendMobileVerificationCode(candidate);
+            }
 
             if (verifiedMobile || !enableText)
             {

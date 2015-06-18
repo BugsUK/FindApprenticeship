@@ -16,7 +16,7 @@
         private Mock<IUserAccountService> _userAccountService = new Mock<IUserAccountService>();
         private Mock<IAuthenticationService> _authenticationService = new Mock<IAuthenticationService>();
         private Mock<ICandidateWriteRepository> _candidateWriteRepository = new Mock<ICandidateWriteRepository>();
-        private readonly Mock<ICodeGenerator> _codeGenerator = new Mock<ICodeGenerator>();
+        private Mock<ICodeGenerator> _codeGenerator = new Mock<ICodeGenerator>();
         private Mock<ICommunicationService> _communicationService = new Mock<ICommunicationService>();
         private Mock<IUserReadRepository> _userReadRepository = new Mock<IUserReadRepository>();
 
@@ -62,6 +62,12 @@
         public RegisterCandidateStrategyBuilder With(Mock<IUserAccountService> userAccountService)
         {
             _userAccountService = userAccountService;
+            return this;
+        }
+
+        public RegisterCandidateStrategyBuilder With(Mock<ICodeGenerator> codeGenerator)
+        {
+            _codeGenerator = codeGenerator;
             return this;
         }
     }

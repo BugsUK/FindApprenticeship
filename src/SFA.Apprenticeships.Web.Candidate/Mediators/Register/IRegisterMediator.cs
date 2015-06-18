@@ -11,5 +11,7 @@
         MediatorResponse<ActivationViewModel> Activate(Guid candidateId, ActivationViewModel activationViewModel);
 
         MediatorResponse UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel);
+
+        MediatorResponse SendMobileVerificationCode(Guid candidateId, string verifyMobileUrl);
     }
 }

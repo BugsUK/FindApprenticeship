@@ -53,16 +53,14 @@
                 EnableApplicationStatusChangeAlertsViaEmail = true
             };
 
-            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
-            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
-
             // ReSharper disable once RedundantAssignment
             var candidate = new Candidate();
+            candidate.DisableAllOptionalCommunications();
             var accountProviderMock = new Mock<IAccountProvider>();
 
             accountProviderMock.Setup(x => x.TrySaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>(), out candidate)).Returns(true);
 
-            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(accountProviderMock.Object).Build();
+            var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
             var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
 
             response.Code.Should().Be(AccountMediatorCodes.Settings.Success);
@@ -77,11 +75,10 @@
             settingsViewModel.Mode = SettingsViewModel.SettingsMode.YourAccount;
 
             var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
-            
-            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
 
             // ReSharper disable once RedundantAssignment
             var candidate = new Candidate();
+            candidate.DisableAllOptionalCommunications();
             var accountProviderMock = new Mock<IAccountProvider>();
             
             accountProviderMock.Setup(x => x.TrySaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>(), out candidate)).Returns(true);
@@ -99,16 +96,14 @@
             var settingsViewModel = new SettingsViewModelBuilder().EnableSavedSearchAlertsViaEmail(true).EnableSavedSearchAlertsViaText(true).WithSavedSearchViewModels(savedSearchViewModels).Build();
             settingsViewModel.Mode = SettingsViewModel.SettingsMode.SavedSearches;
 
-            var candidateServiceProviderMock = new Mock<ICandidateServiceProvider>();
-            candidateServiceProviderMock.Setup(x => x.GetCandidate(It.IsAny<Guid>())).Returns(new Candidate());
-
             // ReSharper disable once RedundantAssignment
             var candidate = new Candidate();
+            candidate.DisableAllOptionalCommunications();
             var accountProviderMock = new Mock<IAccountProvider>();
 
             accountProviderMock.Setup(x => x.TrySaveSettings(It.IsAny<Guid>(), It.IsAny<SettingsViewModel>(), out candidate)).Returns(true);
 
-            var accountMediator = new AccountMediatorBuilder().With(candidateServiceProviderMock).With(accountProviderMock.Object).Build();
+            var accountMediator = new AccountMediatorBuilder().With(accountProviderMock.Object).Build();
             var response = accountMediator.SaveSettings(Guid.NewGuid(), settingsViewModel);
 
             response.AssertMessage(AccountMediatorCodes.Settings.SuccessWithWarning, AccountPageMessages.SettingsUpdatedSavedSearchesAlertWarning, UserMessageLevel.Info, true);

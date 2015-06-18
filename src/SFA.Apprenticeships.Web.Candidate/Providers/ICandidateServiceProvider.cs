@@ -58,5 +58,7 @@
         bool Unsubscribe(Guid subscriberId, SubscriptionTypes subscriptionType);
 
         void UpdateMonitoringInformation(Guid candidateId, MonitoringInformationViewModel monitoringInformationViewModel);
+
+        string SendMobileVerificationCode(Guid candidateId);
     }
 }

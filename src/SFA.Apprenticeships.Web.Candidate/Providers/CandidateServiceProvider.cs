@@ -228,6 +228,7 @@
                         UserStatus = user.Status,
                         IsAuthenticated = true,
                         AcceptedTermsAndConditionsVersion = candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion,
+                        PhoneNumber = candidate.RegistrationDetails.PhoneNumber,
                         MobileVerificationRequired = candidate.MobileVerificationRequired(),
                         PendingUsernameVerificationRequired = user.PendingUsernameVerificationRequired()
                     };
@@ -569,6 +570,10 @@
                 if (saveCandidate)
                 {
                     _candidateService.SaveCandidate(candidate);
+                    if (candidate.MobileVerificationRequired())
+                    {
+                        _candidateService.SendMobileVerificationCode(candidate);
+                    }
                 }
             }
             catch (Exception ex)
@@ -647,6 +652,13 @@
             {
                 _logger.Error("Error updating monitoring information", ex);
             }
+        }
+
+        public string SendMobileVerificationCode(Guid candidateId)
+        {
+            var candidate = _candidateService.GetCandidate(candidateId);
+            _candidateService.SendMobileVerificationCode(candidate);
+            return candidate.RegistrationDetails.PhoneNumber;
         }
 
         public bool RequestEmailReminder(ForgottenEmailViewModel forgottenEmailViewModel)

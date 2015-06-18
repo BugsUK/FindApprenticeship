@@ -43,7 +43,8 @@
                 {
                     MarketingPreferences = new CommunicationPreference
                     {
-                        EnableEmail = viewModel.AcceptUpdates
+                        EnableEmail = viewModel.AcceptUpdates,
+                        EnableText = viewModel.AcceptUpdates
                     }
                 }
             };
