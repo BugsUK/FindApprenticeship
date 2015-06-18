@@ -129,12 +129,6 @@
                 );
 
             routes.MapRoute(
-                name: CandidateRouteNames.ApprenticeshipSearchValidation,
-                url: "apprenticeshipsearchvalidation",
-                defaults: new { controller = "ApprenticeshipSearch", action = "SearchValidation" }
-                );
-
-            routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipDetailsWithDistance,
                 url: "apprenticeshipdetail/{id}/{distance}",
                 defaults: new { controller = "ApprenticeshipSearch", action = "DetailsWithDistance" }

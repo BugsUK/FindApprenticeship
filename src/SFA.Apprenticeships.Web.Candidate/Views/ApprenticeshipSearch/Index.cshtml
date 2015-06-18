@@ -12,7 +12,7 @@
 <div class="grid-wrapper" id="searchHome">
     <div class="grid-wrapper controls-3-4">
         <section class="grid grid-2-3">
-            @using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipSearchValidation, FormMethod.Get, new { @id = "#searchForm" }))
+            @using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipSearch, FormMethod.Post, new { @id = "#searchForm" }))
             {
                 @Html.Partial("ValidationSummary", ViewData.ModelState)
 

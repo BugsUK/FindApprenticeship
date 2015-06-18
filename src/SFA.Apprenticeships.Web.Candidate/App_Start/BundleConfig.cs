@@ -71,8 +71,7 @@ namespace SFA.Apprenticeships.Web.Candidate
                 "~/Content/_assets/js/nas/geoLocater.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/search").Include(
-                "~/Content/_assets/js/nas/searchTour.js",
-                "~/Content/_assets/js/nas/tabbedContent.js"));
+                "~/Content/_assets/js/nas/searchTour.js"));
         }
     }
 }

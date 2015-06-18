@@ -56,9 +56,9 @@
             });
         }
 
-        [HttpGet]
+        [HttpPost]
         [ClearSearchReturnUrl(false)]
-        public async Task<ActionResult> SearchValidation(ApprenticeshipSearchViewModel model)
+        public async Task<ActionResult> Index(ApprenticeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
