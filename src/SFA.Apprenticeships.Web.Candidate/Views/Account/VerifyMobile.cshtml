@@ -42,7 +42,7 @@
 
         @Html.FormTextFor(
         m => m.VerifyMobileCode,
-        controlHtmlAttributes: new { @maxlength = "4" },
+        controlHtmlAttributes: new { @maxlength = "4", autofocus = "autofocus" },
         containerHtmlAttributes: new { @class = "form-group-withlink" })
     </fieldset>
     <div class="form-group">
