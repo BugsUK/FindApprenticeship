@@ -252,6 +252,7 @@
   <ItemGroup>
     <Content Include="403.aspx" />
     <Content Include="403.html" />
+    <Content Include="BingSiteAuth.xml" />
     <Content Include="Content\_assets\css\main-1.11.0.2251.css" />
     <Content Include="Content\_assets\css\main-ie8-1.11.0.2251.css" />
     <Content Include="Content\_assets\img\apple-touch-icon-120x120.png" />
