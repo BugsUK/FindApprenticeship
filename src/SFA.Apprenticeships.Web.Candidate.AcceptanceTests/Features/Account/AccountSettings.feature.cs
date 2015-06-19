@@ -202,10 +202,16 @@ this.ScenarioSetup(scenarioInfo);
 #line 74
  testRunner.And("I choose EnableApplicationStatusChangeAlertsViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 75
- testRunner.And("I choose EnableExpiringApplicationAlertsViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I choose EnableApplicationStatusChangeAlertsViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 77
- testRunner.And("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I choose EnableExpiringApplicationAlertsViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 78
+ testRunner.And("I choose EnableExpiringApplicationAlertsViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 80
+ testRunner.And("I choose EnableMarketingViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 82
+ testRunner.And("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 83
  testRunner.Then("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -216,7 +222,7 @@ this.ScenarioSetup(scenarioInfo);
                         "ValidationSummary",
                         "Does Not Exist",
                         ""});
-#line 80
+#line 85
  testRunner.And("I see", ((string)(null)), table4, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -279,7 +285,7 @@ this.ScenarioSetup(scenarioInfo);
                         "EnableExpiringApplicationAlertsViaEmail",
                         "Equals",
                         "False"});
-#line 84
+#line 89
  testRunner.And("I see", ((string)(null)), table5, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -290,7 +296,7 @@ this.ScenarioSetup(scenarioInfo);
                         "SuccessMessageText",
                         "Equals",
                         "You\'ve successfully updated your settings"});
-#line 101
+#line 106
  testRunner.And("I see", ((string)(null)), table6, "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -301,21 +307,21 @@ this.ScenarioSetup(scenarioInfo);
         public virtual void AsACandidateICannotSaveInvalidPersonalSettings()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I cannot save invalid personal settings", ((string[])(null)));
-#line 105
-this.ScenarioSetup(scenarioInfo);
-#line 107
- testRunner.Given("I navigated to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 108
- testRunner.And("I am logged out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 109
- testRunner.And("I navigated to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 110
- testRunner.Then("I am on the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+this.ScenarioSetup(scenarioInfo);
 #line 112
- testRunner.Given("I registered an account and activated it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I navigated to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 113
- testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I am logged out", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 114
+ testRunner.And("I navigated to the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 115
+ testRunner.Then("I am on the ApprenticeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 117
+ testRunner.Given("I registered an account and activated it", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 118
+ testRunner.And("I navigated to the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 119
  testRunner.When("I am on the LoginPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
@@ -327,17 +333,17 @@ this.ScenarioSetup(scenarioInfo);
             table7.AddRow(new string[] {
                         "Password",
                         "{PasswordToken}"});
-#line 115
- testRunner.And("I enter data", ((string)(null)), table7, "And ");
-#line 119
- testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 120
- testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 122
- testRunner.Given("I navigated to the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 123
- testRunner.When("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I enter data", ((string)(null)), table7, "And ");
+#line 124
+ testRunner.And("I choose SignInButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 125
+ testRunner.Then("I am on the MyApplicationsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 127
+ testRunner.Given("I navigated to the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 128
+ testRunner.When("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 130
  testRunner.And("I wait to see UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
@@ -348,11 +354,11 @@ this.ScenarioSetup(scenarioInfo);
                         "ClearAllSettings",
                         "Equals",
                         "Done"});
-#line 127
- testRunner.Then("I see", ((string)(null)), table8, "Then ");
-#line 131
- testRunner.When("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 132
+ testRunner.Then("I see", ((string)(null)), table8, "Then ");
+#line 136
+ testRunner.When("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 137
  testRunner.Then("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
@@ -363,9 +369,9 @@ this.ScenarioSetup(scenarioInfo);
                         "ValidationSummaryCount",
                         "Equals",
                         "8"});
-#line 134
+#line 139
  testRunner.And("I see", ((string)(null)), table9, "And ");
-#line 138
+#line 143
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
@@ -380,9 +386,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#FirstName"});
-#line 139
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table10, "And ");
 #line 144
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table10, "And ");
+#line 149
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
@@ -397,9 +403,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#LastName"});
-#line 145
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table11, "And ");
 #line 150
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table11, "And ");
+#line 155
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
@@ -414,9 +420,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#DateOfBirth_Day"});
-#line 151
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table12, "And ");
 #line 156
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table12, "And ");
+#line 161
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
@@ -431,9 +437,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#DateOfBirth_Month"});
-#line 157
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table13, "And ");
 #line 162
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table13, "And ");
+#line 167
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
@@ -448,9 +454,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#DateOfBirth_Year"});
-#line 163
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table14, "And ");
 #line 168
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table14, "And ");
+#line 173
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
@@ -465,9 +471,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#Address_AddressLine1"});
-#line 169
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table15, "And ");
 #line 174
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table15, "And ");
+#line 179
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
@@ -482,9 +488,9 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#Address_Postcode"});
-#line 175
- testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table16, "And ");
 #line 180
+ testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table16, "And ");
+#line 185
  testRunner.And("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
@@ -499,7 +505,7 @@ this.ScenarioSetup(scenarioInfo);
                         "Href",
                         "Equals",
                         "#PhoneNumber"});
-#line 181
+#line 186
  testRunner.And("I am on ValidationSummaryItems list item matching criteria", ((string)(null)), table17, "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -512,13 +518,13 @@ this.ScenarioSetup(scenarioInfo);
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I can verify my mobile number", new string[] {
                         "US616"});
-#line 187
+#line 192
 this.ScenarioSetup(scenarioInfo);
-#line 188
+#line 193
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 189
+#line 194
  testRunner.Given("I navigated to the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 190
+#line 195
  testRunner.Then("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
@@ -532,18 +538,22 @@ this.ScenarioSetup(scenarioInfo);
             table18.AddRow(new string[] {
                         "EnableApplicationStatusChangeAlertsViaText",
                         "Equals",
-                        "False"});
-#line 191
- testRunner.And("I see", ((string)(null)), table18, "And ");
-#line 195
- testRunner.And("I wait to see EnableApplicationStatusChangeAlertsViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+                        "True"});
+            table18.AddRow(new string[] {
+                        "EnableExpiringApplicationAlertsViaText",
+                        "Equals",
+                        "True"});
 #line 196
+ testRunner.And("I see", ((string)(null)), table18, "And ");
+#line 201
+ testRunner.And("I wait to see EnableApplicationStatusChangeAlertsViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 202
  testRunner.When("I choose EnableApplicationStatusChangeAlertsViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 197
+#line 203
  testRunner.And("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 198
+#line 204
  testRunner.Then("I am on the VerifyMobile page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 199
+#line 205
  testRunner.When("I get my mobile verification code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
@@ -552,11 +562,11 @@ this.ScenarioSetup(scenarioInfo);
             table19.AddRow(new string[] {
                         "VerifyMobileCode",
                         "{MobileVerificationCodeToken}"});
-#line 200
+#line 206
  testRunner.And("I enter data", ((string)(null)), table19, "And ");
-#line 203
+#line 209
  testRunner.And("I choose VerifyNumberButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 204
+#line 210
  testRunner.Then("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
@@ -570,27 +580,31 @@ this.ScenarioSetup(scenarioInfo);
             table20.AddRow(new string[] {
                         "EnableApplicationStatusChangeAlertsViaText",
                         "Equals",
+                        "False"});
+            table20.AddRow(new string[] {
+                        "EnableExpiringApplicationAlertsViaText",
+                        "Equals",
                         "True"});
-#line 205
+#line 211
  testRunner.And("I see", ((string)(null)), table20, "And ");
 #line hidden
             this.ScenarioCleanup();
         }
         
         [NUnit.Framework.TestAttribute()]
-        [NUnit.Framework.DescriptionAttribute("As a candidate I can opt into marketing messages via text")]
+        [NUnit.Framework.DescriptionAttribute("As a candidate I can opt out of marketing messages via text")]
         [NUnit.Framework.CategoryAttribute("US519")]
-        public virtual void AsACandidateICanOptIntoMarketingMessagesViaText()
+        public virtual void AsACandidateICanOptOutOfMarketingMessagesViaText()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I can opt into marketing messages via text", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("As a candidate I can opt out of marketing messages via text", new string[] {
                         "US519"});
-#line 211
+#line 218
 this.ScenarioSetup(scenarioInfo);
-#line 212
+#line 219
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 213
+#line 220
  testRunner.Given("I navigated to the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 214
+#line 221
  testRunner.Then("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
@@ -608,7 +622,7 @@ this.ScenarioSetup(scenarioInfo);
             table21.AddRow(new string[] {
                         "EnableApplicationStatusChangeAlertsViaText",
                         "Equals",
-                        "False"});
+                        "True"});
             table21.AddRow(new string[] {
                         "EnableExpiringApplicationAlertsViaEmail",
                         "Equals",
@@ -616,7 +630,7 @@ this.ScenarioSetup(scenarioInfo);
             table21.AddRow(new string[] {
                         "EnableExpiringApplicationAlertsViaText",
                         "Equals",
-                        "False"});
+                        "True"});
             table21.AddRow(new string[] {
                         "EnableMarketingViaEmail",
                         "Equals",
@@ -624,26 +638,22 @@ this.ScenarioSetup(scenarioInfo);
             table21.AddRow(new string[] {
                         "EnableMarketingViaText",
                         "Equals",
-                        "False"});
-#line 215
+                        "True"});
+#line 222
  testRunner.And("I see", ((string)(null)), table21, "And ");
-#line 225
- testRunner.When("I choose EnableApplicationStatusChangeAlertsViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 226
- testRunner.And("I choose EnableApplicationStatusChangeAlertsViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 228
- testRunner.And("I choose EnableExpiringApplicationAlertsViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 229
- testRunner.And("I choose EnableExpiringApplicationAlertsViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 231
- testRunner.And("I choose EnableMarketingViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 232
- testRunner.And("I choose EnableMarketingViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.When("I choose EnableApplicationStatusChangeAlertsViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 234
- testRunner.And("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 235
- testRunner.Then("I am on the VerifyMobile page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I choose EnableExpiringApplicationAlertsViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 236
+ testRunner.And("I choose EnableMarketingViaEmail", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 237
+ testRunner.And("I choose EnableMarketingViaText", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 239
+ testRunner.And("I choose UpdateDetailsButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 240
+ testRunner.Then("I am on the VerifyMobile page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 241
  testRunner.When("I get my mobile verification code", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
@@ -652,11 +662,11 @@ this.ScenarioSetup(scenarioInfo);
             table22.AddRow(new string[] {
                         "VerifyMobileCode",
                         "{MobileVerificationCodeToken}"});
-#line 237
+#line 242
  testRunner.And("I enter data", ((string)(null)), table22, "And ");
-#line 240
+#line 245
  testRunner.And("I choose VerifyNumberButton", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 241
+#line 246
  testRunner.Then("I am on the SettingsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
@@ -690,8 +700,8 @@ this.ScenarioSetup(scenarioInfo);
             table23.AddRow(new string[] {
                         "EnableMarketingViaText",
                         "Equals",
-                        "True"});
-#line 242
+                        "False"});
+#line 247
  testRunner.And("I see", ((string)(null)), table23, "And ");
 #line hidden
             this.ScenarioCleanup();

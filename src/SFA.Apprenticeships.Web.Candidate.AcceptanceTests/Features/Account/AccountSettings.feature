@@ -72,7 +72,12 @@ Scenario: As a candidate I can change my personal settings
 	| Postcode     | SW1A 2AA            |
 
 	And I choose EnableApplicationStatusChangeAlertsViaEmail
+	And I choose EnableApplicationStatusChangeAlertsViaText
+
 	And I choose EnableExpiringApplicationAlertsViaEmail
+	And I choose EnableExpiringApplicationAlertsViaText
+
+	And I choose EnableMarketingViaText
 
 	And I choose UpdateDetailsButton
 	Then I am on the SettingsPage page
@@ -191,7 +196,8 @@ Scenario: As a candidate I can verify my mobile number
 	And I see
 	| Field                                      | Rule           | Value |
 	| VerifyContainer                            | Does Not Exist |       |
-	| EnableApplicationStatusChangeAlertsViaText | Equals         | False |
+	| EnableApplicationStatusChangeAlertsViaText | Equals         | True  |
+	| EnableExpiringApplicationAlertsViaText     | Equals         | True  |
 	And I wait to see EnableApplicationStatusChangeAlertsViaText
 	When I choose EnableApplicationStatusChangeAlertsViaText
 	And I choose UpdateDetailsButton
@@ -205,10 +211,11 @@ Scenario: As a candidate I can verify my mobile number
 	And I see
 	| Field                                      | Rule   | Value |
 	| VerifyContainer                            | Exists |       |
-	| EnableApplicationStatusChangeAlertsViaText | Equals | True  |
+	| EnableApplicationStatusChangeAlertsViaText | Equals | False |
+	| EnableExpiringApplicationAlertsViaText     | Equals | True  |
 
 @US519
-Scenario: As a candidate I can opt into marketing messages via text
+Scenario: As a candidate I can opt out of marketing messages via text
 	Given I have registered a new candidate
 	Given I navigated to the SettingsPage page
 	Then I am on the SettingsPage page
@@ -216,17 +223,15 @@ Scenario: As a candidate I can opt into marketing messages via text
 	| Field                                       | Rule           | Value |
 	| VerifyContainer                             | Does Not Exist |       |
 	| EnableApplicationStatusChangeAlertsViaEmail | Equals         | True  |
-	| EnableApplicationStatusChangeAlertsViaText  | Equals         | False |
+	| EnableApplicationStatusChangeAlertsViaText  | Equals         | True  |
 	| EnableExpiringApplicationAlertsViaEmail     | Equals         | True  |
-	| EnableExpiringApplicationAlertsViaText      | Equals         | False |
+	| EnableExpiringApplicationAlertsViaText      | Equals         | True  |
 	| EnableMarketingViaEmail                     | Equals         | True  |
-	| EnableMarketingViaText                      | Equals         | False |
+	| EnableMarketingViaText                      | Equals         | True  |
 	
 	When I choose EnableApplicationStatusChangeAlertsViaEmail
-	And I choose EnableApplicationStatusChangeAlertsViaText
 		  
 	And I choose EnableExpiringApplicationAlertsViaEmail
-	And I choose EnableExpiringApplicationAlertsViaText
 		  
 	And I choose EnableMarketingViaEmail
 	And I choose EnableMarketingViaText
@@ -247,4 +252,4 @@ Scenario: As a candidate I can opt into marketing messages via text
 	| EnableExpiringApplicationAlertsViaEmail     | Equals | False |
 	| EnableExpiringApplicationAlertsViaText      | Equals | True  |
 	| EnableMarketingViaEmail                     | Equals | False |
-	| EnableMarketingViaText                      | Equals | True  |
+	| EnableMarketingViaText                      | Equals | False |
