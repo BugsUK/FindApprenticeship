@@ -98,7 +98,7 @@
                     }
 
                     <div class="tabbed-element disp-block form-group searchtab @keywordTabControlClass @categoriesTabClass @categoriesTabControlClass">
-                        @Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, new { reset = true }, new { @id = "reset-search-options-link" })
+                        @Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, new { reset = true, Model.SearchMode }, new { @id = "reset-search-options-link" })
                     </div>
 
                     @Html.HiddenFor(m => m.Latitude)

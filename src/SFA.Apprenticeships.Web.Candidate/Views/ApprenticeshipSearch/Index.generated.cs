@@ -551,7 +551,7 @@ WriteLiteral("                        ");
 
             
             #line 101 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-                   Write(Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, new { reset = true }, new { @id = "reset-search-options-link" }));
+                   Write(Html.RouteLink("Reset search options", CandidateRouteNames.ApprenticeshipSearch, new { reset = true, Model.SearchMode }, new { @id = "reset-search-options-link" }));
 
             
             #line default
@@ -588,14 +588,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 7462), Tuple.Create("\"", 7492)
+WriteAttribute("value", Tuple.Create(" value=\"", 7480), Tuple.Create("\"", 7510)
             
             #line 107 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 7470), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 7488), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 7470), false)
+, 7488), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -686,14 +686,14 @@ WriteLiteral(" class=\"list-text\"");
 WriteLiteral(">\r\n                        <li>0800 015 0400</li>\r\n                        <li><a" +
 "");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8345), Tuple.Create("\'", 8395)
+WriteAttribute("href", Tuple.Create(" href=\'", 8363), Tuple.Create("\'", 8413)
             
             #line 124 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 8352), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 8370), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 8352), false)
+, 8370), false)
 );
 
 WriteLiteral(">Contact us</a></li>\r\n                    </ul>\r\n                    <ul");
