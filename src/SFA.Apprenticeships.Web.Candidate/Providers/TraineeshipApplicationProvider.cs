@@ -40,6 +40,15 @@
                 var applicationDetail = _candidateService.GetTraineeshipApplication(candidateId, vacancyId);
                 var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(applicationDetail);
 
+                if (viewModel == null)
+                {
+                    return new TraineeshipApplicationViewModel
+                    {
+                        ViewModelStatus = ApplicationViewModelStatus.ApplicationNotFound,
+                        ViewModelMessage = MyApplicationsPageMessages.ApplicationNotFound
+                    };
+                }
+
                 return PatchWithVacancyDetail(candidateId, vacancyId, viewModel);
             }
             catch (CustomException e)
