@@ -29,7 +29,7 @@
         {
             return Collection
                 .AsQueryable()
-                .Count(each => each.ActivationCode == null);
+                .Count(each => each.Status != UserStatuses.PendingActivation && each.Status != UserStatuses.PendingDeletion);
         }
 
         public long GetUnactivatedUserCount()
