@@ -58,7 +58,10 @@
         <div class="footer__wrapper">
             <div class="footer__meta">
                 <ul class="footer__nav" role="navigation">
-                    <li class="small-btm-margin"><a class="bold-medium" href="/helpdesk">Contact us</a></li>
+                    <li class="small-btm-margin">
+                        <a class="footer__link bold-medium" href="/helpdesk">Contact us</a>
+                        <a class="footer__link bold-medium" href="/feedback">Give feedback</a>
+                    </li>
                     <li class="footer__link"><a href="/privacy">Privacy and cookies</a></li>
                     <li class="footer__link"><a href="/terms">Terms and conditions</a></li>
                     <li class="footer__link">Built by the <a href="http://gov.uk/sfa" target="_blank">Skills Funding Agency</a></li>

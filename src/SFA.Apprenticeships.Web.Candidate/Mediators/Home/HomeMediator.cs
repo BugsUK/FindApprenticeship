@@ -13,75 +13,78 @@
     {
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ContactMessageServerViewModelValidator _contactMessageServerViewModelValidator;
+        private readonly FeedbackServerViewModelValidator _feedbackServerViewModelValidator;
         private readonly ILogService _logService;
 
-        public HomeMediator(ICandidateServiceProvider candidateServiceProvider, 
+        public HomeMediator(
+            ILogService logService,
+            ICandidateServiceProvider candidateServiceProvider,
             ContactMessageServerViewModelValidator contactMessageServerViewModelValidator,
-            ILogService logService)
+            FeedbackServerViewModelValidator feedbackServerViewModelValidator)
         {
+            _logService = logService;
             _candidateServiceProvider = candidateServiceProvider;
             _contactMessageServerViewModelValidator = contactMessageServerViewModelValidator;
-            _logService = logService;
+            _feedbackServerViewModelValidator = feedbackServerViewModelValidator;
         }
 
-        public MediatorResponse<ContactMessageViewModel> SendContactMessage(Guid? candidateId,
-            ContactMessageViewModel contactMessageViewModel)
+        public MediatorResponse<ContactMessageViewModel> SendContactMessage(Guid? candidateId, ContactMessageViewModel contactMessageViewModel)
         {
             var validationResult = _contactMessageServerViewModelValidator.Validate(contactMessageViewModel);
 
             if (!validationResult.IsValid)
             {
-                PopulateEnquiries(contactMessageViewModel);
+                PopulateContactMessageViewModelEnquiries(contactMessageViewModel);
                 return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.ValidationError, contactMessageViewModel, validationResult);
             }
 
             if (_candidateServiceProvider.SendContactMessage(candidateId, contactMessageViewModel))
             {
-                var viewModel = GetViewModel(candidateId);
-                PopulateEnquiries(viewModel);
+                var viewModel = InternalGetContactMessageViewModel(candidateId);
+                PopulateContactMessageViewModelEnquiries(viewModel);
                 return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.SuccessfullySent,
                     viewModel, ApplicationPageMessages.SendContactMessageSucceeded, UserMessageLevel.Success);
             }
 
-            PopulateEnquiries(contactMessageViewModel);
+            PopulateContactMessageViewModelEnquiries(contactMessageViewModel);
+
             return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.Error, contactMessageViewModel,
                 ApplicationPageMessages.SendContactMessageFailed, UserMessageLevel.Warning);
         }
 
+        public MediatorResponse<FeedbackViewModel> SendFeedback(Guid? candidateId, FeedbackViewModel feedbackViewModel)
+        {
+            var validationResult = _feedbackServerViewModelValidator.Validate(feedbackViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(HomeMediatorCodes.SendFeedback.ValidationError, feedbackViewModel, validationResult);
+            }
+
+            if (_candidateServiceProvider.SendFeedback(candidateId, feedbackViewModel))
+            {
+                var viewModel = InternalGetFeedbackViewModel(candidateId);
+
+                return GetMediatorResponse(HomeMediatorCodes.SendFeedback.SuccessfullySent,
+                    viewModel, ApplicationPageMessages.SendFeedbackSucceeded, UserMessageLevel.Success);
+            }
+
+            return GetMediatorResponse(HomeMediatorCodes.SendFeedback.Error, feedbackViewModel,
+                ApplicationPageMessages.SendFeedbackFailed, UserMessageLevel.Warning);
+        }
+
         public MediatorResponse<ContactMessageViewModel> GetContactMessageViewModel(Guid? candidateId)
         {
-            var viewModel = GetViewModel(candidateId);
+            var viewModel = InternalGetContactMessageViewModel(candidateId);
             
             return GetMediatorResponse(HomeMediatorCodes.GetContactMessageViewModel.Successful, viewModel);
         }
 
-        private ContactMessageViewModel GetViewModel(Guid? candidateId)
+        public MediatorResponse<FeedbackViewModel> GetFeedbackViewModel(Guid? candidateId)
         {
-            var viewModel = new ContactMessageViewModel();
-            PopulateEnquiries(viewModel);
+            var viewModel = InternalGetFeedbackViewModel(candidateId);
 
-            if (candidateId.HasValue)
-            {
-                try
-                {
-                    var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
-                    viewModel.Email = candidate.RegistrationDetails.EmailAddress;
-                    viewModel.Name = string.Format("{0} {1}", candidate.RegistrationDetails.FirstName,
-                        candidate.RegistrationDetails.LastName);
-                }
-                catch(Exception ex)
-                {
-                    _logService.Error("Failed to created view model", ex);
-                }
-            }
-
-            return viewModel;
-        }
-
-        private static void PopulateEnquiries(ContactMessageViewModel contactMessageViewModel)
-        {
-            contactMessageViewModel.Enquiries = GetEnquiries();
-            contactMessageViewModel.SelectedEnquiry = "noSelect";
+            return GetMediatorResponse(HomeMediatorCodes.GetFeedbackViewModel.Successful, viewModel);
         }
 
         protected static SelectList GetEnquiries()
@@ -106,5 +109,62 @@
 
             return enquiries;
         }
+
+        #region Helpers
+
+        private ContactMessageViewModel InternalGetContactMessageViewModel(Guid? candidateId)
+        {
+            var viewModel = new ContactMessageViewModel();
+            PopulateContactMessageViewModelEnquiries(viewModel);
+
+            if (candidateId.HasValue)
+            {
+                try
+                {
+                    var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
+
+                    viewModel.Email = candidate.RegistrationDetails.EmailAddress;
+                    viewModel.Name = string.Format("{0} {1}",
+                        candidate.RegistrationDetails.FirstName, candidate.RegistrationDetails.LastName);
+                }
+                catch(Exception ex)
+                {
+                    _logService.Error("Failed to created view model (ignoring)", ex);
+                }
+            }
+
+            return viewModel;
+        }
+
+        private FeedbackViewModel InternalGetFeedbackViewModel(Guid? candidateId)
+        {
+            var viewModel = new FeedbackViewModel();
+
+            if (candidateId.HasValue)
+            {
+                try
+                {
+                    var candidate = _candidateServiceProvider.GetCandidate(candidateId.Value);
+
+                    viewModel.Email = candidate.RegistrationDetails.EmailAddress;
+                    viewModel.Name = string.Format("{0} {1}",
+                        candidate.RegistrationDetails.FirstName, candidate.RegistrationDetails.LastName);
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error("Failed to created view model (ignoring)", ex);
+                }
+            }
+
+            return viewModel;
+        }
+
+        private static void PopulateContactMessageViewModelEnquiries(ContactMessageViewModel contactMessageViewModel)
+        {
+            contactMessageViewModel.Enquiries = GetEnquiries();
+            contactMessageViewModel.SelectedEnquiry = "noSelect";
+        }
+
+        #endregion
     }
 }

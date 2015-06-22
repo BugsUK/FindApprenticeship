@@ -139,7 +139,7 @@
     <Compile Include="Candidate\Strategies\RegisterCandidateStrategy\RegisterCandidateStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\RegisterCandidateStrategy\RegisterCandidateStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyBuilder.cs" />
-    <Compile Include="Candidate\Strategies\SendContactMessageStrategy\SendContactMessageStrategyTests.cs" />
+    <Compile Include="Candidate\Strategies\SubmitContactMessageStrategy\SubmitContactMessageStrategyTests.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\SendMobileVerificationCodeStrategy\SendMobileVerificationCodeStrategyTests.cs" />
     <Compile Include="Candidates\Strategies\ActivationReminder\SetPendingDeletionStrategyTests.cs" />

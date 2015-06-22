@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.SendContactMessageStrategy
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.SubmitContactMessageStrategy
 {
     using System;
     using System.Collections.Generic;
@@ -14,7 +14,7 @@
     [TestFixture]
     public class SendContactMessageStrategyTests
     {
-        private const string HelpdeskEmailAddress = "helpdesk@gmail.com";
+        private const string HelpdeskEmailAddress = "helpdesk@example.com";
 
         private readonly Mock<ICommunicationService> _communicationService = new Mock<ICommunicationService>();
         private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
@@ -25,7 +25,10 @@
         {
             _configurationService.Setup(
                 cm => cm.Get<UserAccountConfiguration>())
-                .Returns(new UserAccountConfiguration() {HelpdeskEmailAddress = HelpdeskEmailAddress});
+                .Returns(new UserAccountConfiguration
+                {
+                    HelpdeskEmailAddress = HelpdeskEmailAddress
+                });
         }
 
         [Test]

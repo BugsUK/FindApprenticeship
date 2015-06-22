@@ -99,6 +99,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.Feedback,
+                url: "feedback",
+                defaults: new { controller = "Home", action = "Feedback" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.Terms,
                 url: "terms",
                 defaults: new { controller = "Home", action = "Terms" }

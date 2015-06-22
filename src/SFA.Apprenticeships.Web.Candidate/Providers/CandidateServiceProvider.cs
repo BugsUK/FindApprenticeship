@@ -485,8 +485,27 @@
             try
             {
                 var candidate = _mapper.Map<ContactMessageViewModel, ContactMessage>(viewModel);
+
                 candidate.UserId = candidateId;
                 _candidateService.SubmitContactMessage(candidate);
+                
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public bool SendFeedback(Guid? candidateId, FeedbackViewModel viewModel)
+        {
+            try
+            {
+                var candidate = _mapper.Map<FeedbackViewModel, ContactMessage>(viewModel);
+                
+                candidate.UserId = candidateId;
+                _candidateService.SubmitContactMessage(candidate);
+
                 return true;
             }
             catch

@@ -2,17 +2,14 @@
 {
     using SpecBind.Pages;
     using OpenQA.Selenium;
-    using SpecBind.Selenium;
 
     [PageNavigation("/helpdesk")]
     [PageAlias("HelpdeskPage")]
     public class HelpdeskPage : BaseValidationPage
     {
-        private IElementList<IWebElement, EnquiryDropdownItem> _enquiryDropdown;
-
-        public HelpdeskPage(ISearchContext context) : base(context)
+        public HelpdeskPage(ISearchContext context)
+            : base(context)
         {
-
         }
 
         [ElementLocator(Id = "Name")]
@@ -22,11 +19,7 @@
         public IWebElement Email { get; set; }
 
         [ElementLocator(Id = "contact-subject")]
-        public IElementList<IWebElement, EnquiryDropdownItem> EnquiryDropdown
-        {
-            get { return _enquiryDropdown; }
-            set { _enquiryDropdown = value; }
-        }
+        public IElementList<IWebElement, EnquiryDropdownItem> EnquiryDropdown { get; set; }
 
         [ElementLocator(Id = "Enquiry")]
         public IWebElement Enquiry { get; set; }
@@ -34,16 +27,7 @@
         [ElementLocator(Id = "Details")]
         public IWebElement Details { get; set; }
 
-        [ElementLocator(Id="send-contact-form-button")]
+        [ElementLocator(Id = "send-contact-form-button")]
         public IWebElement SendButton { get; set; }
-    }
-
-    [ElementLocator(TagName = "option")]
-    public class EnquiryDropdownItem : WebElement
-    {
-        public EnquiryDropdownItem(ISearchContext parent)
-            : base(parent)
-        {
-        }
     }
 }

@@ -43,6 +43,8 @@
 
         bool SendContactMessage(Guid? candidateId, ContactMessageViewModel viewModel);
 
+        bool SendFeedback(Guid? candidateId, FeedbackViewModel viewModel);
+
         IEnumerable<ApprenticeshipApplicationSummary> GetApprenticeshipApplications(Guid candidateId, bool refresh = true);
 
         ApprenticeshipSearchViewModel CreateSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel);

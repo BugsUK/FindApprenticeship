@@ -724,6 +724,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>HowToApply.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Home\Feedback.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Feedback.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -816,6 +820,7 @@
     <Compile Include="Constants\Pages\UpdateEmailAddressMessages.cs" />
     <Compile Include="Constants\Pages\VerifyMobilePageMessages.cs" />
     <Compile Include="Constants\CandidateDataItemNames.cs" />
+    <Compile Include="Constants\ViewModels\FeedbackViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\MonitoringInformationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ForgottenEmailViewModelMessages.cs" />
@@ -843,6 +848,7 @@
     <Compile Include="Providers\IApprenticeshipVacancyProvider.cs" />
     <Compile Include="Providers\ITraineeshipVacancyProvider.cs" />
     <Compile Include="Providers\TraineeshipVacancyProvider.cs" />
+    <Compile Include="Validators\FeedbackViewModelValidator.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
     <Compile Include="Validators\EmailViewModelValidator.cs" />
     <Compile Include="Validators\ForgottenEmailViewModelValidator.cs" />
@@ -874,6 +880,7 @@
     <Compile Include="ViewModels\Applications\WhatHappensNextApprenticeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\MonitoringInformationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\TrainingCourseViewModel.cs" />
+    <Compile Include="ViewModels\Home\FeedbackViewModel.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenCredentialsViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenEmailViewModel.cs" />
@@ -1028,6 +1035,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Settings.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Home\Feedback.generated.cs">
+      <DependentUpon>Feedback.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Home\HowToApply.generated.cs">
       <DependentUpon>HowToApply.cshtml</DependentUpon>

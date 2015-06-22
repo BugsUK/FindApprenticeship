@@ -1,0 +1,33 @@
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Home.FeedbackViewModel
+
+@{
+    ViewBag.Title = "Give feedback - Find an apprenticeship";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="hgroup">
+    <h1 class="heading-xlarge">Give feedback</h1>
+</div>
+
+@using (Html.BeginForm("Feedback", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.FormTextFor(
+            m => m.Name,
+            containerHtmlAttributes: new { @class = "form-group-compound" },
+            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" })
+
+    @Html.FormTextFor(
+            m => m.Email,
+            containerHtmlAttributes: new { @class = "form-group-compound" },
+                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
+            hintHtmlAttributes: new { @class = "text" })
+
+    @Html.FormTextAreaFor(m => m.Details,
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
+                hintHtmlAttributes: new { @class = "text" })
+    
+    <div class="form-group">
+        <button id="give-feedback-form-button" class="button">Give feedback</button>
+    </div>
+}

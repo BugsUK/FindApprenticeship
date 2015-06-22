@@ -64,6 +64,7 @@
             {
                 var candidateId = GetCandidateId();
                 var response = _homeMediator.GetContactMessageViewModel(candidateId);
+
                 return View(response.ViewModel);
             });
         }
@@ -88,6 +89,46 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
                     case HomeMediatorCodes.SendContactMessage.Error:
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(response.ViewModel);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+            });
+        }
+
+        [OutputCache(CacheProfile = CacheProfiles.Long)]
+        public async Task<ActionResult> Feedback()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var candidateId = GetCandidateId();
+                var response = _homeMediator.GetFeedbackViewModel(candidateId);
+
+                return View(response.ViewModel);
+            });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Feedback(FeedbackViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var candidateId = GetCandidateId();
+                var response = _homeMediator.SendFeedback(candidateId, model);
+
+                switch (response.Code)
+                {
+                    case HomeMediatorCodes.SendFeedback.ValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(model);
+                    case HomeMediatorCodes.SendFeedback.SuccessfullySent:
+                        ModelState.Clear();
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                        return View(response.ViewModel);
+                    case HomeMediatorCodes.SendFeedback.Error:
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
                 }

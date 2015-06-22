@@ -235,7 +235,8 @@
     <Compile Include="Mediators\ApprenticeshipSearch\SaveSearchTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\SearchValidationTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\TestsBase.cs" />
-    <Compile Include="Mediators\Home\HomeMediatorTests.cs" />
+    <Compile Include="Mediators\Home\FeedbackTests.cs" />
+    <Compile Include="Mediators\Home\ContactMessageTests.cs" />
     <Compile Include="Mediators\Login\ForgottenEmailTests.cs" />
     <Compile Include="Mediators\Login\IndexTests.cs" />
     <Compile Include="Mediators\Login\LoginMediatorBuilder.cs" />
@@ -294,6 +295,7 @@
     <Compile Include="Providers\CandidateServiceProvider\RegisterTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\RequestEmailReminderTests.cs" />
+    <Compile Include="Providers\CandidateServiceProvider\SendFeedbackTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\SendContactMessageTests.cs" />
     <Compile Include="Providers\CandidateServiceProvider\VerifyAccountUnlockCodeTests.cs" />
     <Compile Include="Providers\SearchProviderTests.cs" />
@@ -302,6 +304,7 @@
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderBuilder.cs" />
     <Compile Include="Providers\Traineeships\TraineeshipApplicationProviderTest.cs" />
     <Compile Include="Providers\TraineeshipVacancyProvider\FindVacanciesTests.cs" />
+    <Compile Include="Validators\FeedbackViewModelValidatorTests.cs" />
     <Compile Include="Validators\MonitoringInformationViewModelValidatorTests.cs" />
     <Compile Include="Validators\ActivationViewModelValidatorTests.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidatorTests.cs" />

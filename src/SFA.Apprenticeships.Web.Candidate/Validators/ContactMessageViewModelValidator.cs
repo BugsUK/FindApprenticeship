@@ -55,6 +55,5 @@
                 .Matches(ContactMessageViewModelMessages.DetailsMessages.WhiteListRegularExpression)
                 .WithMessage(ContactMessageViewModelMessages.DetailsMessages.WhiteListErrorText);
         }
-
     }
 }

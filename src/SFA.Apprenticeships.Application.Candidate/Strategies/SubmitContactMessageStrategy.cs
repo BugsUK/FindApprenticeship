@@ -24,19 +24,22 @@
 
         public void SubmitMessage(ContactMessage contactMessage)
         {
-            var config = _configurationService.Get<UserAccountConfiguration>();
-            var helpdeskAddress = config.HelpdeskEmailAddress;
-            var details = string.IsNullOrWhiteSpace(contactMessage.Details) ? string.Empty : contactMessage.Details;
+            var recipientEmailAddress = _configurationService.Get<UserAccountConfiguration>().HelpdeskEmailAddress;
+
+            var userFullName = string.IsNullOrWhiteSpace(contactMessage.Email) ? string.Empty : contactMessage.Name;
+            var userEmailAddress = string.IsNullOrWhiteSpace(contactMessage.Email) ? string.Empty : contactMessage.Email;
+            var userEnquiry = string.IsNullOrWhiteSpace(contactMessage.Enquiry) ? string.Empty : contactMessage.Enquiry;
+            var userEnquiryDetails = string.IsNullOrWhiteSpace(contactMessage.Details) ? string.Empty : contactMessage.Details;
 
             _contactMessageRepository.Save(contactMessage);
                 
             _communicationService.SendContactMessage(contactMessage.UserId, MessageTypes.CandidateContactMessage, new[]
             {
-                new CommunicationToken(CommunicationTokens.RecipientEmailAddress, helpdeskAddress),
-                new CommunicationToken(CommunicationTokens.UserEmailAddress, contactMessage.Email),
-                new CommunicationToken(CommunicationTokens.UserFullName, contactMessage.Name),
-                new CommunicationToken(CommunicationTokens.UserEnquiry, contactMessage.Enquiry),
-                new CommunicationToken(CommunicationTokens.UserEnquiryDetails, details)
+                new CommunicationToken(CommunicationTokens.RecipientEmailAddress, recipientEmailAddress),
+                new CommunicationToken(CommunicationTokens.UserEmailAddress, userEmailAddress),
+                new CommunicationToken(CommunicationTokens.UserFullName, userFullName),
+                new CommunicationToken(CommunicationTokens.UserEnquiry, userEnquiry),
+                new CommunicationToken(CommunicationTokens.UserEnquiryDetails, userEnquiryDetails)
             });
         }
     }

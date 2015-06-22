@@ -8,5 +8,9 @@
         MediatorResponse<ContactMessageViewModel> SendContactMessage(Guid? candidateId, ContactMessageViewModel registerViewModel);
 
         MediatorResponse<ContactMessageViewModel> GetContactMessageViewModel(Guid? candidateId);
+
+        MediatorResponse<FeedbackViewModel> GetFeedbackViewModel(Guid? candidateId);
+
+        MediatorResponse<FeedbackViewModel> SendFeedback(Guid? candidateId, FeedbackViewModel feedbackViewModel);
     }
 }

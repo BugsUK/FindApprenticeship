@@ -204,6 +204,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BrowseBasedSearch.feature</DependentUpon>
     </Compile>
+    <Compile Include="Features\Home\Feedback.feature.cs">
+      <DependentUpon>Feedback.feature</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Features\Home\Helpdesk.feature.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -342,6 +347,8 @@
     <Compile Include="Pages\BaseValidationPage.cs" />
     <Compile Include="Pages\Dashboard\MyApplicationsPage.cs" />
     <Compile Include="Pages\Gds\GdsStartPage.cs" />
+    <Compile Include="Pages\Home\EnquiryDropdownItem.cs" />
+    <Compile Include="Pages\Home\FeedbackPage.cs" />
     <Compile Include="Pages\Home\HelpdeskPage.cs" />
     <Compile Include="Pages\Registration\MonitoringInformationPage.cs" />
     <Compile Include="Pages\TraineeshipApplication\TraineeshipWhatsNextPage.cs" />
@@ -445,6 +452,10 @@
     <None Include="Features\ApprenticeshipSearch\BrowseBasedSearch.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>
       <LastGenOutput>BrowseBasedSearch.feature.cs</LastGenOutput>
+    </None>
+    <None Include="Features\Home\Feedback.feature">
+      <Generator>SpecFlowSingleFileGenerator</Generator>
+      <LastGenOutput>Feedback.feature.cs</LastGenOutput>
     </None>
     <None Include="Features\Home\Helpdesk.feature">
       <Generator>SpecFlowSingleFileGenerator</Generator>

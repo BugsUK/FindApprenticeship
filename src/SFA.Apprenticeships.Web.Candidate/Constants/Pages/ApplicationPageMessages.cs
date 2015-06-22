@@ -4,6 +4,8 @@
     {
         public const string SendContactMessageSucceeded = "Your question has been successfully sent. Thank you.";
         public const string SendContactMessageFailed = "There’s been a problem sending your question. Please try again.";
+        public const string SendFeedbackSucceeded = "Your feedback has been successfully sent. Thank you.";
+        public const string SendFeedbackFailed = "There’s been a problem sending your feedback. Please try again.";
         public const string ArchiveFailed = "There’s been a problem saving your application. Please try again.";
         public const string UnarchiveFailed = "TODO: There's been a problem processing your request. Please try again.";
         public const string DeleteFailed = "There’s been a problem deleting your application. Please try again.";
