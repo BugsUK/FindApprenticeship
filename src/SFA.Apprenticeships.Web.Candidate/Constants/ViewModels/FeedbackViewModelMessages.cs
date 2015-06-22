@@ -6,7 +6,7 @@
     {
         public static class FullNameMessages
         {
-            public const string LabelText = "Full name";
+            public const string LabelText = "Full name (optional)";
             public const string TooLongErrorText = "Full name mustn’t exceed 71 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Full name " + Whitelists.NameWhitelist.ErrorText;
@@ -14,7 +14,7 @@
 
         public static class EmailAddressMessages
         {
-            public const string LabelText = "Email address";
+            public const string LabelText = "Email address (optional)";
             public const string TooLongErrorText = "Email address mustn’t exceed 100 characters";
             public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Email address " + Whitelists.EmailAddressWhitelist.ErrorText;
