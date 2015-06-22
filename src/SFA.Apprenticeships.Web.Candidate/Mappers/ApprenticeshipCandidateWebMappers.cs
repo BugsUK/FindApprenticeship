@@ -117,7 +117,7 @@
             Mapper.CreateMap<FeedbackViewModel, ContactMessage>()
                 .ForMember(c => c.EntityId, opt => opt.Ignore())
                 .ForMember(c => c.UserId, opt => opt.Ignore())
-                .ForMember(c => c.Enquiry, opt => opt.Ignore())
+                .ForMember(c => c.Enquiry, opt => opt.UseValue("Feedback"))
                 .ForMember(c => c.DateCreated, opt => opt.Ignore())
                 .ForMember(c => c.DateUpdated, opt => opt.Ignore());
         }

@@ -8,6 +8,10 @@
 
     public class SubmitContactMessageStrategy : ISubmitContactMessageStrategy
     {
+        public const string DefaultUserFullName = "(anonymous)";
+        public const string DefaultUserEmailAddress = "noreply@findapprenticeship.service.gov.uk";
+        public const string DefaultUserEnquiryDetails = "(none)";
+
         private readonly ICommunicationService _communicationService;
         private readonly IConfigurationService _configurationService;
         private readonly IContactMessageRepository _contactMessageRepository;
@@ -26,21 +30,29 @@
         {
             var recipientEmailAddress = _configurationService.Get<UserAccountConfiguration>().HelpdeskEmailAddress;
 
-            var userFullName = string.IsNullOrWhiteSpace(contactMessage.Email) ? string.Empty : contactMessage.Name;
-            var userEmailAddress = string.IsNullOrWhiteSpace(contactMessage.Email) ? string.Empty : contactMessage.Email;
-            var userEnquiry = string.IsNullOrWhiteSpace(contactMessage.Enquiry) ? string.Empty : contactMessage.Enquiry;
-            var userEnquiryDetails = string.IsNullOrWhiteSpace(contactMessage.Details) ? string.Empty : contactMessage.Details;
+            var userFullName = DefaultCommunicationToken(contactMessage.Name, DefaultUserFullName);
+            var userEmailAddress = DefaultCommunicationToken(contactMessage.Email, DefaultUserEmailAddress);
+            var userEnquiryDetails = DefaultCommunicationToken(contactMessage.Details, DefaultUserEnquiryDetails);
 
             _contactMessageRepository.Save(contactMessage);
                 
             _communicationService.SendContactMessage(contactMessage.UserId, MessageTypes.CandidateContactMessage, new[]
             {
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, recipientEmailAddress),
-                new CommunicationToken(CommunicationTokens.UserEmailAddress, userEmailAddress),
                 new CommunicationToken(CommunicationTokens.UserFullName, userFullName),
-                new CommunicationToken(CommunicationTokens.UserEnquiry, userEnquiry),
+                new CommunicationToken(CommunicationTokens.UserEmailAddress, userEmailAddress),
+                new CommunicationToken(CommunicationTokens.UserEnquiry, contactMessage.Enquiry),
                 new CommunicationToken(CommunicationTokens.UserEnquiryDetails, userEnquiryDetails)
             });
         }
+
+        #region Helpers
+
+        private static string DefaultCommunicationToken(string value, string defaultValue)
+        {
+            return string.IsNullOrWhiteSpace(value) ? defaultValue : value;
+        }
+
+        #endregion
     }
 }
