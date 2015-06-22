@@ -131,24 +131,12 @@
             sb.AppendFormat("   - Unsuccessful: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Unsuccessful));
             sb.AppendFormat("   - Successful: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Successful));
 
-            // Apprenticeship applications per candidate.
-            sb.AppendFormat(" - Total number of candidates with at least one application in any state: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationCountPerCandidate));
-            sb.AppendFormat(" - Total number of candidates with at least one application in draft: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Draft));
-
-            var s1 = TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Submitting);
-            var s2 = TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Submitted);
-            sb.AppendFormat(" - Total number of candidates with at least one submitted application: {0} ({1}ms + {2}ms)\n", (int)s1[0] + (int)s2[0], s1[1], s2[1]);
-
-            sb.AppendFormat(" - Total number of candidates with at least one successful application: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Successful));
-            sb.AppendFormat(" - Total number of candidates with at least one unsuccessful application: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Unsuccessful));
-
             sb.AppendFormat(" - Total number of Apprenticeships: {0}\n", _vacancyMetricsProvider.GetApprenticeshipsCount());
 
             // Traineeships.
             sb.Append("Traineeships:\n");
             sb.AppendFormat(" - Total number of applications submitted: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetApplicationCount));
             sb.AppendFormat(" - Total number of candidates with applications: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetApplicationsPerCandidateCount));
-            sb.AppendFormat(" - Total number of candidates who would have been shown the traineeship prompt (" + UnsuccessfulApplicationsToShowTraineeshipsPrompt + "+ unsuccessful applications): {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetCandidatesWithApplicationsInStatusCount, ApplicationStatuses.Unsuccessful, UnsuccessfulApplicationsToShowTraineeshipsPrompt));
             sb.AppendFormat(" - Total number of candidates who have dismissed the traineeship prompt: {0} ({1}ms)\n", TimedMongoCall(_candidateMetricsRepository.GetDismissedTraineeshipPromptCount));
 
             sb.AppendFormat(" - Total number of Traineeships: {0}\n", _vacancyMetricsProvider.GetTraineeshipsCount());
