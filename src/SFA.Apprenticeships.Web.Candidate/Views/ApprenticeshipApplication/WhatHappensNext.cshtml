@@ -114,7 +114,7 @@
 
 <div class="text form-group">
     <p>
-        <a href="@Url.RouteUrl(RouteNames.SignOut, new { returnUrl = ViewBag.FeedbackUrl })">What did you think of this service? </a>
-        <span class="inl-block">(30 second survey, this will also sign you out)</span>
+        <a href="@ViewBag.FeedbackUrl" target="_blank" rel="external">What did you think of this service?</a>
+        <br>(30 second survey, this will open in a new tab)
     </p>
 </div>
