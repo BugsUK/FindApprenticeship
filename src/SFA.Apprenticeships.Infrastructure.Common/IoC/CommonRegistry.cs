@@ -23,7 +23,6 @@
                     .Ctor<IConfigurationService>()
                     .Named("ConfigurationService")
                     .Ctor<ICacheService>()
-                    .IsTheDefault()
                     .Named(MemoryCacheRegistry.MemoryCacheName);
             }
         }
