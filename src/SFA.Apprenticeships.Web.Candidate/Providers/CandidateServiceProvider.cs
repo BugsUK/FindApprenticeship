@@ -706,7 +706,7 @@
 
         private static LoginResultViewModel GetAuthenticationFailedViewModel(LoginViewModel model, UserStatuses? userStatus = null)
         {
-            return new LoginResultViewModel(LoginPageMessages.InvalidUsernameOrPasswordErrorText)
+            return new LoginResultViewModel(LoginPageMessages.InvalidUsernameAndOrPasswordErrorText)
             {
                 EmailAddress = model.EmailAddress,
                 UserStatus = userStatus

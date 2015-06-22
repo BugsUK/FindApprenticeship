@@ -104,7 +104,7 @@
             };*/
 
             // Assert.
-            resultViewModel.ViewModelMessage.Should().Be(LoginPageMessages.InvalidUsernameOrPasswordErrorText);
+            resultViewModel.ViewModelMessage.Should().Be(LoginPageMessages.InvalidUsernameAndOrPasswordErrorText);
         }
     }
 }
