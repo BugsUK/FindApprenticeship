@@ -36,9 +36,7 @@
     </header>
     <div class="content-container">
         <div class="phase-notice gov-border">
-            <div class="prototype-warning">
-                <strong class="beta__label">Beta</strong> <span>This is a new services – your <a rel="external" href="https://www.surveymonkey.com/s/MFNR7NZ" target="_blank">feedback</a> will help to improve it.</span>
-            </div>
+            
         </div>
         <main role="main" id="main">
             <h1 class="heading-xlarge">Service is currently down for maintenance</h1>
