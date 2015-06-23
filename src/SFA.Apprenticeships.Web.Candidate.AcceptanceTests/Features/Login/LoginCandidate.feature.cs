@@ -174,7 +174,7 @@ this.FeatureBackground();
             table4.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter a valid email address or password"});
+                        "Please enter a valid email address and password"});
 #line 41
  testRunner.And("I am on ValidationSummaryNoLinkItems list item matching criteria", ((string)(null)), table4, "And ");
 #line hidden

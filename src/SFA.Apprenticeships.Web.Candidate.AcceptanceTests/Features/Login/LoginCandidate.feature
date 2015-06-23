@@ -39,8 +39,8 @@ Scenario: As a candidate I cannot login with an invalid password
 		| Field						   | Rule   | Value |
 		| ValidationSummaryNoLinkCount | Equals | 1     |
 	And I am on ValidationSummaryNoLinkItems list item matching criteria
-		| Field | Rule   | Value                                          |
-		| Text  | Equals | Please enter a valid email address or password |
+		| Field | Rule   | Value                                           |
+		| Text  | Equals | Please enter a valid email address and password |
 
 @US458 @US444 @US456
 Scenario: As a candidate I can login with a registered but unactivated account and am redirected to the activation page
