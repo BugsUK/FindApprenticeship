@@ -44,6 +44,11 @@
         }
     }
 
+    if (Model.TotalLocalHits == 0 && Model.TotalNationalHits != 0)
+    {
+        resultMessage = "We're unable to find any apprenticeships in your selected area.";
+    }
+
     if (Model.TotalNationalHits == 0)
     {
         nationalResultsMessage = "";
