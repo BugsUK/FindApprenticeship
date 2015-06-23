@@ -126,7 +126,7 @@
             });
 
             view.GetElementbyId("result-message")
-                    .InnerHtml.Should().BeEmpty();
+                    .InnerHtml.Should().Be("We were unable to find any apprenticeships in your selected area.");
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
@@ -150,7 +150,7 @@
             });
 
             view.GetElementbyId("result-message")
-                    .InnerHtml.Should().BeEmpty();
+                    .InnerHtml.Should().Be("We were unable to find any apprenticeships in your selected area.");
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
