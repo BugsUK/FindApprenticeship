@@ -6,6 +6,7 @@
     using Domain.Entities.Communication;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Interfaces.Logging;
     using Moq;
 
     public class SendDailyDigestsStrategyBuilder
@@ -15,6 +16,7 @@
         private Mock<ICandidateReadRepository> _candidateReadRepository = new Mock<ICandidateReadRepository>();
         private Mock<IUserReadRepository> _userReadRepository = new Mock<IUserReadRepository>();
         private Mock<IMessageBus> _messageBus = new Mock<IMessageBus>();
+        private Mock<ILogService> _logService = new Mock<ILogService>();
 
         public SendDailyDigestsStrategyBuilder()
         {
@@ -55,7 +57,12 @@
         public SendDailyDigestsStrategy Build()
         {
             return new SendDailyDigestsStrategy(
-                _expiringApprenticeshipApplicationDraftRepository.Object, _applicationStatusAlertRepository.Object, _candidateReadRepository.Object, _userReadRepository.Object, _messageBus.Object);
+                _expiringApprenticeshipApplicationDraftRepository.Object,
+                _applicationStatusAlertRepository.Object,
+                _candidateReadRepository.Object,
+                _userReadRepository.Object,
+                _messageBus.Object,
+                _logService.Object);
         }
     }
 }
