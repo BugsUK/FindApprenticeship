@@ -47,7 +47,8 @@
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.TraineeshipApplicationSubmitted, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.DailyDigest, new EmailDailyDigestMessageFormatter(configurationService)),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SavedSearchAlert, new EmailSavedSearchAlertMessageFormatter(configurationService)),
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactMessage, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateContactUsMessage, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.CandidateFeedbackMessage, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendActivationCodeReminder, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendDormantAccountReminder, new EmailSimpleMessageFormatter())
             };

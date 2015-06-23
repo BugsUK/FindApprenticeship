@@ -4,6 +4,8 @@
 
     public class ContactMessage : BaseEntity
     {
+        public ContactMessageTypes Type { get; set; }
+
         public Guid? UserId { get; set; }
 
         public string Name { get; set; }

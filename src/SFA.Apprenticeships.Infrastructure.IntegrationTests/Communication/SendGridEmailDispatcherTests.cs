@@ -180,13 +180,13 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldSendContactMessageEmail()
+        public void ShouldSendContactUsMessageEmail()
         {
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = TokenGenerator.CreateContactMessageTokensWithDetails("UserEnquiryDetails"),
-                MessageType = MessageTypes.CandidateContactMessage
+                Tokens = TokenGenerator.CreateContactUsMessageTokensWithDetails("UserEnquiryDetails"),
+                MessageType = MessageTypes.CandidateContactUsMessage
             };
 
             _dispatcher.SendEmail(request);
@@ -199,8 +199,8 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = TokenGenerator.CreateContactMessageTokensWithDetails(string.Empty),
-                MessageType = MessageTypes.CandidateContactMessage
+                Tokens = TokenGenerator.CreateContactUsMessageTokensWithDetails(string.Empty),
+                MessageType = MessageTypes.CandidateContactUsMessage
             };
 
             _dispatcher.SendEmail(request);
@@ -213,12 +213,26 @@
             var request = new EmailRequest
             {
                 ToEmail = TestToEmail,
-                Tokens = TokenGenerator.CreateContactMessageTokensWithDetails(null),
-                MessageType = MessageTypes.CandidateContactMessage
+                Tokens = TokenGenerator.CreateContactUsMessageTokensWithDetails(null),
+                MessageType = MessageTypes.CandidateContactUsMessage
             };
 
             _dispatcher.SendEmail(request);
             VerifyErrorsLogged(Times.Once());
+        }
+
+        [Test, Category("Integration")]
+        public void ShouldSendFeedbackMessageEmail()
+        {
+            var request = new EmailRequest
+            {
+                ToEmail = TestToEmail,
+                Tokens = TokenGenerator.CreateFeedbackTokens(),
+                MessageType = MessageTypes.CandidateFeedbackMessage
+            };
+
+            _dispatcher.SendEmail(request);
+            VerifyErrorsLogged(Times.Never());
         }
 
 

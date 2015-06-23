@@ -109,15 +109,17 @@
                 .ConvertUsing<SettingsViewModelResolvers.RegistrationDetailsToSettingsViewModelResolver>();
 
             Mapper.CreateMap<ContactMessageViewModel, ContactMessage>()
+                .ForMember(c => c.Type, opt => opt.UseValue(ContactMessageTypes.ContactUs))
                 .ForMember(c => c.EntityId, opt => opt.Ignore())
                 .ForMember(c => c.UserId, opt => opt.Ignore())
                 .ForMember(c => c.DateCreated, opt => opt.Ignore())
                 .ForMember(c => c.DateUpdated, opt => opt.Ignore());
 
             Mapper.CreateMap<FeedbackViewModel, ContactMessage>()
+                .ForMember(c => c.Type, opt => opt.UseValue(ContactMessageTypes.Feedback))
                 .ForMember(c => c.EntityId, opt => opt.Ignore())
                 .ForMember(c => c.UserId, opt => opt.Ignore())
-                .ForMember(c => c.Enquiry, opt => opt.UseValue("Feedback"))
+                .ForMember(c => c.Enquiry, opt => opt.Ignore())
                 .ForMember(c => c.DateCreated, opt => opt.Ignore())
                 .ForMember(c => c.DateUpdated, opt => opt.Ignore());
         }

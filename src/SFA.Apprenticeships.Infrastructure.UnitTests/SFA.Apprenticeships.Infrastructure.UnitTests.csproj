@@ -148,7 +148,8 @@
     <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\ApplicationStatusAlertTests.cs" />
     <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\CommonTests.cs" />
     <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\ExpiringDraftTests.cs" />
-    <Compile Include="Communication\Commands\HelpDeskCommunication\CommandTests.cs" />
+    <Compile Include="Communication\Commands\HelpDeskCommunication\FeedbackCommandTests.cs" />
+    <Compile Include="Communication\Commands\HelpDeskCommunication\ContactUsCommandTests.cs" />
     <Compile Include="Communication\Email\EmailMessageFormatters\ApplicationStatusAlertEmailDailyDigestMessageFormatterTests.cs" />
     <Compile Include="Communication\Email\EmailMessageFormatters\Builders\DailyDigestEmailRequestBuilder.cs" />
     <Compile Include="Communication\Email\EmailMessageFormatters\Builders\EmailDailyDigestMessageFormatterBuilder.cs" />

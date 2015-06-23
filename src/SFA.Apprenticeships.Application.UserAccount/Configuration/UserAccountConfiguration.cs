@@ -13,5 +13,9 @@
         public int PasswordResetCodeExpiryDays { get; set; }
 
         public string HelpdeskEmailAddress { get; set; }
+
+        public string FeedbackEmailAddress { get; set; }
+
+        public string NoReplyEmailAddress { get; set; }
     }
 }

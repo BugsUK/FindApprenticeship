@@ -120,7 +120,7 @@
             return tokens;
         }
 
-        public static IEnumerable<CommunicationToken> CreateContactMessageTokensWithDetails(string details)
+        public static IEnumerable<CommunicationToken> CreateContactUsMessageTokensWithDetails(string details)
         {
             return new[]
             {
@@ -258,6 +258,17 @@
                 new CommunicationToken(CommunicationTokens.CandidateFirstName, "Jane"),
                 new CommunicationToken(CommunicationTokens.UserPendingUsername, TestPendingUsername),
                 new CommunicationToken(CommunicationTokens.UserPendingUsernameCode, TestPendingUsernameCode)
+            };
+        }
+
+        public static IEnumerable<CommunicationToken> CreateFeedbackTokens()
+        {
+            return new[]
+            {
+                new CommunicationToken(CommunicationTokens.CandidateSiteDomainName, "int.findapprenticeship.service.gov.uk"),
+                new CommunicationToken(CommunicationTokens.UserEmailAddress, TestUsername),
+                new CommunicationToken(CommunicationTokens.UserFullName, "User full name"),
+                new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "Some details")
             };
         }
     }

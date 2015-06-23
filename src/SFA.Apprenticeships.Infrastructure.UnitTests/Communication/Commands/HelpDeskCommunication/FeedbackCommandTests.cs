@@ -9,39 +9,38 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class CommandTests
+    public class FeedbackCommandTests
     {
         private const string TestEmailAddress = "jane.doe@example.com";
 
         private Mock<IMessageBus> _messageBus;
-        private CommunicationRequest _candidateContactCommunicationRequest;
+        private CommunicationRequest _communicationRequest;
 
         [SetUp]
         public void SetUp()
         {
             _messageBus = new Mock<IMessageBus>();
 
-            _candidateContactCommunicationRequest = new CommunicationRequest
+            _communicationRequest = new CommunicationRequest
             {
-                MessageType = MessageTypes.CandidateContactMessage,
+                MessageType = MessageTypes.CandidateFeedbackMessage,
                 Tokens = new[]
                 {
                     new CommunicationToken(CommunicationTokens.RecipientEmailAddress, TestEmailAddress),
                     new CommunicationToken(CommunicationTokens.UserFullName, "Jane Doe"),
-                    new CommunicationToken(CommunicationTokens.UserEnquiry, "I have forgotten my password"),
-                    new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "I have still forgotten my password")
+                    new CommunicationToken(CommunicationTokens.UserEnquiryDetails, "Some feedback")
                 }
             };
         }
 
         [Test]
-        public void ShouldBeAbleToHandleCandidateContactMessage()
+        public void ShouldBeAbleToHandleCandidateFeedbackMessage()
         {
             // Act.
             var command = new HelpDeskCommunicationCommand(null);
 
             // Assert.
-            command.CanHandle(_candidateContactCommunicationRequest).Should().BeTrue();
+            command.CanHandle(_communicationRequest).Should().BeTrue();
         }
 
         [TestCase(MessageTypes.ApprenticeshipApplicationSubmitted)]
@@ -77,14 +76,14 @@
             // Arrange.
             var command = new HelpDeskCommunicationCommand(_messageBus.Object);
             // Act.
-            command.Handle(_candidateContactCommunicationRequest);
+            command.Handle(_communicationRequest);
 
             // Assert.
             _messageBus.Verify(mock => mock.PublishMessage(
                 It.Is<EmailRequest>(emailRequest =>
-                    emailRequest.MessageType == _candidateContactCommunicationRequest.MessageType &&
+                    emailRequest.MessageType == _communicationRequest.MessageType &&
                     emailRequest.ToEmail == TestEmailAddress &&
-                    emailRequest.Tokens.Count() == 3)),
+                    emailRequest.Tokens.Count() == 2)),
                 Times.Once);
         }
 
@@ -95,7 +94,7 @@
             var command = new HelpDeskCommunicationCommand(_messageBus.Object);
 
             // Act.
-            command.Handle(_candidateContactCommunicationRequest);
+            command.Handle(_communicationRequest);
 
             // Assert.
             _messageBus.Verify(mock => mock.PublishMessage(It.IsAny<SmsRequest>()), Times.Never);

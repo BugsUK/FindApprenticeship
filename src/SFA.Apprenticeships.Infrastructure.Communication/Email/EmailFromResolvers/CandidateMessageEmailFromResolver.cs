@@ -6,7 +6,10 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailFromResolv
     {
         public bool CanResolve(MessageTypes messageType)
         {
-            return messageType != MessageTypes.CandidateContactMessage;
+            // TODO: AG: DEBT: use an inclusive rather than exclusive test here.
+            return
+                messageType != MessageTypes.CandidateContactUsMessage &&
+                messageType != MessageTypes.CandidateFeedbackMessage;
         }
 
         public string Resolve(EmailRequest emailRequest, string defaultEmailAddress)

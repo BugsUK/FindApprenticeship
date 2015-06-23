@@ -7,7 +7,9 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailFromResolv
     {
         public bool CanResolve(MessageTypes messageType)
         {
-            return messageType == MessageTypes.CandidateContactMessage;
+            return
+                messageType == MessageTypes.CandidateContactUsMessage ||
+                messageType == MessageTypes.CandidateFeedbackMessage;
         }
 
         public string Resolve(EmailRequest emailRequest, string defaultEmailAddress)

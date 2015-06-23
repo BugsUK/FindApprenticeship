@@ -3,25 +3,30 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Candidate.Strategies;
     using Application.UserAccount.Configuration;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
+    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class SendContactMessageStrategyTests
+    public class SubmitContactUsMessageTests
     {
         private const string ValidHelpdeskEmailAddress = "helpdesk@example.com";
         private const string ValidUserFullName = "Jane Doe";
-        private const string ValidUserEnquiryDetails = "Bacon ipsum";
+        private const string ValidUserEnquiryDetails = "Some details";
         private const string ValidUserEmailAddress = "jane.doe@example.com";
 
-        private readonly Mock<ICommunicationService> _communicationService = new Mock<ICommunicationService>();
+        private readonly Mock<ILogService> _logService = new Mock<ILogService>();
         private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private readonly Mock<IContactMessageRepository> _contactMessageRepository = new Mock<IContactMessageRepository>();
+        private readonly Mock<ICommunicationService> _communicationService = new Mock<ICommunicationService>();
+
+        private SubmitContactMessageStrategy _strategy;
 
         [SetUp]
         public void SetUp()
@@ -32,101 +37,102 @@
                 {
                     HelpdeskEmailAddress = ValidHelpdeskEmailAddress
                 });
+
+            _strategy = new SubmitContactMessageStrategy(
+                _logService.Object, _communicationService.Object, _configurationService.Object, _contactMessageRepository.Object);
         }
 
         [Test]
-        public void ShouldSendContactMessageToHelpDeskEmailAddress()
+        public void ShouldSendContactUsMessageToHelpDeskEmailAddress()
         {
             // Arrange.
-            var strategy = new Application.Candidate.Strategies.SubmitContactMessageStrategy(
-                _communicationService.Object, _configurationService.Object, _contactMessageRepository.Object);
+            var contactMessage = new ContactMessage
+            {
+                Type = ContactMessageTypes.ContactUs
+            };
 
             // Act.
-            strategy.SubmitMessage(new ContactMessage());
+            _strategy.SubmitMessage(contactMessage);
 
             // Assert.
             _communicationService.Verify(cs => cs.SendContactMessage(
                 It.IsAny<Guid?>(), 
-                MessageTypes.CandidateContactMessage, 
+                MessageTypes.CandidateContactUsMessage, 
                 It.Is<IEnumerable<CommunicationToken>>(communicationTokens => communicationTokens.First(
                     each => each.Key == CommunicationTokens.RecipientEmailAddress).Value == ValidHelpdeskEmailAddress)));
         }
 
-        [TestCase(null, Application.Candidate.Strategies.SubmitContactMessageStrategy.DefaultUserFullName)]
-        [TestCase(ValidUserFullName, ValidUserFullName)]
-        public void ShouldSendContactMessageWithUserFullName(string name, string expectedUserFullName)
+        [Test]
+        public void ShouldSendContactUsMessageWithUserFullName()
         {
             // Arrange.
-            var strategy = new Application.Candidate.Strategies.SubmitContactMessageStrategy(
-                _communicationService.Object, _configurationService.Object, _contactMessageRepository.Object);
+            var contactMessage = new ContactMessage
+            {
+                Type = ContactMessageTypes.ContactUs,
+                Name = ValidUserFullName
+            };
 
             // Act.
-            strategy.SubmitMessage(new ContactMessage
-            {
-                Name = name
-            });
+            _strategy.SubmitMessage(contactMessage);
 
             // Assert.
             _communicationService.Verify(cs => cs.SendContactMessage(
                 It.IsAny<Guid?>(),
-                MessageTypes.CandidateContactMessage,
+                MessageTypes.CandidateContactUsMessage,
                 It.Is<IEnumerable<CommunicationToken>>(communicationTokens => communicationTokens.First(
-                    each => each.Key == CommunicationTokens.UserFullName).Value == expectedUserFullName)));
+                    each => each.Key == CommunicationTokens.UserFullName).Value == ValidUserFullName)));
         }
-
-        [TestCase(null, Application.Candidate.Strategies.SubmitContactMessageStrategy.DefaultUserEmailAddress)]
-        [TestCase(ValidUserEmailAddress, ValidUserEmailAddress)]
-        public void ShouldSendContactMessageWithUserEmailAddress(string email, string expectedUserEmailAddress)
+        
+        [Test]
+        public void ShouldSendContactUsMessageWithUserEmailAddress()
         {
             // Arrange.
-            var strategy = new Application.Candidate.Strategies.SubmitContactMessageStrategy(
-                _communicationService.Object, _configurationService.Object, _contactMessageRepository.Object);
+            var contactMessage = new ContactMessage
+            {
+                Type = ContactMessageTypes.ContactUs,
+                Email = ValidUserEmailAddress
+            };
 
             // Act.
-            strategy.SubmitMessage(new ContactMessage
-            {
-                Email = email
-            });
+            _strategy.SubmitMessage(contactMessage);
 
             // Assert.
             _communicationService.Verify(cs => cs.SendContactMessage(
                 It.IsAny<Guid?>(),
-                MessageTypes.CandidateContactMessage,
+                MessageTypes.CandidateContactUsMessage,
                 It.Is<IEnumerable<CommunicationToken>>(communicationTokens => communicationTokens.First(
-                    each => each.Key == CommunicationTokens.UserEmailAddress).Value == expectedUserEmailAddress)));
+                    each => each.Key == CommunicationTokens.UserEmailAddress).Value == ValidUserEmailAddress)));
         }
 
-        [TestCase(null, Application.Candidate.Strategies.SubmitContactMessageStrategy.DefaultUserEnquiryDetails)]
+        [TestCase(null, SubmitContactMessageStrategy.DefaultUserEnquiryDetails)]
         [TestCase(ValidUserEnquiryDetails, ValidUserEnquiryDetails)]
-        public void ShouldSendContactMessageWithUserEnquiryDetails(string details, string expectedUserEnquiryDetails)
+        public void ShouldSendContactUsMessageWithUserEnquiryDetails(string details, string expectedUserEnquiryDetails)
         {
             // Arrange.
-            var strategy = new Application.Candidate.Strategies.SubmitContactMessageStrategy(
-                _communicationService.Object, _configurationService.Object, _contactMessageRepository.Object);
+            var contactMessage = new ContactMessage
+            {
+                Type = ContactMessageTypes.ContactUs,
+                Details = details
+            };
 
             // Act.
-            strategy.SubmitMessage(new ContactMessage
-            {
-                Details = details
-            });
+            _strategy.SubmitMessage(contactMessage);
 
             // Assert.
             _communicationService.Verify(cs => cs.SendContactMessage(
                 It.IsAny<Guid?>(),
-                MessageTypes.CandidateContactMessage,
+                MessageTypes.CandidateContactUsMessage,
                 It.Is<IEnumerable<CommunicationToken>>(communicationTokens => communicationTokens.First(
                     each => each.Key == CommunicationTokens.UserEnquiryDetails).Value == expectedUserEnquiryDetails)));
         }
 
         [Test]
-        public void ShouldSaveContactMessage()
+        public void ShouldSaveContactUsMessage()
         {
             // Arrange.
-            var strategy = new Application.Candidate.Strategies.SubmitContactMessageStrategy(
-                _communicationService.Object, _configurationService.Object, _contactMessageRepository.Object);
-
             var contactMessage = new ContactMessage
             {
+                Type = ContactMessageTypes.ContactUs,
                 UserId = Guid.NewGuid(),
                 Name = ValidUserFullName,
                 Email = ValidUserEmailAddress,
@@ -135,10 +141,10 @@
             };
 
             // Act.
-            strategy.SubmitMessage(contactMessage);
+            _strategy.SubmitMessage(contactMessage);
 
             // Assert.
-            _contactMessageRepository.Verify(repo => repo.Save(contactMessage), Times.Once());
+            _contactMessageRepository.Verify(mock => mock.Save(contactMessage), Times.Once);
         }
     }
 }

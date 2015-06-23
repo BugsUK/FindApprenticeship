@@ -58,7 +58,8 @@
             action.ShouldThrowExactly<InvalidOperationException>();
         }
 
-        [TestCase(MessageTypes.CandidateContactMessage)]
+        [TestCase(MessageTypes.CandidateContactUsMessage)]
+        [TestCase(MessageTypes.CandidateFeedbackMessage)]
         [TestCase(MessageTypes.DailyDigest)]
         public void ShouldNotBeAbleToHandleOtherMessageTypes(MessageTypes messageType)
         {

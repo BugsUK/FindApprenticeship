@@ -4,23 +4,26 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
+    using Interfaces.Logging;
     using UserAccount.Configuration;
 
     public class SubmitContactMessageStrategy : ISubmitContactMessageStrategy
     {
         public const string DefaultUserFullName = "(anonymous)";
-        public const string DefaultUserEmailAddress = "noreply@findapprenticeship.service.gov.uk";
-        public const string DefaultUserEnquiryDetails = "(none)";
+        public const string DefaultUserEnquiryDetails = "(no details provided)";
 
+        private readonly ILogService _logService;
         private readonly ICommunicationService _communicationService;
         private readonly IConfigurationService _configurationService;
         private readonly IContactMessageRepository _contactMessageRepository;
 
         public SubmitContactMessageStrategy(
+            ILogService logService,
             ICommunicationService communicationService,
             IConfigurationService configurationService,
             IContactMessageRepository contactMessageRepository)
         {
+            _logService = logService;
             _communicationService = communicationService;
             _configurationService = configurationService;
             _contactMessageRepository = contactMessageRepository;
@@ -28,25 +31,57 @@
 
         public void SubmitMessage(ContactMessage contactMessage)
         {
-            var recipientEmailAddress = _configurationService.Get<UserAccountConfiguration>().HelpdeskEmailAddress;
+            _contactMessageRepository.Save(contactMessage);
 
+            switch (contactMessage.Type)
+            {
+                case ContactMessageTypes.ContactUs:
+                    SubmitContactUsMessage(contactMessage);
+                    break;
+
+                case ContactMessageTypes.Feedback:
+                    SubmitFeedbackMesage(contactMessage);
+                    break;
+
+                default:
+                    _logService.Error("Invalid contact message type '{0}' for id {1}", contactMessage.Type, contactMessage.EntityId);
+                    break;
+            }
+        }
+
+        #region Helpers
+
+        private void SubmitFeedbackMesage(ContactMessage contactMessage)
+        {
+            var noReplyEmailAddress = _configurationService.Get<UserAccountConfiguration>().NoReplyEmailAddress;
+            var feedbackEmailAddress = _configurationService.Get<UserAccountConfiguration>().FeedbackEmailAddress;
+
+            var userEmailAddress = DefaultCommunicationToken(contactMessage.Email, noReplyEmailAddress);
             var userFullName = DefaultCommunicationToken(contactMessage.Name, DefaultUserFullName);
-            var userEmailAddress = DefaultCommunicationToken(contactMessage.Email, DefaultUserEmailAddress);
+
+            _communicationService.SendContactMessage(contactMessage.UserId, MessageTypes.CandidateFeedbackMessage, new[]
+            {
+                new CommunicationToken(CommunicationTokens.RecipientEmailAddress, feedbackEmailAddress),
+                new CommunicationToken(CommunicationTokens.UserEmailAddress, userEmailAddress),
+                new CommunicationToken(CommunicationTokens.UserFullName, userFullName),
+                new CommunicationToken(CommunicationTokens.UserEnquiryDetails, contactMessage.Details)
+            });
+        }
+
+        private void SubmitContactUsMessage(ContactMessage contactMessage)
+        {
+            var helpdeskEmailAddress = _configurationService.Get<UserAccountConfiguration>().HelpdeskEmailAddress;
             var userEnquiryDetails = DefaultCommunicationToken(contactMessage.Details, DefaultUserEnquiryDetails);
 
-            _contactMessageRepository.Save(contactMessage);
-                
-            _communicationService.SendContactMessage(contactMessage.UserId, MessageTypes.CandidateContactMessage, new[]
+            _communicationService.SendContactMessage(contactMessage.UserId, MessageTypes.CandidateContactUsMessage, new[]
             {
-                new CommunicationToken(CommunicationTokens.RecipientEmailAddress, recipientEmailAddress),
-                new CommunicationToken(CommunicationTokens.UserFullName, userFullName),
-                new CommunicationToken(CommunicationTokens.UserEmailAddress, userEmailAddress),
+                new CommunicationToken(CommunicationTokens.RecipientEmailAddress, helpdeskEmailAddress),
+                new CommunicationToken(CommunicationTokens.UserEmailAddress, contactMessage.Email),
+                new CommunicationToken(CommunicationTokens.UserFullName, contactMessage.Name),
                 new CommunicationToken(CommunicationTokens.UserEnquiry, contactMessage.Enquiry),
                 new CommunicationToken(CommunicationTokens.UserEnquiryDetails, userEnquiryDetails)
             });
         }
-
-        #region Helpers
 
         private static string DefaultCommunicationToken(string value, string defaultValue)
         {

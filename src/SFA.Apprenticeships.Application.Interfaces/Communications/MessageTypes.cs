@@ -10,7 +10,7 @@
         TraineeshipApplicationSubmitted = 5,
         PasswordChanged = 6,
         DailyDigest = 7,
-        CandidateContactMessage = 8,
+        CandidateContactUsMessage = 8,
         SavedSearchAlert = 9,
         ApprenticeshipApplicationSuccessful = 10,
         ApprenticeshipApplicationUnsuccessful = 11,
@@ -20,8 +20,8 @@
         SendPendingUsernameCode = 15,
         SendEmailReminder = 16,
         SendActivationCodeReminder = 17,
-        //EmployerContactMessage
         SendMobileVerificationCodeReminder = 18,
-        SendDormantAccountReminder = 19
+        SendDormantAccountReminder = 19,
+        CandidateFeedbackMessage = 20
     }
 }

@@ -12,7 +12,9 @@
 
         public override bool CanHandle(CommunicationRequest communicationRequest)
         {
-            return communicationRequest.MessageType == MessageTypes.CandidateContactMessage;
+            return
+                communicationRequest.MessageType == MessageTypes.CandidateContactUsMessage ||
+                communicationRequest.MessageType == MessageTypes.CandidateFeedbackMessage;
         }
 
         public override void Handle(CommunicationRequest communicationRequest)
