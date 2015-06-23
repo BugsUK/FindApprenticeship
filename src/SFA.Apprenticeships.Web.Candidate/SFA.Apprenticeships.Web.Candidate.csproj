@@ -250,6 +250,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="BingSiteAuth.xml" />
+    <Content Include="google63f704cde409cb80.html" />
     <Content Include="403.aspx" />
     <Content Include="403.html" />
     <Content Include="Content\_assets\css\main-1.11.0.2251.css" />
