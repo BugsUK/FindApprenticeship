@@ -8,6 +8,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Interfaces.Logging;
 
     public class SendDailyDigestsStrategy : ISendDailyDigestsStrategy
     {
@@ -16,19 +17,22 @@
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IMessageBus _messageBus;
+        private readonly ILogService _logService;
 
         public SendDailyDigestsStrategy(
             IExpiringApprenticeshipApplicationDraftRepository expiringDraftRepository,
             IApplicationStatusAlertRepository applicationStatusAlertRepository,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository,
-            IMessageBus messageBus)
+            IMessageBus messageBus,
+            ILogService logService)
         {
             _expiringDraftRepository = expiringDraftRepository;
             _applicationStatusAlertRepository = applicationStatusAlertRepository;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
             _messageBus = messageBus;
+            _logService = logService;
         }
 
         public void SendDailyDigests(Guid batchId)
@@ -42,7 +46,13 @@
             foreach (var candidateId in candidateIds)
             {
                 var candidate = _candidateReadRepository.Get(candidateId);
-                var user = _userReadRepository.Get(candidate.EntityId);
+                var user = _userReadRepository.Get(candidateId);
+
+                if (candidate == null || user == null)
+                {
+                    _logService.Warn("Could not find a valid user or candidate for id: {0}. User is null: {1}, Candidate is null: {2}", candidateId, user == null, candidate == null);
+                    return;
+                }
 
                 List<ExpiringApprenticeshipApplicationDraft> candidateExpiringDraftsDailyDigest;
                 var candidateHasExpiringDrafts = candidatesExpiringDrafts.TryGetValue(candidateId, out candidateExpiringDraftsDailyDigest);
