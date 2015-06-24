@@ -67,10 +67,11 @@ WriteLiteral(">\r\n    <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">Give feedback</h1>\r\n</div>\r\n\r\n");
+WriteLiteral(">Give feedback</h1>\r\n    <p>Please leave your suggestions or comments about our s" +
+"ervice in the feedback box.</p>\r\n</div>\r\n\r\n");
 
             
-            #line 12 "..\..\Views\Home\Feedback.cshtml"
+            #line 13 "..\..\Views\Home\Feedback.cshtml"
  using (Html.BeginForm("Feedback", "Home", FormMethod.Post))
 {
     
@@ -78,21 +79,21 @@ WriteLiteral(">Give feedback</h1>\r\n</div>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Home\Feedback.cshtml"
+            #line 15 "..\..\Views\Home\Feedback.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Home\Feedback.cshtml"
+            #line 15 "..\..\Views\Home\Feedback.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 15 "..\..\Views\Home\Feedback.cshtml"
+            #line 16 "..\..\Views\Home\Feedback.cshtml"
 Write(Html.FormTextFor(
             m => m.Name,
             containerHtmlAttributes: new { @class = "form-group-compound" },
@@ -102,7 +103,7 @@ Write(Html.FormTextFor(
             #line default
             #line hidden
             
-            #line 18 "..\..\Views\Home\Feedback.cshtml"
+            #line 19 "..\..\Views\Home\Feedback.cshtml"
                                                                                                 
 
     
@@ -110,7 +111,7 @@ Write(Html.FormTextFor(
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Home\Feedback.cshtml"
+            #line 21 "..\..\Views\Home\Feedback.cshtml"
 Write(Html.FormTextFor(
             m => m.Email,
             containerHtmlAttributes: new { @class = "form-group-compound" },
@@ -121,7 +122,7 @@ Write(Html.FormTextFor(
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Home\Feedback.cshtml"
+            #line 25 "..\..\Views\Home\Feedback.cshtml"
                                                         
 
     
@@ -129,7 +130,7 @@ Write(Html.FormTextFor(
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\Home\Feedback.cshtml"
+            #line 27 "..\..\Views\Home\Feedback.cshtml"
 Write(Html.FormTextAreaFor(m => m.Details,
                 controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
                 hintHtmlAttributes: new { @class = "text" }));
@@ -138,9 +139,9 @@ Write(Html.FormTextAreaFor(m => m.Details,
             #line default
             #line hidden
             
-            #line 28 "..\..\Views\Home\Feedback.cshtml"
+            #line 29 "..\..\Views\Home\Feedback.cshtml"
                                                             
-    
+
 
             
             #line default
@@ -158,7 +159,7 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Give feedback</button>\r\n    </div>\r\n");
 
             
-            #line 33 "..\..\Views\Home\Feedback.cshtml"
+            #line 34 "..\..\Views\Home\Feedback.cshtml"
 }
 
             
