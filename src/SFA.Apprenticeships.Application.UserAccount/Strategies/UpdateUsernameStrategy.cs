@@ -63,12 +63,12 @@
             }
 
             var pendingActivationUser = _userReadRepository.Get(user.PendingUsername, false);
-            if (pendingActivationUser != null)
+            if (pendingActivationUser != null && pendingActivationUser.Status != UserStatuses.PendingDeletion)
             {
                 //Delete any user with username = user.PendingUsername - they must be PendingActivation
                 if (pendingActivationUser.Status != UserStatuses.PendingActivation)
                 {
-                    _logService.Error("UpdateUsername error, existing userId ({0}) to pending username ({1}) failed as username already exists and is not in PendingActivation state", user.PendingUsername);
+                    _logService.Error("UpdateUsername error, existing userId ({0}) to pending username ({1}) failed as username already exists and is not in PendingActivation state", userId, user.PendingUsername);
                     throw new CustomException(ErrorCodes.UsernameExistsAndNotInPendingActivationState);
                 }
                 _userWriteRepository.Delete(pendingActivationUser.EntityId);
