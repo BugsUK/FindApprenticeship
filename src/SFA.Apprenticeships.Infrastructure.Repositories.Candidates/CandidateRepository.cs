@@ -59,23 +59,26 @@
             return CandidateOrNull(mongoEntity);
         }
 
-        public Candidate Get(string username, bool errorIfNotFound = true)
+        public IEnumerable<Candidate> Get(string username, bool errorIfNotFound = true)
         {
-            _logger.Debug("Calling repository to get candidate with username={0}", username);
+            _logger.Debug("Calling repository to get candidates with username={0}", username);
 
-            var mongoEntity = Collection.FindOne(Query<MongoCandidate>.EQ(o => o.RegistrationDetails.EmailAddress, username.ToLower()));
+            var candidates =
+                Collection.Find(Query<MongoCandidate>.EQ(o => o.RegistrationDetails.EmailAddress, username.ToLower()))
+                .Select(e => _mapper.Map<MongoCandidate, Candidate>(e))
+                .ToList();
 
-            if (mongoEntity == null && errorIfNotFound)
+            if (candidates.Count == 0 && errorIfNotFound)
             {
-                var message = string.Format("Unknown candidate with EmailAddress={0}", username);
-                _logger.Debug(message, username);
+                var message = string.Format("No candidates found with username={0}", username);
+                _logger.Debug(message);
 
-                throw new CustomException(message, CandidateErrorCodes.CandidateNotFoundError); 
+                throw new CustomException(message, CandidateErrorCodes.CandidateNotFoundError);
             }
 
-            LogOutcome(username, mongoEntity);
+            _logger.Debug(string.Format("Found {0} candidates with username={1}", candidates.Count, username));
 
-            return CandidateOrNull(mongoEntity);
+            return candidates;
         }
 
         public Candidate Get(int legacyCandidateId, bool errorIfNotFound = true)

@@ -386,7 +386,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         public void WhenIGetMyMobileVerificationCode()
         {
             var email = _tokenManager.GetTokenByKey(BindingData.UserEmailAddressTokenName);
-            var candidate = _candidateReadRepository.Get(email);
+            var user = _userReadRepository.Get(_email);
+            var candidate = _candidateReadRepository.Get(user.EntityId);
 
             if (candidate != null)
             {

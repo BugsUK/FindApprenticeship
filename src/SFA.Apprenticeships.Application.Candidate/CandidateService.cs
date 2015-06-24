@@ -62,6 +62,7 @@
         private readonly IRequestEmailReminderStrategy _requestEmailReminderStrategy;
         private readonly IUnsubscribeStrategy _unsubscribeStrategy;
         private readonly IApprenticeshipVacancySuggestionsStrategy _apprenticeshipVacancySuggestionsStrategy;
+        private readonly IGetCandidateByUsernameStrategy _getCandidateByUsernameStrategy;
 
         public CandidateService(
             ICandidateReadRepository candidateReadRepository,
@@ -99,7 +100,8 @@
             IUpdateUsernameStrategy updateUsernameStrategy,
             IRequestEmailReminderStrategy requestEmailReminderStrategy,
             IUnsubscribeStrategy unsubscribeStrategy,
-            IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy)
+            IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy,
+            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy)
         {
             _candidateReadRepository = candidateReadRepository;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -137,6 +139,7 @@
             _requestEmailReminderStrategy = requestEmailReminderStrategy;
             _unsubscribeStrategy = unsubscribeStrategy;
             _apprenticeshipVacancySuggestionsStrategy = apprenticeshipVacancySuggestionsStrategy;
+            _getCandidateByUsernameStrategy = getCandidateByUsernameStrategy;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -183,7 +186,7 @@
 
             _logger.Debug("Calling CandidateService to get the user {0}.", username);
 
-            return _candidateReadRepository.Get(username);
+            return _getCandidateByUsernameStrategy.GetCandidate(username);
         }
 
         public Candidate SaveCandidate(Candidate candidate)

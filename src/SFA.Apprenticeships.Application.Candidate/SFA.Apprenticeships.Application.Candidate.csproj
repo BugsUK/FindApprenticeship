@@ -97,6 +97,8 @@
     <Compile Include="CandidateService.cs" />
     <Compile Include="CreateCandidateRequest.cs" />
     <Compile Include="SaveCandidateRequest.cs" />
+    <Compile Include="Strategies\GetCandidateByUsernameStrategy.cs" />
+    <Compile Include="Strategies\IGetCandidateByUsernameStrategy.cs" />
     <Compile Include="Strategies\IRequestEmailReminderStrategy.cs" />
     <Compile Include="Strategies\IUnsubscribeStrategy.cs" />
     <Compile Include="Strategies\IUpdateUsernameStrategy.cs" />

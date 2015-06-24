@@ -27,18 +27,18 @@
         public Candidate Build()
         {
             var repo = WebTestRegistry.Container.GetInstance<ICandidateWriteRepository>();
-            var repoRead = WebTestRegistry.Container.GetInstance<ICandidateReadRepository>();
+            var repoRead = WebTestRegistry.Container.GetInstance<IUserReadRepository>();
             var configuration = WebTestRegistry.Container.GetInstance<IConfigurationService>();
 
             Candidate.RegistrationDetails = RegistrationBuilder.Build();
             Candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = configuration.Get<WebConfiguration>().TermsAndConditionsVersion;
             Candidate.CommunicationPreferences = new CommunicationPreferences();
 
-            var candidateInRepo = repoRead.Get(Candidate.RegistrationDetails.EmailAddress);
+            var userInRepo = repoRead.Get(Candidate.RegistrationDetails.EmailAddress);
 
-            if (candidateInRepo != null)
+            if (userInRepo != null)
             {
-                Candidate.EntityId = candidateInRepo.EntityId;
+                Candidate.EntityId = userInRepo.EntityId;
             }
 
             repo.Save(Candidate);

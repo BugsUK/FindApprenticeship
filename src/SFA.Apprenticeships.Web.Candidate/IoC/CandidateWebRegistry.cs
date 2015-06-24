@@ -167,6 +167,7 @@
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
             For<IUnsubscribeStrategy>().Use<UnsubscribeStrategy>();
             For<IApprenticeshipVacancySuggestionsStrategy>().Use<ApprenticeshipVacancySuggestionsStrategy>();
+            For<IGetCandidateByUsernameStrategy>().Use<GetCandidateByUsernameStrategy>();
 
             For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>().Ctor<ISaveCandidateStrategy>().Named("QueuedLegacySaveCandidateStrategy").Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
