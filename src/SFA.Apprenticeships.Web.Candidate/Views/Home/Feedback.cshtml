@@ -7,6 +7,7 @@
 
 <div class="hgroup">
     <h1 class="heading-xlarge">Give feedback</h1>
+    <p>Please leave your suggestions or comments about our service in the feedback box.</p>
 </div>
 
 @using (Html.BeginForm("Feedback", "Home", FormMethod.Post))
@@ -26,7 +27,7 @@
     @Html.FormTextAreaFor(m => m.Details,
                 controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
                 hintHtmlAttributes: new { @class = "text" })
-    
+
     <div class="form-group">
         <button id="give-feedback-form-button" class="button">Give feedback</button>
     </div>
