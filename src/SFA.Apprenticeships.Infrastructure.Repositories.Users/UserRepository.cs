@@ -44,8 +44,8 @@
             _logger.Debug("Called Mongodb to get user with username={0}", username);
 
             //Note that setting a user to pending deletion doesn't prevent it from being retrieved.
-            //Code futher up the stack should perform the neccessary logic checks
-            var mongoEntity = Collection.FindOne(Query.EQ("Username", username.ToLower()));
+            //Code futher up the stack should perform the necessary logic checks
+            var mongoEntity = Collection.Find(Query.EQ("Username", username.ToLower())).OrderBy(u => u.Status).FirstOrDefault();
 
             if (mongoEntity == null && errorIfNotFound)
             {
