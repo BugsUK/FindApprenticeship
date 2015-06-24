@@ -6,6 +6,7 @@
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.Vacancies.Entities;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
@@ -16,6 +17,7 @@
         where TDestinationSummary : class, IVacancySummary
     {
         private readonly ILogService _logger;
+        private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
@@ -24,11 +26,16 @@
         private const double LondonLongitude = -0.10619;
         private const int SearchRadius = 30;
 
-        public VacancyIndexerService(IElasticsearchClientFactory elasticsearchClientFactory, IMapper mapper, ILogService logger)
+        public VacancyIndexerService(
+            ILogService logger,
+            IConfigurationService configurationService,
+            IMapper mapper,
+            IElasticsearchClientFactory elasticsearchClientFactory)
         {
-            _elasticsearchClientFactory = elasticsearchClientFactory;
-            _mapper = mapper;
             _logger = logger;
+            _configurationService = configurationService;
+            _mapper = mapper;
+            _elasticsearchClientFactory = elasticsearchClientFactory;
         }
 
         public void Index(TSourceSummary vacancySummaryToIndex)
@@ -81,9 +88,17 @@
             if (!indexExistsResponse.Exists)
             {
                 var indexSettings = new IndexSettings();
+                var synonyms = _configurationService.Get<SearchConfiguration>().Synonyms.ToArray();
 
-                var synonymFilter = new SynonymTokenFilter { SynonymsPath = "../config/synonyms.txt" };
-                indexSettings.Analysis.TokenFilters.Add("synonym", synonymFilter);
+                if (synonyms.Any())
+                {
+                    var synonymFilter = new SynonymTokenFilter
+                    {
+                        Synonyms = synonyms
+                    };
+
+                    indexSettings.Analysis.TokenFilters.Add("synonym", synonymFilter);
+                }
 
                 //Token filters
                 var snowballTokenFilter = new SnowballTokenFilter { Language = "English" };
