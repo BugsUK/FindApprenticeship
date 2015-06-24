@@ -20,15 +20,15 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
             _auditRepository = auditRepository;
         }
 
-        public void Activate(string username, string activationCode)
+        public void Activate(Guid id, string activationCode)
         {
-            var user = _userReadRepository.Get(username);
+            var user = _userReadRepository.Get(id);
 
             user.AssertState("Activate user", UserStatuses.PendingActivation);
 
             if (!user.ActivationCode.Equals(activationCode, StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new CustomException("Invalid activation code \"{0}\" for user \"{1}\"", ErrorCodes.UserActivationCodeError, activationCode, username);
+                throw new CustomException("Invalid activation code \"{0}\" for user with id \"{1}\"", ErrorCodes.UserActivationCodeError, activationCode, id);
             }
 
             user.SetStateActive();

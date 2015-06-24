@@ -72,14 +72,14 @@
             _registerUserStrategy.Register(username, userId, activationCode, roles);
         }
 
-        public void Activate(string username, string activationCode)
+        public void Activate(Guid id, string activationCode)
         {
-            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(id);
             Condition.Requires(activationCode).IsNotNullOrEmpty();
 
-            _logger.Info("Calling ActivateUserStrategy to activate the user {0}.", username);
+            _logger.Info("Calling ActivateUserStrategy to activate the user with id {0}.", id);
 
-            _activateUserStrategy.Activate(username, activationCode);
+            _activateUserStrategy.Activate(id, activationCode);
         }
 
         public void ResendActivationCode(string username)

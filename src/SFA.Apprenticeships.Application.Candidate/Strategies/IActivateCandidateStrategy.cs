@@ -4,6 +4,6 @@
 
     public interface IActivateCandidateStrategy
     {
-        void ActivateCandidate(string username, string activationCode);
+        void ActivateCandidate(Guid id, string activationCode);
     }
 }

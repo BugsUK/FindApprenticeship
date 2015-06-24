@@ -4,6 +4,6 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
     public interface IActivateUserStrategy
     {
-        void Activate(string username, string activationCode);
+        void Activate(Guid id, string activationCode);
     }
 }

@@ -151,14 +151,14 @@
             return candidate;
         }
 
-        public void Activate(string username, string activationCode)
+        public void Activate(Guid id, string activationCode)
         {
-            Condition.Requires(username).IsNotNullOrEmpty();
+            Condition.Requires(id);
             Condition.Requires(activationCode).IsNotNullOrEmpty();
 
-            _logger.Info("Calling CandidateService to activate the user {0}.", username);
+            _logger.Info("Calling CandidateService to activate the user with id {0}.", id);
 
-            _activateCandidateStrategy.ActivateCandidate(username, activationCode);
+            _activateCandidateStrategy.ActivateCandidate(id, activationCode);
         }
 
         public Candidate Authenticate(string username, string password)

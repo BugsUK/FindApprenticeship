@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
+    using System;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
@@ -23,9 +24,9 @@
             _candidateReadRepository = candidateReadRepository;
         }
 
-        public void ActivateCandidate(string username, string activationCode)
+        public void ActivateCandidate(Guid id, string activationCode)
         {
-            var user = _userReadRepository.Get(username);
+            var user = _userReadRepository.Get(id);
 
             user.AssertState("Activate user", UserStatuses.PendingActivation);
 
@@ -39,7 +40,7 @@
                 _candidateWriteRepository.Save(candidate);
             }
 
-            _registrationService.Activate(username, activationCode);
+            _registrationService.Activate(id, activationCode);
         }
     }
 }

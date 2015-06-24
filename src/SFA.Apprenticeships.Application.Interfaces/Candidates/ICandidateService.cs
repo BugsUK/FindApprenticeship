@@ -18,7 +18,7 @@
     {
         Candidate Register(Candidate newCandidate, string password);
 
-        void Activate(string username, string activationCode);
+        void Activate(Guid id, string activationCode);
 
         Candidate Authenticate(string username, string password);
 

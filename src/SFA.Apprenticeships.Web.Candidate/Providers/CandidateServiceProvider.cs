@@ -167,7 +167,7 @@
                     _logger.Warn("Candidate email address {0} does not match supplied email address {1}", candidate.RegistrationDetails.EmailAddress, model.EmailAddress);
                 }
 
-                _candidateService.Activate(model.EmailAddress, model.ActivationCode);
+                _candidateService.Activate(candidateId, model.ActivationCode);
                 _authenticationTicketService.SetAuthenticationCookie(candidateId.ToString(), UserRoleNames.Activated);
 
                 return new ActivationViewModel(model.EmailAddress, model.ActivationCode, ActivateUserState.Activated);

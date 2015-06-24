@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
+    using System;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -21,14 +22,14 @@
             _logService = logService;
         }
 
-        public void ActivateCandidate(string username, string activationCode)
+        public void ActivateCandidate(Guid id, string activationCode)
         {
-            var user = _userReadRepository.Get(username);
+            var user = _userReadRepository.Get(id);
 
             user.AssertState("Activate candidate", UserStatuses.PendingActivation);
 
             // Activate user before message submission so that they can continue using the site
-            _registrationService.Activate(username, activationCode);
+            _registrationService.Activate(id, activationCode);
             
             // queue request for submission to legacy
             var message = new CreateCandidateRequest

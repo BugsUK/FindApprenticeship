@@ -14,7 +14,7 @@
 
         void Register(string username, Guid userId, string activationCode, UserRoles roles);
 
-        void Activate(string username, string activationCode);
+        void Activate(Guid id, string activationCode);
 
         void ResendActivationCode(string username);
 
