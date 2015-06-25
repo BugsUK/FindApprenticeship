@@ -23,7 +23,7 @@
 
         public void Delete(VacancyType vacancyType, Guid applicationId)
         {
-            _logService.Info("Deleting application type={0}, id={1}", vacancyType, applicationId);
+            _logService.Info("Deleting application: type={0}, id={1}", vacancyType, applicationId);
 
             switch (vacancyType)
             {
@@ -37,7 +37,7 @@
                     throw new InvalidOperationException(string.Format("Unknown vacancy type: {0}.", vacancyType));
             }
 
-            _logService.Info("Deleted application type={0}, id={1}", vacancyType, applicationId);
+            _logService.Info("Deleted application: type={0}, id={1}", vacancyType, applicationId);
         }
     }
 }

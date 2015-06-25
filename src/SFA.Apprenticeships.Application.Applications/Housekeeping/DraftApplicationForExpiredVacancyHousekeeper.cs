@@ -60,16 +60,22 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 
                         if (!application.DateApplied.HasValue && application.Vacancy.ClosingDate <= GetHousekeepingDate())
                         {
+                            _logService.Info("Deleting unsubmitted application for expired vacancy: type={0}, id={1}, vacancy closing date={2}",
+                                request.VacancyType, request.ApplicationId, application.Vacancy.ClosingDate);
+
                             _hardDeleteApplicationStrategy.Delete(
                                 request.VacancyType,
                                 request.ApplicationId);
 
+                            _logService.Info("Deleted unsubmitted application for expired vacancy: type={0}, id={1}, vacancy closing date={2}",
+                                request.VacancyType, request.ApplicationId, application.Vacancy.ClosingDate);
                             return;
                         }
                         break;
                     }
 
                 case VacancyType.Traineeship:
+                    // There are no draft traineeship applications.
                     break;
 
                 default:
