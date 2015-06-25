@@ -91,7 +91,6 @@
                         new Category
                         {
                             CodeName = c.ApprenticeshipOccupationCodeName,
-                            ShortName = c.ApprenticeshipOccupationShortName,
                             FullName = c.ApprenticeshipOccupationFullName
                         }).Distinct(new CategoryComparer()).OrderBy(c => c.FullName);
 
@@ -102,9 +101,8 @@
                     .Select(d =>
                         new Category
                         {
-                            ParentCategory = topLevelCategory,
+                            ParentCategoryCodeName = topLevelCategory.CodeName,
                             CodeName = d.ApprenticeshipFrameworkCodeName,
-                            ShortName = d.ApprenticeshipFrameworkShortName,
                             FullName = d.ApprenticeshipFrameworkFullName
                         }).OrderBy(c => c.FullName).ToList();
 

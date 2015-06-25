@@ -37,6 +37,18 @@
       <HintPath>..\packages\CsvHelper.2.13.1.0\lib\net40-client\CsvHelper.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Elasticsearch.Net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elasticsearch.Net.1.6.0\lib\net45\Elasticsearch.Net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Nest, Version=1.0.0.0, Culture=neutral, PublicKeyToken=96c599bbe3e70f5d, processorArchitecture=MSIL">
+      <HintPath>..\packages\NEST.1.6.0\lib\net45\Nest.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.5.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.5.154\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -55,11 +67,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Category.cs" />
-    <Compile Include="CategoryExtensions.cs" />
-    <Compile Include="Framework.cs" />
-    <Compile Include="FrameworkClassMap.cs" />
+    <Compile Include="Entities\CategoryComparer.cs" />
+    <Compile Include="Entities\CategoryExtensions.cs" />
+    <Compile Include="Entities\Framework.cs" />
+    <Compile Include="Entities\FrameworkClassMap.cs" />
     <Compile Include="IoC.cs" />
+    <Compile Include="Process\FrameworkDataComparer.cs" />
+    <Compile Include="Process\FrameworkDataLoader.cs" />
+    <Compile Include="Process\FrameworkDataProvider.cs" />
+    <Compile Include="Process\FrameworkDataReferenceDataProvider.cs" />
+    <Compile Include="Process\IFrameworkDataComparer.cs" />
+    <Compile Include="Process\IFrameworkDataLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -71,6 +89,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\src\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\src\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
@@ -86,6 +108,10 @@
     <ProjectReference Include="..\..\..\src\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
+      <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>

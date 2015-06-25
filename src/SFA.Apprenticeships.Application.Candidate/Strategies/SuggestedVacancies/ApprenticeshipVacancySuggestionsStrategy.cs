@@ -40,7 +40,7 @@
 
             if (vacancySubCategory == null) { return null; }
 
-            searchParameters.CategoryCode = vacancySubCategory.ParentCategory.CodeName;
+            searchParameters.CategoryCode = vacancySubCategory.ParentCategoryCodeName;
             searchParameters.SubCategoryCodes = new[] {vacancySubCategory.CodeName};
 
             var excludeVacancyIds = candidateApplications.Select(x => x.LegacyVacancyId).ToList();

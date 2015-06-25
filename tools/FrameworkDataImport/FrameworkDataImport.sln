@@ -27,6 +27,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Logging", "..\..\src\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj", "{A2D82061-BCBD-4030-9EB4-5148AEE79241}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Elastic.Common", "..\..\src\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj", "{F75B0C62-89B5-473D-AF2D-366A5A6722AC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Demo|Any CPU = Demo|Any CPU
@@ -181,6 +183,18 @@ Global
 		{A2D82061-BCBD-4030-9EB4-5148AEE79241}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{A2D82061-BCBD-4030-9EB4-5148AEE79241}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{A2D82061-BCBD-4030-9EB4-5148AEE79241}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Local|Any CPU.Build.0 = Local|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{F75B0C62-89B5-473D-AF2D-366A5A6722AC}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

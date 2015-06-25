@@ -1,4 +1,4 @@
-﻿namespace FrameworkDataImport
+﻿namespace FrameworkDataImport.Entities
 {
     using System;
     using System.Linq;
