@@ -40,7 +40,7 @@
     <div>
         @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Keyword)
         {
-            <p id="search-no-results-trybrowse">Alternatively, try using the <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)#browsetab">category search</a> to browse for an apprenticeship.</p>
+            <p id="search-no-results-trybrowse">Alternatively, try <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch, new { searchMode = ApprenticeshipSearchMode.Category })">browsing by category</a> to find an apprenticeship.</p>
         }
     </div>
 }
