@@ -95,10 +95,15 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 
             if (application.DateApplied.HasValue && application.DateApplied <= GetHousekeepingDate())
             {
+                _logService.Info("Deleting submitted application: type={0}, id={1}, date applied={2}",
+                    request.VacancyType, request.ApplicationId, application.DateApplied);
+
                 _hardDeleteApplicationStrategy.Delete(
                     request.VacancyType,
                     request.ApplicationId);
 
+                _logService.Info("Deleted submitted application: type={0}, id={1}, date applied={2}",
+                    request.VacancyType, request.ApplicationId, application.DateApplied);
                 return;
             }
 

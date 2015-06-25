@@ -61,7 +61,7 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                 count++;
 
                 // TODO: AG: US794: temporary code to limit number of deletions.
-                if (count > maxCount)
+                if (count >= maxCount)
                 {
                     _logService.Info("Limiting number of applications for housekeeping to {0}", maxCount);
                     break;
