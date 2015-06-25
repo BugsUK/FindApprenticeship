@@ -75,7 +75,6 @@
     <Compile Include="Process\FrameworkDataComparer.cs" />
     <Compile Include="Process\FrameworkDataLoader.cs" />
     <Compile Include="Process\FrameworkDataProvider.cs" />
-    <Compile Include="Process\FrameworkDataReferenceDataProvider.cs" />
     <Compile Include="Process\IFrameworkDataComparer.cs" />
     <Compile Include="Process\IFrameworkDataLoader.cs" />
     <Compile Include="Program.cs" />
@@ -112,6 +111,10 @@
     <ProjectReference Include="..\..\..\src\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
       <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\src\SFA.Apprenticeships.Infrastructure.FrameworkDataProvider\SFA.Apprenticeships.Infrastructure.FrameworkDataProvider.csproj">
+      <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.FrameworkDataProvider</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\..\src\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6e8e77ca-bb23-45de-aadd-236cafbc66e3}</Project>

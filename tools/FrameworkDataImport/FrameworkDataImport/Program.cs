@@ -27,7 +27,7 @@
             Console.WriteLine("Press any key to retrieve categories from index");
             Console.ReadKey();
 
-            var frameworkDataReferenceDataProvider = container.GetInstance<IReferenceDataProvider>("FrameworkDataReferenceDataProvider");
+            var frameworkDataReferenceDataProvider = container.GetInstance<IReferenceDataProvider>("FrameworkDataProvider");
             var providedCategories = frameworkDataReferenceDataProvider.GetCategories().ToList();
             Console.WriteLine("Provided {0} Categories", providedCategories.Count);
             var counter = 0;

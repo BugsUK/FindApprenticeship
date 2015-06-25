@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using System.Threading;
     using Application.Candidates;
     using Application.Interfaces.Logging;
+    using Application.ReferenceData.Configuration;
     using Azure.Common.IoC;
     using Common.Configuration;
     using Common.IoC;
@@ -93,6 +94,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var referenceDataConfiguration = configurationService.Get<ReferenceDataConfiguration>();
 
             _container = new Container(x =>
             {
@@ -108,7 +110,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

@@ -1,22 +1,20 @@
-﻿namespace FrameworkDataImport.Process
+﻿namespace SFA.Apprenticeships.Infrastructure.FrameworkDataProvider
 {
     using System.Collections.Generic;
-    using SFA.Apprenticeships.Application.Interfaces.Logging;
-    using SFA.Apprenticeships.Application.ReferenceData;
-    using SFA.Apprenticeships.Domain.Entities.ReferenceData;
-    using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
+    using System.Linq;
+    using Application.ReferenceData;
+    using Domain.Entities.ReferenceData;
+    using Elastic.Common.Configuration;
 
-    public class FrameworkDataReferenceDataProvider : IReferenceDataProvider
+    public class FrameworkDataProvider : IReferenceDataProvider
     {
         private const string IndexName = "categories";
 
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
-        private readonly ILogService _logger;
 
-        public FrameworkDataReferenceDataProvider(IElasticsearchClientFactory elasticsearchClientFactory, ILogService logger)
+        public FrameworkDataProvider(IElasticsearchClientFactory elasticsearchClientFactory)
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
-            _logger = logger;
         }
 
         public IEnumerable<Category> GetCategories()
@@ -28,22 +26,22 @@
 
         public Category GetSubCategoryByName(string subCategoryName)
         {
-            throw new System.NotImplementedException();
+            return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.FullName == subCategoryName);
         }
 
         public Category GetCategoryByName(string categoryName)
         {
-            throw new System.NotImplementedException();
+            return GetCategories().FirstOrDefault(c => c.FullName == categoryName);
         }
 
         public Category GetSubCategoryByCode(string subCategoryCode)
         {
-            throw new System.NotImplementedException();
+            return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.CodeName == subCategoryCode);
         }
 
         public Category GetCategoryByCode(string categoryCode)
         {
-            throw new System.NotImplementedException();
+            return GetCategories().FirstOrDefault(c => c.CodeName == categoryCode);
         }
     }
 }

@@ -18,6 +18,7 @@
 
 namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Application.Interfaces.Logging;
+    using Application.ReferenceData.Configuration;
     using Candidate.IoC;
     using Common.IoC;
     using Common.Providers;
@@ -53,6 +54,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var referenceDataConfiguration = configurationService.Get<ReferenceDataConfiguration>();
 
             return new Container(x =>
             {
@@ -65,7 +67,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<PostcodeRegistry>();
                 // TODO: DEBT: AG: if Rabbit is incorrectly configured, website fails to start properly. Need to more lazily initialise RabbitMQ.
                 x.AddRegistry<RabbitMqRegistry>();

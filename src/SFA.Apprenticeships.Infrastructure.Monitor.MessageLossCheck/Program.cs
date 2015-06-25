@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck
 {
     using System;
+    using Application.ReferenceData.Configuration;
     using Common.Configuration;
     using Common.IoC;
     using Domain.Interfaces.Configuration;
@@ -29,6 +30,7 @@
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var referenceDataConfiguration = configurationService.Get<ReferenceDataConfiguration>();
 
             container = new Container(x =>
             {
@@ -36,7 +38,7 @@
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();

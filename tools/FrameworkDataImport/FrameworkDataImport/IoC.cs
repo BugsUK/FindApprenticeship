@@ -6,6 +6,7 @@
     using SFA.Apprenticeships.Infrastructure.Common.Configuration;
     using SFA.Apprenticeships.Infrastructure.Common.IoC;
     using SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC;
+    using SFA.Apprenticeships.Infrastructure.FrameworkDataProvider.IoC;
     using SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC;
     using SFA.Apprenticeships.Infrastructure.Logging.IoC;
     using StructureMap;
@@ -27,6 +28,7 @@
                 x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
+                x.AddRegistry<FrameworkDataProviderRegistry>();
 
                 // cache service - to allow web site to run without azure cache
                 x.AddCachingRegistry(cacheConfig);
@@ -36,7 +38,6 @@
 
                 x.For<IFrameworkDataComparer>().Use<FrameworkDataComparer>().Ctor<IReferenceDataProvider>().Named("LegacyReferenceDataProvider");
                 x.For<IFrameworkDataLoader>().Use<FrameworkDataLoader>();
-                x.For<IReferenceDataProvider>().Use<FrameworkDataReferenceDataProvider>().Name = "FrameworkDataReferenceDataProvider";
             });
         }
     }

@@ -156,6 +156,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Audit", "SFA.Apprenticeships.Infrastructure.Repositories.Audit\SFA.Apprenticeships.Infrastructure.Repositories.Audit.csproj", "{1CD7F494-A6BC-448A-AF1E-ECFAF03A66FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.FrameworkDataProvider", "SFA.Apprenticeships.Infrastructure.FrameworkDataProvider\SFA.Apprenticeships.Infrastructure.FrameworkDataProvider.csproj", "{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Demo|Any CPU = Demo|Any CPU
@@ -828,6 +830,18 @@ Global
 		{1CD7F494-A6BC-448A-AF1E-ECFAF03A66FC}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{1CD7F494-A6BC-448A-AF1E-ECFAF03A66FC}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{1CD7F494-A6BC-448A-AF1E-ECFAF03A66FC}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Local|Any CPU.Build.0 = Local|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -901,5 +915,6 @@ Global
 		{94A08002-F409-476B-97D3-8A9639B996C3} = {37F78283-62CA-418D-9548-4EF7A6C126B7}
 		{3CA36139-BBDD-4305-B15A-E9500606B672} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
 		{1CD7F494-A6BC-448A-AF1E-ECFAF03A66FC} = {A34B1856-1875-4220-A1CC-AF67CB5A521F}
+		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 	EndGlobalSection
 EndGlobal

@@ -20,6 +20,7 @@
     using System;
     using System.Reflection;
     using System.ServiceProcess;
+    using Application.ReferenceData.Configuration;
     using Infrastructure.Repositories.Communication.IoC;
     using Infrastructure.Repositories.Users.IoC;
     using Infrastructure.Caching.Memory.IoC;
@@ -77,6 +78,7 @@
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var referenceDataConfiguration = configurationService.Get<ReferenceDataConfiguration>();
 
             _container = new Container(x =>
             {
@@ -91,7 +93,7 @@
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
