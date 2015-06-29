@@ -148,10 +148,6 @@ else
                     }
                     <p data-show="DisplayDescription" @{if (!Model.VacancySearch.DisplayDescription) { <text> class="toggle-content" </text>    }}>
                         @vacancy.Description
-                        @if (vacancy.NumberOfPositions > 1)
-                        {
-                            <span id="number-of-positions-@vacancy.Id" class="font-xsmall inl-block">(@vacancy.NumberOfPositions positions available)</span>
-                        }
                     </p>
                     <div class="grid-wrapper">
                         <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : "")">
