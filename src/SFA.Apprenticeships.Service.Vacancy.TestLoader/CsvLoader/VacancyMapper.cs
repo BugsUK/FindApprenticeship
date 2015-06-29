@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Service.Vacancy.TestLoader.CsvLoader
 {
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies.Entities;
     using CsvHelper.Configuration;
 
-    public class VacancyMapper : CsvClassMap<VacancySummaryUpdate>
+    public sealed class VacancyMapper : CsvClassMap<ApprenticeshipSummaryUpdate>
     {
         public VacancyMapper()
         {

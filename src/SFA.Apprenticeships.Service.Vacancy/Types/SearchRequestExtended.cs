@@ -1,6 +1,5 @@
 namespace SFA.Apprenticeships.Service.Vacancy.Types
 {
-    using System;
     using System.Collections.Generic;
 
     public class SearchRequestExtended : SearchRequest
@@ -11,47 +10,74 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
             JobTitleTerms = searchRequest.JobTitleTerms;
             KeywordTerms = searchRequest.KeywordTerms;
 
-            UseJobTitleTerms = searchRequest.Parameters.ContainsKey(SearchParameters.UseJobTitleTerms) &&
-                               bool.Parse(searchRequest.Parameters[SearchParameters.UseJobTitleTerms]);
+            if (searchRequest.Parameters == null)
+            {
+                return;
+            }
 
-            SearchJobTitleField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchJobTitleField) &&
-                                  bool.Parse(searchRequest.Parameters[SearchParameters.SearchJobTitleField]);
+            UseJobTitleTerms = searchRequest.Parameters.ContainsKey(
+                SearchParameters.UseJobTitleTerms) &&
+                bool.Parse(searchRequest.Parameters[SearchParameters.UseJobTitleTerms]);
 
-            SearchDescriptionField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchDescriptionField) &&
-                                     bool.Parse(searchRequest.Parameters[SearchParameters.SearchDescriptionField]);
+            SearchJobTitleField = searchRequest.Parameters.ContainsKey(
+                SearchParameters.SearchJobTitleField) &&
+                bool.Parse(searchRequest.Parameters[SearchParameters.SearchJobTitleField]);
 
-            SearchEmployerNameField = searchRequest.Parameters.ContainsKey(SearchParameters.SearchEmployerNameField) &&
-                                      bool.Parse(searchRequest.Parameters[SearchParameters.SearchEmployerNameField]);
+            SearchDescriptionField = searchRequest.Parameters.ContainsKey(
+                SearchParameters.SearchDescriptionField) &&
+                bool.Parse(searchRequest.Parameters[SearchParameters.SearchDescriptionField]);
 
-            JobTitleFactors = new KeywordFactors(searchRequest.Parameters, SearchParameters.JobTitleBoost,
-                SearchParameters.JobTitleFuzziness, SearchParameters.JobTitleFuzzyPrefix,
-                SearchParameters.JobTitleMatchAllKeywords, SearchParameters.JobTitlePhraseProximity,
+            SearchEmployerNameField =
+                searchRequest.Parameters.ContainsKey(SearchParameters.SearchEmployerNameField) &&
+                bool.Parse(searchRequest.Parameters[SearchParameters.SearchEmployerNameField]);
+
+            JobTitleFactors = new KeywordFactors(
+                searchRequest.Parameters,
+                SearchParameters.JobTitleBoost,
+                SearchParameters.JobTitleFuzziness,
+                SearchParameters.JobTitleFuzzyPrefix,
+                SearchParameters.JobTitleMatchAllKeywords,
+                SearchParameters.JobTitlePhraseProximity,
                 SearchParameters.JobTitleMinimumMatch);
 
-            DescriptionFactors = new KeywordFactors(searchRequest.Parameters, SearchParameters.DescriptionBoost,
-                SearchParameters.DescriptionFuzziness, SearchParameters.DescriptionFuzzyPrefix,
-                SearchParameters.DescriptionMatchAllKeywords, SearchParameters.DescriptionPhraseProximity,
+            DescriptionFactors = new KeywordFactors(
+                searchRequest.Parameters,
+                SearchParameters.DescriptionBoost,
+                SearchParameters.DescriptionFuzziness,
+                SearchParameters.DescriptionFuzzyPrefix,
+                SearchParameters.DescriptionMatchAllKeywords,
+                SearchParameters.DescriptionPhraseProximity,
                 SearchParameters.DescriptionMinimumMatch);
 
-            EmployerFactors = new KeywordFactors(searchRequest.Parameters, SearchParameters.EmployerNameBoost,
-                SearchParameters.EmployerNameFuzziness, SearchParameters.EmployerNameFuzzyPrefix,
-                SearchParameters.EmployerNameMatchAllKeywords, SearchParameters.EmployerNamePhraseProximity,
+            EmployerFactors = new KeywordFactors(
+                searchRequest.Parameters,
+                SearchParameters.EmployerNameBoost,
+                SearchParameters.EmployerNameFuzziness,
+                SearchParameters.EmployerNameFuzzyPrefix,
+                SearchParameters.EmployerNameMatchAllKeywords,
+                SearchParameters.EmployerNamePhraseProximity,
                 SearchParameters.EmployerMinimumMatch);
         }
 
         public bool UseJobTitleTerms { get; set; }
+
         public bool SearchJobTitleField { get; set; }
+        
         public bool SearchDescriptionField { get; set; }
+        
         public bool SearchEmployerNameField { get; set; }
 
         public KeywordFactors JobTitleFactors { get; set; }
+        
         public KeywordFactors DescriptionFactors { get; set; }
+        
         public KeywordFactors EmployerFactors { get; set; }
     }
 
     public class KeywordFactors
     {
-        public KeywordFactors(Dictionary<SearchParameters, string> parameters, 
+        public KeywordFactors(
+            IReadOnlyDictionary<SearchParameters, string> parameters, 
             SearchParameters boost,
             SearchParameters fuzzy, 
             SearchParameters fuzzyPrefix, 
@@ -69,10 +95,15 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
         }
 
         public double? Boost { get; set; }
+
         public int? Fuzziness { get; set; }
+        
         public int? FuzzinessPrefix { get; set; }
+        
         public bool MatchAllKeywords { get; set; }
+        
         public int? PhraseProximity { get; set; }
+
         public string MinimumMatch { get; set; }
     }
 }

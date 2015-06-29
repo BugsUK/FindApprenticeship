@@ -4,13 +4,15 @@
     using System.Linq;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.Configuration;
-    using Infrastructure.Elastic.Common.Entities;
     using Infrastructure.Elastic.Common.IoC;
+    using Infrastructure.Logging.IoC;
     using Nest;
     using StructureMap;
     using Types;
+    using ApprenticeshipSummary = Infrastructure.Elastic.Common.Entities.ApprenticeshipSummary;
 
     public class SearchProvider
     {
@@ -20,23 +22,25 @@
 
         public SearchProvider()
         {
-            ObjectFactory.Configure(c =>
+            var container = new Container(c =>
             {
+                c.AddRegistry<LoggingRegistry>();
                 c.AddRegistry<CommonRegistry>();
                 c.AddRegistry<ElasticsearchCommonRegistry>();
             });
 
-            var elasticsearchClientFactory = ObjectFactory.GetInstance<IElasticsearchClientFactory>();
+            var elasticsearchClientFactory = container.GetInstance<IElasticsearchClientFactory>();
+
             _client = elasticsearchClientFactory.GetElasticClient();
-            _indexName = elasticsearchClientFactory.GetIndexNameForType(typeof(VacancySummary));
-            _documentTypeName = elasticsearchClientFactory.GetDocumentNameForType(typeof(VacancySummary));
+            _indexName = elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
+            _documentTypeName = elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary));
         }
 
-        public SearchResults<VacancySummaryResponse> Search(Types.SearchRequest request)
+        public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> Search(Types.SearchRequest request)
         {
             var searchRequestExtended = new SearchRequestExtended(request);
 
-            var search = _client.Search<VacancySummaryResponse>(s =>
+            var search = _client.Search<ApprenticeshipSearchResponse>(s =>
             {
                 s.Index(_indexName);
                 s.Type(_documentTypeName);
@@ -98,7 +102,8 @@
 
             var results = search.Documents.ToList();
             results.ForEach(r => r.Score = search.HitsMetaData.Hits.First(h => h.Id == r.Id.ToString(CultureInfo.InvariantCulture)).Score);
-            var searchResults = new SearchResults<VacancySummaryResponse>(search.Total, 1, results);
+            var searchResults = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(
+                search.Total, results, null, null);
 
             return searchResults;
         }
@@ -117,7 +122,7 @@
             return queryContainer;
         }
 
-        private static void BuildFieldQuery(MatchQueryDescriptor<VacancySummaryResponse> queryDescriptor, KeywordFactors searchFactors)
+        private static void BuildFieldQuery(MatchQueryDescriptor<ApprenticeshipSearchResponse> queryDescriptor, KeywordFactors searchFactors)
         {
             if (searchFactors.Boost.HasValue)
             {

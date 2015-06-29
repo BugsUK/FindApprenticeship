@@ -3,11 +3,13 @@
     using System;
     using System.IO;
     using System.Linq;
-    using Application.VacancyEtl.Entities;
+    using Application.Vacancies.Entities;
     using CsvHelper;
     using CsvLoader;
     using Infrastructure.Common.IoC;
+    using Infrastructure.Elastic.Common.Entities;
     using Infrastructure.Elastic.Common.IoC;
+    using Infrastructure.Logging.IoC;
     using Infrastructure.VacancyIndexer;
     using Infrastructure.VacancyIndexer.IoC;
     using NLog;
@@ -15,7 +17,7 @@
 
     public class Program
     {
-        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
         public static void Main(string[] args)
         {
@@ -24,53 +26,54 @@
                 return;
             }
 
-            _logger.Debug("Loading IoC configuration...");
+            Logger.Debug("Loading IoC configuration...");
 
-            ObjectFactory.Configure(c =>
+            var container = new Container(c =>
             {
                 c.AddRegistry<CommonRegistry>();
+                c.AddRegistry<LoggingRegistry>();
                 c.AddRegistry<ElasticsearchCommonRegistry>();
                 c.AddRegistry<VacancyIndexerRegistry>();
             });
 
-            _logger.Debug("Loaded IoC configuration...");
+            Logger.Debug("Loaded IoC configuration...");
 
-            _logger.Debug("Loading Csv file: {0}", args[0]);
+            Logger.Debug("Loading Csv file: {0}", args[0]);
 
-            var indexer = ObjectFactory.GetInstance<IVacancyIndexerService>();
+            var indexer = container.GetInstance<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
             var indexDate = DateTime.Today;
 
-            using (TextReader reader = File.OpenText(args[0]))
+            using (var reader = File.OpenText(args[0]))
             {
-                _logger.Debug("Loaded Csv file: {0}", args[0]);
+                Logger.Debug("Loaded Csv file: {0}", args[0]);
 
-                _logger.Debug("Loading Csv Mapping");
+                Logger.Debug("Loading Csv Mapping");
                 var csv = new CsvReader(reader);
                 csv.Configuration.RegisterClassMap<VacancyMapper>();
-                _logger.Debug("Loaded Csv Mapping");
+                Logger.Debug("Loaded Csv Mapping");
 
-                _logger.Debug("Loading Csv Rows");
-                var allCsvRows = csv.GetRecords<VacancySummaryUpdate>().ToList();
-                _logger.Debug("Loaded '{0}' Csv Rows", allCsvRows.Count);
+                Logger.Debug("Loading Csv Rows");
+                var allCsvRows = csv.GetRecords<ApprenticeshipSummaryUpdate>().ToList();
+                Logger.Debug("Loaded '{0}' Csv Rows", allCsvRows.Count);
 
-                _logger.Debug("Creating index for date: ", indexDate);
+                Logger.Debug("Creating index for date: {0}", indexDate);
                 indexer.CreateScheduledIndex(indexDate);
-                _logger.Debug("Created index for date: ", indexDate);
+                Logger.Debug("Created index for date: {0}", indexDate);
 
-                foreach (VacancySummaryUpdate vacancySummaryUpdate in allCsvRows)
+                foreach (var vacancySummaryUpdate in allCsvRows)
                 {
-                    _logger.Debug("Indexing item: {0}", vacancySummaryUpdate.Title);
+                    Logger.Debug("Indexing item: {0}", vacancySummaryUpdate.Title);
                     vacancySummaryUpdate.ScheduledRefreshDateTime = indexDate;
                     indexer.Index(vacancySummaryUpdate);
-                    _logger.Debug("Indexed item: {0}", vacancySummaryUpdate.Title);
+                    Logger.Debug("Indexed item: {0}", vacancySummaryUpdate.Title);
                 }
 
-                _logger.Debug("Swapping index");
+                Logger.Debug("Swapping index");
                 indexer.SwapIndex(indexDate);
-                _logger.Debug("Swapped index");
+                Logger.Debug("Swapped index");
             }
             
-            _logger.Debug("Complete");
+            Logger.Debug("Complete");
         }
 
         private static bool CheckArgs(string[] args)

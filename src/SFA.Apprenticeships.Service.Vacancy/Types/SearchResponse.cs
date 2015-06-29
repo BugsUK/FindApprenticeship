@@ -1,9 +1,10 @@
 namespace SFA.Apprenticeships.Service.Vacancy.Types
 {
-    using System;
+    using System.Collections.Generic;
     using System.Runtime.Serialization;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Domain.Entities.Vacancies.Apprenticeships;
 
     [DataContract(Namespace = "http://candidates.gov.uk")]
     public class SearchResponse
@@ -12,6 +13,6 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
         public SearchRequest Request { get; set; }
 
         [DataMember(Order = 2, Name = "SearchResults")]
-        public SearchResults<VacancySummaryResponse> SearchResults { get; set; }
+        public IEnumerable<ApprenticeshipSearchResponse> SearchResults { get; set; }
     }
 }

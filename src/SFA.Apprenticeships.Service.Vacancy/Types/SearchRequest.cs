@@ -1,6 +1,5 @@
 namespace SFA.Apprenticeships.Service.Vacancy.Types
 {
-    using System;
     using System.Collections.Generic;
     using System.Runtime.Serialization;
 
