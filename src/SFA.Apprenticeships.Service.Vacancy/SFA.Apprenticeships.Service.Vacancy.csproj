@@ -96,6 +96,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Configs\readme.txt" />
     <Content Include="VacancySearchService.svc" />
   </ItemGroup>
   <ItemGroup>

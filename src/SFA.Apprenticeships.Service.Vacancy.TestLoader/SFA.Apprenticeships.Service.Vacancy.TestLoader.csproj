@@ -117,7 +117,11 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Configs\readme.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
