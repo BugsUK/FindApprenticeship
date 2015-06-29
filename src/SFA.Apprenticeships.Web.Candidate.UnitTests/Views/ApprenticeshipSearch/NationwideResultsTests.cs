@@ -32,7 +32,7 @@
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
                     .Contain("We've also found <a id='nationwideLocationTypeLink' class='update-results'")
-                    .And.Contain("3 apprenticeships with positions across England</a>.");
+                    .And.Contain("3 apprenticeships with positions elsewhere in England</a>.");
         }
 
         [Test]
@@ -57,7 +57,7 @@
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
-                    .Contain("We've also found 3 apprenticeships with positions across England.");
+                    .Be("We've also found 3 apprenticeships with positions elsewhere in England.");
         }
 
         [Test]
@@ -82,7 +82,7 @@
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
                     .Contain("We've also found <a id='nationwideLocationTypeLink' class='update-results'")
-                    .And.Contain("2 apprenticeships with positions across England</a>.");
+                    .And.Contain("2 apprenticeships with positions elsewhere in England</a>.");
         }
 
         [Test]
@@ -107,7 +107,7 @@
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
-                    .Contain("We've also found 3 apprenticeships with positions across England.");
+                    .Be("We've also found 3 apprenticeships with positions elsewhere in England.");
         }
 
         [Test]
@@ -119,19 +119,16 @@
             {
                 VacancySearch = new ApprenticeshipSearchViewModel
                 {
-                    LocationType = ApprenticeshipLocationType.NonNational
+                    LocationType = ApprenticeshipLocationType.National //Location type switches to national if no local results were found
                 },
                 TotalLocalHits = 0,
                 TotalNationalHits = 2
             });
 
             view.GetElementbyId("result-message")
-                    .InnerHtml.Should().Be("We were unable to find any apprenticeships in your selected area.");
+                    .InnerHtml.Should().Be("There are currently no matching apprenticeships in your selected area.");
 
-            view.GetElementbyId("national-results-message")
-                    .InnerHtml.Should()
-                    .Contain("We've found <a id='nationwideLocationTypeLink' class='update-results'")
-                    .And.Contain("2 apprenticeships with positions across England</a>.");
+            view.GetElementbyId("national-results-message").InnerHtml.Should().Be("We've found 2 apprenticeships with positions elsewhere in England.");
         }
 
         [Test]
@@ -150,11 +147,9 @@
             });
 
             view.GetElementbyId("result-message")
-                    .InnerHtml.Should().Be("We were unable to find any apprenticeships in your selected area.");
+                    .InnerHtml.Should().Be("There are currently no matching apprenticeships in your selected area.");
 
-            view.GetElementbyId("national-results-message")
-                    .InnerHtml.Should()
-                    .Contain("We've found 3 apprenticeships with positions across England.");
+            view.GetElementbyId("national-results-message").InnerHtml.Should().Be("We've found 3 apprenticeships with positions elsewhere in England.");
         }
 
         [Test]
@@ -179,7 +174,7 @@
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
                     .Contain("We've also found <a id='nationwideLocationTypeLink' class='update-results'")
-                    .And.Contain("1 apprenticeship with positions across England</a>.");
+                    .And.Contain("1 apprenticeship with positions elsewhere in England</a>.");
         }
 
         [Test]
@@ -204,7 +199,7 @@
 
             view.GetElementbyId("national-results-message")
                     .InnerHtml.Should()
-                    .Contain("We've also found 1 apprenticeship with positions across England.");
+                    .Be("We've also found 1 apprenticeship with positions elsewhere in England.");
         }
 
         [Test]

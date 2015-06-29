@@ -35,11 +35,12 @@
 
                 if (schedulerNotification == null) return;
 
+                //Delete message as housekeeping queries can take a long time and the message can be read several times causing multiple code executions
+                MessageService.DeleteMessage(QueueName, schedulerNotification.MessageId, schedulerNotification.PopReceipt);
+
                 _candidateProcessor.QueueCandidates();
                 _rootApplicationHousekeeper.QueueHousekeepingRequests();
                 _rootCommunicationHousekeeper.QueueHousekeepingRequests();
-
-                MessageService.DeleteMessage(QueueName, schedulerNotification.MessageId, schedulerNotification.PopReceipt);
             });
         }
     }
