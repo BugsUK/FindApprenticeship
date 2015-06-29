@@ -114,13 +114,23 @@ else
                     <div class="hgroup-medium top-align width-all-3-4">
                         <h2 class="heading-medium vacancy-title-link">
                             @(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ?
-                            Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude }) :
-                            Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker })
-                            )
+                                  Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new {id = vacancy.Id, distance = vacancy.DistanceAsString}, new {@class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude}) :
+                                  Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new {id = vacancy.Id, distance = vacancy.DistanceAsString}, new {@class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker}))
+                            <br />
                             @if (Model.VacancySearch.SearchMode == ApprenticeshipSearchMode.Category)
                             {
-                                <span data-show="DisplaySubCategory" class="font-small hidden-subcategory @(Model.VacancySearch.DisplaySubCategory ? "inl-block" : "toggle-content")"> (@FullNameFormatter.Format(vacancy.SubCategory))</span>
+                                <span data-show="DisplaySubCategory" class="font-small hidden-subcategory @(Model.VacancySearch.DisplaySubCategory ? "inl-block" : "toggle-content")">@FullNameFormatter.Format(vacancy.SubCategory)</span>
                             }
+                            <span id="number-of-positions-@vacancy.Id" class="font-small hidden-subcategory">
+                                @if (vacancy.NumberOfPositions == 1)
+                                {
+                                    <span>(1 position available)</span>
+                                }
+                                else
+                                {
+                                    <span>(@vacancy.NumberOfPositions positions available)</span>
+                                }
+                            </span>
                         </h2>
                         <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
                     </div>

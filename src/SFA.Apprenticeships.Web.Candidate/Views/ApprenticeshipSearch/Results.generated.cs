@@ -82,7 +82,7 @@ WriteLiteral("\r\n");
             : Url.ApprenticeshipSearchViewModelRouteUrl(CandidateRouteNames.ApprenticeshipResults, new ApprenticeshipSearchViewModel(Model.VacancySearch) {LocationType = ApprenticeshipLocationType.National, SearchAction = SearchAction.LocationTypeChanged, SortType = VacancySearchSortType.Distance, PageNumber = 1});
 
     string resultMessage;
-    string nationalResultsMessage;
+    string nationalResultsMessage = "";
 
     if (Model.TotalLocalHits == 0)
     {
@@ -112,40 +112,33 @@ WriteLiteral("\r\n");
         }
     }
 
-    if (Model.TotalLocalHits == 0 && Model.TotalNationalHits != 0)
+    if (Model.TotalNationalHits != 0)
     {
-        resultMessage = "We were unable to find any apprenticeships in your selected area.";
-    }
-
-    if (Model.TotalNationalHits == 0)
-    {
-        nationalResultsMessage = "";
-    }
-    else
-    {
-        var nationalResultsMessagePrefix = Model.TotalLocalHits == 0 ? "We've found" : "We've also found";
-
-        if (Model.TotalNationalHits == 1)
+        if (Model.TotalLocalHits == 0)
         {
-
+            resultMessage = "There are currently no matching apprenticeships in your selected area.";
+            nationalResultsMessage = string.Format("We've found {0} apprenticeships with positions elsewhere in England.", Model.TotalNationalHits);
+        }
+        else if (Model.TotalNationalHits == 1)
+        {
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{1} <a id='nationwideLocationTypeLink' class='update-results' href={0}>1 apprenticeship with positions across England</a>.", locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("We've also found <a id='nationwideLocationTypeLink' class='update-results' href={0}>1 apprenticeship with positions elsewhere in England</a>.", locationTypeLink);
             }
             else
             {
-                nationalResultsMessage = nationalResultsMessagePrefix + " 1 apprenticeship with positions across England.";
+                nationalResultsMessage = "We've also found 1 apprenticeship with positions elsewhere in England.";
             }
         }
         else
         {
             if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
             {
-                nationalResultsMessage = string.Format("{2} <a id='nationwideLocationTypeLink' class='update-results' href={1}>{0} apprenticeships with positions across England</a>.", Model.TotalNationalHits, locationTypeLink, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("We've also found <a id='nationwideLocationTypeLink' class='update-results' href={1}>{0} apprenticeships with positions elsewhere in England</a>.", Model.TotalNationalHits, locationTypeLink);
             }
             else
             {
-                nationalResultsMessage = string.Format("{1} {0} apprenticeships with positions across England.", Model.TotalNationalHits, nationalResultsMessagePrefix);
+                nationalResultsMessage = string.Format("We've also found {0} apprenticeships with positions elsewhere in England.", Model.TotalNationalHits);
             }
         }
     }
@@ -163,14 +156,14 @@ WriteLiteral("\r\n    <meta");
 
 WriteLiteral(" name=\"WT.oss_r\"");
 
-WriteAttribute("content", Tuple.Create(" content=\"", 4130), Tuple.Create("\"", 4161)
+WriteAttribute("content", Tuple.Create(" content=\"", 4061), Tuple.Create("\"", 4092)
             
-            #line 89 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4140), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
+            #line 82 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+, Tuple.Create(Tuple.Create("", 4071), Tuple.Create<System.Object, System.Int32>(Model.TotalLocalHits
             
             #line default
             #line hidden
-, 4140), false)
+, 4071), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -202,7 +195,7 @@ WriteLiteral(" class=\"small-btm-margin\"");
 WriteLiteral(">");
 
             
-            #line 96 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 89 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                                                        Write(Html.Raw(resultMessage));
 
             
@@ -217,7 +210,7 @@ WriteLiteral(" class=\"\"");
 WriteLiteral(">");
 
             
-            #line 97 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 90 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                                                  Write(Html.Raw(nationalResultsMessage));
 
             
@@ -226,13 +219,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 98 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 91 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 98 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 91 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
              if (!string.IsNullOrEmpty(Model.VacancySearch.Location))
             {
 
@@ -247,14 +240,14 @@ WriteLiteral(">\r\n                    <a");
 
 WriteLiteral(" id=\"receiveSaveSearchAlert\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4713), Tuple.Create("\"", 4855)
+WriteAttribute("href", Tuple.Create(" \r\n                       href=\"", 4644), Tuple.Create("\"", 4786)
             
-            #line 102 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
-, Tuple.Create(Tuple.Create("", 4745), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelAction("savesearch", new ApprenticeshipSearchViewModel(Model.VacancySearch))
+            #line 95 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+, Tuple.Create(Tuple.Create("", 4676), Tuple.Create<System.Object, System.Int32>(Url.ApprenticeshipSearchViewModelAction("savesearch", new ApprenticeshipSearchViewModel(Model.VacancySearch))
             
             #line default
             #line hidden
-, 4745), false)
+, 4676), false)
 );
 
 WriteLiteral("\r\n                       onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'" +
@@ -268,7 +261,7 @@ WriteLiteral(" class=\"fa fa-bell-o\"");
 WriteLiteral("></i>Receive alerts for this search</a>\r\n                </p>\r\n");
 
             
-            #line 105 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 98 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
             }
 
             
@@ -277,13 +270,13 @@ WriteLiteral("></i>Receive alerts for this search</a>\r\n                </p>\r\
 WriteLiteral("        </div>\r\n    </div>\r\n\r\n");
 
             
-            #line 109 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 102 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 109 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 102 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
      using (Html.BeginRouteForm(CandidateRouteNames.ApprenticeshipResults, FormMethod.Get))
     {
         Html.Partial("ValidationSummary", ViewData.ModelState);
@@ -304,13 +297,13 @@ WriteLiteral(" id=\"pagedList\"");
 WriteLiteral(">\r\n");
 
             
-            #line 116 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 109 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 116 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 109 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                    Html.RenderPartial("_searchResults", Model); 
             
             #line default
@@ -318,7 +311,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("\r\n            </div>\r\n        </section>\r\n");
 
             
-            #line 119 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 112 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
     }
 
             
@@ -339,7 +332,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 128 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 121 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/locationsearch"));
 
             
@@ -350,7 +343,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 129 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 122 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/cookie"));
 
             
@@ -359,7 +352,7 @@ Write(Scripts.Render("~/bundles/cookie"));
 WriteLiteral(" \r\n    <script>\r\n        var searchUrl = \'");
 
             
-            #line 131 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 124 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                     Write(Url.RouteUrl(CandidateRouteNames.ApprenticeshipResults));
 
             
@@ -368,7 +361,7 @@ WriteLiteral(" \r\n    <script>\r\n        var searchUrl = \'");
 WriteLiteral("\';\r\n        var locationUrl = \'");
 
             
-            #line 132 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 125 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                       Write(Url.Action("location", "Location"));
 
             
@@ -379,7 +372,7 @@ WriteLiteral("\';\r\n    </script>\r\n");
 WriteLiteral("    ");
 
             
-            #line 134 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 127 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
 Write(Scripts.Render("~/bundles/nas/results"));
 
             
@@ -388,7 +381,7 @@ Write(Scripts.Render("~/bundles/nas/results"));
 WriteLiteral("\r\n    <script>\r\n        initSavedVacancies({\r\n            saveUrl:  \'");
 
             
-            #line 137 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 130 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                   Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
 
             
@@ -397,7 +390,7 @@ WriteLiteral("\r\n    <script>\r\n        initSavedVacancies({\r\n            sa
 WriteLiteral("\',\r\n            deleteUrl: \'");
 
             
-            #line 138 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
+            #line 131 "..\..\Views\ApprenticeshipSearch\Results.cshtml"
                    Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
 
             
