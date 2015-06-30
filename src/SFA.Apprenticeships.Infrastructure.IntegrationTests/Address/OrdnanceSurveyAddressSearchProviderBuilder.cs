@@ -20,12 +20,13 @@
                 x.AddRegistry<CommunicationRegistry>();
             });
 
-            container.Configure(c => c.For<ILogService>().Use(new Mock<ILogService>().Object));
+            var mockLogService = new Mock<ILogService>();
+
+            container.Configure(c => c.For<ILogService>().Use(mockLogService.Object));
 
             var configurationService = container.GetInstance<IConfigurationService>();
 
-            var provider = new OrdnanceSurveyAddressSearchProvider(configurationService, new RestClient());
-            return provider;
+            return new OrdnanceSurveyAddressSearchProvider(mockLogService.Object, configurationService, new RestClient());
         }
     }
 }

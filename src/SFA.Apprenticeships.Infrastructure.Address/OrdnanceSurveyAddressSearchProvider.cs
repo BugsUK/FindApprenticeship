@@ -3,7 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
     using Application.Address;
+    using Application.Interfaces.Logging;
     using Configuration;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Configuration;
@@ -16,11 +18,16 @@
         private const string DatasetDpa = "DPA";
         private const string DatasetLpi = "LPI";
 
+        private readonly ILogService _logService;
         private readonly IRestClient _restClient;
         private readonly OrdnanceSurveyPlacesConfiguration _configuration;
 
-        public OrdnanceSurveyAddressSearchProvider(IConfigurationService configurationService, IRestClient restClient)
+        public OrdnanceSurveyAddressSearchProvider(
+            ILogService logService,
+            IConfigurationService configurationService,
+            IRestClient restClient)
         {
+            _logService = logService;
             _restClient = restClient;
             _configuration = configurationService.Get<AddressSearchConfiguration>().OrdnanceSurveyPlacesConfiguration;
         }
@@ -37,7 +44,8 @@
             restRequest.AddParameter("key", _configuration.ApiKey);
 
             var restResponse = _restClient.Execute<OrdnanceSurveyPlacesResponse>(restRequest);
-            if (restResponse.ResponseStatus == ResponseStatus.Completed)
+
+            if (restResponse.StatusCode == HttpStatusCode.OK)
             {
                 var results = restResponse.Data.Results;
 
@@ -59,6 +67,11 @@
                             .OrderBy(a => a.AddressLine1);
                     }
                 }
+            }
+            else
+            {
+                _logService.Warn("Find address failed with status code: {0} and description '{1}', content '{2}'",
+                    restResponse.StatusCode, restResponse.StatusDescription, restResponse.Content);
             }
 
             return Enumerable.Empty<Address>();
