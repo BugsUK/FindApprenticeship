@@ -14,7 +14,7 @@
         private readonly Dictionary<Type, string> _typeIndexNameMap = new Dictionary<Type, string>();
         private readonly Dictionary<Type, string> _documentTypeNameMap = new Dictionary<Type, string>();
 
-        public ElasticsearchClientFactory(IConfigurationService configurationService, ILogService logService, bool buildIndexes = true)
+        public ElasticsearchClientFactory(IConfigurationService configurationService, ILogService logService)
         {
             var elasticsearchConfiguration = configurationService.Get<SearchConfiguration>();
 
@@ -30,10 +30,11 @@
                 }
 
                 _typeIndexNameMap.Add(mappingType, index.Name);
+
                 _documentTypeNameMap.Add(mappingType,
                     ((ElasticTypeAttribute)
-                        mappingType.GetCustomAttributes(typeof (ElasticTypeAttribute), false)
-                            .FirstOrDefault()).Name);
+                        mappingType.GetCustomAttributes(typeof(ElasticTypeAttribute), false)
+                            .First()).Name);
             }
 
             _connectionSettings = new ConnectionSettings(new Uri(elasticsearchConfiguration.HostName));

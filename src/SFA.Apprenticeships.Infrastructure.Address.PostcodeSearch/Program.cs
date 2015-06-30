@@ -6,7 +6,6 @@ using SFA.Apprenticeships.Infrastructure.Elastic.Common.Configuration;
 
 namespace SFA.Apprenticeships.Infrastructure.Address.PostcodeSearch
 {
-    using Common.Configuration;
     using Common.IoC;
     using Domain.Interfaces.Configuration;
     using Logging;
@@ -29,7 +28,7 @@ namespace SFA.Apprenticeships.Infrastructure.Address.PostcodeSearch
             });
 
             var configurationService = container.GetInstance<IConfigurationService>();
-            var clientFactory = new ElasticsearchClientFactory(configurationService, new NLogLogService(typeof (ElasticsearchClientFactory)), false);
+            var clientFactory = new ElasticsearchClientFactory(configurationService, new NLogLogService(typeof (ElasticsearchClientFactory)));
             var client = clientFactory.GetElasticClient();
 
             Console.WriteLine("Connected. Press any key to start");

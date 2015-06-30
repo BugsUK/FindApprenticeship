@@ -1,6 +1,5 @@
 namespace SFA.Apprenticeships.Service.Vacancy.Types
 {
-    using System.Collections.Generic;
     using System.Runtime.Serialization;
 
     [DataContract(Namespace = "http://candidates.gov.uk")]
@@ -10,12 +9,12 @@ namespace SFA.Apprenticeships.Service.Vacancy.Types
         public string TestRunId { get; set; }
 
         [DataMember(Order = 2)]
-        public string JobTitleTerms { get; set; }
+        public string SearchTerms { get; set; }
 
         [DataMember(Order = 3)]
-        public string KeywordTerms { get; set; }
+        public SearchFactorsParameter[] SearchFactorsParameters { get; set; }
 
         [DataMember(Order = 4)]
-        public Dictionary<SearchParameters, string> Parameters { get; set; }
+        public string SearchField { get; set; }
     }
 }

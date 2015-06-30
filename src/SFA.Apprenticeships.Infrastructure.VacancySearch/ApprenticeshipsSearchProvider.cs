@@ -24,7 +24,8 @@
         private readonly SearchFactorConfiguration _searchConfiguration;
         private const string SubCategoriesAggregationName = "SubCategoryCodes";
 
-        public ApprenticeshipsSearchProvider(IElasticsearchClientFactory elasticsearchClientFactory,
+        public ApprenticeshipsSearchProvider(
+            IElasticsearchClientFactory elasticsearchClientFactory,
             IMapper vacancySearchMapper,
             IConfigurationService configurationService, ILogService logger)
         {
@@ -44,6 +45,7 @@
                 indexName);
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
+
             var responses =
                 _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSearchResponse>>
                     (search.Documents).ToList();
@@ -75,7 +77,6 @@
             _logger.Debug("{0} search results returned", search.Total);
 
             var aggregationResults = GetAggregationResultsFrom(search.Aggs);
-
             var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(search.Total, responses, aggregationResults, parameters);
 
             return results;
@@ -125,7 +126,6 @@
 
                 s.Query(q =>
                 {
-                    QueryContainer queryVacancyLocation;
                     QueryContainer query = null;
 
                     if (_searchConfiguration.JobTitleFactors.Enabled
@@ -185,13 +185,14 @@
 
                     if (parameters.ExcludeVacancyIds != null)
                     {
-                        var queryExcludeVacancyIds = !q.Ids(parameters.ExcludeVacancyIds.Select(x => x.ToString()));
+                        var queryExcludeVacancyIds = !q.Ids(parameters.ExcludeVacancyIds.Select(x => x.ToString(CultureInfo.InvariantCulture)));
                         query = query && queryExcludeVacancyIds;
                     }
 
                     if (parameters.VacancyLocationType != ApprenticeshipLocationType.Unknown)
                     {
-                        queryVacancyLocation = q.Match(m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
+                        var queryVacancyLocation = q.Match(m => m.OnField(f => f.VacancyLocationType).Query(parameters.VacancyLocationType.ToString()));
+
                         query = query && queryVacancyLocation;
                     }
 

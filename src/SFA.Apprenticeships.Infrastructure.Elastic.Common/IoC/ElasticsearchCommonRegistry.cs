@@ -11,7 +11,7 @@
         {
             For<IElasticsearchClientFactory>()
                 .Singleton()
-                .Use(context => new ElasticsearchClientFactory(context.GetInstance<IConfigurationService>(), context.GetInstance<ILogService>(), true));
+                .Use(context => new ElasticsearchClientFactory(context.GetInstance<IConfigurationService>(), context.GetInstance<ILogService>()));
         }
     }
 }
