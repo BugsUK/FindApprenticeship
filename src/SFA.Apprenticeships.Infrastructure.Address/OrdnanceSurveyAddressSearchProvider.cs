@@ -70,7 +70,7 @@
             }
             else
             {
-                _logService.Warn("Find address failed with status code: {0} and description '{1}', content '{2}'",
+                _logService.Warn("Find address failed with status code: {0}, description: '{1}', content: '{2}'",
                     restResponse.StatusCode, restResponse.StatusDescription, restResponse.Content);
             }
 

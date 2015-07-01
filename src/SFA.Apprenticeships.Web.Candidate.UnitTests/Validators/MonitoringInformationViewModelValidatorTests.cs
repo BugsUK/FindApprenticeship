@@ -4,41 +4,58 @@
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Candidate.Validators;
-    using NUnit.Framework.Constraints;
-    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class MonitoringInformationViewModelValidatorTests
     {
-        [TestCase(true, null)]
-        [TestCase(true, "")]
-        [TestCase(true, " ")]
-        public void ShouldRequireInterviewSupportText(bool requiresSupport, string support)
+        [TestCase(0, true)]
+        [TestCase(4000, true)]
+        [TestCase(4001, false)]
+        public void ShouldValidateSupportLength(int length, bool shouldBeValid)
         {
             var viewModel = new MonitoringInformationViewModel
             {
-                RequiresSupportForInterview = requiresSupport,
-                AnythingWeCanDoToSupportYourInterview = support
+                AnythingWeCanDoToSupportYourInterview = new string('X', length)
             };
 
             var validator = new MonitoringInformationViewModelValidator();
 
-            validator.ShouldHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
+            if (shouldBeValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
+            }
         }
 
-        [TestCase(true, "Braille")]
-        [TestCase(false, "Interpreter")]
-        public void ShouldValidateInterviewSupportText(bool requiresSupport, string support)
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase(" ")]
+        public void ShouldValidateNullOrWhitespaceSupportLength(string anythingWeCanDoToSupportYourInterview)
         {
             var viewModel = new MonitoringInformationViewModel
             {
-                RequiresSupportForInterview = requiresSupport,
-                AnythingWeCanDoToSupportYourInterview = support
+                AnythingWeCanDoToSupportYourInterview = anythingWeCanDoToSupportYourInterview
             };
 
             var validator = new MonitoringInformationViewModelValidator();
 
             validator.ShouldNotHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
+        }
+
+        [TestCase("<script>")]
+        public void ShouldValidateWhitelistedCharacters(string anythingWeCanDoToSupportYourInterview)
+        {
+            var viewModel = new MonitoringInformationViewModel
+            {
+                AnythingWeCanDoToSupportYourInterview = anythingWeCanDoToSupportYourInterview
+            };
+
+            var validator = new MonitoringInformationViewModelValidator();
+
+            validator.ShouldHaveValidationErrorFor(x => x.AnythingWeCanDoToSupportYourInterview, viewModel);
         }
     }
 }

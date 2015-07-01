@@ -216,7 +216,7 @@
                     return new TraineeshipApplicationViewModel(ApplicationPageMessages.SubmitApplicationFailed);
                 }
 
-                if (!submittedModel.Candidate.MonitoringInformation.RequiresSupportForInterview)
+                if (submittedModel.IsJavascript && !submittedModel.Candidate.MonitoringInformation.RequiresSupportForInterview)
                 {
                     submittedModel.Candidate.MonitoringInformation.AnythingWeCanDoToSupportYourInterview = string.Empty;
                 }

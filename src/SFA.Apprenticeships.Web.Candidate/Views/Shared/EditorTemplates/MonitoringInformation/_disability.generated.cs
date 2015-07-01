@@ -155,7 +155,7 @@ WriteLiteral(" class=\"form-hint\"");
 
 WriteLiteral(">For example, do you need a signer or information in braille</span>\r\n    <div");
 
-WriteLiteral(" class=\"form-group form-group-compound inline\"");
+WriteLiteral(" class=\"form-group form-group-compound inline hide-nojs\"");
 
 WriteLiteral(">\r\n        <label");
 
@@ -180,7 +180,7 @@ WriteLiteral(" Yes\r\n        </label>\r\n        <label");
 
 WriteLiteral(" for=\"disability-support-no\"");
 
-WriteLiteral(" class=\"block-label\"");
+WriteLiteral(" class=\"block-label hide-nojs\"");
 
 WriteLiteral(">\r\n");
 

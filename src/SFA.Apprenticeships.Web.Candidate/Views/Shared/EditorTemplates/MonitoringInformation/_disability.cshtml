@@ -32,11 +32,11 @@
 <div class="form-group">
     <label for="question4" class="form-label">Is there anything we can do to support your interview?</label>
     <span class="form-hint">For example, do you need a signer or information in braille</span>
-    <div class="form-group form-group-compound inline">
+    <div class="form-group form-group-compound inline hide-nojs">
         <label data-target="support-panel" for="disability-support-yes" class="block-label">
             @Html.RadioButtonFor(m => m.RequiresSupportForInterview, true, new { id = "disability-support-yes", aria_controls = "support-panel", aria_expanded = "false" }) Yes
         </label>
-        <label for="disability-support-no" class="block-label">
+        <label for="disability-support-no" class="block-label hide-nojs">
             @Html.RadioButtonFor(m => m.RequiresSupportForInterview, false, new { id = "disability-support-no" }) No
         </label>
     </div>

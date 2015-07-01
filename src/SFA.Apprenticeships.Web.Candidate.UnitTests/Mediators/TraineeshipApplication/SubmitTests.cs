@@ -110,7 +110,7 @@
                 {
                     MonitoringInformation = new MonitoringInformationViewModel
                     {
-                        RequiresSupportForInterview = true
+                        AnythingWeCanDoToSupportYourInterview = new string('X', 9999)
                     }
                 }
             };

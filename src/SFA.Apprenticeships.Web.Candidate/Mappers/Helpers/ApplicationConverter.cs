@@ -147,7 +147,7 @@
                 HobbiesAndInterests = model.WhatAreYourHobbiesInterests,
                 Improvements = model.WhatDoYouFeelYouCouldImprove,
                 Strengths = model.WhatAreYourStrengths,
-                Support = monitoringInformationViewModel.RequiresSupportForInterview ? monitoringInformationViewModel.AnythingWeCanDoToSupportYourInterview : string.Empty
+                Support = monitoringInformationViewModel.AnythingWeCanDoToSupportYourInterview
             };
         }
 

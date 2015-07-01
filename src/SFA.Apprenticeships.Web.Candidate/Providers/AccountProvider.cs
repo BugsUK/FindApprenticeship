@@ -148,9 +148,12 @@
                     ? default(int?)
                     : model.MonitoringInformation.Ethnicity;
 
-                aboutYou.Support = model.MonitoringInformation.RequiresSupportForInterview
-                    ? model.MonitoringInformation.AnythingWeCanDoToSupportYourInterview
-                    : null;
+                if (model.IsJavascript && !model.MonitoringInformation.RequiresSupportForInterview)
+                {
+                    model.MonitoringInformation.AnythingWeCanDoToSupportYourInterview = null;
+                }
+
+                aboutYou.Support = model.MonitoringInformation.AnythingWeCanDoToSupportYourInterview;
 
                 PatchRegistrationDetails(candidate.RegistrationDetails, model);
 

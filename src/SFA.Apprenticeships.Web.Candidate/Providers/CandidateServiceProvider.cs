@@ -663,8 +663,10 @@
             {
                 var monitoringInformation = _mapper.Map<MonitoringInformationViewModel, MonitoringInformation>(monitoringInformationViewModel);
                 var candidate = _candidateService.GetCandidate(candidateId);
+
                 candidate.MonitoringInformation = monitoringInformation;
                 candidate.ApplicationTemplate.AboutYou.Support = monitoringInformationViewModel.AnythingWeCanDoToSupportYourInterview;
+
                 _candidateService.SaveCandidate(candidate);
             }
             catch (Exception ex)

@@ -47,6 +47,7 @@
                 <p class="text">Any changes you make will be seen on draft or new applications. Submitted applications will continue to show your old details.</p>
             </div>
 
+            @Html.HiddenFor(m => m.IsJavascript, new { @id = "hidden-flag-javascript" })
             @Html.FormTextFor(m => m.Firstname, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
             @Html.FormTextFor(m => m.Lastname, controlHtmlAttributes: new { type = "text", autocorrect = "off" })
             @Html.EditorFor(r => r.DateOfBirth)
@@ -273,6 +274,7 @@
                 $('#equality-diversity-summary-link').click();
             }
 
+            document.getElementById("hidden-flag-javascript").value = "True";
         });
     </script>
 }

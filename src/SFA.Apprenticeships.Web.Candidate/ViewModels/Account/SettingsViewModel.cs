@@ -75,5 +75,7 @@
         public IList<SavedSearchViewModel> SavedSearches { get; set; }
 
         public MonitoringInformationViewModel MonitoringInformation { get; set; }
+
+        public bool IsJavascript { get; set; }
     }
 }
