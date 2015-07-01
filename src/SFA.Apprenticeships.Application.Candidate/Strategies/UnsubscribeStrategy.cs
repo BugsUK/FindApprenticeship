@@ -39,6 +39,10 @@
                     case SubscriptionTypes.SavedSearchAlertsViaEmail:
                         unsubscribed = UnsubscribeSavedSearchAlertsViaEmail(candidate);
                         break;
+
+                    case SubscriptionTypes.MarketingViaEmail:
+                        unsubscribed = UnsubscribeMarketingViaEmail(candidate);
+                        break;
                 }
 
                 if (unsubscribed)
@@ -71,6 +75,14 @@
         private bool UnsubscribeSavedSearchAlertsViaEmail(Candidate candidate)
         {
             candidate.CommunicationPreferences.SavedSearchPreferences.EnableEmail = false;
+
+            _saveCandidateStrategy.SaveCandidate(candidate);
+            return true;
+        }
+
+        private bool UnsubscribeMarketingViaEmail(Candidate candidate)
+        {
+            candidate.CommunicationPreferences.MarketingPreferences.EnableEmail = false;
 
             _saveCandidateStrategy.SaveCandidate(candidate);
             return true;
