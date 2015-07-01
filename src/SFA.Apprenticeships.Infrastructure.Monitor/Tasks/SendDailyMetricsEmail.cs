@@ -131,6 +131,13 @@
             sb.AppendFormat("   - Unsuccessful: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Unsuccessful));
             sb.AppendFormat("   - Successful: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCount, ApplicationStatuses.Successful));
 
+            // Apprenticeship applications per candidate.
+            var s1 = TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Submitting);
+            var s2 = TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Submitted);
+            sb.AppendFormat(" - Total number of candidates with at least one submitted application: {0} ({1}ms + {2}ms)\n", (int)s1[0] + (int)s2[0], s1[1], s2[1]);
+
+            sb.AppendFormat(" - Total number of candidates with at least one successful application: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetApplicationStateCountPerCandidate, ApplicationStatuses.Successful));
+
             sb.AppendFormat(" - Total number of Apprenticeships: {0}\n", _vacancyMetricsProvider.GetApprenticeshipsCount());
 
             // Traineeships.
