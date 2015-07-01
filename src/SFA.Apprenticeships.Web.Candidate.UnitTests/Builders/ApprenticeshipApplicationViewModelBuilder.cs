@@ -14,6 +14,8 @@
         private string _viewModelMessage;
         private ApplicationViewModelStatus _viewModelStatus;
 
+        private bool _isJavascript;
+
         private ApplicationStatuses _status = ApplicationStatuses.Draft;
         private VacancyStatuses _vacancyStatus = VacancyStatuses.Live;
         private bool _applyViaEmployerWebsite;
@@ -92,6 +94,12 @@
             return this;
         }
 
+        public ApprenticeshipApplicationViewModelBuilder IsJavascript(bool isJavascript)
+        {
+            _isJavascript = isJavascript;
+            return this;
+        }
+
         public ApprenticeshipApplicationViewModel Build()
         {
             var viewModel = new ApprenticeshipApplicationViewModel
@@ -99,6 +107,9 @@
                 Status = _status,
                 ViewModelMessage = _viewModelMessage,
                 ViewModelStatus = _viewModelStatus,
+
+                IsJavascript = _isJavascript,
+
                 Candidate = new ApprenticeshipCandidateViewModel
                 {
                     Education = new EducationViewModel(),

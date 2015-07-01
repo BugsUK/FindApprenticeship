@@ -35,6 +35,7 @@
         private bool _requiresSupport;
 
         private IList<SavedSearchViewModel> _savedSearches;
+        private bool _isJavascript;
 
         public SettingsViewModelBuilder Firstname(string firstname)
         {
@@ -163,6 +164,12 @@
             return this;
         }
 
+        public SettingsViewModelBuilder IsJavascript(bool isJavascript)
+        {
+            _isJavascript = isJavascript;
+            return this;
+        }
+
         public SettingsViewModel Build()
         {
             var model = new SettingsViewModel
@@ -182,7 +189,10 @@
                     ShowTraineeshipsLink = _showTraineeshipsLink,
                     ShowTraineeshipsPrompt = _showTraineeshipsPrompt
                 },
+
                 SmsEnabled = _smsEnabled,
+
+                IsJavascript = _isJavascript,
 
                 EnableApplicationStatusChangeAlertsViaEmail = _enableApplicationStatusChangeAlertsViaEmail,
                 EnableApplicationStatusChangeAlertsViaText = _enableApplicationStatusChangeAlertsViaText,

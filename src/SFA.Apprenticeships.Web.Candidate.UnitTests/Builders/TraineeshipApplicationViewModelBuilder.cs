@@ -13,6 +13,8 @@
         private string _viewModelMessage;
         private ApplicationViewModelStatus _viewModelStatus;
 
+        private bool _isJavascript;
+
         private IEnumerable<QualificationsViewModel> _qualifications;
         private IEnumerable<WorkExperienceViewModel> _workExperience;
         private IEnumerable<TrainingCourseViewModel> _trainingCourses;
@@ -62,12 +64,21 @@
             return this;
         }
 
+        public TraineeshipApplicationViewModelBuilder IsJavascript(bool isJavascript)
+        {
+            _isJavascript = isJavascript;
+            return this;
+        }
+
         public TraineeshipApplicationViewModel Build()
         {
             return  new TraineeshipApplicationViewModel
             {
                 ViewModelMessage = _viewModelMessage,
                 ViewModelStatus = _viewModelStatus,
+
+                IsJavascript = _isJavascript,
+
                 Candidate = new TraineeshipCandidateViewModel
                 {
                     HasQualifications = _qualifications != null,

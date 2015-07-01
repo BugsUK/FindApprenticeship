@@ -47,6 +47,7 @@
         {
             var savedModel = new ApprenticeshipApplicationViewModelBuilder().Build();
             var submittedModel = new ApprenticeshipApplicationViewModelBuilder()
+                .IsJavascript(true)
                 .DoesNotRequireSupportForInterview()
                 .CanBeSupportedAtInterviewBy("Should be blanked")
                 .Build();

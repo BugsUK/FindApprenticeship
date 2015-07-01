@@ -1,17 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
     using System;
-    using System.Linq;
     using Candidate.Mediators.Register;
-    using Candidate.ViewModels;
     using Candidate.ViewModels.Candidate;
-    using Domain.Entities.Candidates;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Constants.Pages;
-    using Constants.ViewModels;
-    using Candidate.ViewModels.Register;
     using Common.Constants;
 
     [TestFixture]
@@ -39,7 +34,11 @@
         [Test]
         public void FailValidation()
         {
-            var viewModel = new MonitoringInformationViewModel { RequiresSupportForInterview = true };
+            var viewModel = new MonitoringInformationViewModel
+            {
+                AnythingWeCanDoToSupportYourInterview = new string('X', 9999)
+            };
+
             var response = _registerMediator.UpdateMonitoringInformation(Guid.NewGuid(), viewModel);
             response.AssertValidationResult(RegisterMediatorCodes.UpdateMonitoringInformation.FailedValidation);
         }

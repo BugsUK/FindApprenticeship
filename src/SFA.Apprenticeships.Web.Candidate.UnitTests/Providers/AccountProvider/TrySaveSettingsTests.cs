@@ -250,10 +250,11 @@
             candidate.MonitoringInformation.DisabilityStatus.Should().Be(expectedDisabilityStatus);
         }
 
-        [TestCase(false, null)]
-        [TestCase(false, "Braille")]
-        [TestCase(true, "Braille")]
-        public void ShouldMapSupport(bool requiresSupport, string support)
+        [TestCase(false, false, null, null)]
+        [TestCase(false, false, "A", "A")]
+        [TestCase(false, true, "B", "B")]
+        [TestCase(true, false, "C", null)]
+        public void ShouldMapSupport(bool isJavascript, bool requiresSupport, string support, string expectedSuport)
         {
             // Arrange.
             var candidateId = Guid.NewGuid();
@@ -264,6 +265,7 @@
                 .Returns(new CandidateBuilder(candidateId).Build);
 
             var viewModel = new SettingsViewModelBuilder()
+                .IsJavascript(isJavascript)
                 .Support(requiresSupport, support)
                 .Build();
 
@@ -276,17 +278,8 @@
 
             // Assert.
             result.Should().BeTrue();
-
             candidate.MonitoringInformation.Should().NotBeNull();
-
-            if (requiresSupport)
-            {
-                candidate.ApplicationTemplate.AboutYou.Support.Should().Be(support);
-            }
-            else
-            {
-                candidate.ApplicationTemplate.AboutYou.Support.Should().BeNull();
-            }
+            candidate.ApplicationTemplate.AboutYou.Support.Should().Be(expectedSuport);
         }
     }
 }

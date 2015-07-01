@@ -101,9 +101,16 @@
             viewModel.Candidate.TrainingCourses.Should().Equal(trainingCourses);
         }
 
-        [TestCase(true, "Wheelchair access, please")]
-        [TestCase(false, "Wheelchair access, please")]
-        public void ShouldPatchRequiresSupportForInterview(bool requiresSupportForInterview, string anythingWeCanDoToSupportYourInterview)
+        [TestCase(false, false, null, null)]
+        [TestCase(false, true, null, null)]
+        [TestCase(false, true, "A", "A")]
+        [TestCase(true, false, "B", "")]
+        [TestCase(true, true, "C", "C")]
+        public void ShouldPatchRequiresSupportForInterview(
+            bool isJavascript,
+            bool requiresSupportForInterview,
+            string anythingWeCanDoToSupportYourInterview,
+            string expectedAythingWeCanDoToSupportYourInterview)
         {
             // Arrange.
             var candidateId = Guid.NewGuid();
@@ -111,12 +118,12 @@
             var savedModel = new TraineeshipApplicationViewModelBuilder().Build();
 
             var submittedModel = new TraineeshipApplicationViewModelBuilder()
+                .IsJavascript(isJavascript)
                 .WithMonitoringInformation(new MonitoringInformationViewModel
                 {
                     RequiresSupportForInterview = requiresSupportForInterview,
                     AnythingWeCanDoToSupportYourInterview = anythingWeCanDoToSupportYourInterview
                 })
-
                 .Build();
 
             // Act.
@@ -128,8 +135,8 @@
             patchedViewModel.HasError().Should().BeFalse();
 
             // Assert.
-            patchedViewModel.Candidate.MonitoringInformation.AnythingWeCanDoToSupportYourInterview.Should().Be(
-                requiresSupportForInterview ? anythingWeCanDoToSupportYourInterview : string.Empty);
+            patchedViewModel.Candidate.MonitoringInformation.AnythingWeCanDoToSupportYourInterview
+                .Should().Be(expectedAythingWeCanDoToSupportYourInterview);
         }
 
         [Test]
