@@ -5,6 +5,7 @@
         Unknown = 0,
 
         DailyDigestViaEmail = 1,
-        SavedSearchAlertsViaEmail = 2
+        SavedSearchAlertsViaEmail = 2,
+        MarketingViaEmail = 3
     }
 }
