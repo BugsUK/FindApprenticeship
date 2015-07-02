@@ -264,7 +264,7 @@ WriteLiteral(">\r\n        <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">New user?</h2>\r\n        <div");
+WriteLiteral(">New to this service?</h2>\r\n        <div");
 
 WriteLiteral(" class=\"text\"");
 
@@ -280,7 +280,8 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
-WriteLiteral(".\r\n            </p>\r\n            <p");
+WriteLiteral(", even if you already have an existing account with \"Apprenticeship vacancies\".\r\n" +
+"            </p>\r\n            <p");
 
 WriteLiteral(" class=\"small-btm-margin\"");
 
