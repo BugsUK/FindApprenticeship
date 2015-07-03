@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 {
     using System;
     using System.Collections.Generic;

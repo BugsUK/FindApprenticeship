@@ -6,7 +6,6 @@
     using Domain.Interfaces.Messaging;
     using Infrastructure.Azure.ServiceBus;
     using Infrastructure.Azure.ServiceBus.Configuration;
-    using Infrastructure.Azure.ServiceBus.IoC;
     using StructureMap;
     using Moq;
 
@@ -24,11 +23,23 @@
             var mockConfigurationService = BuildMockConfigurationService(args[0]);
 
             var manager = new AzureServiceBusManager(container, mockConfigurationService.Object);
+            var bus = new AzureServiceBus(mockConfigurationService.Object);
+
+            bus.PublishMessage(new CreateCandidateRequest
+            {
+                CandidateId = Guid.NewGuid(),
+                ProcessTime = DateTime.UtcNow.AddMinutes(5)
+            });
 
             manager.Initialise();
             manager.Subscribe();
 
-            var bus = new AzureServiceBus(mockConfigurationService.Object);
+            Console.WriteLine("Subscribed");
+            Console.ReadLine();
+
+            manager.Unsubscribe();
+
+            Console.WriteLine("Unsubscribed");
 
             bus.PublishMessage(new CreateCandidateRequest
             {
@@ -50,6 +61,10 @@
                 container
                     .For<IServiceBusSubscriber<CreateCandidateRequest>>()
                     .Use<Consumers.AuditCreateCandidateRequestConsumer>();
+
+                container
+                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
+                    .Use<Consumers.RequeueCreateCandidateRequestConsumer>();
             });
         }
 
@@ -75,12 +90,17 @@
                             new AzureServiceBusSubscriptionConfiguration
                             {
                                 SubscriptionName = "create",
-                                SubscriberType = "SFA.Apprenticeships.CustomHosts.Azure.ServiceBus.GreenCreateCandidateRequestConsumer, SFA.Apprenticeships.CustomHosts.Azure.ServiceBus"
+                                SubscriberType = "SFA.Apprenticeships.CustomHosts.Azure.ServiceBus.CreateCandidateRequestConsumer, SFA.Apprenticeships.CustomHosts.Azure.ServiceBus"
                             },
                             new AzureServiceBusSubscriptionConfiguration
                             {
                                 SubscriptionName = "audit",
-                                SubscriberType = "SFA.Apprenticeships.CustomHosts.Azure.ServiceBus.RedCreateCandidateRequestConsumer, SFA.Apprenticeships.CustomHosts.Azure.ServiceBus"
+                                SubscriberType = "SFA.Apprenticeships.CustomHosts.Azure.ServiceBus.AuditCreateCandidateRequestConsumer, SFA.Apprenticeships.CustomHosts.Azure.ServiceBus"
+                            },
+                            new AzureServiceBusSubscriptionConfiguration
+                            {
+                                SubscriptionName = "requeue",
+                                SubscriberType = "SFA.Apprenticeships.CustomHosts.Azure.ServiceBus.OtherCreateCandidateRequestConsumer, SFA.Apprenticeships.CustomHosts.Azure.ServiceBus"
                             }
                         }
                     }

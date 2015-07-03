@@ -6,9 +6,12 @@
 
     public class AuditCreateCandidateRequestConsumer : IServiceBusSubscriber<CreateCandidateRequest>
     {
-        public void Consume(CreateCandidateRequest message)
+        [ServiceBusTopicSubscription(TopicName = "candidate-create", SubscriptionName = "audit")]
+        public ServiceBusMessageResult Consume(CreateCandidateRequest message)
         {
             Console.WriteLine("AUDIT: {0}", message.CandidateId);
+
+            return ServiceBusMessageResult.Abandon();
         }
     }
 }

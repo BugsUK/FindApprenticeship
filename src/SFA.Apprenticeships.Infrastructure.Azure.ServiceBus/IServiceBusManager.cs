@@ -3,6 +3,9 @@
     public interface IServiceBusManager
     {
         void Initialise();
+
         void Subscribe();
+
+        void Unsubscribe();
     }
 }

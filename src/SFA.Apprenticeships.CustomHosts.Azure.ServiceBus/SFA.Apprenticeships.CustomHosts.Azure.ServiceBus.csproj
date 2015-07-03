@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consumers\RequeueCreateCandidateRequestConsumer.cs" />
     <Compile Include="Consumers\CreateCandidateRequestConsumer.cs" />
     <Compile Include="Consumers\AuditCreateCandidateRequestConsumer.cs" />
     <Compile Include="Program.cs" />

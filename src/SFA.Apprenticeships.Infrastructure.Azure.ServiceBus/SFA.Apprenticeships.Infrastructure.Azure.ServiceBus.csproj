@@ -100,7 +100,7 @@
     <Compile Include="Configuration\AzureServiceBusConfiguration.cs" />
     <Compile Include="Configuration\AzureServiceBusSubscriptionConfiguration.cs" />
     <Compile Include="Configuration\AzureServiceBusTopicConfiguration.cs" />
-    <Compile Include="IoC\AzureServiceBus.cs" />
+    <Compile Include="AzureServiceBus.cs" />
     <Compile Include="IServiceBusManager.cs" />
     <Compile Include="IoC\AzureServiceBusRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
