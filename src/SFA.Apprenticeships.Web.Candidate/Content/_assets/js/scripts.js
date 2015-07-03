@@ -307,7 +307,8 @@ $(function() {
 
     //------- Inline details toggle
 
-  $(document).on('click', '.summary-style', function () {
+  $(document).on('click', '.summary-style', function (e) {
+      e.preventDefault();
       $this = $(this);
       $this.toggleClass('open');
       $this.next('.detail-content').toggle();
