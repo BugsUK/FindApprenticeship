@@ -6,7 +6,6 @@
 namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -42,7 +41,7 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 
             public Type MessageType { get; set; }
 
-            public object Subscriber { get; set; }
+            public IServiceBusSubscriber Subscriber { get; set; }
 
             public MethodInfo ConsumeMethod { get; set; }
         }
@@ -52,8 +51,8 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
             ILogService logService,
             IConfigurationService configurationService)
         {
-            _logService = logService;
             _container = container;
+            _logService = logService;
             _configurationService = configurationService;
             _completedEvent = new ManualResetEvent(false);
             _subscriberInfos = new List<SubscriberInfo>();
@@ -98,7 +97,7 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
                     foreach (var subscriptionConfiguration in topicConfiguration.Subscriptions)
                     {
                         var messageType = GetMessageType(topicConfiguration);
-                        var subscribers = GetSubscribers(messageType);
+                        var subscribers = GetSubscribers();
                         var foundSubscriber = false;
 
                         var subscriptionPath = string.Format("{0}/{1}",
@@ -257,7 +256,7 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 
         #region Helpers
 
-        private static MethodInfo GetConsumeMethod(object subscriber, string topicName, string subscriptionName)
+        private static MethodInfo GetConsumeMethod(IServiceBusSubscriber subscriber, string topicName, string subscriptionName)
         {
             var consumeMethod = subscriber.GetType().GetMethod(ConsumeMethodName);
 
@@ -275,13 +274,6 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
             return null;
         }
 
-        private IEnumerable GetSubscribers(Type messageType)
-        {
-            var genericSubscriberType = typeof(IServiceBusSubscriber<>).MakeGenericType(messageType);
-
-            return _container.GetAllInstances(genericSubscriberType);
-        }
-
         private static Type GetMessageType(AzureServiceBusTopicConfiguration topic)
         {
             var messageType = Type.GetType(topic.MessageType);
@@ -292,6 +284,11 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
                     "Invalid message type: '{0}'.", topic.MessageType));
             }
             return messageType;
+        }
+
+        private IEnumerable<IServiceBusSubscriber> GetSubscribers()
+        {
+            return _container.GetAllInstances<IServiceBusSubscriber>();
         }
 
         private static DateTime GetDefaultReqeueDateTimeUtc()

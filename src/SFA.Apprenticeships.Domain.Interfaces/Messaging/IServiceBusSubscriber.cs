@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Messaging
 {
-    public interface IServiceBusSubscriber<in T>
-         where T : class
+    public interface IServiceBusSubscriber
     {
-        ServiceBusMessageResult Consume(T message);
     }
 }

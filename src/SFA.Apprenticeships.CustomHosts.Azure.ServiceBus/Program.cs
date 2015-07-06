@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
 {
     using System;
+    using System.Reflection;
     using Application.Candidate;
     using Application.Interfaces.Logging;
     using Domain.Interfaces.Configuration;
@@ -49,20 +50,11 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
 
         private static IContainer BuildContainer()
         {
-            return new Container(container =>
+            return new Container(container => container.Scan(scanner =>
             {
-                container
-                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
-                    .Use<Consumers.CreateCandidateRequestConsumer>();
-
-                container
-                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
-                    .Use<Consumers.AuditCreateCandidateRequestConsumer>();
-
-                container
-                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
-                    .Use<Consumers.RequeueCreateCandidateRequestConsumer>();
-            });
+                scanner.Assembly(Assembly.GetExecutingAssembly());
+                scanner.AddAllTypesOf<IServiceBusSubscriber>();
+            }));
         }
 
         private static Mock<IConfigurationService> BuildMockConfigurationService(string connectionString)
