@@ -11,7 +11,7 @@
         {
             Console.WriteLine("REQUEUE: {0}", message.CandidateId);
 
-            // return ServiceBusMessageResult.Reqeue(DateTime.UtcNow.AddSeconds(5));
+            // return ServiceBusMessageResult.Reqeue(DateTime.UtcNow.AddSeconds(30));
             return ServiceBusMessageResult.Complete();
         }
     }

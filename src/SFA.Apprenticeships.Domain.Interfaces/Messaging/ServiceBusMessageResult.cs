@@ -2,8 +2,16 @@
 
 namespace SFA.Apprenticeships.Domain.Interfaces.Messaging
 {
-    public class ServiceBusMessageResult
+    public sealed class ServiceBusMessageResult
     {
+        private ServiceBusMessageResult()
+        {    
+        }
+
+        public ServiceBusMessageStates State { get; private set; }
+
+        public DateTime? RequeueDateTimeUtc { get; private set; }
+
         public static ServiceBusMessageResult Complete()
         {
             return new ServiceBusMessageResult
@@ -29,8 +37,12 @@ namespace SFA.Apprenticeships.Domain.Interfaces.Messaging
             };
         }
 
-        public ServiceBusMessageStates State { get; private set; }
-
-        public DateTime? RequeueDateTimeUtc { get; private set; }
+        public static ServiceBusMessageResult DeadLetter()
+        {
+            return new ServiceBusMessageResult
+            {
+                State = ServiceBusMessageStates.DeadLetter
+            };
+        }
     }
 }

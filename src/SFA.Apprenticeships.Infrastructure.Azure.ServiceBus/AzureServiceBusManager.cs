@@ -1,10 +1,18 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
+﻿// TODO: AG: review all logging.
+// TODO: AG: review all throws.
+// TODO: AG: review all try / catch.
+// TODO: do we need events?
+
+namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
+    using Application.Interfaces.Logging;
     using Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
@@ -15,194 +23,45 @@
 
     public class AzureServiceBusManager : IServiceBusManager
     {
+        private const string ConsumeMethodName = "Consume";
+
         private readonly IContainer _container;
+        private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
-        
+
         private readonly ManualResetEvent _completedEvent;
-        private readonly IList<SubscriptionClient> _subscriptionClients;
+        private readonly IList<SubscriberInfo> _subscriberInfos;
+
+        public class SubscriberInfo
+        {
+            public string Path { get; set; }
+
+            public TopicClient TopicClient { get; set; }
+
+            public SubscriptionClient SubscriptionClient { get; set; }
+
+            public Type MessageType { get; set; }
+
+            public object Subscriber { get; set; }
+
+            public MethodInfo ConsumeMethod { get; set; }
+        }
 
         public AzureServiceBusManager(
             IContainer container,
+            ILogService logService,
             IConfigurationService configurationService)
         {
+            _logService = logService;
             _container = container;
             _configurationService = configurationService;
             _completedEvent = new ManualResetEvent(false);
-            _subscriptionClients = new List<SubscriptionClient>();
+            _subscriberInfos = new List<SubscriberInfo>();
         }
 
         public void Initialise()
         {
-            CreateTopicsAndSubscriptions();
-        }
-
-        public void Subscribe()
-        {
-            Task.Run(() =>
-            {
-                var configuration = _configurationService.Get<AzureServiceBusConfiguration>();
-
-                foreach (var topic in configuration.Topics)
-                {
-                    var topicClient = TopicClient.CreateFromConnectionString(
-                        configuration.ConnectionString, topic.TopicName);
-
-                    foreach (var subscription in topic.Subscriptions)
-                    {
-                        var messageType = Type.GetType(topic.MessageType);
-
-                        if (messageType == null)
-                        {
-                            throw new InvalidOperationException(string.Format(
-                                "Invalid message type: \"{0}\"", topic.MessageType));
-                        }
-
-                        var genericSubscriberType = typeof(IServiceBusSubscriber<>).MakeGenericType(messageType);
-                        var subscribers = _container.GetAllInstances(genericSubscriberType);
-
-                        var subscriberCount = 0;
-
-                        foreach (var subscriber in subscribers)
-                        {
-                            var consumeMethod = subscriber.GetType().GetMethod("Consume");
-
-                            var subscriptionAttribute = consumeMethod
-                                .GetCustomAttributes(typeof(ServiceBusTopicSubscriptionAttribute), true)
-                                .SingleOrDefault() as ServiceBusTopicSubscriptionAttribute;
-
-                            if (subscriptionAttribute == null ||
-                                subscriptionAttribute.TopicName != topic.TopicName ||
-                                subscriptionAttribute.SubscriptionName != subscription.SubscriptionName)
-                            {
-                                continue;
-                            }
-
-                            if (subscriberCount > 0)
-                            {
-                                throw new InvalidOperationException(string.Format(
-                                    "Expected only one subscriber found for topic/subscription \"{0}/{1}\"",
-                                    topic.TopicName,
-                                    subscription.SubscriptionName));
-                            }
-
-                            var options = new OnMessageOptions
-                            {
-                                MaxConcurrentCalls =
-                                    subscription.MaxConcurrentMessagesPerNode ??
-                                    configuration.DefaultMaxConcurrentMessagesPerNode,
-                                AutoComplete = true                                
-                            };
-
-                            var subscriptionClient = SubscriptionClient.CreateFromConnectionString(
-                                configuration.ConnectionString,
-                                topic.TopicName,
-                                subscription.SubscriptionName,
-                                ReceiveMode.ReceiveAndDelete);
-
-                            subscriptionClient.OnMessageAsync(brokeredMessage => Task.Run(() =>
-                            {
-                                try
-                                {
-                                    var json = brokeredMessage.GetBody<string>();
-                                    var message = JsonConvert.DeserializeObject(json, messageType);
-
-                                    var result = consumeMethod.Invoke(subscriber, new[]
-                                    {
-                                        message
-                                    }) as ServiceBusMessageResult;
-
-                                    if (result == null)
-                                    {
-                                        // TODO: AG: log.
-                                        brokeredMessage.Abandon();
-                                        return;
-                                    }
-
-                                    switch (result.State)
-                                    {
-                                        case ServiceBusMessageStates.Complete:
-                                            // Nothing to do.
-                                            Console.WriteLine("-> Complete");
-                                            break;
-
-                                        case ServiceBusMessageStates.Abandon:
-                                            // brokeredMessage.Abandon();
-
-                                            Console.WriteLine("-> Abandon");
-                                            break;
-
-                                        case ServiceBusMessageStates.DeadLetter:
-                                            brokeredMessage.DeadLetter();
-                                            Console.WriteLine("-> DeadLetter");
-                                            break;
-
-                                        case ServiceBusMessageStates.Requeue:
-                                            var newBrokeredMessage = new BrokeredMessage(json)
-                                            {
-                                                ScheduledEnqueueTimeUtc = result.RequeueDateTimeUtc ?? GetDefaultReqeueDateTimeUtc()
-                                            };
-
-                                            topicClient.SendAsync(newBrokeredMessage);
-                                            Console.WriteLine("-> Requeue");
-                                            break;
-
-                                        default:
-                                            // TODO: log.
-                                            Console.WriteLine("Invalid service bus message state: \"{0}\", message will be abandoned.", result.State);
-                                            break;
-                                    }
-                                }
-                                catch (Exception)
-                                {
-                                    // TODO: log.
-                                    // TODO: handle retries, deferrals etc.
-                                    brokeredMessage.DeadLetter();
-                                }
-                            }), options);
-
-                            _subscriptionClients.Add(subscriptionClient);
-                            subscriberCount++;
-                        }
-
-                        if (subscriberCount == 0)
-                        {
-                            throw new InvalidOperationException(string.Format(
-                                "No subscribers found for topic/subscription \"{0}/{1}\"",
-                                topic.TopicName,
-                                subscription.SubscriptionName));
-                        }
-                    }
-                }
-
-                _completedEvent.WaitOne();
-            });
-        }
-
-        public void Unsubscribe()
-        {
-            Console.WriteLine("Unsubscribing...");
-
-            foreach (var subscriptionClient in _subscriptionClients)
-            {
-                try
-                {
-                    subscriptionClient.Close();
-                }
-                catch
-                {
-                    // TODO: AG: log.
-                    Console.WriteLine("Failed to close subscription client.");
-                }
-            }
-
-            _completedEvent.Set();
-            Console.WriteLine("...done");
-        }
-
-        #region Helpers
-
-        private void CreateTopicsAndSubscriptions()
-        {
+            // TODO: AG: add logging.
             var configuration = _configurationService.Get<AzureServiceBusConfiguration>();
             var namespaceManager = NamespaceManager.CreateFromConnectionString(configuration.ConnectionString);
 
@@ -225,7 +84,217 @@
             }
         }
 
-        private DateTime GetDefaultReqeueDateTimeUtc()
+        public void Subscribe()
+        {
+            Task.Run(() =>
+            {
+                var serviceBusConfiguration = _configurationService.Get<AzureServiceBusConfiguration>();
+
+                foreach (var topicConfiguration in serviceBusConfiguration.Topics)
+                {
+                    var topicClient = TopicClient.CreateFromConnectionString(
+                        serviceBusConfiguration.ConnectionString, topicConfiguration.TopicName);
+
+                    foreach (var subscriptionConfiguration in topicConfiguration.Subscriptions)
+                    {
+                        var messageType = GetMessageType(topicConfiguration);
+                        var subscribers = GetSubscribers(messageType);
+                        var foundSubscriber = false;
+
+                        var subscriptionPath = string.Format("{0}/{1}",
+                            topicConfiguration.TopicName, subscriptionConfiguration.SubscriptionName);
+
+                        foreach (var subscriber in subscribers)
+                        {
+                            var consumeMethod = GetConsumeMethod(
+                                subscriber, topicConfiguration.TopicName, subscriptionConfiguration.SubscriptionName);
+
+                            if (consumeMethod == null)
+                            {
+                                continue;
+                            }
+
+                            if (foundSubscriber)
+                            {
+                                throw new InvalidOperationException(string.Format(
+                                    "Expected only one subscriber for topic/subscription '{0}'.", subscriptionPath));
+                            }
+
+                            foundSubscriber = true;
+
+                            var options = new OnMessageOptions
+                            {
+                                MaxConcurrentCalls =
+                                    subscriptionConfiguration.MaxConcurrentMessagesPerNode ??
+                                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode,
+                                AutoComplete = true
+                            };
+
+                            var subscriptionClient = SubscriptionClient.CreateFromConnectionString(
+                                serviceBusConfiguration.ConnectionString,
+                                topicConfiguration.TopicName,
+                                subscriptionConfiguration.SubscriptionName,
+                                ReceiveMode.PeekLock);
+
+                            var subscriberInfo = new SubscriberInfo
+                            {
+                                Path = subscriptionPath,
+                                TopicClient = topicClient,
+                                SubscriptionClient = subscriptionClient,
+                                MessageType = messageType,
+                                Subscriber = subscriber,
+                                ConsumeMethod = consumeMethod
+                            };
+
+                            subscriptionClient.OnMessageAsync(brokeredMessage => Task.Run(() =>
+                                ConsumeMessage(subscriberInfo, brokeredMessage)),
+                                options);
+
+                            _subscriberInfos.Add(subscriberInfo);
+                        }
+
+                        if (!foundSubscriber)
+                        {
+                            throw new InvalidOperationException(string.Format(
+                                "No subscribers found for topic/subscription '{0}'.", subscriptionPath));
+                        }
+                    }
+                }
+
+                _completedEvent.WaitOne();
+            });
+        }
+
+        private void ConsumeMessage(SubscriberInfo subscriberInfo, BrokeredMessage brokeredMessage)
+        {
+            try
+            {
+                // TODO: add debug logging.
+                var messageBody = brokeredMessage.GetBody<string>();
+                var message = JsonConvert.DeserializeObject(messageBody, subscriberInfo.MessageType);
+
+                var result = subscriberInfo.ConsumeMethod.Invoke(subscriberInfo.Subscriber, new[]
+                {
+                    message
+                }) as ServiceBusMessageResult;
+
+                HandleMessageResult(subscriberInfo, result, brokeredMessage, messageBody);
+            }
+            catch (Exception e)
+            {
+                _logService.Error(
+                    "Unexpected exception consuming message id '{0}', message will be dead-lettered",
+                    e, brokeredMessage.MessageId);
+
+                brokeredMessage.DeadLetter();
+            }
+        }
+
+        private void HandleMessageResult(SubscriberInfo subscriberInfo, ServiceBusMessageResult result, BrokeredMessage brokeredMessage, string messageBody)
+        {
+            if (result == null)
+            {
+                _logService.Warn("No message result for message id '{0}', message will be dead-lettered",
+                    brokeredMessage.MessageId);
+
+                brokeredMessage.DeadLetter();
+                return;
+            }
+
+            switch (result.State)
+            {
+                case ServiceBusMessageStates.Complete:
+                    break;
+
+                case ServiceBusMessageStates.Abandon:
+                    brokeredMessage.Abandon();
+                    break;
+
+                case ServiceBusMessageStates.DeadLetter:
+                    brokeredMessage.DeadLetter();
+                    break;
+
+                case ServiceBusMessageStates.Requeue:
+                    var newBrokeredMessage = new BrokeredMessage(messageBody)
+                    {
+                        ScheduledEnqueueTimeUtc = result.RequeueDateTimeUtc ?? GetDefaultReqeueDateTimeUtc()
+                    };
+
+                    subscriberInfo.TopicClient.Send(newBrokeredMessage);
+                    break;
+
+                default:
+                    _logService.Error(
+                        "Invalid message state '{0}' for message id '{1}', message will be dead-lettered",
+                        result.State, brokeredMessage.MessageId);
+
+                    brokeredMessage.DeadLetter();
+                    break;
+            }
+        }
+
+        public void Unsubscribe()
+        {
+            _logService.Debug("Unsubscribing...");
+
+            _completedEvent.Set();
+
+            foreach (var subscriberInfo in _subscriberInfos)
+            {
+                try
+                {
+                    subscriberInfo.TopicClient.Close();
+                    subscriberInfo.SubscriptionClient.Close();
+                }
+                catch
+                {
+                    _logService.Warn("Failed to close: '{0}'", subscriberInfo.Path);
+                }
+            }
+
+            _logService.Debug("Unsubscribed");
+        }
+
+        #region Helpers
+
+        private static MethodInfo GetConsumeMethod(object subscriber, string topicName, string subscriptionName)
+        {
+            var consumeMethod = subscriber.GetType().GetMethod(ConsumeMethodName);
+
+            var subscriptionAttribute = consumeMethod
+                .GetCustomAttributes(typeof(ServiceBusTopicSubscriptionAttribute), false)
+                .SingleOrDefault() as ServiceBusTopicSubscriptionAttribute;
+
+            if (subscriptionAttribute != null &&
+                subscriptionAttribute.TopicName == topicName &&
+                subscriptionAttribute.SubscriptionName == subscriptionName)
+            {
+                return consumeMethod;
+            }
+
+            return null;
+        }
+
+        private IEnumerable GetSubscribers(Type messageType)
+        {
+            var genericSubscriberType = typeof(IServiceBusSubscriber<>).MakeGenericType(messageType);
+
+            return _container.GetAllInstances(genericSubscriberType);
+        }
+
+        private static Type GetMessageType(AzureServiceBusTopicConfiguration topic)
+        {
+            var messageType = Type.GetType(topic.MessageType);
+
+            if (messageType == null)
+            {
+                throw new InvalidOperationException(string.Format(
+                    "Invalid message type: '{0}'.", topic.MessageType));
+            }
+            return messageType;
+        }
+
+        private static DateTime GetDefaultReqeueDateTimeUtc()
         {
             // TODO: review default, get from configuration.
             return DateTime.UtcNow.AddMinutes(5);

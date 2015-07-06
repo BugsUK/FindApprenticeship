@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Application.Interfaces.Logging;
     using Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
@@ -10,35 +11,44 @@
 
     public class AzureServiceBus : IServiceBus
     {
+        private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
+
         private IDictionary<string, TopicClient> _topicClients;
         private readonly object _locker = new object();
 
-        public AzureServiceBus(IConfigurationService configurationService)
+        public AzureServiceBus(
+            ILogService logService,
+            IConfigurationService configurationService)
         {
+            _logService = logService;
             _configurationService = configurationService;
         }
 
         public void PublishMessage<T>(T message) where T : class
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException("message");
+            }
+
             EnsureTopicClientsCreated();
 
-            var messageType = message.GetType().FullName;
-            TopicClient topicClient;
+            var messageTypeName = message.GetType().FullName;
 
-            if (!_topicClients.TryGetValue(messageType, out topicClient))
+            if (!_topicClients.ContainsKey(messageTypeName))
             {
-                // TODO: AG: log.
+                _logService.Error("Failed to get service bus topic client for message type \"{0}\".", messageTypeName);
                 return;
             }
-            
+
             var json = JsonConvert.SerializeObject(message);
             var brokeredMessage = new BrokeredMessage(json)
             {
                 ContentType = "application/json"
             };
 
-            topicClient.SendAsync(brokeredMessage);
+            _topicClients[messageTypeName].Send(brokeredMessage);
         }
 
         #region Helpers
@@ -47,7 +57,6 @@
         {
             if (_topicClients != null) return;
 
-            // TODO: AG: review locking.
             lock (_locker)
             {
                 if (_topicClients != null) return;
@@ -59,7 +68,6 @@
                 {
                     var topicClient = TopicClient.CreateFromConnectionString(configuration.ConnectionString, topic.TopicName);
 
-                    // TODO: AG: extract message type name from bit before comma.
                     topicClients.Add(GetTypeFullName(topic.MessageType), topicClient);
                 }
 
@@ -84,8 +92,7 @@
                 }
             }
 
-            throw new InvalidOperationException(string.Format(
-                "Cannot message type name from string \"{0}\".", messageType));
+            throw new InvalidOperationException(string.Format("Cannot message type name from string \"{0}\".", messageType));
         }
 
         #endregion

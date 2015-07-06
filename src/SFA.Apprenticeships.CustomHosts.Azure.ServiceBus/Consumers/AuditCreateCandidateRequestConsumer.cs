@@ -11,7 +11,7 @@
         {
             Console.WriteLine("AUDIT: {0}", message.CandidateId);
 
-            return ServiceBusMessageResult.Abandon();
+            return ServiceBusMessageResult.Complete();
         }
     }
 }

@@ -1,7 +1,10 @@
-﻿namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
+﻿// TODO: avoid parameterising with IContainer.
+
+namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
 {
     using System;
     using Application.Candidate;
+    using Application.Interfaces.Logging;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Infrastructure.Azure.ServiceBus;
@@ -20,18 +23,19 @@
             }
 
             var container = BuildContainer();
+            var mockLogService = new Mock<ILogService>();
             var mockConfigurationService = BuildMockConfigurationService(args[0]);
 
-            var manager = new AzureServiceBusManager(container, mockConfigurationService.Object);
-            var bus = new AzureServiceBus(mockConfigurationService.Object);
+            var manager = new AzureServiceBusManager(container, mockLogService.Object, mockConfigurationService.Object);
+            var bus = new AzureServiceBus(mockLogService.Object, mockConfigurationService.Object);
+
+            manager.Initialise();
 
             bus.PublishMessage(new CreateCandidateRequest
             {
-                CandidateId = Guid.NewGuid(),
-                ProcessTime = DateTime.UtcNow.AddMinutes(5)
+                CandidateId = Guid.NewGuid()
             });
 
-            manager.Initialise();
             manager.Subscribe();
 
             Console.WriteLine("Subscribed");
@@ -40,13 +44,6 @@
             manager.Unsubscribe();
 
             Console.WriteLine("Unsubscribed");
-
-            bus.PublishMessage(new CreateCandidateRequest
-            {
-                CandidateId = Guid.NewGuid(),
-                ProcessTime = DateTime.UtcNow.AddMinutes(5)
-            });
-
             Console.ReadLine();
         }
 
