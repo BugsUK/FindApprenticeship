@@ -4,7 +4,7 @@
     using Application.Candidate;
     using Domain.Interfaces.Messaging;
 
-    public class RequeueCreateCandidateRequestConsumer :  IServiceBusSubscriber, IServiceBusConsumer<CreateCandidateRequest>
+    public class RequeueCreateCandidateRequestSubscriber :  IServiceBusSubscriber<CreateCandidateRequest>
     {
         [ServiceBusTopicSubscription(TopicName = "candidate-create", SubscriptionName = "requeue")]
         public ServiceBusMessageResult Consume(CreateCandidateRequest message)

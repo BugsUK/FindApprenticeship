@@ -3,9 +3,9 @@
 namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
 {
     using System;
-    using System.Reflection;
     using Application.Candidate;
     using Application.Interfaces.Logging;
+    using Consumers;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Infrastructure.Azure.ServiceBus;
@@ -26,6 +26,16 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
             var container = BuildContainer();
             var mockLogService = new Mock<ILogService>();
             var mockConfigurationService = BuildMockConfigurationService(args[0]);
+
+            var instances = container.GetAllInstances(typeof(IServiceBusSubscriber<>).MakeGenericType(typeof(CreateCandidateRequest)));
+            var instanceCount = 0;
+
+            foreach (var instance in instances)
+            {
+                instanceCount++;
+            }
+
+            Console.WriteLine("Instance count: {0}", instanceCount);
 
             var manager = new AzureServiceBusManager(container, mockLogService.Object, mockConfigurationService.Object);
             var bus = new AzureServiceBus(mockLogService.Object, mockConfigurationService.Object);
@@ -50,11 +60,20 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
 
         private static IContainer BuildContainer()
         {
-            return new Container(container => container.Scan(scanner =>
+            return new Container(container =>
             {
-                scanner.Assembly(Assembly.GetExecutingAssembly());
-                scanner.AddAllTypesOf<IServiceBusSubscriber>();
-            }));
+                container
+                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
+                    .Use<AuditCreateCandidateRequestSubscriber>();
+
+                container
+                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
+                    .Use<CreateCandidateRequestSubscriber>();
+
+                container
+                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
+                    .Use<RequeueCreateCandidateRequestSubscriber>();
+            });
         }
 
         private static Mock<IConfigurationService> BuildMockConfigurationService(string connectionString)

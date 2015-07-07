@@ -6,6 +6,7 @@
 namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Reflection;
@@ -41,7 +42,7 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 
             public Type MessageType { get; set; }
 
-            public IServiceBusSubscriber Subscriber { get; set; }
+            public object Subscriber { get; set; }
 
             public MethodInfo ConsumeMethod { get; set; }
         }
@@ -60,7 +61,8 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 
         public void Initialise()
         {
-            // TODO: AG: add logging.
+            _logService.Debug("Initialising...");
+
             var configuration = _configurationService.Get<AzureServiceBusConfiguration>();
             var namespaceManager = NamespaceManager.CreateFromConnectionString(configuration.ConnectionString);
 
@@ -70,6 +72,7 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
                 {
                     var topicDescription = new TopicDescription(topic.TopicName);
 
+                    _logService.Info("Creating topic '{0}'", topic.TopicName);
                     namespaceManager.CreateTopic(topicDescription);
                 }
 
@@ -77,16 +80,21 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
                 {
                     if (!namespaceManager.SubscriptionExists(topic.TopicName, subscription.SubscriptionName))
                     {
+                        _logService.Info("Creating subscription '{0}/{1}'", topic.TopicName, subscription.SubscriptionName);
                         namespaceManager.CreateSubscription(topic.TopicName, subscription.SubscriptionName);
                     }
                 }
             }
+
+            _logService.Debug("Initialised");
         }
 
         public void Subscribe()
         {
             Task.Run(() =>
             {
+                _logService.Info("Subscribing...");
+
                 var serviceBusConfiguration = _configurationService.Get<AzureServiceBusConfiguration>();
 
                 foreach (var topicConfiguration in serviceBusConfiguration.Topics)
@@ -97,7 +105,7 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
                     foreach (var subscriptionConfiguration in topicConfiguration.Subscriptions)
                     {
                         var messageType = GetMessageType(topicConfiguration);
-                        var subscribers = GetSubscribers();
+                        var subscribers = GetMessageTypeSubscribers(messageType);
                         var foundSubscriber = false;
 
                         var subscriptionPath = string.Format("{0}/{1}",
@@ -145,11 +153,15 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
                                 ConsumeMethod = consumeMethod
                             };
 
+                            _logService.Info("Subscribing to topic/subscription '{0}'", subscriberInfo.Path);
+
                             subscriptionClient.OnMessageAsync(brokeredMessage => Task.Run(() =>
                                 ConsumeMessage(subscriberInfo, brokeredMessage)),
                                 options);
 
                             _subscriberInfos.Add(subscriberInfo);
+                        
+                            _logService.Info("Subscribed to topic/subscription '{0}'", subscriberInfo.Path);
                         }
 
                         if (!foundSubscriber)
@@ -160,6 +172,7 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
                     }
                 }
 
+                _logService.Info("Subscribed");
                 _completedEvent.WaitOne();
             });
         }
@@ -168,9 +181,11 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
         {
             try
             {
-                // TODO: add debug logging.
                 var messageBody = brokeredMessage.GetBody<string>();
                 var message = JsonConvert.DeserializeObject(messageBody, subscriberInfo.MessageType);
+
+                _logService.Debug("Consuming message id '{0}', topic/subscription '{1}', body '{2}'",
+                    brokeredMessage.MessageId, subscriberInfo.Path, messageBody);
 
                 var result = subscriberInfo.ConsumeMethod.Invoke(subscriberInfo.Subscriber, new[]
                 {
@@ -178,12 +193,15 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
                 }) as ServiceBusMessageResult;
 
                 HandleMessageResult(subscriberInfo, result, brokeredMessage, messageBody);
+
+                _logService.Debug("Consumed message id '{0}', topic/subscription '{1}', body '{2}'",
+                    brokeredMessage.MessageId, subscriberInfo.Path, messageBody);
             }
             catch (Exception e)
             {
                 _logService.Error(
-                    "Unexpected exception consuming message id '{0}', message will be dead-lettered",
-                    e, brokeredMessage.MessageId);
+                    "Unexpected exception consuming message id '{0}, topic/subscription '{1}': message will be dead-lettered",
+                    e, brokeredMessage.MessageId, subscriberInfo.Path);
 
                 brokeredMessage.DeadLetter();
             }
@@ -193,12 +211,15 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
         {
             if (result == null)
             {
-                _logService.Warn("No message result for message id '{0}', message will be dead-lettered",
-                    brokeredMessage.MessageId);
+                _logService.Warn("No message result for message id '{0}', topic/subscription '{1}': message will be dead-lettered",
+                    brokeredMessage.MessageId, subscriberInfo.Path);
 
                 brokeredMessage.DeadLetter();
                 return;
             }
+
+            _logService.Debug("Handling message id '{0}', topic/subscription '{1}', state '{2}', body '{3}' ",
+                brokeredMessage.MessageId, subscriberInfo.Path, result.State, messageBody);
 
             switch (result.State)
             {
@@ -224,17 +245,20 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
 
                 default:
                     _logService.Error(
-                        "Invalid message state '{0}' for message id '{1}', message will be dead-lettered",
-                        result.State, brokeredMessage.MessageId);
+                        "Invalid message state '{0}' for message id '{1}', topic/subscription '{2}': message will be dead-lettered",
+                        result.State, brokeredMessage.MessageId, subscriberInfo.Path);
 
                     brokeredMessage.DeadLetter();
                     break;
             }
+
+            _logService.Debug("Handled message id '{0}', topic/subscription '{1}', state '{2}', body '{3}' ",
+                brokeredMessage.MessageId, subscriberInfo.Path, result.State, messageBody);
         }
 
         public void Unsubscribe()
         {
-            _logService.Debug("Unsubscribing...");
+            _logService.Info("Unsubscribing...");
 
             _completedEvent.Set();
 
@@ -242,21 +266,25 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
             {
                 try
                 {
+                    _logService.Info("Unsubscribing from topic/subscription '{0}'...", subscriberInfo.Path);
+
                     subscriberInfo.TopicClient.Close();
                     subscriberInfo.SubscriptionClient.Close();
+
+                    _logService.Info("Unsubscribed from topic/subscription '{0}'...", subscriberInfo.Path);
                 }
                 catch
                 {
-                    _logService.Warn("Failed to close: '{0}'", subscriberInfo.Path);
+                    _logService.Warn("Failed to unsubscribe from topic/subscription: '{0}'", subscriberInfo.Path);
                 }
             }
 
-            _logService.Debug("Unsubscribed");
+            _logService.Info("Unsubscribed");
         }
 
         #region Helpers
 
-        private static MethodInfo GetConsumeMethod(IServiceBusSubscriber subscriber, string topicName, string subscriptionName)
+        private static MethodInfo GetConsumeMethod(object subscriber, string topicName, string subscriptionName)
         {
             var consumeMethod = subscriber.GetType().GetMethod(ConsumeMethodName);
 
@@ -286,14 +314,13 @@ namespace SFA.Apprenticeships.Infrastructure.Azure.ServiceBus
             return messageType;
         }
 
-        private IEnumerable<IServiceBusSubscriber> GetSubscribers()
+        private IEnumerable GetMessageTypeSubscribers(Type messageType)
         {
-            return _container.GetAllInstances<IServiceBusSubscriber>();
+            return _container.GetAllInstances(typeof(IServiceBusSubscriber<>).MakeGenericType(messageType));
         }
 
         private static DateTime GetDefaultReqeueDateTimeUtc()
         {
-            // TODO: review default, get from configuration.
             return DateTime.UtcNow.AddMinutes(5);
         }
 
