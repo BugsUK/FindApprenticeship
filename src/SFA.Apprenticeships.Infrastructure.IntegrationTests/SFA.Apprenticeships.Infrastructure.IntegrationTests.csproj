@@ -163,6 +163,7 @@
     </Compile>
     <Compile Include="Address\OrdnanceSurveyAddressSearchProviderBuilder.cs" />
     <Compile Include="Address\OrdnanceSurveyAddressSearchProviderTests.cs" />
+    <Compile Include="AzureServiceBus\Configuration\AzureServiceBusConfigurationTests.cs" />
     <Compile Include="Caching\MemoryCachingTests.cs" />
     <Compile Include="Communication\ReachConfigurationTests.cs" />
     <Compile Include="Communication\ReachSmsDispatcherTests.cs" />
@@ -262,6 +263,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Address\SFA.Apprenticeships.Infrastructure.Address.csproj">
       <Project>{969662B6-BB64-48EE-880D-9646AB6146A4}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Address</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
+      <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
       <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>

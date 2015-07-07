@@ -7,11 +7,16 @@
     {
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
         private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
-        public QueuedLegacySaveCandidateStrategy(ISaveCandidateStrategy saveCandidateStrategy, IMessageBus messageBus)
+        public QueuedLegacySaveCandidateStrategy(
+            ISaveCandidateStrategy saveCandidateStrategy,
+            IMessageBus messageBus,
+            IServiceBus serviceBus)
         {
             _saveCandidateStrategy = saveCandidateStrategy;
             _messageBus = messageBus;
+            _serviceBus = serviceBus;
         }
 
         public Candidate SaveCandidate(Candidate candidate)
@@ -20,8 +25,14 @@
 
             if (savedCandidate.LegacyCandidateId > 0)
             {
-                var request = new SaveCandidateRequest {CandidateId = savedCandidate.EntityId};
+                var request = new SaveCandidateRequest
+                {
+                    CandidateId = savedCandidate.EntityId
+                };
+
                 _messageBus.PublishMessage(request);
+                // TODO: AG.
+                _serviceBus.PublishMessage(request);
             }
 
             return savedCandidate;

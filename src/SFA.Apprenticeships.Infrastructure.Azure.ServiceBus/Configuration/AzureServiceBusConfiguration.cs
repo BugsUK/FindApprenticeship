@@ -3,8 +3,6 @@
     public class AzureServiceBusConfiguration
     {
         public string ConnectionString { get; set; }
-
-        public string DefaultSubscriptionName { get; set; }
         
         public int DefaultMessageCountWarningLimit { get; set; }
         

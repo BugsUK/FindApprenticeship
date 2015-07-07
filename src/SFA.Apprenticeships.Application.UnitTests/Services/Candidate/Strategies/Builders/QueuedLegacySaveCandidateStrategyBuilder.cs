@@ -9,6 +9,7 @@
     {
         private Mock<ISaveCandidateStrategy> _saveCandidateStrategy = new Mock<ISaveCandidateStrategy>();
         private Mock<IMessageBus> _messageBus = new Mock<IMessageBus>();
+        private Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
 
         public QueuedLegacySaveCandidateStrategyBuilder()
         {
@@ -17,8 +18,7 @@
 
         public ISaveCandidateStrategy Build()
         {
-            var strategy = new QueuedLegacySaveCandidateStrategy(_saveCandidateStrategy.Object, _messageBus.Object);
-            return strategy;
+            return new QueuedLegacySaveCandidateStrategy(_saveCandidateStrategy.Object, _messageBus.Object, _serviceBus.Object);
         }
 
         public QueuedLegacySaveCandidateStrategyBuilder With(Mock<ISaveCandidateStrategy> saveCandidateStrategy)
@@ -30,6 +30,12 @@
         public QueuedLegacySaveCandidateStrategyBuilder With(Mock<IMessageBus> messageBus)
         {
             _messageBus = messageBus;
+            return this;
+        }
+
+        public QueuedLegacySaveCandidateStrategyBuilder With(Mock<IServiceBus> serviceBus)
+        {
+            _serviceBus = serviceBus;
             return this;
         }
     }

@@ -3,6 +3,7 @@
     using Application.Applications;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
+    using Application.Candidate;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Communications.Housekeeping;
@@ -14,6 +15,7 @@
     using Application.Vacancies;
     using Application.Vacancy.SiteMap;
     using Applications;
+    using Azure.ServiceBus;
     using Candidates;
     using Common.IoC;
     using Communication.Configuration;
@@ -21,6 +23,7 @@
     using Communications.Commands;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Logging.IoC;
     using Repositories.Audit;
@@ -108,6 +111,10 @@
 
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
+
+            // Save candidate
+            For<IServiceBusSubscriber<SaveCandidateRequest>>().Use<SaveCandidateRequestSubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<SaveCandidateRequest>>();
         }
     }
 }

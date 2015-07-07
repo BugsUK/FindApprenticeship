@@ -126,7 +126,6 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
                 DefaultMaxConcurrentMessagesPerNode = 5,
                 DefaultMessageCountWarningLimit = 500,
                 DefaultDeadLetterMessageCountWarningLimit = 100,
-                DefaultSubscriptionName = "consume",
                 Topics = new[]
                 {
                     new AzureServiceBusTopicConfiguration
