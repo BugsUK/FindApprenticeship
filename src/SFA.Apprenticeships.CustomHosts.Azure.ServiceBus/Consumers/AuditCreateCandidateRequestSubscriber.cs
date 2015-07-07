@@ -9,7 +9,7 @@
         [ServiceBusTopicSubscription(TopicName = "candidate-create", SubscriptionName = "audit")]
         public ServiceBusMessageResult Consume(CreateCandidateRequest message)
         {
-            Console.WriteLine("AUDIT: {0}", message.CandidateId);
+            Console.WriteLine("AUDIT: CreateCandidateRequest: {0}", message.CandidateId);
 
             return ServiceBusMessageResult.Complete();
         }

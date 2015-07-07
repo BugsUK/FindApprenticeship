@@ -96,13 +96,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AzureServiceBusManager.cs" />
+    <Compile Include="AzureServiceBusInitialiser.cs" />
+    <Compile Include="AzureServiceBusMessageBroker.cs" />
     <Compile Include="Configuration\AzureServiceBusConfiguration.cs" />
     <Compile Include="Configuration\AzureServiceBusSubscriptionConfiguration.cs" />
     <Compile Include="Configuration\AzureServiceBusTopicConfiguration.cs" />
     <Compile Include="AzureServiceBus.cs" />
-    <Compile Include="IServiceBusManager.cs" />
-    <Compile Include="IoC\AzureServiceBusRegistry.cs" />
+    <Compile Include="IServiceBusInitialiser.cs" />
+    <Compile Include="IServiceBusMessageBroker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

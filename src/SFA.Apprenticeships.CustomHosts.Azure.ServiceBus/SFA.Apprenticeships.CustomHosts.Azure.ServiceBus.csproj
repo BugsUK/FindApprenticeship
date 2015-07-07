@@ -59,6 +59,7 @@
     <Compile Include="Consumers\AuditCreateCandidateRequestSubscriber.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Consumers\SubmitApprenticeshipApplicationRequestSubscriber.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

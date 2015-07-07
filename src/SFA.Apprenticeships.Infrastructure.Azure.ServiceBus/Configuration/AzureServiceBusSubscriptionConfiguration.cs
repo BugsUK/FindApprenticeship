@@ -4,7 +4,7 @@
     {
         public string SubscriptionName { get; set; }
 
-        public string SubscriberType { get; set; }
+        // public string SubscriberType { get; set; }
         
         public int? MessageCountWarningLimit { get; set; }
         

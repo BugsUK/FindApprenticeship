@@ -4,14 +4,13 @@
     using Application.Candidate;
     using Domain.Interfaces.Messaging;
 
-    public class RequeueCreateCandidateRequestSubscriber :  IServiceBusSubscriber<CreateCandidateRequest>
+    public class RequeueCreateCandidateRequestSubscriber : IServiceBusSubscriber<CreateCandidateRequest>
     {
         [ServiceBusTopicSubscription(TopicName = "candidate-create", SubscriptionName = "requeue")]
         public ServiceBusMessageResult Consume(CreateCandidateRequest message)
         {
-            Console.WriteLine("REQUEUE: {0}", message.CandidateId);
+            Console.WriteLine("REQUEUE: CreateCandidateRequest: {0}", message.CandidateId);
 
-            // return ServiceBusMessageResult.Reqeue(DateTime.UtcNow.AddSeconds(30));
             return ServiceBusMessageResult.Complete();
         }
     }

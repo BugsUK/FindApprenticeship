@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
 {
     using System;
+    using System.Linq;
     using Application.Candidate;
     using Application.Interfaces.Logging;
     using Consumers;
@@ -15,6 +16,9 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
 
     class Program
     {
+        private static Mock<ILogService> _mockLogService;
+        private static Mock<IConfigurationService> _mockConfigurationService;
+
         static void Main(string[] args)
         {
             if (args.Length == 0)
@@ -23,36 +27,48 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
                 return;
             }
 
+            _mockLogService = new Mock<ILogService>();
+            _mockConfigurationService = BuildMockConfigurationService(args[0]);
+
             var container = BuildContainer();
-            var mockLogService = new Mock<ILogService>();
-            var mockConfigurationService = BuildMockConfigurationService(args[0]);
 
-            var instances = container.GetAllInstances(typeof(IServiceBusSubscriber<>).MakeGenericType(typeof(CreateCandidateRequest)));
-            var instanceCount = 0;
+            var intialiser = container.GetInstance<IServiceBusInitialiser>();
 
-            foreach (var instance in instances)
-            {
-                instanceCount++;
-            }
+            intialiser.Initialise();
 
-            Console.WriteLine("Instance count: {0}", instanceCount);
-
-            var manager = new AzureServiceBusManager(container, mockLogService.Object, mockConfigurationService.Object);
-            var bus = new AzureServiceBus(mockLogService.Object, mockConfigurationService.Object);
-
-            manager.Initialise();
+            var bus = new AzureServiceBus(_mockLogService.Object, _mockConfigurationService.Object);
 
             bus.PublishMessage(new CreateCandidateRequest
             {
                 CandidateId = Guid.NewGuid()
             });
 
-            manager.Subscribe();
+            bus.PublishMessage(new SubmitApprenticeshipApplicationRequest
+            {
+                ApplicationId = Guid.NewGuid()
+            });
 
-            Console.WriteLine("Subscribed");
+            var instances = container
+                .GetAllInstances<IServiceBusMessageBroker>()
+                .ToList();
+
+            var instanceCount = 0;
+
+            foreach (var instance in instances)
+            {
+                instance.Subscribe();
+                instanceCount++;
+            }
+
+            Console.WriteLine("Subscribed {0}", instanceCount);
             Console.ReadLine();
 
-            manager.Unsubscribe();
+            foreach (var instance in instances)
+            {
+                instance.Unsubscribe();
+
+                instanceCount++;
+            }
 
             Console.WriteLine("Unsubscribed");
             Console.ReadLine();
@@ -63,8 +79,16 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
             return new Container(container =>
             {
                 container
-                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
-                    .Use<AuditCreateCandidateRequestSubscriber>();
+                    .For<ILogService>()
+                    .Use(_mockLogService.Object);
+
+                container
+                    .For<IConfigurationService>()
+                    .Use(_mockConfigurationService.Object);
+
+                container
+                    .For<IServiceBusInitialiser>()
+                    .Use<AzureServiceBusInitialiser>();
 
                 container
                     .For<IServiceBusSubscriber<CreateCandidateRequest>>()
@@ -72,7 +96,23 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
 
                 container
                     .For<IServiceBusSubscriber<CreateCandidateRequest>>()
+                    .Use<AuditCreateCandidateRequestSubscriber>();
+
+                container
+                    .For<IServiceBusSubscriber<CreateCandidateRequest>>()
                     .Use<RequeueCreateCandidateRequestSubscriber>();
+
+                container
+                    .For<IServiceBusSubscriber<SubmitApprenticeshipApplicationRequest>>()
+                    .Use<SubmitApprenticeshipApplicationRequestSubscriber>();
+
+                container
+                    .For<IServiceBusMessageBroker>()
+                    .Use<AzureServiceBusMessageBroker<CreateCandidateRequest>>();
+
+                container
+                    .For<IServiceBusMessageBroker>()
+                    .Use<AzureServiceBusMessageBroker<SubmitApprenticeshipApplicationRequest>>();
             });
         }
 
@@ -92,23 +132,32 @@ namespace SFA.Apprenticeships.CustomHosts.Azure.ServiceBus
                     new AzureServiceBusTopicConfiguration
                     {                        
                         TopicName = "candidate-create",
-                        MessageType = "SFA.Apprenticeships.Application.Candidate.CreateCandidateRequest, SFA.Apprenticeships.Application.Candidate",
+                        MessageType = "SFA.Apprenticeships.Application.Candidate.CreateCandidateRequest",
                         Subscriptions = new[]
                         {
                             new AzureServiceBusSubscriptionConfiguration
                             {
                                 SubscriptionName = "create",
-                                SubscriberType = "SFA.Apprenticeships.CustomHosts.Azure.ServiceBus.CreateCandidateRequestConsumer, SFA.Apprenticeships.CustomHosts.Azure.ServiceBus"
                             },
                             new AzureServiceBusSubscriptionConfiguration
                             {
                                 SubscriptionName = "audit",
-                                SubscriberType = "SFA.Apprenticeships.CustomHosts.Azure.ServiceBus.AuditCreateCandidateRequestConsumer, SFA.Apprenticeships.CustomHosts.Azure.ServiceBus"
                             },
                             new AzureServiceBusSubscriptionConfiguration
                             {
                                 SubscriptionName = "requeue",
-                                SubscriberType = "SFA.Apprenticeships.CustomHosts.Azure.ServiceBus.OtherCreateCandidateRequestConsumer, SFA.Apprenticeships.CustomHosts.Azure.ServiceBus"
+                            }
+                        }
+                    },
+                    new AzureServiceBusTopicConfiguration
+                    {                        
+                        TopicName = "apprenticeship-application-submit",
+                        MessageType = "SFA.Apprenticeships.Application.Candidate.SubmitApprenticeshipApplicationRequest",
+                        Subscriptions = new[]
+                        {
+                            new AzureServiceBusSubscriptionConfiguration
+                            {
+                                SubscriptionName = "default"
                             }
                         }
                     }

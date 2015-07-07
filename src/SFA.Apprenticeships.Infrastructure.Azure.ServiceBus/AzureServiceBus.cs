@@ -68,31 +68,11 @@
                 {
                     var topicClient = TopicClient.CreateFromConnectionString(configuration.ConnectionString, topic.TopicName);
 
-                    topicClients.Add(GetTypeFullName(topic.MessageType), topicClient);
+                    topicClients.Add(topic.MessageType, topicClient);
                 }
 
                 _topicClients = topicClients;
             }
-        }
-
-        private static string GetTypeFullName(string messageType)
-        {
-            if (string.IsNullOrWhiteSpace(messageType))
-            {
-                throw new ArgumentNullException("messageType");
-            }
-
-            var parts = messageType.Split(',');
-
-            if (parts.Length == 2)
-            {
-                if (!string.IsNullOrWhiteSpace(parts[0]))
-                {
-                    return parts[0];
-                }
-            }
-
-            throw new InvalidOperationException(string.Format("Cannot message type name from string \"{0}\".", messageType));
         }
 
         #endregion
