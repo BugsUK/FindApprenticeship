@@ -250,6 +250,7 @@
                     model.Location = location.Name;
                     model.Latitude = location.Latitude;
                     model.Longitude = location.Longitude;
+                    model.Hash = model.LatLonLocHash();
 
                     model.LocationSearches = suggestedLocations.Locations.Skip(1).Select(each =>
                     {
