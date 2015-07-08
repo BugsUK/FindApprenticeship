@@ -142,6 +142,9 @@
 
         [ElementLocator(Id = "ajaxLoading")]
         public IWebElement AjaxLoading { get; set; }
+
+        [ElementLocator(Id = "headerLinkFAA")]
+        public IWebElement HeaderLinkFaa { get; set; }
         
         public string ResultsAreInDistanceOrder
         {
