@@ -25,6 +25,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Common.Services;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Address.IoC;
+    using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.IoC;
@@ -71,6 +72,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry<PostcodeRegistry>();
                 // TODO: DEBT: AG: if Rabbit is incorrectly configured, website fails to start properly. Need to more lazily initialise RabbitMQ.
                 x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
