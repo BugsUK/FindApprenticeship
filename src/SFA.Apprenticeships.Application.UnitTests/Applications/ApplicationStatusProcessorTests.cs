@@ -7,7 +7,6 @@
     using Application.Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Logging;
@@ -25,6 +24,7 @@
         private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
         private Mock<IMessageBus> _bus;
         private Mock<ILogService> _logger;
+        private Mock<IServiceBus> _serviceBus;
 
         [SetUp]
         public void SetUp()
@@ -35,10 +35,11 @@
             _candidateReadMock = new Mock<ICandidateReadRepository>();
             _applicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
             _bus = new Mock<IMessageBus>();
+            _serviceBus = new Mock<IServiceBus>();
             _logger = new Mock<ILogService>();
             _applicationStatusProcessor = new ApplicationStatusProcessor(_legacyApplicationStatusProvider.Object,
                 _apprenticeshipApplicationReadMock.Object, _traineeshipApplicationReadMock.Object, _candidateReadMock.Object, 
-                _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object);
+                _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object, _serviceBus.Object);
         }
 
         [Test]

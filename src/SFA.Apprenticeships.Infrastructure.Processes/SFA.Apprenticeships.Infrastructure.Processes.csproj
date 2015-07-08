@@ -181,6 +181,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\ApplicationStatusSummarySubscriber.cs" />
     <Compile Include="Applications\CommunicationHousekeepingRequestConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusChangedConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusSummaryConsumerAsync.cs" />
@@ -188,7 +189,7 @@
     <Compile Include="Applications\ApplicationHousekeepingRequestConsumerAsync.cs" />
     <Compile Include="Candidates\CandidateAccountHousekeepingConsumerAsync.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesConsumerAsync.cs" />
-    <Compile Include="Candidates\CreateCandidateRequestSubscriber.cs" />
+    <Compile Include="Candidates\SaveCandidateRequestSubscriber.cs" />
     <Compile Include="Candidates\SaveCandidateRequestConsumerAsync.cs" />
     <Compile Include="Communications\CandidateCommunicationHelper.cs" />
     <Compile Include="Communications\Commands\CandidateDailyDigestCommunicationCommand.cs" />
@@ -217,6 +218,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Vacancies\VacancySummaryCompleteSubscriber.cs" />
     <Compile Include="Vacancies\VacancySummaryCompleteConsumerAsync.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>

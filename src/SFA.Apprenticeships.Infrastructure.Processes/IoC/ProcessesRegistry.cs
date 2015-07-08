@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.IoC
 {
     using Application.Applications;
+    using Application.Applications.Entities;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
     using Application.Candidate;
@@ -13,6 +14,7 @@
     using Application.Location;
     using Application.ReferenceData;
     using Application.Vacancies;
+    using Application.Vacancies.Entities;
     using Application.Vacancy.SiteMap;
     using Applications;
     using Azure.ServiceBus;
@@ -112,9 +114,15 @@
             For<ILocationSearchService>().Use<LocationSearchService>();
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
 
-            // Save candidate
+            // service bus
             For<IServiceBusSubscriber<SaveCandidateRequest>>().Use<SaveCandidateRequestSubscriber>();
             For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<SaveCandidateRequest>>();
+
+            For<IServiceBusSubscriber<ApplicationStatusSummary>>().Use<ApplicationStatusSummarySubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<ApplicationStatusSummary>>();
+
+            For<IServiceBusSubscriber<VacancySummaryUpdateComplete>>().Use<VacancySummaryCompleteSubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancySummaryUpdateComplete>>();
         }
     }
 }

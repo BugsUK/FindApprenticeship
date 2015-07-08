@@ -13,6 +13,7 @@
     public class ApplicationStatusProcessor : IApplicationStatusProcessor
     {
         private readonly ILogService _logger;
+        private readonly IServiceBus _serviceBus;
 
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
@@ -26,7 +27,7 @@
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ICandidateReadRepository candidateReadRepository,
             IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy,
-            IMessageBus messageBus, ILogService logger)
+            IMessageBus messageBus, ILogService logger, IServiceBus serviceBus)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
@@ -35,6 +36,7 @@
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
             _messageBus = messageBus;
             _logger = logger;
+            _serviceBus = serviceBus;
         }
 
         public void QueueApplicationStatusesPages(int applicationStatusExtractWindow)
@@ -80,7 +82,11 @@
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
+                applicationStatusSummary =>
+                {
+                    _messageBus.PublishMessage(applicationStatusSummary);
+                    _serviceBus.PublishMessage(applicationStatusSummary);
+                });
 
             _logger.Info("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
         }
@@ -133,7 +139,7 @@
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
+                applicationStatusSummary => _serviceBus.PublishMessage(applicationStatusSummary));
         }
 
         private bool ProcessApprenticeshipApplication(ApplicationStatusSummary applicationStatusSummary, bool strictEtlValidation)

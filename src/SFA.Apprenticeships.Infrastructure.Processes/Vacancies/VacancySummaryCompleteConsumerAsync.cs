@@ -28,8 +28,8 @@
             _traineeVacancyIndexerService = traineeVacancyIndexerService;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 2)]
-        [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryCompleteConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 2)]
+        // [AutoSubscriberConsumer(SubscriptionId = "VacancySummaryCompleteConsumerAsync")]
         public Task Consume(VacancySummaryUpdateComplete updateComplete)
         {
             _logger.Debug("Received vacancy summary update completed message.");
