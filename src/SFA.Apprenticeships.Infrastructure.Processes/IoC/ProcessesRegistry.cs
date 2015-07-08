@@ -15,6 +15,7 @@
     using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
+    using Application.Vacancies.Entities.SiteMap;
     using Application.Vacancy.SiteMap;
     using Applications;
     using Azure.ServiceBus;
@@ -29,6 +30,7 @@
     using Domain.Interfaces.Repositories;
     using Logging.IoC;
     using Repositories.Audit;
+    using SiteMap;
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Vacancies;
@@ -123,6 +125,9 @@
 
             For<IServiceBusSubscriber<VacancySummaryUpdateComplete>>().Use<VacancySummaryCompleteSubscriber>();
             For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancySummaryUpdateComplete>>();
+
+            For<IServiceBusSubscriber<CreateVacancySiteMapRequest>>().Use<CreateVacancySiteMapRequestSubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<CreateVacancySiteMapRequest>>();
         }
     }
 }

@@ -14,29 +14,32 @@
     {
         private readonly ILogService _logger;
         private readonly IServiceBus _serviceBus;
+        private readonly IMessageBus _messageBus;
 
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
-        private readonly IMessageBus _messageBus;
 
-        public ApplicationStatusProcessor(ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
+        public ApplicationStatusProcessor(
+            ILogService logger,
+            IServiceBus serviceBus,
+            IMessageBus messageBus,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ICandidateReadRepository candidateReadRepository,
-            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy,
-            IMessageBus messageBus, ILogService logger, IServiceBus serviceBus)
+            ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
+            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy)
         {
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _candidateReadRepository = candidateReadRepository;
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
-            _messageBus = messageBus;
             _logger = logger;
             _serviceBus = serviceBus;
+            _messageBus = messageBus;
         }
 
         public void QueueApplicationStatusesPages(int applicationStatusExtractWindow)

@@ -13,7 +13,7 @@
             _logService = logService;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "candidate-save", SubscriptionName = "default")]
+        [ServiceBusTopicSubscription(TopicName = "save-candidate-request")]
         public ServiceBusMessageResult Consume(SaveCandidateRequest message)
         {
             _logService.Info("SaveCandidateRequest: {0}", message.CandidateId);

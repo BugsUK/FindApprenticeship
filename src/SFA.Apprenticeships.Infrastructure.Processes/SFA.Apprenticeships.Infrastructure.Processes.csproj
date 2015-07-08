@@ -204,6 +204,7 @@
     <Compile Include="Communications\EmailRequestConsumerAsync.cs" />
     <Compile Include="Configuration\ProcessConfiguration.cs" />
     <Compile Include="Extensions\EtlValidationLoggingExtensions.cs" />
+    <Compile Include="SiteMap\CreateVacancySiteMapRequestSubscriber.cs" />
     <Compile Include="SiteMap\CreateVacancySiteMapRequestConsumerAsync.cs" />
     <Compile Include="Vacancies\ApprenticeshipSummaryUpdateProcessor.cs" />
     <Compile Include="Vacancies\TraineeshipsSummaryUpdateProcessor.cs" />

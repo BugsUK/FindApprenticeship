@@ -12,23 +12,23 @@
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _apprenticeshipVacancyIndexerService;
         private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, Elastic.TraineeshipSummary> _traineeVacancyIndexerService;
         private readonly ILogService _logger;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
         public VacancySummaryCompleteSubscriber(
             ILogService logger,
-            IMessageBus messageBus,
+            IServiceBus serviceBus,
             IVacancyIndexerService<ApprenticeshipSummaryUpdate,
             Elastic.ApprenticeshipSummary> apprenticeshipVacancyIndexerService,
             IVacancyIndexerService<TraineeshipSummaryUpdate,
             Elastic.TraineeshipSummary> traineeVacancyIndexerService)
         {
             _logger = logger;
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             _apprenticeshipVacancyIndexerService = apprenticeshipVacancyIndexerService;
             _traineeVacancyIndexerService = traineeVacancyIndexerService;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "vacancy-summary-update-completed")]
+        [ServiceBusTopicSubscription(TopicName = "vacancy-summary-update-complete")]
         public ServiceBusMessageResult Consume(VacancySummaryUpdateComplete updateComplete)
         {
             _logger.Debug("Received vacancy summary update completed message.");
@@ -69,7 +69,7 @@
                     TraineeshipVacancyIndexName = traineeshipVacancyIndexName
                 };
 
-                _messageBus.PublishMessage(request);
+                _serviceBus.PublishMessage(request);
             }
             else
             {
