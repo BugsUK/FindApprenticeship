@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
     using System;
-    using System.Threading;
     using Application.Applications;
     using Application.Applications.Entities;
     using Configuration;
@@ -12,13 +11,12 @@
     {
         private readonly IApplicationStatusProcessor _applicationStatusProcessor;
         private readonly IServiceBus _serviceBus;
-        private readonly ManualResetEvent _applicationStatusSummaryConsumerResetEvent = new ManualResetEvent(true);
         private readonly bool _strictEtlValidation;
 
         public ApplicationStatusSummarySubscriber(
             IApplicationStatusProcessor applicationStatusProcessor,
             IServiceBus serviceBus,
-            IConfigurationService configurationService, CancellationTokenSource cancellationTokenSource)
+            IConfigurationService configurationService)
         {
             _applicationStatusProcessor = applicationStatusProcessor;
             _serviceBus = serviceBus;
