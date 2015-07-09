@@ -103,7 +103,7 @@
 
             sb.Append("General:\n");
             sb.AppendFormat(" - Total number of candidates registered: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredUserCount));
-            sb.AppendFormat(" - Total number of candidates registered and activated: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredAndActivatedUserCount));
+            sb.AppendFormat(" - Total number of candidates registered and activated: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActivatedUserCount));
             sb.AppendFormat(" - Total number of unactivated candidates: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetUnactivatedUserCount));
             sb.AppendFormat(" - Total number of unactivated candidates with expired activation codes: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetUnactivatedExpiredCodeUserCount));
             sb.AppendFormat(" - Total number of dormant candidates: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetDormantUserCount));
@@ -155,6 +155,13 @@
             sb.AppendFormat(" - Number of saved search alerts processed today: {0} ({1}ms)\n", TimedMongoCall(_savedSearchAlertMetricsRepository.GetSavedSearchAlertsProcessedToday));
             sb.AppendFormat(" - Number of contact us emails sent today: {0} ({1}ms)\n", TimedMongoCall(_contactMessagesMetricsRepository.GetContactMessagesSentToday));
 
+            //Daily Stats
+            sb.Append("Daily:\n");
+            var today = DateTime.UtcNow;
+            var midnightAmToday = new DateTime(today.Year, today.Month, today.Day);
+            AddDailyStats(sb, midnightAmToday.AddDays(-1));
+            AddDailyStats(sb, midnightAmToday.AddDays(-2));
+
             stopwatch.Stop();
 
             var message = string.Format("Daily metrics queries took {0}", stopwatch.Elapsed);
@@ -169,6 +176,17 @@
             }
 
             return sb.ToString();
+        }
+
+        private void AddDailyStats(StringBuilder sb, DateTime date)
+        {
+            var endDate = date.AddDays(1);
+            sb.AppendLine(date.ToShortDateString());
+            sb.AppendFormat(" - Number of account registrations: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredUserCount, date, endDate));
+            sb.AppendFormat(" - Number of account activations: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredUserCount, date, endDate));
+            sb.AppendFormat(" - Number of applications submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetSubmittedApplicationCount, date, endDate));
+            sb.AppendFormat(" - Number of applications set as unsuccessful: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusChangedTo, ApplicationStatuses.Unsuccessful, date, endDate));
+            sb.AppendFormat(" - Number of applications set as successful: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusChangedTo, ApplicationStatuses.Successful, date, endDate));
         }
 
         private object[] GetActiveUserCount(Func<DateTime, long> activeUserCountFunc, DateTime customDaysAgo)
@@ -206,7 +224,16 @@
             var result = mongoCall.Invoke(param1, param2);
             sw.Stop();
             return new object[] { result, sw.ElapsedMilliseconds };
-        } 
+        }
+
+        private static object[] TimedMongoCall<TParam1, TParam2, TParam3, TResult>(Func<TParam1, TParam2, TParam3, TResult> mongoCall, TParam1 param1, TParam2 param2, TParam3 param3)
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            var result = mongoCall.Invoke(param1, param2, param3);
+            sw.Stop();
+            return new object[] { result, sw.ElapsedMilliseconds };
+        }
 
         private static string GetSubject()
         {

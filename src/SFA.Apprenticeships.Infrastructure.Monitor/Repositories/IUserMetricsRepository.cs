@@ -7,7 +7,9 @@
     public interface IUserMetricsRepository
     {
         long GetRegisteredUserCount();
-        long GetRegisteredAndActivatedUserCount();
+        long GetRegisteredUserCount(DateTime dateCreatedStart, DateTime dateCreatedEnd);
+        long GetActivatedUserCount();
+        long GetActivatedUserCount(DateTime dateActivatedStart, DateTime dateActivatedEnd);
         long GetUnactivatedUserCount();
         long GetUnactivatedExpiredCodeUserCount();
         long GetActiveUserCount(DateTime activeFrom);
