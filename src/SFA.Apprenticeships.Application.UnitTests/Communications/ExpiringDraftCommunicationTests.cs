@@ -23,7 +23,7 @@
         private Mock<ISavedSearchAlertRepository> _savedSearchAlertRepository;
         private Mock<ICandidateReadRepository> _candidateReadRepository;
         private Mock<IUserReadRepository> _userReadRepository;
-        private Mock<IMessageBus> _bus;
+        private Mock<IServiceBus> _serviceBus;
         private CommunicationProcessor _communicationProcessor;
 
         [SetUp]
@@ -41,14 +41,14 @@
 
             _candidateReadRepository = new Mock<ICandidateReadRepository>();
             _userReadRepository = new Mock<IUserReadRepository>();
-            _bus = new Mock<IMessageBus>();
+            _serviceBus = new Mock<IServiceBus>();
 
             var sendDailyDigestsStrategy = new SendDailyDigestsStrategyBuilder()
                 .With(_applicationStatusAlertRepository)
                 .With(_expiringDraftRepository)
                 .With(_candidateReadRepository)
                 .With(_userReadRepository)
-                .With(_bus)
+                .With(_serviceBus)
                 .Build();
 
             _communicationProcessor = new CommunicationProcessor(sendDailyDigestsStrategy, null);
@@ -76,7 +76,7 @@
             _candidateReadRepository.Setup(mock => mock.Get(It.IsAny<Guid>())).Returns(candidate);
             _userReadRepository.Setup(mock => mock.Get(It.IsAny<Guid>())).Returns(user);
 
-            _bus.Setup(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()));
+            _serviceBus.Setup(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()));
 
             var batchId = Guid.NewGuid();
 
@@ -87,7 +87,7 @@
             _expiringDraftRepository.Verify(mock => mock.GetCandidatesDailyDigest(), Times.Once);
             _expiringDraftRepository.Verify(mock => mock.Delete(It.IsAny<ExpiringApprenticeshipApplicationDraft>()), Times.Never);
             _expiringDraftRepository.Verify(mock => mock.Save(It.Is<ExpiringApprenticeshipApplicationDraft>(ed => ed.BatchId == batchId)), Times.Exactly(4));
-            _bus.Verify(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(2));
+            _serviceBus.Verify(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(2));
         }
 
         [Test]
@@ -118,7 +118,7 @@
             _expiringDraftRepository.Verify(mock => mock.GetCandidatesDailyDigest(), Times.Once);
             _expiringDraftRepository.Verify(mock => mock.Delete(It.IsAny<ExpiringApprenticeshipApplicationDraft>()), Times.Exactly(4));
             _expiringDraftRepository.Verify(mock => mock.Save(It.IsAny<ExpiringApprenticeshipApplicationDraft>()), Times.Never);
-            _bus.Verify(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Never);
+            _serviceBus.Verify(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Never);
         }
 
         [TestCase(UserStatuses.Inactive)]
@@ -142,7 +142,7 @@
             _candidateReadRepository.Setup(mock => mock.Get(It.IsAny<Guid>())).Returns(candidate);
             _userReadRepository.Setup(mock => mock.Get(It.IsAny<Guid>())).Returns(user);
 
-            _bus.Setup(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()));
+            _serviceBus.Setup(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()));
 
             var batchId = Guid.NewGuid();
             _communicationProcessor.SendDailyDigests(batchId);
@@ -152,7 +152,7 @@
             _userReadRepository.Verify(mock => mock.Get(It.IsAny<Guid>()), Times.Exactly(2));
             _expiringDraftRepository.Verify(mock => mock.Delete(It.IsAny<ExpiringApprenticeshipApplicationDraft>()), Times.Exactly(4));
             _expiringDraftRepository.Verify(mock => mock.Save(It.IsAny<ExpiringApprenticeshipApplicationDraft>()), Times.Never);
-            _bus.Verify(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Never);
+            _serviceBus.Verify(mock => mock.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Never);
         }
 
         private static Dictionary<Guid, List<ExpiringApprenticeshipApplicationDraft>> GetDraftDigests(int candidateCount, int expiringDraftCount)

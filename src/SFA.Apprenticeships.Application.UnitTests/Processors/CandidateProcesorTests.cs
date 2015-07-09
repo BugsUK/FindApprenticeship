@@ -21,7 +21,7 @@
     public class CandidateProcesorTests
     {
         private Mock<ILogService> _mockLogger;
-        private Mock<IMessageBus> _mockMessageBus;
+        private Mock<IServiceBus> _mockMessageBus;
         private Mock<IUserReadRepository> _mockUserReadRepository;
         private Mock<ICandidateReadRepository> _mockCandidateReadRepository;
         private Mock<IConfigurationService> _mockConfigurationService;
@@ -30,7 +30,7 @@
         public void SetUp()
         {
             _mockLogger = new Mock<ILogService>();
-            _mockMessageBus = new Mock<IMessageBus>();
+            _mockMessageBus = new Mock<IServiceBus>();
             _mockUserReadRepository = new Mock<IUserReadRepository>();
             _mockCandidateReadRepository = new Mock<ICandidateReadRepository>();
             _mockConfigurationService = new Mock<IConfigurationService>();
@@ -42,7 +42,11 @@
         {
             // Arrange.
             var processor = new CandidateProcessor(
-                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object, _mockConfigurationService.Object);
+                _mockLogger.Object,
+                _mockConfigurationService.Object,
+                _mockMessageBus.Object,
+                _mockUserReadRepository.Object,
+                _mockCandidateReadRepository.Object);
 
             var users = new Fixture()
                 .Build<User>()
@@ -76,7 +80,11 @@
         {
             // Arrange.
             var processor = new CandidateProcessor(
-                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object, _mockConfigurationService.Object);
+                _mockLogger.Object,
+                _mockConfigurationService.Object,
+                _mockMessageBus.Object,
+                _mockUserReadRepository.Object,
+                _mockCandidateReadRepository.Object);
 
             var candidates = new Fixture()
                 .Build<Domain.Entities.Candidates.Candidate>()
@@ -109,7 +117,11 @@
         {
             // Arrange.
             var processor = new CandidateProcessor(
-                _mockLogger.Object, _mockMessageBus.Object, _mockUserReadRepository.Object, _mockCandidateReadRepository.Object, _mockConfigurationService.Object);
+                _mockLogger.Object,
+                _mockConfigurationService.Object,
+                _mockMessageBus.Object,
+                _mockUserReadRepository.Object,
+                _mockCandidateReadRepository.Object);
 
             var users = new Fixture()
                 .Build<User>()

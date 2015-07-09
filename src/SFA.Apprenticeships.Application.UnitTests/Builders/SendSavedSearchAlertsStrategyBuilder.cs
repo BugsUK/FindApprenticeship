@@ -10,7 +10,7 @@
         private Mock<ICandidateReadRepository> _candidateReadRepository = new Mock<ICandidateReadRepository>();
         private Mock<IUserReadRepository> _userReadRepository = new Mock<IUserReadRepository>();
         private Mock<ISavedSearchAlertRepository> _savedSearchAlertRepository = new Mock<ISavedSearchAlertRepository>();
-        private Mock<IMessageBus> _messageBus = new Mock<IMessageBus>();
+        private Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
 
         public SendSavedSearchAlertsStrategyBuilder With(Mock<ICandidateReadRepository> candidateReadRepository)
         {
@@ -30,16 +30,19 @@
             return this;
         }
 
-        public SendSavedSearchAlertsStrategyBuilder With(Mock<IMessageBus> messageBus)
+        public SendSavedSearchAlertsStrategyBuilder With(Mock<IServiceBus> serviceBus)
         {
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             return this;
         }
 
         public SendSavedSearchAlertsStrategy Build()
         {
             return new SendSavedSearchAlertsStrategy(
-                _savedSearchAlertRepository.Object, _candidateReadRepository.Object, _userReadRepository.Object, _messageBus.Object);
+                _savedSearchAlertRepository.Object,
+                _candidateReadRepository.Object,
+                _userReadRepository.Object,
+                _serviceBus.Object);
         }
     }
 }

@@ -24,7 +24,6 @@
         private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
         private Mock<ILogService> _loggerMock;
         private Mock<IServiceBus> _serviceBusMock;
-        private Mock<IMessageBus> _messageBusMock;
 
         [SetUp]
         public void SetUp()
@@ -34,14 +33,12 @@
             _traineeshipApplicationReadMock = new Mock<ITraineeshipApplicationReadRepository>();
             _candidateReadMock = new Mock<ICandidateReadRepository>();
             _applicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
-            _messageBusMock = new Mock<IMessageBus>();
             _serviceBusMock = new Mock<IServiceBus>();
             _loggerMock = new Mock<ILogService>();
 
             _applicationStatusProcessor = new ApplicationStatusProcessor(
                 _loggerMock.Object,
                 _serviceBusMock.Object,
-                _messageBusMock.Object,
                 _apprenticeshipApplicationReadMock.Object,
                 _traineeshipApplicationReadMock.Object,
                 _candidateReadMock.Object,

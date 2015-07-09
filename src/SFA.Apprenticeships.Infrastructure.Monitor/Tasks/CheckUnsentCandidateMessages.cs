@@ -13,13 +13,16 @@
     {
         private readonly ILogService _logger;
         private readonly ICandidateDiagnosticsRepository _candidateDiagnosticsRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
-        public CheckUnsentCandidateMessages(ICandidateDiagnosticsRepository candidateDiagnosticsRepository, IMessageBus messageBus, ILogService logger)
+        public CheckUnsentCandidateMessages(
+            ILogService logger,
+            IServiceBus serviceBus,
+            ICandidateDiagnosticsRepository candidateDiagnosticsRepository)
         {
-            _candidateDiagnosticsRepository = candidateDiagnosticsRepository;
-            _messageBus = messageBus;
             _logger = logger;
+            _serviceBus = serviceBus;
+            _candidateDiagnosticsRepository = candidateDiagnosticsRepository;
         }
 
         public string TaskName
@@ -37,6 +40,7 @@
             foreach (var candidate in candidatesToRequeue)
             {
                 var requeueingMessage = string.Format("Re-queuing create candidate message for candidate id: {0}", candidate.EntityId);
+
                 _logger.Info(requeueingMessage);
                 sb.AppendLine(requeueingMessage);
 
@@ -45,9 +49,10 @@
                     CandidateId = candidate.EntityId
                 };
 
-                _messageBus.PublishMessage(message);
+                _serviceBus.PublishMessage(message);
 
                 var requeuedMessage = string.Format("Re-queued create candidate message for candidate id: {0}", candidate.EntityId);
+
                 _logger.Info(requeuedMessage);
                 sb.AppendLine(requeuedMessage);
             }

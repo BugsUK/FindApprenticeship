@@ -52,14 +52,14 @@
 
             userReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(user);
 
-            var messageBus = new Mock<IMessageBus>();
+            var serviceBus = new Mock<IServiceBus>();
 
             var sendDailyDigestsStrategy = new SendDailyDigestsStrategyBuilder()
                 .With(applicationStatusAlertRepository)
                 .With(expiringDraftRepository)
                 .With(candidateReadRepository)
                 .With(userReadRepository)
-                .With(messageBus)
+                .With(serviceBus)
                 .Build();
 
             var communicationProcessor = new CommunicationProcessor(sendDailyDigestsStrategy, null);
@@ -67,7 +67,7 @@
             var batchId = Guid.NewGuid();
 
             communicationProcessor.SendDailyDigests(batchId);
-            messageBus.Verify(mb => mb.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(3));
+            serviceBus.Verify(mb => mb.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(3));
         }
 
         [Test]
@@ -97,14 +97,14 @@
 
             userReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(user);
 
-            var messageBus = new Mock<IMessageBus>();
+            var serviceBus = new Mock<IServiceBus>();
 
             var sendDailyDigestsStrategy = new SendDailyDigestsStrategyBuilder()
                 .With(applicationStatusAlertRepository)
                 .With(expiringDraftRepository)
                 .With(candidateReadRepository)
                 .With(userReadRepository)
-                .With(messageBus)
+                .With(serviceBus)
                 .Build();
 
             var batchId = Guid.NewGuid();

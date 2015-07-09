@@ -8,18 +8,18 @@ namespace SFA.Apprenticeships.Application.UnitTests.Applications.Processes
     public class ApplicationStatusAlertStrategyBuilder
     {
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
-        
-        private Mock<IMessageBus> _messageBus = new Mock<IMessageBus>();
 
-        public ApplicationStatusAlertStrategyBuilder With(Mock<IMessageBus> messageBus)
+        private Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
+
+        public ApplicationStatusAlertStrategyBuilder With(Mock<IServiceBus> serviceBus)
         {
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             return this;
         }
 
         public ApplicationStatusAlertStrategy Build()
         {
-            var strategy = new ApplicationStatusAlertStrategy(_messageBus.Object, _logService.Object);
+            var strategy = new ApplicationStatusAlertStrategy(_logService.Object, _serviceBus.Object);
             return strategy;
         }
     }

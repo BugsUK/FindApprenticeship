@@ -17,7 +17,7 @@
     {
         private Mock<ILogService> _mockLogService;
         private Mock<IConfigurationService> _mockConfigurationService;
-        private Mock<IMessageBus> _mockMessageBus;
+        private Mock<IServiceBus> _mockServiceBus;
 
         private Mock<IApplicationStatusAlertCommunicationHousekeeper> _mockApplicationStatusAlertCommunicationHousekeeper;
         private Mock<IExpiringDraftApplicationAlertCommunicationHousekeeper> _mockExpiringDraftApplicationAlertCommunicationHousekeeper;
@@ -31,7 +31,7 @@
         {
             _mockLogService = new Mock<ILogService>();
             _mockConfigurationService = new Mock<IConfigurationService>();
-            _mockMessageBus = new Mock<IMessageBus>();
+            _mockServiceBus = new Mock<IServiceBus>();
 
             _mockApplicationStatusAlertCommunicationHousekeeper =
                 new Mock<IApplicationStatusAlertCommunicationHousekeeper>();
@@ -54,7 +54,7 @@
             _housekeeper = new RootCommunicationHousekeeper(
                 _mockLogService.Object,
                 _mockConfigurationService.Object,
-                _mockMessageBus.Object,
+                _mockServiceBus.Object,
                 _mockApplicationStatusAlertCommunicationHousekeeper.Object,
                 _mockExpiringDraftApplicationAlertCommunicationHousekeeper.Object,
                 _mockSavedSearchAlertCommunicationHousekeeper.Object);

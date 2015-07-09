@@ -21,28 +21,28 @@
         [TestCase(ApplicationStatuses.Unsuccessful, true)]
         public void ApplicationStatusPublishMessage(ApplicationStatuses applicationStatus, bool shouldPublish)
         {
-            var messageBus = new Mock<IMessageBus>();
-            var strategy = new ApplicationStatusAlertStrategyBuilder().With(messageBus).Build();
+            var serviceBus = new Mock<IServiceBus>();
+            var strategy = new ApplicationStatusAlertStrategyBuilder().With(serviceBus).Build();
             var summary = new ApplicationStatusSummaryBuilder(applicationStatus).Build();
 
             strategy.Send(summary);
 
             var times = shouldPublish ? Times.Once() : Times.Never();
-            messageBus.Verify(mb => mb.PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
+            serviceBus.Verify(mb => mb.PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
         }
 
         [TestCase(true)]
         [TestCase(false)]
         public void IsLegacySystemUpdatePublishMessage(bool isLegacySystemUpdate)
         {
-            var messageBus = new Mock<IMessageBus>();
-            var strategy = new ApplicationStatusAlertStrategyBuilder().With(messageBus).Build();
+            var serviceBus = new Mock<IServiceBus>();
+            var strategy = new ApplicationStatusAlertStrategyBuilder().With(serviceBus).Build();
             var summary = new ApplicationStatusSummaryBuilder(ApplicationStatuses.Successful).IsLegacySystemUpdate(isLegacySystemUpdate).Build();
 
             strategy.Send(summary);
 
             var times = isLegacySystemUpdate ? Times.Once() : Times.Never();
-            messageBus.Verify(mb => mb.PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
+            serviceBus.Verify(mb => mb.PublishMessage(It.IsAny<ApplicationStatusChanged>()), times);
         }
 
         [Test]
@@ -51,10 +51,14 @@
             const ApplicationStatuses applicationStatus = ApplicationStatuses.Successful;
             const int legacyApplicationId = 3456789;
             const string unsuccessfulReason = "You do not have the required grades";
+
             ApplicationStatusChanged applicationStatusChanged = null;
-            var messageBus = new Mock<IMessageBus>();
-            messageBus.Setup(mb => mb.PublishMessage(It.IsAny<ApplicationStatusChanged>())).Callback<ApplicationStatusChanged>(asc => { applicationStatusChanged = asc; });
-            var strategy = new ApplicationStatusAlertStrategyBuilder().With(messageBus).Build();
+
+            var serviceBus = new Mock<IServiceBus>();
+
+            serviceBus.Setup(mb => mb.PublishMessage(It.IsAny<ApplicationStatusChanged>())).Callback<ApplicationStatusChanged>(asc => { applicationStatusChanged = asc; });
+
+            var strategy = new ApplicationStatusAlertStrategyBuilder().With(serviceBus).Build();
             var summary = new ApplicationStatusSummaryBuilder(applicationStatus).WithLegacyApplicationId(legacyApplicationId).WithUnsuccessfulReason(unsuccessfulReason).Build();
 
             strategy.Send(summary);

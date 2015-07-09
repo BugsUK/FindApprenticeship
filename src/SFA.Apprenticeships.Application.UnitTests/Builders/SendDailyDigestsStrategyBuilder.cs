@@ -11,12 +11,13 @@
 
     public class SendDailyDigestsStrategyBuilder
     {
+        private Mock<ILogService> _logService = new Mock<ILogService>();
+        private Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
+
         private Mock<IExpiringApprenticeshipApplicationDraftRepository> _expiringApprenticeshipApplicationDraftRepository = new Mock<IExpiringApprenticeshipApplicationDraftRepository>();
         private Mock<IApplicationStatusAlertRepository> _applicationStatusAlertRepository = new Mock<IApplicationStatusAlertRepository>();
         private Mock<ICandidateReadRepository> _candidateReadRepository = new Mock<ICandidateReadRepository>();
         private Mock<IUserReadRepository> _userReadRepository = new Mock<IUserReadRepository>();
-        private Mock<IMessageBus> _messageBus = new Mock<IMessageBus>();
-        private Mock<ILogService> _logService = new Mock<ILogService>();
 
         public SendDailyDigestsStrategyBuilder()
         {
@@ -48,21 +49,21 @@
             return this;
         }
 
-        public SendDailyDigestsStrategyBuilder With(Mock<IMessageBus> messageBus)
+        public SendDailyDigestsStrategyBuilder With(Mock<IServiceBus> serviceBus)
         {
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             return this;
         }
 
         public SendDailyDigestsStrategy Build()
         {
             return new SendDailyDigestsStrategy(
+                _logService.Object,
+                _serviceBus.Object,
                 _expiringApprenticeshipApplicationDraftRepository.Object,
                 _applicationStatusAlertRepository.Object,
                 _candidateReadRepository.Object,
-                _userReadRepository.Object,
-                _messageBus.Object,
-                _logService.Object);
+                _userReadRepository.Object);
         }
     }
 }

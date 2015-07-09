@@ -16,29 +16,40 @@
         [Test]
         public void ShouldUpdateCandidateSystem()
         {
+            // Arrange.
             var saveCandidateStrategy = new Mock<ISaveCandidateStrategy>();
-            saveCandidateStrategy.Setup(s => s.SaveCandidate(It.IsAny<Candidate>())).Returns<Candidate>(c => c);
-            var strategy = new QueuedLegacySaveCandidateStrategyBuilder().With(saveCandidateStrategy).Build();
 
+            saveCandidateStrategy.Setup(mock => mock.SaveCandidate(It.IsAny<Candidate>())).Returns<Candidate>(c => c);
+
+            var strategy = new QueuedLegacySaveCandidateStrategyBuilder().With(saveCandidateStrategy).Build();
             var candidate = new Fixture().Build<Candidate>().Create();
+
+            // Act.
             strategy.SaveCandidate(candidate);
 
-            saveCandidateStrategy.Verify(p => p.SaveCandidate(It.IsAny<Candidate>()), Times.Once);
+            // Assert.
+            saveCandidateStrategy.Verify(mock => mock.SaveCandidate(It.IsAny<Candidate>()), Times.Once);
         }
 
         [Test]
         public void ShouldQueueMessage()
         {
-            var messageBus = new Mock<IMessageBus>();
+            // Arrange.
+            var serviceBus = new Mock<IServiceBus>();
+
             SaveCandidateRequest request = null;
-            messageBus.Setup(b => b.PublishMessage(It.IsAny<SaveCandidateRequest>())).Callback<SaveCandidateRequest>(r => { request = r; });
 
-            var strategy = new QueuedLegacySaveCandidateStrategyBuilder().With(messageBus).Build();
+            serviceBus.Setup(b => b.PublishMessage(
+                It.IsAny<SaveCandidateRequest>())).Callback<SaveCandidateRequest>(r => { request = r; });
 
+            var strategy = new QueuedLegacySaveCandidateStrategyBuilder().With(serviceBus).Build();
             var candidate = new Fixture().Build<Candidate>().Create();
+
+            // Act.
             strategy.SaveCandidate(candidate);
 
-            messageBus.Verify(b => b.PublishMessage(It.IsAny<SaveCandidateRequest>()));
+            // Assert.
+            serviceBus.Verify(mock => mock.PublishMessage(It.IsAny<SaveCandidateRequest>()));
             request.Should().NotBeNull();
             request.CandidateId.Should().Be(candidate.EntityId);
         }

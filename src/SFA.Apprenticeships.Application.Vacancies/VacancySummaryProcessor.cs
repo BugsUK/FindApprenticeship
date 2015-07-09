@@ -15,7 +15,6 @@
     {
         private readonly ILogService _logger;
 
-        private readonly IMessageBus _messageBus;
         private readonly IServiceBus _serviceBus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMapper _mapper;
@@ -23,16 +22,15 @@
         private readonly IApprenticeshipSummaryUpdateProcessor _apprenticeshipSummaryUpdateProcessor;
         private readonly ITraineeshipsSummaryUpdateProcessor _traineeshipsSummaryUpdateProcessor;
 
-        public VacancySummaryProcessor(IMessageBus messageBus,
-                                       IServiceBus serviceBus,
-                                       IVacancyIndexDataProvider vacancyIndexDataProvider,
-                                       IMapper mapper,
-                                       IJobControlQueue<StorageQueueMessage> jobControlQueue,
-                                       IApprenticeshipSummaryUpdateProcessor apprenticeshipSummaryUpdateProcessor,
-                                       ITraineeshipsSummaryUpdateProcessor traineeshipsSummaryUpdateProcessor,
-                                       ILogService logger)
+        public VacancySummaryProcessor(
+            IServiceBus serviceBus,
+            IVacancyIndexDataProvider vacancyIndexDataProvider,
+            IMapper mapper,
+            IJobControlQueue<StorageQueueMessage> jobControlQueue,
+            IApprenticeshipSummaryUpdateProcessor apprenticeshipSummaryUpdateProcessor,
+            ITraineeshipsSummaryUpdateProcessor traineeshipsSummaryUpdateProcessor,
+            ILogService logger)
         {
-            _messageBus = messageBus;
             _serviceBus = serviceBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
@@ -76,7 +74,6 @@
                 ScheduledRefreshDateTime = lastVacancySummaryPage.ScheduledRefreshDateTime
             };
 
-            _messageBus.PublishMessage(vsuc);
             _serviceBus.PublishMessage(vsuc);
 
             _logger.Info("Published VacancySummaryUpdateComplete message published to queue");

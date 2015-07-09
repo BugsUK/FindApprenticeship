@@ -13,13 +13,13 @@
     {
         private const string TestEmailAddress = "jane.doe@example.com";
 
-        private Mock<IMessageBus> _messageBus;
+        private Mock<IServiceBus> _mockServiceBus;
         private CommunicationRequest _communicationRequest;
 
         [SetUp]
         public void SetUp()
         {
-            _messageBus = new Mock<IMessageBus>();
+            _mockServiceBus = new Mock<IServiceBus>();
 
             _communicationRequest = new CommunicationRequest
             {
@@ -75,12 +75,12 @@
         public void ShouldQueueEmail()
         {
             // Arrange.
-            var command = new HelpDeskCommunicationCommand(_messageBus.Object);
+            var command = new HelpDeskCommunicationCommand(_mockServiceBus.Object);
             // Act.
             command.Handle(_communicationRequest);
 
             // Assert.
-            _messageBus.Verify(mock => mock.PublishMessage(
+            _mockServiceBus.Verify(mock => mock.PublishMessage(
                 It.Is<EmailRequest>(emailRequest =>
                     emailRequest.MessageType == _communicationRequest.MessageType &&
                     emailRequest.ToEmail == TestEmailAddress &&
@@ -92,13 +92,13 @@
         public void ShouldNotQueueSms()
         {
             // Arrange.
-            var command = new HelpDeskCommunicationCommand(_messageBus.Object);
+            var command = new HelpDeskCommunicationCommand(_mockServiceBus.Object);
 
             // Act.
             command.Handle(_communicationRequest);
 
             // Assert.
-            _messageBus.Verify(mock => mock.PublishMessage(It.IsAny<SmsRequest>()), Times.Never);
+            _mockServiceBus.Verify(mock => mock.PublishMessage(It.IsAny<SmsRequest>()), Times.Never);
         }
     }
 }

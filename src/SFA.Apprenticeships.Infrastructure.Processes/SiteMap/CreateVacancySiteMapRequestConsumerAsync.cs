@@ -24,8 +24,8 @@
             _siteMapVacancyProcessor = siteMapVacancyProcessor;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 1)]
-        [AutoSubscriberConsumer(SubscriptionId = "CreateVacancySiteMapRequestConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 1)]
+        // [AutoSubscriberConsumer(SubscriptionId = "CreateVacancySiteMapRequestConsumerAsync")]
         public Task Consume(CreateVacancySiteMapRequest request)
         {
             return Task.Run(() =>

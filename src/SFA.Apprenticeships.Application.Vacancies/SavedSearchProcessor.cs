@@ -24,7 +24,7 @@
     public class SavedSearchProcessor : ISavedSearchProcessor
     {
         private readonly ISavedSearchReadRepository _savedSearchReadRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
         private readonly IUserReadRepository _userReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly ILocationSearchService _locationSearchService;
@@ -33,10 +33,19 @@
         private readonly ISavedSearchWriteRepository _savedSearchWriteRepository;
         private readonly ILogService _logService;
 
-        public SavedSearchProcessor(ISavedSearchReadRepository savedSearchReadRepository, IMessageBus messageBus, IUserReadRepository userReadRepository, ICandidateReadRepository candidateReadRepository, ILocationSearchService locationSearchService, IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> vacancySearchProvider, ISavedSearchAlertRepository savedSearchAlertRepository, ISavedSearchWriteRepository savedSearchWriteRepository, ILogService logService)
+        public SavedSearchProcessor(
+            ISavedSearchReadRepository savedSearchReadRepository,
+            IServiceBus serviceBus,
+            IUserReadRepository userReadRepository,
+            ICandidateReadRepository candidateReadRepository,
+            ILocationSearchService locationSearchService,
+            IVacancySearchProvider<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> vacancySearchProvider,
+            ISavedSearchAlertRepository savedSearchAlertRepository,
+            ISavedSearchWriteRepository savedSearchWriteRepository,
+            ILogService logService)
         {
             _savedSearchReadRepository = savedSearchReadRepository;
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             _userReadRepository = userReadRepository;
             _candidateReadRepository = candidateReadRepository;
             _locationSearchService = locationSearchService;
@@ -62,7 +71,7 @@
                 {
                     CandidateId = candidateId
                 };
-                _messageBus.PublishMessage(candidateSavedSearches);
+                _serviceBus.PublishMessage(candidateSavedSearches);
                 Interlocked.Increment(ref counter);
             });
 

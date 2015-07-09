@@ -25,8 +25,8 @@
         }
 
         //TODO: Potentially up this value once we stop seeing errors
-        [SubscriptionConfiguration(PrefetchCount = 5)]
-        [AutoSubscriberConsumer(SubscriptionId = "SmsRequestConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 5)]
+        // [AutoSubscriberConsumer(SubscriptionId = "SmsRequestConsumerAsync")]
         public Task Consume(SmsRequest request)
         {
             return Task.Run(() =>

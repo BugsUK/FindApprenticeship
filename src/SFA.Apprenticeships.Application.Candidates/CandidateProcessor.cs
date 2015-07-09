@@ -15,23 +15,23 @@ namespace SFA.Apprenticeships.Application.Candidates
     public class CandidateProcessor : ICandidateProcessor
     {
         private readonly ILogService _logService;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
         private readonly IUserReadRepository _userReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IConfigurationService _configurationService;
 
         public CandidateProcessor(
             ILogService logService,
-            IMessageBus messageBus,
+            IConfigurationService configurationService,
+            IServiceBus serviceBus,
             IUserReadRepository userReadRepository,
-            ICandidateReadRepository candidateReadRepository,
-            IConfigurationService configurationService)
+            ICandidateReadRepository candidateReadRepository)
         {
             _logService = logService;
-            _messageBus = messageBus;
+            _configurationService = configurationService;
+            _serviceBus = serviceBus;
             _userReadRepository = userReadRepository;
             _candidateReadRepository = candidateReadRepository;
-            _configurationService = configurationService;
         }
 
         public void QueueCandidates()
@@ -56,7 +56,7 @@ namespace SFA.Apprenticeships.Application.Candidates
                     CandidateId = candidateId
                 };
 
-                _messageBus.PublishMessage(candidateHousekeeping);
+                _serviceBus.PublishMessage(candidateHousekeeping);
                 counter++;
             }
 

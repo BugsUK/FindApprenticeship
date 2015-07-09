@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Applications
 {
     using System;
-    using System.Threading.Tasks;
     using Application.Candidate;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Logging;
@@ -9,63 +8,43 @@
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using EasyNetQ.AutoSubscribe;
 
-    public class SubmitApprenticeshipApplicationRequestConsumerAsync : IConsumeAsync<SubmitApprenticeshipApplicationRequest>
+    public class SubmitApprenticeshipApplicationRequestSubscriber : IServiceBusSubscriber<SubmitApprenticeshipApplicationRequest>
     {
         private readonly ILogService _logger;
-        private readonly ILegacyApplicationProvider _legacyApplicationProvider;
-        private readonly ILegacyCandidateProvider _legacyCandidateProvider;
+
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly IMessageBus _messageBus;
 
-        public SubmitApprenticeshipApplicationRequestConsumerAsync(
-            ILegacyApplicationProvider legacyApplicationProvider,
-            ILegacyCandidateProvider legacyCandidateProvider,
+        private readonly ILegacyApplicationProvider _legacyApplicationProvider;
+        private readonly ILegacyCandidateProvider _legacyCandidateProvider;
+
+        public SubmitApprenticeshipApplicationRequestSubscriber(
+            ILogService logger,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
-            IMessageBus messageBus,
-            ILogService logger)
+            ILegacyApplicationProvider legacyApplicationProvider,
+            ILegacyCandidateProvider legacyCandidateProvider)
         {
-            _legacyApplicationProvider = legacyApplicationProvider;
-            _legacyCandidateProvider = legacyCandidateProvider;
+            _logger = logger;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
-            _messageBus = messageBus;
-            _logger = logger;
+            _legacyApplicationProvider = legacyApplicationProvider;
+            _legacyCandidateProvider = legacyCandidateProvider;
         }
 
-        // [SubscriptionConfiguration(PrefetchCount = 2)]
-        // [AutoSubscriberConsumer(SubscriptionId = "SubmitApprenticeshipApplicationRequestConsumerAsync")]
-        public Task Consume(SubmitApprenticeshipApplicationRequest request)
+        [ServiceBusTopicSubscription(TopicName = "submit-apprenticeship-application-request")]
+        public ServiceBusMessageResult Consume(SubmitApprenticeshipApplicationRequest request)
         {
-            return Task.Run(() =>
-            {
-                if (request.ProcessTime.HasValue && request.ProcessTime > DateTime.Now)
-                {
-                    try
-                    {
-                        _messageBus.PublishMessage(request);
-                        return;
-                    }
-                    catch
-                    {
-                        _logger.Error("Failed to re-queue deferred 'Submit Apprenticeship Application' request: {{ 'ApplicationId': '{0}' }}", request.ApplicationId);
-                        throw;
-                    }
-                }
-                
-                CreateApplication(request);
-            });
+            return CreateApplication(request);
         }
 
-        private void CreateApplication(SubmitApprenticeshipApplicationRequest request)
+        private ServiceBusMessageResult CreateApplication(SubmitApprenticeshipApplicationRequest request)
         {
-            _logger.Debug("Creating traineeship application Id: {0}", request.ApplicationId);
+            _logger.Debug("Creating apprenticeship application Id: {0}", request.ApplicationId);
 
             var applicationDetail = _apprenticeshipApplicationReadRepository.Get(request.ApplicationId, true);
 
@@ -77,34 +56,40 @@
                 {
                     _logger.Info("Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
                         applicationDetail.CandidateId);
-                    Requeue(request);
-                }
-                else
-                {
-                    EnsureApplicationCanBeCreated(applicationDetail);
 
-                    // Update candidate disability status to match the application.
-                    candidate.MonitoringInformation.DisabilityStatus = applicationDetail.CandidateInformation.DisabilityStatus;
-                    _legacyCandidateProvider.UpdateCandidate(candidate);
-
-                    applicationDetail.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
-                    SetApplicationStateSubmitted(applicationDetail);
+                    return Requeue(request);
                 }
+
+                EnsureApplicationCanBeCreated(applicationDetail);
+
+                // Update candidate disability status to match the application.
+                candidate.MonitoringInformation.DisabilityStatus = applicationDetail.CandidateInformation.DisabilityStatus;
+                _legacyCandidateProvider.UpdateCandidate(candidate);
+
+                applicationDetail.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
+                SetApplicationStateSubmitted(applicationDetail);
+
+                return ServiceBusMessageResult.Complete();
             }
-            catch (CustomException ex)
+            catch (CustomException e)
             {
-                HandleCustomException(request, ex, applicationDetail);
+                return HandleCustomException(request, e, applicationDetail);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                _logger.Error(string.Format("Submit apprenticeship application with Id = {0} request async process failed.", request.ApplicationId), ex);
-                Requeue(request);
+                _logger.Error("Submit apprenticeship application with Id = {0} request async process failed.",
+                    e, request.ApplicationId);
+
+                return Requeue(request);
             }
         }
 
-        private void HandleCustomException(SubmitApprenticeshipApplicationRequest request, CustomException ex, ApprenticeshipApplicationDetail apprenticeshipApplication)
+        private ServiceBusMessageResult HandleCustomException(
+            SubmitApprenticeshipApplicationRequest request,
+            CustomException e,
+            ApprenticeshipApplicationDetail apprenticeshipApplication)
         {
-            switch (ex.Code)
+            switch (e.Code)
             {
                 case ErrorCodes.ApplicationDuplicatedError:
                     _logger.Info("Apprenticeship application has already been submitted to legacy system: Application Id: \"{0}\"", request.ApplicationId);
@@ -126,14 +111,15 @@
                     break;
 
                 case Domain.Entities.ErrorCodes.EntityStateError:
-                    _logger.Error(string.Format("Apprenticeship application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), ex);
+                    _logger.Error(string.Format("Apprenticeship application is in an invalid state: Application Id: \"{0}\"", request.ApplicationId), e);
                     break;
 
                 default:
-                    _logger.Warn(string.Format("Submit apprenticeship application with Id = {0} request async process failed.", request.ApplicationId), ex);
-                    Requeue(request);
-                    break;
+                    _logger.Warn(string.Format("Submit apprenticeship application with Id = {0} request async process failed.", request.ApplicationId), e);
+                    return Requeue(request);
             }
+
+            return ServiceBusMessageResult.Complete();
         }
 
         private void SetApplicationStateSubmitted(ApprenticeshipApplicationDetail apprenticeshipApplication)
@@ -148,10 +134,11 @@
             _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
         }
 
-        private void Requeue(SubmitApprenticeshipApplicationRequest request)
+        private ServiceBusMessageResult Requeue(SubmitApprenticeshipApplicationRequest request)
         {
             request.ProcessTime = request.ProcessTime.HasValue ? DateTime.Now.AddMinutes(5) : DateTime.Now.AddSeconds(30);
-            _messageBus.PublishMessage(request);
+
+            return ServiceBusMessageResult.Requeue(request.ProcessTime.Value);
         }
 
         private static void EnsureApplicationCanBeCreated(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)

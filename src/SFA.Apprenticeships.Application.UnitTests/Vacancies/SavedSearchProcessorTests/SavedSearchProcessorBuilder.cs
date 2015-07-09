@@ -13,7 +13,7 @@
     public class SavedSearchProcessorBuilder
     {
         private Mock<ISavedSearchReadRepository> _savedSearchReadRepository = new Mock<ISavedSearchReadRepository>();
-        private Mock<IMessageBus> _messageBus = new Mock<IMessageBus>();
+        private Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
         private Mock<IUserReadRepository> _userReadRepository = new Mock<IUserReadRepository>();
         private Mock<ICandidateReadRepository> _candidateReadRepository = new Mock<ICandidateReadRepository>();
         private Mock<ILocationSearchService> _locationSearchService = new Mock<ILocationSearchService>();
@@ -24,7 +24,17 @@
 
         public ISavedSearchProcessor Build()
         {
-            var processor = new SavedSearchProcessor(_savedSearchReadRepository.Object, _messageBus.Object, _userReadRepository.Object, _candidateReadRepository.Object, _locationSearchService.Object, _vacancySearchProvider.Object, _savedSearchAlertRepository.Object, _savedSearchWriteRepository.Object, _logService.Object);
+            var processor = new SavedSearchProcessor(
+                _savedSearchReadRepository.Object,
+                _serviceBus.Object,
+                _userReadRepository.Object,
+                _candidateReadRepository.Object,
+                _locationSearchService.Object,
+                _vacancySearchProvider.Object,
+                _savedSearchAlertRepository.Object,
+                _savedSearchWriteRepository.Object,
+                _logService.Object);
+
             return processor;
         }
 
@@ -34,9 +44,9 @@
             return this;
         }
 
-        public SavedSearchProcessorBuilder With(Mock<IMessageBus> messageBus)
+        public SavedSearchProcessorBuilder With(Mock<IServiceBus> serviceBus)
         {
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             return this;
         }
 

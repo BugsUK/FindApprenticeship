@@ -181,14 +181,23 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\ApplicationHousekeepingRequestSubscriber.cs" />
+    <Compile Include="Applications\ApplicationStatusChangedSubscriber.cs" />
+    <Compile Include="Applications\ApplicationStatusSummaryPageSubscriber.cs" />
     <Compile Include="Applications\ApplicationStatusSummarySubscriber.cs" />
+    <Compile Include="Applications\CommunicationHousekeepingRequestSubscriber.cs" />
     <Compile Include="Applications\CommunicationHousekeepingRequestConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusChangedConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusSummaryConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusSummaryPageConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationHousekeepingRequestConsumerAsync.cs" />
+    <Compile Include="Applications\SubmitApprenticeshipApplicationRequestSubscriber.cs" />
+    <Compile Include="Applications\SubmitTraineeshipApplicationRequestSubscriber.cs" />
+    <Compile Include="Candidates\CandidateAccountHousekeepingSubscriber.cs" />
     <Compile Include="Candidates\CandidateAccountHousekeepingConsumerAsync.cs" />
+    <Compile Include="Candidates\CandidateSavedSearchesSubscriber.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesConsumerAsync.cs" />
+    <Compile Include="Candidates\CreateCandidateRequestSubscriber.cs" />
     <Compile Include="Candidates\SaveCandidateRequestSubscriber.cs" />
     <Compile Include="Candidates\SaveCandidateRequestConsumerAsync.cs" />
     <Compile Include="Communications\CandidateCommunicationHelper.cs" />
@@ -196,8 +205,11 @@
     <Compile Include="Communications\Commands\CandidateCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CommunicationCommand.cs" />
     <Compile Include="Communications\Commands\HelpDeskCommunicationCommand.cs" />
+    <Compile Include="Communications\CommunicationRequestSubscriber.cs" />
     <Compile Include="Communications\CommunicationRequestConsumerAsync.cs" />
     <Compile Include="Candidates\CreateCandidateRequestConsumerAsync.cs" />
+    <Compile Include="Communications\EmailRequestSubscriber.cs" />
+    <Compile Include="Communications\SmsRequestSubscriber.cs" />
     <Compile Include="Communications\SmsRequestConsumerAsync.cs" />
     <Compile Include="Applications\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Applications\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
@@ -208,6 +220,7 @@
     <Compile Include="SiteMap\CreateVacancySiteMapRequestConsumerAsync.cs" />
     <Compile Include="Vacancies\ApprenticeshipSummaryUpdateProcessor.cs" />
     <Compile Include="Vacancies\TraineeshipsSummaryUpdateProcessor.cs" />
+    <Compile Include="Vacancies\VacancyAboutToExpireSubscriber.cs" />
     <Compile Include="Vacancies\VacancyAboutToExpireConsumerAsync.cs" />
     <Compile Include="Vacancies\VacancyEtlMapper.cs" />
     <Compile Include="Vacancies\VacancyStatusSummarySubscriber.cs" />

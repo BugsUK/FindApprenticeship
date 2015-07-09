@@ -41,13 +41,13 @@
 
             userReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(user);
 
-            var messageBus = new Mock<IMessageBus>();
+            var serviceBus = new Mock<IServiceBus>();
 
             var sendSavedSearchAlertsStrategy = new SendSavedSearchAlertsStrategyBuilder()
                 .With(candidateReadRepository)
                 .With(userReadRepository)
                 .With(savedSearchAlertRepository)
-                .With(messageBus)
+                .With(serviceBus)
                 .Build();
 
             var communicationProcessor = new CommunicationProcessor(null, sendSavedSearchAlertsStrategy);
@@ -60,7 +60,7 @@
             userReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
             savedSearchAlertRepository.Verify(x => x.Delete(It.IsAny<SavedSearchAlert>()), Times.Never);
             savedSearchAlertRepository.Verify(x => x.Save(It.IsAny<SavedSearchAlert>()), Times.Exactly(4));
-            messageBus.Verify(x => x.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(2));
+            serviceBus.Verify(x => x.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(2));
         }
 
         [Test]

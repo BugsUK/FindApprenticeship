@@ -16,23 +16,23 @@
         private readonly IApplicationStatusAlertRepository _applicationStatusAlertRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
         private readonly ILogService _logService;
 
         public SendDailyDigestsStrategy(
+            ILogService logService,
+            IServiceBus serviceBus,
             IExpiringApprenticeshipApplicationDraftRepository expiringDraftRepository,
             IApplicationStatusAlertRepository applicationStatusAlertRepository,
             ICandidateReadRepository candidateReadRepository,
-            IUserReadRepository userReadRepository,
-            IMessageBus messageBus,
-            ILogService logService)
+            IUserReadRepository userReadRepository)
         {
+            _logService = logService;
+            _serviceBus = serviceBus;
             _expiringDraftRepository = expiringDraftRepository;
             _applicationStatusAlertRepository = applicationStatusAlertRepository;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
-            _messageBus = messageBus;
-            _logService = logService;
         }
 
         public void SendDailyDigests(Guid batchId)
@@ -64,7 +64,7 @@
                 {
                     var communicationRequest = CommunicationRequestFactory.GetDailyDigestCommunicationRequest(candidate, candidateExpiringDraftsDailyDigest, candidateApplicationStatusAlertsDailyDigest);
 
-                    _messageBus.PublishMessage(communicationRequest);
+                    _serviceBus.PublishMessage(communicationRequest);
 
                     if (candidateHasExpiringDrafts)
                     {

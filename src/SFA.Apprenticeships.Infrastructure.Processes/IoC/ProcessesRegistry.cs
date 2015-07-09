@@ -117,20 +117,25 @@
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
 
             // service bus
-            For<IServiceBusSubscriber<SaveCandidateRequest>>().Use<SaveCandidateRequestSubscriber>();
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<SaveCandidateRequest>>();
-
             For<IServiceBusSubscriber<ApplicationStatusSummary>>().Use<ApplicationStatusSummarySubscriber>();
             For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<ApplicationStatusSummary>>();
+
+            For<IServiceBusSubscriber<VacancyStatusSummary>>().Use<VacancyStatusSummarySubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancyStatusSummary>>();
+
+            For<IServiceBusSubscriber<ApplicationHousekeepingRequest>>().Use<ApplicationHousekeepingRequestSubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<ApplicationHousekeepingRequest>>();
+
+
+            //
+            For<IServiceBusSubscriber<SaveCandidateRequest>>().Use<SaveCandidateRequestSubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<SaveCandidateRequest>>();
 
             For<IServiceBusSubscriber<VacancySummaryUpdateComplete>>().Use<VacancySummaryCompleteSubscriber>();
             For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancySummaryUpdateComplete>>();
 
             For<IServiceBusSubscriber<CreateVacancySiteMapRequest>>().Use<CreateVacancySiteMapRequestSubscriber>();
             For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<CreateVacancySiteMapRequest>>();
-
-            For<IServiceBusSubscriber<VacancyStatusSummary>>().Use<VacancyStatusSummarySubscriber>();
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancyStatusSummary>>();
         }
     }
 }

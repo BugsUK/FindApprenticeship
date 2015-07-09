@@ -14,18 +14,19 @@
         private readonly ILogService _logger;
 
         private readonly ICommunicationService _communicationService;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
 
         public LegacySubmitTraineeshipApplicationStrategy(
-            IMessageBus messageBus,
-            ICommunicationService communicationService,
+            ILogService logger,
+            IServiceBus serviceBus,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository, ILogService logger)
+            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
+            ICommunicationService communicationService)
         {
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             _communicationService = communicationService;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
@@ -59,7 +60,7 @@
                     ApplicationId = traineeshipApplicationDetail.EntityId
                 };
 
-                _messageBus.PublishMessage(message);
+                _serviceBus.PublishMessage(message);
             }
             catch
             {

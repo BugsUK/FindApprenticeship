@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
     {
         private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
         private readonly IApplicationStatusAlertCommunicationHousekeeper _applicationStatusAlertCommunicationHousekeeper;
         private readonly IExpiringDraftApplicationAlertCommunicationHousekeeper _expiringDraftApplicationAlertCommunicationHousekeeper;
@@ -20,14 +20,14 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
         public RootCommunicationHousekeeper(
             ILogService logService,
             IConfigurationService configurationService,
-            IMessageBus messageBus,
+            IServiceBus serviceBus,
             IApplicationStatusAlertCommunicationHousekeeper applicationStatusAlertCommunicationHousekeeper,
             IExpiringDraftApplicationAlertCommunicationHousekeeper expiringDraftApplicationAlertCommunicationHousekeeper,
             ISavedSearchAlertCommunicationHousekeeper savedSearchAlertCommunicationHousekeeper)
         {
             _configurationService = configurationService;
             _logService = logService;
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
 
             _applicationStatusAlertCommunicationHousekeeper = applicationStatusAlertCommunicationHousekeeper;
             _expiringDraftApplicationAlertCommunicationHousekeeper = expiringDraftApplicationAlertCommunicationHousekeeper;
@@ -63,7 +63,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
 
             foreach (var request in requests)
             {
-                _messageBus.PublishMessage(request);
+                _serviceBus.PublishMessage(request);
                 count++;
 
                 // TODO: AG: US794: temporary code to limit number of deletions.

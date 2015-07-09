@@ -25,7 +25,7 @@
         readonly Mock<ILogService> _logService = new Mock<ILogService>();
         readonly Mock<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>> _vacancyIndexer = new Mock<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
         readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
-        readonly Mock<IMessageBus> _messageBus = new Mock<IMessageBus>();
+        readonly Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
 
         [SetUp]
         public void SetUp()
@@ -51,7 +51,12 @@
                     StrictEtlValidation = strictEtlValidation
                 });
 
-            var processor = new ApprenticeshipSummaryUpdateProcessor(_configurationService.Object, _vacancyIndexer.Object, _referenceDataService.Object, _messageBus.Object, _logService.Object);
+            var processor = new ApprenticeshipSummaryUpdateProcessor(
+                _logService.Object,
+                _serviceBus.Object,
+                _configurationService.Object,
+                _vacancyIndexer.Object,
+                _referenceDataService.Object);
 
             SetupReferenceDataService(_referenceDataService);
 
@@ -76,7 +81,13 @@
         [Test]
         public void IndexVacancy()
         {
-            var processor = new ApprenticeshipSummaryUpdateProcessor(_configurationService.Object, _vacancyIndexer.Object, _referenceDataService.Object, _messageBus.Object, _logService.Object);
+
+            var processor = new ApprenticeshipSummaryUpdateProcessor(
+                _logService.Object,
+                _serviceBus.Object,
+                _configurationService.Object,
+                _vacancyIndexer.Object,
+                _referenceDataService.Object);
 
             SetupReferenceDataService(_referenceDataService);
 
@@ -87,7 +98,7 @@
             });
 
             _vacancyIndexer.Verify(vi => vi.Index(It.IsAny<ApprenticeshipSummaryUpdate>()), Times.Once);
-            _messageBus.Verify(mb => mb.PublishMessage(It.IsAny<VacancyAboutToExpire>()));
+            _serviceBus.Verify(mb => mb.PublishMessage(It.IsAny<VacancyAboutToExpire>()));
             _logService.Verify(ls => ls.Warn(It.IsAny<string>(), It.IsAny<object[]>()), Times.Never);
         }
 
@@ -95,7 +106,13 @@
         public void ShouldNotQueueTheVacancyIfTheVacancyIsNotAboutToExpire()
         {
             const int aVacancyId = 5;
-            var processor = new ApprenticeshipSummaryUpdateProcessor(_configurationService.Object, _vacancyIndexer.Object, _referenceDataService.Object, _messageBus.Object, _logService.Object);
+
+            var processor = new ApprenticeshipSummaryUpdateProcessor(
+                _logService.Object,
+                _serviceBus.Object,
+                _configurationService.Object,
+                _vacancyIndexer.Object,
+                _referenceDataService.Object);
 
             var vacancySummary = new ApprenticeshipSummaryUpdate
             {
@@ -105,14 +122,20 @@
 
             processor.QueueVacancyIfExpiring(vacancySummary, VacancyAboutToExpireNotificationHours);
 
-            _messageBus.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)), Times.Never());
+            _serviceBus.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)), Times.Never());
         }
 
         [Test]
         public void ShouldQueueTheVacancyIfTheVacancyIsAboutToExpire()
         {
             const int aVacancyId = 5;
-            var processor = new ApprenticeshipSummaryUpdateProcessor(_configurationService.Object, _vacancyIndexer.Object, _referenceDataService.Object, _messageBus.Object, _logService.Object);
+
+            var processor = new ApprenticeshipSummaryUpdateProcessor(
+                _logService.Object,
+                _serviceBus.Object,
+                _configurationService.Object,
+                _vacancyIndexer.Object,
+                _referenceDataService.Object);
 
             var vacancySummary = new ApprenticeshipSummaryUpdate
             {
@@ -122,7 +145,7 @@
 
             processor.QueueVacancyIfExpiring(vacancySummary, VacancyAboutToExpireNotificationHours);
 
-            _messageBus.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)));
+            _serviceBus.Verify(x => x.PublishMessage(It.Is<VacancyAboutToExpire>(m => m.Id == aVacancyId)));
         }
 
         private static void SetupReferenceDataService(Mock<IReferenceDataService> referenceDataService)

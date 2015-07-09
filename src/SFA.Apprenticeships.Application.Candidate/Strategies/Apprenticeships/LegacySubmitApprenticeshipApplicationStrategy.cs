@@ -12,20 +12,25 @@
     public class LegacySubmitApprenticeshipApplicationStrategy : ISubmitApprenticeshipApplicationStrategy
     {
         private readonly ILogService _logger;
+        private readonly IServiceBus _serviceBus;
 
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
-        private readonly IMessageBus _messageBus;
+
         private readonly ICommunicationService _communicationService;
 
-        public LegacySubmitApprenticeshipApplicationStrategy(IMessageBus messageBus, IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
-            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository, ICommunicationService communicationService, ILogService logger)
+        public LegacySubmitApprenticeshipApplicationStrategy(
+            ILogService logger,
+            IServiceBus serviceBus,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
+            ICommunicationService communicationService)
         {
-            _messageBus = messageBus;
+            _logger = logger;
+            _serviceBus = serviceBus;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _communicationService = communicationService;
-            _logger = logger;
         }
 
         public void SubmitApplication(Guid candidateId, int vacancyId)
@@ -60,7 +65,7 @@
                     ApplicationId = apprenticeshipApplicationDetail.EntityId
                 };
 
-                _messageBus.PublishMessage(message);
+                _serviceBus.PublishMessage(message);
             }
             catch
             {

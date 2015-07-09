@@ -20,7 +20,7 @@ namespace SFA.Apprenticeships.Domain.Interfaces.Messaging
             };
         }
 
-        public static ServiceBusMessageResult Reqeue(DateTime reqeueDateTimeUtc)
+        public static ServiceBusMessageResult Requeue(DateTime reqeueDateTimeUtc)
         {
             return new ServiceBusMessageResult
             {
