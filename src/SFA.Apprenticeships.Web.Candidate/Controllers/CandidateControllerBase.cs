@@ -13,8 +13,15 @@
     using NLog;
     using Providers;
 
-    [ApplyWebTrends, SessionTimeout, CookiesEnabled, OutputCache(CacheProfile = CacheProfiles.None), 
-    AllowReturnUrl(Allow = true), ClearSearchReturnUrl, PlannedOutageMessage, UserJourneyContext(UserJourney.None, Order = 1)]
+    [ApplyWebTrends, 
+    SessionTimeout, 
+    CookiesEnabled, 
+    OutputCache(CacheProfile = CacheProfiles.None), 
+    AllowReturnUrl(Allow = true), 
+    ClearSearchReturnUrl, 
+    PlannedOutageMessage, 
+    UserJourneyContext(UserJourney.None, Order = 1),
+    RobotsIndexPage]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         public readonly IConfigurationService ConfigurationService;

@@ -171,6 +171,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
+    <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
     <Compile Include="SiteMap\ISiteMapGenerator.cs" />
     <Compile Include="SiteMap\SiteMapChangeFrequency.cs" />
     <Compile Include="SiteMap\SiteMapGenerator.cs" />
