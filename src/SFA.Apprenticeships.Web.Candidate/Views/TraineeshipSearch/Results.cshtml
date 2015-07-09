@@ -39,6 +39,9 @@
 {
 
     @Scripts.Render("~/bundles/nas/locationsearch")
+    @Scripts.Render("~/bundles/nas/geoLocater")
+
+
     <script>
         var searchUrl = '@Url.RouteUrl(CandidateRouteNames.TraineeshipResults)';
         var locationUrl = '@Url.Action("location", "Location")';
