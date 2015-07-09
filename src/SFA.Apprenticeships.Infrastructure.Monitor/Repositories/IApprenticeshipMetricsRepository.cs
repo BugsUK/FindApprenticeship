@@ -8,6 +8,7 @@
     public interface IApprenticeshipMetricsRepository
     {
         int GetApplicationCount();
+        int GetSubmittedApplicationCount(DateTime submittedDateStart, DateTime submittedDateEnd);
         int GetApplicationStateCount(ApplicationStatuses applicationStatus);
         int GetApplicationCountPerCandidate();
         int GetApplicationStateCountPerCandidate(ApplicationStatuses applicationStatus);
