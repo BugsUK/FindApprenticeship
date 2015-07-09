@@ -2,6 +2,7 @@
 {
     using System;
     using System.Diagnostics;
+    using System.Globalization;
     using System.Net.Mail;
     using System.Text;
     using Application.Candidates;
@@ -181,7 +182,7 @@
         private void AddDailyStats(StringBuilder sb, DateTime date)
         {
             var endDate = date.AddDays(1);
-            sb.AppendLine(date.ToShortDateString());
+            sb.AppendFormat("{0}\n", date.ToString("d", new CultureInfo("en-GB")));
             sb.AppendFormat(" - Number of account registrations: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredUserCount, date, endDate));
             sb.AppendFormat(" - Number of account activations: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredUserCount, date, endDate));
             sb.AppendFormat(" - Number of applications submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetSubmittedApplicationCount, date, endDate));
