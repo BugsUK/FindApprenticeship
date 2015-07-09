@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using ActionResults;
     using Attributes;
+    using Common.Attributes;
     using Constants;
     using Domain.Interfaces.Configuration;
     using FluentValidation.Mvc;
@@ -90,6 +91,7 @@
 
         [HttpGet]
         [ClearSearchReturnUrl(false)]
+        [RobotsIndexPage(true)]
         public async Task<ActionResult> Details(string id)
         {
             return await Task.Run<ActionResult>(() =>
