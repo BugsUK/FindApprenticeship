@@ -128,6 +128,9 @@
 
             For<IServiceBusSubscriber<CreateVacancySiteMapRequest>>().Use<CreateVacancySiteMapRequestSubscriber>();
             For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<CreateVacancySiteMapRequest>>();
+
+            For<IServiceBusSubscriber<VacancyStatusSummary>>().Use<VacancyStatusSummarySubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancyStatusSummary>>();
         }
     }
 }

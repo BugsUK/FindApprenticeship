@@ -24,20 +24,20 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "application-status-summary")]
-        public ServiceBusMessageResult Consume(ApplicationStatusSummary applicationStatusSummaryToProcess)
+        public ServiceBusMessageResult Consume(ApplicationStatusSummary applicationStatusSummary)
         {
-            _applicationStatusProcessor.ProcessApplicationStatuses(applicationStatusSummaryToProcess, _strictEtlValidation);
+            _applicationStatusProcessor.ProcessApplicationStatuses(applicationStatusSummary, _strictEtlValidation);
 
             // determine whether this message is from an already propagated vacancy status summary
-            var isReprocessing = applicationStatusSummaryToProcess.ApplicationId != Guid.Empty;
+            var isReprocessing = applicationStatusSummary.ApplicationId != Guid.Empty;
 
             if (!isReprocessing)
             {
                 var vacancyStatusSummary = new VacancyStatusSummary
                 {
-                    LegacyVacancyId = applicationStatusSummaryToProcess.LegacyVacancyId,
-                    VacancyStatus = applicationStatusSummaryToProcess.VacancyStatus,
-                    ClosingDate = applicationStatusSummaryToProcess.ClosingDate
+                    LegacyVacancyId = applicationStatusSummary.LegacyVacancyId,
+                    VacancyStatus = applicationStatusSummary.VacancyStatus,
+                    ClosingDate = applicationStatusSummary.ClosingDate
                 };
 
                 _serviceBus.PublishMessage(vacancyStatusSummary);
