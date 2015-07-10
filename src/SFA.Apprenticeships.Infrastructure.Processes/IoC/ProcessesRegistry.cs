@@ -118,12 +118,12 @@
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
 
             // service bus
-            RegisterServiceBusMessageBrokers();
+            RegisterServiceBusMessageBrokers(container);
         }
 
         #region Helpers
 
-        private void RegisterServiceBusMessageBrokers()
+        private void RegisterServiceBusMessageBrokers(Container container)
         {
             RegisterServiceBusMessageBroker<ApplicationStatusSummarySubscriber, ApplicationStatusSummary>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
@@ -144,6 +144,16 @@
             RegisterServiceBusMessageBroker<VacancyAboutToExpireSubscriber, VacancyAboutToExpire>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
             RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
+
+            // TODO: AG: this mapper is slated for removal (see TODO above).
+            For<VacancyAboutToExpireSubscriber>().Use<VacancyAboutToExpireSubscriber>().Ctor<IMapper>().Named("VacancyEtlMapper");
+
+            // Plug-in configured email, SMS etc. providers.
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var communicationConfiguration = configurationService.Get<CommunicationConfiguration>();
+
+            For<EmailRequestSubscriber>().Use<EmailRequestSubscriber>().Ctor<IEmailDispatcher>().Named(communicationConfiguration.EmailDispatcher);
+            For<SmsRequestSubscriber>().Use<SmsRequestSubscriber>().Ctor<ISmsDispatcher>().Named(communicationConfiguration.SmsDispatcher);
         }
 
         // TODO: AG: move to Azure Service Bus.
