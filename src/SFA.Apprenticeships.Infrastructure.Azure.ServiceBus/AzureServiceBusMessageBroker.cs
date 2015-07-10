@@ -66,7 +66,7 @@
             if (!TryGetSubscriberTopicSubscriptionNames(subscriber, out topicName, out subscriptionName))
             {
                 throw new InvalidOperationException(string.Format(
-                    "No subscriber topic/subscription attribute specified for type '{0}'", typeof (TMessage).FullName));
+                    "No subscriber topic/subscription attribute specified for type '{0}'", typeof(TMessage).FullName));
             }
 
             var serviceBusConfiguration = _configurationService.Get<AzureServiceBusConfiguration>();
@@ -78,8 +78,14 @@
 
             if (subscriptionConfiguration == null)
             {
-                throw new InvalidOperationException(string.Format(
-                    "No subscriber configuration found for topic/subscription \"{0}/{1}\"", topicName, subscriptionName));
+                _logService.Info(
+                    "No subscriber configuration found for topic/subscription \"{0}/{1}\", will use default configuration",
+                    topicName, subscriptionName);
+
+                subscriptionConfiguration = new AzureServiceBusSubscriptionConfiguration
+                {
+                    SubscriptionName = "default"
+                };
             }
 
             var topicClient = TopicClient.CreateFromConnectionString(
@@ -183,9 +189,11 @@
             }
             catch (Exception e)
             {
-                _logService.Error(
+                var deadLetterReason = string.Format(
                     "Unexpected exception consuming message id '{0}, topic/subscription '{1}': message will be dead-lettered",
-                    e, brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
+                    brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
+
+                _logService.Error(deadLetterReason, e);
 
                 brokeredMessage.DeadLetter();
             }
@@ -195,8 +203,11 @@
         {
             if (result == null)
             {
-                _logService.Warn("No message result for message id '{0}', topic/subscription '{1}': message will be dead-lettered",
+                var deadLetterReason = string.Format(
+                    "No message result for message id '{0}', topic/subscription '{1}': message will be dead-lettered",
                     brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
+
+                _logService.Warn(deadLetterReason);
 
                 brokeredMessage.DeadLetter();
                 return;
@@ -228,9 +239,11 @@
                     break;
 
                 default:
-                    _logService.Error(
+                    var deadLetterReason = string.Format(
                         "Invalid message state '{0}' for message id '{1}', topic/subscription '{2}': message will be dead-lettered",
                         result.State, brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
+
+                    _logService.Error(deadLetterReason);
 
                     brokeredMessage.DeadLetter();
                     break;

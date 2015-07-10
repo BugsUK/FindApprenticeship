@@ -126,14 +126,18 @@
         private void RegisterServiceBusMessageBrokers(Container container)
         {
             // TODO: AG: this mapper is slated for removal (see TODO above).
-            For<VacancyAboutToExpireSubscriber>().Use<VacancyAboutToExpireSubscriber>().Ctor<IMapper>().Named("VacancyEtlMapper");
+            For<IServiceBusSubscriber<VacancyAboutToExpire>>().Use<VacancyAboutToExpireSubscriber>().Ctor<IMapper>().Named("VacancyEtlMapper");
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancyAboutToExpire>>();
 
             // Plug-in configured email, SMS etc. providers.
             var configurationService = container.GetInstance<IConfigurationService>();
             var communicationConfiguration = configurationService.Get<CommunicationConfiguration>();
 
-            For<EmailRequestSubscriber>().Use<EmailRequestSubscriber>().Ctor<IEmailDispatcher>().Named(communicationConfiguration.EmailDispatcher);
-            For<SmsRequestSubscriber>().Use<SmsRequestSubscriber>().Ctor<ISmsDispatcher>().Named(communicationConfiguration.SmsDispatcher);
+            For<IServiceBusSubscriber<EmailRequest>>().Use<EmailRequestSubscriber>().Ctor<IEmailDispatcher>().Named(communicationConfiguration.EmailDispatcher);
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<EmailRequest>>();
+
+            For<IServiceBusSubscriber<SmsRequest>>().Use<SmsRequestSubscriber>().Ctor<ISmsDispatcher>().Named(communicationConfiguration.SmsDispatcher);
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<SmsRequest>>();
 
             RegisterServiceBusMessageBroker<ApplicationStatusSummarySubscriber, ApplicationStatusSummary>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
@@ -148,10 +152,7 @@
             RegisterServiceBusMessageBroker<CreateCandidateRequestSubscriber, CreateCandidateRequest>();
             RegisterServiceBusMessageBroker<SaveCandidateRequestSubscriber, SaveCandidateRequest>();
             RegisterServiceBusMessageBroker<CommunicationRequestSubscriber, CommunicationRequest>();
-            RegisterServiceBusMessageBroker<EmailRequestSubscriber, EmailRequest>();
-            RegisterServiceBusMessageBroker<SmsRequestSubscriber, SmsRequest>();
             RegisterServiceBusMessageBroker<CreateVacancySiteMapRequestSubscriber, CreateVacancySiteMapRequest>();
-            RegisterServiceBusMessageBroker<VacancyAboutToExpireSubscriber, VacancyAboutToExpire>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
             RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
         }
