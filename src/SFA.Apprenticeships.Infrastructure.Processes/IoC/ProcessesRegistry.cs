@@ -125,6 +125,16 @@
 
         private void RegisterServiceBusMessageBrokers(Container container)
         {
+            // TODO: AG: this mapper is slated for removal (see TODO above).
+            For<VacancyAboutToExpireSubscriber>().Use<VacancyAboutToExpireSubscriber>().Ctor<IMapper>().Named("VacancyEtlMapper");
+
+            // Plug-in configured email, SMS etc. providers.
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var communicationConfiguration = configurationService.Get<CommunicationConfiguration>();
+
+            For<EmailRequestSubscriber>().Use<EmailRequestSubscriber>().Ctor<IEmailDispatcher>().Named(communicationConfiguration.EmailDispatcher);
+            For<SmsRequestSubscriber>().Use<SmsRequestSubscriber>().Ctor<ISmsDispatcher>().Named(communicationConfiguration.SmsDispatcher);
+
             RegisterServiceBusMessageBroker<ApplicationStatusSummarySubscriber, ApplicationStatusSummary>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
             RegisterServiceBusMessageBroker<ApplicationHousekeepingRequestSubscriber, ApplicationHousekeepingRequest>();
@@ -144,16 +154,6 @@
             RegisterServiceBusMessageBroker<VacancyAboutToExpireSubscriber, VacancyAboutToExpire>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
             RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
-
-            // TODO: AG: this mapper is slated for removal (see TODO above).
-            For<VacancyAboutToExpireSubscriber>().Use<VacancyAboutToExpireSubscriber>().Ctor<IMapper>().Named("VacancyEtlMapper");
-
-            // Plug-in configured email, SMS etc. providers.
-            var configurationService = container.GetInstance<IConfigurationService>();
-            var communicationConfiguration = configurationService.Get<CommunicationConfiguration>();
-
-            For<EmailRequestSubscriber>().Use<EmailRequestSubscriber>().Ctor<IEmailDispatcher>().Named(communicationConfiguration.EmailDispatcher);
-            For<SmsRequestSubscriber>().Use<SmsRequestSubscriber>().Ctor<ISmsDispatcher>().Named(communicationConfiguration.SmsDispatcher);
         }
 
         // TODO: AG: move to Azure Service Bus.
