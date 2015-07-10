@@ -5,6 +5,7 @@
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
     using Application.Candidate;
+    using Application.Candidates.Entities;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Communications.Housekeeping;
@@ -117,25 +118,43 @@
             For<ISavedSearchProcessor>().Use<SavedSearchProcessor>();
 
             // service bus
-            For<IServiceBusSubscriber<ApplicationStatusSummary>>().Use<ApplicationStatusSummarySubscriber>();
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<ApplicationStatusSummary>>();
-
-            For<IServiceBusSubscriber<VacancyStatusSummary>>().Use<VacancyStatusSummarySubscriber>();
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancyStatusSummary>>();
-
-            For<IServiceBusSubscriber<ApplicationHousekeepingRequest>>().Use<ApplicationHousekeepingRequestSubscriber>();
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<ApplicationHousekeepingRequest>>();
-
-
-            //
-            For<IServiceBusSubscriber<SaveCandidateRequest>>().Use<SaveCandidateRequestSubscriber>();
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<SaveCandidateRequest>>();
-
-            For<IServiceBusSubscriber<VacancySummaryUpdateComplete>>().Use<VacancySummaryCompleteSubscriber>();
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancySummaryUpdateComplete>>();
-
-            For<IServiceBusSubscriber<CreateVacancySiteMapRequest>>().Use<CreateVacancySiteMapRequestSubscriber>();
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<CreateVacancySiteMapRequest>>();
+            RegisterServiceBusMessageBrokers();
         }
+
+        #region Helpers
+
+        private void RegisterServiceBusMessageBrokers()
+        {
+            RegisterServiceBusMessageBroker<ApplicationStatusSummarySubscriber, ApplicationStatusSummary>();
+            RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
+            RegisterServiceBusMessageBroker<ApplicationHousekeepingRequestSubscriber, ApplicationHousekeepingRequest>();
+            RegisterServiceBusMessageBroker<ApplicationStatusChangedSubscriber, ApplicationStatusChanged>();
+            RegisterServiceBusMessageBroker<ApplicationStatusSummaryPageSubscriber, ApplicationUpdatePage>();
+            RegisterServiceBusMessageBroker<CommunicationHousekeepingRequestSubscriber, CommunicationHousekeepingRequest>();
+            RegisterServiceBusMessageBroker<SubmitApprenticeshipApplicationRequestSubscriber, SubmitApprenticeshipApplicationRequest>();
+            RegisterServiceBusMessageBroker<SubmitTraineeshipApplicationRequestSubscriber, SubmitTraineeshipApplicationRequest>();
+            RegisterServiceBusMessageBroker<CandidateAccountHousekeepingSubscriber, CandidateHousekeeping>();
+            RegisterServiceBusMessageBroker<CandidateSavedSearchesSubscriber, CandidateSavedSearches>();
+            RegisterServiceBusMessageBroker<CreateCandidateRequestSubscriber, CreateCandidateRequest>();
+            RegisterServiceBusMessageBroker<SaveCandidateRequestSubscriber, SaveCandidateRequest>();
+            RegisterServiceBusMessageBroker<CommunicationRequestSubscriber, CommunicationRequest>();
+            RegisterServiceBusMessageBroker<EmailRequestSubscriber, EmailRequest>();
+            RegisterServiceBusMessageBroker<SmsRequestSubscriber, SmsRequest>();
+            RegisterServiceBusMessageBroker<CreateVacancySiteMapRequestSubscriber, CreateVacancySiteMapRequest>();
+            RegisterServiceBusMessageBroker<VacancyAboutToExpireSubscriber, VacancyAboutToExpire>();
+            RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
+            RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
+        }
+
+        // TODO: AG: move to Azure Service Bus.
+        private void RegisterServiceBusMessageBroker<TSubscriber, TMessage>()
+            where TSubscriber : IServiceBusSubscriber<TMessage>
+            where TMessage : class
+        {
+            For<IServiceBusSubscriber<TMessage>>().Use<TSubscriber>();
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<TMessage>>();
+        }
+
+        #endregion
     }
 }
