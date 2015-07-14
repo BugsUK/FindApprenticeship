@@ -39,7 +39,7 @@
                 topicConfiguration.MessageType.Should().NotBeNullOrWhiteSpace();
 
                 topicConfiguration.Subscriptions.Should().NotBeNull();
-                topicConfiguration.Subscriptions.Length.Should().BePositive();
+                topicConfiguration.Subscriptions.Length.Should().BeGreaterOrEqualTo(0);
 
                 foreach (var subscriptionConfiguration in topicConfiguration.Subscriptions)
                 {
