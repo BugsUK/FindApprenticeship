@@ -15,7 +15,6 @@
         where TMessage : class
     {
         private const string ConsumeMethodName = "Consume";
-        private const string DefaultSubscriptionName = "default";
 
         private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
@@ -83,10 +82,7 @@
                     "No subscriber configuration found for topic/subscription \"{0}/{1}\", will use default configuration",
                     topicName, subscriptionName);
 
-                subscriptionConfiguration = new AzureServiceBusSubscriptionConfiguration
-                {
-                    SubscriptionName = DefaultSubscriptionName
-                };
+                subscriptionConfiguration = new AzureServiceBusSubscriptionConfiguration();
             }
 
             var subscriptionPath = string.Format("{0}/{1}", topicName, subscriptionConfiguration.SubscriptionName);

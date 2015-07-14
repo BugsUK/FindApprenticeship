@@ -2,6 +2,11 @@
 {
     public class AzureServiceBusSubscriptionConfiguration
     {
+        public AzureServiceBusSubscriptionConfiguration()
+        {
+            SubscriptionName = "default";
+        }
+
         public string SubscriptionName { get; set; }
 
         public int? MessageCountWarningLimit { get; set; }
