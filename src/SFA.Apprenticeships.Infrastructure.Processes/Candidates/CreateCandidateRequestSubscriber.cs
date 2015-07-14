@@ -70,7 +70,7 @@
             {
                 _logger.Error(string.Format("Create candidate with id {0} request async process failed", request.CandidateId), ex);
 
-                request.ProcessTime = request.ProcessTime.HasValue ? DateTime.Now.AddMinutes(5) : DateTime.Now.AddSeconds(30);
+                request.ProcessTime = request.ProcessTime.HasValue ? DateTime.UtcNow.AddMinutes(5) : DateTime.UtcNow.AddSeconds(30);
 
                 return ServiceBusMessageResult.Requeue(request.ProcessTime.Value);
             }

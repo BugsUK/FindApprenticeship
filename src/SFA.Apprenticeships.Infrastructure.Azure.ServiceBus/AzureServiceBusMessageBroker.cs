@@ -15,6 +15,7 @@
         where TMessage : class
     {
         private const string ConsumeMethodName = "Consume";
+        private const string DefaultSubscriptionName = "default";
 
         private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
@@ -84,14 +85,16 @@
 
                 subscriptionConfiguration = new AzureServiceBusSubscriptionConfiguration
                 {
-                    SubscriptionName = "default"
+                    SubscriptionName = DefaultSubscriptionName
                 };
             }
 
+            var subscriptionPath = string.Format("{0}/{1}", topicName, subscriptionConfiguration.SubscriptionName);
+
+            _logService.Info("Subscribing to topic/subscription '{0}'", subscriptionPath);
+
             var topicClient = TopicClient.CreateFromConnectionString(
                 serviceBusConfiguration.ConnectionString, topicName);
-
-            var subscriptionPath = string.Format("{0}/{1}", topicName, subscriptionName);
 
             var options = new OnMessageOptions
             {
@@ -101,13 +104,13 @@
                 AutoComplete = true
             };
 
+            options.ExceptionReceived += LogSubscriptionClientException;
+
             var subscriptionClient = SubscriptionClient.CreateFromConnectionString(
                 serviceBusConfiguration.ConnectionString,
                 topicName,
-                subscriptionName,
+                subscriptionConfiguration.SubscriptionName,
                 ReceiveMode.PeekLock);
-
-            _logService.Info("Subscribing to topic/subscription '{0}'", subscriptionPath);
 
             var subscriberInfo = new SubscriberInfo
             {
@@ -121,7 +124,8 @@
                 ConsumeMessage(subscriberInfo, brokeredMessage)),
                 options);
 
-            _logService.Info("Subscribed to topic/subscription '{0}'", subscriptionPath);
+            _logService.Info("Subscribed to topic/subscription '{0}' with max of {1} concurrent call(s) per node",
+                subscriptionPath, options.MaxConcurrentCalls);
 
             return subscriberInfo;
         }
@@ -166,7 +170,7 @@
 
             topicName = subscriptionAttribute.TopicName;
             subscriptionName = subscriptionAttribute.SubscriptionName;
-
+            
             return true;
         }
 
@@ -256,6 +260,11 @@
         private static DateTime GetDefaultReqeueDateTimeUtc()
         {
             return DateTime.UtcNow.AddMinutes(5);
+        }
+
+        private void LogSubscriptionClientException(object sender, ExceptionReceivedEventArgs e)
+        {
+            _logService.Error("Subscription client exception", e);
         }
 
         #endregion

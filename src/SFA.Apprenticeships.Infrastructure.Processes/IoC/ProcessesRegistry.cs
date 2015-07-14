@@ -176,7 +176,6 @@
             For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancyAboutToExpire>>();
         }
 
-        // TODO: AG: move to Azure Service Bus.
         private void RegisterServiceBusMessageBroker<TSubscriber, TMessage>()
             where TSubscriber : IServiceBusSubscriber<TMessage>
             where TMessage : class

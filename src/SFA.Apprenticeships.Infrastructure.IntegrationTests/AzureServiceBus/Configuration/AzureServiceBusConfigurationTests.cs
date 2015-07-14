@@ -43,7 +43,12 @@
 
                 foreach (var subscriptionConfiguration in topicConfiguration.Subscriptions)
                 {
-                    subscriptionConfiguration.SubscriptionName.Should().NotBeNull();
+                    // One or more subscription configuration items should be specified.
+                    Assert.That(
+                        !string.IsNullOrWhiteSpace(subscriptionConfiguration.SubscriptionName) ||
+                        subscriptionConfiguration.MessageCountWarningLimit.HasValue ||
+                        subscriptionConfiguration.DeadLetterMessageCountWarningLimit.HasValue ||
+                        subscriptionConfiguration.MaxConcurrentMessagesPerNode.HasValue);
                 }
             }
         }
