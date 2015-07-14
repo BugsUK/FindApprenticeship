@@ -8,6 +8,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Address.IoC;
     using Application.Interfaces.Logging;
     using Azure.Common.IoC;
+    using Azure.ServiceBus.IoC;
     using Common.IoC;
     using Consumers;
     using Domain.Interfaces.Configuration;
@@ -136,6 +137,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<MonitorRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();

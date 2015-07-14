@@ -32,16 +32,36 @@
                 {
                     var topicDescription = new TopicDescription(topic.TopicName);
 
-                    _logService.Info("Creating topic '{0}'", topic.TopicName);
-                    namespaceManager.CreateTopic(topicDescription);
+                    try
+                    {
+                        _logService.Info("Creating topic '{0}'", topic.TopicName);
+
+                        namespaceManager.CreateTopic(topicDescription);
+
+                        _logService.Info("Created topic '{0}'", topic.TopicName);
+                    }
+                    catch (MessagingEntityAlreadyExistsException)
+                    {
+                        _logService.Info("Topic already exists '{0}'", topic.TopicName);
+                    }
                 }
 
                 foreach (var subscription in topic.Subscriptions)
                 {
                     if (!namespaceManager.SubscriptionExists(topic.TopicName, subscription.SubscriptionName))
                     {
-                        _logService.Info("Creating subscription '{0}/{1}'", topic.TopicName, subscription.SubscriptionName);
-                        namespaceManager.CreateSubscription(topic.TopicName, subscription.SubscriptionName);
+                        try
+                        {
+                            _logService.Info("Creating subscription '{0}/{1}'", topic.TopicName, subscription.SubscriptionName);
+
+                            namespaceManager.CreateSubscription(topic.TopicName, subscription.SubscriptionName);
+
+                            _logService.Info("Created subscription '{0}/{1}'", topic.TopicName, subscription.SubscriptionName);
+                        }
+                        catch (MessagingEntityAlreadyExistsException)
+                        {
+                            _logService.Info("Subscription already exists '{0}/{1}'", topic.TopicName, subscription.SubscriptionName);
+                        }
                     }
                 }
             }
