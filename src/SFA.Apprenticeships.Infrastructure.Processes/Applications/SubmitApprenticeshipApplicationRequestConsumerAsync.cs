@@ -7,6 +7,7 @@
     using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using EasyNetQ.AutoSubscribe;
@@ -19,7 +20,7 @@
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IUserReadRepository _userReadRepository;
 
         public SubmitApprenticeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
@@ -27,8 +28,8 @@
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
-            IMessageBus messageBus,
-            ILogService logger)
+            IUserReadRepository userReadRepository,
+            IMessageBus messageBus, ILogService logger)
         {
             _legacyApplicationProvider = legacyApplicationProvider;
             _legacyCandidateProvider = legacyCandidateProvider;
@@ -37,7 +38,10 @@
             _candidateReadRepository = candidateReadRepository;
             _messageBus = messageBus;
             _logger = logger;
+            _userReadRepository = userReadRepository;
         }
+
+        private readonly IMessageBus _messageBus;
 
         [SubscriptionConfiguration(PrefetchCount = 2)]
         [AutoSubscriberConsumer(SubscriptionId = "SubmitApprenticeshipApplicationRequestConsumerAsync")]
@@ -75,9 +79,22 @@
 
                 if (candidate.LegacyCandidateId == 0)
                 {
-                    _logger.Info("Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
-                        applicationDetail.CandidateId);
-                    Requeue(request);
+                    var user = _userReadRepository.Get(applicationDetail.CandidateId);
+                    if (user == null || user.Status == UserStatuses.PendingDeletion)
+                    {
+                        _logger.Warn(
+                            "User with Id: {0} is set as pending deletion. Application with Id: {1} cannot be submitted and will be set to draft. Message will not be requeued",
+                            applicationDetail.CandidateId, request.ApplicationId);
+                        applicationDetail.RevertStateToDraft();
+                        _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+                    }
+                    else
+                    {
+                        _logger.Info(
+                            "Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
+                            applicationDetail.CandidateId);
+                        Requeue(request);
+                    }
                 }
                 else
                 {

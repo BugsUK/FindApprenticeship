@@ -5,6 +5,7 @@
     using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
@@ -21,6 +22,7 @@
         private Mock<IApprenticeshipApplicationReadRepository> _mockApprenticeshipApplicationReadRepository;
         private Mock<IApprenticeshipApplicationWriteRepository> _mockApprenticeshipApplicationWriteRepository;
         private Mock<ICandidateReadRepository> _mockCandidateReadRepository;
+        private Mock<IUserReadRepository> _mockUserReadRepository;
         private Mock<IMessageBus> _mockMessageBus;
         private Mock<ILogService> _mockLogger;
 
@@ -34,6 +36,7 @@
             _mockApprenticeshipApplicationReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();
             _mockApprenticeshipApplicationWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
             _mockCandidateReadRepository = new Mock<ICandidateReadRepository>();
+            _mockUserReadRepository = new Mock<IUserReadRepository>();
             _mockMessageBus = new Mock<IMessageBus>();
             _mockLogger = new Mock<ILogService>();
 
@@ -43,6 +46,7 @@
                 _mockApprenticeshipApplicationReadRepository.Object,
                 _mockApprenticeshipApplicationWriteRepository.Object,
                 _mockCandidateReadRepository.Object,
+                _mockUserReadRepository.Object,
                 _mockMessageBus.Object,
                 _mockLogger.Object);
         }
@@ -75,6 +79,8 @@
             _mockCandidateReadRepository.Setup(mock => mock
                 .Get(candidate.EntityId, true))
                 .Returns(candidate);
+
+            _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User {Status = UserStatuses.Active});
 
             // Act.
             _consumer.Consume(request).Wait();
@@ -121,6 +127,8 @@
                 .Get(candidate.EntityId, true))
                 .Returns(candidate);
 
+            _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User { Status = UserStatuses.Active });
+
             // Act.
             _consumer.Consume(request).Wait();
 
@@ -157,6 +165,8 @@
             _mockCandidateReadRepository.Setup(mock => mock
                 .Get(candidate.EntityId, true))
                 .Returns(candidate);
+
+            _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User { Status = UserStatuses.Active });
 
             // Act.
             _consumer.Consume(request).Wait();
@@ -196,6 +206,8 @@
                 .Get(candidate.EntityId, true))
                 .Returns(candidate);
 
+            _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User { Status = UserStatuses.Active });
+
             // Act.
             _consumer.Consume(request).Wait();
 
@@ -203,6 +215,46 @@
             _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Never);
             _mockLegacyApplicationProvider.Verify(mock => mock.CreateApplication(applicationDetail), Times.Never);
             _mockMessageBus.Verify(mock => mock.PublishMessage(request), Times.Never);
+        }
+
+        [Test]
+        public void ShouldNotRequeueIfUserPendingDeletion()
+        {
+            var request = new SubmitApprenticeshipApplicationRequest
+            {
+                ApplicationId = new Guid()
+            };
+
+            var candidate = new Fixture()
+                .Build<Candidate>()
+                .With(fixture => fixture.LegacyCandidateId, 0)
+                .Create();
+
+            var applicationDetail = new Fixture()
+                .Build<ApprenticeshipApplicationDetail>()
+                .With(fixture => fixture.EntityId, request.ApplicationId)
+                .With(fixture => fixture.CandidateId, candidate.EntityId)
+                .With(fixture => fixture.Status, ApplicationStatuses.Draft)
+                .Create();
+
+            _mockApprenticeshipApplicationReadRepository.Setup(mock => mock
+                .Get(applicationDetail.EntityId, true))
+                .Returns(applicationDetail);
+
+            _mockCandidateReadRepository.Setup(mock => mock
+                .Get(candidate.EntityId, true))
+                .Returns(candidate);
+
+            _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User { Status = UserStatuses.PendingDeletion });
+
+            // Act.
+            _consumer.Consume(request).Wait();
+
+            // Assert.
+            _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Never);
+            _mockLegacyApplicationProvider.Verify(mock => mock.CreateApplication(applicationDetail), Times.Never);
+            _mockMessageBus.Verify(mock => mock.PublishMessage(request), Times.Never);
+            _mockApprenticeshipApplicationWriteRepository.Verify(a => a.Save(It.IsAny<ApprenticeshipApplicationDetail>()), Times.Once);
         }
     }
 }
