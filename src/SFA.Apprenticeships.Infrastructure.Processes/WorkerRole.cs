@@ -2,7 +2,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 {
     using System;
     using System.Net;
-    using System.Reflection;
     using System.Threading;
     using Application.Candidates;
     using Application.Interfaces.Logging;
@@ -13,7 +12,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
-    using Communications;
     using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using Elastic.Common.IoC;
@@ -24,8 +22,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using RabbitMq.Interfaces;
-    using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Audit.IoC;
     using Repositories.Authentication.IoC;
@@ -79,7 +75,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
             try
             {
                 InitializeIoC();
-                InitialiseRabbitMQSubscribers();
                 InitialiseServiceBus();
                 SubscribeServiceBusMessageBrokers();
             }
@@ -107,7 +102,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
-                x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
@@ -132,19 +126,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
             });
 
             _logger = _container.GetInstance<ILogService>();
-
-
-        }
-
-        private void InitialiseRabbitMQSubscribers()
-        {
-            var bootstrapper = _container.GetInstance<IBootstrapSubcribers>();
-
-            _logger.Debug("RabbitMQ initialising");
-
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(EmailRequestConsumerAsync)), "AsyncProcessor", _container);
-
-            _logger.Debug("RabbitMQ initialised");
         }
 
         private void InitialiseServiceBus()

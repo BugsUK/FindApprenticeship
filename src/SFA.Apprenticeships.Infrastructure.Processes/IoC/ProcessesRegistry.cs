@@ -125,19 +125,8 @@
 
         private void RegisterServiceBusMessageBrokers(Container container)
         {
-            // TODO: AG: this mapper is slated for removal (see TODO above).
-            For<IServiceBusSubscriber<VacancyAboutToExpire>>().Use<VacancyAboutToExpireSubscriber>().Ctor<IMapper>().Named("VacancyEtlMapper");
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancyAboutToExpire>>();
-
-            // Plug-in configured email, SMS etc. providers.
-            var configurationService = container.GetInstance<IConfigurationService>();
-            var communicationConfiguration = configurationService.Get<CommunicationConfiguration>();
-
-            For<IServiceBusSubscriber<EmailRequest>>().Use<EmailRequestSubscriber>().Ctor<IEmailDispatcher>().Named(communicationConfiguration.EmailDispatcher);
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<EmailRequest>>();
-
-            For<IServiceBusSubscriber<SmsRequest>>().Use<SmsRequestSubscriber>().Ctor<ISmsDispatcher>().Named(communicationConfiguration.SmsDispatcher);
-            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<SmsRequest>>();
+            RegisterVacancyAboutToExpireServiceBusMessageBroker();
+            RegisterCommunicationServiceBusMessageBrokers(container);
 
             RegisterServiceBusMessageBroker<ApplicationStatusSummarySubscriber, ApplicationStatusSummary>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
@@ -155,6 +144,36 @@
             RegisterServiceBusMessageBroker<CreateVacancySiteMapRequestSubscriber, CreateVacancySiteMapRequest>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
             RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
+        }
+
+        private void RegisterCommunicationServiceBusMessageBrokers(Container container)
+        {
+            // Plug-in configured email, SMS etc. providers.
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var communicationConfiguration = configurationService.Get<CommunicationConfiguration>();
+
+            For<IServiceBusSubscriber<EmailRequest>>()
+                .Use<EmailRequestSubscriber>()
+                .Ctor<IEmailDispatcher>()
+                .Named(communicationConfiguration.EmailDispatcher);
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<EmailRequest>>();
+
+            For<IServiceBusSubscriber<SmsRequest>>()
+                .Use<SmsRequestSubscriber>()
+                .Ctor<ISmsDispatcher>()
+                .Named(communicationConfiguration.SmsDispatcher);
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<SmsRequest>>();
+        }
+
+        private void RegisterVacancyAboutToExpireServiceBusMessageBroker()
+        {
+            // TODO: AG: this mapper is slated for removal (see TODO above).
+            For<IServiceBusSubscriber<VacancyAboutToExpire>>()
+                .Use<VacancyAboutToExpireSubscriber>()
+                .Ctor<IMapper>()
+                .Named("VacancyEtlMapper");
+
+            For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<VacancyAboutToExpire>>();
         }
 
         // TODO: AG: move to Azure Service Bus.
