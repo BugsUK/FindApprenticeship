@@ -85,13 +85,15 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <span");
+WriteLiteral("\r\n                    <a");
 
-WriteLiteral(" class=\"fake-link geolocater inl-block hide-nojs \"");
+WriteLiteral(" href=\"#\"");
+
+WriteLiteral(" class=\"geolocater inl-block hide-nojs \"");
 
 WriteLiteral(" id=\"getLocation\"");
 
-WriteLiteral(">Use current location</span>\r\n                </div>\r\n                \r\n");
+WriteLiteral(">Use current location</a>\r\n                </div>\r\n                \r\n");
 
             
             #line 15 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
@@ -176,14 +178,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1476), Tuple.Create("\"", 1521)
+WriteAttribute("href", Tuple.Create(" href=\"", 1469), Tuple.Create("\"", 1514)
             
             #line 26 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 1483), Tuple.Create<System.Object, System.Int32>(Url.Action("results", locationSearch)
+, Tuple.Create(Tuple.Create("", 1476), Tuple.Create<System.Object, System.Int32>(Url.Action("results", locationSearch)
             
             #line default
             #line hidden
-, 1483), false)
+, 1476), false)
 );
 
 WriteLiteral(">");
@@ -282,14 +284,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2683), Tuple.Create("\"", 2713)
+WriteAttribute("value", Tuple.Create(" value=\"", 2676), Tuple.Create("\"", 2706)
             
             #line 46 "..\..\Views\TraineeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2691), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 2684), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 2691), false)
+, 2684), false)
 );
 
 WriteLiteral(" />\r\n\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n    \r\n\r\n</section>");

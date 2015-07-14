@@ -45,9 +45,10 @@ $(function () {
 
     }
 
-    $('.geolocation #geoLocateContainer').append(' or <span class="fake-link geolocater inl-block hide-nojs" id="getLocation">use current location</span>');
+    $('.geolocation #geoLocateContainer').append(' or <a href="#" class="geolocater inl-block hide-nojs" id="getLocation">use current location</a>');
 
-    $(document).on('click', '#getLocation', function () {
+    $(document).on('click', '#getLocation', function (e) {
+        e.preventDefault();
         geoFindMe();
     });
 

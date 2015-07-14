@@ -167,13 +167,15 @@ WriteLiteral("                    ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    <span");
+WriteLiteral("\r\n                    <a");
 
-WriteLiteral(" class=\"fake-link geolocater inl-block hide-nojs \"");
+WriteLiteral(" href=\"#\"");
+
+WriteLiteral(" class=\"geolocater inl-block hide-nojs \"");
 
 WriteLiteral(" id=\"getLocation\"");
 
-WriteLiteral(">Use current location</span>\r\n                </div>\r\n                \r\n\r\n");
+WriteLiteral(">Use current location</a>\r\n                </div>\r\n                \r\n\r\n");
 
             
             #line 26 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
@@ -258,14 +260,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2184), Tuple.Create("\"", 2241)
+WriteAttribute("href", Tuple.Create(" href=\"", 2177), Tuple.Create("\"", 2234)
             
             #line 37 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 2191), Tuple.Create<System.Object, System.Int32>(Url.Action("results", locationSearch.RouteValues)
+, Tuple.Create(Tuple.Create("", 2184), Tuple.Create<System.Object, System.Int32>(Url.Action("results", locationSearch.RouteValues)
             
             #line default
             #line hidden
-, 2191), false)
+, 2184), false)
 );
 
 WriteLiteral(">");
@@ -400,14 +402,14 @@ WriteLiteral(" name=\"Hash\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 3994), Tuple.Create("\"", 4024)
+WriteAttribute("value", Tuple.Create(" value=\"", 3987), Tuple.Create("\"", 4017)
             
             #line 64 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-, Tuple.Create(Tuple.Create("", 4002), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
+, Tuple.Create(Tuple.Create("", 3995), Tuple.Create<System.Object, System.Int32>(Model.LatLonLocHash()
             
             #line default
             #line hidden
-, 4002), false)
+, 3995), false)
 );
 
 WriteLiteral(" />\r\n");
@@ -431,14 +433,14 @@ WriteLiteral(" name=\"LocationType\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4342), Tuple.Create("\"", 4369)
+WriteAttribute("value", Tuple.Create(" value=\"", 4335), Tuple.Create("\"", 4362)
             
             #line 67 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-  , Tuple.Create(Tuple.Create("", 4350), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+  , Tuple.Create(Tuple.Create("", 4343), Tuple.Create<System.Object, System.Int32>(Model.LocationType
             
             #line default
             #line hidden
-, 4350), false)
+, 4343), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n</section>");
