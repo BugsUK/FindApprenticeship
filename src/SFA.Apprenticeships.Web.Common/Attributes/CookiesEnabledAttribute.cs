@@ -10,13 +10,22 @@
     {
         public ICookieDetectionProvider CookieDetectionProvider { get; set; }
 
+        public IRobotCrawlerProvider RobotCrawlerProvider { get; set; }
+
         public IEuCookieDirectiveProvider EuCookieDirectiveProvider { get; set; }
 
         public IUserDataProvider UserDataProvider { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            if (!CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext) &&
+            var isCookiePresent = CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext);
+
+            if (!isCookiePresent && RobotCrawlerProvider.IsRobot(filterContext.HttpContext))
+            {
+                return;
+            }
+
+            if (!isCookiePresent &&
                 !filterContext.ActionDescriptor.ActionName.Equals("Cookies", StringComparison.CurrentCultureIgnoreCase) &&
                 !filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.Equals("Home", StringComparison.CurrentCultureIgnoreCase))
             {
@@ -32,7 +41,7 @@
                 return;
             }
 
-            if (CookieDetectionProvider.IsCookiePresent(filterContext.HttpContext))
+            if (isCookiePresent)
             {
                 if (filterContext.ActionDescriptor.ActionName.Equals("Cookies", StringComparison.CurrentCultureIgnoreCase) && 
                     filterContext.ActionDescriptor.ControllerDescriptor.ControllerName.Equals("Home", StringComparison.CurrentCultureIgnoreCase))
