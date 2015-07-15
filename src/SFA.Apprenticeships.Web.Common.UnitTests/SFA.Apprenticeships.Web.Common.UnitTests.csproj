@@ -127,6 +127,7 @@
     <Compile Include="Framework\DateDisplayExtensionsTests.cs" />
     <Compile Include="Providers\HelpCookieProviderBuilder.cs" />
     <Compile Include="Providers\HelpCookieProviderTests.cs" />
+    <Compile Include="Providers\RobotCrawlerProviderTests.cs" />
     <Compile Include="YearRegexRangeGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
