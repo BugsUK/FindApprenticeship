@@ -96,7 +96,7 @@
             {
                 MaxConcurrentCalls =
                     subscriptionConfiguration.MaxConcurrentMessagesPerNode ??
-                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode,
+                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode,                    
                 AutoComplete = true
             };
 
@@ -116,7 +116,7 @@
                 Subscriber = subscriber
             };
 
-            subscriptionClient.OnMessageAsync(brokeredMessage => Task.Run(() =>
+            subscriptionClient.OnMessageAsync(async brokeredMessage => await Task.Run(() =>
                 ConsumeMessage(subscriberInfo, brokeredMessage)),
                 options);
 
