@@ -30,6 +30,7 @@
                     x.Type<CheckPostcodeService>();
                     x.Type<CheckUserDirectory>();
                     x.Type<CheckRabbitMessageQueue>();
+                    x.Type<CheckAzureServiceBus>();
                     x.Type<CheckNasGateway>();
                     x.Type<CheckMongoReplicaSets>();
                     x.Type<CheckElasticsearchCluster>();

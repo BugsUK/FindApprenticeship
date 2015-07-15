@@ -119,6 +119,10 @@
       <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.3\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.ServiceBus, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WindowsAzure.ServiceBus.2.7.3\lib\net40-full\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Web.DistributedCache, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.WindowsAzure.Caching.2.5.1.0\lib\net40-full\Microsoft.Web.DistributedCache.dll</HintPath>
@@ -182,11 +186,13 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial">
       <HintPath>..\packages\System.Spatial.5.6.3\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
@@ -217,6 +223,7 @@
     <Compile Include="Repositories\SavedSearchesMetricsRepository.cs" />
     <Compile Include="Repositories\UserMetricsRepository.cs" />
     <Compile Include="Repositories\TraineeshipMetricsRepository.cs" />
+    <Compile Include="Tasks\CheckAzureServiceBus.cs" />
     <Compile Include="Tasks\CheckUnsentCandidateMessages.cs" />
     <Compile Include="Tasks\SendDailyMetricsEmail.cs" />
     <Compile Include="Tasks\CheckTraineeshipApplicationRepository.cs" />
