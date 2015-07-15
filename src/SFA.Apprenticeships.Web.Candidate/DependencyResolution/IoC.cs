@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Application.Interfaces.Logging;
     using Application.ReferenceData.Configuration;
     using Candidate.IoC;
+    using Common.Attributes;
     using Common.IoC;
     using Common.Providers;
     using Common.Services;
@@ -88,12 +89,14 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.For<IUserDataProvider>().HttpContextScoped().Use<CookieUserDataProvider>();
                 x.For<IEuCookieDirectiveProvider>().Use<EuCookieDirectiveProvider>();
                 x.For<ICookieDetectionProvider>().Use<CookieDetectionProvider>();
+                x.For<IRobotCrawlerProvider>().Use<RobotCrawlerProvider>().Singleton();
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IEuCookieDirectiveProvider>());
+                x.Policies.SetAllProperties(y => y.OfType<IRobotCrawlerProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IUserDataProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<ILogService>());
                 x.Policies.SetAllProperties(y => y.OfType<IDismissPlannedOutageMessageCookieProvider>());
