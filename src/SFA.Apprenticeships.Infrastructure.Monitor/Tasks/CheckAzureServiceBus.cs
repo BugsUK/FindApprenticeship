@@ -62,17 +62,17 @@
                     var messageCountDetails = GetMessageCountDetails(
                         namespaceManager, topicConfiguration.TopicName, subscriptionConfiguration.SubscriptionName);
 
-                    var messageCountNarrative = string.Format("Found {0} active message(s) and {1} dead-lettered message(s) for topic/subscription: {2}",
+                    var messageCountNarrative = string.Format("Found {0} active and {1} dead-lettered message(s) for topic/subscription: {2}",
                             messageCountDetails.ActiveMessageCount, messageCountDetails.DeadLetterMessageCount, subscriptionPath);
 
                     if (messageCountDetails.ActiveMessageCount >= messageCountWarningLimit ||
                         messageCountDetails.DeadLetterMessageCount >= deadLetterMessageCountWarningLimit)
                     {
-                        _logger.Info(messageCountNarrative);
+                        _logger.Warn(messageCountNarrative);
                     }
                     else
                     {
-                        _logger.Warn(messageCountNarrative);
+                        _logger.Info(messageCountNarrative);
                     }
                 }
             }
