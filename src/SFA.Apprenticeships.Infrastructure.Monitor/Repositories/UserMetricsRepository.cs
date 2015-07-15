@@ -43,7 +43,7 @@
         {
             return Collection
                 .AsQueryable()
-                .Count(each => each.ActivationDate.HasValue && each.ActivationDate >= dateActivatedStart && each.ActivationDate < dateActivatedEnd);
+                .Count(each => each.ActivationDate != null && each.ActivationDate >= dateActivatedStart && each.ActivationDate < dateActivatedEnd);
         }
 
         public long GetUnactivatedUserCount()

@@ -29,7 +29,7 @@
         {
             return Collection
                 .AsQueryable()
-                .Count(each => each.DateCreated >= submittedDateStart && each.DateCreated < submittedDateEnd);
+                .Count(each => each.DateApplied >= submittedDateStart && each.DateApplied < submittedDateEnd);
         }
 
         public int GetApplicationStateCount(ApplicationStatuses applicationStatus)
