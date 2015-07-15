@@ -171,6 +171,8 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
+    <Compile Include="Providers\RobotCrawlerProvider.cs" />
+    <Compile Include="Providers\IRobotCrawlerProvider.cs" />
     <Compile Include="SiteMap\ISiteMapGenerator.cs" />
     <Compile Include="SiteMap\SiteMapChangeFrequency.cs" />
     <Compile Include="SiteMap\SiteMapGenerator.cs" />
