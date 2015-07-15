@@ -58,7 +58,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
 
             var message = string.Format("Querying communications for housekeeping took {0}", stopwatch.Elapsed);
 
-            const int maxCount = 50;
+            const int maxCount = 5000;
             var count = 0;
 
             foreach (var request in requests)
