@@ -52,7 +52,7 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 
             var message = string.Format("Querying applications for housekeeping took {0}", stopwatch.Elapsed);
 
-            const int maxCount = 50;
+            const int maxCount = 5000;
             var count = 0;
 
             foreach (var request in requests)
