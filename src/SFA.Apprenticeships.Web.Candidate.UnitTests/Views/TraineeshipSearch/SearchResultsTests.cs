@@ -43,9 +43,9 @@
             }
         }
 
-        [TestCase(5, true)]
-        [TestCase(1, false)]
-        public void NumberOfPositions(int numberOfPositions, bool shouldShowNumberOfPositions)
+        [TestCase(5)]
+        [TestCase(1)]
+        public void NumberOfPositions(int numberOfPositions)
         {
             // Arrange.
             const int hits = 5;
@@ -71,15 +71,8 @@
 
                 var element = result.GetElementbyId(id);
 
-                if (shouldShowNumberOfPositions)
-                {
-                    element.Should().NotBeNull();
-                    element.InnerText.Should().Contain(numberOfPositions.ToString(CultureInfo.InvariantCulture));
-                }
-                else
-                {
-                    element.Should().BeNull();                    
-                }
+                element.Should().NotBeNull();
+                element.InnerText.Should().Contain(numberOfPositions.ToString(CultureInfo.InvariantCulture));
             }
         }
     }
