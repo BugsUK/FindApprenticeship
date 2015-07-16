@@ -84,7 +84,7 @@
                     <h3 class="bold-small">Reference number</h3>
                     <p id="vacancy-reference-id">@Model.VacancyReference</p>
                     
-                    @if (@Model.NumberOfPositions > 1)
+                    @if (Model.VacancyLocationType != ApprenticeshipLocationType.National)
                     {
                         <h3 class="bold-small">Positions</h3>
                         <p id="number-of-positions">@Model.NumberOfPositions available</p>
