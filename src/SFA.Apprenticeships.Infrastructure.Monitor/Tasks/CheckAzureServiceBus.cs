@@ -62,8 +62,8 @@
                     var messageCountDetails = GetMessageCountDetails(
                         namespaceManager, topicConfiguration.TopicName, subscriptionConfiguration.SubscriptionName);
 
-                    var messageCountNarrative = string.Format("Found {0} active and {1} dead-lettered message(s) for topic/subscription: {2}",
-                            messageCountDetails.ActiveMessageCount, messageCountDetails.DeadLetterMessageCount, subscriptionPath);
+                    var messageCountNarrative = string.Format("Found {0} active, {1} scheduled and {2} dead-lettered message(s) for topic/subscription: {3}",
+                            messageCountDetails.ActiveMessageCount, messageCountDetails.ScheduledMessageCount, messageCountDetails.DeadLetterMessageCount, subscriptionPath);
 
                     if (messageCountDetails.ActiveMessageCount >= messageCountWarningLimit ||
                         messageCountDetails.DeadLetterMessageCount >= deadLetterMessageCountWarningLimit)
