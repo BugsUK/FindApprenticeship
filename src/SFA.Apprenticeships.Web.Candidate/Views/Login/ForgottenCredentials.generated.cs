@@ -53,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Login
             
             #line 3 "..\..\Views\Login\ForgottenCredentials.cshtml"
   
-    ViewBag.Title = "Forgotten credentials - Find an apprenticeship";
+    ViewBag.Title = "Can't access account - Find an apprenticeship";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
             
@@ -96,16 +96,12 @@ Write(Html.AntiForgeryToken());
             
             #line 16 "..\..\Views\Login\ForgottenCredentials.cshtml"
                             
-    
+
 
             
             #line default
             #line hidden
-WriteLiteral("    <fieldset");
-
-WriteLiteral(" class=\"inner-block-padr\"");
-
-WriteLiteral(">\r\n        <div");
+WriteLiteral("    <section>\r\n        <div");
 
 WriteLiteral(" class=\"text\"");
 
@@ -113,15 +109,60 @@ WriteLiteral(">\r\n            <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
+WriteLiteral(">If you have an account with the old service</h2>\r\n            <p");
+
+WriteLiteral(" class=\"med-btm-margin\"");
+
+WriteLiteral(">\r\n                <img");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 660), Tuple.Create("\"", 712)
+, Tuple.Create(Tuple.Create("", 666), Tuple.Create<System.Object, System.Int32>(Href("~/Content/_assets/img/logo-apprenticeships.png")
+, 666), false)
+);
+
+WriteLiteral(" width=\"133\"");
+
+WriteLiteral(" height=\"50\"");
+
+WriteLiteral(" alt=\"Logo from the old Apprenticeships vacancies service\"");
+
+WriteLiteral(" title=\"Logo from the old Apprenticeships vacancies service\"");
+
+WriteLiteral(" align=\"left\"");
+
+WriteLiteral(" />\r\n                You won\'t be able to sign in using existing \"Apprenticeship " +
+"vacancies\" details.\r\n            </p>\r\n            <p>You must <a");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 1014), Tuple.Create("\"", 1053)
+            
+            #line 25 "..\..\Views\Login\ForgottenCredentials.cshtml"
+, Tuple.Create(Tuple.Create("", 1021), Tuple.Create<System.Object, System.Int32>(Url.Action("Index", "Register")
+            
+            #line default
+            #line hidden
+, 1021), false)
+);
+
+WriteLiteral(">create an account</a> to access this new service.</p>\r\n        </div>\r\n    </sec" +
+"tion>\r\n");
+
+WriteLiteral("    <section>\r\n        <div");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n            \r\n            <h2");
+
+WriteLiteral(" class=\"heading-medium\"");
+
 WriteLiteral(">If you\'ve forgotten your password</h2>\r\n            <p>\r\n                To rese" +
 "t your password we need to send a 6-character code to your\r\n                emai" +
-"l address.\r\n            </p>\r\n        </div>\r\n        \r\n");
+"l address.\r\n            </p>\r\n        </div>\r\n\r\n");
 
 WriteLiteral("        ");
 
             
-            #line 27 "..\..\Views\Login\ForgottenCredentials.cshtml"
-   Write(Html.FormTextFor(m => m.ForgottenPasswordViewModel.EmailAddress, controlHtmlAttributes: new { @class = "linked-input-master", type = "email", spellcheck = "false", autofocus = "autofocus" }, hintHtmlAttributes: new { @class = "text" }, labelText: "Enter email"));
+            #line 38 "..\..\Views\Login\ForgottenCredentials.cshtml"
+   Write(Html.FormTextFor(m => m.ForgottenPasswordViewModel.EmailAddress, controlHtmlAttributes: new { @class = "linked-input-master", type = "email", spellcheck = "false"}, hintHtmlAttributes: new { @class = "text" }, labelText: "Enter email"));
 
             
             #line default
@@ -136,10 +177,10 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" id=\"forgottenpassword-button\"");
 
-WriteLiteral(">Send code</button>\r\n        </div>\r\n    </fieldset>\r\n");
+WriteLiteral(">Send code</button>\r\n        </div>\r\n    </section>\r\n");
 
             
-            #line 33 "..\..\Views\Login\ForgottenCredentials.cshtml"
+            #line 44 "..\..\Views\Login\ForgottenCredentials.cshtml"
 }
 
             
@@ -156,20 +197,20 @@ WriteLiteral(" class=\"heading-medium\"");
 WriteLiteral(">If your account is locked</h2>\r\n    <p>\r\n        If your account is locked and y" +
 "ou’ve been sent a code to unlock it, you\r\n        can <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1415), Tuple.Create("\"", 1452)
+WriteAttribute("href", Tuple.Create(" href=\"", 2037), Tuple.Create("\"", 2074)
             
-            #line 39 "..\..\Views\Login\ForgottenCredentials.cshtml"
-, Tuple.Create(Tuple.Create("", 1422), Tuple.Create<System.Object, System.Int32>(Url.Action("Unlock", "Login")
+            #line 50 "..\..\Views\Login\ForgottenCredentials.cshtml"
+, Tuple.Create(Tuple.Create("", 2044), Tuple.Create<System.Object, System.Int32>(Url.Action("Unlock", "Login")
             
             #line default
             #line hidden
-, 1422), false)
+, 2044), false)
 );
 
 WriteLiteral(">enter it</a> now.\r\n    </p>\r\n</div>\r\n\r\n");
 
             
-            #line 43 "..\..\Views\Login\ForgottenCredentials.cshtml"
+            #line 54 "..\..\Views\Login\ForgottenCredentials.cshtml"
  using (Html.BeginForm("ForgottenEmail", "Login", FormMethod.Post, new { @id = "forgotten-email-form" }))
 {
     
@@ -177,14 +218,14 @@ WriteLiteral(">enter it</a> now.\r\n    </p>\r\n</div>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Login\ForgottenCredentials.cshtml"
+            #line 56 "..\..\Views\Login\ForgottenCredentials.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 45 "..\..\Views\Login\ForgottenCredentials.cshtml"
+            #line 56 "..\..\Views\Login\ForgottenCredentials.cshtml"
                             
 
 
@@ -212,7 +253,7 @@ WriteLiteral(">\r\n                <p>\r\n                    To retrieve the em
 WriteLiteral("                ");
 
             
-            #line 56 "..\..\Views\Login\ForgottenCredentials.cshtml"
+            #line 67 "..\..\Views\Login\ForgottenCredentials.cshtml"
            Write(Html.FormTextFor(m => m.ForgottenEmailViewModel.PhoneNumber, controlHtmlAttributes: new { type = "tel" }));
 
             
@@ -232,7 +273,7 @@ WriteLiteral(">Send email address</button>\r\n                </div>\r\n        
 " </details>\r\n    </div>\r\n");
 
             
-            #line 64 "..\..\Views\Login\ForgottenCredentials.cshtml"
+            #line 75 "..\..\Views\Login\ForgottenCredentials.cshtml"
 }
 
             

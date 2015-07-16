@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Communication.Entities;
     using Mongo.Common;
@@ -24,6 +25,14 @@
             return Collection
                 .AsQueryable()
                 .Count(each => each.SentDateTime >= today && each.SentDateTime <= tomorrow);
+        }
+
+        public int GetApplicationStatusChangedTo(ApplicationStatuses applicationStatus, DateTime statusChangeStartDate,
+            DateTime statusChangeEndDate)
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.DateCreated >= statusChangeStartDate && each.DateCreated < statusChangeEndDate && each.Status == applicationStatus);
         }
     }
 }

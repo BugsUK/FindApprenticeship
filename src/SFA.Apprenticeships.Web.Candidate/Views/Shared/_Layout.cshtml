@@ -19,7 +19,14 @@
     <meta name="format-detection" content="date=no">
     <meta name="format-detection" content="address=no">
     <meta name="DCSext.Authenticated" content="@(Request.IsAuthenticated ? "Yes" : "No")" />
-    <meta name="ROBOTS" content="NOFOLLOW">
+    @if (ViewBag.ShouldRobotsIndexPage)
+    {
+        <meta name="ROBOTS" content="NOFOLLOW">
+    }
+    else
+    {
+        <meta name="ROBOTS" content="NOFOLLOW,NOINDEX">
+    }
     @RenderSection("metatags", false)
     <!--[if gt IE 8]><!-->@Styles.Render(Url.CdnContent("css/main-1.12.0.2522.css", "~/Content/_assets"))<!--<![endif]-->
     <!--[if lte IE 8]>@Styles.Render(Url.CdnContent("css/main-ie8-1.12.0.2522.css", "~/Content/_assets"))<![endif]-->

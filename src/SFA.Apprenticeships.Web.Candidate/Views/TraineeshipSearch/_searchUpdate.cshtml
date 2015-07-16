@@ -7,7 +7,10 @@
             <legend class="heading-medium mob-collpanel-trigger" id="editSearchToggle">Edit search</legend>
             <div class="mob-collpanel toggle-content--mob" id="editSearchPanel">
 
-                @Html.FormTextFor(m => m.Location, hintText: "")
+                <div class="para-btm-margin">
+                    @Html.FormTextFor(m => m.Location, hintText: "", containerHtmlAttributes: new { @class = "small-btm-margin" })
+                    <a href="#" class="geolocater inl-block hide-nojs " id="getLocation">Use current location</a>
+                </div>
                 
                 @{
                     var open = Model.LocationSearches.Any() ? "open " : "";

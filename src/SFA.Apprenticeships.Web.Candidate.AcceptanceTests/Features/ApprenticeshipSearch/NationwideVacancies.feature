@@ -24,9 +24,45 @@ Scenario: After clicking on nationwide apprenticeships I see them
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I wait 3 seconds
 	And I see
-        | Field                        | Rule           | Value |
-        | LocalLocationTypeLink        | Exists         |       |
-        | NationwideLocationTypeLink   | Does Not Exist |       |
+        | Field                      | Rule           | Value |
+        | LocalLocationTypeLink      | Exists         |       |
+        | NationwideLocationTypeLink | Does Not Exist |       |
+        | SearchResultItemsCount     | Greater Than   | 0     |
+
+Scenario: Remebering last location search does not break nationwide results
+	Given I navigated to the ApprenticeshipSearchPage page
+	When I enter data
+		 | Field    | Value |
+		 | Location | Hull  |
+	And I choose Search
+	Then I am on the ApprenticeshipSearchResultPage page
+	When I choose NationwideLocationTypeLink
+	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
+	And I see
+        | Field                      | Rule           | Value |
+        | LocalLocationTypeLink      | Exists         |       |
+        | NationwideLocationTypeLink | Does Not Exist |       |
+        | SearchResultItemsCount     | Greater Than   | 0     |
+	When I choose HeaderLinkFaa
+	Then I am on the ApprenticeshipSearchPage page
+	Then I see
+	    | Field         | Rule   | Value                           |
+	    | Location      | Equals | Hull (East Riding of Yorkshire) |
+	    | ClearLocation | Equals | Cleared                         |
+	When I enter data
+		 | Field    | Value     |
+		 | Location | Lichfield |
+	And I choose Search
+	Then I am on the ApprenticeshipSearchResultPage page
+	When I choose NationwideLocationTypeLink
+	Then I am on the ApprenticeshipSearchResultPage page
+	And I wait 3 seconds
+	And I see
+        | Field                      | Rule           | Value |
+        | LocalLocationTypeLink      | Exists         |       |
+        | NationwideLocationTypeLink | Does Not Exist |       |
+        | SearchResultItemsCount     | Greater Than   | 0     |
 
 @SmokeTests
 #TODO: replace it with view unit tests?

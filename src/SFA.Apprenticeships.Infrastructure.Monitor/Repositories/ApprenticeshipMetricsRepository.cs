@@ -25,6 +25,13 @@
             return (int)Collection.Count();
         }
 
+        public int GetSubmittedApplicationCount(DateTime submittedDateStart, DateTime submittedDateEnd)
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.DateCreated >= submittedDateStart && each.DateCreated < submittedDateEnd);
+        }
+
         public int GetApplicationStateCount(ApplicationStatuses applicationStatus)
         {
             return Collection

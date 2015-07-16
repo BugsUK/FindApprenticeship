@@ -25,11 +25,25 @@
             return Collection.Count();
         }
 
-        public long GetRegisteredAndActivatedUserCount()
+        public long GetRegisteredUserCount(DateTime dateCreatedStart, DateTime dateCreatedEnd)
         {
             return Collection
                 .AsQueryable()
-                .Count(each => each.Status != UserStatuses.PendingActivation && each.Status != UserStatuses.PendingDeletion);
+                .Count(each => each.DateCreated >= dateCreatedStart && each.DateCreated < dateCreatedEnd);
+        }
+
+        public long GetActivatedUserCount()
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.ActivationCode == null);
+        }
+
+        public long GetActivatedUserCount(DateTime dateActivatedStart, DateTime dateActivatedEnd)
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.ActivationDate.HasValue && each.ActivationDate >= dateActivatedStart && each.ActivationDate < dateActivatedEnd);
         }
 
         public long GetUnactivatedUserCount()
