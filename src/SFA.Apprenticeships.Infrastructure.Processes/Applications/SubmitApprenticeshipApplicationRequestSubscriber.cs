@@ -54,7 +54,7 @@
 
                 if (candidate.LegacyCandidateId == 0)
                 {
-                    _logger.Info("Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
+                    _logger.Info("Candidate with Id: {0} has not been created in the legacy system, message will be requeued",
                         applicationDetail.CandidateId);
 
                     return Requeue(request);
@@ -77,7 +77,7 @@
             }
             catch (Exception e)
             {
-                _logger.Error("Submit apprenticeship application with Id = {0} request async process failed.",
+                _logger.Error("Submit apprenticeship application with Id = {0} request async process failed, message will be requeued",
                     e, request.ApplicationId);
 
                 return Requeue(request);
@@ -115,7 +115,7 @@
                     break;
 
                 default:
-                    _logger.Warn(string.Format("Submit apprenticeship application with Id = {0} request async process failed.", request.ApplicationId), e);
+                    _logger.Warn(string.Format("Submit apprenticeship application with Id = {0} request async process failed, message will be requeued", request.ApplicationId), e);
                     return Requeue(request);
             }
 
