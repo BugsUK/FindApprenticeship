@@ -263,9 +263,9 @@
             element.InnerText.Should().Be(friendlyPostedDate);
         }
 
-        [TestCase(5, true)]
-        [TestCase(1, false)]
-        public void ShowNumberOfPositions(int numberOfPositions, bool shouldShowNumberOfPositions)
+        [TestCase(5)]
+        [TestCase(1)]
+        public void ShowNumberOfPositions(int numberOfPositions)
         {
             // Arrange.
             var details = new Details();
@@ -282,15 +282,8 @@
             // Assert.
             var element = view.GetElementbyId("number-of-positions");
 
-            if (shouldShowNumberOfPositions)
-            {
-                element.Should().NotBeNull();
-                element.InnerText.Should().Contain(numberOfPositions.ToString(CultureInfo.InvariantCulture));
-            }
-            else
-            {
-                element.Should().BeNull();                
-            }
+            element.Should().NotBeNull();
+            element.InnerText.Should().Contain(numberOfPositions.ToString(CultureInfo.InvariantCulture));
         }
     }
 }
