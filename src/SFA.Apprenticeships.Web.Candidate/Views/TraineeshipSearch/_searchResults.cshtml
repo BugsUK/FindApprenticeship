@@ -31,7 +31,22 @@ else
                 <li class="search-results__item section-border">
                     <div class="hgroup-medium">
                         <h2 class="heading-medium vacancy-title-link">@Html.ActionLink(@vacancy.Title, "DetailsWithDistance", new { id = vacancy.Id, distance = vacancy.DistanceAsString }, new { @class = "vacancy-link", data_vacancy_id = vacancy.Id, onclick = webTrendItemPositionTracker, data_lat = vacancy.Location.Latitude, data_lon = vacancy.Location.Longitude })</h2>
-                        <p id="posted-date-@vacancy.Id" class="subtitle">@vacancy.EmployerName<span class="font-xsmall"> (Added @vacancy.PostedDate.ToFriendlyDaysAgo())</span></p>
+                        <p id="posted-date-@vacancy.Id" class="subtitle">
+                            @vacancy.EmployerName<span class="font-xsmall">
+                                (Added @vacancy.PostedDate.ToFriendlyDaysAgo()
+                                <span id="number-of-positions-@vacancy.Id" class="hidden-subcategory">
+                                    @if (vacancy.NumberOfPositions == 1)
+                                    {
+                                        <span>- 1 position available)</span>
+                                    }
+                                    else
+                                    {
+                                        <span>- @vacancy.NumberOfPositions positions available)</span>
+                                    }
+                                </span>
+                                
+                            </span>
+                        </p>
                     </div>
                     <p>
                         @vacancy.Description
@@ -69,15 +84,15 @@ else
                         </div>
                     </div>
                 </li>
-                itemPosition++;
+                        itemPosition++;
             }
         }
     </ul>
 
-    Html.RenderPartial("_pagination", Model);
+        Html.RenderPartial("_pagination", Model);
 
-    if (Model.TotalHits > 5)
-    {
+        if (Model.TotalHits > 5)
+        {
         <div class="form-group">
             <label for="results-per-page" class="heading-small inline">Display results</label>
             @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
