@@ -64,21 +64,17 @@
                         <h3 class="bold-small">Date posted</h3>
                         <p id="vacancy-posted-date">@Model.PostedDate.ToFriendlyDaysAgo()</p>
                         @if (Model.Distance != null)
-                {
+                        {
                             <h3 class="bold-small">Distance</h3>
                             <p id="vacancy-distance">@Model.Distance miles</p>
-                }
+                        }
 
                         <h3 class="bold-small">Reference number</h3>
                         <p id="vacancy-reference-id">@Model.VacancyReference</p>
-
-                        @if (@Model.NumberOfPositions > 1)
-                {
-                            <h3 class="bold-small">Positions available</h3>
-                            <p id="number-of-positions">@Model.NumberOfPositions positions available</p>
-                }
-
-
+                
+                        <h3 class="bold-small">Positions</h3>
+                        <p id="number-of-positions">@Model.NumberOfPositions available</p>
+                
                     </div>
                 </section>
                 <section class="section-border grid-wrapper" id="vacancy-info">
