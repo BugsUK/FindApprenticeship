@@ -21,6 +21,7 @@
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly IMessageBus _messageBus;
 
         public SubmitApprenticeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
