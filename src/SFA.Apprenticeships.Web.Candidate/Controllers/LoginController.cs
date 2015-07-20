@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
+    using System;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
@@ -414,9 +415,24 @@
 
         private void SetLoggedInUserMessages(LoginResultViewModel viewModel)
         {
+            var message = "";
+
+            if (viewModel.PendingUsernameVerificationRequired)
+            {
+                message += string.Format(LoginPageMessages.PendingUsernameVerificationRequiredText,
+                    Url.RouteUrl(RouteNames.VerifyUpdatedEmail));
+
+                SetUserMessage(message, UserMessageLevel.Info);
+            }
+
             if (viewModel.MobileVerificationRequired)
             {
-                var message = string.Format(LoginPageMessages.MobileVerificationRequiredText, viewModel.PhoneNumber,
+                if (!string.IsNullOrEmpty(message))
+                {
+                    message += "<br/><br/>";
+                }
+
+                message += string.Format(LoginPageMessages.MobileVerificationRequiredText, viewModel.PhoneNumber,
                     Url.Action("VerifyMobile", "Account",
                         new RouteValueDictionary
                         {
@@ -424,14 +440,6 @@
                                 "ReturnUrl", viewModel.ReturnUrl
                             }
                         }));
-
-                SetUserMessage(message, UserMessageLevel.Info);
-            }
-
-            if (viewModel.PendingUsernameVerificationRequired)
-            {
-                var message = string.Format(LoginPageMessages.PendingUsernameVerificationRequiredText,
-                    Url.RouteUrl(RouteNames.VerifyUpdatedEmail));
 
                 SetUserMessage(message, UserMessageLevel.Info);
             }
