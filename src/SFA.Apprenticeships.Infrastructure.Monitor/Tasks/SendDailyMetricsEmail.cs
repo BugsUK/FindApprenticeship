@@ -185,9 +185,10 @@
             sb.AppendFormat("{0}\n", date.ToString("d", new CultureInfo("en-GB")));
             sb.AppendFormat(" - Number of account registrations: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetRegisteredUserCount, date, endDate));
             sb.AppendFormat(" - Number of account activations: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetActivatedUserCount, date, endDate));
-            sb.AppendFormat(" - Number of applications submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetSubmittedApplicationCount, date, endDate));
-            sb.AppendFormat(" - Number of applications set as unsuccessful: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusChangedTo, ApplicationStatuses.Unsuccessful, date, endDate));
-            sb.AppendFormat(" - Number of applications set as successful: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusChangedTo, ApplicationStatuses.Successful, date, endDate));
+            sb.AppendFormat(" - Number of apprenticeship applications submitted: {0} ({1}ms)\n", TimedMongoCall(_apprenticeshipMetricsRepository.GetSubmittedApplicationCount, date, endDate));
+            sb.AppendFormat(" - Number of apprenticeship applications set as unsuccessful: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusChangedTo, ApplicationStatuses.Unsuccessful, date, endDate));
+            sb.AppendFormat(" - Number of apprenticeship applications set as successful: {0} ({1}ms)\n", TimedMongoCall(_applicationStatusAlertsMetricsRepository.GetApplicationStatusChangedTo, ApplicationStatuses.Successful, date, endDate));
+            sb.AppendFormat(" - Number of traineeship applications submitted: {0} ({1}ms)\n", TimedMongoCall(_traineeshipMetricsRepository.GetSubmittedApplicationCount, date, endDate));
         }
 
         private object[] GetActiveUserCount(Func<DateTime, long> activeUserCountFunc, DateTime customDaysAgo)

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
@@ -9,6 +10,7 @@
     using Mongo.Common.Configuration;
     using MongoDB.Bson;
     using MongoDB.Driver;
+    using MongoDB.Driver.Linq;
 
     public class TraineeshipMetricsRepository : GenericMongoClient<MongoCandidate>, ITraineeshipMetricsRepository
     {
@@ -21,6 +23,13 @@
         public long GetApplicationCount()
         {
             return Collection.Count();
+        }
+
+        public int GetSubmittedApplicationCount(DateTime submittedDateStart, DateTime submittedDateEnd)
+        {
+            return Collection
+                .AsQueryable()
+                .Count(each => each.DateCreated >= submittedDateStart && each.DateCreated < submittedDateEnd);
         }
 
         public long GetApplicationsPerCandidateCount()
