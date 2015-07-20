@@ -94,7 +94,14 @@
 
         #endregion
 
+        #region Buttons
+
+        [ElementLocator(Id = "AcceptSubmit")]
+        public IWebElement AcceptSubmit { get; set; }
+
         [ElementLocator(Id = "submit-application")]
         public IWebElement SubmitApplication { get; set; }
+
+        #endregion
     }
 }

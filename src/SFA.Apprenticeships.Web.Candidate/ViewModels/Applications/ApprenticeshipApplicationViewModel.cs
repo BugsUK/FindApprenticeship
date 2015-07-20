@@ -39,7 +39,6 @@
 
         public ApprenticeshipVacancyDetailViewModel VacancyDetail { get; set; }
 
-
         //TODO: Think of a better name
         public bool IsExpiredOrWithdrawn()
         {

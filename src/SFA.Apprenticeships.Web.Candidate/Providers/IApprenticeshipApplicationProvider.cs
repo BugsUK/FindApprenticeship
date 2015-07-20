@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
+    using FluentValidation.Results;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using ViewModels.VacancySearch;
@@ -8,6 +9,8 @@
     public interface IApprenticeshipApplicationProvider
     {
         ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId);
+
+        ApprenticeshipApplicationPreviewViewModel GetApplicationPreviewViewModel(Guid candidateId, int vacancyId);
 
         ApprenticeshipApplicationViewModel CreateApplicationViewModel(Guid candidateId, int vacancyId);
 

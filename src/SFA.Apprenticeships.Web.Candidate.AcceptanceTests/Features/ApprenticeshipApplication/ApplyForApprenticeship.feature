@@ -239,6 +239,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| WhatAreYourStrengths          | Equals         | My strengths          |
 		| WhatCanYouImprove             | Equals         | What can I improve    |
 		| HobbiesAndInterests           | Equals         | Hobbies and interests |
+	When I choose AcceptSubmit
+	Then I am on the ApprenticeshipApplicationPreviewPage page
 	When I choose SubmitApplication
 	Then I am on the ApprenticeshipApplicationCompletePage page
 	When I choose MyApplicationsLink
@@ -269,6 +271,8 @@ Scenario: As a candidate I would like to see my apprenticeship application as su
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer1 | Emp 1 |
 		| Candidate_EmployerQuestionAnswers_CandidateAnswer2 | Emp 2 |
 	And I choose ApplyButton
+	Then I am on the ApprenticeshipApplicationPreviewPage page
+	When I choose AcceptSubmit
 	Then I am on the ApprenticeshipApplicationPreviewPage page
 	When I choose SubmitApplication
 	Then I am on the ApprenticeshipApplicationCompletePage page

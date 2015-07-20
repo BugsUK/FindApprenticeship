@@ -22,13 +22,21 @@
         private readonly IApprenticeshipApplicationProvider _apprenticeshipApplicationProvider;
         private readonly ApprenticeshipApplicationViewModelServerValidator _apprenticeshipApplicationViewModelFullValidator;
         private readonly ApprenticeshipApplicationViewModelSaveValidator _apprenticeshipApplicationViewModelSaveValidator;
+        private readonly ApprenticeshipApplicationPreviewViewModelValidator _apprenticeshipApplicationPreviewViewModelValidator;
 
-        public ApprenticeshipApplicationMediator(IApprenticeshipApplicationProvider apprenticeshipApplicationProvider, ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelFullValidator, ApprenticeshipApplicationViewModelSaveValidator apprenticeshipApplicationViewModelSaveValidator, IConfigurationService configService, IUserDataProvider userDataProvider)
+        public ApprenticeshipApplicationMediator(
+            IConfigurationService configService,
+            IUserDataProvider userDataProvider,
+            IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
+            ApprenticeshipApplicationViewModelServerValidator apprenticeshipApplicationViewModelFullValidator,
+            ApprenticeshipApplicationViewModelSaveValidator apprenticeshipApplicationViewModelSaveValidator,
+            ApprenticeshipApplicationPreviewViewModelValidator apprenticeshipApplicationPreviewViewModelValidator)
             : base(configService, userDataProvider)
         {
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;
             _apprenticeshipApplicationViewModelFullValidator = apprenticeshipApplicationViewModelFullValidator;
             _apprenticeshipApplicationViewModelSaveValidator = apprenticeshipApplicationViewModelSaveValidator;
+            _apprenticeshipApplicationPreviewViewModelValidator = apprenticeshipApplicationPreviewViewModelValidator;
         }
 
         public MediatorResponse<ApprenticeshipApplicationViewModel> Resume(Guid candidateId, int vacancyId)
@@ -63,6 +71,7 @@
             }
 
             var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+
             if (model == null || model.IsNotFound())
             {
                 model = _apprenticeshipApplicationProvider.CreateApplicationViewModel(candidateId, vacancyId);
@@ -120,7 +129,6 @@
             }
 
             viewModel.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds - 30;
-
 
             var result = _apprenticeshipApplicationViewModelFullValidator.Validate(viewModel);
 
@@ -228,47 +236,6 @@
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AutoSave.Ok, autoSaveResult);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId)
-        {
-            var savedModel = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
-
-            if (savedModel.HasError())
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Error, null, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
-            }
-
-            if (savedModel.IsExpiredOrWithdrawn())
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound);
-            }
-
-            var result = _apprenticeshipApplicationViewModelSaveValidator.Validate(savedModel);
-
-            if (!result.IsValid)
-            {
-                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Submit.ValidationError, savedModel, result);
-            }
-
-            var model = _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
-
-            if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState);
-            }
-            if (model.ViewModelStatus == ApplicationViewModelStatus.Error || model.HasError())
-            {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Error, null, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
-            }
-
-            var parameters = new
-            {
-                id = vacancyId,
-                vacancyReference = model.VacancyDetail.VacancyReference,
-                vacancyTitle = model.VacancyDetail.Title
-            };
-            return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Ok, parameters: parameters);
-        }
-
         public MediatorResponse<ApprenticeshipApplicationViewModel> AddEmptyQualificationRows(ApprenticeshipApplicationViewModel viewModel)
         {
             viewModel.Candidate.Qualifications = RemoveEmptyRowsFromQualifications(viewModel.Candidate.Qualifications);
@@ -305,31 +272,83 @@
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AddEmptyTrainingCourseRows.Ok, viewModel);
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> Preview(Guid candidateId, int vacancyId)
+        public MediatorResponse<ApprenticeshipApplicationPreviewViewModel> Preview(Guid candidateId, int vacancyId)
         {
-            var model = _apprenticeshipApplicationProvider.GetApplicationViewModel(candidateId, vacancyId);
+            var model = _apprenticeshipApplicationProvider.GetApplicationPreviewViewModel(candidateId, vacancyId);
 
             if (model.HasError())
             {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.HasError);
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.HasError);
             }
 
             if (model.VacancyDetail.ApplyViaEmployerWebsite)
             {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy);
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.OfflineVacancy);
             }
 
             if (model.IsExpiredOrWithdrawn())
             {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound);
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.VacancyNotFound);
             }
 
             if (model.Status != ApplicationStatuses.Draft)
             {
-                return GetMediatorResponse<ApprenticeshipApplicationViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.IncorrectState, null, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info);
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Preview.IncorrectState, null, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info);
             }
 
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Preview.Ok, model);
+        }
+
+        public MediatorResponse<ApprenticeshipApplicationPreviewViewModel> Submit(Guid candidateId, int vacancyId, ApprenticeshipApplicationPreviewViewModel viewModel)
+        {
+            var savedModel = _apprenticeshipApplicationProvider.GetApplicationPreviewViewModel(candidateId, vacancyId);
+
+            if (savedModel.HasError())
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Error, null, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new { id = vacancyId });
+            }
+
+            if (savedModel.IsExpiredOrWithdrawn())
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.VacancyNotFound);
+            }
+
+            var saveValidationResult = _apprenticeshipApplicationViewModelSaveValidator.Validate(savedModel);
+
+            if (!saveValidationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Submit.ValidationError, savedModel, saveValidationResult);
+            }
+
+            var previewValidationResult = _apprenticeshipApplicationPreviewViewModelValidator.Validate(viewModel);
+
+            if (!previewValidationResult.IsValid)
+            {
+                return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Submit.AcceptSubmitValidationError, savedModel, previewValidationResult);
+            }
+
+            var model = _apprenticeshipApplicationProvider.SubmitApplication(candidateId, vacancyId);
+
+            if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState);
+            }
+            if (model.ViewModelStatus == ApplicationViewModelStatus.Error || model.HasError())
+            {
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Error, null, ApplicationPageMessages.SubmitApplicationFailed, UserMessageLevel.Warning, new
+                {
+                    id = vacancyId
+                });
+            }
+
+            var parameters = new
+            {
+                id = vacancyId,
+                vacancyReference = model.VacancyDetail.VacancyReference,
+                vacancyTitle = model.VacancyDetail.Title
+            };
+
+            return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.Ok, parameters: parameters);
         }
 
         public MediatorResponse<WhatHappensNextApprenticeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle, string searchReturnUrl)

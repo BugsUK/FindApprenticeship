@@ -295,16 +295,22 @@
             });
         }
 
+        [HttpPost]
+        [ValidateInput(false)]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
-        public async Task<ActionResult> SubmitApplication(int id)
+        public async Task<ActionResult> Preview(int id, ApprenticeshipApplicationPreviewViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.Submit(UserContext.CandidateId, id);
+                var response = _apprenticeshipApplicationMediator.Submit(UserContext.CandidateId, id, model);
 
                 switch (response.Code)
                 {
+                    case ApprenticeshipApplicationMediatorCodes.Submit.AcceptSubmitValidationError:
+                        ModelState.Clear();
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View(response.ViewModel);
                     case ApprenticeshipApplicationMediatorCodes.Submit.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);

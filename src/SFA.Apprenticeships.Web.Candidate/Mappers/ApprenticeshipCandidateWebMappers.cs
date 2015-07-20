@@ -17,7 +17,6 @@
     using ViewModels.Locations;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
-    using Views.Shared.EditorTemplates.MonitoringInformation;
 
     public class ApprenticeshipCandidateWebMappers : MapperEngine
     {
