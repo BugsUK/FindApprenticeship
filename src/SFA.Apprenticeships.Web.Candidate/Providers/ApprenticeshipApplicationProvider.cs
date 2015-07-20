@@ -110,6 +110,22 @@
             }
         }
 
+        public ApprenticeshipApplicationPreviewViewModel GetApplicationPreviewViewModel(Guid candidateId, int vacancyId)
+        {
+            var viewModel = GetApplicationViewModel(candidateId, vacancyId);
+
+            return new ApprenticeshipApplicationPreviewViewModel
+            {
+                Candidate = viewModel.Candidate,
+                DateUpdated = viewModel.DateUpdated,
+                DateApplied = viewModel.DateApplied,
+                VacancyId = viewModel.VacancyId,
+                VacancyDetail = viewModel.VacancyDetail,
+                Status = viewModel.Status,
+                AcceptSubmit = false
+            };
+        }
+
         public ApprenticeshipApplicationViewModel CreateApplicationViewModel(Guid candidateId, int vacancyId)
         {
             _logger.Debug(

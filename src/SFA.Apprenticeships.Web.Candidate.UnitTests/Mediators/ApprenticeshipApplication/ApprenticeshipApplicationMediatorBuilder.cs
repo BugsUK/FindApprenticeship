@@ -38,8 +38,14 @@
         {
             _configurationService.Setup(x => x.Get<WebConfiguration>())
                 .Returns(new WebConfiguration {VacancyResultsPerPage = 5});
-            var mediator = new ApprenticeshipApplicationMediator(_apprenticeshipApplicationProvider.Object, new ApprenticeshipApplicationViewModelServerValidator(), new ApprenticeshipApplicationViewModelSaveValidator(), _configurationService.Object, _userDataProvider.Object);
-            return mediator;
+
+            return new ApprenticeshipApplicationMediator(
+                _configurationService.Object,
+                _userDataProvider.Object,
+                _apprenticeshipApplicationProvider.Object,
+                new ApprenticeshipApplicationViewModelServerValidator(),
+                new ApprenticeshipApplicationViewModelSaveValidator(),
+                new ApprenticeshipApplicationPreviewViewModelValidator());
         }
     }
 }

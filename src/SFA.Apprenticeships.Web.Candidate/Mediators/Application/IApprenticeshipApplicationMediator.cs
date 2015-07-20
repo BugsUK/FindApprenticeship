@@ -22,9 +22,9 @@
 
         MediatorResponse<ApprenticeshipApplicationViewModel> PreviewAndSubmit(Guid candidateId, int vacancyId, ApprenticeshipApplicationViewModel viewModel);
 
-        MediatorResponse<ApprenticeshipApplicationViewModel> Preview(Guid candidateId, int vacancyId);
+        MediatorResponse<ApprenticeshipApplicationPreviewViewModel> Preview(Guid candidateId, int vacancyId);
 
-        MediatorResponse<ApprenticeshipApplicationViewModel> Submit(Guid candidateId, int vacancyId);
+        MediatorResponse<ApprenticeshipApplicationPreviewViewModel> Submit(Guid candidateId, int vacancyId, ApprenticeshipApplicationPreviewViewModel viewModel);
 
         MediatorResponse<WhatHappensNextApprenticeshipViewModel> WhatHappensNext(Guid candidateId, string vacancyIdString, string vacancyReference, string vacancyTitle, string searchReturnUrl);
 

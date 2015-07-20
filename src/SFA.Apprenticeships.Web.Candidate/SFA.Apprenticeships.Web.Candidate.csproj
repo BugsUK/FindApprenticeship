@@ -827,6 +827,7 @@
     <Compile Include="Constants\ViewModels\MonitoringInformationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ContactMessageViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ForgottenEmailViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ApprenticeshipApplicationPreviewViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyUpdatedEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyMobileViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\TrainingCourseViewModelMessages.cs" />
@@ -851,6 +852,7 @@
     <Compile Include="Providers\IApprenticeshipVacancyProvider.cs" />
     <Compile Include="Providers\ITraineeshipVacancyProvider.cs" />
     <Compile Include="Providers\TraineeshipVacancyProvider.cs" />
+    <Compile Include="Validators\ApprenticeshipApplicationPreviewViewModelValidator.cs" />
     <Compile Include="Validators\FeedbackViewModelValidator.cs" />
     <Compile Include="Validators\ContactMessageViewModelValidator.cs" />
     <Compile Include="Validators\EmailViewModelValidator.cs" />
@@ -880,6 +882,7 @@
     <Compile Include="Constants\ViewModels\EducationViewModelMessages.cs" />
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
+    <Compile Include="ViewModels\Applications\ApprenticeshipApplicationPreviewViewModel.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextApprenticeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\MonitoringInformationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\TrainingCourseViewModel.cs" />

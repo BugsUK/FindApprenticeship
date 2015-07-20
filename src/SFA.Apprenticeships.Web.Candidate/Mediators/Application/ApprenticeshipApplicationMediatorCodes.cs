@@ -18,6 +18,7 @@
             public const string Error = "ApprenticeshipApplication.Submit.Error";
             public const string Ok = "ApprenticeshipApplication.Submit.Ok";
             public const string ValidationError = "ApprenticeshipApplication.Submit.ValidationError";
+            public const string AcceptSubmitValidationError = "ApprenticeshipApplication.Submit.AcceptSubmitValidationError";
         }
 
         public class AddEmptyQualificationRows

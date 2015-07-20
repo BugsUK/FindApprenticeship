@@ -20,11 +20,24 @@
         public void Setup()
         {
             ApprenticeshipApplicationProvider = new Mock<IApprenticeshipApplicationProvider>();
+
             ConfigurationService = new Mock<IConfigurationService>();
+
             ConfigurationService.Setup(x => x.Get<WebConfiguration>())
-                .Returns(new WebConfiguration() { VacancyResultsPerPage = 5 });
+                .Returns(new WebConfiguration
+                {
+                    VacancyResultsPerPage = 5
+                });
+            
             UserDataProvider = new Mock<IUserDataProvider>();
-            Mediator = new ApprenticeshipApplicationMediator(ApprenticeshipApplicationProvider.Object, new ApprenticeshipApplicationViewModelServerValidator(), new ApprenticeshipApplicationViewModelSaveValidator(), ConfigurationService.Object, UserDataProvider.Object);
+
+            Mediator = new ApprenticeshipApplicationMediator(
+                ConfigurationService.Object,
+                UserDataProvider.Object,
+                ApprenticeshipApplicationProvider.Object,
+                new ApprenticeshipApplicationViewModelServerValidator(),
+                new ApprenticeshipApplicationViewModelSaveValidator(),
+                new ApprenticeshipApplicationPreviewViewModelValidator());
         }
     }
 }

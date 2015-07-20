@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel
+﻿@model SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationPreviewViewModel
 
 @{
     ViewBag.Title = "Preview your application - Find an apprenticeship";
@@ -12,6 +12,9 @@
         <li><span class="hide-tablet">Step </span>3<span class="hide-tablet"> of 3</span>. Submitted</li>
     </ul>
 </div>
+
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 @if (Model.DateUpdated.HasValue)
 {
     <div class="panel-info">
@@ -32,7 +35,6 @@
         </div>
     </div>
 </div>
-
 
 <div class="text">
     @Html.HiddenFor(m => m.VacancyDetail.Title)
@@ -68,32 +70,34 @@
     @Html.DisplayFor(m => m.Candidate.MonitoringInformation, "MonitoringInformation/_disability")
 </section>
 
-<div class="hide-print">
-    <h3 class="heading-large">Submit your application</h3>
-    <div class="form-group">
-        <p>Before you submit your application make sure you:</p>
-        <ul>
-            <li>ask someone to check your application for mistakes</li>
-            <li>check your answers are relevant to the apprenticeship</li>
-            <li>are able to get to the apprenticeship location easily</li>
-        </ul>
+@using (Html.BeginForm(null, "ApprenticeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken();
+    <div class="text hide-print">
+        <h3 class="heading-large">Submit your application</h3>
+        <div class="form-group">
+            <p>Before you submit your application make sure you:</p>
+            <ul>
+                <li>ask someone to check your application for mistakes</li>
+                <li>check your answers are relevant to the apprenticeship</li>
+                <li>are able to get to the apprenticeship location easily</li>
+            </ul>
+        </div>
+        @Html.FormCheckBoxFor(m => m.AcceptSubmit, labelHtmlAttributes: new {@class = "block-label para-btm-margin"})
     </div>
-</div>
 
-<div class="form-group hide-print">
-    @Html.ActionLink("Submit application", "SubmitApplication", new { id = Model.VacancyId }, new { @class = "button", id = "submit-application", onclick = string.Format(AnalyticsTag, "BottomButton") })
+    <div class="form-group hide-print">
+        <button id="submit-application" type="submit" class="button" onclick=@string.Format(AnalyticsTag, "BottomButton")>Submit application</button>
 
-    @if (Model.DateUpdated.HasValue)
-    {
-        <p id="applicationSavedBottomMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
-    }
-</div>
-
+        @if (Model.DateUpdated.HasValue)
+        {
+            <p id="applicationSavedBottomMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
+        }
+    </div>
+}
 @section scripts{
-
     <script>
         function getMonthLabel(index) {
-            //alert(index);
             var month = "";
 
             if (index === 0) {
@@ -108,7 +112,6 @@
 
         $(function () {
             $('#submit-application').on('click', function () {
-
                 if ($('#submit-application').attr('data-disabled') != undefined) {
                     if (event.preventDefault) {
                         event.preventDefault();
@@ -122,7 +125,5 @@
                 }
             });
         });
-
-
     </script>
 }
