@@ -21,7 +21,8 @@
         private readonly ILogService _logger;
         private readonly IMapper _vacancySearchMapper;
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
-        private readonly SearchFactorConfiguration _searchConfiguration;
+        private readonly SearchConfiguration _searchConfiguration;
+        private readonly SearchFactorConfiguration _searchFactorConfiguration;
         private const string SubCategoriesAggregationName = "SubCategoryCodes";
 
         public ApprenticeshipsSearchProvider(
@@ -31,7 +32,8 @@
         {
             _elasticsearchClientFactory = elasticsearchClientFactory;
             _vacancySearchMapper = vacancySearchMapper;
-            _searchConfiguration = configurationService.Get<SearchFactorConfiguration>();
+            _searchConfiguration = configurationService.Get<SearchConfiguration>();
+            _searchFactorConfiguration = configurationService.Get<SearchFactorConfiguration>();
             _logger = logger;
         }
 
@@ -43,6 +45,8 @@
 
             _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);
+
+            ProcessSearchParameters(parameters);
 
             var search = PerformSearch(parameters, client, indexName, documentTypeName);
 
@@ -82,6 +86,18 @@
             return results;
         }
 
+        private void ProcessSearchParameters(ApprenticeshipSearchParameters parameters)
+        {
+            if (!string.IsNullOrEmpty(parameters.Keywords))
+            {
+                parameters.Keywords = parameters.Keywords.ToLower();
+
+                foreach (var excludedTerm in _searchConfiguration.ExcludedTerms)
+                {
+                    parameters.Keywords = parameters.Keywords.Replace(excludedTerm, "");
+                }
+            }
+        }
 
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancy(string vacancyReference)
         {
@@ -128,51 +144,51 @@
                 {
                     QueryContainer query = null;
 
-                    if (_searchConfiguration.JobTitleFactors.Enabled
+                    if (_searchFactorConfiguration.JobTitleFactors.Enabled
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.JobTitle))
                     {
                         var queryClause = q.Match(m =>
                         {
                             m.OnField(f => f.Title).Query(parameters.Keywords);
-                            BuildFieldQuery(m, _searchConfiguration.JobTitleFactors);
+                            BuildFieldQuery(m, _searchFactorConfiguration.JobTitleFactors);
                         });
 
                         query = BuildContainer(null, queryClause);
                     }
 
-                    if (_searchConfiguration.DescriptionFactors.Enabled 
+                    if (_searchFactorConfiguration.DescriptionFactors.Enabled 
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Description))
                     {
                         var queryClause = q.Match(m =>
                         {
                             m.OnField(f => f.Description).Query(parameters.Keywords);
-                            BuildFieldQuery(m, _searchConfiguration.DescriptionFactors);
+                            BuildFieldQuery(m, _searchFactorConfiguration.DescriptionFactors);
                         });
                         query = BuildContainer(query, queryClause);
                     }
 
-                    if (_searchConfiguration.EmployerFactors.Enabled 
+                    if (_searchFactorConfiguration.EmployerFactors.Enabled 
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Employer))
                     {
                         var exactMatchClause = q.Match(m =>
                         {
                             m.OnField(f => f.EmployerName).Query(parameters.Keywords);
-                            BuildFieldQuery(m, _searchConfiguration.EmployerFactors);
+                            BuildFieldQuery(m, _searchFactorConfiguration.EmployerFactors);
                         });
                         query = BuildContainer(query, exactMatchClause);
                     }
 
-                    if (_searchConfiguration.ProviderFactors.Enabled
+                    if (_searchFactorConfiguration.ProviderFactors.Enabled
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Provider))
                     {
                         var exactMatchClause = q.Match(m =>
                         {
                             m.OnField(f => f.ProviderName).Query(parameters.Keywords);
-                            BuildFieldQuery(m, _searchConfiguration.ProviderFactors);
+                            BuildFieldQuery(m, _searchFactorConfiguration.ProviderFactors);
                         });
                         query = BuildContainer(query, exactMatchClause);
                     }

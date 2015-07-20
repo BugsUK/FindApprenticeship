@@ -21,6 +21,8 @@
         public IEnumerable<ElasticsearchIndex> Indexes { get; set; }
 
         public IEnumerable<string> Synonyms { get; set; }
+
+        public IEnumerable<string> ExcludedTerms { get; set; }
     }
 
     public class ElasticsearchIndex
