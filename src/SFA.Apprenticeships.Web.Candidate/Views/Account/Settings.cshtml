@@ -63,9 +63,9 @@
             @if (!string.IsNullOrWhiteSpace(Model.PendingUsername))
             {
                 <div class="form-group">
-                    <p class="form-label">Pending Email Update</p>
+                    <p class="form-label">Unverified email address</p>
                     <span class="form-prepopped" id="settings-pending-username">@Model.PendingUsername</span>
-                    <a id="settings-confirm-username" class="inl-block" href="@Url.RouteUrl(RouteNames.VerifyUpdatedEmail)">Verify new email address</a>
+                    <a id="settings-confirm-username" class="inl-block" href="@Url.RouteUrl(RouteNames.VerifyUpdatedEmail)">Verify email address</a>
                 </div>
             }
             
