@@ -5,20 +5,52 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
     using Interfaces.Communications;
-    using Interfaces.Logging;
 
-    public abstract class SendAccountRemindersStrategy : HousekeepingStrategy
+    public class SendAccountRemindersStrategy : HousekeepingStrategy
     {
-        private readonly IConfigurationService _configurationService;
         private readonly ICommunicationService _communicationService;
-        private readonly ILogService _logService;
 
-        protected SendAccountRemindersStrategy(IConfigurationService configurationService, ICommunicationService communicationService, ILogService logService)
+        public SendAccountRemindersStrategy(
+            IConfigurationService configurationService,
+            ICommunicationService communicationService)
             : base(configurationService)
         {
-            _configurationService = configurationService;
             _communicationService = communicationService;
-            _logService = logService;
+        }
+
+        protected override bool DoHandle(User user, Candidate candidate)
+        {
+            if (user == null || candidate == null) return false;
+
+            if (user.Status != UserStatuses.PendingActivation) return false;
+
+            var housekeepingCyclesSinceCreation = GetHousekeepingCyclesSince(user.DateCreated);
+
+            var configuration = Configuration.ActivationReminderStrategy.SendAccountReminderStrategy;
+
+            //Only remind if enough time has passed and not due for deletion
+            if (housekeepingCyclesSinceCreation < configuration.SendAccountReminderAfterCycles
+                || housekeepingCyclesSinceCreation >= Configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles)
+            {
+                return false;
+            }
+
+            //Remind on the first cycle
+            if (housekeepingCyclesSinceCreation == configuration.SendAccountReminderAfterCycles)
+            {
+                SendAccountReminder(user, candidate);
+                return true;
+            }
+
+            //Then every X cycles after that
+            if ((housekeepingCyclesSinceCreation - configuration.SendAccountReminderAfterCycles) %
+                configuration.SendAccountReminderEveryCycles == 0)
+            {
+                SendAccountReminder(user, candidate);
+                return true;
+            }
+
+            return false;
         }
 
         protected void SendAccountReminder(User user, Candidate candidate)

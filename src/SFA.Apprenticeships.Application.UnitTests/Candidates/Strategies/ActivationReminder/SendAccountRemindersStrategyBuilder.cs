@@ -6,18 +6,16 @@
     using Configuration;
     using Domain.Interfaces.Configuration;
     using Interfaces.Communications;
-    using Interfaces.Logging;
     using Moq;
 
-    public class SendAccountRemindersStrategyBBuilder
+    public class SendAccountRemindersStrategyBuilder
     {
         private Mock<IConfigurationService> _configurationService;
         private Mock<ICommunicationService> _communicationService;
-        private readonly Mock<ILogService> _logService = new Mock<ILogService>();
 
         private IHousekeepingStrategy _successor; 
 
-        public SendAccountRemindersStrategyBBuilder()
+        public SendAccountRemindersStrategyBuilder()
         {
             _configurationService = new Mock<IConfigurationService>();
             _configurationService.Setup(s => s.Get<HousekeepingConfiguration>()).Returns(new HousekeepingConfigurationBuilder().Build());
@@ -25,32 +23,32 @@
             _successor = new TerminatingHousekeepingStrategy(_configurationService.Object);
         }
 
-        public SendAccountRemindersStrategyB Build()
+        public SendAccountRemindersStrategy Build()
         {
-            var strategy = new SendAccountRemindersStrategyB(_configurationService.Object, _communicationService.Object, _logService.Object);
+            var strategy = new SendAccountRemindersStrategy(_configurationService.Object, _communicationService.Object);
             strategy.SetSuccessor(_successor);
             return strategy;
         }
 
-        public SendAccountRemindersStrategyBBuilder With(Mock<IConfigurationService> configurationService)
+        public SendAccountRemindersStrategyBuilder With(Mock<IConfigurationService> configurationService)
         {
             _configurationService = configurationService;
             return this;
         }
 
-        public SendAccountRemindersStrategyBBuilder With(HousekeepingConfiguration configuration)
+        public SendAccountRemindersStrategyBuilder With(HousekeepingConfiguration configuration)
         {
             _configurationService.Setup(s => s.Get<HousekeepingConfiguration>()).Returns(configuration);
             return this;
         }
 
-        public SendAccountRemindersStrategyBBuilder With(IHousekeepingStrategy successor)
+        public SendAccountRemindersStrategyBuilder With(IHousekeepingStrategy successor)
         {
             _successor = successor;
             return this;
         }
 
-        public SendAccountRemindersStrategyBBuilder With(Mock<ICommunicationService> communicationService)
+        public SendAccountRemindersStrategyBuilder With(Mock<ICommunicationService> communicationService)
         {
             _communicationService = communicationService;
             return this;
