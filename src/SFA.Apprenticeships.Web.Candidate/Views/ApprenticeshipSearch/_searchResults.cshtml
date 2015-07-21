@@ -126,9 +126,9 @@ else
                         <p id="posted-date-@vacancy.Id" class="subtitle">
                             @vacancy.EmployerName
                             <span class="font-xsmall inl-block">
-                                (Added @vacancy.PostedDate.ToFriendlyDaysAgo()
                                 @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                                 {
+                                    <text>(Added @vacancy.PostedDate.ToFriendlyDaysAgo()</text>
                                     <span id="number-of-positions-@vacancy.Id" class="hidden-subcategory">
                                         @if (vacancy.NumberOfPositions == 1)
                                         {
@@ -139,6 +139,10 @@ else
                                             <span>- @vacancy.NumberOfPositions positions available)</span>
                                         }
                                     </span>
+                                }
+                                else
+                                {
+                                    <text>(Added @vacancy.PostedDate.ToFriendlyDaysAgo())</text>
                                 }
                                 
                             </span>
