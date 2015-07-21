@@ -282,7 +282,7 @@
             }
             catch (CustomException e)
             {
-                if (e.Code == ApplicationErrorCodes.ApplicationInIncorrectStateError)
+                if (e.Code == ErrorCodes.EntityStateError)
                 {
                     _logger.Info(e.Message, e);
                     return
