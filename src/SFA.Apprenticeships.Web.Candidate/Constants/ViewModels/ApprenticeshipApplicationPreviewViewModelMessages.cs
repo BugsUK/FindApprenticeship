@@ -5,7 +5,7 @@
         public static class AcceptSubmit
         {
             public const string LabelText = "I have checked my application and understand I won't be able to make any changes once it has been submitted";
-            public const string MustAcceptSubmit = "TODO: Please confirm that you have checked your application";
+            public const string MustAcceptSubmit = "Please confirm that you have checked your application";
         }
     }
 }
