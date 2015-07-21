@@ -34,18 +34,11 @@
 
     public class ActivationReminderStrategy
     {
-        public SendAccountReminderStrategyA SendAccountReminderStrategyA { get; set; }
-        public SendAccountReminderStrategyB SendAccountReminderStrategyB { get; set; }
+        public SendAccountReminderStrategy SendAccountReminderStrategy { get; set; }
         public int SetPendingDeletionAfterCycles { get; set; }
     }
 
-    public class SendAccountReminderStrategyA
-    {
-        public int SendAccountReminderOneAfterCycles { get; set; }
-        public int SendAccountReminderTwoAfterCycles { get; set; }
-    }
-
-    public class SendAccountReminderStrategyB
+    public class SendAccountReminderStrategy
     {
         public int SendAccountReminderAfterCycles { get; set; }
         public int SendAccountReminderEveryCycles { get; set; }

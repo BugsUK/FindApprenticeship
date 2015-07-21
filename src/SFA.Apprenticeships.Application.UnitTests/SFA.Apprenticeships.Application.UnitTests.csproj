@@ -129,10 +129,8 @@
     <Compile Include="Candidates\Strategies\HardDeleteStrategyTests.cs" />
     <Compile Include="Candidates\Strategies\SaveTraineeshipApplicationStrategyTests.cs" />
     <Compile Include="Candidates\Strategies\SaveApprenticeshipApplicationStrategyTests.cs" />
-    <Compile Include="Candidates\Strategies\ActivationReminder\SendAccountRemindersStrategyABuilder.cs" />
-    <Compile Include="Candidates\Strategies\ActivationReminder\SendAccountRemindersStrategyBBuilder.cs" />
-    <Compile Include="Candidates\Strategies\ActivationReminder\SendAccountRemindersStrategyATests.cs" />
-    <Compile Include="Candidates\Strategies\ActivationReminder\SendAccountRemindersStrategyBTests.cs" />
+    <Compile Include="Candidates\Strategies\ActivationReminder\SendAccountRemindersStrategyBuilder.cs" />
+    <Compile Include="Candidates\Strategies\ActivationReminder\SendAccountRemindersStrategyTests.cs" />
     <Compile Include="Candidates\Strategies\SendMobileVerificationCodeReminderStrategyTests.cs" />
     <Compile Include="Candidates\Strategies\ActivationReminder\SetPendingDeletionStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />

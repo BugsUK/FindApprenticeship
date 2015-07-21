@@ -13,16 +13,14 @@
 
         public ActivationReminderHousekeeping(IConfigurationService configurationService, ICommunicationService communicationService, IUserWriteRepository userWriteRepository, IAuditRepository auditRepository, ILogService logService)
         {
-            var sendAccountRemindersStrategyA = new SendAccountRemindersStrategyA(configurationService, communicationService, logService);
-            var sendAccountRemindersStrategyB = new SendAccountRemindersStrategyB(configurationService, communicationService, logService);
+            var sendAccountRemindersStrategy = new SendAccountRemindersStrategy(configurationService, communicationService);
             var setPendingDeletionStrategy = new SetPendingDeletionStrategy(configurationService, userWriteRepository, auditRepository, logService);
             var terminatingHousekeepingStrategy = new TerminatingHousekeepingStrategy(configurationService);
 
-            sendAccountRemindersStrategyA.SetSuccessor(sendAccountRemindersStrategyB);
-            sendAccountRemindersStrategyB.SetSuccessor(setPendingDeletionStrategy);
+            sendAccountRemindersStrategy.SetSuccessor(setPendingDeletionStrategy);
             setPendingDeletionStrategy.SetSuccessor(terminatingHousekeepingStrategy);
 
-            _strategy = sendAccountRemindersStrategyA;
+            _strategy = sendAccountRemindersStrategy;
         }
 
         public int Order

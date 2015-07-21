@@ -99,8 +99,6 @@
     <Compile Include="Strategies\HousekeepingStrategy.cs" />
     <Compile Include="Strategies\IHousekeepingStrategy.cs" />
     <Compile Include="Strategies\ActivationReminder\SendAccountRemindersStrategy.cs" />
-    <Compile Include="Strategies\ActivationReminder\SendAccountRemindersStrategyA.cs" />
-    <Compile Include="Strategies\ActivationReminder\SendAccountRemindersStrategyB.cs" />
     <Compile Include="Strategies\MobileVerificationCodeReminderHousekeeping.cs" />
     <Compile Include="Strategies\SendMobileVerificationCodeReminderStrategy.cs" />
     <Compile Include="Strategies\ActivationReminder\SetPendingDeletionStrategy.cs" />

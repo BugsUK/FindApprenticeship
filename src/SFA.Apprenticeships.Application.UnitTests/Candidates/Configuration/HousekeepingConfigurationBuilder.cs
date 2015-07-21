@@ -9,12 +9,7 @@
             HousekeepingCycleInHours = 24,
             ActivationReminderStrategy = new ActivationReminderStrategy
             {
-                SendAccountReminderStrategyA = new SendAccountReminderStrategyA
-                {
-                    SendAccountReminderOneAfterCycles = 7,
-                    SendAccountReminderTwoAfterCycles = 21
-                },
-                SendAccountReminderStrategyB = new SendAccountReminderStrategyB
+                SendAccountReminderStrategy = new SendAccountReminderStrategy
                 {
                     SendAccountReminderAfterCycles = 1,
                     SendAccountReminderEveryCycles = 7
@@ -36,21 +31,11 @@
             return _configuration;
         }
 
-        public HousekeepingConfigurationBuilder WithStrategyA(int housekeepingCycleInHours, int sendAccountReminderOneAfterCycles, int sendAccountReminderTwoAfterCycles, int setPendingDeletionAfterCycles)
+        public HousekeepingConfigurationBuilder WithStrategy(int housekeepingCycleInHours, int sendAccountReminderAfterCycles, int sendAccountReminderEveryCycles, int setPendingDeletionAfterCycles)
         {
             _configuration.HousekeepingCycleInHours = housekeepingCycleInHours;
-            _configuration.ActivationReminderStrategy.SendAccountReminderStrategyA.SendAccountReminderOneAfterCycles = sendAccountReminderOneAfterCycles;
-            _configuration.ActivationReminderStrategy.SendAccountReminderStrategyA.SendAccountReminderTwoAfterCycles = sendAccountReminderTwoAfterCycles;
-            _configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
-
-            return this;
-        }
-
-        public HousekeepingConfigurationBuilder WithStrategyB(int housekeepingCycleInHours, int sendAccountReminderAfterCycles, int sendAccountReminderEveryCycles, int setPendingDeletionAfterCycles)
-        {
-            _configuration.HousekeepingCycleInHours = housekeepingCycleInHours;
-            _configuration.ActivationReminderStrategy.SendAccountReminderStrategyB.SendAccountReminderAfterCycles = sendAccountReminderAfterCycles;
-            _configuration.ActivationReminderStrategy.SendAccountReminderStrategyB.SendAccountReminderEveryCycles = sendAccountReminderEveryCycles;
+            _configuration.ActivationReminderStrategy.SendAccountReminderStrategy.SendAccountReminderAfterCycles = sendAccountReminderAfterCycles;
+            _configuration.ActivationReminderStrategy.SendAccountReminderStrategy.SendAccountReminderEveryCycles = sendAccountReminderEveryCycles;
             _configuration.ActivationReminderStrategy.SetPendingDeletionAfterCycles = setPendingDeletionAfterCycles;
 
             return this;
