@@ -187,3 +187,18 @@ Scenario: Find apprenticeships by keyword and change ordering to closing date
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
         | ResultsAreInClosingDateOrder | Equals | True  |
+
+@SmokeTests
+Scenario: When searching by apprenticeships keyword results are returned
+	Given I navigated to the ApprenticeshipSearchPage page
+	When I enter data
+		 | Field               | Value           |
+		 | Keywords            | Apprenticeships |
+		 | Location            | Birmingham      |
+		 | WithInDistance      | 40 miles        |
+		 | ApprenticeshipLevel | All levels      |
+	And I choose Search
+	And I am on the ApprenticeshipSearchResultPage page
+	Then I see 
+        | Field                  | Rule         | Value |
+        | SearchResultItemsCount | Greater Than | 0     |
