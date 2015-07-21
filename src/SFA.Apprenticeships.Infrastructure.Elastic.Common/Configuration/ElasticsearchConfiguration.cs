@@ -8,6 +8,12 @@
 
     public class ElasticsearchConfiguration
     {
+        public ElasticsearchConfiguration()
+        {
+            Synonyms = new List<string>();
+            ExcludedTerms = new List<string>();
+        }
+
         public const string SearchConfigurationName = "SearchConfiguration";
 
         public const string LogstashConfigurationName = "LogstashConfiguration";
