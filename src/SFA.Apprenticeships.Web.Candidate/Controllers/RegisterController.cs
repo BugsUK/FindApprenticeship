@@ -165,8 +165,12 @@
                 var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
 
                 //Following registration, user should be prompted to verify their mobile number
-                var message = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.Action("VerifyMobile", "Account", new RouteValueDictionary { { "ReturnUrl", returnUrl } })).Message;
-                SetUserMessage(message.Text, message.Level);
+                var response = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.Action("VerifyMobile", "Account", new RouteValueDictionary { { "ReturnUrl", returnUrl } }));
+                if (response.Code == RegisterMediatorCodes.SendMobileVerificationCode.Success)
+                {
+                    var message = response.Message;
+                    SetUserMessage(message.Text, message.Level);
+                }
 
                 // Clear last viewed vacancy and distance (if any).
                 var lastViewedVacancyId = UserData.Pop(CandidateDataItemNames.LastViewedVacancyId);

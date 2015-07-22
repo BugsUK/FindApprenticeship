@@ -95,7 +95,7 @@
             
             var response = Mediator.Submit(Guid.NewGuid(), ValidVacancyId, postedViewModel);
 
-            response.AssertCode(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState, false);
+            response.AssertMessage(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info, false);
         }
 
         [Test]

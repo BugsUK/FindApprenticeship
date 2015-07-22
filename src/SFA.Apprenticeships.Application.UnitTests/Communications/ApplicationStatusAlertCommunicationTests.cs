@@ -71,7 +71,7 @@
         }
 
         [Test]
-        public void AllowNeitherEmailNorSmsShouldNotSendMessageAndDeleteAlerts()
+        public void AllowNeitherEmailNorSmsShouldNotSendMessageAndSoftDeleteAlerts()
         {
             var expiringDraftRepository = new Mock<IExpiringApprenticeshipApplicationDraftRepository>();
 
@@ -116,7 +116,7 @@
             applicationStatusAlertRepository.Verify(x => x.GetCandidatesDailyDigest(), Times.Once);
             candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
             userReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
-            applicationStatusAlertRepository.Verify(x => x.Delete(It.IsAny<ApplicationStatusAlert>()), Times.Exactly(4));
+            applicationStatusAlertRepository.Verify(x => x.Save(It.IsAny<ApplicationStatusAlert>()), Times.Exactly(4));
         }
 
         private static Dictionary<Guid, List<ApplicationStatusAlert>> GetAlertCandidatesDailyDigest(int candidateCount, int alertCount)

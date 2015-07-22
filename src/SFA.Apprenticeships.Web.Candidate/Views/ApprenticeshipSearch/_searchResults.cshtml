@@ -67,10 +67,13 @@ else
                                     <input @{if (Model.VacancySearch.DisplayDescription) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayDescription">
                                     <label for="DisplayDescription">Description</label>
                                 </li>
-                                <li>
-                                    <input @{if (Model.VacancySearch.DisplayDistance) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayDistance">
-                                    <label for="DisplayDistance">Distance</label>
-                                </li>
+                                @if (Model.VacancySearch.LocationType == ApprenticeshipLocationType.NonNational)
+                                {
+                                    <li>
+                                        <input @{if (Model.VacancySearch.DisplayDistance) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayDistance">
+                                        <label for="DisplayDistance">Distance</label>
+                                    </li>
+                                }
                                 <li>
                                     <input @{if (Model.VacancySearch.DisplayClosingDate) { <text> checked="checked" </text>   }} type="checkbox" id="DisplayClosingDate">
                                     <label for="DisplayClosingDate">Closing date</label>
@@ -126,9 +129,9 @@ else
                         <p id="posted-date-@vacancy.Id" class="subtitle">
                             @vacancy.EmployerName
                             <span class="font-xsmall inl-block">
-                                (Added @vacancy.PostedDate.ToFriendlyDaysAgo()
                                 @if (vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational)
                                 {
+                                    <text>(Added @vacancy.PostedDate.ToFriendlyDaysAgo()</text>
                                     <span id="number-of-positions-@vacancy.Id" class="hidden-subcategory">
                                         @if (vacancy.NumberOfPositions == 1)
                                         {
@@ -139,6 +142,10 @@ else
                                             <span>- @vacancy.NumberOfPositions positions available)</span>
                                         }
                                     </span>
+                                }
+                                else
+                                {
+                                    <text>(Added @vacancy.PostedDate.ToFriendlyDaysAgo())</text>
                                 }
                                 
                             </span>

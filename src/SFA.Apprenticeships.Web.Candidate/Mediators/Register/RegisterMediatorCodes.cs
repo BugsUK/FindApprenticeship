@@ -27,6 +27,8 @@
         public class SendMobileVerificationCode
         {
             public const string Success = "RegisterMediatorCodes.SendMobileVerificationCode.Success";
+            public const string NotRequired = "RegisterMediatorCodes.SendMobileVerificationCode.NotRequired";
+            public const string Error = "RegisterMediatorCodes.SendMobileVerificationCode.Error";
         }
     }
 }

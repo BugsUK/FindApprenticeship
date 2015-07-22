@@ -331,7 +331,7 @@
 
             if (model.ViewModelStatus == ApplicationViewModelStatus.ApplicationInIncorrectState)
             {
-                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState);
+                return GetMediatorResponse<ApprenticeshipApplicationPreviewViewModel>(ApprenticeshipApplicationMediatorCodes.Submit.IncorrectState, null, MyApplicationsPageMessages.ApplicationInIncorrectState, UserMessageLevel.Info);
             }
             if (model.ViewModelStatus == ApplicationViewModelStatus.Error || model.HasError())
             {

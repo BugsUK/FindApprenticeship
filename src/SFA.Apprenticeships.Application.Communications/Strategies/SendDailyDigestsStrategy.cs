@@ -90,14 +90,22 @@
                 {
                     if (candidateHasExpiringDrafts)
                     {
-                        // Delete candidates expiring drafts
-                        candidateExpiringDraftsDailyDigest.ToList().ForEach(_expiringDraftRepository.Delete);
+                        // Soft delete candidates expiring drafts by setting batch id to empty
+                        candidateExpiringDraftsDailyDigest.ToList().ForEach(dd =>
+                        {
+                            dd.BatchId = Guid.Empty;
+                            _expiringDraftRepository.Save(dd);
+                        });
                     }
 
                     if (candidateHasApplicationStatusAlerts)
                     {
-                        // Delete candidates application status alerts
-                        candidateApplicationStatusAlertsDailyDigest.ToList().ForEach(_applicationStatusAlertRepository.Delete);
+                        // Soft delete candidates saved application status alerts by setting batch id to empty
+                        candidateApplicationStatusAlertsDailyDigest.ToList().ForEach(dd =>
+                        {
+                            dd.BatchId = Guid.Empty;
+                            _applicationStatusAlertRepository.Save(dd);
+                        });
                     }
                 }
             }

@@ -64,7 +64,7 @@
         }
 
         [Test]
-        public void AllowNeitherEmailNorSmsShouldNotSendMessageAndDeleteAlerts()
+        public void AllowNeitherEmailNorSmsShouldNotSendMessageAndSoftDeleteAlerts()
         {
             var savedSearchAlertRepository = new Mock<ISavedSearchAlertRepository>();
 
@@ -97,7 +97,7 @@
             savedSearchAlertRepository.Verify(x => x.GetCandidatesSavedSearchAlerts(), Times.Once);
             candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
             userReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
-            savedSearchAlertRepository.Verify(x => x.Delete(It.IsAny<SavedSearchAlert>()), Times.Exactly(4));
+            savedSearchAlertRepository.Verify(x => x.Save(It.IsAny<SavedSearchAlert>()), Times.Exactly(4));
         }
 
         #region Helpers

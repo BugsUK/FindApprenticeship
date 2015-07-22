@@ -3,6 +3,8 @@
     using System;
     using Common.Constants;
     using Constants.Pages;
+    using Domain.Entities;
+    using Domain.Entities.Exceptions;
     using Providers;
     using Validators;
     using ViewModels;
@@ -116,9 +118,20 @@
 
         public MediatorResponse SendMobileVerificationCode(Guid candidateId, string verifyMobileUrl)
         {
-            var phoneNumber = _candidateServiceProvider.SendMobileVerificationCode(candidateId);
-            var message = string.Format(LoginPageMessages.MobileVerificationRequiredText, phoneNumber, verifyMobileUrl);
-            return GetMediatorResponse(RegisterMediatorCodes.SendMobileVerificationCode.Success, message, UserMessageLevel.Info);
+            try
+            {
+                var phoneNumber = _candidateServiceProvider.SendMobileVerificationCode(candidateId);
+                var message = string.Format(LoginPageMessages.MobileVerificationRequiredText, phoneNumber, verifyMobileUrl);
+                return GetMediatorResponse(RegisterMediatorCodes.SendMobileVerificationCode.Success, message, UserMessageLevel.Info);
+            }
+            catch (CustomException ex)
+            {
+                if (ex.Code == ErrorCodes.EntityStateError)
+                {
+                    return GetMediatorResponse(RegisterMediatorCodes.SendMobileVerificationCode.NotRequired);
+                }
+                return GetMediatorResponse(RegisterMediatorCodes.SendMobileVerificationCode.Error);
+            }
         }
     }
 }
