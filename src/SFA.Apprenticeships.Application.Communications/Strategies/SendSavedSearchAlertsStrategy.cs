@@ -54,8 +54,12 @@
                 }
                 else
                 {
-                    // Delete candidates saved search status alerts
-                    candidateSavedSearchAlerts.ToList().ForEach(_savedSearchAlertRepository.Delete);
+                    // Soft delete candidates saved search status alerts by setting batch id to empty
+                    candidateSavedSearchAlerts.ToList().ForEach(dd =>
+                    {
+                        dd.BatchId = Guid.Empty;
+                        _savedSearchAlertRepository.Save(dd);
+                    });
                 }
             }
         }
