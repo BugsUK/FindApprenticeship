@@ -13,7 +13,7 @@
             _savedSearchProcessor = savedSearchProcessor;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "candidate-saved-searches")]
+        [ServiceBusTopicSubscription(TopicName = "candidate-saved-searches-run")]
         public ServiceBusMessageResult Consume(CandidateSavedSearches candidateSavedSearches)
         {
             _savedSearchProcessor.ProcessCandidateSavedSearches(candidateSavedSearches);

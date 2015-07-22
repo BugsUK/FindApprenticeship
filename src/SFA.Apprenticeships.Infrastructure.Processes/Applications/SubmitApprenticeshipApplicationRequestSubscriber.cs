@@ -40,7 +40,7 @@
             _legacyCandidateProvider = legacyCandidateProvider;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "submit-apprenticeship-application-request")]
+        [ServiceBusTopicSubscription(TopicName = "aship-application-submit")]
         public ServiceBusMessageResult Consume(SubmitApprenticeshipApplicationRequest request)
         {
             return CreateApplication(request);

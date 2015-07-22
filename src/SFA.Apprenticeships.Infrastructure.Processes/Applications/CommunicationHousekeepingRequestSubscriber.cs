@@ -17,7 +17,7 @@
             _housekeeper = housekeeper;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "communication-housekeeping-request")]
+        [ServiceBusTopicSubscription(TopicName = "communication-housekeeping-request-create")]
         public ServiceBusMessageResult Consume(CommunicationHousekeepingRequest request)
         {
             _logService.Debug("Running housekeeping for communication id {0} and type {1}",

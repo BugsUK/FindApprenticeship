@@ -13,7 +13,7 @@
             _dispatcher = dispatcher;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "sms-request")]
+        [ServiceBusTopicSubscription(TopicName = "sms-send")]
         public ServiceBusMessageResult Consume(SmsRequest request)
         {
             try

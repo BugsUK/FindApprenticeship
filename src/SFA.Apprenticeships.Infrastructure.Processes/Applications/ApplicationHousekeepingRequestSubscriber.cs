@@ -17,7 +17,7 @@
             _housekeeper = housekeeper;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "application-housekeeping-request")]
+        [ServiceBusTopicSubscription(TopicName = "application-housekeeping-request-create")]
         public ServiceBusMessageResult Consume(ApplicationHousekeepingRequest request)
         {
             _logService.Debug("Running housekeeping for application id {0} and vacancy type {1}",

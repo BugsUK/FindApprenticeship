@@ -23,7 +23,7 @@
             _siteMapVacancyProcessor = siteMapVacancyProcessor;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "create-vacancy-sitemap-request")]
+        [ServiceBusTopicSubscription(TopicName = "vacancy-sitemap-create")]
         public ServiceBusMessageResult Consume(CreateVacancySiteMapRequest request)
         {
             if (_configurationService.Get<ProcessConfiguration>().EnableVacancySiteMap)

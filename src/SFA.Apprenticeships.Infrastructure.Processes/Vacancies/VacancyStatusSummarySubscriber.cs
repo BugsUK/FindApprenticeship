@@ -24,7 +24,7 @@
             _enableVacancyStatusPropagation = configurationService.Get<ProcessConfiguration>().EnableVacancyStatusPropagation;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "vacancy-status-summary")]
+        [ServiceBusTopicSubscription(TopicName = "aship-vacancy-status-update")]
         public ServiceBusMessageResult Consume(VacancyStatusSummary message)
         {
             // TODO: AG: ASB: refactor logic and unit test.

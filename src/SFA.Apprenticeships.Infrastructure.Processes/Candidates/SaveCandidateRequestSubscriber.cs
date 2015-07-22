@@ -23,7 +23,7 @@
             _legacyCandidateProvider = legacyCandidateProvider;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "save-candidate-request")]
+        [ServiceBusTopicSubscription(TopicName = "candidate-updated")]
         public ServiceBusMessageResult Consume(SaveCandidateRequest message)
         {
             _logService.Info("SaveCandidateRequest: {0}", message.CandidateId);

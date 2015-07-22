@@ -27,7 +27,7 @@
             _housekeepingChains = housekeepingChains.OrderBy(hc => hc.Order).ToList();
         }
 
-        [ServiceBusTopicSubscription(TopicName = "candidate-housekeeping")]
+        [ServiceBusTopicSubscription(TopicName = "candidate-housekeeping-request-create")]
         public ServiceBusMessageResult Consume(CandidateHousekeeping candidateHousekeeping)
         {
             var candidateId = candidateHousekeeping.CandidateId;

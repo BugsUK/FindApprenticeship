@@ -28,7 +28,7 @@
             _strictEtlValidation = configurationService.Get<ProcessConfiguration>().StrictEtlValidation;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "application-status-changed")]
+        [ServiceBusTopicSubscription(TopicName = "aship-application-status-updated")]
         public ServiceBusMessageResult Consume(ApplicationStatusChanged applicationStatusChanged)
         {
             var application = _apprenticeshipApplicationReadRepository.Get(applicationStatusChanged.LegacyApplicationId, _strictEtlValidation);

@@ -15,7 +15,7 @@
             _communicationCommands = new List<CommunicationCommand>(communicationCommands);
         }
 
-        [ServiceBusTopicSubscription(TopicName = "communication-request")]
+        [ServiceBusTopicSubscription(TopicName = "communication-request-create")]
         public ServiceBusMessageResult Consume(CommunicationRequest message)
         {
             _communicationCommands

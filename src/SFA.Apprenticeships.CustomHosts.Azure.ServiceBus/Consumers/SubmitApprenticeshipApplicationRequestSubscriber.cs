@@ -6,7 +6,7 @@
 
     public class SubmitApprenticeshipApplicationRequestSubscriber : IServiceBusSubscriber<SubmitApprenticeshipApplicationRequest>
     {
-        [ServiceBusTopicSubscription(TopicName = "apprenticeship-application-submit", SubscriptionName = "default")]
+        [ServiceBusTopicSubscription(TopicName = "aship-application-submit")]
         public ServiceBusMessageResult Consume(SubmitApprenticeshipApplicationRequest message)
         {
             Console.WriteLine("DEFAULT: SubmitApprenticeshipApplicationRequest: {0}", message.ApplicationId);

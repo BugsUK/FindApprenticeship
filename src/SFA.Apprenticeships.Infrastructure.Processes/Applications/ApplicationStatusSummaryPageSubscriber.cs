@@ -20,7 +20,7 @@
             _applicationStatusExtractWindow = configurationService.Get<ProcessConfiguration>().ApplicationStatusExtractWindow;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "application-update-page")]
+        [ServiceBusTopicSubscription(TopicName = "aship-application-status-page-update")]
         public ServiceBusMessageResult Consume(ApplicationUpdatePage message)
         {
             _applicationStatusProcessor.QueueApplicationStatuses(_applicationStatusExtractWindow, message);
