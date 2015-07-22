@@ -34,7 +34,7 @@
             _logger = logger;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "tship-application-submit")]
+        [ServiceBusTopicSubscription(TopicName = "SubmitTraineeshipApplication")]
         public ServiceBusMessageResult Consume(SubmitTraineeshipApplicationRequest request)
         {
             return CreateApplication(request);

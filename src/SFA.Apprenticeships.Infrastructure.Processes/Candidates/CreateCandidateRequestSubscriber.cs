@@ -31,7 +31,7 @@
             _legacyCandidateProvider = legacyCandidateProvider;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "candidate-create")]
+        [ServiceBusTopicSubscription(TopicName = "CreateCandidate")]
         public ServiceBusMessageResult Consume(CreateCandidateRequest request)
         {
             return CreateCandidate(request);

@@ -26,7 +26,7 @@
             _traineeVacancyIndexerService = traineeVacancyIndexerService;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "vacancy-index-created")]
+        [ServiceBusTopicSubscription(TopicName = "VacancyIndexCreated")]
         public ServiceBusMessageResult Consume(VacancySummaryUpdateComplete updateComplete)
         {
             _logger.Debug("Received vacancy summary update completed message.");

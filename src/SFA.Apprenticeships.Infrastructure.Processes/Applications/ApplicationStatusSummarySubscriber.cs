@@ -23,7 +23,7 @@
             _strictEtlValidation = configurationService.Get<ProcessConfiguration>().StrictEtlValidation;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "application-status-summary")]
+        [ServiceBusTopicSubscription(TopicName = "UpdateApprenticeshipApplicationStatus")]
         public ServiceBusMessageResult Consume(ApplicationStatusSummary applicationStatusSummary)
         {
             _applicationStatusProcessor.ProcessApplicationStatuses(applicationStatusSummary, _strictEtlValidation);

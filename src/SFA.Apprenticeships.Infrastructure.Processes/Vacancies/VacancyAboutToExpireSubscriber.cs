@@ -25,7 +25,7 @@
             _mapper = mapper;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "aship-vacancy-expiring")]
+        [ServiceBusTopicSubscription(TopicName = "ApprenticeshipVacancyExpiring")]
         public ServiceBusMessageResult Consume(VacancyAboutToExpire vacancy)
         {
             // Get saved and draft applications for expiring vacancy

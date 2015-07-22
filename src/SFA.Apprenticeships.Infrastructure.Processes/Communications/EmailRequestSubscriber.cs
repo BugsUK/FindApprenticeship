@@ -12,7 +12,7 @@
             _dispatcher = dispatcher;
         }
 
-        [ServiceBusTopicSubscription(TopicName = "email-send")]
+        [ServiceBusTopicSubscription(TopicName = "SendEmail")]
         public ServiceBusMessageResult Consume(EmailRequest request)
         {
             _dispatcher.SendEmail(request);
