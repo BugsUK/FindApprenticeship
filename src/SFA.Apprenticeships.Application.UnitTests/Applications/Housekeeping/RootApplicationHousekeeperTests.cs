@@ -19,7 +19,7 @@
     {
         private Mock<ILogService> _mockLogService;
         private Mock<IConfigurationService> _mockConfigurationService;
-        private Mock<IMessageBus> _mockMessageBus;
+        private Mock<IServiceBus> _mockServiceBus;
 
         private Mock<IDraftApplicationForExpiredVacancyHousekeeper> _mockDraftApplicationForExpiredVacancyHousekeeper;
         private Mock<ISubmittedApplicationHousekeeper> _mockSubmittedApplicationHousekeeper;
@@ -32,7 +32,7 @@
         {
             _mockLogService = new Mock<ILogService>();
             _mockConfigurationService = new Mock<IConfigurationService>();
-            _mockMessageBus = new Mock<IMessageBus>();
+            _mockServiceBus = new Mock<IServiceBus>();
 
             _mockDraftApplicationForExpiredVacancyHousekeeper =
                 new Mock<IDraftApplicationForExpiredVacancyHousekeeper>();
@@ -52,7 +52,7 @@
             _housekeeper = new RootApplicationHousekeeper(
                 _mockLogService.Object,
                 _mockConfigurationService.Object,
-                _mockMessageBus.Object,
+                _mockServiceBus.Object,
                 _mockDraftApplicationForExpiredVacancyHousekeeper.Object,
                 _mockSubmittedApplicationHousekeeper.Object);
         }
@@ -68,7 +68,7 @@
 
             var queue = new List<ApplicationHousekeepingRequest>();
 
-            _mockMessageBus.Setup(mock =>
+            _mockServiceBus.Setup(mock =>
                 mock.PublishMessage(It.IsAny<ApplicationHousekeepingRequest>()))
                 .Callback<ApplicationHousekeepingRequest>(queue.Add);
 
@@ -99,7 +99,7 @@
 
             var queue = new List<ApplicationHousekeepingRequest>();
 
-            _mockMessageBus.Setup(mock =>
+            _mockServiceBus.Setup(mock =>
                 mock.PublishMessage(It.IsAny<ApplicationHousekeepingRequest>()))
                 .Callback<ApplicationHousekeepingRequest>(queue.Add);
 
@@ -134,7 +134,7 @@
 
             var queue = new List<ApplicationHousekeepingRequest>();
 
-            _mockMessageBus.Setup(mock =>
+            _mockServiceBus.Setup(mock =>
                 mock.PublishMessage(It.IsAny<ApplicationHousekeepingRequest>()))
                 .Callback<ApplicationHousekeepingRequest>(queue.Add);
 

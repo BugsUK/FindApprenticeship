@@ -9,13 +9,13 @@
 
     public class ApplicationStatusAlertStrategy : IApplicationStatusAlertStrategy
     {
-        private readonly IMessageBus _messageBus;
         private readonly ILogService _logService;
+        private readonly IServiceBus _serviceBus;
 
-        public ApplicationStatusAlertStrategy(IMessageBus messageBus, ILogService logService)
+        public ApplicationStatusAlertStrategy(ILogService logService, IServiceBus serviceBus)
         {
-            _messageBus = messageBus;
             _logService = logService;
+            _serviceBus = serviceBus;
         }
 
         public void Send(ApplicationStatusSummary applicationStatusSummary)
@@ -36,7 +36,7 @@
                 try
                 {
                     _logService.Debug(message);
-                    _messageBus.PublishMessage(applicationStatusChanged);
+                    _serviceBus.PublishMessage(applicationStatusChanged);
                 }
                 catch (Exception ex)
                 {

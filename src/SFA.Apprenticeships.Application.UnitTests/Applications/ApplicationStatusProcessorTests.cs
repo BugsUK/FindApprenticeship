@@ -7,7 +7,6 @@
     using Application.Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Logging;
@@ -23,8 +22,8 @@
         private Mock<IApprenticeshipApplicationReadRepository> _apprenticeshipApplicationReadMock;
         private Mock<ICandidateReadRepository> _candidateReadMock;
         private Mock<ITraineeshipApplicationReadRepository> _traineeshipApplicationReadMock;
-        private Mock<IMessageBus> _bus;
-        private Mock<ILogService> _logger;
+        private Mock<ILogService> _loggerMock;
+        private Mock<IServiceBus> _serviceBusMock;
 
         [SetUp]
         public void SetUp()
@@ -34,11 +33,17 @@
             _traineeshipApplicationReadMock = new Mock<ITraineeshipApplicationReadRepository>();
             _candidateReadMock = new Mock<ICandidateReadRepository>();
             _applicationStatusUpdateStrategy = new Mock<IApplicationStatusUpdateStrategy>();
-            _bus = new Mock<IMessageBus>();
-            _logger = new Mock<ILogService>();
-            _applicationStatusProcessor = new ApplicationStatusProcessor(_legacyApplicationStatusProvider.Object,
-                _apprenticeshipApplicationReadMock.Object, _traineeshipApplicationReadMock.Object, _candidateReadMock.Object, 
-                _applicationStatusUpdateStrategy.Object, _bus.Object, _logger.Object);
+            _serviceBusMock = new Mock<IServiceBus>();
+            _loggerMock = new Mock<ILogService>();
+
+            _applicationStatusProcessor = new ApplicationStatusProcessor(
+                _loggerMock.Object,
+                _serviceBusMock.Object,
+                _apprenticeshipApplicationReadMock.Object,
+                _traineeshipApplicationReadMock.Object,
+                _candidateReadMock.Object,
+                _legacyApplicationStatusProvider.Object,
+                _applicationStatusUpdateStrategy.Object);
         }
 
         [Test]
@@ -51,8 +56,6 @@
                     Status = ApplicationStatuses.Draft,
                     LegacyVacancyId = 123
                 }, 4);
-
-            _bus.Setup(x => x.PublishMessage(It.IsAny<ApplicationStatusSummary>()));
 
             _apprenticeshipApplicationReadMock.Setup(
                 x => x.GetApplicationSummaries(It.Is<int>(id => id == 123)))
@@ -72,7 +75,7 @@
                     x.GetApplicationSummaries(
                         It.Is<int>(id => id == 123)), Times.Once);
 
-            _bus.Verify(
+            _serviceBusMock.Verify(
                 x =>
                     x.PublishMessage(
                         It.Is<ApplicationStatusSummary>(

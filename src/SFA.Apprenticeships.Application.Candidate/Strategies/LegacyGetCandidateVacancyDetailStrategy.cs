@@ -17,18 +17,18 @@
 
         private readonly IVacancyDataProvider<TVacancyDetail> _vacancyDataProvider;
         private readonly IApplicationVacancyUpdater _applicationVacancyUpdater;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
         public LegacyGetCandidateVacancyDetailStrategy(
-            IVacancyDataProvider<TVacancyDetail> vacancyDataProvider,
-            IApplicationVacancyUpdater applicationVacancyUpdater,
             ILogService logger,
-            IMessageBus messageBus)
+            IServiceBus serviceBus,
+            IVacancyDataProvider<TVacancyDetail> vacancyDataProvider,
+            IApplicationVacancyUpdater applicationVacancyUpdater)
         {
-            _messageBus = messageBus;
+            _logger = logger;
+            _serviceBus = serviceBus;
             _vacancyDataProvider = vacancyDataProvider;
             _applicationVacancyUpdater = applicationVacancyUpdater;
-            _logger = logger;
         }
 
         public TVacancyDetail GetVacancyDetails(Guid candidateId, int vacancyId)
@@ -52,7 +52,7 @@
                         ClosingDate = vacancyDetails.ClosingDate
                     };
 
-                    _messageBus.PublishMessage(vacancyStatusSummary);
+                    _serviceBus.PublishMessage(vacancyStatusSummary);
                 }
 
                 return vacancyDetails;

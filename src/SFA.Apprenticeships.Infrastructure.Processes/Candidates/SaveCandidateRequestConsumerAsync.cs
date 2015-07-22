@@ -24,8 +24,8 @@
             _logger = logger;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 2)]
-        [AutoSubscriberConsumer(SubscriptionId = "SaveCandidateRequestConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 2)]
+        // [AutoSubscriberConsumer(SubscriptionId = "SaveCandidateRequestConsumerAsync")]
         public Task Consume(SaveCandidateRequest request)
         {
             return Task.Run(() =>

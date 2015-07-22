@@ -12,7 +12,7 @@
     [TestFixture]
     public class ElastricsearchConfigurationTests
     {
-        private IConfigurationService configurationService = null;
+        private IConfigurationService _configurationService;
         
         [SetUp]
         public void SetUp()
@@ -24,21 +24,21 @@
                 x.AddRegistry<ElasticsearchCommonRegistry>();
             });
 
-            configurationService = container.GetInstance<IConfigurationService>();
+            _configurationService = container.GetInstance<IConfigurationService>();
         }
 
 
         [Test]
         public void ShouldPopulateWithValues()
         {
-            var searchConfig = configurationService.Get<SearchConfiguration>();
+            var searchConfig = _configurationService.Get<SearchConfiguration>();
 
             searchConfig.Should().NotBeNull();
             searchConfig.HostName.Should().NotBeNull();
             searchConfig.NodeCount.Should().BeGreaterOrEqualTo(1);
             searchConfig.Timeout.Should().Be(30);
 
-            var logstashConfig = configurationService.Get<LogstashConfiguration>();
+            var logstashConfig = _configurationService.Get<LogstashConfiguration>();
 
             logstashConfig.Should().NotBeNull();
             logstashConfig.HostName.Should().NotBeNull();

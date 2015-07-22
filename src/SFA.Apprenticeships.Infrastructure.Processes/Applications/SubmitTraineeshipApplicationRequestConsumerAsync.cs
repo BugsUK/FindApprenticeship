@@ -38,8 +38,8 @@
             _logger = logger;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 2)]
-        [AutoSubscriberConsumer(SubscriptionId = "SubmitTraineeshipApplicationRequestConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 2)]
+        // [AutoSubscriberConsumer(SubscriptionId = "SubmitTraineeshipApplicationRequestConsumerAsync")]
         public Task Consume(SubmitTraineeshipApplicationRequest request)
         {
             return Task.Run(() =>

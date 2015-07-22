@@ -29,8 +29,8 @@
             _strictEtlValidation = configurationService.Get<ProcessConfiguration>().StrictEtlValidation;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 20)]
-        [AutoSubscriberConsumer(SubscriptionId = "ApplicationStatusChangedConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 20)]
+        // [AutoSubscriberConsumer(SubscriptionId = "ApplicationStatusChangedConsumerAsync")]
         public Task Consume(ApplicationStatusChanged applicationStatusChanged)
         {
             return Task.Run(() =>

@@ -14,12 +14,15 @@
     {
         private readonly ILogService _logger;
         private readonly ITraineeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
-        public CheckUnsentTraineeshipApplicationMessages(ITraineeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus, ILogService logger)
+        public CheckUnsentTraineeshipApplicationMessages(
+            ITraineeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository,
+            IServiceBus serviceBus,
+            ILogService logger)
         {
             _applicationDiagnosticsRepository = applicationDiagnosticsRepository;
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             _logger = logger;
         }
 
@@ -46,7 +49,7 @@
                     ApplicationId = application.EntityId
                 };
 
-                _messageBus.PublishMessage(message);
+                _serviceBus.PublishMessage(message);
 
                 var requeuedMessage = string.Format("Re-queued create traineeship application message for candidate id: {0}", application.EntityId);
                 _logger.Info(requeuedMessage);

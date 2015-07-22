@@ -7,11 +7,11 @@
 
     public class QueueContactMessageStrategy : ISendContactMessageStrategy
     {
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
-        public QueueContactMessageStrategy(IMessageBus messageBus)
+        public QueueContactMessageStrategy(IServiceBus serviceBus)
         {
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
         }
 
         public void Send(Guid? userId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
@@ -23,7 +23,7 @@
                 Tokens = tokens
             };
 
-            _messageBus.PublishMessage(request);
+            _serviceBus.PublishMessage(request);
         }
     }
 }

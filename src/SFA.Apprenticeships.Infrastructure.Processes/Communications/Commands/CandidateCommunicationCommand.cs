@@ -23,10 +23,10 @@
         public CandidateCommunicationCommand(
             ILogService logService,
             IConfigurationService configurationService,
-            IMessageBus messageBus,
+            IServiceBus serviceBus,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository)
-            : base(messageBus)
+            : base(serviceBus)
         {
             _logService = logService;
             _configurationService = configurationService;

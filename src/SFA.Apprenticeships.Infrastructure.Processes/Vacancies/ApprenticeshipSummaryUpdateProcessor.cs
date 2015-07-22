@@ -15,22 +15,26 @@
 
     public class ApprenticeshipSummaryUpdateProcessor : IApprenticeshipSummaryUpdateProcessor
     {
-        private readonly IReferenceDataService _referenceDataService;
-        private readonly IMessageBus _messageBus;
         private readonly ILogService _logService;
+        private readonly IServiceBus _serviceBus;
+
+        private readonly IReferenceDataService _referenceDataService;
         private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _vacancyIndexerService;
+
         private readonly int _vacancyAboutToExpireThreshold;
         private readonly bool _strictEtlValidation;
 
         public ApprenticeshipSummaryUpdateProcessor(
+            ILogService logService,
+            IServiceBus serviceBus,
             IConfigurationService configurationService,
             IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> vacancyIndexerService,
-            IReferenceDataService referenceDataService, IMessageBus messageBus, ILogService logService)
+            IReferenceDataService referenceDataService)
         {
+            _logService = logService;
+            _serviceBus = serviceBus;
             _vacancyIndexerService = vacancyIndexerService;
             _referenceDataService = referenceDataService;
-            _messageBus = messageBus;
-            _logService = logService;
             _vacancyAboutToExpireThreshold = configurationService.Get<ProcessConfiguration>().VacancyAboutToExpireNotificationHours;
             _strictEtlValidation = configurationService.Get<ProcessConfiguration>().StrictEtlValidation;
         }
@@ -88,7 +92,7 @@
                     _logService.Debug("Queueing expiring vacancy");
 
                     var vacancyAboutToExpireMessage = new VacancyAboutToExpire { Id = vacancySummary.Id };
-                    _messageBus.PublishMessage(vacancyAboutToExpireMessage);
+                    _serviceBus.PublishMessage(vacancyAboutToExpireMessage);
                 }
             }
             catch (Exception ex)

@@ -2,16 +2,16 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 {
     using System;
     using System.Net;
-    using System.Reflection;
     using System.Threading;
     using Application.Candidates;
     using Application.Interfaces.Logging;
     using Application.ReferenceData.Configuration;
     using Azure.Common.IoC;
+    using Azure.ServiceBus;
+    using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
-    using Communications;
     using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using Elastic.Common.IoC;
@@ -22,8 +22,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using RabbitMq.Interfaces;
-    using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Audit.IoC;
     using Repositories.Authentication.IoC;
@@ -60,6 +58,8 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
             // Kill the bus which will kill any subscriptions
             _container.GetInstance<IBus>().Advanced.Dispose();
 
+            UnsubscribeServiceBusMessageBrokers();
+
             // Give it 5 seconds to finish processing any in flight subscriptions.
             Thread.Sleep(TimeSpan.FromSeconds(5));
 
@@ -75,7 +75,8 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
             try
             {
                 InitializeIoC();
-                InitialiseRabbitMQSubscribers();
+                InitialiseServiceBus();
+                SubscribeServiceBusMessageBrokers();
             }
             catch (Exception ex)
             {
@@ -101,7 +102,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
-                x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
@@ -127,15 +128,47 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
             _logger = _container.GetInstance<ILogService>();
         }
 
-        private void InitialiseRabbitMQSubscribers()
+        private void InitialiseServiceBus()
         {
-            var bootstrapper = _container.GetInstance<IBootstrapSubcribers>();
+            _logger.Debug("Initialising service bus");
 
-            _logger.Debug("RabbitMQ initialising");
+            _container.GetInstance<IServiceBusInitialiser>().Initialise();
 
-            bootstrapper.LoadSubscribers(Assembly.GetAssembly(typeof(EmailRequestConsumerAsync)), "AsyncProcessor", _container);
+            _logger.Debug("Initialised service bus");
+        }
 
-            _logger.Debug("RabbitMQ initialised");
+        private void SubscribeServiceBusMessageBrokers()
+        {
+            _logger.Debug("Subscribing service bus message brokers");
+
+            var brokers = _container.GetAllInstances<IServiceBusMessageBroker>();
+
+            var count = 0;
+
+            foreach (var broker in brokers)
+            {
+                broker.Subscribe();
+                count++;
+            }
+
+            _logger.Debug("Subscribed {0} service bus message broker(s)", count);
+        }
+
+        private void UnsubscribeServiceBusMessageBrokers()
+        {
+            _logger.Debug("Unsubscribing service bus message brokers");
+
+            var brokers = _container.GetAllInstances<IServiceBusMessageBroker>();
+
+            var count = 0;
+
+            foreach (var broker in brokers)
+            {
+                broker.Unsubscribe();
+                count++;
+            }
+
+            _logger.Debug("Unsubscribed {0} service bus message broker(s)", count);
         }
     }
 }

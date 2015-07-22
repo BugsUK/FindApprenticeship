@@ -11,16 +11,16 @@
     {
         private readonly IUserReadRepository _userReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
         public QueueUsernameUpdateCommunicationStrategy(
             IUserReadRepository userReadRepository,
             ICandidateReadRepository candidateReadRepository, 
-            IMessageBus messageBus)
+            IServiceBus serviceBus)
         {
             _userReadRepository = userReadRepository;
             _candidateReadRepository = candidateReadRepository;
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
         }
 
         public void Send(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
@@ -42,7 +42,7 @@
                 Tokens = tokens
             };
 
-            _messageBus.PublishMessage(request);
+            _serviceBus.PublishMessage(request);
         }
     }
 }

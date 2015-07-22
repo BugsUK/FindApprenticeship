@@ -86,7 +86,12 @@
     <Compile Include="Configuration\IConfigurationService.cs" />
     <Compile Include="Messaging\IMessageBus.cs" />
     <Compile Include="Messaging\IJobControlQueue.cs" />
+    <Compile Include="Messaging\IServiceBus.cs" />
+    <Compile Include="Messaging\IServiceBusSubscriber.cs" />
     <Compile Include="Messaging\ScheduledJobQueues.cs" />
+    <Compile Include="Messaging\ServiceBusMessageStates.cs" />
+    <Compile Include="Messaging\ServiceBusMessageResult.cs" />
+    <Compile Include="Messaging\ServiceBusTopicSubscriptionAttribute.cs" />
     <Compile Include="Messaging\StorageQueueMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Caching\CacheDuration.cs" />

@@ -16,8 +16,8 @@
             _communicationCommands = new List<CommunicationCommand>(communicationCommands);
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 20)]
-        [AutoSubscriberConsumer(SubscriptionId = "CommunicationRequestConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 20)]
+        // [AutoSubscriberConsumer(SubscriptionId = "CommunicationRequestConsumerAsync")]
         public Task Consume(CommunicationRequest message)
         {
             return Task.Run(() => _communicationCommands

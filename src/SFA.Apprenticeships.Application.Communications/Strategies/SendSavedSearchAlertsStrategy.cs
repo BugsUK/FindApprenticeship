@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.Communications.Strategies
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Candidates;
-    using Domain.Entities.Communication;
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
@@ -14,18 +12,18 @@
         private readonly ISavedSearchAlertRepository _savedSearchAlertRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
         public SendSavedSearchAlertsStrategy(
             ISavedSearchAlertRepository savedSearchAlertRepository,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository,
-            IMessageBus messageBus)
+            IServiceBus serviceBus)
         {
             _savedSearchAlertRepository = savedSearchAlertRepository;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
         }
 
         public void SendSavedSearchAlerts(Guid batchId)
@@ -43,7 +41,7 @@
                 {
                     var communicationRequest = CommunicationRequestFactory.GetSavedSearchAlertCommunicationRequest(candidate, candidateSavedSearchAlerts);
 
-                    _messageBus.PublishMessage(communicationRequest);
+                    _serviceBus.PublishMessage(communicationRequest);
 
                     // Update candidates saved search alerts to sent
                     candidateSavedSearchAlerts.ToList().ForEach(dd =>
@@ -54,8 +52,12 @@
                 }
                 else
                 {
-                    // Delete candidates saved search status alerts
-                    candidateSavedSearchAlerts.ToList().ForEach(_savedSearchAlertRepository.Delete);
+                    // Soft delete candidates saved search status alerts by setting batch id to empty
+                    candidateSavedSearchAlerts.ToList().ForEach(dd =>
+                    {
+                        dd.BatchId = Guid.Empty;
+                        _savedSearchAlertRepository.Save(dd);
+                    });
                 }
             }
         }

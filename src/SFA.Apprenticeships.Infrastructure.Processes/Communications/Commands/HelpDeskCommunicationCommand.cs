@@ -5,8 +5,8 @@
 
     public class HelpDeskCommunicationCommand : CommunicationCommand
     {
-        public HelpDeskCommunicationCommand(IMessageBus messageBus)
-            : base(messageBus)
+        public HelpDeskCommunicationCommand(IServiceBus serviceBus)
+            : base(serviceBus)
         {
         }
 

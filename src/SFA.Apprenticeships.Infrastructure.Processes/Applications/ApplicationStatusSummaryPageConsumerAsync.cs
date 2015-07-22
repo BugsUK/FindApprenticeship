@@ -26,8 +26,8 @@
             _applicationStatusExtractWindow = configurationService.Get<ProcessConfiguration>().ApplicationStatusExtractWindow;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 2)]
-        [AutoSubscriberConsumer(SubscriptionId = "ApplicationStatusSummaryPageConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 2)]
+        // [AutoSubscriberConsumer(SubscriptionId = "ApplicationStatusSummaryPageConsumerAsync")]
         public Task Consume(ApplicationUpdatePage message)
         {
             return Task.Run(() =>

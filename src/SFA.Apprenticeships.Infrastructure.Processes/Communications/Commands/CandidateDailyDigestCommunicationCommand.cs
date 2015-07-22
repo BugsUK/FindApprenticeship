@@ -17,10 +17,10 @@
         public CandidateDailyDigestCommunicationCommand(
             ILogService logService,
             IConfigurationService configurationService,
-            IMessageBus messageBus,
+            IServiceBus serviceBus,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository)
-            : base(logService, configurationService, messageBus, candidateReadRepository, userReadRepository)
+            : base(logService, configurationService, serviceBus, candidateReadRepository, userReadRepository)
         {
         }
 

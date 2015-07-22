@@ -58,7 +58,7 @@
             }
             catch (Exception ex)
             {
-                _loggerService.Error("Error desrialising", ex);
+                _loggerService.Error("Error deserialising", ex);
                 throw;
             }
 

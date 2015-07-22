@@ -16,7 +16,7 @@
         public void SetUp()
         {
             var command = new CandidateCommunicationCommand(
-                LogService.Object, ConfigurationService.Object, MessageBus.Object, CandidateRepository.Object, UserRepository.Object);
+                LogService.Object, ConfigurationService.Object, ServiceBus.Object, CandidateRepository.Object, UserRepository.Object);
 
             base.SetUp(command);
         }

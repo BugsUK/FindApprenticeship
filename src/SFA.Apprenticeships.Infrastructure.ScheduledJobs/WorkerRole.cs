@@ -9,6 +9,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Application.Interfaces.Logging;
     using Application.ReferenceData.Configuration;
     using Azure.Common.IoC;
+    using Azure.ServiceBus.IoC;
     using Caching.Azure.IoC;
     using Common.Configuration;
     using Common.IoC;
@@ -144,6 +145,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddCachingRegistry(cacheConfig);
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<ElasticsearchCommonRegistry>();

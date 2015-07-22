@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -27,8 +26,8 @@
             _mapper = mapper;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 20)]
-        [AutoSubscriberConsumer(SubscriptionId = "VacancyAboutToExpireConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 20)]
+        // [AutoSubscriberConsumer(SubscriptionId = "VacancyAboutToExpireConsumerAsync")]
         public Task Consume(VacancyAboutToExpire vacancy)
         {
             return Task.Run(() =>

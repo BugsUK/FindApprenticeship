@@ -18,8 +18,8 @@
             _housekeeper = housekeeper;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 20)]
-        [AutoSubscriberConsumer(SubscriptionId = "ApplicationHousekeepingRequestConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 20)]
+        // [AutoSubscriberConsumer(SubscriptionId = "ApplicationHousekeepingRequestConsumerAsync")]
         public Task Consume(ApplicationHousekeepingRequest request)
         {
             return Task.Run(() =>

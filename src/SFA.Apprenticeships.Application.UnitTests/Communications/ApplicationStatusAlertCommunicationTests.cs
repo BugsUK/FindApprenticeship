@@ -52,14 +52,14 @@
 
             userReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(user);
 
-            var messageBus = new Mock<IMessageBus>();
+            var serviceBus = new Mock<IServiceBus>();
 
             var sendDailyDigestsStrategy = new SendDailyDigestsStrategyBuilder()
                 .With(applicationStatusAlertRepository)
                 .With(expiringDraftRepository)
                 .With(candidateReadRepository)
                 .With(userReadRepository)
-                .With(messageBus)
+                .With(serviceBus)
                 .Build();
 
             var communicationProcessor = new CommunicationProcessor(sendDailyDigestsStrategy, null);
@@ -67,11 +67,11 @@
             var batchId = Guid.NewGuid();
 
             communicationProcessor.SendDailyDigests(batchId);
-            messageBus.Verify(mb => mb.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(3));
+            serviceBus.Verify(mb => mb.PublishMessage(It.IsAny<CommunicationRequest>()), Times.Exactly(3));
         }
 
         [Test]
-        public void AllowNeitherEmailNorSmsShouldNotSendMessageAndDeleteAlerts()
+        public void AllowNeitherEmailNorSmsShouldNotSendMessageAndSoftDeleteAlerts()
         {
             var expiringDraftRepository = new Mock<IExpiringApprenticeshipApplicationDraftRepository>();
 
@@ -97,14 +97,14 @@
 
             userReadRepository.Setup(x => x.Get(It.IsAny<Guid>())).Returns(user);
 
-            var messageBus = new Mock<IMessageBus>();
+            var serviceBus = new Mock<IServiceBus>();
 
             var sendDailyDigestsStrategy = new SendDailyDigestsStrategyBuilder()
                 .With(applicationStatusAlertRepository)
                 .With(expiringDraftRepository)
                 .With(candidateReadRepository)
                 .With(userReadRepository)
-                .With(messageBus)
+                .With(serviceBus)
                 .Build();
 
             var batchId = Guid.NewGuid();
@@ -116,7 +116,7 @@
             applicationStatusAlertRepository.Verify(x => x.GetCandidatesDailyDigest(), Times.Once);
             candidateReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
             userReadRepository.Verify(x => x.Get(It.IsAny<Guid>()), Times.Exactly(2));
-            applicationStatusAlertRepository.Verify(x => x.Delete(It.IsAny<ApplicationStatusAlert>()), Times.Exactly(4));
+            applicationStatusAlertRepository.Verify(x => x.Save(It.IsAny<ApplicationStatusAlert>()), Times.Exactly(4));
         }
 
         private static Dictionary<Guid, List<ApplicationStatusAlert>> GetAlertCandidatesDailyDigest(int candidateCount, int alertCount)

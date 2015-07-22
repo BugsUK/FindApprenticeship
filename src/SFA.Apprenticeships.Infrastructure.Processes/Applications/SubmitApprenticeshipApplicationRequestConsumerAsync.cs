@@ -21,6 +21,7 @@
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly IMessageBus _messageBus;
 
         public SubmitApprenticeshipApplicationRequestConsumerAsync(
             ILegacyApplicationProvider legacyApplicationProvider,
@@ -41,10 +42,8 @@
             _userReadRepository = userReadRepository;
         }
 
-        private readonly IMessageBus _messageBus;
-
-        [SubscriptionConfiguration(PrefetchCount = 2)]
-        [AutoSubscriberConsumer(SubscriptionId = "SubmitApprenticeshipApplicationRequestConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 2)]
+        // [AutoSubscriberConsumer(SubscriptionId = "SubmitApprenticeshipApplicationRequestConsumerAsync")]
         public Task Consume(SubmitApprenticeshipApplicationRequest request)
         {
             return Task.Run(() =>

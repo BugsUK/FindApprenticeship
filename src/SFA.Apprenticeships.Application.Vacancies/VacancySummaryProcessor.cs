@@ -15,22 +15,23 @@
     {
         private readonly ILogService _logger;
 
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
         private readonly IVacancyIndexDataProvider _vacancyIndexDataProvider;
         private readonly IMapper _mapper;
         private readonly IJobControlQueue<StorageQueueMessage> _jobControlQueue;
         private readonly IApprenticeshipSummaryUpdateProcessor _apprenticeshipSummaryUpdateProcessor;
         private readonly ITraineeshipsSummaryUpdateProcessor _traineeshipsSummaryUpdateProcessor;
 
-        public VacancySummaryProcessor(IMessageBus messageBus,
-                                       IVacancyIndexDataProvider vacancyIndexDataProvider,
-                                       IMapper mapper,
-                                       IJobControlQueue<StorageQueueMessage> jobControlQueue, 
-                                       IApprenticeshipSummaryUpdateProcessor apprenticeshipSummaryUpdateProcessor,
-                                       ITraineeshipsSummaryUpdateProcessor traineeshipsSummaryUpdateProcessor,
-                                       ILogService logger)
+        public VacancySummaryProcessor(
+            IServiceBus serviceBus,
+            IVacancyIndexDataProvider vacancyIndexDataProvider,
+            IMapper mapper,
+            IJobControlQueue<StorageQueueMessage> jobControlQueue,
+            IApprenticeshipSummaryUpdateProcessor apprenticeshipSummaryUpdateProcessor,
+            ITraineeshipsSummaryUpdateProcessor traineeshipsSummaryUpdateProcessor,
+            ILogService logger)
         {
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             _vacancyIndexDataProvider = vacancyIndexDataProvider;
             _mapper = mapper;
             _jobControlQueue = jobControlQueue;
@@ -63,7 +64,7 @@
             Parallel.ForEach(vacancySummaries, new ParallelOptions { MaxDegreeOfParallelism = 2 }, ProcessVacancySummaryPage);
 
             var lastVacancySummaryPage = vacancySummaries.Last();
-            
+
             _logger.Info("Vacancy ETL Queue completed: {0} vacancy summary pages processed ", lastVacancySummaryPage.TotalPages);
 
             _logger.Info("Publishing VacancySummaryUpdateComplete message to queue");
@@ -73,7 +74,7 @@
                 ScheduledRefreshDateTime = lastVacancySummaryPage.ScheduledRefreshDateTime
             };
 
-            _messageBus.PublishMessage(vsuc);
+            _serviceBus.PublishMessage(vsuc);
 
             _logger.Info("Published VacancySummaryUpdateComplete message published to queue");
         }
@@ -119,7 +120,7 @@
 
         #region Helpers
         private static IEnumerable<VacancySummaryPage> BuildVacancySummaryPages(DateTime scheduledRefreshDateTime, int count)
-        {           
+        {
             var vacancySumaries = new List<VacancySummaryPage>(count);
 
             for (var i = 1; i <= count; i++)

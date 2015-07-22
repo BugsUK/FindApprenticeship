@@ -7,11 +7,11 @@
 
     public abstract class CommunicationCommand
     {
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
-        protected CommunicationCommand(IMessageBus messageBus)
+        protected CommunicationCommand(IServiceBus serviceBus)
         {
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
         }
 
         public abstract bool CanHandle(CommunicationRequest communicationRequest);
@@ -29,7 +29,7 @@
                 Tokens = GetMessageTokens(communicationRequest),
             };
 
-            _messageBus.PublishMessage(request);
+            _serviceBus.PublishMessage(request);
         }
 
         protected void QueueSmsMessage(CommunicationRequest communicationRequest)
@@ -43,7 +43,7 @@
                 Tokens = GetMessageTokens(communicationRequest),
             };
 
-            _messageBus.PublishMessage(request);
+            _serviceBus.PublishMessage(request);
         }
 
         private IEnumerable<CommunicationToken> GetMessageTokens(CommunicationRequest communicationRequest)

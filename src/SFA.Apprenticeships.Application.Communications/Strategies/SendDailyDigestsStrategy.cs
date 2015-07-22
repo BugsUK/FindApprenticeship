@@ -16,23 +16,23 @@
         private readonly IApplicationStatusAlertRepository _applicationStatusAlertRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
         private readonly ILogService _logService;
 
         public SendDailyDigestsStrategy(
+            ILogService logService,
+            IServiceBus serviceBus,
             IExpiringApprenticeshipApplicationDraftRepository expiringDraftRepository,
             IApplicationStatusAlertRepository applicationStatusAlertRepository,
             ICandidateReadRepository candidateReadRepository,
-            IUserReadRepository userReadRepository,
-            IMessageBus messageBus,
-            ILogService logService)
+            IUserReadRepository userReadRepository)
         {
+            _logService = logService;
+            _serviceBus = serviceBus;
             _expiringDraftRepository = expiringDraftRepository;
             _applicationStatusAlertRepository = applicationStatusAlertRepository;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
-            _messageBus = messageBus;
-            _logService = logService;
         }
 
         public void SendDailyDigests(Guid batchId)
@@ -64,7 +64,7 @@
                 {
                     var communicationRequest = CommunicationRequestFactory.GetDailyDigestCommunicationRequest(candidate, candidateExpiringDraftsDailyDigest, candidateApplicationStatusAlertsDailyDigest);
 
-                    _messageBus.PublishMessage(communicationRequest);
+                    _serviceBus.PublishMessage(communicationRequest);
 
                     if (candidateHasExpiringDrafts)
                     {
@@ -90,14 +90,22 @@
                 {
                     if (candidateHasExpiringDrafts)
                     {
-                        // Delete candidates expiring drafts
-                        candidateExpiringDraftsDailyDigest.ToList().ForEach(_expiringDraftRepository.Delete);
+                        // Soft delete candidates expiring drafts by setting batch id to empty
+                        candidateExpiringDraftsDailyDigest.ToList().ForEach(dd =>
+                        {
+                            dd.BatchId = Guid.Empty;
+                            _expiringDraftRepository.Save(dd);
+                        });
                     }
 
                     if (candidateHasApplicationStatusAlerts)
                     {
-                        // Delete candidates application status alerts
-                        candidateApplicationStatusAlertsDailyDigest.ToList().ForEach(_applicationStatusAlertRepository.Delete);
+                        // Soft delete candidates saved application status alerts by setting batch id to empty
+                        candidateApplicationStatusAlertsDailyDigest.ToList().ForEach(dd =>
+                        {
+                            dd.BatchId = Guid.Empty;
+                            _applicationStatusAlertRepository.Save(dd);
+                        });
                     }
                 }
             }

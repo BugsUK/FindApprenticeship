@@ -9,17 +9,21 @@
 
     public class QueuedLegacyActivateCandidateStrategy : IActivateCandidateStrategy
     {
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
         private readonly IUserReadRepository _userReadRepository;
         private readonly IUserAccountService _registrationService;
         private readonly ILogService _logService;
 
-        public QueuedLegacyActivateCandidateStrategy(IMessageBus messageBus, IUserReadRepository userReadRepository, IUserAccountService registrationService, ILogService logService)
+        public QueuedLegacyActivateCandidateStrategy(
+            ILogService logService,
+            IServiceBus serviceBus,
+            IUserReadRepository userReadRepository,
+            IUserAccountService registrationService)
         {
-            _messageBus = messageBus;
+            _logService = logService;
+            _serviceBus = serviceBus;
             _userReadRepository = userReadRepository;
             _registrationService = registrationService;
-            _logService = logService;
         }
 
         public void ActivateCandidate(Guid id, string activationCode)
@@ -38,7 +42,9 @@
             };
 
             _logService.Info("Publishing CreateCandidateRequest for Candidate with Id: {0}", message.CandidateId);
-            _messageBus.PublishMessage(message);
+
+            _serviceBus.PublishMessage(message);
+
             _logService.Info("Successfully published CreateCandidateRequest for Candidate with Id: {0}", message.CandidateId);
         }
     }

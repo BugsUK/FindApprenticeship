@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.Tasks
 {
     using System.Linq;
-    using System.Text;
     using Application.Applications;
     using Application.Candidate;
     using Application.Interfaces.Logging;
@@ -12,14 +11,18 @@
     public class CheckUnsetTraineeshipApplicationLegacyId : IMonitorTask
     {
         private readonly ITraineeshipApplicationDiagnosticsRepository _applicationDiagnosticsRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly ILogService _logger;
 
-        public CheckUnsetTraineeshipApplicationLegacyId(ITraineeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository, IMessageBus messageBus, ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider, ILogService logger)
+        public CheckUnsetTraineeshipApplicationLegacyId(
+            ITraineeshipApplicationDiagnosticsRepository applicationDiagnosticsRepository,
+            IServiceBus serviceBus,
+            ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
+            ILogService logger)
         {
             _applicationDiagnosticsRepository = applicationDiagnosticsRepository;
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
             _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _logger = logger;
         }
@@ -45,7 +48,7 @@
                         ApplicationId = applicationDetail.EntityId
                     };
 
-                    _messageBus.PublishMessage(message);
+                    _serviceBus.PublishMessage(message);
 
                     _logger.Warn("Could not patch traineeship application id: {0} with legacy id as no matching application status summary was found. Re-queued instead", applicationDetail.EntityId);
                 }

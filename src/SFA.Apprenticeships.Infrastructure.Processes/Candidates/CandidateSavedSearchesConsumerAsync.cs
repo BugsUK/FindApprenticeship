@@ -14,8 +14,8 @@
             _savedSearchProcessor = savedSearchProcessor;
         }
 
-        [SubscriptionConfiguration(PrefetchCount = 20)]
-        [AutoSubscriberConsumer(SubscriptionId = "CandidateSavedSearchesConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 20)]
+        // [AutoSubscriberConsumer(SubscriptionId = "CandidateSavedSearchesConsumerAsync")]
         public Task Consume(CandidateSavedSearches candidateSavedSearches)
         {
             return Task.Run(() => _savedSearchProcessor.ProcessCandidateSavedSearches(candidateSavedSearches));

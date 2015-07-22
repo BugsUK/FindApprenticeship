@@ -17,7 +17,7 @@
     {
         protected Mock<ILogService> LogService;
         protected Mock<IConfigurationService> ConfigurationService;
-        protected Mock<IMessageBus> MessageBus;
+        protected Mock<IServiceBus> ServiceBus;
         protected Mock<ICandidateReadRepository> CandidateRepository;
         protected Mock<IUserReadRepository> UserRepository;
 
@@ -27,7 +27,7 @@
         {
             LogService = new Mock<ILogService>();
             ConfigurationService = new Mock<IConfigurationService>();
-            MessageBus = new Mock<IMessageBus>();
+            ServiceBus = new Mock<IServiceBus>();
             UserRepository = new Mock<IUserReadRepository>();
             CandidateRepository = new Mock<ICandidateReadRepository>();
         }
@@ -38,7 +38,7 @@
 
             LogService.ResetCalls();
             ConfigurationService.ResetCalls();
-            MessageBus.ResetCalls();
+            ServiceBus.ResetCalls();
             UserRepository.ResetCalls();
             CandidateRepository.ResetCalls();
 
@@ -52,7 +52,7 @@
 
         protected void ShouldQueueEmail(MessageTypes messageType, int expectedCount, string emailAddress = CommunicationRequestBuilder.DefaultTestEmailAddress)
         {
-            MessageBus.Verify(mock => mock.PublishMessage(
+            ServiceBus.Verify(mock => mock.PublishMessage(
                 It.Is<EmailRequest>(emailRequest =>
                     emailRequest.MessageType == messageType &&
                     emailRequest.ToEmail == emailAddress)),
@@ -61,7 +61,7 @@
 
         protected void ShouldQueueSms(MessageTypes messageType, int expectedCount, string mobileNumber = CommunicationRequestBuilder.DefaultTestMobileNumber)
         {
-            MessageBus.Verify(mock => mock.PublishMessage(
+            ServiceBus.Verify(mock => mock.PublishMessage(
                 It.Is<SmsRequest>(smsRequest =>
                     smsRequest.MessageType == messageType &&
                     smsRequest.ToNumber == mobileNumber)),

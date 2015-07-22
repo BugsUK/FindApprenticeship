@@ -181,32 +181,49 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\ApplicationHousekeepingRequestSubscriber.cs" />
+    <Compile Include="Applications\ApplicationStatusChangedSubscriber.cs" />
+    <Compile Include="Applications\ApplicationStatusSummaryPageSubscriber.cs" />
+    <Compile Include="Applications\ApplicationStatusSummarySubscriber.cs" />
+    <Compile Include="Applications\CommunicationHousekeepingRequestSubscriber.cs" />
     <Compile Include="Applications\CommunicationHousekeepingRequestConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusChangedConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusSummaryConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationStatusSummaryPageConsumerAsync.cs" />
     <Compile Include="Applications\ApplicationHousekeepingRequestConsumerAsync.cs" />
+    <Compile Include="Applications\SubmitApprenticeshipApplicationRequestSubscriber.cs" />
+    <Compile Include="Applications\SubmitTraineeshipApplicationRequestSubscriber.cs" />
+    <Compile Include="Candidates\CandidateAccountHousekeepingSubscriber.cs" />
     <Compile Include="Candidates\CandidateAccountHousekeepingConsumerAsync.cs" />
+    <Compile Include="Candidates\CandidateSavedSearchesSubscriber.cs" />
     <Compile Include="Candidates\CandidateSavedSearchesConsumerAsync.cs" />
+    <Compile Include="Candidates\CreateCandidateRequestSubscriber.cs" />
+    <Compile Include="Candidates\SaveCandidateRequestSubscriber.cs" />
     <Compile Include="Candidates\SaveCandidateRequestConsumerAsync.cs" />
     <Compile Include="Communications\CandidateCommunicationHelper.cs" />
     <Compile Include="Communications\Commands\CandidateDailyDigestCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CandidateCommunicationCommand.cs" />
     <Compile Include="Communications\Commands\CommunicationCommand.cs" />
     <Compile Include="Communications\Commands\HelpDeskCommunicationCommand.cs" />
+    <Compile Include="Communications\CommunicationRequestSubscriber.cs" />
     <Compile Include="Communications\CommunicationRequestConsumerAsync.cs" />
     <Compile Include="Candidates\CreateCandidateRequestConsumerAsync.cs" />
+    <Compile Include="Communications\EmailRequestSubscriber.cs" />
+    <Compile Include="Communications\SmsRequestSubscriber.cs" />
     <Compile Include="Communications\SmsRequestConsumerAsync.cs" />
     <Compile Include="Applications\SubmitTraineeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Applications\SubmitApprenticeshipApplicationRequestConsumerAsync.cs" />
     <Compile Include="Communications\EmailRequestConsumerAsync.cs" />
     <Compile Include="Configuration\ProcessConfiguration.cs" />
     <Compile Include="Extensions\EtlValidationLoggingExtensions.cs" />
+    <Compile Include="SiteMap\CreateVacancySiteMapRequestSubscriber.cs" />
     <Compile Include="SiteMap\CreateVacancySiteMapRequestConsumerAsync.cs" />
     <Compile Include="Vacancies\ApprenticeshipSummaryUpdateProcessor.cs" />
     <Compile Include="Vacancies\TraineeshipsSummaryUpdateProcessor.cs" />
+    <Compile Include="Vacancies\VacancyAboutToExpireSubscriber.cs" />
     <Compile Include="Vacancies\VacancyAboutToExpireConsumerAsync.cs" />
     <Compile Include="Vacancies\VacancyEtlMapper.cs" />
+    <Compile Include="Vacancies\VacancyStatusSummarySubscriber.cs" />
     <Compile Include="Vacancies\VacancyStatusSummaryConsumerAsync.cs" />
     <Compile Include="Extensions\VacancyStatusSummaryExtensions.cs" />
     <Compile Include="IoC\ProcessesRegistry.cs" />
@@ -216,6 +233,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Vacancies\VacancySummaryCompleteSubscriber.cs" />
     <Compile Include="Vacancies\VacancySummaryCompleteConsumerAsync.cs" />
     <Compile Include="WorkerRole.cs" />
   </ItemGroup>
@@ -325,6 +343,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">
       <Project>{4fe5e4be-91df-49c6-b6cd-9b69fcd0c0fe}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
+      <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Azure\SFA.Apprenticeships.Infrastructure.Caching.Azure.csproj">
       <Project>{B3285E4A-29DD-4CB6-B8C9-51AA06DB4F83}</Project>

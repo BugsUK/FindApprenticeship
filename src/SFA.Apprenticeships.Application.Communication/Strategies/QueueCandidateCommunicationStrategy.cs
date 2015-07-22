@@ -10,12 +10,14 @@
     public class QueueCandidateCommunicationStrategy : ISendCandidateCommunicationStrategy
     {
         private readonly ICandidateReadRepository _candidateReadRepository;
-        private readonly IMessageBus _messageBus;
+        private readonly IServiceBus _serviceBus;
 
-        public QueueCandidateCommunicationStrategy(ICandidateReadRepository candidateReadRepository, IMessageBus messageBus)
+        public QueueCandidateCommunicationStrategy(
+            ICandidateReadRepository candidateReadRepository,
+            IServiceBus serviceBus)
         {
             _candidateReadRepository = candidateReadRepository;
-            _messageBus = messageBus;
+            _serviceBus = serviceBus;
         }
 
         public void Send(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
@@ -36,7 +38,7 @@
                 Tokens = tokens
             };
 
-            _messageBus.PublishMessage(request);
+            _serviceBus.PublishMessage(request);
         }
     }
 }

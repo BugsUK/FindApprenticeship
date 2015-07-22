@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Communications
 {
-    using System;
     using System.Threading.Tasks;
     using Application.Interfaces.Communications;
     using EasyNetQ.AutoSubscribe;
@@ -15,8 +14,8 @@
         }
 
         //TODO: Potentially up this value once we stop seeing errors
-        [SubscriptionConfiguration(PrefetchCount = 5)]
-        [AutoSubscriberConsumer(SubscriptionId = "EmailRequestConsumerAsync")]
+        // [SubscriptionConfiguration(PrefetchCount = 5)]
+        // [AutoSubscriberConsumer(SubscriptionId = "EmailRequestConsumerAsync")]
         public Task Consume(EmailRequest request)
         {
             return Task.Run(() => _dispatcher.SendEmail(request));

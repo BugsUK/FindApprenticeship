@@ -13,28 +13,30 @@
     public class ApplicationStatusProcessor : IApplicationStatusProcessor
     {
         private readonly ILogService _logger;
+        private readonly IServiceBus _serviceBus;
 
         private readonly ILegacyApplicationStatusesProvider _legacyApplicationStatusesProvider;
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
-        private readonly IMessageBus _messageBus;
 
-        public ApplicationStatusProcessor(ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
+        public ApplicationStatusProcessor(
+            ILogService logger,
+            IServiceBus serviceBus,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             ICandidateReadRepository candidateReadRepository,
-            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy,
-            IMessageBus messageBus, ILogService logger)
+            ILegacyApplicationStatusesProvider legacyApplicationStatusesProvider,
+            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy)
         {
-            _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
+            _logger = logger;
+            _serviceBus = serviceBus;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _candidateReadRepository = candidateReadRepository;
+            _legacyApplicationStatusesProvider = legacyApplicationStatusesProvider;
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
-            _messageBus = messageBus;
-            _logger = logger;
         }
 
         public void QueueApplicationStatusesPages(int applicationStatusExtractWindow)
@@ -57,7 +59,7 @@
             Parallel.ForEach(
                 pages,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                page => _messageBus.PublishMessage(page));
+                page => _serviceBus.PublishMessage(page));
 
             _logger.Info("Queued {0} application status update pages", pageCount);
         }
@@ -80,7 +82,7 @@
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
+                applicationStatusSummary => _serviceBus.PublishMessage(applicationStatusSummary));
 
             _logger.Info("Queued {0} application status updates for page {1} of {2}", applicationStatusSummaries.Count(), applicationStatusSummaryPage.PageNumber, applicationStatusSummaryPage.TotalPages);
         }
@@ -133,7 +135,7 @@
             Parallel.ForEach(
                 applicationStatusSummaries,
                 new ParallelOptions { MaxDegreeOfParallelism = 5 },
-                applicationStatusSummary => _messageBus.PublishMessage(applicationStatusSummary));
+                applicationStatusSummary => _serviceBus.PublishMessage(applicationStatusSummary));
         }
 
         private bool ProcessApprenticeshipApplication(ApplicationStatusSummary applicationStatusSummary, bool strictEtlValidation)
