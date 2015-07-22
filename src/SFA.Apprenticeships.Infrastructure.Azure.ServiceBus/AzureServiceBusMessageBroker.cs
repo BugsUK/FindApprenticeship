@@ -258,9 +258,9 @@
             return DateTime.UtcNow.AddMinutes(5);
         }
 
-        private void LogSubscriptionClientException(object sender, ExceptionReceivedEventArgs e)
+        private void LogSubscriptionClientException(object sender, ExceptionReceivedEventArgs eventArgs)
         {
-            _logService.Error("Subscription client exception", e);
+            _logService.Error("Subscription client exception, action '{0}'", eventArgs.Exception, eventArgs.Action);
         }
 
         #endregion

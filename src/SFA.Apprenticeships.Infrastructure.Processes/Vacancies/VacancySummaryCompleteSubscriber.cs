@@ -9,18 +9,16 @@
 
     public class VacancySummaryCompleteSubscriber : IServiceBusSubscriber<VacancySummaryUpdateComplete>
     {
-        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _apprenticeshipVacancyIndexerService;
-        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, Elastic.TraineeshipSummary> _traineeVacancyIndexerService;
         private readonly ILogService _logger;
         private readonly IServiceBus _serviceBus;
+        private readonly IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> _apprenticeshipVacancyIndexerService;
+        private readonly IVacancyIndexerService<TraineeshipSummaryUpdate, Elastic.TraineeshipSummary> _traineeVacancyIndexerService;
 
         public VacancySummaryCompleteSubscriber(
             ILogService logger,
             IServiceBus serviceBus,
-            IVacancyIndexerService<ApprenticeshipSummaryUpdate,
-            Elastic.ApprenticeshipSummary> apprenticeshipVacancyIndexerService,
-            IVacancyIndexerService<TraineeshipSummaryUpdate,
-            Elastic.TraineeshipSummary> traineeVacancyIndexerService)
+            IVacancyIndexerService<ApprenticeshipSummaryUpdate, Elastic.ApprenticeshipSummary> apprenticeshipVacancyIndexerService,
+            IVacancyIndexerService<TraineeshipSummaryUpdate, Elastic.TraineeshipSummary> traineeVacancyIndexerService)
         {
             _logger = logger;
             _serviceBus = serviceBus;

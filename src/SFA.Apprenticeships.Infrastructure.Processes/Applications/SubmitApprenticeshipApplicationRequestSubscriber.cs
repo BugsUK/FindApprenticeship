@@ -6,6 +6,7 @@
     using Application.Interfaces.Logging;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
@@ -16,6 +17,7 @@
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly IUserReadRepository _userReadRepository;
 
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
         private readonly ILegacyCandidateProvider _legacyCandidateProvider;
@@ -25,6 +27,7 @@
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ICandidateReadRepository candidateReadRepository,
+            IUserReadRepository userReadRepository,
             ILegacyApplicationProvider legacyApplicationProvider,
             ILegacyCandidateProvider legacyCandidateProvider)
         {
@@ -32,6 +35,7 @@
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _candidateReadRepository = candidateReadRepository;
+            _userReadRepository = userReadRepository;
             _legacyApplicationProvider = legacyApplicationProvider;
             _legacyCandidateProvider = legacyCandidateProvider;
         }
@@ -54,10 +58,24 @@
 
                 if (candidate.LegacyCandidateId == 0)
                 {
-                    _logger.Info("Candidate with Id: {0} has not been created in the legacy system, message will be requeued",
-                        applicationDetail.CandidateId);
+                    var user = _userReadRepository.Get(applicationDetail.CandidateId);
 
-                    return Requeue(request);
+                    if (user == null || user.Status == UserStatuses.PendingDeletion)
+                    {
+                        _logger.Warn(
+                            "User with Id: {0} is set as pending deletion. Application with Id: {1} cannot be submitted and will be set to draft. Message will not be requeued",
+                            applicationDetail.CandidateId, request.ApplicationId);
+                        applicationDetail.RevertStateToDraft();
+                        _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+                    }
+                    else
+                    {
+                        _logger.Info(
+                            "Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
+                            applicationDetail.CandidateId);
+
+                        return Requeue(request);
+                    }
                 }
 
                 EnsureApplicationCanBeCreated(applicationDetail);

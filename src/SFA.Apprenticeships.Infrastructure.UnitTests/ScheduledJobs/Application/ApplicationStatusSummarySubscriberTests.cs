@@ -66,13 +66,44 @@
             _applicationStatusProcessorMock.Verify(x => x.ProcessApplicationStatuses(It.Is<ApplicationStatusSummary>(y => y == appStatusSummary), true));
 
             _serviceBus.Verify(
-                x =>
-                    x.PublishMessage(
+                mock =>
+                    mock.PublishMessage(
                         It.Is<VacancyStatusSummary>(
                             v =>
                                 v.LegacyVacancyId == appStatusSummary.LegacyVacancyId &&
                                 v.ClosingDate == appStatusSummary.ClosingDate &&
                                 v.VacancyStatus == appStatusSummary.VacancyStatus)));
+        }
+
+        [Test]
+        public void ShouldNotPublishMessageWhenReprocessingApplicationStatusSummary()
+        {
+            // Arrange.
+            _applicationStatusProcessorMock.Setup(x => x.ProcessApplicationStatuses(It.IsAny<ApplicationStatusSummary>(), true));
+            _serviceBus.Setup(x => x.PublishMessage(It.IsAny<VacancyStatusSummary>()));
+
+            var appStatusSummary = new ApplicationStatusSummary
+            {
+                ApplicationId = Guid.NewGuid(),
+                LegacyVacancyId = 101,
+                ApplicationStatus = ApplicationStatuses.Submitted,
+                VacancyStatus = VacancyStatuses.Live,
+                ClosingDate = DateTime.Now,
+                LegacyApplicationId = 1001,
+                UnsuccessfulReason = "Because"
+            };
+
+            // Act.
+            var result = _applicationStatusSummarySubscriber.Consume(appStatusSummary);
+
+            // Assert.
+            result.Should().NotBeNull();
+            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            result.State.Should().Be(ServiceBusMessageStates.Complete);
+
+            _applicationStatusProcessorMock.Verify(x => x.ProcessApplicationStatuses(It.Is<ApplicationStatusSummary>(y => y == appStatusSummary), true));
+
+            _serviceBus.Verify(mock => mock.PublishMessage(It.IsAny<VacancyStatusSummary>()), Times.Never);
         }
     }
 }
