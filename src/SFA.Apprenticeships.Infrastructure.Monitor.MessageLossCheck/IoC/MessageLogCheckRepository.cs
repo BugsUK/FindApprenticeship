@@ -23,12 +23,12 @@
                 .EnumerableOf<IMonitorTask>()
                 .Contains(x =>
                 {
-                    x.Type<CheckUnsentCandidateMessages>();
+                    //x.Type<CheckUnsentCandidateMessages>();
                     x.Type<CheckUnsentApprenticeshipApplicationMessages>();
                     //x.Type<CheckUnsentTraineeshipApplicationMessages>();
-                    x.Type<CheckUnsetApprenticeshipApplicationLegacyId>();
-                    x.Type<CheckUnsetTraineeshipApplicationLegacyId>();
-                    x.Type<CheckApprenticeshipApplicationsIncorrectlyInDraft>();
+                    //x.Type<CheckUnsetApprenticeshipApplicationLegacyId>();
+                    //x.Type<CheckUnsetTraineeshipApplicationLegacyId>();
+                    //x.Type<CheckApprenticeshipApplicationsIncorrectlyInDraft>();
                     //x.Type<CheckExpiredDrafts>();
                 });
         }
