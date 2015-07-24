@@ -14,10 +14,6 @@
         private readonly IApprenticeshipMetricsRepository _apprenticeshipMetricsRepository;
         private readonly ITraineeshipMetricsRepository _traineeshipMetricsRepository;
 
-        private const string FileNamePrefix = "../Prod_";
-
-        private readonly DateTime _oldestValidDate = new DateTime(2014, 12, 1);
-
         public TraineeshipsAnalysis(IUserMetricsRepository userMetricsRepository, ICandidateMetricsRepository candidateMetricsRepository, IApprenticeshipMetricsRepository apprenticeshipMetricsRepository, ITraineeshipMetricsRepository traineeshipMetricsRepository)
         {
             _userMetricsRepository = userMetricsRepository;
@@ -55,7 +51,7 @@
 
         private static void WriteTraineeshipAnalysisCsv(Dictionary<Guid, UserApplicationMetrics> userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("{1}TraineeshipAnalysis_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), FileNamePrefix);
+            var fileName = string.Format("TraineeshipAnalysis_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"));
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.Values);
@@ -65,7 +61,7 @@
 
         private static void WriteApprenticeshipApplicationMetricsCsv(ApprenticeshipApplicationMetrics userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("{1}ApprenticeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), FileNamePrefix);
+            var fileName = string.Format("ApprenticeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"));
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.ApprenticeshipMetrics.Values);
@@ -75,7 +71,7 @@
 
         private static void WriteTraineeshipApplicationMetricsCsv(TraineeshipApplicationMetrics userApplicationMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("{1}TraineeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"), FileNamePrefix);
+            var fileName = string.Format("TraineeshipApplicationMetrics_{0}.csv", fileDateTime.ToString("s").Replace(":", "-"));
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.WriteRecords(userApplicationMetrics.TraineeshipMetrics.Values);
@@ -86,7 +82,7 @@
         private void AddUserActivityMetrics(Dictionary<Guid, UserApplicationMetrics> userApplicationMetrics)
         {
             var dateTime = DateTime.UtcNow;
-            while (dateTime > _oldestValidDate)
+            while (dateTime > Constants.OldestValidDate)
             {
                 var userActivityMetrics = _userMetricsRepository.GetUserActivityMetrics(dateTime.AddDays(-30), dateTime);
                 foreach (var userActivityMetric in userActivityMetrics)

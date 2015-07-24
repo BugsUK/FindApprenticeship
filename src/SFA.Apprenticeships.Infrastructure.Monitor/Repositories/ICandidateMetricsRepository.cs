@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Domain.Entities.Candidates;
 
     public interface ICandidateMetricsRepository
     {
@@ -10,5 +11,7 @@
         int GetDismissedTraineeshipPromptCount();
 
         IEnumerable<Guid> GetCandidatesThatHaveDismissedTheTraineeshipPrompt();
+
+        IEnumerable<Candidate> GetCandidateActivityMetrics(DateTime dateCreatedStart, DateTime dateCreatedEnd);
     }
 }
