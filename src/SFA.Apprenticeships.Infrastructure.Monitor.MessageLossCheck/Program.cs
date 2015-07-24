@@ -2,6 +2,7 @@
 {
     using System;
     using Application.ReferenceData.Configuration;
+    using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Domain.Interfaces.Configuration;
@@ -38,6 +39,7 @@
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
