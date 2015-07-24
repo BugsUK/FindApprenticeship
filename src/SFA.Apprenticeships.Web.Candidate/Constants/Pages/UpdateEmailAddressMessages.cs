@@ -1,8 +1,6 @@
 ﻿
 namespace SFA.Apprenticeships.Web.Candidate.Constants.Pages
 {
-    using FluentValidation.Results;
-
     public class UpdateEmailAddressMessages
     {
         public const string VerificationCodeSent = "A verification code has been sent to your new email address.";
