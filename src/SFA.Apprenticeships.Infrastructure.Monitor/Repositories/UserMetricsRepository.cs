@@ -17,7 +17,7 @@
         public UserMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.UsersDb, "users");
+            Initialise(config.MetricsUsersDb, "users");
         }
 
         public long GetRegisteredUserCount()

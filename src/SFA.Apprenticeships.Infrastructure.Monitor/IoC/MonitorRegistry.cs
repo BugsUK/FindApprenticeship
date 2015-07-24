@@ -54,6 +54,7 @@
             For<IContactMessagesMetricsRepository>().Use<ContactMessagesMetricsRepository>();
             For<ISavedSearchesMetricsRepository>().Use<SavedSearchesMetricsRepository>();
             For<ICandidateMetricsRepository>().Use<CandidateMetricsRepository>();
+            For<IAuditMetricsRepository>().Use<AuditMetricsRepository>();
 
             For<IVacancyMetricsProvider>().Use<VacancyMetricsProvider>();
         }

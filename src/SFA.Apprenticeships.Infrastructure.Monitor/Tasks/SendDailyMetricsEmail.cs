@@ -10,7 +10,6 @@
     using Configuration;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Repositories;
     using Provider;
     using Repositories;
 
@@ -34,7 +33,7 @@
         private readonly ISavedSearchesMetricsRepository _savedSearchesMetricsRepository;
         private readonly ICandidateMetricsRepository _candidateMetricsRepository;
         private readonly IVacancyMetricsProvider _vacancyMetricsProvider;
-        private readonly IAuditRepository _auditRepository;
+        private readonly IAuditMetricsRepository _auditMetricsRepository;
 
         private readonly int _validNumberOfDaysSinceUserActivity;
 
@@ -51,7 +50,7 @@
             ISavedSearchesMetricsRepository savedSearchesMetricsRepository,
             ICandidateMetricsRepository candidateMetricsRepository,
             IVacancyMetricsProvider vacancyMetricsProvider,
-            IAuditRepository auditRepository)
+            IAuditMetricsRepository auditMetricsRepository)
         {
             _logger = logger;
             _apprenticeshipMetricsRepository = apprenticeshipMetricsRepository;
@@ -64,7 +63,7 @@
             _savedSearchesMetricsRepository = savedSearchesMetricsRepository;
             _candidateMetricsRepository = candidateMetricsRepository;
             _vacancyMetricsProvider = vacancyMetricsProvider;
-            _auditRepository = auditRepository;
+            _auditMetricsRepository = auditMetricsRepository;
 
             _monitorConfiguration = configurationManager.Get<MonitorConfiguration>();
             _validNumberOfDaysSinceUserActivity = _monitorConfiguration.ValidNumberOfDaysSinceUserActivity;
@@ -108,7 +107,7 @@
             sb.AppendFormat(" - Total number of unactivated candidates: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetUnactivatedUserCount));
             sb.AppendFormat(" - Total number of unactivated candidates with expired activation codes: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetUnactivatedExpiredCodeUserCount));
             sb.AppendFormat(" - Total number of dormant candidates: {0} ({1}ms)\n", TimedMongoCall(_userMetricsRepository.GetDormantUserCount));
-            sb.AppendFormat(" - Total number of deleted candidates: {0} ({1}ms)\n", TimedMongoCall(() => { return _auditRepository.GetAuditCount("User.HardDeleteUser") + _auditRepository.GetAuditCount(AuditEventTypes.HardDeleteCandidateUser); }));
+            sb.AppendFormat(" - Total number of deleted candidates: {0} ({1}ms)\n", TimedMongoCall(() => { return _auditMetricsRepository.GetAuditCount("User.HardDeleteUser") + _auditMetricsRepository.GetAuditCount(AuditEventTypes.HardDeleteCandidateUser); }));
 
             var oneWeekAgo = DateTime.UtcNow.AddDays(-7);
             var fourWeeksAgo = DateTime.UtcNow.AddDays(-28);

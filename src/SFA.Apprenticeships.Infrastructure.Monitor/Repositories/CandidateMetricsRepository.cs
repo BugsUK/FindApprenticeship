@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Applications;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Candidates.Entities;
     using Mongo.Common;
@@ -17,7 +16,7 @@
         public CandidateMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.CandidatesDb, "candidates");
+            Initialise(config.MetricsCandidatesDb, "candidates");
         }
 
         public int GetVerfiedMobileNumbersCount()
