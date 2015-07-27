@@ -186,6 +186,11 @@ $(document).ready(function () {
         };
     };
 
+})(jQuery);
+
+// checking for existing email address
+(function ($) {
+
     $.fn.usernameLookup = function (apiurl) {
 
         var self = this;
@@ -223,7 +228,7 @@ $(document).ready(function () {
             if (!username) {
                 return;
             }
-            
+
             cleanErrorMessage();
 
             $.ajax({
@@ -235,7 +240,7 @@ $(document).ready(function () {
             });
         });
 
-        self.focusin(function() {
+        self.focusin(function () {
             $('#display-message').html('');
         });
     };
