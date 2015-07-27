@@ -251,12 +251,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BingSiteAuth.xml" />
+    <Content Include="Content\_assets\css\main-1.13.css" />
+    <Content Include="Content\_assets\css\main-ie8-1.13.css" />
     <Content Include="Content\_assets\img\logo-apprenticeships.png" />
     <Content Include="google63f704cde409cb80.html" />
     <Content Include="403.aspx" />
     <Content Include="403.html" />
-    <Content Include="Content\_assets\css\main-1.12.0.2522.css" />
-    <Content Include="Content\_assets\css\main-ie8-1.12.0.2522.css" />
     <Content Include="Content\_assets\img\apple-touch-icon-120x120.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-152x152.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-60x60.png" />

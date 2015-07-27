@@ -1089,43 +1089,43 @@ WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
-WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\"#find-addresses\").address" +
-"Lookup({\r\n                url: \'");
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
 
             
-            #line 219 "..\..\Views\Account\Settings.cshtml"
-                 Write(Url.Action("Addresses", "Location"));
+            #line 216 "..\..\Views\Account\Settings.cshtml"
+Write(Scripts.Render("~/bundles/nas/account"));
 
             
             #line default
             #line hidden
-WriteLiteral("\',\r\n                selectlist: \'#address-select\'\r\n            });\r\n\r\n           " +
-" $(\".delete-saved-search-link\").on(\'click\', function () {\r\n                var $" +
-"this = $(this),\r\n                    $href = $this.attr(\'href\').replace(\"isJavas" +
-"cript=False\", \"isJavascript=true\").replace(\"isJavascript=false\", \"isJavascript=t" +
-"rue\"),\r\n                    $id = $this.attr(\'id\');\r\n\r\n                $.ajax({\r" +
-"\n                    url: $href,\r\n                    complete: function (result" +
-") {\r\n\r\n                        if (result.status == 200) {\r\n                    " +
-"        $(\"#\" + $id).hide();\r\n\r\n                            if ($(\".saved-search" +
-":visible\").length == 0) {\r\n                                $(\"#noSavedSearchesTe" +
-"xt\").show();\r\n                            }\r\n                        }\r\n        " +
-"            }\r\n                });\r\n\r\n                return false;\r\n           " +
-" });\r\n\r\n            $(\'#emailToggle\').on(\'click\', function () {\r\n               " +
-" var theTable = $(this).closest(\'.display-table\');\r\n\r\n                if (theTab" +
-"le.find(\'.email-input:checked\').length == 3) {\r\n                    theTable.fin" +
-"d(\'.email-input:checked\').click();\r\n                } else {\r\n                  " +
-"  theTable.find(\'.email-input:not(:checked)\').click();\r\n                }\r\n\r\n   " +
-"             $(this).blur();\r\n\r\n                return false;\r\n\r\n            });" +
-"\r\n\r\n            $(\'#textToggle\').on(\'click\', function () {\r\n                var " +
-"theTable = $(this).closest(\'.display-table\');\r\n\r\n                if (theTable.fi" +
-"nd(\'.text-input:checked\').length == 3) {\r\n                    theTable.find(\'.te" +
-"xt-input:checked\').click();\r\n                } else {\r\n                    theTa" +
-"ble.find(\'.text-input:not(:checked)\').click();\r\n                }\r\n\r\n           " +
-"     $(this).blur();\r\n\r\n                return false;\r\n\r\n            });\r\n\r\n    " +
-"        if ($(\'#disability-support-yes\').is(\':checked\')) {\r\n                $(\'#" +
-"equality-diversity-summary-link\').click();\r\n            }\r\n\r\n            documen" +
-"t.getElementById(\"hidden-flag-javascript\").value = \"True\";\r\n        });\r\n    </s" +
-"cript>\r\n");
+WriteLiteral("\r\n\r\n\r\n    <script>\r\n        $(function () {\r\n\r\n            $(\".delete-saved-searc" +
+"h-link\").on(\'click\', function () {\r\n                var $this = $(this),\r\n      " +
+"              $href = $this.attr(\'href\').replace(\"isJavascript=False\", \"isJavasc" +
+"ript=true\").replace(\"isJavascript=false\", \"isJavascript=true\"),\r\n               " +
+"     $id = $this.attr(\'id\');\r\n\r\n                $.ajax({\r\n                    ur" +
+"l: $href,\r\n                    complete: function (result) {\r\n\r\n                " +
+"        if (result.status == 200) {\r\n                            $(\"#\" + $id).hi" +
+"de();\r\n\r\n                            if ($(\".saved-search:visible\").length == 0)" +
+" {\r\n                                $(\"#noSavedSearchesText\").show();\r\n         " +
+"                   }\r\n                        }\r\n                    }\r\n        " +
+"        });\r\n\r\n                return false;\r\n            });\r\n\r\n            $(\'" +
+"#emailToggle\').on(\'click\', function () {\r\n                var theTable = $(this)" +
+".closest(\'.display-table\');\r\n\r\n                if (theTable.find(\'.email-input:c" +
+"hecked\').length == 3) {\r\n                    theTable.find(\'.email-input:checked" +
+"\').click();\r\n                } else {\r\n                    theTable.find(\'.email" +
+"-input:not(:checked)\').click();\r\n                }\r\n\r\n                $(this).bl" +
+"ur();\r\n\r\n                return false;\r\n\r\n            });\r\n\r\n            $(\'#tex" +
+"tToggle\').on(\'click\', function () {\r\n                var theTable = $(this).clos" +
+"est(\'.display-table\');\r\n\r\n                if (theTable.find(\'.text-input:checked" +
+"\').length == 3) {\r\n                    theTable.find(\'.text-input:checked\').clic" +
+"k();\r\n                } else {\r\n                    theTable.find(\'.text-input:n" +
+"ot(:checked)\').click();\r\n                }\r\n\r\n                $(this).blur();\r\n\r" +
+"\n                return false;\r\n\r\n            });\r\n\r\n            if ($(\'#disabil" +
+"ity-support-yes\').is(\':checked\')) {\r\n                $(\'#equality-diversity-summ" +
+"ary-link\').click();\r\n            }\r\n\r\n            document.getElementById(\"hidde" +
+"n-flag-javascript\").value = \"True\";\r\n        });\r\n    </script>\r\n");
 
 });
 
