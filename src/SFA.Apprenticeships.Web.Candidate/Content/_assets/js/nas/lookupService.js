@@ -4,6 +4,8 @@ $(document).ready(function () {
 
     $(document).on("change", ".address-item", function() {
         $("#Address_Uprn").val("");
+        $("#Address_GeoPoint_Latitude").val("");
+        $("#Address_GeoPoint_Longitude").val("");
     });
 });
 
@@ -11,7 +13,8 @@ $(document).ready(function () {
 (function ($) {
 
     var searchContext = "",
-        key = "RH59-EY94-RA78-NZ89";
+        key = "RH59-EY94-RA78-NZ89",
+        uri = $('form').attr('action');
 
     $("#postcode-search").autocomplete({
         source: function (request, response) {
@@ -91,6 +94,7 @@ $(document).ready(function () {
         $('#Address_Postcode').val(address.PostalCode);
         $("#Address_Uprn").val(address.DomesticId);
         populateLatLng(address);
+        Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", uri + "/findaddress", "WT.dl", "99", "WT.ti", "Settings – Find Address"] });
     }
 
     function populateLatLng(address) {
