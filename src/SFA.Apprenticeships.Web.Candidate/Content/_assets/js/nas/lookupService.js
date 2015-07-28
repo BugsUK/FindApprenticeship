@@ -14,7 +14,8 @@ $(document).ready(function () {
 
     var searchContext = "",
         key = "RH59-EY94-RA78-NZ89",
-        uri = $('form').attr('action');
+        uri = $('form').attr('action'),
+        findAddressVal = $("#postcode-search").val();
 
     $('#enterAddressManually').on('click', function (e) {
         e.preventDefault();
@@ -25,6 +26,10 @@ $(document).ready(function () {
 
     $('#addressManualWrapper').on('click', function () {
         $('#address-details').removeClass('disabled');
+    });
+
+    $("#postcode-search").keyup(function () {
+        findAddressVal = $(this).val();
     });
 
     $("#postcode-search").autocomplete({
@@ -43,12 +48,20 @@ $(document).ready(function () {
                     response($.map(data.Items, function (suggestion) {
                         return {
                             label: suggestion.Text,
-                            value: "",
                             data: suggestion
                         }
                     }));
                 }
             });
+        },
+        messages: {
+            noResults: function () {
+                return "We can't find an address matching " + findAddressVal;
+            },
+            results: function (amount) {
+                return "We've found " + amount + (amount > 1 ? " addresses" : " address") +
+                    " that match " + findAddressVal + ". Use up and down arrow keys to navigate";
+            }
         },
         select: function (event, ui) {
             var item = ui.item.data
@@ -66,11 +79,9 @@ $(document).ready(function () {
                 });
             }
         },
-        autoFocus: true,
+        autoFocus: false,
         minLength: 1,
         delay: 100
-    }).focus(function () {
-        searchContext = "";
     });
 
     function retrieveAddress(id) {
@@ -92,6 +103,7 @@ $(document).ready(function () {
                 $('#addressLoading').hide();
                 $('#enterAddressManually').show();
                 $('#address-details').removeClass('disabled');
+                $("#postcode-search").val("");
             }
         });
     }
@@ -104,6 +116,9 @@ $(document).ready(function () {
         $('#Address_AddressLine4').val(address.City);
         $('#Address_Postcode').val(address.PostalCode);
         $("#Address_Uprn").val(address.DomesticId);
+
+        $('#addressesPopulated').text('Your address has been populated below');
+
         populateLatLng(address);
         Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", uri + "/findaddress", "WT.dl", "99", "WT.ti", "Settings – Find Address"] });
     }
@@ -128,10 +143,6 @@ $(document).ready(function () {
             //console.log("failed");
         });
     }
-
-    //TODO: Aria message when locations are found
-
-    
 
 })(jQuery);
 
