@@ -24,4 +24,6 @@
     @Html.FormTextFor(m => m.AddressLine4, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" })
     @Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" })
     @Html.HiddenFor(m => m.Uprn)
+    @Html.HiddenFor(m => m.GeoPoint.Latitude)
+    @Html.HiddenFor(m => m.GeoPoint.Longitude)
 </div>

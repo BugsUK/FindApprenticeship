@@ -190,6 +190,28 @@ Write(Html.HiddenFor(m => m.Uprn));
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 27 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+Write(Html.HiddenFor(m => m.GeoPoint.Latitude));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 28 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+Write(Html.HiddenFor(m => m.GeoPoint.Longitude));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n</div>\r\n");
 
         }

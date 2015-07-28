@@ -90,7 +90,28 @@ $(document).ready(function () {
         $('#Address_AddressLine4').val(address.City);
         $('#Address_Postcode').val(address.PostalCode);
         $("#Address_Uprn").val(address.DomesticId);
+        populateLatLng(address);
+    }
 
+    function populateLatLng(address) {
+        var url = "https://api.postcodes.io/postcodes/" + address.PostalCode,
+                json;
+
+        $.get(url)
+        .done(function (data) {
+            json = data;
+
+            if (json.status == 200 && json.result !== null) {
+                $("#Address_GeoPoint_Latitude").val(json.result.latitude);
+                $("#Address_GeoPoint_Longitude").val(json.result.longitude);
+            } else {
+                //console.log("Nope");
+            }
+
+        })
+        .fail(function () {
+            //console.log("failed");
+        });
     }
 
     //TODO: Aria message when locations are found
