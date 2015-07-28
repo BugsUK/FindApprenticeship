@@ -17,7 +17,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class TraineeshipsFeatureViewModel
+    public class TraineeshipsFeatureViewModelTests
     {
         const int UnsuccessfulApplications = 3;
 

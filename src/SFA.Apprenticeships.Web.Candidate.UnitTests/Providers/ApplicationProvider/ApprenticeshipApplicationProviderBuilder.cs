@@ -17,7 +17,7 @@
         private Mock<IConfigurationService> _configurationService;
         private readonly Mock<ILogService> _logService;
         private Mock<IUserDataProvider> _userDataProvider;
-        private Mock<IReferenceDataService> _referenceDataService;
+        private readonly Mock<IReferenceDataService> _referenceDataService;
 
         public ApprenticeshipApplicationProviderBuilder()
         {

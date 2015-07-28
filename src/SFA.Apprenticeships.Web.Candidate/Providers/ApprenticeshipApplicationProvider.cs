@@ -122,6 +122,7 @@
                 VacancyId = viewModel.VacancyId,
                 VacancyDetail = viewModel.VacancyDetail,
                 Status = viewModel.Status,
+                ViewModelMessage = viewModel.ViewModelMessage,
                 AcceptSubmit = false
             };
         }
