@@ -54,7 +54,7 @@
             }
             catch (Exception ex)
             {
-                _logger.Error("Error sending email", ex);
+                _logger.Error("Error sending email to '{0}', message type '{1}'", ex, request.ToEmail, request.MessageType);
             }
         }
 
