@@ -218,7 +218,7 @@
             };
 
             _dispatcher.SendEmail(request);
-            VerifyErrorsLogged(Times.Once());
+            VerifyErrorsLogged(Times.Exactly(2));
         }
 
         [Test, Category("Integration")]
@@ -282,7 +282,7 @@
 
         private void VerifyErrorsLogged(Times times)
         {
-            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>()), times);
+            _logServiceMock.Verify(l => l.Error(It.IsAny<string>(), It.IsAny<Exception>(), It.IsAny<object[]>()), times);
         }
 
         #endregion
