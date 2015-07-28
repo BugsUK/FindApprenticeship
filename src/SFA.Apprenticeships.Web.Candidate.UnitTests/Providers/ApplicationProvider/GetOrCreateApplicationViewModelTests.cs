@@ -15,7 +15,7 @@
     using ErrorCodes = Domain.Entities.ErrorCodes;
 
     [TestFixture]
-    public class GetOrCreateApplicationViewModel
+    public class GetOrCreateApplicationViewModelTests
     {
         const int ValidVacancyId = 1;
 
