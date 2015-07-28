@@ -416,11 +416,11 @@ Write(Scripts.Render("~/bundles/nas/passwordstrength"));
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n    <script>\r\n        $(function () {\r\n            $(\'input[id=EmailAddress]\'" +
-").usernameLookup(\'");
+WriteLiteral("\r\n\r\n    <script>\r\n        $(function () {\r\n            $(\'#address-details\').addC" +
+"lass(\'disabled\');\r\n            $(\'input[id=EmailAddress]\').usernameLookup(\'");
 
             
-            #line 76 "..\..\Views\Register\Index.cshtml"
+            #line 77 "..\..\Views\Register\Index.cshtml"
                                                    Write(Url.Action("CheckUsername", "Register"));
 
             

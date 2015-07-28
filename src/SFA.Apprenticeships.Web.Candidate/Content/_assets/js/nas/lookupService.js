@@ -16,6 +16,17 @@ $(document).ready(function () {
         key = "RH59-EY94-RA78-NZ89",
         uri = $('form').attr('action');
 
+    $('#enterAddressManually').on('click', function (e) {
+        e.preventDefault();
+
+        $('#address-details').removeClass('disabled');
+        $('#Address_AddressLine1').focus();
+    });
+
+    $('#addressManualWrapper').on('click', function () {
+        $('#address-details').removeClass('disabled');
+    });
+
     $("#postcode-search").autocomplete({
         source: function (request, response) {
             $.ajax({

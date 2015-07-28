@@ -104,13 +104,15 @@ WriteLiteral(" id=\"address-manual\"");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
-WriteLiteral(">\r\n        <span");
+WriteLiteral(">\r\n        <a");
 
-WriteLiteral(" class=\"form-hint\"");
+WriteLiteral(" href=\"#\"");
+
+WriteLiteral(" class=\"copy-19\"");
 
 WriteLiteral(" id=\"enterAddressManually\"");
 
-WriteLiteral(">Or enter address manually</span>\r\n        <span");
+WriteLiteral(">Or enter address manually</a>\r\n        <span");
 
 WriteLiteral(" class=\"toggle-content hide-nojs loading-text\"");
 
@@ -118,99 +120,103 @@ WriteLiteral(" id=\"addressLoading\"");
 
 WriteLiteral(">Loading address...</span>\r\n    </div>\r\n</div>\r\n\r\n<div");
 
+WriteLiteral(" id=\"addressManualWrapper\"");
+
+WriteLiteral(">\r\n    <div");
+
 WriteLiteral(" id=\"address-details\"");
 
 WriteLiteral(" class=\"address-manual-input\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("    ");
-
-            
-            #line 18 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.AddressLine1, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
             #line 19 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.AddressLine2, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
+   Write(Html.FormTextFor(m => m.AddressLine1, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
             #line 20 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.AddressLine3, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
+   Write(Html.FormTextFor(m => m.AddressLine2, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
             #line 21 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.AddressLine4, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
+   Write(Html.FormTextFor(m => m.AddressLine3, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
             #line 22 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" }));
+   Write(Html.FormTextFor(m => m.AddressLine4, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
             #line 23 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.HiddenFor(m => m.Uprn));
+   Write(Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
             #line 24 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.HiddenFor(m => m.GeoPoint.Latitude));
+   Write(Html.HiddenFor(m => m.Uprn));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
             #line 25 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.HiddenFor(m => m.GeoPoint.Longitude));
+   Write(Html.HiddenFor(m => m.GeoPoint.Latitude));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>\r\n");
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 26 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.HiddenFor(m => m.GeoPoint.Longitude));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n");
 
         }
     }

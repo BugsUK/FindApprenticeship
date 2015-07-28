@@ -73,6 +73,7 @@
 
     <script>
         $(function () {
+            $('#address-details').addClass('disabled');
             $('input[id=EmailAddress]').usernameLookup('@Url.Action("CheckUsername", "Register")');
         });
 
