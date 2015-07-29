@@ -7,6 +7,7 @@
     using CsvHelper;
     using CsvLoader;
     using Infrastructure.Common.IoC;
+    using Infrastructure.Elastic.Common.Configuration;
     using Infrastructure.Elastic.Common.Entities;
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.Logging.IoC;
@@ -41,7 +42,8 @@
             Logger.Debug("Loading Csv file: {0}", args[0]);
 
             var indexer = container.GetInstance<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
-            var indexDate = DateTime.Today;
+            //Make sure the date used does not clash with an existing index
+            var indexDate = new DateTime(2000, 01, 01, 12, 00, 00);
 
             using (var reader = File.OpenText(args[0]))
             {
@@ -67,10 +69,6 @@
                     indexer.Index(vacancySummaryUpdate);
                     Logger.Debug("Indexed item: {0}", vacancySummaryUpdate.Title);
                 }
-
-                Logger.Debug("Swapping index");
-                indexer.SwapIndex(indexDate);
-                Logger.Debug("Swapped index");
             }
             
             Logger.Debug("Complete");

@@ -8,6 +8,7 @@
     using Domain.Interfaces.Mapping;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.Configuration;
+    using Infrastructure.Elastic.Common.Entities;
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.VacancySearch;
@@ -63,8 +64,12 @@
                 SearchField = GetSearchFieldFromRequest(request),
                 Keywords = request.SearchTerms
             };
+            
+            var indexDate = new DateTime(2000, 01, 01, 12, 00, 00);
+            var indexAlias = elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
+            var indexName = string.Format("{0}.{1}", indexAlias, indexDate.ToUniversalTime().ToString("yyyy-MM-dd-HH"));
 
-            var vacancies = searchProvider.FindVacancies(parameters);
+            var vacancies = searchProvider.FindVacancies(parameters, indexName);
 
             return new SearchResponse
             {
