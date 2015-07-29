@@ -92,7 +92,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\svc-vacancysearchProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\sfa-apprenticeships-pre-search-serviceProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
