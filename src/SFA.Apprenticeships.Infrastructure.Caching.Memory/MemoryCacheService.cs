@@ -8,6 +8,7 @@
 
     public class MemoryCacheService : ICacheService
     {
+        private readonly object _locker = new object();
         private readonly ILogService _logger;
         private const string GettingItemFromCacheFormat = "Getting item with key: {0} from cache";
         private const string ItemReturnedFromCacheFormat = "Item with key: {0} returned from cache";
@@ -83,7 +84,7 @@
 
             //MemoryCache is thread safe however only the access is protected. The cache pattern of check then retrieve if null is not protected.
             //This allows multiple threads to execute the dataFunc uneccessarily. A lock here solves this issue
-            lock (_cache)
+            lock (_locker)
             {
                 var result = _cache[cacheKey] as TResult;
                 if (result == null || result.Equals(default(TResult)))
@@ -111,7 +112,7 @@
 
             //MemoryCache is thread safe however only the access is protected. The cache pattern of check then retrieve if null is not protected.
             //This allows multiple threads to execute the dataFunc uneccessarily. A lock here solves this issue
-            lock (_cache)
+            lock (_locker)
             {
                 var result = _cache[cacheKey] as TResult;
                 if (result == null || result.Equals(default(TResult)))

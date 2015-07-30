@@ -7,6 +7,7 @@
 
     public class AzureCacheService : ICacheService
     {
+        private readonly object _locker = new object();
         private readonly ILogService _logger;
 
         private const string GettingItemFromCacheFormat = "Getting item with key: {0} from cache";
@@ -132,7 +133,7 @@
 
             _logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            lock (_cache)
+            lock (_locker)
             {
                 var result = Get<TResult>(cacheKey);
                 if (result == null || result.Equals(default(TResult)))
@@ -158,7 +159,7 @@
 
             _logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            lock (_cache)
+            lock (_locker)
             {
                 var result = Get<TResult>(cacheKey);
                 if (result == null || result.Equals(default(TResult)))
