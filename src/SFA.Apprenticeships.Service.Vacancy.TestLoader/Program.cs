@@ -43,7 +43,7 @@
 
             var indexer = container.GetInstance<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
             //Make sure the date used does not clash with an existing index
-            var indexDate = new DateTime(2000, 01, 01, 12, 00, 00);
+            var indexDate = new DateTime(2020, 01, 01, 12, 00, 00);
 
             using (var reader = File.OpenText(args[0]))
             {

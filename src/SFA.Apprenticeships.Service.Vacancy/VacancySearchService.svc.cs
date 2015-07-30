@@ -65,7 +65,7 @@
                 Keywords = request.SearchTerms
             };
             
-            var indexDate = new DateTime(2000, 01, 01, 12, 00, 00);
+            var indexDate = new DateTime(2020, 01, 01, 12, 00, 00);
             var indexAlias = elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
             var indexName = string.Format("{0}.{1}", indexAlias, indexDate.ToUniversalTime().ToString("yyyy-MM-dd-HH"));
 
