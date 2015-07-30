@@ -35,7 +35,7 @@
                     x.Type<CheckElasticsearchCluster>();
                     x.Type<CheckElasticsearchAliases>();
                     x.Type<CheckLogstashLogs>();
-                    x.Type<CheckUnsentCandidateMessages>();
+                    //x.Type<CheckUnsentCandidateMessages>();
                 });
 
             For<IDailyMetricsTasksRunner>().Use<DailyMetricsTasksRunner>()

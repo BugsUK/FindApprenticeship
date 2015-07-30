@@ -5,7 +5,9 @@
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Runtime.Caching;
     using Application.Interfaces.Logging;
+    using Domain.Interfaces.Caching;
     using Domain.Interfaces.Configuration;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
@@ -17,35 +19,23 @@
         private readonly IConfigurationManager _configurationManager;
         private readonly ILogService _loggerService;
         private readonly static string FileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(ConfigurationService)).Location).FileVersion;
+        private static readonly string CacheKey = string.Format("Configuration_{0}", FileVersion);
+        private readonly ObjectCache _cache;
+        private readonly object _locker = new object();
 
         public ConfigurationService(IConfigurationManager configurationManager, ILogService loggerService)
         {
             _configurationManager = configurationManager;
             _loggerService = loggerService;
+            _cache = MemoryCache.Default;
         }
 
         public TSettings Get<TSettings>() where TSettings : class
         {
-            _loggerService.Debug("Loading confguration from mongo");
+            var json = GetJson();
 
-            var mongoConnectionString = _configurationManager.GetAppSetting<string>("ConfigurationDb");
-
-            if (string.IsNullOrWhiteSpace(mongoConnectionString))
-            {
-                _loggerService.Warn("ConfigurationDb config setting null, can't load config");
-                return null;
-            }
-
-            var json = LoadJson(mongoConnectionString);
-            
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                _loggerService.Error("Failed to load configuration from mongo");
-                return null;
-            }
-
-            string settingName = typeof (TSettings).Name;
-            string elementJson = null;
+            var settingName = typeof (TSettings).Name;
+            string elementJson;
 
             try
             {
@@ -64,6 +54,39 @@
 
             var tsetting = JsonConvert.DeserializeObject<TSettings>(elementJson);
             return tsetting;
+        }
+
+        private string GetJson()
+        {
+            lock (_locker)
+            {
+                var json = (string)_cache.Get(CacheKey);
+                if (string.IsNullOrEmpty(json))
+                {
+                    _loggerService.Debug("Loading confguration from mongo");
+
+                    var mongoConnectionString = _configurationManager.GetAppSetting<string>("ConfigurationDb");
+
+                    if (string.IsNullOrWhiteSpace(mongoConnectionString))
+                    {
+                        _loggerService.Warn("ConfigurationDb config setting null, can't load config");
+                        return null;
+                    }
+
+                    json = LoadJson(mongoConnectionString);
+
+                    if (string.IsNullOrWhiteSpace(json))
+                    {
+                        _loggerService.Error("Failed to load configuration from mongo");
+                        return null;
+                    }
+
+                    var cacheTimeSpan = TimeSpan.FromMinutes((int)CacheDuration.OneMinute);
+                    var policy = new CacheItemPolicy { AbsoluteExpiration = DateTimeOffset.Now.Add(cacheTimeSpan) };
+                    _cache.Add(CacheKey, json, policy);
+                }
+                return json;
+            }
         }
 
         private string LoadJson(string mongoConnectionString)
