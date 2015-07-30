@@ -13,19 +13,22 @@ $(document).ready(function () {
 (function ($) {
 
     var searchContext = "",
-        key = "RH59-EY94-RA78-NZ89",
+        key = "JY37-NM56-JA37-WT99",
         uri = $('form').attr('action'),
         findAddressVal = $("#postcode-search").val();
 
     $('#enterAddressManually').on('click', function (e) {
         e.preventDefault();
+        $('#addressManualWrapper').unbind('click');
 
         $('#address-details').removeClass('disabled');
         $('#Address_AddressLine1').focus();
     });
 
-    $('#addressManualWrapper').on('click', function () {
+    $('#addressManualWrapper').bind('click', function () {
+        $(this).unbind('click');
         $('#address-details').removeClass('disabled');
+        $('#Address_AddressLine1').focus();
     });
 
     $("#postcode-search").keyup(function () {
@@ -97,13 +100,15 @@ $(document).ready(function () {
                 id: id
             },
             success: function (data) {
-                if (data.Items.length)
-                    populateAddress(data.Items[0]);
+                if (data.Items.length) {
+                    $('#address-details').removeClass('disabled');
+                    $('#addressLoading').hide();
+                    $('#enterAddressManually').show();
+                    $('#addressManualWrapper').unbind('click');
+                    $("#postcode-search").val("");
 
-                $('#addressLoading').hide();
-                $('#enterAddressManually').show();
-                $('#address-details').removeClass('disabled');
-                $("#postcode-search").val("");
+                    populateAddress(data.Items[0]);
+                }
             }
         });
     }
