@@ -81,19 +81,24 @@
 
             _logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
-            if (result == null || result.Equals(default(TResult)))
+            //MemoryCache is thread safe however only the access is protected. The cache pattern of check then retrieve if null is not protected.
+            //This allows multiple threads to execute the dataFunc uneccessarily. A lock here solves this issue
+            lock (_cache)
             {
-                _logger.Debug(ItemNotInCacheFormat, cacheKey);
+                var result = _cache[cacheKey] as TResult;
+                if (result == null || result.Equals(default(TResult)))
+                {
+                    _logger.Debug(ItemNotInCacheFormat, cacheKey);
 
-                result = dataFunc();
-                Store(cacheKey, result, cacheEntry.Duration);
+                    result = dataFunc();
+                    Store(cacheKey, result, cacheEntry.Duration);
+                    return result;
+                }
+
+                _logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
+
                 return result;
             }
-
-            _logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
-
-            return result;
         }
 
         public TResult Get<TCacheKey, TFuncParam1, TResult>(TCacheKey cacheEntry, Func<TFuncParam1, TResult> dataFunc, TFuncParam1 funcParam1)
@@ -104,19 +109,24 @@
 
             _logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
-            var result = _cache[cacheKey] as TResult;
-            if (result == null || result.Equals(default(TResult)))
+            //MemoryCache is thread safe however only the access is protected. The cache pattern of check then retrieve if null is not protected.
+            //This allows multiple threads to execute the dataFunc uneccessarily. A lock here solves this issue
+            lock (_cache)
             {
-                _logger.Debug(ItemNotInCacheFormat, cacheKey);
+                var result = _cache[cacheKey] as TResult;
+                if (result == null || result.Equals(default(TResult)))
+                {
+                    _logger.Debug(ItemNotInCacheFormat, cacheKey);
 
-                result = dataFunc(funcParam1);
-                Store(cacheKey, result, cacheEntry.Duration);
+                    result = dataFunc(funcParam1);
+                    Store(cacheKey, result, cacheEntry.Duration);
+                    return result;
+                }
+
+                _logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
+
                 return result;
             }
-
-            _logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
-
-            return result;
         }
 
         public void PutObject(string cacheKey, object cacheObject, CacheDuration cacheDuration = CacheDuration.CacheDefault)
