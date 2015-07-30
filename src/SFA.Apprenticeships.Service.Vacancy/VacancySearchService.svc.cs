@@ -62,7 +62,8 @@
                 PageNumber = 1,
                 PageSize = 50,
                 SearchField = GetSearchFieldFromRequest(request),
-                Keywords = request.SearchTerms
+                Keywords = request.SearchTerms,
+                SortType = VacancySearchSortType.Relevancy
             };
             
             var indexDate = new DateTime(2020, 01, 01, 12, 00, 00);
