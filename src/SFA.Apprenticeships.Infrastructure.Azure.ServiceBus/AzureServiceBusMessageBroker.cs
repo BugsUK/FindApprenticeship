@@ -96,7 +96,8 @@
             {
                 MaxConcurrentCalls =
                     subscriptionConfiguration.MaxConcurrentMessagesPerNode ??
-                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode
+                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode,
+                    AutoComplete = false
             };
 
             options.ExceptionReceived += LogSubscriptionClientException;
