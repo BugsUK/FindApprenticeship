@@ -82,6 +82,9 @@ $(document).ready(function () {
                 });
             }
         },
+        focus: function (event, ui) {
+            $("#addressInputWrapper").find('.ui-helper-hidden-accessible').text("To select " + ui.item.label + ", press enter");
+        },
         autoFocus: false,
         minLength: 1,
         delay: 100
@@ -114,7 +117,6 @@ $(document).ready(function () {
     }
 
     function populateAddress(address) {
-        console.log(address);
         $('#Address_AddressLine1').val(address.Line1);
         $('#Address_AddressLine2').val(address.Line2);
         $('#Address_AddressLine3').val(address.Line3);
@@ -122,7 +124,7 @@ $(document).ready(function () {
         $('#Address_Postcode').val(address.PostalCode);
         $("#Address_Uprn").val(address.DomesticId);
 
-        $('#addressesPopulated').text('Your address has been populated below');
+        $('#ariaAddressEntered').text('Your address has been entered into the fields below.');
 
         populateLatLng(address);
         Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", uri + "/findaddress", "WT.dl", "99", "WT.ti", "Settings – Find Address"] });
