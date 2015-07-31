@@ -182,6 +182,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Builders\AccountUnlockViewModelBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipApplicationDetailBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipApplicationViewModelBuilder.cs" />

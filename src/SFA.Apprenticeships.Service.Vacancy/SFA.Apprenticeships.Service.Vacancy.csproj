@@ -104,6 +104,9 @@
     <Content Include="VacancySearchService.svc" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Types\SearchFactorKeys.cs" />
     <Compile Include="Types\SearchFactorsParameter.cs" />
     <Compile Include="Types\SearchRequest.cs" />
