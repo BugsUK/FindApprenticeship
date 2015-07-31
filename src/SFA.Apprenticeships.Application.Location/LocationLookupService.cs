@@ -26,8 +26,7 @@
         {
             Condition.Requires(placeNameOrPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
-            _logger.Debug("Calling LocationLookupService to find location for place name or postcode {0}.",
-                placeNameOrPostcode);
+            _logger.Debug("Calling LocationLookupService to find location for place name or postcode {0}.", placeNameOrPostcode);
 
             if (LocationHelper.IsPostcode(placeNameOrPostcode) || LocationHelper.IsPartialPostcode(placeNameOrPostcode))
             {
@@ -37,39 +36,38 @@
             return FindLocationByPlaceName(placeNameOrPostcode);
         }
 
-        private IEnumerable<Location> FindLocationByPlaceName(string postcode)
+        private IEnumerable<Location> FindLocationByPlaceName(string placeName)
         {
             try
             {
-                return _locationLookupProvider.FindLocation(postcode);
+                return _locationLookupProvider.FindLocation(placeName);
             }
             catch (Exception e)
             {
-                const string message = "Location lookup failed.";
+                var message = string.Format("Location lookup failed for location {0}.", placeName);
                 _logger.Debug(message, e);
-                throw new CustomException(
-                    message, e, ErrorCodes.LocationLookupFailed);
+                throw new CustomException(message, e, ErrorCodes.LocationLookupFailed);
             }
         }
 
-        private IEnumerable<Location> FindLocationByPostcode(string placeName)
+        private IEnumerable<Location> FindLocationByPostcode(string postcode)
         {
             Location location;
 
             try
             {
-                location = _postcodeLookupProvider.GetLocation(placeName);
+                location = _postcodeLookupProvider.GetLocation(postcode);
             }
             catch (Exception e)
             {
-                var message = string.Format("Postcode lookup failed for postcode {0}.", placeName);
+                var message = string.Format("Postcode lookup failed for postcode {0}.", postcode);
                 _logger.Debug(message, e);
                 throw new CustomException(message, e, ErrorCodes.PostcodeLookupFailed);
             }
 
             if (location == null)
             {
-                _logger.Debug("Cannot find any match for place name or postcode {0}.", placeName);
+                _logger.Debug("Cannot find any match for place name or postcode {0}.", postcode);
                 return new Location[0]; // no match
             }
 
