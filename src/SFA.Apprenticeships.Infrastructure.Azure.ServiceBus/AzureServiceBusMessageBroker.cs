@@ -96,8 +96,7 @@
             {
                 MaxConcurrentCalls =
                     subscriptionConfiguration.MaxConcurrentMessagesPerNode ??
-                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode,                    
-                AutoComplete = true
+                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode
             };
 
             options.ExceptionReceived += LogSubscriptionClientException;
@@ -219,6 +218,7 @@
             switch (result.State)
             {
                 case ServiceBusMessageStates.Complete:
+                    brokeredMessage.Complete();
                     break;
 
                 case ServiceBusMessageStates.Abandon:
