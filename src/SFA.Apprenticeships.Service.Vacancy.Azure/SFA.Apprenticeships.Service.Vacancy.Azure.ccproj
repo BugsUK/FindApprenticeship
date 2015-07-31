@@ -80,6 +80,7 @@
       <RoleType>Web</RoleType>
       <RoleName>SFA.Apprenticeships.Service.Vacancy</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
