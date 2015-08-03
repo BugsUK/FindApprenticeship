@@ -141,6 +141,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AzureServiceBus\AzureServiceBusMessageBrokerTests.cs" />
     <Compile Include="Communication\Builders\ApplicationStatusAlertsBuilder.cs" />
     <Compile Include="Communication\Builders\CommunicationRequestBuilder.cs" />
     <Compile Include="Communication\Builders\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
