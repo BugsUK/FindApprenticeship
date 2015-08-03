@@ -88,7 +88,8 @@
             if (!indexExistsResponse.Exists)
             {
                 var indexSettings = new IndexSettings();
-                var synonyms = _configurationService.Get<SearchConfiguration>().Synonyms.ToArray();
+                var searchConfiguration = _configurationService.Get<SearchConfiguration>();
+                var synonyms = searchConfiguration.Synonyms.ToArray();
 
                 if (synonyms.Any())
                 {
@@ -104,8 +105,8 @@
                 var snowballTokenFilter = new SnowballTokenFilter { Language = "English" };
                 indexSettings.Analysis.TokenFilters.Add("snowball", snowballTokenFilter);
 
-                var baseStopwords = GetStopwords("StopwordsBase").ToList();
-                var extendedStopwords = baseStopwords.Concat(GetStopwords("StopwordsExtended"));
+                var baseStopwords = searchConfiguration.StopwordsBase.ToList();
+                var extendedStopwords = baseStopwords.Concat(searchConfiguration.StopwordsExtended);
 
                 var stopwordsBaseFilter = new StopTokenFilter { Stopwords = baseStopwords };
                 indexSettings.Analysis.TokenFilters.Add("stopwordsBaseFilter", stopwordsBaseFilter);
@@ -131,20 +132,6 @@
                 _logger.Error(string.Format("Vacancy search index already created: {0}", newIndexName));
             }
         }
-
-        private IEnumerable<string> GetStopwords(string stopwordsList)
-        {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Configs", stopwordsList + ".txt");
-
-            if (!File.Exists(filePath))
-            {
-                _logger.Warn("ElasticSearch stopword file '{0}' does not exist.", filePath);
-                return Enumerable.Empty<string>();
-            }
-
-            var stopwords = File.ReadAllLines(filePath).Where(w => !string.IsNullOrEmpty(w));
-            return stopwords;
-        } 
 
         public string SwapIndex(DateTime scheduledRefreshDateTime)
         {

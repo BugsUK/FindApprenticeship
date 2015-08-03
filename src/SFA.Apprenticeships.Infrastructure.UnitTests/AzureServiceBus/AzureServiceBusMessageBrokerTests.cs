@@ -133,9 +133,7 @@
             message.Verify(m => m.Complete(), Times.Once);
             //New message has been created and assigned a scheduled time 30 seconds in the future
             newBrokeredMessage.Should().NotBeNull();
-            newBrokeredMessage.ScheduledEnqueueTimeUtc.Should().BeAfter(DateTime.MinValue);
-            newBrokeredMessage.ScheduledEnqueueTimeUtc.Should().BeAfter(DateTime.UtcNow.AddSeconds(25));
-            newBrokeredMessage.ScheduledEnqueueTimeUtc.Should().BeBefore(DateTime.UtcNow.AddSeconds(35));
+            newBrokeredMessage.ScheduledEnqueueTimeUtc.Should().BeCloseTo(DateTime.UtcNow.AddSeconds(30), 1000);
         }
 
         [Test]
@@ -161,9 +159,7 @@
             message.Verify(m => m.Complete(), Times.Once);
             //New message has been created and assigned a scheduled time 5 minutes in the future
             newBrokeredMessage.Should().NotBeNull();
-            newBrokeredMessage.ScheduledEnqueueTimeUtc.Should().BeAfter(DateTime.MinValue);
-            newBrokeredMessage.ScheduledEnqueueTimeUtc.Should().BeAfter(DateTime.UtcNow.AddSeconds(295));
-            newBrokeredMessage.ScheduledEnqueueTimeUtc.Should().BeBefore(DateTime.UtcNow.AddSeconds(305));
+            newBrokeredMessage.ScheduledEnqueueTimeUtc.Should().BeCloseTo(DateTime.UtcNow.AddSeconds(300), 1000);
         }
     }
 }

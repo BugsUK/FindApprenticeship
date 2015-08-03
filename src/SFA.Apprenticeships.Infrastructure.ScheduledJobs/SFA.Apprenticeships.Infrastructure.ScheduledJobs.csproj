@@ -174,12 +174,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Content Include="Configs\StopwordsExtended.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configs\StopwordsBase.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Include="Consumers\ApplicationEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\DailyDigestControlQueueConsumer.cs" />
     <Compile Include="Consumers\HousekeepingControlQueueConsumer.cs" />
