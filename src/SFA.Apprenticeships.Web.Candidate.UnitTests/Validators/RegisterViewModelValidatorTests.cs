@@ -97,5 +97,107 @@
 
             viewModelServerValidator.ShouldNotHaveValidationErrorFor(x => x.Password, viewModel);
         }
+
+        [TestCase(null, false)]
+        [TestCase(0, false)]
+        [TestCase(1, true)]
+        [TestCase(35, true)]
+        [TestCase(36, false)]
+        public void ShouldRequireFirstName(int? length, bool expectValid)
+        {
+            // Arrange.
+            var viewModel = new RegisterViewModel
+            {
+                Firstname= length.HasValue ? new string('X', length.Value) : null
+            };
+
+            // Act.
+            var validator = new RegisterViewModelServerValidator();
+
+            // Assert.
+            if (expectValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(vm => vm.Firstname, viewModel);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(vm => vm.Firstname, viewModel);
+            }
+        }
+
+        [TestCase("John", true)]
+        [TestCase("Jo<hn", false)]
+        public void ShouldWhitelistFirstName(string firstName, bool expectValid)
+        {
+            // Arrange.
+            var viewModel = new RegisterViewModel
+            {
+                Firstname = firstName
+            };
+
+            // Act.
+            var validator = new RegisterViewModelServerValidator();
+
+            // Assert.
+            if (expectValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(vm => vm.Firstname, viewModel);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(vm => vm.Firstname, viewModel);
+            }
+        }
+
+        [TestCase(null, false)]
+        [TestCase(0, false)]
+        [TestCase(1, true)]
+        [TestCase(33, true)]
+        [TestCase(34, false)]
+        public void ShouldRequireLastName(int? length, bool expectValid)
+        {
+            // Arrange.
+            var viewModel = new RegisterViewModel
+            {
+                Lastname = length.HasValue ? new string('X', length.Value) : null
+            };
+
+            // Act.
+            var validator = new RegisterViewModelServerValidator();
+
+            // Assert.
+            if (expectValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(vm => vm.Lastname, viewModel);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(vm => vm.Lastname, viewModel);
+            }
+        }
+
+        [TestCase("Smith", true)]
+        [TestCase("Smi<th", false)]
+        public void ShouldWhitelistLastName(string lastName, bool expectValid)
+        {
+            // Arrange.
+            var viewModel = new RegisterViewModel
+            {
+                Lastname = lastName
+            };
+
+            // Act.
+            var validator = new RegisterViewModelServerValidator();
+
+            // Assert.
+            if (expectValid)
+            {
+                validator.ShouldNotHaveValidationErrorFor(vm => vm.Lastname, viewModel);
+            }
+            else
+            {
+                validator.ShouldHaveValidationErrorFor(vm => vm.Lastname, viewModel);
+            }
+        }
     }
 }

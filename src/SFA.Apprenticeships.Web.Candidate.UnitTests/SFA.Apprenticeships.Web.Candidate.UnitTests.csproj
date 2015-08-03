@@ -331,7 +331,7 @@
     <Compile Include="Validators\EducationViewModelValidatorTests.cs" />
     <Compile Include="Validators\AboutYouViewModelValidatorTests.cs" />
     <Compile Include="Validators\RegisterViewModelValidatorTests.cs" />
-    <Compile Include="Validators\SettingsViewModelServerValidatorTests.cs" />
+    <Compile Include="Validators\SettingsViewModelValidatorTests.cs" />
     <Compile Include="Validators\WorkExperienceViewModelValidatorTests.cs" />
     <Compile Include="Validators\TrainingCourseViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancySearchValidatorTests.cs" />
