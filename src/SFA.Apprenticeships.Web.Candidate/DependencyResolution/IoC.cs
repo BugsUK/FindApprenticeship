@@ -1,26 +1,7 @@
-// --------------------------------------------------------------------------------------------------------------------
-// <copyright file="IoC.cs" company="Web Advanced">
-// Copyright 2012 Web Advanced (www.webadvanced.com)
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-// </copyright>
-// --------------------------------------------------------------------------------------------------------------------
-
-
 namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Application.Interfaces.Logging;
     using Application.ReferenceData.Configuration;
     using Candidate.IoC;
-    using Common.Attributes;
     using Common.IoC;
     using Common.Providers;
     using Common.Services;
@@ -34,7 +15,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Infrastructure.LocationLookup.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
-    using Infrastructure.RabbitMq.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Audit.IoC;
     using Infrastructure.Repositories.Authentication.IoC;
@@ -71,8 +51,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<PostcodeRegistry>();
-                // TODO: DEBT: AG: if Rabbit is incorrectly configured, website fails to start properly. Need to more lazily initialise RabbitMQ.
-                x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();

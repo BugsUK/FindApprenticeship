@@ -239,7 +239,6 @@
     <Compile Include="Tasks\CheckApprenticeshipApplicationRepository.cs" />
     <Compile Include="Tasks\CheckCandidateRepository.cs" />
     <Compile Include="Tasks\CheckAddressSearch.cs" />
-    <Compile Include="Tasks\CheckRabbitMessageQueue.cs" />
     <Compile Include="Tasks\CheckUserRepository.cs" />
     <Compile Include="Tasks\CheckLocationLookup.cs" />
     <Compile Include="Tasks\CheckVacancySearch.cs" />
@@ -400,10 +399,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
-      <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>

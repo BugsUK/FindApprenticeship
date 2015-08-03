@@ -47,17 +47,9 @@
                 x.AddRegistry<CommonRegistry>();
             });
 
-            var configService = container.GetInstance<IConfigurationService>();
-            var commsConfig = configService.Get<CommunicationConfiguration>();
-
-            For<EmailRequestConsumerAsync>().Use<EmailRequestConsumerAsync>().Ctor<IEmailDispatcher>().Named(commsConfig.EmailDispatcher);
-            For<SmsRequestConsumerAsync>().Use<SmsRequestConsumerAsync>().Ctor<ISmsDispatcher>().Named(commsConfig.SmsDispatcher);
-
             For<CommunicationCommand>().Use<CandidateCommunicationCommand>();
             For<CommunicationCommand>().Use<CandidateDailyDigestCommunicationCommand>();
             For<CommunicationCommand>().Use<HelpDeskCommunicationCommand>();
-
-            For<CommunicationRequestConsumerAsync>().Use<CommunicationRequestConsumerAsync>();
 
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
             For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
@@ -68,9 +60,6 @@
             For<ICommunicationService>().Use<CommunicationService>();
 
             // applications
-            For<SubmitApprenticeshipApplicationRequestConsumerAsync>().Use<SubmitApprenticeshipApplicationRequestConsumerAsync>();
-            For<SubmitTraineeshipApplicationRequestConsumerAsync>().Use<SubmitTraineeshipApplicationRequestConsumerAsync>();
-            For<ApplicationStatusChangedConsumerAsync>().Use<ApplicationStatusChangedConsumerAsync>();
             For<IApplicationStatusProcessor>().Use<ApplicationStatusProcessor>();
             For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
             For<IApplicationStatusAlertStrategy>().Use<ApplicationStatusAlertStrategy>();
@@ -79,13 +68,11 @@
             For<IApprenticeshipSummaryUpdateProcessor>().Use<ApprenticeshipSummaryUpdateProcessor>();
             For<ITraineeshipsSummaryUpdateProcessor>().Use<TraineeshipsSummaryUpdateProcessor>();
 
-            For<VacancyStatusSummaryConsumerAsync>().Use<VacancyStatusSummaryConsumerAsync>();
             For<ApprenticeshipSummaryUpdateProcessor>().Use<ApprenticeshipSummaryUpdateProcessor>();
             For<TraineeshipsSummaryUpdateProcessor>().Use<TraineeshipsSummaryUpdateProcessor>();
 
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";//todo: remove
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");
-            For<VacancyAboutToExpireConsumerAsync>().Use<VacancyAboutToExpireConsumerAsync>().Ctor<IMapper>().Named("VacancyEtlMapper");
 
             // site map
             For<ISiteMapVacancyProcessor>().Use<SiteMapVacancyProcessor>();
@@ -93,13 +80,6 @@
 
             // reference data
             For<IReferenceDataService>().Use<ReferenceDataService>();
-
-            // candidates
-            For<CandidateSavedSearchesConsumerAsync>().Use<CandidateSavedSearchesConsumerAsync>();
-            For<CreateCandidateRequestConsumerAsync>().Use<CreateCandidateRequestConsumerAsync>();
-
-            // candidate housekeeping
-            For<CandidateAccountHousekeepingConsumerAsync>().Use<CandidateAccountHousekeepingConsumerAsync>();
 
             // application housekeeping
             For<IRootApplicationHousekeeper>().Use<RootApplicationHousekeeper>();

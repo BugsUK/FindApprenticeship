@@ -186,12 +186,7 @@
     <Compile Include="Monitor\Repositories\ApprenticeshipMetricsRepositoryTests.cs" />
     <Compile Include="Monitor\Repositories\CandidateMetricsRepositoryTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
-    <Compile Include="RabbitMq\BootstrapSubscribersTests.cs" />
     <Compile Include="RabbitMq\Configuration\RabbitConfigurationTests.cs" />
-    <Compile Include="RabbitMq\Consumers\ConsumerCounter.cs" />
-    <Compile Include="RabbitMq\Consumers\TestConsumerAsync.cs" />
-    <Compile Include="RabbitMq\Consumers\TestConsumerSync.cs" />
-    <Compile Include="RabbitMq\Consumers\TestMessage.cs" />
     <Compile Include="Repositories\Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />
     <Compile Include="Repositories\Applications\ApprenticeshipApplicationWriteRepositoryTests.cs" />
     <Compile Include="Repositories\Applications\TraineeshipApplicationReadRepositoryTests.cs" />
@@ -307,10 +302,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
-      <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
