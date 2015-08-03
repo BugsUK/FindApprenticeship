@@ -13,7 +13,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.IoC;
     using Communication.IoC;
     using Domain.Interfaces.Configuration;
-    using EasyNetQ;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
@@ -37,7 +36,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
         private static ILogService _logger;
         private const string ProcessName = "Background Processor";
         private readonly CancellationTokenSource _cancelSource = new CancellationTokenSource();
-        private StructureMap.IContainer _container;
+        private IContainer _container;
 
         public override void Run()
         {
@@ -55,9 +54,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
         public override void OnStop()
         {
-            // Kill the bus which will kill any subscriptions
-            _container.GetInstance<IBus>().Advanced.Dispose();
-
             UnsubscribeServiceBusMessageBrokers();
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
