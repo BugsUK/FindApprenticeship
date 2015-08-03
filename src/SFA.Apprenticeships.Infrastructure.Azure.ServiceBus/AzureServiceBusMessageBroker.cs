@@ -8,7 +8,9 @@
     using Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
+    using Factory;
     using Microsoft.ServiceBus.Messaging;
+    using Model;
     using Newtonsoft.Json;
 
     public class AzureServiceBusMessageBroker<TMessage> : IServiceBusMessageBroker<TMessage>
@@ -18,6 +20,7 @@
 
         private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
+        private readonly IClientFactory _clientFactory;
 
         private readonly IList<IServiceBusSubscriber<TMessage>> _subscribers;
         private readonly IList<SubscriberInfo> _subscriptionInfos;
@@ -26,9 +29,9 @@
         {
             public string SubscriptionPath { get; set; }
 
-            public TopicClient TopicClient { get; set; }
+            public ITopicClient TopicClient { get; set; }
 
-            public SubscriptionClient SubscriptionClient { get; set; }
+            public ISubscriptionClient SubscriptionClient { get; set; }
 
             public IServiceBusSubscriber<TMessage> Subscriber { get; set; }
         }
@@ -36,10 +39,12 @@
         public AzureServiceBusMessageBroker(
             ILogService logService,
             IConfigurationService configurationService,
-            IEnumerable<IServiceBusSubscriber<TMessage>> subscribers)
+            IEnumerable<IServiceBusSubscriber<TMessage>> subscribers,
+            IClientFactory clientFactory)
         {
             _logService = logService;
             _configurationService = configurationService;
+            _clientFactory = clientFactory;
             _subscribers = subscribers.ToList();
             _subscriptionInfos = new List<SubscriberInfo>();
         }
@@ -89,7 +94,7 @@
 
             _logService.Info("Subscribing to topic/subscription '{0}'", subscriptionPath);
 
-            var topicClient = TopicClient.CreateFromConnectionString(
+            var topicClient = _clientFactory.CreateFromConnectionString(
                 serviceBusConfiguration.ConnectionString, topicName);
 
             var options = new OnMessageOptions
@@ -102,7 +107,7 @@
 
             options.ExceptionReceived += LogSubscriptionClientException;
 
-            var subscriptionClient = SubscriptionClient.CreateFromConnectionString(
+            var subscriptionClient = _clientFactory.CreateFromConnectionString(
                 serviceBusConfiguration.ConnectionString,
                 topicName,
                 subscriptionConfiguration.SubscriptionName,
@@ -116,9 +121,7 @@
                 Subscriber = subscriber
             };
 
-            subscriptionClient.OnMessageAsync(async brokeredMessage => await Task.Run(() =>
-                ConsumeMessage(subscriberInfo, brokeredMessage)),
-                options);
+            subscriptionClient.OnMessage(brokeredMessage => ConsumeMessage(subscriberInfo, brokeredMessage), options);
 
             _logService.Info("Subscribed to topic/subscription '{0}' with max of {1} concurrent call(s) per node",
                 subscriptionPath, options.MaxConcurrentCalls);
@@ -170,7 +173,7 @@
             return true;
         }
 
-        private void ConsumeMessage(SubscriberInfo subscriberInfo, BrokeredMessage brokeredMessage)
+        private void ConsumeMessage(SubscriberInfo subscriberInfo, IBrokeredMessage brokeredMessage)
         {
             try
             {
@@ -199,7 +202,7 @@
             }
         }
 
-        private void HandleMessageResult(SubscriberInfo subscriberInfo, ServiceBusMessageStates state, BrokeredMessage brokeredMessage, string messageBody)
+        private void HandleMessageResult(SubscriberInfo subscriberInfo, ServiceBusMessageStates state, IBrokeredMessage brokeredMessage, string messageBody)
         {
             _logService.Debug("Handling message id '{0}', topic/subscription '{1}', state '{2}', body '{3}' ",
                 brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, state, messageBody);
