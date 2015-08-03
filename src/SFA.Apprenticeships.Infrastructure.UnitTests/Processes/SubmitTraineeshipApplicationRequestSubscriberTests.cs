@@ -77,11 +77,10 @@
                 .Returns(candidate);
 
             // Act.
-            var result = _subscriber.Consume(request);
+            var state = _subscriber.Consume(request);
 
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             // Assert.
             _mockLegacyApplicationProvider.Verify(mock => mock.CreateApplication(applicationDetail), Times.Once);
@@ -124,11 +123,10 @@
                 .Returns(candidate);
 
             // Act.
-            var result = _subscriber.Consume(request);
+            var state = _subscriber.Consume(request);
 
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             // Assert.
             _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Once);
@@ -164,12 +162,10 @@
                 .Returns(candidate);
 
             // Act.
-            var result = _subscriber.Consume(request);
+            var state = _subscriber.Consume(request);
 
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Requeue);
-            result.RequeueDateTimeUtc.HasValue.Should().BeTrue();
-            result.RequeueDateTimeUtc.Should().BeCloseTo(DateTime.UtcNow, (int)TimeSpan.FromMinutes(10).TotalMilliseconds);
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Requeue);
 
             // Assert.
             _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Never);

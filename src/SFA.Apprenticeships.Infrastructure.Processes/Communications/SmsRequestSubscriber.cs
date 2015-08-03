@@ -14,18 +14,16 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "SendSms")]
-        public ServiceBusMessageResult Consume(SmsRequest request)
+        public ServiceBusMessageStates Consume(SmsRequest request)
         {
             try
             {
                 _dispatcher.SendSms(request);
-                return ServiceBusMessageResult.Complete();
+                return ServiceBusMessageStates.Complete;
             }
             catch (Exception)
             {
-                request.ProcessTime = request.ProcessTime.HasValue ? DateTime.UtcNow.AddMinutes(5) : DateTime.UtcNow.AddSeconds(30);
-
-                return ServiceBusMessageResult.Requeue(request.ProcessTime.Value);
+                return ServiceBusMessageStates.Requeue;
             }
         }
     }

@@ -27,7 +27,7 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "VacancyIndexCreated")]
-        public ServiceBusMessageResult Consume(VacancySummaryUpdateComplete updateComplete)
+        public ServiceBusMessageStates Consume(VacancySummaryUpdateComplete updateComplete)
         {
             _logger.Debug("Received vacancy summary update completed message.");
 
@@ -74,7 +74,7 @@
                 _logger.Warn("One or more indexes was not correctly created (see previously logged errors), vacancy site map will not be created.");
             }
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

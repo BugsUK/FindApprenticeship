@@ -28,7 +28,7 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "StartCandidateHousekeeping")]
-        public ServiceBusMessageResult Consume(CandidateHousekeeping candidateHousekeeping)
+        public ServiceBusMessageStates Consume(CandidateHousekeeping candidateHousekeeping)
         {
             var candidateId = candidateHousekeeping.CandidateId;
 
@@ -51,7 +51,7 @@
 
             _logService.Debug("Housekeeping for CandidateId: {0} complete", candidateId);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

@@ -35,12 +35,12 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "SubmitTraineeshipApplication")]
-        public ServiceBusMessageResult Consume(SubmitTraineeshipApplicationRequest request)
+        public ServiceBusMessageStates Consume(SubmitTraineeshipApplicationRequest request)
         {
             return CreateApplication(request);
         }
 
-        public ServiceBusMessageResult CreateApplication(SubmitTraineeshipApplicationRequest request)
+        public ServiceBusMessageStates CreateApplication(SubmitTraineeshipApplicationRequest request)
         {
             _logger.Debug("Creating traineeship application Id: {0}", request.ApplicationId);
 
@@ -54,8 +54,8 @@
                 {
                     _logger.Info("Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
                         applicationDetail.CandidateId);
-                    
-                    return Requeue(request);
+
+                    return ServiceBusMessageStates.Requeue;
                 }
                 
                 // Update candidate disability status to match the application.
@@ -65,7 +65,7 @@
                 applicationDetail.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
                 _traineeeshipApplicationWriteRepository.Save(applicationDetail);
 
-                return ServiceBusMessageResult.Complete();
+                return ServiceBusMessageStates.Complete;
             }
             catch (CustomException e)
             {
@@ -76,11 +76,11 @@
                 _logger.Error("Submit traineeship application with Id = {0} request async process failed.",
                     e, request.ApplicationId);
 
-                return Requeue(request);
+                return ServiceBusMessageStates.Requeue;
             }
         }
 
-        private ServiceBusMessageResult HandleCustomException(
+        private ServiceBusMessageStates HandleCustomException(
             SubmitTraineeshipApplicationRequest request,
             CustomException e)
         {
@@ -108,17 +108,10 @@
 
                 default:
                     _logger.Warn(string.Format("Submit traineeship application with Id = {0} request async process failed.", request.ApplicationId), e);
-                    return Requeue(request);
+                    return ServiceBusMessageStates.Requeue;
             }
 
-            return ServiceBusMessageResult.Complete();
-        }
-
-        private ServiceBusMessageResult Requeue(SubmitTraineeshipApplicationRequest request)
-        {
-            request.ProcessTime = request.ProcessTime.HasValue ? DateTime.UtcNow.AddMinutes(5) : DateTime.UtcNow.AddSeconds(30);
-
-            return ServiceBusMessageResult.Requeue(request.ProcessTime.Value);
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

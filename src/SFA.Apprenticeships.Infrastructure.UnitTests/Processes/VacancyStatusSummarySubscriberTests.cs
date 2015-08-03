@@ -48,12 +48,11 @@
             _cacheServiceMock.Setup(x => x.Get<VacancyStatusSummary>(It.IsAny<string>())).Returns(new VacancyStatusSummary());
 
             // Act.
-            var result = _subscriber.Consume(new VacancyStatusSummary());
+            var state = _subscriber.Consume(new VacancyStatusSummary());
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _cacheServiceMock.Verify(x => x.PutObject(It.IsAny<string>(), It.IsAny<object>(), It.IsAny<CacheDuration>()), Times.Never);
             _applicationStatusProcessor.Verify(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()), Times.Never);
@@ -83,12 +82,11 @@
                 _applicationStatusProcessor.Object);
 
             // Act.
-            var result = _subscriber.Consume(vacancyStatusSummary);
+            var state = _subscriber.Consume(vacancyStatusSummary);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _cacheServiceMock.Verify(
                 x =>

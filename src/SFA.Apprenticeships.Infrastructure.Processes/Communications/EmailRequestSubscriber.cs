@@ -13,11 +13,11 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "SendEmail")]
-        public ServiceBusMessageResult Consume(EmailRequest request)
+        public ServiceBusMessageStates Consume(EmailRequest request)
         {
             _dispatcher.SendEmail(request);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

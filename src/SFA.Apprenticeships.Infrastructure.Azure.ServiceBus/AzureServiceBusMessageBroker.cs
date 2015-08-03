@@ -180,9 +180,9 @@
                 _logService.Debug("Consuming message id '{0}', topic/subscription '{1}', body '{2}'",
                     brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, messageBody);
 
-                var result = subscriberInfo.Subscriber.Consume(message);
+                var state = subscriberInfo.Subscriber.Consume(message);
 
-                HandleMessageResult(subscriberInfo, result, brokeredMessage, messageBody);
+                HandleMessageResult(subscriberInfo, state, brokeredMessage, messageBody);
 
                 _logService.Debug("Consumed message id '{0}', topic/subscription '{1}', body '{2}'",
                     brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, messageBody);
@@ -199,24 +199,12 @@
             }
         }
 
-        private void HandleMessageResult(SubscriberInfo subscriberInfo, ServiceBusMessageResult result, BrokeredMessage brokeredMessage, string messageBody)
+        private void HandleMessageResult(SubscriberInfo subscriberInfo, ServiceBusMessageStates state, BrokeredMessage brokeredMessage, string messageBody)
         {
-            if (result == null)
-            {
-                var deadLetterReason = string.Format(
-                    "No message result for message id '{0}', topic/subscription '{1}': message will be dead-lettered",
-                    brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
-
-                _logService.Warn(deadLetterReason);
-
-                brokeredMessage.DeadLetter();
-                return;
-            }
-
             _logService.Debug("Handling message id '{0}', topic/subscription '{1}', state '{2}', body '{3}' ",
-                brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, result.State, messageBody);
+                brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, state, messageBody);
 
-            switch (result.State)
+            switch (state)
             {
                 case ServiceBusMessageStates.Complete:
                     brokeredMessage.Complete();
@@ -231,18 +219,21 @@
                     break;
 
                 case ServiceBusMessageStates.Requeue:
+                    var scheduledEnqueueTimeUtc = brokeredMessage.ScheduledEnqueueTimeUtc == DateTime.MinValue ? DateTime.UtcNow.AddSeconds(30) : GetDefaultRequeueDateTimeUtc();
+
                     var newBrokeredMessage = new BrokeredMessage(messageBody)
                     {
-                        ScheduledEnqueueTimeUtc = result.RequeueDateTimeUtc ?? GetDefaultReqeueDateTimeUtc()
+                        ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtc
                     };
 
                     subscriberInfo.TopicClient.Send(newBrokeredMessage);
+                    brokeredMessage.Complete();
                     break;
 
                 default:
                     var deadLetterReason = string.Format(
                         "Invalid message state '{0}' for message id '{1}', topic/subscription '{2}': message will be dead-lettered",
-                        result.State, brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
+                        state, brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
 
                     _logService.Error(deadLetterReason);
 
@@ -251,10 +242,10 @@
             }
 
             _logService.Debug("Handled message id '{0}', topic/subscription '{1}', state '{2}', body '{3}' ",
-                brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, result.State, messageBody);
+                brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, state, messageBody);
         }
 
-        private static DateTime GetDefaultReqeueDateTimeUtc()
+        private static DateTime GetDefaultRequeueDateTimeUtc()
         {
             return DateTime.UtcNow.AddMinutes(5);
         }

@@ -54,15 +54,14 @@
                 _mockLogService.Object, _mockServiceBus.Object, _mockApprenticeshipIndexer.Object, _mockTraineeshipIndexer.Object);
 
             // Act.
-            var result = subscriber.Consume(new VacancySummaryUpdateComplete
+            var state = subscriber.Consume(new VacancySummaryUpdateComplete
             {
                 ScheduledRefreshDateTime = scheduledRefreshDateTime
             });
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _mockApprenticeshipIndexer.Verify(mock => mock.IsIndexCorrectlyCreated(scheduledRefreshDateTime), Times.Once);
             _mockApprenticeshipIndexer.Verify(mock => mock.SwapIndex(scheduledRefreshDateTime), Times.Once);
@@ -95,15 +94,14 @@
                 _mockLogService.Object, _mockServiceBus.Object, _mockApprenticeshipIndexer.Object, _mockTraineeshipIndexer.Object);
 
             // Act.
-            var result = subscriber.Consume(new VacancySummaryUpdateComplete
+            var state = subscriber.Consume(new VacancySummaryUpdateComplete
             {
                 ScheduledRefreshDateTime = scheduledRefreshDateTime
             });
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _mockApprenticeshipIndexer.Verify(mock => mock.IsIndexCorrectlyCreated(scheduledRefreshDateTime), Times.Once);
             _mockApprenticeshipIndexer.Verify(mock => mock.SwapIndex(scheduledRefreshDateTime), Times.Exactly(apprenticeshipVacancyIndexOk ? 1 : 0));

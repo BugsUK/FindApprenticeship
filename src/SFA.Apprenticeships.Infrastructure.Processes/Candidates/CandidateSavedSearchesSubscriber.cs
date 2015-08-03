@@ -14,11 +14,11 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "RunCandidateSavedSearches")]
-        public ServiceBusMessageResult Consume(CandidateSavedSearches candidateSavedSearches)
+        public ServiceBusMessageStates Consume(CandidateSavedSearches candidateSavedSearches)
         {
             _savedSearchProcessor.ProcessCandidateSavedSearches(candidateSavedSearches);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

@@ -84,12 +84,11 @@
             _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User {Status = UserStatuses.Active});
 
             // Act.
-            var result = _subscriber.Consume(request);
+            var state = _subscriber.Consume(request);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _mockLegacyApplicationProvider.Verify(mock => mock.CreateApplication(applicationDetail), Times.Once);
             _mockApprenticeshipApplicationWriteRepository.Verify(mock => mock.Save(applicationDetail), Times.Once);
@@ -136,12 +135,11 @@
             _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User { Status = UserStatuses.Active });
 
             // Act.
-            var result = _subscriber.Consume(request);
+            var state = _subscriber.Consume(request);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Once);
 
@@ -180,13 +178,11 @@
             _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User { Status = UserStatuses.Active });
 
             // Act.
-            var result = _subscriber.Consume(request);
+            var state = _subscriber.Consume(request);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Requeue);
-            result.RequeueDateTimeUtc.HasValue.Should().BeTrue();
-            result.RequeueDateTimeUtc.Should().BeCloseTo(DateTime.UtcNow, (int)TimeSpan.FromMinutes(10).TotalMilliseconds);
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Requeue);
 
             _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Never);
             _mockLegacyApplicationProvider.Verify(mock => mock.CreateApplication(applicationDetail), Times.Never);
@@ -224,12 +220,11 @@
             _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User { Status = UserStatuses.Active });
 
             // Act.
-            var result = _subscriber.Consume(request);
+            var state = _subscriber.Consume(request);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Never);
             _mockLegacyApplicationProvider.Verify(mock => mock.CreateApplication(applicationDetail), Times.Never);
@@ -266,12 +261,11 @@
             _mockUserReadRepository.Setup(m => m.Get(It.IsAny<Guid>())).Returns(new User { Status = UserStatuses.PendingDeletion });
 
             // Act.
-            var result = _subscriber.Consume(request);
+            var state = _subscriber.Consume(request);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
             
             _mockLegacyCandidateProvider.Verify(mock => mock.UpdateCandidate(candidate), Times.Never);
             _mockLegacyApplicationProvider.Verify(mock => mock.CreateApplication(applicationDetail), Times.Never);
