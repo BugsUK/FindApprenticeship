@@ -75,13 +75,10 @@
         [ElementLocator(Id = "postcode-search")]
         public IWebElement PostcodeSearch { get; set; }
 
-        [ElementLocator(Id = "find-addresses")]
-        public IWebElement FindAddresses { get; set; }
+        [ElementLocator(Id = "ui-id-1")]
+        public IWebElement AddressSelect { get; set; }
 
-        [ElementLocator(Id = "address-select-label")]
-        public IWebElement AddressSelectLabel { get; set; }
-
-        [ElementLocator(Id = "address-select")]
+        [ElementLocator(Id = "ui-id-1")]
         public IElementList<IWebElement, AddressDropdownItem> AddressDropdown
         {
             get { return _addressDropdown; }
@@ -96,20 +93,11 @@
         #endregion
     }
 
-    [ElementLocator(TagName = "option")]
+    [ElementLocator(Class = "ui-corner-all")]
     public class AddressDropdownItem : WebElement
     {
         public AddressDropdownItem(ISearchContext parent) : base(parent)
         {
         }
-
-        public string AddressLine1 { get { return this.GetAttribute("data-address-line1"); } }
-        public string AddressLine2 { get { return this.GetAttribute("data-address-line2"); } }
-        public string AddressLine3 { get { return this.GetAttribute("data-address-line3"); } }
-        public string AddressLine4 { get { return this.GetAttribute("data-address-line4"); } }
-        public string Postcode { get { return this.GetAttribute("data-post-code"); } }
-        public string Uprn { get { return this.GetAttribute("value"); } }
-        public string Latitude { get { return this.GetAttribute("data-lat"); } }
-        public string Longitude { get { return this.GetAttribute("data-lon"); } }
     }
 }

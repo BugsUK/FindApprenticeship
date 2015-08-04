@@ -291,13 +291,15 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             When("I have created a new email address");
             And("I enter data", GetRegistrationData());
             And("I choose HasAcceptedTermsAndConditions");
-            And("I choose FindAddresses");
-            And("I wait for 30 seconds to see AddressSelectLabel");
-            Then("I am on the RegisterCandidatePage page");
 
+            //Postcode search
+            And("I enter data", GetAddressData());
+            And("I wait for 30 seconds to see AddressSelect");
+            Then("I am on the RegisterCandidatePage page");
             When("I am on AddressDropdown list item matching criteria", GetAddressMatchingCriteria());
             And("I choose WrappedElement");
             When("I am on the RegisterCandidatePage page");
+
             When("I choose CreateAccountButton");
             Then("I wait 500 second for the ActivationPage page");
             When("I get the token for my newly created account");
@@ -318,12 +320,11 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             string[] row2 = { "Lastname", "Lastname" };
             string[] row3 = { "Phonenumber", "07469984649" };
             string[] row4 = { "EmailAddress", "{EmailToken}" };
-            string[] row5 = { "PostcodeSearch", "N7 8LS  " };
-            string[] row6 = { "Day", "01" };
-            string[] row7 = { "Month", "01" };
-            string[] row8 = { "Year", "2000" };
-            string[] row9 = { "Password", "?Password01!" };
-            string[] row10 = { "ConfirmPassword", "?Password01!" };
+            string[] row5 = { "Day", "01" };
+            string[] row6 = { "Month", "01" };
+            string[] row7 = { "Year", "2000" };
+            string[] row8 = { "Password", "?Password01!" };
+            string[] row9 = { "ConfirmPassword", "?Password01!" };
 
             var t = new Table(header);
 
@@ -336,7 +337,18 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             t.AddRow(row7);
             t.AddRow(row8);
             t.AddRow(row9);
-            t.AddRow(row10);
+
+            return t;
+        }
+
+        private Table GetAddressData()
+        {
+            string[] header = { "Field", "Value" };
+            string[] row1 = { "PostcodeSearch", "N7 8LS" };
+
+            var t = new Table(header);
+
+            t.AddRow(row1);
 
             return t;
         }
@@ -344,7 +356,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
         private Table GetAddressMatchingCriteria()
         {
             string[] header = { "Field", "Rule", "Value" };
-            string[] row1 = { "Text", "Equals", "Flat A, 6 Furlong Road" };
+            string[] row1 = { "Text", "Equals", "N7 8LS, 6, Furlong Road, London" };
             var t = new Table(header);
             t.AddRow(row1);
             return t;

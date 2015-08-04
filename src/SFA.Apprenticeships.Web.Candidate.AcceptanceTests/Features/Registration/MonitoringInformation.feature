@@ -23,20 +23,13 @@ Scenario: As a new candidate my additional monitoring information is saved
 		| Phonenumber     | 07999999999   |
 		| Password        | ?Password01!  |
 		| ConfirmPassword | ?Password01!  |
-		| PostcodeSearch  | N7 8LS        |
-	And I choose FindAddresses
+	And I enter data
+		| Field          | Value  |
+		| PostcodeSearch | N7 8LS |
 	And I wait 3 seconds
 	And I am on AddressDropdown list item matching criteria
-		| Field        | Rule   | Value                  |
-		| Text         | Equals | Flat A, 6 Furlong Road |
-		| AddressLine1 | Equals | Flat A                 |
-		| AddressLine2 | Equals | 6 Furlong Road         |
-		| AddressLine3 | Equals | London                 |
-		| AddressLine4 | Equals | Islington              |
-		| Postcode     | Equals | N7 8LS                 |
-		| Uprn         | Equals | 5300034721             |
-		| Latitude     | Equals | 0                      |
-		| Longitude    | Equals | 0                      |
+		| Field | Rule   | Value                           |
+		| Text  | Equals | N7 8LS, 6, Furlong Road, London |
 	And I choose WrappedElement
 	And I am on the RegisterCandidatePage page
 	And I choose HasAcceptedTermsAndConditions

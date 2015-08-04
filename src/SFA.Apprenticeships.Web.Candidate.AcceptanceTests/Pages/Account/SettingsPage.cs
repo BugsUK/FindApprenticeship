@@ -85,13 +85,10 @@
         [ElementLocator(Id = "postcode-search")]
         public IWebElement PostcodeSearch { get; set; }
 
-        [ElementLocator(Id = "find-addresses")]
-        public IWebElement FindAddresses { get; set; }
-
-        [ElementLocator(Id = "address-select")]
+        [ElementLocator(Id = "ui-id-1")]
         public IElementList<IWebElement, AddressDropdownItem> AddressDropdown { get; set; }
 
-        [ElementLocator(Id = "address-select")]
+        [ElementLocator(Id = "ui-id-1")]
         public IWebElement Addresses { get; set; }
 
         #endregion

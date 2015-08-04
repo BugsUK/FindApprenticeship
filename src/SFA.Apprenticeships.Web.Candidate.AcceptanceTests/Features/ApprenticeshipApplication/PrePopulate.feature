@@ -23,10 +23,10 @@ Scenario: Pre-populate my Education Qualifications Work Experience About You det
 		| EmailReadOnly           | Equals | {EmailToken}       |
 		| DobReadOnly             | Equals | 01/01/2000         |
 		| PhoneReadOnly           | Equals | 07469984649        |
-		| AddressLine1ReadOnly    | Equals | Flat A             |
-		| AddressLine2ReadOnly    | Equals | 6 Furlong Road     |
-		| AddressLine3ReadOnly    | Equals | London             |
-		| AddressLine4ReadOnly    | Equals | Islington          |
+		| AddressLine1ReadOnly    | Equals | 6 Furlong Road     |
+		| AddressLine2ReadOnly    | Equals |                    |
+		| AddressLine3ReadOnly    | Equals |                    |
+		| AddressLine4ReadOnly    | Equals | London             |
 		| AddressPostcodeReadOnly | Equals | N7 8LS             |
 		#Should not be filled in as no previous application has been submitted
 		| EducationNameOfSchool   | Equals |                    |
