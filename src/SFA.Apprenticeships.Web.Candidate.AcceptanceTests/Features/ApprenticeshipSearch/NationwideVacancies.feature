@@ -51,8 +51,8 @@ Scenario: Remebering last location search does not break nationwide results
 	    | Location      | Equals | Hull (East Riding of Yorkshire) |
 	    | ClearLocation | Equals | Cleared                         |
 	When I enter data
-		 | Field    | Value     |
-		 | Location | Lichfield |
+		 | Field    | Value      |
+		 | Location | Birmingham |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
