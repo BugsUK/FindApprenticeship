@@ -133,7 +133,8 @@
                 { ValidationErrorCodes.InvalidCandidateState, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CandidateStateError },
                 { ValidationErrorCodes.CandidateNotFound, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError },
                 { ValidationErrorCodes.UnknownCandidate, Apprenticeships.Application.Interfaces.Candidates.ErrorCodes.CandidateNotFoundError },
-                { ValidationErrorCodes.InvalidVacancyState, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError }
+                { ValidationErrorCodes.InvalidVacancyState, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError },
+                { ValidationErrorCodes.SchoolNotEntered, Apprenticeships.Application.Interfaces.Vacancies.ErrorCodes.LegacyVacancyStateError }
             };
 
             foreach (var pair in map)

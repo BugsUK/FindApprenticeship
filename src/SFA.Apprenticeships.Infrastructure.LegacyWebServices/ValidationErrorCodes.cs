@@ -7,5 +7,6 @@
         public const string CandidateNotFound = "CANDIDATE_NOT_FOUND";
         public const string UnknownCandidate = "UNKNOWN_CANDIDATE";
         public const string InvalidVacancyState = "INVALID_VACANCY_STATE";
+        public const string SchoolNotEntered = "SCHOOL_NOT_ENTERED";
     }
 }

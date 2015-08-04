@@ -133,7 +133,7 @@
                     break;
 
                 default:
-                    _logger.Warn(string.Format("Submit apprenticeship application with Id = {0} request async process failed, message will be requeued", request.ApplicationId), e);
+                    _logger.Warn(string.Format("Submit apprenticeship application with Id = {0} request async process failed with code = {1}, message will be requeued", request.ApplicationId, e.Code), e);
                     return ServiceBusMessageStates.Requeue;
             }
 
