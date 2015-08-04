@@ -174,12 +174,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Content Include="Configs\StopwordsExtended.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Configs\StopwordsBase.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Compile Include="Consumers\ApplicationEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\DailyDigestControlQueueConsumer.cs" />
     <Compile Include="Consumers\HousekeepingControlQueueConsumer.cs" />
@@ -333,10 +327,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
       <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
-      <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>

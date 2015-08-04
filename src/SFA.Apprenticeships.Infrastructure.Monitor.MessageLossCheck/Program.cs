@@ -14,7 +14,6 @@
     using IoC;
     using LegacyWebServices.IoC;
     using Logging.IoC;
-    using RabbitMq.IoC;
     using StructureMap;
     using Tasks;
     using VacancySearch.IoC;
@@ -38,7 +37,6 @@
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<CandidateRepositoryRegistry>();

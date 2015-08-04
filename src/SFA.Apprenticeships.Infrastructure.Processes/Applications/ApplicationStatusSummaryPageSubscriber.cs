@@ -21,11 +21,11 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "UpdateApprenticeshipApplicationStatuses")]
-        public ServiceBusMessageResult Consume(ApplicationUpdatePage message)
+        public ServiceBusMessageStates Consume(ApplicationUpdatePage message)
         {
             _applicationStatusProcessor.QueueApplicationStatuses(_applicationStatusExtractWindow, message);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

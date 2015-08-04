@@ -56,12 +56,11 @@
             };
 
             // Act.
-            var result = _applicationStatusSummarySubscriber.Consume(appStatusSummary);
+            var state = _applicationStatusSummarySubscriber.Consume(appStatusSummary);
             
             // Assert.
-            result.Should().NotBeNull();
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _applicationStatusProcessorMock.Verify(x => x.ProcessApplicationStatuses(It.Is<ApplicationStatusSummary>(y => y == appStatusSummary), true));
 
@@ -94,12 +93,11 @@
             };
 
             // Act.
-            var result = _applicationStatusSummarySubscriber.Consume(appStatusSummary);
+            var state = _applicationStatusSummarySubscriber.Consume(appStatusSummary);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _applicationStatusProcessorMock.Verify(x => x.ProcessApplicationStatuses(It.Is<ApplicationStatusSummary>(y => y == appStatusSummary), true));
 

@@ -48,12 +48,11 @@
             };
 
             // Act.
-            var result = subscriber.Consume(request);
+            var state = subscriber.Consume(request);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _siteMapVacancyProcessor.Verify(mock => mock.Process(request), Times.Exactly(enabled ? 1 : 0));
         }

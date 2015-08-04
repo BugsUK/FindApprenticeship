@@ -43,6 +43,9 @@
 
             foreach (var topicConfiguration in serviceBusConfiguration.Topics)
             {
+                var topicMessageCountDetails = GetTopicMessageCountDetails(
+                    namespaceManager, topicConfiguration.TopicName);
+
                 foreach (var subscriptionConfiguration in topicConfiguration.Subscriptions)
                 {
                     var subscriptionPath = string.Format("{0}/{1}",
@@ -59,14 +62,17 @@
                     _logger.Info("Limits for topic/subscription {0} are {1} active and {2} dead-lettered messages",
                         subscriptionPath, messageCountWarningLimit, deadLetterMessageCountWarningLimit);
 
-                    var messageCountDetails = GetMessageCountDetails(
+                    var subscriptionMessageCountDetails = GetSubscriptionMessageCountDetails(
                         namespaceManager, topicConfiguration.TopicName, subscriptionConfiguration.SubscriptionName);
 
                     var messageCountNarrative = string.Format("Found {0} active, {1} scheduled and {2} dead-lettered message(s) for topic/subscription: {3}",
-                            messageCountDetails.ActiveMessageCount, messageCountDetails.ScheduledMessageCount, messageCountDetails.DeadLetterMessageCount, subscriptionPath);
+                        subscriptionMessageCountDetails.ActiveMessageCount,
+                        topicMessageCountDetails.ScheduledMessageCount,
+                        subscriptionMessageCountDetails.DeadLetterMessageCount,
+                        subscriptionPath);
 
-                    if (messageCountDetails.ActiveMessageCount >= messageCountWarningLimit ||
-                        messageCountDetails.DeadLetterMessageCount >= deadLetterMessageCountWarningLimit)
+                    if (subscriptionMessageCountDetails.ActiveMessageCount >= messageCountWarningLimit ||
+                        subscriptionMessageCountDetails.DeadLetterMessageCount >= deadLetterMessageCountWarningLimit)
                     {
                         _logger.Warn(messageCountNarrative);
                     }
@@ -80,12 +86,20 @@
             _logger.Info("Checked Azure Service Bus Message counts");
         }
 
-        private static MessageCountDetails GetMessageCountDetails(
+        private static MessageCountDetails GetSubscriptionMessageCountDetails(
             NamespaceManager namespaceManager, string topicName, string subscriptionName)
         {
             var subscriptionDescription = namespaceManager.GetSubscription(topicName, subscriptionName);
 
             return subscriptionDescription.MessageCountDetails;
+        }
+
+        private static MessageCountDetails GetTopicMessageCountDetails(
+            NamespaceManager namespaceManager, string topicName)
+        {
+            var topicDescription = namespaceManager.GetTopic(topicName);
+
+            return topicDescription.MessageCountDetails;
         }
 
         #endregion

@@ -26,7 +26,7 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "ApprenticeshipVacancyExpiring")]
-        public ServiceBusMessageResult Consume(VacancyAboutToExpire vacancy)
+        public ServiceBusMessageStates Consume(VacancyAboutToExpire vacancy)
         {
             // Get saved and draft applications for expiring vacancy
             var expiringApplications = _apprenticeshipApplicationReadRepository
@@ -36,7 +36,7 @@
 
             if (!expiringApplications.Any())
             {
-                return ServiceBusMessageResult.Complete();
+                return ServiceBusMessageStates.Complete;
             }
 
             // Map to expiring draft model
@@ -55,7 +55,7 @@
             // Write to repo
             newExpiringDrafts.ForEach(_expiringDraftRepository.Save);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

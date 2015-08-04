@@ -18,7 +18,7 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "StartApplicationHousekeeping")]
-        public ServiceBusMessageResult Consume(ApplicationHousekeepingRequest request)
+        public ServiceBusMessageStates Consume(ApplicationHousekeepingRequest request)
         {
             _logService.Debug("Running housekeeping for application id {0} and vacancy type {1}",
                 request.ApplicationId, request.VacancyType);
@@ -28,7 +28,7 @@
             _logService.Debug("Housekeeping for application id {0} and vacancy type {1} complete",
                 request.ApplicationId, request.VacancyType);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

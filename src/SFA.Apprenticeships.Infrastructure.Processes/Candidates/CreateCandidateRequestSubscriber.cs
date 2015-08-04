@@ -32,12 +32,12 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "CreateCandidate")]
-        public ServiceBusMessageResult Consume(CreateCandidateRequest request)
+        public ServiceBusMessageStates Consume(CreateCandidateRequest request)
         {
             return CreateCandidate(request);
         }
 
-        private ServiceBusMessageResult CreateCandidate(CreateCandidateRequest request)
+        private ServiceBusMessageStates CreateCandidate(CreateCandidateRequest request)
         {
             try
             {
@@ -64,15 +64,13 @@
                     _logger.Warn("User has already been activated in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
                 }
 
-                return ServiceBusMessageResult.Complete();
+                return ServiceBusMessageStates.Complete;
             }
             catch (Exception ex)
             {
                 _logger.Error(string.Format("Create candidate with id {0} request async process failed", request.CandidateId), ex);
 
-                request.ProcessTime = request.ProcessTime.HasValue ? DateTime.UtcNow.AddMinutes(5) : DateTime.UtcNow.AddSeconds(30);
-
-                return ServiceBusMessageResult.Requeue(request.ProcessTime.Value);
+                return ServiceBusMessageStates.Requeue;
             }
         }
     }

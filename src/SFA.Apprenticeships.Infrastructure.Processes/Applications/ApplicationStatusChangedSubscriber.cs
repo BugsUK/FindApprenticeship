@@ -29,13 +29,13 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "ApprenticeshipApplicationStatusUpdated")]
-        public ServiceBusMessageResult Consume(ApplicationStatusChanged applicationStatusChanged)
+        public ServiceBusMessageStates Consume(ApplicationStatusChanged applicationStatusChanged)
         {
             var application = _apprenticeshipApplicationReadRepository.Get(applicationStatusChanged.LegacyApplicationId, _strictEtlValidation);
             if (application == null)
             {
                 _logService.Warn(_strictEtlValidation, string.Format(ApplicationNotFoundMessageFormat, applicationStatusChanged.LegacyApplicationId));
-                return ServiceBusMessageResult.Complete();
+                return ServiceBusMessageStates.Complete;
             }
 
             var applicationStatusAlerts = _applicationStatusAlertRepository.GetForApplication(application.EntityId);
@@ -61,7 +61,7 @@
 
             _applicationStatusAlertRepository.Save(applicationStatusAlert);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

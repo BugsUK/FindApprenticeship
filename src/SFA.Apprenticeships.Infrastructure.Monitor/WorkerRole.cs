@@ -25,7 +25,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using RabbitMq.IoC;
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
@@ -136,7 +135,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry(new AddressRegistry(configurationService));
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
-                x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry<MonitorRegistry>();

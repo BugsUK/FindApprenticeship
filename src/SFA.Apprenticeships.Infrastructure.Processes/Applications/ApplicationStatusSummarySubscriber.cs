@@ -24,7 +24,7 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "UpdateApprenticeshipApplicationStatus")]
-        public ServiceBusMessageResult Consume(ApplicationStatusSummary applicationStatusSummary)
+        public ServiceBusMessageStates Consume(ApplicationStatusSummary applicationStatusSummary)
         {
             _applicationStatusProcessor.ProcessApplicationStatuses(applicationStatusSummary, _strictEtlValidation);
 
@@ -43,7 +43,7 @@
                 _serviceBus.PublishMessage(vacancyStatusSummary);
             }
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

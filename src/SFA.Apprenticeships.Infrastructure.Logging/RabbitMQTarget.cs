@@ -4,6 +4,7 @@
     using System.Configuration;
     using System.Text;
     using Common.IoC;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using EasyNetQ;
     using EasyNetQ.Topology;
@@ -12,7 +13,6 @@
     using NLog;
     using NLog.Common;
     using NLog.Targets;
-    using RabbitMq.Configuration;
     using StructureMap;
 
     /// <summary>
@@ -42,6 +42,7 @@
 
             var configService = container.GetInstance<IConfigurationService>();
             var rabbitConfig = configService.Get<RabbitConfiguration>();
+
             _rabbitMqHostHostConfig = rabbitConfig.LoggingHost;
         }
 
@@ -123,7 +124,7 @@
                     // This will create the exchange and queue and bind them if they doesn't already exist 
                     // Change passive from false to true on both calls if it needs to be pre-declared.
                     _exchange = _bus.ExchangeDeclare(ExchangeName, ExchangeType, false, _rabbitMqHostHostConfig.Durable);
-                    var queue = _bus.QueueDeclare(QueueName, false);
+                    var queue = _bus.QueueDeclare(QueueName);
                     _bus.Bind(_exchange, queue, GetRoutingKey("*"));
                 }
                 catch (Exception ex)

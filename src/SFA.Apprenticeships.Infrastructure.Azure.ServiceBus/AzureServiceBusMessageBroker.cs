@@ -8,7 +8,9 @@
     using Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
+    using Factory;
     using Microsoft.ServiceBus.Messaging;
+    using Model;
     using Newtonsoft.Json;
 
     public class AzureServiceBusMessageBroker<TMessage> : IServiceBusMessageBroker<TMessage>
@@ -18,6 +20,7 @@
 
         private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
+        private readonly IClientFactory _clientFactory;
 
         private readonly IList<IServiceBusSubscriber<TMessage>> _subscribers;
         private readonly IList<SubscriberInfo> _subscriptionInfos;
@@ -26,9 +29,9 @@
         {
             public string SubscriptionPath { get; set; }
 
-            public TopicClient TopicClient { get; set; }
+            public ITopicClient TopicClient { get; set; }
 
-            public SubscriptionClient SubscriptionClient { get; set; }
+            public ISubscriptionClient SubscriptionClient { get; set; }
 
             public IServiceBusSubscriber<TMessage> Subscriber { get; set; }
         }
@@ -36,10 +39,12 @@
         public AzureServiceBusMessageBroker(
             ILogService logService,
             IConfigurationService configurationService,
-            IEnumerable<IServiceBusSubscriber<TMessage>> subscribers)
+            IEnumerable<IServiceBusSubscriber<TMessage>> subscribers,
+            IClientFactory clientFactory)
         {
             _logService = logService;
             _configurationService = configurationService;
+            _clientFactory = clientFactory;
             _subscribers = subscribers.ToList();
             _subscriptionInfos = new List<SubscriberInfo>();
         }
@@ -89,20 +94,20 @@
 
             _logService.Info("Subscribing to topic/subscription '{0}'", subscriptionPath);
 
-            var topicClient = TopicClient.CreateFromConnectionString(
+            var topicClient = _clientFactory.CreateFromConnectionString(
                 serviceBusConfiguration.ConnectionString, topicName);
 
             var options = new OnMessageOptions
             {
                 MaxConcurrentCalls =
                     subscriptionConfiguration.MaxConcurrentMessagesPerNode ??
-                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode,                    
-                AutoComplete = true
+                    serviceBusConfiguration.DefaultMaxConcurrentMessagesPerNode,
+                    AutoComplete = false
             };
 
             options.ExceptionReceived += LogSubscriptionClientException;
 
-            var subscriptionClient = SubscriptionClient.CreateFromConnectionString(
+            var subscriptionClient = _clientFactory.CreateFromConnectionString(
                 serviceBusConfiguration.ConnectionString,
                 topicName,
                 subscriptionConfiguration.SubscriptionName,
@@ -116,9 +121,7 @@
                 Subscriber = subscriber
             };
 
-            subscriptionClient.OnMessageAsync(async brokeredMessage => await Task.Run(() =>
-                ConsumeMessage(subscriberInfo, brokeredMessage)),
-                options);
+            subscriptionClient.OnMessage(brokeredMessage => ConsumeMessage(subscriberInfo, brokeredMessage), options);
 
             _logService.Info("Subscribed to topic/subscription '{0}' with max of {1} concurrent call(s) per node",
                 subscriptionPath, options.MaxConcurrentCalls);
@@ -170,7 +173,7 @@
             return true;
         }
 
-        private void ConsumeMessage(SubscriberInfo subscriberInfo, BrokeredMessage brokeredMessage)
+        private void ConsumeMessage(SubscriberInfo subscriberInfo, IBrokeredMessage brokeredMessage)
         {
             try
             {
@@ -180,9 +183,9 @@
                 _logService.Debug("Consuming message id '{0}', topic/subscription '{1}', body '{2}'",
                     brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, messageBody);
 
-                var result = subscriberInfo.Subscriber.Consume(message);
+                var state = subscriberInfo.Subscriber.Consume(message);
 
-                HandleMessageResult(subscriberInfo, result, brokeredMessage, messageBody);
+                HandleMessageResult(subscriberInfo, state, brokeredMessage, messageBody);
 
                 _logService.Debug("Consumed message id '{0}', topic/subscription '{1}', body '{2}'",
                     brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, messageBody);
@@ -199,26 +202,15 @@
             }
         }
 
-        private void HandleMessageResult(SubscriberInfo subscriberInfo, ServiceBusMessageResult result, BrokeredMessage brokeredMessage, string messageBody)
+        private void HandleMessageResult(SubscriberInfo subscriberInfo, ServiceBusMessageStates state, IBrokeredMessage brokeredMessage, string messageBody)
         {
-            if (result == null)
-            {
-                var deadLetterReason = string.Format(
-                    "No message result for message id '{0}', topic/subscription '{1}': message will be dead-lettered",
-                    brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
-
-                _logService.Warn(deadLetterReason);
-
-                brokeredMessage.DeadLetter();
-                return;
-            }
-
             _logService.Debug("Handling message id '{0}', topic/subscription '{1}', state '{2}', body '{3}' ",
-                brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, result.State, messageBody);
+                brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, state, messageBody);
 
-            switch (result.State)
+            switch (state)
             {
                 case ServiceBusMessageStates.Complete:
+                    brokeredMessage.Complete();
                     break;
 
                 case ServiceBusMessageStates.Abandon:
@@ -230,18 +222,21 @@
                     break;
 
                 case ServiceBusMessageStates.Requeue:
+                    var scheduledEnqueueTimeUtc = brokeredMessage.ScheduledEnqueueTimeUtc == DateTime.MinValue ? DateTime.UtcNow.AddSeconds(30) : GetDefaultRequeueDateTimeUtc();
+
                     var newBrokeredMessage = new BrokeredMessage(messageBody)
                     {
-                        ScheduledEnqueueTimeUtc = result.RequeueDateTimeUtc ?? GetDefaultReqeueDateTimeUtc()
+                        ScheduledEnqueueTimeUtc = scheduledEnqueueTimeUtc
                     };
 
                     subscriberInfo.TopicClient.Send(newBrokeredMessage);
+                    brokeredMessage.Complete();
                     break;
 
                 default:
                     var deadLetterReason = string.Format(
                         "Invalid message state '{0}' for message id '{1}', topic/subscription '{2}': message will be dead-lettered",
-                        result.State, brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
+                        state, brokeredMessage.MessageId, subscriberInfo.SubscriptionPath);
 
                     _logService.Error(deadLetterReason);
 
@@ -250,10 +245,10 @@
             }
 
             _logService.Debug("Handled message id '{0}', topic/subscription '{1}', state '{2}', body '{3}' ",
-                brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, result.State, messageBody);
+                brokeredMessage.MessageId, subscriberInfo.SubscriptionPath, state, messageBody);
         }
 
-        private static DateTime GetDefaultReqeueDateTimeUtc()
+        private static DateTime GetDefaultRequeueDateTimeUtc()
         {
             return DateTime.UtcNow.AddMinutes(5);
         }
