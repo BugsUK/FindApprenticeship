@@ -24,7 +24,7 @@
             var strategy =
                 new SendAccountUnlockCodeStrategyBuilder().With(lockUserStrategy)
                     .With(communicationService)
-                    .WithUnlockCodeExpiration(DateTime.Now.AddDays(-1))
+                    .WithUnlockCodeExpiration(DateTime.UtcNow.AddDays(-1))
                     .Build();
 
             strategy.SendAccountUnlockCode("Username");
@@ -64,7 +64,7 @@
         private readonly Mock<ICandidateReadRepository> _candidateReadRepository = new Mock<ICandidateReadRepository>();
         private Mock<ILockUserStrategy> _lockUserStrategy = new Mock<ILockUserStrategy>();
         private Mock<ICommunicationService> _communicationService = new Mock<ICommunicationService>();
-        private DateTime _unlockCodeExpiration = DateTime.Now.AddDays(1);
+        private DateTime _unlockCodeExpiration = DateTime.UtcNow.AddDays(1);
 
         public SendAccountUnlockCodeStrategyBuilder With(Mock<ILockUserStrategy> lockUserStrategy)
         {

@@ -117,7 +117,7 @@
             var vacancySummary = new ApprenticeshipSummaryUpdate
             {
                 Id = aVacancyId,
-                ClosingDate = DateTime.Now.AddHours(VacancyAboutToExpireNotificationHours + 1)
+                ClosingDate = DateTime.UtcNow.AddHours(VacancyAboutToExpireNotificationHours + 1)
             };
 
             processor.QueueVacancyIfExpiring(vacancySummary, VacancyAboutToExpireNotificationHours);
@@ -140,7 +140,7 @@
             var vacancySummary = new ApprenticeshipSummaryUpdate
             {
                 Id = aVacancyId,
-                ClosingDate = DateTime.Now.AddHours(VacancyAboutToExpireNotificationHours - 1)
+                ClosingDate = DateTime.UtcNow.AddHours(VacancyAboutToExpireNotificationHours - 1)
             };
 
             processor.QueueVacancyIfExpiring(vacancySummary, VacancyAboutToExpireNotificationHours);

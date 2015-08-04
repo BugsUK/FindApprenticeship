@@ -16,7 +16,7 @@
                 {
                     FirstName = "NAS",
                     LastName = "Exemplar",
-                    EmailAddress = string.Format("nas.exemplar+{0}@gmail.com", DateTime.Now.Ticks) ,
+                    EmailAddress = string.Format("nas.exemplar+{0}@gmail.com", DateTime.UtcNow.Ticks),
                     DateOfBirth = new DateTime(1980, 1, 1),
                     PhoneNumber = "01683200911",
                     Address = new Address

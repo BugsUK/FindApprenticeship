@@ -110,7 +110,7 @@
             {
                 EntityId = Guid.NewGuid(),
                 Status = applicationStatus,
-                DateCreated = DateTime.Now,
+                DateCreated = DateTime.UtcNow,
                 CandidateId = candidate.EntityId,
                 CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),
                 VacancyStatus = vacancyDetails.VacancyStatus,

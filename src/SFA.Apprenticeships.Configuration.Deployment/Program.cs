@@ -28,7 +28,7 @@
                 var json = File.ReadAllText(@"Configs\settings.json");
                 var document = BsonSerializer.Deserialize<BsonDocument>(json);
 
-                var dateTimeUpdated = DateTime.Now;
+                var dateTimeUpdated = DateTime.UtcNow;
                 var fileVersion = VersionLogging.GetVersion();
 
                 if (fileVersion == "1.0.0.0")

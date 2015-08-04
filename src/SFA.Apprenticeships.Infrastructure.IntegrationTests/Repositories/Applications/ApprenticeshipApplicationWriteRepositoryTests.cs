@@ -68,7 +68,7 @@
                 {
                     FirstName = "Johnny",
                     LastName = "Candidate",
-                    DateOfBirth = DateTime.Now.AddYears(-30),
+                    DateOfBirth = DateTime.UtcNow.AddYears(-30),
                     EmailAddress = "email@server.com",
                     PhoneNumber = "07777111222",
                     Address =

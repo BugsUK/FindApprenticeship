@@ -38,7 +38,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
                 Roles = roles
             };
 
-            newUser.SetStatePendingActivation(activationCode, DateTime.Now.AddDays(_activationCodeExpiryDays));
+            newUser.SetStatePendingActivation(activationCode, DateTime.UtcNow.AddDays(_activationCodeExpiryDays));
             _userWriteRepository.Save(newUser);
         }
     }

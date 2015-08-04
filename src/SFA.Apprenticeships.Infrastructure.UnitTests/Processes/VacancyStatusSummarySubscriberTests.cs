@@ -64,7 +64,9 @@
             // Arrange.
             var vacancyStatusSummary = new VacancyStatusSummary
             {
-                LegacyVacancyId = 123, ClosingDate = DateTime.Now.AddMonths(-3), VacancyStatus = VacancyStatuses.Expired
+                LegacyVacancyId = 123,
+                ClosingDate = DateTime.UtcNow.AddMonths(-3),
+                VacancyStatus = VacancyStatuses.Expired
             };
 
             _applicationStatusProcessor.Setup(x => x.ProcessApplicationStatuses(It.IsAny<VacancyStatusSummary>()));

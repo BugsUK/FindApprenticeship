@@ -46,7 +46,7 @@
                     AddressLine4 = "Add4",
                     Postcode = "N7 8LS"
                 },
-                DateOfBirth = new DateViewModel { Day = DateTime.Now.Day, Month = DateTime.Now.Month, Year = DateTime.Now.Year },
+                DateOfBirth = new DateViewModel { Day = DateTime.UtcNow.Day, Month = DateTime.UtcNow.Month, Year = DateTime.UtcNow.Year },
                 PhoneNumber = "079824524523",
                 Firstname = "FN",
                 Lastname = "LN",
@@ -122,7 +122,7 @@
                     AddressLine4 = "Add4",
                     Postcode = "N7 8LS"
                 },
-                DateOfBirth = new DateViewModel { Day = DateTime.Now.Day, Month = DateTime.Now.Month, Year = DateTime.Now.Year },
+                DateOfBirth = new DateViewModel { Day = DateTime.UtcNow.Day, Month = DateTime.UtcNow.Month, Year = DateTime.UtcNow.Year },
                 PhoneNumber = "079824524523",
                 Firstname = "FN",
                 Lastname = "LN"

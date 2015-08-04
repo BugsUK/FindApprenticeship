@@ -28,7 +28,7 @@
 
             user.AssertState("Unlock user account", UserStatuses.Locked);
 
-            if (user.AccountUnlockCodeExpiry < DateTime.Now)
+            if (user.AccountUnlockCodeExpiry < DateTime.UtcNow)
             {
                 // NOTE: account unlock code has expired, send a new one.
                 _sendAccountUnlockCodeStrategy.SendAccountUnlockCode(username);

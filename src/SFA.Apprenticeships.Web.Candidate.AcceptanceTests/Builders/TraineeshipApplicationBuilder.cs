@@ -16,7 +16,7 @@
         private int _vacancyId;
         private readonly string _emailAddress = string.Empty;
 
-        private DateTime _closingDate = DateTime.Now.AddDays(30);
+        private DateTime _closingDate = DateTime.UtcNow.AddDays(30);
 
         public TraineeshipApplicationBuilder(Guid candidateId, string emailAddress)
         {
@@ -48,7 +48,7 @@
             {
                 CandidateId = _candidateId,
                 CandidateInformation = new ApplicationTemplate(),
-                DateApplied = DateTime.Now.AddDays(-1),
+                DateApplied = DateTime.UtcNow.AddDays(-1),
                 VacancyStatus = VacancyStatuses.Live,
                 Vacancy = new TraineeshipSummary
                 {

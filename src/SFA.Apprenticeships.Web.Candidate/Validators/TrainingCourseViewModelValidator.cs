@@ -26,7 +26,7 @@
                 .Matches(TrainingCourseViewModelMessages.TitleMessages.WhiteListRegularExpression)
                 .WithMessage(TrainingCourseViewModelMessages.TitleMessages.WhiteListErrorText);
 
-            var maxYear = Convert.ToString(DateTime.Now.Year - 100);
+            var maxYear = Convert.ToString(DateTime.UtcNow.Year - 100);
 
             RuleFor(x => x.FromYear)
                 .NotEmpty()

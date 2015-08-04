@@ -39,10 +39,10 @@
                 .WithMessage(DateViewModelMessages.MonthMessages.RequiredErrorText);
 
             validator.RuleFor(x => x.Year)
-                .InclusiveBetween(DateTime.Now.Year - 100, DateTime.Now.Year)
-                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RangeErrorText, DateTime.Now.Year - 100, DateTime.Now.Year))
+                .InclusiveBetween(DateTime.UtcNow.Year - 100, DateTime.UtcNow.Year)
+                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RangeErrorText, DateTime.UtcNow.Year - 100, DateTime.UtcNow.Year))
                 .NotEmpty()
-                .WithMessage(string.Format(DateViewModelMessages.YearMessages.RequiredErrorText, DateTime.Now.Year - 100, DateTime.Now.Year));
+                .WithMessage(DateViewModelMessages.YearMessages.RequiredErrorText);
         }
 
         internal static void AddServerRules(this AbstractValidator<DateViewModel> validator)

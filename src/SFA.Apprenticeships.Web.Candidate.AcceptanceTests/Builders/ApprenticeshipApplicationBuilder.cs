@@ -16,8 +16,8 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Builders
         private int _vacancyId;
         private readonly string _emailAddress = string.Empty;
         private ApplicationStatuses _applicationStatus;
-        private DateTime? _dateApplied = DateTime.Now;
-        private DateTime _expirationDate = DateTime.Now.AddDays(30);
+        private DateTime? _dateApplied = DateTime.UtcNow;
+        private DateTime _expirationDate = DateTime.UtcNow.AddDays(30);
 
         public ApprenticeshipApplicationBuilder(Guid candidateId, string emailAddress)
         {

@@ -61,7 +61,7 @@
                 x => x.GetApplicationSummaries(It.Is<int>(id => id == 123)))
                 .Returns(apprenticeshipApplicationSummaries);
 
-            var closingDate = DateTime.Now.AddMonths(-2);
+            var closingDate = DateTime.UtcNow.AddMonths(-2);
 
             _applicationStatusProcessor.ProcessApplicationStatuses(new VacancyStatusSummary
             {

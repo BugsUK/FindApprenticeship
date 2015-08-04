@@ -14,7 +14,7 @@
             var user = GetUserWithLockRelatedAttributes(logingIncorrectAttempts);
 
             var accountLockCode = "123456";
-            var accountLockExpiry = DateTime.Now;
+            var accountLockExpiry = DateTime.UtcNow;
 
             user.SetStateLocked(accountLockCode, accountLockExpiry);
 
@@ -29,7 +29,7 @@
             {
                 LoginIncorrectAttempts = loginIncorrectAttempts,
                 AccountUnlockCode = "ABCDEF",
-                AccountUnlockCodeExpiry = DateTime.Now
+                AccountUnlockCodeExpiry = DateTime.UtcNow
             };
             return user;
         }

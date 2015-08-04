@@ -76,7 +76,7 @@
                 return;
             }
 
-            var timeToExpiry = (ticket.Expiration - DateTime.Now).TotalSeconds;
+            var timeToExpiry = (ticket.Expiration - DateTime.UtcNow).TotalSeconds;
 
             // Is the expiration within the update window?
             var expiring = timeToExpiry < (FormsAuthentication.Timeout.TotalSeconds / 2);
@@ -127,11 +127,11 @@
 
         private static FormsAuthenticationTicket CreateTicket(string userName, params string[] claims)
         {
-            var expiration = DateTime.Now.AddSeconds(FormsAuthentication.Timeout.TotalSeconds);
+            var expiration = DateTime.UtcNow.AddSeconds(FormsAuthentication.Timeout.TotalSeconds);
             var ticket = new FormsAuthenticationTicket(
                 version: 1,
                 name: userName,
-                issueDate: DateTime.Now,
+                issueDate: DateTime.UtcNow,
                 expiration: expiration,
                 isPersistent: false,
                 userData: StringifyUserData(claims, expiration));

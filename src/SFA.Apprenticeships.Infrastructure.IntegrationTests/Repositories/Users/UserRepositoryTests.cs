@@ -52,10 +52,10 @@
             return new User
             {
                 EntityId = Guid.NewGuid(),
-                ActivateCodeExpiry = DateTime.Now.AddDays(30),
+                ActivateCodeExpiry = DateTime.UtcNow.AddDays(30),
                 ActivationCode = "KNU56",
                 PasswordResetCode = "",
-                PasswordResetCodeExpiry = DateTime.Now.AddDays(7),
+                PasswordResetCodeExpiry = DateTime.UtcNow.AddDays(7),
                 Roles = UserRoles.Candidate,
                 Status = UserStatuses.PendingActivation,
                 Username = email

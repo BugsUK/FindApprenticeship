@@ -6,7 +6,7 @@
 
 @section metatags
 {
-    <meta name="DCSext.Days2Close" content="@((Model.ClosingDate - DateTime.Now).Days)"/>
+    <meta name="DCSext.Days2Close" content="@((DateTime.SpecifyKind(Model.ClosingDate, DateTimeKind.Utc).Date - DateTime.UtcNow.Date).Days)"/>
 }
 
 <div itemscope itemtype="http://schema.org/JobPosting">

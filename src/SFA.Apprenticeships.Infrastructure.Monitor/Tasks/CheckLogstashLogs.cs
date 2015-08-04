@@ -57,7 +57,7 @@
 
         private void EnsureExpectedNumberOfMessagesLoggedInTimeframe()
         {
-            var timeframeStart = DateTime.Now.AddMinutes(-_monitorConfiguration.ExpectedLogTimeframeInMinutes);
+            var timeframeStart = DateTime.UtcNow.AddMinutes(-_monitorConfiguration.ExpectedLogTimeframeInMinutes);
 
             var timestamps = GetRecentLogEntryTimestamps();
             var actualLogCount = timestamps.Count(timestamp => timestamp >= timeframeStart);
@@ -82,7 +82,7 @@
             var client = CreateRestClient();
             var timestamps = new List<DateTime>();
 
-            var indexDate = DateTime.Now.AddMinutes(-30);
+            var indexDate = DateTime.UtcNow.AddMinutes(-30);
             var uri = BuildUri(indexDate);
             var request = CreateRestRequest(uri);
 

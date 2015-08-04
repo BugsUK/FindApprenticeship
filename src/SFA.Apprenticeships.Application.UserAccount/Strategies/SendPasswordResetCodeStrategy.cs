@@ -47,7 +47,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            var currentDateTime = DateTime.Now;
+            var currentDateTime = DateTime.UtcNow;
             var expiry = currentDateTime.AddDays(_passwordResetCodeExpiryDays);
 
             string passwordResetCode;

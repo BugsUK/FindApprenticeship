@@ -131,7 +131,7 @@
         {
             var cookie = new HttpCookie(name)
             {
-                Expires = DateTime.Now.AddDays(-1)
+                Expires = DateTime.UtcNow.AddDays(-1)
             };
 
             return cookie;
