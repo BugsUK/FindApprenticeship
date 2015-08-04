@@ -51,6 +51,7 @@ $(document).ready(function () {
                     response($.map(data.Items, function (suggestion) {
                         return {
                             label: suggestion.Text,
+                            value: "",
                             data: suggestion
                         }
                     }));
@@ -85,9 +86,11 @@ $(document).ready(function () {
         focus: function (event, ui) {
             $("#addressInputWrapper").find('.ui-helper-hidden-accessible').text("To select " + ui.item.label + ", press enter");
         },
-        autoFocus: false,
+        autoFocus: true,
         minLength: 1,
         delay: 100
+    }).focus(function () {
+        searchContext = "";
     });
 
     function retrieveAddress(id) {
