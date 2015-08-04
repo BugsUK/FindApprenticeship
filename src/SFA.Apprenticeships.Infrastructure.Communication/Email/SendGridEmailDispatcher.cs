@@ -45,17 +45,10 @@
 
         public void SendEmail(EmailRequest request)
         {
-            try
-            {
-                _logger.Debug("Dispatching email To:{0}, Template:{1}", request.ToEmail, request.MessageType);
+            _logger.Debug("Dispatching email To:{0}, Template:{1}", request.ToEmail, request.MessageType);
 
-                var message = ComposeMessage(request);
-                DispatchMessage(request, message);
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("Error sending email to '{0}', message type '{1}'", ex, request.ToEmail, request.MessageType);
-            }
+            var message = ComposeMessage(request);
+            DispatchMessage(request, message);
         }
 
         private SendGridMessage ComposeMessage(EmailRequest request)
@@ -159,7 +152,7 @@
                 var errorMessage = string.Format("Failed to dispatch email: {0}. Errors: {1}", logMessage, string.Join(", ", e.Errors));
 
                 _logger.Error(errorMessage, e, logMessage);
-                throw new CustomException(errorMessage, e, ErrorCodes.EmailError);
+                throw new CustomException(errorMessage, e, ErrorCodes.EmailApiError);
             }
             catch (Exception e)
             {
