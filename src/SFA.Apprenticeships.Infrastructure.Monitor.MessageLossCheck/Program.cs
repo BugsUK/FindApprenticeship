@@ -6,7 +6,6 @@
     using Common.Configuration;
     using Common.IoC;
     using Domain.Interfaces.Configuration;
-    using EasyNetQ;
     using Elastic.Common.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
@@ -53,8 +52,6 @@
 
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
-
-            container.GetInstance<IBus>().Advanced.Dispose();
         }
     }
 }
