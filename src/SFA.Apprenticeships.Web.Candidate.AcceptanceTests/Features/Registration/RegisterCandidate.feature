@@ -42,11 +42,10 @@ Scenario: As a candidate I am on the registration page and all required fields a
 	And I enter data
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
-	And I choose FindAddresses
 	And I wait 3 seconds
 	And I am on AddressDropdown list item matching criteria
-		| Field | Rule   | Value                  |
-		| Text  | Equals | Flat A, 6 Furlong Road |
+		| Field | Rule   | Value                           |
+		| Text  | Equals | N7 8LS, 6, Furlong Road, London |
 	And I choose WrappedElement
 	And I am on the RegisterCandidatePage page
 	And I enter data
@@ -75,27 +74,20 @@ Scenario: As a candidate on the registration page I want to be able to pick my a
 	And I enter data
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
-	And I choose FindAddresses
 	And I wait 3 seconds
 	And I am on AddressDropdown list item matching criteria
-		| Field        | Rule   | Value                  |
-		| Text         | Equals | Flat A, 6 Furlong Road |
-		| AddressLine1 | Equals | Flat A                 |
-		| AddressLine2 | Equals | 6 Furlong Road         |
-		| AddressLine3 | Equals | London                 |
-		| AddressLine4 | Equals | Islington              |
-		| Postcode     | Equals | N7 8LS                 |
-		| Uprn         | Equals | 5300034721             |
+		| Field | Rule   | Value                           |
+		| Text  | Equals | N7 8LS, 6, Furlong Road, London |
 	And I choose WrappedElement
 	And I am on the RegisterCandidatePage page
 	Then I see
-		| Field        | Rule   | Value                |
-		| AddressLine1 | Equals | Flat A               |
-		| AddressLine2 | Equals | 6 Furlong Road       |
-		| AddressLine3 | Equals | London               |
-		| AddressLine4 | Equals | Islington            |
-		| Postcode     | Equals | N7 8LS               |
-		| Uprn         | Equals | 5300034721           |
+		| Field        | Rule   | Value          |
+		| AddressLine1 | Equals | 6 Furlong Road |
+		| AddressLine2 | Equals |                |
+		| AddressLine3 | Equals |                |
+		| AddressLine4 | Equals | London         |
+		| Postcode     | Equals | N7 8LS         |
+		| Uprn         | Equals | 15544478       |
 
 @SmokeTests
 Scenario: As a candidate I want to be told quickly that my email/username is available
@@ -134,11 +126,10 @@ Scenario: As a candidate I must confirm my password
 	And I enter data
 		 | Field          | Value  |
 		 | PostcodeSearch | N7 8LS |
-	And I choose FindAddresses
 	And I wait 3 seconds
 	And I am on AddressDropdown list item matching criteria
-		| Field | Rule   | Value                  |
-		| Text  | Equals | Flat A, 6 Furlong Road |
+		| Field | Rule   | Value                           |
+		| Text  | Equals | N7 8LS, 6, Furlong Road, London |
 	And I choose WrappedElement
 	And I am on the RegisterCandidatePage page
 	And I enter data

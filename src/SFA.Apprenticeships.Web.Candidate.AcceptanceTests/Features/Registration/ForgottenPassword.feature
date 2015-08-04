@@ -48,18 +48,19 @@ Scenario: Reset password in an unactivated account
 		| Lastname        | LastnameTest  |
 		| Phonenumber     | 07469984649   |
 		| EmailAddress    | {EmailToken}  |
-		| PostcodeSearch  | N7 8LS        |
 		| Day             | 01            |
 		| Month           | 01            |
 		| Year            | 2000          |
 		| Password        | ?Password01!  |
 		| ConfirmPassword | ?Password01!  |
 	And I choose HasAcceptedTermsAndConditions
-	And I choose FindAddresses
+	And I enter data
+		| Field          | Value  |
+		| PostcodeSearch | N7 8LS |
 	And I wait 3 seconds
 	And I am on AddressDropdown list item matching criteria
-		| Field        | Rule   | Value                  |
-		| Text         | Equals | Flat A, 6 Furlong Road |
+		| Field | Rule   | Value                           |
+		| Text  | Equals | N7 8LS, 6, Furlong Road, London |
 	And I choose WrappedElement
 	And I am on the RegisterCandidatePage page
 	And I choose CreateAccountButton
