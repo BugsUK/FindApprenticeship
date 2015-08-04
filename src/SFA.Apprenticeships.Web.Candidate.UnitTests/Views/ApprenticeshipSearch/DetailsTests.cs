@@ -435,7 +435,7 @@
         }
 
         [Test]
-        public void HideProviderSectorPassRate()
+        public void ProviderSectorPassRateNotProvided()
         {
             var details = new Details();
 
@@ -451,9 +451,9 @@
                 .Should()
                 .NotBeNull("The vacancy framework should be shown if the vacancy has a provider");
 
-            view.GetElementbyId("vacancy-provider-sector-pass-rate")
+            view.GetElementbyId("vacancy-provider-sector-pass-rate").InnerText
                 .Should()
-                .BeNull("The vacancy provider sector pass rate should not be shown if no value is set.");
+                .Be("The training provider does not yet have a sector success rate for this type of apprenticeship training.");
         }
 
         [Test]
