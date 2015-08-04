@@ -77,10 +77,16 @@ $(document).ready(function () {
                 var field = $(this);
                 searchContext = item.Id;
 
-                //search again
-                window.setTimeout(function () {
-                    field.autocomplete("search", item.Id);
-                });
+                if (searchContext === "GBR|") {
+                    window.setTimeout(function () {
+                        field.autocomplete("search", item.Text);
+                    });
+                } else {
+                    window.setTimeout(function () {
+                        field.autocomplete("search", item.Id);
+                    });
+                }
+                
             }
         },
         focus: function (event, ui) {
