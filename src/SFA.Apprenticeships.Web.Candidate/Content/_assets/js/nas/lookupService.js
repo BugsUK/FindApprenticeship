@@ -47,6 +47,7 @@ $(document).ready(function () {
                     searchTerm: request.term,
                     lastId: searchContext
                 },
+                timeout: 5000,
                 success: function (data) {
                     response($.map(data.Items, function (suggestion) {
                         return {
@@ -55,6 +56,11 @@ $(document).ready(function () {
                             data: suggestion
                         }
                     }));
+                },
+                error: function () {
+                    $('#postcodeServiceUnavailable').show();
+                    $('#enterAddressManually').hide();
+                    $('#address-details').removeClass('disabled');
                 }
             });
         },
@@ -115,6 +121,7 @@ $(document).ready(function () {
                 key: key,
                 id: id
             },
+            timeout: 5000,
             success: function (data) {
                 if (data.Items.length) {
                     $('#address-details').removeClass('disabled');
@@ -125,6 +132,12 @@ $(document).ready(function () {
 
                     populateAddress(data.Items[0]);
                 }
+            },
+            error: function () {
+                $('#postcodeServiceUnavailable').show();
+                $('#enterAddressManually').hide();
+                $('#addressLoading').hide();
+                $('#address-details').removeClass('disabled');
             }
         });
     }
