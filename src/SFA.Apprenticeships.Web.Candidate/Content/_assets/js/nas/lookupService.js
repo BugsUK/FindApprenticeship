@@ -85,7 +85,6 @@ $(document).ready(function () {
 
                 $('#addressLoading').show();
                 $('#enterAddressManually').hide();
-                $('#address-details').addClass('disabled');
 
                 if (searchContext === "GBR|") {
                     window.setTimeout(function () {
