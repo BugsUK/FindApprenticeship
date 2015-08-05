@@ -222,7 +222,7 @@
             Action sendEmail = () => _dispatcher.SendEmail(request);
 
             sendEmail.ShouldThrow<CustomException>().Which.Code.Should().Be(ErrorCodes.EmailError);
-            VerifyErrorsLogged(Times.Exactly(1));
+            VerifyErrorsLogged(Times.Once());
         }
 
         [Test, Category("Integration")]
