@@ -37,7 +37,7 @@
                 .WithMessage(SettingsViewModelMessages.FirstnameMessages.WhiteListErrorText);
 
             validator.RuleFor(x => x.Lastname)
-                .Length(0, 35)
+                .Length(0, 33)
                 .WithMessage(SettingsViewModelMessages.LastnameMessages.TooLongErrorText)
                 .NotEmpty()
                 .WithMessage(SettingsViewModelMessages.LastnameMessages.RequiredErrorText)

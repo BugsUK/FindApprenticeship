@@ -24,7 +24,6 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using RabbitMq.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
@@ -144,7 +143,6 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
-                x.AddRegistry<RabbitMqRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddCachingRegistry(cacheConfig);
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));

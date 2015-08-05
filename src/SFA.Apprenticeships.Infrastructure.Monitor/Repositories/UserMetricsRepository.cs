@@ -17,7 +17,7 @@
         public UserMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.UsersDb, "users");
+            Initialise(config.MetricsUsersDb, "users");
         }
 
         public long GetRegisteredUserCount()
@@ -100,7 +100,16 @@
                 {
                     "$group", new BsonDocument
                     {
-                        {"_id", new BsonDocument {{"CandidateId", "$_id"}, {"DateCreated", "$DateCreated"}, {"ActivateCodeExpiry", "$ActivateCodeExpiry"}, {"ActivationDate", "$ActivationDate"}, {"LastLogin", "$LastLogin"}}},
+                        {"_id", new BsonDocument
+                            {
+                                {"CandidateId", "$_id"},
+                                {"DateCreated", "$DateCreated"},
+                                {"Status", "$Status"},
+                                {"ActivateCodeExpiry", "$ActivateCodeExpiry"},
+                                {"ActivationDate", "$ActivationDate"},
+                                {"LastLogin", "$LastLogin"}
+                            }
+                        },
                         {"Activated", new BsonDocument {{"$first", new BsonDocument {{"$cond", new BsonArray {new BsonDocument {{"$gte", new BsonArray {"$Status", 20}}}, true, false}}}}}}
                     }
                 }

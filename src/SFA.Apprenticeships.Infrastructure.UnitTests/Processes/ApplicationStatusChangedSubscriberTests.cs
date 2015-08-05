@@ -31,11 +31,10 @@
             var subscriber = new ApplicationStatusChangedSubscriberBuilder().With(repository).With(logService).Build();
             var applicationStatusChanged = new Fixture().Build<ApplicationStatusChanged>().With(asc => asc.LegacyApplicationId, legacyApplicationId).Create();
 
-            var result = subscriber.Consume(applicationStatusChanged);
+            var state = subscriber.Consume(applicationStatusChanged);
 
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             var expectedMessage = string.Format(ApplicationStatusChangedSubscriber.ApplicationNotFoundMessageFormat, legacyApplicationId);
             logService.Verify(ls => ls.Warn(expectedMessage));
@@ -68,11 +67,10 @@
                 .With(asc => asc.UnsuccessfulReason, unsuccessfulReason)
                 .Create();
 
-            var result = subscriber.Consume(applicationStatusChanged);
+            var state = subscriber.Consume(applicationStatusChanged);
 
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             applicationStatusAlert.Should().NotBeNull();
             applicationStatusAlert.CandidateId.Should().Be(apprenticeshipApplicationDetail.CandidateId);
@@ -128,11 +126,10 @@
                 .With(asc => asc.UnsuccessfulReason, unsuccessfulReason)
                 .Create();
 
-            var result = subscriber.Consume(applicationStatusChanged);
+            var state = subscriber.Consume(applicationStatusChanged);
 
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             applicationStatusAlert.EntityId.Should().Be(existingApplicationStatusAlert.EntityId);
             applicationStatusAlert.Status.Should().Be(applicationStatus);
@@ -178,11 +175,10 @@
                 .With(asc => asc.UnsuccessfulReason, unsuccessfulReason)
                 .Create();
 
-            var result = subscriber.Consume(applicationStatusChanged);
+            var state = subscriber.Consume(applicationStatusChanged);
 
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             applicationStatusAlert.EntityId.Should().NotBe(existingApplicationStatusAlert.EntityId);
             applicationStatusAlert.Status.Should().Be(applicationStatus);

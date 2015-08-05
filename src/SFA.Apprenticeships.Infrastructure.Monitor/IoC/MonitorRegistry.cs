@@ -29,14 +29,13 @@
                     x.Type<CheckAddressSearch>();
                     x.Type<CheckPostcodeService>();
                     x.Type<CheckUserDirectory>();
-                    x.Type<CheckRabbitMessageQueue>();
                     x.Type<CheckAzureServiceBus>();
                     x.Type<CheckNasGateway>();
                     x.Type<CheckMongoReplicaSets>();
                     x.Type<CheckElasticsearchCluster>();
                     x.Type<CheckElasticsearchAliases>();
                     x.Type<CheckLogstashLogs>();
-                    x.Type<CheckUnsentCandidateMessages>();
+                    //x.Type<CheckUnsentCandidateMessages>();
                 });
 
             For<IDailyMetricsTasksRunner>().Use<DailyMetricsTasksRunner>()
@@ -54,6 +53,7 @@
             For<IContactMessagesMetricsRepository>().Use<ContactMessagesMetricsRepository>();
             For<ISavedSearchesMetricsRepository>().Use<SavedSearchesMetricsRepository>();
             For<ICandidateMetricsRepository>().Use<CandidateMetricsRepository>();
+            For<IAuditMetricsRepository>().Use<AuditMetricsRepository>();
 
             For<IVacancyMetricsProvider>().Use<VacancyMetricsProvider>();
         }

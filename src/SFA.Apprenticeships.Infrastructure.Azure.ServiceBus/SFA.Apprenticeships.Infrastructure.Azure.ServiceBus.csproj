@@ -2,7 +2,7 @@
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -96,15 +96,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AzureServiceBusInitialiser.cs" />
     <Compile Include="AzureServiceBusMessageBroker.cs" />
     <Compile Include="Configuration\AzureServiceBusConfiguration.cs" />
     <Compile Include="Configuration\AzureServiceBusSubscriptionConfiguration.cs" />
     <Compile Include="Configuration\AzureServiceBusTopicConfiguration.cs" />
     <Compile Include="AzureServiceBus.cs" />
+    <Compile Include="Factory\ClientFactory.cs" />
+    <Compile Include="Factory\IClientFactory.cs" />
     <Compile Include="IoC\AzureServiceBusRegistry.cs" />
     <Compile Include="IServiceBusInitialiser.cs" />
     <Compile Include="IServiceBusMessageBroker.cs" />
+    <Compile Include="Model\BrokeredMessageWrapper.cs" />
+    <Compile Include="Model\IBrokeredMessage.cs" />
+    <Compile Include="Model\ISubscriptionClient.cs" />
+    <Compile Include="Model\ITopicClient.cs" />
+    <Compile Include="Model\SubscriptionClientWrapper.cs" />
+    <Compile Include="Model\TopicClientWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -15,5 +15,15 @@
         public string AuthenticationDb { get; set; }
 
         public string AuditDb { get; set; }
+
+        public string MetricsCandidatesDb { get; set; }
+
+        public string MetricsApplicationsDb { get; set; }
+
+        public string MetricsUsersDb { get; set; }
+
+        public string MetricsCommunicationsDb { get; set; }
+
+        public string MetricsAuditDb { get; set; }
     }
 }

@@ -14,7 +14,7 @@
         public ApplicationStatusAlertsMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.CommunicationsDb, "applicationstatusalerts");
+            Initialise(config.MetricsCommunicationsDb, "applicationstatusalerts");
         }
 
         public int GetApplicationStatusAlertsProcessedToday()

@@ -41,12 +41,12 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "SubmitApprenticeshipApplication")]
-        public ServiceBusMessageResult Consume(SubmitApprenticeshipApplicationRequest request)
+        public ServiceBusMessageStates Consume(SubmitApprenticeshipApplicationRequest request)
         {
             return CreateApplication(request);
         }
 
-        private ServiceBusMessageResult CreateApplication(SubmitApprenticeshipApplicationRequest request)
+        private ServiceBusMessageStates CreateApplication(SubmitApprenticeshipApplicationRequest request)
         {
             _logger.Debug("Creating apprenticeship application Id: {0}", request.ApplicationId);
 
@@ -74,7 +74,7 @@
                             "Candidate with Id: {0} has not been created in the legacy system. Message will be requeued",
                             applicationDetail.CandidateId);
 
-                        return Requeue(request);
+                        return ServiceBusMessageStates.Requeue;
                     }
                 }
 
@@ -87,7 +87,7 @@
                 applicationDetail.LegacyApplicationId = _legacyApplicationProvider.CreateApplication(applicationDetail);
                 SetApplicationStateSubmitted(applicationDetail);
 
-                return ServiceBusMessageResult.Complete();
+                return ServiceBusMessageStates.Complete;
             }
             catch (CustomException e)
             {
@@ -98,11 +98,11 @@
                 _logger.Error("Submit apprenticeship application with Id = {0} request async process failed, message will be requeued",
                     e, request.ApplicationId);
 
-                return Requeue(request);
+                return ServiceBusMessageStates.Requeue;
             }
         }
 
-        private ServiceBusMessageResult HandleCustomException(
+        private ServiceBusMessageStates HandleCustomException(
             SubmitApprenticeshipApplicationRequest request,
             CustomException e,
             ApprenticeshipApplicationDetail apprenticeshipApplication)
@@ -133,11 +133,11 @@
                     break;
 
                 default:
-                    _logger.Warn(string.Format("Submit apprenticeship application with Id = {0} request async process failed, message will be requeued", request.ApplicationId), e);
-                    return Requeue(request);
+                    _logger.Warn(string.Format("Submit apprenticeship application with Id = {0} request async process failed with code = {1}, message will be requeued", request.ApplicationId, e.Code), e);
+                    return ServiceBusMessageStates.Requeue;
             }
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
 
         private void SetApplicationStateSubmitted(ApprenticeshipApplicationDetail apprenticeshipApplication)
@@ -150,13 +150,6 @@
         {
             apprenticeshipApplication.SetStateExpiredOrWithdrawn();
             _apprenticeshipApplicationWriteRepository.Save(apprenticeshipApplication);
-        }
-
-        private ServiceBusMessageResult Requeue(SubmitApprenticeshipApplicationRequest request)
-        {
-            request.ProcessTime = request.ProcessTime.HasValue ? DateTime.UtcNow.AddMinutes(5) : DateTime.UtcNow.AddSeconds(30);
-
-            return ServiceBusMessageResult.Requeue(request.ProcessTime.Value);
         }
 
         private static void EnsureApplicationCanBeCreated(ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)

@@ -29,6 +29,10 @@
         public IEnumerable<string> Synonyms { get; set; }
 
         public IEnumerable<string> ExcludedTerms { get; set; }
+
+        public IEnumerable<string> StopwordsBase { get; set; }
+
+        public IEnumerable<string> StopwordsExtended { get; set; }
     }
 
     public class ElasticsearchIndex

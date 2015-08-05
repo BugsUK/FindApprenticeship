@@ -47,7 +47,6 @@
             CheckAndThrowFailureError(succeeded, "Change password failed", ErrorCodes.UserChangePasswordError);
         }
 
-// ReSharper disable once UnusedParameter.Local
         private static void CheckAndThrowFailureError(bool succeeded, string errorMessage, string errorCode)
         {
             if (!succeeded)

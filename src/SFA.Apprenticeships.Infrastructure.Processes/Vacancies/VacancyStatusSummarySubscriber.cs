@@ -25,23 +25,23 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "UpdateApprenticeshipVacancyStatus")]
-        public ServiceBusMessageResult Consume(VacancyStatusSummary message)
+        public ServiceBusMessageStates Consume(VacancyStatusSummary message)
         {
             // TODO: AG: ASB: refactor logic and unit test.
-            if (!_enableVacancyStatusPropagation) return ServiceBusMessageResult.Complete();
+            if (!_enableVacancyStatusPropagation) return ServiceBusMessageStates.Complete;
 
             var cachedSummaryUpdate = _cacheService.Get<VacancyStatusSummary>(message.CacheKey());
 
             if (cachedSummaryUpdate != null)
             {
                 // This vacancy has already been processed so return to prevent endless reprocessing.
-                return ServiceBusMessageResult.Complete();
+                return ServiceBusMessageStates.Complete;
             }
 
             _cacheService.PutObject(message.CacheKey(), message, message.CacheDuration());
             _applicationStatusProcessor.ProcessApplicationStatuses(message);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

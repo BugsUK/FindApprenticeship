@@ -107,18 +107,35 @@
     <Compile Include="IoC\MetricsRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tasks\Constants.cs" />
+    <Compile Include="Tasks\EShot.cs" />
     <Compile Include="Tasks\IMetricsTask.cs" />
     <Compile Include="Tasks\IMetricsTaskRunner.cs" />
     <Compile Include="Tasks\MetricsTaskRunner.cs" />
     <Compile Include="Tasks\TraineeshipsAnalysis.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Script\7z.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Script\7z.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Script\sendEmail.exe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
     <Content Include="Configs\settings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Configs\emailSettings.config" />
     <None Include="packages.config" />
+    <None Include="Script\e-shot.ps1">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Script\sendEmail.pl">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\readme.txt">

@@ -41,7 +41,6 @@ namespace SFA.Apprenticeships.Web.Candidate
                 "~/Content/_assets/js/vendor/knockout.validation.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(
-                "~/Content/_assets/js/nas/lookupService.js",
                 "~/Content/_assets/js/nas/validationscripts.js",
                 "~/Content/_assets/js/nas/headerContext.js",
                 "~/Content/_assets/js/nas/webTrendsInlineTrack.js"));
@@ -52,6 +51,10 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/nas/application").Include(
                 "~/Content/_assets/js/nas/application/applicationform.js",
                 "~/Content/_assets/js/nas/application/dirtyFormDialog.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/nas/account").Include(
+                "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
+                "~/Content/_assets/js/nas/lookupService.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/locationsearch").Include(
                 "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",

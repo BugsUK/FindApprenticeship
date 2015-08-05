@@ -80,6 +80,7 @@
       <RoleType>Web</RoleType>
       <RoleName>SFA.Apprenticeships.Service.Vacancy</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -92,7 +93,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PublishProfile Include="Profiles\svc-vacancysearchProduction.azurePubxml" />
+    <PublishProfile Include="Profiles\sfa-apprenticeships-pre-search-serviceProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
@@ -105,8 +106,5 @@
 if exist $(ProjectDir)..\..\..\Apprenticeships xcopy /E /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)
 REM Copy from build server locations
 if exist $(ProjectDir)..\..\Configuration xcopy /E /Y $(ProjectDir)..\..\Configuration\Applications\$(ProjectName) $(ProjectDir)</PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)' == 'MSDN' ">
-    <OutputPath>bin\MSDN\</OutputPath>
   </PropertyGroup>
 </Project>

@@ -24,14 +24,14 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "CandidateUpdated")]
-        public ServiceBusMessageResult Consume(SaveCandidateRequest message)
+        public ServiceBusMessageStates Consume(SaveCandidateRequest message)
         {
             _logService.Info("SaveCandidateRequest: {0}", message.CandidateId);
 
             return SaveCandidate(message);
         }
 
-        private ServiceBusMessageResult SaveCandidate(SaveCandidateRequest request)
+        private ServiceBusMessageStates SaveCandidate(SaveCandidateRequest request)
         {
             try
             {
@@ -39,7 +39,7 @@
 
                 _legacyCandidateProvider.UpdateCandidate(candidate);
 
-                return ServiceBusMessageResult.Complete();
+                return ServiceBusMessageStates.Complete;
             }
             catch (CustomException ex)
             {
@@ -49,12 +49,12 @@
             {
                 _logService.Error(
                     string.Format("Save candidate with Id = {0} request async process failed.", request.CandidateId), ex);
-                
-                return Requeue(request);
+
+                return ServiceBusMessageStates.Requeue;
             }
         }
 
-        private ServiceBusMessageResult HandleCustomException(SaveCandidateRequest request, CustomException ex)
+        private ServiceBusMessageStates HandleCustomException(SaveCandidateRequest request, CustomException ex)
         {
             switch (ex.Code)
             {
@@ -67,17 +67,10 @@
                     break;
                 default:
                     _logService.Warn(string.Format("Save/Update candidate with Id = {0} request async process failed. Queuing for retry.", request.CandidateId), ex);
-                    return Requeue(request);
+                    return ServiceBusMessageStates.Requeue;
             }
 
-            return ServiceBusMessageResult.Complete();
-        }
-
-        private ServiceBusMessageResult Requeue(SaveCandidateRequest request)
-        {
-            request.ProcessTime = request.ProcessTime.HasValue ? DateTime.UtcNow.AddMinutes(5) : DateTime.UtcNow.AddSeconds(30);
-
-            return ServiceBusMessageResult.Requeue(request.ProcessTime.Value);
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

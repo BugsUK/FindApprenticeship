@@ -13,7 +13,7 @@
         public ContactMessagesMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.CommunicationsDb, "contactmessages");
+            Initialise(config.MetricsCommunicationsDb, "contactmessages");
         }
 
         public int GetContactMessagesSentToday()

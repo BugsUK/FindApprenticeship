@@ -10,7 +10,7 @@
         public SavedSearchesMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.CandidatesDb, "savedsearches");
+            Initialise(config.MetricsCandidatesDb, "savedsearches");
         }
 
         public int GetSavedSearchesCount()

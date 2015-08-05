@@ -17,7 +17,7 @@
         public TraineeshipMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.ApplicationsDb, "traineeships");
+            Initialise(config.MetricsApplicationsDb, "traineeships");
         }
 
         public long GetApplicationCount()

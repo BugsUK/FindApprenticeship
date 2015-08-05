@@ -68,16 +68,12 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/nas/account")
     @Scripts.Render("~/bundles/nas/passwordstrength")
 
     <script>
         $(function () {
-
-            $("#find-addresses").addressLookup({
-                url: '@Url.Action("Addresses", "Location")',
-                selectlist: '#address-select'
-            });
-
+            $('#address-details').addClass('disabled');
             $('input[id=EmailAddress]').usernameLookup('@Url.Action("CheckUsername", "Register")');
         });
 

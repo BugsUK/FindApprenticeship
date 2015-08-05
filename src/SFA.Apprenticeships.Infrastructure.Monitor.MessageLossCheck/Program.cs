@@ -2,10 +2,10 @@
 {
     using System;
     using Application.ReferenceData.Configuration;
+    using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Domain.Interfaces.Configuration;
-    using EasyNetQ;
     using Elastic.Common.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
@@ -13,7 +13,6 @@
     using IoC;
     using LegacyWebServices.IoC;
     using Logging.IoC;
-    using RabbitMq.IoC;
     using StructureMap;
     using Tasks;
     using VacancySearch.IoC;
@@ -37,7 +36,7 @@
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry<RabbitMqRegistry>();
+                x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
@@ -53,8 +52,6 @@
 
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
-
-            container.GetInstance<IBus>().Advanced.Dispose();
         }
     }
 }

@@ -60,116 +60,57 @@ WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
+WriteLiteral(" id=\"addressInputWrapper\"");
+
 WriteLiteral(">\r\n        <label");
 
 WriteLiteral(" for=\"postcode-search\"");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">Postcode</label>\r\n        <span");
-
-WriteLiteral(" class=\"form-hint\"");
-
-WriteLiteral(">For example, BN1 8NH</span>\r\n        <input");
+WriteLiteral(">Enter your postcode or start typing address</label>\r\n        <input");
 
 WriteLiteral(" id=\"postcode-search\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteLiteral(" class=\"form-control form-control-large\"");
-
-WriteLiteral(" autocapitalize=\"characters\"");
+WriteLiteral(" class=\"form-control form-control-1-3\"");
 
 WriteLiteral(" autocorrect=\"off\"");
 
-WriteLiteral(" value=\"\"");
-
 WriteLiteral(">\r\n        <span");
-
-WriteLiteral(" id=\"addressesFound\"");
 
 WriteLiteral(" class=\"visuallyhidden\"");
 
-WriteLiteral(" aria-live=\"polite\"");
-
-WriteLiteral("></span>\r\n        <span");
-
-WriteLiteral(" id=\"postcode-search-validation-error\"");
-
-WriteLiteral(" class=\"field-validation-valid\"");
+WriteLiteral(" id=\"ariaAddressEntered\"");
 
 WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral("></span>\r\n    </div>\r\n    <div");
 
-WriteLiteral(" class=\"form-group form-group-compound\"");
-
-WriteLiteral(">\r\n        <a");
-
-WriteLiteral(" role=\"button\"");
-
-WriteLiteral(" href=\"#\"");
-
-WriteLiteral(" id=\"find-addresses\"");
-
-WriteLiteral(" class=\"button address-find-btn\"");
-
-WriteAttribute("onclick", Tuple.Create(" onclick=\'", 745), Tuple.Create("\'", 901)
-, Tuple.Create(Tuple.Create("", 755), Tuple.Create("Webtrends.multiTrack({", 755), true)
-, Tuple.Create(Tuple.Create(" ", 777), Tuple.Create("element:", 778), true)
-, Tuple.Create(Tuple.Create(" ", 786), Tuple.Create("this,", 787), true)
-, Tuple.Create(Tuple.Create(" ", 792), Tuple.Create("argsa:", 793), true)
-, Tuple.Create(Tuple.Create(" ", 799), Tuple.Create("[\"DCS.dcsuri\",", 800), true)
-, Tuple.Create(Tuple.Create(" ", 814), Tuple.Create("\"", 815), true)
-            
-            #line 12 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-                                                                             , Tuple.Create(Tuple.Create("", 816), Tuple.Create<System.Object, System.Int32>(ViewData["AnalyticsDSCUri"]
-            
-            #line default
-            #line hidden
-, 816), false)
-, Tuple.Create(Tuple.Create("", 844), Tuple.Create("\",", 844), true)
-, Tuple.Create(Tuple.Create(" ", 846), Tuple.Create("\"WT.dl\",", 847), true)
-, Tuple.Create(Tuple.Create(" ", 855), Tuple.Create("\"99\",", 856), true)
-, Tuple.Create(Tuple.Create(" ", 861), Tuple.Create("\"WT.ti\",", 862), true)
-, Tuple.Create(Tuple.Create(" ", 870), Tuple.Create("\"Settings", 871), true)
-, Tuple.Create(Tuple.Create(" ", 880), Tuple.Create("–", 881), true)
-, Tuple.Create(Tuple.Create(" ", 882), Tuple.Create("Fine", 883), true)
-, Tuple.Create(Tuple.Create(" ", 887), Tuple.Create("Address\"]", 888), true)
-, Tuple.Create(Tuple.Create(" ", 897), Tuple.Create("});", 898), true)
-);
-
-WriteLiteral(">Find address</a>\r\n    </div>\r\n    <div");
-
-WriteLiteral(" id=\"address-list\"");
-
-WriteLiteral(" class=\"address-find-select form-group toggle-content\"");
-
-WriteLiteral(" hidden>\r\n        <label");
-
-WriteLiteral(" id=\"address-select-label\"");
-
-WriteLiteral(" for=\"address-select\"");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Select your address</label>\r\n        <select");
-
-WriteLiteral(" id=\"address-select\"");
-
-WriteLiteral(" aria-describedby=\"address-select-label\"");
-
-WriteLiteral(">\r\n        </select>\r\n    </div>\r\n    <div");
-
 WriteLiteral(" id=\"address-manual\"");
 
 WriteLiteral(" class=\"form-group form-group-compound\"");
 
-WriteLiteral(">\r\n        <span");
+WriteLiteral(">\r\n        <a");
 
-WriteLiteral(" class=\"form-hint\"");
+WriteLiteral(" href=\"#\"");
 
-WriteLiteral(">Or enter address manually</span>\r\n    </div>\r\n</div>\r\n\r\n<div");
+WriteLiteral(" class=\"copy-19\"");
+
+WriteLiteral(" id=\"enterAddressManually\"");
+
+WriteLiteral(">Or enter address manually</a>\r\n        <span");
+
+WriteLiteral(" class=\"toggle-content hide-nojs loading-text\"");
+
+WriteLiteral(" id=\"addressLoading\"");
+
+WriteLiteral(">Loading address...</span>\r\n    </div>\r\n</div>\r\n\r\n<div");
+
+WriteLiteral(" id=\"addressManualWrapper\"");
+
+WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" id=\"address-details\"");
 
@@ -177,93 +118,93 @@ WriteLiteral(" class=\"address-manual-input\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 25 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.AddressLine1, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 26 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.AddressLine2, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
+            #line 17 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.FormTextFor(m => m.AddressLine1, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 27 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.AddressLine3, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 28 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.AddressLine4, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
+            #line 18 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.FormTextFor(m => m.AddressLine2, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 29 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("    ");
-
-            
-            #line 30 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.HiddenFor(m => m.Uprn));
+            #line 19 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.FormTextFor(m => m.AddressLine3, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 31 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.HiddenFor(m => m.GeoPoint.Latitude));
+            #line 20 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.FormTextFor(m => m.AddressLine4, containerHtmlAttributes: new { @class = "form-group-compound address-item" }, controlHtmlAttributes: new { type = "text", autocorrect = "off" }, labelHtmlAttributes: new { @class = "visuallyhidden" }));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
+WriteLiteral("        ");
 
             
-            #line 32 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
-Write(Html.HiddenFor(m => m.GeoPoint.Longitude));
+            #line 21 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.FormTextFor(m => m.Postcode, containerHtmlAttributes: new { @class = "address-item" }, controlHtmlAttributes: new { @class = "form-control-large", type = "text", autocapitalize = "characters", autocorrect = "off" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</div>\r\n");
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 22 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.HiddenFor(m => m.Uprn));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 23 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.HiddenFor(m => m.GeoPoint.Latitude));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 24 "..\..\Views\Shared\EditorTemplates\AddressViewModel.cshtml"
+   Write(Html.HiddenFor(m => m.GeoPoint.Longitude));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n</div>\r\n\r\n");
 
         }
     }

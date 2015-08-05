@@ -3,6 +3,6 @@
     public interface IServiceBusSubscriber<in TMessage>
         where TMessage : class 
     {
-        ServiceBusMessageResult Consume(TMessage message);
+        ServiceBusMessageStates Consume(TMessage message);
     }
 }

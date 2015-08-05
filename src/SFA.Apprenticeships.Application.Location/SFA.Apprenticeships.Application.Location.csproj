@@ -88,7 +88,7 @@
     </Compile>
     <Compile Include="ILocationLookupProvider.cs" />
     <Compile Include="IPostcodeLookupProvider.cs" />
-    <Compile Include="LocationLookupService.cs" />
+    <Compile Include="LocationSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

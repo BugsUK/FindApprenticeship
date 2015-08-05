@@ -13,7 +13,7 @@
         public ExpiringDraftsMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.CommunicationsDb, "expiringdraftapplications");
+            Initialise(config.MetricsCommunicationsDb, "expiringdraftapplications");
         }
 
         public int GetDraftApplicationsProcessedToday()

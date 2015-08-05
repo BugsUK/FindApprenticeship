@@ -16,13 +16,13 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "SendCommunication")]
-        public ServiceBusMessageResult Consume(CommunicationRequest message)
+        public ServiceBusMessageStates Consume(CommunicationRequest message)
         {
             _communicationCommands
                 .First(communicationCommand => communicationCommand.CanHandle(message))
                 .Handle(message);
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

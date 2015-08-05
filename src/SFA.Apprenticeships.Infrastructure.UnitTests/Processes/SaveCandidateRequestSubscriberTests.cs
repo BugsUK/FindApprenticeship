@@ -47,12 +47,11 @@
             _legacyCandidateProvider.Setup(x => x.UpdateCandidate(candidate));
 
             // Act.
-            var result = _subscriber.Consume(saveCandidateRequest);
+            var state = _subscriber.Consume(saveCandidateRequest);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _candidateReadRepository.Verify(x => x.Get(saveCandidateRequest.CandidateId), Times.Once);
             _legacyCandidateProvider.Verify(x => x.UpdateCandidate(candidate), Times.Once);
@@ -69,12 +68,11 @@
             _legacyCandidateProvider.Setup(x => x.UpdateCandidate(candidate)).Throws(new DomainException(ErrorCodes.CandidateNotFoundError));
 
             // Act.
-            var result = _subscriber.Consume(saveCandidateRequest);
+            var state = _subscriber.Consume(saveCandidateRequest);
             
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Complete);
-            result.RequeueDateTimeUtc.HasValue.Should().BeFalse();
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Complete);
 
             _candidateReadRepository.Verify(x => x.Get(saveCandidateRequest.CandidateId), Times.Once);
             _legacyCandidateProvider.Verify(x => x.UpdateCandidate(candidate), Times.Once);
@@ -91,13 +89,11 @@
             _legacyCandidateProvider.Setup(x => x.UpdateCandidate(candidate)).Throws(new Exception());
 
             // Act.
-            var result = _subscriber.Consume(saveCandidateRequest);
+            var state = _subscriber.Consume(saveCandidateRequest);
 
             // Assert.
-            result.Should().NotBeNull();
-            result.State.Should().Be(ServiceBusMessageStates.Requeue);
-            result.RequeueDateTimeUtc.HasValue.Should().BeTrue();
-            result.RequeueDateTimeUtc.Should().BeCloseTo(DateTime.UtcNow, (int)TimeSpan.FromMinutes(10).TotalMilliseconds);
+            state.Should().NotBeNull();
+            state.Should().Be(ServiceBusMessageStates.Requeue);
 
             _candidateReadRepository.Verify(x => x.Get(saveCandidateRequest.CandidateId), Times.Once);
             _legacyCandidateProvider.Verify(x => x.UpdateCandidate(candidate), Times.Once);

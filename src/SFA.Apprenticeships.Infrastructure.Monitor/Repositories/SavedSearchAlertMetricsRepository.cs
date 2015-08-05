@@ -13,7 +13,7 @@
         public SavedSearchAlertMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.CommunicationsDb, "savedsearchalerts");
+            Initialise(config.MetricsCommunicationsDb, "savedsearchalerts");
         }
 
         public int GetSavedSearchAlertsProcessedToday()

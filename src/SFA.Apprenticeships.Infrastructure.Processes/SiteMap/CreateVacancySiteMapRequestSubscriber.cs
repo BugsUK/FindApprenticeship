@@ -24,7 +24,7 @@
         }
 
         [ServiceBusTopicSubscription(TopicName = "CreateVacancySiteMap")]
-        public ServiceBusMessageResult Consume(CreateVacancySiteMapRequest request)
+        public ServiceBusMessageStates Consume(CreateVacancySiteMapRequest request)
         {
             if (_configurationService.Get<ProcessConfiguration>().EnableVacancySiteMap)
             {
@@ -35,7 +35,7 @@
                 _logger.Info("Vacancy site map is currently disabled");
             }
 
-            return ServiceBusMessageResult.Complete();
+            return ServiceBusMessageStates.Complete;
         }
     }
 }

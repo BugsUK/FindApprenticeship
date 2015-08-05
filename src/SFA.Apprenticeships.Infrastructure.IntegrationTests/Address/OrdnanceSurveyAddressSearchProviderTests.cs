@@ -4,7 +4,7 @@
     using FluentAssertions;
     using NUnit.Framework;
 
-    [TestFixture]
+    [TestFixture, Ignore("We are no longer planning to use the OS api for address lookup")]
     public class OrdnanceSurveyAddressSearchProviderTests
     {
         [Test]

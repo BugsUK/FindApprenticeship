@@ -8,6 +8,7 @@
     using Domain.Interfaces.Mapping;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.Configuration;
+    using Infrastructure.Elastic.Common.Entities;
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.VacancySearch;
@@ -61,10 +62,15 @@
                 PageNumber = 1,
                 PageSize = 50,
                 SearchField = GetSearchFieldFromRequest(request),
-                Keywords = request.SearchTerms
+                Keywords = request.SearchTerms,
+                SortType = VacancySearchSortType.Relevancy
             };
+            
+            var indexDate = new DateTime(2020, 01, 01, 12, 00, 00);
+            var indexAlias = elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
+            var indexName = string.Format("{0}.{1}", indexAlias, indexDate.ToUniversalTime().ToString("yyyy-MM-dd-HH"));
 
-            var vacancies = searchProvider.FindVacancies(parameters);
+            var vacancies = searchProvider.FindVacancies(parameters, indexName);
 
             return new SearchResponse
             {

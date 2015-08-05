@@ -3,13 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Repositories.Candidates.Entities;
     using Mongo.Common;
     using Mongo.Common.Configuration;
     using MongoDB.Bson;
     using MongoDB.Driver;
+    using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
 
     public class CandidateMetricsRepository : GenericMongoClient<MongoCandidate>, ICandidateMetricsRepository
@@ -17,7 +18,7 @@
         public CandidateMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.CandidatesDb, "candidates");
+            Initialise(config.MetricsCandidatesDb, "candidates");
         }
 
         public int GetVerfiedMobileNumbersCount()
@@ -44,6 +45,15 @@
             var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
 
             return result.Select(r => r["_id"].AsGuid);
+        }
+
+        public IEnumerable<Candidate> GetCandidateActivityMetrics(DateTime dateCreatedStart, DateTime dateCreatedEnd)
+        {
+            var candidates =
+                Collection.Find(Query.And(Query<MongoCandidate>.GTE(c => c.DateCreated, dateCreatedStart),
+                    Query<MongoCandidate>.LTE(c => c.DateCreated, dateCreatedEnd))).Select(c => c as Candidate);
+
+            return candidates;
         }
     }
 }

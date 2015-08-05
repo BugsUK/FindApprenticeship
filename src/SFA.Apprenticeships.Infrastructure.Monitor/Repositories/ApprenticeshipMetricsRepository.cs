@@ -17,7 +17,7 @@
         public ApprenticeshipMetricsRepository(IConfigurationService configurationService)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.ApplicationsDb, "apprenticeships");
+            Initialise(config.MetricsApplicationsDb, "apprenticeships");
         }
 
         public int GetApplicationCount()

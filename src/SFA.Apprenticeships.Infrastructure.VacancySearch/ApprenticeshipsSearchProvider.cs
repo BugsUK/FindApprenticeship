@@ -39,8 +39,13 @@
 
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancies(ApprenticeshipSearchParameters parameters)
         {
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
+            return FindVacancies(parameters, indexName);
+        }
+
+        public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancies(ApprenticeshipSearchParameters parameters, string indexName)
+        {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
             var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
 
             _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,

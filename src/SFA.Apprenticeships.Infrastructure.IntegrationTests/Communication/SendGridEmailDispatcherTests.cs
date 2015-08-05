@@ -4,6 +4,8 @@
     using Application.Interfaces.Communications;
     using Application.Interfaces.Logging;
     using Common.IoC;
+    using Domain.Entities.Exceptions;
+    using FluentAssertions;
     using Infrastructure.Communication.Email;
     using Infrastructure.Communication.IoC;
     using Moq;
@@ -217,8 +219,10 @@
                 MessageType = MessageTypes.CandidateContactUsMessage
             };
 
-            _dispatcher.SendEmail(request);
-            VerifyErrorsLogged(Times.Exactly(2));
+            Action sendEmail = () => _dispatcher.SendEmail(request);
+
+            sendEmail.ShouldThrow<CustomException>().Which.Code.Should().Be(ErrorCodes.EmailError);
+            VerifyErrorsLogged(Times.Once());
         }
 
         [Test, Category("Integration")]

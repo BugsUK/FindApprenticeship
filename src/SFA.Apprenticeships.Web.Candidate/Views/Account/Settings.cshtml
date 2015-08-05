@@ -213,12 +213,11 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/nas/account")
+
+
     <script>
         $(function () {
-            $("#find-addresses").addressLookup({
-                url: '@Url.Action("Addresses", "Location")',
-                selectlist: '#address-select'
-            });
 
             $(".delete-saved-search-link").on('click', function () {
                 var $this = $(this),

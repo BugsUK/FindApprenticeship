@@ -251,12 +251,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BingSiteAuth.xml" />
+    <Content Include="Content\_assets\css\main-1.13.2.css" />
+    <Content Include="Content\_assets\css\main-ie8-1.13.2.css" />
     <Content Include="Content\_assets\img\logo-apprenticeships.png" />
     <Content Include="google63f704cde409cb80.html" />
     <Content Include="403.aspx" />
     <Content Include="403.html" />
-    <Content Include="Content\_assets\css\main-1.12.0.2522.css" />
-    <Content Include="Content\_assets\css\main-ie8-1.12.0.2522.css" />
     <Content Include="Content\_assets\img\apple-touch-icon-120x120.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-152x152.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-60x60.png" />
@@ -1578,10 +1578,6 @@
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.RabbitMq\SFA.Apprenticeships.Infrastructure.RabbitMq.csproj">
-      <Project>{480622E1-7624-449C-904F-AF7FD3590BEF}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.RabbitMq</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711d-4976-ad7f-069063d8b487}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
@@ -1723,4 +1719,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <SkipValidatePackageReferences>true</SkipValidatePackageReferences>
+  </PropertyGroup>
 </Project>
