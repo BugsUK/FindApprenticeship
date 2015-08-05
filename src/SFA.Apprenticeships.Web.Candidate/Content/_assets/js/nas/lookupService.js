@@ -50,7 +50,14 @@ $(document).ready(function () {
                 timeout: 5000,
                 success: function (data) {
                     $('#postcodeServiceUnavailable').hide();
-                    $('#enterAddressManually').show();
+                    $('#enterAddressManually').hide();
+                    $('#addressLoading').show();
+
+                    $("#postcode-search").blur(function () {
+                        $('#enterAddressManually').show();
+                        $('#addressLoading').hide();
+                    });
+
                     response($.map(data.Items, function (suggestion) {
                         return {
                             label: suggestion.Text,
