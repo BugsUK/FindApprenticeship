@@ -56,7 +56,7 @@
 
             user.AssertState("Register candidate", UserStatuses.PendingActivation);
 
-            if (user.ActivateCodeExpiry != null && user.ActivateCodeExpiry > DateTime.Now)
+            if (user.ActivateCodeExpiry != null && user.ActivateCodeExpiry > DateTime.UtcNow)
             {
                 // Process existing username in unexpired pending activation status
                 return SaveAndNotifyCandidate(user.EntityId, newCandidate, user.ActivationCode);

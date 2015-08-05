@@ -8,7 +8,7 @@
         {
             const string format = "nas.exemplar+{0}@gmail.com";
 
-            return string.Format(format, DateTime.Now.Ticks);
+            return string.Format(format, DateTime.UtcNow.Ticks);
         }
     }
 }

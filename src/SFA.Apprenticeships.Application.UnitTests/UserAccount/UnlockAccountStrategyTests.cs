@@ -24,7 +24,7 @@
 
             userReadRepository.Setup(urr => urr.Get(It.IsAny<string>(),true)).Returns(new User
             {
-                AccountUnlockCodeExpiry = DateTime.Now.AddDays(-1),
+                AccountUnlockCodeExpiry = DateTime.UtcNow.AddDays(-1),
                 Status = UserStatuses.Locked
             });
 
@@ -44,7 +44,7 @@
 
             userReadRepository.Setup(urr => urr.Get(It.IsAny<string>(), true)).Returns(new User
             {
-                AccountUnlockCodeExpiry = DateTime.Now.AddDays(1),
+                AccountUnlockCodeExpiry = DateTime.UtcNow.AddDays(1),
                 Status = UserStatuses.Locked,
                 AccountUnlockCode = AnotherAccountUnlockCode
             });
@@ -66,7 +66,7 @@
 
             userReadRepository.Setup(urr => urr.Get(It.IsAny<string>(), true)).Returns(new User
             {
-                AccountUnlockCodeExpiry = DateTime.Now.AddDays(1),
+                AccountUnlockCodeExpiry = DateTime.UtcNow.AddDays(1),
                 Status = UserStatuses.Locked,
                 AccountUnlockCode = UnlockAccountCode
             });

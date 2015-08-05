@@ -190,7 +190,7 @@
         private static GetApplicationsStatusRequest CreateGetApplicationsStatusRequest(int pageNumber, int applicationStatusExtractWindow)
         {
             // NAS Gateway uses local time (GMT / BST, not UTC).
-            var rangeTo = DateTime.Now;
+            var rangeTo = TimeZoneInfo.ConvertTime(DateTime.UtcNow, TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
 
             return new GetApplicationsStatusRequest
             {

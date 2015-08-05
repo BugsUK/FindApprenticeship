@@ -26,7 +26,7 @@
         {
             if (!User.ActivateCodeExpiry.HasValue)
             {
-                User.ActivateCodeExpiry = activationCodeExpiry ?? DateTime.Now.AddDays(30);
+                User.ActivateCodeExpiry = activationCodeExpiry ?? DateTime.UtcNow.AddDays(30);
             }
 
             User.ActivationCode = activationCode;
@@ -52,7 +52,7 @@
         {
             if (!User.PasswordResetCodeExpiry.HasValue)
             {
-                User.PasswordResetCodeExpiry = passwordResetCodeExpiry ?? DateTime.Now.AddDays(30);
+                User.PasswordResetCodeExpiry = passwordResetCodeExpiry ?? DateTime.UtcNow.AddDays(30);
             }
 
             User.PasswordResetCode = passwordResetCode;

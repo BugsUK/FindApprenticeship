@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Validators.Helpers
 
             if (int.TryParse(year, out @from))
             {
-                return @from <= DateTime.Now.Year;
+                return @from <= DateTime.UtcNow.Year;
             }
 
             return true;

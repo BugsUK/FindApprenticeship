@@ -43,7 +43,7 @@
 
             var traineeshipApplicationMetrics = GetTraineeshipApplicationMetrics();
 
-            var fileDateTime = DateTime.Now;
+            var fileDateTime = DateTime.UtcNow;
             WriteTraineeshipAnalysisCsv(userApplicationMetrics, fileDateTime);
             WriteApprenticeshipApplicationMetricsCsv(apprenticeshipApplicationMetrics, fileDateTime);
             WriteTraineeshipApplicationMetricsCsv(traineeshipApplicationMetrics, fileDateTime);

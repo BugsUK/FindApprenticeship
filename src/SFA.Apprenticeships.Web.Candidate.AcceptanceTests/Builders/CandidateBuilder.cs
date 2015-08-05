@@ -16,7 +16,7 @@
             Candidate = new Candidate
             {
                 EntityId = UserBuilder.UserAndCandidateId,
-                DateCreated = DateTime.Now
+                DateCreated = DateTime.UtcNow
             };
         }
 

@@ -18,24 +18,36 @@
         [TestCase(7, "in 7 days")]
         public void FriendlyClosingWeekWithinTheWeek(int daysToClosing, string expectedOutput)
         {
-            var closingDate = DateTime.Now.Date.AddDays(daysToClosing);
+            //Test GMT and UTC dates
+            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(daysToClosing), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
             var friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
+            Assert.AreEqual(friendlyClosingDate, expectedOutput);
+            closingDate = DateTime.UtcNow.Date.AddDays(daysToClosing);
+            friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
             Assert.AreEqual(friendlyClosingDate, expectedOutput);
         }
 
         [Test]
         public void FriendlyClosingWeekGreaterThanAWeekInTheFuture()
         {
-            var closingDate = DateTime.Now.Date.AddDays(10);
+            //Test GMT and UTC dates
+            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(10), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
             var friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
+            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
+            closingDate = DateTime.UtcNow.Date.AddDays(10);
+            friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
             Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
         }
 
         [Test]
         public void FriendlyClosingWeekInThePast()
         {
-            var closingDate = DateTime.Now.Date.AddDays(-10);
+            //Test GMT and UTC dates
+            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(-10), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
             var friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
+            Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
+            closingDate = DateTime.UtcNow.Date.AddDays(-10);
+            friendlyClosingDate = closingDate.ToFriendlyClosingWeek();
             Assert.AreEqual(friendlyClosingDate, closingDate.ToString("dd MMM yyyy"));
         }
 
@@ -46,8 +58,12 @@
         [TestCase(20, false)]
         public void FriendlyClosingToday(int daysToClosing, bool showToday)
         {
-            var closingDate = DateTime.Now.Date.AddDays(daysToClosing);
+            //Test GMT and UTC dates
+            var closingDate = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(daysToClosing), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
             var friendlyClosingDate = closingDate.ToFriendlyClosingToday();
+            Assert.AreEqual(friendlyClosingDate, showToday ? "today" : closingDate.ToString("dd MMM yyyy"));
+            closingDate = DateTime.UtcNow.Date.AddDays(daysToClosing);
+            friendlyClosingDate = closingDate.ToFriendlyClosingToday();
             Assert.AreEqual(friendlyClosingDate, showToday ? "today" : closingDate.ToString("dd MMM yyyy"));
         }
 
@@ -59,9 +75,17 @@
         [TestCase(28)]
         public void ToFriendlyDaysAgo(int daysAgo)
         {
-            var dateDaysAgo = DateTime.UtcNow.AddDays(-daysAgo);
+            //Test GMT and UTC dates
+            var dateDaysAgo = TimeZoneInfo.ConvertTime(DateTime.UtcNow.Date.AddDays(-daysAgo), TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time"));
             var friendlyDaysAgo = dateDaysAgo.ToFriendlyDaysAgo();
+            AssertToFriendlyDaysAgo(daysAgo, friendlyDaysAgo, dateDaysAgo);
+            dateDaysAgo = DateTime.UtcNow.AddDays(-daysAgo);
+            friendlyDaysAgo = dateDaysAgo.ToFriendlyDaysAgo();
+            AssertToFriendlyDaysAgo(daysAgo, friendlyDaysAgo, dateDaysAgo);
+        }
 
+        private static void AssertToFriendlyDaysAgo(int daysAgo, string friendlyDaysAgo, DateTime dateDaysAgo)
+        {
             if (daysAgo == 0)
             {
                 friendlyDaysAgo.Should().Be("today");

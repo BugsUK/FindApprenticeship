@@ -56,7 +56,7 @@
                 _apprenticeshipApplicationBuilder
                     .WithVacancyId(i + 1)
                     .WithApplicationStatus(ApplicationStatuses.ExpiredOrWithdrawn)
-                    .WithExpirationDate(DateTime.Now.AddDays(-5))
+                    .WithExpirationDate(DateTime.UtcNow.AddDays(-5))
                     .WithoutDateApplied()
                     .Build();
             }

@@ -55,7 +55,7 @@
         private bool IsCookieExpired(AuthenticationContext filterContext, FormsAuthenticationTicket ticket)
         {
             var expirationTime = AuthenticationTicketService.GetExpirationTimeFrom(ticket);
-            return (expirationTime < DateTime.Now && !SigningOut(filterContext));
+            return (expirationTime < DateTime.UtcNow && !SigningOut(filterContext));
         }
 
         private static bool SigningOut(AuthenticationContext filterContext)

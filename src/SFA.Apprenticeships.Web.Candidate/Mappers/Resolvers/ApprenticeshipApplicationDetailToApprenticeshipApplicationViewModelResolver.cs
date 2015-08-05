@@ -20,7 +20,7 @@
                 DateUpdated = application.DateUpdated,
                 VacancyId = application.Vacancy.Id,
                 Status = application.Status,
-                DateApplied = application.DateApplied ?? DateTime.Now
+                DateApplied = application.DateApplied ?? DateTime.UtcNow
             };
 
             model.Candidate.AboutYou = ApplicationConverter.GetAboutYouViewModel(application.CandidateInformation.AboutYou);

@@ -36,7 +36,7 @@
             dest.Should().NotBeNull();
 
             dest.Id.Should().Be(src.VacancyId);
-            dest.ClosingDate.Should().Be(src.ClosingDate ?? DateTime.Now);
+            dest.ClosingDate.Should().Be(src.ClosingDate ?? DateTime.UtcNow);
             dest.EmployerName.Should().Be(src.EmployerName);
             dest.Title.Should().Be(src.VacancyTitle);
         }

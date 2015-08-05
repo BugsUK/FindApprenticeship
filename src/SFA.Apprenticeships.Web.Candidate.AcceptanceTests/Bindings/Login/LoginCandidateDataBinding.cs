@@ -66,7 +66,7 @@
                 .Build();
 
             new UserBuilder(BindingData.UserEmailAddress, UserStatuses.Locked)
-                .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(1))
+                .WithAccountUnlockCodeExpiry(DateTime.UtcNow.AddDays(1))
                 .WithAccountUnlockCode(BindingData.AccountUnlockCode)
                 .Build();
             
@@ -81,7 +81,7 @@
                 .Build();
 
             new UserBuilder(BindingData.UserEmailAddress, UserStatuses.Locked)
-                .WithAccountUnlockCodeExpiry(DateTime.Now.AddDays(-7))
+                .WithAccountUnlockCodeExpiry(DateTime.UtcNow.AddDays(-7))
                 .WithAccountUnlockCode(BindingData.AccountUnlockCode).Build();
 
             SetTokens(candidate);
@@ -99,7 +99,7 @@
             accountUnlockCode.Should().NotBe(user.AccountUnlockCode);
 
             // Ensure account unlock code has been renewed.
-            user.AccountUnlockCodeExpiry.Should().BeAfter(DateTime.Now);
+            user.AccountUnlockCodeExpiry.Should().BeAfter(DateTime.UtcNow);
         }
 
         [Then(@"the user login incorrect attempts should be (.*)")]

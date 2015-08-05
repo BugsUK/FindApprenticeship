@@ -13,7 +13,7 @@
         where TCandidateViewModel : CandidateViewModelBase
     {
         public readonly string ConfirmationMessage = ApplicationPageMessages.LeavingPageMessage;
-        public readonly int CurrentYear = DateTime.Now.Year;
+        public readonly int CurrentYear = DateTime.UtcNow.Year;
         public readonly string FourDigitYearRegex = Whitelists.YearRangeWhiteList.RegularExpression();
         public readonly string WhiteListRegex = Whitelists.FreetextWhitelist.RegularExpression;
 

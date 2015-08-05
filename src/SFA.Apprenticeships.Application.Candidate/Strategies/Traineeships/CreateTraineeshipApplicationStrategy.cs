@@ -39,7 +39,7 @@
             return new TraineeshipApplicationDetail
             {
                 EntityId = Guid.NewGuid(),
-                DateCreated = DateTime.Now,
+                DateCreated = DateTime.UtcNow,
                 CandidateId = candidate.EntityId,
                 CandidateDetails = Mapper.Map<RegistrationDetails, RegistrationDetails>(candidate.RegistrationDetails),
                 VacancyStatus = vacancyDetails.VacancyStatus,

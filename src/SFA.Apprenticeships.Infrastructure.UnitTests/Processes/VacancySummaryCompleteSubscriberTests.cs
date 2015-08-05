@@ -36,7 +36,7 @@
             const string apprenticeshipVacancyIndexName = "apprenticeships.2015-12-31-00";
             const string traineeshipVacancyIndexName = "traineeships.2015-12-31-00";
 
-            var scheduledRefreshDateTime = DateTime.Now;
+            var scheduledRefreshDateTime = DateTime.UtcNow;
 
             _mockApprenticeshipIndexer.Setup(mock => mock.IsIndexCorrectlyCreated(scheduledRefreshDateTime)).Returns(true);
             _mockApprenticeshipIndexer.Setup(mock => mock.SwapIndex(scheduledRefreshDateTime)).Returns(apprenticeshipVacancyIndexName);
@@ -85,7 +85,7 @@
             bool apprenticeshipVacancyIndexOk, bool traineeshipVacancyIndexOk)
         {
             // Arrange.
-            var scheduledRefreshDateTime = DateTime.Now;
+            var scheduledRefreshDateTime = DateTime.UtcNow;
 
             _mockApprenticeshipIndexer.Setup(mock => mock.IsIndexCorrectlyCreated(scheduledRefreshDateTime)).Returns(apprenticeshipVacancyIndexOk);
             _mockTraineeshipIndexer.Setup(mock => mock.IsIndexCorrectlyCreated(scheduledRefreshDateTime)).Returns(traineeshipVacancyIndexOk);

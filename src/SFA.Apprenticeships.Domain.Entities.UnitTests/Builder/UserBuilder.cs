@@ -17,7 +17,7 @@
         public UserBuilder(Guid userId)
         {
             _userId = userId;
-            _dateCreated = DateTime.Now;
+            _dateCreated = DateTime.UtcNow;
         }
 
         public UserBuilder(string username, Guid userId): this(userId)

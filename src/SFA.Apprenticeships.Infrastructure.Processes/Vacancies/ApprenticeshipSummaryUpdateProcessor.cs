@@ -87,7 +87,7 @@
         {
             try
             {
-                if (vacancySummary.ClosingDate < DateTime.Now.AddHours(aboutToExpireThreshold))
+                if (vacancySummary.ClosingDate < DateTime.UtcNow.AddHours(aboutToExpireThreshold))
                 {
                     _logService.Debug("Queueing expiring vacancy");
 

@@ -29,7 +29,7 @@
             var unlockCodeExpiryDays = _userAccountConfiguration.UnlockCodeExpiryDays;
 
             var accountUnlockCode = _codeGenerator.GenerateAlphaNumeric();
-            var expiry = DateTime.Now.AddDays(unlockCodeExpiryDays);
+            var expiry = DateTime.UtcNow.AddDays(unlockCodeExpiryDays);
 
             user.SetStateLocked(accountUnlockCode, expiry);
             _userWriteRepository.Save(user);

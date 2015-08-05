@@ -37,7 +37,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             var candidate = _candidateReadRepository.Get(user.EntityId);
 
-            if (user.AccountUnlockCodeExpiry < DateTime.Now)
+            if (user.AccountUnlockCodeExpiry < DateTime.UtcNow)
             {
                 // Account unlock code has expired, renew it.
                 _lockUserStrategy.LockUser(user);

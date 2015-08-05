@@ -50,7 +50,7 @@
                 LegacyVacancyId = 101,
                 ApplicationStatus = ApplicationStatuses.Submitted,
                 VacancyStatus = VacancyStatuses.Live,
-                ClosingDate = DateTime.Now,
+                ClosingDate = DateTime.UtcNow,
                 LegacyApplicationId = 1001,
                 UnsuccessfulReason = "Because"
             };
@@ -87,7 +87,7 @@
                 LegacyVacancyId = 101,
                 ApplicationStatus = ApplicationStatuses.Submitted,
                 VacancyStatus = VacancyStatuses.Live,
-                ClosingDate = DateTime.Now,
+                ClosingDate = DateTime.UtcNow,
                 LegacyApplicationId = 1001,
                 UnsuccessfulReason = "Because"
             };

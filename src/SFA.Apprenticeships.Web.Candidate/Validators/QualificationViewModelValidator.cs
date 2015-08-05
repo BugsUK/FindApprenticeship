@@ -33,7 +33,7 @@
                 .Matches(QualificationViewModelMessages.GradeMessages.WhiteListRegularExpression)
                 .WithMessage(QualificationViewModelMessages.GradeMessages.WhiteListErrorText);
 
-            var maxYear = Convert.ToString(DateTime.Now.Year - 100);
+            var maxYear = Convert.ToString(DateTime.UtcNow.Year - 100);
             RuleFor(x => x.Year)
                 .NotEmpty()
                 .WithMessage(QualificationViewModelMessages.YearMessages.RequiredErrorText)
@@ -60,7 +60,7 @@
 
             if (int.TryParse(year, out from))
             {
-                return from <= DateTime.Now.Year;
+                return from <= DateTime.UtcNow.Year;
             }
 
             return  true;

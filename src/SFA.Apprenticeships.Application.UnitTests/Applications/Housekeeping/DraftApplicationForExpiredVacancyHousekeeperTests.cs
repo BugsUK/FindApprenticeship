@@ -167,7 +167,7 @@
             var application = new Fixture()
                 .Build<ApprenticeshipApplicationDetail>()
                 .With(fixture => fixture.EntityId, applicationId)
-                .With(fixture => fixture.DateApplied, DateTime.Now)
+                .With(fixture => fixture.DateApplied, DateTime.UtcNow)
                 .With(fixture => fixture.Vacancy, new ApprenticeshipSummary
                 {
                     ClosingDate = expiredVacancyDate

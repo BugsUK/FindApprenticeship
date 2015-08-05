@@ -49,7 +49,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
 
             if (user.PasswordResetCode != null && user.PasswordResetCode.Equals(passwordCode, StringComparison.CurrentCultureIgnoreCase))
             {
-                if (user.PasswordResetCodeExpiry != null && DateTime.Now > user.PasswordResetCodeExpiry)
+                if (user.PasswordResetCodeExpiry != null && DateTime.UtcNow > user.PasswordResetCodeExpiry)
                 {
                     throw new CustomException("Password reset code has expired.", Interfaces.Users.ErrorCodes.UserPasswordResetCodeExpiredError);
                 }

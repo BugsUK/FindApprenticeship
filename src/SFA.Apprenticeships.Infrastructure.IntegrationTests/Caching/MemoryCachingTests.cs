@@ -21,7 +21,7 @@
         {
             _memoryCacheService = new MemoryCacheService(new Mock<ILogService>().Object);
             _cacheKeyEntry = new TestCacheKeyEntry();
-            _testCachedObject = new TestCachedObject { DateTimeCached = DateTime.Now };
+            _testCachedObject = new TestCachedObject { DateTimeCached = DateTime.UtcNow };
             _testFunc = (i => _testCachedObject);
         }
 

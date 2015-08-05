@@ -22,7 +22,7 @@
         [Test]
         public void ShouldHaveErrorsOnSaveWhenFromYearInTheFuture()
         {
-            var viewModel = new EducationViewModel {FromYear = Convert.ToString(DateTime.Now.Year + 1)};
+            var viewModel = new EducationViewModel { FromYear = Convert.ToString(DateTime.UtcNow.Year + 1) };
             new EducationViewModelSaveValidator().ShouldHaveValidationErrorFor(x => x.FromYear, viewModel);
         }
 

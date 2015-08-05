@@ -44,12 +44,12 @@
         {
             public static string RegularExpression(int yearsInFutureAllowed = 0)
             {
-                return YearRegexRangeGenerator.GetRegex((DateTime.Now.Year + yearsInFutureAllowed).ToString(CultureInfo.InvariantCulture));
+                return YearRegexRangeGenerator.GetRegex((DateTime.UtcNow.Year + yearsInFutureAllowed).ToString(CultureInfo.InvariantCulture));
             }
 
             public static string ErrorText(int yearsInFutureAllowed = 0)
             {
-                return string.Format("must be 4 digits, between {0} and {1}", DateTime.Now.Year - 100 + yearsInFutureAllowed, DateTime.Now.Year + yearsInFutureAllowed);
+                return string.Format("must be 4 digits, between {0} and {1}", DateTime.UtcNow.Year - 100 + yearsInFutureAllowed, DateTime.UtcNow.Year + yearsInFutureAllowed);
             }
         }
 

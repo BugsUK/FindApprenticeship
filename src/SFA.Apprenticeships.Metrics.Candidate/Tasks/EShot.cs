@@ -54,7 +54,7 @@
 
             AddCandidateActivityMetrics(eShotMetrics);
 
-            var fileDateTime = DateTime.Now;
+            var fileDateTime = DateTime.UtcNow;
             WriteEShotCsv(eShotMetrics, fileDateTime);
         }
 

@@ -203,7 +203,7 @@
 
             var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
             var user = new UserBuilder(emailAddress, candidateId).Activated(false).Build();
-            user.ActivateCodeExpiry = DateTime.Now.AddMonths(-2);
+            user.ActivateCodeExpiry = DateTime.UtcNow.AddMonths(-2);
 
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);
@@ -223,7 +223,7 @@
 
             var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
             var user = new UserBuilder(emailAddress, candidateId).Activated(false).Build();
-            user.ActivateCodeExpiry = DateTime.Now.AddMonths(-2);
+            user.ActivateCodeExpiry = DateTime.UtcNow.AddMonths(-2);
 
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);
@@ -244,7 +244,7 @@
 
             var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
             var user = new UserBuilder(emailAddress, candidateId).Activated(false).Build();
-            user.ActivateCodeExpiry = DateTime.Now.AddMonths(-2);
+            user.ActivateCodeExpiry = DateTime.UtcNow.AddMonths(-2);
 
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);
@@ -265,7 +265,7 @@
 
             var candidate = new CandidateBuilder(candidateId).EmailAddress(emailAddress).Build();
             var user = new UserBuilder(emailAddress, candidateId).Activated(false).Build();
-            user.ActivateCodeExpiry = DateTime.Now.AddMonths(-2);
+            user.ActivateCodeExpiry = DateTime.UtcNow.AddMonths(-2);
 
             var userReadRepository = new Mock<IUserReadRepository>();
             userReadRepository.Setup(r => r.Get(emailAddress, false)).Returns(user);

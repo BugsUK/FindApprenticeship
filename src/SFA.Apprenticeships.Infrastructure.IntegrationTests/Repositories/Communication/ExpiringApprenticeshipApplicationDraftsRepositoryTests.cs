@@ -49,7 +49,7 @@
             const int expiringEmailsToAdd = 3;
             //Arrange
             var batchId = Guid.NewGuid();
-            var sentDateTime = DateTime.Now;
+            var sentDateTime = DateTime.UtcNow;
             var expiringDrafts =
                 Builder<ExpiringApprenticeshipApplicationDraft>.CreateListOfSize(expiringEmailsToAdd)
                     .All()
