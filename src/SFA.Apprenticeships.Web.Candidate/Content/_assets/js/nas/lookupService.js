@@ -49,6 +49,8 @@ $(document).ready(function () {
                 },
                 timeout: 5000,
                 success: function (data) {
+                    $('#postcodeServiceUnavailable').hide();
+                    $('#enterAddressManually').show();
                     response($.map(data.Items, function (suggestion) {
                         return {
                             label: suggestion.Text,
@@ -85,6 +87,7 @@ $(document).ready(function () {
 
                 $('#addressLoading').show();
                 $('#enterAddressManually').hide();
+                $('#postcodeServiceUnavailable').hide();
 
                 if (searchContext === "GBR|") {
                     window.setTimeout(function () {
@@ -111,6 +114,7 @@ $(document).ready(function () {
     function retrieveAddress(id) {
         $('#addressLoading').show();
         $('#enterAddressManually').hide();
+        $('#postcodeServiceUnavailable').hide();
         $('#address-details').addClass('disabled');
 
         $.ajax({
