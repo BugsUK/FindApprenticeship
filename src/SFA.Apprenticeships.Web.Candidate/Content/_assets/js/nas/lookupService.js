@@ -77,6 +77,10 @@ $(document).ready(function () {
                 var field = $(this);
                 searchContext = item.Id;
 
+                $('#addressLoading').show();
+                $('#enterAddressManually').hide();
+                $('#address-details').addClass('disabled');
+
                 if (searchContext === "GBR|") {
                     window.setTimeout(function () {
                         field.autocomplete("search", item.Text);
