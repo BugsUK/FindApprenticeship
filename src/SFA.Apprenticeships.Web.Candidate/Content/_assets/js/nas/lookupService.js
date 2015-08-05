@@ -53,7 +53,7 @@ $(document).ready(function () {
                     $('#enterAddressManually').hide();
                     $('#addressLoading').show();
 
-                    $("#postcode-search").blur(function () {
+                    $("#postcode-search").one('blur', function () {
                         $('#enterAddressManually').show();
                         $('#addressLoading').hide();
                     });
