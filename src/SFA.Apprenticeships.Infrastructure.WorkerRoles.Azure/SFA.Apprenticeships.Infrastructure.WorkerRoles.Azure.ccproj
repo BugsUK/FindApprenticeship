@@ -112,7 +112,8 @@
   </PropertyGroup>
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy /E /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)</PreBuildEvent>
+    <PreBuildEvent>robocopy /E /IS $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir)
+if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <Target Name="CopyWorkerRoleConfigurations" BeforeTargets="AfterPackageComputeService">
     <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ScheduledJobs\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ScheduledJobs.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ScheduledJobs" OverwriteReadOnlyFiles="true" />

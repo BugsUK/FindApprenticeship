@@ -337,7 +337,8 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\Configs\*.config $(ProjectDir)Configs</PreBuildEvent>
+    <PreBuildEvent>robocopy /IS $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\Configs\ $(ProjectDir)Configs *.config
+if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -138,7 +138,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\Configs\* $(ProjectDir)Configs</PreBuildEvent>
+    <PreBuildEvent>robocopy /IS $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\Configs\ $(ProjectDir)Configs
+if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

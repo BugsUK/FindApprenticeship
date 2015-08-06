@@ -1701,7 +1701,8 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>xcopy /C /Y /E $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\* $(ProjectDir)</PreBuildEvent>
+    <PreBuildEvent>robocopy /IS /E $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\ $(ProjectDir)
+if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.14-beta\build\portable-net45+win8+wpa81\Microsoft.Diagnostics.Tracing.EventSource.Redist.targets" Condition="Exists('..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.14-beta\build\portable-net45+win8+wpa81\Microsoft.Diagnostics.Tracing.EventSource.Redist.targets')" />
   <Import Project="..\packages\Microsoft.ApplicationInsights.0.13.2-build00132\tools\net40\Microsoft.ApplicationInsights.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.0.13.2-build00132\tools\net40\Microsoft.ApplicationInsights.targets')" />

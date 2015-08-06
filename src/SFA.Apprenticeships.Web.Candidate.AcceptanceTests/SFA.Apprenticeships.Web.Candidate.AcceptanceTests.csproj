@@ -678,7 +678,8 @@
     <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>xcopy /C /Y $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\Configs\*.config $(ProjectDir)Configs</PreBuildEvent>
+    <PreBuildEvent>robocopy /IS $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\Configs\ $(ProjectDir)Configs *.config
+if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Label="SlowCheetah">
     <SlowCheetahToolsPath>$([System.IO.Path]::GetFullPath( $(MSBuildProjectDirectory)\..\packages\SlowCheetah.2.5.14\tools\))</SlowCheetahToolsPath>
