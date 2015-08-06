@@ -83,7 +83,7 @@
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>SFA.Apprenticeships.Infrastructure.Processes</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.ScheduledJobs\SFA.Apprenticeships.Infrastructure.ScheduledJobs.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.ScheduledJobs</Name>
@@ -99,6 +99,11 @@
     <Folder Include="SFA.Apprenticeships.Infrastructure.ProcessesContent" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.MonitorContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ProcessesContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

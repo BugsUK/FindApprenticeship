@@ -79,7 +79,7 @@
       <Private>True</Private>
       <RoleType>Web</RoleType>
       <RoleName>SFA.Apprenticeships.Service.Vacancy</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+      <UpdateDiagnosticsConnectionStringOnPublish>False</UpdateDiagnosticsConnectionStringOnPublish>
       <Properties>SkipValidatePackageReferences=true</Properties>
     </ProjectReference>
   </ItemGroup>
@@ -89,6 +89,9 @@
   </ItemGroup>
   <ItemGroup>
     <PublishProfile Include="Profiles\sfa-apprenticeships-pre-search-serviceProduction.azurePubxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Service.VacancyContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
