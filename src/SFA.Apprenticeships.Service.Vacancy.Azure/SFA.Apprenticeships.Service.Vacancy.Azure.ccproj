@@ -88,11 +88,6 @@
     <Folder Include="SFA.Apprenticeships.Service.VacancyContent\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="SFA.Apprenticeships.Service.VacancyContent\diagnostics.wadcfg">
-      <SubType>Content</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <PublishProfile Include="Profiles\sfa-apprenticeships-pre-search-serviceProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->

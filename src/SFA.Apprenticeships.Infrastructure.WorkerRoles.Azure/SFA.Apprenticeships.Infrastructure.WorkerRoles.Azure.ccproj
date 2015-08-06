@@ -100,11 +100,6 @@
     <Folder Include="SFA.Apprenticeships.Infrastructure.MonitorContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\" />
   </ItemGroup>
-  <ItemGroup>
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ProcessesContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\diagnostics.wadcfgx" />
-  </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
