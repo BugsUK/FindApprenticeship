@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ServiceDefinition name="SFA.Apprenticeships.Service.Vacancy.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2014-06.2.4">
+<ServiceDefinition name="SFA.Apprenticeships.Service.Vacancy.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
   <WebRole name="SFA.Apprenticeships.Service.Vacancy" vmsize="Small">
     <Sites>
       <Site name="Web">
@@ -11,9 +11,7 @@
     <Endpoints>
       <InputEndpoint name="Endpoint1" protocol="http" port="80" />
     </Endpoints>
-    <Imports>
-    </Imports>
-    <Certificates>
-    </Certificates>
+    <Imports></Imports>
+    <Certificates></Certificates>
   </WebRole>
 </ServiceDefinition>
