@@ -33,7 +33,6 @@
             _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary)).Should().Be("apprenticeships");
             _elasticsearchClientFactory.GetIndexNameForType(typeof(TraineeshipSummary)).Should().Be("traineeships");
             _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup)).Should().Be("locations");
-            _elasticsearchClientFactory.GetIndexNameForType(typeof(Address)).Should().Be("addresses");
         }
 
         [Test]
@@ -42,7 +41,6 @@
             _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary)).Should().Be("apprenticeship");
             _elasticsearchClientFactory.GetDocumentNameForType(typeof(TraineeshipSummary)).Should().Be("traineeship");
             _elasticsearchClientFactory.GetDocumentNameForType(typeof(LocationLookup)).Should().Be("locationdatas");
-            _elasticsearchClientFactory.GetDocumentNameForType(typeof(Address)).Should().Be("address");
         }
     }
 }
