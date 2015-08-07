@@ -35,7 +35,7 @@
                 var exceptionMessage = string.Format("Error while executing action {0}/{1} of controller {2} ({3}): {4}",
                     currentAction, verb, currentController, httpContext.Request.Url, exception.Message);
 
-                Logger.Error(exceptionMessage, exception);
+                Logger.Error(exception, exceptionMessage);
             }
 
             var controller = DependencyResolver.Current.GetService<T>();
