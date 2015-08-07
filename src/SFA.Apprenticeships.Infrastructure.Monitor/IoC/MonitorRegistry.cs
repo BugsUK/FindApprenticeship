@@ -26,7 +26,7 @@
                     x.Type<CheckCandidateRepository>();
                     x.Type<CheckVacancySearch>();
                     x.Type<CheckLocationLookup>();
-                    x.Type<CheckAddressSearch>();
+                    // x.Type<CheckAddressSearch>();
                     x.Type<CheckPostcodeService>();
                     x.Type<CheckUserDirectory>();
                     x.Type<CheckAzureServiceBus>();
