@@ -50,7 +50,7 @@
 
                 var client = _elasticsearchClientFactory.GetElasticClient();
                 var indexResponse = client.Index(vacancySummaryElastic, f => f.Index(newIndexName));
-                if (!indexResponse.ConnectionStatus.Success || indexResponse.ConnectionStatus.HttpStatusCode != 200)
+                if (!indexResponse.ConnectionStatus.Success)
                 {
                     _logger.Info("Failed to index vacancy item : {0} ({1}). Response {2} {3}", vacancySummaryToIndex.Title, vacancySummaryToIndex.Id, indexResponse.ConnectionStatus.HttpStatusCode, indexResponse.ConnectionStatus);
                 }
