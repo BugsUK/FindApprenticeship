@@ -215,11 +215,12 @@
         private TraineeshipApplicationMetrics GetTraineeshipApplicationMetrics()
         {
             var averageApplicationCountPerTraineeship = _traineeshipMetricsRepository.GetAverageApplicationCountPerTraineeship();
-            var traineeshipApplicationMetrics = new TraineeshipApplicationMetrics
+            var traineeshipApplicationMetrics = new TraineeshipApplicationMetrics();
+            if(averageApplicationCountPerTraineeship != null)
             {
-                TraineeshipsWithApplicationsCount = averageApplicationCountPerTraineeship["traineeshipsWithApplicationsCount"].AsInt32,
-                TotalApplicationsCount = averageApplicationCountPerTraineeship["count"].AsInt32,
-                AverageApplicationsPerTraineeship = averageApplicationCountPerTraineeship["average"].AsDouble
+                traineeshipApplicationMetrics.TraineeshipsWithApplicationsCount = averageApplicationCountPerTraineeship["traineeshipsWithApplicationsCount"].AsInt32;
+                traineeshipApplicationMetrics.TotalApplicationsCount = averageApplicationCountPerTraineeship["count"].AsInt32;
+                traineeshipApplicationMetrics.AverageApplicationsPerTraineeship = averageApplicationCountPerTraineeship["average"].AsDouble;
             };
 
             var applicationCountPerTraineeship = _traineeshipMetricsRepository.GetApplicationCountPerTraineeship();

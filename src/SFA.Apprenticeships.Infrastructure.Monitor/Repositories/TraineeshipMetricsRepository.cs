@@ -90,7 +90,7 @@
 
             var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
 
-            return result.First();
+            return result.FirstOrDefault();
         }
 
         private static BsonDocument GetApplicationStatusCount(ApplicationStatuses applicationStatus)
