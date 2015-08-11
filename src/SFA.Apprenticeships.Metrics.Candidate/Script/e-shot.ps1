@@ -15,7 +15,7 @@ Function Email-EShotData(){
 
     $filename = "FAA-candidates-" + (Get-Date -format yyyyMMdd)
 
-    & .\7z a -tzip -p"$zipPassword" "$filename.zip" "$filename.csv"
+    & .\7z a -tzip -p"$zipPassword" -mx9 "$filename.zip" "$filename.csv"
 
     & .\sendEmail.exe -f "noreply@findapprenticeship.service.gov.uk" -t $to -cc $cc -u "FAA E-Shot Data" -m "Attached is an export of all the active Candidates using the FAA service who could be contacted via an e-shot campaign. Check the AllowMarketingEmails and AllowMarketingTexts for allowed communication channels" -s "smtp.sendgrid.net:587" -xu "findapprenticeshipservice" -xp "k9qP35sa" -a "$filename.zip"
     & .\sendEmail.exe -f "noreply@findapprenticeship.service.gov.uk" -t $to -cc $cc -u "FAA E-Shot Data Password" -m "Attachment Password: $zipPassword" -s "smtp.sendgrid.net:587" -xu "findapprenticeshipservice" -xp "k9qP35sa"

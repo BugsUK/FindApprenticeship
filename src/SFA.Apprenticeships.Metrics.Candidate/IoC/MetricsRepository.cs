@@ -17,7 +17,7 @@
                 .EnumerableOf<IMetricsTask>()
                 .Contains(x =>
                 {
-                    x.Type<TraineeshipsAnalysis>();
+                    //x.Type<TraineeshipsAnalysis>();
                     x.Type<EShot>();
                 });
         }

@@ -118,7 +118,7 @@
                             metrics.AddressLine3 = candidate.RegistrationDetails.Address.AddressLine3;
                             metrics.AddressLine4 = candidate.RegistrationDetails.Address.AddressLine4;
                             metrics.Postcode = candidate.RegistrationDetails.Address.Postcode;
-                            metrics.DateOfBirth = candidate.RegistrationDetails.DateOfBirth;
+                            metrics.DateOfBirth = candidate.RegistrationDetails.DateOfBirth.ToString("dd/MM/yyy");
                             if (candidate.MonitoringInformation != null)
                             {
                                 metrics.Gender = candidate.MonitoringInformation.Gender;
@@ -161,7 +161,7 @@
         public string AddressLine3 { get; set; }
         public string AddressLine4 { get; set; }
         public string Postcode { get; set; }
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
         public Gender? Gender { get; set; }
         public string PhoneNumber { get; set; }
         public bool AllowMarketingTexts { get; set; }
