@@ -1,25 +1,6 @@
-﻿// TODO: get 'postcode' messages from C#
+﻿$(document).ready(function () {
 
-$(document).ready(function () {
-    $("#address-select").change(function () {
-        var option = $(this);
-        var selected = $(this).find('option:selected');
-        if (option && option.val() !== "") {
-            $("#Address_AddressLine1").val(selected.attr("data-address-line1"));
-            $("#Address_AddressLine2").val(selected.attr("data-address-line2"));
-            $("#Address_AddressLine3").val(selected.attr("data-address-line3"));
-            $("#Address_City").val(selected.attr("data-city"));
-            $("#Address_Postcode").val(selected.attr("data-post-code"));
-            //$("#Address_Uprn").val(option.val());
-            $("#Address_Latitude").val(selected.attr("data-lat"));
-            $("#Address_Longitude").val(selected.attr("data-lon"));
-            $('#addressesFound').text('Address has been entered into the fields below');
-        }
-        //TODO: if needing validation groups this should be refactored too
-    });
-
-    $(".address-item").change(function() {
-        //$("#Address_Uprn").val("");
+    $(document).on("change", ".address-item", function () {
         $("#Address_Latitude").val("");
         $("#Address_Longitude").val("");
     });
@@ -28,161 +9,180 @@ $(document).ready(function () {
 // provides the matching addresses from postcode
 (function ($) {
 
-    $.fn.addressLookup = function (options) {
-        var self = this,
-            settings = options;
+    var searchContext = "",
+        key = "JY37-NM56-JA37-WT99",
+        uri = $('form').attr('action'),
+        findAddressVal = $("#postcode-search").val();
 
-        var $postcodeSearchValidationError = $("#postcode-search-validation-error"),
-            $addressSelect = $("#address-select"),
-            $addressList = $("#address-list"),
-            $findAddressButton = $('#find-addresses'),
-            $postCodeSearch = $('#postcode-search'),
-            $ariaFoundText = $('#addressesFound');
+    $('#enterAddressManually').on('click', function (e) {
+        e.preventDefault();
+        $('#addressManualWrapper').unbind('click');
 
-        self.click(function (e) {
-            e.preventDefault();
-            getAddresses($postCodeSearch.val());
-        });
+        $('#address-details').removeClass('disabled');
+        $('#Address_AddressLine1').focus();
+    });
 
-        $postCodeSearch.keypress(function (e) {
-            var keycode = (e.keyCode ? e.keyCode : e.which),
-                $thisText = $findAddressButton.text();
+    $('#addressManualWrapper').bind('click', function () {
+        $(this).unbind('click');
+        $('#address-details').removeClass('disabled');
+        $('#Address_AddressLine1').focus();
+    });
 
-            if (keycode === 13) {
-                getAddresses($postCodeSearch.val());
-                e.preventDefault();
-                
-                setTimeout(function () {
-                    if ($('#postcode-search-validation-error.field-validation-error').length > 0) {
-                        $findAddressButton.text($thisText).removeClass('disabled');
-                    } else {
-                        $findAddressButton.addClass('disabled').text('Loading');
-                    }
-                }, 50);
-            }
+    $("#postcode-search").keyup(function () {
+        findAddressVal = $(this).val();
+    });
 
-            e.stopPropagation();
-        });
+    $("#postcode-search").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                url: "//services.postcodeanywhere.co.uk/CapturePlus/Interactive/Find/v2.10/json3.ws",
+                dataType: "jsonp",
+                data: {
+                    key: key,
+                    country: 'GB',
+                    searchTerm: request.term,
+                    lastId: searchContext
+                },
+                timeout: 5000,
+                success: function (data) {
+                    $('#postcodeServiceUnavailable').hide();
+                    $('#enterAddressManually').hide();
+                    $('#addressLoading').show();
 
-        var showErrorMessage = function (message) {
-            $postcodeSearchValidationError.removeClass("field-validation-valid");
-            $postcodeSearchValidationError.addClass("field-validation-error");
-            $postcodeSearchValidationError.html(message);
-        };
-
-        var hideErrorMessage = function () {
-            $postcodeSearchValidationError.removeClass("field-validation-error");
-            $postcodeSearchValidationError.addClass("field-validation-valid");
-            $postcodeSearchValidationError.html('');
-        };
-
-        var showFindAddressButton = function() {
-            $findAddressButton.removeClass('disabled').text('Find address');
-        };
-
-        var $makeAddressOption = function (location) {
-            var address = location.Address;
-            var displayVal = address.AddressLine1;
-
-            if (address.AddressLine2 && address.AddressLine2 !== "") {
-                displayVal += ", " + address.AddressLine2;
-            }
-
-            return $('<option/>')
-                .val(address.Uprn)
-                .html(displayVal)
-                .addClass("address-select-option")
-                .attr("data-address-line1", _.escape(address.AddressLine1))
-                .attr("data-address-line2", _.escape(address.AddressLine2))
-                .attr("data-address-line3", _.escape(address.AddressLine3))
-                .attr("data-city", _.escape(address.City))
-                .attr("data-post-code", _.escape(address.Postcode))
-                .attr("data-lat", location.Latitude)
-                .attr("data-lon", location.Longitude);
-        };
-
-        var $makeAddressCountOption = function(count) {
-            return $('<option/>')
-                .val("")
-                .html("-- " + count + " found --")
-                .addClass("address-select-option");
-        }
-
-        var handleResponse = function (response) {
-
-            if (response.HasError) {
-                showErrorMessage("Sorry, there’s a problem with the service. Please try entering your address manually.");
-            } else {
-                var locations = response.Locations;
-                if (locations != null && locations.length) {
-                    $addressSelect.empty();
-                    $addressSelect.append($makeAddressCountOption(locations.length));
-
-                    $.each(locations, function (i, location) {
-                        $addressSelect.append($makeAddressOption(location));
+                    $("#postcode-search").one('blur', function () {
+                        $('#enterAddressManually').show();
+                        $('#addressLoading').hide();
                     });
 
-                    $addressList.removeClass("toggle-content").removeAttr('hidden');
-
-                    $ariaFoundText.text(locations.length + ' addresses have been found, please select from the dropdown');
-
-                } else {
-                    $addressList.addClass("toggle-content").attr('hidden', true);
-                    showErrorMessage("Postcode not found. Please enter address manually.");
-                    $ariaFoundText.text('');
+                    response($.map(data.Items, function (suggestion) {
+                        return {
+                            label: suggestion.Text,
+                            value: "",
+                            data: suggestion
+                        }
+                    }));
+                },
+                error: function () {
+                    $('#postcodeServiceUnavailable').show();
+                    $('#enterAddressManually').hide();
+                    $('#address-details').removeClass('disabled');
                 }
-            }
-
-            showFindAddressButton();
-        };
-
-        var handleMissingPostcode = function () {
-            $addressList.addClass("toggle-content").attr('hidden', true);
-            showErrorMessage("Please enter a postcode");
-            showFindAddressButton();
-            $ariaFoundText.text('');
-        };
-
-        var handleInvalidPostcode = function () {
-            $addressList.addClass("toggle-content").attr('hidden', true);
-            showErrorMessage("Please enter a valid postcode");
-            showFindAddressButton();
-            $ariaFoundText.text('');
-        };
-
-        var handleError = function (e) {
-            // TODO: can we differentiate between proxy error and server-type error (e.g. postcode.io).
-            console.error(e);
-            showErrorMessage("Sorry, there’s a problem with the service. Please try entering your address manually.");
-            showFindAddressButton();
-        };
-
-        var isEmptyString = function (s) {
-            return !s || /^\s*$/.test(s);
-        };
-
-        var getAddresses = function (postcode) {
-            jQuery.support.cors = true;
-
-            hideErrorMessage();
-
-            if (isEmptyString(postcode)) {
-                handleMissingPostcode();
-                return;
-            }
-
-            $.ajax({
-                statusCode: {
-                    400: handleInvalidPostcode
-                },
-                url: settings.url,
-                type: 'GET',
-                data: {
-                    postcode: postcode
-                },
-                success: handleResponse,
-                error: handleError
             });
-        };
-    };
+        },
+        messages: {
+            noResults: function () {
+                return "We can't find an address matching " + findAddressVal;
+            },
+            results: function (amount) {
+                return "We've found " + amount + (amount > 1 ? " addresses" : " address") +
+                    " that match " + findAddressVal + ". Use up and down arrow keys to navigate";
+            }
+        },
+        select: function (event, ui) {
+            var item = ui.item.data
+
+            if (item.Next == "Retrieve") {
+                //retrieve the address
+                retrieveAddress(item.Id);
+            } else {
+                var field = $(this);
+                searchContext = item.Id;
+
+                $('#addressLoading').show();
+                $('#enterAddressManually').hide();
+                $('#postcodeServiceUnavailable').hide();
+
+                if (searchContext === "GBR|") {
+                    window.setTimeout(function () {
+                        field.autocomplete("search", item.Text);
+                    });
+                } else {
+                    window.setTimeout(function () {
+                        field.autocomplete("search", item.Id);
+                    });
+                }
+
+            }
+        },
+        focus: function (event, ui) {
+            $("#addressInputWrapper").find('.ui-helper-hidden-accessible').text("To select " + ui.item.label + ", press enter");
+        },
+        autoFocus: true,
+        minLength: 1,
+        delay: 100
+    }).focus(function () {
+        searchContext = "";
+    });
+
+    function retrieveAddress(id) {
+        $('#addressLoading').show();
+        $('#enterAddressManually').hide();
+        $('#postcodeServiceUnavailable').hide();
+        $('#address-details').addClass('disabled');
+
+        $.ajax({
+            url: "//services.postcodeanywhere.co.uk/CapturePlus/Interactive/Retrieve/v2.10/json3.ws",
+            dataType: "jsonp",
+            data: {
+                key: key,
+                id: id
+            },
+            timeout: 5000,
+            success: function (data) {
+                if (data.Items.length) {
+                    $('#address-details').removeClass('disabled');
+                    $('#addressLoading').hide();
+                    $('#enterAddressManually').show();
+                    $('#addressManualWrapper').unbind('click');
+                    $("#postcode-search").val("");
+
+                    populateAddress(data.Items[0]);
+                }
+            },
+            error: function () {
+                $('#postcodeServiceUnavailable').show();
+                $('#enterAddressManually').hide();
+                $('#addressLoading').hide();
+                $('#address-details').removeClass('disabled');
+            }
+        });
+    }
+
+    function populateAddress(address) {
+        if (!$('#Companyname').val()) {
+            $('#Companyname').val(address.Company);
+        }
+        $('#Address_AddressLine1').val(address.Line1);
+        $('#Address_AddressLine2').val(address.Line2);
+        $('#Address_AddressLine3').val(address.Line3);
+        $('#Address_City').val(address.City);
+        $('#Address_Postcode').val(address.PostalCode);
+
+        $('#ariaAddressEntered').text('Your address has been entered into the fields below.');
+
+        populateLatLng(address);
+        Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", uri + "/findaddress", "WT.dl", "99", "WT.ti", "Settings – Find Address"] });
+    }
+
+    function populateLatLng(address) {
+        var url = "https://api.postcodes.io/postcodes/" + address.PostalCode,
+                json;
+
+        $.get(url)
+        .done(function (data) {
+            json = data;
+
+            if (json.status == 200 && json.result !== null) {
+                $("#Address_Latitude").val(json.result.latitude);
+                $("#Address_Longitude").val(json.result.longitude);
+            } else {
+                //console.log("Nope");
+            }
+
+        })
+        .fail(function () {
+            //console.log("failed");
+        });
+    }
+
 })(jQuery);

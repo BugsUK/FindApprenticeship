@@ -120,11 +120,7 @@
 {
     <script>
         $(function () {
-
-            $("#find-addresses").addressLookup({
-                url: '@Url.Action("Addresses", "Location")',
-                selectlist: '#address-select'
-            });
+            $('#address-details').addClass('disabled');
         });
     </script>
 }
