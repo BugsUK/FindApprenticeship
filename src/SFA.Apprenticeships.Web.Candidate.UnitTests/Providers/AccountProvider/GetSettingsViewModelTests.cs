@@ -134,12 +134,12 @@
                 .With(s => s.SubCategoriesFullName, "Surveying, Construction Civil Engineering")
                 .With(s => s.DateProcessed, new DateTime(2015, 01, 01))
                 .CreateMany(1).ToList();
-            candidateService.Setup(cs => cs.RetrieveSavedSearches(candidateId)).Returns(savedSearches);
+            candidateService.Setup(cs => cs.GetSavedSearches(candidateId)).Returns(savedSearches);
             var provider = new AccountProviderBuilder().With(candidateService).Build();
 
             var viewModel = provider.GetSettingsViewModel(candidateId);
 
-            candidateService.Verify(cs => cs.RetrieveSavedSearches(candidateId), Times.Once);
+            candidateService.Verify(cs => cs.GetSavedSearches(candidateId), Times.Once);
 
             viewModel.Should().NotBeNull();
             viewModel.SavedSearches.Count.Should().Be(1);

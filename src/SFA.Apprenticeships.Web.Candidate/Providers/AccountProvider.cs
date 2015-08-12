@@ -48,7 +48,7 @@
 
                 var candidate = _candidateService.GetCandidate(candidateId);
                 var user = _userAccountService.GetUser(candidateId);
-                var savedSearches = _candidateService.RetrieveSavedSearches(candidateId);
+                var savedSearches = _candidateService.GetSavedSearches(candidateId);
                 var settings = _mapper.Map<RegistrationDetails, SettingsViewModel>(candidate.RegistrationDetails);
 
                 settings.Username = user.Username;
@@ -165,7 +165,7 @@
 
                 if (model.SavedSearches != null && model.SavedSearches.Count > 0)
                 {
-                    var savedSearches = _candidateService.RetrieveSavedSearches(candidateId);
+                    var savedSearches = _candidateService.GetSavedSearches(candidateId);
 
                     foreach (var updatedSavedSearch in model.SavedSearches)
                     {

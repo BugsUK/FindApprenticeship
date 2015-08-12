@@ -442,7 +442,7 @@
             return createdSavedSearch;
         }
 
-        public IList<SavedSearch> RetrieveSavedSearches(Guid candidateId)
+        public IList<SavedSearch> GetSavedSearches(Guid candidateId)
         {
             Condition.Requires(candidateId);
 
@@ -469,7 +469,7 @@
             return _deleteSavedSearchStrategy.DeleteSavedSearch(candidateId, savedSearchId);
         }
 
-        public SavedSearch RetrieveSavedSearch(Guid candidateId, Guid savedSearchId)
+        public SavedSearch GetSavedSearch(Guid candidateId, Guid savedSearchId)
         {
             _logger.Debug("Calling CandidateService to get saved search with id='{0}' for candidate='{1}'.", savedSearchId, candidateId);
 

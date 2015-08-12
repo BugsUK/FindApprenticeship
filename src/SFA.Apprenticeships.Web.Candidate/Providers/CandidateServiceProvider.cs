@@ -571,7 +571,7 @@
                 var candidate = _candidateService.GetCandidate(candidateId);
 
                 var searchHash = savedSearch.GetSearchHash();
-                var existingSavedSearches = _candidateService.RetrieveSavedSearches(candidateId);
+                var existingSavedSearches = _candidateService.GetSavedSearches(candidateId);
 
                 if (existingSavedSearches == null || !existingSavedSearches.Select(s => s.GetSearchHash()).Contains(searchHash))
                 {
@@ -623,7 +623,7 @@
         {
             try
             {
-                return _candidateService.RetrieveSavedSearches(candidateId)
+                return _candidateService.GetSavedSearches(candidateId)
                     .Select(each => each.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit));
             }
             catch (Exception ex)
@@ -637,7 +637,7 @@
         {
             try
             {
-                var savedSearch = _candidateService.RetrieveSavedSearch(candidateId, savedSearchId);
+                var savedSearch = _candidateService.GetSavedSearch(candidateId, savedSearchId);
 
                 return savedSearch == null ? null : savedSearch.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit);
             }

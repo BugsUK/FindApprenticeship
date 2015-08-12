@@ -96,7 +96,7 @@
 
             SavedSearch savedSearch = null;
             var candidateService = new Mock<ICandidateService>();
-            candidateService.Setup(cs => cs.RetrieveSavedSearches(candidateId)).Returns(new List<SavedSearch> { new SavedSearchBuilder().WithLocation("Different Location").Build() });
+            candidateService.Setup(cs => cs.GetSavedSearches(candidateId)).Returns(new List<SavedSearch> { new SavedSearchBuilder().WithLocation("Different Location").Build() });
             candidateService.Setup(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>())).Callback<SavedSearch>(ss => { savedSearch = ss; });
             var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
             var viewModel = new ApprenticeshipSearchViewModelBuilder()
@@ -300,7 +300,7 @@
                 .Build();
 
             var candidateService = new Mock<ICandidateService>();
-            candidateService.Setup(cs => cs.RetrieveSavedSearches(candidateId)).Returns(new List<SavedSearch> {existingSavedSearch});
+            candidateService.Setup(cs => cs.GetSavedSearches(candidateId)).Returns(new List<SavedSearch> {existingSavedSearch});
             var provider = new CandidateServiceProviderBuilder().With(candidateService).Build();
             var viewModel = new ApprenticeshipSearchViewModelBuilder()
                 .WithSearchMode(searchMode)
@@ -318,7 +318,7 @@
             var response = provider.CreateSavedSearch(candidateId, viewModel);
 
             response.Should().NotBeNull();
-            candidateService.Verify(cs => cs.RetrieveSavedSearches(candidateId), Times.Once);
+            candidateService.Verify(cs => cs.GetSavedSearches(candidateId), Times.Once);
 
             //Should only replace search if it is new
             candidateService.Verify(cs => cs.CreateSavedSearch(It.IsAny<SavedSearch>()), Times.Never);

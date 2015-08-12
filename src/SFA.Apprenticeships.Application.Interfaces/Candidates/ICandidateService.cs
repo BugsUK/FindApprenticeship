@@ -48,7 +48,7 @@
 
         IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId);
 
-        void SubmitTraineeshipApplication(Guid candidateId, int vacancyId, TraineeshipApplicationDetail traineeshipApplicationDetail);
+        void SubmitTraineeshipApplication(Guid candidateId, int vacancyId, TraineeshipApplicationDetail traineeshipApplicationDetail); //todo: refactor to remove traineeship argument
 
         void UnlockAccount(string username, string accountUnlockCode);
 
@@ -74,13 +74,13 @@
 
         SavedSearch CreateSavedSearch(SavedSearch savedSearch);
 
-        IList<SavedSearch> RetrieveSavedSearches(Guid candidateId);
+        IList<SavedSearch> GetSavedSearches(Guid candidateId);
 
-        SavedSearch UpdateSavedSearch(SavedSearch savedSearch);
+        SavedSearch UpdateSavedSearch(SavedSearch savedSearch) ;
 
         SavedSearch DeleteSavedSearch(Guid candidateId, Guid savedSearchId);
 
-        SavedSearch RetrieveSavedSearch(Guid candidateId, Guid savedSearchId);
+        SavedSearch GetSavedSearch(Guid candidateId, Guid savedSearchId);
 
         void UpdateUsername(Guid userId, string verfiyCode, string password);
 
