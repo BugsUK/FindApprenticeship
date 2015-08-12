@@ -241,15 +241,15 @@
             return _apprenticeshipApplicationReadRepository.GetForCandidate(candidateId, vacancyId);
         }
 
-        public TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int traineeshipVacancyId)
+        public TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
 
             _logger.Debug(
                 "Calling CandidateService to create a traineeship application of the user with Id={0} to the vacancy with Id={1}.",
-                candidateId, traineeshipVacancyId);
+                candidateId, vacancyId);
 
-            return _createTraineeshipApplicationStrategy.CreateApplication(candidateId, traineeshipVacancyId);
+            return _createTraineeshipApplicationStrategy.CreateApplication(candidateId, vacancyId);
         }
 
         public void ArchiveApplication(Guid candidateId, int vacancyId)

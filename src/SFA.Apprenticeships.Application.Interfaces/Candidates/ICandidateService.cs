@@ -42,7 +42,7 @@
 
         void SubmitApplication(Guid candidateId, int vacancyId);
 
-        TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int traineeshipVacancyId);
+        TraineeshipApplicationDetail CreateTraineeshipApplication(Guid candidateId, int vacancyId);
 
         TraineeshipApplicationDetail GetTraineeshipApplication(Guid candidateId, int vacancyId);
 
