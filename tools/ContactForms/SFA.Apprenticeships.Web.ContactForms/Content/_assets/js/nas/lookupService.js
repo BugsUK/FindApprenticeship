@@ -10,7 +10,6 @@
 (function ($) {
 
     var searchContext = "",
-        key = "JY37-NM56-JA37-WT99",
         uri = $('form').attr('action'),
         findAddressVal = $("#postcode-search").val();
 

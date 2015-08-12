@@ -141,8 +141,6 @@
     <Compile Include="Providers\EmployerEnquiryProviderBuilder.cs" />
     <Compile Include="Providers\GlaEmployerEnquiryTests.cs" />
     <Compile Include="Providers\EmployerEnquiryTests.cs" />
-    <Compile Include="Services\LocationSearchService\DeliveryPointAddressExtensionsTests.cs" />
-    <Compile Include="Services\LocationSearchService\LocalPropertyIdentifierExtensionsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />

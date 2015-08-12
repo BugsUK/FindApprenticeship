@@ -155,7 +155,6 @@
     <Compile Include="Constants\CommonConstants.cs" />
     <Compile Include="Constants\Pages\AccessRequestPageMessages.cs" />
     <Compile Include="Controllers\AccessRequestController.cs" />
-    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Constants\AddressViewModelMessages.cs" />
     <Compile Include="Constants\EmployerEnquiryViewModelMessages.cs" />
     <Compile Include="Constants\EmployerRouteNames.cs" />
@@ -196,9 +195,6 @@
     <Compile Include="Mediators\Interfaces\IAccessRequestMediator.cs" />
     <Compile Include="Mediators\Interfaces\IReferenceDataMediator.cs" />
     <Compile Include="Mediators\Interfaces\IEmployerEnquiryMediator.cs" />
-    <Compile Include="Mediators\Interfaces\ILocationMediator.cs" />
-    <Compile Include="Mediators\Location\LocationMediator.cs" />
-    <Compile Include="Mediators\Location\LocationMediatorCodes.cs" />
     <Compile Include="Mediators\MediatorBase.cs" />
     <Compile Include="Mediators\MediatorException.cs" />
     <Compile Include="Mediators\MediatorResponse.cs" />
@@ -210,8 +206,6 @@
     <Compile Include="Providers\Interfaces\IAccessRequestProvider.cs" />
     <Compile Include="Providers\Interfaces\IReferenceDataProvider.cs" />
     <Compile Include="Providers\Interfaces\IEmployerEnquiryProvider.cs" />
-    <Compile Include="Providers\Interfaces\ILocationProvider.cs" />
-    <Compile Include="Providers\LocationProvider.cs" />
     <Compile Include="Providers\AccessRequestProvider.cs" />
     <Compile Include="Providers\ReferenceDataProvider.cs" />
     <Compile Include="Validators\AccessRequestViewModelValidators.cs" />

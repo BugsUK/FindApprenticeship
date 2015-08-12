@@ -14,6 +14,6 @@
         public static string AccessRequestToEmailAddress = AppConfiguration.GetValue(BaseAppSettingKeys.AccessRequestToEmailAddress) ?? string.Empty;
         public static string FromMailAddress = AppConfiguration.GetValue(BaseAppSettingKeys.FromMailAddress) ?? string.Empty;
         public static string FromName = AppConfiguration.GetValue(BaseAppSettingKeys.FromName) ?? string.Empty;
-        public static string OrdnanceSurveyPlacesApiKey = AppConfiguration.GetValue(BaseAppSettingKeys.OrdnanceSurveyPlacesApiKey) ?? string.Empty;
+        public static string PostCodeAnywhereApiKey = AppConfiguration.GetValue(BaseAppSettingKeys.PostCodeAnywhereApiKey) ?? string.Empty;
     }
 }

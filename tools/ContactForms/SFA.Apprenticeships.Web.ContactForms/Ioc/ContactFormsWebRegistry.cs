@@ -9,7 +9,6 @@ namespace SFA.Apprenticeships.Web.ContactForms.Ioc
     using Application.Interfaces.Communications;
     using Application.Services.Communication;
     using Application.Services.ConfigReferenceDataService;
-    using Application.Services.LocationSearchService;
     using Common.AppSettings;
     using Domain.Entities;
     using Infrastructure.Communication.Email;
@@ -20,14 +19,13 @@ namespace SFA.Apprenticeships.Web.ContactForms.Ioc
     using Mediators.AccessRequest;
     using Mediators.EmployerEnquiry;
     using Mediators.Interfaces;
-    using Mediators.Location;
     using Mediators.ReferenceData;
     using Providers;
     using Providers.Interfaces;
     using StructureMap.Configuration.DSL;
     using ViewModels;
-    using SFA.Apprenticeships.Application.Services.Communication.Strategies.Interfaces;
-    using SFA.Apprenticeships.Application.Services.Communication.Strategies;
+    using Application.Services.Communication.Strategies.Interfaces;
+    using Application.Services.Communication.Strategies;
 
     public class ContactFormsWebRegistry : Registry
     {
@@ -73,7 +71,6 @@ namespace SFA.Apprenticeships.Web.ContactForms.Ioc
             For<IEmailDispatcher>().Use<VoidEmailDispatcher>().Name = "VoidEmailDispatcher";
             
             For<SendGridConfiguration>().Singleton().Use(SendGridConfiguration.Instance);            
-            For<ILocationSearchService>().Use<LocationSearchService>();
             For<ICommunciationService>().Use<CommunciationService>();
             For<IReferenceDataService>().Use<ConfigReferenceDataService>();
         }
@@ -82,7 +79,6 @@ namespace SFA.Apprenticeships.Web.ContactForms.Ioc
         {
             For<IEmployerEnquiryProvider>().Use<EmployerEnquiryProvider>();
             For<IAccessRequestProvider>().Use<AccessRequestProvider>();
-            For<ILocationProvider>().Use<LocationProvider>();
             For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
         }
 
@@ -90,7 +86,6 @@ namespace SFA.Apprenticeships.Web.ContactForms.Ioc
         {
             For<IEmployerEnquiryMediator>().Use<EmployerEnquiryMediator>();
             For<IAccessRequestMediator>().Use<AccessRequestMediator>();
-            For<ILocationMediator>().Use<LocationMediator>();
             For<IReferenceDataMediator>().Use<ReferenceDataMediator>();
         }
 

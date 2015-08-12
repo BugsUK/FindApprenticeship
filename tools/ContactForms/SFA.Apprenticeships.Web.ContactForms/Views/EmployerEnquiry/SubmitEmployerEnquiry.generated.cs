@@ -27,9 +27,15 @@ namespace ASP
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
-    using SFA.Apprenticeships.Web.ContactForms;
     
     #line 1 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+    using SFA.Apprenticeships.Common.AppSettings;
+    
+    #line default
+    #line hidden
+    using SFA.Apprenticeships.Web.ContactForms;
+    
+    #line 2 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
     using SFA.Apprenticeships.Web.ContactForms.Framework;
     
     #line default
@@ -45,7 +51,7 @@ namespace ASP
         public override void Execute()
         {
             
-            #line 4 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 5 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
   
     ViewBag.Title = "Employer enquiry form";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -99,7 +105,7 @@ WriteLiteral(" rel=\"external\"");
 WriteLiteral(">Wales</a>.\r\n    </p>\r\n    <br />\r\n</div>\r\n\r\n\r\n\r\n");
 
             
-            #line 30 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 31 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
  using (Html.BeginForm("SubmitEmployerEnquiry", "EmployerEnquiry", FormMethod.Post))
 {
     
@@ -107,14 +113,14 @@ WriteLiteral(">Wales</a>.\r\n    </p>\r\n    <br />\r\n</div>\r\n\r\n\r\n\r\n");
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 33 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 33 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
                                                            
 
 
@@ -134,7 +140,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 38 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 39 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.FormLabelFor(m => m.Title));
 
             
@@ -145,7 +151,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 39 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 40 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.DropDownListFor(m => m.Title, Model.TitleList));
 
             
@@ -156,7 +162,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 40 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 41 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.ValidationMessageFor(model => model.Title));
 
             
@@ -167,7 +173,7 @@ WriteLiteral("\r\n        </div>\r\n");
 WriteLiteral("        ");
 
             
-            #line 42 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 43 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.FormTextFor(
             m => m.Firstname,
             controlHtmlAttributes: new { @class = "form-control" }));
@@ -180,7 +186,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 46 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 47 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.FormTextFor(
             m => m.Lastname,
             controlHtmlAttributes: new { @class = "form-control" }));
@@ -193,7 +199,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 50 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 51 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.FormTextFor(
             m => m.Position,
             controlHtmlAttributes: new { @class = "form-control" }));
@@ -206,7 +212,7 @@ WriteLiteral("\r\n        \r\n");
 WriteLiteral("        ");
 
             
-            #line 54 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 55 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.FormTextFor(
             m => m.WorkPhoneNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" }));
 
@@ -218,7 +224,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 57 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 58 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.FormTextFor(
             m => m.MobileNumber, controlHtmlAttributes: new { @class = "form-control", type = "tel" }));
 
@@ -230,7 +236,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 60 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 61 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.FormTextFor(
             m => m.Email,
             controlHtmlAttributes: new { @class = "form-control", type = "email" }));
@@ -247,7 +253,7 @@ WriteLiteral(">Company details</legend>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 66 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 67 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.FormTextFor(
             m => m.Companyname,
             controlHtmlAttributes: new { @class = "form-control" }));
@@ -260,7 +266,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 70 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 71 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.EditorFor(a => a.Address));
 
             
@@ -275,7 +281,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 73 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 74 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.FormLabelFor(m => m.EmployeesCount));
 
             
@@ -286,7 +292,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 74 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 75 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.DropDownListFor(m => m.EmployeesCount, Model.EmployeesCountList));
 
             
@@ -297,7 +303,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 75 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 76 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.ValidationMessageFor(model => model.EmployeesCount));
 
             
@@ -312,7 +318,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 78 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 79 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.FormLabelFor(m => m.WorkSector));
 
             
@@ -323,7 +329,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 79 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 80 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.DropDownListFor(m => m.WorkSector, Model.WorkSectorList));
 
             
@@ -334,7 +340,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 80 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 81 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.ValidationMessageFor(model => model.WorkSector));
 
             
@@ -355,7 +361,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 84 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 85 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.FormLabelFor(m => m.EnquiryRelatesTo));
 
             
@@ -366,7 +372,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 85 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 86 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.DropDownListFor(m => m.EnquiryRelatesTo, Model.EnquiryRelatesToList));
 
             
@@ -377,7 +383,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 86 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 87 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.ValidationMessageFor(model => model.EnquiryRelatesTo));
 
             
@@ -388,7 +394,7 @@ WriteLiteral("\r\n        </div>\r\n");
 WriteLiteral("        ");
 
             
-            #line 88 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 89 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
    Write(Html.FormTextAreaFor(
             m => m.EnquiryDescription,
              controlHtmlAttributes: new { @class = "form-control", @rows = 7 }));
@@ -409,7 +415,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 95 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 96 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.FormLabelFor(m => m.PreviousExperienceType));
 
             
@@ -420,7 +426,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 96 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 97 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.DropDownListFor(m => m.PreviousExperienceType, Model.PreviousExperienceTypeList));
 
             
@@ -431,7 +437,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 97 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 98 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.ValidationMessageFor(model => model.PreviousExperienceType));
 
             
@@ -446,7 +452,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 100 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 101 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.FormLabelFor(m => m.EnquirySource));
 
             
@@ -457,7 +463,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 101 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 102 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.DropDownListFor(m => m.EnquirySource, Model.EnquirySourceList));
 
             
@@ -468,7 +474,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 102 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 103 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
        Write(Html.ValidationMessageFor(model => model.EnquirySource));
 
             
@@ -481,7 +487,7 @@ WriteLiteral(" class=\"hidden\"");
 WriteLiteral("><strong>");
 
             
-            #line 104 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 105 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
                                Write(Html.Honeypot("UserName"));
 
             
@@ -506,7 +512,7 @@ WriteLiteral(" type=\"submit\"");
 WriteLiteral(" >Send Enquiry</button>\r\n        </p>\r\n    </div>\r\n");
 
             
-            #line 112 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+            #line 113 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
 }
 
             
@@ -514,8 +520,17 @@ WriteLiteral(" >Send Enquiry</button>\r\n        </p>\r\n    </div>\r\n");
             #line hidden
 DefineSection("scripts", () => {
 
-WriteLiteral("\r\n    <script>\r\n        $(function () {\r\n            $(\'#address-details\').addCla" +
-"ss(\'disabled\');\r\n        });\r\n    </script>\r\n");
+WriteLiteral("\r\n    <script>\r\n        var key = \"");
+
+            
+            #line 117 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
+              Write(BaseAppSettingValues.PostCodeAnywhereApiKey);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\";\r\n        $(function () {\r\n            $(\'#address-details\').addClass(\'disabled" +
+"\');\r\n        });\r\n    </script>\r\n");
 
 });
 
