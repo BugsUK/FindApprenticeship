@@ -6,7 +6,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
     using Common.Providers;
     using Common.Services;
     using Domain.Interfaces.Configuration;
-    using Infrastructure.Address.IoC;
     using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
@@ -59,7 +58,6 @@ namespace SFA.Apprenticeships.Web.Candidate.DependencyResolution {
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
-                x.AddRegistry(new AddressRegistry(configurationService));
                 x.AddRegistry<AuditRepositoryRegistry>();
 
                 // web layer

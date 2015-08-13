@@ -42,22 +42,5 @@
                 throw new NotSupportedException("Non-JS not yet implemented!");
             });
         }
-
-        [HttpGet]
-        [AllowCrossSiteJson]
-        [OutputCache(CacheProfile = CacheProfiles.Data, VaryByParam = "postcode")]
-        public async Task<ActionResult> Addresses(string postcode)
-        {
-            return await Task.Run<ActionResult>(() =>
-            {
-                if (Request.IsAjaxRequest())
-                {
-                    var addresses = _searchProvider.FindAddresses(postcode);
-                    return Json(addresses, JsonRequestBehavior.AllowGet);
-                }
-
-                throw new NotSupportedException("Non-JS not yet implemented!");
-            });
-        }
     }
 }

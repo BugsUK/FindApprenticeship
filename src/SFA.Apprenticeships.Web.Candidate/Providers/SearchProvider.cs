@@ -16,18 +16,15 @@
     public class SearchProvider : ISearchProvider
     {
         private readonly ILocationSearchService _locationSearchService;
-        private readonly IAddressSearchService _addressSearchService;
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly ILogService _logger;
 
         public SearchProvider(
             ILocationSearchService locationSearchService,
-            IAddressSearchService addressSearchService,
             IMapper apprenticeshipSearchMapper,
             ILogService logger)
         {
             _locationSearchService = locationSearchService;
-            _addressSearchService = addressSearchService;
             _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
             _logger = logger;
         }
@@ -74,34 +71,6 @@
                 _logger.Error(message, e);
                 throw;
             }
-        }
-
-        public AddressSearchResult FindAddresses(string postcode)
-        {
-            _logger.Debug("Calling SearchProvider to find out the addresses for postcode {0}.", postcode);
-
-            var addressSearchViewModel = new AddressSearchResult();
-
-            try
-            {
-                IEnumerable<Address> addresses = _addressSearchService.FindAddress(postcode).OrderBy(x => x.Uprn);
-                addressSearchViewModel.Addresses = _apprenticeshipSearchMapper.Map<IEnumerable<Address>, IEnumerable<AddressViewModel>>(addresses);
-            }
-            catch (CustomException e)
-            {
-                var message = string.Format("FindAddresses for postcode {0} failed.", postcode);
-                _logger.Error(message, e);
-                addressSearchViewModel.ErrorMessage = e.Message;
-                addressSearchViewModel.HasError = true;
-            }
-            catch (Exception e)
-            {
-                var message = string.Format("FindAddresses for postcode {0} failed.", postcode);
-                _logger.Error(message, e);
-                throw;
-            }
-
-            return addressSearchViewModel;
         }
     }
 }

@@ -5,7 +5,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using Address.IoC;
     using Application.Interfaces.Logging;
     using Azure.Common.IoC;
     using Azure.ServiceBus.IoC;
@@ -112,14 +111,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
         private void InitializeIoC()
         {
-            var container = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationService = container.GetInstance<IConfigurationService>();
-
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -132,7 +123,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<AuthenticationRepositoryRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
-                x.AddRegistry(new AddressRegistry(configurationService));
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();

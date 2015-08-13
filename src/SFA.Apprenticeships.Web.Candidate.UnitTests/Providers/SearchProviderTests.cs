@@ -16,7 +16,6 @@
     {
         private Mock<ILogService> _logService;
         private Mock<ILocationSearchService> _locationSearchService;
-        private Mock<IAddressSearchService> _addressSearchService;
         private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
         
         [SetUp]
@@ -24,7 +23,6 @@
         {
             _logService = new Mock<ILogService>();
             _locationSearchService = new Mock<ILocationSearchService>();
-            _addressSearchService = new Mock<IAddressSearchService>();
             _apprenticeshipMapper = new ApprenticeshipCandidateWebMappers();
         }
 
@@ -39,7 +37,6 @@
             _locationSearchService.Setup(x => x.FindLocation("Location1")).Returns(locations);
 
             var searchProvider = new SearchProvider(_locationSearchService.Object, 
-                _addressSearchService.Object, 
                 _apprenticeshipMapper, 
                 _logService.Object);
 
@@ -58,7 +55,6 @@
                 .Returns(default(IEnumerable<Location>));
 
             var searchProvider = new SearchProvider(_locationSearchService.Object,
-                _addressSearchService.Object,
                 _apprenticeshipMapper,
                 _logService.Object);
 

@@ -116,8 +116,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Address\LocalPropertyIdentifierExtensionsTests.cs" />
-    <Compile Include="Address\DeliveryPointAddressExtensionsTests.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyBuilder.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyTests.cs" />
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
@@ -241,10 +239,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Address\SFA.Apprenticeships.Infrastructure.Address.csproj">
-      <Project>{969662B6-BB64-48EE-880D-9646AB6146A4}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Address</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
-    using Common.Configuration;
     using Consumers;
-    using Domain.Interfaces.Configuration;
     using Mongo.Common;
     using Provider;
     using Repositories;
@@ -26,7 +24,6 @@
                     x.Type<CheckCandidateRepository>();
                     x.Type<CheckVacancySearch>();
                     x.Type<CheckLocationLookup>();
-                    // x.Type<CheckAddressSearch>();
                     x.Type<CheckPostcodeService>();
                     x.Type<CheckUserDirectory>();
                     x.Type<CheckAzureServiceBus>();

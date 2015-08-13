@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
     using System.Web;
-    using Application.Address;
     using Application.Applications;
     using Application.Applications.Strategies;
     using Application.Authentication;
@@ -102,7 +101,6 @@
             For<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>().Use<VacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
             For<ICandidateService>().Use<CandidateService>();
             For<IUserAccountService>().Use<UserAccountService>();
-            For<IAddressSearchService>().Use<AddressSearchService>();
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
