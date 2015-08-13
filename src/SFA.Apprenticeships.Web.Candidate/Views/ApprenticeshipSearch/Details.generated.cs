@@ -1732,7 +1732,7 @@ WriteLiteral("\r\n\r\n    <script>\r\n    $(function () {\r\n        initSavedVa
 
             
             #line 308 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                 Write(Url.Action("SaveVacancy", "ApprenticeshipApplication"));
+                 Write(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSaveVacancy));
 
             
             #line default
@@ -1741,12 +1741,12 @@ WriteLiteral("\',\r\n            deleteUrl: \'");
 
             
             #line 309 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                   Write(Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication"));
+                   Write(Url.RouteUrl(CandidateRouteNames.ApprenticeshipDeleteSavedVacancy));
 
             
             #line default
             #line hidden
-WriteLiteral("\'    \r\n        });\r\n    });\r\n    </script>\r\n");
+WriteLiteral("\'\r\n        });\r\n    });\r\n    </script>\r\n");
 
 });
 

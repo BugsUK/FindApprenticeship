@@ -7,7 +7,7 @@
 
 <h1 class="heading-xlarge">Create an account</h1>
 
-@using (Html.BeginForm("Index", "Register", FormMethod.Post))
+@using (Html.BeginRouteForm(RouteNames.Register, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -74,7 +74,7 @@
     <script>
         $(function () {
             $('#address-details').addClass('disabled');
-            $('input[id=EmailAddress]').usernameLookup('@Url.Action("CheckUsername", "Register")');
+            $('input[id=EmailAddress]').usernameLookup('@Url.RouteUrl(RouteNames.CheckUsername)');
         });
 
     </script>

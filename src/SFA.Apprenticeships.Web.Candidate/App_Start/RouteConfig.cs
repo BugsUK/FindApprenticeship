@@ -33,9 +33,57 @@
                 );
 
             routes.MapRoute(
+                name: RouteNames.Unlock,
+                url: "unlock",
+                defaults: new { controller = "Login", action = "Unlock" }
+                );
+
+            routes.MapRoute(
                 name: RouteNames.ForgottenCredentials,
                 url: "forgottencredentials",
                 defaults: new { controller = "Login", action = "ForgottenCredentials" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.ForgottenPassword,
+                url: "forgottenpassword",
+                defaults: new { controller = "Login", action = "ForgottenPassword" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.ForgottenEmail,
+                url: "forgottenemail",
+                defaults: new { controller = "Login", action = "ForgottenEmail" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.ResetPassword,
+                url: "resetpassword",
+                defaults: new { controller = "Login", action = "ResetPassword" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.Register,
+                url: "register",
+                defaults: new { controller = "Register", action = "Index" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.CheckUsername,
+                url: "checkusername",
+                defaults: new { controller = "Register", action = "CheckUsername" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.Activate,
+                url: "activate",
+                defaults: new { controller = "Register", action = "Activate" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.Activation,
+                url: "activation",
+                defaults: new { controller = "Register", action = "Activation" }
                 );
 
             routes.MapRoute(
@@ -45,9 +93,39 @@
                 );
 
             routes.MapRoute(
+                name: RouteNames.SkipMonitoringInformation,
+                url: "skiptellusmore",
+                defaults: new { controller = "Register", action = "SkipMonitoringInformation" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.WebTrendsOptOut,
+                url: "webtrendsoptout",
+                defaults: new { controller = "Home", action = "WebTrendsOptOut" }
+                );
+
+            routes.MapRoute(
+                name: RouteNames.DismissPlannedOutageMessage,
+                url: "dismissplannedoutagemessage",
+                defaults: new { controller = "Account", action = "DismissPlannedOutageMessage" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.Settings,
                 url: "settings",
                 defaults: new { controller = "Account", action = "Settings" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.LocationSearch,
+                url: "location",
+                defaults: new { controller = "Location", action = "Location" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.ResendUpdateEmailAddressCode,
+                url: "resendupdateemailaddresscode",
+                defaults: new { controller = "Account", action = "ResendUpdateEmailAddressCode" }
                 );
 
             routes.MapRoute(
@@ -135,9 +213,27 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipSearchSaveSearch,
+                url: "apprenticeshipsearch/savesearch",
+                defaults: new { controller = "ApprenticeshipSearch", action = "SaveSearch" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipDetailsWithDistance,
                 url: "apprenticeshipdetail/{id}/{distance}",
                 defaults: new { controller = "ApprenticeshipSearch", action = "DetailsWithDistance" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipSaveVacancy,
+                url: "apprenticeship/save",
+                defaults: new { controller = "ApprenticeshipApplication", action = "SaveVacancy" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipDeleteSavedVacancy,
+                url: "apprenticeship/deletesaved",
+                defaults: new { controller = "ApprenticeshipApplication", action = "DeleteSavedVacancy" }
                 );
 
             routes.MapRoute(
@@ -171,15 +267,33 @@
                 );
 
             routes.MapRoute(
-                name: CandidateRouteNames.ApprenticeshipSaveVacancy,
-                url: "apprenticeship/savevacancy/{id}",
-                defaults: new { controller = "ApprenticeshipApplication", action = "SaveVacancy" }
+                name: CandidateRouteNames.ApprenticeshipAutoSave,
+                url: "apprenticeship/autosave/{id}",
+                defaults: new { controller = "ApprenticeshipApplication", action = "AutoSave" }
                 );
 
             routes.MapRoute(
-                name: CandidateRouteNames.ApprenticeshipDeleteSavedVacancy,
-                url: "apprenticeship/deletesavedvacancy/{id}",
-                defaults: new { controller = "ApprenticeshipApplication", action = "DeleteSavedVacancy" }
+                name: CandidateRouteNames.ApprenticeshipResume,
+                url: "apprenticeship/resume/{id}",
+                defaults: new { controller = "ApprenticeshipApplication", action = "Resume" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipArchive,
+                url: "apprenticeship/archive/{id}",
+                defaults: new { controller = "Account", action = "Archive" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipDelete,
+                url: "apprenticeship/delete/{id}",
+                defaults: new { controller = "Account", action = "Delete" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.ApprenticeshipTrack,
+                url: "apprenticeship/track/{id}",
+                defaults: new { controller = "Account", action = "Track" }
                 );
 
             routes.MapRoute(
@@ -222,6 +336,24 @@
                 name: CandidateRouteNames.TraineeshipView,
                 url: "traineeship/view/{id}",
                 defaults: new { controller = "TraineeshipApplication", action = "View" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.DismissTraineeshipPrompts,
+                url: "traineeships/dismissprompts",
+                defaults: new { controller = "Account", action = "DismissTraineeshipPrompts" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.DismissApplicationNotifications,
+                url: "apprenticeships/dismissnotifications",
+                defaults: new { controller = "Account", action = "DismissApplicationNotifications" }
+                );
+
+            routes.MapRoute(
+                name: CandidateRouteNames.DeleteSavedSearch,
+                url: "savedsearch/delete/{id}",
+                defaults: new { controller = "Account", action = "DeleteSavedSearch" }
                 );
 
             routes.MapRoute(

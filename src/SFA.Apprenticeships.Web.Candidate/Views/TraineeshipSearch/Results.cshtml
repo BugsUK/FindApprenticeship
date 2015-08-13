@@ -44,7 +44,7 @@
 
     <script>
         var searchUrl = '@Url.RouteUrl(CandidateRouteNames.TraineeshipResults)';
-        var locationUrl = '@Url.Action("location", "Location")';
+        var locationUrl = '@Url.RouteUrl(CandidateRouteNames.LocationSearch)';
     </script>
     @Scripts.Render("~/bundles/nas/results")
 }

@@ -11,7 +11,7 @@
     <p>If you're looking for help then <a href="@Url.RouteUrl(CandidateRouteNames.Helpdesk)">contact us</a> instead.</p>
 </div>
 
-@using (Html.BeginForm("Feedback", "Home", FormMethod.Post))
+@using (Html.BeginRouteForm(CandidateRouteNames.Feedback, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.FormTextFor(

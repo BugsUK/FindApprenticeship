@@ -75,9 +75,9 @@
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);
                         return View("Index", response.ViewModel);
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.CandidateNotLoggedIn:
-                        return RedirectToAction("Index");
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.Ok:
-                        return RedirectToAction("Results", model.RouteValues);
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipResults, model.RouteValues);
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch:
                     {
                         // ReSharper disable once PossibleInvalidOperationException
@@ -88,7 +88,7 @@
                             case ApprenticeshipSearchMediatorCodes.SavedSearch.SavedSearchNotFound:
                             case ApprenticeshipSearchMediatorCodes.SavedSearch.RunSaveSearchFailed:
                                 SetUserMessage(savedSearchResponse.Message.Text, savedSearchResponse.Message.Level);
-                                return RedirectToAction("Index");
+                                return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
                             case ApprenticeshipSearchMediatorCodes.SavedSearch.Ok:
                                 ModelState.Clear();
                                 return Redirect(savedSearchResponse.ViewModel.SearchUrl.Value);
@@ -125,7 +125,7 @@
                         return View(response.ViewModel);
                     case ApprenticeshipSearchMediatorCodes.Results.ExactMatchFound:
                         ViewBag.SearchReturnUrl = null;
-                        return RedirectToAction("Details", response.Parameters);
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, response.Parameters);
                     case ApprenticeshipSearchMediatorCodes.Results.Ok:
                         ModelState.Remove("Location");
                         ModelState.Remove("Latitude");

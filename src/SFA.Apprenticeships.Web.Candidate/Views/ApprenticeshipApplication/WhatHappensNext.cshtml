@@ -65,7 +65,7 @@
                             }
                             else
                             {
-                                <p><a href="@Url.Action("Resume", "ApprenticeshipApplication", new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })">Resume</a></p>
+                                <p><a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipResume, new { id = Model.SavedAndDraftApplications[i].VacancyId.ToString() })">Resume</a></p>
                             }
                         </div>
                     </div>

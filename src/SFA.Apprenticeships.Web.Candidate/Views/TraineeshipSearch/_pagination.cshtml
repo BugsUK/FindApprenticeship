@@ -2,8 +2,8 @@
 
 @{
     var pages = Model.Pages;
-    var prevLink = Model.VacancySearch.PageNumber > 1 ? Url.Action("results", new TraineeshipSearchViewModel(Model.VacancySearch) {PageNumber = Model.PrevPage, SearchAction = SearchAction.Sort}) : "#";
-    var nextLink = Model.VacancySearch.PageNumber < pages ? Url.Action("results", new TraineeshipSearchViewModel(Model.VacancySearch) { PageNumber = Model.NextPage, SearchAction = SearchAction.Sort }) : "#";
+    var prevLink = Model.VacancySearch.PageNumber > 1 ? Url.RouteUrl(CandidateRouteNames.TraineeshipResults, new TraineeshipSearchViewModel(Model.VacancySearch) { PageNumber = Model.PrevPage, SearchAction = SearchAction.Sort }) : "#";
+    var nextLink = Model.VacancySearch.PageNumber < pages ? Url.RouteUrl(CandidateRouteNames.TraineeshipResults, new TraineeshipSearchViewModel(Model.VacancySearch) { PageNumber = Model.NextPage, SearchAction = SearchAction.Sort }) : "#";
 }
 
 @if (Model.TotalHits > 0)

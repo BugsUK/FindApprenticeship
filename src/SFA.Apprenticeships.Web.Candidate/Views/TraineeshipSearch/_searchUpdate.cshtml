@@ -23,7 +23,7 @@
                         <ul id="location-suggestions" class="list-text list-max-11">
                             @foreach (var locationSearch in Model.LocationSearches)
                             {
-                                <li><a href="@Url.Action("results", locationSearch)">@locationSearch.Location</a></li>
+                                <li><a href="@Url.RouteUrl(CandidateRouteNames.TraineeshipResults, locationSearch)">@locationSearch.Location</a></li>
                             }
                         </ul>
                     </div>

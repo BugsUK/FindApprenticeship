@@ -66,7 +66,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
                     case TraineeshipApplicationMediatorCodes.Submit.Ok:
-                        return RedirectToAction("WhatHappensNext", response.Parameters);
+                        return RedirectToRoute(CandidateRouteNames.TraineeshipWhatNext, response.Parameters);
                     case TraineeshipApplicationMediatorCodes.Submit.ValidationError:
                         ModelState.Clear();
                         response.ValidationResult.AddToModelState(ModelState, string.Empty);

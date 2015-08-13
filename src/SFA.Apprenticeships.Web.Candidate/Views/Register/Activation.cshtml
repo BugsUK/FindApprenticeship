@@ -7,7 +7,7 @@
 
 <h1 id="accountCreated" class="heading-xlarge">Activate your account</h1>
 
-@using (Html.BeginForm("Activate", "Register", FormMethod.Post, new {@id = "activation-form"}))
+@using (Html.BeginRouteForm(RouteNames.Activate, FormMethod.Post, new { @id = "activation-form" }))
 {
     @Html.AntiForgeryToken()
     <p class="text">

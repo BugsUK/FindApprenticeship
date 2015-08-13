@@ -34,7 +34,7 @@
             <p>
                 <a id="dismiss-traineeship-prompts-link" 
                    class="notInterested link-unimp icon-black" 
-                   href="@Url.Action("DismissTraineeshipPrompts", "Account")"
+                   href="@Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)"
                    onclick="Webtrends.multiTrack({ element: this, argsa: ['DCS.dcsuri', '/traineeships/promptdecline', 'WT.dl', '99', 'WT.ti', 'Traineeship Prompt Declined'] })"><i class="copy-16 fa fa-times-circle"></i>Don't show me this again</a>
             </p>
         </div>
@@ -54,7 +54,7 @@
                 </p>
             }
             <p>
-                <a href="@Url.Action("DismissApplicationNotifications", new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
+                <a href="@Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })" class="notInterested link-unimp icon-black" id=""><fa class="fa fa-times-circle"></fa>Dismiss this message</a>
             </p>
         </div>
     </div>
@@ -160,7 +160,7 @@ else
                                         </td>
                                         <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
                                         <td class="ta-center">
-                                            <a title="Remove from my applications" class="icon-black archive-successful" href="@Url.Action("Archive", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                            <a title="Remove from my applications" class="icon-black archive-successful" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                         </td>
                                     </tr>
                                 }
@@ -261,7 +261,7 @@ else
                                             </td>
                                             <td class="ta-center">@Html.RouteLink("View application", CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId })</td>
                                             <td class="ta-center">
-                                                <a title="Remove from my applications" class="icon-black archive-unsuccessful" href="@Url.Action("Archive", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                                <a title="Remove from my applications" class="icon-black archive-unsuccessful" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                             </td>
                                         </tr>
 
@@ -350,7 +350,7 @@ else
                                         }
                                     </td>
                                     <td class="ta-center">
-                                        <a title="Remove from my applications" class="icon-black delete-draft" href="@Url.Action("Delete", "Account", new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                        <a title="Remove from my applications" class="icon-black delete-draft" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                     </td>
                                 </tr>
                             }

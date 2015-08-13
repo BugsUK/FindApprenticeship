@@ -32,7 +32,7 @@
             You applied on @Html.DisplayFor(m => m.DateApplied, "Date").
         </p>
         <p class="hide-print">
-            <a id="return-to-my-applications" href="@Url.Action("Index", "Account")">Return to my applications</a>
+            <a id="return-to-my-applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">Return to my applications</a>
         </p>
     </div>
 </div>
@@ -52,6 +52,6 @@
 
 <div class="form-group hide-print">
     <p>
-        <a id="return-to-my-applications" href="@Url.Action("Index", "Account")">Return to my applications</a>
+        <a id="return-to-my-applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">Return to my applications</a>
     </p>
 </div>

@@ -243,8 +243,8 @@ else
 {
     <script>
         initSavedVacancies({
-            saveUrl: '@Url.Action("SaveVacancy", "ApprenticeshipApplication")',
-            deleteUrl: '@Url.Action("DeleteSavedVacancy", "ApprenticeshipApplication")',
+            saveUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipSaveVacancy)',
+            deleteUrl: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDeleteSavedVacancy)',
             title: true
         });
     </script>

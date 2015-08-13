@@ -364,7 +364,7 @@
                 Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", "/apprenticeship/apply/autosavedraft/@Model.VacancyId", "WT.dl", "99", "WT.ti", "Apprenticeship – Auto Save Draft Form"] });
                 var request = $.ajax({
                     type: "POST",
-                    url: '@Url.Action("AutoSave", "ApprenticeshipApplication", new {id = Model.VacancyId})',
+                    url: '@Url.RouteUrl(CandidateRouteNames.ApprenticeshipAutoSave, new { id = Model.VacancyId })',
                     data: $("#application-form").serialize()
                 });
 

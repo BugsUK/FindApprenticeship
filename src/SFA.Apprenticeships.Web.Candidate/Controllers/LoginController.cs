@@ -87,7 +87,7 @@
                         return View(model);
 
                     case LoginMediatorCodes.Index.AccountLocked:
-                        return RedirectToAction("Unlock");
+                        return RedirectToRoute(RouteNames.Unlock);
 
                     case LoginMediatorCodes.Index.ApprenticeshipApply:
                         return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, new { id = response.Parameters.ToString() });
@@ -102,7 +102,7 @@
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
 
                     case LoginMediatorCodes.Index.PendingActivation:
-                        return RedirectToAction("Activation", "Register");
+                        return RedirectToRoute(RouteNames.Activation);
 
                     case LoginMediatorCodes.Index.LoginFailed:
                         ModelState.AddModelError(string.Empty, response.Parameters.ToString());
@@ -197,7 +197,7 @@
                     case LoginMediatorCodes.Resend.ResendFailed:
                     case LoginMediatorCodes.Resend.ResentSuccessfully:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToAction("Unlock");
+                        return RedirectToRoute(RouteNames.Unlock);
 
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
@@ -300,7 +300,7 @@
                         return View(RouteNames.ForgottenCredentials, response.ViewModel);
                     case LoginMediatorCodes.ForgottenPassword.PasswordSent:
                         UserData.Push(UserDataItemNames.EmailAddress, model.ForgottenPasswordViewModel.EmailAddress);
-                        return RedirectToAction("ResetPassword");
+                        return RedirectToRoute(RouteNames.ResetPassword);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -324,10 +324,10 @@
                         return View(RouteNames.ForgottenCredentials, response.ViewModel);
                     case LoginMediatorCodes.ForgottenEmail.FailedToSendEmail:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToAction("Index", "Login");
+                        return RedirectToRoute(RouteNames.SignIn);
                     case LoginMediatorCodes.ForgottenEmail.EmailSent:
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToAction("Index", "Login");
+                        return RedirectToRoute(RouteNames.SignIn);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -375,7 +375,7 @@
 
                     case LoginMediatorCodes.ResetPassword.UserAccountLocked:
                         UserData.Push(UserDataItemNames.EmailAddress, model.EmailAddress);
-                        return RedirectToAction("Unlock");
+                        return RedirectToRoute(RouteNames.Unlock);
 
                     case LoginMediatorCodes.ResetPassword.SuccessfullyResetPassword:
                         SetUserMessage(response.Message.Text);
@@ -407,7 +407,7 @@
                     SetUserMessage(PasswordResetPageMessages.FailedToSendPasswordResetCode, UserMessageLevel.Warning);
                 }
 
-                return RedirectToAction("ResetPassword");
+                return RedirectToRoute(RouteNames.ResetPassword);
             });
         }
 
@@ -433,7 +433,7 @@
                 }
 
                 message += string.Format(LoginPageMessages.MobileVerificationRequiredText, viewModel.PhoneNumber,
-                    Url.Action("VerifyMobile", "Account",
+                    Url.RouteUrl(CandidateRouteNames.VerifyMobile,
                         new RouteValueDictionary
                         {
                             {

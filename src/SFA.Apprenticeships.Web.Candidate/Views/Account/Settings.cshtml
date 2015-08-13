@@ -193,7 +193,7 @@
                                         @Html.FormUnvalidatedCheckBoxFor(m => m.SavedSearches[index].AlertsEnabled, controlHtmlAttributes: new { @class = "no-left-margin" })
                                     </li>
                                     <li>
-                                        <a href="@Url.Action("DeleteSavedSearch", new {id = savedSearch.Id, isJavascript = false})" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
+                                        <a href="@Url.RouteUrl(CandidateRouteNames.DeleteSavedSearch, new { id = savedSearch.Id, isJavascript = false })" id="@savedSearch.Id" class="link-unimp icon-black delete-saved-search-link">
                                             <i class="fa fa-times-circle"></i>Delete saved search
                                         </a>
                                     </li>

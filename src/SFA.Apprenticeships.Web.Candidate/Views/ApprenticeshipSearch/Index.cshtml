@@ -224,7 +224,7 @@
 
     <script>
         $("#Location").locationMatch({
-            url: '@Url.Action("location", "Location")',
+            url: '@Url.RouteUrl(CandidateRouteNames.LocationSearch)',
             longitude: '#@(Html.IdFor(m => m.Longitude))',
             latitude: '#@(Html.IdFor(m => m.Latitude))',
             latlonhash: '#@(Html.IdFor(m => m.Hash))'

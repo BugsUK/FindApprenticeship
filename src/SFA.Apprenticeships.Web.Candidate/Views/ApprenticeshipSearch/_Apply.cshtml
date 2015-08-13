@@ -39,11 +39,11 @@ else if (Request.IsAuthenticated)
 
             if (Model.VacancyStatus == VacancyStatuses.Live)
             {
-                <a id="track-application-status" href="@Url.Action("Track", "Account", new { id = Model.Id })">Track application status</a>
+                <a id="track-application-status" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipTrack, new { id = Model.Id })">Track application status</a>
             }
             else
             {
-                <a id="return-to-my-applications" href="@Url.Action("Index", "Account")">Return to my applications</a>
+                <a id="return-to-my-applications" href="@Url.RouteUrl(CandidateRouteNames.MyApplications)">Return to my applications</a>
             }
         }
     }

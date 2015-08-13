@@ -56,7 +56,7 @@
             <div class="content-container" role="alert">
                 <div class="font-xsmall maintenance-content">
                     <div>@Html.Raw(ViewBag.PlannedOutageMessage)</div>
-                    <a href="@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = false })" class="maintenance-close">
+                    <a href="@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })" class="maintenance-close">
                         <i id="dismiss-planned-outage-message" class="icon-black fa fa-times-circle"></i>
                     </a>
                 </div>
@@ -203,7 +203,7 @@
 
                 var request = $.ajax({
                     type: "GET",
-                    url: '@Url.Action("DismissPlannedOutageMessage", "Account", new { isJavascript = true })'
+                    url: '@Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = true })'
                 });
 
                 request.done(function () {

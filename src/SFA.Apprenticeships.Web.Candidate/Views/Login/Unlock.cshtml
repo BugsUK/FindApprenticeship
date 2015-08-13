@@ -10,7 +10,7 @@
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-@using (Html.BeginForm("Unlock", "Login", FormMethod.Post, new { @id = "account-unlock-form" }))
+@using (Html.BeginRouteForm(RouteNames.Unlock, FormMethod.Post, new { @id = "account-unlock-form" }))
 {
     @Html.AntiForgeryToken();
     <div class="form-group">

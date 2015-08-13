@@ -49,7 +49,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return RedirectToRoute(CandidateRouteNames.MyApplications);
                     case ApprenticeshipApplicationMediatorCodes.Resume.Ok:
-                        return RedirectToAction("Apply", response.Parameters);
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipApply, response.Parameters);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
@@ -115,7 +115,7 @@
                         return View(response.ViewModel);
                     case ApprenticeshipApplicationMediatorCodes.PreviewAndSubmit.Ok:
                         ModelState.Clear();
-                        return RedirectToAction("Preview", response.Parameters);
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipPreview, response.Parameters);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);
@@ -323,9 +323,9 @@
                     case ApprenticeshipApplicationMediatorCodes.Submit.Error:
                         ModelState.Clear();
                         SetUserMessage(response.Message.Text, response.Message.Level);
-                        return RedirectToAction("Preview", response.Parameters);
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipPreview, response.Parameters);
                     case ApprenticeshipApplicationMediatorCodes.Submit.Ok:
-                        return RedirectToAction("WhatHappensNext", response.Parameters);
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipWhatNext, response.Parameters);
                 }
 
                 throw new InvalidMediatorCodeException(response.Code);

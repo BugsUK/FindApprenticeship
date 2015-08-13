@@ -62,7 +62,7 @@
                         return View(model);
                     case RegisterMediatorCodes.Register.SuccessfullyRegistered:
                         UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, ConfigurationService.Get<WebConfiguration>().TermsAndConditionsVersion);
-                        return RedirectToAction("Activation");
+                        return RedirectToRoute(RouteNames.Activation);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -150,7 +150,7 @@
                 }
 
                 //Redirects even if fails for unknown reason, don't hinder user.
-                return RedirectToAction("SkipMonitoringInformation");
+                return RedirectToRoute(RouteNames.SkipMonitoringInformation);
             });
         }
 
@@ -165,7 +165,7 @@
                 var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
 
                 //Following registration, user should be prompted to verify their mobile number
-                var response = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.Action("VerifyMobile", "Account", new RouteValueDictionary { { "ReturnUrl", returnUrl } }));
+                var response = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.RouteUrl(CandidateRouteNames.VerifyMobile, new RouteValueDictionary { { "ReturnUrl", returnUrl } }));
                 if (response.Code == RegisterMediatorCodes.SendMobileVerificationCode.Success)
                 {
                     var message = response.Message;
@@ -206,11 +206,11 @@
                 {
                     SetUserMessage(string.Format(ActivationPageMessages.ActivationCodeSent, emailAddress));
 
-                    return RedirectToAction("Activation");
+                    return RedirectToRoute(RouteNames.Activation);
                 }
 
                 SetUserMessage(ActivationPageMessages.ActivationCodeSendingFailure, UserMessageLevel.Warning);
-                return RedirectToAction("Activation");
+                return RedirectToRoute(RouteNames.Activation);
             });
         }
 

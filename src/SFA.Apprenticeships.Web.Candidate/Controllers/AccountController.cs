@@ -96,7 +96,7 @@
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(response.ViewModel);
                     case AccountMediatorCodes.Settings.MobileVerificationRequired:
-                        return RedirectToAction("VerifyMobile");
+                        return RedirectToRoute(CandidateRouteNames.VerifyMobile);
                     case AccountMediatorCodes.Settings.Success:
                     case AccountMediatorCodes.Settings.SuccessWithWarning:
                         UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
@@ -226,7 +226,7 @@
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
-                return RedirectToAction("VerifyMobile");
+                return RedirectToRoute(CandidateRouteNames.VerifyMobile);
             });
         }
 
