@@ -357,6 +357,7 @@
 
         public async Task<ActionResult> DismissPlannedOutageMessage(bool isJavascript)
         {
+            //todo: move to home controller as not related to the user account views
             return await Task.Run<ActionResult>(() =>
             {
                 _dismissPlannedOutageMessageCookieProvider.SetCookie(HttpContext);
@@ -400,6 +401,7 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Track(int id)
         {
+            // called when a user clicks "Track application status" from vacancy details for a live vacancy previously applied for
             return await Task.Run<ActionResult>(() =>
             {
                 var response = _accountMediator.Track(UserContext.CandidateId, id);
@@ -439,7 +441,7 @@
             {
                 if (UserContext == null)
                 {
-                    //Check needed as AuthorizeCandidate attribute not on action
+                    //todo: check needed as AuthorizeCandidate attribute not on action
                     return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
                 }
 
