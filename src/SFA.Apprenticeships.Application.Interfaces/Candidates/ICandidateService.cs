@@ -14,6 +14,7 @@
     /// <summary>
     /// For candidate users to register, manage their profile and other dashboard entities
     /// </summary>
+    //todo: review whether operations should be defined in the account or candidate provider/service interfaces
     public interface ICandidateService
     {
         Candidate Register(Candidate newCandidate, string password);

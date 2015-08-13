@@ -13,6 +13,7 @@
     using ViewModels.Register;
     using ViewModels.VacancySearch;
 
+    //todo: review whether operations should be defined in the account or candidate provider/service interfaces
     public interface ICandidateServiceProvider
     {
         bool Register(RegisterViewModel model);

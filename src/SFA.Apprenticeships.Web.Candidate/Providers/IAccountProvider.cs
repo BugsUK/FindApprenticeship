@@ -4,6 +4,7 @@
     using Domain.Entities.Candidates;
     using ViewModels.Account;
 
+    //todo: review whether operations should be defined in the account or candidate provider/service interfaces
     public interface IAccountProvider
     {
         SettingsViewModel GetSettingsViewModel(Guid candidateId);

@@ -8,6 +8,7 @@
     /// Role agnostic (i.e. is not aware of specific roles such as candidate).
     /// Uses the user repository
     /// </summary>
+    //todo: review whether operations should be defined in the account or candidate provider/service interfaces
     public interface IUserAccountService
     {
         bool IsUsernameAvailable(string username);
