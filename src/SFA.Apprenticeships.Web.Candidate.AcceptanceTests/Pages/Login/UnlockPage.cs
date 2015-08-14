@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/login/unlock")]
+    [PageNavigation("/unlock")]
     [PageAlias("UnlockPage")]
     public class UnlockPage : BaseValidationPage
     {

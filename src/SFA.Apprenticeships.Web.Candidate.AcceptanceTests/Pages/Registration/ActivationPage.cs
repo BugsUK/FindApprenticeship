@@ -3,7 +3,7 @@
     using global::SpecBind.Pages;
     using OpenQA.Selenium;
 
-    [PageNavigation("/register/activation")]
+    [PageNavigation("/activation")]
     [PageAlias("ActivationPage")]
     public class ActivationPage : BaseValidationPage
     {

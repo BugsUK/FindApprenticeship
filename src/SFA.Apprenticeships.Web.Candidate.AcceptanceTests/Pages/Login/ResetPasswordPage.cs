@@ -3,7 +3,7 @@
     using OpenQA.Selenium;
     using SpecBind.Pages;
 
-    [PageNavigation("/login/resetpassword")]
+    [PageNavigation("/resetpassword")]
     [PageAlias("ResetPasswordPage")]
     public class ResetPasswordPage : BaseValidationPage
     {
