@@ -7,7 +7,7 @@
     {
         protected override string ResolveCore(VacancySummary source)
         {
-            return source.EmployerAnonymous ? source.EmployerTradingName : source.EmployerName;
+            return source.EmployerAnonymous ? string.Empty : source.EmployerName;
         }
     }
 }
