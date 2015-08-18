@@ -91,9 +91,9 @@
         {
             _logger.Debug("Processing application summary status update for application with legacy application ID '{0}'", applicationStatusSummary.LegacyApplicationId);
 
-            if (!ProcessApprenticeshipApplication(applicationStatusSummary, strictEtlValidation) && !ProcessTraineeshipApplication(applicationStatusSummary, strictEtlValidation))
+            if (!ProcessApprenticeshipApplication(applicationStatusSummary, strictEtlValidation) && !ProcessTraineeshipApplication(applicationStatusSummary))
             {
-                var message = string.Format("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}' and application ID '{1}'", applicationStatusSummary.LegacyApplicationId, applicationStatusSummary.ApplicationId);
+                var message = string.Format("Unable to find/update apprenticeship or traineeship application status for application with legacy application ID '{0}', application ID '{1}' and legacy candidate ID '{2}'. Check the audit repository to see if the candidate and application was deleted", applicationStatusSummary.LegacyApplicationId, applicationStatusSummary.ApplicationId, applicationStatusSummary.LegacyCandidateId);
 
                 if (applicationStatusSummary.ApplicationId != Guid.Empty && applicationStatusSummary.LegacyApplicationId == 0)
                 {
@@ -155,7 +155,7 @@
             if (apprenticeshipApplicationDetail == null && applicationStatusSummary.LegacyCandidateId != 0)
             {
                 // in some cases the application can't be found using the application IDs so use legacy candidate and vacancy IDs
-                var candidate = _candidateReadRepository.Get(applicationStatusSummary.LegacyCandidateId, strictEtlValidation);
+                var candidate = _candidateReadRepository.Get(applicationStatusSummary.LegacyCandidateId, false);
 
                 if (candidate == null)
                 {
@@ -175,14 +175,14 @@
             return true;
         }
 
-        private bool ProcessTraineeshipApplication(ApplicationStatusSummary applicationStatusSummary, bool strictEtlValidation)
+        private bool ProcessTraineeshipApplication(ApplicationStatusSummary applicationStatusSummary)
         {
             var traineeshipApplicationDetail = _traineeshipApplicationReadRepository.Get(applicationStatusSummary.LegacyApplicationId);
 
             if (traineeshipApplicationDetail == null && applicationStatusSummary.LegacyCandidateId != 0)
             {
                 // in some cases the application can't be found using the application IDs so use legacy candidate and vacancy IDs
-                var candidate = _candidateReadRepository.Get(applicationStatusSummary.LegacyCandidateId, strictEtlValidation);
+                var candidate = _candidateReadRepository.Get(applicationStatusSummary.LegacyCandidateId, false);
 
                 if (candidate == null)
                 {
