@@ -57,8 +57,8 @@
             viewModelClientValidator.ShouldNotHaveValidationErrorFor(x => x.EmailAddress, viewModel);
         }
 
-        [TestCase(".krister.bone@gmail.com", "?Password01!")]
-        [TestCase("krister.bone@-gmail.co7m", "?Password01!")]
+        [TestCase(".krister.bonegmail.com", "?Password01!")]
+        [TestCase("krister.bone@gmailcom", "?Password01!")]
         public void ShouldHaveErrorWhenEmailAddressIsInvalid(string emailAddress, string password)
         {
             var viewModel = new RegisterViewModel
