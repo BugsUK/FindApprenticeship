@@ -276,7 +276,7 @@
 
                 _candidateService.SubmitApplication(candidateId, vacancyId);
 
-                _logger.Debug("Application submitted for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Info("Application submitted for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
                 return model;
@@ -324,7 +324,7 @@
             try
             {
                 _candidateService.ArchiveApplication(candidateId, vacancyId);
-                _logger.Debug("Application archived for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Info("Application archived for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
             }
             catch (Exception e)
@@ -352,7 +352,7 @@
             {
                 _candidateService.UnarchiveApplication(candidateId, vacancyId);
 
-                _logger.Debug("Application unarchived for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Info("Application unarchived for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
             }
             catch (Exception e)
@@ -379,7 +379,7 @@
             try
             {
                 _candidateService.DeleteApplication(candidateId, vacancyId);
-                _logger.Debug("Application deleted for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Info("Application deleted for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
             }
             catch (CustomException e)

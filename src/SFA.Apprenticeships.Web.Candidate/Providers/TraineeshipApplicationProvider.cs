@@ -137,7 +137,7 @@
 
                 _candidateService.SubmitTraineeshipApplication(candidateId, vacancyId, traineeshipApplicationDetails);
 
-                _logger.Debug("Traineeship application submitted for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Info("Traineeship application submitted for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
 
                 return model;
