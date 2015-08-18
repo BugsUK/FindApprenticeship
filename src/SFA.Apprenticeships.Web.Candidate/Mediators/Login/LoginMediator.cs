@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Linq;
+    using Apprenticeships.Application.Interfaces.Logging;
     using Common.Configuration;
     using Common.Constants;
     using Common.Framework;
@@ -30,6 +31,7 @@
         private readonly ForgottenPasswordViewModelServerValidator _forgottenPasswordViewModelServerValidator;
         private readonly PasswordResetViewModelServerValidator _passwordResetViewModelServerValidator;
         private readonly ForgottenEmailViewModelServerValidator _forgottenEmailViewModelServerValidator;
+        private readonly ILogService _logService;
 
         public LoginMediator(IUserDataProvider userDataProvider, 
             ICandidateServiceProvider candidateServiceProvider,
@@ -40,7 +42,8 @@
             IAuthenticationTicketService authenticationTicketService,
             ForgottenPasswordViewModelServerValidator forgottenPasswordViewModelServerValidator,
             PasswordResetViewModelServerValidator passwordResetViewModelServerValidator,
-            ForgottenEmailViewModelServerValidator forgottenEmailViewModelServerValidator)
+            ForgottenEmailViewModelServerValidator forgottenEmailViewModelServerValidator,
+            ILogService logService)
         {
             _userDataProvider = userDataProvider;
             _candidateServiceProvider = candidateServiceProvider;
@@ -52,6 +55,7 @@
             _forgottenPasswordViewModelServerValidator = forgottenPasswordViewModelServerValidator;
             _passwordResetViewModelServerValidator = passwordResetViewModelServerValidator;
             _forgottenEmailViewModelServerValidator = forgottenEmailViewModelServerValidator;
+            _logService = logService;
         }
 
         public MediatorResponse<LoginResultViewModel> Index(LoginViewModel viewModel)
@@ -76,6 +80,8 @@
 
                 if (result.IsAuthenticated)
                 {
+                    _logService.Info("User {0} successfully logged in. User Status: {1}", result.EmailAddress, result.UserStatus);
+
                     _userDataProvider.SetUserContext(result.EmailAddress, result.FullName, result.AcceptedTermsAndConditionsVersion);
 
                     if (result.UserStatus == UserStatuses.PendingActivation)

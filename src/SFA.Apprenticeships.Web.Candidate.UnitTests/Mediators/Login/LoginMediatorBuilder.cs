@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
+    using Application.Interfaces.Logging;
     using Candidate.Mediators.Login;
     using Candidate.Providers;
     using Candidate.Validators;
@@ -47,10 +48,10 @@
             {
                 _configurationService = new Mock<IConfigurationService>();
                 _configurationService.Setup(x => x.Get<WebConfiguration>())
-                    .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
+                    .Returns(new WebConfiguration {VacancyResultsPerPage = 5});
             }
 
-            var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationService.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator(), _authenticationTicketService.Object, new ForgottenPasswordViewModelServerValidator(), new PasswordResetViewModelServerValidator(), new ForgottenEmailViewModelServerValidator());
+            var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationService.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator(), _authenticationTicketService.Object, new ForgottenPasswordViewModelServerValidator(), new PasswordResetViewModelServerValidator(), new ForgottenEmailViewModelServerValidator(), new Mock<ILogService>().Object);
             return mediator;
         }
     }
