@@ -59,7 +59,7 @@
                         subscriptionConfiguration.DeadLetterMessageCountWarningLimit ??
                         serviceBusConfiguration.DefaultDeadLetterMessageCountWarningLimit;
 
-                    _logger.Info("Limits for topic/subscription {0} are {1} active and {2} dead-lettered messages",
+                    _logger.Debug("Limits for topic/subscription {0} are {1} active and {2} dead-lettered messages",
                         subscriptionPath, messageCountWarningLimit, deadLetterMessageCountWarningLimit);
 
                     var subscriptionMessageCountDetails = GetSubscriptionMessageCountDetails(

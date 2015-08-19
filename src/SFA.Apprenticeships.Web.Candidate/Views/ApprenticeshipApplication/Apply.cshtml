@@ -365,6 +365,8 @@
                 var request = $.ajax({
                     type: "POST",
                     url: '@Url.Action("AutoSave", "ApprenticeshipApplication", new {id = Model.VacancyId})',
+                    cache: false,
+                    timeout: 30000,
                     data: $("#application-form").serialize()
                 });
 
@@ -386,7 +388,7 @@
 
                 });
 
-                request.fail(function(jqXHR, textStatus) {
+                request.fail(function(jqXHR, textStatus, errorThrown) {
 
                 });
             }

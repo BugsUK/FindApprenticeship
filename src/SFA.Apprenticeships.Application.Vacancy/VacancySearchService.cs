@@ -37,7 +37,7 @@
             Condition.Requires(parameters.PageSize).IsGreaterOrEqual(1);
 
             var enterMessage = GetLoggerMessage(CallingMessageFormat, parameters);
-            _logger.Info(enterMessage);
+            _logger.Debug(enterMessage);
 
             try
             {

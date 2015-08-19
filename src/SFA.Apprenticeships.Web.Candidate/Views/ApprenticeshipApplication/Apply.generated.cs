@@ -1126,6 +1126,8 @@ WriteLiteral("\", \"WT.dl\", \"99\", \"WT.ti\", \"Apprenticeship – Auto Save D
             #line default
             #line hidden
 WriteLiteral(@"',
+                    cache: false,
+                    timeout: 30000,
                     data: $(""#application-form"").serialize()
                 });
 
@@ -1135,7 +1137,7 @@ WriteLiteral(@"',
                         var savedMessage = 'Last saved at ' + result.DateTimeMessage + ' to ' + '<a href=""");
 
             
-            #line 374 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 376 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
                                                                                                      Write(Url.RouteUrl(CandidateRouteNames.MyApplications));
 
             
@@ -1147,25 +1149,25 @@ WriteLiteral("\" title=\"My Applications\">my applications</a>\';\r\n           
 "hide(); }, 5000);\r\n\r\n                        dirtyFormDialog.resetDirtyForm({\r\n " +
 "                           formSelector: \"form\"\r\n                        });\r\n\r\n" +
 "                        window.resetSessionTimeout();\r\n                    }\r\n\r\n" +
-"                });\r\n\r\n                request.fail(function(jqXHR, textStatus) " +
-"{\r\n\r\n                });\r\n            }\r\n\r\n            timeout_reset();\r\n       " +
-" }\r\n\r\n        function getCurrentYear() {\r\n            return currentYear;\r\n    " +
-"    }\r\n\r\n        function getQualificationData() {\r\n            return qualifica" +
-"tionData;\r\n        }\r\n\r\n        function getWorkExperienceData() {\r\n            " +
-"return workExperienceData;\r\n        }\r\n\r\n        function getTrainingCourseData(" +
-") {\r\n            return trainingCourseData;\r\n        }\r\n\r\n        function getWh" +
-"iteListRegex() {\r\n            return whitelistregex;\r\n        }\r\n\r\n        funct" +
-"ion getYearRegex() {\r\n            return yearRegex;\r\n        }\r\n\r\n        functi" +
-"on getMonthLabel(index) {\r\n            var month = \"\";\r\n\r\n            if (index " +
-"=== 0) {\r\n\r\n            } else {\r\n                var mths = [\'Jan\', \'Feb\', \'Mar" +
-"\', \'Apr\', \'May\', \'June\', \'July\', \'Aug\', \'Sept\', \'Oct\', \'Nov\', \'Dec\'];\r\n         " +
-"       month = mths[index - 1];\r\n            }\r\n\r\n            return month;\r\n   " +
-"     }\r\n\r\n    </script>\r\n        \r\n");
+"                });\r\n\r\n                request.fail(function(jqXHR, textStatus, " +
+"errorThrown) {\r\n\r\n                });\r\n            }\r\n\r\n            timeout_rese" +
+"t();\r\n        }\r\n\r\n        function getCurrentYear() {\r\n            return curre" +
+"ntYear;\r\n        }\r\n\r\n        function getQualificationData() {\r\n            ret" +
+"urn qualificationData;\r\n        }\r\n\r\n        function getWorkExperienceData() {\r" +
+"\n            return workExperienceData;\r\n        }\r\n\r\n        function getTraini" +
+"ngCourseData() {\r\n            return trainingCourseData;\r\n        }\r\n\r\n        f" +
+"unction getWhiteListRegex() {\r\n            return whitelistregex;\r\n        }\r\n\r\n" +
+"        function getYearRegex() {\r\n            return yearRegex;\r\n        }\r\n\r\n " +
+"       function getMonthLabel(index) {\r\n            var month = \"\";\r\n\r\n         " +
+"   if (index === 0) {\r\n\r\n            } else {\r\n                var mths = [\'Jan\'" +
+", \'Feb\', \'Mar\', \'Apr\', \'May\', \'June\', \'July\', \'Aug\', \'Sept\', \'Oct\', \'Nov\', \'Dec\'" +
+"];\r\n                month = mths[index - 1];\r\n            }\r\n\r\n            retur" +
+"n month;\r\n        }\r\n\r\n    </script>\r\n        \r\n");
 
 WriteLiteral("    ");
 
             
-            #line 436 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 438 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/nas/application"));
 
             
@@ -1176,7 +1178,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 437 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
+            #line 439 "..\..\Views\ApprenticeshipApplication\Apply.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             

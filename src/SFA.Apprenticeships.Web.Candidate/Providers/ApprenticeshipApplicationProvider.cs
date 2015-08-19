@@ -243,7 +243,7 @@
                         apprenticeshipApplicationViewModel);
 
                 _candidateService.SaveApplication(candidateId, vacancyId, application);
-                _logger.Debug("Application View Model saved for candidate ID: {0}, vacancy ID: {1}.",
+                _logger.Info("Application View Model saved for candidate ID: {0}, vacancy ID: {1}.",
                     candidateId, vacancyId);
             }
             catch (Exception e)
