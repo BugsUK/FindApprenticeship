@@ -10,6 +10,7 @@
     using Common.Constants;
     using Common.Providers;
     using Constants;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
     using Extensions;
@@ -170,7 +171,7 @@
             return await Task.Run<ActionResult>(() =>
             {
                 UserData.Push(CandidateDataItemNames.VacancyDistance, distance);
-                UserData.Push(CandidateDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
+                UserData.PushLastViewedVacancyId(id, VacancyType.Apprenticeship);
 
                 return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id });
             });

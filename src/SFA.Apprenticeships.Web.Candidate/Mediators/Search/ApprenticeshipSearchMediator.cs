@@ -18,6 +18,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Configuration;
+    using Extensions;
     using Infrastructure.Common.Configuration;
     using Infrastructure.VacancySearch.Configuration;
     using Providers;
@@ -383,15 +384,15 @@
             }
 
             var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
-            var lastVacancyId = UserDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
+            var lastViewedVacancy = UserDataProvider.PopLastViewedVacancy();
 
-            if (HasToPopulateDistance(vacancyId, distance, lastVacancyId))
+            if (HasToPopulateDistance(vacancyId, distance, lastViewedVacancy))
             {
                 vacancyDetailViewModel.Distance = distance;
                 UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
             }
 
-            UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
+            UserDataProvider.PushLastViewedVacancyId(vacancyId, VacancyType.Apprenticeship);
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }

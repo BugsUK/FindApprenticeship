@@ -13,7 +13,9 @@
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
+    using Extensions;
     using Providers;
     using Validators;
     using ViewModels.Login;
@@ -109,18 +111,26 @@
                     }
 
                     // Redirect to last viewed vacancy (if any).
-                    var lastViewedVacancyId = _userDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
+                    var lastViewedVacancy = _userDataProvider.PopLastViewedVacancy();
 
-                    if (lastViewedVacancyId != null)
+                    if (lastViewedVacancy != null)
                     {
-                        var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, int.Parse(lastViewedVacancyId));
-
-                        if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
+                        switch (lastViewedVacancy.Type)
                         {
-                            return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipApply, result, parameters: lastViewedVacancyId);
-                        }
+                            case VacancyType.Apprenticeship:
+                            {
+                                var applicationStatus = _candidateServiceProvider.GetApplicationStatus(candidate.EntityId, lastViewedVacancy.Id);
 
-                        return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipDetails, result, parameters: lastViewedVacancyId);
+                                if (applicationStatus.HasValue && applicationStatus.Value == ApplicationStatuses.Draft)
+                                {
+                                    return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipApply, result, parameters: lastViewedVacancy.Id);
+                                }
+
+                                return GetMediatorResponse(LoginMediatorCodes.Index.ApprenticeshipDetails, result, parameters: lastViewedVacancy.Id);
+                            }
+                            case VacancyType.Traineeship:
+                                return GetMediatorResponse(LoginMediatorCodes.Index.TraineeshipDetails, result, parameters: lastViewedVacancy.Id);
+                        }
                     }
 
                     return GetMediatorResponse(LoginMediatorCodes.Index.Ok, result);

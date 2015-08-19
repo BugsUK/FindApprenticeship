@@ -106,8 +106,8 @@
             _userData.ContainsKey(CandidateDataItemNames.VacancyDistance).Should().BeTrue();
             _userData[CandidateDataItemNames.VacancyDistance].Should().Be(Distance);
 
-            _userData.ContainsKey(CandidateDataItemNames.LastViewedVacancyId).Should().BeTrue();
-            _userData[CandidateDataItemNames.LastViewedVacancyId].Should().Be(VacancyId.ToString(CultureInfo.InvariantCulture));
+            _userData.ContainsKey(CandidateDataItemNames.LastViewedVacancy).Should().BeTrue();
+            _userData[CandidateDataItemNames.LastViewedVacancy].Should().Be(VacancyType.Traineeship + "_" + VacancyId.ToString(CultureInfo.InvariantCulture));
         }
 
         private Mock<IUserDataProvider> GetUserDataProvider()
@@ -119,8 +119,8 @@
                 .Returns(Distance);
 
             userDataProvider.Setup(p => p.Pop(
-                It.Is<string>(s => s == CandidateDataItemNames.LastViewedVacancyId)))
-                .Returns(VacancyId.ToString(CultureInfo.InvariantCulture));
+                It.Is<string>(s => s == CandidateDataItemNames.LastViewedVacancy)))
+                .Returns(VacancyType.Traineeship + "_" + VacancyId);
 
             userDataProvider.Setup(p => p.Push(
                 It.IsAny<string>(), It.IsAny<string>()))

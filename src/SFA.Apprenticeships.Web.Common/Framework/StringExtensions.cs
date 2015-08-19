@@ -6,7 +6,7 @@
     {
         public static bool IsValidReturnUrl(this string returnUrl)
         {
-            return !string.IsNullOrEmpty(returnUrl) && (returnUrl.StartsWith("/") || returnUrl.ToLower().StartsWith("%2f"));
+            return !string.IsNullOrEmpty(returnUrl) && (returnUrl.StartsWith("/") || returnUrl.ToLower().StartsWith("%2f")) && returnUrl != "/" && returnUrl != "%2f";
         }
 
         public static T? GetValueOrNull<T>(this string valueAsString) where T : struct

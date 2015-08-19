@@ -8,7 +8,9 @@
     using Attributes;
     using Common.Attributes;
     using Constants;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
+    using Extensions;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Search;
@@ -83,7 +85,7 @@
             return await Task.Run<ActionResult>(() =>
             {
                 UserData.Push(CandidateDataItemNames.VacancyDistance, distance);
-                UserData.Push(CandidateDataItemNames.LastViewedVacancyId, id.ToString(CultureInfo.InvariantCulture));
+                UserData.PushLastViewedVacancyId(id, VacancyType.Traineeship);
 
                 return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, new { id });
             });

@@ -131,7 +131,7 @@
             ApprenticeshipVacancyProvider.Setup(p => p.GetVacancyDetailViewModel(It.IsAny<Guid?>(), It.IsAny<int>())).Returns(vacancyDetailViewModel);
 
             UserDataProvider.Setup(udp => udp.Pop(CandidateDataItemNames.VacancyDistance)).Returns(VacancyDistance);
-            UserDataProvider.Setup(udp => udp.Pop(CandidateDataItemNames.LastViewedVacancyId)).Returns(Convert.ToString(Id));
+            UserDataProvider.Setup(udp => udp.Pop(CandidateDataItemNames.LastViewedVacancy)).Returns(VacancyType.Apprenticeship + "_" + Convert.ToString(Id));
 
             var response = Mediator.Details(Id, null);
 

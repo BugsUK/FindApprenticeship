@@ -9,7 +9,9 @@
     using Common.Constants;
     using Constants;
     using Constants.Pages;
+    using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
+    using Extensions;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Register;
@@ -173,7 +175,7 @@
                 }
 
                 // Clear last viewed vacancy and distance (if any).
-                var lastViewedVacancyId = UserData.Pop(CandidateDataItemNames.LastViewedVacancyId);
+                var lastViewedVacancy = UserData.PopLastViewedVacancy();
                 UserData.Pop(CandidateDataItemNames.VacancyDistance);
 
                 if (!string.IsNullOrWhiteSpace(returnUrl))
@@ -181,9 +183,15 @@
                     return Redirect(Server.UrlDecode(returnUrl));
                 }
 
-                if (lastViewedVacancyId != null)
+                if (lastViewedVacancy != null)
                 {
-                    return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id = int.Parse(lastViewedVacancyId) });
+                    switch (lastViewedVacancy.Type)
+                    {
+                        case VacancyType.Apprenticeship:
+                            return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new { id = lastViewedVacancy.Id });
+                        case VacancyType.Traineeship:
+                            return RedirectToRoute(CandidateRouteNames.TraineeshipDetails, new { id = lastViewedVacancy.Id });
+                    }
                 }
 
                 return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);

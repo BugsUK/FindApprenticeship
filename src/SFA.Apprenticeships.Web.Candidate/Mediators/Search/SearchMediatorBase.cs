@@ -8,6 +8,7 @@
     using Apprenticeships.Application.Interfaces.Vacancies;
     using Common.Configuration;
     using Common.Constants;
+    using Common.Models.Common;
     using Common.Providers;
     using Domain.Interfaces.Configuration;
     using ViewModels.VacancySearch;
@@ -115,6 +116,11 @@
             searchViewModel.CheckLatLonLocHash();
 
             return searchViewModel.Latitude.HasValue && searchViewModel.Longitude.HasValue;
+        }
+
+        protected static bool HasToPopulateDistance(int id, string distance, LastViewedVacancy lastVacancy)
+        {
+            return !string.IsNullOrWhiteSpace(distance) && lastVacancy != null && lastVacancy.Id == id;
         }
 
         protected static bool HasToPopulateDistance(int id, string distance, string lastVacancyId)

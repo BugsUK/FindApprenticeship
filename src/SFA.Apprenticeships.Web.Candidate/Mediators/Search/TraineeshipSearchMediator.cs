@@ -10,6 +10,7 @@
     using Constants;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Configuration;
+    using Extensions;
     using Providers;
     using Validators;
     using ViewModels.VacancySearch;
@@ -159,15 +160,15 @@
             }
 
             var distance = UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
-            var lastVacancyId = UserDataProvider.Pop(CandidateDataItemNames.LastViewedVacancyId);
+            var lastViewedVacancy = UserDataProvider.PopLastViewedVacancy();
 
-            if (HasToPopulateDistance(vacancyId, distance, lastVacancyId))
+            if (HasToPopulateDistance(vacancyId, distance, lastViewedVacancy))
             {
                 vacancyDetailViewModel.Distance = distance;
                 UserDataProvider.Push(CandidateDataItemNames.VacancyDistance, distance);
             }
 
-            UserDataProvider.Push(CandidateDataItemNames.LastViewedVacancyId, vacancyId.ToString(CultureInfo.InvariantCulture));
+            UserDataProvider.PushLastViewedVacancyId(vacancyId, VacancyType.Traineeship);
 
             return GetMediatorResponse(TraineeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }

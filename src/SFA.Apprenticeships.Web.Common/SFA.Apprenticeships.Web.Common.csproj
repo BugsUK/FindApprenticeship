@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
     <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
+    <Compile Include="Models\Common\LastViewedVacancy.cs" />
     <Compile Include="Providers\RobotCrawlerProvider.cs" />
     <Compile Include="Providers\IRobotCrawlerProvider.cs" />
     <Compile Include="SiteMap\ISiteMapGenerator.cs" />
