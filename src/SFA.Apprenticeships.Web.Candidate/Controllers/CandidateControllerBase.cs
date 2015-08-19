@@ -59,6 +59,7 @@
             }
 
             SetLoggingIds();
+            SetRequestInfo();
             SetAbout();
             SetCandidate();
 
@@ -106,11 +107,15 @@
 
             MappedDiagnosticsLogicalContext.Set("sessionId", sessionId);
             MappedDiagnosticsLogicalContext.Set("userId", UserContext != null ? UserContext.CandidateId.ToString() : "<none>");
+        }
 
+        private void SetRequestInfo()
+        {
             MappedDiagnosticsLogicalContext.Set("UserAgent", Request.UserAgent);
             MappedDiagnosticsLogicalContext.Set("UrlReferrer", Request.UrlReferrer == null ? "<unknown>" : Request.UrlReferrer.ToString());
             MappedDiagnosticsLogicalContext.Set("UserLanguages", Request.UserLanguages == null ? "<unknown>" : string.Join(",", Request.UserLanguages));
             MappedDiagnosticsLogicalContext.Set("CurrentCulture", CultureInfo.CurrentCulture.ToString());
+            MappedDiagnosticsLogicalContext.Set("CurrentUICulture", CultureInfo.CurrentUICulture.ToString());
             var headers = Request.Headers.AllKeys.Select(key => string.Format("{0}={1}", key, Request.Headers[key]));
             MappedDiagnosticsLogicalContext.Set("Headers", string.Join(",", headers));
         }
