@@ -6,6 +6,7 @@
     using System.Web.Mvc;
     using System.Web.Routing;
     using System.Web.Security;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -26,16 +27,19 @@
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ILoginMediator _loginMediator;
+        private readonly ILogService _logService;
 
         public LoginController(IAuthenticationTicketService authenticationTicketService,
             ICandidateServiceProvider candidateServiceProvider,
             ILoginMediator loginMediator,
-            IConfigurationService configurationService)
+            IConfigurationService configurationService,
+            ILogService logService)
             : base(configurationService)
         {
             _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer?
             _candidateServiceProvider = candidateServiceProvider; //todo: shouldn't be in here, move to Provider layer?
             _loginMediator = loginMediator;
+            _logService = logService;
         }
 
         [HttpGet]
@@ -257,8 +261,13 @@
 
             UserData.Push(userJourneyKey, userJourneyValue);
 
-            if (userContext != null)
+            if (userContext == null)
             {
+                _logService.Info("User session timeout");
+            }
+            else
+            {
+                _logService.Info("User {0} session timeout", userContext.UserName);
                 //Only set the message if the user context was set by a previous login action.
                 //This means that the session has timed out rather than becoming invalid after closing the browser.
                 SetUserMessage(SignOutPageMessages.SessionTimeoutMessageText);
