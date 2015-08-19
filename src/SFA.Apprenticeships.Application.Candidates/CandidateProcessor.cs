@@ -47,24 +47,13 @@ namespace SFA.Apprenticeships.Application.Candidates
 
             var message = string.Format("Querying candidates for housekeeping took {0}", stopwatch.Elapsed);
 
-            var counter = 0;
-
-            foreach (var candidateId in candidateIds)
-            {
-                var candidateHousekeeping = new CandidateHousekeeping
-                {
-                    CandidateId = candidateId
-                };
-
-                _serviceBus.PublishMessage(candidateHousekeeping);
-                counter++;
-            }
+            var count = _serviceBus.PublishMessages(candidateIds.Select(cid => new CandidateHousekeeping {CandidateId = cid}));
 
             stopwatch.Stop();
 
-            message += string.Format(". Queuing {0} candidates for housekeeping took {1}", counter, stopwatch.Elapsed);
+            message += string.Format(". Queuing {0} candidates for housekeeping took {1}", count, stopwatch.Elapsed);
 
-            if (stopwatch.ElapsedMilliseconds > 60000)
+            if (stopwatch.ElapsedMilliseconds > 60000 * 5)
             {
                 _logService.Warn(message);
             }

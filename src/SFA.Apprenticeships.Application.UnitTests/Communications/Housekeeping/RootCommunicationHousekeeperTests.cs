@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Communications.Housekeeping
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Application.Candidates.Configuration;
     using Application.Communications.Housekeeping;
@@ -32,6 +33,7 @@
             _mockLogService = new Mock<ILogService>();
             _mockConfigurationService = new Mock<IConfigurationService>();
             _mockServiceBus = new Mock<IServiceBus>();
+            _mockServiceBus.Setup(sb => sb.PublishMessages(It.IsAny<IEnumerable<CommunicationHousekeepingRequest>>())).Returns<IEnumerable<CommunicationHousekeepingRequest>>(requests => requests.Count());
 
             _mockApplicationStatusAlertCommunicationHousekeeper =
                 new Mock<IApplicationStatusAlertCommunicationHousekeeper>();

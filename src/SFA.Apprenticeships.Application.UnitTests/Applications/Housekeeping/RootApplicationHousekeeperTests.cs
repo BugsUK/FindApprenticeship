@@ -69,8 +69,8 @@
             var queue = new List<ApplicationHousekeepingRequest>();
 
             _mockServiceBus.Setup(mock =>
-                mock.PublishMessage(It.IsAny<ApplicationHousekeepingRequest>()))
-                .Callback<ApplicationHousekeepingRequest>(queue.Add);
+                mock.PublishMessages(It.IsAny<IEnumerable<ApplicationHousekeepingRequest>>()))
+                .Callback<IEnumerable<ApplicationHousekeepingRequest>>(queue.AddRange).Returns<IEnumerable<ApplicationHousekeepingRequest>>(messages => messages.Count());
 
             _mockDraftApplicationForExpiredVacancyHousekeeper
                 .Setup(mock => mock
@@ -100,8 +100,8 @@
             var queue = new List<ApplicationHousekeepingRequest>();
 
             _mockServiceBus.Setup(mock =>
-                mock.PublishMessage(It.IsAny<ApplicationHousekeepingRequest>()))
-                .Callback<ApplicationHousekeepingRequest>(queue.Add);
+                mock.PublishMessages(It.IsAny<IEnumerable<ApplicationHousekeepingRequest>>()))
+                .Callback<IEnumerable<ApplicationHousekeepingRequest>>(queue.AddRange).Returns<IEnumerable<ApplicationHousekeepingRequest>>(messages => messages.Count());
 
             _mockSubmittedApplicationHousekeeper
                 .Setup(mock => mock
@@ -135,8 +135,8 @@
             var queue = new List<ApplicationHousekeepingRequest>();
 
             _mockServiceBus.Setup(mock =>
-                mock.PublishMessage(It.IsAny<ApplicationHousekeepingRequest>()))
-                .Callback<ApplicationHousekeepingRequest>(queue.Add);
+                mock.PublishMessages(It.IsAny<IEnumerable<ApplicationHousekeepingRequest>>()))
+                .Callback<IEnumerable<ApplicationHousekeepingRequest>>(queue.AddRange).Returns<IEnumerable<ApplicationHousekeepingRequest>>(messages => messages.Count());
 
             _mockDraftApplicationForExpiredVacancyHousekeeper
                 .Setup(mock => mock

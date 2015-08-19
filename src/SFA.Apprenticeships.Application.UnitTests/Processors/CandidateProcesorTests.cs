@@ -61,15 +61,15 @@
                 .Returns(users.Select(u => u.EntityId));
 
             _mockMessageBus.Setup(mock =>
-                mock.PublishMessage(It.IsAny<CandidateHousekeeping>()))
-                .Callback<CandidateHousekeeping>(message => candidateIds.Add(message.CandidateId));
+                mock.PublishMessages(It.IsAny<IEnumerable<CandidateHousekeeping>>()))
+                .Callback<IEnumerable<CandidateHousekeeping>>(messages => candidateIds.AddRange(messages.Select(cid => cid.CandidateId)));
 
             // Act.
             processor.QueueCandidates();
 
             // Assert.
             _mockMessageBus.Verify(mock =>
-                mock.PublishMessage(It.IsAny<CandidateHousekeeping>()), Times.Exactly(users.Count()));
+                mock.PublishMessages(It.IsAny<IEnumerable<CandidateHousekeeping>>()), Times.Once);
 
             candidateIds.Count().Should().Be(users.Count());
             candidateIds.Should().BeEquivalentTo(users.Select(each => each.EntityId));
@@ -98,15 +98,15 @@
                 .Returns(candidates.Select(c => c.EntityId));
 
             _mockMessageBus.Setup(mock =>
-                mock.PublishMessage(It.IsAny<CandidateHousekeeping>()))
-                .Callback<CandidateHousekeeping>(each => candidateIds.Add(each.CandidateId));
+                mock.PublishMessages(It.IsAny<IEnumerable<CandidateHousekeeping>>()))
+                .Callback<IEnumerable<CandidateHousekeeping>>(messages => candidateIds.AddRange(messages.Select(cid => cid.CandidateId)));
 
             // Act.
             processor.QueueCandidates();
 
             // Assert.
             _mockMessageBus.Verify(mock =>
-                mock.PublishMessage(It.IsAny<CandidateHousekeeping>()), Times.Exactly(candidates.Count()));
+                mock.PublishMessages(It.IsAny<IEnumerable<CandidateHousekeeping>>()), Times.Once);
 
             candidateIds.Count().Should().Be(candidates.Count());
             candidateIds.Should().BeEquivalentTo(candidates.Select(each => each.EntityId));
@@ -152,15 +152,15 @@
                 .Returns(candidates.Select(c => c.EntityId));
 
             _mockMessageBus.Setup(mock =>
-                mock.PublishMessage(It.IsAny<CandidateHousekeeping>()))
-                .Callback<CandidateHousekeeping>(each => candidateIds.Add(each.CandidateId));
+                mock.PublishMessages(It.IsAny<IEnumerable<CandidateHousekeeping>>()))
+                .Callback<IEnumerable<CandidateHousekeeping>>(messages => candidateIds.AddRange(messages.Select(cid => cid.CandidateId)));
 
             // Act.
             processor.QueueCandidates();
 
             // Assert.
             _mockMessageBus.Verify(mock =>
-                mock.PublishMessage(It.IsAny<CandidateHousekeeping>()), Times.Exactly(uniqueCandidateIds.Count()));
+                mock.PublishMessages(It.IsAny<IEnumerable<CandidateHousekeeping>>()), Times.Once);
 
             uniqueCandidateIds.Count().Should().Be(users.Count() + candidates.Count() - 1);
             candidateIds.Count().Should().Be(uniqueCandidateIds.Count());

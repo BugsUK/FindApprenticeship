@@ -52,19 +52,13 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
 
             var message = string.Format("Querying applications for housekeeping took {0}", stopwatch.Elapsed);
 
-            var count = 0;
-
-            foreach (var request in requests)
-            {
-                _serviceBus.PublishMessage(request);
-                count++;
-            }
+            var count = _serviceBus.PublishMessages(requests);
 
             stopwatch.Stop();
 
             message += string.Format(". Queuing {0} application(s) for housekeeping took {1}", count, stopwatch.Elapsed);
 
-            if (stopwatch.ElapsedMilliseconds > 60000)
+            if (stopwatch.ElapsedMilliseconds > 60000 * 5)
             {
                 _logService.Warn(message);
             }
