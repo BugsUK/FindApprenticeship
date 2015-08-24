@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Application form - Find an apprenticeship";
-    Layout = "~/Views/Shared/_Layout.cshtml";   
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="progress-indicator progress-indicator-horizontal">
     <ul>
@@ -17,6 +17,16 @@
         <p class="autosave" id="applicationSavedTopMessage">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
     </div>
 }
+
+<noscript>
+    <div class="panel-warning">
+        <div class="text">
+            <h2 class="heading-large"><i class="fa fa-info-circle"></i>Save your application regularly</h2>
+            <p>For security reasons you'll be signed out after 60 minutes.</p>
+            <p>Save your application after you complete each section to ensure you don't lose any of your application.</p>
+        </div>
+    </div>
+</noscript>
 
 @using (Html.BeginForm(null, "ApprenticeshipApplication", new { id = Model.VacancyId }, FormMethod.Post, new { id = "application-form", autocomplete = "off" }))
 {
@@ -56,12 +66,12 @@
     @Html.DisplayFor(m => m.Candidate)
     @Html.EditorFor(m => m.Candidate.Education)
     @Html.HiddenFor(m => m.VacancyId)
-    @Html.HiddenFor(m => m.IsJavascript, new{ @id="hidden-flag-javascript"})
+    @Html.HiddenFor(m => m.IsJavascript, new { @id = "hidden-flag-javascript" })
 
-    Html.RenderPartial("_qualificationsJS", Model);    
+    Html.RenderPartial("_qualificationsJS", Model);
     Html.RenderPartial("_qualificationsNonJS", Model);
-    
-    Html.RenderPartial("_workExperiencesJS", Model);   
+
+    Html.RenderPartial("_workExperiencesJS", Model);
     Html.RenderPartial("_workExperiencesNonJS", Model);
 
     Html.RenderPartial("_trainingCoursesJS", Model);
@@ -93,7 +103,7 @@
             <p class="autosave" id="applicationSaved">Last saved at @Html.DisplayFor(m => m.DateUpdated.Value, "DateTimeSaved") to <a href="@Url.RouteUrl(CandidateRouteNames.MyApplications)" title="My Applications">my applications</a></p>
         }
     </div>
-    
+
 }
 
 <div class="saving-prompt toggle-content hide-nojs" id="savedNotification">
@@ -434,7 +444,7 @@
         }
 
     </script>
-        
+
     @Scripts.Render("~/bundles/nas/application")
     @Scripts.Render("~/bundles/joyride")
     <script>
