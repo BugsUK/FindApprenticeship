@@ -129,7 +129,7 @@ WriteLiteral("\r\n    <!--[if gt IE 8]><!-->");
 
             
             #line 22 "..\..\Views\Shared\_Layout.cshtml"
-                     Write(Styles.Render(Url.CdnContent("css/main-1.5.0.862.css", "~/Content/_assets")));
+                     Write(Styles.Render(Url.CdnContent("css/main-1.13.2.css", "~/Content/_assets")));
 
             
             #line default
@@ -138,7 +138,7 @@ WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
             #line 23 "..\..\Views\Shared\_Layout.cshtml"
-                 Write(Styles.Render(Url.CdnContent("css/main-ie8-1.5.0.862.css", "~/Content/_assets")));
+                 Write(Styles.Render(Url.CdnContent("css/main-ie8-1.13.2.css", "~/Content/_assets")));
 
             
             #line default
@@ -165,14 +165,14 @@ WriteLiteral("<!--<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1494), Tuple.Create("\"", 1556)
+WriteAttribute("href", Tuple.Create(" href=\"", 1488), Tuple.Create("\"", 1550)
             
             #line 26 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 1501), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 1495), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1501), false)
+, 1495), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
@@ -307,14 +307,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3168), Tuple.Create("\"", 3243)
+WriteAttribute("src", Tuple.Create(" src=\"", 3162), Tuple.Create("\"", 3237)
             
             #line 62 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 3174), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 3168), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 3174), false)
+, 3168), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -571,14 +571,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6942), Tuple.Create("\"", 7010)
+WriteAttribute("src", Tuple.Create(" src=\"", 6936), Tuple.Create("\"", 7004)
             
             #line 131 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 6948), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 6942), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 6948), false)
+, 6942), false)
 );
 
 WriteLiteral(" width=\"125\"");

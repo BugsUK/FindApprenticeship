@@ -279,10 +279,8 @@
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\_assets\css\fonts-ie8.css" />
     <Content Include="Content\_assets\css\fonts.css" />
-    <Content Include="Content\_assets\css\main-1.5.0.862.css" />
-    <Content Include="Content\_assets\css\main-1.6.0.1098.css" />
-    <Content Include="Content\_assets\css\main-ie8-1.5.0.862.css" />
-    <Content Include="Content\_assets\css\main-ie8-1.6.0.1098.css" />
+    <Content Include="Content\_assets\css\main-1.13.2.css" />
+    <Content Include="Content\_assets\css\main-ie8-1.13.2.css" />
     <Content Include="Content\_assets\css\main-ie8.css" />
     <Content Include="Content\_assets\css\main.css" />
     <Content Include="Content\_assets\img\apple-touch-icon-114x114.png" />

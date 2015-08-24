@@ -129,7 +129,7 @@ WriteLiteral("\r\n    <!--[if gt IE 8]><!-->");
 
             
             #line 22 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
-                     Write(Styles.Render(Url.CdnContent("css/main-1.5.0.862.css", "~/Content/_assets")));
+                     Write(Styles.Render(Url.CdnContent("css/main-1.13.2.css", "~/Content/_assets")));
 
             
             #line default
@@ -138,7 +138,7 @@ WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
             #line 23 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
-                 Write(Styles.Render(Url.CdnContent("css/main-ie8-1.5.0.862.css", "~/Content/_assets")));
+                 Write(Styles.Render(Url.CdnContent("css/main-ie8-1.13.2.css", "~/Content/_assets")));
 
             
             #line default
@@ -165,14 +165,14 @@ WriteLiteral("<!--<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1494), Tuple.Create("\"", 1556)
+WriteAttribute("href", Tuple.Create(" href=\"", 1488), Tuple.Create("\"", 1550)
             
             #line 26 "..\..\Views\Shared\_LayoutNoHeaderFooter.cshtml"
-, Tuple.Create(Tuple.Create("", 1501), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 1495), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1501), false)
+, 1495), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
