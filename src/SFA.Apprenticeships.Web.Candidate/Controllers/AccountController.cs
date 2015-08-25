@@ -73,6 +73,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [SessionTimeout]
         public async Task<ActionResult> SavedSearchesSettings()
@@ -457,6 +458,7 @@
             });
         }
 
+        [HttpGet]
         public async Task<ActionResult> AcceptTermsAndConditions(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -490,6 +492,7 @@
             });
         }
 
+        [HttpGet]
         public async Task<ActionResult> DeclineTermsAndConditions(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
