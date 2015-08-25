@@ -107,14 +107,14 @@
 
         private static string GetReturnUrl(AuthorizationContext filterContext)
         {
-            var urlReferrer = filterContext.RequestContext.HttpContext.Request.UrlReferrer;
+            var url = filterContext.RequestContext.HttpContext.Request.Url;
 
-            if (urlReferrer == null)
+            if (url == null)
             {
                 return string.Empty;
             }
 
-            return urlReferrer.PathAndQuery;
+            return url.PathAndQuery;
         }
 
         #endregion

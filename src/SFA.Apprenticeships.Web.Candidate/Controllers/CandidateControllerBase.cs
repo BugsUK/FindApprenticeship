@@ -16,6 +16,7 @@
     using Providers;
 
     [ApplyWebTrends,
+    GlobalSessionTimeout,
     CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None),
     AllowReturnUrl(Allow = true),

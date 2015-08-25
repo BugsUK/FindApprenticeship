@@ -19,7 +19,7 @@
     Scripts.Render("~/Content/_assets/js/webtrends/webtrends.stub.js"))
 
 @{
-    var messageCount = 0;
+    var anyMessages = false;
     var controller = ViewContext.Controller as CandidateControllerBase;
 
     if (controller != null)
@@ -34,12 +34,12 @@
             userData.Get(UserMessageConstants.ErrorMessage)
         };
 
-        messageCount = messages.Count(message => !message.IsNullOrWhiteSpace());
+        anyMessages = messages.Any(message => !message.IsNullOrWhiteSpace());
     }    
 }
 
 @if ((ViewBag.EnableSessionTimeout != null && ViewBag.EnableSessionTimeout) ||
-    (Request.IsAuthenticated && messageCount > 0))
+    (Request.IsAuthenticated && anyMessages))
 {
     <script>
         (function() {

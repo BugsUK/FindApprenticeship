@@ -3,12 +3,16 @@
     using System;
     using System.Configuration;
     using System.Web.Mvc;
-    using System.Web.Security;
     using Constants;
     using Controllers;
 
     public class SessionTimeoutAttribute : ActionFilterAttribute
     {
+        public SessionTimeoutAttribute()
+        {
+            Order = 1;
+        }
+
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var controller = filterContext.Controller as IUserController;
@@ -28,8 +32,8 @@
 
             if (httpContext.User.Identity.IsAuthenticated)
             {
-                // They are logged in, set the timeout.
-                SetSessionTimeout(filterContext);
+                // They are logged in, enable the timeout.
+                EnableSessionTimeout(filterContext);
 
                 // And refresh authentication ticket if required
                 controller.AuthenticationTicketService.RefreshTicket();
@@ -40,13 +44,8 @@
 
         #region Helpers
 
-        private static void SetSessionTimeout(ControllerContext filterContext)
+        private static void EnableSessionTimeout(ControllerContext filterContext)
         {
-            var request = filterContext.RequestContext.HttpContext.Request;
-            var returnUrl = request != null && request.Url != null ? request.Url.PathAndQuery : "/";
-
-            filterContext.Controller.ViewBag.SessionTimeout = FormsAuthentication.Timeout.TotalSeconds;
-            filterContext.Controller.ViewBag.SessionTimeoutUrl = returnUrl;
             filterContext.Controller.ViewBag.EnableSessionTimeout = true;
         }
 
