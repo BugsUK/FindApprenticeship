@@ -16,6 +16,12 @@ These are replaced by the following (temporary) urls:
 - [GLA Employer Enquiry Form](https://sfacontactforms.azurewebsites.net/gla-employer-enquiry)
 - [Web Access Request Form](https://sfacontactforms.azurewebsites.net/access-request)
 
+Staging urls for testing:
+
+- [Employer Enquiry Form](https://sfacontactforms-staging.azurewebsites.net/employer-enquiry)
+- [GLA Employer Enquiry Form](https://sfacontactforms-staging.azurewebsites.net/gla-employer-enquiry)
+- [Web Access Request Form](https://sfacontactforms-staging.azurewebsites.net/access-request)
+
 ## Processes ##
 ### Existing ###
 
