@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Providers
 {
-    using System;
-
     public interface IUserDataProvider
     {
         UserContext GetUserContext();

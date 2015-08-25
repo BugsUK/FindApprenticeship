@@ -1,4 +1,6 @@
-﻿@Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
+﻿@using Microsoft.Ajax.Utilities
+@using SFA.Apprenticeships.Web.Candidate.Controllers
+@Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
 
 <script>
     var html = document.documentElement;
@@ -16,7 +18,28 @@
     Scripts.Render("~/Content/_assets/js/webtrends/webtrends.load.js") :
     Scripts.Render("~/Content/_assets/js/webtrends/webtrends.stub.js"))
 
-@if (ViewBag.EnableSessionTimeout != null && ViewBag.EnableSessionTimeout)
+@{
+    var messageCount = 0;
+    var controller = ViewContext.Controller as CandidateControllerBase;
+
+    if (controller != null)
+    {
+        var userData = controller.UserData;
+        
+        var messages = new[]
+        {
+            userData.Get(UserMessageConstants.InfoMessage),
+            userData.Get(UserMessageConstants.SuccessMessage),
+            userData.Get(UserMessageConstants.WarningMessage),
+            userData.Get(UserMessageConstants.ErrorMessage)
+        };
+
+        messageCount = messages.Count(message => !message.IsNullOrWhiteSpace());
+    }    
+}
+
+@if ((ViewBag.EnableSessionTimeout != null && ViewBag.EnableSessionTimeout) ||
+    (Request.IsAuthenticated && messageCount > 0))
 {
     <script>
         (function() {
