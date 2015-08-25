@@ -23,7 +23,7 @@
         private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;
         private readonly ILogService _logService;
 
-        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator, 
+        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator,
             ILogService logService,
             IConfigurationService configurationService)
             : base(configurationService)
@@ -32,6 +32,7 @@
             _logService = logService;
         }
 
+        [HttpGet]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Resume(int id)
@@ -59,6 +60,7 @@
         [HttpGet]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> Apply(string id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -266,8 +268,10 @@
             });
         }
 
+        [HttpGet]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> Preview(int id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -332,8 +336,10 @@
             });
         }
 
+        [HttpGet]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
             return await Task.Run<ActionResult>(() =>
@@ -354,8 +360,10 @@
             });
         }
 
+        [HttpGet]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> View(int id)
         {
             return await Task.Run<ActionResult>(() =>

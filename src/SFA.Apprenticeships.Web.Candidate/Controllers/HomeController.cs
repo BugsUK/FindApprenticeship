@@ -5,6 +5,7 @@
     using System.Web;
     using System.Web.Mvc;
     using Attributes;
+    using Common.Attributes;
     using Common.Framework;
     using Constants;
     using Constants.Pages;
@@ -25,6 +26,7 @@
             _homeMediator = homeMediator;
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         [SiteRootRedirect]
         public async Task<ActionResult> Index()
@@ -32,12 +34,14 @@
             return await Task.Run<ActionResult>(() => View());
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         public async Task<ActionResult> Privacy()
         {
             return await Task.Run<ActionResult>(() => View());
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.None)]
         public async Task<ActionResult> WebTrendsOptOut()
         {
@@ -50,6 +54,7 @@
             });
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         public async Task<ActionResult> Cookies(string returnUrl)
         {
@@ -57,7 +62,9 @@
             return await Task.Run<ActionResult>(() => View());
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
+        [SessionTimeout]
         public async Task<ActionResult> Helpdesk()
         {
             return await Task.Run<ActionResult>(() =>
@@ -97,7 +104,9 @@
             });
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
+        [SessionTimeout]
         public async Task<ActionResult> Feedback()
         {
             return await Task.Run<ActionResult>(() =>
@@ -137,18 +146,21 @@
             });
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         public async Task<ActionResult> Terms()
         {
             return await Task.Run<ActionResult>(() => View());
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         public async Task<ActionResult> NextSteps()
         {
             return await Task.Run<ActionResult>(() => View());
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         public async Task<ActionResult> HowToApply()
         {

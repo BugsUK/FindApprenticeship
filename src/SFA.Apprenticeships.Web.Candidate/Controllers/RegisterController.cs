@@ -36,6 +36,7 @@
             _registerMediator = registerMediator;
         }
 
+        [HttpGet]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
         [AllowReturnUrl(Allow = false)]
         public async Task<ActionResult> Index()
@@ -125,6 +126,7 @@
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> MonitoringInformation()
         {
             return await Task.Run(() =>
@@ -198,13 +200,16 @@
             });
         }
 
+        [HttpGet]
         [AllowReturnUrl(Allow = false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> Complete()
         {
             return await Task.Run(() => View(UserContext.UserName));
         }
 
+        [HttpGet]
         [AllowReturnUrl(Allow = false)]
         public async Task<ActionResult> ResendActivationCode(string emailAddress)
         {
@@ -222,6 +227,7 @@
             });
         }
 
+        [HttpGet]
         [AllowCrossSiteJson]
         public async Task<ActionResult> CheckUsername(string username)
         {

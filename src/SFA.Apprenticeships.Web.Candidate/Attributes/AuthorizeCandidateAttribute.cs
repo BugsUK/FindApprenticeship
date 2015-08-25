@@ -17,7 +17,9 @@
             base.OnAuthorization(filterContext);
 
             UserContext userContext = null;
+
             var controller = filterContext.Controller as IUserController;
+
             if (controller != null)
             {
                 userContext = controller.UserData.GetUserContext();
@@ -29,7 +31,7 @@
             }
             else if (userContext == null)
             {
-                //Current session is invalid. Force user to log in again.
+                // Current session is invalid. Force user to log in again.
                 OnSessionExpired(filterContext);
             }
             else if (
@@ -38,8 +40,9 @@
             {
                 var routeValues = new RouteValueDictionary
                 {
-                    {"ReturnUrl", filterContext.RequestContext.HttpContext.Request.Path}
+                    { "ReturnUrl", filterContext.RequestContext.HttpContext.Request.Path }
                 };
+
                 filterContext.Result = new RedirectToRouteResult(RouteNames.UpdatedTermsAndConditions, routeValues);
             }
         }
@@ -65,36 +68,38 @@
             }
         }
 
-        private void OnSessionExpired(AuthorizationContext filterContext)
+        #region Helpers
+
+        private static void OnSessionExpired(AuthorizationContext filterContext)
         {
             var routeValues = new RouteValueDictionary
             {
-                {"Controller", "Login"},
-                {"Action", "SessionTimeout"},
-                {"ReturnUrl", GetReturnUrl(filterContext)}
+                { "Controller", "Login" },
+                { "Action", "SessionTimeout" },
+                { "ReturnUrl", GetReturnUrl(filterContext) }
             };
 
             filterContext.Result = new RedirectToRouteResult(routeValues);
         }
 
-        private void OnUnauthorizedUnactivated(AuthorizationContext filterContext)
+        private static void OnUnauthorizedUnactivated(AuthorizationContext filterContext)
         {
             var routeValues = new RouteValueDictionary
             {
-                {"Controller", "Register"},
-                {"Action", "Activation"},
-                {"ReturnUrl", GetReturnUrl(filterContext)}
+                { "Controller", "Register" },
+                { "Action", "Activation" },
+                { "ReturnUrl", GetReturnUrl(filterContext) }
             };
 
             filterContext.Result = new RedirectToRouteResult(routeValues);
         }
 
-        private void OnUnauthorizedActivated(AuthorizationContext filterContext)
+        private static void OnUnauthorizedActivated(AuthorizationContext filterContext)
         {
             var routeValues = new RouteValueDictionary
             {
-                {"Controller", "ApprenticeshipSearch"},
-                {"Action", "Index"}
+                { "Controller", "ApprenticeshipSearch" },
+                { "Action", "Index" }
             };
 
             filterContext.Result = new RedirectToRouteResult(routeValues);
@@ -111,5 +116,7 @@
 
             return urlReferrer.PathAndQuery;
         }
+
+        #endregion
     }
 }

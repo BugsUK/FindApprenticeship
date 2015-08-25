@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
-    using System;
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
@@ -133,6 +132,7 @@
 
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
+        [SessionTimeout]
         public async Task<ActionResult> Unlock()
         {
             return await Task.Run(() =>
@@ -214,6 +214,7 @@
             });
         }
 
+        [HttpGet]
         [AllowReturnUrl(Allow = false)]
         public ActionResult SignOut(string returnUrl)
         {
@@ -253,6 +254,7 @@
                 : RedirectToRoute(RouteNames.SignIn);
         }
 
+        [HttpGet]
         [AllowReturnUrl(Allow = false)]
         public ActionResult SessionTimeout(string returnUrl)
         {
@@ -289,6 +291,7 @@
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
         [OutputCache(CacheProfile = CacheProfiles.Long)]
+        [SessionTimeout]
         public async Task<ActionResult> ForgottenCredentials()
         {
             return await Task.Run(() => View());
@@ -350,6 +353,7 @@
 
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
+        [SessionTimeout]
         public async Task<ActionResult> ResetPassword()
         {
             return await Task.Run<ActionResult>(() =>
@@ -404,6 +408,7 @@
 
         [HttpGet]
         [AllowReturnUrl(Allow = false)]
+        [SessionTimeout]
         public async Task<ActionResult> ResendPasswordResetCode(string emailAddress)
         {
             return await Task.Run(() =>

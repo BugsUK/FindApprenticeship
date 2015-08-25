@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Globalization;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
@@ -47,6 +46,7 @@
 
         [HttpGet]
         [ClearSearchReturnUrl(false)]
+        [SessionTimeout]
         public async Task<ActionResult> Results(TraineeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -94,6 +94,7 @@
         [HttpGet]
         [ClearSearchReturnUrl(false)]
         [RobotsIndexPage(true)]
+        [SessionTimeout]
         public async Task<ActionResult> Details(string id)
         {
             return await Task.Run<ActionResult>(() =>

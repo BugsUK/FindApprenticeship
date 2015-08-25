@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using System.Text;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -14,17 +12,15 @@
     using Constants;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Logging;
-    using NLog;
     using NLog.Contrib;
     using Providers;
 
-    [ApplyWebTrends, 
-    SessionTimeout, 
-    CookiesEnabled, 
-    OutputCache(CacheProfile = CacheProfiles.None), 
-    AllowReturnUrl(Allow = true), 
-    ClearSearchReturnUrl, 
-    PlannedOutageMessage, 
+    [ApplyWebTrends,
+    CookiesEnabled,
+    OutputCache(CacheProfile = CacheProfiles.None),
+    AllowReturnUrl(Allow = true),
+    ClearSearchReturnUrl,
+    PlannedOutageMessage,
     UserJourneyContext(UserJourney.None, Order = 1),
     RobotsIndexPage]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>

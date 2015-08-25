@@ -27,6 +27,7 @@
         [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         [ClearSearchReturnUrl(false)]
+        [SessionTimeout]
         public async Task<ActionResult> Apply(string id)
         {
             return await Task.Run<ActionResult>(() =>
@@ -128,7 +129,9 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
             return await Task.Run<ActionResult>(() =>
@@ -147,8 +150,10 @@
             });
         }
 
+        [HttpGet]
         [ClearSearchReturnUrl(false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> View(int id)
         {
             return await Task.Run<ActionResult>(() =>

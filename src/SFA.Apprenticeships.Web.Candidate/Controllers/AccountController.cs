@@ -18,6 +18,7 @@
     using Mediators;
     using Mediators.Account;
     using ViewModels.Account;
+    using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 
     public class AccountController : CandidateControllerBase
     {
@@ -35,7 +36,9 @@
             _userDataProvider = userDataProvider;
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> Index()
         {
             return await Task.Run<ActionResult>(() =>
@@ -45,6 +48,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> DismissApplicationNotifications(long lastupdated)
         {
@@ -57,7 +61,9 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> Settings()
         {
             return await Task.Run<ActionResult>(() =>
@@ -68,6 +74,7 @@
         }
 
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> SavedSearchesSettings()
         {
             return await Task.Run<ActionResult>(() =>
@@ -111,6 +118,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> DeleteSavedSearch(Guid id, bool isJavascript)
         {
@@ -140,8 +148,10 @@
             });
         }
 
+        [HttpGet]
         [SmsEnabledToggle]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> VerifyMobile(string returnUrl)
         {
             return await Task.Run<ActionResult>(() =>
@@ -230,7 +240,9 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> UpdateEmailAddress()
         {
             return await Task.Run<ActionResult>(() => View());
@@ -261,7 +273,9 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> ResendUpdateEmailAddressCode()
         {
             return await Task.Run<ActionResult>(() =>
@@ -272,8 +286,10 @@
             });
         }
 
+        [HttpGet]
         [AllowReturnUrl(Allow = false)]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
+        [SessionTimeout]
         public async Task<ActionResult> VerifyUpdatedEmailAddress()
         {
             return await Task.Run<ActionResult>(() => View());
@@ -306,6 +322,7 @@
             return View(response.ViewModel);
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Archive(int id)
         {
@@ -329,6 +346,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Delete(int id)
         {
@@ -355,6 +373,7 @@
             });
         }
 
+        [HttpGet]
         public async Task<ActionResult> DismissPlannedOutageMessage(bool isJavascript)
         {
             //todo: move to home controller as not related to the user account views
@@ -376,6 +395,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> DismissTraineeshipPrompts()
         {
@@ -398,6 +418,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Track(int id)
         {
@@ -420,6 +441,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> UpdatedTermsAndConditions(string returnUrl)
         {
@@ -480,6 +502,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> ApprenticeshipVacancyDetails(int id)
         {
@@ -505,6 +528,7 @@
             });
         }
 
+        [HttpGet]
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> TraineeshipVacancyDetails(int id)
         {

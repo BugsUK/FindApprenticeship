@@ -34,6 +34,7 @@
         }
 
         [HttpGet]
+        [SessionTimeout]
         public async Task<ActionResult> Index(ApprenticeshipSearchMode searchMode = ApprenticeshipSearchMode.Keyword, bool reset = false)
         {
             return await Task.Run<ActionResult>(() =>
@@ -105,6 +106,7 @@
 
         [HttpGet]
         [ClearSearchReturnUrl(false)]
+        [SessionTimeout]
         public async Task<ActionResult> Results(ApprenticeshipSearchViewModel model)
         {
             return await Task.Run<ActionResult>(() =>
@@ -165,7 +167,7 @@
         }
 
         [HttpGet]
-        [ClearSearchReturnUrl(false)]
+        [ClearSearchReturnUrl(false)]        
         public async Task<ActionResult> DetailsWithDistance(int id, string distance)
         {
             return await Task.Run<ActionResult>(() =>
@@ -180,6 +182,7 @@
         [HttpGet]
         [ClearSearchReturnUrl(false)]
         [RobotsIndexPage(true)]
+        [SessionTimeout]
         public async Task<ActionResult> Details(string id)
         {
             return await Task.Run<ActionResult>(() =>
