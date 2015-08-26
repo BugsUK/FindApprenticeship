@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Logging
+﻿namespace SFA.Apprenticeships.Infrastructure.Logging.Targets
 {
     using System;
     using System.Configuration;
