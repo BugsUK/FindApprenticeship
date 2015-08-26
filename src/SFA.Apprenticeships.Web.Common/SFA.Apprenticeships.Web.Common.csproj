@@ -182,7 +182,7 @@
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
     <Compile Include="Attributes\CookiesEnabledAttribute.cs" />
     <Compile Include="Attributes\PlannedOutageMessageAttribute.cs" />
-    <Compile Include="Attributes\GlobalSessionTimeoutAttribute.cs" />
+    <Compile Include="Attributes\DefaultSessionTimeoutAttribute.cs" />
     <Compile Include="Attributes\AllowReturnUrlAttribute.cs" />
     <Compile Include="Binders\TrimModelBinder.cs" />
     <Compile Include="Configuration\WebConfiguration.cs" />

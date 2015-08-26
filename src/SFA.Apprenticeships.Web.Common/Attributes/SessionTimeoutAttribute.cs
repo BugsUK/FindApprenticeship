@@ -8,11 +8,6 @@
 
     public class SessionTimeoutAttribute : ActionFilterAttribute
     {
-        public SessionTimeoutAttribute()
-        {
-            Order = 1;
-        }
-
         public override void OnActionExecuted(ActionExecutedContext filterContext)
         {
             var controller = filterContext.Controller as IUserController;
