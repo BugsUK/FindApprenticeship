@@ -13,7 +13,7 @@
         public CommonRegistry(CacheConfiguration cacheConfiguration)
         {
             For<IConfigurationManager>().Singleton().Use<ConfigurationManager>();
-            For<IConfigurationService>().Singleton().Use<ConfigurationService>().Name = "ConfigurationService";
+            For<IConfigurationService>().Singleton().Use<AzureBlobConfigurationService>().Name = "ConfigurationService";
 
             if (cacheConfiguration.UseCache)
             {
