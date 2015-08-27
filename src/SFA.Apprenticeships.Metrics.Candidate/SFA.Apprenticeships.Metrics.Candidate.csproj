@@ -131,7 +131,6 @@
     <Content Include="Configs\settings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Configs\emailSettings.config" />
     <None Include="packages.config" />
     <None Include="Script\e-shot.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

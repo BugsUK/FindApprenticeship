@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Configs\emailSettings.config" />
     <None Include="Configs\settings.config" />
     <None Include="packages.config" />
   </ItemGroup>
