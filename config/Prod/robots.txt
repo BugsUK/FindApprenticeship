@@ -1,0 +1,7 @@
+User-Agent: *
+Disallow: /
+Allow: /sitemap.xml
+Allow: /apprenticeship/
+Allow: /traineeship/
+
+Sitemap: https://www.findapprenticeship.service.gov.uk/sitemap.xml

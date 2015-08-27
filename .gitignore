@@ -108,6 +108,8 @@ tools/*/packages/*
 
 # Windows Azure Build Output and Config files
 csx
+ecf
+rcf
 *.build.csdef
 *.cscfg
 *.csdef
