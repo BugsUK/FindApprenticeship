@@ -10,9 +10,6 @@ Param(
    [string]$CdnStorageContainerName
 )
 
-Copy-Item -Force -Recurse $PSScriptRoot\..\NAS C:\windows\system32\WindowsPowerShell\v1.0\Modules
-Import-Module -Force -Name NAS
-
 Function Update-AllCdnContent ()
 {
     $StorageContext = New-AzureStorageContext -StorageAccountName $CdnStorageName -StorageAccountKey $CdnStorageAccessKey
