@@ -209,7 +209,7 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>robocopy /IS $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\ $(ProjectDir)Configs *.config
+    <PreBuildEvent>robocopy /IS $(ProjectDir)..\..\config\$(ConfigurationName)\ $(ProjectDir)Configs *.config
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

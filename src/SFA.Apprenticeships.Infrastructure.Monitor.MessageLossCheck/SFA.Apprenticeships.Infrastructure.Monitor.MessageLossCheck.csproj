@@ -132,7 +132,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Configs\emailSettings.config" />
     <None Include="Configs\settings.config" />
     <None Include="packages.config" />
   </ItemGroup>
@@ -217,7 +216,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>robocopy /IS $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\Configs\ $(ProjectDir)Configs *.config
+    <PreBuildEvent>robocopy /IS $(ProjectDir)..\..\config\$(ConfigurationName)\Configs\ $(ProjectDir)Configs *.config
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

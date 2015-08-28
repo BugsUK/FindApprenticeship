@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceDefinition name="SFA.Apprenticeships.Web.Candidate.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceDefinition" schemaVersion="2015-04.2.6">
+  <WebRole name="SFA.Apprenticeships.Web.Candidate" vmsize="Large">
+    <Sites>
+      <Site name="Web">
+        <Bindings>
+          <Binding name="Endpoint1" endpointName="SSLCandidateWebEndpoint" />
+          <Binding name="Endpoint2" endpointName="CandidateWebEndpoint" />
+        </Bindings>
+      </Site>
+    </Sites>
+    <Endpoints>
+      <InputEndpoint name="SSLCandidateWebEndpoint" protocol="https" port="443" certificate="SSLWebCandidate" />
+      <InputEndpoint name="CandidateWebEndpoint" protocol="http" port="80" />
+    </Endpoints>
+    <Certificates>
+      <Certificate name="NasClientCertificate" storeLocation="LocalMachine" storeName="My" />
+      <Certificate name="SSLWebCandidate" storeLocation="LocalMachine" storeName="My" />
+    </Certificates>
+    <Startup>
+      <Task commandLine="Startup\startup.cmd" executionContext="elevated" />
+    </Startup>
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
+    </ConfigurationSettings>
+    <LocalResources>
+      <LocalStorage name="DiagnosticStore" sizeInMB="20000" cleanOnRoleRecycle="false" />
+    </LocalResources>
+  </WebRole>
+</ServiceDefinition>

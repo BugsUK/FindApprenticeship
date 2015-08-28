@@ -303,9 +303,6 @@
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.custom.js" />
     <Content Include="Content\_assets\js\webtrends\webtrends.load.js" />
     <Content Include="Content\_assets\js\webtrends\webtrends.min.js" />
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\_assets\js\webtrends\webtrends.stub.js" />
     <Content Include="Scripts\knockout-3.2.0.debug.js" />
     <Content Include="Scripts\knockout-3.2.0.js" />
@@ -319,9 +316,6 @@
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\_assets\css\font-awesome\fonts\FontAwesome.otf" />
-    <Content Include="Configs\emailSettings.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\_assets\js\nas\application\applicationform.js" />
@@ -1692,7 +1686,7 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>robocopy /IS /E $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\ $(ProjectDir)
+    <PreBuildEvent>robocopy /IS /E $(ProjectDir)..\..\config\$(ConfigurationName)\ $(ProjectDir)
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
