@@ -121,6 +121,8 @@
                     batch = new List<TSource>(size);
 
                 batch.Add(item);
+                count++;
+
                 if (count != size)
                     continue;
 
