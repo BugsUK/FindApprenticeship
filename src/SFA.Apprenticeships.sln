@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{22CE73E4-F469-434C-AC5D-D926EBBAC3D5}"
 EndProject
@@ -156,7 +156,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Metrics", "Metrics", "{2529
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SearchService", "SearchService", "{5672F583-9834-4D4E-874B-F3545A47A1E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Log", "SFA.Apprenticeships.Infrastructure.Log\SFA.Apprenticeships.Infrastructure.Log.csproj", "{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.LogEventIndexer", "SFA.Apprenticeships.Infrastructure.LogEventIndexer\SFA.Apprenticeships.Infrastructure.LogEventIndexer.csproj", "{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1068,20 +1068,20 @@ Global
 		{BB161A54-EF1A-4611-8296-9A0BE69B4587}.Sit|Any CPU.Build.0 = Sit|Any CPU
 		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Demo|Any CPU.Build.0 = Debug|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Dev|Any CPU.Build.0 = Debug|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Local|Any CPU.ActiveCfg = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Local|Any CPU.Build.0 = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Pre|Any CPU.ActiveCfg = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Pre|Any CPU.Build.0 = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Prod|Any CPU.ActiveCfg = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Prod|Any CPU.Build.0 = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Sit|Any CPU.ActiveCfg = Release|Any CPU
-		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Sit|Any CPU.Build.0 = Release|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Demo|Any CPU.ActiveCfg = Dev|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Demo|Any CPU.Build.0 = Dev|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Local|Any CPU.Build.0 = Local|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Release|Any CPU.ActiveCfg = Sit|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Release|Any CPU.Build.0 = Sit|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{70DAAF2F-4F18-473A-86EB-A845D42A7E2D}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

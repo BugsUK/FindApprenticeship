@@ -7,11 +7,11 @@
     using NLog.Config;
     using NLog.Targets;
 
-    [Target("AzureEventHub")]
+    [Target("AzureEventHubTarget")]
     public class AzureEventHubTarget : TargetWithLayout
     {
-        EventHubClient _eventHubClient = null;
-        MessagingFactory _messsagingFactory = null;
+        object _lock = new object();
+        EventHubClient _eventHubClient;
 
         [RequiredParameter]
         public string EventHubConnectionStringSettingName { get; set; }
@@ -19,10 +19,6 @@
         [RequiredParameter]
         public string EventHubPath { get; set; }
 
-        /// <summary>
-        /// PartitionKey is optional. If no partition key is supplied the log messages are sent to eventhub
-        /// and distributed to various partitions in a round robin manner.
-        /// </summary>
         public string PartitionKey { get; set; }
 
         protected override void Write(LogEventInfo logEvent)
@@ -34,18 +30,8 @@
 
         private async void SendAsync(string partitionKey, LogEventInfo logEvent)
         {
-            if (this._messsagingFactory == null)
-            {
-                var connectionString = CloudConfigurationManager.GetSetting(EventHubConnectionStringSettingName);
-                this._messsagingFactory = MessagingFactory.CreateFromConnectionString(connectionString);
-            }
-
-            if (this._eventHubClient == null)
-            {
-                this._eventHubClient = this._messsagingFactory.CreateEventHubClient(EventHubPath);
-            }
-
-            string logMessage = this.Layout.Render(logEvent);
+            var eventHubClient = GetEventHubClient();
+            var logMessage = Layout.Render(logEvent);
 
             using (var eventHubData = new EventData(Encoding.UTF8.GetBytes(logMessage))
             {
@@ -57,8 +43,27 @@
                     eventHubData.Properties.Add(key.ToString(), logEvent.Properties[key]);
                 }
 
-                await _eventHubClient.SendAsync(eventHubData);
+                await eventHubClient.SendAsync(eventHubData);
             }
+        }
+
+        private EventHubClient GetEventHubClient()
+        {
+            if (_eventHubClient == null)
+            {
+                lock (_lock)
+                {
+                    if (_eventHubClient == null)
+                    {
+                        var connectionString = CloudConfigurationManager.GetSetting(EventHubConnectionStringSettingName);
+                        var messsagingFactory = MessagingFactory.CreateFromConnectionString(connectionString);
+
+                        _eventHubClient = messsagingFactory.CreateEventHubClient(EventHubPath);
+                    }
+                }
+            }
+
+            return _eventHubClient;
         }
     }
 }
