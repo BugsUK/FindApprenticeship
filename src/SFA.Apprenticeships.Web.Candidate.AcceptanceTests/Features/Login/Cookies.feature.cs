@@ -121,7 +121,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 27
  testRunner.And("I have the cookie \'User.Data\' with a populated value \'Data.VacancyDistance\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 28
- testRunner.And("I have the cookie \'User.Data\' with a populated value \'Data.LastVacancyID\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I have the cookie \'User.Data\' with a populated value \'Data.LastViewedVacancy\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 29
  testRunner.And("I have the cookie \'User.Data\' with a populated value \'Data.LastSearchedLocation\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
@@ -137,7 +137,7 @@ this.ScenarioSetup(scenarioInfo);
 #line 35
  testRunner.And("I have the cookie \'User.Data\' without a value \'Data.VacancyDistance\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 36
- testRunner.And("I have the cookie \'User.Data\' without a value \'Data.LastVacancyID\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I have the cookie \'User.Data\' without a value \'Data.LastViewedVacancy\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 37
  testRunner.And("I have the cookie \'User.Data\' without a value \'SearchReturnUrl\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 38
