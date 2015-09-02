@@ -8,6 +8,9 @@ Param(
 	
 	[Parameter(Mandatory=$True)]
     [string]$authorizationInfo
+
+	[Parameter(Mandatory=$True)]
+    [string]$configurationEventHubLogConnectionString,
 )
 
 $TextInfo = (Get-Culture).TextInfo
@@ -25,6 +28,11 @@ $vacancyRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Service.Vacancy
 Write-Output "Updating $settingsConfigFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
 $configurationStorageConnectionStringAppSetting = ('<add key="ConfigurationStorageConnectionString" value="' + $configurationStorageConnectionString + '" />')
 (gc $settingsConfigFile) -replace '<add key="ConfigurationStorageConnectionString" value=".*?" />', $configurationStorageConnectionStringAppSetting | sc $settingsConfigFile
+Write-Output "$settingsConfigFile updated"
+
+Write-Output "Updating $settingsConfigFile with ConfigurationEventHubLogConnectionString: $configurationEventHubLogConnectionString"
+$configurationEventHubLogConnectionStringAppSetting = ('<add key="ConfigurationEventHubLogConnectionString" value="' + $configurationEventHubLogConnectionString + '" />')
+(gc $settingsConfigFile) -replace '<add key="ConfigurationEventHubLogConnectionString" value=".*?" />', $configurationEventHubLogConnectionStringAppSetting | sc $settingsConfigFile
 Write-Output "$settingsConfigFile updated"
 
 Write-Output "Updating $dataCacheClientFile with AuthorizationInfo: $authorizationInfo"

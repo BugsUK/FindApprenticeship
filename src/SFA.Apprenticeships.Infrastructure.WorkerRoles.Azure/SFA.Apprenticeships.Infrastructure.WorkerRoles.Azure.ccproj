@@ -96,11 +96,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Profiles" />
+    <Folder Include="SFA.Apprenticeships.Infrastructure.LogEventIndexerContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.ProcessesContent" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.MonitorContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\" />
   </ItemGroup>
   <ItemGroup>
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.LogEventIndexerContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ProcessesContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\diagnostics.wadcfgx" />
