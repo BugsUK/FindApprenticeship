@@ -7,10 +7,10 @@ Param(
     [string]$configurationStorageConnectionString,
 	
 	[Parameter(Mandatory=$True)]
-    [string]$authorizationInfo
+    [string]$authorizationInfo,
 
 	[Parameter(Mandatory=$True)]
-    [string]$configurationEventHubLogConnectionString,
+    [string]$configurationEventHubLogConnectionString
 )
 
 $TextInfo = (Get-Culture).TextInfo
