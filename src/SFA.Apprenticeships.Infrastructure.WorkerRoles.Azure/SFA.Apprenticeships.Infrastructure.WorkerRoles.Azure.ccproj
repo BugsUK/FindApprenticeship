@@ -69,6 +69,14 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LogEventIndexer\SFA.Apprenticeships.Infrastructure.LogEventIndexer.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.LogEventIndexer</Name>
+      <Project>{4ca9132c-14c8-4743-b9bb-66d84d4d8e69}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>SFA.Apprenticeships.Infrastructure.LogEventIndexer</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
       <Project>{61619f66-5f17-4ef7-a8cf-ba720bea3ad3}</Project>
