@@ -7,7 +7,16 @@ Param(
     [string]$configurationStorageConnectionString,
 	
 	[Parameter(Mandatory=$True)]
-    [string]$authorizationInfo
+    [string]$authorizationInfo,
+	
+	[Parameter(Mandatory=$True)]
+    [string]$configurationEventHubLogConnectionString,
+	
+	[Parameter(Mandatory=$True)]
+    [string]$decryptionKey,
+	
+	[Parameter(Mandatory=$True)]
+    [string]$validationKey
 )
 
 $TextInfo = (Get-Culture).TextInfo
@@ -16,6 +25,7 @@ $buildConfiguration = $TextInfo.ToTitleCase($buildConfiguration)
 $configPath = "$PSScriptRoot\..\..\config\$buildConfiguration\Configs"
 $settingsConfigFile = "$configPath\settings.config"
 $dataCacheClientFile = "$configPath\dataCacheClient.config"
+$machineKeyFile = "$configPath\machineKey.config"
 
 $cscfgPathFormat = "$PSScriptRoot\..\..\config\{0}\ServiceConfiguration.$buildConfiguration.cscfg"
 $workerRolesCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure"
@@ -31,6 +41,11 @@ Write-Output "Updating $dataCacheClientFile with AuthorizationInfo: $authorizati
 $messageSecurityAuthorizationInfo = ('<messageSecurity authorizationInfo="' + $authorizationInfo + '" />')
 (gc $dataCacheClientFile) -replace '<messageSecurity authorizationInfo=".*?" />', $messageSecurityAuthorizationInfo | sc $dataCacheClientFile
 Write-Output "$dataCacheClientFile updated"
+
+Write-Output "Updating $machineKeyFile with DecryptionKey: $decryptionKey ValidationKey: $validationKey"
+$machineKey = ('<machineKey decryption="Auto" decryptionKey="' + $decryptionKey + '" validation="SHA1" validationKey="' + $validationKey + '" />')
+(gc $machineKeyFile) -replace '<machineKey .*? />', $machineKey | sc $machineKeyFile
+Write-Output "$machineKeyFile updated"
 
 $configurationStorageConnectionStringSetting = ('<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="' + $configurationStorageConnectionString + '" />')
 
