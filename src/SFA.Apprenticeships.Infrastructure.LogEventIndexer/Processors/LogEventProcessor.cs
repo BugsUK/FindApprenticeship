@@ -13,15 +13,12 @@
     // TODO: LOGGING: fallback logging
     // TODO: LOGGING: Info as Debug.
 
-    // Implementation follows https://azure.microsoft.com/en-gb/documentation/articles/event-hubs-csharp-ephcs-getstarted/.
+    // Implementation based on https://azure.microsoft.com/en-gb/documentation/articles/event-hubs-csharp-ephcs-getstarted/.
 
     public class LogEventProcessor : IEventProcessor
     {
         private readonly ILogService _logService;
         private readonly ILogEventIndexerService _indexerService;
-
-        private readonly Stopwatch _stopwatch = new Stopwatch();
-        private readonly TimeSpan _checkpointInterval = TimeSpan.FromSeconds(5);
 
         public LogEventProcessor(
             ILogService logService,
@@ -48,8 +45,6 @@
                 return;
             }
 
-            _stopwatch.Start();
-
             var messageCount = 0;
 
             foreach (var message in messages)
@@ -62,14 +57,7 @@
                 messageCount++;
             }
 
-            if (_stopwatch.Elapsed > _checkpointInterval)
-            {
-                _logService.Info("Indexed {0} message(s) in {1}ms",
-                    messageCount, _stopwatch.ElapsedMilliseconds);
-
-                await context.CheckpointAsync();
-                _stopwatch.Restart();
-            }
+            await context.CheckpointAsync();
         }
 
         public async Task CloseAsync(PartitionContext context, CloseReason reason)
