@@ -2,9 +2,7 @@
 {
     using System;
     using System.Diagnostics;
-    using Domain;
     using Elastic.Common.Configuration;
-    using Nest;
     using Newtonsoft.Json;
 
     public class LogEventIndexerService : ILogEventIndexerService
@@ -56,9 +54,9 @@
         private static string GetIndexName(DateTime dateTime)
         {
             const string indexNamePrefix = "log";
-            const string dateSuffixFormat = "yyyy-MM-dd-HH";
+            const string dateSuffixFormat = "yyyy.MM.dd";
 
-            return string.Format("{0}.{1}",
+            return string.Format("{0}-{1}",
                 indexNamePrefix, dateTime.ToUniversalTime().ToString(dateSuffixFormat));
         }
     }

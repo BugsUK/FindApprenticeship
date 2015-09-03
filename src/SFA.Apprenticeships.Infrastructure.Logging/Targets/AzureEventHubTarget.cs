@@ -1,17 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Logging.Targets
 {
     using System.Text;
-    using Microsoft.WindowsAzure;
     using Microsoft.ServiceBus.Messaging;
     using NLog;
     using NLog.Config;
     using NLog.Targets;
+    using StructureMap;
+    using Common.IoC;
+    using Common.Configuration;
 
     [Target("AzureEventHubTarget")]
     public class AzureEventHubTarget : TargetWithLayout
     {
-        object _lock = new object();
-        EventHubClient _eventHubClient;
+        private EventHubClient _eventHubClient;
+        private IConfigurationManager _configManager;
+
+        private object _lock = new object();
 
         [RequiredParameter]
         public string EventHubConnectionStringSettingName { get; set; }
@@ -19,24 +23,29 @@
         [RequiredParameter]
         public string EventHubPath { get; set; }
 
-        public string PartitionKey { get; set; }
+        public AzureEventHubTarget()
+        {
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+            });
+
+            _configManager = container.GetInstance<IConfigurationManager>();
+        }
 
         protected override void Write(LogEventInfo logEvent)
         {
 #pragma warning disable 4014
-            SendAsync(PartitionKey, logEvent);
+            SendAsync(logEvent);
 #pragma warning restore 4014
         }
 
-        private async void SendAsync(string partitionKey, LogEventInfo logEvent)
+        private async void SendAsync(LogEventInfo logEvent)
         {
             var eventHubClient = GetEventHubClient();
-            var logMessage = Layout.Render(logEvent);
+            var json = Layout.Render(logEvent);
 
-            using (var eventHubData = new EventData(Encoding.UTF8.GetBytes(logMessage))
-            {
-                PartitionKey = partitionKey
-            })
+            using (var eventHubData = new EventData(Encoding.UTF8.GetBytes(json)))
             {
                 foreach (var key in logEvent.Properties.Keys)
                 {
@@ -55,10 +64,9 @@
                 {
                     if (_eventHubClient == null)
                     {
-                        var connectionString = CloudConfigurationManager.GetSetting(EventHubConnectionStringSettingName);
-                        var messsagingFactory = MessagingFactory.CreateFromConnectionString(connectionString);
+                        var connectionString = _configManager.GetAppSetting(EventHubConnectionStringSettingName);
 
-                        _eventHubClient = messsagingFactory.CreateEventHubClient(EventHubPath);
+                        _eventHubClient = EventHubClient.CreateFromConnectionString(connectionString, EventHubPath);
                     }
                 }
             }
