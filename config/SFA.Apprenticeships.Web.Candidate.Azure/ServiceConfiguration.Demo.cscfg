@@ -11,7 +11,7 @@
     </Certificates>
   </Role>
   <NetworkConfiguration>
-    <VirtualNetworkSite name="nasdemo" />
+    <VirtualNetworkSite name="naspre" />
     <AddressAssignments>
       <InstanceAddress roleName="SFA.Apprenticeships.Web.Candidate">
         <Subnets>
