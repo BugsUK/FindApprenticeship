@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Services
+﻿using SFA.Apprenticeships.Application.Interfaces.Logging;
+
+namespace SFA.Apprenticeships.Web.Common.Services
 {
     using System;
     using System.Globalization;
@@ -10,11 +12,13 @@
     public class AuthenticationTicketService : IAuthenticationTicketService
     {
         private readonly HttpContextBase _httpContext;
+        private readonly ILogService _logService;
         private static readonly string CookieName = FormsAuthentication.FormsCookieName;
 
-        public AuthenticationTicketService(HttpContextBase httpContext)
+        public AuthenticationTicketService(HttpContextBase httpContext, ILogService logService)
         {
             _httpContext = httpContext;
+            _logService = logService;
         }
 
         public FormsAuthenticationTicket GetTicket()
@@ -37,29 +41,29 @@
 
                 return FormsAuthentication.Decrypt(cookie.Value);
             }
-            catch (CryptographicException)
+            catch (CryptographicException ex)
             {
-                //Logger.Debug("Error decrypting ticket from cookie. Cookie is no longer valid and will be removed.", (Exception)ex);
+                _logService.Error("Error decrypting ticket from cookie. Cookie is no longer valid and will be removed.", ex);
                 RemoveCookie(cookies);
                 return null;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //Logger.Error("Error getting/decrypting ticket from cookie. Cookie is no longer valid and will be removed.", ex);
+                _logService.Error("Error getting/decrypting ticket from cookie. Cookie is no longer valid and will be removed.", ex);
                 RemoveCookie(cookies);
                 return null;
             }
         }
 
-        private static void RemoveCookie(HttpCookieCollection cookies)
+        private void RemoveCookie(HttpCookieCollection cookies)
         {
             try
             {
                 cookies.Remove(CookieName);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //Logger.Error(string.Format("Error removing cookie {0}", CookieName), ex);
+                _logService.Error(string.Format("Error removing cookie {0}", CookieName), ex);
             }
         }
 
@@ -90,7 +94,7 @@
 
             AddTicket(_httpContext.Response.Cookies, newTicket);
 
-            //Logger.Debug("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s", ticket.Name, timeToExpiry, (FormsAuthentication.Timeout.TotalSeconds / 2));
+            _logService.Info("Ticket issued for {0} because it only had {1}s to expire and the update window is {2}s", ticket.Name, timeToExpiry, (FormsAuthentication.Timeout.TotalSeconds / 2));
         }
 
         public string[] GetClaims(FormsAuthenticationTicket ticket)
@@ -125,7 +129,7 @@
             });
         }
 
-        private static FormsAuthenticationTicket CreateTicket(string userName, params string[] claims)
+        private FormsAuthenticationTicket CreateTicket(string userName, params string[] claims)
         {
             var expiration = DateTime.UtcNow.AddSeconds(FormsAuthentication.Timeout.TotalSeconds);
             var ticket = new FormsAuthenticationTicket(
@@ -136,7 +140,7 @@
                 isPersistent: false,
                 userData: StringifyUserData(claims, expiration));
 
-            //Logger.Debug("Ticket created for {0} with {1} at {2} expires {3}", ticket.Name, ticket.UserData, ticket.IssueDate, ticket.Expiration);
+            _logService.Info("Ticket created for {0} with {1} at {2} expires {3}", ticket.Name, ticket.UserData, ticket.IssueDate, ticket.Expiration);
 
             return ticket;
         }
