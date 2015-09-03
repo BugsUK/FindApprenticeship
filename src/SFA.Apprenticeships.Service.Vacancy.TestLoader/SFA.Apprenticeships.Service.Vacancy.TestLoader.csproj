@@ -163,7 +163,12 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>robocopy /IS /E $(ProjectDir)..\..\config\$(ConfigurationName)\ $(ProjectDir)
+    <PreBuildEvent>IF "%COPY_CONFIG_FROM_SECURE_REPO%" == "true" (
+SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\ 
+) else (
+SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\
+)
+robocopy /IS /E %COPY_PATH% $(ProjectDir)
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

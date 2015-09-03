@@ -107,7 +107,12 @@
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>
     <PreBuildEvent>copy $(ProjectDir)..\..\config\$(ProjectName)\ServiceDefinition.$(Configuration).csdef $(ProjectDir)ServiceDefinition.csdef /Y
-robocopy /E /IS $(ProjectDir)..\..\config\$(ProjectName) $(ProjectDir) /XF *.csdef
+IF "%COPY_CONFIG_FROM_SECURE_REPO%" == "true" (
+SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\ 
+) else (
+SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\
+)
+robocopy /E /IS %COPY_PATH% $(ProjectDir) /XF *.csdef
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Dev' ">
