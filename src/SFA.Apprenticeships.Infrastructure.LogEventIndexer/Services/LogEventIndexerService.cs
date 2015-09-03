@@ -44,7 +44,8 @@
             {
                 var logEventObject = JsonConvert.DeserializeObject<dynamic>(logEvent);
 
-                return Convert.ToDateTime(logEventObject.Date);
+                // NOTE: logged date is lower case.
+                return Convert.ToDateTime(logEventObject.date);
             }
             catch
             {
