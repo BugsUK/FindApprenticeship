@@ -28,7 +28,7 @@
     </Certificates>
   </Role>
   <NetworkConfiguration>
-    <VirtualNetworkSite name="nassit" />
+    <VirtualNetworkSite name="naspre" />
     <AddressAssignments>
       <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.Processes">
         <Subnets>
