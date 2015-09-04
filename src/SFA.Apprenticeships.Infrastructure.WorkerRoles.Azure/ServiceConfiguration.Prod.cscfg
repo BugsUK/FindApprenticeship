@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ServiceConfiguration serviceName="SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure" xmlns="http://schemas.microsoft.com/ServiceHosting/2008/10/ServiceConfiguration" osFamily="4" osVersion="*" schemaVersion="2015-04.2.6">
+  <Role name="SFA.Apprenticeships.Infrastructure.Processes">
+    <Instances count="2" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="NasClientCertificate" thumbprint="B4CB6B341C2261DAEAA59685D60B71A9C56BC21B" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="SFA.Apprenticeships.Infrastructure.Monitor">
+    <Instances count="2" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="NasClientCertificate" thumbprint="B4CB6B341C2261DAEAA59685D60B71A9C56BC21B" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="SFA.Apprenticeships.Infrastructure.ScheduledJobs">
+    <Instances count="2" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="NasClientCertificate" thumbprint="B4CB6B341C2261DAEAA59685D60B71A9C56BC21B" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <Role name="SFA.Apprenticeships.Infrastructure.LogEventIndexer">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="NasClientCertificate" thumbprint="B4CB6B341C2261DAEAA59685D60B71A9C56BC21B" thumbprintAlgorithm="sha1" />
+    </Certificates>
+  </Role>
+  <NetworkConfiguration>
+    <VirtualNetworkSite name="nasprod" />
+    <AddressAssignments>
+      <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.Processes">
+        <Subnets>
+          <Subnet name="BackendServices" />
+        </Subnets>
+      </InstanceAddress>
+      <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.Monitor">
+        <Subnets>
+          <Subnet name="BackendServices" />
+        </Subnets>
+      </InstanceAddress>
+      <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.ScheduledJobs">
+        <Subnets>
+          <Subnet name="BackendServices" />
+        </Subnets>
+      </InstanceAddress>
+      <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.LogEventIndexer">
+        <Subnets>
+          <Subnet name="BackendServices" />
+        </Subnets>
+      </InstanceAddress>
+    </AddressAssignments>
+  </NetworkConfiguration>
+</ServiceConfiguration>
