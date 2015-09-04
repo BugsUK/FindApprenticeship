@@ -106,7 +106,7 @@
   </PropertyGroup>
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\ServiceDefinition.$(Configuration).csdef $(ProjectDir)\ServiceDefinition.csdef /Y
+    <PreBuildEvent>copy $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\ServiceDefinition.$(Configuration).csdef $(ProjectDir)ServiceDefinition.csdef /Y
 robocopy /E /IS $(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName) $(ProjectDir) /XF *.csdef
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
