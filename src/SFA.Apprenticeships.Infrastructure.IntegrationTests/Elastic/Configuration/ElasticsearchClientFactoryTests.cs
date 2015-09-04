@@ -30,17 +30,17 @@
         [Test]
         public void ShouldReturnIndexNamesFromConfigurationForMappedObjectType()
         {
-            _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary)).Should().Be("apprenticeships");
-            _elasticsearchClientFactory.GetIndexNameForType(typeof(TraineeshipSummary)).Should().Be("traineeships");
-            _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup)).Should().Be("locations");
+            _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary)).Should().EndWith("apprenticeships");
+            _elasticsearchClientFactory.GetIndexNameForType(typeof(TraineeshipSummary)).Should().EndWith("traineeships");
+            _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup)).Should().EndWith("locations");
         }
 
         [Test]
         public void ShouldReturnDocumentTypesFromConfigurationForMappedObjectType()
         {
-            _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary)).Should().Be("apprenticeship");
-            _elasticsearchClientFactory.GetDocumentNameForType(typeof(TraineeshipSummary)).Should().Be("traineeship");
-            _elasticsearchClientFactory.GetDocumentNameForType(typeof(LocationLookup)).Should().Be("locationdatas");
+            _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary)).Should().EndWith("apprenticeship");
+            _elasticsearchClientFactory.GetDocumentNameForType(typeof(TraineeshipSummary)).Should().EndWith("traineeship");
+            _elasticsearchClientFactory.GetDocumentNameForType(typeof(LocationLookup)).Should().EndWith("locationdatas");
         }
     }
 }
