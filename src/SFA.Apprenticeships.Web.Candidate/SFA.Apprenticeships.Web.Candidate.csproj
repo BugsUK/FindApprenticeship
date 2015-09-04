@@ -278,6 +278,9 @@
     <Content Include="Content\_assets\js\nas\tabbedContent.js" />
     <Content Include="Content\_assets\js\vendor\jquery.joyride.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
+    <Content Include="Configs\machineKey.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -112,6 +112,7 @@ csx
 *.cscfg
 *.csdef
 dataCacheClient.config
+machineKey.config
 settings.config
 settings.json
 emailSettings.config
