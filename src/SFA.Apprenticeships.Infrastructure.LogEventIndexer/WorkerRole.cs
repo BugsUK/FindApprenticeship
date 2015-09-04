@@ -4,18 +4,16 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
     using System.Diagnostics;
     using System.Net;
     using System.Threading;
-    using Application.Interfaces.Logging;
-    using Apprenticeships.Domain.Interfaces.Configuration;
-    using Common.IoC;
-    using Elastic.Common.Configuration;
-    using Elastic.Common.IoC;
-    using Logging;
-    using Logging.IoC;
     using Microsoft.ServiceBus.Messaging;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Processors;
     using Services;
     using StructureMap;
+    using Common.IoC;
+    using Logging.IoC;
+    using Apprenticeships.Domain.Interfaces.Configuration;
+    using Application.Interfaces.Logging;
+    using Logging;
 
     public class WorkerRole : RoleEntryPoint
     {
@@ -79,7 +77,6 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<ElasticsearchCommonRegistry>();
             });
 
             _configurationService = _container.GetInstance<IConfigurationService>();
@@ -99,8 +96,7 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
                 configuration.EventHubConnectionString,
                 configuration.StorageConnectionString);
 
-            var elasticSearchClientFactory = _container.GetInstance<IElasticsearchClientFactory>();
-            var indexerService = new LogEventIndexerService(elasticSearchClientFactory);
+            var indexerService = new LogEventIndexerService(_configurationService);
             var eventProcessorFactory = new LogEventProcessorFactory(_logService, indexerService);
 
             _eventProcessorHost.RegisterEventProcessorFactoryAsync(eventProcessorFactory);

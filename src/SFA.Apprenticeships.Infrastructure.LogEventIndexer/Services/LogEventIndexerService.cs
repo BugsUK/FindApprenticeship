@@ -2,16 +2,18 @@
 {
     using System;
     using System.Diagnostics;
-    using Elastic.Common.Configuration;
     using Newtonsoft.Json;
+    using Apprenticeships.Domain.Interfaces.Configuration;
+    using Nest;
+    using Configuration;
 
     public class LogEventIndexerService : ILogEventIndexerService
     {
-        private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
+        private IConfigurationService _configurationService;
 
-        public LogEventIndexerService(IElasticsearchClientFactory elasticsearchClientFactory)
+        public LogEventIndexerService(IConfigurationService configurationService)
         {
-            _elasticsearchClientFactory = elasticsearchClientFactory;
+            _configurationService = configurationService;
         }
 
         public void Index(string logEvent)
@@ -20,7 +22,7 @@
             {
                 var indexDate = GetIndexDate(logEvent);
                 var indexName = GetIndexName(indexDate);
-                var client = _elasticsearchClientFactory.GetElasticClient();
+                var client = GetElasticClient();
 
                 var response = client.Raw.Index(indexName, "logEvent", logEvent);
 
@@ -34,6 +36,16 @@
             {
                 Trace.TraceError("Exception occurred when attempting to index log event: \"{0}\"", e.ToString());
             }
+        }
+
+        #region Helpers
+
+        private ElasticClient GetElasticClient()
+        {
+            var configuration = _configurationService.Get<AzureEventHubLogIndexerConfiguration>();
+            var connectionSettings = new ConnectionSettings(new Uri(configuration.ElasticsearchHostName));
+
+            return new ElasticClient(connectionSettings);
         }
 
         private static DateTime GetIndexDate(string logEvent)
@@ -59,5 +71,7 @@
             return string.Format("{0}-{1}",
                 indexNamePrefix, dateTime.ToUniversalTime().ToString(dateSuffixFormat));
         }
+
+        #endregion
     }
 }

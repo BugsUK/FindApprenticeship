@@ -9,5 +9,7 @@
         public string StorageConnectionString { get; set; }
 
         public string ConsumerGroupName { get; set; }
+
+        public string ElasticsearchHostName { get; set; }
     }
 }
