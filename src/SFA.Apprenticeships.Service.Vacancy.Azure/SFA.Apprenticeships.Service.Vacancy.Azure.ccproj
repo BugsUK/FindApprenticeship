@@ -101,9 +101,9 @@
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
   <PropertyGroup>
     <PreBuildEvent>IF "%COPY_CONFIG_FROM_SECURE_REPO%" == "true" (
-SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\ 
+SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\ 
 ) else (
-SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\
+SET COPY_PATH=$(ProjectDir)..\..\config\$(ProjectName)\
 )
 robocopy /E /IS %COPY_PATH% $(ProjectDir)
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
