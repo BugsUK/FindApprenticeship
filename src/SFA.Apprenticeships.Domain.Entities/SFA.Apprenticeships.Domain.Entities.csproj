@@ -110,7 +110,10 @@
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Providers\Provider.cs" />
+    <Compile Include="Providers\ProviderSite.cs" />
     <Compile Include="ReferenceData\Category.cs" />
+    <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchMode.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchResponse.cs" />
