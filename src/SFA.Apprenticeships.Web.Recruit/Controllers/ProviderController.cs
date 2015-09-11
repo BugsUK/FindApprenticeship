@@ -12,5 +12,15 @@
             UserData.Push(UserMessageConstants.InfoMessage, "As you're the first person to sign in from your organisation, please take a moment to review your training sites.");
             return View();
         }
+
+        public ActionResult AddSite()
+        {
+            return View();
+        }
+
+        public ActionResult EditSite()
+        {
+            return View();
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿@{
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
     ViewBag.Title = "Recruit an Apprentice - Manage your Sites";
 }
 
@@ -41,7 +42,7 @@
                         <tr>
                             <td>Basing View, Basingstoke</td>
                             <td>
-                                <a href="edit-site.html">Edit</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.EditProviderSite)">Edit</a>
                             </td>
                             <td></td>
                         </tr>
@@ -120,13 +121,13 @@
             </div>
         </section>
         <div class="form-group">
-            <a href="add-site.html" class=""><i class="fa fa-plus"></i>Add a new  site</a>
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.AddProviderSite)" class=""><i class="fa fa-plus"></i>Add a new  site</a>
         </div>
     </div>
     <div class="toggle-content" id="newProviderContinue">
-        <a href="user-info.html" class="button" id="newProviderContinueBtn">Save and continue</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.UserInfo)" class="button" id="newProviderContinueBtn">Save and continue</a>
     </div>
     <div class="" id="providerDetailsSave">
-        <a href="#" class="button">Save details</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.UserInfo)" class="button">Save details</a>
     </div>
 </div>

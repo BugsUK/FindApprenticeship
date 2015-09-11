@@ -1,12 +1,33 @@
-﻿<div class="account-info">
-    <div class="small-btm-margin">
-        <span class="your-name" id="bannerUserName">John Smith (Key Training Ltd)</span>
-        <a href="/apprentice/profile-signin.html?Status=signout" id="btnSignOut"><i class="fa fa-sign-out"></i>Sign out</a>
+﻿@using SFA.Apprenticeships.Web.Recruit.Controllers
+
+@if (Request.IsAuthenticated)
+{
+    var controller = ViewContext.Controller as RecuitmentControllerBase;
+    var fullName = (controller != null && controller.UserContext != null) ? controller.UserContext.FullName : string.Empty;
+
+    <div class="account-info" id="bannerSignedIn">
+        <div class="small-btm-margin">
+            <span class="your-name" id="bannerUserName">@fullName</span>
+            <a id="signout-link" href=""><i class="fa fa-sign-out"></i>Sign out</a>
+        </div>
+        <div>
+            <a class="account-link" id="applicationsLink" href="recruitment-home.html">Home</a>
+            <a class="account-link" id="applicationsLink" href="manage-sites.html">Provider details</a>
+            <a class="" id="applicationsLink" href="user-info.html">Contact details</a>
+        </div>
     </div>
-    <div>
-        <a class="account-link" id="applicationsLink" href="recruitment-home.html">Home</a>
-        <a class="account-link" id="applicationsLink" href="manage-sites.html">Provider details</a>
-        <a class="" id="applicationsLink" href="user-info.html">Contact details</a>
+}
+else
+{
+    <div class="account-info" id="bannerSignedOut">
+        @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
+        {
+            <a href="" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
+        }
+        else
+        {
+            <a href="" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
+        }
     </div>
-</div>
+}
 
