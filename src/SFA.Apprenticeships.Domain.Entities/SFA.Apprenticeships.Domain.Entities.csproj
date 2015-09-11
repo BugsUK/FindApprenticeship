@@ -110,6 +110,7 @@
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Organisations\VerifiedOrganisation.cs" />
     <Compile Include="Providers\Provider.cs" />
     <Compile Include="Providers\ProviderSite.cs" />
     <Compile Include="ReferenceData\Category.cs" />

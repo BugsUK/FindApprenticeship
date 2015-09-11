@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns="http://services.lsc.gov.uk/CommonLibrary-200605" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://services.lsc.gov.uk/CommonLibrary-200605" version="1.0a" id="LSCCommonLibrary" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:annotation>
+    <xs:documentation>The types defined within this document are common to all document interchange with the LSC</xs:documentation>
+    <xs:documentation>Encapsulates the information that will be supplied by a Broker for amendment and/or cancellation of one or more of an ONA Analysis, Brokerage Proposal, and Onward Referrals. The main element is the BrokerageOutcomeAmendment element.</xs:documentation>
+    <xs:appinfo>
+      <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms" xmlns:egms="http://www.govtalk.gov.uk/metadata/egms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <Contributor Role="author" Href="mailto:jason.bryant@lsc.gov.uk">Jason Bryant (LSC Solution Architect)</Contributor>
+        <Contributor Role="contributor" Href="mailto:nick.hill@xansa.com">Nick Hill (LSC Architecture Team)</Contributor>
+        <Contributor Role="contributor" Href="mailto:julian.baden@xansa.com">Julian Baden (LSC Architecture Team)</Contributor>
+        <Contributor Role="reviewer" Href="mailto:paul.spencer@boynings.co.uk">Paul Spencer, Boynings Consulting Ltd</Contributor>
+        <Creator>Train To Gain Project Team - (mailto:jason.bryant@lsc.gov.uk)</Creator>
+        <Created>2006-01-01</Created>
+        <Modified>2006-03-07</Modified>
+        <Description>LSC Common Types</Description>
+        <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+        <Identifier Href="http://schemas.lsc.gov.uk/traintogain/200605/LSC-CommonLibrary-v1-0a.xsd">LSCCommonLibrary</Identifier>
+        <Language codeListID="ISO639-2">eng</Language>
+        <Publisher Href="mailto:jason.bryant@lsc.gov.uk">LSC Architecture Team</Publisher>
+        <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+        <ProvidesDefinitionOf Namespace="http://services.lsc.gov.uk/CommonLibrary-200605">LSCCommonLibrary</ProvidesDefinitionOf>
+        <Requires>LSC-CommonLibrary-v1-0.xsd</Requires>
+        <Copyright>LSC</Copyright>
+        <Status>release</Status>
+        <StatusDescription>release for UK GovTalk submission</StatusDescription>
+        <Version>1.0a</Version>
+        <Category codeListID="GCL" codeListAgencyName="Cabinet Office" codeListName="Government Category List" codeListVersionID="0.1" codeListURI="http://www.govtalk.gov.uk/schemasstandards/gcl.xsd" codeListSchemeURI="							http://www.govtalk.gov.uk/metadata/gcl" languageID="en">Education and Skills</Category>
+        <Project>Broker Data Interchange</Project>
+        <Title>Broker Interchange Submission File</Title>
+        <Type>message</Type>
+      </Metadata>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:simpleType name="YesNoType">
+    <xs:annotation>
+      <xs:documentation>Type used to represent yes or no.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="yes" />
+      <xs:enumeration value="no" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SectorSubjectAreaType">
+    <xs:annotation>
+      <xs:documentation>A valid Tier 1 Sector Subject Area Code (as defined in the NETP Glossary). These codes and their meanings are listed below.
+				01		Health, Public Services and Care	
+				02		Science and Mathematics	
+				03		Agriculture, Horticulture and Animal Care	
+				04		Engineering and Manufacturing Technologies	
+				05		Construction, Planning and the Built Environment	
+				06		Information and Communication Technology	
+				07		Retail and Commercial Enterprise	
+				08		Leisure, Travel and Tourism	
+				09		Arts, Media and Publishing	
+				10		History, Philosophy and Theology	
+				11		Social Sciences	
+				12		Languages, Literature and Culture	
+				13		Education and Training	
+				14		Preparation for Life and Work	
+				15		Business, Administration and Law
+			</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="01" />
+      <xs:enumeration value="02" />
+      <xs:enumeration value="03" />
+      <xs:enumeration value="04" />
+      <xs:enumeration value="05" />
+      <xs:enumeration value="06" />
+      <xs:enumeration value="07" />
+      <xs:enumeration value="08" />
+      <xs:enumeration value="09" />
+      <xs:enumeration value="10" />
+      <xs:enumeration value="11" />
+      <xs:enumeration value="12" />
+      <xs:enumeration value="13" />
+      <xs:enumeration value="14" />
+      <xs:enumeration value="15" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="QualificationTypeType">
+    <xs:annotation>
+      <xs:documentation>A type of Learning. Values are not supplied as an enumeration because as of this version of the schema they are not fully defined</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LevelOfLearningType">
+    <xs:restriction base="xs:string" />
+  </xs:simpleType>
+  <xs:simpleType name="EmployerIdType">
+    <xs:annotation>
+      <xs:documentation>Represents a unique key which references a specific employer in EDRS. The data type and length of an element of this type should be consistent with EDRS the unique key in EDRS used to identify an Employer. [TODO: This should be replaced by the Type referenced/imported from the appropriate EDRS Schema] </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:minInclusive value="50000000" />
+      <xs:maxInclusive value="59999999" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EmployerNameType">
+    <xs:annotation>
+      <xs:documentation>Type used to represent an EDRS Employer Name. [TODO: This should be replaced by the Type from the appropriate EDRS Schema]</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ProviderIdType">
+    <xs:annotation>
+      <xs:documentation>Represents the Unique Provider Identification Number (UPIN) of the agreed training provider. Only allows digits in the range "0" to "9". Must be 6 digits in length.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9]{6}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OrganisationNameType">
+    <xs:annotation>
+      <xs:documentation>Organisation Name. Replaces the Organisation_Type type to cater for Organisations with name exceeding 35 chars.  Note that govtalk standards recommend 255 characters, and this type will be amended in a subsequent release.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50" />
+      <xs:minLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EthnicityType">
+    <xs:annotation>
+      <xs:documentation>Type to represent Ethnicity</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="white" />
+      <xs:enumeration value="mixed" />
+      <xs:enumeration value="Asian/Asian British" />
+      <xs:enumeration value="Black/Black British" />
+      <xs:enumeration value="Chinese" />
+      <xs:enumeration value="other" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="UkprnType">
+    <xs:annotation>
+      <xs:documentation>Type used to represent the United Kingdom Provider Reference Number. Minimum value allowed is 100000. [TODO: eventually reference the UKRLP schema]</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:positiveInteger">
+      <xs:minInclusive value="100000" />
+      <xs:maxInclusive value="999999" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PostCodeType">
+    <xs:annotation>
+      <xs:documentation>Based on a simplified version of the pattern used by bs7666</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][A-Z]{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="daf8810e-ad13-4cfe-acbf-788ee04628b3" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://services.edrs.lsc.gov.uk/lookup17.asmx?wsdl" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="LSCCommonLibrary.xsd" MetadataType="Schema" ID="b6611c1b-9cb5-4bf9-9c52-2fab07ad1a39" SourceId="1" SourceUrl="http://services.edrs.lsc.gov.uk/LSC-CommonLibrary-v1-0a.xsd" />
+    <MetadataFile FileName="OrganisationIdentifierTypes.xsd" MetadataType="Schema" ID="26dbdc1f-aa7b-417e-ba25-86c8bc4a75db" SourceId="1" SourceUrl="http://services.edrs.lsc.gov.uk/OrganisationIdentifierTypes-v1-1.xsd" />
+    <MetadataFile FileName="CommonSimpleTypes-v1-3.xsd" MetadataType="Schema" ID="fe9beb6b-a308-4bda-9f4d-18457f3b0de0" SourceId="1" SourceUrl="http://services.edrs.lsc.gov.uk/CommonSimpleTypes-v1-3.xsd" />
+    <MetadataFile FileName="BS7666.xsd" MetadataType="Schema" ID="2e7ed416-c8bf-42d3-973e-019b09850d54" SourceId="1" SourceUrl="http://services.edrs.lsc.gov.uk/bs7666-v2-0.xsd" />
+    <MetadataFile FileName="lookup17.wsdl" MetadataType="Wsdl" ID="a322bd6a-3b54-4f7d-9767-55ca5c5bea86" SourceId="1" SourceUrl="http://services.edrs.lsc.gov.uk/lookup17.asmx?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

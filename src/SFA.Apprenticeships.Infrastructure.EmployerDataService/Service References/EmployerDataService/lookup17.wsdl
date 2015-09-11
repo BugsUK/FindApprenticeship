@@ -1,0 +1,2972 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://services.edrs.lsc.gov.uk/v1.7" xmlns:s1="http://services.edrs.lsc.gov.uk/v1.7/AbstractTypes" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:s2="http://www.govtalk.gov.uk/people/bs7666" xmlns:s3="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://services.edrs.lsc.gov.uk/v1.7" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://services.edrs.lsc.gov.uk/v1.7">
+      <s:import namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7" />
+      <s:import namespace="http://services.lsc.gov.uk/CommonLibrary-200605" />
+      <s:import namespace="http://www.govtalk.gov.uk/core" />
+      <s:import namespace="http://www.govtalk.gov.uk/financial/OrganisationIdentifiers" />
+      <s:import namespace="http://www.govtalk.gov.uk/people/bs7666" />
+      <s:element name="Parents">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Urn" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ParentsResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ParentsResult" type="tns:ArrayOfHierarchyStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfHierarchyStructure">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="HierarchyStructure" nillable="true" type="s3:HierarchyStructure" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="Hierarchy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Urn" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="IncludeWorkplaces" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="HierarchyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HierarchyResult" type="tns:ArrayOfHierarchyStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Validate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Urns" type="tns:ArrayOfInt" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfInt">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="int" type="s:int" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ValidateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateResult" type="tns:ArrayOfValidationResultStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfValidationResultStructure">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ValidationResultStructure" nillable="true" type="s3:ValidationResultStructure" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ByUrn">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Urn" type="s:int" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByUrnResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ByUrnResult" type="tns:ArrayOfConciseEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfConciseEmployerStructure">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="ConciseEmployerStructure" nillable="true" type="s3:ConciseEmployerStructure" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="ByPostcode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Postcode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgWorkplace" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByPostcodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ByPostcodeResult" type="tns:ArrayOfConciseEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByOutcode">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Outcode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgWorkplace" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByOutcodeResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ByOutcodeResult" type="tns:ArrayOfConciseEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByPhone">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Phone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgWorkplace" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByPhoneResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ByPhoneResult" type="tns:ArrayOfConciseEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByOrganisation">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Organisation" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Town" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IsPhonetic" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgWorkplace" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByOrganisationResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ByOrganisationResult" type="tns:ArrayOfConciseEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByOrganisationAndTrading">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Organisation" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Town" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IsPhonetic" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgWorkplace" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByOrganisationAndTradingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ByOrganisationAndTradingResult" type="tns:ArrayOfConciseEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByStreet">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Street" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Town" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IsPhonetic" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgWorkplace" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByStreetResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ByStreetResult" type="tns:ArrayOfConciseEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByFreeText">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FreeText" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="IsPhonetic" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="OrgWorkplace" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Region" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ByFreeTextResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ByFreeTextResult" type="tns:ArrayOfConciseEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Fetch">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="Urn" type="s:int" />
+            <s:element minOccurs="1" maxOccurs="1" name="IncludeAliases" type="s:boolean" />
+            <s:element minOccurs="0" maxOccurs="1" name="Credentials" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="FetchResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="FetchResult" type="s3:DetailedEmployerStructure" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ArrayOfHierarchyStructure" nillable="true" type="tns:ArrayOfHierarchyStructure" />
+      <s:element name="ArrayOfValidationResultStructure" nillable="true" type="tns:ArrayOfValidationResultStructure" />
+      <s:element name="ArrayOfConciseEmployerStructure" nillable="true" type="tns:ArrayOfConciseEmployerStructure" />
+      <s:element name="DetailedEmployerStructure" nillable="true" type="s3:DetailedEmployerStructure" />
+    </s:schema>
+    <s:schema targetNamespace="http://services.edrs.lsc.gov.uk/v1.7/AbstractTypes">
+      <s:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <s:complexType name="StringArray">
+        <s:complexContent mixed="false">
+          <s:restriction base="soapenc:Array">
+            <s:sequence>
+              <s:element minOccurs="0" maxOccurs="unbounded" name="String" type="s:string" />
+            </s:sequence>
+          </s:restriction>
+        </s:complexContent>
+      </s:complexType>
+    </s:schema>
+    <xsd:schema xmlns="http://www.govtalk.gov.uk/people/bs7666" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://www.govtalk.gov.uk/people/bs7666" version="2.0" id="BS7666" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+      <xsd:annotation>
+        <xsd:appinfo>
+          <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms">
+            <Contributor Href="mailto:adam.bailin@cabinet-office.x.gsi.gov.uk">Adam Bailin, e-Government Unit, Cabinet Office</Contributor>
+            <Contributor Href="mailto:paul.spencer@boynings.co.uk" />
+            <Contributor>e-champions, Government Schema Group, IDeA</Contributor>
+            <Contributor>Adrian Kent, Office e-Envoy</Contributor>
+            <Contributor Href="mailto:bruce@egic.ltd.uk">Bruce Yeoman, EGIC</Contributor>
+            <Creator Href="maito:govtalk@cabinet-office.x.gsi.gov.uk">e-Government Unit, Cabinet Office, UK Government</Creator>
+            <Created>2003-02-11</Created>
+            <Modified>2004-12-08</Modified>
+            <Description>Schema for BS7666 definitions including address and postcode. BS7666 provides a geo-spatial reference and is particularly suitable for local gazeteer applications. For a postal address format, use the UKPostalAddressStructure defined in the Address Types schema.</Description>
+            <Review>2005-12-08</Review>
+            <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+            <Identifier Href="http://www.govtalk.gov.uk/gdsc/schemas/bs7666-v2-0.xsd">BS7666-v2-0</Identifier>
+            <Language codeListID="ISO639-2">eng</Language>
+            <Publisher Href="mailto:govtalk@cabinet-office.x.gsi.gov.uk">e-Government Unit, Cabinet Office, UK Government</Publisher>
+            <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+            <IsPartOf>http://www.govtalk.gov.uk/gdsc/schemas/AddressTypes-v2-0.xsd</IsPartOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">BSaddressStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">BasicLandAndPropertyUnitStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">PostCodeType</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">AONstructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">StreetDescriptiveIdentifierStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">UPRNtype</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">USRNtype</ProvidesDefinitionOf>
+            <Copyright>Crown Copyright 2002, 2003, 2004</Copyright>
+            <ProtectiveMarking>Unclassified</ProtectiveMarking>
+            <Status>draft</Status>
+            <StatusDescription>For approval by GSG</StatusDescription>
+            <Version>2.0</Version>
+            <Category codeListID="GCL">People, communities and living</Category>
+            <Project>UK GovTalk Government Data Standards Catalogue</Project>
+            <Title>BS7666 2.0</Title>
+            <Type>architectural</Type>
+          </Metadata>
+        </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:complexType name="BSaddressStructure">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="SAON" type="s2:AONstructure">
+            <xsd:annotation>
+              <xsd:documentation>Secondary Addressable Object</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:element name="PAON" type="s2:AONstructure">
+            <xsd:annotation>
+              <xsd:documentation>Primary Addressable Object</xsd:documentation>
+            </xsd:annotation>
+          </xsd:element>
+          <xsd:sequence>
+            <xsd:element name="StreetDescription" type="s2:StreetDescriptorType" />
+            <xsd:element minOccurs="0" name="UniqueStreetReferenceNumber" type="s2:USRNtype" />
+          </xsd:sequence>
+          <xsd:choice>
+            <xsd:sequence>
+              <xsd:element ref="s2:Locality" />
+              <xsd:choice minOccurs="0">
+                <xsd:sequence>
+                  <xsd:element ref="s2:Town" />
+                  <xsd:element minOccurs="0" ref="s2:AdministrativeArea" />
+                </xsd:sequence>
+                <xsd:element ref="s2:AdministrativeArea" />
+              </xsd:choice>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="s2:Town" />
+              <xsd:element minOccurs="0" ref="s2:AdministrativeArea" />
+            </xsd:sequence>
+            <xsd:element ref="s2:AdministrativeArea" />
+          </xsd:choice>
+          <xsd:element minOccurs="0" name="PostTown" type="s2:PostTownType" />
+          <xsd:element minOccurs="0" name="PostCode" type="s2:PostCodeType" />
+          <xsd:element minOccurs="0" name="UniquePropertyReferenceNumber" type="s2:UPRNtype" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="UPRNtype">
+        <xsd:restriction base="xsd:integer">
+          <xsd:minInclusive value="1" />
+          <xsd:maxInclusive value="999999999999" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="USRNtype">
+        <xsd:restriction base="xsd:integer">
+          <xsd:minInclusive value="1" />
+          <xsd:maxInclusive value="99999999" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="PostCodeType">
+        <xsd:annotation>
+          <xsd:documentation>complex pattern for postcode, which matches definition, accepted by some parsers is: "(GIR 0AA)|((([A-Z-[QVX]][0-9][0-9]?)|(([A-Z-[QVX]][A-Z-[IJZ]][0-9][0-9]?)|(([A-Z-[QVX]][0-9][A-HJKSTUW])|([A-Z-[QVX]][A-Z-[IJZ]][0-9][ABEHMNPRVWXY])))) [0-9][A-Z-[CIKMOV]]{2})"</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[A-Z]{1,2}[0-9R][0-9A-Z]? [0-9][A-Z-[CIKMOV]]{2}" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="PostTownType">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="1" />
+          <xsd:maxLength value="30" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="LocalityType">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="1" />
+          <xsd:maxLength value="35" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="AdministrativeAreaType">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="1" />
+          <xsd:maxLength value="30" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="TownType">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="1" />
+          <xsd:maxLength value="30" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="StreetDescriptorType">
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="1" />
+          <xsd:maxLength value="100" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="StreetReferenceTypeType">
+        <xsd:restriction base="xsd:integer">
+          <xsd:enumeration value="1" />
+          <xsd:enumeration value="2" />
+          <xsd:enumeration value="3" />
+          <xsd:enumeration value="4" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="VersionNumberType">
+        <xsd:restriction base="xsd:positiveInteger">
+          <xsd:minInclusive value="1" />
+          <xsd:maxInclusive value="9999" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="ToleranceType">
+        <xsd:restriction base="xsd:decimal">
+          <xsd:minInclusive value="0" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="RefPointGridCoordinateType">
+        <xsd:restriction base="xsd:string">
+          <xsd:pattern value="[0-9]{14}" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="StreetStructure">
+        <xsd:sequence>
+          <xsd:element name="StreetReferenceType" type="s2:StreetReferenceTypeType" />
+          <xsd:element name="StartCoordinate" type="s2:CoordinateStructure" />
+          <xsd:element name="EndCoordinate" type="s2:CoordinateStructure" />
+          <xsd:element name="Tolerance" type="s2:ToleranceType" />
+          <xsd:element name="StreetVersionNumber" type="s2:VersionNumberType" />
+          <xsd:element name="StreetEntryDate" type="xsd:date" />
+          <xsd:element minOccurs="0" name="StreetClosureDate" type="xsd:date" />
+          <xsd:element name="ResponsibleAuthority" type="s2:CustodianCodeType" />
+          <xsd:element name="DescriptiveIdentifier" type="s2:StreetDescriptiveIdentifierStructure" />
+          <xsd:element minOccurs="0" name="StreetAlias" type="s2:StreetDescriptiveIdentifierStructure" />
+          <xsd:element minOccurs="0" name="StreetCrossReferences">
+            <xsd:complexType>
+              <xsd:choice>
+                <xsd:element name="UniqueStreetReferenceNumbers" type="s2:USRNlistType" />
+                <xsd:element minOccurs="0" maxOccurs="unbounded" name="ElementaryStreetUnit" type="s2:ElementaryStreetUnitStructure" />
+              </xsd:choice>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+        <xsd:attribute name="usrn" type="s2:USRNtype" />
+      </xsd:complexType>
+      <xsd:complexType name="StreetDescriptiveIdentifierStructure">
+        <xsd:sequence>
+          <xsd:element name="StreetDescription" type="s2:StreetDescriptorType" />
+          <xsd:choice>
+            <xsd:sequence>
+              <xsd:element ref="s2:Locality" />
+              <xsd:choice minOccurs="0">
+                <xsd:sequence>
+                  <xsd:element ref="s2:Town" />
+                  <xsd:element minOccurs="0" ref="s2:AdministrativeArea" />
+                </xsd:sequence>
+                <xsd:element ref="s2:AdministrativeArea" />
+              </xsd:choice>
+            </xsd:sequence>
+            <xsd:sequence>
+              <xsd:element ref="s2:Town" />
+              <xsd:element minOccurs="0" ref="s2:AdministrativeArea" />
+            </xsd:sequence>
+            <xsd:element ref="s2:AdministrativeArea" />
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ElementaryStreetUnitStructure">
+        <xsd:sequence>
+          <xsd:element name="ESUidentity" type="s2:RefPointGridCoordinateType" />
+          <xsd:element name="ESUversion" type="s2:VersionNumberType" />
+          <xsd:element name="ESUentryDate" type="xsd:date" />
+          <xsd:element minOccurs="0" name="ESUclosureDate" type="xsd:date" />
+          <xsd:element name="StartCoordinate" type="s2:CoordinateStructure" />
+          <xsd:element name="EndCoordinate" type="s2:CoordinateStructure" />
+          <xsd:element name="Tolerance" type="s2:ToleranceType" />
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="IntermediateCoord" type="s2:CoordinateStructure" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="CoordinateStructure">
+        <xsd:annotation>
+          <xsd:documentation>Coordinate Point based on UK National Grid</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="X">
+            <xsd:annotation>
+              <xsd:documentation>Easting Field</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:unsignedLong">
+                <xsd:minInclusive value="0" />
+                <xsd:maxInclusive value="9999999" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Y">
+            <xsd:annotation>
+              <xsd:documentation>Northing Field</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:unsignedLong">
+                <xsd:minInclusive value="0" />
+                <xsd:maxInclusive value="9999999" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="UPRNlistType">
+        <xsd:list itemType="s2:UPRNtype" />
+      </xsd:simpleType>
+      <xsd:simpleType name="USRNlistType">
+        <xsd:list itemType="s2:USRNtype" />
+      </xsd:simpleType>
+      <xsd:complexType name="BLPUpolygonStructure">
+        <xsd:sequence>
+          <xsd:element name="PolygonID">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:positiveInteger">
+                <xsd:minInclusive value="1" />
+                <xsd:maxInclusive value="99" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element minOccurs="0" name="PolygonType">
+            <xsd:annotation>
+              <xsd:documentation>H to represent a hole or not present</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:enumeration value="H" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:choice>
+            <xsd:element minOccurs="3" maxOccurs="unbounded" name="Vertices" type="s2:CoordinateStructure" />
+            <xsd:element name="ExternalRef" type="xsd:unsignedLong" />
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="BLPUextentStructure">
+        <xsd:sequence>
+          <xsd:element name="SourceDescription">
+            <xsd:annotation>
+              <xsd:documentation>Description of Source of BLPU Extent</xsd:documentation>
+            </xsd:annotation>
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:minLength value="1" />
+                <xsd:maxLength value="50" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="ExtentEntryDate" type="xsd:date" />
+          <xsd:element name="ExtentSourceDate" type="xsd:date" />
+          <xsd:element name="ExtentStartDate" type="xsd:date" />
+          <xsd:element minOccurs="0" name="ExtentEndDate" type="xsd:date" />
+          <xsd:element name="ExtentLastUpdateDate" type="xsd:date" />
+          <xsd:element maxOccurs="unbounded" name="ExtentDefinition" type="s2:BLPUpolygonStructure" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="ProvenanceCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Provenance Code values
+					T = Registered land title
+					L = Unregistered land title
+					F = Formal tenancy agreement
+					R = Rental agreement
+					P = Physical features
+					O = Occupancy
+					U = Use</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:enumeration value="T" />
+          <xsd:enumeration value="L" />
+          <xsd:enumeration value="F" />
+          <xsd:enumeration value="R" />
+          <xsd:enumeration value="P" />
+          <xsd:enumeration value="O" />
+          <xsd:enumeration value="U" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="ProvenanceStructure">
+        <xsd:sequence>
+          <xsd:element name="ProvenanceCode" type="s2:ProvenanceCodeType" />
+          <xsd:element minOccurs="0" name="Annotation" type="xsd:string" />
+          <xsd:element name="ProvEntryDate" type="xsd:date" />
+          <xsd:element name="ProvStartDate" type="xsd:date" />
+          <xsd:element minOccurs="0" name="ProvEndDate" type="xsd:date" />
+          <xsd:element name="ProvLastUpdateDate" type="xsd:date" />
+          <xsd:element minOccurs="0" name="BLPUextent" type="s2:BLPUextentStructure" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:simpleType name="CustodianCodeType">
+        <xsd:restriction base="xsd:integer">
+          <xsd:minInclusive value="1" />
+          <xsd:maxInclusive value="9999" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="RepresentativePointCodeType">
+        <xsd:annotation>
+          <xsd:documentation>Representative Point Code values
+					1 = Visual centre
+					2 = General internal point
+					3 = South-west corner of 100m grid square
+					4 = Start point of the referenced street</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:positiveInteger">
+          <xsd:enumeration value="1" />
+          <xsd:enumeration value="2" />
+          <xsd:enumeration value="3" />
+          <xsd:enumeration value="4" />
+          <xsd:enumeration value="5" />
+          <xsd:enumeration value="9" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:simpleType name="LogicalStatusType">
+        <xsd:annotation>
+          <xsd:documentation>Logical Status values
+					1 = Approved preferred
+					2 = Approved alternative (LPI Only)
+					3 = Alternative (LPI Only)
+					5 = Candidate
+					6 = Provisional
+					8 = Historical
+					9 = Rejected</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:integer">
+          <xsd:minInclusive value="1" />
+          <xsd:maxInclusive value="9" />
+          <xsd:enumeration value="1" />
+          <xsd:enumeration value="2" />
+          <xsd:enumeration value="3" />
+          <xsd:enumeration value="5" />
+          <xsd:enumeration value="6" />
+          <xsd:enumeration value="8" />
+          <xsd:enumeration value="9" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="BasicLandAndPropertyUnitStructure">
+        <xsd:sequence>
+          <xsd:element ref="s2:UniquePropertyReferenceNumber" />
+          <xsd:element name="CustodianCode" type="s2:CustodianCodeType" />
+          <xsd:element name="RepresentativePointCode" type="s2:RepresentativePointCodeType" />
+          <xsd:element name="LogicalStatus" type="s2:LogicalStatusType" />
+          <xsd:element name="GridReference" type="s2:CoordinateStructure" />
+          <xsd:element name="BLPUentryDate" type="xsd:date" />
+          <xsd:element name="BLPUstartDate" type="xsd:date" />
+          <xsd:element minOccurs="0" name="BLPUendDate" type="xsd:date" />
+          <xsd:element name="BLPUlastUpdateDate" type="xsd:date" />
+          <xsd:element maxOccurs="unbounded" name="LandAndPropertyIdentifier" type="s2:LandAndPropertyIdentifierStructure" />
+          <xsd:element maxOccurs="unbounded" name="Provenance" type="s2:ProvenanceStructure" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="LandAndPropertyIdentifierStructure">
+        <xsd:sequence>
+          <xsd:element name="PAON" type="s2:AONstructure" />
+          <xsd:element minOccurs="0" name="SAON" type="s2:AONstructure" />
+          <xsd:element minOccurs="0" name="PostTown" type="s2:PostTownType" />
+          <xsd:element minOccurs="0" name="PostCode" type="s2:PostCodeType" />
+          <xsd:element minOccurs="0" name="Level">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:minLength value="1" />
+                <xsd:maxLength value="30" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="LogicalStatus" type="s2:LogicalStatusType" />
+          <xsd:element minOccurs="0" name="OfficialAddressMarker" type="xsd:boolean" />
+          <xsd:element name="LPIstartDate" type="xsd:date" />
+          <xsd:element name="LPIentryDate" type="xsd:date" />
+          <xsd:element minOccurs="0" name="LPIendDate" type="xsd:date" />
+          <xsd:element name="LPIlastUpdateDate" type="xsd:date" />
+          <xsd:choice>
+            <xsd:element name="Street" type="s2:StreetStructure" />
+            <xsd:element name="USRN" type="s2:USRNtype" />
+          </xsd:choice>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="Town" type="s2:TownType" />
+      <xsd:element name="Locality" type="s2:LocalityType" />
+      <xsd:element name="AdministrativeArea" type="s2:AdministrativeAreaType" />
+      <xsd:element name="UniquePropertyReferenceNumber" type="s2:UPRNtype" />
+      <xsd:element name="BS7666Address" type="s2:BSaddressStructure" />
+      <xsd:element name="BS7666BLPU" type="s2:BasicLandAndPropertyUnitStructure" />
+      <xsd:simpleType name="AONdescriptionType">
+        <xsd:annotation>
+          <xsd:documentation>Restricted string type for the name text portion of the PAON and SAON</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+          <xsd:minLength value="1" />
+          <xsd:maxLength value="90" />
+          <xsd:pattern value="[a-zA-Z0-9:;&lt;=&gt;\?@%&amp;'\(\)\*\+,\-\. ]{0,90}" />
+        </xsd:restriction>
+      </xsd:simpleType>
+      <xsd:complexType name="AONrangeStructure">
+        <xsd:annotation>
+          <xsd:documentation>Numeric and optional alpha suffix for start and end numbers</xsd:documentation>
+        </xsd:annotation>
+        <xsd:sequence>
+          <xsd:element name="Number">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:positiveInteger">
+                <xsd:maxInclusive value="9999" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element minOccurs="0" name="Suffix">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:minLength value="1" />
+                <xsd:maxLength value="1" />
+                <xsd:pattern value="[A-Z]" />
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="AONstructure">
+        <xsd:annotation>
+          <xsd:documentation>Replacement for PAONtype and SAONtype</xsd:documentation>
+        </xsd:annotation>
+        <xsd:choice>
+          <xsd:sequence>
+            <xsd:element name="StartRange" type="s2:AONrangeStructure" />
+            <xsd:element minOccurs="0" name="EndRange" type="s2:AONrangeStructure" />
+            <xsd:element minOccurs="0" name="Description" type="s2:AONdescriptionType" />
+          </xsd:sequence>
+          <xsd:element name="Description" type="s2:AONdescriptionType" />
+        </xsd:choice>
+      </xsd:complexType>
+      <xsd:annotation>
+        <xsd:appinfo>
+          <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms">
+            <Contributor Href="mailto:adam.bailin@cabinet-office.x.gsi.gov.uk">Adam Bailin, e-Government Unit, Cabinet Office</Contributor>
+            <Contributor Href="mailto:paul.spencer@boynings.co.uk" />
+            <Contributor>e-champions, Government Schema Group, IDeA</Contributor>
+            <Contributor>Adrian Kent, Office e-Envoy</Contributor>
+            <Contributor Href="mailto:bruce@egic.ltd.uk">Bruce Yeoman, EGIC</Contributor>
+            <Creator Href="maito:govtalk@cabinet-office.x.gsi.gov.uk">e-Government Unit, Cabinet Office, UK Government</Creator>
+            <Created>2003-02-11</Created>
+            <Modified>2004-12-08</Modified>
+            <Description>Schema for BS7666 definitions including address and postcode. BS7666 provides a geo-spatial reference and is particularly suitable for local gazeteer applications. For a postal address format, use the UKPostalAddressStructure defined in the Address Types schema.</Description>
+            <Review>2005-12-08</Review>
+            <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+            <Identifier Href="http://www.govtalk.gov.uk/gdsc/schemas/bs7666-v2-0.xsd">BS7666-v2-0</Identifier>
+            <Language codeListID="ISO639-2">eng</Language>
+            <Publisher Href="mailto:govtalk@cabinet-office.x.gsi.gov.uk">e-Government Unit, Cabinet Office, UK Government</Publisher>
+            <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+            <IsPartOf>http://www.govtalk.gov.uk/gdsc/schemas/AddressTypes-v2-0.xsd</IsPartOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">BSaddressStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">BasicLandAndPropertyUnitStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">PostCodeType</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">AONstructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">StreetDescriptiveIdentifierStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">UPRNtype</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">USRNtype</ProvidesDefinitionOf>
+            <Copyright>Crown Copyright 2002, 2003, 2004</Copyright>
+            <ProtectiveMarking>Unclassified</ProtectiveMarking>
+            <Status>draft</Status>
+            <StatusDescription>For approval by GSG</StatusDescription>
+            <Version>2.0</Version>
+            <Category codeListID="GCL">People, communities and living</Category>
+            <Project>UK GovTalk Government Data Standards Catalogue</Project>
+            <Title>BS7666 2.0</Title>
+            <Type>architectural</Type>
+          </Metadata>
+        </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:annotation>
+        <xsd:appinfo>
+          <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms">
+            <Contributor Href="mailto:adam.bailin@cabinet-office.x.gsi.gov.uk">Adam Bailin, e-Government Unit, Cabinet Office</Contributor>
+            <Contributor Href="mailto:paul.spencer@boynings.co.uk" />
+            <Contributor>e-champions, Government Schema Group, IDeA</Contributor>
+            <Contributor>Adrian Kent, Office e-Envoy</Contributor>
+            <Contributor Href="mailto:bruce@egic.ltd.uk">Bruce Yeoman, EGIC</Contributor>
+            <Creator Href="maito:govtalk@cabinet-office.x.gsi.gov.uk">e-Government Unit, Cabinet Office, UK Government</Creator>
+            <Created>2003-02-11</Created>
+            <Modified>2004-12-08</Modified>
+            <Description>Schema for BS7666 definitions including address and postcode. BS7666 provides a geo-spatial reference and is particularly suitable for local gazeteer applications. For a postal address format, use the UKPostalAddressStructure defined in the Address Types schema.</Description>
+            <Review>2005-12-08</Review>
+            <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+            <Identifier Href="http://www.govtalk.gov.uk/gdsc/schemas/bs7666-v2-0.xsd">BS7666-v2-0</Identifier>
+            <Language codeListID="ISO639-2">eng</Language>
+            <Publisher Href="mailto:govtalk@cabinet-office.x.gsi.gov.uk">e-Government Unit, Cabinet Office, UK Government</Publisher>
+            <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+            <IsPartOf>http://www.govtalk.gov.uk/gdsc/schemas/AddressTypes-v2-0.xsd</IsPartOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">BSaddressStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">BasicLandAndPropertyUnitStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">PostCodeType</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">AONstructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">StreetDescriptiveIdentifierStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">UPRNtype</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">USRNtype</ProvidesDefinitionOf>
+            <Copyright>Crown Copyright 2002, 2003, 2004</Copyright>
+            <ProtectiveMarking>Unclassified</ProtectiveMarking>
+            <Status>draft</Status>
+            <StatusDescription>For approval by GSG</StatusDescription>
+            <Version>2.0</Version>
+            <Category codeListID="GCL">People, communities and living</Category>
+            <Project>UK GovTalk Government Data Standards Catalogue</Project>
+            <Title>BS7666 2.0</Title>
+            <Type>architectural</Type>
+          </Metadata>
+        </xsd:appinfo>
+      </xsd:annotation>
+      <xsd:annotation>
+        <xsd:appinfo>
+          <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms">
+            <Contributor Href="mailto:adam.bailin@cabinet-office.x.gsi.gov.uk">Adam Bailin, e-Government Unit, Cabinet Office</Contributor>
+            <Contributor Href="mailto:paul.spencer@boynings.co.uk" />
+            <Contributor>e-champions, Government Schema Group, IDeA</Contributor>
+            <Contributor>Adrian Kent, Office e-Envoy</Contributor>
+            <Contributor Href="mailto:bruce@egic.ltd.uk">Bruce Yeoman, EGIC</Contributor>
+            <Creator Href="maito:govtalk@cabinet-office.x.gsi.gov.uk">e-Government Unit, Cabinet Office, UK Government</Creator>
+            <Created>2003-02-11</Created>
+            <Modified>2004-12-08</Modified>
+            <Description>Schema for BS7666 definitions including address and postcode. BS7666 provides a geo-spatial reference and is particularly suitable for local gazeteer applications. For a postal address format, use the UKPostalAddressStructure defined in the Address Types schema.</Description>
+            <Review>2005-12-08</Review>
+            <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+            <Identifier Href="http://www.govtalk.gov.uk/gdsc/schemas/bs7666-v2-0.xsd">BS7666-v2-0</Identifier>
+            <Language codeListID="ISO639-2">eng</Language>
+            <Publisher Href="mailto:govtalk@cabinet-office.x.gsi.gov.uk">e-Government Unit, Cabinet Office, UK Government</Publisher>
+            <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+            <IsPartOf>http://www.govtalk.gov.uk/gdsc/schemas/AddressTypes-v2-0.xsd</IsPartOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">BSaddressStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">BasicLandAndPropertyUnitStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">PostCodeType</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">AONstructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">StreetDescriptiveIdentifierStructure</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">UPRNtype</ProvidesDefinitionOf>
+            <ProvidesDefinitionOf Namespace="http://www.govtalk.gov.uk/people/bs7666">USRNtype</ProvidesDefinitionOf>
+            <Copyright>Crown Copyright 2002, 2003, 2004</Copyright>
+            <ProtectiveMarking>Unclassified</ProtectiveMarking>
+            <Status>draft</Status>
+            <StatusDescription>For approval by GSG</StatusDescription>
+            <Version>2.0</Version>
+            <Category codeListID="GCL">People, communities and living</Category>
+            <Project>UK GovTalk Government Data Standards Catalogue</Project>
+            <Title>BS7666 2.0</Title>
+            <Type>architectural</Type>
+          </Metadata>
+        </xsd:appinfo>
+      </xsd:annotation>
+    </xsd:schema>
+    <xs:schema xmlns:egovbs7666="http://www.govtalk.gov.uk/people/bs7666" xmlns:mstns="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7" xmlns:lsc="http://services.lsc.gov.uk/CommonLibrary-200605" xmlns:egovorg="http://www.govtalk.gov.uk/financial/OrganisationIdentifiers" xmlns="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7" xmlns:egovcommon="http://www.govtalk.gov.uk/core" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7" version="1.7" id="EDRS-CommonTypes" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import schemaLocation="http://services.edrs.lsc.gov.uk/LSC-CommonLibrary-v1-0a.xsd" namespace="http://services.lsc.gov.uk/CommonLibrary-200605" />
+      <xs:import schemaLocation="http://services.edrs.lsc.gov.uk/CommonSimpleTypes-v1-3.xsd" namespace="http://www.govtalk.gov.uk/core" />
+      <xs:import schemaLocation="http://services.edrs.lsc.gov.uk/OrganisationIdentifierTypes-v1-1.xsd" namespace="http://www.govtalk.gov.uk/financial/OrganisationIdentifiers" />
+      <xs:import schemaLocation="http://services.edrs.lsc.gov.uk/bs7666-v2-0.xsd" namespace="http://www.govtalk.gov.uk/people/bs7666" />
+      <xs:annotation>
+        <xs:documentation>Types defined within this document are defined within the domain of Employer Data Service only</xs:documentation>
+        <xs:appinfo>
+          <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms" xmlns:egms="http://www.govtalk.gov.uk/metadata/egms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <Contributor Role="author" Href="mailto:jamie@postcodeanywhere.co.uk">Jamie Turner (Postcode Anywhere)</Contributor>
+            <Creator>Jamie Turner - (mailto:jamie@postcodeanywhere.co.uk)</Creator>
+            <Created>2006-03-20</Created>
+            <Modified>2008-12-11</Modified>
+            <Description>Common Types associated with EDRS</Description>
+            <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+            <Identifier Href="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7.xsd">EDRS-CommonTypes</Identifier>
+            <Language codeListID="ISO639-2">eng</Language>
+            <Publisher Href="mailto:jamie@postcodeanywhere.co.uk">Postcode Anywhere</Publisher>
+            <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+            <ProvidesDefinitionOf Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7">EDRSCommonTypes</ProvidesDefinitionOf>
+            <Copyright>LSC</Copyright>
+            <Status>release</Status>
+            <StatusDescription>release for UK GovTalk submission</StatusDescription>
+            <Version>1.7</Version>
+            <Category codeListID="GCL" codeListAgencyName="Cabinet Office" codeListName="Government Category List" codeListVersionID="0.1" codeListURI="http://www.govtalk.gov.uk/schemasstandards/gcl.xsd" codeListSchemeURI="http://www.govtalk.gov.uk/metadata/gcl" languageID="en">Education and Skills</Category>
+            <Project>EDRS</Project>
+            <Title>EDRS Common Types</Title>
+            <Type>message</Type>
+            <Relation>
+              <Requires>LSCCommonLibrary</Requires>
+              <Requires>CommonSimpleTypes-v1-3</Requires>
+              <Requires>OrganisationIdentifierTypes</Requires>
+              <Requires>BS7666</Requires>
+            </Relation>
+          </Metadata>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:simpleType name="LscSectorType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the LSC sector code
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+          <xs:minInclusive value="1" />
+          <xs:maxInclusive value="999999999" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="LscRegionType">
+        <xs:annotation>
+          <xs:documentation>
+				Single character representing the LSC region
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1" />
+          <xs:maxLength value="1" />
+          <xs:pattern value="[A-Z]{1}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="URNType">
+        <xs:annotation>
+          <xs:documentation>
+				The Unique Reference Number for the employer.
+
+				Numbers starting with a 1 have been sourced through commerical data providers while those prefixed with a 9 were created as a result of requests from users of the service following verification.
+
+				The URN includes a modulus 11 check digit.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+          <xs:totalDigits value="9" />
+          <xs:minInclusive value="100000000" />
+          <xs:maxInclusive value="999999999" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="BlueSheepWorkplaceIdType">
+        <xs:annotation>
+          <xs:documentation>
+				The unique identifier used by Blue Sheep for the workplace.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:positiveInteger">
+          <xs:minInclusive value="1" />
+          <xs:maxInclusive value="999999999" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="OriginalSourceIdType">
+        <xs:annotation>
+          <xs:documentation>
+				The unique identifier used by original data supplier to identify the record.
+
+				These follow no strict format as each supply operates their own nomenclature.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="1" />
+          <xs:maxLength value="12" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="WebSiteAddressType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents a simple web address.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:anyURI">
+          <xs:maxLength value="100" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="BranchInformationType">
+        <xs:annotation>
+          <xs:documentation>
+				Describes the relationship of the workplace within a larger group structure.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="single-site" />
+          <xs:enumeration value="head-office" />
+          <xs:enumeration value="branch" />
+          <xs:enumeration value="regional-head-office" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ThomsonCodeType">
+        <xs:annotation>
+          <xs:documentation>
+				A 5 digit Thomson Directory code indicating the principle activity for the employer.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="5" />
+          <xs:maxLength value="5" />
+          <xs:pattern value="\d{5}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="USSICCodeType">
+        <xs:annotation>
+          <xs:documentation>
+				A 4 digit US Standard Industrial Code (SIC).
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="4" />
+          <xs:maxLength value="4" />
+          <xs:pattern value="\d{4}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="UKSICCodeBandType">
+        <xs:annotation>
+          <xs:documentation>
+				A UK Standard Industrial Code (SIC) banding. Represents the primary sector of trading.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="agriculture" />
+          <xs:enumeration value="mining" />
+          <xs:enumeration value="heavy-industry" />
+          <xs:enumeration value="light-industry" />
+          <xs:enumeration value="utility" />
+          <xs:enumeration value="construction" />
+          <xs:enumeration value="distribution" />
+          <xs:enumeration value="retail" />
+          <xs:enumeration value="transport" />
+          <xs:enumeration value="service" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="BlueSheepSICBandType">
+        <xs:annotation>
+          <xs:documentation>
+				A UK Standard Industrial Code (SIC) sector based banding. Provides a more detailed description of the sector of activity based on the first 2 or three characters of a UK 92 SIC
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:minLength value="2" />
+          <xs:maxLength value="3" />
+          <xs:pattern value="\d{2,3}" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="EmployeeNumberBandType">
+        <xs:annotation>
+          <xs:documentation>
+				A banding based on the number of employees.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="from-1-3" />
+          <xs:enumeration value="from-4-10" />
+          <xs:enumeration value="from-11-30" />
+          <xs:enumeration value="from-31-100" />
+          <xs:enumeration value="from-101-300" />
+          <xs:enumeration value="from-301-1000" />
+          <xs:enumeration value="over-100" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="EmployerSizeBandType">
+        <xs:annotation>
+          <xs:documentation>
+				A broad banding based on the number of employees.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="small" />
+          <xs:enumeration value="medium" />
+          <xs:enumeration value="large" />
+          <xs:enumeration value="very-large" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="TurnoverBandType">
+        <xs:annotation>
+          <xs:documentation>
+				A banding based on the turnover.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="upto-9k" />
+          <xs:enumeration value="from-10-99k" />
+          <xs:enumeration value="from-100-999k" />
+          <xs:enumeration value="from-1000-9999k" />
+          <xs:enumeration value="from-10000-99999k" />
+          <xs:enumeration value="from-100000-999999k" />
+          <xs:enumeration value="over-1000000k" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ProfitBandType">
+        <xs:annotation>
+          <xs:documentation>
+				A banding based on the profit.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="upto-9k" />
+          <xs:enumeration value="from-10-99k" />
+          <xs:enumeration value="from-100-999k" />
+          <xs:enumeration value="from-1000-9999k" />
+          <xs:enumeration value="from-10000-99999k" />
+          <xs:enumeration value="from-100000-999999k" />
+          <xs:enumeration value="over-1000000k" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="GrowthBandType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the growth of the employer.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="trail-blazing" />
+          <xs:enumeration value="dynamic" />
+          <xs:enumeration value="prosperous" />
+          <xs:enumeration value="healthy" />
+          <xs:enumeration value="solid" />
+          <xs:enumeration value="steady" />
+          <xs:enumeration value="survivors" />
+          <xs:enumeration value="sinking" />
+          <xs:enumeration value="melt-down" />
+          <xs:enumeration value="black-hole" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="OfficeTypeType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the relationship of the address to the organisation.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="registered-office" />
+          <xs:enumeration value="trading-office" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="CreditBandType">
+        <xs:annotation>
+          <xs:documentation>
+				A banded representation of the employer's credit worthiness.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="excellent" />
+          <xs:enumeration value="good" />
+          <xs:enumeration value="fair" />
+          <xs:enumeration value="mediocre" />
+          <xs:enumeration value="unclassfied" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="LegalStatusType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the legal status of the employer.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ltd" />
+          <xs:enumeration value="plc" />
+          <xs:enumeration value="public" />
+          <xs:enumeration value="sole-trader" />
+          <xs:enumeration value="partnership" />
+          <xs:enumeration value="other" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="AccountsFilingMonthType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the month that the employer's accounts are filed with Companies House.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="january" />
+          <xs:enumeration value="february" />
+          <xs:enumeration value="march" />
+          <xs:enumeration value="april" />
+          <xs:enumeration value="may" />
+          <xs:enumeration value="june" />
+          <xs:enumeration value="july" />
+          <xs:enumeration value="august" />
+          <xs:enumeration value="september" />
+          <xs:enumeration value="october" />
+          <xs:enumeration value="november" />
+          <xs:enumeration value="december" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="WorkplaceStatusType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the status of the workplace.
+
+				valid = the record has been researched and confirmed to be valid
+				no-longer-valid = the employer work place is no longer valid, e.g. closed down
+				not-validated = the record is in the process or being researched to check its validity
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="valid" />
+          <xs:enumeration value="no-longer-valid" />
+          <xs:enumeration value="not-validated" />
+          <xs:enumeration value="duplicate" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="ValidationStatusType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the validation status of the URN.
+
+				invalid = the URN does not exist
+				valid = the URN exists and the record is valid
+				no-longer-valid = the URN exists but the employer workplace it relates to is no longer valid (e.g. closed down)
+				not-validated = the URN exists but the record is still being validated
+				aliased = the URN no longer exists and has been replaced with the new URN
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="invalid" />
+          <xs:enumeration value="valid" />
+          <xs:enumeration value="no-longer-valid" />
+          <xs:enumeration value="not-validated" />
+          <xs:enumeration value="aliased" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="EmployerCategoryType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the type and status of the employer. Provides a broader indication of the nature of the employer than is possible with the Legal Status
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="registered-company" />
+          <xs:enumeration value="partnership-or-unincorporated-business" />
+          <xs:enumeration value="franchise" />
+          <xs:enumeration value="social-enterprise" />
+          <xs:enumeration value="co-operative" />
+          <xs:enumeration value="uk-registered-charity" />
+          <xs:enumeration value="international-registered-company" />
+          <xs:enumeration value="public-sector-organisation" />
+          <xs:enumeration value="educational-or-vocational-training" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="EmployerTypeType">
+        <xs:annotation>
+          <xs:documentation>
+				An indication of the employer type and the primary source of funding.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="private-sector-business" />
+          <xs:enumeration value="public-sector-body" />
+          <xs:enumeration value="local-government-financed" />
+          <xs:enumeration value="central-government-financed" />
+          <xs:enumeration value="charity-or-voluntary-sector-organisation" />
+          <xs:enumeration value="other" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="OrganisationTypeType">
+        <xs:annotation>
+          <xs:documentation>
+				Represents the type of organisation.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="public-limited-company" />
+          <xs:enumeration value="limited-company" />
+          <xs:enumeration value="partnership" />
+          <xs:enumeration value="charity" />
+          <xs:enumeration value="self-employed" />
+          <xs:enumeration value="sole-trader" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="OrganisationWorkplaceType">
+        <xs:annotation>
+          <xs:documentation>
+				Describes the type of record - whether it's an organisation or workplace.
+			</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="organisation" />
+          <xs:enumeration value="workplace" />
+          <xs:enumeration value="unknown" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:complexType name="FinancialInformationStructure">
+        <xs:annotation>
+          <xs:documentation>Contains basic financial information about the employer including accounts filing date, turnover, profit, net worth  and number of employees.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="AccountsFiled" type="egovcommon:DateType">
+            <xs:annotation>
+              <xs:documentation>
+						The date the accounts were filed at Companies House
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Turnover" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						The turnover in Pounds Sterling
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PreTaxProfit" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						The pre tax proft in Pounds Sterling
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="NetWorth" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						The net worth in Pounds Sterling
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EmployeeCount" type="xs:nonNegativeInteger">
+            <xs:annotation>
+              <xs:documentation>
+						The number of reported employees
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ConciseEmployerStructure">
+        <xs:annotation>
+          <xs:documentation>This cut-down structure contains concise details of an employer record.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="URN" type="mstns:URNType">
+            <xs:annotation>
+              <xs:documentation>
+						The unique employer reference number provided by the LSC.
+
+						Reason Required:
+						To identify the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Name" type="egovorg:OrganisationNameType">
+            <xs:annotation>
+              <xs:documentation>
+						The name of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TradingName" type="egovorg:OrganisationNameType">
+            <xs:annotation>
+              <xs:documentation>
+						The trading name of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="egovbs7666:BSaddressStructure">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's address.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Phone" type="egovcommon:TelephoneNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's phone number.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Fax" type="egovcommon:TelephoneNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's fax number.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Website" type="mstns:WebSiteAddressType">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's website address.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Email" type="egovcommon:EmailAddressType">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's email address.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PrincipleActivity" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Description of the principle activity of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ChangesPending" type="egovcommon:YesNoType">
+            <xs:annotation>
+              <xs:documentation>
+						Indicates if there are changes pending against the record.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WorkplaceStatus" type="mstns:WorkplaceStatusType">
+            <xs:annotation>
+              <xs:documentation>
+						The status of the workplace
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganisationType" type="mstns:OrganisationTypeType">
+            <xs:annotation>
+              <xs:documentation>
+						The type of organisation
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganisationWorkplace" type="mstns:OrganisationWorkplaceType">
+            <xs:annotation>
+              <xs:documentation>
+						Indicates whether the record is an organisation or workplace record
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="DetailedEmployerStructure">
+        <xs:annotation>
+          <xs:documentation>This standard structure contains the full details of an employer record.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="URN" type="mstns:URNType">
+            <xs:annotation>
+              <xs:documentation>
+						The unique employer reference number provided by the LSC.
+
+						Reason Required:
+						To identify the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Name" type="egovorg:OrganisationNameType">
+            <xs:annotation>
+              <xs:documentation>
+						The name of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TradingName" type="egovorg:OrganisationNameType">
+            <xs:annotation>
+              <xs:documentation>
+						The trading name of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Address" type="egovbs7666:BSaddressStructure">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's address.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Phone" type="egovcommon:TelephoneNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's phone number.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Fax" type="egovcommon:TelephoneNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's fax number.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Website" type="mstns:WebSiteAddressType">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's website address.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Email" type="egovcommon:EmailAddressType">
+            <xs:annotation>
+              <xs:documentation>
+						The employer's email address.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="PrincipleActivity" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Description of the principle activity of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Importer" type="egovcommon:YesNoType">
+            <xs:annotation>
+              <xs:documentation>
+						Indication of whether the employer is an importer of goods and services.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Exporter" type="egovcommon:YesNoType">
+            <xs:annotation>
+              <xs:documentation>
+						Indication of whether the employer is an importer of goods and services.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BlueSheepWorkplaceId" type="mstns:BlueSheepWorkplaceIdType">
+            <xs:annotation>
+              <xs:documentation>
+						The unique identifier used by Blue Sheep for the workplace.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BlueSheepSourceId" type="mstns:OriginalSourceIdType">
+            <xs:annotation>
+              <xs:documentation>
+						The unique identifier used by original data supplier to identify the record.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IncorporationDate" type="egovcommon:DateType">
+            <xs:annotation>
+              <xs:documentation>
+						Employer's date of incorporation
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EstablishedDate" type="egovcommon:DateType">
+            <xs:annotation>
+              <xs:documentation>
+						Date the employer was originally established
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BranchInformation" type="mstns:BranchInformationType">
+            <xs:annotation>
+              <xs:documentation>
+						Indication of the location within a larger group.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="4" name="SIC92Code" type="egovorg:StandardisedIndustrialClassificationNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						UK SIC 92 for the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SICBand" type="mstns:UKSICCodeBandType">
+            <xs:annotation>
+              <xs:documentation>
+						UK SIC 92 banding for the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="BlueSheepSICBand" type="mstns:BlueSheepSICBandType">
+            <xs:annotation>
+              <xs:documentation>
+						Detailed SIC based banding for the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SIC80Code" type="egovorg:StandardisedIndustrialClassificationNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						UK SIC 80 for the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SICUS" type="mstns:USSICCodeType">
+            <xs:annotation>
+              <xs:documentation>
+						US SIC for the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="4" name="SIC2003" type="egovorg:StandardisedIndustrialClassificationNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						UK SIC 2003 for the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element minOccurs="0" maxOccurs="4" name="SIC2007" type="egovorg:StandardisedIndustrialClassificationNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						UK SIC 2007 for the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ThomsonCode" type="mstns:ThomsonCodeType">
+            <xs:annotation>
+              <xs:documentation>
+						Thomson Directory classification for the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SiteEmployees" type="xs:nonNegativeInteger">
+            <xs:annotation>
+              <xs:documentation>
+						The number of employees at the site
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SiteEmployeesBand" type="mstns:EmployeeNumberBandType">
+            <xs:annotation>
+              <xs:documentation>
+						A banded representation of the number of employees at the site
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SiteTurnover" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						The turnover of the site
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SiteTurnoverBand" type="mstns:TurnoverBandType">
+            <xs:annotation>
+              <xs:documentation>
+						A banded representation of the turnover of the site
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GroupEmployees" type="xs:nonNegativeInteger">
+            <xs:annotation>
+              <xs:documentation>
+						The number of employees in the group
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GroupEmployeesBand" type="mstns:EmployeeNumberBandType">
+            <xs:annotation>
+              <xs:documentation>
+						A banded representation of the number of employees in the group
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GroupTurnover" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						The turnover of the group
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GroupTurnoverBand" type="mstns:TurnoverBandType">
+            <xs:annotation>
+              <xs:documentation>
+						A banded representation of the turnover of the group
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GroupProfit" type="xs:integer">
+            <xs:annotation>
+              <xs:documentation>
+						The profit made by the group
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GroupProfitBand" type="mstns:ProfitBandType">
+            <xs:annotation>
+              <xs:documentation>
+						A banded representation of the profit made by the group
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GrowthBand" type="mstns:GrowthBandType">
+            <xs:annotation>
+              <xs:documentation>
+						A banded representation of the growth of the employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OfficeType" type="mstns:OfficeTypeType">
+            <xs:annotation>
+              <xs:documentation>
+						The legal role of the office
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CompanyRegistration" type="egovorg:CompaniesHouseReferenceNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						The registration number of the employer at Companies House or equilivent
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ParentCompanyRegistration" type="egovorg:CompaniesHouseReferenceNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						The registration number of the parent company.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ParentCompanyName" type="egovorg:OrganisationNameType">
+            <xs:annotation>
+              <xs:documentation>
+						The name of the parent company.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UtlimateCompanyRegistration" type="egovorg:CompaniesHouseReferenceNumberType">
+            <xs:annotation>
+              <xs:documentation>
+						The registration number of the utlimate owner in the group heirarchy.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UtlimateCompanyName" type="egovorg:OrganisationNameType">
+            <xs:annotation>
+              <xs:documentation>
+						The name of the ultimate owner of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CreditBand" type="mstns:CreditBandType">
+            <xs:annotation>
+              <xs:documentation>
+						An indication of the creditworthiness of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LegalStatus" type="mstns:LegalStatusType">
+            <xs:annotation>
+              <xs:documentation>
+						The legal status of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="AccountsFilingMonth" type="mstns:AccountsFilingMonthType">
+            <xs:annotation>
+              <xs:documentation>
+						The month the employer files accounts with Companies House.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WorkplaceStatus" type="mstns:WorkplaceStatusType">
+            <xs:annotation>
+              <xs:documentation>
+						The status of the workplace.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EmployerSizeBand" type="mstns:EmployerSizeBandType">
+            <xs:annotation>
+              <xs:documentation>
+						A banded representation of the employer's size.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EmployerCategory" type="mstns:EmployerCategoryType">
+            <xs:annotation>
+              <xs:documentation>
+						Represents the type of employer and an indication of legal status.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="EmployerType" type="mstns:EmployerTypeType">
+            <xs:annotation>
+              <xs:documentation>
+						An indication of the employer type and the primary source of funding.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UKPRN" type="lsc:UkprnType">
+            <xs:annotation>
+              <xs:documentation>
+						The unique UK Provider Number.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CurrentFinancials" type="mstns:FinancialInformationStructure">
+            <xs:annotation>
+              <xs:documentation>
+						Financial information from the current set of accounts
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Previous1Financials" type="mstns:FinancialInformationStructure">
+            <xs:annotation>
+              <xs:documentation>
+						Financial information from last year's set of accounts
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Previous2Financials" type="mstns:FinancialInformationStructure">
+            <xs:annotation>
+              <xs:documentation>
+						Financial information from accounts posted 2 years ago
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ChangesPending" type="egovcommon:YesNoType">
+            <xs:annotation>
+              <xs:documentation>
+						Indicates if there are changes pending against the record.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SkillsPledgeEmployees" type="xs:nonNegativeInteger">
+            <xs:annotation>
+              <xs:documentation>
+						The number of employees listed under the Skills Pledge
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UltimateEmployees" type="xs:nonNegativeInteger">
+            <xs:annotation>
+              <xs:documentation>
+						The total number of employees in the group structure
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganisationType" type="mstns:OrganisationTypeType">
+            <xs:annotation>
+              <xs:documentation>
+						The type of organisation
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LscRegion" type="mstns:LscRegionType">
+            <xs:annotation>
+              <xs:documentation>
+						The LSC Region
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="LscSector" type="mstns:LscSectorType">
+            <xs:annotation>
+              <xs:documentation>
+						The LSC sector code
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganisationWorkplace" type="mstns:OrganisationWorkplaceType">
+            <xs:annotation>
+              <xs:documentation>
+						Indicates whether the record is an organisation or workplace record
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WorkplaceSource" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Description of the source of the workplace information.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="WorkplaceDate" type="egovcommon:DateType">
+            <xs:annotation>
+              <xs:documentation>
+						The date the accounts were filed at Companies House
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SiteEmployeesSource" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Description of the source of the site employees information.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SiteEmployeesDate" type="egovcommon:DateType">
+            <xs:annotation>
+              <xs:documentation>
+						The date the site employees information was captured.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GroupEmployeesSource" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Description of the source of the group employees information.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="GroupEmployeesDate" type="egovcommon:DateType">
+            <xs:annotation>
+              <xs:documentation>
+						The date the group employees information was captured.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UltEmployeesSource" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Description of the source of the ultimate employees information.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UltEmployeesDate" type="egovcommon:DateType">
+            <xs:annotation>
+              <xs:documentation>
+						The date the ultimate employees information was captured.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SkillsEmployeesSource" type="xs:string">
+            <xs:annotation>
+              <xs:documentation>
+						Description of the source of the skills employees information.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="SkillsSourceDate" type="egovcommon:DateType">
+            <xs:annotation>
+              <xs:documentation>
+						The date the skills source information was captured.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TreeGroupEmployees" type="xs:nonNegativeInteger">
+            <xs:annotation>
+              <xs:documentation>
+						The total number of employees in the group structure of the tree
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="TreeUltimateEmployees" type="xs:nonNegativeInteger">
+            <xs:annotation>
+              <xs:documentation>
+						The total number of employees in the ultimate structure of entire tree
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="ValidationResultStructure">
+        <xs:annotation>
+          <xs:documentation>This cut-down structure contains concise details of an employer record.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="TestedURN" type="mstns:URNType">
+            <xs:annotation>
+              <xs:documentation>
+						The unique employer reference number that was tested
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="CorrectedURN" type="mstns:URNType">
+            <xs:annotation>
+              <xs:documentation>
+						The correct unique employer reference number that should be used (if the tested URN is no longer valid).
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ValidationStatus" type="mstns:ValidationStatusType">
+            <xs:annotation>
+              <xs:documentation>
+						The validation status of the record
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="HierarchyStructure">
+        <xs:annotation>
+          <xs:documentation>This structure is used to represent the organisational heirarchy.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+          <xs:element name="URN" type="mstns:URNType">
+            <xs:annotation>
+              <xs:documentation>
+						The unique employer reference number that was tested
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="Name" type="egovorg:OrganisationNameType">
+            <xs:annotation>
+              <xs:documentation>
+						The name of the employer.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="ParentURN" type="mstns:URNType">
+            <xs:annotation>
+              <xs:documentation>
+						The immediate parent URN of this record.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="UltimateURN" type="mstns:URNType">
+            <xs:annotation>
+              <xs:documentation>
+						The ultimate parent URN of this record.
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="OrganisationWorkplace" type="mstns:OrganisationWorkplaceType">
+            <xs:annotation>
+              <xs:documentation>
+						Indicates whether the record is an organisation or workplace record
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+          <xs:element name="IsLarge" type="egovcommon:YesNoType">
+            <xs:annotation>
+              <xs:documentation>
+						Indicates whether the record is a large employer
+					</xs:documentation>
+            </xs:annotation>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:annotation>
+        <xs:documentation>Types defined within this document are defined within the domain of Employer Data Service only</xs:documentation>
+        <xs:appinfo>
+          <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms" xmlns:egms="http://www.govtalk.gov.uk/metadata/egms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <Contributor Role="author" Href="mailto:jamie@postcodeanywhere.co.uk">Jamie Turner (Postcode Anywhere)</Contributor>
+            <Creator>Jamie Turner - (mailto:jamie@postcodeanywhere.co.uk)</Creator>
+            <Created>2006-03-20</Created>
+            <Modified>2008-12-11</Modified>
+            <Description>Common Types associated with EDRS</Description>
+            <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+            <Identifier Href="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7.xsd">EDRS-CommonTypes</Identifier>
+            <Language codeListID="ISO639-2">eng</Language>
+            <Publisher Href="mailto:jamie@postcodeanywhere.co.uk">Postcode Anywhere</Publisher>
+            <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+            <ProvidesDefinitionOf Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7">EDRSCommonTypes</ProvidesDefinitionOf>
+            <Copyright>LSC</Copyright>
+            <Status>release</Status>
+            <StatusDescription>release for UK GovTalk submission</StatusDescription>
+            <Version>1.7</Version>
+            <Category codeListID="GCL" codeListAgencyName="Cabinet Office" codeListName="Government Category List" codeListVersionID="0.1" codeListURI="http://www.govtalk.gov.uk/schemasstandards/gcl.xsd" codeListSchemeURI="http://www.govtalk.gov.uk/metadata/gcl" languageID="en">Education and Skills</Category>
+            <Project>EDRS</Project>
+            <Title>EDRS Common Types</Title>
+            <Type>message</Type>
+            <Relation>
+              <Requires>LSCCommonLibrary</Requires>
+              <Requires>CommonSimpleTypes-v1-3</Requires>
+              <Requires>OrganisationIdentifierTypes</Requires>
+              <Requires>BS7666</Requires>
+            </Relation>
+          </Metadata>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:annotation>
+        <xs:documentation>Types defined within this document are defined within the domain of Employer Data Service only</xs:documentation>
+        <xs:appinfo>
+          <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms" xmlns:egms="http://www.govtalk.gov.uk/metadata/egms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <Contributor Role="author" Href="mailto:jamie@postcodeanywhere.co.uk">Jamie Turner (Postcode Anywhere)</Contributor>
+            <Creator>Jamie Turner - (mailto:jamie@postcodeanywhere.co.uk)</Creator>
+            <Created>2006-03-20</Created>
+            <Modified>2008-12-11</Modified>
+            <Description>Common Types associated with EDRS</Description>
+            <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+            <Identifier Href="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7.xsd">EDRS-CommonTypes</Identifier>
+            <Language codeListID="ISO639-2">eng</Language>
+            <Publisher Href="mailto:jamie@postcodeanywhere.co.uk">Postcode Anywhere</Publisher>
+            <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+            <ProvidesDefinitionOf Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7">EDRSCommonTypes</ProvidesDefinitionOf>
+            <Copyright>LSC</Copyright>
+            <Status>release</Status>
+            <StatusDescription>release for UK GovTalk submission</StatusDescription>
+            <Version>1.7</Version>
+            <Category codeListID="GCL" codeListAgencyName="Cabinet Office" codeListName="Government Category List" codeListVersionID="0.1" codeListURI="http://www.govtalk.gov.uk/schemasstandards/gcl.xsd" codeListSchemeURI="http://www.govtalk.gov.uk/metadata/gcl" languageID="en">Education and Skills</Category>
+            <Project>EDRS</Project>
+            <Title>EDRS Common Types</Title>
+            <Type>message</Type>
+            <Relation>
+              <Requires>LSCCommonLibrary</Requires>
+              <Requires>CommonSimpleTypes-v1-3</Requires>
+              <Requires>OrganisationIdentifierTypes</Requires>
+              <Requires>BS7666</Requires>
+            </Relation>
+          </Metadata>
+        </xs:appinfo>
+      </xs:annotation>
+      <xs:annotation>
+        <xs:documentation>Types defined within this document are defined within the domain of Employer Data Service only</xs:documentation>
+        <xs:appinfo>
+          <Metadata xmlns="http://www.govtalk.gov.uk/metadata/egms" xmlns:egms="http://www.govtalk.gov.uk/metadata/egms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+            <Contributor Role="author" Href="mailto:jamie@postcodeanywhere.co.uk">Jamie Turner (Postcode Anywhere)</Contributor>
+            <Creator>Jamie Turner - (mailto:jamie@postcodeanywhere.co.uk)</Creator>
+            <Created>2006-03-20</Created>
+            <Modified>2008-12-11</Modified>
+            <Description>Common Types associated with EDRS</Description>
+            <Format Scheme="http://www.iana.org/assignments/media-types/">text/xml</Format>
+            <Identifier Href="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7.xsd">EDRS-CommonTypes</Identifier>
+            <Language codeListID="ISO639-2">eng</Language>
+            <Publisher Href="mailto:jamie@postcodeanywhere.co.uk">Postcode Anywhere</Publisher>
+            <ConformsTo>http://www.w3.org/2001/XMLSchema</ConformsTo>
+            <ProvidesDefinitionOf Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7">EDRSCommonTypes</ProvidesDefinitionOf>
+            <Copyright>LSC</Copyright>
+            <Status>release</Status>
+            <StatusDescription>release for UK GovTalk submission</StatusDescription>
+            <Version>1.7</Version>
+            <Category codeListID="GCL" codeListAgencyName="Cabinet Office" codeListName="Government Category List" codeListVersionID="0.1" codeListURI="http://www.govtalk.gov.uk/schemasstandards/gcl.xsd" codeListSchemeURI="http://www.govtalk.gov.uk/metadata/gcl" languageID="en">Education and Skills</Category>
+            <Project>EDRS</Project>
+            <Title>EDRS Common Types</Title>
+            <Type>message</Type>
+            <Relation>
+              <Requires>LSCCommonLibrary</Requires>
+              <Requires>CommonSimpleTypes-v1-3</Requires>
+              <Requires>OrganisationIdentifierTypes</Requires>
+              <Requires>BS7666</Requires>
+            </Relation>
+          </Metadata>
+        </xs:appinfo>
+      </xs:annotation>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ParentsSoapIn">
+    <wsdl:part name="parameters" element="tns:Parents" />
+  </wsdl:message>
+  <wsdl:message name="ParentsSoapOut">
+    <wsdl:part name="parameters" element="tns:ParentsResponse" />
+  </wsdl:message>
+  <wsdl:message name="HierarchySoapIn">
+    <wsdl:part name="parameters" element="tns:Hierarchy" />
+  </wsdl:message>
+  <wsdl:message name="HierarchySoapOut">
+    <wsdl:part name="parameters" element="tns:HierarchyResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateSoapIn">
+    <wsdl:part name="parameters" element="tns:Validate" />
+  </wsdl:message>
+  <wsdl:message name="ValidateSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateResponse" />
+  </wsdl:message>
+  <wsdl:message name="ByUrnSoapIn">
+    <wsdl:part name="parameters" element="tns:ByUrn" />
+  </wsdl:message>
+  <wsdl:message name="ByUrnSoapOut">
+    <wsdl:part name="parameters" element="tns:ByUrnResponse" />
+  </wsdl:message>
+  <wsdl:message name="ByPostcodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ByPostcode" />
+  </wsdl:message>
+  <wsdl:message name="ByPostcodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ByPostcodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeSoapIn">
+    <wsdl:part name="parameters" element="tns:ByOutcode" />
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeSoapOut">
+    <wsdl:part name="parameters" element="tns:ByOutcodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ByPhoneSoapIn">
+    <wsdl:part name="parameters" element="tns:ByPhone" />
+  </wsdl:message>
+  <wsdl:message name="ByPhoneSoapOut">
+    <wsdl:part name="parameters" element="tns:ByPhoneResponse" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationSoapIn">
+    <wsdl:part name="parameters" element="tns:ByOrganisation" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationSoapOut">
+    <wsdl:part name="parameters" element="tns:ByOrganisationResponse" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationAndTradingSoapIn">
+    <wsdl:part name="parameters" element="tns:ByOrganisationAndTrading" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationAndTradingSoapOut">
+    <wsdl:part name="parameters" element="tns:ByOrganisationAndTradingResponse" />
+  </wsdl:message>
+  <wsdl:message name="ByStreetSoapIn">
+    <wsdl:part name="parameters" element="tns:ByStreet" />
+  </wsdl:message>
+  <wsdl:message name="ByStreetSoapOut">
+    <wsdl:part name="parameters" element="tns:ByStreetResponse" />
+  </wsdl:message>
+  <wsdl:message name="ByFreeTextSoapIn">
+    <wsdl:part name="parameters" element="tns:ByFreeText" />
+  </wsdl:message>
+  <wsdl:message name="ByFreeTextSoapOut">
+    <wsdl:part name="parameters" element="tns:ByFreeTextResponse" />
+  </wsdl:message>
+  <wsdl:message name="FetchSoapIn">
+    <wsdl:part name="parameters" element="tns:Fetch" />
+  </wsdl:message>
+  <wsdl:message name="FetchSoapOut">
+    <wsdl:part name="parameters" element="tns:FetchResponse" />
+  </wsdl:message>
+  <wsdl:message name="ParentsHttpGetIn">
+    <wsdl:part name="Urn" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ParentsHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfHierarchyStructure" />
+  </wsdl:message>
+  <wsdl:message name="HierarchyHttpGetIn">
+    <wsdl:part name="Urn" type="s:string" />
+    <wsdl:part name="IncludeWorkplaces" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HierarchyHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfHierarchyStructure" />
+  </wsdl:message>
+  <wsdl:message name="ValidateHttpGetIn">
+    <wsdl:part name="Urns" type="s1:StringArray" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ValidateHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfValidationResultStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByUrnHttpGetIn">
+    <wsdl:part name="Urn" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByUrnHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByPostcodeHttpGetIn">
+    <wsdl:part name="Postcode" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByPostcodeHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeHttpGetIn">
+    <wsdl:part name="Outcode" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByPhoneHttpGetIn">
+    <wsdl:part name="Phone" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByPhoneHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationHttpGetIn">
+    <wsdl:part name="Organisation" type="s:string" />
+    <wsdl:part name="Town" type="s:string" />
+    <wsdl:part name="IsPhonetic" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationAndTradingHttpGetIn">
+    <wsdl:part name="Organisation" type="s:string" />
+    <wsdl:part name="Town" type="s:string" />
+    <wsdl:part name="IsPhonetic" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationAndTradingHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByStreetHttpGetIn">
+    <wsdl:part name="Street" type="s:string" />
+    <wsdl:part name="Town" type="s:string" />
+    <wsdl:part name="IsPhonetic" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByStreetHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByFreeTextHttpGetIn">
+    <wsdl:part name="FreeText" type="s:string" />
+    <wsdl:part name="IsPhonetic" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByFreeTextHttpGetOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="FetchHttpGetIn">
+    <wsdl:part name="Urn" type="s:string" />
+    <wsdl:part name="IncludeAliases" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FetchHttpGetOut">
+    <wsdl:part name="Body" element="tns:DetailedEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ParentsHttpPostIn">
+    <wsdl:part name="Urn" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ParentsHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfHierarchyStructure" />
+  </wsdl:message>
+  <wsdl:message name="HierarchyHttpPostIn">
+    <wsdl:part name="Urn" type="s:string" />
+    <wsdl:part name="IncludeWorkplaces" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="HierarchyHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfHierarchyStructure" />
+  </wsdl:message>
+  <wsdl:message name="ValidateHttpPostIn">
+    <wsdl:part name="Urns" type="s1:StringArray" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ValidateHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfValidationResultStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByUrnHttpPostIn">
+    <wsdl:part name="Urn" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByUrnHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByPostcodeHttpPostIn">
+    <wsdl:part name="Postcode" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByPostcodeHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeHttpPostIn">
+    <wsdl:part name="Outcode" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByOutcodeHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByPhoneHttpPostIn">
+    <wsdl:part name="Phone" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByPhoneHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationHttpPostIn">
+    <wsdl:part name="Organisation" type="s:string" />
+    <wsdl:part name="Town" type="s:string" />
+    <wsdl:part name="IsPhonetic" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationAndTradingHttpPostIn">
+    <wsdl:part name="Organisation" type="s:string" />
+    <wsdl:part name="Town" type="s:string" />
+    <wsdl:part name="IsPhonetic" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByOrganisationAndTradingHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByStreetHttpPostIn">
+    <wsdl:part name="Street" type="s:string" />
+    <wsdl:part name="Town" type="s:string" />
+    <wsdl:part name="IsPhonetic" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByStreetHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="ByFreeTextHttpPostIn">
+    <wsdl:part name="FreeText" type="s:string" />
+    <wsdl:part name="IsPhonetic" type="s:string" />
+    <wsdl:part name="OrgWorkplace" type="s:string" />
+    <wsdl:part name="Region" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ByFreeTextHttpPostOut">
+    <wsdl:part name="Body" element="tns:ArrayOfConciseEmployerStructure" />
+  </wsdl:message>
+  <wsdl:message name="FetchHttpPostIn">
+    <wsdl:part name="Urn" type="s:string" />
+    <wsdl:part name="IncludeAliases" type="s:string" />
+    <wsdl:part name="Credentials" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="FetchHttpPostOut">
+    <wsdl:part name="Body" element="tns:DetailedEmployerStructure" />
+  </wsdl:message>
+  <wsdl:portType name="EmployerLookupSoap">
+    <wsdl:operation name="Parents">
+      <wsdl:input message="tns:ParentsSoapIn" />
+      <wsdl:output message="tns:ParentsSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Hierarchy">
+      <wsdl:input message="tns:HierarchySoapIn" />
+      <wsdl:output message="tns:HierarchySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Validate">
+      <wsdl:input message="tns:ValidateSoapIn" />
+      <wsdl:output message="tns:ValidateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByUrn">
+      <wsdl:input message="tns:ByUrnSoapIn" />
+      <wsdl:output message="tns:ByUrnSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByPostcode">
+      <wsdl:input message="tns:ByPostcodeSoapIn" />
+      <wsdl:output message="tns:ByPostcodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOutcode">
+      <wsdl:input message="tns:ByOutcodeSoapIn" />
+      <wsdl:output message="tns:ByOutcodeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByPhone">
+      <wsdl:input message="tns:ByPhoneSoapIn" />
+      <wsdl:output message="tns:ByPhoneSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisation">
+      <wsdl:input message="tns:ByOrganisationSoapIn" />
+      <wsdl:output message="tns:ByOrganisationSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisationAndTrading">
+      <wsdl:input message="tns:ByOrganisationAndTradingSoapIn" />
+      <wsdl:output message="tns:ByOrganisationAndTradingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByStreet">
+      <wsdl:input message="tns:ByStreetSoapIn" />
+      <wsdl:output message="tns:ByStreetSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByFreeText">
+      <wsdl:input message="tns:ByFreeTextSoapIn" />
+      <wsdl:output message="tns:ByFreeTextSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Fetch">
+      <wsdl:input message="tns:FetchSoapIn" />
+      <wsdl:output message="tns:FetchSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="EmployerLookupHttpGet">
+    <wsdl:operation name="Parents">
+      <wsdl:input message="tns:ParentsHttpGetIn" />
+      <wsdl:output message="tns:ParentsHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Hierarchy">
+      <wsdl:input message="tns:HierarchyHttpGetIn" />
+      <wsdl:output message="tns:HierarchyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Validate">
+      <wsdl:input message="tns:ValidateHttpGetIn" />
+      <wsdl:output message="tns:ValidateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByUrn">
+      <wsdl:input message="tns:ByUrnHttpGetIn" />
+      <wsdl:output message="tns:ByUrnHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByPostcode">
+      <wsdl:input message="tns:ByPostcodeHttpGetIn" />
+      <wsdl:output message="tns:ByPostcodeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOutcode">
+      <wsdl:input message="tns:ByOutcodeHttpGetIn" />
+      <wsdl:output message="tns:ByOutcodeHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByPhone">
+      <wsdl:input message="tns:ByPhoneHttpGetIn" />
+      <wsdl:output message="tns:ByPhoneHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisation">
+      <wsdl:input message="tns:ByOrganisationHttpGetIn" />
+      <wsdl:output message="tns:ByOrganisationHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisationAndTrading">
+      <wsdl:input message="tns:ByOrganisationAndTradingHttpGetIn" />
+      <wsdl:output message="tns:ByOrganisationAndTradingHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByStreet">
+      <wsdl:input message="tns:ByStreetHttpGetIn" />
+      <wsdl:output message="tns:ByStreetHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByFreeText">
+      <wsdl:input message="tns:ByFreeTextHttpGetIn" />
+      <wsdl:output message="tns:ByFreeTextHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Fetch">
+      <wsdl:input message="tns:FetchHttpGetIn" />
+      <wsdl:output message="tns:FetchHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="EmployerLookupHttpPost">
+    <wsdl:operation name="Parents">
+      <wsdl:input message="tns:ParentsHttpPostIn" />
+      <wsdl:output message="tns:ParentsHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Hierarchy">
+      <wsdl:input message="tns:HierarchyHttpPostIn" />
+      <wsdl:output message="tns:HierarchyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Validate">
+      <wsdl:input message="tns:ValidateHttpPostIn" />
+      <wsdl:output message="tns:ValidateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByUrn">
+      <wsdl:input message="tns:ByUrnHttpPostIn" />
+      <wsdl:output message="tns:ByUrnHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByPostcode">
+      <wsdl:input message="tns:ByPostcodeHttpPostIn" />
+      <wsdl:output message="tns:ByPostcodeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOutcode">
+      <wsdl:input message="tns:ByOutcodeHttpPostIn" />
+      <wsdl:output message="tns:ByOutcodeHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByPhone">
+      <wsdl:input message="tns:ByPhoneHttpPostIn" />
+      <wsdl:output message="tns:ByPhoneHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisation">
+      <wsdl:input message="tns:ByOrganisationHttpPostIn" />
+      <wsdl:output message="tns:ByOrganisationHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisationAndTrading">
+      <wsdl:input message="tns:ByOrganisationAndTradingHttpPostIn" />
+      <wsdl:output message="tns:ByOrganisationAndTradingHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByStreet">
+      <wsdl:input message="tns:ByStreetHttpPostIn" />
+      <wsdl:output message="tns:ByStreetHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ByFreeText">
+      <wsdl:input message="tns:ByFreeTextHttpPostIn" />
+      <wsdl:output message="tns:ByFreeTextHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Fetch">
+      <wsdl:input message="tns:FetchHttpPostIn" />
+      <wsdl:output message="tns:FetchHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EmployerLookupSoap" type="tns:EmployerLookupSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Parents">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/Parents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hierarchy">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/Hierarchy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Validate">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/Validate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByUrn">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByUrn" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByPostcode">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByPostcode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOutcode">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByOutcode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByPhone">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByPhone" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisation">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByOrganisation" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisationAndTrading">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByOrganisationAndTrading" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByStreet">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByStreet" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByFreeText">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByFreeText" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Fetch">
+      <soap:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/Fetch" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmployerLookupSoap12" type="tns:EmployerLookupSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="Parents">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/Parents" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hierarchy">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/Hierarchy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Validate">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/Validate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByUrn">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByUrn" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByPostcode">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByPostcode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOutcode">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByOutcode" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByPhone">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByPhone" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisation">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByOrganisation" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisationAndTrading">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByOrganisationAndTrading" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByStreet">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByStreet" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByFreeText">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/ByFreeText" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Fetch">
+      <soap12:operation soapAction="http://services.edrs.lsc.gov.uk/v1.7/Fetch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmployerLookupHttpGet" type="tns:EmployerLookupHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="Parents">
+      <http:operation location="/Parents" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hierarchy">
+      <http:operation location="/Hierarchy" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Validate">
+      <http:operation location="/Validate" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByUrn">
+      <http:operation location="/ByUrn" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByPostcode">
+      <http:operation location="/ByPostcode" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOutcode">
+      <http:operation location="/ByOutcode" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByPhone">
+      <http:operation location="/ByPhone" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisation">
+      <http:operation location="/ByOrganisation" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisationAndTrading">
+      <http:operation location="/ByOrganisationAndTrading" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByStreet">
+      <http:operation location="/ByStreet" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByFreeText">
+      <http:operation location="/ByFreeText" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Fetch">
+      <http:operation location="/Fetch" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="EmployerLookupHttpPost" type="tns:EmployerLookupHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="Parents">
+      <http:operation location="/Parents" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Hierarchy">
+      <http:operation location="/Hierarchy" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Validate">
+      <http:operation location="/Validate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByUrn">
+      <http:operation location="/ByUrn" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByPostcode">
+      <http:operation location="/ByPostcode" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOutcode">
+      <http:operation location="/ByOutcode" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByPhone">
+      <http:operation location="/ByPhone" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisation">
+      <http:operation location="/ByOrganisation" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByOrganisationAndTrading">
+      <http:operation location="/ByOrganisationAndTrading" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByStreet">
+      <http:operation location="/ByStreet" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ByFreeText">
+      <http:operation location="/ByFreeText" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Fetch">
+      <http:operation location="/Fetch" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EmployerLookup">
+    <wsdl:port name="EmployerLookupSoap" binding="tns:EmployerLookupSoap">
+      <soap:address location="http://services.edrs.lsc.gov.uk/lookup17.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmployerLookupSoap12" binding="tns:EmployerLookupSoap12">
+      <soap12:address location="http://services.edrs.lsc.gov.uk/lookup17.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmployerLookupHttpGet" binding="tns:EmployerLookupHttpGet">
+      <http:address location="http://services.edrs.lsc.gov.uk/lookup17.asmx" />
+    </wsdl:port>
+    <wsdl:port name="EmployerLookupHttpPost" binding="tns:EmployerLookupHttpPost">
+      <http:address location="http://services.edrs.lsc.gov.uk/lookup17.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
