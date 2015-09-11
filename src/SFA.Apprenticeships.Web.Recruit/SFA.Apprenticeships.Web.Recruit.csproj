@@ -85,7 +85,7 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>  
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -104,6 +104,10 @@
       <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
@@ -113,6 +117,25 @@
     </Reference>
     <Reference Include="Microsoft.WindowsAzure.ServiceRuntime, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
       <Private>False</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog.Contrib">
+      <HintPath>..\packages\NLog.Contrib.1.0.0.2\lib\net45\NLog.Contrib.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\structuremap.web.3.1.0.133\lib\net40\StructureMap.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -171,6 +194,9 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -181,9 +207,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -232,43 +255,87 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="App_Start\StructuremapMvc.cs" />
+    <Compile Include="Constants\RecruitmentRouteNames.cs" />
+    <Compile Include="Controllers\RecuitmentControllerBase.cs" />
+    <Compile Include="Controllers\ProviderController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="IoC\IoC.cs" />
+    <Compile Include="IoC\RecruitmentWebRegistry.cs" />
+    <Compile Include="IoC\StructureMapScopeModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\RecuitmentUserContext.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\_assets\css\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Content\_assets\css\fonts-ie8.css" />
+    <Content Include="Content\_assets\css\fonts.css" />
+    <Content Include="Content\_assets\css\main-ie8.css" />
+    <Content Include="Content\_assets\css\main.css" />
+    <Content Include="Content\_assets\img\apple-touch-icon-114x114.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-144x144.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-57x57.png" />
+    <Content Include="Content\_assets\img\apple-touch-icon-72x72.png" />
+    <Content Include="Content\_assets\img\av-screenshot.png" />
+    <Content Include="Content\_assets\img\favicon.ico" />
+    <Content Include="Content\_assets\img\gov.uk_logotype_crown.png" />
+    <Content Include="Content\_assets\img\gov.uk_logotype_crown_print.png" />
+    <Content Include="Content\_assets\img\govuk-crest-2x.png" />
+    <Content Include="Content\_assets\img\icon-external-hover.svg" />
+    <Content Include="Content\_assets\img\icon-external.png" />
+    <Content Include="Content\_assets\img\icon-external.svg" />
+    <Content Include="Content\_assets\img\icon-location-selected.png" />
+    <Content Include="Content\_assets\img\icon-location-selected.svg" />
+    <Content Include="Content\_assets\img\icon-location.png" />
+    <Content Include="Content\_assets\img\icon-location.svg" />
+    <Content Include="Content\_assets\img\icon-pointer-2x.png" />
+    <Content Include="Content\_assets\img\icon-pointer.png" />
+    <Content Include="Content\_assets\img\icon-sms.png" />
+    <Content Include="Content\_assets\img\icon-sms.svg" />
+    <Content Include="Content\_assets\img\label-o.svg" />
+    <Content Include="Content\_assets\img\label.svg" />
+    <Content Include="Content\_assets\img\logo-apprenticeships.png" />
+    <Content Include="Content\_assets\img\logo-ticks-2x.png" />
+    <Content Include="Content\_assets\img\logo-ticks-small-2x.png" />
+    <Content Include="Content\_assets\img\open-government-licence.png" />
+    <Content Include="Content\_assets\img\open-government-licence_2x.png" />
+    <Content Include="Content\_assets\img\performance-icon-2x.png" />
+    <Content Include="Content\_assets\img\performance-icon.png" />
+    <Content Include="Content\_assets\img\screenshot-employer-approval.png" />
+    <Content Include="Content\_assets\img\screenshot-employer-notification.png" />
+    <Content Include="Content\_assets\img\screenshot-idams.png" />
+    <Content Include="Content\_assets\js\frameworks.js" />
+    <Content Include="Content\_assets\js\jobtitles.js" />
+    <Content Include="Content\_assets\js\prototype-recruit.js" />
+    <Content Include="Content\_assets\js\prototype.js" />
+    <Content Include="Content\_assets\js\scripts.min.js" />
+    <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick.js" />
+    <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.cookie.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.joyride-2.1.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.scrollTableBody-1.0.0.js" />
+    <Content Include="Content\_assets\js\vendor\jstorage.js" />
+    <Content Include="Content\_assets\js\vendor\modernizr-2.7.1.js" />
+    <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
+    <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
+    <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
-    <Content Include="Scripts\bootstrap.js" />
-    <Content Include="Scripts\bootstrap.min.js" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\jquery.validate.js" />
-    <Content Include="Scripts\jquery.validate.min.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\respond.js" />
-    <Content Include="Scripts\respond.min.js" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -278,42 +345,60 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
-    <Content Include="Views\Shared\Lockout.cshtml" />
-    <Content Include="Views\Shared\_LoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+    <Content Include="Content\_assets\fonts\NTA-Bold-20130221.eot" />
+    <Content Include="Content\_assets\fonts\NTA-Bold-20130221.woff" />
+    <Content Include="Content\_assets\fonts\NTA-Light-20130221.eot" />
+    <Content Include="Content\_assets\fonts\NTA-Light-20130221.woff" />
+    <Content Include="Content\_assets\fonts\NTATabularNumbers-Bold.eot" />
+    <Content Include="Content\_assets\fonts\NTATabularNumbers-Bold.woff" />
+    <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.eot" />
+    <Content Include="Content\_assets\fonts\NTATabularNumbers-Light.woff" />
+    <Content Include="Configs\dataCacheClient.config">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\machineKey.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Configs\settings.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Shared\_Scripts.cshtml" />
+    <Content Include="Views\Provider\Sites.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_LoginPartial.generated.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
+      <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
+      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
+      <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
+      <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
+      <Name>SFA.Apprenticeships.Web.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

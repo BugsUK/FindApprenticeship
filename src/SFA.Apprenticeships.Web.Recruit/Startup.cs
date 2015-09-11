@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Web.Recruit
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            //ConfigureAuth(app);
         }
     }
 }

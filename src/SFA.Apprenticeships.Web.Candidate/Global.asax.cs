@@ -9,6 +9,7 @@
     using Common.Binders;
     using Common.Configuration;
     using Common.Framework;
+    using Common.IoC;
     using Common.Validations;
     using Controllers;
     using Domain.Interfaces.Configuration;

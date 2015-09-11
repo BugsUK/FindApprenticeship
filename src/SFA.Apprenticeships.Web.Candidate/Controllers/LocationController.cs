@@ -11,6 +11,7 @@
     using Providers;
     using ViewModels.VacancySearch;
     using Common.Attributes;
+    using Common.Constants;
 
     public class LocationController : Controller
     {

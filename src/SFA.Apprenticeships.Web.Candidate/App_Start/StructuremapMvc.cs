@@ -24,10 +24,11 @@ using WebActivatorEx;
 
 namespace SFA.Apprenticeships.Web.Candidate {
 	using System.Web.Mvc;
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-	using DependencyResolution;
-    
-	public static class StructuremapMvc {
+	using Common.IoC;
+	using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+	using IoC;
+
+    public static class StructuremapMvc {
         #region Public Properties
 
         public static StructureMapDependencyScope StructureMapDependencyScope { get; set; }
@@ -41,7 +42,7 @@ namespace SFA.Apprenticeships.Web.Candidate {
         }
 		
         public static void Start() {
-            var container = DependencyResolution.IoC.Initialize();
+            var container = IoC.IoC.Initialize();
             StructureMapDependencyScope = new StructureMapDependencyScope(container);
             DependencyResolver.SetResolver(StructureMapDependencyScope);
             DynamicModuleUtility.RegisterModule(typeof(StructureMapScopeModule));
