@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
     using Domain.Interfaces.Configuration;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
+    using Infrastructure.EmployerDataService.IoC;
     using Infrastructure.Logging.IoC;
     using StructureMap;
     using StructureMap.Web;
@@ -30,7 +31,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.AddCachingRegistry(cacheConfig);
 
                 // service layer
-                x.For()
+                x.AddRegistry<EmployerDataServicesRegistry>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

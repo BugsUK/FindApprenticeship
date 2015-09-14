@@ -10,8 +10,11 @@
     {
         public EmployerDataServicesRegistry()
         {
+            // Providers.
+            For<IVerifiedOrganisationProvider>().Use<EmployerDataProvider>().Singleton();
+
+            // Web Services.
             For<IWcfService<EmployerLookupSoapClient>>().Use<WcfService<EmployerLookupSoapClient>>();
-            For<IVerifiedOrganisationProvider>().Use<EmployerDataProvider>();
         }
     }
 }

@@ -260,6 +260,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
+    <Compile Include="Mediators\Provider\IProviderSiteMediator.cs" />
     <Compile Include="Controllers\ProviderUserController.cs" />
     <Compile Include="Controllers\RecuitmentControllerBase.cs" />
     <Compile Include="Controllers\ProviderController.cs" />
@@ -270,6 +271,9 @@
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="IoC\RecruitmentWebRegistry.cs" />
     <Compile Include="IoC\StructureMapScopeModule.cs" />
+    <Compile Include="Mediators\Provider\ProviderSiteMediator.cs" />
+    <Compile Include="ViewModels\Provider\ProviderSiteSearchResponseViewModel.cs" />
+    <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\RecuitmentUserContext.cs" />
     <Compile Include="Startup.cs" />
@@ -353,8 +357,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Mediators\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -405,9 +407,17 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
+      <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Candidate\SFA.Apprenticeships.Web.Candidate.csproj">
+      <Project>{470BA0C8-FE2E-4DB9-92C8-6F37095688EE}</Project>
+      <Name>SFA.Apprenticeships.Web.Candidate</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
