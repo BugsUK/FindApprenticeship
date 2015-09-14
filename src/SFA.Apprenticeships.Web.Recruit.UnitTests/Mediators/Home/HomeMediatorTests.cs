@@ -1,6 +1,8 @@
 ﻿using System.Security.Claims;
 using NUnit.Framework;
+using SFA.Apprenticeships.Web.Common.Constants;
 using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
+using SFA.Apprenticeships.Web.Recruit.Constants.Messages;
 using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
@@ -17,7 +19,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             var principal = new ClaimsPrincipal(identity);
 
             var response = mediator.Authorize(principal);
-            response.AssertCode(HomeMediatorCodes.Authorize.MissingProviderIdentifier);
+            response.AssertMessage(HomeMediatorCodes.Authorize.MissingProviderIdentifier, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
         }
 
         [Test(Description = "If the user doesn't have the service permission (missing \"service claim\") then end the user's session and return them to landing page with a message")]
@@ -30,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             var principal = new ClaimsPrincipal(identity);
 
             var response = mediator.Authorize(principal);
-            response.AssertCode(HomeMediatorCodes.Authorize.MissingServicePermission);
+            response.AssertMessage(HomeMediatorCodes.Authorize.MissingServicePermission, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
         }
 
         [Test(Description = "User has all claims, a complete provider profile and has verified their email address")]

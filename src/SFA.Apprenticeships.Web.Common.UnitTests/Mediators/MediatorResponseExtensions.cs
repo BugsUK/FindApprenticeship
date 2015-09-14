@@ -31,6 +31,15 @@ namespace SFA.Apprenticeships.Web.Common.UnitTests.Mediators
             response.ValidationResult.Should().BeNull();
         }
 
+        public static void AssertMessage(this MediatorResponse response, string code, string message, UserMessageLevel messageLevel, bool parametersShouldNotBeNull = false)
+        {
+            response.Code.Should().Be(code);
+            response.Message.Text.Should().Be(message);
+            response.Message.Level.Should().Be(messageLevel);
+            response.AssertParameters(parametersShouldNotBeNull);
+            response.ValidationResult.Should().BeNull();
+        }
+
         public static void AssertMessage<T>(this MediatorResponse<T> response, string code, string message, UserMessageLevel messageLevel, bool viewModelShouldNotBeNull, bool parametersShouldNotBeNull = false)
         {
             response.Code.Should().Be(code);
