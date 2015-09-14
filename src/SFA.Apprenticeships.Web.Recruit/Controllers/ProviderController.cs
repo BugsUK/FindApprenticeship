@@ -8,12 +8,12 @@
 
     public class ProviderController : ControllerBase<RecuitmentUserContext>
     {
-        private readonly IProviderSiteMediator _providerSiteMediator;
+        private readonly IProviderMediator _providerMediator;
 
         public ProviderController(
-            IProviderSiteMediator providerSiteMediator)
+            IProviderMediator providerMediator)
         {
-            _providerSiteMediator = providerSiteMediator;
+            _providerMediator = providerMediator;
         }
 
         public ProviderController()
