@@ -259,7 +259,13 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
+    <Compile Include="Constants\ClaimTypes.cs" />
+    <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
+    <Compile Include="Constants\Roles.cs" />
+    <Compile Include="Mediators\Home\HomeMediator.cs" />
+    <Compile Include="Mediators\Home\HomeMediatorCodes.cs" />
+    <Compile Include="Mediators\Home\IHomeMediator.cs" />
     <Compile Include="Mediators\Provider\IProviderSiteMediator.cs" />
     <Compile Include="Controllers\ProviderUserController.cs" />
     <Compile Include="Controllers\RecuitmentControllerBase.cs" />

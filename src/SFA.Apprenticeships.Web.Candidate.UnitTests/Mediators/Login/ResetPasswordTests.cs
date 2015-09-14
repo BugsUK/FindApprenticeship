@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
+﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
+
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
     using System;
     using Candidate.Mediators.Login;

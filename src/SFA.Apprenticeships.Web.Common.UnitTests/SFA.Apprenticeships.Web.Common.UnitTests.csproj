@@ -74,6 +74,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentAssertions.3.5.0\lib\net45\FluentAssertions.Core.dll</HintPath>
     </Reference>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentValidation.Mvc, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
@@ -130,6 +138,7 @@
     <Compile Include="Builders\HttpContextBuilder.cs" />
     <Compile Include="Builders\HttpResponseBuilder.cs" />
     <Compile Include="Framework\DateDisplayExtensionsTests.cs" />
+    <Compile Include="Mediators\MediatorResponseExtensions.cs" />
     <Compile Include="Providers\HelpCookieProviderBuilder.cs" />
     <Compile Include="Providers\HelpCookieProviderTests.cs" />
     <Compile Include="Providers\RobotCrawlerProviderTests.cs" />

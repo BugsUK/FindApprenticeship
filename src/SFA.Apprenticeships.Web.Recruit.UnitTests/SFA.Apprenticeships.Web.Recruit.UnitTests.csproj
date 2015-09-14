@@ -79,11 +79,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mediators\Home\HomeMediatorBuilder.cs" />
+    <Compile Include="Mediators\Home\HomeMediatorTests.cs" />
     <Compile Include="Mediators\Provider\ProviderSiteMediatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common.UnitTests\SFA.Apprenticeships.Web.Common.UnitTests.csproj">
+      <Project>{3ca36139-bbdd-4305-b15a-e9500606b672}</Project>
+      <Name>SFA.Apprenticeships.Web.Common.UnitTests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
+      <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
+      <Name>SFA.Apprenticeships.Web.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Recruit\SFA.Apprenticeships.Web.Recruit.csproj">
+      <Project>{AF7E6460-86F4-40D6-8C46-AB97C283479B}</Project>
+      <Name>SFA.Apprenticeships.Web.Recruit</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

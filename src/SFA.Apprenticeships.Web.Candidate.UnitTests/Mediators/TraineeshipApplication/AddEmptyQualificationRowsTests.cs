@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
+﻿using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
+
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipApplication
 {
     using Candidate.Mediators.Application;
     using Candidate.ViewModels.Applications;

@@ -1,11 +1,9 @@
-﻿using SFA.Apprenticeships.Web.Common.Mediators;
+﻿using FluentAssertions;
+using SFA.Apprenticeships.Web.Common.Constants;
+using SFA.Apprenticeships.Web.Common.Mediators;
 
-namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators
+namespace SFA.Apprenticeships.Web.Common.UnitTests.Mediators
 {
-    using Candidate.Mediators;
-    using Common.Constants;
-    using FluentAssertions;
-
     public static class MediatorResponseExtensions
     {
         public static void AssertCode(this MediatorResponse response, string code, bool parametersShouldNotBeNull = false)
