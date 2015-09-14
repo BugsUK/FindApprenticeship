@@ -7,6 +7,6 @@
     /// </summary>
     public interface IVerifiedOrganisationProvider
     {
-        VerifiedOrganisation GetByReferenceNumber(string referenceNumber);
+        Organisation GetByReferenceNumber(string referenceNumber);
     }
 }

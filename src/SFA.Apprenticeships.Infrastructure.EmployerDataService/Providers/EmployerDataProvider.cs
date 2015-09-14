@@ -10,13 +10,15 @@
     using Domain.Interfaces.Configuration;
     using EmployerDataService;
     using Mappers;
-    using Wcf = WebServices.Wcf;
+    using WebServices.Wcf;
 
     public class EmployerDataProvider : IVerifiedOrganisationProvider
     {
+        private const string EndpointConfigurationName = "EmployerDataService";
+
         private readonly ILogService _logger;
         private readonly IConfigurationService _configurationService;
-        private readonly Wcf.IWcfService<EmployerLookupSoapClient> _service;
+        private readonly IWcfService<EmployerLookupSoapClient> _service;
 
         private string _credentials;
         private readonly EmployerMapper _employerMapper;
@@ -24,7 +26,7 @@
         public EmployerDataProvider(
             ILogService logger,
             IConfigurationService configurationService,
-            Wcf.IWcfService<EmployerLookupSoapClient> service)
+            IWcfService<EmployerLookupSoapClient> service)
         {
             _logger = logger;
             _configurationService = configurationService;
@@ -32,7 +34,7 @@
             _employerMapper = new EmployerMapper();
         }
 
-        public VerifiedOrganisation GetByReferenceNumber(string referenceNumber)
+        public Organisation GetByReferenceNumber(string referenceNumber)
         {
             var context = new
             {
@@ -43,17 +45,19 @@
             {
                 _logger.Debug("Calling EmployerDataService.ByUrn with reference number='{0}'", referenceNumber);
 
-                ConciseEmployerStructure[] employer = null;
+                ConciseEmployerStructure[] employers = null;
 
-                _service.Use("EmployerDataService", client => employer = client.ByUrn(ReferenceNumberToInt32(referenceNumber), Credentials));
+                _service.Use(
+                    EndpointConfigurationName,
+                    client => employers = client.ByUrn(Convert.ToInt32(referenceNumber), Credentials));
 
-                if (employer == null || employer.Length == 0)
+                if (employers == null || employers.Length == 0)
                 {
                     _logger.Debug("EmployerDataService.ByUrn did not find employer with reference number='{0}'", referenceNumber);
                     return null;
                 }
 
-                var organisation = _employerMapper.ToVerifiedOrganisation(employer.First());
+                var organisation = _employerMapper.ToVerifiedOrganisation(employers.First());
 
                 _logger.Debug("EmployerDataService.ByUrn found employer with reference number='{0}'", referenceNumber);
 
@@ -73,11 +77,6 @@
 
         #region Helpers
 
-        private static int ReferenceNumberToInt32(string referenceNumber)
-        {
-            return Convert.ToInt32(referenceNumber);
-        }
-
         private string Credentials
         {
             get
@@ -86,7 +85,7 @@
                 {
                     var configuration = _configurationService.Get<EmployerDataServiceConfiguration>();
 
-                    _credentials = configuration.UserName;
+                    _credentials = configuration.Credentials;
                 }
 
                 return _credentials;

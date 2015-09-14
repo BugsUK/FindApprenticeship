@@ -5,11 +5,11 @@
 
     public class EmployerMapper
     {
-        public VerifiedOrganisation ToVerifiedOrganisation(ConciseEmployerStructure fromEmployer)
+        public Organisation ToVerifiedOrganisation(ConciseEmployerStructure fromEmployer)
         {
             var addressMapper = new BsAddressMapper();
 
-            return new VerifiedOrganisation
+            return new Organisation
             {
                 ReferenceNumber = fromEmployer.URN,
                 Name = fromEmployer.Name,

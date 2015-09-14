@@ -30,6 +30,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.AddCachingRegistry(cacheConfig);
 
                 // service layer
+                x.For()
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

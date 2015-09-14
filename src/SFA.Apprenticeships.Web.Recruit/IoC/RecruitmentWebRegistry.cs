@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
     using System.Web;
+    using Application.Interfaces.Organisations;
+    using Application.Organisation;
     using StructureMap.Configuration.DSL;
 
     public class RecruitmentWebRegistry : Registry
@@ -24,6 +26,7 @@
 
         private void RegisterServices()
         {
+            For<IOrganisationService>().Use<OrganisationService>();
         }
 
         private void RegisterStrategies()

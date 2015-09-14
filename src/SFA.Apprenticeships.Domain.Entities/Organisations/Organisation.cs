@@ -2,7 +2,7 @@
 {
     using Locations;
 
-    public class VerifiedOrganisation
+    public class Organisation
     {
         public string ReferenceNumber { get; set; }
 

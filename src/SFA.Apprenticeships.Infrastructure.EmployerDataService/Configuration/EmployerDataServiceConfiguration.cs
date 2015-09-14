@@ -2,6 +2,6 @@
 {
     public class EmployerDataServiceConfiguration
     {
-        public string UserName { get; set; }
+        public string Credentials { get; set; }
     }
 }
