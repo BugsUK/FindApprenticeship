@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
+﻿using SFA.Apprenticeships.Web.Common.Mediators;
+
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 {
     using System;
     using Application.Interfaces.Logging;

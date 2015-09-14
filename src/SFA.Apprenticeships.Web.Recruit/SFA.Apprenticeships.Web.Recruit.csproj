@@ -415,10 +415,6 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Web.Candidate\SFA.Apprenticeships.Web.Candidate.csproj">
-      <Project>{470BA0C8-FE2E-4DB9-92C8-6F37095688EE}</Project>
-      <Name>SFA.Apprenticeships.Web.Candidate</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>

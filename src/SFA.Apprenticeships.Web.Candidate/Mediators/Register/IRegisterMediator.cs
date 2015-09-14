@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Register
+﻿using SFA.Apprenticeships.Web.Common.Mediators;
+
+namespace SFA.Apprenticeships.Web.Candidate.Mediators.Register
 {
     using System;
     using ViewModels.Candidate;

@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
+﻿using SFA.Apprenticeships.Web.Common.Mediators;
+
+namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 {
     using System;
     using System.Linq;

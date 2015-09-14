@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
-{
-    using System;
+﻿using System;
 
+namespace SFA.Apprenticeships.Web.Common.Mediators
+{
     public class InvalidMediatorCodeException : Exception
     {
         public string Code { get; set; }

@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators
+﻿using SFA.Apprenticeships.Web.Common.Mediators;
+
+namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators
 {
     using Candidate.Mediators;
     using Common.Constants;

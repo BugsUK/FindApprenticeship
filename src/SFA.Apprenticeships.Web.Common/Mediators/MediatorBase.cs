@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
-{
-    using Common.Constants;
-    using FluentValidation.Results;
+﻿using FluentValidation.Results;
+using SFA.Apprenticeships.Web.Common.Constants;
 
+namespace SFA.Apprenticeships.Web.Common.Mediators
+{
     public abstract class MediatorBase
     {
         protected static MediatorResponse GetMediatorResponse(string code, ValidationResult validationResult = null, object parameters = null)

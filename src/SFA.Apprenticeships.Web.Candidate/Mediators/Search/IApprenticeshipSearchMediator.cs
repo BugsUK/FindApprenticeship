@@ -1,3 +1,5 @@
+using SFA.Apprenticeships.Web.Common.Mediators;
+
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 {
     using System;

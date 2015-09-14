@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
-{
-    using FluentValidation.Results;
+﻿using FluentValidation.Results;
 
+namespace SFA.Apprenticeships.Web.Common.Mediators
+{
     public class MediatorResponse
     {
         public string Code { get; set; }

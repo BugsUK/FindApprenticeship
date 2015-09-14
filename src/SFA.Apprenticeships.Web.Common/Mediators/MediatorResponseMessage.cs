@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Mediators
-{
-    using Common.Constants;
+﻿using SFA.Apprenticeships.Web.Common.Constants;
 
+namespace SFA.Apprenticeships.Web.Common.Mediators
+{
     public class MediatorResponseMessage
     {
         public string Text { get; set; }

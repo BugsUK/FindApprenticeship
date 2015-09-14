@@ -985,13 +985,9 @@
     <Compile Include="Mediators\Application\ApprenticeshipApplicationMediatorCodes.cs" />
     <Compile Include="Mediators\Application\IApprenticeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Search\TraineeshipSearchMediatorCodes.cs" />
-    <Compile Include="Mediators\InvalidMediatorCodeException.cs" />
     <Compile Include="Mediators\Application\ITraineeshipApplicationMediator.cs" />
-    <Compile Include="Mediators\MediatorBase.cs" />
     <Compile Include="Mediators\Search\IApprenticeshipSearchMediator.cs" />
     <Compile Include="Mediators\Search\ApprenticeshipSearchMediatorCodes.cs" />
-    <Compile Include="Mediators\MediatorResponse.cs" />
-    <Compile Include="Mediators\MediatorResponseMessage.cs" />
     <Compile Include="Mediators\Search\ApprenticeshipSearchMediator.cs" />
     <Compile Include="Mediators\Search\SearchMediatorBase.cs" />
     <Compile Include="Mediators\Application\TraineeshipApplicationMediator.cs" />
