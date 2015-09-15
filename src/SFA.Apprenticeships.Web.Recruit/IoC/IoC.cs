@@ -1,3 +1,6 @@
+using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
+using SFA.Apprenticeships.Web.Recruit.Providers;
+
 namespace SFA.Apprenticeships.Web.Recruit.IoC {
     using Application.Interfaces.Logging;
     using Common.IoC;
@@ -43,6 +46,11 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.For<IRobotCrawlerProvider>().Use<RobotCrawlerProvider>().Singleton();
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
+
+                x.For<IProviderProvider>().Use<ProviderProvider>();
+                x.For<IUserProfileProvider>().Use<UserProfileProvider>();
+
+                x.For<IHomeMediator>().Use<HomeMediator>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());

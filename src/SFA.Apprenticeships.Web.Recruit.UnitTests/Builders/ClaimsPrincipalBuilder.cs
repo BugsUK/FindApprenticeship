@@ -4,9 +4,9 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Builders
 {
     public class ClaimsPrincipalBuilder
     {
-        private string _name = null;
-        private string _ukprn = null;
-        private string _role = null;
+        private string _name;
+        private string _ukprn;
+        private string _role;
 
         public ClaimsPrincipal Build()
         {
@@ -25,6 +25,24 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Builders
             }
             var principal = new ClaimsPrincipal(identity);
             return principal;
+        }
+
+        public ClaimsPrincipalBuilder WithName(string name)
+        {
+            _name = name;
+            return this;
+        }
+
+        public ClaimsPrincipalBuilder WithUkprn(string ukprn)
+        {
+            _ukprn = ukprn;
+            return this;
+        }
+
+        public ClaimsPrincipalBuilder WithRole(string role)
+        {
+            _role = role;
+            return this;
         }
     }
 }

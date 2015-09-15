@@ -27,6 +27,12 @@
                 );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.Authorize,
+                url: "authorize",
+                defaults: new { controller = "Home", action = "Authorize" }
+                );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.RecruitmentHome,
                url: "home",
                defaults: new { controller = "ProviderUser", action = "Home" }

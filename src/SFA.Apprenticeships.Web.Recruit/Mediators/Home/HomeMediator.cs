@@ -12,10 +12,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
         private const int MinProviderSites = 1;
 
         private readonly IProviderProvider _providerProvider;
+        private readonly IUserProfileProvider _userProfileProvider;
 
-        public HomeMediator(IProviderProvider providerProvider)
+        public HomeMediator(IProviderProvider providerProvider, IUserProfileProvider userProfileProvider)
         {
             _providerProvider = providerProvider;
+            _userProfileProvider = userProfileProvider;
         }
 
         public MediatorResponse Authorize(ClaimsPrincipal principal)
@@ -50,6 +52,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
             if (provider.ProviderSiteViewModels.Count() < MinProviderSites)
             {
                 return GetMediatorResponse(HomeMediatorCodes.Authorize.FailedMinimumSitesCountCheck, AuthorizeMessages.FailedMinimumSitesCountCheck, UserMessageLevel.Warning);
+            }
+
+            var userProfile = _userProfileProvider.GetUserProfileViewModel(principal.Identity.Name);
+            if (userProfile == null)
+            {
+                return GetMediatorResponse(HomeMediatorCodes.Authorize.NoUserProfile, AuthorizeMessages.NoUserProfile, UserMessageLevel.Info);
+            }
+
+            if (!userProfile.EmailAddressVerified)
+            {
+                return GetMediatorResponse(HomeMediatorCodes.Authorize.EmailAddressNotVerified, AuthorizeMessages.EmailAddressNotVerified, UserMessageLevel.Info);
             }
 
             //var providerSites = _providerSiteProvider.GetProviderSites();

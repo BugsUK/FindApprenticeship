@@ -287,6 +287,9 @@
     <Compile Include="IoC\StructureMapScopeModule.cs" />
     <Compile Include="Mediators\Provider\ProviderMediator.cs" />
     <Compile Include="Providers\IProviderProvider.cs" />
+    <Compile Include="Providers\IUserProfileProvider.cs" />
+    <Compile Include="Providers\ProviderProvider.cs" />
+    <Compile Include="Providers\UserProfileProvider.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchMode.cs" />
@@ -298,6 +301,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
+    <Compile Include="ViewModels\UserProfileViewModel.cs" />
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>

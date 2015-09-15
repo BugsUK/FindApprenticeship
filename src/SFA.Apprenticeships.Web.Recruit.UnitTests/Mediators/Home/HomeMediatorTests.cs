@@ -7,6 +7,8 @@ using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
 using SFA.Apprenticeships.Web.Recruit.Constants.Messages;
 using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
 using SFA.Apprenticeships.Web.Recruit.Providers;
+using SFA.Apprenticeships.Web.Recruit.UnitTests.Builders;
+using SFA.Apprenticeships.Web.Recruit.ViewModels;
 using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
@@ -19,8 +21,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
         {
             var mediator = new HomeMediatorBuilder().Build();
 
-            var identity = new ClaimsIdentity();
-            var principal = new ClaimsPrincipal(identity);
+            var principal = new ClaimsPrincipalBuilder().Build();
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(HomeMediatorCodes.Authorize.EmptyUsername, AuthorizeMessages.EmptyUsername, UserMessageLevel.Error);
@@ -31,9 +32,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
         {
             var mediator = new HomeMediatorBuilder().Build();
 
-            var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.Name, "User001"));
-            var principal = new ClaimsPrincipal(identity);
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").Build();
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(HomeMediatorCodes.Authorize.MissingProviderIdentifier, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
@@ -44,11 +43,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
         {
             var mediator = new HomeMediatorBuilder().Build();
 
-            var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.Name, "User001"));
-            identity.AddClaim(new Claim(Constants.ClaimTypes.Ukprn, ""));
-            identity.AddClaim(new Claim(ClaimTypes.Role, Constants.Roles.Faa));
-            var principal = new ClaimsPrincipal(identity);
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("").WithRole(Constants.Roles.Faa).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(HomeMediatorCodes.Authorize.MissingProviderIdentifier, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
@@ -59,11 +54,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
         {
             var mediator = new HomeMediatorBuilder().Build();
 
-            var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.Name, "User001"));
-            identity.AddClaim(new Claim(Constants.ClaimTypes.Ukprn, "00001"));
-            var principal = new ClaimsPrincipal(identity);
-
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").Build();
+            
             var response = mediator.Authorize(principal);
             response.AssertMessage(HomeMediatorCodes.Authorize.MissingServicePermission, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
         }
@@ -73,11 +65,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
         {
             var mediator = new HomeMediatorBuilder().Build();
 
-            var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.Name, "User001"));
-            identity.AddClaim(new Claim(Constants.ClaimTypes.Ukprn, "00001"));
-            identity.AddClaim(new Claim(ClaimTypes.Role, Constants.Roles.Faa));
-            var principal = new ClaimsPrincipal(identity);
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(HomeMediatorCodes.Authorize.NoProviderProfile, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Warning);
@@ -90,11 +78,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             providerProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(new ProviderViewModel());
             var mediator = new HomeMediatorBuilder().With(providerProvider).Build();
 
-            var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.Name, "User001"));
-            identity.AddClaim(new Claim(Constants.ClaimTypes.Ukprn, "00001"));
-            identity.AddClaim(new Claim(ClaimTypes.Role, Constants.Roles.Faa));
-            var principal = new ClaimsPrincipal(identity);
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(HomeMediatorCodes.Authorize.FailedMinimumSitesCountCheck, AuthorizeMessages.FailedMinimumSitesCountCheck, UserMessageLevel.Warning);
@@ -111,14 +95,31 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             providerProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
             var mediator = new HomeMediatorBuilder().With(providerProvider).Build();
 
-            var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.Name, "User001"));
-            identity.AddClaim(new Claim(Constants.ClaimTypes.Ukprn, "00001"));
-            identity.AddClaim(new Claim(ClaimTypes.Role, Constants.Roles.Faa));
-            var principal = new ClaimsPrincipal(identity);
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
 
             var response = mediator.Authorize(principal);
-            response.AssertCode(HomeMediatorCodes.Authorize.Ok);
+            response.AssertMessage(HomeMediatorCodes.Authorize.NoUserProfile, AuthorizeMessages.NoUserProfile, UserMessageLevel.Info);
+        }
+
+        [Test(Description = "If the user has not verified their email address then direct the user to the \"verify\" page with a message")]
+        public void Authenticated_EmailAddressNotVerified()
+        {
+            var providerProvider = new Mock<IProviderProvider>();
+            var providerViewModel = new ProviderViewModel
+            {
+                ProviderSiteViewModels = new List<ProviderSiteViewModel> {new ProviderSiteViewModel()}
+            };
+            providerProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
+
+            var userProfileProvider = new Mock<IUserProfileProvider>();
+            userProfileProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>())).Returns(new UserProfileViewModel());
+
+            var mediator = new HomeMediatorBuilder().With(providerProvider).With(userProfileProvider).Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
+
+            var response = mediator.Authorize(principal);
+            response.AssertMessage(HomeMediatorCodes.Authorize.EmailAddressNotVerified, AuthorizeMessages.EmailAddressNotVerified, UserMessageLevel.Info);
         }
 
         [Test(Description = "User has all claims, a complete provider profile and has verified their email address")]
@@ -127,16 +128,16 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             var providerProvider = new Mock<IProviderProvider>();
             var providerViewModel = new ProviderViewModel
             {
-                ProviderSiteViewModels = new List<ProviderSiteViewModel> {new ProviderSiteViewModel()}
+                ProviderSiteViewModels = new List<ProviderSiteViewModel> { new ProviderSiteViewModel() }
             };
             providerProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
-            var mediator = new HomeMediatorBuilder().With(providerProvider).Build();
 
-            var identity = new ClaimsIdentity();
-            identity.AddClaim(new Claim(ClaimTypes.Name, "User001"));
-            identity.AddClaim(new Claim(Constants.ClaimTypes.Ukprn, "00001"));
-            identity.AddClaim(new Claim(ClaimTypes.Role, Constants.Roles.Faa));
-            var principal = new ClaimsPrincipal(identity);
+            var userProfileProvider = new Mock<IUserProfileProvider>();
+            userProfileProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>())).Returns(new UserProfileViewModel {EmailAddressVerified = true});
+
+            var mediator = new HomeMediatorBuilder().With(providerProvider).With(userProfileProvider).Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertCode(HomeMediatorCodes.Authorize.Ok);
