@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Controllers
+﻿using SFA.Apprenticeships.Web.Common.Constants;
+
+namespace SFA.Apprenticeships.Web.Common.Controllers
 {
     using System.Web.Mvc;
     using Attributes;
@@ -19,5 +21,24 @@
 
         [SetterProperty]
         public IAuthenticationTicketService AuthenticationTicketService { get; set; }
+
+        protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
+        {
+            switch (level)
+            {
+                case UserMessageLevel.Info:
+                    UserData.Push(UserMessageConstants.InfoMessage, message);
+                    break;
+                case UserMessageLevel.Success:
+                    UserData.Push(UserMessageConstants.SuccessMessage, message);
+                    break;
+                case UserMessageLevel.Warning:
+                    UserData.Push(UserMessageConstants.WarningMessage, message);
+                    break;
+                case UserMessageLevel.Error:
+                    UserData.Push(UserMessageConstants.ErrorMessage, message);
+                    break;
+            }
+        }
     }
 }

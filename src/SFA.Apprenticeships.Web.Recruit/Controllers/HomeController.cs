@@ -1,4 +1,5 @@
-﻿using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
+﻿using SFA.Apprenticeships.Web.Common.Mediators;
+using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
 
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
@@ -29,13 +30,30 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         {
             var claimsPrincipal = (ClaimsPrincipal) User;
             var response = _homeMediator.Authorize(claimsPrincipal);
-            switch (response.Code)
+
+            if (response.Message != null)
             {
-                case HomeMediatorCodes.Authorize.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.LandingPage);
+                SetUserMessage(response.Message.Text, response.Message.Level);
             }
 
-            return RedirectToRoute(RecruitmentRouteNames.LandingPage);
+            switch (response.Code)
+            {
+                case HomeMediatorCodes.Authorize.EmptyUsername:
+                case HomeMediatorCodes.Authorize.MissingProviderIdentifier:
+                case HomeMediatorCodes.Authorize.MissingServicePermission:
+                case HomeMediatorCodes.Authorize.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.LandingPage);
+                case HomeMediatorCodes.Authorize.NoProviderProfile:
+                case HomeMediatorCodes.Authorize.FailedMinimumSitesCountCheck:
+                    return RedirectToRoute(RecruitmentRouteNames.ManageProviderSites);
+                case HomeMediatorCodes.Authorize.NoUserProfile:
+                    return RedirectToRoute(RecruitmentRouteNames.UserInfo);
+                case HomeMediatorCodes.Authorize.EmailAddressNotVerified:
+                    return RedirectToRoute(RecruitmentRouteNames.VertifyEmail);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         public ActionResult LoginDummy(string loginType)
