@@ -119,6 +119,59 @@
             return result;
         }
 
+        public IEnumerable<BsonDocument> GetUnsubmittedApplicationsCountPerCandidate(DateTime dateCreatedStart, DateTime dateCreatedEnd)
+        {
+            var pipeline = GetApplicationsCountPerCandidatePipeline(dateCreatedStart, dateCreatedEnd, "$lt");
+
+            var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
+
+            return result;
+        }
+
+        public IEnumerable<BsonDocument> GetSubmittedApplicationsCountPerCandidate(DateTime dateCreatedStart, DateTime dateCreatedEnd)
+        {
+            var pipeline = GetApplicationsCountPerCandidatePipeline(dateCreatedStart, dateCreatedEnd, "$gte");
+
+            var result = Collection.Aggregate(new AggregateArgs { Pipeline = pipeline });
+
+            return result;
+        }
+
+        private static BsonDocument[] GetApplicationsCountPerCandidatePipeline(DateTime dateCreatedStart, DateTime dateCreatedEnd, string modifier)
+        {
+            var match = new BsonDocument
+            {
+                {
+                    "$match",
+                    new BsonDocument
+                    {
+                        {
+                            "$and",
+                            new BsonArray
+                            {
+                                new BsonDocument {{"Status", new BsonDocument {{modifier, (int) ApplicationStatuses.Submitted}}}},
+                                new BsonDocument {{"DateCreated", new BsonDocument {{"$gte", dateCreatedStart}}}},
+                                new BsonDocument {{"DateCreated", new BsonDocument {{"$lte", dateCreatedEnd}}}}
+                            }
+                        }
+                    }
+                }
+            };
+            var group = new BsonDocument
+            {
+                {
+                    "$group", new BsonDocument
+                    {
+                        {"_id", new BsonDocument {{"CandidateId", "$CandidateId"}}},
+                        {"count", new BsonDocument {{"$sum", 1}}}
+                    }
+                }
+            };
+
+            var pipeline = new[] {match, @group};
+            return pipeline;
+        }
+
         public BsonDocument GetAverageApplicationCountPerApprenticeship()
         {
             var match = new BsonDocument

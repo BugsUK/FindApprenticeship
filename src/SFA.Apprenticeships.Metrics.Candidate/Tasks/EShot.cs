@@ -13,6 +13,8 @@
     {
         private readonly IUserMetricsRepository _userMetricsRepository;
         private readonly ICandidateMetricsRepository _candidateMetricsRepository;
+        private readonly IApprenticeshipMetricsRepository _apprenticeshipMetricsRepository;
+        private readonly ITraineeshipMetricsRepository _traineeshipMetricsRepository;
 
         private readonly Dictionary<int, string> _ethnicity = new Dictionary<int, string>
         {
@@ -38,10 +40,12 @@
             {98, "Any other ethnic group"}
         };
 
-        public EShot(IUserMetricsRepository userMetricsRepository, ICandidateMetricsRepository candidateMetricsRepository)
+        public EShot(IUserMetricsRepository userMetricsRepository, ICandidateMetricsRepository candidateMetricsRepository, IApprenticeshipMetricsRepository apprenticeshipMetricsRepository, ITraineeshipMetricsRepository traineeshipMetricsRepository)
         {
             _userMetricsRepository = userMetricsRepository;
             _candidateMetricsRepository = candidateMetricsRepository;
+            _apprenticeshipMetricsRepository = apprenticeshipMetricsRepository;
+            _traineeshipMetricsRepository = traineeshipMetricsRepository;
         }
 
         public string TaskName { get { return "e-shot"; } }
@@ -53,6 +57,8 @@
             AddUserActivityMetrics(eShotMetrics);
 
             AddCandidateActivityMetrics(eShotMetrics);
+
+            AddApplicationMetrics(eShotMetrics);
 
             var fileDateTime = DateTime.UtcNow;
             WriteEShotCsv(eShotMetrics, fileDateTime);
@@ -149,6 +155,52 @@
                 dateTime = dateTime.AddDays(-30);
             }
         }
+
+        private void AddApplicationMetrics(Dictionary<Guid, EShotMetrics> eShotMetrics)
+        {
+            var dateTime = DateTime.UtcNow;
+            while (dateTime > Constants.OldestValidDate)
+            {
+                var unsubmittedApplicationsCountPerCandidate = _apprenticeshipMetricsRepository.GetUnsubmittedApplicationsCountPerCandidate(dateTime.AddDays(-30), dateTime);
+                foreach (var unsubmittedApplicationsCount in unsubmittedApplicationsCountPerCandidate)
+                {
+                    var idComponents = unsubmittedApplicationsCount["_id"].AsBsonDocument;
+                    var candidateId = idComponents["CandidateId"].AsGuid;
+                    var count = unsubmittedApplicationsCount["count"].AsInt32;
+
+                    if (eShotMetrics.ContainsKey(candidateId))
+                    {
+                        eShotMetrics[candidateId].ApprenticeshipDraftCount += count;
+                    }
+                }
+                var submittedApplicationsCountPerCandidate = _apprenticeshipMetricsRepository.GetSubmittedApplicationsCountPerCandidate(dateTime.AddDays(-30), dateTime);
+                foreach (var submittedApplicationsCount in submittedApplicationsCountPerCandidate)
+                {
+                    var idComponents = submittedApplicationsCount["_id"].AsBsonDocument;
+                    var candidateId = idComponents["CandidateId"].AsGuid;
+                    var count = submittedApplicationsCount["count"].AsInt32;
+
+                    if (eShotMetrics.ContainsKey(candidateId))
+                    {
+                        eShotMetrics[candidateId].ApprenticeshipSubmittedCount += count;
+                    }
+                }
+                var submittedTraineeshipApplicationsCountPerCandidate = _traineeshipMetricsRepository.GetSubmittedApplicationsCountPerCandidate(dateTime.AddDays(-30), dateTime);
+                foreach (var submittedApplicationsCount in submittedTraineeshipApplicationsCountPerCandidate)
+                {
+                    var idComponents = submittedApplicationsCount["_id"].AsBsonDocument;
+                    var candidateId = idComponents["CandidateId"].AsGuid;
+                    var count = submittedApplicationsCount["count"].AsInt32;
+
+                    if (eShotMetrics.ContainsKey(candidateId))
+                    {
+                        eShotMetrics[candidateId].TraineeshipSubmittedCount += count;
+                    }
+                }
+
+                dateTime = dateTime.AddDays(-30);
+            }
+        }
     }
 
     public class EShotMetrics
@@ -174,5 +226,8 @@
         public string LastSchool { get; set; }
         public int LastSchoolFromYear { get; set; }
         public int LastSchoolToYear { get; set; }
+        public int ApprenticeshipDraftCount { get; set; }
+        public int ApprenticeshipSubmittedCount { get; set; }
+        public int TraineeshipSubmittedCount { get; set; }
     }
 }

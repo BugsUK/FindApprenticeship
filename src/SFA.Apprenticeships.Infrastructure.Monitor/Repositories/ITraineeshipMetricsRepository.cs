@@ -11,6 +11,7 @@
         long GetApplicationsPerCandidateCount();
         IEnumerable<BsonDocument> GetApplicationStatusCounts();
         IEnumerable<BsonDocument> GetApplicationCountPerTraineeship();
+        IEnumerable<BsonDocument> GetSubmittedApplicationsCountPerCandidate(DateTime dateCreatedStart, DateTime dateCreatedEnd);
         BsonDocument GetAverageApplicationCountPerTraineeship();
     }
 }

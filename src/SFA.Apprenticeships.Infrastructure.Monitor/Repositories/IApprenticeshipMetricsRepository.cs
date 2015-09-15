@@ -16,6 +16,8 @@
         IEnumerable<BsonDocument> GetApplicationStatusCounts();
         IEnumerable<Guid> GetCandidatesThatWouldHaveSeenTraineeshipPrompt();
         IEnumerable<BsonDocument> GetApplicationCountPerApprenticeship();
+        IEnumerable<BsonDocument> GetUnsubmittedApplicationsCountPerCandidate(DateTime dateCreatedStart, DateTime dateCreatedEnd);
+        IEnumerable<BsonDocument> GetSubmittedApplicationsCountPerCandidate(DateTime dateCreatedStart, DateTime dateCreatedEnd);
         BsonDocument GetAverageApplicationCountPerApprenticeship();
     }
 }
