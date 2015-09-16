@@ -16,15 +16,9 @@
             _providerMediator = providerMediator;
         }
 
-        public ProviderController()
-        {
-            
-        }
-
         [HttpGet]
         public ActionResult Sites()
         {
-
             UserData.Push(UserMessageConstants.InfoMessage, "As you're the first person to sign in from your organisation, please take a moment to review your training sites.");
 
             return View();

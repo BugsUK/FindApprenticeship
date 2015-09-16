@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace SFA.Apprenticeships.Web.Recruit
 {
@@ -24,7 +23,11 @@ namespace SFA.Apprenticeships.Web.Recruit
                 "~/Content/_assets/js/vendor/jquery.cookie.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nascript").Include(
-                  "~/Content/_assets/js/scripts.js"));
+                "~/Content/_assets/js/scripts.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
+                "~/Content/_assets/js/vendor/jquery.validate.js",
+                "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.custom.js"));
         }
     }
 }

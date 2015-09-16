@@ -3,6 +3,7 @@
     using System.Web;
     using Application.Interfaces.Organisations;
     using Application.Organisation;
+    using Mediators.Provider;
     using StructureMap.Configuration.DSL;
 
     public class RecruitmentWebRegistry : Registry
@@ -12,11 +13,8 @@
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
 
             RegisterServices();
-
             RegisterStrategies();
-
             RegisterProviders();
-
             RegisterMediators();
         }
 
@@ -35,6 +33,7 @@
 
         private void RegisterMediators()
         {
+            For<IProviderMediator>().Use<ProviderMediator>();
         }
     }
 }

@@ -6,14 +6,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
 
     public class ProviderMediator : IProviderMediator
     {
-        public MediatorResponse<ProviderSiteSearchResponseViewModel> FindSite(ProviderSiteSearchViewModel searchViewModel)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public MediatorResponse<ProviderSiteSearchViewModel> AddSite()
         {
-            throw new System.NotImplementedException();
+            return null;
+        }
+
+        public MediatorResponse<ProviderSiteSearchResponseViewModel> FindSite(ProviderSiteSearchViewModel searchViewModel)
+        {
+            return null;
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿@using SFA.Apprenticeships.Web.Common.Framework
-@using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
-
-@model ProviderSiteSearchViewModel
-
-@{
+﻿@{
     ViewBag.Title = "Recruit an Apprentice - Add Site";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,92 +11,77 @@
     </div>
     <h2 class="heading-medium">Find training site</h2>
     <div class="blocklabel-single-container">
-        @using (Html.BeginRouteForm(RecruitmentRouteNames.AddProviderSite, FormMethod.Post, new { @id = "#searchForm" }))
-        {
-            @Html.Partial("ValidationSummary", ViewData.ModelState)
-
-            <div class="form-group inline clearfix blocklabel-single">
-                <label data-target="ernsearch-panel" for="ernsearch" class="block-label">
-                    <input aria-controls="ernsearch-panel" name="sitesearch" type="radio" id="ernsearch">Search using ERN
-                </label>
-                <label data-target="namesearch-panel" for="namesearch" class="block-label">
-                    <input name="sitesearch" type="radio" id="namesearch">Search using site name
-                </label>
+        <div class="form-group inline clearfix blocklabel-single hide-nojs">
+            <label data-target="ernsearch-panel" for="ernsearch" class="block-label">
+                <input aria-controls="ernsearch-panel" name="sitesearch" type="radio" id="ernsearch">Search using ERN
+            </label>
+            <label data-target="namesearch-panel" for="namesearch" class="block-label">
+                <input name="sitesearch" type="radio" id="namesearch">Search using site name
+            </label>
+        </div>
+        <div id="ernsearch-panel" class="toggle-content blocklabel-content">
+            <div class="form-group">
+                <label for="ernSearch" class="form-label">Search using Employer Reference Number (ERN)</label>
+                <input type="text" id="ernSearch" class="form-control">
             </div>
-
-            if (Model.SiteSearchMode == ProviderSiteSearchMode.EmployerReferenceNumber)
-            {
-                <div id="ernsearch-panel" class="toggle-content blocklabel-content">
-                    <div class="form-group">
-                        <label for="ernSearch" class="form-label">Search using Employer Reference Number (ERN)</label>
-                        <input type="text" id="ernSearch" class="form-control">
-                    </div>
-
-                    @Html.FormTextFor(model => model.EmployerReferenceNumber)
-
-                    <div class="form-group">
-                        <button class="button" id="find-site-button">Find site</button>
-                    </div>
+            <div class="form-group">
+                <a href="edit-site.html" class="button">Find site</a>
+            </div>
+        </div>
+        <div id="namesearch-panel" class="toggle-content  blocklabel-content">
+            <div class="form-group">
+                <label for="nameSearch" class="form-label">Site name</label>
+                <input type="text" id="nameSearch" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="nameSearch" class="form-label">Location (optional)</label>
+                <span class="form-hint">Enter town or postcode</span>
+                <input type="text" id="nameSearch" class="form-control">
+            </div>
+            <div class="form-group">
+                <a href="edit-site.html" class="button" id="searchTrainingNameBtn">Search</a>
+            </div>
+            <section class="toggle-content clearfix" id="trainingSiteResults">
+                <h2 class="heading-small">Training sites</h2>
+                <div class="grid grid-2-3 scrolling-panel max-height-15">
+                    <table>
+                        <colgroup>
+                            <col class="t40">
+                            <col class="t30">
+                            <col class="t15">
+                            <col class="t15">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td>Basing View</td>
+                            <td>Basingstoke</td>
+                            <td>RG21 4FP</td>
+                            <td>
+                                <a href="edit-site.html">Select site</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Basingers Ltd</td>
+                            <td>Basingstoke</td>
+                            <td>RG21 8KL</td>
+                            <td>
+                                <a href="edit-site.html">Select site</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Basingstoke Care Ltd</td>
+                            <td>Basingstoke</td>
+                            <td>RG21 9OD</td>
+                            <td>
+                                <a href="edit-site.html">Select site</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
-            }
-            else if (Model.SiteSearchMode == ProviderSiteSearchMode.EmployerReferenceNumber)
-            {
-                <div id="namesearch-panel" class="toggle-content  blocklabel-content">
-                    <div class="form-group">
-                        <label for="nameSearch" class="form-label">Site name</label>
-                        <input type="text" id="nameSearch" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label for="nameSearch" class="form-label">Location (optional)</label>
-                        <span class="form-hint">Enter town or postcode</span>
-                        <input type="text" id="nameSearch" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <button class="button" id="search-button">Search</button>
-                    </div>
-                    <section class="toggle-content clearfix" id="trainingSiteResults">
-                        <h2 class="heading-small">Training sites</h2>
-                        <div class="grid grid-2-3 scrolling-panel max-height-15">
-                            <table>
-                                <colgroup>
-                                    <col class="t40">
-                                    <col class="t30">
-                                    <col class="t15">
-                                    <col class="t15">
-                                    <col>
-                                </colgroup>
-                                <tbody>
-                                    <tr>
-                                        <td>Basing View</td>
-                                        <td>Basingstoke</td>
-                                        <td>RG21 4FP</td>
-                                        <td>
-                                            <a href="edit-site.html">Select site</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Basingers Ltd</td>
-                                        <td>Basingstoke</td>
-                                        <td>RG21 8KL</td>
-                                        <td>
-                                            <a href="edit-site.html">Select site</a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Basingstoke Care Ltd</td>
-                                        <td>Basingstoke</td>
-                                        <td>RG21 9OD</td>
-                                        <td>
-                                            <a href="edit-site.html">Select site</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
-                </div>
-            }
-        }
+            </section>
+        </div>
     </div>
     <h2 class="heading-medium">Enter manually</h2>
     <div class="text">

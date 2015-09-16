@@ -6,6 +6,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
 
     public interface IProviderMediator
     {
+        MediatorResponse<ProviderSiteSearchViewModel> AddSite();
+
         MediatorResponse<ProviderSiteSearchResponseViewModel> FindSite(ProviderSiteSearchViewModel searchViewModel);
     }
 }
