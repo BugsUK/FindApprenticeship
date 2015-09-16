@@ -23,11 +23,11 @@ else
     <div class="account-info" id="bannerSignedOut">
         @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
         {
-            <a href="" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
         }
         else
         {
-            <a href="" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
         }
     </div>
 }
