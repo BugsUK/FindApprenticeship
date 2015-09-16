@@ -435,7 +435,6 @@
     <Content Include="Views\Provider\EditSite.cshtml" />
     <Content Include="Views\ProviderUser\UserInfo.cshtml" />
     <Content Include="Views\ProviderUser\VertifyEmail.cshtml" />
-    <Content Include="Views\Home\LoginDummy.cshtml" />
     <Content Include="Views\Shared\ValidationSummary.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ValidationSummary.generated.cs</LastGenOutput>

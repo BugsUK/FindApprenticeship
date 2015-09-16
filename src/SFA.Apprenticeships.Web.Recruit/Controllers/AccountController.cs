@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿using SFA.Apprenticeships.Web.Recruit.Constants;
+
+namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web;
     using System.Web.Mvc;
@@ -16,7 +18,7 @@
             {
                 var properties = new AuthenticationProperties
                 {
-                    RedirectUri = "/"
+                    RedirectUri = "/authorize"
                 };
 
                 HttpContext.GetOwinContext().Authentication.Challenge(
@@ -42,7 +44,7 @@
             if (Request.IsAuthenticated)
             {
                 // Redirect to home page if the user is authenticated.
-                return RedirectToAction("Index", "Home");
+                return RedirectToRoute(RecruitmentRouteNames.LandingPage);
             }
 
             return View();

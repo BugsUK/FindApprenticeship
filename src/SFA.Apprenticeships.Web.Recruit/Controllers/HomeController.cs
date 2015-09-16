@@ -48,29 +48,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case HomeMediatorCodes.Authorize.NoUserProfile:
                     return RedirectToRoute(RecruitmentRouteNames.UserInfo);
                 case HomeMediatorCodes.Authorize.EmailAddressNotVerified:
-                    return RedirectToRoute(RecruitmentRouteNames.VertifyEmail);
+                    return RedirectToRoute(RecruitmentRouteNames.VerifyEmail);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
-        }
-
-        public ActionResult LoginDummy(string loginType)
-        {
-            switch (loginType)
-            {
-                case "validProvider":
-                    //We need to extend SetAuthenticationCookie and the cookie to add claims.
-                    // _authenticationTicketService.SetAuthenticationCookie("userid123", "ProviderId=123", "RAA");
-                    break;
-                case "invalidProvider":
-                    // _authenticationTicketService.SetAuthenticationCookie("userid234");
-                    break;
-                default:
-                    return View();
-            }
-
-            return RedirectToRoute(RecruitmentRouteNames.LandingPage);
         }
     }
 }

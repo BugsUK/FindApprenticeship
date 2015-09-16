@@ -13,13 +13,6 @@
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Content" });
             routes.IgnoreRoute("{folder}/{*pathInfo}", new { folder = "Scripts" });
 
-            //TO BE DELETED
-            routes.MapRoute(
-                name: "LoginDummy",
-                url: "login",
-                defaults: new {controller = "Home", action = "LoginDummy" }
-                );
-
             routes.MapRoute(
                 name: RecruitmentRouteNames.LandingPage,
                 url: "",
@@ -30,6 +23,24 @@
                 name: RecruitmentRouteNames.Authorize,
                 url: "authorize",
                 defaults: new { controller = "Home", action = "Authorize" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.SignIn,
+                url: "signin",
+                defaults: new { controller = "Account", action = "SignIn" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.SignOut,
+                url: "signout",
+                defaults: new { controller = "Account", action = "SignOut" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.SignOutCallback,
+                url: "signedout",
+                defaults: new { controller = "Account", action = "SignOutCallback" }
                 );
 
             routes.MapRoute(
@@ -45,7 +56,7 @@
                );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.VertifyEmail,
+               name: RecruitmentRouteNames.VerifyEmail,
                url: "verifyemail",
                defaults: new { controller = "ProviderUser", action = "VerifyEmail" }
                );
