@@ -157,9 +157,11 @@
     </footer>
 
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/vendor")
     @Scripts.Render("~/bundles/fastclick")
     @Scripts.Render("~/bundles/underscore")
     @Scripts.Render("~/bundles/joyride")
     @Scripts.Render("~/bundles/nascript")
+    @RenderSection("scripts", required: false)
 </body>
 </html>

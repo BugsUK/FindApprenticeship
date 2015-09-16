@@ -31,33 +31,46 @@
         </p>
     </div>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.UserInfo, FormMethod.Post))
-{
-    @Html.FormTextFor(
-        m => m.Fullname,
-        controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })
+    @using (Html.BeginRouteForm(RecruitmentRouteNames.UserInfo, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.FormTextFor(
-        m => m.EmailAddress,
-        controlHtmlAttributes: new { type = "email", spellcheck = "false" })
+        @Html.FormTextFor(
+            m => m.Fullname,
+            controlHtmlAttributes: new {type = "text", autofocus = "autofocus", spellcheck = "false"})
 
-    @Html.FormTextFor(
-        m => m.PhoneNumber,
-        controlHtmlAttributes: new { @class = "form-label", type = "tel", spellcheck = "false" })
+        @Html.FormTextFor(
+            m => m.EmailAddress,
+            controlHtmlAttributes: new {type = "email", spellcheck = "false"})
 
-    <div class="form-group">
-        <p class="form-label">Your default training site</p>
-        @Html.DropDownListFor(m => m.DefaultTrainingSiteId, (List<SelectListItem>)ViewBag.Sites, new { @class = "chosen-select" })
-    </div>
-    <div class="toggle-content" id="newProviderTerms">
-        <p>
-            By continuing you accept the <a href="terms-and-conditions.html" target="_blank">terms and conditions</a> of
-            this site.
-        </p>
-        <button class="button">Accept and continue</button>
-    </div>
-    <div class="" id="userInfoSaveBtn">
-        <button class="button">Save details</button>
-    </div>
-}
+        @Html.FormTextFor(
+            m => m.PhoneNumber,
+            controlHtmlAttributes: new {@class = "form-label", type = "tel", spellcheck = "false"})
+
+        <div class="form-group">
+            <p class="form-label">Your default training site</p>
+            @Html.DropDownListFor(m => m.DefaultTrainingSiteId, (List<SelectListItem>) ViewBag.Sites, new {@class = "chosen-select"})
+        </div>
+        <div class="toggle-content" id="newProviderTerms">
+            <p>
+                By continuing you accept the <a href="terms-and-conditions.html" target="_blank">terms and conditions</a> of
+                this site.
+            </p>
+            <button class="button">Accept and continue</button>
+        </div>
+        <div class="" id="userInfoSaveBtn">
+            <button class="button">Save details</button>
+        </div>
+    }
 </div>
+
+@section scripts{
+    <script>
+        $(function() {
+            $(".chosen-select").chosen();
+        });
+    </script>
+}
+
+
