@@ -14,7 +14,6 @@
 
     public class ProviderUserController : ControllerBase<RecuitmentUserContext>
     {
-        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         private readonly IProviderUserMediator _providerUserMediator;
 
         public ProviderUserController(IProviderUserMediator providerUserMediator)
@@ -22,6 +21,7 @@
             _providerUserMediator = providerUserMediator;
         }
 
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult Home()
         {
             return View();
@@ -31,11 +31,11 @@
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult Settings()
         {
-            LoadSites();
+            LoadTestSites();
             return View(new ProviderUserViewModel());
         }
 
-        private void LoadSites()
+        private void LoadTestSites()
         {
             var sites = new List<SelectListItem>();
             sites.Add(new SelectListItem {Value = "1", Text = "Basing View, Basingstoke", Selected = true});
@@ -60,15 +60,10 @@
 
             ModelState.Clear();
 
-            return View();
-        }
-
-        public ActionResult VerifyEmail()
-        {
             switch (response.Code)
             {
                 case ProviderUserMediatorCodes.UpdateUser.FailedValidation:
-                    LoadSites();
+                    LoadTestSites();
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(providerUserViewModel);
                 case ProviderUserMediatorCodes.UpdateUser.Ok:
@@ -76,6 +71,11 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        public ActionResult VerifyEmail()
+        {
+            return View();
         }
     }
 }
