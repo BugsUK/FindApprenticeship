@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿using SFA.Apprenticeships.Web.Recruit.Constants;
+
+namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
     using Common.Constants;
@@ -6,6 +8,7 @@
     using Mediators.Provider;
     using Providers;
 
+    [Authorize(Roles = Roles.Faa)]
     public class ProviderController : ControllerBase<RecuitmentUserContext>
     {
         private readonly IProviderMediator _providerMediator;

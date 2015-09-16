@@ -47,6 +47,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.For<IRobotCrawlerProvider>().Use<RobotCrawlerProvider>().Singleton();
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
+                x.For<ICookieAuthorizationDataProvider>().Use<CookieAuthorizationDataProvider>();
 
                 x.For<IProviderProvider>().Use<ProviderProvider>();
                 x.For<IProviderUserProvider>().Use<ProviderUserProvider>();
@@ -63,6 +64,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.Policies.SetAllProperties(y => y.OfType<IDismissPlannedOutageMessageCookieProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IHelpCookieProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IAuthenticationTicketService>());
+                x.Policies.SetAllProperties(y => y.OfType<ICookieAuthorizationDataProvider>());
             });
         }
     }

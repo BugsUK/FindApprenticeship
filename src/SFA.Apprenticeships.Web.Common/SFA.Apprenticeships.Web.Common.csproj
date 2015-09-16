@@ -168,6 +168,7 @@
     </Compile>
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
     <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
+    <Compile Include="Attributes\AuthorizationDataAttribute.cs" />
     <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
     <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
@@ -178,7 +179,11 @@
     <Compile Include="Mediators\MediatorBase.cs" />
     <Compile Include="Mediators\MediatorResponse.cs" />
     <Compile Include="Mediators\MediatorResponseMessage.cs" />
+    <Compile Include="Models\Common\AuthorizationClaim.cs" />
+    <Compile Include="Models\Common\AuthorizationData.cs" />
     <Compile Include="Models\Common\LastViewedVacancy.cs" />
+    <Compile Include="Providers\CookieAuthorizationDataProvider.cs" />
+    <Compile Include="Providers\ICookieAuthorizationDataProvider.cs" />
     <Compile Include="Providers\RobotCrawlerProvider.cs" />
     <Compile Include="Providers\IRobotCrawlerProvider.cs" />
     <Compile Include="SiteMap\ISiteMapGenerator.cs" />

@@ -139,6 +139,7 @@
     <Compile Include="Builders\HttpResponseBuilder.cs" />
     <Compile Include="Framework\DateDisplayExtensionsTests.cs" />
     <Compile Include="Mediators\MediatorResponseExtensions.cs" />
+    <Compile Include="Providers\CookieAuthorizationDataProviderTests.cs" />
     <Compile Include="Providers\HelpCookieProviderBuilder.cs" />
     <Compile Include="Providers\HelpCookieProviderTests.cs" />
     <Compile Include="Providers\RobotCrawlerProviderTests.cs" />

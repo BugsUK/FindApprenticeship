@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit
 {
+    using System;
     using System.Configuration;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
@@ -15,7 +16,9 @@
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
-            app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            var cookieAuthenticationOptions = new CookieAuthenticationOptions {SlidingExpiration = true};
+
+            app.UseCookieAuthentication(cookieAuthenticationOptions);
 
             app.UseWsFederationAuthentication(
                 new WsFederationAuthenticationOptions

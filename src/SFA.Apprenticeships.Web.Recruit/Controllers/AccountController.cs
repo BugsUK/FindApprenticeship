@@ -4,18 +4,26 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web;
     using System.Web.Mvc;
+    using Common.Constants;
+    using Common.Framework;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
+    using ControllerBase = Common.Controllers.ControllerBase;
 
-    public class AccountController : Controller
+    public class AccountController : ControllerBase
     {
         private const string DefaultScheme = "https";
 
-        public void SignIn()
+        public void SignIn(string returnUrl)
         {
             if (!Request.IsAuthenticated)
             {
+                if (returnUrl.IsValidReturnUrl())
+                {
+                    UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
+                }
+
                 var properties = new AuthenticationProperties
                 {
                     RedirectUri = "/authorize"

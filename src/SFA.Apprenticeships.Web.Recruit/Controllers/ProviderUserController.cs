@@ -2,19 +2,23 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Attributes;
     using Common.Controllers;
+    using Constants;
     using Providers;
     using ViewModels;
     using ViewModels.ProviderUser;
 
     public class ProviderUserController : ControllerBase<RecuitmentUserContext>
-    { 
+    {
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult Home()
         {
             return View();
         }
 
         [HttpGet]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult Settings()
         {
             var sites = new List<SelectListItem>();
@@ -43,6 +47,11 @@
 
             //Save
 
+            return View();
+        }
+
+        public ActionResult VerifyEmail()
+        {
             return View();
         }
     }
