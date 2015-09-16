@@ -65,8 +65,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
                 return GetMediatorResponse(HomeMediatorCodes.Authorize.EmailAddressNotVerified, AuthorizeMessages.EmailAddressNotVerified, UserMessageLevel.Info);
             }
 
-            //var providerSites = _providerSiteProvider.GetProviderSites();
-
             return GetMediatorResponse(HomeMediatorCodes.Authorize.Ok);
         }
     }

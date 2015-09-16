@@ -1,4 +1,5 @@
-﻿using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
+﻿using System.Collections.Generic;
+using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
 
 namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
@@ -6,7 +7,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     {
         public ProviderViewModel GetProviderViewModel(string ukprn)
         {
-            throw new System.NotImplementedException();
+            //Stub code for removal
+            if (ukprn == "hasproviderprofile")
+            {
+                return new ProviderViewModel();
+            }
+            if (ukprn == "onesite")
+            {
+                return new ProviderViewModel
+                {
+                    ProviderSiteViewModels = new List<ProviderSiteViewModel> {new ProviderSiteViewModel()}
+                };
+            }
+
+            return null;
+            //end stub code
         }
     }
 }

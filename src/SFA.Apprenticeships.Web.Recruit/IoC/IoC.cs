@@ -1,4 +1,5 @@
 using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
+using SFA.Apprenticeships.Web.Recruit.Mediators.Provider;
 using SFA.Apprenticeships.Web.Recruit.Providers;
 
 namespace SFA.Apprenticeships.Web.Recruit.IoC {
@@ -51,6 +52,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.For<IUserProfileProvider>().Use<UserProfileProvider>();
 
                 x.For<IHomeMediator>().Use<HomeMediator>();
+                x.For<IProviderMediator>().Use<ProviderMediator>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());

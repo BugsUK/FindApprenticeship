@@ -6,7 +6,18 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     {
         public UserProfileViewModel GetUserProfileViewModel(string username)
         {
-            throw new System.NotImplementedException();
+            //Stub code for removal
+            if (username == "user.profile@naspread.onmicrosoft.com")
+            {
+                return new UserProfileViewModel {EmailAddress = username};
+            }
+            if (username == "verified.email@naspread.onmicrosoft.com")
+            {
+                return new UserProfileViewModel {EmailAddress = username, EmailAddressVerified = true};
+            }
+
+            return null;
+            //end stub code
         }
     }
 }
