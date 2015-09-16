@@ -4,11 +4,11 @@ using Owin;
 [assembly: OwinStartupAttribute(typeof(SFA.Apprenticeships.Web.Recruit.Startup))]
 namespace SFA.Apprenticeships.Web.Recruit
 {
-    public partial class Startup
+    public class Startup
     {
         public void Configuration(IAppBuilder app)
         {
-            //ConfigureAuth(app);
+            AuthenticationConfig.RegisterProvider(app);
         }
     }
 }

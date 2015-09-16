@@ -6,18 +6,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using System.Security.Claims;
     using System.Web.Mvc;
     using Common.Controllers;
-    using Common.Services;
     using Constants;
     using Providers;
 
     public class HomeController : ControllerBase<RecuitmentUserContext>
     {
-        private readonly IAuthenticationTicketService _authenticationTicketService;
+        // private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly IHomeMediator _homeMediator;
 
-        public HomeController(IAuthenticationTicketService authenticationTicketService, IHomeMediator homeMediator)
+        public HomeController(IHomeMediator homeMediator)
         {
-            _authenticationTicketService = authenticationTicketService;
+            // _authenticationTicketService = authenticationTicketService;
             _homeMediator = homeMediator;
         }
 
@@ -28,7 +27,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
         public ActionResult Authorize()
         {
-            var claimsPrincipal = (ClaimsPrincipal) User;
+            var claimsPrincipal = (ClaimsPrincipal)User;
             var response = _homeMediator.Authorize(claimsPrincipal);
 
             if (response.Message != null)
@@ -62,10 +61,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             {
                 case "validProvider":
                     //We need to extend SetAuthenticationCookie and the cookie to add claims.
-                    _authenticationTicketService.SetAuthenticationCookie("userid123", "ProviderId=123", "RAA");
+                    // _authenticationTicketService.SetAuthenticationCookie("userid123", "ProviderId=123", "RAA");
                     break;
                 case "invalidProvider":
-                    _authenticationTicketService.SetAuthenticationCookie("userid234");
+                    // _authenticationTicketService.SetAuthenticationCookie("userid234");
                     break;
                 default:
                     return View();
