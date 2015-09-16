@@ -50,9 +50,9 @@
                );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.UserInfo,
+               name: RecruitmentRouteNames.Settings,
                url: "user",
-               defaults: new { controller = "ProviderUser", action = "UserInfo" }
+               defaults: new { controller = "ProviderUser", action = "Settings" }
                );
 
             routes.MapRoute(

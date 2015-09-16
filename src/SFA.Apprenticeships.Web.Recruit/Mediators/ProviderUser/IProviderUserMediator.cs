@@ -2,10 +2,11 @@
 {
     using Common.Mediators;
     using ViewModels;
+    using ViewModels.ProviderUser;
 
     public interface IProviderUserMediator
     {
-        MediatorResponse UpdateUser(UserProfileViewModel userProfileView);
+        MediatorResponse UpdateUser(ProviderUserViewModel providerUserView);
 
     }
 }

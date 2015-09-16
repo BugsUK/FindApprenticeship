@@ -307,10 +307,11 @@
     <Compile Include="IoC\StructureMapScopeModule.cs" />
     <Compile Include="Mediators\Provider\ProviderMediator.cs" />
     <Compile Include="Providers\IProviderProvider.cs" />
-    <Compile Include="Providers\IUserProfileProvider.cs" />
+    <Compile Include="Providers\IProviderUserProvider.cs" />
     <Compile Include="Providers\ProviderProvider.cs" />
-    <Compile Include="Providers\UserProfileProvider.cs" />
+    <Compile Include="Providers\ProviderUserProvider.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
+    <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchMode.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchResponseViewModel.cs" />
@@ -321,7 +322,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
-    <Compile Include="ViewModels\UserProfileViewModel.cs" />
+    <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -441,7 +442,7 @@
     <Content Include="Views\ProviderUser\Home.cshtml" />
     <Content Include="Views\Provider\AddSite.cshtml" />
     <Content Include="Views\Provider\EditSite.cshtml" />
-    <Content Include="Views\ProviderUser\UserInfo.cshtml" />
+    <Content Include="Views\ProviderUser\Settings.cshtml" />
     <Content Include="Views\ProviderUser\VertifyEmail.cshtml" />
     <Content Include="Views\Shared\ValidationSummary.cshtml">
       <Generator>RazorGenerator</Generator>

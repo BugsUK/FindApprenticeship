@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.UserProfileViewModel
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser.ProviderUserViewModel
 
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
@@ -31,7 +31,7 @@
         </p>
     </div>
 
-    @using (Html.BeginRouteForm(RecruitmentRouteNames.UserInfo, FormMethod.Post))
+    @using (Html.BeginRouteForm(RecruitmentRouteNames.Settings, FormMethod.Post))
     {
         @Html.AntiForgeryToken()
         @Html.Partial("ValidationSummary", ViewData.ModelState)

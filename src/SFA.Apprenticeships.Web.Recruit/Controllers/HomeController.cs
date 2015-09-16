@@ -46,7 +46,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case HomeMediatorCodes.Authorize.FailedMinimumSitesCountCheck:
                     return RedirectToRoute(RecruitmentRouteNames.ManageProviderSites);
                 case HomeMediatorCodes.Authorize.NoUserProfile:
-                    return RedirectToRoute(RecruitmentRouteNames.UserInfo);
+                    return RedirectToRoute(RecruitmentRouteNames.Settings);
                 case HomeMediatorCodes.Authorize.EmailAddressNotVerified:
                     return RedirectToRoute(RecruitmentRouteNames.VerifyEmail);
 

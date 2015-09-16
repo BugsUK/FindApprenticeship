@@ -5,6 +5,7 @@
     using Common.Controllers;
     using Providers;
     using ViewModels;
+    using ViewModels.ProviderUser;
 
     public class ProviderUserController : ControllerBase<RecuitmentUserContext>
     { 
@@ -14,7 +15,7 @@
         }
 
         [HttpGet]
-        public ActionResult UserInfo()
+        public ActionResult Settings()
         {
             var sites = new List<SelectListItem>();
             sites.Add(new SelectListItem { Value = "1", Text = "Basing View, Basingstoke", Selected = true} );
@@ -35,7 +36,7 @@
         }
 
         [HttpPost]
-        public ActionResult UserInfo(UserProfileViewModel userProfileView)
+        public ActionResult Settings(ProviderUserViewModel providerUserView)
         {
             //Validate
 

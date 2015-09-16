@@ -8,7 +8,7 @@
         public const string ManageProviderSites = "ManageProviderSites";
         public const string AddProviderSite = "AddProviderSite";
         public const string EditProviderSite = "EditProviderSite";
-        public const string UserInfo = "UserInfo";
+        public const string Settings = "Settings";
         public const string VerifyEmail = "VerifyEmail";
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";

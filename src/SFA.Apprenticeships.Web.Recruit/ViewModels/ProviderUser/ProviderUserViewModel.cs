@@ -1,9 +1,12 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using FluentValidation.Attributes;
+    using Validators.ProviderUser;
 
-    public class UserProfileViewModel
+    [Validator(typeof(ProviderUserViewModelValidator))]
+    public class ProviderUserViewModel
     {
         [Display(Name = UserProfileViewModelMessages.FullnameMessages.LabelText)]
         public string Fullname { get; set; }

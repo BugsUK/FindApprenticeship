@@ -12,9 +12,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
         private const int MinProviderSites = 1;
 
         private readonly IProviderProvider _providerProvider;
-        private readonly IUserProfileProvider _userProfileProvider;
+        private readonly IProviderUserProvider _userProfileProvider;
 
-        public HomeMediator(IProviderProvider providerProvider, IUserProfileProvider userProfileProvider)
+        public HomeMediator(IProviderProvider providerProvider, IProviderUserProvider userProfileProvider)
         {
             _providerProvider = providerProvider;
             _userProfileProvider = userProfileProvider;

@@ -3,10 +3,11 @@
     using Common.Mediators;
     using ViewModels;
     using ViewModels.Provider;
+    using ViewModels.ProviderUser;
 
     public class ProviderUserMediator : IProviderUserMediator
     {
-        public MediatorResponse UpdateUser(UserProfileViewModel userProfileView)
+        public MediatorResponse UpdateUser(ProviderUserViewModel providerUserView)
         {
             throw new System.NotImplementedException();
         }

@@ -13,6 +13,8 @@ using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
 {
+    using ViewModels.ProviderUser;
+
     [TestFixture]
     public class HomeMediatorTests
     {
@@ -111,8 +113,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             };
             providerProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
 
-            var userProfileProvider = new Mock<IUserProfileProvider>();
-            userProfileProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>())).Returns(new UserProfileViewModel());
+            var userProfileProvider = new Mock<IProviderUserProvider>();
+            userProfileProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>())).Returns(new ProviderUserViewModel());
 
             var mediator = new HomeMediatorBuilder().With(providerProvider).With(userProfileProvider).Build();
 
@@ -132,8 +134,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             };
             providerProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
 
-            var userProfileProvider = new Mock<IUserProfileProvider>();
-            userProfileProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>())).Returns(new UserProfileViewModel {EmailAddressVerified = true});
+            var userProfileProvider = new Mock<IProviderUserProvider>();
+            userProfileProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>())).Returns(new ProviderUserViewModel {EmailAddressVerified = true});
 
             var mediator = new HomeMediatorBuilder().With(providerProvider).With(userProfileProvider).Build();
 

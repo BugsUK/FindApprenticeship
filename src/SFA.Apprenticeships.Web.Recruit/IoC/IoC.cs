@@ -49,7 +49,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
 
                 x.For<IProviderProvider>().Use<ProviderProvider>();
-                x.For<IUserProfileProvider>().Use<UserProfileProvider>();
+                x.For<IProviderUserProvider>().Use<ProviderUserProvider>();
 
                 x.For<IHomeMediator>().Use<HomeMediator>();
                 x.For<IProviderMediator>().Use<ProviderMediator>();

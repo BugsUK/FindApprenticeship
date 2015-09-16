@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
     public class HomeMediatorBuilder
     {
         private Mock<IProviderProvider> _providerProvider = new Mock<IProviderProvider>();
-        private Mock<IUserProfileProvider> _userProfileProvider = new Mock<IUserProfileProvider>();
+        private Mock<IProviderUserProvider> _userProfileProvider = new Mock<IProviderUserProvider>();
 
         public IHomeMediator Build()
         {
@@ -21,7 +21,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             return this;
         }
 
-        public HomeMediatorBuilder With(Mock<IUserProfileProvider> userProfileProvider)
+        public HomeMediatorBuilder With(Mock<IProviderUserProvider> userProfileProvider)
         {
             _userProfileProvider = userProfileProvider;
             return this;
