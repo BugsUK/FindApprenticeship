@@ -6,7 +6,7 @@
 
     public interface IProviderUserMediator
     {
-        MediatorResponse UpdateUser(ProviderUserViewModel providerUserView);
+        MediatorResponse UpdateUser(ProviderUserViewModel providerUserViewModel);
 
     }
 }

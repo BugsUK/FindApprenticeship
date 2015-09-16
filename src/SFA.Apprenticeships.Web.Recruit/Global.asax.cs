@@ -8,6 +8,9 @@
     using Common.IoC;
     using Common.Binders;
     using Common.Framework;
+    using Common.Validations;
+    using FluentValidation.Mvc;
+    using FluentValidation.Validators;
     using Infrastructure.Logging;
     using StructureMap;
 
@@ -48,13 +51,13 @@
             ControllerBuilder.Current.SetControllerFactory(new DefaultControllerFactory());
 
             ModelBinders.Binders.DefaultBinder = new TrimModelBinder();
-            //FluentValidationModelValidatorProvider.Configure(provider =>
-            //{
-            //    provider.AddImplicitRequiredValidator = false;
-            //    provider.Add(typeof(EqualValidator),
-            //        (metadata, context, description, validator) =>
-            //            new EqualToValueFluentValidationPropertyValidator(metadata, context, description, validator));
-            //});
+            FluentValidationModelValidatorProvider.Configure(provider =>
+            {
+                provider.AddImplicitRequiredValidator = false;
+                provider.Add(typeof(EqualValidator),
+                    (metadata, context, description, validator) =>
+                        new EqualToValueFluentValidationPropertyValidator(metadata, context, description, validator));
+            });
 
             // This header cannot be removed using web.config --> http://www.codeproject.com/Tips/785867/ASP-NET-MVC-Remove-IIS-Header-Bloat
             MvcHandler.DisableMvcResponseHeader = true;

@@ -377,6 +377,7 @@
     <Content Include="Content\_assets\img\screenshot-idams.png" />
     <Content Include="Content\_assets\js\frameworks.js" />
     <Content Include="Content\_assets\js\jobtitles.js" />
+    <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\prototype-recruit.js" />
     <Content Include="Content\_assets\js\prototype.js" />
     <Content Include="Content\_assets\js\scripts.js" />
