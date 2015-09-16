@@ -37,6 +37,11 @@
         [HttpPost]
         public ActionResult UserInfo(UserProfileViewModel userProfileView)
         {
+            //Validate
+
+
+            //Save
+
             return View();
         }
     }

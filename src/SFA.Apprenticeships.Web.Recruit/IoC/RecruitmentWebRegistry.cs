@@ -4,6 +4,7 @@
     using Application.Interfaces.Organisations;
     using Application.Organisation;
     using Mediators.Provider;
+    using Mediators.ProviderUser;
     using StructureMap.Configuration.DSL;
 
     public class RecruitmentWebRegistry : Registry
@@ -34,6 +35,7 @@
         private void RegisterMediators()
         {
             For<IProviderMediator>().Use<ProviderMediator>();
+            For<IProviderUserMediator>().Use<ProviderUserMediator>();
         }
     }
 }

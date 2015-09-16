@@ -288,6 +288,9 @@
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\ViewModels\UserProfileViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
+    <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
+    <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\IProviderMediator.cs" />
     <Compile Include="Mediators\Home\HomeMediator.cs" />
     <Compile Include="Mediators\Home\HomeMediatorCodes.cs" />
