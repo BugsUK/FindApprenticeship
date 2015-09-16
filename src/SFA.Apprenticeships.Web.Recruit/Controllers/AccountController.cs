@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
                 var properties = new AuthenticationProperties
                 {
-                    RedirectUri = "/authorize"
+                    RedirectUri = Url.RouteUrl(RecruitmentRouteNames.Authorize)
                 };
 
                 HttpContext.GetOwinContext().Authentication.Challenge(
@@ -34,9 +34,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             }
         }
 
-        public void SignOut()
+        public void SignOut(string returnRoute)
         {
-            var callbackUrl = Url.Action("SignOutCallback", "Account", null, Request.Url?.Scheme ?? DefaultScheme);
+            var callbackUrl = Url.RouteUrl(returnRoute ?? RecruitmentRouteNames.SignOutCallback, null, Request.Url?.Scheme ?? DefaultScheme);
 
             var properties = new AuthenticationProperties
             {

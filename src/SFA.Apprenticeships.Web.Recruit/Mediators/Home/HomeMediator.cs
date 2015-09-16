@@ -21,7 +21,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
             _userProfileProvider = userProfileProvider;
         }
 
-        //TODO: Mode to ProviderUserMediator
+        //TODO: Move to ProviderUserMediator
         public MediatorResponse<AuthorizeResponseViewModel> Authorize(ClaimsPrincipal principal)
         {
             var viewModel = new AuthorizeResponseViewModel();

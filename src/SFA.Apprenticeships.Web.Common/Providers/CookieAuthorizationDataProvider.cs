@@ -28,6 +28,7 @@ namespace SFA.Apprenticeships.Web.Common.Providers
 
             var cookie = new HttpCookie(CookieName, protectedAuthorizationData);
             
+            //TODO: http + secure
             if (httpContext.Response.Cookies.AllKeys.Contains(CookieName))
             {
                 httpContext.Response.Cookies.Set(cookie);

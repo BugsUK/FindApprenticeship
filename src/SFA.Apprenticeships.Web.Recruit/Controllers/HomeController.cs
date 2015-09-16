@@ -32,6 +32,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             return View();
         }
 
+        //TODO: Probably move to ProviderUserController
         public ActionResult Authorize()
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
@@ -59,7 +60,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case HomeMediatorCodes.Authorize.EmptyUsername:
                 case HomeMediatorCodes.Authorize.MissingProviderIdentifier:
                 case HomeMediatorCodes.Authorize.MissingServicePermission:
-                    return RedirectToRoute(RecruitmentRouteNames.LandingPage);
+                {
+                    return RedirectToRoute(RecruitmentRouteNames.SignOut, new { returnRoute = RecruitmentRouteNames.LandingPage });
+                }
                 case HomeMediatorCodes.Authorize.NoProviderProfile:
                 case HomeMediatorCodes.Authorize.FailedMinimumSitesCountCheck:
                     return RedirectToRoute(RecruitmentRouteNames.ManageProviderSites);

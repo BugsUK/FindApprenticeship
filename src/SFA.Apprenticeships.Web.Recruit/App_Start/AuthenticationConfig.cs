@@ -9,6 +9,8 @@
 
     public static class AuthenticationConfig
     {
+        public const string CookieName = "User.Authentication";
+
         private static readonly string Realm = ConfigurationManager.AppSettings["ida:Wtrealm"];
         private static readonly string MetadataAddress = ConfigurationManager.AppSettings["ida:MetadataAddress"];
 
@@ -16,7 +18,11 @@
         {
             app.SetDefaultSignInAsAuthenticationType(CookieAuthenticationDefaults.AuthenticationType);
 
-            var cookieAuthenticationOptions = new CookieAuthenticationOptions {SlidingExpiration = true};
+            var cookieAuthenticationOptions = new CookieAuthenticationOptions
+            {
+                CookieName = CookieName,
+                SlidingExpiration = true
+            };
 
             app.UseCookieAuthentication(cookieAuthenticationOptions);
 

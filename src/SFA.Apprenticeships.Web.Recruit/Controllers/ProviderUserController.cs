@@ -28,7 +28,6 @@
         }
 
         [HttpGet]
-        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult Settings()
         {
             LoadTestSites();
