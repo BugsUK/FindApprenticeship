@@ -110,6 +110,7 @@
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View(verifyEmailViewModel);
                 case ProviderUserMediatorCodes.VerifyEmailAddress.Ok:
+                    _cookieAuthorizationDataProvider.AddClaim(new Claim(System.Security.Claims.ClaimTypes.Role, Roles.VerifiedEmail), HttpContext, User.Identity.Name);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
