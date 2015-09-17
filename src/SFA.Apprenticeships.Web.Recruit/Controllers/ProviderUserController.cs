@@ -109,7 +109,7 @@
                 case ProviderUserMediatorCodes.VerifyEmailAddress.InvalidCode:
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View(verifyEmailViewModel);
-                case ProviderUserMediatorCodes.UpdateUser.Ok:
+                case ProviderUserMediatorCodes.VerifyEmailAddress.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

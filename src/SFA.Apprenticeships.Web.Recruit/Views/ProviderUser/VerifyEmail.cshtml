@@ -18,7 +18,7 @@
     address.
 </p>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.Settings, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.VerifyEmail, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -30,7 +30,7 @@
     <p><a href="@Url.RouteUrl(RecruitmentRouteNames.ResendVertificationCode)">Resend code</a></p>
 
     <div class="form-group">
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)" class="button activate-page-btn" id="btnSignIn">Verify email</a>
+        <button class="button activate-page-btn" id="btnSignIn">Verify email</button>
     </div>
 
 }
