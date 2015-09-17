@@ -17,7 +17,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                 return new ProviderViewModel
                 {
                     ProviderName = "Key Training Ltd",
-                    ProviderSiteViewModels = new List<ProviderSiteViewModel> {new ProviderSiteViewModel()}
+                    ProviderSiteViewModels = new List<ProviderSiteViewModel>
+                    {
+                        new ProviderSiteViewModel
+                        {
+                            Ern = "00001",
+                            Name = "Basing View, Basingstoke"
+                        }
+                    }
                 };
             }
 

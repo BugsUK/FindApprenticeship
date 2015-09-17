@@ -2,6 +2,8 @@
 {
     public class ProviderSiteViewModel
     {
-         
+        public string Ern { get; set; }
+
+        public string Name { get; set; }
     }
 }

@@ -64,7 +64,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
         [HttpGet]
         [Authorize(Roles = Roles.VerifiedEmail)]
-        public ActionResult EditSite()
+        public ActionResult EditSite(string ern)
         {
             return View();
         }
