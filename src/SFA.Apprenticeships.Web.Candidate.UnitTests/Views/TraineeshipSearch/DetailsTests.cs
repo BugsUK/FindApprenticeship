@@ -2,10 +2,10 @@
 {
     using System;
     using System.Globalization;
-    using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.TraineeshipSearch;
     using Common.Framework;
+    using Common.ViewModels.Locations;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;

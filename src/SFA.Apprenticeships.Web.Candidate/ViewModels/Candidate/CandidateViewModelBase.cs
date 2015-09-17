@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Locations;
+    using Common.ViewModels.Locations;
 
     [Serializable]
     public abstract class CandidateViewModelBase

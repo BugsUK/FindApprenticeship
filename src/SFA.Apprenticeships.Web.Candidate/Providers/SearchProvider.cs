@@ -2,15 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Logging;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
-    using ViewModels;
-    using ViewModels.Locations;
     using ViewModels.VacancySearch;
 
     public class SearchProvider : ISearchProvider

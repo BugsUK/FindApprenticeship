@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
+    using Common.Validators;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Account;

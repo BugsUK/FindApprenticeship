@@ -2,7 +2,7 @@
 {
     using System;
     using System.Globalization;
-    using Locations;
+    using Common.ViewModels.Locations;
 
     public abstract class VacancySummaryViewModel
     {

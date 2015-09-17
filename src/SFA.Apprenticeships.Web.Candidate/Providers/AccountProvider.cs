@@ -7,6 +7,7 @@
     using Application.Interfaces.Logging;
     using Application.Interfaces.Users;
     using Common.Configuration;
+    using Common.ViewModels.Locations;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
@@ -15,7 +16,6 @@
     using Domain.Interfaces.Mapping;
     using Mappers;
     using ViewModels.Account;
-    using ViewModels.Locations;
     using ErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class AccountProvider : IAccountProvider

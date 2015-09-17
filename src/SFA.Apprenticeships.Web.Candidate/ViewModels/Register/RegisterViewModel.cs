@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Register
 {
     using System.ComponentModel.DataAnnotations;
+    using Common.ViewModels.Locations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
-    using Locations;
     using Validators;
 
     [Validator(typeof(RegisterViewModelClientValidator))]

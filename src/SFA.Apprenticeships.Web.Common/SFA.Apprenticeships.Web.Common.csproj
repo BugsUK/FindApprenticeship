@@ -115,6 +115,7 @@
       <HintPath>..\packages\structuremap.web.3.1.0.133\lib\net40\StructureMap.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net.Http" />
@@ -172,6 +173,7 @@
     <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
     <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
+    <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="IoC\ControllerConvention.cs" />
     <Compile Include="IoC\FilterConfig.cs" />
     <Compile Include="IoC\StructureMapDependencyScope.cs" />
@@ -239,6 +241,9 @@
     <Compile Include="Services\AuthenticationTicketService.cs" />
     <Compile Include="Services\IAuthenticationTicketService.cs" />
     <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
+    <Compile Include="Validators\AddressViewModelValidator.cs" />
+    <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
+    <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

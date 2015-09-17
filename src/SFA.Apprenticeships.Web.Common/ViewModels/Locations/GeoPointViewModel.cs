@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Locations
+﻿namespace SFA.Apprenticeships.Web.Common.ViewModels.Locations
 {
     using System;
 

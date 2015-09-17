@@ -4,9 +4,9 @@
     using System.ComponentModel.DataAnnotations;
     using Applications;
     using Candidate;
+    using Common.ViewModels.Locations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
-    using Locations;
     using Validators;
 
     [Validator(typeof(SettingsViewModelClientValidator))]

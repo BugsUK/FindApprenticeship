@@ -2,6 +2,7 @@
 {
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
@@ -14,7 +15,6 @@
     using ViewModels.Applications;
     using ViewModels.Candidate;
     using ViewModels.Home;
-    using ViewModels.Locations;
     using ViewModels.Register;
     using ViewModels.VacancySearch;
 

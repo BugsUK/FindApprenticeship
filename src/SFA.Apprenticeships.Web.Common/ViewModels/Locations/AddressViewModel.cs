@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Locations
+﻿namespace SFA.Apprenticeships.Web.Common.ViewModels.Locations
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using FluentValidation.Attributes;
     using Constants.ViewModels;
+    using FluentValidation.Attributes;
     using Validators;
 
     [Serializable]

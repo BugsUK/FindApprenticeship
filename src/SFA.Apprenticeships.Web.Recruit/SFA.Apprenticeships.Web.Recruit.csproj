@@ -460,6 +460,9 @@
       <LastGenOutput>ValidationSummary.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Account\SignOutCallback.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AddressViewModel.cshtml">
+      <LastGenOutput>AddressViewModel.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

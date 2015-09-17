@@ -3,11 +3,11 @@
     using Application.Interfaces.Search;
     using Domain.Entities.Locations;
     using Application.Interfaces.Vacancies;
+    using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
-    using ViewModels.Locations;
     using ViewModels.VacancySearch;
     using ViewModels.Applications;
 

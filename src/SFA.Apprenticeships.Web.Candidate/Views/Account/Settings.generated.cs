@@ -39,13 +39,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Locations;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Account/Settings.cshtml")]

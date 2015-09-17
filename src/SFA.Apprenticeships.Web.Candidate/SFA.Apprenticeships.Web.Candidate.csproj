@@ -739,7 +739,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_why.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Register\MonitoringInformation.cshtml" />
+    <Content Include="Views\Register\MonitoringInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MonitoringInformation.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\Shared\DisplayTemplates\MonitoringInformation\_disability.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_disability.generated.cs</LastGenOutput>
@@ -911,7 +914,6 @@
     <Compile Include="ViewModels\Account\VerifyUpdatedEmailViewModel.cs" />
     <Compile Include="ViewModels\Account\VerifyMobileViewModel.cs" />
     <Compile Include="ViewModels\AddressSearchResult.cs" />
-    <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\TraineeshipSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ActivationCodeMessages.cs" />
@@ -1006,7 +1008,6 @@
     <Compile Include="Providers\ITraineeshipApplicationProvider.cs" />
     <Compile Include="Providers\SearchProvider.cs" />
     <Compile Include="Providers\TraineeshipApplicationProvider.cs" />
-    <Compile Include="Validators\AddressViewModelValidator.cs" />
     <Compile Include="Validators\ActivationViewModelValidator.cs" />
     <Compile Include="Validators\TraineeshipSearchViewModelValidator.cs" />
     <Compile Include="Validators\TraineeshipApplicationViewModelValidator.cs" />
@@ -1047,8 +1048,6 @@
     <Compile Include="ViewModels\Candidate\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
-    <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
-    <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockViewModel.cs" />
     <Compile Include="ViewModels\MyApplications\MyTraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Applications\TraineeshipFeatureViewModel.cs" />
@@ -1151,6 +1150,11 @@
       <DependentUpon>_trainingCoursesNonJS.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Register\MonitoringInformation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MonitoringInformation.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\Qualifications.generated.cs">
       <AutoGen>True</AutoGen>

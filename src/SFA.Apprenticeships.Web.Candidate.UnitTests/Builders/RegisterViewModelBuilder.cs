@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
     using Candidate.ViewModels;
-    using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.Register;
+    using Common.ViewModels.Locations;
 
     public class RegisterViewModelBuilder
     {

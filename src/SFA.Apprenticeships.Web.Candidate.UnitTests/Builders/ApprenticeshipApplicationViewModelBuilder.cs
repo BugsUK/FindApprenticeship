@@ -3,9 +3,9 @@
     using System.Linq;
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
-    using Candidate.ViewModels.Locations;
     using Candidate.ViewModels.VacancySearch;
     using Common.Models.Application;
+    using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
 

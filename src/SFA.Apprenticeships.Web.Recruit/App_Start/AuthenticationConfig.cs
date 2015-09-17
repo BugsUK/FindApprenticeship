@@ -21,7 +21,9 @@
             var cookieAuthenticationOptions = new CookieAuthenticationOptions
             {
                 CookieName = CookieName,
-                SlidingExpiration = true
+                SlidingExpiration = true,
+                //TODO: From config
+                ExpireTimeSpan = TimeSpan.FromMinutes(10)
             };
 
             app.UseCookieAuthentication(cookieAuthenticationOptions);

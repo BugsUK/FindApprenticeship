@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using Common.ViewModels.Locations;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using ViewModels.Candidate;
-    using ViewModels.Locations;
 
     //todo: 1.6: this is inconsistent with approach to other mapping. should use MapperEngine
     public static class ApplicationConverter

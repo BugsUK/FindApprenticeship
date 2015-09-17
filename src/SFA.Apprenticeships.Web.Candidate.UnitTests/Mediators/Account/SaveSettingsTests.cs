@@ -10,8 +10,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
     using Candidate.Providers;
     using Candidate.ViewModels;
     using Candidate.ViewModels.Account;
-    using Candidate.ViewModels.Locations;
     using Common.Constants;
+    using Common.ViewModels.Locations;
     using Constants.Pages;
     using FluentAssertions;
     using Moq;

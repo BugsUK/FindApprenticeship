@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
     using AutoMapper;
+    using Common.ViewModels.Locations;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using ViewModels;
     using ViewModels.Account;
-    using ViewModels.Locations;
 
     public static class SettingsViewModelResolvers
     {

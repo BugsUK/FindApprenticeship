@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.Constants.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Common.Constants.ViewModels
 {
     using Common.Constants;
 
