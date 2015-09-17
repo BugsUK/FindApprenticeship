@@ -47,6 +47,16 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             return claims;
         }
 
+        public void Clear(HttpContextBase httpContext)
+        {
+            if (!httpContext.Request.Cookies.AllKeys.Contains(CookieName))
+            {
+                return;
+            }
+
+            httpContext.Request.Cookies.Remove(CookieName);
+        }
+
         private static AuthorizationData GetAuthorizationData(HttpContextBase httpContext, string username)
         {
             //TODO: Check ukprn and username

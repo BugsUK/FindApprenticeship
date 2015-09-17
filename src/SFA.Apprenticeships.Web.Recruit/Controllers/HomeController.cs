@@ -6,11 +6,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Security.Claims;
     using System.Web.Mvc;
-    using Attributes;
+    using System.Linq;
+    using System.Web;
     using Common.Constants;
     using Common.Controllers;
     using Common.Framework;
     using Constants;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.Cookies;
+    using Microsoft.Owin.Security.WsFederation;
     using Providers;
     using ViewModels;
 
@@ -35,6 +39,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         //TODO: Probably move to ProviderUserController
         public ActionResult Authorize()
         {
+            //TODO: ACS Calls this action during signout. Need to suppress it in a cleaner manner
+            if (!Request.IsAuthenticated)
+            {
+                return null;
+            }
+
             var claimsPrincipal = (ClaimsPrincipal)User;
             var response = _homeMediator.Authorize(claimsPrincipal);
             var message = response.Message;
@@ -60,9 +70,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case HomeMediatorCodes.Authorize.EmptyUsername:
                 case HomeMediatorCodes.Authorize.MissingProviderIdentifier:
                 case HomeMediatorCodes.Authorize.MissingServicePermission:
-                {
+                    _authorizationDataProvider.Clear(HttpContext);
                     return RedirectToRoute(RecruitmentRouteNames.SignOut, new { returnRoute = RecruitmentRouteNames.LandingPage });
-                }
                 case HomeMediatorCodes.Authorize.NoProviderProfile:
                 case HomeMediatorCodes.Authorize.FailedMinimumSitesCountCheck:
                     return RedirectToRoute(RecruitmentRouteNames.ManageProviderSites);
