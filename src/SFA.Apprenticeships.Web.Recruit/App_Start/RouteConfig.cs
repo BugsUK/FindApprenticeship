@@ -62,6 +62,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.ResendVertificationCode,
+               url: "resentverificationemail",
+               defaults: new { controller = "ProviderUser", action = "ResendVertificationCode" }
+               );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.ManageProviderSites,
                 url: "sites",
                 defaults: new { controller = "Provider", action = "Sites" }

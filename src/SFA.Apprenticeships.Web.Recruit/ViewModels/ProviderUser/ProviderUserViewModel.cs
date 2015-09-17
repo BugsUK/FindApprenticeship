@@ -8,13 +8,13 @@
     [Validator(typeof(ProviderUserViewModelValidator))]
     public class ProviderUserViewModel
     {
-        [Display(Name = UserProfileViewModelMessages.FullnameMessages.LabelText)]
+        [Display(Name = ProviderUserViewModelMessages.FullnameMessages.LabelText)]
         public string Fullname { get; set; }
 
-        [Display(Name = UserProfileViewModelMessages.EmailAddressMessages.LabelText)]
+        [Display(Name = ProviderUserViewModelMessages.EmailAddressMessages.LabelText)]
         public string EmailAddress { get; set; }
 
-        [Display(Name = UserProfileViewModelMessages.PhoneNumberMessages.LabelText)]
+        [Display(Name = ProviderUserViewModelMessages.PhoneNumberMessages.LabelText)]
         public string PhoneNumber { get; set; }
 
         public int DefaultTrainingSiteId { get; set; }

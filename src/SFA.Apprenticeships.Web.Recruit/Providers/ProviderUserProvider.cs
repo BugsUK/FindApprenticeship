@@ -19,5 +19,19 @@
             return null;
             //end stub code
         }
+
+        public bool ValidateEmailVerificationCode(string username, string code)
+        {
+            //Stub
+
+            if (code == "ABC123")
+            {
+                return true;
+            }
+
+            return false;
+
+            //End Stub
+        }
     }
 }

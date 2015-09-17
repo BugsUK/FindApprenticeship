@@ -5,5 +5,7 @@
     public interface IProviderUserProvider
     {
         ProviderUserViewModel GetUserProfileViewModel(string username);
+
+        bool ValidateEmailVerificationCode(string username, string code);
     }
 }

@@ -22,20 +22,19 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             var authorizationClaim = new AuthorizationClaim {Type = claim.Type, Value = claim.Value};
             claims.Add(authorizationClaim);
             authorizationData.Claims = claims.ToArray();
+            SetCookie(httpContext, authorizationData);
+        }
 
-            var authorizationDataJson = JsonConvert.SerializeObject(authorizationData);
-            var protectedAuthorizationData = Protect(authorizationDataJson);
-
-            var cookie = new HttpCookie(CookieName, protectedAuthorizationData);
-            
+        public void RemoveClaim(string claimType, string claimValue, HttpContextBase httpContext, string username)
             //TODO: http + secure
-            if (httpContext.Response.Cookies.AllKeys.Contains(CookieName))
+        {
+            var authorizationData = GetAuthorizationData(httpContext, username);
+            var claimToRemove = authorizationData.Claims.SingleOrDefault(c => c.Type == claimType && c.Value == claimValue);
+
+            if (claimToRemove != null)
             {
-                httpContext.Response.Cookies.Set(cookie);
-            }
-            else
-            {
-                httpContext.Response.Cookies.Add(cookie);
+                authorizationData.Claims = authorizationData.Claims.Where(c => c != claimToRemove).ToArray();
+                SetCookie(httpContext, authorizationData);
             }
         }
 
@@ -81,6 +80,23 @@ namespace SFA.Apprenticeships.Web.Common.Providers
                 return httpContext.Request.Cookies.Get(CookieName);
             }
             return null;
+        }
+
+        private static void SetCookie(HttpContextBase httpContext, AuthorizationData authorizationData)
+        {
+            var authorizationDataJson = JsonConvert.SerializeObject(authorizationData);
+            var protectedAuthorizationData = Protect(authorizationDataJson);
+
+            var cookie = new HttpCookie(CookieName, protectedAuthorizationData);
+
+            if (httpContext.Response.Cookies.AllKeys.Contains(CookieName))
+            {
+                httpContext.Response.Cookies.Set(cookie);
+            }
+            else
+            {
+                httpContext.Response.Cookies.Add(cookie);
+            }
         }
 
         //http://stackoverflow.com/questions/3681493/leveraging-asp-net-machinekey-for-encrypting-my-own-data

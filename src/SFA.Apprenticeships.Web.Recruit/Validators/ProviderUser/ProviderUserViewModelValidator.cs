@@ -16,25 +16,25 @@
         {
             RuleFor(m => m.Fullname)
                 .NotEmpty()
-                .WithMessage(UserProfileViewModelMessages.FullnameMessages.RequiredErrorText)
+                .WithMessage(ProviderUserViewModelMessages.FullnameMessages.RequiredErrorText)
                 .Length(0, 100)
-                .WithMessage(UserProfileViewModelMessages.FullnameMessages.TooLongErrorText);
+                .WithMessage(ProviderUserViewModelMessages.FullnameMessages.TooLongErrorText);
 
             RuleFor(m => m.EmailAddress)
                 .Length(0, 100)
-                .WithMessage(UserProfileViewModelMessages.EmailAddressMessages.TooLongErrorText)
+                .WithMessage(ProviderUserViewModelMessages.EmailAddressMessages.TooLongErrorText)
                 .NotEmpty()
-                .WithMessage(UserProfileViewModelMessages.EmailAddressMessages.RequiredErrorText)
-                .Matches(UserProfileViewModelMessages.EmailAddressMessages.WhiteListRegularExpression)
-                .WithMessage(UserProfileViewModelMessages.EmailAddressMessages.WhiteListErrorText);
+                .WithMessage(ProviderUserViewModelMessages.EmailAddressMessages.RequiredErrorText)
+                .Matches(ProviderUserViewModelMessages.EmailAddressMessages.WhiteListRegularExpression)
+                .WithMessage(ProviderUserViewModelMessages.EmailAddressMessages.WhiteListErrorText);
 
             RuleFor(x => x.PhoneNumber)
                 .Length(8, 16)
-                .WithMessage(UserProfileViewModelMessages.PhoneNumberMessages.LengthErrorText)
+                .WithMessage(ProviderUserViewModelMessages.PhoneNumberMessages.LengthErrorText)
                 .NotEmpty()
-                .WithMessage(UserProfileViewModelMessages.PhoneNumberMessages.RequiredErrorText)
-                .Matches(UserProfileViewModelMessages.PhoneNumberMessages.WhiteListRegularExpression)
-                .WithMessage(UserProfileViewModelMessages.PhoneNumberMessages.WhiteListErrorText);
+                .WithMessage(ProviderUserViewModelMessages.PhoneNumberMessages.RequiredErrorText)
+                .Matches(ProviderUserViewModelMessages.PhoneNumberMessages.WhiteListRegularExpression)
+                .WithMessage(ProviderUserViewModelMessages.PhoneNumberMessages.WhiteListErrorText);
         }
     }
 }

@@ -1,16 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Web;
-using System.Web.Security;
-using FluentAssertions;
-using NUnit.Framework;
-using SFA.Apprenticeships.Web.Common.Providers;
-using SFA.Apprenticeships.Web.Common.UnitTests.Builders;
-
-namespace SFA.Apprenticeships.Web.Common.UnitTests.Providers
+﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Providers
 {
+    using System.Security.Claims;
+    using Builders;
+    using Common.Providers;
+    using FluentAssertions;
+    using NUnit.Framework;
+
     [TestFixture]
     public class CookieAuthorizationDataProviderTests
     {
@@ -105,6 +100,28 @@ namespace SFA.Apprenticeships.Web.Common.UnitTests.Providers
             claims[0].Value.Should().Be("TestValue1");
             claims[1].Type.Should().Be("TestType2");
             claims[1].Value.Should().Be("TestValue2");
+        }
+
+        [Test]
+        public void RemoveClaim()
+        {
+            var provider = new CookieAuthorizationDataProvider();
+
+            var claim1 = new Claim("TestType1", "TestValue1");
+            var claim2 = new Claim("TestType2", "TestValue2");
+
+            var httpContext = new HttpContextBuilder().Build();
+
+            provider.AddClaim(claim1, httpContext, "provider@user.com");
+            provider.AddClaim(claim2, httpContext, "provider@user.com");
+
+            provider.RemoveClaim("TestType1", "TestValue1", httpContext, "provider@user.com");
+
+            var claims = provider.GetClaims(httpContext, "provider@user.com");
+
+            claims.Length.Should().Be(1);
+            claims[0].Type.Should().Be("TestType2");
+            claims[0].Value.Should().Be("TestValue2");
         }
     }
 }

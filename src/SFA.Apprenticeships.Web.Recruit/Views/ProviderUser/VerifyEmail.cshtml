@@ -1,4 +1,6 @@
-﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser.VerifyEmailViewModel
+
+@using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Vertify Email";
 }
@@ -7,18 +9,28 @@
     <p id="SuccessMessageText" class="text"><i class="fa fa-check"></i>You've successfully created your account</p>
 </div>
 <h1 id="accountCreated" class="heading-xlarge">Verify email</h1>
+
+
+
 <p class="text">
-    An email has been sent to <b class="">john.smith@keytraining.co.uk</b>.
+    An email has been sent to <b class="">@Model.EmailAddress</b>.
     It’ll contain a 6-character code that you’ll need to verify your email
     address.
 </p>
-<div class="form-group">
-    <label for="activation-code" class="form-label">Verification code</label>
-    <input type="text" id="activation-code" class="form-control form-control-1-3">
-    <p>
-        <a href="">Resend code</a>
-    </p>
-</div>
-<div class="form-group">
-    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)" class="button activate-page-btn" id="btnSignIn">Verify email</a>
-</div>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.Settings, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.FormTextFor(
+            m => m.VerificationCode,
+            controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false", @class = "form-control-1-3" })    
+    
+    <p><a href="@Url.RouteUrl(RecruitmentRouteNames.ResendVertificationCode)">Resend code</a></p>
+
+    <div class="form-group">
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)" class="button activate-page-btn" id="btnSignIn">Verify email</a>
+    </div>
+
+}

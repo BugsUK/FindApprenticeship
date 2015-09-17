@@ -2,7 +2,7 @@
 {
     using Common.Constants;
 
-    public class UserProfileViewModelMessages
+    public class ProviderUserViewModelMessages
     {
         public static class FullnameMessages
         {
