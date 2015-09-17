@@ -17,21 +17,18 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
         public void SignIn(string returnUrl)
         {
-            if (!Request.IsAuthenticated)
+            if (returnUrl.IsValidReturnUrl())
             {
-                if (returnUrl.IsValidReturnUrl())
-                {
-                    UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
-                }
-
-                var properties = new AuthenticationProperties
-                {
-                    RedirectUri = Url.RouteUrl(RecruitmentRouteNames.Authorize)
-                };
-
-                HttpContext.GetOwinContext().Authentication.Challenge(
-                    properties, WsFederationAuthenticationDefaults.AuthenticationType);
+                UserData.Push(UserDataItemNames.ReturnUrl, Server.UrlEncode(returnUrl));
             }
+
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = Url.RouteUrl(RecruitmentRouteNames.Authorize)
+            };
+
+            HttpContext.GetOwinContext().Authentication.Challenge(
+                properties, WsFederationAuthenticationDefaults.AuthenticationType);
         }
 
         public void SignOut(string returnRoute)
