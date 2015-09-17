@@ -30,13 +30,10 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    <div class="form-group">
-
-        @Html.FormTextFor(
+    @Html.FormTextFor(
             m => m.ProviderName,
             controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })
 
-    </div>
     <div id="providerSitesList">
         <h2 class="heading-medium">Manage your training sites</h2>
         <section class="grid-wrapper">

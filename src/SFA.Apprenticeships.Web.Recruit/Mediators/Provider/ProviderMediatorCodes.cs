@@ -17,5 +17,16 @@
             public const string FailedValidation = "Provider.UpdateSites.FailedValidation";
             public const string Ok = "Provider.UpdateSites.Ok";
         }
+
+        public static class GetSite
+        {
+            public const string Ok = "Provider.GetSite.Ok";
+        }
+
+        public static class UpdateSite
+        {
+            public const string FailedValidation = "Provider.UpdateSite.FailedValidation";
+            public const string Ok = "Provider.UpdateSite.Ok";
+        }
     }
 }

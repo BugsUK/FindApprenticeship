@@ -22,7 +22,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                         new ProviderSiteViewModel
                         {
                             Ern = "00001",
-                            Name = "Basing View, Basingstoke"
+                            Name = "Basing View"
                         }
                     }
                 };
@@ -30,6 +30,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
             return null;
             //end stub code
+        }
+
+        public ProviderSiteViewModel GetProviderSiteViewModel(string ern)
+        {
+            return new ProviderSiteViewModel
+            {
+                Ern = ern,
+                Name = "Basing View",
+                EmailAddress = "basing-view@keytraining.co.uk",
+                PhoneNumber = "01256 320222"
+            };
         }
     }
 }

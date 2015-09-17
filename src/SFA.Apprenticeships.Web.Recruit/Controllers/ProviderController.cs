@@ -66,7 +66,28 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [Authorize(Roles = Roles.VerifiedEmail)]
         public ActionResult EditSite(string ern)
         {
-            return View();
+            var response = _providerMediator.GetSite(ern);
+            var providerSiteViewModel = response.ViewModel;
+
+            return View(providerSiteViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Roles.VerifiedEmail)]
+        public ActionResult EditSite(ProviderSiteViewModel providerSiteViewModel)
+        {
+            var response = _providerMediator.UpdateSite(providerSiteViewModel);
+
+            switch (response.Code)
+            {
+                case ProviderMediatorCodes.UpdateSite.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                case ProviderMediatorCodes.UpdateSite.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.EditProviderSite, new {ern = response.ViewModel.Ern});
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
     }
 }

@@ -287,6 +287,7 @@
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
     <Compile Include="Constants\Roles.cs" />
+    <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\UserProfileViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -316,6 +317,7 @@
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
+    <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchMode.cs" />
