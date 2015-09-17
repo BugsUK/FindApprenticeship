@@ -10,12 +10,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             //Stub code for removal
             if (ukprn == "hasproviderprofile")
             {
-                return new ProviderViewModel();
+                return new ProviderViewModel {ProviderName = "Key Training Ltd"};
             }
             if (ukprn == "onesite")
             {
                 return new ProviderViewModel
                 {
+                    ProviderName = "Key Training Ltd",
                     ProviderSiteViewModels = new List<ProviderSiteViewModel> {new ProviderSiteViewModel()}
                 };
             }

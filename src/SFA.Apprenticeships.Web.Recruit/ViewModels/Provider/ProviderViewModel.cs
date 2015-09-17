@@ -2,6 +2,12 @@
 
 namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
 {
+    using System.ComponentModel.DataAnnotations;
+    using Constants.ViewModels;
+    using FluentValidation.Attributes;
+    using Validators.Provider;
+
+    [Validator(typeof(ProviderViewModelValidator))]
     public class ProviderViewModel
     {
         public ProviderViewModel()
@@ -9,6 +15,8 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
             ProviderSiteViewModels = new List<ProviderSiteViewModel>();
         }
 
+        [Display(Name = ProviderViewModelMessages.ProviderNameMessages.LabelText)]
+        public string ProviderName { get; set; }
         public IEnumerable<ProviderSiteViewModel> ProviderSiteViewModels { get; set; }
     }
 }

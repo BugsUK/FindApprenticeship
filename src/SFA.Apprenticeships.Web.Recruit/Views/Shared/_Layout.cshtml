@@ -1,5 +1,6 @@
 ﻿@using SFA.Apprenticeships.Web.Common.Constants
 @using SFA.Apprenticeships.Web.Common.Framework
+@using SFA.Apprenticeships.Web.Recruit.Constants
 
 <!DOCTYPE html>
 <!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"><![endif]-->
@@ -65,7 +66,7 @@
             </div>
             <div class="global-header__nav">
                 <div class="global-header__title alpha" id="headerLinkFAA">
-                    <a href="/">Recruit an apprentice</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.ManageProviderSites)">Recruit an apprentice</a>
                 </div>
             </div>
         </div>

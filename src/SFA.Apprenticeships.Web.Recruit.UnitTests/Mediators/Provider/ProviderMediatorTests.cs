@@ -13,7 +13,7 @@
         public void AddSite_ShouldDefaultSearchMode()
         {
             // Arrange.
-            var mediator = new ProviderMediator();
+            var mediator = new ProviderMediator(null, null);
 
             // Act.
             var response = mediator.AddSite();

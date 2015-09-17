@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
         {
             var viewModel = new AuthorizeResponseViewModel();
 
-            if (principal == null || principal.Identity == null || string.IsNullOrEmpty(principal.Identity.Name))
+            if (string.IsNullOrEmpty(principal?.Identity?.Name))
             {
                 return GetMediatorResponse(HomeMediatorCodes.Authorize.EmptyUsername, viewModel, AuthorizeMessages.EmptyUsername, UserMessageLevel.Error);
             }
@@ -60,7 +60,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
 
             if (provider == null)
             {
-                return GetMediatorResponse(HomeMediatorCodes.Authorize.NoProviderProfile, viewModel, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Warning);
+                return GetMediatorResponse(HomeMediatorCodes.Authorize.NoProviderProfile, viewModel, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Info);
             }
 
             if (provider.ProviderSiteViewModels.Count() < MinProviderSites)

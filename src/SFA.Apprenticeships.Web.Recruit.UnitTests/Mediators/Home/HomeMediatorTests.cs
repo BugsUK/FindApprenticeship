@@ -70,7 +70,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
             var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
 
             var response = mediator.Authorize(principal);
-            response.AssertMessage(HomeMediatorCodes.Authorize.NoProviderProfile, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Warning);
+            response.AssertMessage(HomeMediatorCodes.Authorize.NoProviderProfile, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Info);
         }
 
         [Test(Description = "If there is not at least 1 site then direct the user to the \"sites\" page with a message")]
