@@ -13,13 +13,14 @@
         public void AddSite_ShouldDefaultSearchMode()
         {
             // Arrange.
-            var mediator = new ProviderMediator(null, null, null);
+            var mediator = new ProviderMediator(null, null, null, null, null);
 
             // Act.
             var response = mediator.AddSite();
 
             // Assert.
             response.Should().NotBeNull();
+            response.ViewModel.Should().NotBeNull();
             response.ViewModel.SiteSearchMode.Should().Be(ProviderSiteSearchMode.EmployerReferenceNumber);
         }
     }

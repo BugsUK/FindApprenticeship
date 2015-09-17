@@ -5,6 +5,9 @@
         public static class AddSite
         {
             public const string Ok = "Provider.AddSite.Ok";
+            public const string ValidationError = "Provider.AddSite.ValidationError";
+            public const string SiteNotFoundByEmployerReferenceNumber = "Provider.AddSite.SiteNotFoundByEmployerReferenceNumber";
+            public const string SiteFoundByEmployerReferenceNumber = "Provider.AddSite.SiteFoundByEmployerReferenceNumber";
         }
 
         public static class Sites

@@ -149,6 +149,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common.UnitTests\SFA.Apprenticeships.Web.Common.UnitTests.csproj">
       <Project>{3ca36139-bbdd-4305-b15a-e9500606b672}</Project>
       <Name>SFA.Apprenticeships.Web.Common.UnitTests</Name>

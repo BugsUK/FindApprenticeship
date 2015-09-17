@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
     {
         MediatorResponse<ProviderSiteSearchViewModel> AddSite();
 
-        MediatorResponse<ProviderSiteSearchResponseViewModel> FindSite(ProviderSiteSearchViewModel searchViewModel);
+        MediatorResponse<ProviderSiteSearchViewModel> AddSite(ProviderSiteSearchViewModel viewModel);
 
         MediatorResponse<ProviderViewModel> Sites(string ukprn);
 

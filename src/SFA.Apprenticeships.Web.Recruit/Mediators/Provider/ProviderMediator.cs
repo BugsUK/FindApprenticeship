@@ -2,6 +2,9 @@
 
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
 {
+    using Application.Organisation;
+    using Common.Constants;
+    using Constants.Pages.Provider;
     using Providers;
     using Validators.Provider;
     using ViewModels.Provider;
@@ -9,26 +12,47 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
     public class ProviderMediator : MediatorBase, IProviderMediator
     {
         private readonly IProviderProvider _providerProvider;
+        private readonly IVerifiedOrganisationProvider _verifiedOrganisationProvider;
+
+        private readonly ProviderSiteSearchViewModelValidator _providerSiteSearchViewModelValidator;
         private readonly ProviderViewModelValidator _providerViewModelValidator;
         private readonly ProviderSiteViewModelValidator _providerSiteViewModelValidator;
 
-        public ProviderMediator(IProviderProvider providerProvider, ProviderViewModelValidator providerViewModelValidator, ProviderSiteViewModelValidator providerSiteViewModelValidator)
+        public ProviderMediator(IProviderProvider providerProvider, IVerifiedOrganisationProvider verifiedOrganisationProvider, ProviderViewModelValidator providerViewModelValidator, ProviderSiteViewModelValidator providerSiteViewModelValidator, ProviderSiteSearchViewModelValidator providerSiteSearchViewModelValidator)
         {
             _providerProvider = providerProvider;
+            _verifiedOrganisationProvider = verifiedOrganisationProvider;
             _providerViewModelValidator = providerViewModelValidator;
             _providerSiteViewModelValidator = providerSiteViewModelValidator;
+            _providerSiteSearchViewModelValidator = providerSiteSearchViewModelValidator;
         }
-
         public MediatorResponse<ProviderSiteSearchViewModel> AddSite()
         {
-            return null;
+            var viewModel = new ProviderSiteSearchViewModel();
+
+            return GetMediatorResponse(ProviderMediatorCodes.AddSite.Ok, viewModel);
         }
 
-        public MediatorResponse<ProviderSiteSearchResponseViewModel> FindSite(ProviderSiteSearchViewModel searchViewModel)
+        public MediatorResponse<ProviderSiteSearchViewModel> AddSite(ProviderSiteSearchViewModel viewModel)
         {
-            return null;
-        }
+            var validationResult = _providerSiteSearchViewModelValidator.Validate(viewModel);
 
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(ProviderMediatorCodes.AddSite.ValidationError, viewModel, validationResult);
+            }
+
+            var organisation = _verifiedOrganisationProvider.GetByReferenceNumber(viewModel.EmployerReferenceNumber);
+
+            if (organisation == null)
+            {
+                return GetMediatorResponse(ProviderMediatorCodes.AddSite.SiteNotFoundByEmployerReferenceNumber, viewModel,
+                    AddSitePageMessages.SiteNotFoundByEmployerReferenceNumber, UserMessageLevel.Warning);
+            }
+
+            return GetMediatorResponse(ProviderMediatorCodes.AddSite.SiteNotFoundByEmployerReferenceNumber, viewModel,
+                "TODO: found", UserMessageLevel.Success);
+        }
         public MediatorResponse<ProviderViewModel> Sites(string ukprn)
         {
             var providerProfile = _providerProvider.GetProviderViewModel(ukprn);
@@ -50,6 +74,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
         public MediatorResponse<ProviderSiteViewModel> GetSite(string ern)
         {
             var providerSite = _providerProvider.GetProviderSiteViewModel(ern);
+
             return GetMediatorResponse(ProviderMediatorCodes.GetSite.Ok, providerSite);
         }
 

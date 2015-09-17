@@ -3,13 +3,12 @@
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
-    using Common.Constants;
+    using Common.Attributes;
     using Common.Controllers;
     using Common.Mediators;
     using Extensions;
     using FluentValidation.Mvc;
     using Mediators.Provider;
-    using Mediators.ProviderUser;
     using Providers;
     using ViewModels.Provider;
 
@@ -59,7 +58,39 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [Authorize(Roles = Roles.VerifiedEmail)]
         public ActionResult AddSite()
         {
-            return View();
+            var response = _providerMediator.AddSite();
+
+            return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = Roles.VerifiedEmail)]
+        [MultipleFormActionsButton(SubmitButtonActionName = "AddSiteByEmployerReferenceNumber")]
+        public ActionResult AddSiteByEmployerReferenceNumber(ProviderSiteSearchViewModel viewModel)
+        {
+            var response = _providerMediator.AddSite(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case ProviderMediatorCodes.AddSite.ValidationError:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("AddSite", response.ViewModel);
+
+                case ProviderMediatorCodes.AddSite.SiteNotFoundByEmployerReferenceNumber:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View("AddSite", response.ViewModel);
+
+                case ProviderMediatorCodes.AddSite.SiteFoundByEmployerReferenceNumber:
+                    // TODO: AG: return RedirectToRoute(Xxx);
+                    break;
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+
+            return View("AddSite", response.ViewModel);
         }
 
         [HttpGet]
@@ -84,7 +115,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case ProviderMediatorCodes.UpdateSite.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.EditProviderSite, new {ern = response.ViewModel.Ern});
+                    return RedirectToRoute(RecruitmentRouteNames.EditProviderSite, new { ern = response.ViewModel.Ern });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
