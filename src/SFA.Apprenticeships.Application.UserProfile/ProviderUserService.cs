@@ -4,7 +4,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
 
-    public class ProviderUserService
+    public class ProviderUserService : IProviderUserService
     {
         private readonly IProviderUserReadRepository _providerUserReadRepository;
         private readonly IProviderUserWriteRepository _providerUserWriteRepository;
@@ -28,7 +28,7 @@
 
         public ProviderUser UpdateProviderUser(ProviderUser providerUser)
         {
-            //Check is email is being updated and set pending, vertification code, send email etc
+            //Check if email is being updated and set pending, vertification code, send email etc
             return null;
         }
     }
