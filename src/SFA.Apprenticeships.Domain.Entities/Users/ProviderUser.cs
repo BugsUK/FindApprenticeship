@@ -17,5 +17,6 @@
         public string VerificationCode { get; set; }
 
         public int PreferredSiteId { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

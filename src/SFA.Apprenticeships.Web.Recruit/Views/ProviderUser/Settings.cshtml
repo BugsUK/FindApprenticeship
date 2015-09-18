@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser.ProviderUserViewModel
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.SettingsViewModel
 
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
@@ -37,20 +37,20 @@
         @Html.Partial("ValidationSummary", ViewData.ModelState)
 
         @Html.FormTextFor(
-            m => m.Fullname,
+            m => m.ProviderUserViewModel.Fullname,
             controlHtmlAttributes: new {type = "text", autofocus = "autofocus", spellcheck = "false"})
 
         @Html.FormTextFor(
-            m => m.EmailAddress,
+            m => m.ProviderUserViewModel.EmailAddress,
             controlHtmlAttributes: new {type = "email", spellcheck = "false"})
 
         @Html.FormTextFor(
-            m => m.PhoneNumber,
+            m => m.ProviderUserViewModel.PhoneNumber,
             controlHtmlAttributes: new {@class = "form-label", type = "tel", spellcheck = "false"})
 
         <div class="form-group">
             <p class="form-label">Your default training site</p>
-            @Html.DropDownListFor(m => m.DefaultTrainingSiteId, (List<SelectListItem>) ViewBag.Sites, new {@class = "chosen-select"})
+            @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultTrainingSiteId, Model.ProviderSites, new {@class = "chosen-select"})
         </div>
         <div class="toggle-content" id="newProviderTerms">
             <p>

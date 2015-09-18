@@ -29,7 +29,7 @@
         public ProviderUser SaveUser(ProviderUser providerUser)
         {
             //Check if email is being updated and set pending, vertification code, send email etc
-            return null;
+            return _providerUserWriteRepository.Save(providerUser);
         }
     }
 }

@@ -16,7 +16,7 @@
             var user = new ProviderUserViewModel {EmailAddress = ""};
 
             // Act.
-            var response = mediator.UpdateUser("userName", user);
+            var response = mediator.UpdateUser("userName", "00001", user);
 
             // Assert.
             response.Should().NotBeNull();
@@ -32,7 +32,7 @@
             var user = new ProviderUserViewModel { Fullname = "Full name", EmailAddress = "asdf@asdf.com", PhoneNumber = "0321321321"};
 
             // Act.
-            var response = mediator.UpdateUser("userName", user);
+            var response = mediator.UpdateUser("userName", "00001", user);
 
             // Assert.
             response.Should().NotBeNull();

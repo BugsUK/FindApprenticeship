@@ -1,19 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Security.Claims;
     using System.Web.Mvc;
     using Attributes;
-    using Common.Constants;
     using Common.Controllers;
     using Common.Mediators;
     using Common.Providers;
     using Constants;
     using Constants.ViewModels;
+    using Extensions;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
     using Providers;
+    using ViewModels;
     using ViewModels.ProviderUser;
 
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -37,41 +36,23 @@
         [HttpGet]
         public ActionResult Settings()
         {
-            LoadTestSites();
-            return View(new ProviderUserViewModel());
-        }
+            var response = _providerUserMediator.GetSettingsViewModel(User.Identity.Name, User.GetUkprn());
 
-        private void LoadTestSites()
-        {
-            var sites = new List<SelectListItem>();
-            sites.Add(new SelectListItem {Value = "1", Text = "Basing View, Basingstoke", Selected = true});
-            sites.Add(new SelectListItem {Value = "2", Text = "Great Charles Street Queensway, Birmingham"});
-            sites.Add(new SelectListItem {Value = "3", Text = "St. Helens Street, Ipswich"});
-            sites.Add(new SelectListItem {Value = "4", Text = "South Parade, Leeds"});
-            sites.Add(new SelectListItem {Value = "5", Text = "24-26 Baltic Street West, London"});
-            sites.Add(new SelectListItem {Value = "6", Text = "Dean Street, Newcastle upon Tyne"});
-            sites.Add(new SelectListItem {Value = "7", Text = "Judson Road, Peterlee"});
-            sites.Add(new SelectListItem {Value = "8", Text = "David Murray John Tower, Swindon"});
-            sites.Add(new SelectListItem {Value = "9", Text = "6-10 Gills Yard, Wakefield"});
-            sites.Add(new SelectListItem {Value = "10", Text = "Sheep Street, Wellingborough"});
-            sites.Add(new SelectListItem {Value = "11", Text = "Sheet Street, Windsor"});
-
-            ViewBag.Sites = sites;
+            return View(response.ViewModel);
         }
 
         [HttpPost]
-        public ActionResult Settings(ProviderUserViewModel providerUserViewModel)
+        public ActionResult Settings(SettingsViewModel settingsViewModel)
         {
-            var response = _providerUserMediator.UpdateUser(User.Identity.Name, providerUserViewModel);
+            var response = _providerUserMediator.UpdateUser(User.Identity.Name, User.GetUkprn(), settingsViewModel.ProviderUserViewModel);
 
             ModelState.Clear();
 
             switch (response.Code)
             {
                 case ProviderUserMediatorCodes.UpdateUser.FailedValidation:
-                    LoadTestSites();
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                    return View(providerUserViewModel);
+                    return View(settingsViewModel);
                 case ProviderUserMediatorCodes.UpdateUser.EmailUpdated:
                     _cookieAuthorizationDataProvider.RemoveClaim(System.Security.Claims.ClaimTypes.Role, Roles.VerifiedEmail, HttpContext, User.Identity.Name);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);

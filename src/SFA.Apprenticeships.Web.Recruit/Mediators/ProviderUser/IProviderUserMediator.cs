@@ -6,11 +6,12 @@
 
     public interface IProviderUserMediator
     {
-        MediatorResponse<ProviderUserViewModel> GetProviderUserViewModel(string userName);
+        MediatorResponse<ProviderUserViewModel> GetProviderUserViewModel(string username);
 
-        MediatorResponse UpdateUser(string userName, ProviderUserViewModel providerUserViewModel);
+        MediatorResponse<SettingsViewModel> GetSettingsViewModel(string username, string ukprn);
 
-        MediatorResponse VerifyEmailAddress(string userName, VerifyEmailViewModel verifyEmailViewModel);
+        MediatorResponse<SettingsViewModel> UpdateUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel);
 
+        MediatorResponse VerifyEmailAddress(string username, VerifyEmailViewModel verifyEmailViewModel);
     }
 }

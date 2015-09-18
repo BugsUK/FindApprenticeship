@@ -5,7 +5,11 @@
         public static class GetProviderUserViewModel
         {
             public const string Ok = "ProviderUser.GetProviderUserViewModel.Ok";
-            public const string DoesntExist = "ProviderUser.GetProviderUserViewModel.DoesntExist";
+        }
+        public static class GetSettingsViewModel
+        {
+            public const string Ok = "ProviderUser.GetSettingsViewModel.Ok";
+            public const string DoesntExist = "ProviderUser.GetSettingsViewModel.DoesntExist";
         }
 
         public static class UpdateUser

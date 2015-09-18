@@ -334,6 +334,7 @@
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
+    <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>

@@ -10,5 +10,7 @@
         IEnumerable<ProviderUserViewModel> GetUserProfileViewModels(string ukprn);
 
         bool ValidateEmailVerificationCode(string username, string code);
+
+        ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel);
     }
 }

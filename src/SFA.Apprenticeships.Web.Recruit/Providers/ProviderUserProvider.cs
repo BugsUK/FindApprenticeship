@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Users;
@@ -58,6 +59,24 @@
             //End Stub
         }
 
+        public ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel)
+        {
+            var providerUser = _userProfileService.GetProviderUser(username) ?? new ProviderUser();
+
+            //TODO: Probably put this in a strategy in the service and add the verify email code
+            providerUser.Username = username;
+            providerUser.Ukprn = ukprn;
+            providerUser.Email = providerUserViewModel.EmailAddress;
+            providerUser.Fullname = providerUserViewModel.Fullname;
+            providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
+            providerUser.PreferredSiteId = providerUserViewModel.DefaultTrainingSiteId;
+            providerUser.VerificationCode = providerUser.VerificationCode ?? "ABC123";
+
+            _userProfileService.SaveUser(providerUser);
+
+            return GetUserProfileViewModel(providerUser.Username);
+        }
+
         private static ProviderUserViewModel Convert(ProviderUser providerUser)
         {
             var viewModel = new ProviderUserViewModel
@@ -67,7 +86,7 @@
                 //TODO: Check with Krister how we're storing EmailAddressVerified
                 EmailAddressVerified = providerUser.VerificationCode == null,
                 Fullname = providerUser.Fullname,
-                //PhoneNumber = providerUser.PhoneNumber
+                PhoneNumber = providerUser.PhoneNumber
             };
 
             return viewModel;
