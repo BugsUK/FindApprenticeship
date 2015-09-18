@@ -4,6 +4,16 @@
 
     public class ProviderUser : BaseEntity
     {
-        // provider user's profile. username, given name, phone number, email, preferred site, etc.
+        public string Username { get; set; }
+
+        public string Fullname { get; set; }
+
+        public string Email { get; set; }
+
+        public string PendingEmail { get; set; }
+
+        public string VerificationCode { get; set; }
+
+        public int PreferredSiteId { get; set; }
     }
 }
