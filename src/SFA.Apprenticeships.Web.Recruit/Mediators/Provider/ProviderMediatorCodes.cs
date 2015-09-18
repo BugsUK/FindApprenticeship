@@ -18,6 +18,7 @@
         public static class UpdateSites
         {
             public const string FailedValidation = "Provider.UpdateSites.FailedValidation";
+            public const string NoUserProfile = "Provider.UpdateSites.NoUserProfile";
             public const string Ok = "Provider.UpdateSites.Ok";
         }
 

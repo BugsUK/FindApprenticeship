@@ -31,6 +31,19 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             return Convert(provider, providerSites);
         }
 
+        public ProviderViewModel SaveProviderViewModel(string ukprn, ProviderViewModel providerViewModel)
+        {
+            var provider = _providerService.GetProvider(ukprn);
+            var providerSites = _providerService.GetProviderSites(ukprn);
+
+            //TODO: Combine existing with anything that can be updated from the passed view model
+
+            _providerService.SaveProvider(provider);
+            _providerService.SaveProviderSites(providerSites);
+
+            return GetProviderViewModel(ukprn);
+        }
+
         public ProviderSiteViewModel GetProviderSiteViewModel(string ern)
         {
             return new ProviderSiteViewModel

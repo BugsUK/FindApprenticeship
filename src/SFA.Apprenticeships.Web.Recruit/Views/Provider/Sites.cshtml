@@ -19,6 +19,7 @@
     <div class="form-group">
         <h2 class="heading-medium">Provider name</h2>
         <span>@Model.ProviderName</span>
+        @Html.HiddenFor(m => m.ProviderName)
     </div>
 
     //@Html.FormTextFor(m => m.ProviderName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })

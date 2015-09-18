@@ -10,6 +10,10 @@
     {
         Provider GetProvider(string ukprn);
 
+        void SaveProvider(Provider provider);
+
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
+
+        void SaveProviderSites(IEnumerable<ProviderSite> providerSites);
     }
 }

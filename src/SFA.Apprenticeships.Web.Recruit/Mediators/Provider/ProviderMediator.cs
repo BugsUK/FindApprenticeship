@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
 {
     using Application.Organisation;
     using Common.Constants;
+    using Constants.Messages;
     using Constants.Pages.Provider;
     using Providers;
     using Validators.Provider;
@@ -13,15 +14,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
     {
         private readonly IProviderProvider _providerProvider;
         private readonly IVerifiedOrganisationProvider _verifiedOrganisationProvider;
+        private readonly IProviderUserProvider _providerUserProvider;
 
         private readonly ProviderSiteSearchViewModelValidator _providerSiteSearchViewModelValidator;
         private readonly ProviderViewModelValidator _providerViewModelValidator;
         private readonly ProviderSiteViewModelValidator _providerSiteViewModelValidator;
 
-        public ProviderMediator(IProviderProvider providerProvider, IVerifiedOrganisationProvider verifiedOrganisationProvider, ProviderViewModelValidator providerViewModelValidator, ProviderSiteViewModelValidator providerSiteViewModelValidator, ProviderSiteSearchViewModelValidator providerSiteSearchViewModelValidator)
+        public ProviderMediator(IProviderProvider providerProvider, IVerifiedOrganisationProvider verifiedOrganisationProvider, IProviderUserProvider providerUserProvider, ProviderViewModelValidator providerViewModelValidator, ProviderSiteViewModelValidator providerSiteViewModelValidator, ProviderSiteSearchViewModelValidator providerSiteSearchViewModelValidator)
         {
             _providerProvider = providerProvider;
             _verifiedOrganisationProvider = verifiedOrganisationProvider;
+            _providerUserProvider = providerUserProvider;
             _providerViewModelValidator = providerViewModelValidator;
             _providerSiteViewModelValidator = providerSiteViewModelValidator;
             _providerSiteSearchViewModelValidator = providerSiteSearchViewModelValidator;
@@ -59,13 +62,20 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
             return GetMediatorResponse(ProviderMediatorCodes.Sites.Ok, providerProfile);
         }
 
-        public MediatorResponse<ProviderViewModel> UpdateSites(ProviderViewModel providerViewModel)
+        public MediatorResponse<ProviderViewModel> UpdateSites(string ukprn, string username, ProviderViewModel providerViewModel)
         {
             var result = _providerViewModelValidator.Validate(providerViewModel);
 
             if (!result.IsValid)
             {
                 return GetMediatorResponse(ProviderMediatorCodes.UpdateSites.FailedValidation, providerViewModel, result);
+            }
+
+            providerViewModel = _providerProvider.SaveProviderViewModel(ukprn, providerViewModel);
+
+            if (_providerUserProvider.GetUserProfileViewModel(username) == null)
+            {
+                return GetMediatorResponse(ProviderMediatorCodes.UpdateSites.NoUserProfile, providerViewModel, AuthorizeMessages.NoUserProfile, UserMessageLevel.Info);
             }
 
             return GetMediatorResponse(ProviderMediatorCodes.UpdateSites.Ok, providerViewModel);

@@ -36,7 +36,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         public ActionResult Sites(ProviderViewModel providerViewModel)
         {
-            var response = _providerMediator.UpdateSites(providerViewModel);
+            var response = _providerMediator.UpdateSites(User.GetUkprn(), User.Identity.Name, providerViewModel);
 
             ModelState.Clear();
 
@@ -45,6 +45,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case ProviderMediatorCodes.UpdateSites.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
+                case ProviderMediatorCodes.UpdateSites.NoUserProfile:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return RedirectToRoute(RecruitmentRouteNames.Settings);
                 case ProviderMediatorCodes.UpdateSites.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.ManageProviderSites);
                 default:

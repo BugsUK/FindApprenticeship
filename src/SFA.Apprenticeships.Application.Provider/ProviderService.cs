@@ -48,6 +48,11 @@
             return provider;
         }
 
+        public void SaveProvider(Provider provider)
+        {
+            _providerWriteRepository.Save(provider);
+        }
+
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
@@ -66,6 +71,14 @@
             providerSites = _organisationService.GetProviderSites(ukprn);
 
             return providerSites;
+        }
+
+        public void SaveProviderSites(IEnumerable<ProviderSite> providerSites)
+        {
+            foreach (var providerSite in providerSites)
+            {
+                _providerSiteWriteRepository.Save(providerSite);
+            }
         }
     }
 }
