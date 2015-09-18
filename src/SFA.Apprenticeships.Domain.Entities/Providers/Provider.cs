@@ -2,7 +2,8 @@
 {
     public class Provider : BaseEntity
     {
-        // name, ukprn, etc.
         public string Ukprn { get; set; }
+
+        public string Name { get; set; }
     }
 }

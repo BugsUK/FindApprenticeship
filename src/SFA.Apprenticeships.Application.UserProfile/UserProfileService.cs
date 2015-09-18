@@ -1,15 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Application.UserProfile
 {
-    using System;
+    using System.Collections.Generic;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Interfaces.Users;
 
-    public class ProviderUserService : IProviderUserService
+    public class UserProfileService : IUserProfileService
     {
         private readonly IProviderUserReadRepository _providerUserReadRepository;
         private readonly IProviderUserWriteRepository _providerUserWriteRepository;
         
-        public ProviderUserService(IProviderUserReadRepository providerUserReadRepository, IProviderUserWriteRepository providerUserWriteRepository)
+        public UserProfileService(IProviderUserReadRepository providerUserReadRepository, IProviderUserWriteRepository providerUserWriteRepository)
         {
             _providerUserReadRepository = providerUserReadRepository;
             _providerUserWriteRepository = providerUserWriteRepository;
@@ -20,13 +21,12 @@
             return _providerUserReadRepository.Get(username);
         }
 
-        public ProviderUser CreateProviderUser(ProviderUser providerUser)
+        public IEnumerable<ProviderUser> GetProviderUsers(string ukprn)
         {
-            //Throw error is already exixts.
-            return null;
+            return _providerUserReadRepository.GetForProvider(ukprn);
         }
 
-        public ProviderUser UpdateProviderUser(ProviderUser providerUser)
+        public ProviderUser SaveUser(ProviderUser providerUser)
         {
             //Check if email is being updated and set pending, vertification code, send email etc
             return null;

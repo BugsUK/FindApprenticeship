@@ -4,6 +4,9 @@ using SFA.Apprenticeships.Web.Recruit.Providers;
 
 namespace SFA.Apprenticeships.Web.Recruit.IoC {
     using Application.Interfaces.Logging;
+    using Application.Interfaces.Providers;
+    using Application.Interfaces.Users;
+    using Application.Provider;
     using Application.UserProfile;
     using Common.IoC;
     using Common.Providers;
@@ -42,7 +45,8 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
 
-                x.For<IProviderUserService>().Use<ProviderUserService>();
+                x.For<IProviderService>().Use<ProviderService>();
+                x.For<IUserProfileService>().Use<UserProfileService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

@@ -1,21 +1,24 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Application.Interfaces.Users;
     using Application.UserProfile;
     using Domain.Entities.Users;
     using ViewModels.ProviderUser;
 
     public class ProviderUserProvider : IProviderUserProvider
     {
-        private readonly IProviderUserService _providerUserService;
+        private readonly IUserProfileService _userProfileService;
 
-        public ProviderUserProvider(IProviderUserService providerUserService)
+        public ProviderUserProvider(IUserProfileService userProfileService)
         {
-            _providerUserService = providerUserService;
+            _userProfileService = userProfileService;
         }
 
         public ProviderUserViewModel GetUserProfileViewModel(string username)
         {
-            var providerUser = _providerUserService.GetProviderUser(username);
+            var providerUser = _userProfileService.GetProviderUser(username);
             if (providerUser != null)
             {
                 return Convert(providerUser);
@@ -35,6 +38,12 @@
             //end stub code
         }
 
+        public IEnumerable<ProviderUserViewModel> GetUserProfileViewModels(string ukprn)
+        {
+            var providerUsers = _userProfileService.GetProviderUsers(ukprn);
+            return providerUsers.Select(Convert);
+        }
+
         public bool ValidateEmailVerificationCode(string username, string code)
         {
             //Stub
@@ -49,7 +58,7 @@
             //End Stub
         }
 
-        private ProviderUserViewModel Convert(ProviderUser providerUser)
+        private static ProviderUserViewModel Convert(ProviderUser providerUser)
         {
             var viewModel = new ProviderUserViewModel
             {

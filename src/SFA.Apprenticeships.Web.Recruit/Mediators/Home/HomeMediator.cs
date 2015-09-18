@@ -70,6 +70,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
 
             if (userProfile == null)
             {
+                var isFirstUser = !_userProfileProvider.GetUserProfileViewModels(ukprn).Any();
+                if (isFirstUser)
+                {
+                    return GetMediatorResponse(HomeMediatorCodes.Authorize.FirstUser, viewModel, AuthorizeMessages.FirstUser, UserMessageLevel.Info);
+                }
+
                 return GetMediatorResponse(HomeMediatorCodes.Authorize.NoUserProfile, viewModel, AuthorizeMessages.NoUserProfile, UserMessageLevel.Info);
             }
 

@@ -86,10 +86,12 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ILegacyProviderProvider.cs" />
     <Compile Include="IProviderDataProvider.cs" />
     <Compile Include="IVerifiedOrganisationProvider.cs" />
     <Compile Include="OrganisationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StubLegacyProviderProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

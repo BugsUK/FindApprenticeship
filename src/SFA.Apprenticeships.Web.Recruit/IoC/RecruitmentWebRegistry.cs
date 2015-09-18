@@ -21,6 +21,7 @@
 
         private void RegisterProviders()
         {
+            For<ILegacyProviderProvider>().Use<StubLegacyProviderProvider>();
         }
 
         private void RegisterServices()

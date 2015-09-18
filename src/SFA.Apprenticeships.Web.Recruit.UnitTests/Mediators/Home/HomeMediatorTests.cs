@@ -95,7 +95,10 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
                 ProviderSiteViewModels = new List<ProviderSiteViewModel> {new ProviderSiteViewModel()}
             };
             providerProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(providerViewModel);
-            var mediator = new HomeMediatorBuilder().With(providerProvider).Build();
+            var userProfileProvider = new Mock<IProviderUserProvider>();
+            userProfileProvider.Setup(p => p.GetUserProfileViewModels(It.IsAny<string>()))
+                .Returns(new List<ProviderUserViewModel> {new ProviderUserViewModel()});
+            var mediator = new HomeMediatorBuilder().With(providerProvider).With(userProfileProvider).Build();
 
             var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
 

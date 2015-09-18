@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Users
 {
-    using System;
+    using System.Collections.Generic;
+    using Domain.Entities.Users;
 
     /// <summary>
     /// For managing user profiles for users that are authenticated outside the service (ie. SSO). 
@@ -8,7 +9,10 @@
     /// </summary>
     public interface IUserProfileService
     {
-        // GetProviderUser (id) -> ProviderUser
-        // SaveUser (ProviderUser)
+        ProviderUser GetProviderUser(string username);
+
+        IEnumerable<ProviderUser> GetProviderUsers(string ukprn);
+
+        ProviderUser SaveUser(ProviderUser providerUser);
     }
 }

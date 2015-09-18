@@ -69,6 +69,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     return RedirectToRoute(RecruitmentRouteNames.SignOut, new { returnRoute = RecruitmentRouteNames.LandingPage });
                 case HomeMediatorCodes.Authorize.NoProviderProfile:
                 case HomeMediatorCodes.Authorize.FailedMinimumSitesCountCheck:
+                case HomeMediatorCodes.Authorize.FirstUser:
                     return RedirectToRoute(RecruitmentRouteNames.ManageProviderSites);
                 case HomeMediatorCodes.Authorize.NoUserProfile:
                     return RedirectToRoute(RecruitmentRouteNames.Settings);

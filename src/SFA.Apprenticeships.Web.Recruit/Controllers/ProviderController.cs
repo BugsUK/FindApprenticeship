@@ -24,7 +24,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.VerifiedEmail)]
         public ActionResult Sites()
         {
             var ukprn = User.GetUkprn();
@@ -35,7 +34,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.VerifiedEmail)]
         public ActionResult Sites(ProviderViewModel providerViewModel)
         {
             var response = _providerMediator.UpdateSites(providerViewModel);

@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Logging;
     using Domain.Entities.Users;
     using Domain.Interfaces.Configuration;
@@ -42,6 +44,20 @@
             var mongoEntity = Collection.FindOne(Query<MongoProviderUser>.EQ(e => e.Username, username));
 
             return mongoEntity == null ? null : _mapper.Map<MongoProviderUser, ProviderUser>(mongoEntity);
+        }
+
+        public IEnumerable<ProviderUser> GetForProvider(string ukprn)
+        {
+            _logger.Debug("Called Mongodb to get provider users for provider with UKPRN={0}", ukprn);
+
+            var mongoEntities = Collection.Find(Query<MongoProviderUser>.EQ(e => e.Ukprn, ukprn));
+
+            var entities =
+                _mapper.Map<IEnumerable<MongoProviderUser>, IEnumerable<ProviderUser>>(mongoEntities).ToList();
+
+            _logger.Debug("Found {1} provider users for provider with UKPRN={0}", ukprn, entities.Count);
+
+            return entities;
         }
 
         public void Delete(Guid id)
