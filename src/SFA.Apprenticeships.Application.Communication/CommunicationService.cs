@@ -16,19 +16,20 @@
         private readonly ISendContactMessageStrategy _sendContactMessageStrategy;
         private readonly ISendUsernameUpdateCommunicationStrategy _sendUsernameUpdateCommunicationStrategy;
 
-        public CommunicationService(ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
+        public CommunicationService(
+            ILogService logger,
+            ISendApplicationSubmittedStrategy sendApplicationSubmittedStrategy,
             ISendTraineeshipApplicationSubmittedStrategy sendTraineeshipApplicationSubmittedStrategy, 
             ISendCandidateCommunicationStrategy sendCandidateCommunicationStrategy, 
             ISendContactMessageStrategy sendContactMessageStrategy,
-            ISendUsernameUpdateCommunicationStrategy sendUsernameUpdateCommunicationStrategy,
-            ILogService logger)
+            ISendUsernameUpdateCommunicationStrategy sendUsernameUpdateCommunicationStrategy)
         {
+            _logger = logger;
             _sendApplicationSubmittedStrategy = sendApplicationSubmittedStrategy;
             _sendTraineeshipApplicationSubmittedStrategy = sendTraineeshipApplicationSubmittedStrategy;
             _sendCandidateCommunicationStrategy = sendCandidateCommunicationStrategy;
             _sendContactMessageStrategy = sendContactMessageStrategy;
             _sendUsernameUpdateCommunicationStrategy = sendUsernameUpdateCommunicationStrategy;
-            _logger = logger;
         }
 
         public void SendMessageToCandidate(Guid candidateId, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
@@ -60,7 +61,7 @@
                     _sendUsernameUpdateCommunicationStrategy.Send(candidateId, messageType, tokens);
                     break;
                 default:
-                    throw new ArgumentOutOfRangeException("messageType");
+                    throw new ArgumentOutOfRangeException(nameof(messageType));
             }
         }
 

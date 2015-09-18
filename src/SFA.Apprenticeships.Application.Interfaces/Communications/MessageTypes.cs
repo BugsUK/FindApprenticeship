@@ -22,6 +22,7 @@
         SendActivationCodeReminder = 17,
         SendMobileVerificationCodeReminder = 18,
         SendDormantAccountReminder = 19,
-        CandidateFeedbackMessage = 20
+        CandidateFeedbackMessage = 20,
+        SendProviderUserEmailVerificationCode = 21
     }
 }

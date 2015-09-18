@@ -7,11 +7,13 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
     using Application.Provider;
+    using Application.UserAccount;
     using Application.UserProfile;
     using Common.IoC;
     using Common.Providers;
     using Common.Services;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
@@ -44,9 +46,11 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
+                x.AddRegistry<AzureServiceBusRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
+                x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

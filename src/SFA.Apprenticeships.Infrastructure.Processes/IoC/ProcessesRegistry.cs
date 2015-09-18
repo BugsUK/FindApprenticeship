@@ -50,6 +50,7 @@
             For<CommunicationCommand>().Use<CandidateCommunicationCommand>();
             For<CommunicationCommand>().Use<CandidateDailyDigestCommunicationCommand>();
             For<CommunicationCommand>().Use<HelpDeskCommunicationCommand>();
+            For<CommunicationCommand>().Use<ProviderCommunicationCommand>();
 
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
             For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();

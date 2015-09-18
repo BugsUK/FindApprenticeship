@@ -86,6 +86,7 @@
     <Compile Include="Communications\CommunicationChannels.cs" />
     <Compile Include="Communications\CommunicationRequestHelpers.cs" />
     <Compile Include="Communications\ErrorCodes.cs" />
+    <Compile Include="Communications\IProviderCommunicationService.cs" />
     <Compile Include="Communications\SubscriptionTypes.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Logging\ILogService.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Providers\IProviderService.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Search\AggregationResult.cs" />
+    <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />
     <Compile Include="Vacancies\VacancySearchParametersBase.cs" />

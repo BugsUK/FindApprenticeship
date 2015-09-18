@@ -34,6 +34,9 @@
         CandidateSubscriberId = 29,
         CandidateSubscriptionType = 30,
         LastLogin = 31,
-        AccountExpiryDate = 32
+        AccountExpiryDate = 32,
+        ProviderUserEmailVerificationCode = 33,
+        ProviderUserFullName = 34,
+        ProviderUserUsername = 35
     }
 }

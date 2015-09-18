@@ -8,7 +8,7 @@
 
     public class CommunicationRequestSubscriber : IServiceBusSubscriber<CommunicationRequest>
     {
-        private readonly List<CommunicationCommand> _communicationCommands = new List<CommunicationCommand>();
+        private readonly List<CommunicationCommand> _communicationCommands;
 
         public CommunicationRequestSubscriber(IEnumerable<CommunicationCommand> communicationCommands)
         {

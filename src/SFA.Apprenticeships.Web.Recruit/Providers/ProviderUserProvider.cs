@@ -4,17 +4,20 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Users;
-    using Application.UserProfile;
     using Domain.Entities.Users;
     using ViewModels.ProviderUser;
 
     public class ProviderUserProvider : IProviderUserProvider
     {
         private readonly IUserProfileService _userProfileService;
+        private readonly IProviderUserAccountService _providerUserAccountService;
 
-        public ProviderUserProvider(IUserProfileService userProfileService)
+        public ProviderUserProvider(
+            IUserProfileService userProfileService,
+            IProviderUserAccountService providerUserAccountService)
         {
             _userProfileService = userProfileService;
+            _providerUserAccountService = providerUserAccountService;
         }
 
         public ProviderUserViewModel GetUserProfileViewModel(string username)
@@ -76,10 +79,13 @@
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
             providerUser.PreferredSiteErn = providerUserViewModel.DefaultTrainingSiteErn;
-            providerUser.EmailVerificationCode = providerUser.EmailVerificationCode ?? "ABC123";
             providerUser.Status = ProviderUserStatuses.Registered;
 
             _userProfileService.SaveUser(providerUser);
+
+            // TODO: AG: US824: call to this service must be moved. Note that this service is responsible for generating the email
+            // verification code and updating the user again so take care must be taken around other calls to UserProfileService.SaveUser().
+            _providerUserAccountService.SendEmailVerificationCode(username);
 
             return GetUserProfileViewModel(providerUser.Username);
         }

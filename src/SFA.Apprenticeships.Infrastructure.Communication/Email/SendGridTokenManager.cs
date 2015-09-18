@@ -96,8 +96,17 @@ namespace SFA.Apprenticeships.Infrastructure.Communication.Email
                 case CommunicationTokens.AccountExpiryDate:
                     emailTemplateToken = "Candidate.AccountExpiryDate";
                     break;
+                case CommunicationTokens.ProviderUserEmailVerificationCode:
+                    emailTemplateToken = "ProviderUser.EmailVerificationCode";
+                    break;
+                case CommunicationTokens.ProviderUserFullName:
+                    emailTemplateToken = "ProviderUser.FullName";
+                    break;
+                case CommunicationTokens.ProviderUserUsername:
+                    emailTemplateToken = "ProviderUser.Username";
+                    break;
                 default:
-                    throw new ArgumentOutOfRangeException("key", key, string.Format("Unknown communication token '{0}'.", key));
+                    throw new ArgumentOutOfRangeException(nameof(key), key, string.Format("Unknown communication token '{0}'.", key));
             }
 
             return string.Format("{0}{1}{0}", TemplateTokenDelimiter, emailTemplateToken);
