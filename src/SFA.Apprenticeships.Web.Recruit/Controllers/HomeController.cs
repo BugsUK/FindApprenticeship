@@ -6,15 +6,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Security.Claims;
     using System.Web.Mvc;
-    using System.Linq;
-    using System.Web;
     using Common.Constants;
     using Common.Controllers;
     using Common.Framework;
     using Constants;
-    using Microsoft.Owin.Security;
-    using Microsoft.Owin.Security.Cookies;
-    using Microsoft.Owin.Security.WsFederation;
     using Providers;
     using ViewModels;
 
