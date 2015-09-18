@@ -47,10 +47,14 @@
 
         public bool ValidateEmailVerificationCode(string username, string code)
         {
-            //Stub
+            var providerUser = _userProfileService.GetProviderUser(username);
 
-            if (code == "ABC123")
+            if (code == providerUser.VerificationCode)
             {
+                //TODO: Probably put all this in a strategy in the service
+                providerUser.VerificationCode = null;
+                _userProfileService.SaveUser(providerUser);
+
                 return true;
             }
 
