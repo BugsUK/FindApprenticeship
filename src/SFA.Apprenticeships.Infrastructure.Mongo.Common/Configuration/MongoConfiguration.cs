@@ -8,8 +8,6 @@
 
         public string UsersDb { get; set; }
 
-        public string UserProfilesDb { get; set; }
-
         public string CommunicationsDb { get; set; }
 
         public string AdminDb { get; set; }
@@ -17,6 +15,10 @@
         public string AuthenticationDb { get; set; }
 
         public string AuditDb { get; set; }
+
+        public string UserProfilesDb { get; set; }
+
+        public string ProvidersDb { get; set; }
 
         public string MetricsCandidatesDb { get; set; }
 

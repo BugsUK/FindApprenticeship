@@ -63,7 +63,7 @@
 
             Collection.Save(mongoEntity);
 
-            _logger.Debug("Saved User to Mongodb with username={0}", entity.Username);
+            _logger.Debug("Saved provider user to Mongodb with username={0}", entity.Username);
 
             return _mapper.Map<MongoProviderUser, ProviderUser>(mongoEntity);
         }
