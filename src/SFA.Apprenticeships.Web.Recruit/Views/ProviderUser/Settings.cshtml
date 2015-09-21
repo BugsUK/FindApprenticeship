@@ -52,15 +52,13 @@
             <p class="form-label">Your default training site</p>
             @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultTrainingSiteId, Model.ProviderSites, new {@class = "chosen-select"})
         </div>
-        <div class="toggle-content" id="newProviderTerms">
+
+        <div class="toggle-content" id="newProviderTerms" style="display: block;">
             <p>
                 By continuing you accept the <a href="terms-and-conditions.html" target="_blank">terms and conditions</a> of
                 this site.
             </p>
             <button class="button">Accept and continue</button>
-        </div>
-        <div class="" id="userInfoSaveBtn">
-            <button class="button">Save details</button>
         </div>
     }
 </div>

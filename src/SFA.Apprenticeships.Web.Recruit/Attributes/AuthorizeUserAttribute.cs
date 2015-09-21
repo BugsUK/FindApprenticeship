@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Attributes
 {
     using System.Web.Mvc;
+    using System.Web.Mvc.Filters;
     using System.Web.Routing;
     using Constants;
 
@@ -29,6 +30,11 @@
                     filterContext.Result = new RedirectToRouteResult(RecruitmentRouteNames.SignIn, routeValues);
                 }
             }
+        }
+
+        public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
+        {
+
         }
 
         private static string GetReturnUrl(AuthorizationContext filterContext)
