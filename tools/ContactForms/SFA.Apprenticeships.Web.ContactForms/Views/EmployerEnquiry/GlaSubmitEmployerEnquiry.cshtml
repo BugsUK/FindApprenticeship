@@ -87,7 +87,7 @@
             @Html.ValidationMessageFor(model => model.WorkSector)
         </div>
         <legend class="heading-large">Your enquiry</legend>
-        <div class="form-group" style="display: none">
+        <div class="form-group">
             @Html.FormLabelFor(m => m.EnquiryRelatesTo)
             @Html.DropDownListFor(m => m.EnquiryRelatesTo, Model.EnquiryRelatesToList)
             @Html.ValidationMessageFor(model => model.EnquiryRelatesTo)

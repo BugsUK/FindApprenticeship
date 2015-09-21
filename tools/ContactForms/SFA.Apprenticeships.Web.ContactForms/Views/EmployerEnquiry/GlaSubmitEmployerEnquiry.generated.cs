@@ -363,8 +363,6 @@ WriteLiteral(">Your enquiry</legend>\r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(" style=\"display: none\"");
-
 WriteLiteral(">\r\n");
 
 WriteLiteral("            ");
