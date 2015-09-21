@@ -73,7 +73,14 @@
                 return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.FailedValidation, viewModel, result);
             }
 
+            var existingUser = _providerUserProvider.GetUserProfileViewModel(username);
+
             viewModel.ProviderUserViewModel = _providerUserProvider.SaveProviderUser(username, ukprn, providerUserViewModel);
+
+            if (existingUser != null && existingUser.EmailAddress != viewModel.ProviderUserViewModel.EmailAddress)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.EmailUpdated, viewModel);
+            }
 
             return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.Ok, viewModel);
         }

@@ -12,12 +12,14 @@
 
         public string Email { get; set; }
 
-        public string PendingEmail { get; set; }
+        public string EmailVerificationCode { get; set; }
 
-        public string VerificationCode { get; set; }
+        public DateTime? EmailVerifiedDate { get; set; }
 
         public string PreferredSiteErn { get; set; }
 
         public string PhoneNumber { get; set; }
+
+        public ProviderUserStatuses Status { get; set; }
     }
 }

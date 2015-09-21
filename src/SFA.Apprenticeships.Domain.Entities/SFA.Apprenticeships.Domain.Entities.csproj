@@ -114,6 +114,7 @@
     <Compile Include="Providers\Provider.cs" />
     <Compile Include="Providers\ProviderSite.cs" />
     <Compile Include="ReferenceData\Category.cs" />
+    <Compile Include="Users\ProviderUserStatuses.cs" />
     <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchMode.cs" />

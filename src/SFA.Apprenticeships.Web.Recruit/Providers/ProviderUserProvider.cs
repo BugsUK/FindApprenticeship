@@ -49,10 +49,12 @@
         {
             var providerUser = _userProfileService.GetProviderUser(username);
 
-            if (code == providerUser.VerificationCode)
+            if (code == providerUser.EmailVerificationCode)
             {
                 //TODO: Probably put all this in a strategy in the service
-                providerUser.VerificationCode = null;
+                providerUser.EmailVerificationCode = null;
+                providerUser.EmailVerifiedDate = DateTime.UtcNow;
+                providerUser.Status = ProviderUserStatuses.EmailVerified;
                 _userProfileService.SaveUser(providerUser);
 
                 return true;
@@ -74,7 +76,8 @@
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
             providerUser.PreferredSiteErn = providerUserViewModel.DefaultTrainingSiteErn;
-            providerUser.VerificationCode = providerUser.VerificationCode ?? "ABC123";
+            providerUser.EmailVerificationCode = providerUser.EmailVerificationCode ?? "ABC123";
+            providerUser.Status = ProviderUserStatuses.Registered;
 
             _userProfileService.SaveUser(providerUser);
 
@@ -87,8 +90,7 @@
             {
                 DefaultTrainingSiteErn = providerUser.PreferredSiteErn,
                 EmailAddress = providerUser.Email,
-                //TODO: Check with Krister how we're storing EmailAddressVerified
-                EmailAddressVerified = providerUser.VerificationCode == null,
+                EmailAddressVerified = providerUser.Status == ProviderUserStatuses.EmailVerified,
                 Fullname = providerUser.Fullname,
                 PhoneNumber = providerUser.PhoneNumber
             };
