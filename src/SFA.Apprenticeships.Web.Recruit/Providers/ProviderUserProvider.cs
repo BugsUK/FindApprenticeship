@@ -73,7 +73,7 @@
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
-            providerUser.PreferredSiteId = providerUserViewModel.DefaultTrainingSiteId;
+            providerUser.PreferredSiteErn = providerUserViewModel.DefaultTrainingSiteErn;
             providerUser.VerificationCode = providerUser.VerificationCode ?? "ABC123";
 
             _userProfileService.SaveUser(providerUser);
@@ -85,7 +85,7 @@
         {
             var viewModel = new ProviderUserViewModel
             {
-                DefaultTrainingSiteId = providerUser.PreferredSiteId,
+                DefaultTrainingSiteErn = providerUser.PreferredSiteErn,
                 EmailAddress = providerUser.Email,
                 //TODO: Check with Krister how we're storing EmailAddressVerified
                 EmailAddressVerified = providerUser.VerificationCode == null,

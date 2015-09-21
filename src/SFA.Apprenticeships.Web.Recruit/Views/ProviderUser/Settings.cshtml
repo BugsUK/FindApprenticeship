@@ -50,7 +50,7 @@
 
         <div class="form-group">
             <p class="form-label">Your default training site</p>
-            @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultTrainingSiteId, Model.ProviderSites, new {@class = "chosen-select"})
+            @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultTrainingSiteErn, Model.ProviderSites, new {@class = "chosen-select"})
         </div>
 
         <div class="toggle-content" id="newProviderTerms" style="display: block;">
