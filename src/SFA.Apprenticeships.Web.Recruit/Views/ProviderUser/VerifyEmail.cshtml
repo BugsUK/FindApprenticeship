@@ -25,9 +25,11 @@
 
     @Html.FormTextFor(
             m => m.VerificationCode,
-            controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false", @class = "form-control-1-3" })    
+            controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false", @class = "form-control-1-3" })
     
     <p><a href="@Url.RouteUrl(RecruitmentRouteNames.ResendVertificationCode)">Resend code</a></p>
+    
+    <p><a href="@Url.RouteUrl(RecruitmentRouteNames.Settings)">Change email</a></p>
 
     <div class="form-group">
         <button class="button activate-page-btn" id="btnSignIn">Verify email</button>
