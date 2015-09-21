@@ -32,6 +32,24 @@
                );
 
             routes.MapRoute(
+                name: EmployerRouteNames.SubmitEmployerEnquiryThankYou,
+                url: "employer-enquiry-end",
+                defaults: new { controller = "EmployerEnquiry", action = "ThankYou" }
+                );
+
+            routes.MapRoute(
+               name: EmployerRouteNames.GlaSubmitEmployerEnquiryThankYou,
+               url: "gla-employer-enquiry-end",
+               defaults: new { controller = "EmployerEnquiry", action = "GlaThankYou" }
+               );
+
+            routes.MapRoute(
+               name: EmployerRouteNames.AccessRequestThankYou,
+               url: "access-request-end",
+               defaults: new { controller = "AccessRequest", action = "ThankYou" }
+               );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "EmployerEnquiry", action = "SubmitEmployerEnquiry", id = UrlParameter.Optional }

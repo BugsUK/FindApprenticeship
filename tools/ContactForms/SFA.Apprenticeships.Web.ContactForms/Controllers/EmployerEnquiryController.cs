@@ -2,6 +2,8 @@
 {
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Constants;
+    using Constants.Pages;
     using FluentValidation.Mvc;
     using Framework.Attributes;
     using Mediators;
@@ -46,9 +48,7 @@
                         SetPageMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case EmployerEnquiryMediatorCodes.SubmitEnquiry.Success:
-                        SetPageMessage(response.Message.Text, response.Message.Level);
-                        ViewBag.Title = "Employer enquiry-Thank You";
-                        return View("ThankYou");
+                        return RedirectToRoute(EmployerRouteNames.SubmitEmployerEnquiryThankYou);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -84,9 +84,7 @@
                         SetPageMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case EmployerEnquiryMediatorCodes.SubmitEnquiry.Success:
-                        SetPageMessage(response.Message.Text, response.Message.Level);
-                        ViewBag.Title = "Gla Employer enquiry-Thank You";
-                        return View("GlaThankYou");
+                        return RedirectToRoute(EmployerRouteNames.GlaSubmitEmployerEnquiryThankYou);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -95,6 +93,15 @@
 
         public async Task<ActionResult> ThankYou()
         {
+            SetPageMessage(EmployerEnquiryPageMessages.QueryHasBeenSubmittedSuccessfully);
+            ViewBag.Title = "Employer enquiry-Thank You";
+            return await Task.Run<ActionResult>(() => View());
+        }
+
+        public async Task<ActionResult> GlaThankYou()
+        {
+            SetPageMessage(EmployerEnquiryPageMessages.QueryHasBeenSubmittedSuccessfully);
+            ViewBag.Title = "Gla Employer enquiry-Thank You";
             return await Task.Run<ActionResult>(() => View());
         }
     }

@@ -2,6 +2,8 @@
 {
     using System.Threading.Tasks;
     using System.Web.Mvc;
+    using Constants;
+    using Constants.Pages;
     using Framework.Attributes;
     using Mediators;
     using Mediators.Interfaces;
@@ -46,9 +48,7 @@
                         SetPageMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case AccessRequestMediatorCodes.SubmitAccessRequest.Success:
-                        SetPageMessage(response.Message.Text, response.Message.Level);
-                        ViewBag.Title = "Access request-Thank You";
-                        return View("ThankYou");
+                        return RedirectToRoute(EmployerRouteNames.AccessRequestThankYou);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);
                 }
@@ -57,7 +57,8 @@
 
         public async Task<ActionResult> ThankYou()
         {
-            ViewBag.Title = "Access Request-Thank You";
+            SetPageMessage(AccessRequestPageMessages.RequestHasBeenSubmittedSuccessfully);
+            ViewBag.Title = "Access request-Thank You";
             return await Task.Run<ActionResult>(() => View());
         }
     }
