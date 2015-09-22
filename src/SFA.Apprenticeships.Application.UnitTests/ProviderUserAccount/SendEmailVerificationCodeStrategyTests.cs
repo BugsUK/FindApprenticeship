@@ -36,7 +36,6 @@
                 Setup(mock => mock.GenerateAlphaNumeric(SendEmailVerificationCodeStrategy.EmailVerificationCodeLength))
                 .Returns(EmailVerificationCode);
 
-
             // Provider user read repository.
             _mockProviderUserReadRepository = new Mock<IProviderUserReadRepository>();
 
@@ -124,9 +123,14 @@
         public void ShouldSendCommunicationRequest()
         {
             // Arrange.
+            var providerUser = new ProviderUser
+            {
+                Username = ValidUsername
+            };
+
             _mockProviderUserReadRepository
                 .Setup(mock => mock.Get(ValidUsername))
-                .Returns(new ProviderUser());
+                .Returns(providerUser);
 
             var communicationTokens = default(IEnumerable<CommunicationToken>);
 
@@ -151,6 +155,7 @@
 
             communicationTokens.ShouldAllBeEquivalentTo(new[]
             {
+                new CommunicationToken(CommunicationTokens.ProviderUserUsername, ValidUsername),
                 new CommunicationToken(CommunicationTokens.ProviderUserEmailVerificationCode, EmailVerificationCode)
             });
         }

@@ -44,6 +44,7 @@
             _communicationService.SendMessageToProviderUser(username, MessageTypes.SendProviderUserEmailVerificationCode,
                 new[]
                 {
+                    new CommunicationToken(CommunicationTokens.ProviderUserUsername, providerUser.Username),
                     new CommunicationToken(CommunicationTokens.ProviderUserEmailVerificationCode, providerUser.EmailVerificationCode)
                 });
         }

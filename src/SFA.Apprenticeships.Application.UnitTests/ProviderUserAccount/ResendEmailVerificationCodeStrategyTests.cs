@@ -83,6 +83,7 @@
                 .Setup(mock => mock.Get(UnverifiedUsername))
                 .Returns(new ProviderUser
                 {
+                    Username = UnverifiedUsername,
                     Status = ProviderUserStatuses.Registered,
                     EmailVerificationCode = EmailVerificationCode
                 });
@@ -110,6 +111,7 @@
 
             communicationTokens.ShouldAllBeEquivalentTo(new[]
             {
+                new CommunicationToken(CommunicationTokens.ProviderUserUsername, UnverifiedUsername),
                 new CommunicationToken(CommunicationTokens.ProviderUserEmailVerificationCode, EmailVerificationCode)
             });
         }
