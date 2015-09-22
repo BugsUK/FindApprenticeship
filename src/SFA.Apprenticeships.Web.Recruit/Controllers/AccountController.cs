@@ -53,7 +53,20 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
         }
 
-        public ActionResult SignOutCallback()
+        public void SessionTimeout()
+        {
+            var callbackUrl = Url.RouteUrl(RecruitmentRouteNames.SignOutCallback, new {timeout = true}, Request.Url?.Scheme ?? DefaultScheme);
+
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = callbackUrl
+            };
+
+            HttpContext.GetOwinContext().Authentication.SignOut(
+                properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+        }
+
+        public ActionResult SignOutCallback(bool timeout)
         {
             if (Request.IsAuthenticated)
             {
@@ -63,7 +76,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
             _authorizationDataProvider.Clear(HttpContext);
 
-            SetUserMessage(AuthorizeMessages.SignedOut, UserMessageLevel.Info);
+            if (timeout)
+            {
+                SetUserMessage(AuthorizeMessages.SignedOutTimeout, UserMessageLevel.Info);
+            }
+            else
+            {
+                SetUserMessage(AuthorizeMessages.SignedOut, UserMessageLevel.Info);
+            }
 
             return RedirectToRoute(RecruitmentRouteNames.LandingPage);
         }

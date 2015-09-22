@@ -13,6 +13,7 @@
         public const string ResendVerificationCode = "ResendVerificationCode";
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";
+        public const string SessionTimeout = "SessionTimeout";
         public const string SignOutCallback = "SignOutCallback";
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";

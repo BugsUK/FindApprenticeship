@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Attributes
 {
+    using System.Linq;
     using System.Web.Mvc;
     using System.Web.Mvc.Filters;
     using System.Web.Routing;
+    using System.Web.Security;
     using Constants;
 
     public class AuthorizeUserAttribute : AuthorizeAttribute
@@ -27,7 +29,15 @@
                 {
                     var routeValues = new RouteValueDictionary {{"ReturnUrl", GetReturnUrl(filterContext)}};
 
-                    filterContext.Result = new RedirectToRouteResult(RecruitmentRouteNames.SignIn, routeValues);
+                    //Session timeout detection
+                    if (filterContext.HttpContext.Request.Cookies.AllKeys.Contains(AuthenticationConfig.CookieName))
+                    {
+                        filterContext.Result = new RedirectToRouteResult(RecruitmentRouteNames.SessionTimeout, routeValues);
+                    }
+                    else
+                    {
+                        filterContext.Result = new RedirectToRouteResult(RecruitmentRouteNames.SignIn, routeValues);
+                    }
                 }
             }
         }

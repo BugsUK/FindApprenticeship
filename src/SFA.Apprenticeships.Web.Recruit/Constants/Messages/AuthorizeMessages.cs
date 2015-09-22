@@ -11,5 +11,6 @@
         public const string NoUserProfile = "Please fill in your user profile";
         public const string EmailAddressNotVerified = "Please verify your email address";
         public const string SignedOut = "You have successfully signed out";
+        public const string SignedOutTimeout = "You have been signed out due to inactivity";
     }
 }

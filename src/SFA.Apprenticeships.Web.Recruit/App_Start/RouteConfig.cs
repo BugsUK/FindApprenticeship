@@ -56,6 +56,12 @@
                 );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.SessionTimeout,
+                url: "sessiontimeout",
+                defaults: new { controller = "Account", action = "SessionTimeout" }
+                );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.SignOutCallback,
                 url: "signedout",
                 defaults: new { controller = "Account", action = "SignOutCallback" }

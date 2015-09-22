@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
+    using Attributes;
     using Common.Attributes;
     using Common.Controllers;
     using Common.Mediators;
@@ -12,7 +13,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Providers;
     using ViewModels.Provider;
 
-    [Authorize(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.Faa)]
     public class ProviderController : ControllerBase<RecuitmentUserContext>
     {
         private readonly IProviderMediator _providerMediator;
@@ -56,7 +57,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.VerifiedEmail)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult AddSite()
         {
             var response = _providerMediator.AddSite();
@@ -65,7 +66,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.VerifiedEmail)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         [MultipleFormActionsButton(SubmitButtonActionName = "AddSiteByEmployerReferenceNumber")]
         public ActionResult AddSiteByEmployerReferenceNumber(ProviderSiteSearchViewModel viewModel)
         {
@@ -95,7 +96,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = Roles.VerifiedEmail)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult EditSite(string ern)
         {
             var response = _providerMediator.GetSite(ern);
@@ -105,7 +106,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = Roles.VerifiedEmail)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult EditSite(ProviderSiteViewModel providerSiteViewModel)
         {
             var response = _providerMediator.UpdateSite(providerSiteViewModel);
