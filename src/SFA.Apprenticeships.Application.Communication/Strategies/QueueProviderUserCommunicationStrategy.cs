@@ -23,11 +23,10 @@
         {
             var providerUser = _providerUserReadRepository.Get(username);
 
-            // TODO: AG: US824: fix email address.
             tokens = tokens.Union(new[]
                 {
                     new CommunicationToken(CommunicationTokens.ProviderUserFullName, providerUser.Fullname), 
-                    new CommunicationToken(CommunicationTokens.RecipientEmailAddress, "valtechnas@gmail.com"),
+                    new CommunicationToken(CommunicationTokens.RecipientEmailAddress, providerUser.Email),
                 });
 
             var request = new CommunicationRequest
