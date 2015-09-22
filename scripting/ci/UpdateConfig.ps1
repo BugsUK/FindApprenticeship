@@ -29,7 +29,8 @@ $machineKeyFile = "$configPath\machineKey.config"
 
 $cscfgPathFormat = "$PSScriptRoot\..\..\config\{0}\ServiceConfiguration.$buildConfiguration.cscfg"
 $workerRolesCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Infrastructure.WorkerRoles.Azure"
-$webRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Candidate.Azure"
+$candidateWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Candidate.Azure"
+$recruitWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Recruit.Azure"
 $vacancyRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Service.Vacancy.Azure"
 
 Write-Output "Updating $settingsConfigFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
@@ -58,10 +59,14 @@ Write-Output "Updating $workerRolesCscfgFile with ConfigurationStorageConnection
 (gc $workerRolesCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $workerRolesCscfgFile
 Write-Output "$workerRolesCscfgFile updated"
 
-Write-Output "Updating $webRoleCscfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
-(gc $webRoleCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $webRoleCscfgFile
-Write-Output "$webRoleCscfgFile updated"
+Write-Output "Updating $candidateWebRoleCscfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
+(gc $candidateWebRoleCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $candidateWebRoleCscfgFile
+Write-Output "$candidateWebRoleCscfgFile updated"
 
 Write-Output "Updating $vacancyRoleCscfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
 (gc $vacancyRoleCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $vacancyRoleCscfgFile
 Write-Output "$vacancyRoleCscfgFile updated"
+
+Write-Output "Updating $recruitWebRoleCscfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
+(gc $recruitWebRoleCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $recruitWebRoleCscfgFile
+Write-Output "$recruitWebRoleCscfgFile updated"
