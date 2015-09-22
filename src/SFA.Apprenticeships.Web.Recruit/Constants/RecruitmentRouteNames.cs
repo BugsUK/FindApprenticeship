@@ -10,7 +10,7 @@
         public const string EditProviderSite = "EditProviderSite";
         public const string Settings = "Settings";
         public const string VerifyEmail = "VerifyEmail";
-        public const string ResendVertificationCode = "ResendVertificationCode";
+        public const string ResendVerificationCode = "ResendVerificationCode";
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";
         public const string SignOutCallback = "SignOutCallback";

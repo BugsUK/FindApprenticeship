@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Constants.Pages
         public const string UpdateEmailAddressError = "There’s been an error. Please try again.";
         public const string UpdateEmailAddressAlreadyInUse = "The email address is not available.";
         public const string UpdatedEmailSuccess = "Your email address has been updated, please login using your new details.";
-        public const string IncorrectVertificationCode = "The verification code entered is incorrect.";
+        public const string IncorrectVerificationCode = "The verification code entered is incorrect.";
         public const string IncorrectPassword = "The password entered is incorrect.";
     }
 }

@@ -377,7 +377,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
                     case UpdateEmailStatus.AccountAlreadyExists:
                         return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.UpdateEmailAddressAlreadyInUse, UserMessageLevel.Error);
                     case UpdateEmailStatus.InvalidUpdateUsernameCode:
-                        return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.IncorrectVertificationCode, UserMessageLevel.Error);
+                        return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.IncorrectVerificationCode, UserMessageLevel.Error);
                     case UpdateEmailStatus.UserPasswordError:
                         return GetMediatorResponse(AccountMediatorCodes.VerifyUpdatedEmailAddress.HasError, viewModel, UpdateEmailAddressMessages.IncorrectPassword, UserMessageLevel.Error);
                     default:

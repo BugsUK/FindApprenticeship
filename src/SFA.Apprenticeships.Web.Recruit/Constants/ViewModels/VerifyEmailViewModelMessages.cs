@@ -10,11 +10,11 @@
 
         public static class VerificationCode
         {
-            public const string LabelText = "Vertification code";
+            public const string LabelText = "Verification code";
             public const string RequiredErrorText = "Please enter an verification code";
-            public const string LengthErrorText = "Vertification code must be 6 characters";
+            public const string LengthErrorText = "Verification code must be 6 characters";
             public const string WhiteListRegularExpression = Whitelists.CodeWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Vertification code " + Whitelists.CodeWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Verification code " + Whitelists.CodeWhitelist.ErrorText;
         }
     }
 }
