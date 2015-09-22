@@ -6,6 +6,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using System.Web.Mvc;
     using Common.Constants;
     using Common.Framework;
+    using Common.Providers;
+    using Constants.Messages;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
@@ -14,6 +16,13 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     public class AccountController : ControllerBase
     {
         private const string DefaultScheme = "https";
+
+        private readonly ICookieAuthorizationDataProvider _authorizationDataProvider;
+
+        public AccountController(ICookieAuthorizationDataProvider authorizationDataProvider)
+        {
+            _authorizationDataProvider = authorizationDataProvider;
+        }
 
         public void SignIn(string returnUrl)
         {
@@ -52,7 +61,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 return RedirectToRoute(RecruitmentRouteNames.LandingPage);
             }
 
-            return View();
+            _authorizationDataProvider.Clear(HttpContext);
+
+            SetUserMessage(AuthorizeMessages.SignedOut, UserMessageLevel.Info);
+
+            return RedirectToRoute(RecruitmentRouteNames.LandingPage);
         }
     }
 }

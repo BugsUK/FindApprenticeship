@@ -82,7 +82,7 @@
                 return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.EmailUpdated, viewModel);
             }
 
-            return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.Ok, viewModel);
+            return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.Ok, viewModel, ProviderUserViewModelMessages.AccountCreated, UserMessageLevel.Success);
         }
 
         public MediatorResponse VerifyEmailAddress(string username, VerifyEmailViewModel verifyEmailViewModel)

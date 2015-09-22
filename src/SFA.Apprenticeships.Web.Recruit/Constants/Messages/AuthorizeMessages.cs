@@ -10,5 +10,6 @@
         public const string FirstUser = "As you're the first person to sign in from your organisation, please take a moment to review your training sites";
         public const string NoUserProfile = "Please fill in your user profile";
         public const string EmailAddressNotVerified = "Please verify your email address";
+        public const string SignedOut = "You have successfully signed out";
     }
 }

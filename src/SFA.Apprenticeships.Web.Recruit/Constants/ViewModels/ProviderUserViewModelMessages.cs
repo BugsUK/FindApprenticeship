@@ -4,6 +4,8 @@
 
     public class ProviderUserViewModelMessages
     {
+        public const string AccountCreated = "You've successfully created your account";
+
         public static class FullnameMessages
         {
             public const string LabelText = "Full name";

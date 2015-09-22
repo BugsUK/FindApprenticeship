@@ -11,11 +11,14 @@
             <span class="your-name" id="bannerUserName">@fullName</span>
             <a id="signout-link" href="@Url.RouteUrl(RecruitmentRouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
-        <div>
-            <a class="account-link" id="applicationsLink" href="recruitment-home.html">Home</a>
-            <a class="account-link" id="applicationsLink" href="manage-sites.html">Provider details</a>
-            <a class="" id="applicationsLink" href="user-info.html">Contact details</a>
-        </div>
+        @if (User.IsInRole(SFA.Apprenticeships.Web.Recruit.Constants.Roles.VerifiedEmail))
+        {
+            <div>
+                <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Home</a>
+                <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.ManageProviderSites)">Provider details</a>
+                <!--<a class="" id="applicationsLink" href="user-info.html">Contact details</a>-->
+            </div>
+        }
     </div>
 }
 else

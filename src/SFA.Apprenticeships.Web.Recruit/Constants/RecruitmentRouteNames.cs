@@ -14,5 +14,8 @@
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";
         public const string SignOutCallback = "SignOutCallback";
+        public const string Privacy = "Privacy";
+        public const string TermsAndConditions = "TermsAndConditions";
+        public const string ContactUs = "ContactUs";
     }
 }

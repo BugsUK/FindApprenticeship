@@ -26,6 +26,24 @@
                 );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.Privacy,
+                url: "privacy",
+                defaults: new { controller = "Home", action = "Privacy" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.TermsAndConditions,
+                url: "terms",
+                defaults: new { controller = "Home", action = "TermsAndConditions" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.ContactUs,
+                url: "contact",
+                defaults: new { controller = "Home", action = "ContactUs" }
+                );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.SignIn,
                 url: "signin",
                 defaults: new { controller = "Account", action = "SignIn" }

@@ -31,6 +31,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             return View();
         }
 
+        public ActionResult Privacy()
+        {
+            return View();
+        }
+
+        public ActionResult TermsAndConditions()
+        {
+            return View();
+        }
+
+        public ActionResult ContactUs()
+        {
+            return View();
+        }
+
         //TODO: Probably move to ProviderUserController
         public ActionResult Authorize()
         {
@@ -44,6 +59,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             var response = _homeMediator.Authorize(claimsPrincipal);
             var message = response.Message;
             var viewModel = response.ViewModel;
+
+            //Clear existing claims
+            _authorizationDataProvider.Clear(HttpContext);
 
             //Add domain claims
             if (viewModel.EmailAddress != null)

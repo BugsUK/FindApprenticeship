@@ -285,6 +285,7 @@
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
+    <Compile Include="Constants\Pages\ProviderUser\VerifyEmailPageMessages.cs" />
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
     <Compile Include="Constants\Roles.cs" />
@@ -470,6 +471,9 @@
     <Content Include="Views\Shared\EditorTemplates\AddressViewModel.cshtml">
       <LastGenOutput>AddressViewModel.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Home\Privacy.cshtml" />
+    <Content Include="Views\Home\TermsAndConditions.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">

@@ -66,7 +66,7 @@
             </div>
             <div class="global-header__nav">
                 <div class="global-header__title alpha" id="headerLinkFAA">
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.ManageProviderSites)">Recruit an apprentice</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Recruit an apprentice</a>
                 </div>
             </div>
         </div>
@@ -76,7 +76,7 @@
             <div class="banner-container">
                 <div class="phase-notice gov-border grid-wrapper">
                     <div class="grid grid-1-2">
-                        <strong class="alpha__label">Alpha</strong>  <span>This is a prototype – your <a href="https://www.surveymonkey.com/s/MFNR7NZ" target="_blank" rel="external">feedback</a> will help improve it.</span>
+                        <strong class="alpha__label">Alpha</strong><!--  <span>This is a prototype – your <a href="https://www.surveymonkey.com/s/MFNR7NZ" target="_blank" rel="external">feedback</a> will help improve it.</span>-->
                     </div>
                     <div class="grid grid-1-2">
                         @Html.Partial("_LoginPartial")
@@ -134,9 +134,9 @@
         <div class="footer__wrapper">
             <div class="footer__meta">
                 <ul class="footer__nav" role="navigation">
-                    <li class="small-btm-margin"><a class="bold-medium" href="#">Contact us</a></li>
-                    <li class="footer__link"><a href="#">Privacy and cookies</a></li>
-                    <li class="footer__link"><a href="#">Terms and conditions</a></li>
+                    <li class="small-btm-margin"><a class="bold-medium" href="@Url.RouteUrl(RecruitmentRouteNames.ContactUs)">Contact us</a></li>
+                    <li class="footer__link"><a href="@Url.RouteUrl(RecruitmentRouteNames.Privacy)">Privacy and cookies</a></li>
+                    <li class="footer__link"><a href="@Url.RouteUrl(RecruitmentRouteNames.TermsAndConditions)">Terms and conditions</a></li>
                     <li class="footer__link">Built by <a href="http://gov.uk/sfa" target="_blank">Skills Funding Agency</a></li>
                     <li class="footer__ogl hide-print">
                         <a href="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/2"
