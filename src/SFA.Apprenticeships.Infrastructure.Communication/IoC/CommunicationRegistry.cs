@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Communication.IoC
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Communications;
     using Domain.Interfaces.Configuration;
     using Email;
@@ -32,11 +33,11 @@
 
         }
 
-        private IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> BuildEmailFormatters(IContext context)
+        private static IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> BuildEmailFormatters(IContext context)
         {
             var configurationService = context.GetInstance<IConfigurationService>();
 
-            IEnumerable<KeyValuePair<MessageTypes, EmailMessageFormatter>> emailMessageFormatters = new[]
+            var candidateEmailFormatters = new[]
             {
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendActivationCode, new EmailSimpleMessageFormatter()),
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendAccountUnlockCode, new EmailSimpleMessageFormatter()),
@@ -53,10 +54,17 @@
                 new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendDormantAccountReminder, new EmailSimpleMessageFormatter())
             };
 
-            return emailMessageFormatters;
+            var providerUserEmailFormatters = new[]
+            {
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendProviderUserEmailVerificationCode, new EmailSimpleMessageFormatter())
+            };
+
+            return
+                candidateEmailFormatters
+                .Union(providerUserEmailFormatters);
         }
 
-        private IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> BuildSmsFormatters(IContext context)
+        private static IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> BuildSmsFormatters(IContext context)
         {
             var configurationService = context.GetInstance<IConfigurationService>();
             IEnumerable<KeyValuePair<MessageTypes, SmsMessageFormatter>> smsMessageFormatters = new[]

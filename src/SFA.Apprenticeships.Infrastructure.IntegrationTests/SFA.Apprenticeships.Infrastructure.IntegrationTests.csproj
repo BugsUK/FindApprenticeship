@@ -154,11 +154,14 @@
     </Compile>
     <Compile Include="AzureServiceBus\Configuration\AzureServiceBusConfigurationTests.cs" />
     <Compile Include="Caching\MemoryCachingTests.cs" />
+    <Compile Include="Communication\SendGridEmailDispatcherTests.cs" />
+    <Compile Include="Communication\ProviderUser\ProviderUserEmailTests.cs" />
+    <Compile Include="Communication\ProviderUser\ProviderUserEmailTokenGenerator.cs" />
     <Compile Include="Communication\ReachConfigurationTests.cs" />
     <Compile Include="Communication\ReachSmsDispatcherTests.cs" />
     <Compile Include="Communication\SendGridConfigurationTests.cs" />
-    <Compile Include="Communication\SendGridEmailDispatcherTests.cs" />
-    <Compile Include="Communication\TokenGenerator.cs" />
+    <Compile Include="Communication\Candidate\CandidateEmailTests.cs" />
+    <Compile Include="Communication\Candidate\CandidateEmailTokenGenerator.cs" />
     <Compile Include="Communication\VoidSmsDispatcherTests.cs" />
     <Compile Include="Elastic\Configuration\ElasticsearchClientFactoryTests.cs" />
     <Compile Include="Elastic\Configuration\ElastricsearchConfigurationTests.cs" />

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Communication
+﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Communication.Candidate
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@
     using Newtonsoft.Json;
     using Ploeh.AutoFixture;
 
-    public static class TokenGenerator
+    public static class CandidateEmailTokenGenerator
     {
 
         private const string TestActivationCode = "ABC123";

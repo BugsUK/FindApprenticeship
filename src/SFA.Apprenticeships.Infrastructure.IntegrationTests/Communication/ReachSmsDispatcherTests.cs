@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Interfaces.Communications;
+    using Candidate;
     using Common.IoC;
     using Domain.Entities.Exceptions;
     using FluentAssertions;
@@ -46,7 +47,7 @@
             var request = new SmsRequest
             {
                 ToNumber = "X",
-                Tokens = TokenGenerator.CreatePasswordResetConfirmationTokens(),
+                Tokens = CandidateEmailTokenGenerator.CreatePasswordResetConfirmationTokens(),
                 MessageType = MessageTypes.PasswordChanged
             };
 
@@ -63,7 +64,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateApprenticeshipApplicationSubmittedTokens(),
+                Tokens = CandidateEmailTokenGenerator.CreateApprenticeshipApplicationSubmittedTokens(),
                 MessageType = MessageTypes.ApprenticeshipApplicationSubmitted
             };
 
@@ -76,7 +77,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateTraineeshipApplicationSubmittedTokens(),
+                Tokens = CandidateEmailTokenGenerator.CreateTraineeshipApplicationSubmittedTokens(),
                 MessageType = MessageTypes.TraineeshipApplicationSubmitted
             };
 
@@ -89,7 +90,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateSavedSearchAlertTokens(5),
+                Tokens = CandidateEmailTokenGenerator.CreateSavedSearchAlertTokens(5),
                 MessageType = MessageTypes.SavedSearchAlert
             };
 
@@ -102,7 +103,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateApprenticeshipApplicationStatusAlertTokens(),
+                Tokens = CandidateEmailTokenGenerator.CreateApprenticeshipApplicationStatusAlertTokens(),
                 MessageType = MessageTypes.ApprenticeshipApplicationSuccessful
             };
 
@@ -115,7 +116,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateApprenticeshipApplicationStatusAlertTokens(),
+                Tokens = CandidateEmailTokenGenerator.CreateApprenticeshipApplicationStatusAlertTokens(),
                 MessageType = MessageTypes.ApprenticeshipApplicationUnsuccessful
             };
 
@@ -128,7 +129,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateApprenticeshipApplicationStatusAlertsTokens(42),
+                Tokens = CandidateEmailTokenGenerator.CreateApprenticeshipApplicationStatusAlertsTokens(42),
                 MessageType = MessageTypes.ApprenticeshipApplicationsUnsuccessfulSummary
             };
 
@@ -141,7 +142,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateApprenticeshipApplicationExpiringDraftTokens(),
+                Tokens = CandidateEmailTokenGenerator.CreateApprenticeshipApplicationExpiringDraftTokens(),
                 MessageType = MessageTypes.ApprenticeshipApplicationExpiringDraft
             };
 
@@ -154,7 +155,7 @@
             var request = new SmsRequest
             {
                 ToNumber = TestToNumber,
-                Tokens = TokenGenerator.CreateApprenticeshipApplicationExpiringDraftsTokens(42),
+                Tokens = CandidateEmailTokenGenerator.CreateApprenticeshipApplicationExpiringDraftsTokens(42),
                 MessageType = MessageTypes.ApprenticeshipApplicationExpiringDraftsSummary
             };
 
@@ -168,7 +169,7 @@
             var request = new SmsRequest
             {
                 ToNumber = BadToNumber,
-                Tokens = TokenGenerator.CreateMobileVerificationCodeTokens(),
+                Tokens = CandidateEmailTokenGenerator.CreateMobileVerificationCodeTokens(),
                 MessageType = MessageTypes.SendMobileVerificationCode
             };
 
