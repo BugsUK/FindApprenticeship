@@ -1,0 +1,68 @@
+﻿@using Microsoft.Ajax.Utilities
+@using SFA.Apprenticeships.Web.Common.Constants
+@using ControllerBase = SFA.Apprenticeships.Web.Common.Controllers
+
+@Scripts.Render("~/Content/_assets/js/vendor/modernizr-custom.js")
+
+<script>
+    var html = document.documentElement;
+    html.className += " js-enabled";
+
+    if (!('open' in document.createElement('details'))) {
+        document.documentElement.className += ' no-details';
+    }
+
+    window.WebTrendsDscId = "@ViewBag.WebTrendsDscId";
+    window.WebTrendsDomainName = "@ViewBag.WebTrendsDomainName";
+</script>
+
+@(ViewBag.EnableWebTrends == true ?
+    Scripts.Render("~/Content/_assets/js/webtrends/webtrends.load.js") :
+    Scripts.Render("~/Content/_assets/js/webtrends/webtrends.stub.js"))
+
+@{
+    var anyMessages = false;
+    var controller = ViewContext.Controller as ControllerBase.ControllerBase;
+
+    if (controller != null)
+    {
+        var userData = controller.UserData;
+        
+        var messages = new[]
+        {
+            userData.Get(UserMessageConstants.InfoMessage),
+            userData.Get(UserMessageConstants.SuccessMessage),
+            userData.Get(UserMessageConstants.WarningMessage),
+            userData.Get(UserMessageConstants.ErrorMessage)
+        };
+
+        anyMessages = messages.Any(message => !message.IsNullOrWhiteSpace());
+    }    
+}
+
+@if ((ViewBag.EnableSessionTimeout != null && ViewBag.EnableSessionTimeout) ||
+    (Request.IsAuthenticated && anyMessages))
+{
+    <script>
+        (function() {
+            var sessionTimeout = null;
+
+            function resetSessionTimeout() {
+                if (sessionTimeout) {
+                    clearTimeout(sessionTimeout);
+                }
+
+                sessionTimeout = setTimeout(onSessionTimeout, @ViewBag.SessionTimeout * 1000);
+            }
+
+            resetSessionTimeout();
+
+            function onSessionTimeout() {
+                window.location = "@ViewBag.SessionTimeoutUrl";
+            }
+        }());
+    </script>
+    <noscript>
+        <meta http-equiv="refresh" content="@string.Format("{0};{1}", ViewBag.SessionTimeout, ViewBag.SessionTimeoutUrl)">
+    </noscript>
+}
