@@ -12,6 +12,8 @@ Param(
 
 Function Update-AllCdnContent ()
 {
+	Import-Module Azure
+
     $StorageContext = New-AzureStorageContext -StorageAccountName $CdnStorageName -StorageAccountKey $CdnStorageAccessKey
 
     #Delete all existing cdn content

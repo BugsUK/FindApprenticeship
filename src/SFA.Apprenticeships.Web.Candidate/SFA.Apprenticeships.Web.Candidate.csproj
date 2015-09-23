@@ -301,8 +301,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BingSiteAuth.xml" />
-    <Content Include="Content\_assets\css\main-1.13.2.css" />
-    <Content Include="Content\_assets\css\main-ie8-1.13.2.css" />
+    <Content Include="Content\_assets\css\main-2.0.0.css" />
+    <Content Include="Content\_assets\css\main-ie8-2.0.0.css" />
     <Content Include="Content\_assets\img\logo-apprenticeships.png" />
     <Content Include="google63f704cde409cb80.html" />
     <Content Include="403.aspx" />

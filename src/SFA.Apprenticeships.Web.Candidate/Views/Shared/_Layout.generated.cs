@@ -200,7 +200,7 @@ WriteLiteral("\r\n    <!--[if gt IE 8]><!-->");
 
             
             #line 31 "..\..\Views\Shared\_Layout.cshtml"
-                     Write(Styles.Render(Url.CdnContent("css/main-1.13.2.css", "~/Content/_assets")));
+                     Write(Styles.Render(Url.CdnContent("css/main-2.0.0.css", "~/Content/_assets")));
 
             
             #line default
@@ -209,7 +209,7 @@ WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
             #line 32 "..\..\Views\Shared\_Layout.cshtml"
-                 Write(Styles.Render(Url.CdnContent("css/main-ie8-1.13.2.css", "~/Content/_assets")));
+                 Write(Styles.Render(Url.CdnContent("css/main-ie8-2.0.0.css", "~/Content/_assets")));
 
             
             #line default
@@ -236,14 +236,14 @@ WriteLiteral("<!--<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1743), Tuple.Create("\"", 1805)
+WriteAttribute("href", Tuple.Create(" href=\"", 1741), Tuple.Create("\"", 1803)
             
             #line 35 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 1750), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 1748), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1750), false)
+, 1748), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
@@ -254,14 +254,14 @@ WriteLiteral(" rel=\"apple-touch-icon-precomposed\"");
 
 WriteLiteral(" sizes=\"152x152\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1889), Tuple.Create("\"", 1968)
+WriteAttribute("href", Tuple.Create(" href=\"", 1887), Tuple.Create("\"", 1966)
             
             #line 36 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 1896), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-152x152.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 1894), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-152x152.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 1896), false)
+, 1894), false)
 );
 
 WriteLiteral(">\r\n    <link");
@@ -270,14 +270,14 @@ WriteLiteral(" rel=\"apple-touch-icon-precomposed\"");
 
 WriteLiteral(" sizes=\"120x120\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2032), Tuple.Create("\"", 2111)
+WriteAttribute("href", Tuple.Create(" href=\"", 2030), Tuple.Create("\"", 2109)
             
             #line 37 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 2039), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-120x120.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 2037), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-120x120.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 2039), false)
+, 2037), false)
 );
 
 WriteLiteral(">\r\n    <link");
@@ -286,28 +286,28 @@ WriteLiteral(" rel=\"apple-touch-icon-precomposed\"");
 
 WriteLiteral(" sizes=\"76x76\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2173), Tuple.Create("\"", 2250)
+WriteAttribute("href", Tuple.Create(" href=\"", 2171), Tuple.Create("\"", 2248)
             
             #line 38 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 2180), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-76x76.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 2178), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-76x76.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 2180), false)
+, 2178), false)
 );
 
 WriteLiteral(">\r\n    <link");
 
 WriteLiteral(" rel=\"apple-touch-icon-precomposed\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2298), Tuple.Create("\"", 2375)
+WriteAttribute("href", Tuple.Create(" href=\"", 2296), Tuple.Create("\"", 2373)
             
             #line 39 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 2305), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-60x60.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 2303), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/apple-touch-icon-60x60.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 2305), false)
+, 2303), false)
 );
 
 WriteLiteral(">\r\n");
@@ -366,14 +366,14 @@ WriteLiteral(" class=\"copy-16\"");
 
 WriteLiteral(">GOV.UK uses cookies to make the site simpler. <a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 2793), Tuple.Create("\'", 2842)
+WriteAttribute("href", Tuple.Create(" href=\'", 2791), Tuple.Create("\'", 2840)
             
             #line 48 "..\..\Views\Shared\_Layout.cshtml"
-             , Tuple.Create(Tuple.Create("", 2800), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
+             , Tuple.Create(Tuple.Create("", 2798), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
             
             #line default
             #line hidden
-, 2800), false)
+, 2798), false)
 );
 
 WriteLiteral(">Find out more about cookies</a></span>\r\n            </div>\r\n        </div>\r\n");
@@ -428,14 +428,14 @@ WriteLiteral(">\r\n                    <div>");
             #line hidden
 WriteLiteral("</div>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3284), Tuple.Create("\"", 3374)
+WriteAttribute("href", Tuple.Create(" href=\"", 3282), Tuple.Create("\"", 3372)
             
             #line 59 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 3291), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })
+, Tuple.Create(Tuple.Create("", 3289), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RouteNames.DismissPlannedOutageMessage, new { isJavascript = false })
             
             #line default
             #line hidden
-, 3291), false)
+, 3289), false)
 );
 
 WriteLiteral(" class=\"maintenance-close\"");
@@ -490,14 +490,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 4020), Tuple.Create("\"", 4095)
+WriteAttribute("src", Tuple.Create(" src=\"", 4018), Tuple.Create("\"", 4093)
             
             #line 76 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 4026), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 4024), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 4026), false)
+, 4024), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -535,14 +535,14 @@ WriteLiteral("><a");
 
 WriteLiteral(" id=\"headerLinkFAA\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4466), Tuple.Create("\"", 4528)
+WriteAttribute("href", Tuple.Create(" href=\"", 4464), Tuple.Create("\"", 4526)
             
             #line 84 "..\..\Views\Shared\_Layout.cshtml"
-                           , Tuple.Create(Tuple.Create("", 4473), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
+                           , Tuple.Create(Tuple.Create("", 4471), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.ApprenticeshipSearch)
             
             #line default
             #line hidden
-, 4473), false)
+, 4471), false)
 );
 
 WriteLiteral(">Find an apprenticeship</a></div>\r\n                </div>\r\n");
@@ -568,14 +568,14 @@ WriteLiteral(" class=\"global-header__title\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4819), Tuple.Create("\"", 4878)
+WriteAttribute("href", Tuple.Create(" href=\"", 4817), Tuple.Create("\"", 4876)
             
             #line 90 "..\..\Views\Shared\_Layout.cshtml"
-        , Tuple.Create(Tuple.Create("", 4826), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
+        , Tuple.Create(Tuple.Create("", 4824), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipSearch)
             
             #line default
             #line hidden
-, 4826), false)
+, 4824), false)
 );
 
 WriteLiteral(">Find a traineeship</a></div>\r\n                </div>\r\n");
@@ -816,24 +816,24 @@ WriteLiteral(" width=\"1\"");
 
 WriteLiteral(" height=\"1\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 7429), Tuple.Create("\"", 7591)
-, Tuple.Create(Tuple.Create("", 7435), Tuple.Create("//stats.matraxis.net/", 7435), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 7427), Tuple.Create("\"", 7589)
+, Tuple.Create(Tuple.Create("", 7433), Tuple.Create("//stats.matraxis.net/", 7433), true)
             
             #line 150 "..\..\Views\Shared\_Layout.cshtml"
-             , Tuple.Create(Tuple.Create("", 7456), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDscId
+             , Tuple.Create(Tuple.Create("", 7454), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDscId
             
             #line default
             #line hidden
-, 7456), false)
-, Tuple.Create(Tuple.Create("", 7479), Tuple.Create("/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcss" +
-"ip=", 7479), true)
+, 7454), false)
+, Tuple.Create(Tuple.Create("", 7477), Tuple.Create("/njs.gif?dcsuri=/nojavascript&amp;WT.js=No&amp;WT.tv=10.4.11&amp;WT.dl=0&amp;dcss" +
+"ip=", 7477), true)
             
             #line 150 "..\..\Views\Shared\_Layout.cshtml"
-                                                                                                                        , Tuple.Create(Tuple.Create("", 7563), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDomainName
+                                                                                                                        , Tuple.Create(Tuple.Create("", 7561), Tuple.Create<System.Object, System.Int32>(ViewBag.WebTrendsDomainName
             
             #line default
             #line hidden
-, 7563), false)
+, 7561), false)
 );
 
 WriteLiteral(" />\r\n            </noscript>\r\n");
@@ -871,28 +871,28 @@ WriteLiteral(">\r\n                        <a");
 
 WriteLiteral(" class=\"footer__link bold-medium\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 7930), Tuple.Create("\'", 7980)
+WriteAttribute("href", Tuple.Create(" href=\'", 7928), Tuple.Create("\'", 7978)
             
             #line 160 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 7937), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
+, Tuple.Create(Tuple.Create("", 7935), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Helpdesk)
             
             #line default
             #line hidden
-, 7937), false)
+, 7935), false)
 );
 
 WriteLiteral(">Contact us</a>\r\n                        <a");
 
 WriteLiteral(" class=\"footer__link bold-medium\"");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8057), Tuple.Create("\'", 8107)
+WriteAttribute("href", Tuple.Create(" href=\'", 8055), Tuple.Create("\'", 8105)
             
             #line 161 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 8064), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Feedback)
+, Tuple.Create(Tuple.Create("", 8062), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Feedback)
             
             #line default
             #line hidden
-, 8064), false)
+, 8062), false)
 );
 
 WriteLiteral(">Give feedback</a>\r\n                    </li>\r\n                    <li");
@@ -901,14 +901,14 @@ WriteLiteral(" class=\"footer__link\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8202), Tuple.Create("\'", 8251)
+WriteAttribute("href", Tuple.Create(" href=\'", 8200), Tuple.Create("\'", 8249)
             
             #line 163 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 8209), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
+, Tuple.Create(Tuple.Create("", 8207), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Privacy)
             
             #line default
             #line hidden
-, 8209), false)
+, 8207), false)
 );
 
 WriteLiteral(">Privacy and cookies</a></li>\r\n                    <li");
@@ -917,14 +917,14 @@ WriteLiteral(" class=\"footer__link\"");
 
 WriteLiteral("><a");
 
-WriteAttribute("href", Tuple.Create(" href=\'", 8330), Tuple.Create("\'", 8377)
+WriteAttribute("href", Tuple.Create(" href=\'", 8328), Tuple.Create("\'", 8375)
             
             #line 164 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 8337), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
+, Tuple.Create(Tuple.Create("", 8335), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.Terms)
             
             #line default
             #line hidden
-, 8337), false)
+, 8335), false)
 );
 
 WriteLiteral(">Terms and conditions</a></li>\r\n                    <li");
@@ -963,14 +963,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 9094), Tuple.Create("\"", 9162)
+WriteAttribute("src", Tuple.Create(" src=\"", 9092), Tuple.Create("\"", 9160)
             
             #line 169 "..\..\Views\Shared\_Layout.cshtml"
-, Tuple.Create(Tuple.Create("", 9100), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 9098), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
             
             #line default
             #line hidden
-, 9100), false)
+, 9098), false)
 );
 
 WriteLiteral(" width=\"125\"");
