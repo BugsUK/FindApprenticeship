@@ -101,7 +101,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -203,7 +203,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum OrganisationWorkplaceType {
@@ -219,7 +219,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.govtalk.gov.uk/core")]
     public enum YesNoType {
@@ -232,7 +232,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -320,7 +320,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1332,7 +1332,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1480,7 +1480,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1530,7 +1530,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1576,7 +1576,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.govtalk.gov.uk/people/bs7666", IncludeInSchema=false)]
     public enum ItemsChoiceType {
@@ -1592,7 +1592,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://www.govtalk.gov.uk/people/bs7666", IncludeInSchema=false)]
     public enum ItemsChoiceType1 {
@@ -1608,7 +1608,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum BranchInformationType {
@@ -1633,7 +1633,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum UKSICCodeBandType {
@@ -1675,7 +1675,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum EmployeeNumberBandType {
@@ -1713,7 +1713,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum TurnoverBandType {
@@ -1751,7 +1751,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum ProfitBandType {
@@ -1789,7 +1789,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum GrowthBandType {
@@ -1832,7 +1832,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum OfficeTypeType {
@@ -1850,7 +1850,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum CreditBandType {
@@ -1872,7 +1872,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum LegalStatusType {
@@ -1898,7 +1898,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum AccountsFilingMonthType {
@@ -1944,7 +1944,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum WorkplaceStatusType {
@@ -1965,7 +1965,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum EmployerSizeBandType {
@@ -1988,7 +1988,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum EmployerCategoryType {
@@ -2033,7 +2033,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum EmployerTypeType {
@@ -2063,7 +2063,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum OrganisationTypeType {
@@ -2095,7 +2095,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2295,7 +2295,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -2355,7 +2355,7 @@ namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.EmployerDataSer
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.81.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.79.0")]
     [System.SerializableAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://services.edrs.lsc.gov.uk/EDRS-CommonTypes-v1-7")]
     public enum ValidationStatusType {
