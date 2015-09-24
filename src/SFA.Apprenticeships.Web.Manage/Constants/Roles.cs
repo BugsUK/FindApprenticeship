@@ -2,6 +2,6 @@
 {
     public class Roles
     {
-        public const string Faa = "FAA";
+        public const string Raa = "RAA";
     }
 }

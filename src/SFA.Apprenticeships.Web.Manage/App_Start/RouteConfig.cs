@@ -20,12 +20,6 @@
                 );
 
             routes.MapRoute(
-                name: ManagementRouteNames.Authorize,
-                url: "authorize",
-                defaults: new { controller = "Home", action = "Authorize" }
-                );
-
-            routes.MapRoute(
                 name: ManagementRouteNames.Privacy,
                 url: "privacy",
                 defaults: new { controller = "Home", action = "Privacy" }
@@ -68,10 +62,16 @@
                 );
 
             routes.MapRoute(
-               name: ManagementRouteNames.Dashboard,
-               url: "dashboard",
-               defaults: new { controller = "Agent", action = "Dashboard" }
-               );
+                name: ManagementRouteNames.Authorize,
+                url: "authorize",
+                defaults: new { controller = "AgencyUser", action = "Authorize" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.Dashboard,
+                url: "dashboard",
+                defaults: new {controller = "AgencyUser", action = "Dashboard"}
+                );
 
             routes.LowercaseUrls = true;
 

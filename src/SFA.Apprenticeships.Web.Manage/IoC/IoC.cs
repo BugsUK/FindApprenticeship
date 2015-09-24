@@ -1,7 +1,3 @@
-using SFA.Apprenticeships.Web.Manage.Mediators.Home;
-using SFA.Apprenticeships.Web.Manage.Mediators.Provider;
-using SFA.Apprenticeships.Web.Manage.Providers;
-
 namespace SFA.Apprenticeships.Web.Manage.IoC {
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
@@ -62,13 +58,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC {
                 x.For<IRobotCrawlerProvider>().Use<RobotCrawlerProvider>().Singleton();
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
-                x.For<ICookieAuthorizationDataProvider>().Use<CookieAuthorizationDataProvider>();
-
-                x.For<IProviderProvider>().Use<ProviderProvider>();
-                x.For<IProviderUserProvider>().Use<ProviderUserProvider>();
-
-                x.For<IHomeMediator>().Use<HomeMediator>();
-                x.For<IProviderMediator>().Use<ProviderMediator>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());
@@ -79,7 +68,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC {
                 x.Policies.SetAllProperties(y => y.OfType<IDismissPlannedOutageMessageCookieProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IHelpCookieProvider>());
                 x.Policies.SetAllProperties(y => y.OfType<IAuthenticationTicketService>());
-                x.Policies.SetAllProperties(y => y.OfType<ICookieAuthorizationDataProvider>());
             });
         }
     }

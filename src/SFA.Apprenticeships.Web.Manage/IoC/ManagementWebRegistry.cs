@@ -13,8 +13,7 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
-    using Mediators.Provider;
-    using Mediators.ProviderUser;
+    using Mediators.AgencyUser;
     using StructureMap;
     using StructureMap.Configuration.DSL;
 
@@ -67,8 +66,7 @@
 
         private void RegisterMediators()
         {
-            For<IProviderMediator>().Use<ProviderMediator>();
-            For<IProviderUserMediator>().Use<ProviderUserMediator>();
+            For<IAgencyUserMediator>().Use<AgencyUserMediator>();
         }
     }
 }

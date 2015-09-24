@@ -2,6 +2,6 @@
 {
     public class ClaimTypes
     {
-        public const string Ukprn = "ukprn";
+
     }
 }

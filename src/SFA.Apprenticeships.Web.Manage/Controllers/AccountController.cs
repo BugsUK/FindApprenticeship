@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
     using System.Web.Mvc;
     using Common.Constants;
     using Common.Framework;
-    using Common.Providers;
     using Constants.Messages;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
@@ -17,13 +16,6 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
     public class AccountController : ControllerBase
     {
         private const string DefaultScheme = "https";
-
-        private readonly ICookieAuthorizationDataProvider _authorizationDataProvider;
-
-        public AccountController(ICookieAuthorizationDataProvider authorizationDataProvider)
-        {
-            _authorizationDataProvider = authorizationDataProvider;
-        }
 
         public void SignIn(string returnUrl)
         {
@@ -74,8 +66,6 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 // Redirect to home page if the user is authenticated.
                 return RedirectToRoute(ManagementRouteNames.LandingPage);
             }
-
-            _authorizationDataProvider.Clear(HttpContext);
 
             if (timeout)
             {
