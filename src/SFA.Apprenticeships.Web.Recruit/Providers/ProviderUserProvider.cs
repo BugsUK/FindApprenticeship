@@ -83,11 +83,16 @@
 
             _userProfileService.SaveUser(providerUser);
 
+            SendEmailVerificationCode(username);
+
+            return GetUserProfileViewModel(providerUser.Username);
+        }
+
+        public void SendEmailVerificationCode(string username)
+        {
             // TODO: AG: US824: call to this service must be moved. Note that this service is responsible for generating the email
             // verification code and updating the user again so take care must be taken around other calls to UserProfileService.SaveUser().
             _providerUserAccountService.SendEmailVerificationCode(username);
-
-            return GetUserProfileViewModel(providerUser.Username);
         }
 
         private static ProviderUserViewModel Convert(ProviderUser providerUser)

@@ -101,5 +101,25 @@
 
             return GetMediatorResponse(ProviderUserMediatorCodes.VerifyEmailAddress.Ok);
         }
+
+        public MediatorResponse<VerifyEmailViewModel> ResendVerificationCode(string username)
+        {
+            var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username);
+
+            if (providerUserViewModel == null)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.ResendVerificationCode.Error, new VerifyEmailViewModel(), VerifyEmailViewModelMessages.VerificationCodeEmailResentFailedMessage, UserMessageLevel.Error);
+            }
+
+            var viewModel = new VerifyEmailViewModel
+            {
+                EmailAddress = providerUserViewModel.EmailAddress
+            };
+
+            _providerUserProvider.SendEmailVerificationCode(username);
+
+            var message = string.Format(VerifyEmailViewModelMessages.VerificationCodeEmailResentMessage, viewModel.EmailAddress);
+            return GetMediatorResponse(ProviderUserMediatorCodes.ResendVerificationCode.Ok, viewModel, message, UserMessageLevel.Success);
+        }
     }
 }

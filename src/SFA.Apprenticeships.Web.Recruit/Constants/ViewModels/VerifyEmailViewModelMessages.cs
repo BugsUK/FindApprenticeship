@@ -6,6 +6,7 @@
     {
 
         public const string VerificationCodeEmailResentMessage = "We've emailed a verification code to {0}";
+        public const string VerificationCodeEmailResentFailedMessage = "An error occured when emailing your verification code";
         public const string VerificationCodeEmailIncorrectMessage = "Verification code entered is incorrect";
 
         public static class VerificationCode

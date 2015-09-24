@@ -13,5 +13,7 @@
         MediatorResponse<SettingsViewModel> UpdateUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel);
 
         MediatorResponse VerifyEmailAddress(string username, VerifyEmailViewModel verifyEmailViewModel);
+
+        MediatorResponse<VerifyEmailViewModel> ResendVerificationCode(string username);
     }
 }

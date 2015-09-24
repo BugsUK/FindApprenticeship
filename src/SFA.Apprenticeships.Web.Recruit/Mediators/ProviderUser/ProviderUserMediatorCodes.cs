@@ -25,5 +25,11 @@
             public const string FailedValidation = "ProviderUser.VerifyEmailAddress.FailedValidation";
             public const string InvalidCode = "ProviderUser.VerifyEmailAddress.InvalidCode";
         }
+
+        public static class ResendVerificationCode
+        {
+            public const string Ok = "ProviderUser.ResendVerificationCode.Ok";
+            public const string Error = "ProviderUser.ResendVerificationCode.Error";
+        }
     }
 }

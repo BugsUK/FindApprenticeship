@@ -12,5 +12,7 @@
         bool ValidateEmailVerificationCode(string username, string code);
 
         ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel);
+
+        void SendEmailVerificationCode(string username);
     }
 }

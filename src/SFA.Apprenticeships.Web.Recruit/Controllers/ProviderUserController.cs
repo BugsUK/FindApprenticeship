@@ -105,9 +105,16 @@
 
         public ActionResult ResendVerificationCode()
         {
-            var providerUserViewModel = _providerUserMediator.GetProviderUserViewModel(User.Identity.Name);
-            SetUserMessage(string.Format(VerifyEmailViewModelMessages.VerificationCodeEmailResentMessage, providerUserViewModel.ViewModel.EmailAddress));
-            return View("VerifyEmail");
+            var response = _providerUserMediator.ResendVerificationCode(User.Identity.Name);
+            var verifyEmailViewModel = response.ViewModel;
+            var message = response.Message;
+
+            if (message != null)
+            {
+                SetUserMessage(message.Text, message.Level);
+            }
+
+            return View("VerifyEmail", verifyEmailViewModel);
         }
     }
 }
