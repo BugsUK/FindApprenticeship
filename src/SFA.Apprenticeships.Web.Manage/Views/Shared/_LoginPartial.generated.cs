@@ -115,18 +115,18 @@ WriteLiteral(" class=\"account-link\"");
 
 WriteLiteral(" id=\"applicationsLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 719), Tuple.Create("\"", 776)
+WriteAttribute("href", Tuple.Create(" href=\"", 719), Tuple.Create("\"", 771)
             
             #line 15 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 726), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.ManagementHome)
+, Tuple.Create(Tuple.Create("", 726), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Dashboard)
             
             #line default
             #line hidden
 , 726), false)
 );
 
-WriteLiteral(">Home</a>\r\n            <!--<a class=\"\" id=\"applicationsLink\" href=\"user-info.html" +
-"\">Contact details</a>-->\r\n        </div>\r\n    </div>\r\n");
+WriteLiteral(">Dashboard</a>\r\n            <!--<a class=\"\" id=\"applicationsLink\" href=\"user-info" +
+".html\">Contact details</a>-->\r\n        </div>\r\n    </div>\r\n");
 
             
             #line 19 "..\..\Views\Shared\_LoginPartial.cshtml"

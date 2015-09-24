@@ -2,6 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using System;
     using System.Web;
     using System.Web.Mvc;
     using Common.Constants;
@@ -42,7 +43,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
 
         public void SignOut(string returnRoute)
         {
-            var callbackUrl = Url.RouteUrl(returnRoute ?? ManagementRouteNames.SignOutCallback, null, Request.Url?.Scheme ?? DefaultScheme);
+            var callbackUrl = Url.RouteUrl(returnRoute ?? ManagementRouteNames.SignOutCallback, new {timeout = false}, String.Copy(Request.Url?.Scheme ?? DefaultScheme));
 
             var properties = new AuthenticationProperties
             {
@@ -66,7 +67,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
         }
 
-        public ActionResult SignOutCallback(bool timeout)
+        public ActionResult SignOutCallback(bool timeout = false)
         {
             if (Request.IsAuthenticated)
             {

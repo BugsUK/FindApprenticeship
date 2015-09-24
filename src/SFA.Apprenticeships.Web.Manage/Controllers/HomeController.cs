@@ -82,7 +82,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                     {
                         return Redirect(Server.UrlDecode(returnUrl));
                     }
-                    return RedirectToRoute(ManagementRouteNames.ManagementHome);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

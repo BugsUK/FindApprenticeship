@@ -294,6 +294,7 @@
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AgentController.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
@@ -418,6 +419,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
+    <Content Include="Views\Agent\Dashboard.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -471,16 +473,10 @@
     <Content Include="Configs\settings.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Shared\_Scripts.cshtml" />
-    <Content Include="Views\Provider\Sites.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_LoginPartial.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\ProviderUser\Home.cshtml" />
-    <Content Include="Views\Provider\AddSite.cshtml" />
-    <Content Include="Views\Provider\EditSite.cshtml" />
-    <Content Include="Views\ProviderUser\Settings.cshtml" />
-    <Content Include="Views\ProviderUser\VerifyEmail.cshtml" />
     <Content Include="Views\Shared\ValidationSummary.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ValidationSummary.generated.cs</LastGenOutput>

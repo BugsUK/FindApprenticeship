@@ -68,9 +68,9 @@
                 );
 
             routes.MapRoute(
-               name: ManagementRouteNames.ManagementHome,
-               url: "home",
-               defaults: new { controller = "ProviderUser", action = "Home" }
+               name: ManagementRouteNames.Dashboard,
+               url: "dashboard",
+               defaults: new { controller = "Agent", action = "Dashboard" }
                );
 
             routes.LowercaseUrls = true;
