@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.IO;
     using CsvHelper;
     using Domain.Entities.Candidates;
@@ -69,6 +70,7 @@
             var fileName = string.Format("FAA-candidates-{0}.csv", fileDateTime.ToString("yyyyMMdd"));
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
+            csv.Configuration.CultureInfo = CultureInfo.GetCultureInfo("en-GB");
             csv.WriteRecords(eShotMetrics.Values);
             textWriter.Flush();
             textWriter.Close();
