@@ -38,7 +38,7 @@
         {
             get
             {
-                var localEnvironmentNames = new [] { "debug", "local" };
+                var localEnvironmentNames = new [] { "debug", "local", "dev", "demo", "sit" };
 
                 return
                     localEnvironmentNames.Any(each =>

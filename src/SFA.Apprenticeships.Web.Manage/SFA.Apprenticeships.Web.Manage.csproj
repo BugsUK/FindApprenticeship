@@ -394,7 +394,7 @@
     <Content Include="Content\_assets\js\frameworks.js" />
     <Content Include="Content\_assets\js\jobtitles.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
-    <Content Include="Content\_assets\js\prototype-Manage.js" />
+    <Content Include="Content\_assets\js\prototype-manage.js" />
     <Content Include="Content\_assets\js\prototype.js" />
     <Content Include="Content\_assets\js\scripts.js" />
     <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
