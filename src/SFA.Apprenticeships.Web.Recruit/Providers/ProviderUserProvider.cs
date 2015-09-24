@@ -52,7 +52,7 @@
         {
             var providerUser = _userProfileService.GetProviderUser(username);
 
-            if (code == providerUser.EmailVerificationCode)
+            if (code.Equals(providerUser.EmailVerificationCode, StringComparison.CurrentCultureIgnoreCase))
             {
                 //TODO: Probably put all this in a strategy in the service
                 providerUser.EmailVerificationCode = null;

@@ -2,8 +2,8 @@
 {
     using Moq;
     using NUnit.Framework;
-    using Providers;
     using Recruit.Mediators.ProviderUser;
+    using Recruit.Providers;
     using Recruit.Validators.ProviderUser;
 
     public class TestBase
