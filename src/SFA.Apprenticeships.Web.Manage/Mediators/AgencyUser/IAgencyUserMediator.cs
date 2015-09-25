@@ -6,6 +6,6 @@
 
     public interface IAgencyUserMediator
     {
-        MediatorResponse<AuthorizeResponseViewModel> Authorize(ClaimsPrincipal principal);
+        MediatorResponse<AgencyUserViewModel> Authorize(ClaimsPrincipal principal);
     }
 }

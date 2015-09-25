@@ -9,11 +9,15 @@
     {
         private readonly IProviderUserReadRepository _providerUserReadRepository;
         private readonly IProviderUserWriteRepository _providerUserWriteRepository;
-        
-        public UserProfileService(IProviderUserReadRepository providerUserReadRepository, IProviderUserWriteRepository providerUserWriteRepository)
+        private readonly IAgencyUserReadRepository _agencyUserReadRepository;
+        private readonly IAgencyUserWriteRepository _agencyUserWriteRepository;
+
+        public UserProfileService(IProviderUserReadRepository providerUserReadRepository, IProviderUserWriteRepository providerUserWriteRepository, IAgencyUserReadRepository agencyUserReadRepository, IAgencyUserWriteRepository agencyUserWriteRepository)
         {
             _providerUserReadRepository = providerUserReadRepository;
             _providerUserWriteRepository = providerUserWriteRepository;
+            _agencyUserReadRepository = agencyUserReadRepository;
+            _agencyUserWriteRepository = agencyUserWriteRepository;
         }
 
         public ProviderUser GetProviderUser(string username)
@@ -30,6 +34,16 @@
         {
             //Check if email is being updated and set pending, verification code, send email etc
             return _providerUserWriteRepository.Save(providerUser);
+        }
+
+        public AgencyUser GetAgencyUser(string username)
+        {
+            return _agencyUserReadRepository.Get(username);
+        }
+
+        public AgencyUser SaveUser(AgencyUser agencyUser)
+        {
+            return _agencyUserWriteRepository.Save(agencyUser);
         }
     }
 }

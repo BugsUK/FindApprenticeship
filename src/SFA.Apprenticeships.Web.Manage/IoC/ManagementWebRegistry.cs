@@ -14,6 +14,7 @@
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mediators.AgencyUser;
+    using Providers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
 
@@ -39,6 +40,7 @@
         private void RegisterProviders()
         {
             For<ILegacyProviderProvider>().Use<StubLegacyProviderProvider>();
+            For<IAgencyUserProvider>().Use<AgencyUserProvider>();
         }
 
         private void RegisterServices()

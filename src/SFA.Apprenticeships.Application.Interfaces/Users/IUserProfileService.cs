@@ -14,5 +14,9 @@
         IEnumerable<ProviderUser> GetProviderUsers(string ukprn);
 
         ProviderUser SaveUser(ProviderUser providerUser);
+
+        AgencyUser GetAgencyUser(string username);
+
+        AgencyUser SaveUser(AgencyUser agencyUser);
     }
 }

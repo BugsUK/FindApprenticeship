@@ -299,9 +299,10 @@
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="IoC\ManagementWebRegistry.cs" />
     <Compile Include="IoC\StructureMapScopeModule.cs" />
-    <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
+    <Compile Include="Providers\AgencyUserProvider.cs" />
+    <Compile Include="ViewModels\AgencyUserViewModel.cs" />
+    <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\RecuitmentUserContext.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>

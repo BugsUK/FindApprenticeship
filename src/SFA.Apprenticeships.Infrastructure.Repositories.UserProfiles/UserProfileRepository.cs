@@ -15,8 +15,6 @@
 
     public class UserProfileRepository : GenericMongoClient<MongoProviderUser>, IProviderUserReadRepository, IProviderUserWriteRepository
     {
-        // ProviderUser and others too...
-        
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
 

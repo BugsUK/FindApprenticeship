@@ -10,6 +10,9 @@
         {
             Mapper.CreateMap<ProviderUser, MongoProviderUser>();
             Mapper.CreateMap<MongoProviderUser, ProviderUser>();
+
+            Mapper.CreateMap<AgencyUser, MongoAgencyUser>();
+            Mapper.CreateMap<MongoAgencyUser, AgencyUser>();
         }
     }
 }
