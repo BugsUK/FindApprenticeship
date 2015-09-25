@@ -4,6 +4,7 @@
     {
         public class Authorize
         {
+            public const string EmptyUsername = "AgencyUserMediatorCodes.Authorize.EmptyUsername";
             public const string Ok = "AgencyUserMediatorCodes.Authorize.Ok";
         }
     }

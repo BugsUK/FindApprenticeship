@@ -1,7 +1,7 @@
-﻿using System.Security.Claims;
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Builders
+﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Builders
 {
+    using System.Security.Claims;
+
     public class ClaimsPrincipalBuilder
     {
         private string _name;

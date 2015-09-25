@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Security.Claims;
 using Moq;
 using NUnit.Framework;
 using SFA.Apprenticeships.Web.Common.Constants;
@@ -7,12 +6,11 @@ using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
 using SFA.Apprenticeships.Web.Recruit.Constants.Messages;
 using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
 using SFA.Apprenticeships.Web.Recruit.Providers;
-using SFA.Apprenticeships.Web.Recruit.UnitTests.Builders;
-using SFA.Apprenticeships.Web.Recruit.ViewModels;
 using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
 {
+    using Common.UnitTests.Builders;
     using ViewModels.ProviderUser;
 
     [TestFixture]

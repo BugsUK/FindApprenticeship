@@ -8,6 +8,8 @@ using SFA.Apprenticeships.Web.Recruit.ViewModels;
 
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
 {
+    using ClaimTypes = Common.Constants.ClaimTypes;
+
     public class HomeMediator : MediatorBase, IHomeMediator
     {
         private const int MinProviderSites = 1;
@@ -40,7 +42,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
                 viewModel.EmailAddressVerified = userProfile.EmailAddressVerified;
             }
 
-            if (!principal.HasClaim(c => c.Type == Constants.ClaimTypes.Ukprn))
+            if (!principal.HasClaim(c => c.Type == ClaimTypes.Ukprn))
             {
                 return GetMediatorResponse(HomeMediatorCodes.Authorize.MissingProviderIdentifier, viewModel, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
             }
@@ -50,7 +52,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
                 return GetMediatorResponse(HomeMediatorCodes.Authorize.MissingServicePermission, viewModel, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
             }
 
-            var ukprn = principal.Claims.Single(c => c.Type == Constants.ClaimTypes.Ukprn).Value;
+            var ukprn = principal.Claims.Single(c => c.Type == ClaimTypes.Ukprn).Value;
             if (string.IsNullOrEmpty(ukprn))
             {
                 return GetMediatorResponse(HomeMediatorCodes.Authorize.MissingProviderIdentifier, viewModel, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);

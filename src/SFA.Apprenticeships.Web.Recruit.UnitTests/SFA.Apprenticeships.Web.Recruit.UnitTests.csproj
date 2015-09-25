@@ -132,7 +132,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Builders\ClaimsPrincipalBuilder.cs" />
     <Compile Include="Mediators\Home\HomeMediatorBuilder.cs" />
     <Compile Include="Mediators\Home\HomeMediatorTests.cs" />
     <Compile Include="Mediators\ProviderUser\TestBase.cs" />
@@ -182,6 +181,9 @@
       <Project>{af7e6460-86f4-40d6-8c46-ab97c283479b}</Project>
       <Name>SFA.Apprenticeships.Web.Recruit</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Builders\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -6,7 +6,7 @@
 
     public class AgencyUserProvider : IAgencyUserProvider
     {
-        private IUserProfileService _userProfileService;
+        private readonly IUserProfileService _userProfileService;
 
         public AgencyUserProvider(IUserProfileService userProfileService)
         {
