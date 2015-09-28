@@ -4,6 +4,6 @@
 
     public interface IAgencyUserProvider
     {
-        AgencyUserViewModel GetOrCreateAgencyUser(string username);
+        AgencyUserViewModel GetOrCreateAgencyUser(string username, string roleList);
     }
 }

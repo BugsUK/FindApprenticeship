@@ -132,6 +132,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\AgencyUserBuilder.cs" />
+    <Compile Include="Factory\RoleListFactory.cs" />
+    <Compile Include="Factory\TeamListFactory.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorBuilder.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

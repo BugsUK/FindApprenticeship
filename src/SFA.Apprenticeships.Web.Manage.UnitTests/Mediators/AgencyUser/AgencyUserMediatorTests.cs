@@ -29,7 +29,29 @@
             var principal = new ClaimsPrincipalBuilder().WithName("User001").Build();
 
             var response = mediator.Authorize(principal);
-            response.AssertMessage(AgencyUserMediatorCodes.Authorize.MissingServicePermission, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
+            response.AssertMessage(AgencyUserMediatorCodes.Authorize.MissingServicePermission, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Error);
+        }
+
+        [Test]
+        public void Authenticated_MissingRoleListClaim()
+        {
+            var mediator = new AgencyUserMediatorBuilder().Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).Build();
+
+            var response = mediator.Authorize(principal);
+            response.AssertMessage(AgencyUserMediatorCodes.Authorize.MissingRoleListClaim, AuthorizeMessages.MissingRoleListClaim, UserMessageLevel.Error);
+        }
+
+        [Test]
+        public void Authenticated_Ok()
+        {
+            var mediator = new AgencyUserMediatorBuilder().Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
+
+            var response = mediator.Authorize(principal);
+            response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
         }
     }
 }

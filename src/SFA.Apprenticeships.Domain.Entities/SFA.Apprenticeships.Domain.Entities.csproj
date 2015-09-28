@@ -117,6 +117,8 @@
     <Compile Include="Users\AgencyUser.cs" />
     <Compile Include="Users\ProviderUserStatuses.cs" />
     <Compile Include="Users\ProviderUser.cs" />
+    <Compile Include="Users\Role.cs" />
+    <Compile Include="Users\Team.cs" />
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchMode.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchResponse.cs" />

@@ -30,9 +30,19 @@
 
             var claimsPrincipal = (ClaimsPrincipal)User;
             var response = _agencyUserMediator.Authorize(claimsPrincipal);
+            var message = response.Message;
+
+            if (message != null)
+            {
+                SetUserMessage(message.Text, message.Level);
+            }
 
             switch (response.Code)
             {
+                case AgencyUserMediatorCodes.Authorize.EmptyUsername:
+                case AgencyUserMediatorCodes.Authorize.MissingServicePermission:
+                case AgencyUserMediatorCodes.Authorize.MissingRoleListClaim:
+                    return RedirectToRoute(ManagementRouteNames.LandingPage);
                 case AgencyUserMediatorCodes.Authorize.Ok:
                     var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
                     if (returnUrl.IsValidReturnUrl())

@@ -7,6 +7,7 @@
         private string _name;
         private string _ukprn;
         private string _role;
+        private string _roleList;
 
         public ClaimsPrincipal Build()
         {
@@ -22,6 +23,10 @@
             if (_role != null)
             {
                 identity.AddClaim(new Claim(ClaimTypes.Role, _role));
+            }
+            if (_roleList != null)
+            {
+                identity.AddClaim(new Claim(Constants.ClaimTypes.RoleList, _roleList));
             }
             var principal = new ClaimsPrincipal(identity);
             return principal;
@@ -42,6 +47,12 @@
         public ClaimsPrincipalBuilder WithRole(string role)
         {
             _role = role;
+            return this;
+        }
+
+        public ClaimsPrincipalBuilder WithRoleList(string roleList)
+        {
+            _roleList = roleList;
             return this;
         }
     }
