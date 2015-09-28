@@ -81,7 +81,7 @@
 
         private static void WriteCompleteAnonymousCsv(Dictionary<Guid, EShotMetrics> eShotMetrics, DateTime fileDateTime)
         {
-            var fileName = string.Format("FAA-candidates-complete-anonymous{0}.csv", fileDateTime.ToString("yyyyMMdd"));
+            var fileName = string.Format("FAA-candidates-complete-anonymous-{0}.csv", fileDateTime.ToString("yyyyMMdd"));
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.Configuration.CultureInfo = CultureInfo.GetCultureInfo("en-GB");
