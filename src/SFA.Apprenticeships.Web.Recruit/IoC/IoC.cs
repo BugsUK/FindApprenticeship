@@ -66,8 +66,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
 
                 x.For<IProviderProvider>().Use<ProviderProvider>();
                 x.For<IProviderUserProvider>().Use<ProviderUserProvider>();
-
-                x.For<IHomeMediator>().Use<HomeMediator>();
                 x.For<IProviderMediator>().Use<ProviderMediator>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());

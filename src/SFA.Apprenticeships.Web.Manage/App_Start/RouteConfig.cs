@@ -68,6 +68,12 @@
                 );
 
             routes.MapRoute(
+                name: ManagementRouteNames.AuthorizationError,
+                url: "authorize",
+                defaults: new { controller = "AgencyUser", action = "AuthorizationError" }
+                );
+
+            routes.MapRoute(
                 name: ManagementRouteNames.Dashboard,
                 url: "dashboard",
                 defaults: new {controller = "AgencyUser", action = "Dashboard"}

@@ -1,0 +1,32 @@
+﻿@model  SFA.Apprenticeships.Web.Common.Models.Azure.AccessControlService.AuthorizationErrorDetailsViewModel
+
+@{
+    ViewBag.Title = "Authorisation error";
+}
+
+<h2>Error</h2>
+
+@if (Model == null)
+{
+    <div>An error occurred authorising your request.</div>
+}
+else
+{
+    <strong>Context:</strong> @Model.Context
+    <br />
+    <strong>HttpReturnCode:</strong> @Model.HttpReturnCode
+    <br />
+    <strong>IdentityProvider:</strong> @Model.IdentityProvider
+    <br />
+    <strong>TimeStamp:</strong> @Model.TimeStamp
+    <br />
+    <strong>TraceId:</strong> @Model.TraceId
+    <br />
+    <hr />
+
+    foreach (var errorDetail in Model.Errors)
+    {
+        <strong>@errorDetail.ErrorCode</strong> @errorDetail.ErrorMessage
+        <br />
+    }
+}

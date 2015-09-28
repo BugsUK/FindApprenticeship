@@ -3,6 +3,8 @@
     using System.Security.Claims;
     using Common.Constants;
     using Common.Mediators;
+    using Common.Models.Azure.AccessControlService;
+    using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
     using Providers;
     using ViewModels;
@@ -10,10 +12,14 @@
     public class AgencyUserMediator : MediatorBase, IAgencyUserMediator
     {
         private readonly IAgencyUserProvider _agencyUserProvider;
+        private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
 
-        public AgencyUserMediator(IAgencyUserProvider agencyUserProvider)
+        public AgencyUserMediator(
+            IAgencyUserProvider agencyUserProvider,
+            IAuthorizationErrorProvider authorizationErrorProvider)
         {
             _agencyUserProvider = agencyUserProvider;
+            _authorizationErrorProvider = authorizationErrorProvider;
         }
 
         public MediatorResponse<AgencyUserViewModel> Authorize(ClaimsPrincipal principal)
@@ -35,6 +41,11 @@
             }
 
             return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.Ok, viewModel);
+        }
+
+        public AuthorizationErrorDetailsViewModel AuthorizationError(string errorDetails)
+        {
+            return _authorizationErrorProvider.GetAuthorizationErrorDetailsViewModel(errorDetails);
         }
     }
 }

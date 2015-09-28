@@ -184,7 +184,11 @@
     <Compile Include="Mediators\MediatorResponseMessage.cs" />
     <Compile Include="Models\Common\AuthorizationClaim.cs" />
     <Compile Include="Models\Common\AuthorizationData.cs" />
+    <Compile Include="Models\Azure\AccessControlService\AuthorizationErrorDetailsViewModel.cs" />
+    <Compile Include="Models\Azure\AccessControlService\AuthorizationErrorViewModel.cs" />
     <Compile Include="Models\Common\LastViewedVacancy.cs" />
+    <Compile Include="Providers\Azure\AccessControlService\AuthorizationErrorProvider.cs" />
+    <Compile Include="Providers\Azure\AccessControlService\IAuthorizationErrorProvider.cs" />
     <Compile Include="Providers\CookieAuthorizationDataProvider.cs" />
     <Compile Include="Providers\ICookieAuthorizationDataProvider.cs" />
     <Compile Include="Providers\RobotCrawlerProvider.cs" />

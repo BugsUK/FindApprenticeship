@@ -389,6 +389,7 @@
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Views\AgencyUser\Dashboard.cshtml" />
+    <Content Include="Views\AgencyUser\AuthorizationError.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

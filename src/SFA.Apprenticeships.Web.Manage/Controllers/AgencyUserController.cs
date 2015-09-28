@@ -10,7 +10,7 @@
     using Mediators.AgencyUser;
     using ControllerBase = Common.Controllers.ControllerBase;
 
-    [AuthorizeUser(Roles = Constants.Roles.Raa)]
+    [AuthorizeUser(Roles = Roles.Raa)]
     public class AgencyUserController : ControllerBase
     {
         private readonly IAgencyUserMediator _agencyUserMediator;
@@ -44,6 +44,16 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpPost]
+        public ActionResult AuthorizationError()
+        {
+            // This controller action is called when there is a serious ACS error (e.g. bad configuration, no claims etc.)
+            var errorDetails = Request["ErrorDetails"];
+            var viewModel = _agencyUserMediator.AuthorizationError(errorDetails);
+
+            return View(viewModel);
         }
 
         public ActionResult Dashboard()

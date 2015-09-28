@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC {
     using Application.UserProfile;
     using Common.IoC;
     using Common.Providers;
+    using Common.Providers.Azure.AccessControlService;
     using Common.Services;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
@@ -58,6 +59,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC {
                 x.For<IRobotCrawlerProvider>().Use<RobotCrawlerProvider>().Singleton();
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
+                x.For<IAuthorizationErrorProvider>().Use<AuthorizationErrorProvider>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());

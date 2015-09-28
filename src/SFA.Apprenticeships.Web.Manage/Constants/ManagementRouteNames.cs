@@ -4,6 +4,7 @@
     {
         public const string LandingPage = "Landing";
         public const string Authorize = "Authorize";
+        public const string AuthorizationError = "AuthorizationError";
         public const string Dashboard = "Dashboard";
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";

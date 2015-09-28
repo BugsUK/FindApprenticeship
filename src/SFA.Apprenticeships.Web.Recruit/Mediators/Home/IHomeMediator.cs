@@ -1,9 +1,9 @@
-﻿using System.Security.Claims;
-using SFA.Apprenticeships.Web.Common.Mediators;
-using SFA.Apprenticeships.Web.Recruit.ViewModels;
-
-namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
+﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.Home
 {
+    using System.Security.Claims;
+    using Common.Mediators;
+    using ViewModels;
+
     public interface IHomeMediator
     {
         MediatorResponse<AuthorizeResponseViewModel> Authorize(ClaimsPrincipal principal);
