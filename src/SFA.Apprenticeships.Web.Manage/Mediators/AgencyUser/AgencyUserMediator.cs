@@ -29,6 +29,11 @@
 
             viewModel = _agencyUserProvider.GetOrCreateAgencyUser(username);
 
+            if (!principal.IsInRole(Constants.Roles.Raa))
+            {
+                return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.MissingServicePermission, viewModel, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
+            }
+
             return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.Ok, viewModel);
         }
     }

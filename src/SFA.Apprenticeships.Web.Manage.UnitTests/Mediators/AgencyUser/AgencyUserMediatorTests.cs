@@ -20,5 +20,16 @@
             var response = mediator.Authorize(principal);
             response.AssertMessage(AgencyUserMediatorCodes.Authorize.EmptyUsername, AuthorizeMessages.EmptyUsername, UserMessageLevel.Error);
         }
+
+        [Test]
+        public void Authenticated_MissingServicePermission()
+        {
+            var mediator = new AgencyUserMediatorBuilder().Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").Build();
+
+            var response = mediator.Authorize(principal);
+            response.AssertMessage(AgencyUserMediatorCodes.Authorize.MissingServicePermission, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
+        }
     }
 }
