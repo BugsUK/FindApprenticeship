@@ -197,7 +197,7 @@
                 EmailAddress = providerUserViewModel.EmailAddress
             };
 
-            _providerUserProvider.SendEmailVerificationCode(username);
+            _providerUserProvider.ResendEmailVerificationCode(username);
 
             var message = string.Format(VerifyEmailViewModelMessages.VerificationCodeEmailResentMessage, viewModel.EmailAddress);
             return GetMediatorResponse(ProviderUserMediatorCodes.ResendVerificationCode.Ok, viewModel, message, UserMessageLevel.Success);

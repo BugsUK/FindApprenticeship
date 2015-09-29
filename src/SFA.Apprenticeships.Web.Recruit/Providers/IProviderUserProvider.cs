@@ -13,6 +13,6 @@
 
         ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel);
 
-        void SendEmailVerificationCode(string username);
+        void ResendEmailVerificationCode(string username);
     }
 }
