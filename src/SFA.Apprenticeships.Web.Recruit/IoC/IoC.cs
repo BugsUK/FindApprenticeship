@@ -1,4 +1,3 @@
-using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
 using SFA.Apprenticeships.Web.Recruit.Mediators.Provider;
 using SFA.Apprenticeships.Web.Recruit.Providers;
 
@@ -11,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
     using Application.UserProfile;
     using Common.IoC;
     using Common.Providers;
+    using Common.Providers.Azure.AccessControlService;
     using Common.Services;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
@@ -63,6 +63,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
                 x.For<ICookieAuthorizationDataProvider>().Use<CookieAuthorizationDataProvider>();
+                x.For<IAuthorizationErrorProvider>().Use<AuthorizationErrorProvider>();
 
                 x.For<IProviderProvider>().Use<ProviderProvider>();
                 x.For<IProviderUserProvider>().Use<ProviderUserProvider>();

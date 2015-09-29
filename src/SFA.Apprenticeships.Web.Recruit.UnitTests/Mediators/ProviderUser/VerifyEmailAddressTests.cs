@@ -31,7 +31,7 @@
         [TestCase("ABC123")]
         [TestCase("zxcv34")]
         [TestCase("123456")]
-        public void InvaldCodeTest(string code)
+        public void InvalidCodeTest(string code)
         {
             // Arrange.
             MockProviderUserProvider.Setup(x => x.ValidateEmailVerificationCode(UserName, code)).Returns(false);

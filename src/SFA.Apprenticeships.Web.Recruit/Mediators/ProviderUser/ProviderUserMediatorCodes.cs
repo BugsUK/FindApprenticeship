@@ -2,6 +2,19 @@
 {
     public static class ProviderUserMediatorCodes
     {
+        public class Authorize
+        {
+            public const string EmptyUsername = "ProviderUser.Authorize.EmptyUsername";
+            public const string MissingProviderIdentifier = "ProviderUser.Authorize.MissingProviderIdentifier";
+            public const string MissingServicePermission = "ProviderUser.Authorize.MissingServicePermission";
+            public const string NoProviderProfile = "ProviderUser.Authorize.NoProviderProfile";
+            public const string FailedMinimumSitesCountCheck = "ProviderUser.Authorize.FailedMinimumSitesCountCheck";
+            public const string FirstUser = "ProviderUser.Authorize.FirstUser";
+            public const string NoUserProfile = "ProviderUser.Authorize.NoUserProfile";
+            public const string EmailAddressNotVerified = "ProviderUser.Authorize.EmailAddressNotVerified";
+            public const string Ok = "ProviderUser.Authorize.Ok";
+        }
+
         public static class GetProviderUserViewModel
         {
             public const string Ok = "ProviderUser.GetProviderUserViewModel.Ok";

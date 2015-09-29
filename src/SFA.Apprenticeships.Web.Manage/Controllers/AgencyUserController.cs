@@ -6,6 +6,7 @@
     using Common.Constants;
     using Common.Framework;
     using Common.Mediators;
+    using Common.Models.Azure.AccessControlService;
     using Constants;
     using Mediators.AgencyUser;
     using ControllerBase = Common.Controllers.ControllerBase;
@@ -61,7 +62,7 @@
         {
             // This controller action is called when there is a serious ACS error (e.g. bad configuration, no claims etc.)
             var errorDetails = Request["ErrorDetails"];
-            var viewModel = _agencyUserMediator.AuthorizationError(errorDetails);
+            AuthorizationErrorDetailsViewModel viewModel = _agencyUserMediator.AuthorizationError(errorDetails);
 
             return View(viewModel);
         }

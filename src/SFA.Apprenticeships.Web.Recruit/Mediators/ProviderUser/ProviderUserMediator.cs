@@ -2,31 +2,112 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Web.Mvc;
     using Common.Constants;
     using Common.Mediators;
+    using Common.Models.Azure.AccessControlService;
+    using Common.Providers.Azure.AccessControlService;
+    using Constants.Messages;
     using Constants.ViewModels;
     using Providers;
     using Validators.ProviderUser;
     using ViewModels;
     using ViewModels.ProviderUser;
+    using ClaimTypes = Common.Constants.ClaimTypes;
 
     public class ProviderUserMediator : MediatorBase, IProviderUserMediator
     {
+        private const int MinProviderSites = 1;
+
         private readonly IProviderUserProvider _providerUserProvider;
         private readonly IProviderProvider _providerProvider;
+        private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
+
         private readonly ProviderUserViewModelValidator _providerUserViewModelValidator;
         private readonly VerifyEmailViewModelValidator _verifyEmailViewModelValidator;
 
-        public ProviderUserMediator(IProviderUserProvider providerUserProvider, 
+        public ProviderUserMediator(IProviderUserProvider providerUserProvider,
             IProviderProvider providerProvider,
-                    ProviderUserViewModelValidator providerUserViewModelValidator, 
-                    VerifyEmailViewModelValidator verifyEmailViewModelValidator)
+            IAuthorizationErrorProvider authorizationErrorProvider,
+            ProviderUserViewModelValidator providerUserViewModelValidator,
+            VerifyEmailViewModelValidator verifyEmailViewModelValidator)
         {
             _providerUserProvider = providerUserProvider;
             _providerProvider = providerProvider;
+            _authorizationErrorProvider = authorizationErrorProvider;
             _providerUserViewModelValidator = providerUserViewModelValidator;
             _verifyEmailViewModelValidator = verifyEmailViewModelValidator;
+        }
+
+        public MediatorResponse<AuthorizeResponseViewModel> Authorize(ClaimsPrincipal principal)
+        {
+            var viewModel = new AuthorizeResponseViewModel();
+
+            if (string.IsNullOrEmpty(principal?.Identity?.Name))
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.EmptyUsername, viewModel, AuthorizeMessages.EmptyUsername, UserMessageLevel.Error);
+            }
+
+            var username = principal.Identity.Name;
+            viewModel.Username = username;
+            var userProfile = _providerUserProvider.GetUserProfileViewModel(username);
+            if (userProfile != null)
+            {
+                viewModel.EmailAddress = userProfile.EmailAddress;
+                viewModel.EmailAddressVerified = userProfile.EmailAddressVerified;
+            }
+
+            if (!principal.HasClaim(c => c.Type == ClaimTypes.Ukprn))
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier, viewModel, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
+            }
+
+            if (!principal.IsInRole(Constants.Roles.Faa))
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.MissingServicePermission, viewModel, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
+            }
+
+            var ukprn = principal.Claims.Single(c => c.Type == ClaimTypes.Ukprn).Value;
+            if (string.IsNullOrEmpty(ukprn))
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier, viewModel, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
+            }
+
+            var provider = _providerProvider.GetProviderViewModel(ukprn);
+
+            if (provider == null)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.NoProviderProfile, viewModel, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Info);
+            }
+
+            if (provider.ProviderSiteViewModels.Count() < MinProviderSites)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.FailedMinimumSitesCountCheck, viewModel, AuthorizeMessages.FailedMinimumSitesCountCheck, UserMessageLevel.Warning);
+            }
+
+            if (userProfile == null)
+            {
+                var isFirstUser = !_providerUserProvider.GetUserProfileViewModels(ukprn).Any();
+                if (isFirstUser)
+                {
+                    return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.FirstUser, viewModel, AuthorizeMessages.FirstUser, UserMessageLevel.Info);
+                }
+
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.NoUserProfile, viewModel, AuthorizeMessages.NoUserProfile, UserMessageLevel.Info);
+            }
+
+            if (!userProfile.EmailAddressVerified)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.EmailAddressNotVerified, viewModel, AuthorizeMessages.EmailAddressNotVerified, UserMessageLevel.Info);
+            }
+
+            return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.Ok, viewModel);
+        }
+
+        public AuthorizationErrorDetailsViewModel AuthorizationError(string errorDetails)
+        {
+            return _authorizationErrorProvider.GetAuthorizationErrorDetailsViewModel(errorDetails);
         }
 
         public MediatorResponse<ProviderUserViewModel> GetProviderUserViewModel(string username)
@@ -52,7 +133,7 @@
         {
             var providerSites = _providerProvider.GetProviderSiteViewModels(ukprn);
 
-            var sites = providerSites.Select(ps => new SelectListItem {Value = ps.Ern, Text = ps.Name}).ToList();
+            var sites = providerSites.Select(ps => new SelectListItem { Value = ps.Ern, Text = ps.Name }).ToList();
 
             return sites;
         }

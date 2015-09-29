@@ -4,6 +4,7 @@
     {
         public const string LandingPage = "Landing";
         public const string Authorize = "Authorize";
+        public const string AuthorizationError = "AuthorizationError";
         public const string RecruitmentHome = "RecruitmentHome";
         public const string ManageProviderSites = "ManageProviderSites";
         public const string AddProviderSite = "AddProviderSite";

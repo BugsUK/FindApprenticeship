@@ -132,8 +132,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mediators\Home\HomeMediatorBuilder.cs" />
-    <Compile Include="Mediators\Home\HomeMediatorTests.cs" />
+    <Compile Include="Mediators\ProviderUser\AuthorizeTests.cs" />
     <Compile Include="Mediators\ProviderUser\TestBase.cs" />
     <Compile Include="Mediators\ProviderUser\VerifyEmailAddressTests.cs" />
     <Compile Include="Mediators\ProviderUser\UpdateUserTests.cs" />

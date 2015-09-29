@@ -22,7 +22,13 @@
             routes.MapRoute(
                 name: RecruitmentRouteNames.Authorize,
                 url: "authorize",
-                defaults: new { controller = "Home", action = "Authorize" }
+                defaults: new { controller = "ProviderUser", action = "Authorize" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.AuthorizationError,
+                url: "authorize",
+                defaults: new { controller = "ProviderUser", action = "AuthorizationError" }
                 );
 
             routes.MapRoute(

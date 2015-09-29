@@ -294,13 +294,10 @@
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
-    <Compile Include="Mediators\Home\IHomeMediator.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\IProviderMediator.cs" />
-    <Compile Include="Mediators\Home\HomeMediator.cs" />
-    <Compile Include="Mediators\Home\HomeMediatorCodes.cs" />
     <Compile Include="Controllers\ProviderUserController.cs" />
     <Compile Include="Controllers\RecuitmentControllerBase.cs" />
     <Compile Include="Controllers\ProviderController.cs" />
@@ -419,6 +416,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
+    <Content Include="Views\ProviderUser\AuthorizationError.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
