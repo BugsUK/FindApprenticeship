@@ -18,13 +18,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         public ProviderViewModel GetProviderViewModel(string ukprn)
         {
-            //Stub code for removal
-            if (ukprn == "hasproviderprofile")
-            {
-                return new ProviderViewModel {ProviderName = "Key Training Ltd"};
-            }
-            //end stub code
-
             var provider = _providerService.GetProvider(ukprn);
             var providerSites = _providerService.GetProviderSites(ukprn);
 

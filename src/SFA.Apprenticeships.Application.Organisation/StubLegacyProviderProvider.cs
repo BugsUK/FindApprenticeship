@@ -18,6 +18,14 @@
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
+            if (ukprn == "onesite")
+            {
+                return new List<ProviderSite>
+                {
+                    CreateProviderSite(ukprn, "01")
+                };
+            }
+
             return new List<ProviderSite>
             {
                 CreateProviderSite(ukprn, "01"),
