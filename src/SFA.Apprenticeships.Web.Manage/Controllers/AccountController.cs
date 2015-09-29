@@ -33,9 +33,9 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 properties, WsFederationAuthenticationDefaults.AuthenticationType);
         }
 
-        public void SignOut(string returnRoute)
+        public void SignOut(string returnUrl)
         {
-            var callbackUrl = Url.RouteUrl(returnRoute ?? ManagementRouteNames.SignOutCallback, new {timeout = false}, String.Copy(Request.Url?.Scheme ?? DefaultScheme));
+            var callbackUrl = Url.RouteUrl(ManagementRouteNames.SignOutCallback, new {timeout = false, returnUrl}, string.Copy(Request.Url?.Scheme ?? DefaultScheme));
 
             var properties = new AuthenticationProperties
             {
@@ -46,9 +46,9 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
         }
 
-        public void SessionTimeout()
+        public void SessionTimeout(string returnUrl)
         {
-            var callbackUrl = Url.RouteUrl(ManagementRouteNames.SignOutCallback, new {timeout = true}, Request.Url?.Scheme ?? DefaultScheme);
+            var callbackUrl = Url.RouteUrl(ManagementRouteNames.SignOutCallback, new {timeout = true, returnUrl}, Request.Url?.Scheme ?? DefaultScheme);
 
             var properties = new AuthenticationProperties
             {
@@ -59,7 +59,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
         }
 
-        public ActionResult SignOutCallback(bool timeout = false)
+        public ActionResult SignOutCallback(bool timeout, string returnUrl)
         {
             if (Request.IsAuthenticated)
             {
@@ -76,7 +76,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 SetUserMessage(AuthorizeMessages.SignedOut, UserMessageLevel.Info);
             }
 
-            return RedirectToRoute(ManagementRouteNames.LandingPage);
+            return RedirectToRoute(ManagementRouteNames.LandingPage, new {returnUrl});
         }
     }
 }

@@ -4,7 +4,6 @@
     using System.Web.Mvc;
     using System.Web.Mvc.Filters;
     using System.Web.Routing;
-    using System.Web.Security;
     using Constants;
 
     public class AuthorizeUserAttribute : AuthorizeAttribute

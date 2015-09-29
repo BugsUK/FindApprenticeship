@@ -10,20 +10,12 @@
         </div>
         <div>
             <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(ManagementRouteNames.Dashboard)">Dashboard</a>
-            <!--<a class="" id="applicationsLink" href="user-info.html">Contact details</a>-->
         </div>
     </div>
 }
 else
 {
     <div class="account-info" id="bannerSignedOut">
-        @if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
-        {
-            <a href="@Url.RouteUrl(ManagementRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
-        }
-        else
-        {
-            <a href="@Url.RouteUrl(ManagementRouteNames.SignIn)" id="loginLink" title="Sign in / Create account"><i class="fa fa-sign-in"></i>Sign in / Create account</a>
-        }
+        <a href="@Url.RouteUrl(ManagementRouteNames.SignIn)" id="loginLink" title="Sign in"><i class="fa fa-sign-in"></i>Sign in</a>
     </div>
 }
