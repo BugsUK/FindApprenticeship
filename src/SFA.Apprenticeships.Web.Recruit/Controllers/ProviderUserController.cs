@@ -3,6 +3,7 @@
     using System.Security.Claims;
     using System.Web.Mvc;
     using Attributes;
+    using Common.Attributes;
     using Common.Constants;
     using Common.Controllers;
     using Common.Extensions;
@@ -18,6 +19,7 @@
     using ClaimTypes = System.Security.Claims.ClaimTypes;
 
     [AuthorizeUser(Roles = Roles.Faa)]
+    [OwinSessionTimeout]
     public class ProviderUserController : ControllerBase<RecuitmentUserContext>
     {
         private readonly IProviderUserMediator _providerUserMediator;

@@ -170,6 +170,7 @@
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
     <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
     <Compile Include="Attributes\AuthorizationDataAttribute.cs" />
+    <Compile Include="Attributes\OwinSessionTimeoutAttribute.cs" />
     <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
     <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />

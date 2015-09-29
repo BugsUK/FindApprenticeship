@@ -4,6 +4,7 @@
     using System.Web;
     using System.Web.Mvc;
     using Attributes;
+    using Common.Attributes;
     using Common.Constants;
     using Common.Framework;
     using Common.Mediators;
@@ -73,6 +74,7 @@
         [HttpGet]
         //TODO: Discuss and implement verifying roleList claim
         [AuthorizeUser(Roles = Roles.Raa)]
+        [OwinSessionTimeout]
         public ActionResult Dashboard()
         {
             var claimsPrincipal = (ClaimsPrincipal)User;

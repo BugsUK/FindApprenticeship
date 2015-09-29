@@ -15,6 +15,7 @@
 
         private static readonly string Realm = ConfigurationManager.AppSettings["ida:Wtrealm"];
         private static readonly string MetadataAddress = ConfigurationManager.AppSettings["ida:MetadataAddress"];
+        private static readonly int SessionTimeout = int.Parse(ConfigurationManager.AppSettings["ida:SessionTimeout"]);
 
         public static void RegisterProvider(IAppBuilder app)
         {
@@ -25,7 +26,7 @@
                 CookieName = CookieName,
                 AuthenticationType = WsFederationAuthenticationDefaults.AuthenticationType,
                 SlidingExpiration = true,
-                ExpireTimeSpan = TimeSpan.FromMinutes(60)
+                ExpireTimeSpan = TimeSpan.FromMinutes(SessionTimeout)
             };
 
             app.UseCookieAuthentication(cookieAuthenticationOptions);
