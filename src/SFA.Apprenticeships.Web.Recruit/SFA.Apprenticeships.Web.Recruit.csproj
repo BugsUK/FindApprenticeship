@@ -293,7 +293,6 @@
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />

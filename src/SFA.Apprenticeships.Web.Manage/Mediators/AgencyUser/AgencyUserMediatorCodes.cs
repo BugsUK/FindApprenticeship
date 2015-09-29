@@ -9,5 +9,15 @@
             public const string MissingRoleListClaim = "AgencyUserMediatorCodes.Authorize.MissingRoleListClaim";
             public const string Ok = "AgencyUserMediatorCodes.Authorize.Ok";
         }
+
+        public class GetAgencyUser
+        {
+            public const string Ok = "AgencyUserMediatorCodes.GetAgencyUser.Ok";
+        }
+
+        public class SaveAgencyUser
+        {
+            public const string Ok = "AgencyUserMediatorCodes.SaveAgencyUser.Ok";
+        }
     }
 }

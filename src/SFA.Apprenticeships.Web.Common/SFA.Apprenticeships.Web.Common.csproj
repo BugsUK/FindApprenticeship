@@ -175,6 +175,7 @@
     <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
+    <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
     <Compile Include="IoC\ControllerConvention.cs" />
     <Compile Include="IoC\FilterConfig.cs" />
     <Compile Include="IoC\StructureMapDependencyScope.cs" />

@@ -1,8 +1,179 @@
-﻿
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Manage.ViewModels.AgencyUserViewModel
+
 @{
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Dashboard</h2>
+<div class="grid-wrapper">
+    <div class="grid grid-2-3">
+        <div class="inner-block-padr">
+            <h1 class="heading-xlarge">
+                Agency home
+            </h1>
+        </div>
+    </div>
+    <div class="grid grid-1-3">
+        @using (Html.BeginRouteForm(ManagementRouteNames.Dashboard, FormMethod.Post))
+        {
+            <div class="page-link">
+                <div class="form-group">
+                    <p class="form-label">Change role</p>
+                    @Html.DropDownListFor(m => m.RoleId, Model.Roles)
+                </div>
+            </div>
+            <div class="page-link">
+                <div class="form-group">
+                    <p class="form-label">Change team</p>
+                    @Html.DropDownListFor(m => m.TeamId, Model.Teams)
+                </div>
+            </div>
+            <div>
+                <button class="button">Save</button>
+            </div>
+        }
+    </div>
+</div>
+<div class="grid-wrapper">
+    <div class="grid grid-1-2">
+        <div class="inner-block-padr">
+            <section class="font-xsmall">
+                <h2 class="heading-medium">Start QA</h2>
+                <p>You'll be given a vacancy to start the QA proceess</p>
+                <a href="qa-apprenticeship.html" class="button">QA new vacancy</a>
+            </section>
+            <section>
+                <h2 class="heading-medium">Vacancies in progress</h2>
+                <div class="grid-wrapper">
+                    <div class="font-xsmall med-btm-margin grid grid-2-3">
+                        <div class="inner-block-padr">
+                            <select name="" id="" class="form-label">
+                                <option value="" hidden>-- Filter vacancies --</option>
+                                <option value="">Date saved</option>
+                                <option value="">Employer</option>
+                                <option value="">Team</option>
+                                <option value="">User</option>
+                                <option value="">QA status</option>
+                            </select>
+                            <input type="text" class="form-control width-all-1-1" id="filter-employers">
+                        </div>
+                    </div>
+                    <div class="grid grid-1-3 font-xsmall ta-right">
+                        <!--             <select name="" id="">
+                          <option value="">All</option>
+                          <option value="">Live</option>
+                        </select> -->
+                    </div>
+                </div>
+                <table class="no-btm-margin">
+                    <colgroup>
+                        <col class="t75">
+                        <col class="t25">
+                    </colgroup>
+                    <!-- <thead>
+                      <th><a href="" class="font-black link-unimp">Vacancy name / Employer &nbsp;<i class="fa fa-sort"></i></a></th>
+                      <th class="ta-right"><a href="" class="font-black link-unimp">Save &nbsp;<i class="fa fa-sort"></i></a></th>
+                    </thead> -->
+                    <tbody>
+                        <tr class="va-middle">
+                            <td>
+                                <a href="live-apprenticeship.html" class="disp-block link-unimp">Mechanical engineer apprenticeship</a>
+                                <span>RG Engineering</span>
+                            </td>
+                            <td class="ta-right">12 Jul 15</td>
+                        </tr>
+                        <tr class="va-middle">
+                            <td>
+                                <a title="This vacancy is closing soon with no applications"
+                                   href="live-apprenticeship.html" class="disp-block link-unimp">Apprentice precision toolmaker</a>
+                                <span>Regent Engineers Ltd </span>
+                            </td>
+                            <td class="ta-right">7 Jul 15</td>
+                        </tr>
+                        <tr class="va-middle">
+                            <td>
+                                <a href="review-apprenticeship.html" class="disp-block link-unimp">Electrical engineer apprentice</a>
+                                <span>Express Circuits Ltd</span>
+                            </td>
+                            <td class="ta-right">2 Jul 15</td>
+                        </tr>
+                        <tr class="va-middle">
+                            <td>
+                                <a href="submitted-apprenticeship.html" class="disp-block link-unimp">Engineering technician apprentice</a>
+                                <span>Stechford Moulding Ltd </span>
+                            </td>
+                            <td class="ta-right">28 Jun 15</td>
+                        </tr>
+                        <!-- <tr class="va-middle">
+                          <td><a href="draft-apprenticeship.html" class="disp-block link-unimp">Apprentice manufacturing/mechanical engineer</a>
+                          <span>Aggregate Industries</span></td>
+                          <td class="ta-right">22 Jun 15</td>
+                        </tr>
+                        <tr class="va-middle">
+                          <td><a href="draft-apprenticeship.html" class="disp-block link-unimp">Structural engineering apprentice</a>
+                          <span>Telephone Europe</span></td>
+                          <td class="ta-right">22 Jun 15</td>
+                        </tr> -->
+                    </tbody>
+                </table>
+                <!-- <div class="page-navigation font-xsmall small-btm-margin">
+                  <a href="#" class="page-navigation__btn previous disabled">
+                    <i class="arrow-button fa fa-angle-left"></i>
+                    <span class="description">Previous</span>
+                    <span class="counter">1 of 2</span>
+                  </a>
+                  <a href="#" class="page-navigation__btn next">
+                    <i class="arrow-button fa fa-angle-right"></i>
+                    <span class="description">Next</span>
+                    <span class="counter">2 of 2</span>
+                  </a>
+                </div> -->
+            </section>
+        </div>
+    </div>
+    <div class="grid grid-1-2">
+        <section>
+            <div class="text font-xsmall">
+                <h2 class="heading-medium">Search for candidate</h2>
+                <p>
+                    Search for a candidate by first or last name, postcode or date
+                    of birth
+                </p>
+                <a href="candidate-search.html">Search for candidate</a>
+            </div>
+        </section>
+        <section>
+            <div class="text font-xsmall">
+                <h2 class="heading-medium">Search for provider</h2>
+                <p>Search for a provider by name, unique identifier or postcode</p>
+                <a href="provider-search.html">Search for provider</a>
+            </div>
+        </section>
+        <section class="font-xsmall">
+            <h2 class="heading-medium">Useful information</h2>
+            <ul class="list-text">
+                <li>
+                    <a href="/recruitment/info-expect-from-employer.html">Responsibilities of the employer</a>
+                </li>
+                <li>
+                    <a href="/recruitment/info-whos-involved.html">Who's involved in an apprenticeship?</a>
+                </li>
+                <li>
+                    <a href="/recruitment/info-expect-from-apprentice.html">What to expect from your apprentice</a>
+                </li>
+                <li>
+                    <a href="/recruitment/info-expect-from-provider.html">Responsibilities of the provider</a>
+                </li>
+                <li>
+                    <a href="/recruitment/info-payments-and-funding.html">Payments and funding</a>
+                </li>
+                <li>
+                    <a href="/recruitment/info-six-steps.html">How to employ an apprentice</a>
+                </li>
+            </ul>
+        </section>
+    </div>
+</div>
+
 

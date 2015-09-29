@@ -10,5 +10,9 @@
         MediatorResponse<AgencyUserViewModel> Authorize(ClaimsPrincipal principal);
 
         AuthorizationErrorDetailsViewModel AuthorizationError(string errorDetails);
+
+        MediatorResponse<AgencyUserViewModel> GetAgencyUser(ClaimsPrincipal principal);
+
+        MediatorResponse<AgencyUserViewModel> SaveAgencyUser(ClaimsPrincipal principal, AgencyUserViewModel viewModel);
     }
 }

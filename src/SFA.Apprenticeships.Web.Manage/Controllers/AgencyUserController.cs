@@ -9,9 +9,9 @@
     using Common.Models.Azure.AccessControlService;
     using Constants;
     using Mediators.AgencyUser;
+    using ViewModels;
     using ControllerBase = Common.Controllers.ControllerBase;
 
-    [AuthorizeUser(Roles = Roles.Raa)]
     public class AgencyUserController : ControllerBase
     {
         private readonly IAgencyUserMediator _agencyUserMediator;
@@ -67,9 +67,25 @@
             return View(viewModel);
         }
 
+        [HttpGet]
+        //TODO: Discuss and implement verifying roleList claim
+        [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult Dashboard()
         {
-            return View();
+            var claimsPrincipal = (ClaimsPrincipal)User;
+            var response = _agencyUserMediator.GetAgencyUser(claimsPrincipal);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Dashboard(AgencyUserViewModel viewModel)
+        {
+            var claimsPrincipal = (ClaimsPrincipal)User;
+            _agencyUserMediator.SaveAgencyUser(claimsPrincipal, viewModel);
+
+            return RedirectToRoute(ManagementRouteNames.Dashboard);
         }
     }
 }

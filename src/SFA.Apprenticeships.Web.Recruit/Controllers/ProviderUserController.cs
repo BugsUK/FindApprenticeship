@@ -5,11 +5,11 @@
     using Attributes;
     using Common.Constants;
     using Common.Controllers;
+    using Common.Extensions;
     using Common.Framework;
     using Common.Mediators;
     using Common.Providers;
     using Constants;
-    using Extensions;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
     using Providers;

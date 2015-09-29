@@ -75,10 +75,10 @@
             {
                 GetRole("Helpdesk_advisor", "Helpdesk advisor"),
                 GetRole("QA_advisor", "QA advisor", true),
-                GetRole(technicalAdvisor, "Technical advisor")
+                //GetRole(technicalAdvisor, "Technical advisor")
             };
 
-            return roleList == "Serco" ? roles.Where(r => r.Id == technicalAdvisor) : roles;
+            return roleList == "Serco" ? roles.Where(r => r.Id != technicalAdvisor) : roles;
         }
 
         private static Role GetRole(string id, string name, bool isDefault = false)
