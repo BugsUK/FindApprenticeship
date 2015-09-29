@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System.Security.Claims;
+    using System.Web;
     using System.Web.Mvc;
     using Attributes;
     using Common.Constants;
@@ -44,6 +45,8 @@
                 case AgencyUserMediatorCodes.Authorize.MissingServicePermission:
                 case AgencyUserMediatorCodes.Authorize.MissingRoleListClaim:
                     return RedirectToRoute(ManagementRouteNames.LandingPage);
+                case AgencyUserMediatorCodes.Authorize.ReturnUrl:
+                    return Redirect(HttpUtility.UrlDecode(response.Parameters.ToString()));
                 case AgencyUserMediatorCodes.Authorize.Ok:
                     var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
                     if (returnUrl.IsValidReturnUrl())

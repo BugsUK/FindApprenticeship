@@ -3,8 +3,10 @@
     using System.Security.Claims;
     using Common.Constants;
     using Common.Extensions;
+    using Common.Framework;
     using Common.Mediators;
     using Common.Models.Azure.AccessControlService;
+    using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
     using Providers;
@@ -14,13 +16,16 @@
     {
         private readonly IAgencyUserProvider _agencyUserProvider;
         private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
+        private readonly IUserDataProvider _userDataProvider;
 
         public AgencyUserMediator(
             IAgencyUserProvider agencyUserProvider,
-            IAuthorizationErrorProvider authorizationErrorProvider)
+            IAuthorizationErrorProvider authorizationErrorProvider,
+            IUserDataProvider userDataProvider)
         {
             _agencyUserProvider = agencyUserProvider;
             _authorizationErrorProvider = authorizationErrorProvider;
+            _userDataProvider = userDataProvider;
         }
 
         public MediatorResponse<AgencyUserViewModel> Authorize(ClaimsPrincipal principal)
@@ -45,6 +50,13 @@
 
             var username = principal.Identity.Name;
             viewModel = _agencyUserProvider.GetOrCreateAgencyUser(username, roleList);
+
+            // Redirect to session return URL (if any).
+            var returnUrl = _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
+            if (returnUrl.IsValidReturnUrl())
+            {
+                return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.ReturnUrl, viewModel, parameters: returnUrl);
+            }
 
             return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.Ok, viewModel);
         }

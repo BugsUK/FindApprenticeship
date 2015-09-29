@@ -1,10 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 {
+    using System;
+    using System.Collections.Generic;
     using Common.Constants;
+    using Common.Providers;
     using Common.UnitTests.Builders;
     using Common.UnitTests.Mediators;
     using Constants.Messages;
+    using Domain.Entities.Applications;
+    using Domain.Entities.Candidates;
+    using FluentAssertions;
     using Manage.Mediators.AgencyUser;
+    using Moq;
     using NUnit.Framework;
 
     [TestFixture]
@@ -41,6 +48,37 @@
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(AgencyUserMediatorCodes.Authorize.MissingRoleListClaim, AuthorizeMessages.MissingRoleListClaim, UserMessageLevel.Error);
+        }
+
+        [Test]
+        public void Authenticated_SessionReturnUrl()
+        {
+            const string returnUrl = "/localallowedurl";
+            var userDataProvider = new Mock<IUserDataProvider>();
+            userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
+
+            var mediator = new AgencyUserMediatorBuilder().With(userDataProvider).Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
+
+            var response = mediator.Authorize(principal);
+            response.AssertCode(AgencyUserMediatorCodes.Authorize.ReturnUrl, false, true);
+            response.Parameters.Should().Be(returnUrl);
+        }
+
+        [Test]
+        public void Authenticated_SessionReturnUrlNotAllowed()
+        {
+            const string returnUrl = "http://notallowedurl.com/";
+            var userDataProvider = new Mock<IUserDataProvider>();
+            userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
+
+            var mediator = new AgencyUserMediatorBuilder().With(userDataProvider).Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
+
+            var response = mediator.Authorize(principal);
+            response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
         }
 
         [Test]

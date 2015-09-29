@@ -25,7 +25,7 @@
                 CookieName = CookieName,
                 AuthenticationType = WsFederationAuthenticationDefaults.AuthenticationType,
                 SlidingExpiration = true,
-                ExpireTimeSpan = TimeSpan.FromMinutes(1)
+                ExpireTimeSpan = TimeSpan.FromMinutes(60)
             };
 
             app.UseCookieAuthentication(cookieAuthenticationOptions);
