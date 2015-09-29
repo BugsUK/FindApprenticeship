@@ -164,9 +164,6 @@ $(function() {
     $(this).closest('.edit-region-container').find('.editmode-wrapper').show();
   });
 
-
-  $('.chosen-select').chosen();
-
   if($('#pageManageSites').length) {
     var firstUser = gup('First'),
         newUser = gup('New');
