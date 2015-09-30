@@ -5,6 +5,7 @@
     using Attributes;
     using Common.Attributes;
     using Constants;
+    using ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
@@ -37,7 +38,13 @@
         [HttpGet]
         public ActionResult VacancySubmitted(Guid id)
         {
-            return View();
+            var viewModel = new SubmittedVacancyViewModel
+            {
+                ApproverEmail = "john.smith@salon-secrets.co.uk",
+                PublishDate = new DateTime(2015, 10, 12)
+            };
+
+            return View(viewModel);
         }
     }
 }

@@ -338,6 +338,7 @@
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -426,6 +427,7 @@
     <Content Include="Views\VacancyPosting\Index.cshtml" />
     <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -457,7 +459,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\SignIn\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

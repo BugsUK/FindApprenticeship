@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.SubmittedVacancyViewModel
+@using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Create new vacancy";
 }
@@ -27,13 +28,14 @@
 </div>
 <section class="section-border">
     <section class="text">
-        <p><i class="fa fa-envelope-o"></i>We'll send an approval email to <b class="inl-block">john.smith@salon-secrets.co.uk</b>.</p>
+        <p><i class="fa fa-envelope-o"></i>We'll send an approval email to <b class="inl-block">@Model.ApproverEmail</b>.</p>
         <p>
             Once it has been checked and approved it is scheduled to be published
-            on your chosen date of <b class="inl-block">12 Oct 2015</b>.
+            on your chosen date of <b class="inl-block">@Html.DisplayFor(m => m.PublishDate)</b>.
         </p>
     </section>
     <div class="form-group">
+        <p><em>Is this in scope for US811?</em></p>
         <label for="sendVacancy" class="form-label bold-medium">Share vacancy (optional)</label>
         <span class="form-hint">Enter an email address</span>
         <input type="email" id="sendVacancy" class="form-control">
@@ -48,25 +50,21 @@
         <span class="subtitle">Start with a fresh template or continue with a draft</span>
     </div>
     <div class="form-group">
-        <a href="create-vacancy.html" class="button">Create vacancy</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.NewVacancyLandingPage)" class="button">Create vacancy</a>
     </div>
     <p>
-        <a href="recruitment-home.html">Return to recruitment home</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>
     </p>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
 </section>
 <section>
     <h3 class="heading-medium">Employer email view as approver</h3>
+    <p><em>Is this in scope for US811?</em></p>
     <a href="employer-live-apprenticeship.html">
-        <img src="../_assets/img/screenshot-employer-approval.png" alt="">
+        <img src="http://faa-prototype.azurewebsites.net/_assets/img/screenshot-employer-approval.png" alt="">
     </a>
 </section>
 <section>
     <h3 class="heading-medium">Employer email view of notification</h3>
-    <img src="../_assets/img/screenshot-employer-notification.png" alt="">
+    <p><em>Is this in scope for US811?</em></p>
+    <img src="http://faa-prototype.azurewebsites.net/_assets/img/screenshot-employer-notification.png" alt="">
 </section>
