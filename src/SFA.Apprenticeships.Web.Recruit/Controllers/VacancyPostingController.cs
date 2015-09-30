@@ -19,9 +19,13 @@
             _vacancyPostingMediator = vacancyPostingMediator;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
-            return View(new NewVacancyViewModel());
+            var response = _vacancyPostingMediator.GetNewVacancyModel(User.Identity.Name);
+            var viewModel = response.ViewModel;
+
+            return View(viewModel);
         }
 
         [HttpPost]

@@ -4,6 +4,6 @@
 
     public interface IVacancyPostingProvider
     {
-        NewVacancyViewModel GetNewVacancy(string username);
+        NewVacancyViewModel GetNewVacancyViewModel(string username);
     }
 }

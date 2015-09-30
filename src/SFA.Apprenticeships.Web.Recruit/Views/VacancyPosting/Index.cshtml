@@ -1,4 +1,5 @@
 ﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.NewVacancyViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Create new vacancy";
@@ -23,283 +24,60 @@
 <h1 class="heading-xlarge">
     Create new vacancy
 </h1>
+
 @using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    <fieldset class="form-group">
     <div class="form-group">
-    <label for="frameworks-list" class="form-label">Framework</label>
-    <select name="" id="frameworks-list" class="chosen-select" data-placeholder="Choose from list of frameworks">
-    <option value=""></option>
-    <option value="">Agriculture</option>
-    <option value="">Animal Care</option>
-    <option value="">Animal Technology</option>
-    <option value="">Animal Technology</option>
-    <option value="">Environmental Conservation</option>
-    <option value="">Equine</option>
-    <option value="">Farriery</option>
-    <option value="">Fencing</option>
-    <option value="">Fish Husbandry and Fisheries Management</option>
-    <option value="">Floristry</option>
-    <option value="">Game and Wildlife Management</option>
-    <option value="">Horticulture</option>
-    <option value="">Landbased Engineering</option>
-    <option value="">Nursing Assistants in a Veterinary Environment</option>
-    <option value="">Trees and Timber</option>
-    <option value="">Veterinary Nursing</option>
-    <option value="">Advertising &amp; Marketing Communications</option>
-    <option value="">Automative Clay Modelling</option>
-    <option value="">Broadcast Production</option>
-    <option value="">Broadcasting Technology</option>
-    <option value="">Community Arts</option>
-    <option value="">Costume and Wardrobe</option>
-    <option value="">Craft and Technical Roles in Film and Television</option>
-    <option value="">Creative and Digital Media</option>
-    <option value="">Creative Craft Practitioner</option>
-    <option value="">Cultural and Heritage Venue operations</option>
-    <option value="">Design</option>
-    <option value="">Digital Learning Design</option>
-    <option value="">Interactive Design and Development</option>
-    <option value="">Journalism</option>
-    <option value="">Live Events and Promotion</option>
-    <option value="">Music Business</option>
-    <option value="">Photo Imaging</option>
-    <option value="">SetCrafts</option>
-    <option value="">Sound Recording</option>
-    <option value="">Engineering and Studio Facilities</option>
-    <option value="">Technical Theatre</option>
-    <option value="">Accounting</option>
-    <option value="">Banking</option>
-    <option value="">Bookkeeping</option>
-    <option value="">Business and Administration</option>
-    <option value="">Business Innovation and Growth</option>
-    <option value="">Campaigning</option>
-    <option value="">Contact Centre Operations</option>
-    <option value="">Criminal Investigation</option>
-    <option value="">Customer Service</option>
-    <option value="">Enterprise</option>
-    <option value="">Fundraising</option>
-    <option value="">Human Resource Management</option>
-    <option value="">Insurance</option>
-    <option value="">Legal Advice</option>
-    <option value="">Legal Services</option>
-    <option value="">Management</option>
-    <option value="">Marketing</option>
-    <option value="">Payroll</option>
-    <option value="">Professional Services</option>
-    <option value="">Project Management</option>
-    <option value="">Providing Financial Advice</option>
-    <option value="">Providing Financial Services</option>
-    <option value="">Providing Mortgage Advice</option>
-    <option value="">Public Relations</option>
-    <option value="">Recruitment</option>
-    <option value="">Sales and Telesales</option>
-    <option value="">Social Media and Digital Marketing</option>
-    <option value="">Trade Business</option>
-    <option value="">Volunteer Management</option>
-    <option value="">Building Energy Management Systems</option>
-    <option value="">Building Services Engineering Technology</option>
-    <option value="">Construction Building</option>
-    <option value="">Construction Civil Engineering</option>
-    <option value="">Construction Management</option>
-    <option value="">Construction Specialist</option>
-    <option value="">Construction Technical</option>
-    <option value="">Domestic Heating</option>
-    <option value="">Heating and Ventilation</option>
-    <option value="">Plumbing and Heating</option>
-    <option value="">Refrigeration and Air Conditioning</option>
-    <option value="">Surveying</option>
-    <option value="">Learning and Development</option>
-    <option value="">Learning Support</option>
-    <option value="">Supporting Teaching and Learning in Physical Education</option>
-    <option value="">Supporting Teaching and Learning in Schools</option>
-    <option value="">Advanced Diagnostics and Management Principles</option>
-    <option value="">Advanced Engineering Construction</option>
-    <option value="">Advanced Manufacturing Engineering</option>
-    <option value="">Automotive Management and Leadership</option>
-    <option value="">Aviation Operations on the Ground</option>
-    <option value="">Blacksmithing</option>
-    <option value="">Building Products Industry Occupations</option>
-    <option value="">Bus and Coach Engineering and Maintenance</option>
-    <option value="">Ceramics Manufacturing</option>
-    <option value="">Combined Manufacturing Processes</option>
-    <option value="">Composite Engineering</option>
-    <option value="">Consumer Electrical and Electronic Products</option>
-    <option value="">Driving Goods Vehicles</option>
-    <option value="">Electrotechnical</option>
-    <option value="">Engineering Construction – ECITB</option>
-    <option value="">Engineering Environmental Technologies</option>
-    <option value="">Engineering Manufacture</option>
-    <option value="">Engineering Manufacture</option>
-    <option value="">Explosives</option>
-    <option value="">Storage &amp; Maintenance</option>
-    <option value="">Extractives</option>
-    <option value="">Fashion and Textiles:Technical</option>
-    <option value="">Food and Drink</option>
-    <option value="">Furniture</option>
-    <option value="">Furnishing and Interiors</option>
-    <option value="">Glass Industry</option>
-    <option value="">Improving Operational Performance</option>
-    <option value="">Jewellery</option>
-    <option value="">Silversmithing and Allied Trades</option>
-    <option value="">Laboratory and Science Technicians</option>
-    <option value="">Marine Industry</option>
-    <option value="">Maritime Occupations</option>
-    <option value="">Metal Processing and Allied Operations</option>
-    <option value="">Mineral Products Technology</option>
-    <option value="">Multi-Skilled Vehicle Collision Repair</option>
-    <option value="">Nuclear Working</option>
-    <option value="">Operations and Quality Improvement</option>
-    <option value="">Passenger Carrying Vehicle Driving</option>
-    <option value="">Polymer Processing Operations</option>
-    <option value="">Power Engineering</option>
-    <option value="">Print and Printed Packaging</option>
-    <option value="">Process Manufacturing</option>
-    <option value="">Production of Coatings</option>
-    <option value="">Professional Aviation Pilot Practice</option>
-    <option value="">Rail Engineering</option>
-    <option value="">Rail Engineering Overhead Line Construction</option>
-    <option value="">Rail Infrastructure Engineering</option>
-    <option value="">Rail Services</option>
-    <option value="">Rail Traction and Rolling Stock Engineering</option>
-    <option value="">Sea Fishing</option>
-    <option value="">Signmaking</option>
-    <option value="">Smart Meter Installations</option>
-    <option value="">Sustainable Resource Management</option>
-    <option value="">The Gas Industry</option>
-    <option value="">The Power Industry</option>
-    <option value="">The Water Industry</option>
-    <option value="">Vehicle Body and Paint</option>
-    <option value="">Vehicle Fitting</option>
-    <option value="">Vehicle Maintenance and Repair</option>
-    <option value="">Vehicle Parts</option>
-    <option value="">Wood &amp; Timber Processing and Merchants Industry</option>
-    <option value="">Care Leadership and Management</option>
-    <option value="">Children and Young People's Workforce</option>
-    <option value="">Courts</option>
-    <option value="">Tribunal and Prosecution Administration</option>
-    <option value="">Custodial Care</option>
-    <option value="">Emergency Fire Service Operations</option>
-    <option value="">Employment Related Services</option>
-    <option value="">Health - Allied Health Profession Support</option>
-    <option value="">Health - Blood Donor Support</option>
-    <option value="">Health - Clinical Healthcare</option>
-    <option value="">Health - Dental Nursing</option>
-    <option value="">Health - Emergency Care</option>
-    <option value="">Health - Healthcare Support Services</option>
-    <option value="">Health - Maternity and Paediatric Support</option>
-    <option value="">Health - Optical Retail</option>
-    <option value="">Health - Pathology Support</option>
-    <option value="">Health - Perioperative Support</option>
-    <option value="">Health - Pharmacy Services</option>
-    <option value="">Health Informatiion</option>
-    <option value="">Health and Social Care</option>
-    <option value="">Health Assistant Practitioner</option>
-    <option value="">HM Forces</option>
-    <option value="">Housing</option>
-    <option value="">Intelligence Analysis</option>
-    <option value="">Libraries Records and IM Services</option>
-    <option value="">Local Taxation and Benefits</option>
-    <option value="">Locksmithing</option>
-    <option value="">Policing</option>
-    <option value="">Professional Development for Work Based Learning Practitioners</option>
-    <option value="">Providing Security Services</option>
-    <option value="">Security Systems</option>
-    <option value="">Witness Care</option>
-    <option value="">Youth Work</option>
-    <option value="">Information Security</option>
-    <option value="">IT Application Specialist</option>
-    <option value="">IT</option>
-    <option value="">Software</option>
-    <option value="">Web &amp; Telecoms Professionals</option>
-    <option value="">Activity Leadership</option>
-    <option value="">Advanced Playwork</option>
-    <option value="">Advanced Spectator Safety</option>
-    <option value="">Cabin Crew</option>
-    <option value="">Coaching</option>
-    <option value="">Exercise and Fitness</option>
-    <option value="">Leisure Management</option>
-    <option value="">Leisure Operations</option>
-    <option value="">Outdoor Programmes</option>
-    <option value="">Playwork</option>
-    <option value="">Spectator Safety</option>
-    <option value="">Sporting Excellence</option>
-    <option value="">Sports Development</option>
-    <option value="">Travel Services</option>
-    <option value="">Barbering</option>
-    <option value="">Beauty Therapy</option>
-    <option value="">Catering and Professional Chefs</option>
-    <option value="">Cleaning and Environmental Services</option>
-    <option value="">Commercial Moving</option>
-    <option value="">Drinks Dispense Systems</option>
-    <option value="">Energy Assessment and Advice</option>
-    <option value="">Express Logistics</option>
-    <option value="">Facilities Management</option>
-    <option value="">Fashion and Textiles</option>
-    <option value="">Funeral Operations and Services</option>
-    <option value="">Hairdressing</option>
-    <option value="">Hospitality</option>
-    <option value="">Hospitality Management</option>
-    <option value="">International Supply Chain Management</option>
-    <option value="">International Trade and Logistics</option>
-    <option value="">Licensed Hospitality</option>
-    <option value="">Logistics Operations</option>
-    <option value="">Mail Services and Package Distribution</option>
-    <option value="">Nail Services</option>
-    <option value="">Procurement</option>
-    <option value="">Property Services</option>
-    <option value="">Purchasing and Supply Management</option>
-    <option value="">Retail</option>
-    <option value="">Retail Management</option>
-    <option value="">Spa Therapy</option>
-    <option value="">Supply Chain Management</option>
-    <option value="">Traffic Office</option>
-    <option value="">Vehicle Sales</option>
-    <option value="">Warehousing and Storage</option>
-    <option value="">Life Sciences</option>
-    </select>
-    </div>
-    <div class="form-group">
-        <label class="form-label">Choose apprenticeship level</label>
-        <span class="form-hint med-btm-margin">Select multiple levels if applicable</span>
-        <div class="form-group small-btm-margin clearfix">
-            <label for="intermediateLevel" class="block-label">
-                <input checked type="radio" name="chooseLevel" id="intermediateLevel">Intermediate
-            </label>
-        </div>
-        <div class="form-group small-btm-margin clearfix">
-            <label for="advancedLevel" class="block-label">
-                <input type="radio" name="chooseLevel" id="advancedLevel">Advanced
-            </label>
-        </div>
-        <div class="form-group small-btm-margin clearfix">
-            <label for="higherLevel" class="block-label">
-                <input type="radio" name="chooseLevel" id="higherLevel">Higher
-            </label>
-        </div>
-    </div>
-    </fieldset>
-    <fieldset class="form-group">
-        <label class="form-label" for="">Choose training site</label>
-        <select name="" id="" class="chosen-select">
-            <option value="">All training sites</option>
-            <option value="" selected>Basing View, Basingstoke</option>
-            <option value="">Great Charles Street Queensway, Birmingham</option>
-            <option value="">St. Helens Street, Ipswich</option>
-            <option value="">South Parade,</option>
-            <option value="">24-26 Baltic Street West, London</option>
-            <option value="">Dean Street, Newcastle upon Tyne</option>
-            <option value="">Judson Road, Peterlee</option>
-            <option value="">David Murray John Tower, Swindon</option>
-            <option value="">6-10 Gills Yard,</option>
-            <option value="">Sheep Street, Wellingborough</option>
-            <option value="">Sheet Street, Windsor</option>
+        <p class="form-label">Framework</p>
+
+        <select id="@Html.IdFor(model => model.FrameworkCodeName)" name="@Html.NameFor(m => m.FrameworkCodeName)" class="para-btm-margin">
+            <option value="" selected>Choose from a list of frameworks</option>
+
+            @foreach (var sector in Model.Sectors)
+            {
+                <optgroup label="@sector.FullName">
+                    @foreach (var framework in sector.Frameworks)
+                    {
+                        <option value="@framework.CodeName">@framework.FullName</option>
+                    }
+                </optgroup>
+            }
         </select>
-    </fieldset>
+    </div>
+
+    <div class="form-group inline clearfix">
+        <p class="form-label" id="apprenticeship-level-label">Choose apprenticeship level</p>
+        <label for="apprenticeship-level-intermediate" class="block-label">
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, @ApprenticeshipLevel.Intermediate, new { id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label" }) Intermediate
+        </label>
+
+        <label for="apprenticeship-level-advanced" class="block-label">
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, @ApprenticeshipLevel.Advanced, new { id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label" }) Advanced
+        </label>
+
+        <label for="apprenticeship-level-higher" class="block-label">
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, @ApprenticeshipLevel.Higher, new { id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label" }) Higher
+        </label>
+    </div>
+
+    <div class="form-group">
+        <p class="form-label">Choose training site</p>
+        <!-- TODO: US811: provider sites width list. -->
+        @Html.DropDownListFor(model => model.TrainingSiteErn, Model.ProviderSites, new { @class = "chosen-select width-all-1-1" })
+    </div>
+
     <fieldset class="form-group">
         <button type="submit" class="button">Create vacancy</button>
     </fieldset>
 }
 
+@section scripts {
+    <script>
+        $(function () {
+            $(".chosen-select").chosen();
+        });
+    </script>
+}

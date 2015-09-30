@@ -15,7 +15,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
-    public class ProviderController : ControllerBase<RecuitmentUserContext>
+    public class ProviderController : ControllerBase<RecruitmentUserContext>
     {
         private readonly IProviderMediator _providerMediator;
 

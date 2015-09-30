@@ -20,11 +20,11 @@
     AllowReturnUrl(Allow = true),
     PlannedOutageMessage,
     RobotsIndexPage]
-    public abstract class RecuitmentControllerBase : ControllerBase<RecuitmentUserContext>
+    public abstract class RecruitmentControllerBase : ControllerBase<RecruitmentUserContext>
     {
         public readonly IConfigurationService ConfigurationService;
 
-        protected RecuitmentControllerBase(IConfigurationService configurationService)
+        protected RecruitmentControllerBase(IConfigurationService configurationService)
         {
             ConfigurationService = configurationService;
         }
@@ -39,9 +39,9 @@
 
                 if (context != null)
                 {
-                    var candidateContext = new RecuitmentUserContext
+                    var candidateContext = new RecruitmentUserContext
                     {
-                        RecuiterId = new Guid(User.Identity.Name),
+                        RecruiterId = new Guid(User.Identity.Name),
                         FullName = context.FullName,
                         UserName = context.UserName,
                         AcceptedTermsAndConditionsVersion = context.AcceptedTermsAndConditionsVersion
@@ -80,7 +80,7 @@
             }
 
             MappedDiagnosticsLogicalContext.Set("sessionId", sessionId);
-            MappedDiagnosticsLogicalContext.Set("userId", UserContext != null ? UserContext.RecuiterId.ToString() : "<none>");
+            MappedDiagnosticsLogicalContext.Set("userId", UserContext != null ? UserContext.RecruiterId.ToString() : "<none>");
         }
 
         private void SetRequestInfo()
@@ -110,7 +110,7 @@
 
             if (Request.IsAuthenticated && UserContext != null)
             {
-                candidateId = UserContext.RecuiterId;
+                candidateId = UserContext.RecruiterId;
             }
 
             return candidateId;

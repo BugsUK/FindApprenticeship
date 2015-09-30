@@ -5,9 +5,11 @@
     using Application.Communication.Strategies;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Organisations;
+    using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Organisation;
+    using Application.Provider;
     using Application.ReferenceData;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
@@ -50,6 +52,7 @@
             For<IOrganisationService>().Use<OrganisationService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
+            For<IProviderService>().Use<ProviderService>();
         }
 
         private void RegisterStrategies()

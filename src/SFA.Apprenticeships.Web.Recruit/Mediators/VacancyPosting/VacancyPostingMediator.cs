@@ -18,9 +18,11 @@
             _vacancyPostingProvider = vacancyPostingProvider;
         }
 
-        public NewVacancyViewModel Index(string username)
+        public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username)
         {
-            return _vacancyPostingProvider.GetNewVacancy(username);
+            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(username);
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyModel.Ok, viewModel);
         }
 
         public MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel viewModel)

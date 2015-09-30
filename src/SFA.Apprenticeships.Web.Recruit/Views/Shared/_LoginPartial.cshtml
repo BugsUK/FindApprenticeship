@@ -3,7 +3,7 @@
 
 @if (Request.IsAuthenticated)
 {
-    var controller = ViewContext.Controller as RecuitmentControllerBase;
+    var controller = ViewContext.Controller as RecruitmentControllerBase;
     var fullName = (controller != null && controller.UserContext != null) ? controller.UserContext.FullName : string.Empty;
 
     <div class="account-info" id="bannerSignedIn">

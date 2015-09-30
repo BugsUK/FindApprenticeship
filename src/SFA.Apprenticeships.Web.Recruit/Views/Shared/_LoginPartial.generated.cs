@@ -59,7 +59,7 @@ WriteLiteral("\r\n");
             #line 4 "..\..\Views\Shared\_LoginPartial.cshtml"
  if (Request.IsAuthenticated)
 {
-    var controller = ViewContext.Controller as RecuitmentControllerBase;
+    var controller = ViewContext.Controller as RecruitmentControllerBase;
     var fullName = (controller != null && controller.UserContext != null) ? controller.UserContext.FullName : string.Empty;
 
 
@@ -95,14 +95,14 @@ WriteLiteral("</span>\r\n            <a");
 
 WriteLiteral(" id=\"signout-link\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 537), Tuple.Create("\"", 588)
+WriteAttribute("href", Tuple.Create(" href=\"", 538), Tuple.Create("\"", 589)
             
             #line 12 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 544), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignOut)
+, Tuple.Create(Tuple.Create("", 545), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignOut)
             
             #line default
             #line hidden
-, 544), false)
+, 545), false)
 );
 
 WriteLiteral("><i");
@@ -131,14 +131,14 @@ WriteLiteral(" class=\"account-link\"");
 
 WriteLiteral(" id=\"applicationsLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 833), Tuple.Create("\"", 892)
+WriteAttribute("href", Tuple.Create(" href=\"", 834), Tuple.Create("\"", 893)
             
             #line 17 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 840), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 841), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 840), false)
+, 841), false)
 );
 
 WriteLiteral(">Home</a>\r\n                <a");
@@ -147,14 +147,14 @@ WriteLiteral(" class=\"account-link\"");
 
 WriteLiteral(" id=\"applicationsLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 965), Tuple.Create("\"", 1028)
+WriteAttribute("href", Tuple.Create(" href=\"", 966), Tuple.Create("\"", 1029)
             
             #line 18 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 972), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.ManageProviderSites)
+, Tuple.Create(Tuple.Create("", 973), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.ManageProviderSites)
             
             #line default
             #line hidden
-, 972), false)
+, 973), false)
 );
 
 WriteLiteral(">Provider details</a>\r\n                <!--<a class=\"\" id=\"applicationsLink\" href" +
@@ -202,14 +202,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1380), Tuple.Create("\"", 1430)
+WriteAttribute("href", Tuple.Create(" href=\"", 1381), Tuple.Create("\"", 1431)
             
             #line 29 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 1387), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignIn)
+, Tuple.Create(Tuple.Create("", 1388), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignIn)
             
             #line default
             #line hidden
-, 1387), false)
+, 1388), false)
 );
 
 WriteLiteral(" id=\"loginLink\"");
@@ -233,14 +233,14 @@ WriteLiteral("></i>Sign in / Create account</a>\r\n");
             #line hidden
 WriteLiteral("            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1589), Tuple.Create("\"", 1639)
+WriteAttribute("href", Tuple.Create(" href=\"", 1590), Tuple.Create("\"", 1640)
             
             #line 33 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 1596), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignIn)
+, Tuple.Create(Tuple.Create("", 1597), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignIn)
             
             #line default
             #line hidden
-, 1596), false)
+, 1597), false)
 );
 
 WriteLiteral(" id=\"loginLink\"");

@@ -5,10 +5,14 @@
 
     public interface IVacancyPostingMediator
     {
-        NewVacancyViewModel Index(string johnDoeExampleCom);
+        MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username);
+
         MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel viewModel);
+
         MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
+
         MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel);
+
         MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber);
     }
 }

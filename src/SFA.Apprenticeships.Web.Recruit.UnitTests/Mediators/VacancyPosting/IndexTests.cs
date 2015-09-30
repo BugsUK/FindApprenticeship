@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using FluentAssertions;
     using NUnit.Framework;
     using Recruit.Providers;
 
@@ -7,17 +8,17 @@
     public class IndexTests : TestsBase
     {
         [Test]
-        [Ignore]
         public void ShouldGetNewVacancy()
         {
             // Arrange.
             var mediator = GetMediator();
 
             // Act.
-            mediator.Index("john.doe@example.com");
+            var viewModel = mediator.GetNewVacancyModel("john.doe@example.com");
 
             // Assert.
-            Assert.Fail();
+            // TODO: AG: US811: more assertions.
+            viewModel.Should().NotBeNull();
         }
     }
 }

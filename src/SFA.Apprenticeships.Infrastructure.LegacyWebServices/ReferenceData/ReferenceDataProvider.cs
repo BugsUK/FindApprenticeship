@@ -77,7 +77,7 @@
 
         private IEnumerable<Category> GetCategories(GetApprenticeshipFrameworksResponse response)
         {
-            if (response == null || response.ApprenticeshipFrameworks == null || response.ApprenticeshipFrameworks.Length == 0)
+            if (response?.ApprenticeshipFrameworks == null || response.ApprenticeshipFrameworks.Length == 0)
             {
                 _logger.Warn("No ApprenticeshipFrameworks data returned from the legacy GetApprenticeshipFrameworks service");
                 return null;

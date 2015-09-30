@@ -4,7 +4,7 @@
     using Common.Controllers;
     using Providers;
 
-    public class HomeController : ControllerBase<RecuitmentUserContext>
+    public class HomeController : ControllerBase<RecruitmentUserContext>
     {
         public ActionResult Index()
         {

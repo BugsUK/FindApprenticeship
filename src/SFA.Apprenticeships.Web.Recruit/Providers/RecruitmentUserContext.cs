@@ -3,8 +3,8 @@
     using System;
     using Common.Providers;
 
-    public class RecuitmentUserContext : UserContext
+    public class RecruitmentUserContext : UserContext
     {
-        public Guid RecuiterId { get; set; }
+        public Guid RecruiterId { get; set; }
     }
 }

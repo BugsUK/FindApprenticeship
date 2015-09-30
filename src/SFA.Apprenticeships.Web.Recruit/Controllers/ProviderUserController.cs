@@ -20,7 +20,7 @@
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
-    public class ProviderUserController : ControllerBase<RecuitmentUserContext>
+    public class ProviderUserController : ControllerBase<RecruitmentUserContext>
     {
         private readonly IProviderUserMediator _providerUserMediator;
         private readonly ICookieAuthorizationDataProvider _cookieAuthorizationDataProvider;
