@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
-    using System;
     using Common.Mediators;
     using ViewModels.Vacancy;
 
     public interface IVacancyPostingMediator
     {
         NewVacancyViewModel Index(string johnDoeExampleCom);
-        MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(Guid id);
+        MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel viewModel);
+        MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
+        MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel);
+        MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber);
     }
 }

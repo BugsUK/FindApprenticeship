@@ -6,6 +6,7 @@
     using Common.Attributes;
     using Constants;
     using Mediators.VacancyPosting;
+    using ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
@@ -20,32 +21,40 @@
 
         public ActionResult Index()
         {
-
-            return View();
+            return View(new NewVacancyViewModel());
         }
 
         [HttpPost]
-        public ActionResult CreateVacancy()
+        public ActionResult CreateVacancy(NewVacancyViewModel viewModel)
         {
-            return RedirectToRoute(RecruitmentRouteNames.SubmitVacancy, new {id = Guid.NewGuid()});
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+            var vacancyViewModel = response.ViewModel;
+
+            return RedirectToRoute(RecruitmentRouteNames.SubmitVacancy, new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
         }
 
         [HttpGet]
-        public ActionResult SubmitVacancy(Guid id)
+        public ActionResult SubmitVacancy(long vacancyReferenceNumber)
         {
-            return View();
+            var response = _vacancyPostingMediator.GetVacancyViewModel(vacancyReferenceNumber);
+            var viewModel = response.ViewModel;
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public ActionResult SubmitVacancy()
+        public ActionResult SubmitVacancy(VacancyViewModel viewModel)
         {
-            return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new { id = Guid.NewGuid() });
+            var response = _vacancyPostingMediator.SubmitVacancy(viewModel);
+            var vacancyViewModel = response.ViewModel;
+
+            return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
         }
 
         [HttpGet]
-        public ActionResult VacancySubmitted(Guid id)
+        public ActionResult VacancySubmitted(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetSubmittedVacancyViewModel(id);
+            var response = _vacancyPostingMediator.GetSubmittedVacancyViewModel(vacancyReferenceNumber);
             var viewModel = response.ViewModel;
 
             return View(viewModel);
