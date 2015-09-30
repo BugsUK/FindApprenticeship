@@ -417,7 +417,7 @@
 
         private static RouteValueDictionary MergeAttributes(string baseClassName, object extendedAttributes)
         {
-            var mergeAttributes = extendedAttributes != null ? HtmlHelper.AnonymousObjectToHtmlAttributes(extendedAttributes) : new RouteValueDictionary();
+            var mergeAttributes = extendedAttributes != null ? extendedAttributes as RouteValueDictionary ?? HtmlHelper.AnonymousObjectToHtmlAttributes(extendedAttributes) : new RouteValueDictionary();
 
             if (mergeAttributes.ContainsKey("class"))
             {

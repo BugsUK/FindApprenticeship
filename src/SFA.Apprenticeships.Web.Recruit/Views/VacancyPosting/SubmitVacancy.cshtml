@@ -33,18 +33,9 @@
         <div class="grid-wrapper">
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="title">Title</label>
-                            <input type="text" class="form-control width-all-1-1" id="title" name="title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="short-description">Short description</label>
-                            <textarea size="12" class="form-control width-all-1-1" id="short-description" name="short-description"></textarea>
-                        </div>
-                    </div>
+                    @Html.FormTextFor(m => m.Title, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", autofocus = "autofocus" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    <!--TODO: Why is 4000 characters remaining appearing?-->
+                    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
                 </div>
             </div>
         </div>
@@ -56,43 +47,12 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-3">
                 <div class="inner-block-padr">
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="working-week">Working week</label>
-                            <textarea size="12" class="form-control width-all-1-1" id="working-week" name="working-week"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="weekly-wage">Weekly wage (&pound;)</label>
-                            <input type="number" class="form-control width-all-1-3" id="weekly-wage" name="weekly-wage">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="duration">Duration</label>
-                            <input type="number" class="form-control width-all-1-3" id="duration" name="duration">&nbsp;years
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="publish-date">Publish date</label>
-                            <input type="date" class="form-control width-all-2-3" id="publish-date" name="publish-date">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="closing-date">Closing date</label>
-                            <input type="date" class="form-control width-all-2-3" id="closing-date" name="closing-date">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="possible-start-date">Possible start date</label>
-                            <input type="date" class="form-control width-all-2-3" id="possible-start-date"
-                                   name="possible-start-date">
-                        </div>
-                    </div>
+                    @Html.FormTextAreaFor(m => m.WorkingWeek, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new { @class = "width-all-1-3", type = "number" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new { @class = "width-all-1-3", type = "number" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.PublishDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.ClosingDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.PossibleStartDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
                     <div class="form-group">
                         <div data-editable>
                             <label class="form-label bold-small" for="apprenticeship-level">Apprenticeship level</label>
@@ -106,13 +66,7 @@
                 </div>
             </div>
             <div class="grid grid-2-3">
-                <div class="form-group">
-                    <div data-editable class="empty">
-                        <label class="form-label bold-small" for="long-description">Long description</label>
-                        <textarea class="form-control width-all-1-1 form-textarea-large" size="12" id="long-description"
-                                  name="long-description"></textarea>
-                    </div>
-                </div>
+                @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
             </div>
         </div>
     </section>
@@ -123,44 +77,14 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="desired-skills">Desired skills</label>
-                            <textarea class="form-control width-all-1-1 form-textarea-medium" id="desired-skills"
-                                      name="desired-skills"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="personal-qualities">Personal qualities</label>
-                            <textarea class="form-control width-all-1-1 form-textarea-medium" id="personal-qualities"
-                                      name="personal-qualities"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="desired-qualifications">Desired qualifications</label>
-                            <textarea class="form-control width-all-1-1 form-textarea-medium" id="desired-qualifications"
-                                      name="desired-qualifications"></textarea>
-                        </div>
-                    </div>
+                    @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
                 </div>
             </div>
             <div class="grid grid-1-2">
-                <div class="form-group">
-                    <div data-editable class="empty">
-                        <label class="form-label bold-small" for="future-prospect">Future prospects</label>
-                        <textarea class="form-control width-all-1-1 form-textarea-medium" id="future-prospect"
-                                  name="future-prospect"></textarea>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div data-editable class="empty">
-                        <label class="form-label bold-small" for="things-to-consider">Things to consider</label>
-                        <textarea class="form-control width-all-1-1 form-textarea-medium" id="things-to-consider"
-                                  name="things-to-consider"></textarea>
-                    </div>
-                </div>
+                @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
             </div>
         </div>
     </section>
@@ -171,18 +95,8 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="first-question">First question (optional)</label>
-                            <textarea class="form-control width-all-1-1" id="first-question" name="first-question"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div data-editable class="empty">
-                            <label class="form-label bold-small" for="second-question">Second question (optional)</label>
-                            <textarea class="form-control width-all-1-1" id="second-question" name="second-question"></textarea>
-                        </div>
-                    </div>
+                    @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
                 </div>
             </div>
         </div>
@@ -308,7 +222,8 @@
                         apprentice is job ready.
                     </p>
                     <div class="edit-wrapper">
-                        <h3 class="bold-small">Apprenticeship framework<a href="#" class="heading-edit edit-link font-xsmall">Edit</a>
+                        <h3 class="bold-small">
+                            Apprenticeship framework<a href="#" class="heading-edit edit-link font-xsmall">Edit</a>
                         </h3>
                         <p>Hairdressing (Skills Active/Habia)</p>
                         <p>
@@ -322,7 +237,8 @@
                 <h3 class="bold-small">Training provider</h3>
                 <p>Bradford college</p>
                 <div class="edit-wrapper">
-                    <h3 class="heading-small">Contact <a href="#" class="heading-edit edit-link font-xsmall">Edit</a>
+                    <h3 class="heading-small">
+                        Contact <a href="#" class="heading-edit edit-link font-xsmall">Edit</a>
                     </h3>
                     <address>
                         City Training Services<br/>
