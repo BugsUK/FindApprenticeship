@@ -115,6 +115,30 @@
                defaults: new { controller = "Provider", action = "EditSite" }
                );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.NewVacancyLandingPage,
+               url: "newvacancy",
+               defaults: new { controller = "VacancyPosting", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.CreateVacancy,
+               url: "createvacancy",
+               defaults: new { controller = "VacancyPosting", action = "CreateVacancy" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.SubmitVacancy,
+               url: "submitvacancy",
+               defaults: new { controller = "VacancyPosting", action = "SubmitVacancy" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.VacancySubmitted,
+               url: "vacancysubmitted",
+               defaults: new { controller = "VacancyPosting", action = "VacancySubmitted" }
+               );
+
             routes.LowercaseUrls = true;
 
         }

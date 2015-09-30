@@ -424,6 +424,8 @@
     <Content Include="Web.config" />
     <Content Include="Views\ProviderUser\AuthorizationError.cshtml" />
     <Content Include="Views\VacancyPosting\Index.cshtml" />
+    <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -1,0 +1,342 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
+    ViewBag.Title = "Recruit an Apprentice - Create new vacancy";
+}
+
+<div class="progress-indicator progress-indicator-horizontal">
+    <ul>
+        <li>
+            <span class="hide-tablet">Page </span>1<span class="hide-tablet"> of 3</span>.
+            Vacancy type and approver
+        </li>
+        <li class="active">
+            <span class="hide-tablet">Page </span>2<span class="hide-tablet"> of 3</span>.
+            Vacancy details
+        </li>
+        <li>
+            <span class="hide-tablet">Page </span>3<span class="hide-tablet"> of 3</span>.
+            Vacancy submitted
+        </li>
+    </ul>
+</div>
+<h1 class="heading-xlarge">
+    Create new vacancy
+</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <section>
+        <div class="grid-wrapper">
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="title">Title</label>
+                            <input type="text" class="form-control width-all-1-1" id="title" name="title">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="short-description">Short description</label>
+                            <textarea size="12" class="form-control width-all-1-1" id="short-description" name="short-description"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2 class="heading-large">
+            Apprenticeship summary
+        </h2>
+        <div class="grid-wrapper">
+            <div class="grid grid-1-3">
+                <div class="inner-block-padr">
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="working-week">Working week</label>
+                            <textarea size="12" class="form-control width-all-1-1" id="working-week" name="working-week"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="weekly-wage">Weekly wage (&pound;)</label>
+                            <input type="number" class="form-control width-all-1-3" id="weekly-wage" name="weekly-wage">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="duration">Duration</label>
+                            <input type="number" class="form-control width-all-1-3" id="duration" name="duration">&nbsp;years
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="publish-date">Publish date</label>
+                            <input type="date" class="form-control width-all-2-3" id="publish-date" name="publish-date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="closing-date">Closing date</label>
+                            <input type="date" class="form-control width-all-2-3" id="closing-date" name="closing-date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="possible-start-date">Possible start date</label>
+                            <input type="date" class="form-control width-all-2-3" id="possible-start-date"
+                                   name="possible-start-date">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable>
+                            <label class="form-label bold-small" for="apprenticeship-level">Apprenticeship level</label>
+                            <select class="form-control width-all-2-3" id="apprenticeship-level" name="apprenticeship-level">
+                                <option selected>Intermediate</option>
+                                <option>Advanced</option>
+                                <option>Higher</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-2-3">
+                <div class="form-group">
+                    <div data-editable class="empty">
+                        <label class="form-label bold-small" for="long-description">Long description</label>
+                        <textarea class="form-control width-all-1-1 form-textarea-large" size="12" id="long-description"
+                                  name="long-description"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2 class="heading-large">
+            Requirements and prospects
+        </h2>
+        <div class="grid-wrapper">
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="desired-skills">Desired skills</label>
+                            <textarea class="form-control width-all-1-1 form-textarea-medium" id="desired-skills"
+                                      name="desired-skills"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="personal-qualities">Personal qualities</label>
+                            <textarea class="form-control width-all-1-1 form-textarea-medium" id="personal-qualities"
+                                      name="personal-qualities"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="desired-qualifications">Desired qualifications</label>
+                            <textarea class="form-control width-all-1-1 form-textarea-medium" id="desired-qualifications"
+                                      name="desired-qualifications"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-1-2">
+                <div class="form-group">
+                    <div data-editable class="empty">
+                        <label class="form-label bold-small" for="future-prospect">Future prospects</label>
+                        <textarea class="form-control width-all-1-1 form-textarea-medium" id="future-prospect"
+                                  name="future-prospect"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div data-editable class="empty">
+                        <label class="form-label bold-small" for="things-to-consider">Things to consider</label>
+                        <textarea class="form-control width-all-1-1 form-textarea-medium" id="things-to-consider"
+                                  name="things-to-consider"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2 class="heading-large">
+            Questions for candidates
+        </h2>
+        <div class="grid-wrapper">
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="first-question">First question (optional)</label>
+                            <textarea class="form-control width-all-1-1" id="first-question" name="first-question"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div data-editable class="empty">
+                            <label class="form-label bold-small" for="second-question">Second question (optional)</label>
+                            <textarea class="form-control width-all-1-1" id="second-question" name="second-question"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="" id="employer-info">
+        <div>
+            <h2 class="heading-large">About the employer</h2>
+            <div class="form-group">
+                <select name="employer" id="employer" class="chosen-select" data-placeholder="Choose from list of employers">
+                    <option value=""></option>
+                    <option value="employer">Aalco Leeds (ERN: 100349439)</option>
+                    <option value="employer">Active Solutions Ltd (ERN: 100349439)</option>
+                    <option value="employer">Age Partnership Limited (ERN: 100349439)</option>
+                    <option value="employer">Apprenticeship Training Ltd (ERN: 100349439)</option>
+                    <option value="employer">Arena Group (ERN: 100349439)</option>
+                    <option value="employer">Barkston (ERN: 100349439)</option>
+                    <option value="employer">Business Internet Directory (ERN: 100349439)</option>
+                    <option value="employer">Celsian (ERN: 100349439)</option>
+                    <option value="employer">Classic Label Co Ltd (ERN: 100349439)</option>
+                    <option value="employer">Creative Emporium (ERN: 100349439)</option>
+                    <option value="employer">Dubit Limited (ERN: 100349439)</option>
+                    <option value="employer">Dudley Child Executive Recruitment (ERN: 100349439)</option>
+                    <option value="employer">Dutton International Ltd (ERN: 100349439)</option>
+                    <option value="employer">Electromec Access (ERN: 100349439)</option>
+                    <option value="employer">Forge Waste Limited (ERN: 100349439)</option>
+                    <option value="employer">Global Resource Bureau Ltd (ERN: 100349439)</option>
+                    <option value="employer">Go Go Real Estate (ERN: 100349439)</option>
+                    <option value="employer">IPS Group Ltd (ERN: 100349439)</option>
+                    <option value="employer">Jomu Limited (ERN: 100349439)</option>
+                    <option value="employer">Key Training Ltd (ERN: 100349439)</option>
+                    <option value="employer">Langton Howarth Ltd (ERN: 100349439)</option>
+                    <option value="employer">Lucy Walker (Recruitment) Ltd (ERN: 100349439)</option>
+                    <option value="employer">M2 Direct Flooring (ERN: 100349439)</option>
+                    <option value="employer">Margaret McMillan Primary &amp; Nursery (ERN: 100349439)</option>
+                    <option value="employer">Maxim (ERN: 100349439)</option>
+                    <option value="employer">Momentum Dance (ERN: 100349439)</option>
+                    <option value="employer">N G Developments (Normanton) Limited (ERN: 100349439)</option>
+                    <option value="employer">National Centre for Diversity (ERN: 100349439)</option>
+                    <option value="employer">Ram Global Solutions Limited (ERN: 100349439)</option>
+                    <option value="employer">Rathbones Ltd (ERN: 100349439)</option>
+                    <option value="employer">Rubber Products Ltd (ERN: 100349439)</option>
+                    <option value="employer">Search Consultancy Ltd (ERN: 100349439)</option>
+                    <option value="employer">Sunlight Services Ltd (ERN: 100349439)</option>
+                    <option value="employer">Switalski's Solicitors (ERN: 100349439)</option>
+                    <option value="employer">Task Master (ERN: 100349439)</option>
+                    <option value="employer">Taskmaster Recruitment (ERN: 100349439)</option>
+                    <option value="employer">Ward Hadaway (ERN: 100349439)</option>
+                    <option value="employer">Weston Communications Ltd (ERN: 100349439)</option>
+                    <option value="employer">Wheels Insurance Services Ltd (ERN: 100349439)</option>
+                    <option value="employer">Wright Choice (ERN: 100349439)</option>
+                    <option value="employer">Zenith Survey Equipment Ltd (ERN: 100349439)</option>
+                </select>
+                <button type="submit" class="button" name="updated-employer" value="updated">Add</button>
+                <div id="employer-data-display">
+                    <div class="text">
+                        <p>
+                            Established in 1978, R G Engineering Ltd is proud to have developed
+                            partnerships with leading companies that include Rolls-Royce
+                            Aero Engines, Denso, and GKN Aerospace. We supply design
+                            and manufacture products and onsite customer support to the
+                            aerospace, automotive, and robotic markets.
+                        </p>
+                        <p>
+                            Being a medium company we are able to dedicate ourselves to
+                            100% customer focus, delivering high quality parts in short
+                            lead-time’s without compromise.
+                        </p>
+                    </div>
+                    <div class="grid-wrapper">
+                        <div class="grid grid-1-2">
+                            <div class="inner-block-padr">
+                                <h3 class="bold-small">Employer</h3>
+                                <p class="small-btm-margin">R G Engineering</p>
+                                <p>
+                                    <a href="http://www.rgeng.co.uk">http://www.rgeng.co.uk</a>
+                                </p>
+                                <h3 class="bold-small">Address</h3>
+                                <p class="small-btm-margin">Hotchkiss Way</p>
+                                <p class="small-btm-margin">Binley Industrial Estate</p>
+                                <p class="small-btm-margin">Coventry</p>
+                                <p class="small-btm-margin">West Midlands</p>
+                                <p>CV3 2RL</p>
+                            </div>
+                        </div>
+                        <div class="grid grid-1-2 hide-print">
+                            <div class="ad-details__map">
+                                <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
+                                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=CV3+2RL,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                                <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section>
+        <h2 class="heading-large">
+            Training provider
+        </h2>
+        <div class="grid-wrapper">
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <p>
+                        Apprenticeships combine on-the-job and off-the-job training. This means you'll
+                        spend time in a hairdressing salon working and learning the
+                        hairdressing or barbering skills to develop your competence
+                        in hairdressing or barbering.
+                    </p>
+                    <p>
+                        You will attend one day a week at our state of the art London
+                        Hairdressing Academy training centre and salon, learning the
+                        underpinning knowledge and practical skills associated with
+                        hairdressing as well as important skills such as customer service,
+                        teamwork and retail skills including Maths and English.
+                    </p>
+                    <p>
+                        You will gain skills, insight and experience with real clients, real work and real
+                        products. Apprenticeships are not qualifications in their own
+                        right. Instead they are a framework made up of many elements.
+                        An intermediate NVQ Diploma in Hairdressing or barbering which
+                        is a work based qualification that is designed to ensure the
+                        apprentice is job ready.
+                    </p>
+                    <div class="edit-wrapper">
+                        <h3 class="bold-small">Apprenticeship framework<a href="#" class="heading-edit edit-link font-xsmall">Edit</a>
+                        </h3>
+                        <p>Hairdressing (Skills Active/Habia)</p>
+                        <p>
+                            The training provider has achieved a sector success rate of
+                            72% for this type of apprenticeship training.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-1-3">
+                <h3 class="bold-small">Training provider</h3>
+                <p>Bradford college</p>
+                <div class="edit-wrapper">
+                    <h3 class="heading-small">Contact <a href="#" class="heading-edit edit-link font-xsmall">Edit</a>
+                    </h3>
+                    <address>
+                        City Training Services<br/>
+                        39-41 Chapel Street<br/>
+                        Little Germany<br/>
+                        Bradford<br/>
+                        BD1 5BY<br/>
+                        Telephone 01274 728316<br/>
+                        e-mail <a href="mailto:info@citytraining.org.uk">info@citytraining.org.uk</a>
+                    </address>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="grid grid-1-2">
+        <button type="submit" class="button">Submit vacancy</button>
+    </div>
+}

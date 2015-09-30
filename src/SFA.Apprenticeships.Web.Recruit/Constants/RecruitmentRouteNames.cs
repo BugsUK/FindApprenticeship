@@ -19,5 +19,9 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
+        public const string NewVacancyLandingPage = "NewVacancyLandingPage";
+        public const string CreateVacancy = "CreateVacancy";
+        public const string SubmitVacancy = "SubmitVacancy";
+        public const string VacancySubmitted = "VacancySubmitted";
     }
 }
