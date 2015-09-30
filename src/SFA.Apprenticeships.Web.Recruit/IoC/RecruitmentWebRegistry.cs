@@ -17,6 +17,7 @@
     using Infrastructure.Logging.IoC;
     using Mediators.Provider;
     using Mediators.ProviderUser;
+    using Mediators.VacancyPosting;
     using StructureMap;
     using StructureMap.Configuration.DSL;
 
@@ -72,6 +73,7 @@
         {
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IProviderUserMediator>().Use<ProviderUserMediator>();
+            For<IVacancyPostingMediator>().Use<VacancyPostingMediator>();
         }
     }
 }

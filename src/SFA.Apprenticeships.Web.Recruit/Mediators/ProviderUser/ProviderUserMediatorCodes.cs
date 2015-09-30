@@ -19,6 +19,7 @@
         {
             public const string Ok = "ProviderUser.GetProviderUserViewModel.Ok";
         }
+
         public static class GetSettingsViewModel
         {
             public const string Ok = "ProviderUser.GetSettingsViewModel.Ok";

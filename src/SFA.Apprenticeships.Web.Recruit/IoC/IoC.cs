@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
     using Application.Provider;
+    using Application.ReferenceData.Configuration;
     using Application.UserAccount;
     using Application.UserProfile;
     using Common.IoC;
@@ -17,6 +18,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
+    using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Repositories.Providers.IoC;
     using Infrastructure.Repositories.UserProfiles.IoC;
@@ -33,6 +35,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var referenceDataConfiguration = configurationService.Get<ReferenceDataConfiguration>();
 
             return new Container(x =>
             {
@@ -47,6 +50,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
@@ -64,6 +68,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
                 x.For<ICookieAuthorizationDataProvider>().Use<CookieAuthorizationDataProvider>();
                 x.For<IAuthorizationErrorProvider>().Use<AuthorizationErrorProvider>();
+                x.For<IVacancyPostingProvider>().Use<VacancyPostingProvider>();
 
                 x.For<IProviderProvider>().Use<ProviderProvider>();
                 x.For<IProviderUserProvider>().Use<ProviderUserProvider>();

@@ -2,5 +2,9 @@
 {
     public static class VacancyPostingMediatorCodes
     {
+        public static class GetSubmittedVacancyViewModel
+        {
+            public const string Ok = "ProviderUser.GetSubmittedVacancyViewModel.Ok";
+        }
     }
 }

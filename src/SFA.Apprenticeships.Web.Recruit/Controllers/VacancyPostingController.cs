@@ -5,12 +5,19 @@
     using Attributes;
     using Common.Attributes;
     using Constants;
-    using ViewModels.Vacancy;
+    using Mediators.VacancyPosting;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
     public class VacancyPostingController : Controller
     {
+        private readonly IVacancyPostingMediator _vacancyPostingMediator;
+
+        public VacancyPostingController(IVacancyPostingMediator vacancyPostingMediator)
+        {
+            _vacancyPostingMediator = vacancyPostingMediator;
+        }
+
         public ActionResult Index()
         {
 
@@ -38,11 +45,8 @@
         [HttpGet]
         public ActionResult VacancySubmitted(Guid id)
         {
-            var viewModel = new SubmittedVacancyViewModel
-            {
-                ApproverEmail = "john.smith@salon-secrets.co.uk",
-                PublishDate = new DateTime(2015, 10, 12)
-            };
+            var response = _vacancyPostingMediator.GetSubmittedVacancyViewModel(id);
+            var viewModel = response.ViewModel;
 
             return View(viewModel);
         }
