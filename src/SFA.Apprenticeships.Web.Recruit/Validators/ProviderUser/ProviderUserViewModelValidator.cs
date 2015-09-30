@@ -18,7 +18,9 @@
                 .NotEmpty()
                 .WithMessage(ProviderUserViewModelMessages.FullnameMessages.RequiredErrorText)
                 .Length(0, 100)
-                .WithMessage(ProviderUserViewModelMessages.FullnameMessages.TooLongErrorText);
+                .WithMessage(ProviderUserViewModelMessages.FullnameMessages.TooLongErrorText)
+                .Matches(ProviderUserViewModelMessages.FullnameMessages.WhiteListRegularExpression)
+                .WithMessage(ProviderUserViewModelMessages.FullnameMessages.WhiteListErrorText);
 
             RuleFor(m => m.EmailAddress)
                 .Length(0, 100)
