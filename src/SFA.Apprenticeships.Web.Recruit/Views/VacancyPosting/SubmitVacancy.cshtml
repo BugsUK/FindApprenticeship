@@ -53,14 +53,11 @@
                     @Html.FormTextFor(m => m.PublishDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
                     @Html.FormTextFor(m => m.ClosingDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
                     @Html.FormTextFor(m => m.PossibleStartDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+
                     <div class="form-group">
                         <div data-editable>
-                            <label class="form-label bold-small" for="apprenticeship-level">Apprenticeship level</label>
-                            <select class="form-control width-all-2-3" id="apprenticeship-level" name="apprenticeship-level">
-                                <option selected>Intermediate</option>
-                                <option>Advanced</option>
-                                <option>Higher</option>
-                            </select>
+                            <p class="form-label">Apprenticeship level</p>
+                            @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new {@class = "width-all-2-3" })
                         </div>
                     </div>
                 </div>
