@@ -328,6 +328,7 @@
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="ViewModels\Frameworks\FrameworkSelectItemViewModel.cs" />
     <Compile Include="ViewModels\Frameworks\SectorSelectItemViewModel.cs" />
+    <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VerifyEmailViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchMode.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchResponseViewModel.cs" />
@@ -339,7 +340,7 @@
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
-    <Compile Include="ViewModels\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />

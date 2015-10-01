@@ -1,8 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using ProviderUser;
 
     public class SettingsViewModel
     {
