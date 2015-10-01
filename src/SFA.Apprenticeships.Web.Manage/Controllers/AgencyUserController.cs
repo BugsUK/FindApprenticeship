@@ -11,6 +11,9 @@
     using Common.Models.Azure.AccessControlService;
     using Constants;
     using Mediators.AgencyUser;
+    using Microsoft.Owin.Security;
+    using Microsoft.Owin.Security.Cookies;
+    using Microsoft.Owin.Security.WsFederation;
     using ViewModels;
     using ControllerBase = Common.Controllers.ControllerBase;
 
@@ -45,7 +48,7 @@
                 case AgencyUserMediatorCodes.Authorize.EmptyUsername:
                 case AgencyUserMediatorCodes.Authorize.MissingServicePermission:
                 case AgencyUserMediatorCodes.Authorize.MissingRoleListClaim:
-                    return RedirectToRoute(ManagementRouteNames.LandingPage);
+                    return SignOut();
                 case AgencyUserMediatorCodes.Authorize.ReturnUrl:
                     return Redirect(HttpUtility.UrlDecode(response.Parameters.ToString()));
                 case AgencyUserMediatorCodes.Authorize.Ok:
@@ -59,6 +62,20 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        public ActionResult SignOut()
+        {
+            var callbackUrl = Url.RouteUrl(ManagementRouteNames.LandingPage, null, string.Copy(Request.Url?.Scheme ?? Constants.Url.DefaultScheme));
+
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = callbackUrl
+            };
+
+            HttpContext.GetOwinContext().Authentication.SignOut(properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+
+            return null;
         }
 
         [HttpPost]

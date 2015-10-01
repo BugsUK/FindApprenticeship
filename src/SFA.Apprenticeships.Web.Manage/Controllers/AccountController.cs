@@ -15,7 +15,6 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
 
     public class AccountController : ControllerBase
     {
-        private const string DefaultScheme = "https";
 
         public void SignIn(string returnUrl)
         {
@@ -29,34 +28,17 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 RedirectUri = Url.RouteUrl(ManagementRouteNames.Authorize)
             };
 
-            HttpContext.GetOwinContext().Authentication.Challenge(
-                properties, WsFederationAuthenticationDefaults.AuthenticationType);
+            HttpContext.GetOwinContext().Authentication.Challenge(properties, WsFederationAuthenticationDefaults.AuthenticationType);
         }
 
         public void SignOut(string returnUrl)
         {
-            var callbackUrl = Url.RouteUrl(ManagementRouteNames.SignOutCallback, new {timeout = false, returnUrl}, string.Copy(Request.Url?.Scheme ?? DefaultScheme));
-
-            var properties = new AuthenticationProperties
-            {
-                RedirectUri = callbackUrl
-            };
-
-            HttpContext.GetOwinContext().Authentication.SignOut(
-                properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+            SignOut(false, returnUrl);
         }
 
         public void SessionTimeout(string returnUrl)
         {
-            var callbackUrl = Url.RouteUrl(ManagementRouteNames.SignOutCallback, new {timeout = true, returnUrl}, Request.Url?.Scheme ?? DefaultScheme);
-
-            var properties = new AuthenticationProperties
-            {
-                RedirectUri = callbackUrl
-            };
-
-            HttpContext.GetOwinContext().Authentication.SignOut(
-                properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
+            SignOut(true, returnUrl);
         }
 
         public ActionResult SignOutCallback(bool timeout, string returnUrl)
@@ -77,6 +59,18 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             }
 
             return RedirectToRoute(ManagementRouteNames.LandingPage, new {returnUrl});
+        }
+
+        private void SignOut(bool timeout, string returnUrl)
+        {
+            var callbackUrl = Url.RouteUrl(ManagementRouteNames.SignOutCallback, new {timeout, returnUrl}, string.Copy(Request.Url?.Scheme ?? Constants.Url.DefaultScheme));
+
+            var properties = new AuthenticationProperties
+            {
+                RedirectUri = callbackUrl
+            };
+
+            HttpContext.GetOwinContext().Authentication.SignOut(properties, WsFederationAuthenticationDefaults.AuthenticationType, CookieAuthenticationDefaults.AuthenticationType);
         }
     }
 }
