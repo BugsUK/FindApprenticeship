@@ -19,6 +19,7 @@
     OutputCache(CacheProfile = CacheProfiles.None),
     AllowReturnUrl(Allow = true),
     PlannedOutageMessage,
+    AuthorizationData,
     RobotsIndexPage]
     public abstract class RecruitmentControllerBase : ControllerBase<RecruitmentUserContext>
     {

@@ -9,7 +9,6 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
     using StructureMap.Attributes;
 
     [AuthenticateUser]
-    [AuthorizationData]
     public abstract class ControllerBase<TContextType> : ControllerBase, IUserController<TContextType> where TContextType : UserContext
     {
         public TContextType UserContext { get; protected set; }
