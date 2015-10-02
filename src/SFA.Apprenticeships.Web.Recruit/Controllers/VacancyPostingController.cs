@@ -8,6 +8,7 @@
     using Mediators.VacancyPosting;
     using ViewModels.Vacancy;
 
+    [AuthorizationData]
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
     public class VacancyPostingController : Controller

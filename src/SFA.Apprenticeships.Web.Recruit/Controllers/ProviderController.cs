@@ -13,6 +13,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Providers;
     using ViewModels.Provider;
 
+    [AuthorizationData]
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
     public class ProviderController : ControllerBase<RecruitmentUserContext>

@@ -18,6 +18,7 @@
     using ViewModels.ProviderUser;
     using ClaimTypes = System.Security.Claims.ClaimTypes;
 
+    [AuthorizationData]
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
     public class ProviderUserController : ControllerBase<RecruitmentUserContext>

@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web;
     using System.Web.Mvc;
+    using Common.Attributes;
     using Common.Constants;
     using Common.Framework;
     using Common.Providers;
@@ -13,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Microsoft.Owin.Security.WsFederation;
     using ControllerBase = Common.Controllers.ControllerBase;
 
+    [AuthorizationData]
     public class AccountController : ControllerBase
     {
         private const string DefaultScheme = "https";
