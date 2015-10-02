@@ -161,13 +161,23 @@
         [HttpGet]
         public ActionResult VerifyEmail()
         {
-            var providerUserViewModel = _providerUserMediator.GetProviderUserViewModel(User.Identity.Name);
-            var verifyEmailViewModel = new VerifyEmailViewModel
-            {
-                EmailAddress = providerUserViewModel.ViewModel.EmailAddress
-            };
+            var response = _providerUserMediator.GetVerifyEmailViewModel(User.Identity.Name);
 
-            return View(verifyEmailViewModel);
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message.Text, response.Message.Level);
+            }
+
+            switch (response.Code)
+            {
+                case ProviderUserMediatorCodes.GetVerifyEmailViewModel.NoUserProfile:
+                    return RedirectToRoute(RecruitmentRouteNames.Settings);
+                case ProviderUserMediatorCodes.GetVerifyEmailViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]

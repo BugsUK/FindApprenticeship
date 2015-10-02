@@ -12,7 +12,7 @@
 
         AuthorizationErrorDetailsViewModel AuthorizationError(string errorDetails);
 
-        MediatorResponse<ProviderUserViewModel> GetProviderUserViewModel(string username);
+        MediatorResponse<VerifyEmailViewModel> GetVerifyEmailViewModel(string username);
 
         MediatorResponse<SettingsViewModel> GetSettingsViewModel(string username, string ukprn);
 

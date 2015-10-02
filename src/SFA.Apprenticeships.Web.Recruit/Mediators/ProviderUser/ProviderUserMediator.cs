@@ -110,10 +110,20 @@
             return _authorizationErrorProvider.GetAuthorizationErrorDetailsViewModel(errorDetails);
         }
 
-        public MediatorResponse<ProviderUserViewModel> GetProviderUserViewModel(string username)
+        public MediatorResponse<VerifyEmailViewModel> GetVerifyEmailViewModel(string username)
         {
-            var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
-            return GetMediatorResponse(ProviderUserMediatorCodes.GetProviderUserViewModel.Ok, providerUserViewModel);
+            var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username);
+            if (providerUserViewModel == null)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.GetVerifyEmailViewModel.NoUserProfile, (VerifyEmailViewModel)null, AuthorizeMessages.NoUserProfile, UserMessageLevel.Info);
+            }
+
+            var verifyEmailViewModel = new VerifyEmailViewModel
+            {
+                EmailAddress = providerUserViewModel.EmailAddress
+            };
+
+            return GetMediatorResponse(ProviderUserMediatorCodes.GetVerifyEmailViewModel.Ok, verifyEmailViewModel);
         }
 
         public MediatorResponse<SettingsViewModel> GetSettingsViewModel(string username, string ukprn)

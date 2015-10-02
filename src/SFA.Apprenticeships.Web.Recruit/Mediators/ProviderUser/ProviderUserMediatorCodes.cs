@@ -15,8 +15,9 @@
             public const string Ok = "ProviderUser.Authorize.Ok";
         }
 
-        public static class GetProviderUserViewModel
+        public static class GetVerifyEmailViewModel
         {
+            public const string NoUserProfile = "ProviderUser.GetProviderUserViewModel.NoUserProfile";
             public const string Ok = "ProviderUser.GetProviderUserViewModel.Ok";
         }
 
