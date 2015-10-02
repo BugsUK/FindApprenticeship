@@ -61,6 +61,8 @@
         {
             var providerUser = _userProfileService.GetProviderUser(username) ?? new ProviderUser();
 
+            var emailChanged = !string.Equals(providerUser.Email, providerUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
+
             //TODO: Probably put this in a strategy in the service and add the verify email code
             providerUser.Username = username;
             providerUser.Ukprn = ukprn;
@@ -72,9 +74,12 @@
 
             _userProfileService.SaveUser(providerUser);
 
-            // TODO: AG: US824: call to this service must be moved. Note that this service is responsible for generating the email
-            // verification code and updating the user again so take care must be taken around other calls to UserProfileService.SaveUser().
-            _providerUserAccountService.SendEmailVerificationCode(username);
+            if (emailChanged)
+            {
+                // TODO: AG: US824: call to this service must be moved. Note that this service is responsible for generating the email
+                // verification code and updating the user again so take care must be taken around other calls to UserProfileService.SaveUser().
+                _providerUserAccountService.SendEmailVerificationCode(username);
+            }
 
             return GetUserProfileViewModel(providerUser.Username);
         }

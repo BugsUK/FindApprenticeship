@@ -32,6 +32,7 @@
             public const string Ok = "ProviderUser.UpdateUser.Ok";
             public const string FailedValidation = "ProviderUser.UpdateUser.FailedValidation";
             public const string EmailUpdated = "ProviderUser.UpdateUser.EmailUpdated";
+            public const string AccountUpdated = "ProviderUser.UpdateUser.AccountUpdated";
         }
 
         public static class VerifyEmailAddress

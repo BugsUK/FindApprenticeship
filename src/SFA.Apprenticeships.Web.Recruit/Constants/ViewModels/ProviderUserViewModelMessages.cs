@@ -5,6 +5,8 @@
     public class ProviderUserViewModelMessages
     {
         public const string AccountCreated = "You've successfully created your account";
+        public const string EmailUpdated = "Your email address has been changed successfully";
+        public const string AccountUpdated = "Your details have been updated successfully";
 
         public static class FullnameMessages
         {

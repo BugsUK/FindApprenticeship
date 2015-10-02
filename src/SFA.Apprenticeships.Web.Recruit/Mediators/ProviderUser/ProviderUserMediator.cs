@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
@@ -168,9 +169,13 @@
 
             viewModel.ProviderUserViewModel = _providerUserProvider.SaveProviderUser(username, ukprn, providerUserViewModel);
 
-            if (existingUser != null && existingUser.EmailAddress != viewModel.ProviderUserViewModel.EmailAddress)
+            if (existingUser != null)
             {
-                return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.EmailUpdated, viewModel);
+                if (!string.Equals(existingUser.EmailAddress, viewModel.ProviderUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase))
+                {
+                    return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.EmailUpdated, viewModel, ProviderUserViewModelMessages.EmailUpdated, UserMessageLevel.Success);
+                }
+                return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.AccountUpdated, viewModel, ProviderUserViewModelMessages.AccountUpdated, UserMessageLevel.Success);
             }
 
             return GetMediatorResponse(ProviderUserMediatorCodes.UpdateUser.Ok, viewModel, ProviderUserViewModelMessages.AccountCreated, UserMessageLevel.Success);

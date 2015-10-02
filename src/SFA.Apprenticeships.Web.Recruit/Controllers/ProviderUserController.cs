@@ -150,6 +150,7 @@
                     _cookieAuthorizationDataProvider.RemoveClaim(ClaimTypes.Role, Roles.VerifiedEmail, HttpContext, User.Identity.Name);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
+                case ProviderUserMediatorCodes.UpdateUser.AccountUpdated:
                 case ProviderUserMediatorCodes.UpdateUser.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
