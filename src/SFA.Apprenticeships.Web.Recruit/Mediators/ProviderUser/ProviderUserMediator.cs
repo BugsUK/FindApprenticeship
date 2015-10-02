@@ -202,5 +202,18 @@
             var message = string.Format(VerifyEmailViewModelMessages.VerificationCodeEmailResentMessage, viewModel.EmailAddress);
             return GetMediatorResponse(ProviderUserMediatorCodes.ResendVerificationCode.Ok, viewModel, message, UserMessageLevel.Success);
         }
+
+        public MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn)
+        {
+            var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
+            var providerSites = GetProviderSites(ukprn);
+            var viewModel = new HomeViewModel
+            {
+                ProviderUserViewModel = providerUserViewModel,
+                ProviderSites = providerSites
+            };
+
+            return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Ok, viewModel);
+        }
     }
 }

@@ -21,5 +21,7 @@
         MediatorResponse VerifyEmailAddress(string username, VerifyEmailViewModel verifyEmailViewModel);
 
         MediatorResponse<VerifyEmailViewModel> ResendVerificationCode(string username);
+
+        MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn);
     }
 }

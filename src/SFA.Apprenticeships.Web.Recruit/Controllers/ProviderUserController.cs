@@ -115,7 +115,9 @@
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult Home()
         {
-            return View();
+            var response = _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn());
+
+            return View(response.ViewModel);
         }
 
         [HttpGet]

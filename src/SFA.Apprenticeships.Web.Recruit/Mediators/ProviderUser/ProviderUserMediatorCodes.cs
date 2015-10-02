@@ -45,5 +45,10 @@
             public const string Ok = "ProviderUser.ResendVerificationCode.Ok";
             public const string Error = "ProviderUser.ResendVerificationCode.Error";
         }
+
+        public static class GetHomeViewModel
+        {
+            public const string Ok = "ProviderUser.GetHomeViewModel.Ok";
+        }
     }
 }
