@@ -182,6 +182,8 @@ Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Web.Man
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Manage.UnitTests", "SFA.Apprenticeships.Web.Manage.UnitTests\SFA.Apprenticeships.Web.Manage.UnitTests.csproj", "{84881750-9710-4278-94BE-016B1C0C36E6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{405A13A6-70AA-49DF-AED0-46ADEA4F2B5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Demo|Any CPU = Demo|Any CPU
