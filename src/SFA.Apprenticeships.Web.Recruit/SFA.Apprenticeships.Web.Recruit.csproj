@@ -325,6 +325,7 @@
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
+    <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="ViewModels\Frameworks\FrameworkSelectItemViewModel.cs" />
     <Compile Include="ViewModels\Frameworks\SectorSelectItemViewModel.cs" />

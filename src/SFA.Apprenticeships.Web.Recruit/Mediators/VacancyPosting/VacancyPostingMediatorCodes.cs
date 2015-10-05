@@ -20,6 +20,7 @@
         public static class SubmitVacancy
         {
             public const string Ok = "VacancyPosting.SubmitVacancy.Ok";
+            public const string FailedValidation = "VacancyPosting.SubmitVacancy.FailedValidation";
         }
 
         public static class GetSubmittedVacancyViewModel

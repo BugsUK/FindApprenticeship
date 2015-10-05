@@ -4,6 +4,7 @@
     using NUnit.Framework;
     using Recruit.Mediators.VacancyPosting;
     using Recruit.Providers;
+    using Recruit.Validators.Vacancy;
 
     public class TestsBase
     {
@@ -17,8 +18,7 @@
 
         protected IVacancyPostingMediator GetMediator()
         {
-            return new VacancyPostingMediator(
-                VacancyPostingProvider.Object);
+            return new VacancyPostingMediator(VacancyPostingProvider.Object, new VacancyViewModelValidator());
         }
     }
 }

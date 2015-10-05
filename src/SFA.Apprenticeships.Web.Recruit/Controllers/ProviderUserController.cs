@@ -19,7 +19,6 @@
     using ClaimTypes = System.Security.Claims.ClaimTypes;
 
     [AuthorizationData]
-    [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
     public class ProviderUserController : ControllerBase<RecruitmentUserContext>
     {
@@ -113,6 +112,7 @@
             return View(viewModel);
         }
 
+        [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult Home()
         {
@@ -122,6 +122,7 @@
         }
 
         [HttpGet]
+        [AuthorizeUser(Roles = Roles.Faa)]
         public ActionResult Settings()
         {
             var response = _providerUserMediator.GetSettingsViewModel(User.Identity.Name, User.GetUkprn());
@@ -130,6 +131,7 @@
         }
 
         [HttpPost]
+        [AuthorizeUser(Roles = Roles.Faa)]
         public ActionResult Settings(SettingsViewModel settingsViewModel)
         {
             var response = _providerUserMediator.UpdateUser(User.Identity.Name, User.GetUkprn(), settingsViewModel.ProviderUserViewModel);
@@ -161,6 +163,7 @@
         }
 
         [HttpGet]
+        [AuthorizeUser(Roles = Roles.Faa)]
         public ActionResult VerifyEmail()
         {
             var response = _providerUserMediator.GetVerifyEmailViewModel(User.Identity.Name);
@@ -183,6 +186,7 @@
         }
 
         [HttpPost]
+        [AuthorizeUser(Roles = Roles.Faa)]
         public ActionResult VerifyEmail(VerifyEmailViewModel verifyEmailViewModel)
         {
             var response = _providerUserMediator.VerifyEmailAddress(User.Identity.Name, verifyEmailViewModel);
@@ -205,6 +209,7 @@
             }
         }
 
+        [AuthorizeUser(Roles = Roles.Faa)]
         public ActionResult ResendVerificationCode()
         {
             var response = _providerUserMediator.ResendVerificationCode(User.Identity.Name);

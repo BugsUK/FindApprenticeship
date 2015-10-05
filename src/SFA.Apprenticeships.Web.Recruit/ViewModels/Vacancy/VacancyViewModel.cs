@@ -5,8 +5,11 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Constants.ViewModels;
+    using FluentValidation.Attributes;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Validators.Vacancy;
 
+    [Validator(typeof(VacancyViewModelValidator))]
     public class VacancyViewModel
     {
         public long VacancyReferenceNumber { get; set; }

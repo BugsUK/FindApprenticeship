@@ -7,15 +7,18 @@
     using Common.Mediators;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Providers;
+    using Validators.Vacancy;
     using ViewModels.Vacancy;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
+        private readonly VacancyViewModelValidator _vacancyViewModelValidator;
 
-        public VacancyPostingMediator(IVacancyPostingProvider vacancyPostingProvider)
+        public VacancyPostingMediator(IVacancyPostingProvider vacancyPostingProvider, VacancyViewModelValidator vacancyViewModelValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
+            _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username)
@@ -49,6 +52,13 @@
 
         public MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel)
         {
+            var result = _vacancyViewModelValidator.Validate(viewModel);
+
+            if (!result.IsValid)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation, viewModel, result);
+            }
+
             return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.Ok, viewModel);
         }
 
