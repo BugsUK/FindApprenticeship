@@ -112,5 +112,28 @@
     <Build Include="dbo\Tables\ApprenticeshipFrameworkStatusType.sql" />
     <Build Include="dbo\Tables\ApprenticeshipOccupation.sql" />
     <Build Include="dbo\Tables\ApprenticeshipOccupationStatusType.sql" />
+    <Build Include="dbo\Tables\Employer.sql" />
+    <Build Include="dbo\Tables\County.sql" />
+    <Build Include="dbo\Tables\EmployerContact.sql" />
+    <Build Include="dbo\Tables\EmployerTrainingProviderStatus.sql" />
+    <Build Include="dbo\Tables\LocalAuthority.sql" />
+    <Build Include="dbo\Tables\ContactPreferenceType.sql" />
+    <Build Include="dbo\Tables\Person.sql" />
+    <Build Include="dbo\Tables\PersonTitleType.sql" />
+    <Build Include="dbo\Tables\PersonType.sql" />
+    <Build Include="dbo\Tables\Provider.sql" />
+    <Build Include="dbo\Tables\ProviderSite.sql" />
+    <Build Include="dbo\Tables\VacancyOwnerRelationship.sql" />
+    <Build Include="dbo\Tables\AttachedDocument.sql" />
+    <Build Include="dbo\Tables\VacancyProvisionRelationshipStatusType.sql" />
+    <Build Include="dbo\Tables\MIMEType.sql" />
+    <Build Include="dbo\Tables\ProviderSiteRelationship.sql" />
+    <Build Include="dbo\Tables\ProviderSiteRelationshipType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="local.sqlexpress.publish.xml" />
+    <None Include="local.sqlexpress.scmp" />
+    <None Include="naspresql.publish.xml" />
+    <None Include="naspresql.scmp" />
   </ItemGroup>
 </Project>
