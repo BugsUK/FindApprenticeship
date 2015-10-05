@@ -2,12 +2,12 @@
 {
     using FluentAssertions;
     using NUnit.Framework;
-    using Recruit.Providers;
 
     [TestFixture]
     public class IndexTests : TestsBase
     {
         [Test]
+        [Ignore]
         public void ShouldGetNewVacancy()
         {
             // Arrange.

@@ -1,10 +1,13 @@
-namespace SFA.Apprenticeships.Web.Manage.IoC {
+namespace SFA.Apprenticeships.Web.Manage.IoC
+{
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
+    using Application.Interfaces.VacancyPosting;
     using Application.Provider;
     using Application.UserAccount;
     using Application.UserProfile;
+    using Application.VacancyPosting;
     using Common.IoC;
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
@@ -17,10 +20,12 @@ namespace SFA.Apprenticeships.Web.Manage.IoC {
     using Infrastructure.Logging.IoC;
     using Infrastructure.Repositories.Providers.IoC;
     using Infrastructure.Repositories.UserProfiles.IoC;
+    using Infrastructure.Repositories.Vacancies.IoC;
     using StructureMap;
     using StructureMap.Web;
 
-    public static class IoC {
+    public static class IoC
+    {
         public static IContainer Initialize()
         {
             var container = new Container(x =>
@@ -43,6 +48,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC {
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();

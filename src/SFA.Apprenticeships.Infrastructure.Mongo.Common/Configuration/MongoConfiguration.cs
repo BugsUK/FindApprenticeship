@@ -20,6 +20,8 @@
 
         public string ProvidersDb { get; set; }
 
+        public string VacancyDb { get; set; }
+
         public string MetricsCandidatesDb { get; set; }
 
         public string MetricsApplicationsDb { get; set; }

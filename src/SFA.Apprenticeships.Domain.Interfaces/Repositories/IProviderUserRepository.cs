@@ -10,5 +10,7 @@
         IEnumerable<ProviderUser> GetForProvider(string ukprn);
     }
 
-    public interface IProviderUserWriteRepository : IWriteRepository<ProviderUser> {}
+    public interface IProviderUserWriteRepository : IWriteRepository<ProviderUser>
+    {        
+    }
 }

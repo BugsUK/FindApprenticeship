@@ -1,14 +1,14 @@
-using SFA.Apprenticeships.Web.Recruit.Mediators.Provider;
-using SFA.Apprenticeships.Web.Recruit.Providers;
-
-namespace SFA.Apprenticeships.Web.Recruit.IoC {
+namespace SFA.Apprenticeships.Web.Recruit.IoC
+{
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
+    using Application.Interfaces.VacancyPosting;
     using Application.Provider;
     using Application.ReferenceData.Configuration;
     using Application.UserAccount;
     using Application.UserProfile;
+    using Application.VacancyPosting;
     using Common.IoC;
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
@@ -22,10 +22,14 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
     using Infrastructure.Logging.IoC;
     using Infrastructure.Repositories.Providers.IoC;
     using Infrastructure.Repositories.UserProfiles.IoC;
+    using Infrastructure.Repositories.Vacancies.IoC;
+    using Mediators.Provider;
+    using Providers;
     using StructureMap;
     using StructureMap.Web;
 
-    public static class IoC {
+    public static class IoC
+    {
         public static IContainer Initialize()
         {
             var container = new Container(x =>
@@ -49,12 +53,14 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC {
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
+                x.For<IVacancyPostingService>().Use<VacancyPostingService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

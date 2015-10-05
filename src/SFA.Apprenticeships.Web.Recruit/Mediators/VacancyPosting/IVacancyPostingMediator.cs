@@ -7,7 +7,7 @@
     {
         MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username);
 
-        MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel viewModel);
+        MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
         MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
 

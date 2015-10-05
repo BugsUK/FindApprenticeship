@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.Mappers
 {
-    using System;
     using AutoMapper;
     using AutoMapper.Mappers;
     using Domain.Interfaces.Mapping;

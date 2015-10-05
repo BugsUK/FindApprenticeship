@@ -1,11 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Common.Mediators;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Providers;
     using Validators.Vacancy;
     using ViewModels.Vacancy;
@@ -28,26 +24,20 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyModel.Ok, viewModel);
         }
 
-        public MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel viewModel)
+        public MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
-            var vacancyViewModel = new VacancyViewModel
-            {
-                VacancyReferenceNumber = DateTime.UtcNow.Ticks,
-                ApprenticeshipLevels = GetApprenticeshipLevels()
-            };
+            // TODO: AG: US811: implement validation.
+            // var result = _newVacancyViewModelValidator.Validate(viewModel)
+            var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel);
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, vacancyViewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
         }
 
         public MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber)
         {
-            var viewModel = new VacancyViewModel
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                ApprenticeshipLevels = GetApprenticeshipLevels()
-            };
+            var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }
 
         public MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel)
@@ -74,18 +64,6 @@
             };
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);
-        }
-
-        private static List<SelectListItem> GetApprenticeshipLevels()
-        {
-            var levels =
-                Enum.GetValues(typeof (ApprenticeshipLevel))
-                    .Cast<ApprenticeshipLevel>()
-                    .Where(al => al != ApprenticeshipLevel.Unknown)
-                    .Select(al => new SelectListItem {Value = al.ToString(), Text = al.ToString()})
-                    .ToList();
-
-            return levels;
         }
     }
 }
