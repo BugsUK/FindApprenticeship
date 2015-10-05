@@ -54,6 +54,8 @@
         {
             var result = _vacancyViewModelValidator.Validate(viewModel);
 
+            viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
+
             if (!result.IsValid)
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation, viewModel, result);

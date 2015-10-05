@@ -20,15 +20,15 @@
         [Display(Name = VacancyViewModelMessages.WorkingWeek.LabelText)]
         public string WorkingWeek { get; set; }
         [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
-        public string WeeklyWage { get; set; }
+        public decimal? WeeklyWage { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
-        public int Duration { get; set; }
+        public int? Duration { get; set; }
         [Display(Name = VacancyViewModelMessages.PublishDate.LabelText)]
-        public DateTime PublishDate { get; set; }
+        public DateTime? PublishDate { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
-        public DateTime ClosingDate { get; set; }
+        public DateTime? ClosingDate { get; set; }
         [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]
-        public DateTime PossibleStartDate { get; set; }
+        public DateTime? PossibleStartDate { get; set; }
         public List<SelectListItem> ApprenticeshipLevels { get; set; }
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]

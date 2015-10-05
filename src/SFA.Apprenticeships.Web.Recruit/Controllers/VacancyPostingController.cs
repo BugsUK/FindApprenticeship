@@ -1,17 +1,20 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
+    using Common.Controllers;
+    using Common.Mediators;
     using Constants;
+    using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
+    using Providers;
     using ViewModels.Vacancy;
 
     [AuthorizationData]
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
-    public class VacancyPostingController : Controller
+    public class VacancyPostingController : ControllerBase<RecruitmentUserContext>
     {
         private readonly IVacancyPostingMediator _vacancyPostingMediator;
 
@@ -53,7 +56,25 @@
             var response = _vacancyPostingMediator.SubmitVacancy(viewModel);
             var vacancyViewModel = response.ViewModel;
 
-            return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            ModelState.Clear();
+
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message.Text, response.Message.Level);
+            }
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(vacancyViewModel);
+
+                case VacancyPostingMediatorCodes.SubmitVacancy.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]
