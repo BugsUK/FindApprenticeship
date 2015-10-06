@@ -26,7 +26,6 @@ namespace SFA.Apprenticeships.Web.Common.Providers
         }
 
         public void RemoveClaim(string claimType, string claimValue, HttpContextBase httpContext, string username)
-            //TODO: http + secure
         {
             var authorizationData = GetAuthorizationData(httpContext, username);
             var claimToRemove = authorizationData.Claims.SingleOrDefault(c => c.Type == claimType && c.Value == claimValue);
@@ -40,7 +39,6 @@ namespace SFA.Apprenticeships.Web.Common.Providers
 
         public Claim[] GetClaims(HttpContextBase httpContext, string username)
         {
-            //TODO: Check ukprn and username
             var authorizationData = GetAuthorizationData(httpContext, username);
             var claims = authorizationData.Claims.Select(c => new Claim(c.Type, c.Value)).ToArray();
             return claims;
@@ -54,11 +52,20 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             }
 
             httpContext.Request.Cookies.Remove(CookieName);
+
+            var cookie = new HttpCookie(CookieName) {Expires = DateTime.Now.AddDays(-1d)};
+            if (httpContext.Response.Cookies.AllKeys.Contains(CookieName))
+            {
+                httpContext.Response.Cookies.Set(cookie);
+            }
+            else
+            {
+                httpContext.Response.Cookies.Add(cookie);
+            }
         }
 
-        private static AuthorizationData GetAuthorizationData(HttpContextBase httpContext, string username)
+        private AuthorizationData GetAuthorizationData(HttpContextBase httpContext, string username)
         {
-            //TODO: Check ukprn and username
             var cookie = GetCookie(httpContext);
             if (string.IsNullOrEmpty(cookie?.Value))
             {
@@ -66,6 +73,11 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             }
             var authorizationDataJson = Unprotect(cookie.Value);
             var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(authorizationDataJson);
+            if (authorizationData.Username != username)
+            {
+                Clear(httpContext);
+                authorizationData = new AuthorizationData { Username = username };
+            }
             return authorizationData;
         }
 
@@ -112,8 +124,12 @@ namespace SFA.Apprenticeships.Web.Common.Providers
         {
             var protectedBytes = Convert.FromBase64String(protectedText);
             var unprotectedBytes = MachineKey.Unprotect(protectedBytes, Purpose);
-            var unprotectedText = Encoding.UTF8.GetString(unprotectedBytes);
-            return unprotectedText;
+            if (unprotectedBytes != null)
+            {
+                var unprotectedText = Encoding.UTF8.GetString(unprotectedBytes);
+                return unprotectedText;
+            }
+            return "";
         }
     }
 }

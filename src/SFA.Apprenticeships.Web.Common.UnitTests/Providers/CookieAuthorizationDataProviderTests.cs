@@ -123,5 +123,21 @@
             claims[0].Type.Should().Be("TestType2");
             claims[0].Value.Should().Be("TestValue2");
         }
+
+        [Test]
+        public void InncorrectUsername()
+        {
+            var provider = new CookieAuthorizationDataProvider();
+
+            var claim = new Claim("TestType", "TestValue");
+
+            var httpContext = new HttpContextBuilder().Build();
+
+            provider.AddClaim(claim, httpContext, "provider@user.com");
+
+            var claims = provider.GetClaims(httpContext, "differentprovider@user.com");
+
+            claims.Length.Should().Be(0);
+        }
     }
 }

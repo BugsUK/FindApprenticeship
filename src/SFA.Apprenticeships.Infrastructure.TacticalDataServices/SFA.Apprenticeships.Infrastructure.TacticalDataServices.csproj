@@ -111,6 +111,7 @@
     <Compile Include="Configuration\TacticalDataServivcesConfiguration.cs" />
     <Compile Include="FrameworkDataProvider.cs" />
     <Compile Include="IoC\TacticalDataServicesRegistry.cs" />
+    <Compile Include="LegacyProviderProvider.cs" />
     <Compile Include="Models\Framework.cs" />
     <Compile Include="Models\Occupation.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -120,6 +121,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
