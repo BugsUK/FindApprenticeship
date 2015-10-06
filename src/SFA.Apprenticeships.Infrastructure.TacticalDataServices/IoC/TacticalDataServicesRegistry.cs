@@ -1,11 +1,12 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.FrameworkDataProvider.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices.IoC
 {
     using Application.ReferenceData;
     using StructureMap.Configuration.DSL;
+    using TacticalDataServices;
 
-    public class FrameworkDataProviderRegistry : Registry
+    public class TacticalDataServicesRegistry : Registry
     {
-        public FrameworkDataProviderRegistry()
+        public TacticalDataServicesRegistry()
         {
             For<IReferenceDataProvider>().Use<FrameworkDataProvider>().Name = "FrameworkDataProvider";
         }

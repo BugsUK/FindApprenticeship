@@ -266,9 +266,9 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.FrameworkDataProvider\SFA.Apprenticeships.Infrastructure.FrameworkDataProvider.csproj">
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
       <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.FrameworkDataProvider</Name>
+      <Name>SFA.Apprenticeships.Infrastructure.TacticalDataServices</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

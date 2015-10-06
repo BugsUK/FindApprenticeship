@@ -10,8 +10,6 @@
 
         public string ParentCategoryCodeName { get; set; }
 
-        public int[] Levels { get; set; }
-
         public IList<Category> SubCategories { get; set; }
 
         public long? Count { get; set; }

@@ -13,8 +13,6 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Caching;
     using Domain.Interfaces.Mapping;
-    using FrameworkDataProvider;
-    using FrameworkDataProvider.IoC;
     using GatewayServiceProxy;
     using LegacyReferenceDataProxy;
     using Mappers;
@@ -22,6 +20,7 @@
     using Mappers.Traineeship;
     using ReferenceData;
     using StructureMap.Configuration.DSL;
+    using TacticalDataServices;
     using Vacancy;
     using Wcf;
 

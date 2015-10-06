@@ -187,6 +187,7 @@
     <Compile Include="Repositories\Communication\ExpiringApprenticeshipApplicationDraftsRepositoryTests.cs" />
     <Compile Include="Repositories\RepositoryIntegrationTest.cs" />
     <Compile Include="Repositories\Users\UserRepositoryTests.cs" />
+    <Compile Include="TacticalDataServices\TacticalDataServicesTest.cs" />
     <Compile Include="UserDirectory\UserDirectoryProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VacancyIndexer\IndexingInitialisationTests.cs" />
@@ -306,6 +307,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
       <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
+      <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.TacticalDataServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
       <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>
