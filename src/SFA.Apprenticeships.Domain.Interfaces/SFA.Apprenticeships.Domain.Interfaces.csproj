@@ -99,6 +99,7 @@
     <Compile Include="Repositories\IAgencyUserRepository.cs" />
     <Compile Include="Repositories\IApprenticeshipVacancyRepository.cs" />
     <Compile Include="Repositories\IAuditRepository.cs" />
+    <Compile Include="Repositories\IEmployerRepository.cs" />
     <Compile Include="Repositories\IProviderRepository.cs" />
     <Compile Include="Repositories\IProviderSiteRepository.cs" />
     <Compile Include="Repositories\ISavedSearchAlertRepository.cs" />

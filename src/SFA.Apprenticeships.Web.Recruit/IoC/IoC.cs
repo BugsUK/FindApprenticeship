@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.EmployerDataService.IoC;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Logging.IoC;
+    using Infrastructure.Repositories.Employers.IoC;
     using Infrastructure.Repositories.Providers.IoC;
     using Infrastructure.Repositories.UserProfiles.IoC;
     using Infrastructure.Repositories.Vacancies.IoC;
@@ -52,6 +53,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 // service layer
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
+                x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
@@ -77,6 +79,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.For<IVacancyPostingProvider>().Use<VacancyPostingProvider>();
 
                 x.For<IProviderProvider>().Use<ProviderProvider>();
+                x.For<IEmployerProvider>().Use<EmployerProvider>();
                 x.For<IProviderUserProvider>().Use<ProviderUserProvider>();
                 x.For<IProviderMediator>().Use<ProviderMediator>();
 

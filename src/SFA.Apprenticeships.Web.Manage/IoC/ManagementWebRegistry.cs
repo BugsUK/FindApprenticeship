@@ -13,6 +13,7 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
+    using Infrastructure.TacticalDataServices;
     using Mediators.AgencyUser;
     using Providers;
     using StructureMap;
@@ -39,7 +40,9 @@
 
         private void RegisterProviders()
         {
+            //For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
             For<ILegacyProviderProvider>().Use<StubLegacyProviderProvider>();
+            For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
         }
 

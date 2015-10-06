@@ -9,6 +9,7 @@
     public class TestsBase
     {
         protected Mock<IVacancyPostingProvider> VacancyPostingProvider;
+        protected Mock<IEmployerProvider> EmployerProvider;
 
         [SetUp]
         public void SetUp()
@@ -18,7 +19,7 @@
 
         protected IVacancyPostingMediator GetMediator()
         {
-            return new VacancyPostingMediator(VacancyPostingProvider.Object, new VacancyViewModelValidator());
+            return new VacancyPostingMediator(VacancyPostingProvider.Object, EmployerProvider.Object, new VacancyViewModelValidator());
         }
     }
 }

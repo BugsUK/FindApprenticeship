@@ -11,5 +11,7 @@
         Provider GetProvider(string ukprn);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
+
+        IEnumerable<Employer> GetEmployers(string ern);
     }
 }

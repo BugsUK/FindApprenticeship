@@ -463,6 +463,10 @@
       <Project>{C91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
       <Name>SFA.Apprenticeships.Application.Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj">
+      <Project>{DD096F97-415D-4676-9F90-7AEE60213F49}</Project>
+      <Name>SFA.Apprenticeships.Application.Employer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
@@ -507,6 +511,10 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Employers\SFA.Apprenticeships.Infrastructure.Repositories.Employers.csproj">
+      <Project>{D87BF950-D9A8-4590-B868-DBB852E265D2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Employers</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Providers\SFA.Apprenticeships.Infrastructure.Repositories.Providers.csproj">
       <Project>{60B0072E-BC17-4D32-8331-A8A2C74B4500}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Providers</Name>
@@ -518,6 +526,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.csproj">
       <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
+      <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.TacticalDataServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

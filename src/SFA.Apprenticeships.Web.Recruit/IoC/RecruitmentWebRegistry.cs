@@ -3,7 +3,9 @@
     using System.Web;
     using Application.Communication;
     using Application.Communication.Strategies;
+    using Application.Employer;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
@@ -17,6 +19,7 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
+    using Infrastructure.TacticalDataServices;
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.VacancyPosting;
@@ -44,7 +47,9 @@
 
         private void RegisterProviders()
         {
+            //For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
             For<ILegacyProviderProvider>().Use<StubLegacyProviderProvider>();
+            For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
         }
 
         private void RegisterServices()
@@ -53,6 +58,7 @@
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderService>().Use<ProviderService>();
+            For<IEmployerService>().Use<EmployerService>();
         }
 
         private void RegisterStrategies()

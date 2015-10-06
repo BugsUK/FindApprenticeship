@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2C577447-2405-46B3-8065-613A19A58541}</ProjectGuid>
+    <ProjectGuid>{D87BF950-D9A8-4590-B868-DBB852E265D2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Application.Interfaces</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Application.Interfaces</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Infrastructure.Repositories.Employers</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Infrastructure.Repositories.Employers</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -74,6 +74,30 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Bson, Version=1.10.0.62, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Bson.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=1.10.0.62, Culture=neutral, PublicKeyToken=f686731cfb9cc103, processorArchitecture=MSIL">
+      <HintPath>..\packages\mongocsharpdriver.1.10.0\lib\net35\MongoDB.Driver.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
@@ -81,60 +105,40 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Applications\ErrorCodes.cs" />
-    <Compile Include="Candidates\ErrorCodes.cs" />
-    <Compile Include="Communications\CommunicationChannels.cs" />
-    <Compile Include="Communications\CommunicationRequestHelpers.cs" />
-    <Compile Include="Communications\ErrorCodes.cs" />
-    <Compile Include="Communications\IProviderCommunicationService.cs" />
-    <Compile Include="Communications\SubscriptionTypes.cs" />
-    <Compile Include="Employers\IEmployerService.cs" />
-    <Compile Include="Locations\ErrorCodes.cs" />
-    <Compile Include="Logging\ILogService.cs" />
-    <Compile Include="Messaging\BaseRequest.cs" />
-    <Compile Include="Communications\CommunicationToken.cs" />
-    <Compile Include="Messaging\ErrorCodes.cs" />
-    <Compile Include="Communications\MessageTypes.cs" />
-    <Compile Include="Communications\CommunicationTokens.cs" />
-    <Compile Include="Communications\CommunicationRequest.cs" />
-    <Compile Include="Communications\EmailRequest.cs" />
-    <Compile Include="Communications\ICommunicationService.cs" />
-    <Compile Include="Communications\IEmailDispatcher.cs" />
-    <Compile Include="Communications\ISmsDispatcher.cs" />
-    <Compile Include="Communications\SmsRequest.cs" />
-    <Compile Include="Organisations\IOrganisationService.cs" />
-    <Compile Include="Providers\IProviderService.cs" />
-    <Compile Include="ReferenceData\IReferenceDataService.cs" />
-    <Compile Include="Search\AggregationResult.cs" />
-    <Compile Include="Users\IProviderUserAccountService.cs" />
-    <Compile Include="Users\IUserProfileService.cs" />
-    <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />
-    <Compile Include="Vacancies\VacancySearchParametersBase.cs" />
-    <Compile Include="Vacancies\ApprenticeshipSearchParameters.cs" />
-    <Compile Include="Search\SearchParametersBase.cs" />
-    <Compile Include="Vacancies\TraineeshipSearchParameters.cs" />
-    <Compile Include="Users\ErrorCodes.cs" />
-    <Compile Include="Users\ICodeGenerator.cs" />
-    <Compile Include="Users\IUserAccountService.cs" />
-    <Compile Include="Candidates\ICandidateService.cs" />
-    <Compile Include="Locations\ILocationSearchService.cs" />
+    <Compile Include="Entities\MongoEmployer.cs" />
+    <Compile Include="IoC\EmployerRepositoryRegistry.cs" />
+    <Compile Include="Mappers\EmployerMappers.cs" />
+    <Compile Include="EmployerRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Search\SearchResults.cs" />
-    <Compile Include="Users\IAuthenticationService.cs" />
-    <Compile Include="Vacancies\ErrorCodes.cs" />
-    <Compile Include="Vacancies\VacancySearchSortType.cs" />
-    <Compile Include="Vacancies\IVacancySearchService.cs" />
-    <Compile Include="Vacancies\TraineeshipSearchResponse.cs" />
-    <Compile Include="VacancyPosting\IVacancyPostingService.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
-      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
-      <Name>SFA.Apprenticeships.Domain.Entities</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
+      <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
+      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
+      <Project>{CE62BDE8-C127-4808-95F8-5F5E24485830}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

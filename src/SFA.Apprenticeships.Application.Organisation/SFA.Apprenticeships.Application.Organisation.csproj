@@ -87,6 +87,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ILegacyEmployerProvider.cs" />
     <Compile Include="ILegacyProviderProvider.cs" />
     <Compile Include="IProviderDataProvider.cs" />
     <Compile Include="IVerifiedOrganisationProvider.cs" />

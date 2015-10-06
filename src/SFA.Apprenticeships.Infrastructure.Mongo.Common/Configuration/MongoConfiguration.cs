@@ -22,6 +22,8 @@
 
         public string VacancyDb { get; set; }
 
+        public string EmployersDb { get; set; }
+
         public string MetricsCandidatesDb { get; set; }
 
         public string MetricsApplicationsDb { get; set; }

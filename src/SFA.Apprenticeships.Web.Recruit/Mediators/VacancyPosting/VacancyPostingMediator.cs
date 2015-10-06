@@ -13,11 +13,13 @@
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
+        private readonly IEmployerProvider _employerProvider;
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
 
-        public VacancyPostingMediator(IVacancyPostingProvider vacancyPostingProvider, VacancyViewModelValidator vacancyViewModelValidator)
+        public VacancyPostingMediator(IVacancyPostingProvider vacancyPostingProvider, IEmployerProvider employerProvider, VacancyViewModelValidator vacancyViewModelValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
+            _employerProvider = employerProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
@@ -40,6 +42,9 @@
         public MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
+
+            var ern = "12345";//vacancyViewModel.ProviderSite.Ern;
+            var employers = _employerProvider.GetEmployers(ern);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }
