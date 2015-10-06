@@ -3,11 +3,9 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
-    using Application.Interfaces.VacancyPosting;
     using Application.Provider;
     using Application.UserAccount;
     using Application.UserProfile;
-    using Application.VacancyPosting;
     using Common.IoC;
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;

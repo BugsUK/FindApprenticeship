@@ -483,10 +483,6 @@
       <Project>{5853DBD3-4999-4710-8CAA-7BC0603C5827}</Project>
       <Name>SFA.Apprenticeships.Application.UserProfile</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
-      <Project>{ce04b708-ff21-41d4-b796-a36edce2960d}</Project>
-      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>

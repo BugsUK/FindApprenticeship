@@ -148,6 +148,10 @@
     <Reference Include="NLog.Contrib">
       <HintPath>..\packages\NLog.Contrib.1.0.0.2\lib\net45\NLog.Contrib.dll</HintPath>
     </Reference>
+    <Reference Include="SFA.Apprenticeships.Application.VacancyPosting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SFA.Apprenticeships.Application.VacancyPosting\bin\Local\SFA.Apprenticeships.Application.VacancyPosting.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
@@ -538,10 +542,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserProfile\SFA.Apprenticeships.Application.UserProfile.csproj">
       <Project>{5853DBD3-4999-4710-8CAA-7BC0603C5827}</Project>
       <Name>SFA.Apprenticeships.Application.UserProfile</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
-      <Project>{ce04b708-ff21-41d4-b796-a36edce2960d}</Project>
-      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>

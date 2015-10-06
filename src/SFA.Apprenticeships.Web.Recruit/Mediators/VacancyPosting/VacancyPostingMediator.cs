@@ -1,7 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Common.Mediators;
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Providers;
     using Validators.Vacancy;
     using ViewModels.Vacancy;
@@ -64,6 +68,19 @@
             };
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);
+        }
+
+        // TODO: AG: US811: this function is duplicated elsewhere.
+        private static List<SelectListItem> GetApprenticeshipLevels()
+        {
+            var levels =
+                Enum.GetValues(typeof(ApprenticeshipLevel))
+                    .Cast<ApprenticeshipLevel>()
+                    .Where(al => al != ApprenticeshipLevel.Unknown)
+                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
+                    .ToList();
+
+            return levels;
         }
     }
 }
