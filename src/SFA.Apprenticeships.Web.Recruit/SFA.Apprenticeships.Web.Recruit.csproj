@@ -288,9 +288,11 @@
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
     <Compile Include="Constants\Roles.cs" />
+    <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -345,6 +347,8 @@
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\VacancyPosting\EmployerSearchViewModel.cs" />
+    <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
@@ -434,10 +438,13 @@
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Views\ProviderUser\AuthorizationError.cshtml" />
-    <Content Include="Views\VacancyPosting\Index.cshtml" />
+    <Content Include="Views\VacancyPosting\CreateVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
+    <Content Include="Views\VacancyPosting\SelectEmployer.cshtml" />
+    <Content Include="Views\VacancyPosting\AddEmployer.cshtml" />
+    <Content Include="Views\VacancyPosting\ConfirmEmployer.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

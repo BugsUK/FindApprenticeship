@@ -1,0 +1,58 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
+    ViewBag.Title = "Recruit an Apprentice - Create New Vacancy - Confirm Employer";
+}
+
+<div class="grid-wrapper">
+    <div class="hgroup">
+        <h1 class="heading-xlarge">
+            Employer details
+        </h1>
+    </div>
+</div>
+<div class="grid-wrapper">
+    @using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmEmployer, FormMethod.Post))
+    {   
+        @Html.Partial("ValidationSummary", ViewData.ModelState)
+        @Html.Hidden("employerId", 1)
+
+        <div class="grid grid-1-2">
+            <div class="inner-block-padr">
+                <h3 class="bold-small">Employer</h3>
+                <p class="small-btm-margin">R G Engineering</p>
+                <p>
+                    <a href="http://www.rgeng.co.uk">http://www.rgeng.co.uk</a>
+                </p>
+                <h3 class="bold-small">Address</h3>
+                <p class="small-btm-margin">Hotchkiss Way</p>
+                <p class="small-btm-margin">Binley Industrial Estate</p>
+                <p class="small-btm-margin">Coventry</p>
+                <p class="small-btm-margin">West Midlands</p>
+                <p>CV3 2RL</p>
+            </div>
+        </div>
+        <div class="grid grid-1-2 hide-print">
+            <div class="ad-details__map">
+                <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
+                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=CV3+2RL,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+            </div>
+        </div>
+        <div class="grid grid-1-1">
+            <div class="form-group">
+                <label for="employerText" class="form-label bold-small">Employer details</label>
+                <textarea id="employerText" name="employerText" class="form-control width-all-1-1" style="height: 200px;">
+                Established in 1978, R G Engineering Ltd is proud to have developed partnerships
+                with leading companies that include Rolls-Royce Aero Engines, Denso,
+                and GKN Aerospace. We supply design and manufacture products and
+                onsite customer support to the aerospace, automotive, and robotic
+                markets. Being a medium company we are able to dedicate ourselves
+                to 100% customer focus, delivering high quality parts in short
+                lead-time’s without compromise.
+            </textarea>
+            </div>
+            <button class="button">Save details and continue</button>
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer)">Choose another employer</a>
+        </div>
+    }
+</div>

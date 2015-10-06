@@ -93,7 +93,7 @@
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ResendVerificationCode,
-               url: "resentverificationemail",
+               url: "verifyemail/resend",
                defaults: new { controller = "ProviderUser", action = "ResendVerificationCode" }
                );
 
@@ -105,37 +105,49 @@
 
             routes.MapRoute(
                name: RecruitmentRouteNames.AddProviderSite,
-               url: "addsite",
+               url: "sites/add",
                defaults: new { controller = "Provider", action = "AddSite" }
                );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.EditProviderSite,
-               url: "editsite",
+               url: "sites/edit",
                defaults: new { controller = "Provider", action = "EditSite" }
                );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.NewVacancyLandingPage,
-               url: "newvacancy",
-               defaults: new { controller = "VacancyPosting", action = "Index" }
-               );
-
-            routes.MapRoute(
                name: RecruitmentRouteNames.CreateVacancy,
-               url: "createvacancy",
+               url: "vacancy/create",
                defaults: new { controller = "VacancyPosting", action = "CreateVacancy" }
                );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.SelectExistingEmployer,
+                url: "vacancy/employer/select",
+                defaults: new {controller = "VacancyPosting", action = "SelectEmployer" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.AddEmployer,
+                url: "vacancy/employer/add",
+                defaults: new { controller = "VacancyPosting", action = "AddEmployer" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.ComfirmEmployer,
+                url: "vacancy/employer/confirm",
+                defaults: new {controller = "VacancyPosting", action = "ConfirmEmployer"}
+                );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.SubmitVacancy,
-               url: "submitvacancy",
+               url: "vacancy/submit",
                defaults: new { controller = "VacancyPosting", action = "SubmitVacancy" }
                );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.VacancySubmitted,
-               url: "vacancysubmitted",
+               url: "vacancy/submitted",
                defaults: new { controller = "VacancyPosting", action = "VacancySubmitted" }
                );
 

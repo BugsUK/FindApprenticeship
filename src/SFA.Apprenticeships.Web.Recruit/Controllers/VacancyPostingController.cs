@@ -10,6 +10,7 @@
     using Mediators.VacancyPosting;
     using Providers;
     using ViewModels.Vacancy;
+    using ViewModels.VacancyPosting;
 
     [AuthorizationData]
     [AuthorizeUser(Roles = Roles.Faa)]
@@ -24,13 +25,37 @@
         }
 
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult SelectEmployer(EmployerFilterViewModel employerFilter)
+        {
+            return View(employerFilter);
+        }
+
+        [HttpGet]
+        public ActionResult AddEmployer(EmployerSearchViewModel employerFilter)
+        {
+            return View(employerFilter);
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmEmployer(int employerid)
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmEmployer(int employerid, string employerText)
+        {
+            return RedirectToRoute(RecruitmentRouteNames.CreateVacancy);
+        }
+
+        [HttpGet]
+        public ActionResult CreateVacancy()
         {
             var response = _vacancyPostingMediator.GetNewVacancyModel(User.Identity.Name);
             var viewModel = response.ViewModel;
-
             return View(viewModel);
         }
+
 
         [HttpPost]
         public ActionResult CreateVacancy(NewVacancyViewModel viewModel)
