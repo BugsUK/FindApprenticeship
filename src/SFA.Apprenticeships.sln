@@ -177,6 +177,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Manage", "SFA.Apprenticeships.Web.Manage\SFA.Apprenticeships.Web.Manage.csproj", "{456A5D7B-80BB-486A-B521-861691836145}"
 EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Web.Manage.Azure", "SFA.Apprenticeships.Web.Manage.Azure\SFA.Apprenticeships.Web.Manage.Azure.ccproj", "{502F1A87-8037-4CFB-B1A0-EE1664B45189}"
+	ProjectSection(ProjectDependencies) = postProject
+		{456A5D7B-80BB-486A-B521-861691836145} = {456A5D7B-80BB-486A-B521-861691836145}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Manage.UnitTests", "SFA.Apprenticeships.Web.Manage.UnitTests\SFA.Apprenticeships.Web.Manage.UnitTests.csproj", "{84881750-9710-4278-94BE-016B1C0C36E6}"
 EndProject
