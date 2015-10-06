@@ -114,6 +114,8 @@
     <Compile Include="LegacyProviderProvider.cs" />
     <Compile Include="Models\Framework.cs" />
     <Compile Include="Models\Occupation.cs" />
+    <Compile Include="Models\Provider.cs" />
+    <Compile Include="Models\ProviderSite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
