@@ -3,8 +3,8 @@
     public enum ApprenticeshipLevel
     {
         Unknown = 0,
-        Intermediate,
-        Advanced,
-        Higher
+        Intermediate = 1,
+        Advanced = 2,
+        Higher = 3
     }
 }

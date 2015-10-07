@@ -1,13 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Common.Mediators;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Providers;
     using Validators.Vacancy;
+    using Validators.VacancyPosting;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
@@ -15,12 +12,18 @@
     {
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
         private readonly IEmployerProvider _employerProvider;
+        private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
 
-        public VacancyPostingMediator(IVacancyPostingProvider vacancyPostingProvider, IEmployerProvider employerProvider, VacancyViewModelValidator vacancyViewModelValidator)
+        public VacancyPostingMediator(
+            IVacancyPostingProvider vacancyPostingProvider,
+			IEmployerProvider employerProvider,
+            NewVacancyViewModelServerValidator newVacancyViewModelServerValidator,
+            VacancyViewModelValidator vacancyViewModelValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
-            _employerProvider = employerProvider;
+			_employerProvider = employerProvider;
+            _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
@@ -43,10 +46,17 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyModel.Ok, viewModel);
         }
 
-        public MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel)
+        public MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
-            // TODO: AG: US811: implement validation.
-            // var result = _newVacancyViewModelValidator.Validate(viewModel)
+            var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+
+                return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
+            }
+
             var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
@@ -66,7 +76,7 @@
         {
             var result = _vacancyViewModelValidator.Validate(viewModel);
 
-            viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
+            viewModel.ApprenticeshipLevels = _vacancyPostingProvider.GetApprenticeshipLevels();
 
             if (!result.IsValid)
             {
@@ -86,19 +96,6 @@
             };
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);
-        }
-
-        // TODO: AG: US811: this function is duplicated elsewhere.
-        private static List<SelectListItem> GetApprenticeshipLevels()
-        {
-            var levels =
-                Enum.GetValues(typeof(ApprenticeshipLevel))
-                    .Cast<ApprenticeshipLevel>()
-                    .Where(al => al != ApprenticeshipLevel.Unknown)
-                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
-                    .ToList();
-
-            return levels;
         }
     }
 }

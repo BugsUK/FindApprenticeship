@@ -147,7 +147,7 @@
     <Compile Include="Providers\VacancyPosting\TestBase.cs" />
     <Compile Include="Validators\Providers\ProviderSiteSearchViewModelValidatorTests.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidatorTests.cs" />
-    <Compile Include="Validators\VacancyPosting\NewVacancyViewModelValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

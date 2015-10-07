@@ -291,6 +291,7 @@
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
@@ -330,7 +331,7 @@
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
-    <Compile Include="Validators\VacancyPosting\NewVacancyViewModelValidator.cs" />
+    <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="ViewModels\Frameworks\FrameworkSelectItemViewModel.cs" />
     <Compile Include="ViewModels\Frameworks\SectorSelectItemViewModel.cs" />

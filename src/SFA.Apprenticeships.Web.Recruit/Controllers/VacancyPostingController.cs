@@ -76,6 +76,7 @@
         {
             var response = _vacancyPostingMediator.GetNewVacancyModel(User.Identity.Name);
             var viewModel = response.ViewModel;
+
             return View(viewModel);
         }
 
@@ -84,9 +85,24 @@
         public ActionResult CreateVacancy(NewVacancyViewModel viewModel)
         {
             var response = _vacancyPostingMediator.CreateVacancy(viewModel);
-            var vacancyViewModel = response.ViewModel;
 
-            return RedirectToRoute(RecruitmentRouteNames.SubmitVacancy, new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyPostingMediatorCodes.CreateVacancy.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.SubmitVacancy, new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]

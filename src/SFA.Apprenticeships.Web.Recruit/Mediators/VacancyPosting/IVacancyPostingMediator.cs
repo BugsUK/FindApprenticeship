@@ -13,7 +13,7 @@
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username);
 
-        MediatorResponse<VacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel);
+        MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
         MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
 

@@ -25,6 +25,7 @@
         public static class CreateVacancy
         {
             public const string Ok = "VacancyPosting.CreateVacancy.Ok";
+            public const string FailedValidation = "VacancyPosting.CreateVacancy.FailedValidation";
         }
 
         public static class SubmitVacancy

@@ -36,7 +36,7 @@
         <select id="@Html.IdFor(model => model.FrameworkCodeName)" name="@Html.NameFor(m => m.FrameworkCodeName)" class="para-btm-margin">
             <option value="" selected>Choose from a list of frameworks</option>
 
-            @foreach (var sector in Model.Sectors)
+            @foreach (var sector in Model.SectorsAndFrameworks)
             {
                 <optgroup label="@sector.FullName">
                     @foreach (var framework in sector.Frameworks)
@@ -50,34 +50,26 @@
 
     <div class="form-group inline clearfix">
         <p class="form-label" id="apprenticeship-level-label">Choose apprenticeship level</p>
+
+        @* ReSharper disable once Html.IdNotResolved *@
         <label for="apprenticeship-level-intermediate" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, @ApprenticeshipLevel.Intermediate, new { id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label" }) Intermediate
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new { id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label" }) Intermediate
         </label>
 
+        @* ReSharper disable once Html.IdNotResolved *@
         <label for="apprenticeship-level-advanced" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, @ApprenticeshipLevel.Advanced, new { id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label" }) Advanced
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new { id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label" }) Advanced
         </label>
 
+        @* ReSharper disable once Html.IdNotResolved *@
         <label for="apprenticeship-level-higher" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, @ApprenticeshipLevel.Higher, new { id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label" }) Higher
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new { id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label" }) Higher
         </label>
     </div>
 
-    <div class="form-group">
-        <p class="form-label">Choose training site</p>
-        <!-- TODO: US811: provider sites width list. -->
-        @Html.DropDownListFor(model => model.TrainingSiteErn, Model.ProviderSites, new { @class = "chosen-select width-all-1-1" })
-    </div>
+    @Html.HiddenFor(model => model.TrainingSiteErn)
 
     <fieldset class="form-group">
         <button type="submit" class="button">Create vacancy</button>
     </fieldset>
-}
-
-@section scripts {
-    <script>
-        $(function () {
-            $(".chosen-select").chosen();
-        });
-    </script>
 }

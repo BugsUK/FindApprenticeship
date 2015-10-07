@@ -11,17 +11,14 @@
     using Application.Interfaces.VacancyPosting;
     using Common.Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using ViewModels.Frameworks;
     using ViewModels.Vacancy;
 
     public class VacancyPostingProvider : IVacancyPostingProvider
     {
         private readonly ILogService _logService;
-        private readonly IMapper _mapper;
 
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IUserProfileService _userProfileService;
@@ -33,14 +30,12 @@
         public VacancyPostingProvider(
             ILogService logService,
             IConfigurationService configurationService,
-            IMapper mapper,
             IVacancyPostingService vacancyPostingService,
             IUserProfileService userProfileService,
             IProviderService providerService,
             IReferenceDataService referenceDataService)
         {
             _logService = logService;
-            _mapper = mapper;
             _vacancyPostingService = vacancyPostingService;
 
             _userProfileService = userProfileService;
@@ -52,22 +47,18 @@
         public NewVacancyViewModel GetNewVacancyViewModel(string username)
         {
             var userProfile = _userProfileService.GetProviderUser(username);
-            var providerSites = GetProviderSiteSelectList(userProfile.Ukprn);
-            var sectors = GetSectorSelectList();
+            var sectors = GetSectorsAndFrameworks();
 
             return new NewVacancyViewModel
             {
                 ApprenticeshipLevel = ApprenticeshipLevel.Intermediate,
                 TrainingSiteErn = userProfile.PreferredSiteErn,
-                Sectors = sectors,
-                ProviderSites = providerSites
+                SectorsAndFrameworks = sectors
             };
         }
 
-        public VacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel)
+        public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
-            // TODO: AG: US811: fix logging.
-            // TODO: AG: US811: get vacancy reference number.
             _logService.Debug("Creating vacancy reference number");
 
             try
@@ -85,12 +76,9 @@
 
                 _logService.Debug("Created vacancy with reference number={0}", savedVacancy.VacancyReferenceNumber);
 
-                return new VacancyViewModel
-                {
-                    VacancyReferenceNumber = savedVacancy.VacancyReferenceNumber,
-                    ApprenticeshipLevel = savedVacancy.ApprenticeshipLevel,
-                    ApprenticeshipLevels = GetApprenticeshipLevels()
-                };
+                newVacancyViewModel.VacancyReferenceNumber = vacancy.VacancyReferenceNumber;
+
+                return newVacancyViewModel;
             }
             catch (Exception e)
             {
@@ -108,24 +96,19 @@
             };
         }
 
-        #region Helpers
-
-        private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
+        public List<SelectListItem> GetApprenticeshipLevels()
         {
-            var blacklistedCategoryCodeNames = configurationService.Get<WebConfiguration>().BlacklistedCategoryCodes;
-            
-            if (string.IsNullOrWhiteSpace(blacklistedCategoryCodeNames))
-            {
-                return new string[] {};
-            }
+            var levels =
+                Enum.GetValues(typeof(ApprenticeshipLevel))
+                    .Cast<ApprenticeshipLevel>()
+                    .Where(al => al != ApprenticeshipLevel.Unknown)
+                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
+                    .ToList();
 
-            return blacklistedCategoryCodeNames
-                .Split(',')
-                .Select(each => each.Trim())
-                .ToArray();
+            return levels;
         }
 
-        private List<SectorSelectItemViewModel> GetSectorSelectList()
+        public List<SectorSelectItemViewModel> GetSectorsAndFrameworks()
         {
             var categories = _referenceDataService.GetCategories();
 
@@ -144,27 +127,21 @@
                 }).ToList();
         }
 
-        private List<SelectListItem> GetProviderSiteSelectList(string ukprn)
-        {
-            var providerSites = _providerService.GetProviderSites(ukprn);
+        #region Helpers
 
-            return providerSites.Select(providerSite => new SelectListItem
+        private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
+        {
+            var blacklistedCategoryCodeNames = configurationService.Get<WebConfiguration>().BlacklistedCategoryCodes;
+            
+            if (string.IsNullOrWhiteSpace(blacklistedCategoryCodeNames))
             {
-                Value = providerSite.Ern,
-                Text = providerSite.Name
-            }).ToList();
-        }
+                return new string[] {};
+            }
 
-        private static List<SelectListItem> GetApprenticeshipLevels()
-        {
-            var levels =
-                Enum.GetValues(typeof(ApprenticeshipLevel))
-                    .Cast<ApprenticeshipLevel>()
-                    .Where(al => al != ApprenticeshipLevel.Unknown)
-                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
-                    .ToList();
-
-            return levels;
+            return blacklistedCategoryCodeNames
+                .Split(',')
+                .Select(each => each.Trim())
+                .ToArray();
         }
 
         #endregion

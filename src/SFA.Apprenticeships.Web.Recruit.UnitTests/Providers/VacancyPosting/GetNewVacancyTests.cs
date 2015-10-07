@@ -3,14 +3,12 @@
     using System;
     using System.Linq;
     using Common.Configuration;
-    using Domain.Entities.Providers;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class GetNewVacancyTests : TestBase
@@ -91,8 +89,6 @@
             }
         };
 
-        private readonly ProviderSite[] _providerSites = new Fixture().CreateMany<ProviderSite>().ToArray();
-
         [SetUp]
         public void SetUp()
         {
@@ -103,10 +99,6 @@
             MockUserProfileService
                 .Setup(mock => mock.GetProviderUser(ValidUserName))
                 .Returns(_userProfile);
-
-            MockProviderService
-                .Setup(mock => mock.GetProviderSites(Ukprn))
-                .Returns(_providerSites);
 
             MockReferenceDataService
                 .Setup(mock => mock.GetCategories())
@@ -141,8 +133,8 @@
 
             // Assert.
             viewModel.Should().NotBeNull();
-            viewModel.Sectors.Should().NotBeNull();
-            viewModel.Sectors.Count.Should().BePositive();
+            viewModel.SectorsAndFrameworks.Should().NotBeNull();
+            viewModel.SectorsAndFrameworks.Count.Should().BePositive();
         }
 
         [Test]
@@ -156,12 +148,10 @@
 
             // Assert.
             viewModel.Should().NotBeNull();
-            viewModel.Sectors.Should().NotBeNull();
+            viewModel.SectorsAndFrameworks.Should().NotBeNull();
 
-            /*
-            Assert.That(!viewModel.Sectors.
+            Assert.That(!viewModel.SectorsAndFrameworks.
                 Any(sector => _webConfiguration.BlacklistedCategoryCodes.Contains(sector.CodeName)));
-            */
         }
 
         [Test]
@@ -175,8 +165,8 @@
 
             // Assert.
             viewModel.Should().NotBeNull();
-            viewModel.Sectors.Should().NotBeNull();
-            Assert.That(viewModel.Sectors.All(sector => sector.Frameworks?.Count > 0));
+            viewModel.SectorsAndFrameworks.Should().NotBeNull();
+            Assert.That(viewModel.SectorsAndFrameworks.All(sector => sector.Frameworks?.Count > 0));
         }
 
         [Test]
@@ -191,19 +181,6 @@
             // Assert.
             viewModel.Should().NotBeNull();
             viewModel.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Intermediate);
-        }
-
-        [Test]
-        public void ShouldGetSites()
-        {
-            // Arrange.
-            var provider = GetProvider();
-
-            // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ValidUserName);
-
-            // Assert.
-            viewModel.ProviderSites.Count().Should().Be(_providerSites.Count());
         }
     }
 }

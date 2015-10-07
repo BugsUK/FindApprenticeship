@@ -40,7 +40,6 @@
             return new VacancyPostingProvider(
                 MockLogService.Object,
                 MockConfigurationService.Object,
-                MockMapper.Object,
                 MockVacancyPostingService.Object,
                 MockUserProfileService.Object,
                 MockProviderService.Object,

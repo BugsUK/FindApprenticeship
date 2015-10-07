@@ -7,14 +7,14 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 
     public class NewVacancyViewModel
     {
+        public long? VacancyReferenceNumber { get; set; }
+
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public string FrameworkCodeName { get; set; }
 
-        public List<SectorSelectItemViewModel> Sectors { get; set; }
+        public List<SectorSelectItemViewModel> SectorsAndFrameworks { get; set; }
 
         public string TrainingSiteErn { get; set; }
-
-        public List<SelectListItem> ProviderSites { get; set; }
     }
 }

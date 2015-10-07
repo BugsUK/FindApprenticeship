@@ -5,6 +5,7 @@
     using Recruit.Mediators.VacancyPosting;
     using Recruit.Providers;
     using Recruit.Validators.Vacancy;
+    using Recruit.Validators.VacancyPosting;
 
     public class TestsBase
     {
@@ -19,7 +20,11 @@
 
         protected IVacancyPostingMediator GetMediator()
         {
-            return new VacancyPostingMediator(VacancyPostingProvider.Object, EmployerProvider.Object, new VacancyViewModelValidator());
+            return new VacancyPostingMediator(
+                VacancyPostingProvider.Object,
+                EmployerProvider.Object,
+                new NewVacancyViewModelServerValidator(),
+                new VacancyViewModelValidator());
         }
     }
 }
