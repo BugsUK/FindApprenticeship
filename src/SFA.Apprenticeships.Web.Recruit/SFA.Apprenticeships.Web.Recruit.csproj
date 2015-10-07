@@ -630,7 +630,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>12776</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://recruit_kali.findapprenticeship.service.gov.uk</IISUrl>
+          <IISUrl>https://recruit.findapprenticeship.service.gov.uk</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

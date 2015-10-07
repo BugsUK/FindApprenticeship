@@ -24,14 +24,29 @@
             return employers.Select(Convert);
         }
 
-        public EmployerResultsViewModel GetEmployers(Guid providerId, EmployerFilterViewModel filterViewModel)
+        public EmployerResultsViewModel GetEmployers(string ern, EmployerFilterViewModel filterViewModel)
         {
-            return new EmployerResultsViewModel { EmployerResults = new List<EmployerResultViewModel>() };
+            var employers = _employerService.GetEmployers(ern);
+
+            return new EmployerResultsViewModel { EmployerResults = employers.Select(ConvertToResult).ToList() };
         }
 
         public EmployerResultsViewModel GetEmployers(EmployerSearchViewModel searchViewModel)
         {
             return new EmployerResultsViewModel { EmployerResults = new List<EmployerResultViewModel>() };
+        }
+
+        private static EmployerResultViewModel ConvertToResult(Employer employer)
+        {
+            var viewModel = new EmployerResultViewModel
+            {
+                Ern = employer.Ern,
+                //EmployerId = 
+                EmployerName = employer.Name,
+                //Address = 
+            };
+
+            return viewModel;
         }
 
         private static EmployerViewModel Convert(Employer employer)

@@ -38,45 +38,28 @@
                     <col>
                 </colgroup>
                 <tbody>
-                    <tr>
-                        <th>Name</th>
-                        <th>Address</th>
-                        <th>ERN</th>
-                        <th></th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>ERN</th>
+                    <th></th>
+                </tr>
+                @foreach (var employerResultsViewModel in @Model.EmployerResults.EmployerResults)
+                {
                     <tr>
                         <th>
-                            <h4 class="bold-small">Costa</h4>
+                            <h4 class="bold-small">@employerResultsViewModel.EmployerName</h4>
                         </th>
                         <td>
                             12 Broomfield Road
-                            <br />RG21 4FP Basingstoke
+                            <br/>RG21 4FP Basingstoke
                         </td>
-                        <td>5736479734</td>
+                        <td>@employerResultsViewModel.Ern</td>
                         <td>
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {employerid = 1})">Select employer</a>
                         </td>
                     </tr>
-                    <tr>
-                        <th>
-                            <h4 class="bold-small">Starbucks</h4>
-                        </th>
-                        <td>
-                            324 Green Lanes<br />
-                            RG21 8KL Basingstoke
-                        </td>
-                        <td>637452391</td>
-                        <td><a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {employerid = 1})">Select employer</a></td>
-                    </tr>
-                    <tr>
-                        <th><h4 class="bold-small">Nero</h4></th>
-                        <td>
-                            1C Windsor Road<br />
-                            RG21 9OD Basingstoke
-                        </td>
-                        <td>982436529</td>
-                        <td><a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {employerid = 1})">Select employer</a></td>
-                    </tr>
+                }
                 </tbody>
             </table>
         </div>

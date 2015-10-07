@@ -28,7 +28,7 @@
         [HttpGet]
         public ActionResult SelectEmployer(EmployerFilterViewModel employerFilter)
         {
-            var response = _vacancyPostingMediator.GetProviderEmployers(Guid.Empty, employerFilter);
+            var response = _vacancyPostingMediator.GetProviderEmployers("152059466", employerFilter);
 
             switch (response.Code)
             {

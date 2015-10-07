@@ -27,9 +27,9 @@
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
-        public MediatorResponse<EmployerResultsViewModel> GetProviderEmployers(Guid providerId, EmployerFilterViewModel employerFilterViewModel)
+        public MediatorResponse<EmployerResultsViewModel> GetProviderEmployers(string providerSiteErn, EmployerFilterViewModel employerFilterViewModel)
         {
-            var viewModel = _employerProvider.GetEmployers(providerId, employerFilterViewModel);
+            var viewModel = _employerProvider.GetEmployers(providerSiteErn, employerFilterViewModel);
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 

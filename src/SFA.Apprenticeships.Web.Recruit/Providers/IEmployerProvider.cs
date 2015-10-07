@@ -9,7 +9,7 @@
     {
         IEnumerable<EmployerViewModel> GetEmployers(string ern);
 
-        EmployerResultsViewModel GetEmployers(Guid providerId, EmployerFilterViewModel filterViewModel);
+        EmployerResultsViewModel GetEmployers(string ern, EmployerFilterViewModel filterViewModel);
 
         EmployerResultsViewModel GetEmployers(EmployerSearchViewModel searchViewModel);
     }

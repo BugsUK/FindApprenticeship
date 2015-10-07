@@ -40,8 +40,7 @@
 
         private void RegisterProviders()
         {
-            //For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
-            For<ILegacyProviderProvider>().Use<StubLegacyProviderProvider>();
+            For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
         }
