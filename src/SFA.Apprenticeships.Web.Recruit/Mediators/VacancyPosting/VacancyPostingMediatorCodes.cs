@@ -2,6 +2,16 @@
 {
     public static class VacancyPostingMediatorCodes
     {
+        public static class GetProviderEmployers
+        {
+            public const string Ok = "VacancyPosting.GetProviderEmployers.Ok";
+        }
+
+        public static class GetEmployers
+        {
+            public const string Ok = "VacancyPosting.GetEmployers.Ok";
+        }
+
         public static class GetNewVacancyModel
         {
             public const string Ok = "VacancyPosting.GetNewVacancyModel.Ok";

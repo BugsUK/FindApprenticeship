@@ -13,5 +13,7 @@
 
         [Display(Name = EmployerFilterViewModelMessages.Postcode.LabelText)]
         public string Postcode { get; set; }
+
+        public EmployerResultsViewModel EmployerResults { get; set; }
     }
 }

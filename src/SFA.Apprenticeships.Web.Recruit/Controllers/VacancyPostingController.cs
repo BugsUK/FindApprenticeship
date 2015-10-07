@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -27,13 +28,35 @@
         [HttpGet]
         public ActionResult SelectEmployer(EmployerFilterViewModel employerFilter)
         {
+            var response = _vacancyPostingMediator.GetProviderEmployers(Guid.Empty, employerFilter);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
+                    employerFilter.EmployerResults = response.ViewModel;
+                    break;
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+
             return View(employerFilter);
         }
 
         [HttpGet]
-        public ActionResult AddEmployer(EmployerSearchViewModel employerFilter)
+        public ActionResult AddEmployer(EmployerSearchViewModel employerSearch)
         {
-            return View(employerFilter);
+            var response = _vacancyPostingMediator.GetEmployers(employerSearch);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetEmployers.Ok:
+                    employerSearch.EmployerResults = response.ViewModel;
+                    break;
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+
+            return View(employerSearch);
         }
 
         [HttpGet]

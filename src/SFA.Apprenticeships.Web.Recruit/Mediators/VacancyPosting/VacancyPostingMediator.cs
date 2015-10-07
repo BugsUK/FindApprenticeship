@@ -9,6 +9,7 @@
     using Providers;
     using Validators.Vacancy;
     using ViewModels.Vacancy;
+    using ViewModels.VacancyPosting;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
@@ -21,6 +22,18 @@
             _vacancyPostingProvider = vacancyPostingProvider;
             _employerProvider = employerProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
+        }
+
+        public MediatorResponse<EmployerResultsViewModel> GetProviderEmployers(Guid providerId, EmployerFilterViewModel employerFilterViewModel)
+        {
+            var viewModel = _employerProvider.GetEmployers(providerId, employerFilterViewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
+        }
+
+        public MediatorResponse<EmployerResultsViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel)
+        {
+            var viewModel = _employerProvider.GetEmployers(employerFilterViewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username)

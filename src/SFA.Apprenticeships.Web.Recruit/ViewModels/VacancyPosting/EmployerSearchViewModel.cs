@@ -21,5 +21,7 @@
 
         [Display(Name = EmployerSearchViewModelMessages.Location.LabelText, Description = EmployerSearchViewModelMessages.Location.LabelText)]
         public string Location { get; set; }
+
+        public EmployerResultsViewModel EmployerResults { get; set; }
     }
 }
