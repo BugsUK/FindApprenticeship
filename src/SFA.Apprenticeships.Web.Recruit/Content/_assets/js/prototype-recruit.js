@@ -136,7 +136,6 @@ $(function() {
 
   $('.edit-region-container .add-section').on('click', function(e) {
     e.preventDefault();
-
     $(this).hide();
     $(this).closest('.edit-region-container').find('.editmode-wrapper').show().find('input').focus();
   });
@@ -164,9 +163,6 @@ $(function() {
 
     $(this).closest('.edit-region-container').find('.editmode-wrapper').show();
   });
-
-
-  $('.chosen-select').chosen();
 
   if($('#pageManageSites').length) {
     var firstUser = gup('First'),
