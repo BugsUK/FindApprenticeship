@@ -135,5 +135,6 @@
     <None Include="local.sqlexpress.scmp" />
     <None Include="naspresql.publish.xml" />
     <None Include="naspresql.scmp" />
+    <None Include="SFA.Apprenticeships.Data.Reference.publish.xml" />
   </ItemGroup>
 </Project>
