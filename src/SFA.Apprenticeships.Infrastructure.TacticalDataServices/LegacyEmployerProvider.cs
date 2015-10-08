@@ -21,15 +21,29 @@
             _connectionString = config.AvSqlReferenceConnectionString;
         }
 
-        public IEnumerable<Employer> GetEmployers(string ern)
+        public Employer GetEmployer(string providerSiteErn, string ern)
         {
-            const string sql = @"SELECT ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.* FROM dbo.ProviderSite AS ps JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId WHERE ps.EDSURN = @Ern AND ps.TrainingProviderStatusTypeId = 1 AND e.EmployerStatusTypeId = 1";
+            const string sql = @"SELECT ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.* FROM dbo.ProviderSite AS ps JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId WHERE ps.EDSURN = @ProviderSiteErn AND ps.TrainingProviderStatusTypeId = 1 AND e.EdsUrn = @Ern AND e.EmployerStatusTypeId = 1";
+
+            Models.Employer legacyEmployer;
+
+            using (var connection = GetConnection())
+            {
+                legacyEmployer = connection.Query<Models.Employer>(sql, new { ProviderSiteErn = providerSiteErn, Ern = ern }).SingleOrDefault();
+            }
+
+            return GetEmployer(legacyEmployer);
+        }
+
+        public IEnumerable<Employer> GetEmployers(string providerSiteErn)
+        {
+            const string sql = @"SELECT ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.* FROM dbo.ProviderSite AS ps JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId WHERE ps.EDSURN = @ProviderSiteErn AND ps.TrainingProviderStatusTypeId = 1 AND e.EmployerStatusTypeId = 1";
 
             IList<Models.Employer> legacyEmployers;
 
             using (var connection = GetConnection())
             {
-                legacyEmployers = connection.Query<Models.Employer>(sql, new { Ern = ern }).ToList();
+                legacyEmployers = connection.Query<Models.Employer>(sql, new { ProviderSiteErn = providerSiteErn }).ToList();
             }
 
             return legacyEmployers.Select(GetEmployer);

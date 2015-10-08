@@ -5,7 +5,7 @@
 
     public interface IEmployerReadRepository : IReadRepository<Employer>
     {
-        IEnumerable<Employer> GetForProviderSite(string ern);
+        IEnumerable<Employer> GetForProviderSite(string providerSiteErn);
     }
 
     public interface IEmployerWriteRepository : IWriteRepository<Employer> { }

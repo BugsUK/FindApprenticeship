@@ -17,7 +17,7 @@
         [Display(Name = ProviderUserViewModelMessages.PhoneNumberMessages.LabelText)]
         public string PhoneNumber { get; set; }
 
-        public string DefaultTrainingSiteErn { get; set; }
+        public string DefaultProviderSiteErn { get; set; }
 
         public bool EmailAddressVerified { get; set; }
     }

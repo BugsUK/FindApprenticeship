@@ -230,5 +230,23 @@
 
             return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Ok, viewModel);
         }
+
+        public MediatorResponse<HomeViewModel> ChangeTrainingSite(string username, string ukprn, HomeViewModel viewModel)
+        {
+            var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username);
+            providerUserViewModel.DefaultProviderSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteErn;
+            if (providerUserViewModel.DefaultProviderSiteErn != viewModel.ProviderUserViewModel.DefaultProviderSiteErn)
+            {
+                providerUserViewModel = _providerUserProvider.SaveProviderUser(username, ukprn, providerUserViewModel);
+            }
+            var providerSites = GetProviderSites(ukprn);
+            var homeViewModel = new HomeViewModel
+            {
+                ProviderUserViewModel = providerUserViewModel,
+                ProviderSites = providerSites
+            };
+
+            return GetMediatorResponse(ProviderUserMediatorCodes.ChangeTrainingSite.Ok, homeViewModel);
+        }
     }
 }

@@ -23,5 +23,7 @@
         MediatorResponse<VerifyEmailViewModel> ResendVerificationCode(string username);
 
         MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn);
+
+        MediatorResponse<HomeViewModel> ChangeTrainingSite(string username, string ukprn, HomeViewModel viewModel);
     }
 }

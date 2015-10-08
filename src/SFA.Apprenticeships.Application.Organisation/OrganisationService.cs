@@ -53,13 +53,22 @@
             return _legacyProviderProvider.GetProviderSites(ukprn);
         }
 
-        public IEnumerable<Employer> GetEmployers(string ern)
+        public Employer GetEmployer(string providerSiteErn, string ern)
         {
-            Condition.Requires(ern).IsNotNullOrEmpty();
+            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling LegacyEmployerProvider to get employers for provider with UKPRN='{0}'.", ern);
+            _logService.Debug("Calling LegacyEmployerProvider to get employer for provider with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
 
-            return _legacyEmployerProvider.GetEmployers(ern);
-        } 
+            return _legacyEmployerProvider.GetEmployer(providerSiteErn, ern);
+        }
+
+        public IEnumerable<Employer> GetEmployers(string providerSiteErn)
+        {
+            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling LegacyEmployerProvider to get employers for provider with ERN='{0}'.", providerSiteErn);
+
+            return _legacyEmployerProvider.GetEmployers(providerSiteErn);
+        }
     }
 }

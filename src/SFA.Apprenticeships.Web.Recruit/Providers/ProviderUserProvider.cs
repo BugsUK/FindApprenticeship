@@ -69,7 +69,7 @@
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
-            providerUser.PreferredSiteErn = providerUserViewModel.DefaultTrainingSiteErn;
+            providerUser.PreferredSiteErn = providerUserViewModel.DefaultProviderSiteErn;
             providerUser.Status = ProviderUserStatuses.Registered;
 
             _userProfileService.SaveUser(providerUser);
@@ -93,7 +93,7 @@
         {
             var viewModel = new ProviderUserViewModel
             {
-                DefaultTrainingSiteErn = providerUser.PreferredSiteErn,
+                DefaultProviderSiteErn = providerUser.PreferredSiteErn,
                 EmailAddress = providerUser.Email,
                 EmailAddressVerified = providerUser.Status == ProviderUserStatuses.EmailVerified,
                 Fullname = providerUser.Fullname,

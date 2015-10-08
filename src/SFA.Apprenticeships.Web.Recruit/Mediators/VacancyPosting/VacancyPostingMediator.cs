@@ -27,16 +27,22 @@
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
-        public MediatorResponse<EmployerResultsViewModel> GetProviderEmployers(string providerSiteErn, EmployerFilterViewModel employerFilterViewModel)
-        {
-            var viewModel = _employerProvider.GetEmployers(providerSiteErn, employerFilterViewModel);
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
-        }
-
-        public MediatorResponse<EmployerResultsViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel)
+        public MediatorResponse<EmployerFilterViewModel> GetProviderEmployers(EmployerFilterViewModel employerFilterViewModel)
         {
             var viewModel = _employerProvider.GetEmployers(employerFilterViewModel);
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
+        }
+
+        public MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel)
+        {
+            var viewModel = _employerProvider.GetEmployers(employerFilterViewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
+        }
+
+        public MediatorResponse<EmployerViewModel> GetEmployer(string providerSiteErn, string ern)
+        {
+            var viewModel = _employerProvider.GetEmployer(providerSiteErn, ern);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username)

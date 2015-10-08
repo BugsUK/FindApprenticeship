@@ -52,5 +52,10 @@
         {
             public const string Ok = "ProviderUser.GetHomeViewModel.Ok";
         }
+
+        public static class ChangeTrainingSite
+        {
+            public const string Ok = "ProviderUser.ChangeTrainingSite.Ok";
+        }
     }
 }

@@ -18,23 +18,31 @@
             _employerService = employerService;
         }
 
-        public IEnumerable<EmployerViewModel> GetEmployers(string ern)
+        public IEnumerable<EmployerViewModel> GetEmployers(string providerSiteErn)
         {
-            var employers = _employerService.GetEmployers(ern);
+            var employers = _employerService.GetEmployers(providerSiteErn);
 
             return employers.Select(Convert);
         }
 
-        public EmployerResultsViewModel GetEmployers(string ern, EmployerFilterViewModel filterViewModel)
+        public EmployerFilterViewModel GetEmployers(EmployerFilterViewModel filterViewModel)
         {
-            var employers = _employerService.GetEmployers(ern);
+            var employers = _employerService.GetEmployers(filterViewModel.ProviderSiteErn);
+            filterViewModel.EmployerResults = employers.Select(ConvertToResult).ToList();
 
-            return new EmployerResultsViewModel { EmployerResults = employers.Select(ConvertToResult).ToList() };
+            return filterViewModel;
         }
 
-        public EmployerResultsViewModel GetEmployers(EmployerSearchViewModel searchViewModel)
+        public EmployerSearchViewModel GetEmployers(EmployerSearchViewModel searchViewModel)
         {
-            return new EmployerResultsViewModel { EmployerResults = new List<EmployerResultViewModel>() };
+            return new EmployerSearchViewModel { EmployerResults = new List<EmployerResultViewModel>() };
+        }
+
+        public EmployerViewModel GetEmployer(string providerSiteErn, string ern)
+        {
+            var employer = _employerService.GetEmployer(providerSiteErn, ern);
+
+            return Convert(employer);
         }
 
         private static EmployerResultViewModel ConvertToResult(Employer employer)
@@ -54,11 +62,12 @@
         {
             var viewModel = new EmployerViewModel
             {
+                ProviderSiteErn = employer.ProviderSiteErn,
                 Ern = employer.Ern,
                 Name = employer.Name,
                 Description = employer.Description,
                 Website = employer.Website,
-                //Address = 
+                Address = employer.Address.Convert()
             };
 
             return viewModel;

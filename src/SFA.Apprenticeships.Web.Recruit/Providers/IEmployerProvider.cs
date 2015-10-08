@@ -7,10 +7,12 @@
 
     public interface IEmployerProvider
     {
-        IEnumerable<EmployerViewModel> GetEmployers(string ern);
+        IEnumerable<EmployerViewModel> GetEmployers(string providerSiteErn);
 
-        EmployerResultsViewModel GetEmployers(string ern, EmployerFilterViewModel filterViewModel);
+        EmployerFilterViewModel GetEmployers(EmployerFilterViewModel filterViewModel);
 
-        EmployerResultsViewModel GetEmployers(EmployerSearchViewModel searchViewModel);
+        EmployerSearchViewModel GetEmployers(EmployerSearchViewModel searchViewModel);
+
+        EmployerViewModel GetEmployer(string providerSiteErn, string ern);
     }
 }

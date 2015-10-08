@@ -12,6 +12,11 @@
             public const string Ok = "VacancyPosting.GetEmployers.Ok";
         }
 
+        public static class GetEmployer
+        {
+            public const string Ok = "VacancyPosting.GetEmployer.Ok";
+        }
+
         public static class GetNewVacancyModel
         {
             public const string Ok = "VacancyPosting.GetNewVacancyModel.Ok";

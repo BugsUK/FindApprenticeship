@@ -1,10 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
 
     public class EmployerFilterViewModel
     {
+        public string ProviderSiteErn { get; set; }
+
         [Display(Name = EmployerFilterViewModelMessages.Ern.LabelText)]
         public string Ern { get; set; }
 
@@ -14,6 +17,6 @@
         [Display(Name = EmployerFilterViewModelMessages.Postcode.LabelText)]
         public string Postcode { get; set; }
 
-        public EmployerResultsViewModel EmployerResults { get; set; }
+        public IEnumerable<EmployerResultViewModel> EmployerResults { get; set; }
     }
 }

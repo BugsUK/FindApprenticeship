@@ -22,22 +22,38 @@
             _logService = logService;
         }
 
-        public IEnumerable<Employer> GetEmployers(string ern)
+        public Employer GetEmployer(string providerSiteErn, string ern)
         {
+            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
             Condition.Requires(ern).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling EmployerReadRepository to get employers for provider site with ERN='{0}'.", ern);
+            _logService.Debug("Calling EmployerReadRepository to get employers for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
 
-            IEnumerable<Employer> employers = _employerReadRepository.GetForProviderSite(ern).ToList();
+            //TODO: How are we storing these employers/relationships in our DB?
+
+            _logService.Debug("Calling OrganisationService to get employers for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
+
+            var employer = _organisationService.GetEmployer(providerSiteErn, ern);
+
+            return employer;
+        }
+
+        public IEnumerable<Employer> GetEmployers(string providerSiteErn)
+        {
+            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling EmployerReadRepository to get employers for provider site with ERN='{0}'.", providerSiteErn);
+
+            IEnumerable<Employer> employers = _employerReadRepository.GetForProviderSite(providerSiteErn).ToList();
 
             if (employers.Any())
             {
                 return employers;
             }
 
-            _logService.Debug("Calling OrganisationService to get employers for provider site with ERN='{0}'.", ern);
+            _logService.Debug("Calling OrganisationService to get employers for provider site with ERN='{0}'.", providerSiteErn);
 
-            employers = _organisationService.GetEmployers(ern);
+            employers = _organisationService.GetEmployers(providerSiteErn);
 
             return employers;
         }

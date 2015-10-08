@@ -35,15 +35,15 @@
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        public IEnumerable<Employer> GetForProviderSite(string ern)
+        public IEnumerable<Employer> GetForProviderSite(string providerSiteErn)
         {
-            _logger.Debug("Called Mongodb to get employers for provider site with ERN={0}", ern);
+            _logger.Debug("Called Mongodb to get employers for provider site with ERN={0}", providerSiteErn);
 
-            var mongoEntities = Collection.Find(Query<MongoEmployer>.EQ(e => e.ProviderSiteErn, ern));
+            var mongoEntities = Collection.Find(Query<MongoEmployer>.EQ(e => e.ProviderSiteErn, providerSiteErn));
 
             var entities = _mapper.Map<IEnumerable<MongoEmployer>, IEnumerable<Employer>>(mongoEntities).ToList();
 
-            _logger.Debug("Found {1} employers for provider site with ERN={0}", ern, entities.Count);
+            _logger.Debug("Found {1} employers for provider site with ERN={0}", providerSiteErn, entities.Count);
 
             return entities;
         }

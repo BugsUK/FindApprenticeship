@@ -44,7 +44,7 @@
                     <th>ERN</th>
                     <th></th>
                 </tr>
-                @foreach (var employerResultsViewModel in @Model.EmployerResults.EmployerResults)
+                @foreach (var employerResultsViewModel in @Model.EmployerResults)
                 {
                     <tr>
                         <th>
@@ -57,7 +57,7 @@
                         </td>
                         <td>@employerResultsViewModel.Ern</td>
                         <td>
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {employerid = 1})">Select employer</a>
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern})">Select employer</a>
                         </td>
                     </tr>
                 }

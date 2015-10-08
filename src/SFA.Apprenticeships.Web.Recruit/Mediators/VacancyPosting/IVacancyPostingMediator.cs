@@ -7,9 +7,11 @@
 
     public interface IVacancyPostingMediator
     {
-        MediatorResponse<EmployerResultsViewModel> GetProviderEmployers(string providerSiteErn, EmployerFilterViewModel employerFilterViewModel);
+        MediatorResponse<EmployerFilterViewModel> GetProviderEmployers(EmployerFilterViewModel employerFilterViewModel);
 
-        MediatorResponse<EmployerResultsViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel);
+        MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel);
+
+        MediatorResponse<EmployerViewModel> GetEmployer(string providerSiteErn, string ern);
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username);
 

@@ -5,6 +5,7 @@
 
     public interface ILegacyEmployerProvider
     {
-        IEnumerable<Employer> GetEmployers(string ern);
+        Employer GetEmployer(string providerSiteErn, string ern);
+        IEnumerable<Employer> GetEmployers(string providerSiteErn);
     }
 }

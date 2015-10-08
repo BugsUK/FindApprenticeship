@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
 
@@ -11,6 +12,8 @@
 
     public class EmployerSearchViewModel
     {
+        public string ProviderSiteErn { get; set; }
+
         public EmployerFilterType FilterType { get; set; }
 
         [Display(Name = EmployerSearchViewModelMessages.Ern.LabelText)]
@@ -22,6 +25,6 @@
         [Display(Name = EmployerSearchViewModelMessages.Location.LabelText, Description = EmployerSearchViewModelMessages.Location.LabelText)]
         public string Location { get; set; }
 
-        public EmployerResultsViewModel EmployerResults { get; set; }
+        public IEnumerable<EmployerResultViewModel> EmployerResults { get; set; }
     }
 }

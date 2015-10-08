@@ -112,6 +112,7 @@
             return View(viewModel);
         }
 
+        [HttpGet]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult Home()
@@ -119,6 +120,43 @@
             var response = _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn());
 
             return View(response.ViewModel);
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Faa)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingSiteAction")]
+        public ActionResult ChangeTrainingSite(HomeViewModel viewModel)
+        {
+            var response = _providerUserMediator.ChangeTrainingSite(User.Identity.Name, User.GetUkprn(), viewModel);
+
+            switch (response.Code)
+            {
+                case ProviderUserMediatorCodes.ChangeTrainingSite.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Faa)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingSiteAction")]
+        public ActionResult NewVacancy(HomeViewModel viewModel)
+        {
+            var response = _providerUserMediator.ChangeTrainingSite(User.Identity.Name, User.GetUkprn(), viewModel);
+
+            switch (response.Code)
+            {
+                case ProviderUserMediatorCodes.ChangeTrainingSite.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteErn });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]

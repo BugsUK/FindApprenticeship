@@ -26,47 +26,70 @@
         }
 
         [HttpGet]
-        public ActionResult SelectEmployer(EmployerFilterViewModel employerFilter)
+        public ActionResult SelectEmployer(string providerSiteErn)
         {
-            var response = _vacancyPostingMediator.GetProviderEmployers("152059466", employerFilter);
+            var viewModel = new EmployerFilterViewModel
+            {
+                ProviderSiteErn = providerSiteErn
+            };
+
+            var response = _vacancyPostingMediator.GetProviderEmployers(viewModel);
 
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
-                    employerFilter.EmployerResults = response.ViewModel;
-                    break;
+                    return View(response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
 
-            return View(employerFilter);
+        }
+
+        [HttpPost]
+        public ActionResult SelectEmployer(EmployerFilterViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.GetProviderEmployers(viewModel);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+
         }
 
         [HttpGet]
-        public ActionResult AddEmployer(EmployerSearchViewModel employerSearch)
+        public ActionResult AddEmployer(EmployerSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.GetEmployers(employerSearch);
+            var response = _vacancyPostingMediator.GetEmployers(viewModel);
 
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetEmployers.Ok:
-                    employerSearch.EmployerResults = response.ViewModel;
-                    break;
+                    return View(response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
-
-            return View(employerSearch);
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployer(int employerid)
+        public ActionResult ConfirmEmployer(string providerSiteErn, string ern)
         {
-            return View();
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetEmployer.Ok:
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]
-        public ActionResult ConfirmEmployer(int employerid, string employerText)
+        public ActionResult ConfirmEmployer(string providerSiteErn, string ern, string employerText)
         {
             return RedirectToRoute(RecruitmentRouteNames.CreateVacancy);
         }
