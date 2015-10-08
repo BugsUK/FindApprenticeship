@@ -29,7 +29,7 @@
         {
             // Arrange.
             var mediator = GetMediator();
-            var user = new ProviderUserViewModel { Fullname = "Full name", EmailAddress = "asdf@asdf.com", PhoneNumber = "0321321321"};
+            var user = new ProviderUserViewModel { Fullname = "Full name", EmailAddress = "asdf@asdf.com", PhoneNumber = "0321321321", DefaultProviderSiteErn = "12345678"};
 
             // Act.
             var response = mediator.UpdateUser("userName", "00001", user);
