@@ -53,7 +53,7 @@
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
-            const string sql = @"SELECT p.UKPRN, ps.* FROM dbo.Provider AS p JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId WHERE ps.TrainingProviderStatusTypeId = 1 AND p.UKPRN = @Ukprn";
+            const string sql = @"SELECT p.UKPRN, ps.* FROM dbo.Provider AS p JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId WHERE p.UKPRN = @Ukprn AND ps.TrainingProviderStatusTypeId = 1";
 
             IList<Models.ProviderSite> legacyProviderSites;
 
