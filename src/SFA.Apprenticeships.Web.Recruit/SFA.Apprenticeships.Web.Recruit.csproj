@@ -378,7 +378,9 @@
     <Content Include="Content\_assets\css\fonts-ie8.css" />
     <Content Include="Content\_assets\css\fonts.css" />
     <Content Include="Content\_assets\css\main-2.0.0.css" />
+    <Content Include="Content\_assets\css\main-2.0.1.css" />
     <Content Include="Content\_assets\css\main-ie8-2.0.0.css" />
+    <Content Include="Content\_assets\css\main-ie8-2.0.1.css" />
     <Content Include="Content\_assets\css\main-ie8.css" />
     <Content Include="Content\_assets\css\main.css" />
     <Content Include="Content\_assets\img\apple-touch-icon-114x114.png" />
