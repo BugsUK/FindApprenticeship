@@ -1,22 +1,28 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.Mappers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Organisations;
     using EmployerDataService;
 
     public class EmployerMapper
     {
-        public Organisation ToVerifiedOrganisation(ConciseEmployerStructure fromEmployer)
+        public VerifiedOrganisationSummary ToVerifiedOrganisationSummary(
+            ConciseEmployerStructure fromEmployer,
+            IEnumerable<string> referenceNumberAliases)
         {
             var addressMapper = new BsAddressMapper();
 
-            return new Organisation
+            return new VerifiedOrganisationSummary
             {
                 ReferenceNumber = fromEmployer.URN,
                 Name = fromEmployer.Name,
                 TradingName = fromEmployer.TradingName,
                 PhoneNumber = fromEmployer.Phone,
                 EmailAddress = fromEmployer.Email,
-                Address = addressMapper.ToAddress(fromEmployer.Address)
+                Address = addressMapper.ToAddress(fromEmployer.Address),
+                WebSite = fromEmployer.Website,                
+                ReferenceNumberAliases = referenceNumberAliases.ToArray()
             };
         }
     }

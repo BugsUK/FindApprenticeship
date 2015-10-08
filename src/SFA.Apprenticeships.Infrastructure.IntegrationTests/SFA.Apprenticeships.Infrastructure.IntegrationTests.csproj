@@ -165,6 +165,7 @@
     <Compile Include="Communication\VoidSmsDispatcherTests.cs" />
     <Compile Include="Elastic\Configuration\ElasticsearchClientFactoryTests.cs" />
     <Compile Include="Elastic\Configuration\ElastricsearchConfigurationTests.cs" />
+    <Compile Include="EmployerDataService\EmployerDataServiceTests.cs" />
     <Compile Include="LegacyWebServices\GatewayVacancyDataProviderIntegrationTests.cs" />
     <Compile Include="LegacyWebServices\GatewayVacancyIndexDataProviderIntegrationTests.cs" />
     <Compile Include="LegacyWebServices\Helpers\TestApplicationBuilder.cs" />
@@ -224,6 +225,10 @@
       <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
@@ -263,6 +268,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
       <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
+      <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
@@ -323,6 +332,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.WebServices\SFA.Apprenticeships.Infrastructure.WebServices.csproj">
+      <Project>{0D94A2DF-6D5A-4DEC-B6A1-137F3B461B47}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.WebServices</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

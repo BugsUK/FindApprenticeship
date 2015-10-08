@@ -26,7 +26,7 @@
             _legacyEmployerProvider = legacyEmployerProvider;
         }
 
-        public Organisation GetByReferenceNumber(string referenceNumber)
+        public VerifiedOrganisationSummary GetVerifiedOrganisationSummary(string referenceNumber)
         {
             Condition.Requires(referenceNumber).IsNotNullOrEmpty();
 

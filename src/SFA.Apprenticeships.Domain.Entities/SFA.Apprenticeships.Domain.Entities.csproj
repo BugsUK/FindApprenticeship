@@ -111,7 +111,7 @@
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Organisations\Employer.cs" />
-    <Compile Include="Organisations\Organisation.cs" />
+    <Compile Include="Organisations\VerifiedOrganisationSummary.cs" />
     <Compile Include="Providers\Provider.cs" />
     <Compile Include="Providers\ProviderSite.cs" />
     <Compile Include="Providers\ProviderSiteEmployerLink.cs" />

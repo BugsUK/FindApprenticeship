@@ -4,12 +4,12 @@
     {
         public static class ApprenticeshipLevel
         {
-            public const string RequiredErrorText = "TODO: please choose an apprenticeship level";
+            public const string RequiredErrorText = "Please select an apprenticeship level";
         }
 
         public class FrameworkCodeName
         {
-            public const string RequiredErrorText = "TODO: please choose a framework";
+            public const string RequiredErrorText = "Please select a framework";
         }
     }
 }

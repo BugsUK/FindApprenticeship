@@ -14,7 +14,7 @@
             For<IVerifiedOrganisationProvider>().Use<EmployerDataProvider>().Singleton();
 
             // Web Services.
-            For<IWcfService<EmployerLookupSoapClient>>().Use<WcfService<EmployerLookupSoapClient>>();
+            For<IWcfService<EmployerLookupSoap>>().Use<WcfService<EmployerLookupSoap>>();
         }
     }
 }

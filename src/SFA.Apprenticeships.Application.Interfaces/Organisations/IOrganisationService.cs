@@ -6,7 +6,7 @@
 
     public interface IOrganisationService
     {
-        Organisation GetByReferenceNumber(string referenceNumber);
+        VerifiedOrganisationSummary GetVerifiedOrganisationSummary(string referenceNumber);
 
         Provider GetProvider(string ukprn);
 

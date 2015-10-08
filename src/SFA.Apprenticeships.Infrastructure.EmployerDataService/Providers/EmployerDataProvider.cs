@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.EmployerDataService.Providers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.Organisation;
@@ -18,7 +19,7 @@
 
         private readonly ILogService _logger;
         private readonly IConfigurationService _configurationService;
-        private readonly IWcfService<EmployerLookupSoapClient> _service;
+        private readonly IWcfService<EmployerLookupSoap> _service;
 
         private string _credentials;
         private readonly EmployerMapper _employerMapper;
@@ -26,7 +27,7 @@
         public EmployerDataProvider(
             ILogService logger,
             IConfigurationService configurationService,
-            IWcfService<EmployerLookupSoapClient> service)
+            IWcfService<EmployerLookupSoap> service)
         {
             _logger = logger;
             _configurationService = configurationService;
@@ -34,7 +35,7 @@
             _employerMapper = new EmployerMapper();
         }
 
-        public Organisation GetByReferenceNumber(string referenceNumber)
+        public VerifiedOrganisationSummary GetByReferenceNumber(string referenceNumber)
         {
             var context = new
             {
@@ -47,9 +48,8 @@
 
                 ConciseEmployerStructure[] employers = null;
 
-                _service.Use(
-                    EndpointConfigurationName,
-                    client => employers = client.ByUrn(Convert.ToInt32(referenceNumber), Credentials));
+                _service.Use(EndpointConfigurationName, client =>
+                    employers = client.ByUrn(Convert.ToInt32(referenceNumber), Credentials));
 
                 if (employers == null || employers.Length == 0)
                 {
@@ -57,11 +57,65 @@
                     return null;
                 }
 
-                var organisation = _employerMapper.ToVerifiedOrganisation(employers.First());
+                if (employers.Length > 1)
+                {
+                    // TODO: AG: could this ever be the case when fetching by reference number?
+                    _logger.Warn("EmployerDataService.ByUrn found multiple matches for reference number='{0}', will return first result", referenceNumber);
+                }
 
                 _logger.Debug("EmployerDataService.ByUrn found employer with reference number='{0}'", referenceNumber);
 
-                return organisation;
+                // TODO: AG: US814: include reference number aliases.
+                return _employerMapper.ToVerifiedOrganisationSummary(employers.First(), Enumerable.Empty<string>());
+            }
+            catch (BoundaryException e)
+            {
+                _logger.Error(e, context);
+                throw new DomainException(ErrorCodes.GetByReferenceNumberFailed, e, context);
+            }
+            catch (Exception e)
+            {
+                _logger.Error(e, context);
+                throw;
+            }
+        }
+
+        public IEnumerable<VerifiedOrganisationSummary> Find(string employerName, string postcodeOrTown)
+        {
+            var context = new
+            {
+                employerName,
+                postcodeOrTown
+            };
+
+            try
+            {
+                _logger.Debug($"Calling EmployerDataService.ByFreeText with reference number='{employerName}', post code or town='{postcodeOrTown}'");
+
+                ConciseEmployerStructure[] employers = null;
+
+                const bool isPhonetic = false;
+                const string orgWorkplace = null;
+                const string region = null;
+
+                var freeText = string.IsNullOrWhiteSpace(postcodeOrTown)
+                    ? $"{employerName}"
+                    : $"{employerName}, {postcodeOrTown}";
+
+                _service.Use(EndpointConfigurationName, client =>
+                    employers = client.ByFreeText(freeText, isPhonetic, orgWorkplace, region, Credentials));
+
+                if (employers == null || employers.Length == 0)
+                {
+                    _logger.Debug($"EmployerDataService.ByFreeText did not find any employers with reference number='{employerName}', post code or town='{postcodeOrTown}'");
+                    return null;
+                }
+
+                _logger.Debug($"EmployerDataService.ByFreeText {0} employer(s) with reference number='{employerName}', post code or town='{postcodeOrTown}'");
+
+                // TODO: AG: US814: include reference number aliases.
+                return employers.Select(employer =>
+                    _employerMapper.ToVerifiedOrganisationSummary(employer, Enumerable.Empty<string>()));
             }
             catch (BoundaryException e)
             {
@@ -83,9 +137,7 @@
             {
                 if (_credentials == null)
                 {
-                    var configuration = _configurationService.Get<EmployerDataServiceConfiguration>();
-
-                    _credentials = configuration.Credentials;
+                    _credentials = _configurationService.Get<EmployerDataServiceConfiguration>().Credentials;
                 }
 
                 return _credentials;

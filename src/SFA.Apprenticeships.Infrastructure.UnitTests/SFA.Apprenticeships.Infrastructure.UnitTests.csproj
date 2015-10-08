@@ -178,6 +178,7 @@
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTestsBase.cs" />
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
+    <Compile Include="EmployerDataService\Mappers\BsAddressMapperTests.cs" />
     <Compile Include="LegacyWebServices\Candidate\LegacyCandidateProviderBuilder.cs" />
     <Compile Include="LegacyWebServices\Candidate\MockGatewayService.cs" />
     <Compile Include="LegacyWebServices\Candidate\UpdateCandidateTests.cs" />
