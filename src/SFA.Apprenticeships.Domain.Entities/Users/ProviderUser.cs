@@ -4,6 +4,11 @@
 
     public class ProviderUser : BaseEntity
     {
+        public ProviderUser()
+        {
+            Status = ProviderUserStatuses.Registered;
+        }
+
         public string Username { get; set; }
 
         public string Ukprn { get; set; }

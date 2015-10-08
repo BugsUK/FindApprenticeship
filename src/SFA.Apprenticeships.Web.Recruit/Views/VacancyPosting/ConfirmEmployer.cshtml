@@ -42,14 +42,9 @@
             </div>
         </div>
         <div class="grid grid-1-1">
-            <div class="form-group">
-                <label for="employerText" class="form-label bold-small">Employer details</label>
-                <textarea id="employerText" name="employerText" class="form-control width-all-1-1" style="height: 200px;">
-                @Model.Description
-            </textarea>
-            </div>
+            @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
             <button class="button">Save details and continue</button>
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer)">Choose another employer</a>
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Choose another employer</a>
         </div>
     }
 </div>

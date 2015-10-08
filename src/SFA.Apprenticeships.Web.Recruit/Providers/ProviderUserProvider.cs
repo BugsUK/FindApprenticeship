@@ -70,7 +70,7 @@
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
             providerUser.PreferredSiteErn = providerUserViewModel.DefaultProviderSiteErn;
-            providerUser.Status = ProviderUserStatuses.Registered;
+            providerUser.Status = providerUser.Status;
 
             _userProfileService.SaveUser(providerUser);
 

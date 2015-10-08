@@ -13,12 +13,14 @@
     {
         private readonly IOrganisationService _organisationService;
         private readonly IEmployerReadRepository _employerReadRepository;
+        private readonly IEmployerWriteRepository _employerWriteRepository;
         private readonly ILogService _logService;
 
-        public EmployerService(IOrganisationService organisationService, IEmployerReadRepository employerReadRepository, ILogService logService)
+        public EmployerService(IOrganisationService organisationService, IEmployerReadRepository employerReadRepository, IEmployerWriteRepository employerWriteRepository, ILogService logService)
         {
             _organisationService = organisationService;
             _employerReadRepository = employerReadRepository;
+            _employerWriteRepository = employerWriteRepository;
             _logService = logService;
         }
 
@@ -29,13 +31,23 @@
 
             _logService.Debug("Calling EmployerReadRepository to get employers for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
 
-            //TODO: How are we storing these employers/relationships in our DB?
+            var employer = _employerReadRepository.Get(providerSiteErn, ern);
+
+            if (employer != null)
+            {
+                return employer;
+            }
 
             _logService.Debug("Calling OrganisationService to get employers for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
 
-            var employer = _organisationService.GetEmployer(providerSiteErn, ern);
+            employer = _organisationService.GetEmployer(providerSiteErn, ern);
 
             return employer;
+        }
+
+        public Employer SaveEmployer(Employer employer)
+        {
+            return _employerWriteRepository.Save(employer);
         }
 
         public IEnumerable<Employer> GetEmployers(string providerSiteErn)

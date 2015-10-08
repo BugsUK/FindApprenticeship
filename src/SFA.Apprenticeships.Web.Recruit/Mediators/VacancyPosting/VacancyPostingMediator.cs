@@ -29,20 +29,26 @@
 
         public MediatorResponse<EmployerFilterViewModel> GetProviderEmployers(EmployerFilterViewModel employerFilterViewModel)
         {
-            var viewModel = _employerProvider.GetEmployers(employerFilterViewModel);
+            var viewModel = _employerProvider.GetEmployerViewModels(employerFilterViewModel);
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
         public MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel)
         {
-            var viewModel = _employerProvider.GetEmployers(employerFilterViewModel);
+            var viewModel = _employerProvider.GetEmployerViewModels(employerFilterViewModel);
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
         public MediatorResponse<EmployerViewModel> GetEmployer(string providerSiteErn, string ern)
         {
-            var viewModel = _employerProvider.GetEmployer(providerSiteErn, ern);
+            var viewModel = _employerProvider.GetEmployerViewModel(providerSiteErn, ern);
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
+        }
+
+        public MediatorResponse<EmployerViewModel> ConfirmEmployer(string providerSiteErn, string ern, string description)
+        {
+            var viewModel = _employerProvider.ConfirmEmployer(providerSiteErn, ern, description);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, viewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username)
@@ -73,7 +79,7 @@
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
             var ern = "12345";//vacancyViewModel.ProviderSite.Ern;
-            var employers = _employerProvider.GetEmployers(ern);
+            var employers = _employerProvider.GetEmployerViewModels(ern);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }

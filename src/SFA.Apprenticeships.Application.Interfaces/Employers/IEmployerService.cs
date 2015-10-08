@@ -6,6 +6,7 @@
     public interface IEmployerService
     {
         Employer GetEmployer(string providerSiteErn, string ern);
+        Employer SaveEmployer(Employer employer);
         IEnumerable<Employer> GetEmployers(string providerSiteErn);
     }
 }

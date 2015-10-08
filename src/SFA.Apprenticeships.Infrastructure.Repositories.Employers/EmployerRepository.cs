@@ -12,6 +12,7 @@
     using Mongo.Common;
     using Mongo.Common.Configuration;
     using MongoDB.Driver.Builders;
+    using MongoDB.Driver.Linq;
 
     public class EmployerRepository : GenericMongoClient<MongoEmployer>, IEmployerReadRepository, IEmployerWriteRepository
     {
@@ -35,6 +36,15 @@
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
+        public Employer Get(string providerSiteErn, string ern)
+        {
+            _logger.Debug("Called Mongodb to get employer with providerSiteErn={0}, ern={1}", providerSiteErn, ern);
+
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.ProviderSiteErn == providerSiteErn && e.Ern == ern);
+
+            return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
+        }
+
         public IEnumerable<Employer> GetForProviderSite(string providerSiteErn)
         {
             _logger.Debug("Called Mongodb to get employers for provider site with ERN={0}", providerSiteErn);
@@ -52,7 +62,7 @@
         {
             _logger.Debug("Calling repository to delete employer with Id={0}", id);
 
-            Collection.Remove(Query<MongoEmployer>.EQ(o => o.Id, id));
+            Collection.Remove(Query<MongoEmployer>.EQ(e => e.Id, id));
 
             _logger.Debug("Deleted employer with Id={0}", id);
         }

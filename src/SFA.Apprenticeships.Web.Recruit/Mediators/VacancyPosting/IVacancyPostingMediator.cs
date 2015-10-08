@@ -13,6 +13,8 @@
 
         MediatorResponse<EmployerViewModel> GetEmployer(string providerSiteErn, string ern);
 
+        MediatorResponse<EmployerViewModel> ConfirmEmployer(string providerSiteErn, string ern, string description);
+
         MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username);
 
         MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel);

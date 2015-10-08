@@ -234,9 +234,9 @@
         public MediatorResponse<HomeViewModel> ChangeTrainingSite(string username, string ukprn, HomeViewModel viewModel)
         {
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username);
-            providerUserViewModel.DefaultProviderSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteErn;
             if (providerUserViewModel.DefaultProviderSiteErn != viewModel.ProviderUserViewModel.DefaultProviderSiteErn)
             {
+                providerUserViewModel.DefaultProviderSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteErn;
                 providerUserViewModel = _providerUserProvider.SaveProviderUser(username, ukprn, providerUserViewModel);
             }
             var providerSites = GetProviderSites(ukprn);

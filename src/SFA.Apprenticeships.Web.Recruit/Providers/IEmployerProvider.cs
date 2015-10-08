@@ -1,18 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
-    using System;
     using System.Collections.Generic;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     public interface IEmployerProvider
     {
-        IEnumerable<EmployerViewModel> GetEmployers(string providerSiteErn);
+        IEnumerable<EmployerViewModel> GetEmployerViewModels(string providerSiteErn);
 
-        EmployerFilterViewModel GetEmployers(EmployerFilterViewModel filterViewModel);
+        EmployerFilterViewModel GetEmployerViewModels(EmployerFilterViewModel filterViewModel);
 
-        EmployerSearchViewModel GetEmployers(EmployerSearchViewModel searchViewModel);
+        EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel);
 
-        EmployerViewModel GetEmployer(string providerSiteErn, string ern);
+        EmployerViewModel GetEmployerViewModel(string providerSiteErn, string ern);
+
+        EmployerViewModel ConfirmEmployer(string providerSiteErn, string ern, string description);
     }
 }

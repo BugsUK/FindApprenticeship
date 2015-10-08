@@ -4,6 +4,7 @@
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using Application.Organisation;
     using Configuration;
     using Dapper;
@@ -61,7 +62,7 @@
                 AddressLine1 = legacyEmployer.AddressLine1,
                 AddressLine2 = legacyEmployer.AddressLine2,
                 AddressLine3 = legacyEmployer.AddressLine3,
-                AddressLine4 = legacyEmployer.AddressLine4,
+                AddressLine4 = legacyEmployer.Town,
                 Postcode = legacyEmployer.PostCode,
                 GeoPoint = new GeoPoint
                 {
@@ -76,12 +77,27 @@
                 ProviderSiteErn = legacyEmployer.ProviderSiteEdsUrn.ToString(),
                 Ern = legacyEmployer.EdsUrn.ToString(),
                 Name = legacyEmployer.FullName,
-                Description = legacyEmployer.EmployerDescription,
+                Description = CleanDescription(legacyEmployer.EmployerDescription),
                 Website = legacyEmployer.EmployerWebsite,
                 Address = address
             };
 
             return employer;
+        }
+
+        private static string CleanDescription(string description)
+        {
+            if (description == null)
+            {
+                return "";
+            }
+
+            description = Regex.Replace(description, @"^\s*", "");
+            description = Regex.Replace(description, @"\s*$", "");
+            description = Regex.Replace(description, @"<br.*?>", "\r\n");
+            description = Regex.Replace(description, @"<[^>]+>|&nbsp;", "");
+            description = Regex.Replace(description, @"\s{2,}", " ");
+            return description;
         }
 
         private IDbConnection GetConnection()

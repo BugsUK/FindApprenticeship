@@ -89,13 +89,21 @@
         }
 
         [HttpPost]
-        public ActionResult ConfirmEmployer(string providerSiteErn, string ern, string employerText)
+        public ActionResult ConfirmEmployer(string providerSiteErn, string ern, string description)
         {
-            return RedirectToRoute(RecruitmentRouteNames.CreateVacancy);
+            var response = _vacancyPostingMediator.ConfirmEmployer(providerSiteErn, ern, description);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn, ern });
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]
-        public ActionResult CreateVacancy()
+        public ActionResult CreateVacancy(string providerSiteErn, string ern)
         {
             var response = _vacancyPostingMediator.GetNewVacancyModel(User.Identity.Name);
             var viewModel = response.ViewModel;

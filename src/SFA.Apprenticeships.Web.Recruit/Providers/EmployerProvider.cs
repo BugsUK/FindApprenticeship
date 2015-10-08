@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Employers;
@@ -18,14 +17,14 @@
             _employerService = employerService;
         }
 
-        public IEnumerable<EmployerViewModel> GetEmployers(string providerSiteErn)
+        public IEnumerable<EmployerViewModel> GetEmployerViewModels(string providerSiteErn)
         {
             var employers = _employerService.GetEmployers(providerSiteErn);
 
             return employers.Select(Convert);
         }
 
-        public EmployerFilterViewModel GetEmployers(EmployerFilterViewModel filterViewModel)
+        public EmployerFilterViewModel GetEmployerViewModels(EmployerFilterViewModel filterViewModel)
         {
             var employers = _employerService.GetEmployers(filterViewModel.ProviderSiteErn);
             filterViewModel.EmployerResults = employers.Select(ConvertToResult).ToList();
@@ -33,15 +32,22 @@
             return filterViewModel;
         }
 
-        public EmployerSearchViewModel GetEmployers(EmployerSearchViewModel searchViewModel)
+        public EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel)
         {
             return new EmployerSearchViewModel { EmployerResults = new List<EmployerResultViewModel>() };
         }
 
-        public EmployerViewModel GetEmployer(string providerSiteErn, string ern)
+        public EmployerViewModel GetEmployerViewModel(string providerSiteErn, string ern)
         {
             var employer = _employerService.GetEmployer(providerSiteErn, ern);
 
+            return Convert(employer);
+        }
+
+        public EmployerViewModel ConfirmEmployer(string providerSiteErn, string ern, string description)
+        {
+            var employer = _employerService.GetEmployer(providerSiteErn, ern);
+            employer = _employerService.SaveEmployer(employer);
             return Convert(employer);
         }
 
