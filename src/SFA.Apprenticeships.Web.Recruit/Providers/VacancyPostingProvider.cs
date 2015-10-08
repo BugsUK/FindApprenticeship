@@ -63,18 +63,18 @@
 
             try
             {
-                var vacancy = new ApprenticeshipVacancy
+                var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
+
+                var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new ApprenticeshipVacancy
                 {
                     EntityId = Guid.NewGuid(),
-                    VacancyReferenceNumber = DateTime.UtcNow.Ticks,
+                    VacancyReferenceNumber = vacancyReferenceNumber,
                     FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                     ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
                     TrainingSiteErn = newVacancyViewModel.TrainingSiteErn
-                };
+                });
 
-                var savedVacancy = _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
-
-                _logService.Debug("Created vacancy with reference number={0}", savedVacancy.VacancyReferenceNumber);
+                _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);
 
                 newVacancyViewModel.VacancyReferenceNumber = vacancy.VacancyReferenceNumber;
 

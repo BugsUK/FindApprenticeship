@@ -97,6 +97,7 @@
     <Compile Include="Caching\ICacheService.cs" />
     <Compile Include="Mapping\IMapper.cs" />
     <Compile Include="Repositories\IAgencyUserRepository.cs" />
+    <Compile Include="Repositories\IReferenceNumberRepository.cs" />
     <Compile Include="Repositories\IApprenticeshipVacancyRepository.cs" />
     <Compile Include="Repositories\IAuditRepository.cs" />
     <Compile Include="Repositories\IEmployerRepository.cs" />

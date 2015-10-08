@@ -22,6 +22,9 @@
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipVacancyMappers");
 
+            For<IReferenceNumberRepository>()
+                .Use<ReferenceNumberRepository>();
+
             // TODO: Traineeships.
         }
     }
