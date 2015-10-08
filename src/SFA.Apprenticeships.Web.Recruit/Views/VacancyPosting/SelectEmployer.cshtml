@@ -51,8 +51,9 @@
                             <h4 class="bold-small">@employerResultsViewModel.EmployerName</h4>
                         </th>
                         <td>
-                            12 Broomfield Road
-                            <br/>RG21 4FP Basingstoke
+                            @employerResultsViewModel.Address.AddressLine1
+                            <br />@employerResultsViewModel.Address.AddressLine2
+                            <br />@employerResultsViewModel.Address.Postcode
                         </td>
                         <td>@employerResultsViewModel.Ern</td>
                         <td>

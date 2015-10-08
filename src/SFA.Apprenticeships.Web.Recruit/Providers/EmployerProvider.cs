@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Employers;
+    using Converters;
     using Domain.Entities.Organisations;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
@@ -43,7 +44,7 @@
                 Ern = employer.Ern,
                 //EmployerId = 
                 EmployerName = employer.Name,
-                //Address = 
+                Address = employer.Address.Convert()
             };
 
             return viewModel;

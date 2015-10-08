@@ -7,6 +7,7 @@
     using Application.Organisation;
     using Configuration;
     using Dapper;
+    using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Interfaces.Configuration;
 
@@ -41,13 +42,29 @@
                 return null;
             }
 
+            var address = new Address
+            {
+                AddressLine1 = legacyEmployer.AddressLine1,
+                AddressLine2 = legacyEmployer.AddressLine2,
+                AddressLine3 = legacyEmployer.AddressLine3,
+                AddressLine4 = legacyEmployer.AddressLine4,
+                Postcode = legacyEmployer.PostCode,
+                GeoPoint = new GeoPoint
+                {
+                    Latitude = legacyEmployer.Latitude,
+                    Longitude = legacyEmployer.Longitude
+                },
+                //Uprn = 
+            };
+
             var employer = new Employer
             {
                 ProviderSiteErn = legacyEmployer.ProviderSiteEdsUrn.ToString(),
                 Ern = legacyEmployer.EdsUrn.ToString(),
                 Name = legacyEmployer.FullName,
                 Description = legacyEmployer.EmployerDescription,
-                Website = legacyEmployer.EmployerWebsite
+                Website = legacyEmployer.EmployerWebsite,
+                Address = address
             };
 
             return employer;

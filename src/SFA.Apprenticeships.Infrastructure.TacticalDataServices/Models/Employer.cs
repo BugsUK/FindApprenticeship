@@ -25,8 +25,8 @@
         public int CountyId { get; set; }
         public string PostCode { get; set; }
         public int LocalAuthorityId { get; set; }
-        public decimal Longitude { get; set; }
-        public decimal Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
         public int GeocodeEasting { get; set; }
         public int GeocodeNorthing { get; set; }
         public int PrimaryContact { get; set; }
