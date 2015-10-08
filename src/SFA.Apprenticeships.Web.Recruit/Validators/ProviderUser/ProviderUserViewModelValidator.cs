@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.ProviderUser
 {
+    using System.Text.RegularExpressions;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels;
@@ -37,6 +38,10 @@
                 .WithMessage(ProviderUserViewModelMessages.PhoneNumberMessages.RequiredErrorText)
                 .Matches(ProviderUserViewModelMessages.PhoneNumberMessages.WhiteListRegularExpression)
                 .WithMessage(ProviderUserViewModelMessages.PhoneNumberMessages.WhiteListErrorText);
+
+            RuleFor(x => x.DefaultProviderSiteErn)
+                .NotEmpty()
+                .WithMessage(ProviderUserViewModelMessages.DefaultProviderSiteErn.RequiredErrorText);
         }
     }
 }

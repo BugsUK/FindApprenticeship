@@ -140,15 +140,6 @@
             return GetMediatorResponse(ProviderUserMediatorCodes.GetSettingsViewModel.Ok, viewModel);
         }
 
-        private List<SelectListItem> GetProviderSites(string ukprn)
-        {
-            var providerSites = _providerProvider.GetProviderSiteViewModels(ukprn);
-
-            var sites = providerSites.Select(ps => new SelectListItem { Value = ps.Ern, Text = ps.Name }).ToList();
-
-            return sites;
-        }
-
         public MediatorResponse<SettingsViewModel> UpdateUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel)
         {
             var result = _providerUserViewModelValidator.Validate(providerUserViewModel);
@@ -231,7 +222,7 @@
             return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<HomeViewModel> ChangeTrainingSite(string username, string ukprn, HomeViewModel viewModel)
+        public MediatorResponse<HomeViewModel> ChangeProviderSite(string username, string ukprn, HomeViewModel viewModel)
         {
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username);
             if (providerUserViewModel.DefaultProviderSiteErn != viewModel.ProviderUserViewModel.DefaultProviderSiteErn)
@@ -246,7 +237,16 @@
                 ProviderSites = providerSites
             };
 
-            return GetMediatorResponse(ProviderUserMediatorCodes.ChangeTrainingSite.Ok, homeViewModel);
+            return GetMediatorResponse(ProviderUserMediatorCodes.ChangeProviderSite.Ok, homeViewModel);
+        }
+
+        private List<SelectListItem> GetProviderSites(string ukprn)
+        {
+            var providerSites = _providerProvider.GetProviderSiteViewModels(ukprn);
+
+            var sites = providerSites.Select(ps => new SelectListItem { Value = ps.Ern, Text = ps.Name }).ToList();
+
+            return sites;
         }
     }
 }

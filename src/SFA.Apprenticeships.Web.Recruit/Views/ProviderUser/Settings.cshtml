@@ -49,8 +49,17 @@
             controlHtmlAttributes: new {@class = "form-label", type = "tel", spellcheck = "false"})
 
         <div class="form-group">
-            <p class="form-label">Your default training site</p>
-            @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, new {@class = "chosen-select"})
+            <p class="form-label">Your default provider site</p>
+            @if (Model.ProviderSites.Count == 1)
+            {
+                Model.ProviderUserViewModel.DefaultProviderSiteErn = Model.ProviderSites[0].Value;
+                @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn)
+                <p>@Model.ProviderSites[0].Text</p>
+            }
+            else
+            {
+                @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, "", new { @class = "chosen-select" })
+            }
         </div>
 
         <div class="toggle-content" id="newProviderTerms" style="display: block;">

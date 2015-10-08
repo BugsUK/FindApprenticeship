@@ -119,7 +119,7 @@
                 mock.GetProviderUser(ValidUserName), Times.Once);
 
             viewModel.Should().NotBeNull();
-            viewModel.TrainingSiteErn.Should().Be(PreferredSiteUrn);
+            viewModel.ProviderSiteErn.Should().Be(PreferredSiteUrn);
         }
 
         [Test]

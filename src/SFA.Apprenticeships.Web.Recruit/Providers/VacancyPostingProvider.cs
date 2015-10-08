@@ -52,7 +52,7 @@
             return new NewVacancyViewModel
             {
                 ApprenticeshipLevel = ApprenticeshipLevel.Intermediate,
-                TrainingSiteErn = userProfile.PreferredSiteErn,
+                ProviderSiteErn = userProfile.PreferredSiteErn,
                 SectorsAndFrameworks = sectors
             };
         }
@@ -71,7 +71,7 @@
                     VacancyReferenceNumber = vacancyReferenceNumber,
                     FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                     ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
-                    TrainingSiteErn = newVacancyViewModel.TrainingSiteErn
+                    ProviderSiteErn = newVacancyViewModel.ProviderSiteErn
                 });
 
                 _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);

@@ -34,5 +34,10 @@
             public const string WhiteListRegularExpression = Whitelists.PhoneNumberWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Work phone number " + Whitelists.PhoneNumberWhitelist.ErrorText;
         }
+
+        public static class DefaultProviderSiteErn
+        {
+            public const string RequiredErrorText = "Please select a default provider site";
+        }
     }
 }

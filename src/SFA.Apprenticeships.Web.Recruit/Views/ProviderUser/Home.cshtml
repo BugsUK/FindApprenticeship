@@ -17,9 +17,19 @@
         </div>
         <div class="grid grid-1-2">
             <div class="">
-                <p class="form-label">Change training site</p>
-                @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites)
-                <button id="change-training-site-button" type="submit" name="TrainingSiteAction" class="button" value="ChangeTrainingSite">Change</button>
+                @if (Model.ProviderSites.Count == 1)
+                {
+                    <p class="form-label">Provider site</p>
+                    Model.ProviderUserViewModel.DefaultProviderSiteErn = Model.ProviderSites[0].Value;
+                    @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn)
+                    <p>@Model.ProviderSites[0].Text</p>
+                }
+                else
+                {
+                    <p class="form-label">Change provider site</p>
+                    @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites)
+                    <button id="change-training-site-button" type="submit" name="ProviderSiteAction" class="button" value="ChangeProviderSite">Change</button>
+                }
             </div>
         </div>
     </div>
@@ -30,7 +40,7 @@
                     <h2 class="heading-medium">New vacancy</h2>
                     <p class="font-xsmall">Create a new vacancy, clone or continue with a draft</p>
                     <div class="font-xsmall">
-                        <button id="new-vacancy-button" type="submit" name="TrainingSiteAction" class="button" value="NewVacancy">New vacancy</button>
+                        <button id="new-vacancy-button" type="submit" name="ProviderSiteAction" class="button" value="NewVacancy">New vacancy</button>
                     </div>
                 </section>
                 <section>

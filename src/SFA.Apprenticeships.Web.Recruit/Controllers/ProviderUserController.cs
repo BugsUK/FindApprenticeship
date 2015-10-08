@@ -125,14 +125,14 @@
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingSiteAction")]
-        public ActionResult ChangeTrainingSite(HomeViewModel viewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "ProviderSiteAction")]
+        public ActionResult ChangeProviderSite(HomeViewModel viewModel)
         {
-            var response = _providerUserMediator.ChangeTrainingSite(User.Identity.Name, User.GetUkprn(), viewModel);
+            var response = _providerUserMediator.ChangeProviderSite(User.Identity.Name, User.GetUkprn(), viewModel);
 
             switch (response.Code)
             {
-                case ProviderUserMediatorCodes.ChangeTrainingSite.Ok:
+                case ProviderUserMediatorCodes.ChangeProviderSite.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
                 default:
@@ -144,14 +144,14 @@
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingSiteAction")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ProviderSiteAction")]
         public ActionResult NewVacancy(HomeViewModel viewModel)
         {
-            var response = _providerUserMediator.ChangeTrainingSite(User.Identity.Name, User.GetUkprn(), viewModel);
+            var response = _providerUserMediator.ChangeProviderSite(User.Identity.Name, User.GetUkprn(), viewModel);
 
             switch (response.Code)
             {
-                case ProviderUserMediatorCodes.ChangeTrainingSite.Ok:
+                case ProviderUserMediatorCodes.ChangeProviderSite.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteErn });
 
                 default:
@@ -185,7 +185,7 @@
             {
                 case ProviderUserMediatorCodes.UpdateUser.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                    return View(settingsViewModel);
+                    return View(response.ViewModel);
 
                 case ProviderUserMediatorCodes.UpdateUser.EmailUpdated:
                     _cookieAuthorizationDataProvider.RemoveClaim(ClaimTypes.Role, Roles.VerifiedEmail, HttpContext, User.Identity.Name);

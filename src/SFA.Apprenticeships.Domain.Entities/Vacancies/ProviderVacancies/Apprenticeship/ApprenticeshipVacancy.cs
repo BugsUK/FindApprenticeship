@@ -8,6 +8,6 @@
 
         public string FrameworkCodeName { get; set; }
 
-        public string TrainingSiteErn { get; set; }
+        public string ProviderSiteErn { get; set; }
     }
 }
