@@ -36,6 +36,7 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
         public string FrameworkCodeName { get; set; }
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
+        public string FrameworkName { get; set; }
         public string LongDescription { get; set; }
         [Display(Name = VacancyViewModelMessages.DesiredSkills.LabelText)]
         public string DesiredSkills { get; set; }

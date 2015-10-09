@@ -99,6 +99,7 @@
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.Employer.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
+            viewModel.FrameworkName = _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             return viewModel;
         }
 
@@ -129,6 +130,7 @@
 
             viewModel = vacancy.Convert();
             viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
+            viewModel.FrameworkName = _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.Employer.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
             return viewModel;
