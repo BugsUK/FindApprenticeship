@@ -300,6 +300,7 @@
     <Compile Include="Controllers\VacancyPostingController.cs" />
     <Compile Include="Converters\AddressViewModelConverter.cs" />
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
+    <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\VacancyViewModelConverter.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />

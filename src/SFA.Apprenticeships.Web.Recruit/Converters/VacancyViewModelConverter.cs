@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
 {
+    using Domain.Entities.Providers;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using ViewModels.Vacancy;
 
@@ -10,6 +11,7 @@
             var vacancyViewModel = new VacancyViewModel
             {
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
+                Ukprn = apprenticeshipVacancy.Ukprn,
                 Title = apprenticeshipVacancy.Title,
                 ShortDescription = apprenticeshipVacancy.ShortDescription,
                 WorkingWeek = apprenticeshipVacancy.WorkingWeek,
@@ -28,7 +30,7 @@
                 SecondQuestion = apprenticeshipVacancy.SecondQuestion,
                 ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
                 FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
-                Employer = apprenticeshipVacancy.Employer.Convert()
+                Employer = apprenticeshipVacancy.Employer.Convert(),
             };
 
             return vacancyViewModel;

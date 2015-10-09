@@ -7,12 +7,15 @@
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Provider;
     using Validators.Vacancy;
 
     [Validator(typeof(VacancyViewModelValidator))]
     public class VacancyViewModel
     {
         public long VacancyReferenceNumber { get; set; }
+        public string Ukprn { get; set; }
+
         [Display(Name = VacancyViewModelMessages.Title.LabelText)]
         public string Title { get; set; }
         [Display(Name = VacancyViewModelMessages.ShortDescription.LabelText)]
@@ -49,5 +52,6 @@
         [Display(Name = VacancyViewModelMessages.SecondQuestion.LabelText)]
         public string SecondQuestion { get; set; }
         public EmployerViewModel Employer { get; set; }
+        public ProviderSiteViewModel ProviderSite { get; set; }
     }
 }

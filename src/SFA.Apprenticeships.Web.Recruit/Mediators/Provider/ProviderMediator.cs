@@ -81,9 +81,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
             return GetMediatorResponse(ProviderMediatorCodes.UpdateSites.Ok, providerViewModel);
         }
 
-        public MediatorResponse<ProviderSiteViewModel> GetSite(string ern)
+        public MediatorResponse<ProviderSiteViewModel> GetSite(string ukprn, string ern)
         {
-            var providerSite = _providerProvider.GetProviderSiteViewModel(ern);
+            var providerSite = _providerProvider.GetProviderSiteViewModel(ukprn, ern);
 
             return GetMediatorResponse(ProviderMediatorCodes.GetSite.Ok, providerSite);
         }

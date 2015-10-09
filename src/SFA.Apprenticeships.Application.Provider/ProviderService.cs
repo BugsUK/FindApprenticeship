@@ -80,5 +80,26 @@
                 _providerSiteWriteRepository.Save(providerSite);
             }
         }
+
+        public ProviderSite GetProviderSite(string ukprn, string ern)
+        {
+            Condition.Requires(ukprn).IsNotNullOrEmpty();
+            Condition.Requires(ern).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+
+            var providerSite = _providerSiteReadRepository.Get(ern);
+
+            if (providerSite != null)
+            {
+                return providerSite;
+            }
+
+            _logService.Debug("Calling OrganisationService to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+
+            providerSite = _organisationService.GetProviderSite(ukprn, ern);
+
+            return providerSite;
+        }
     }
 }

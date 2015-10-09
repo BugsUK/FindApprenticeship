@@ -7,7 +7,5 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public string FrameworkCodeName { get; set; }
-
-        public string ProviderSiteErn { get; set; }
     }
 }

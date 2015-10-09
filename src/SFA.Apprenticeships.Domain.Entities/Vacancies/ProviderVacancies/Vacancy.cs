@@ -6,6 +6,7 @@
     public abstract class Vacancy : BaseEntity
     {
         public long VacancyReferenceNumber { get; set; }
+        public string Ukprn { get; set; }
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string WorkingWeek { get; set; }

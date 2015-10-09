@@ -5,6 +5,7 @@
     using Attributes;
     using Common.Attributes;
     using Common.Controllers;
+    using Common.Extensions;
     using Common.Mediators;
     using Constants;
     using FluentValidation.Mvc;
@@ -105,7 +106,7 @@
         [HttpGet]
         public ActionResult CreateVacancy(string providerSiteErn, string ern)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyModel(providerSiteErn, ern);
+            var response = _vacancyPostingMediator.GetNewVacancyModel(User.GetUkprn(), providerSiteErn, ern);
             var viewModel = response.ViewModel;
 
             return View(viewModel);

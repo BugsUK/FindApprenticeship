@@ -7,7 +7,7 @@
 
     public interface IVacancyPostingProvider
     {
-        NewVacancyViewModel GetNewVacancyViewModel(string providerSiteErn, string ern);
+        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 

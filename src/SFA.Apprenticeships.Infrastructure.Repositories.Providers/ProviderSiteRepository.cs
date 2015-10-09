@@ -49,6 +49,15 @@
             return entities;
         }
 
+        public ProviderSite Get(string ern)
+        {
+            _logger.Debug("Called Mongodb to get provider site with ERN={0}", ern);
+
+            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.Ern, ern));
+
+            return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
+        }
+
         public void Delete(Guid id)
         {
             _logger.Debug("Calling repository to delete provider site with Id={0}", id);

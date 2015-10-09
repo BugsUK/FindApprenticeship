@@ -51,9 +51,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, viewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string providerSiteErn, string ern)
+        public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string ukprn, string providerSiteErn, string ern)
         {
-            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(providerSiteErn, ern);
+            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(ukprn, providerSiteErn, ern);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyModel.Ok, viewModel);
         }

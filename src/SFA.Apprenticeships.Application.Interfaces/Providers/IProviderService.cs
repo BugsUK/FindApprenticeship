@@ -15,5 +15,7 @@
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
         void SaveProviderSites(IEnumerable<ProviderSite> providerSites);
+
+        ProviderSite GetProviderSite(string ukprn, string ern);
     }
 }

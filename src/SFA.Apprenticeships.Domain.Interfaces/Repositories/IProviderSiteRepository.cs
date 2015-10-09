@@ -6,6 +6,7 @@
     public interface IProviderSiteReadRepository : IReadRepository<ProviderSite>
     {
         IEnumerable<ProviderSite> GetForProvider(string ukprn);
+        ProviderSite Get(string ern);
     }
 
     public interface IProviderSiteWriteRepository : IWriteRepository<ProviderSite> { }

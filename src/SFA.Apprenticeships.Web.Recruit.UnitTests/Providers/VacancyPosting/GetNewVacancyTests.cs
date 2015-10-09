@@ -117,7 +117,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
 
             // Assert.
             MockEmployerService.Verify(mock =>
@@ -134,7 +134,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -149,7 +149,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -166,7 +166,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -181,7 +181,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
 
             // Assert.
             viewModel.Should().NotBeNull();

@@ -7,6 +7,7 @@
     using Application.Organisation;
     using Configuration;
     using Dapper;
+    using Domain.Entities.Locations;
     using Domain.Interfaces.Configuration;
     using Provider = Domain.Entities.Providers.Provider;
     using ProviderSite = Domain.Entities.Providers.ProviderSite;
@@ -65,6 +66,20 @@
             return legacyProviderSites.Select(GetProviderSite);
         }
 
+        public ProviderSite GetProviderSite(string ukprn, string ern)
+        {
+            const string sql = @"SELECT p.UKPRN, ps.* FROM dbo.Provider AS p JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId WHERE p.UKPRN = @Ukprn AND ps.EDSURN = @Ern AND ps.TrainingProviderStatusTypeId = 1";
+
+            Models.ProviderSite legacyProviderSite;
+
+            using (var connection = GetConnection())
+            {
+                legacyProviderSite = connection.Query<Models.ProviderSite>(sql, new { Ukprn = ukprn, Ern = ern }).SingleOrDefault();
+            }
+
+            return GetProviderSite(legacyProviderSite);
+        }
+
         private static ProviderSite GetProviderSite(Models.ProviderSite legacyProviderSite)
         {
             if (legacyProviderSite == null)
@@ -72,12 +87,31 @@
                 return null;
             }
 
+            var address = new Address
+            {
+                AddressLine1 = legacyProviderSite.AddressLine1,
+                AddressLine2 = legacyProviderSite.AddressLine2,
+                AddressLine3 = legacyProviderSite.AddressLine3,
+                AddressLine4 = legacyProviderSite.Town,
+                Postcode = legacyProviderSite.PostCode,
+                GeoPoint = new GeoPoint
+                {
+                    Latitude = legacyProviderSite.Latitude,
+                    Longitude = legacyProviderSite.Longitude
+                },
+                //Uprn = 
+            };
+
             var providerSite = new ProviderSite
             {
                 Ukprn = legacyProviderSite.UKPRN.ToString(),
                 Ern = legacyProviderSite.EDSURN.ToString(),
                 Name = legacyProviderSite.FullName,
-                //EmailAddress = legacyProviderSite.ContactDetailsForEmployer,
+                EmployerDescription = legacyProviderSite.EmployerDescription,
+                CandidateDescription = legacyProviderSite.CandidateDescription,
+                ContactDetailsForEmployer = legacyProviderSite.ContactDetailsForEmployer,
+                ContactDetailsForCandidate = legacyProviderSite.ContactDetailsForCandidate,
+                Address = address
             };
 
             return providerSite;

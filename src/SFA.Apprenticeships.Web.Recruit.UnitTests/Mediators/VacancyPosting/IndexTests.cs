@@ -14,7 +14,7 @@
             var mediator = GetMediator();
 
             // Act.
-            var viewModel = mediator.GetNewVacancyModel("123124124", "124124214");
+            var viewModel = mediator.GetNewVacancyModel("1123123", "123124124", "124124214");
 
             // Assert.
             // TODO: AG: US811: more assertions.

@@ -101,7 +101,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult EditSite(string ern)
         {
-            var response = _providerMediator.GetSite(ern);
+            var response = _providerMediator.GetSite(User.GetUkprn(), ern);
             var providerSiteViewModel = response.ViewModel;
 
             return View(providerSiteViewModel);

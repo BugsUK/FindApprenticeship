@@ -14,7 +14,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
 
         MediatorResponse<ProviderViewModel> UpdateSites(string ukprn, string username, ProviderViewModel providerViewModel);
 
-        MediatorResponse<ProviderSiteViewModel> GetSite(string ern);
+        MediatorResponse<ProviderSiteViewModel> GetSite(string ukprn, string ern);
 
         MediatorResponse<ProviderSiteViewModel> UpdateSite(ProviderSiteViewModel providerSiteViewModel);
     }

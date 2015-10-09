@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
     using System.Linq;
     using Application.Interfaces.Providers;
+    using Converters;
     using Domain.Entities.Providers;
 
     public class ProviderProvider : IProviderProvider
@@ -37,21 +38,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             return GetProviderViewModel(ukprn);
         }
 
-        public ProviderSiteViewModel GetProviderSiteViewModel(string ern)
+        public ProviderSiteViewModel GetProviderSiteViewModel(string ukprn, string ern)
         {
-            return new ProviderSiteViewModel
-            {
-                Ern = ern,
-                Name = "Basing View",
-                EmailAddress = "basing-view@keytraining.co.uk",
-                PhoneNumber = "01256 320222"
-            };
+            var providerSite = _providerService.GetProviderSite(ukprn, ern);
+
+            return providerSite.Convert();
         }
 
         public IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn)
         {
             var providerSites = _providerService.GetProviderSites(ukprn);
-            return providerSites.Select(Convert);
+            return providerSites.Select(ps => ps.Convert());
         }
 
         private static ProviderViewModel Convert(Provider provider, IEnumerable<ProviderSite> providerSites)
@@ -59,21 +56,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             var viewModel = new ProviderViewModel
             {
                 ProviderName = provider.Name,
-                ProviderSiteViewModels = providerSites.Select(Convert).ToList()
+                ProviderSiteViewModels = providerSites.Select(ps => ps.Convert()).ToList()
             };
 
             return viewModel;
-        }
-
-        private static ProviderSiteViewModel Convert(ProviderSite providerSite)
-        {
-            return new ProviderSiteViewModel
-            {
-                Ern = providerSite.Ern,
-                Name = providerSite.Name,
-                EmailAddress = providerSite.EmailAddress,
-                PhoneNumber = providerSite.PhoneNumber
-            };
         }
     }
 }

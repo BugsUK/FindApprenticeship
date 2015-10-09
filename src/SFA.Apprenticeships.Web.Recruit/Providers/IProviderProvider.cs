@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     {
         ProviderViewModel GetProviderViewModel(string ukprn);
         ProviderViewModel SaveProviderViewModel(string ukprn, ProviderViewModel providerViewModel);
-        ProviderSiteViewModel GetProviderSiteViewModel(string ern);
+        ProviderSiteViewModel GetProviderSiteViewModel(string ukprn, string ern);
         IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn);
     }
 }

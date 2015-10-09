@@ -53,6 +53,16 @@
             return _legacyProviderProvider.GetProviderSites(ukprn);
         }
 
+        public ProviderSite GetProviderSite(string ukprn, string ern)
+        {
+            Condition.Requires(ukprn).IsNotNullOrEmpty();
+            Condition.Requires(ern).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling LegacyProviderProvider to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+
+            return _legacyProviderProvider.GetProviderSite(ukprn, ern);
+        }
+
         public Employer GetEmployer(string providerSiteErn, string ern)
         {
             Condition.Requires(providerSiteErn).IsNotNullOrEmpty();

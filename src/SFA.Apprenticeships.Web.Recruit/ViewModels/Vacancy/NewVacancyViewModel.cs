@@ -8,6 +8,8 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
     {
         public long? VacancyReferenceNumber { get; set; }
 
+        public string Ukprn { get; set; }
+
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public string FrameworkCodeName { get; set; }

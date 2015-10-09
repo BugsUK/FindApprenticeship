@@ -43,6 +43,7 @@
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
                 MockReferenceDataService.Object,
+                MockProviderService.Object,
                 MockEmployerService.Object);
         }
     }

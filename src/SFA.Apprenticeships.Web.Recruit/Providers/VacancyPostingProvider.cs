@@ -6,10 +6,12 @@
     using System.Web.Mvc;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Logging;
+    using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.VacancyPosting;
     using Common.Configuration;
     using Converters;
+    using Domain.Entities.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
@@ -22,6 +24,7 @@
 
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
+        private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
 
         private readonly string[] _blacklistedCategoryCodes;
@@ -31,23 +34,26 @@
             IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService,
             IReferenceDataService referenceDataService,
+            IProviderService providerService,
             IEmployerService employerService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
 
             _referenceDataService = referenceDataService;
+            _providerService = providerService;
             _employerService = employerService;
             _blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(configurationService);
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(string providerSiteErn, string ern)
+        public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern)
         {
             var employer = _employerService.GetEmployer(providerSiteErn, ern);
             var sectors = GetSectorsAndFrameworks();
 
             return new NewVacancyViewModel
             {
+                Ukprn = ukprn,
                 ApprenticeshipLevel = ApprenticeshipLevel.Intermediate,
                 SectorsAndFrameworks = sectors,
                 Employer = employer.Convert()
@@ -67,6 +73,7 @@
                 {
                     EntityId = Guid.NewGuid(),
                     VacancyReferenceNumber = vacancyReferenceNumber,
+                    Ukprn = newVacancyViewModel.Ukprn,
                     FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                     ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
                     Employer = employer
@@ -89,6 +96,8 @@
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = vacancy.Convert();
+            var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.Employer.ProviderSiteErn);
+            viewModel.ProviderSite = providerSite.Convert();
             viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
             return viewModel;
         }
@@ -120,6 +129,8 @@
 
             viewModel = vacancy.Convert();
             viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
+            var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.Employer.ProviderSiteErn);
+            viewModel.ProviderSite = providerSite.Convert();
             return viewModel;
         }
 

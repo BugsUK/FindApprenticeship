@@ -1,17 +1,23 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Providers
 {
+    using Locations;
+
     public class ProviderSite : BaseEntity
     {
-        // name, address, ERN, contact info, etc.
-
         public string Ern { get; set; }
 
         public string Ukprn { get; set; }
 
         public string Name { get; set; }
 
-        public string EmailAddress { get; set; }
+        public string EmployerDescription { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public string CandidateDescription { get; set; }
+
+        public string ContactDetailsForEmployer { get; set; }
+
+        public string ContactDetailsForCandidate { get; set; }
+
+        public Address Address { get; set; }
     }
 }
