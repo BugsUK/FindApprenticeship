@@ -51,9 +51,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, viewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username)
+        public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string providerSiteErn, string ern)
         {
-            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(username);
+            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(providerSiteErn, ern);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyModel.Ok, viewModel);
         }
@@ -65,6 +65,7 @@
             if (!validationResult.IsValid)
             {
                 newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+                newVacancyViewModel.Employer = _employerProvider.GetEmployerViewModel(newVacancyViewModel.Employer.ProviderSiteErn, newVacancyViewModel.Employer.Ern);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
@@ -78,9 +79,6 @@
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
-            var ern = "12345";//vacancyViewModel.ProviderSite.Ern;
-            var employers = _employerProvider.GetEmployerViewModels(ern);
-
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }
 
@@ -88,23 +86,28 @@
         {
             var result = _vacancyViewModelValidator.Validate(viewModel);
 
-            viewModel.ApprenticeshipLevels = _vacancyPostingProvider.GetApprenticeshipLevels();
-
             if (!result.IsValid)
             {
+                viewModel = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
+
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation, viewModel, result);
             }
 
+            viewModel = _vacancyPostingProvider.SubmitVacancy(viewModel);
+            
             return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.Ok, viewModel);
         }
 
         public MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber)
         {
+            var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
+
             var viewModel = new SubmittedVacancyViewModel
             {
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                ApproverEmail = "john.smith@salon-secrets.co.uk",
-                PublishDate = new DateTime(2015, 10, 12)
+                VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber,
+                ApproverEmail = "where_does_this_come_from@requirements.com",
+                PublishDate = vacancyViewModel.PublishDate ?? DateTime.MinValue,
+                ProviderSiteErn = vacancyViewModel.Employer.ProviderSiteErn
             };
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);

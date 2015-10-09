@@ -67,7 +67,8 @@
         </label>
     </div>
 
-    @Html.HiddenFor(model => model.ProviderSiteErn)
+    @Html.HiddenFor(model => model.Employer.ProviderSiteErn)
+    @Html.HiddenFor(model => model.Employer.Ern);
 
     <fieldset class="form-group">
         <button type="submit" class="button">Create vacancy</button>

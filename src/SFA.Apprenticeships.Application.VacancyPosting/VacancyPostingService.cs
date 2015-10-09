@@ -21,7 +21,7 @@
             _referenceNumberRepository = referenceNumberRepository;
         }
 
-        public ApprenticeshipVacancy CreateApprenticeshipVacancy(ApprenticeshipVacancy vacancy)
+        public ApprenticeshipVacancy SaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy)
         {
             Condition.Requires(vacancy);
 
@@ -33,6 +33,11 @@
         public long GetNextVacancyReferenceNumber()
         {
             return _referenceNumberRepository.GetNextVacancyReferenceNumber();
+        }
+
+        public ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber)
+        {
+            return _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
         }
     }
 }

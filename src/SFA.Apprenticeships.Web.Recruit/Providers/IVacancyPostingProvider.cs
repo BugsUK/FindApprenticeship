@@ -7,11 +7,14 @@
 
     public interface IVacancyPostingProvider
     {
-        NewVacancyViewModel GetNewVacancyViewModel(string username);
+        NewVacancyViewModel GetNewVacancyViewModel(string providerSiteErn, string ern);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
         VacancyViewModel GetVacancy(long vacancyReferenceNumber);
+
+        VacancyViewModel SubmitVacancy(VacancyViewModel viewModel);
+
 
         List<SectorSelectItemViewModel> GetSectorsAndFrameworks();
 

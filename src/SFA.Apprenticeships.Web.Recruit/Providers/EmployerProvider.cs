@@ -21,13 +21,13 @@
         {
             var employers = _employerService.GetEmployers(providerSiteErn);
 
-            return employers.Select(Convert);
+            return employers.Select(e => e.Convert());
         }
 
         public EmployerFilterViewModel GetEmployerViewModels(EmployerFilterViewModel filterViewModel)
         {
             var employers = _employerService.GetEmployers(filterViewModel.ProviderSiteErn);
-            filterViewModel.EmployerResults = employers.Select(ConvertToResult).ToList();
+            filterViewModel.EmployerResults = employers.Select(e => e.ConvertToResult()).ToList();
 
             return filterViewModel;
         }
@@ -41,42 +41,14 @@
         {
             var employer = _employerService.GetEmployer(providerSiteErn, ern);
 
-            return Convert(employer);
+            return employer.Convert();
         }
 
         public EmployerViewModel ConfirmEmployer(string providerSiteErn, string ern, string description)
         {
             var employer = _employerService.GetEmployer(providerSiteErn, ern);
             employer = _employerService.SaveEmployer(employer);
-            return Convert(employer);
-        }
-
-        private static EmployerResultViewModel ConvertToResult(Employer employer)
-        {
-            var viewModel = new EmployerResultViewModel
-            {
-                Ern = employer.Ern,
-                //EmployerId = 
-                EmployerName = employer.Name,
-                Address = employer.Address.Convert()
-            };
-
-            return viewModel;
-        }
-
-        private static EmployerViewModel Convert(Employer employer)
-        {
-            var viewModel = new EmployerViewModel
-            {
-                ProviderSiteErn = employer.ProviderSiteErn,
-                Ern = employer.Ern,
-                Name = employer.Name,
-                Description = employer.Description,
-                Website = employer.Website,
-                Address = employer.Address.Convert()
-            };
-
-            return viewModel;
+            return employer.Convert();
         }
     }
 }

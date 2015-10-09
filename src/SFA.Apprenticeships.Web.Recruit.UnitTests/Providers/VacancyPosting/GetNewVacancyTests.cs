@@ -3,8 +3,9 @@
     using System;
     using System.Linq;
     using Common.Configuration;
+    using Domain.Entities.Locations;
+    using Domain.Entities.Organisations;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
@@ -14,14 +15,18 @@
     public class GetNewVacancyTests : TestBase
     {
         protected static readonly string ValidUserName = $"{Guid.NewGuid()}@example.com";
-        protected static readonly string PreferredSiteUrn = Guid.NewGuid().ToString();
+        protected static readonly string ProviderSiteUrn = Guid.NewGuid().ToString();
+        protected static readonly string Ern = Guid.NewGuid().ToString();
         protected static readonly string Ukprn = Guid.NewGuid().ToString();
 
-        private readonly ProviderUser _userProfile = new ProviderUser
+        private readonly Employer _employer = new Employer
         {
-            Username = ValidUserName,
-            Ukprn = Ukprn,
-            PreferredSiteErn = PreferredSiteUrn
+            ProviderSiteErn = ProviderSiteUrn,
+            Ern = Ern,
+            Address = new Address
+            {
+                GeoPoint = new GeoPoint()
+            }
         };
 
         private readonly WebConfiguration _webConfiguration = new WebConfiguration
@@ -96,9 +101,9 @@
                 .Setup(mock => mock.Get<WebConfiguration>())
                 .Returns(_webConfiguration);
 
-            MockUserProfileService
-                .Setup(mock => mock.GetProviderUser(ValidUserName))
-                .Returns(_userProfile);
+            MockEmployerService
+                .Setup(mock => mock.GetEmployer(ProviderSiteUrn, Ern))
+                .Returns(_employer);
 
             MockReferenceDataService
                 .Setup(mock => mock.GetCategories())
@@ -112,14 +117,14 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ValidUserName);
+            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
 
             // Assert.
-            MockUserProfileService.Verify(mock =>
-                mock.GetProviderUser(ValidUserName), Times.Once);
+            MockEmployerService.Verify(mock =>
+                mock.GetEmployer(ProviderSiteUrn, Ern), Times.Once);
 
             viewModel.Should().NotBeNull();
-            viewModel.ProviderSiteErn.Should().Be(PreferredSiteUrn);
+            viewModel.Employer.ProviderSiteErn.Should().Be(ProviderSiteUrn);
         }
 
         [Test]
@@ -129,7 +134,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ValidUserName);
+            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -144,7 +149,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ValidUserName);
+            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -161,7 +166,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ValidUserName);
+            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -176,7 +181,7 @@
             var provider = GetProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(ValidUserName);
+            var viewModel = provider.GetNewVacancyViewModel(ProviderSiteUrn, Ern);
 
             // Assert.
             viewModel.Should().NotBeNull();

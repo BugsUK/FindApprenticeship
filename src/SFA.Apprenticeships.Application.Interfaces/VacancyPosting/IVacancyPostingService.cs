@@ -4,8 +4,10 @@
 
     public interface IVacancyPostingService
     {
-        ApprenticeshipVacancy CreateApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
+        ApprenticeshipVacancy SaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
 
         long GetNextVacancyReferenceNumber();
+
+        ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber);
     }
 }

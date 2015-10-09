@@ -7,5 +7,6 @@
         public long VacancyReferenceNumber { get; set; }
         public string ApproverEmail { get; set; }
         public DateTime PublishDate { get; set; }
+        public string ProviderSiteErn { get; set; }
     }
 }

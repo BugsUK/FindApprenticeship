@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
@@ -18,9 +19,9 @@
         protected Mock<IMapper> MockMapper;
 
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
-        protected Mock<IUserProfileService> MockUserProfileService;
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
+        protected Mock<IEmployerService> MockEmployerService;
 
         [SetUp]
         public void SetUpBase()
@@ -30,9 +31,9 @@
             MockMapper = new Mock<IMapper>();
 
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
-            MockUserProfileService = new Mock<IUserProfileService>();
             MockProviderService = new Mock<IProviderService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
+            MockEmployerService = new Mock<IEmployerService>();
         }
 
         protected IVacancyPostingProvider GetProvider()
@@ -41,9 +42,8 @@
                 MockLogService.Object,
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
-                MockUserProfileService.Object,
-                MockProviderService.Object,
-                MockReferenceDataService.Object);
+                MockReferenceDataService.Object,
+                MockEmployerService.Object);
         }
     }
 }

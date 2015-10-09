@@ -4,12 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Logging;
-    using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
     using Common.Configuration;
+    using Converters;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
@@ -21,9 +21,8 @@
         private readonly ILogService _logService;
 
         private readonly IVacancyPostingService _vacancyPostingService;
-        private readonly IUserProfileService _userProfileService;
-        private readonly IProviderService _providerService;
         private readonly IReferenceDataService _referenceDataService;
+        private readonly IEmployerService _employerService;
 
         private readonly string[] _blacklistedCategoryCodes;
 
@@ -31,29 +30,27 @@
             ILogService logService,
             IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService,
-            IUserProfileService userProfileService,
-            IProviderService providerService,
-            IReferenceDataService referenceDataService)
+            IReferenceDataService referenceDataService,
+            IEmployerService employerService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
 
-            _userProfileService = userProfileService;
-            _providerService = providerService;
             _referenceDataService = referenceDataService;
+            _employerService = employerService;
             _blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(configurationService);
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(string username)
+        public NewVacancyViewModel GetNewVacancyViewModel(string providerSiteErn, string ern)
         {
-            var userProfile = _userProfileService.GetProviderUser(username);
+            var employer = _employerService.GetEmployer(providerSiteErn, ern);
             var sectors = GetSectorsAndFrameworks();
 
             return new NewVacancyViewModel
             {
                 ApprenticeshipLevel = ApprenticeshipLevel.Intermediate,
-                ProviderSiteErn = userProfile.PreferredSiteErn,
-                SectorsAndFrameworks = sectors
+                SectorsAndFrameworks = sectors,
+                Employer = employer.Convert()
             };
         }
 
@@ -64,14 +61,15 @@
             try
             {
                 var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
+                var employer = _employerService.GetEmployer(newVacancyViewModel.Employer.ProviderSiteErn, newVacancyViewModel.Employer.Ern);
 
-                var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new ApprenticeshipVacancy
+                var vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(new ApprenticeshipVacancy
                 {
                     EntityId = Guid.NewGuid(),
                     VacancyReferenceNumber = vacancyReferenceNumber,
                     FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                     ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
-                    ProviderSiteErn = newVacancyViewModel.ProviderSiteErn
+                    Employer = employer
                 });
 
                 _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);
@@ -89,11 +87,40 @@
 
         public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
         {
-            return new VacancyViewModel
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                ApprenticeshipLevels = GetApprenticeshipLevels()
-            };
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var viewModel = vacancy.Convert();
+            viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
+            return viewModel;
+        }
+
+        public VacancyViewModel SubmitVacancy(VacancyViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.Title = viewModel.Title;
+            vacancy.ShortDescription = viewModel.ShortDescription;
+            vacancy.WorkingWeek = viewModel.WorkingWeek;
+            vacancy.WeeklyWage = viewModel.WeeklyWage;
+            vacancy.Duration = viewModel.Duration;
+            vacancy.PublishDate = viewModel.PublishDate;
+            vacancy.ClosingDate = viewModel.ClosingDate;
+            vacancy.PossibleStartDate = viewModel.PossibleStartDate;
+            vacancy.ApprenticeshipLevel = viewModel.ApprenticeshipLevel;
+            vacancy.FrameworkCodeName = viewModel.FrameworkCodeName;
+            vacancy.LongDescription = viewModel.LongDescription;
+            vacancy.DesiredSkills = viewModel.DesiredSkills;
+            vacancy.FutureProspects = viewModel.FutureProspects;
+            vacancy.PersonalQualities = viewModel.PersonalQualities;
+            vacancy.ThingsToConsider = viewModel.ThingsToConsider;
+            vacancy.DesiredQualifications = viewModel.DesiredQualifications;
+            vacancy.FirstQuestion = viewModel.FirstQuestion;
+            vacancy.SecondQuestion = viewModel.SecondQuestion;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.Convert();
+            viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
+            return viewModel;
         }
 
         public List<SelectListItem> GetApprenticeshipLevels()

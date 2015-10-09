@@ -15,7 +15,7 @@
 
         MediatorResponse<EmployerViewModel> ConfirmEmployer(string providerSiteErn, string ern, string description);
 
-        MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string username);
+        MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string providerSiteErn, string ern);
 
         MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 

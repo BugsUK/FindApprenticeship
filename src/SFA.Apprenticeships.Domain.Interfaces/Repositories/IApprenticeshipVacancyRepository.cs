@@ -4,6 +4,7 @@
 
     public interface IApprenticeshipVacancyReadRepository : IReadRepository<ApprenticeshipVacancy>
     {
+        ApprenticeshipVacancy Get(long vacancyReferenceNumber);
     }
 
     public interface IApprenticeshipVacancyWriteRepository : IWriteRepository<ApprenticeshipVacancy>

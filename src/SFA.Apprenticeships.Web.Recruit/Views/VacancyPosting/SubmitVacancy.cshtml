@@ -29,6 +29,8 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
+    @Html.HiddenFor(m => m.VacancyReferenceNumber);
+
     <section>
         <div class="grid-wrapper">
             <div class="grid grid-2-3">
@@ -92,8 +94,8 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
-                    @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text"}, containerHtmlAttributes: new RouteValueDictionary {{"data-editable", null}}, labelHtmlAttributes: new {@class = "bold-small"})
+                    @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text"}, containerHtmlAttributes: new RouteValueDictionary {{"data-editable", null}}, labelHtmlAttributes: new {@class = "bold-small"})
                 </div>
             </div>
         </div>
@@ -102,86 +104,30 @@
         <div>
             <h2 class="heading-large">About the employer</h2>
             <div class="form-group">
-                <select name="employer" id="employer" class="chosen-select" data-placeholder="Choose from list of employers">
-                    <option value=""></option>
-                    <option value="employer">Aalco Leeds (ERN: 100349439)</option>
-                    <option value="employer">Active Solutions Ltd (ERN: 100349439)</option>
-                    <option value="employer">Age Partnership Limited (ERN: 100349439)</option>
-                    <option value="employer">Apprenticeship Training Ltd (ERN: 100349439)</option>
-                    <option value="employer">Arena Group (ERN: 100349439)</option>
-                    <option value="employer">Barkston (ERN: 100349439)</option>
-                    <option value="employer">Business Internet Directory (ERN: 100349439)</option>
-                    <option value="employer">Celsian (ERN: 100349439)</option>
-                    <option value="employer">Classic Label Co Ltd (ERN: 100349439)</option>
-                    <option value="employer">Creative Emporium (ERN: 100349439)</option>
-                    <option value="employer">Dubit Limited (ERN: 100349439)</option>
-                    <option value="employer">Dudley Child Executive Recruitment (ERN: 100349439)</option>
-                    <option value="employer">Dutton International Ltd (ERN: 100349439)</option>
-                    <option value="employer">Electromec Access (ERN: 100349439)</option>
-                    <option value="employer">Forge Waste Limited (ERN: 100349439)</option>
-                    <option value="employer">Global Resource Bureau Ltd (ERN: 100349439)</option>
-                    <option value="employer">Go Go Real Estate (ERN: 100349439)</option>
-                    <option value="employer">IPS Group Ltd (ERN: 100349439)</option>
-                    <option value="employer">Jomu Limited (ERN: 100349439)</option>
-                    <option value="employer">Key Training Ltd (ERN: 100349439)</option>
-                    <option value="employer">Langton Howarth Ltd (ERN: 100349439)</option>
-                    <option value="employer">Lucy Walker (Recruitment) Ltd (ERN: 100349439)</option>
-                    <option value="employer">M2 Direct Flooring (ERN: 100349439)</option>
-                    <option value="employer">Margaret McMillan Primary &amp; Nursery (ERN: 100349439)</option>
-                    <option value="employer">Maxim (ERN: 100349439)</option>
-                    <option value="employer">Momentum Dance (ERN: 100349439)</option>
-                    <option value="employer">N G Developments (Normanton) Limited (ERN: 100349439)</option>
-                    <option value="employer">National Centre for Diversity (ERN: 100349439)</option>
-                    <option value="employer">Ram Global Solutions Limited (ERN: 100349439)</option>
-                    <option value="employer">Rathbones Ltd (ERN: 100349439)</option>
-                    <option value="employer">Rubber Products Ltd (ERN: 100349439)</option>
-                    <option value="employer">Search Consultancy Ltd (ERN: 100349439)</option>
-                    <option value="employer">Sunlight Services Ltd (ERN: 100349439)</option>
-                    <option value="employer">Switalski's Solicitors (ERN: 100349439)</option>
-                    <option value="employer">Task Master (ERN: 100349439)</option>
-                    <option value="employer">Taskmaster Recruitment (ERN: 100349439)</option>
-                    <option value="employer">Ward Hadaway (ERN: 100349439)</option>
-                    <option value="employer">Weston Communications Ltd (ERN: 100349439)</option>
-                    <option value="employer">Wheels Insurance Services Ltd (ERN: 100349439)</option>
-                    <option value="employer">Wright Choice (ERN: 100349439)</option>
-                    <option value="employer">Zenith Survey Equipment Ltd (ERN: 100349439)</option>
-                </select>
-                <button type="submit" class="button" name="updated-employer" value="updated">Add</button>
-                <div id="employer-data-display">
+                <div data-id="employer-data-display">
                     <div class="text">
-                        <p>
-                            Established in 1978, R G Engineering Ltd is proud to have developed
-                            partnerships with leading companies that include Rolls-Royce
-                            Aero Engines, Denso, and GKN Aerospace. We supply design
-                            and manufacture products and onsite customer support to the
-                            aerospace, automotive, and robotic markets.
-                        </p>
-                        <p>
-                            Being a medium company we are able to dedicate ourselves to
-                            100% customer focus, delivering high quality parts in short
-                            lead-time’s without compromise.
-                        </p>
+                        <p>@Model.Employer.Description</p>
                     </div>
                     <div class="grid-wrapper">
                         <div class="grid grid-1-2">
                             <div class="inner-block-padr">
                                 <h3 class="bold-small">Employer</h3>
-                                <p class="small-btm-margin">R G Engineering</p>
+                                <p class="small-btm-margin">@Model.Employer.Name</p>
                                 <p>
-                                    <a href="http://www.rgeng.co.uk">http://www.rgeng.co.uk</a>
+                                    <a href="@Model.Employer.Website">@Model.Employer.Website</a>
                                 </p>
                                 <h3 class="bold-small">Address</h3>
-                                <p class="small-btm-margin">Hotchkiss Way</p>
-                                <p class="small-btm-margin">Binley Industrial Estate</p>
-                                <p class="small-btm-margin">Coventry</p>
-                                <p class="small-btm-margin">West Midlands</p>
-                                <p>CV3 2RL</p>
+                                <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
+                                <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>
+                                <p class="small-btm-margin">@Model.Employer.Address.AddressLine3</p>
+                                <p class="small-btm-margin">@Model.Employer.Address.AddressLine4</p>
+                                <p>@Model.Employer.Address.Postcode</p>
                             </div>
                         </div>
                         <div class="grid grid-1-2 hide-print">
                             <div class="ad-details__map">
-                                <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
-                                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=CV3+2RL,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                                <div class="map-overlay" onclick="style.pointerEvents='none'"></div>
+                                <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Employer.Address.Postcode,+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                                 <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                             </div>
                         </div>

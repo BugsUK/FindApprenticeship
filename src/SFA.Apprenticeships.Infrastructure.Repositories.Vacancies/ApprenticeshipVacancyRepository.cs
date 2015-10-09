@@ -38,6 +38,15 @@
             return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }
 
+        public ApprenticeshipVacancy Get(long vacancyReferenceNumber)
+        {
+            _logger.Debug("Called Mongodb to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
+
+            var mongoEntity = Collection.FindOne(Query<ApprenticeshipVacancy>.EQ(v => v.VacancyReferenceNumber, vacancyReferenceNumber));
+
+            return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+        }
+
         public void Delete(Guid id)
         {
             _logger.Debug("Calling repository to delete apprenticeship vacancy with Id={0}", id);

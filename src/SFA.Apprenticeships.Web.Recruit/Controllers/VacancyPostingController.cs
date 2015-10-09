@@ -105,7 +105,7 @@
         [HttpGet]
         public ActionResult CreateVacancy(string providerSiteErn, string ern)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyModel(User.Identity.Name);
+            var response = _vacancyPostingMediator.GetNewVacancyModel(providerSiteErn, ern);
             var viewModel = response.ViewModel;
 
             return View(viewModel);

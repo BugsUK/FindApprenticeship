@@ -14,6 +14,6 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 
         public List<SectorSelectItemViewModel> SectorsAndFrameworks { get; set; }
 
-        public string ProviderSiteErn { get; set; }
+        public EmployerViewModel Employer { get; set; }
     }
 }

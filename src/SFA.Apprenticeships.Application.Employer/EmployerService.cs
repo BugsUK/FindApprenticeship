@@ -56,16 +56,17 @@
 
             _logService.Debug("Calling EmployerReadRepository to get employers for provider site with ERN='{0}'.", providerSiteErn);
 
-            IEnumerable<Employer> employers = _employerReadRepository.GetForProviderSite(providerSiteErn).ToList();
+            //TODO: Reinstate once we've worked out a migration strategy
+            /*IEnumerable<Employer> employers = _employerReadRepository.GetForProviderSite(providerSiteErn).ToList();
 
             if (employers.Any())
             {
                 return employers;
-            }
+            }*/
 
             _logService.Debug("Calling OrganisationService to get employers for provider site with ERN='{0}'.", providerSiteErn);
 
-            employers = _organisationService.GetEmployers(providerSiteErn);
+            var employers = _organisationService.GetEmployers(providerSiteErn);
 
             return employers;
         }
