@@ -1,7 +1,6 @@
 namespace SFA.Apprenticeships.Web.Candidate.IoC {
 
     using Application.Interfaces.Logging;
-    using Application.ReferenceData.Configuration;
     using Common.IoC;
     using Common.Providers;
     using Common.Services;
@@ -35,7 +34,6 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
-            var referenceDataConfiguration = configurationService.Get<ReferenceDataConfiguration>();
 
             return new Container(x =>
             {
@@ -48,7 +46,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

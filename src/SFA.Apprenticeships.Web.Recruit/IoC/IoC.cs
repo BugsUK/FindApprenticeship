@@ -5,7 +5,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
     using Application.Provider;
-    using Application.ReferenceData.Configuration;
     using Application.UserAccount;
     using Application.UserProfile;
     using Application.VacancyPosting;
@@ -24,6 +23,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Repositories.Providers.IoC;
     using Infrastructure.Repositories.UserProfiles.IoC;
     using Infrastructure.Repositories.Vacancies.IoC;
+    using Infrastructure.TacticalDataServices.IoC;
     using Mediators.Provider;
     using Providers;
     using StructureMap;
@@ -40,7 +40,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
-            var referenceDataConfiguration = configurationService.Get<ReferenceDataConfiguration>();
 
             return new Container(x =>
             {
@@ -57,7 +56,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
+                x.AddRegistry<TacticalDataServicesRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
@@ -77,11 +76,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.For<ICookieAuthorizationDataProvider>().Use<CookieAuthorizationDataProvider>();
                 x.For<IAuthorizationErrorProvider>().Use<AuthorizationErrorProvider>();
                 x.For<IVacancyPostingProvider>().Use<VacancyPostingProvider>();
-
-                x.For<IProviderProvider>().Use<ProviderProvider>();
-                x.For<IEmployerProvider>().Use<EmployerProvider>();
-                x.For<IProviderUserProvider>().Use<ProviderUserProvider>();
-                x.For<IProviderMediator>().Use<ProviderMediator>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());

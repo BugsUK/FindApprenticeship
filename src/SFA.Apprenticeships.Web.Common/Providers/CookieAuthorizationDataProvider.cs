@@ -9,10 +9,19 @@ using SFA.Apprenticeships.Web.Common.Models.Common;
 
 namespace SFA.Apprenticeships.Web.Common.Providers
 {
+    using Application.Interfaces.Logging;
+
     public class CookieAuthorizationDataProvider : ICookieAuthorizationDataProvider
     {
         private const string CookieName = "User.Authorization";
         private const string Purpose = "Authorization Claims";
+
+        private readonly ILogService _logService;
+
+        public CookieAuthorizationDataProvider(ILogService logService)
+        {
+            _logService = logService;
+        }
 
         public void AddClaim(Claim claim, HttpContextBase httpContext, string username)
         {
@@ -71,14 +80,23 @@ namespace SFA.Apprenticeships.Web.Common.Providers
             {
                 return new AuthorizationData {Username = username};
             }
-            var authorizationDataJson = Unprotect(cookie.Value);
-            var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(authorizationDataJson);
-            if (authorizationData.Username != username)
+            try
             {
-                Clear(httpContext);
-                authorizationData = new AuthorizationData { Username = username };
+                var authorizationDataJson = Unprotect(cookie.Value);
+                var authorizationData = JsonConvert.DeserializeObject<AuthorizationData>(authorizationDataJson);
+                if (authorizationData.Username != username)
+                {
+                    Clear(httpContext);
+                    authorizationData = new AuthorizationData { Username = username };
+                }
+                return authorizationData;
             }
-            return authorizationData;
+            catch (Exception ex)
+            {
+                _logService.Warn("Unprotecting or deserializing " + CookieName + " failed.", ex);
+                Clear(httpContext);
+                return new AuthorizationData { Username = username };
+            }
         }
 
         private static HttpCookie GetCookie(HttpContextBase httpContext)

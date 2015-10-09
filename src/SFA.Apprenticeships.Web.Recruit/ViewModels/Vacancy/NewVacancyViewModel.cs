@@ -1,7 +1,6 @@
 namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 {
     using System.Collections.Generic;
-    using System.Web.Mvc;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Frameworks;
 

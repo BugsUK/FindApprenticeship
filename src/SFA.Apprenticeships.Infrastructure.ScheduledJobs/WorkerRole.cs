@@ -7,10 +7,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using System.Threading;
     using System.Threading.Tasks;
     using Application.Interfaces.Logging;
-    using Application.ReferenceData.Configuration;
     using Azure.Common.IoC;
     using Azure.ServiceBus.IoC;
-    using Caching.Azure.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Communication.Configuration;
@@ -135,7 +133,6 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
-            var referenceDataConfiguration = configurationService.Get<ReferenceDataConfiguration>();
 
             _container = new Container(x =>
             {
@@ -145,7 +142,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, referenceDataConfiguration));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();

@@ -14,7 +14,7 @@
         [Test]
         public void AddClaim()
         {
-            var provider = new CookieAuthorizationDataProvider();
+            var provider = new CookieAuthorizationDataProvider(null);
 
             var claim = new Claim("TestType", "TestValue");
 
@@ -39,7 +39,7 @@
         [Test]
         public void AddClaims()
         {
-            var provider = new CookieAuthorizationDataProvider();
+            var provider = new CookieAuthorizationDataProvider(null);
 
             var claim1 = new Claim("TestType1", "TestValue1");
             var claim2 = new Claim("TestType2", "TestValue2");
@@ -65,7 +65,7 @@
         [Test]
         public void GetClaim()
         {
-            var provider = new CookieAuthorizationDataProvider();
+            var provider = new CookieAuthorizationDataProvider(null);
 
             var claim = new Claim("TestType", "TestValue");
 
@@ -83,7 +83,7 @@
         [Test]
         public void GetClaims()
         {
-            var provider = new CookieAuthorizationDataProvider();
+            var provider = new CookieAuthorizationDataProvider(null);
 
             var claim1 = new Claim("TestType1", "TestValue1");
             var claim2 = new Claim("TestType2", "TestValue2");
@@ -105,7 +105,7 @@
         [Test]
         public void RemoveClaim()
         {
-            var provider = new CookieAuthorizationDataProvider();
+            var provider = new CookieAuthorizationDataProvider(null);
 
             var claim1 = new Claim("TestType1", "TestValue1");
             var claim2 = new Claim("TestType2", "TestValue2");
@@ -127,7 +127,7 @@
         [Test]
         public void InncorrectUsername()
         {
-            var provider = new CookieAuthorizationDataProvider();
+            var provider = new CookieAuthorizationDataProvider(null);
 
             var claim = new Claim("TestType", "TestValue");
 

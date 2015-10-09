@@ -19,10 +19,10 @@
     using Domain.Interfaces.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
-    using Infrastructure.TacticalDataServices;
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.VacancyPosting;
+    using Providers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
 
@@ -47,8 +47,10 @@
 
         private void RegisterProviders()
         {
-            For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
-            For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
+            For<IProviderProvider>().Use<ProviderProvider>();
+            For<IEmployerProvider>().Use<EmployerProvider>();
+            For<IProviderUserProvider>().Use<ProviderUserProvider>();
+            For<IProviderMediator>().Use<ProviderMediator>();
         }
 
         private void RegisterServices()

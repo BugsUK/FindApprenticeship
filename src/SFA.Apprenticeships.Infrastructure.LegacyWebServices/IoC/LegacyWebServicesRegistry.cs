@@ -4,7 +4,6 @@
     using Apprenticeships.Application.Applications;
     using Apprenticeships.Application.Candidate;
     using Apprenticeships.Application.ReferenceData;
-    using Apprenticeships.Application.ReferenceData.Configuration;
     using Apprenticeships.Application.Vacancies;
     using Apprenticeships.Application.Vacancy;
     using Candidate;
@@ -20,15 +19,14 @@
     using Mappers.Traineeship;
     using ReferenceData;
     using StructureMap.Configuration.DSL;
-    using TacticalDataServices;
     using Vacancy;
     using Wcf;
 
     public class LegacyWebServicesRegistry : Registry
     {
-        public LegacyWebServicesRegistry() : this(new CacheConfiguration(), new ReferenceDataConfiguration { Provider = "LegacyReferenceDataProvider" }) { }
+        public LegacyWebServicesRegistry() : this(new CacheConfiguration()) { }
 
-        public LegacyWebServicesRegistry(CacheConfiguration cacheConfiguration, ReferenceDataConfiguration referenceDataConfiguration)
+        public LegacyWebServicesRegistry(CacheConfiguration cacheConfiguration)
         {
             For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
             For<IMapper>().Use<LegacyApprenticeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper";
@@ -97,14 +95,7 @@
 
             #region Reference Data Service and Providers
 
-            if (referenceDataConfiguration.Provider == "FrameworkDataProvider")
-            {
-                For<IReferenceDataProvider>().Use<FrameworkDataProvider>().Name = referenceDataConfiguration.Provider;
-            }
-            else
-            {
-                For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = referenceDataConfiguration.Provider;
-            }
+            For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = "LegacyReferenceDataProvider";
 
             if (cacheConfiguration.UseCache)
             {
@@ -113,7 +104,7 @@
                     .Ctor<IReferenceDataProvider>()
                     .IsTheDefault()
                     .Ctor<IReferenceDataProvider>()
-                    .Named(referenceDataConfiguration.Provider)
+                    .Named("LegacyReferenceDataProvider")
                     .Ctor<ICacheService>()
                     .Named(cacheConfiguration.DefaultCache);
             }

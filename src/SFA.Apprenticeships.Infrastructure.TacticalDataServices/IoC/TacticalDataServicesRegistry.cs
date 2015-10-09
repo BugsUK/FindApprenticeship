@@ -9,7 +9,7 @@
     {
         public TacticalDataServicesRegistry()
         {
-            For<IReferenceDataProvider>().Use<FrameworkDataProvider>().Name = "FrameworkDataProvider";
+            For<IReferenceDataProvider>().Use<FrameworkDataProvider>();
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
         }
