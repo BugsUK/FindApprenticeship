@@ -97,9 +97,12 @@
                             <div class="inner-block-padr">
                                 <h3 class="bold-small">Employer</h3>
                                 <p class="small-btm-margin">@Model.Employer.Name</p>
-                                <p>
-                                    <a href="@Model.Employer.Website">@Model.Employer.Website</a>
-                                </p>
+                                @if (Model.Employer.IsWebsiteUrlWellFormed)
+                                {
+                                    <p>
+                                        <a href="@Model.Employer.WebsiteUrl" target="_blank" rel="external">@Model.Employer.WebsiteUrl</a>
+                                    </p>
+                                }
                                 <h3 class="bold-small">Address</h3>
                                 <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
                                 <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>

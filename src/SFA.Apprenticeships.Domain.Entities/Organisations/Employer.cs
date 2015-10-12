@@ -8,7 +8,8 @@
         public string Ern { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Website { get; set; }
+        public string WebsiteUrl { get; set; }
+        public bool IsWebsiteUrlWellFormed { get; set; }
         public Address Address { get; set; }
     }
 }

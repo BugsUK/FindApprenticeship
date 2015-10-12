@@ -14,7 +14,8 @@
         public string Name { get; set; }
         [Display(Name = EmployerViewModelMessages.Description.LabelText)]
         public string Description { get; set; }
-        public string Website { get; set; }
+        public string WebsiteUrl { get; set; }
+        public bool IsWebsiteUrlWellFormed { get; set; }
         public AddressViewModel Address { get; set; }
     }
 }

@@ -27,7 +27,8 @@
                 Ern = employer.Ern,
                 Name = employer.Name,
                 Description = employer.Description,
-                Website = employer.Website,
+                WebsiteUrl = employer.WebsiteUrl,
+                IsWebsiteUrlWellFormed = employer.IsWebsiteUrlWellFormed,
                 Address = employer.Address.Convert()
             };
 

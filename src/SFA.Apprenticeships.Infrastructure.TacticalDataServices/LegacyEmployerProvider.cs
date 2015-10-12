@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
@@ -72,13 +73,17 @@
                 //Uprn = 
             };
 
+            string websiteUrl;
+            var isWebsiteUrlWellFormed = TryParseWebsiteUrl(legacyEmployer.EmployerWebsite, out websiteUrl);
+
             var employer = new Employer
             {
                 ProviderSiteErn = legacyEmployer.ProviderSiteEdsUrn.ToString(),
                 Ern = legacyEmployer.EdsUrn.ToString(),
                 Name = legacyEmployer.FullName,
                 Description = CleanDescription(legacyEmployer.EmployerDescription),
-                Website = legacyEmployer.EmployerWebsite,
+                WebsiteUrl = websiteUrl,
+                IsWebsiteUrlWellFormed = isWebsiteUrlWellFormed,
                 Address = address
             };
 
@@ -102,6 +107,38 @@
             description = Regex.Replace(description, @"\s{2,}", " ");
 
             return description;
+        }
+
+        private static bool TryParseWebsiteUrl(string website, out string websiteUrl)
+        {
+            websiteUrl = website;
+            if (IsValidUrl(website))
+            {
+                websiteUrl = new UriBuilder(website).Uri.ToString();
+                return true;
+            }
+            return false;
+        }
+
+        public static bool IsValidUrl(string url)
+        {
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                return false;
+            }
+
+            try
+            {
+                // Attempting to build the URL will throw an exception if it is invalid.
+                // ReSharper disable once UnusedVariable
+                var unused = new UriBuilder(url);
+
+                return true;
+            }
+            catch (UriFormatException)
+            {
+                return false;
+            }
         }
 
         private IDbConnection GetConnection()
