@@ -2,27 +2,11 @@
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
-    ViewBag.Title = "Recruit an Apprentice - Create New Vacancy";
+    ViewBag.Title = "Recruit an Apprentice - Select framework and level";
 }
 
-<div class="progress-indicator progress-indicator-horizontal">
-    <ul>
-        <li class="active">
-            <span class="hide-tablet">Page </span>1<span class="hide-tablet"> of 3</span>.
-            Vacancy type and approver
-        </li>
-        <li>
-            <span class="hide-tablet">Page </span>2<span class="hide-tablet"> of 3</span>.
-            Vacancy details
-        </li>
-        <li>
-            <span class="hide-tablet">Page </span>3<span class="hide-tablet"> of 3</span>.
-            Vacancy submitted
-        </li>
-    </ul>
-</div>
 <h1 class="heading-xlarge">
-    Create new vacancy
+    Select framework and level
 </h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
@@ -31,7 +15,7 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <div class="form-group">
-        <p class="form-label">Framework</p>
+        <p class="form-label">Apprenticeship framework</p>
 
         <select id="@Html.IdFor(model => model.FrameworkCodeName)" name="@Html.NameFor(m => m.FrameworkCodeName)" class="para-btm-margin">
             <option value="" selected>Choose from a list of frameworks</option>
@@ -49,7 +33,7 @@
     </div>
 
     <div class="form-group inline clearfix">
-        <p class="form-label" id="apprenticeship-level-label">Choose apprenticeship level</p>
+        <p class="form-label" id="apprenticeship-level-label">Apprenticeship level</p>
 
         @* ReSharper disable once Html.IdNotResolved *@
         <label for="apprenticeship-level-intermediate" class="block-label">
@@ -72,6 +56,6 @@
     @Html.HiddenFor(model => model.Employer.Ern);
 
     <fieldset class="form-group">
-        <button type="submit" class="button">Create vacancy</button>
+        <button type="submit" class="button">Save and continue</button>
     </fieldset>
 }

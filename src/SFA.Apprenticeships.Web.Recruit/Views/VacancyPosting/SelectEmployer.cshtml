@@ -1,18 +1,18 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
 @model SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting.EmployerFilterViewModel
 @{
-    ViewBag.Title = "Recruit an Apprentice - Create New Vacancy - Select Employer";
+    ViewBag.Title = "Recruit an Apprentice - Select an employer for your vacancy";
 }
 <div class="grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">
-            Select employer
+            Select an employer for your vacancy
         </h1>
     </div>
     <section class="clearfix" id="providerSiteResults">
-        <h2 class="heading-small">Employers</h2>
-        <details>
-            <summary>Filter</summary>
+        <h2 class="heading-small">Your linked employers</h2>
+        <details style="display: none">
+            <summary>Search your employers</summary>
             <div class="detail-content">
                 @using (Html.BeginRouteForm(RecruitmentRouteNames.SelectExistingEmployer, FormMethod.Get))
                 {
@@ -64,6 +64,6 @@
                 </tbody>
             </table>
         </div>
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.AddEmployer)">Add new employer </a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.AddEmployer)" style="display: none">Add new employer </a>
     </section>
 </div>

@@ -1,27 +1,11 @@
 ﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancyViewModel
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
-    ViewBag.Title = "Recruit an Apprentice - Create New Vacancy";
+    ViewBag.Title = "Recruit an Apprentice - Enter vacancy details";
 }
 
-<div class="progress-indicator progress-indicator-horizontal">
-    <ul>
-        <li>
-            <span class="hide-tablet">Page </span>1<span class="hide-tablet"> of 3</span>.
-            Vacancy type and approver
-        </li>
-        <li class="active">
-            <span class="hide-tablet">Page </span>2<span class="hide-tablet"> of 3</span>.
-            Vacancy details
-        </li>
-        <li>
-            <span class="hide-tablet">Page </span>3<span class="hide-tablet"> of 3</span>.
-            Vacancy submitted
-        </li>
-    </ul>
-</div>
 <h1 class="heading-xlarge">
-    Create new vacancy
+    Enter vacancy details
 </h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
@@ -146,14 +130,9 @@
                     <p>@Model.ProviderSite.CandidateDescription</p>
                     <div class="edit-wrapper">
                         <h3 class="bold-small">
-                            Apprenticeship framework<a href="#" class="heading-edit edit-link font-xsmall">Edit</a>
+                            Apprenticeship framework
                         </h3>
                         <p>@Model.FrameworkName</p>
-                        <p>
-                            <em>Where does this come from?</em>
-                            The training provider has achieved a sector success rate of
-                            72% for this type of apprenticeship training.
-                        </p>
                     </div>
                 </div>
             </div>
@@ -177,6 +156,6 @@
         </div>
     </section>
     <div class="grid grid-1-2">
-        <button type="submit" class="button">Submit vacancy</button>
+        <button type="submit" class="button">Submit for approval</button>
     </div>
 }

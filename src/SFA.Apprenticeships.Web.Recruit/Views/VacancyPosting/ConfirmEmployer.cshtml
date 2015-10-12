@@ -1,13 +1,13 @@
 ﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.EmployerViewModel
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
-    ViewBag.Title = "Recruit an Apprentice - Create New Vacancy - Confirm Employer";
+    ViewBag.Title = "Recruit an Apprentice - Check employer description";
 }
 
 <div class="grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">
-            Employer details
+            Check employer description
         </h1>
     </div>
 </div>
@@ -43,7 +43,7 @@
         </div>
         <div class="grid grid-1-1">
             @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
-            <button class="button">Save details and continue</button>
+            <button class="button">Save description and continue</button>
             <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Choose another employer</a>
         </div>
     }

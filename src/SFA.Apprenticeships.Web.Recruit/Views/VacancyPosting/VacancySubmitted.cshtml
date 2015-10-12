@@ -1,53 +1,22 @@
 ﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.SubmittedVacancyViewModel
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
-    ViewBag.Title = "Recruit an Apprentice - Create New Vacancy";
+    ViewBag.Title = "Recruit an Apprentice - Confirmation of submission";
 }
 
-<div class="panel-success toggle-content" id="vacancyShared">
-    <p>This vacancy has been shared with <b>k.bradley@salon-secrets.co.uk</b>.</p>
-</div>
-<div class="progress-indicator progress-indicator-horizontal">
-    <ul>
-        <li>
-            <span class="hide-tablet">Page </span>1<span class="hide-tablet"> of 3</span>.
-            Vacancy type and approver
-        </li>
-        <li>
-            <span class="hide-tablet">Page </span>2<span class="hide-tablet"> of 3</span>.
-            Vacancy details
-        </li>
-        <li class="active">
-            <span class="hide-tablet">Page </span>3<span class="hide-tablet"> of 3</span>.
-            Vacancy submitted
-        </li>
-    </ul>
-</div>
 <div class="success-banner">
     <h1 class="heading-large no-btm-margin"><i class="fa fa-check"></i>Vacancy submitted for approval</h1>
 </div>
 <section class="section-border">
     <section class="text">
-        <p><i class="fa fa-envelope-o"></i>We'll send an approval email to <b class="inl-block">@Model.ApproverEmail</b>.</p>
         <p>
-            Once it has been checked and approved it is scheduled to be published
-            on your chosen date of <b class="inl-block">@Html.DisplayFor(m => m.PublishDate)</b>.
+            Once your vacancy has been approved it'll be published on the Find and apprenticeship service
         </p>
     </section>
-    <div class="form-group">
-        <p><em>Is this in scope for US811?</em></p>
-        <label for="sendVacancy" class="form-label bold-medium">Share vacancy (optional)</label>
-        <span class="form-hint">Enter an email address</span>
-        <input type="email" id="sendVacancy" class="form-control">
-        <p>
-            <a href="#" id="shareVacancyButton">Send vacancy</a>
-        </p>
-    </div>
 </section>
 <section class="section-border">
     <div class="hgroup-medium text">
         <h2 class="heading-medium">Create another vacancy</h2>
-        <span class="subtitle">Start with a fresh template or continue with a draft</span>
     </div>
     <div class="form-group">
         <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn })" class="button">Create vacancy</a>
@@ -55,16 +24,4 @@
     <p>
         <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>
     </p>
-</section>
-<section>
-    <h3 class="heading-medium">Employer email view as approver</h3>
-    <p><em>Is this in scope for US811?</em></p>
-    <a href="employer-live-apprenticeship.html">
-        <img src="http://faa-prototype.azurewebsites.net/_assets/img/screenshot-employer-approval.png" alt="">
-    </a>
-</section>
-<section>
-    <h3 class="heading-medium">Employer email view of notification</h3>
-    <p><em>Is this in scope for US811?</em></p>
-    <img src="http://faa-prototype.azurewebsites.net/_assets/img/screenshot-employer-notification.png" alt="">
 </section>
