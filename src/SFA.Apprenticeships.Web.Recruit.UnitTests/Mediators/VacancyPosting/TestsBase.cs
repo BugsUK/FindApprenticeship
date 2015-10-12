@@ -24,7 +24,8 @@
                 VacancyPostingProvider.Object,
                 EmployerProvider.Object,
                 new NewVacancyViewModelServerValidator(),
-                new VacancyViewModelValidator());
+                new VacancyViewModelValidator(),
+                new EmployerViewModelValidator());
         }
     }
 }

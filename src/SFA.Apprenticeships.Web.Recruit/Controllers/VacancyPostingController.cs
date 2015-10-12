@@ -90,14 +90,17 @@
         }
 
         [HttpPost]
-        public ActionResult ConfirmEmployer(string providerSiteErn, string ern, string description)
+        public ActionResult ConfirmEmployer(EmployerViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.ConfirmEmployer(providerSiteErn, ern, description);
+            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel);
 
             switch (response.Code)
             {
+                case VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn, ern });
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Ern });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

@@ -44,9 +44,10 @@
             return employer.Convert();
         }
 
-        public EmployerViewModel ConfirmEmployer(string providerSiteErn, string ern, string description)
+        public EmployerViewModel ConfirmEmployer(EmployerViewModel viewModel)
         {
-            var employer = _employerService.GetEmployer(providerSiteErn, ern);
+            var employer = _employerService.GetEmployer(viewModel.ProviderSiteErn, viewModel.Ern);
+            employer.Description = viewModel.Description;
             employer = _employerService.SaveEmployer(employer);
             return employer.Convert();
         }

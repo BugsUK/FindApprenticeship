@@ -14,17 +14,20 @@
         private readonly IEmployerProvider _employerProvider;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
+        private readonly EmployerViewModelValidator _employerViewModelValidator;
 
         public VacancyPostingMediator(
             IVacancyPostingProvider vacancyPostingProvider,
 			IEmployerProvider employerProvider,
             NewVacancyViewModelServerValidator newVacancyViewModelServerValidator,
-            VacancyViewModelValidator vacancyViewModelValidator)
+            VacancyViewModelValidator vacancyViewModelValidator,
+            EmployerViewModelValidator employerViewModelValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
 			_employerProvider = employerProvider;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _vacancyViewModelValidator = vacancyViewModelValidator;
+            _employerViewModelValidator = employerViewModelValidator;
         }
 
         public MediatorResponse<EmployerFilterViewModel> GetProviderEmployers(EmployerFilterViewModel employerFilterViewModel)
@@ -45,10 +48,20 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
-        public MediatorResponse<EmployerViewModel> ConfirmEmployer(string providerSiteErn, string ern, string description)
+        public MediatorResponse<EmployerViewModel> ConfirmEmployer(EmployerViewModel viewModel)
         {
-            var viewModel = _employerProvider.ConfirmEmployer(providerSiteErn, ern, description);
-            return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, viewModel);
+            var validationResult = _employerViewModelValidator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                var existingViewModel = _employerProvider.GetEmployerViewModel(viewModel.ProviderSiteErn, viewModel.Ern);
+                existingViewModel.Description = viewModel.Description;
+
+                return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation, existingViewModel, validationResult);
+            }
+
+            var newViewModel = _employerProvider.ConfirmEmployer(viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, newViewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string ukprn, string providerSiteErn, string ern)

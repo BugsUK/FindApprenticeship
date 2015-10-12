@@ -14,6 +14,6 @@
 
         EmployerViewModel GetEmployerViewModel(string providerSiteErn, string ern);
 
-        EmployerViewModel ConfirmEmployer(string providerSiteErn, string ern, string description);
+        EmployerViewModel ConfirmEmployer(EmployerViewModel viewModel);
     }
 }

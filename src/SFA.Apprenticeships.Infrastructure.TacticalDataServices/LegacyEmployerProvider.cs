@@ -97,6 +97,7 @@
             description = Regex.Replace(description, @"<br.*?>", "\r\n");
             description = Regex.Replace(description, @"&nbsp;", " ");
             description = Regex.Replace(description, @"&amp;", "&");
+            description = Regex.Replace(description, @"&pound;", "£");
             description = Regex.Replace(description, @"<[^>]+>|&nbsp;", "");
             description = Regex.Replace(description, @"\s{2,}", " ");
 

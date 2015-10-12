@@ -20,6 +20,7 @@
         public static class ConfirmEmployer
         {
             public const string Ok = "VacancyPosting.ConfirmEmployer.Ok";
+            public const string FailedValidation = "VacancyPosting.ConfirmEmployer.FailedValidation";
         }
 
         public static class GetNewVacancyModel
