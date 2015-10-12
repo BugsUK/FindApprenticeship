@@ -23,9 +23,9 @@
         [Display(Name = VacancyViewModelMessages.WorkingWeek.LabelText)]
         public string WorkingWeek { get; set; }
         [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
-        public decimal? WeeklyWage { get; set; }
+        public string WeeklyWage { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
-        public int? Duration { get; set; }
+        public string Duration { get; set; }
         [Display(Name = VacancyViewModelMessages.PublishDate.LabelText)]
         public DateTime? PublishDate { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]

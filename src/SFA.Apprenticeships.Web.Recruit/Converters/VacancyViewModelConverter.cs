@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
 {
-    using Domain.Entities.Providers;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using ViewModels.Vacancy;
 

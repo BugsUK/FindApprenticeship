@@ -39,7 +39,7 @@
 
         public static class Duration
         {
-            public const string LabelText = "Duration (years)";
+            public const string LabelText = "Duration";
             public const string RequiredErrorText = "Please enter the Duration";
         }
 

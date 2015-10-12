@@ -10,8 +10,8 @@
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string WorkingWeek { get; set; }
-        public decimal? WeeklyWage { get; set; }
-        public int? Duration { get; set; }
+        public string WeeklyWage { get; set; }
+        public string Duration { get; set; }
         public DateTime? PublishDate { get; set; }
         public DateTime? ClosingDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }

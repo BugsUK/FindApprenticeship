@@ -57,14 +57,10 @@
 
             RuleFor(x => x.WeeklyWage)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText)
-                .GreaterThan(0)
                 .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText);
 
             RuleFor(x => x.Duration)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
-                .GreaterThan(0)
                 .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
 
             RuleFor(x => x.PublishDate)
