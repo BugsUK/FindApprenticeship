@@ -26,8 +26,6 @@
         public string WeeklyWage { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
         public string Duration { get; set; }
-        [Display(Name = VacancyViewModelMessages.PublishDate.LabelText)]
-        public DateTime? PublishDate { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
         public DateTime? ClosingDate { get; set; }
         [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]

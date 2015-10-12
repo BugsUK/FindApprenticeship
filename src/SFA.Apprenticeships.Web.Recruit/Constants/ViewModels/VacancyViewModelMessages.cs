@@ -43,13 +43,6 @@
             public const string RequiredErrorText = "Please enter the Duration";
         }
 
-        public static class PublishDate
-        {
-            public const string LabelText = "Publish date";
-            public const string RequiredErrorText = "Please specify the Publish date";
-            public const string TooSoonErrorText = "Publish date must be in the future";
-        }
-
         public static class ClosingDate
         {
             public const string LabelText = "Closing date";

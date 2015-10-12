@@ -112,11 +112,9 @@
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.WeeklyWage = viewModel.WeeklyWage;
             vacancy.Duration = viewModel.Duration;
-            vacancy.PublishDate = viewModel.PublishDate;
             vacancy.ClosingDate = viewModel.ClosingDate;
             vacancy.PossibleStartDate = viewModel.PossibleStartDate;
             vacancy.ApprenticeshipLevel = viewModel.ApprenticeshipLevel;
-            //vacancy.FrameworkCodeName = viewModel.FrameworkCodeName;
             vacancy.LongDescription = viewModel.LongDescription;
             vacancy.DesiredSkills = viewModel.DesiredSkills;
             vacancy.FutureProspects = viewModel.FutureProspects;

@@ -16,7 +16,6 @@
                 WorkingWeek = apprenticeshipVacancy.WorkingWeek,
                 WeeklyWage = apprenticeshipVacancy.WeeklyWage,
                 Duration = apprenticeshipVacancy.Duration,
-                PublishDate = apprenticeshipVacancy.PublishDate,
                 ClosingDate = apprenticeshipVacancy.ClosingDate,
                 PossibleStartDate = apprenticeshipVacancy.PossibleStartDate,
                 LongDescription = apprenticeshipVacancy.LongDescription,

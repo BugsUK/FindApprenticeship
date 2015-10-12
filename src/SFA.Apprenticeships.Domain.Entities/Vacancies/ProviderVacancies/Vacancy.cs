@@ -12,7 +12,6 @@
         public string WorkingWeek { get; set; }
         public string WeeklyWage { get; set; }
         public string Duration { get; set; }
-        public DateTime? PublishDate { get; set; }
         public DateTime? ClosingDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }
         public string LongDescription { get; set; }

@@ -10,23 +10,6 @@
         public VacancyViewModelValidator()
         {
             AddCommonRules();
-            AddServerRules();
-        }
-
-        private void AddServerRules()
-        {
-            RuleFor(x => x.ClosingDate)
-                .Must(BeGreaterThanPublishDate)
-                .WithMessage(VacancyViewModelMessages.ClosingDate.BeforePublishDateErrorText);
-
-            RuleFor(x => x.PossibleStartDate)
-                .Must(BeGreaterThanPublishDate)
-                .WithMessage(VacancyViewModelMessages.PossibleStartDate.BeforePublishDateErrorText);
-        }
-
-        private static bool BeGreaterThanPublishDate(VacancyViewModel viewModel, DateTime? closingDate)
-        {
-            return viewModel.PublishDate < closingDate;
         }
 
         private void AddCommonRules()
@@ -62,12 +45,6 @@
             RuleFor(x => x.Duration)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
-
-            RuleFor(x => x.PublishDate)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.PublishDate.RequiredErrorText)
-                .GreaterThan(DateTime.Today)
-                .WithMessage(VacancyViewModelMessages.PublishDate.TooSoonErrorText);
 
             RuleFor(x => x.ClosingDate)
                 .NotEmpty()

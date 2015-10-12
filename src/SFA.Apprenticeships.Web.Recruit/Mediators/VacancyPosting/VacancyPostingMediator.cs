@@ -123,8 +123,6 @@
             var viewModel = new SubmittedVacancyViewModel
             {
                 VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber,
-                ApproverEmail = "where_does_this_come_from@requirements.com",
-                PublishDate = vacancyViewModel.PublishDate ?? DateTime.MinValue,
                 ProviderSiteErn = vacancyViewModel.Employer.ProviderSiteErn
             };
 
