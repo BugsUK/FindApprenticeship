@@ -54,7 +54,7 @@
             return new NewVacancyViewModel
             {
                 Ukprn = ukprn,
-                ApprenticeshipLevel = ApprenticeshipLevel.Intermediate,
+                ApprenticeshipLevel = ApprenticeshipLevel.Unknown, //Force a selection
                 SectorsAndFrameworks = sectors,
                 Employer = employer.Convert()
             };

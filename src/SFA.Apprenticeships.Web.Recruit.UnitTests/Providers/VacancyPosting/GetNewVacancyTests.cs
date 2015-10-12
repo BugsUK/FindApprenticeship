@@ -185,7 +185,7 @@
 
             // Assert.
             viewModel.Should().NotBeNull();
-            viewModel.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Intermediate);
+            viewModel.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Unknown);
         }
     }
 }
