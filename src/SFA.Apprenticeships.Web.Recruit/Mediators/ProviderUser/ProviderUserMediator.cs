@@ -244,7 +244,7 @@
         {
             var providerSites = _providerProvider.GetProviderSiteViewModels(ukprn);
 
-            var sites = providerSites.Select(ps => new SelectListItem { Value = ps.Ern, Text = ps.Name }).ToList();
+            var sites = providerSites.Select(ps => new SelectListItem { Value = ps.Ern, Text = ps.DisplayName }).ToList();
 
             return sites;
         }

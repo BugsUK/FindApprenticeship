@@ -39,7 +39,7 @@
                     @foreach (var providerSiteViewModel in @Model.ProviderSiteViewModels)
                     {
                         <tr>
-                            <td>@providerSiteViewModel.Name</td>
+                            <td>@providerSiteViewModel.DisplayName</td>
                             <td>
                                 <!--<a href="@Url.RouteUrl(RecruitmentRouteNames.EditProviderSite, new {ern = providerSiteViewModel.Ern})">Edit</a>-->
                             </td>
