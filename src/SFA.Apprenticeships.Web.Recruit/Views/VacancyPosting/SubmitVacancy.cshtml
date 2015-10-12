@@ -19,9 +19,12 @@
         <div class="grid-wrapper">
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
-                    @Html.FormTextFor(m => m.Title, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", autofocus = "autofocus" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @{
+                        const string dataEditableAttribute = "data-editable-disabled";
+                    }
+                    @Html.FormTextFor(m => m.Title, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", autofocus = "autofocus" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
                     <!--TODO: Why is 4000 characters remaining appearing?-->
-                    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
                 </div>
             </div>
         </div>
@@ -33,15 +36,15 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-3">
                 <div class="inner-block-padr">
-                    @Html.FormTextAreaFor(m => m.WorkingWeek, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.PublishDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.ClosingDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.PossibleStartDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.WorkingWeek, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.PublishDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.ClosingDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextFor(m => m.PossibleStartDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
 
                     <div class="form-group">
-                        <div data-editable>
+                        <div @dataEditableAttribute>
                             <p class="bold-small form-label">Apprenticeship level</p>
                             @Html.DropDownListFor(m => m.ApprenticeshipLevel, Model.ApprenticeshipLevels, new {@class = "width-all-2-3" })
                         </div>
@@ -49,7 +52,7 @@
                 </div>
             </div>
             <div class="grid grid-2-3">
-                @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12 }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
             </div>
         </div>
     </section>
@@ -60,14 +63,14 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
-                    @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
                 </div>
             </div>
             <div class="grid grid-1-2">
-                @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
-                @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { "data-editable", null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
+                @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, containerHtmlAttributes: new RouteValueDictionary { { dataEditableAttribute, null } }, labelHtmlAttributes: new { @class = "bold-small" })
             </div>
         </div>
     </section>
@@ -78,8 +81,8 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-2">
                 <div class="inner-block-padr">
-                    @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text"}, containerHtmlAttributes: new RouteValueDictionary {{"data-editable", null}}, labelHtmlAttributes: new {@class = "bold-small"})
-                    @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text"}, containerHtmlAttributes: new RouteValueDictionary {{"data-editable", null}}, labelHtmlAttributes: new {@class = "bold-small"})
+                    @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text"}, containerHtmlAttributes: new RouteValueDictionary {{dataEditableAttribute, null}}, labelHtmlAttributes: new {@class = "bold-small"})
+                    @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text"}, containerHtmlAttributes: new RouteValueDictionary {{dataEditableAttribute, null}}, labelHtmlAttributes: new {@class = "bold-small"})
                 </div>
             </div>
         </div>

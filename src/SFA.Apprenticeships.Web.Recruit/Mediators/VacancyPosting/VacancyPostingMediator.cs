@@ -101,7 +101,12 @@
 
             if (!result.IsValid)
             {
-                viewModel = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
+                var existingViewModel = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
+
+                viewModel.ApprenticeshipLevels = existingViewModel.ApprenticeshipLevels;
+                viewModel.FrameworkName = existingViewModel.FrameworkName;
+                viewModel.Employer = existingViewModel.Employer;
+                viewModel.ProviderSite = existingViewModel.ProviderSite;
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation, viewModel, result);
             }
