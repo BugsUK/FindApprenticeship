@@ -2,6 +2,7 @@
 {
     using Organisations;
 
+    //TODO: Perhaps rename to Relationship?
     public class ProviderSiteEmployerLink : BaseEntity
     {
         public string ProviderSiteErn { get; set; }

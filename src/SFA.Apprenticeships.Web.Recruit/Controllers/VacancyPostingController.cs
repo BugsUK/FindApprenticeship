@@ -38,7 +38,6 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
-
         }
 
         [HttpPost]
@@ -53,7 +52,6 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
-
         }
 
         [HttpGet]
