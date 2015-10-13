@@ -13,6 +13,9 @@
 
             Mapper.CreateMap<ProviderSite, MongoProviderSite>();
             Mapper.CreateMap<MongoProviderSite, ProviderSite>();
+
+            Mapper.CreateMap<ProviderSiteEmployerLink, MongoProviderSiteEmployerLink>();
+            Mapper.CreateMap<MongoProviderSiteEmployerLink, ProviderSiteEmployerLink>();
         }
     }
 }

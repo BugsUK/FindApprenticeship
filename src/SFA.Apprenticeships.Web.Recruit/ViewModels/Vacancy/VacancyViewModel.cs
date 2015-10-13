@@ -50,7 +50,7 @@
         public string FirstQuestion { get; set; }
         [Display(Name = VacancyViewModelMessages.SecondQuestion.LabelText)]
         public string SecondQuestion { get; set; }
-        public EmployerViewModel Employer { get; set; }
+        public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
         public ProviderSiteViewModel ProviderSite { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.EmployerViewModel
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Check employer description";
@@ -17,12 +17,12 @@
         @Html.Partial("ValidationSummary", ViewData.ModelState)
 
         @Html.HiddenFor(m => m.ProviderSiteErn)
-        @Html.HiddenFor(m => m.Ern)
+        @Html.HiddenFor(m => m.Employer.Ern)
 
         <div class="grid grid-1-2">
             <div class="inner-block-padr">
                 <h3 class="bold-small">Employer</h3>
-                <p class="small-btm-margin">@Model.Name</p>
+                <p class="small-btm-margin">@Model.Employer.Name</p>
                 @if (Model.IsWebsiteUrlWellFormed)
                 {
                     <p>
@@ -30,17 +30,17 @@
                     </p>
                 }
                 <h3 class="bold-small">Address</h3>
-                <p class="small-btm-margin">@Model.Address.AddressLine1</p>
-                <p class="small-btm-margin">@Model.Address.AddressLine2</p>
-                <p class="small-btm-margin">@Model.Address.AddressLine3</p>
-                <p class="small-btm-margin">@Model.Address.AddressLine4</p>
-                <p class="small-btm-margin">@Model.Address.Postcode</p>
+                <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
+                <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>
+                <p class="small-btm-margin">@Model.Employer.Address.AddressLine3</p>
+                <p class="small-btm-margin">@Model.Employer.Address.AddressLine4</p>
+                <p class="small-btm-margin">@Model.Employer.Address.Postcode</p>
             </div>
         </div>
         <div class="grid grid-1-2 hide-print">
             <div class="ad-details__map">
                 <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
-                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Address.Postcode,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Employer.Address.Postcode,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                 <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
             </div>
         </div>

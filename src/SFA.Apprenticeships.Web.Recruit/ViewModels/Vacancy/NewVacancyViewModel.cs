@@ -3,6 +3,7 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
     using System.Collections.Generic;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Frameworks;
+    using Provider;
 
     public class NewVacancyViewModel
     {
@@ -16,6 +17,6 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 
         public List<SectorSelectItemViewModel> SectorsAndFrameworks { get; set; }
 
-        public EmployerViewModel Employer { get; set; }
+        public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
     }
 }

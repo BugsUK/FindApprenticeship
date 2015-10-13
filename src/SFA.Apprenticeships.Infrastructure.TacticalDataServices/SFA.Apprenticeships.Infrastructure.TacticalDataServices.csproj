@@ -118,6 +118,7 @@
     <Compile Include="Models\Occupation.cs" />
     <Compile Include="Models\Provider.cs" />
     <Compile Include="Models\ProviderSite.cs" />
+    <Compile Include="Models\VacancyOwnerRelationship.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

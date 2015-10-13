@@ -21,7 +21,6 @@
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
-        protected Mock<IEmployerService> MockEmployerService;
 
         [SetUp]
         public void SetUpBase()
@@ -33,7 +32,6 @@
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
-            MockEmployerService = new Mock<IEmployerService>();
         }
 
         protected IVacancyPostingProvider GetProvider()
@@ -43,8 +41,7 @@
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
                 MockReferenceDataService.Object,
-                MockProviderService.Object,
-                MockEmployerService.Object);
+                MockProviderService.Object);
         }
     }
 }

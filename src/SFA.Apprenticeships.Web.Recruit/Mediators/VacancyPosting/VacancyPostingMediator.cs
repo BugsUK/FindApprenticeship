@@ -1,33 +1,50 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
-    using System;
+    using System.Linq;
     using Common.Mediators;
+    using Converters;
     using Providers;
+    using Validators.Provider;
     using Validators.Vacancy;
     using Validators.VacancyPosting;
+    using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
+        private readonly IProviderProvider _providerProvider;
         private readonly IEmployerProvider _employerProvider;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
-        private readonly EmployerViewModelValidator _employerViewModelValidator;
+        private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
 
         public VacancyPostingMediator(
             IVacancyPostingProvider vacancyPostingProvider,
-			IEmployerProvider employerProvider,
+            IProviderProvider providerProvider,
+            IEmployerProvider employerProvider,
             NewVacancyViewModelServerValidator newVacancyViewModelServerValidator,
             VacancyViewModelValidator vacancyViewModelValidator,
-            EmployerViewModelValidator employerViewModelValidator)
+            ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
-			_employerProvider = employerProvider;
+            _providerProvider = providerProvider;
+            _employerProvider = employerProvider;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _vacancyViewModelValidator = vacancyViewModelValidator;
-            _employerViewModelValidator = employerViewModelValidator;
+            _providerSiteEmployerLinkViewModelValidator = providerSiteEmployerLinkViewModelValidator;
+        }
+
+        public MediatorResponse<EmployerFilterViewModel> GetProviderEmployers(string providerSiteErn)
+        {
+            var viewModels = _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn);
+            var viewModel = new EmployerFilterViewModel
+            {
+                ProviderSiteErn = providerSiteErn,
+                EmployerResults = viewModels.Select(vm => vm.Employer.ConvertToResult())
+            };
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
         public MediatorResponse<EmployerFilterViewModel> GetProviderEmployers(EmployerFilterViewModel employerFilterViewModel)
@@ -42,25 +59,25 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
-        public MediatorResponse<EmployerViewModel> GetEmployer(string providerSiteErn, string ern)
+        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern)
         {
-            var viewModel = _employerProvider.GetEmployerViewModel(providerSiteErn, ern);
+            var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteErn, ern);
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
-        public MediatorResponse<EmployerViewModel> ConfirmEmployer(EmployerViewModel viewModel)
+        public MediatorResponse<ProviderSiteEmployerLinkViewModel> ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel)
         {
-            var validationResult = _employerViewModelValidator.Validate(viewModel);
+            var validationResult = _providerSiteEmployerLinkViewModelValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {
-                var existingViewModel = _employerProvider.GetEmployerViewModel(viewModel.ProviderSiteErn, viewModel.Ern);
+                var existingViewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
                 existingViewModel.Description = viewModel.Description;
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation, existingViewModel, validationResult);
             }
 
-            var newViewModel = _employerProvider.ConfirmEmployer(viewModel);
+            var newViewModel = _providerProvider.ConfirmProviderSiteEmployerLink(viewModel);
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, newViewModel);
         }
 
@@ -78,7 +95,7 @@
             if (!validationResult.IsValid)
             {
                 newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
-                newVacancyViewModel.Employer = _employerProvider.GetEmployerViewModel(newVacancyViewModel.Employer.ProviderSiteErn, newVacancyViewModel.Employer.Ern);
+                newVacancyViewModel.ProviderSiteEmployerLink = _providerProvider.GetProviderSiteEmployerLinkViewModel(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
@@ -105,7 +122,7 @@
 
                 viewModel.ApprenticeshipLevels = existingViewModel.ApprenticeshipLevels;
                 viewModel.FrameworkName = existingViewModel.FrameworkName;
-                viewModel.Employer = existingViewModel.Employer;
+                viewModel.ProviderSiteEmployerLink = existingViewModel.ProviderSiteEmployerLink;
                 viewModel.ProviderSite = existingViewModel.ProviderSite;
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation, viewModel, result);
@@ -123,7 +140,7 @@
             var viewModel = new SubmittedVacancyViewModel
             {
                 VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber,
-                ProviderSiteErn = vacancyViewModel.Employer.ProviderSiteErn
+                ProviderSiteErn = vacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn
             };
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);

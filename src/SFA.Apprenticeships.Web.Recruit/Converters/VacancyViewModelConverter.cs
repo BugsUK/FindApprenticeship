@@ -28,7 +28,7 @@
                 SecondQuestion = apprenticeshipVacancy.SecondQuestion,
                 ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
                 FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
-                Employer = apprenticeshipVacancy.Employer.Convert(),
+                ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert(),
             };
 
             return vacancyViewModel;

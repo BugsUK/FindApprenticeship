@@ -2,6 +2,7 @@
 {
     using System;
     using Organisations;
+    using Providers;
 
     public abstract class Vacancy : BaseEntity
     {
@@ -22,6 +23,6 @@
         public string DesiredQualifications { get; set; }
         public string FirstQuestion { get; set; }
         public string SecondQuestion { get; set; }
-        public Employer Employer { get; set; }
+        public ProviderSiteEmployerLink ProviderSiteEmployerLink { get; set; }
     }
 }

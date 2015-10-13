@@ -51,6 +51,26 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             return providerSites.Select(ps => ps.Convert());
         }
 
+        public ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(string providerSiteErn, string ern)
+        {
+            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(providerSiteErn, ern);
+            return providerSiteEmployerLink.Convert();
+        }
+
+        public ProviderSiteEmployerLinkViewModel ConfirmProviderSiteEmployerLink(ProviderSiteEmployerLinkViewModel viewModel)
+        {
+            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
+            providerSiteEmployerLink.Description = viewModel.Description;
+            providerSiteEmployerLink = _providerService.SaveProviderSiteEmployerLink(providerSiteEmployerLink);
+            return providerSiteEmployerLink.Convert();
+        }
+
+        public IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(string providerSiteErn)
+        {
+            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(providerSiteErn);
+            return providerSiteEmployerLinks.Select(psel => psel.Convert());
+        }
+
         private static ProviderViewModel Convert(Provider provider, IEnumerable<ProviderSite> providerSites)
         {
             var viewModel = new ProviderViewModel

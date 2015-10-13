@@ -36,26 +36,13 @@
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        public Employer Get(string providerSiteErn, string ern)
+        public Employer Get(string ern)
         {
-            _logger.Debug("Called Mongodb to get employer with providerSiteErn={0}, ern={1}", providerSiteErn, ern);
+            _logger.Debug("Called Mongodb to get employer with ern={0}", ern);
 
-            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.ProviderSiteErn == providerSiteErn && e.Ern == ern);
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.Ern == ern);
 
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
-        }
-
-        public IEnumerable<Employer> GetForProviderSite(string providerSiteErn)
-        {
-            _logger.Debug("Called Mongodb to get employers for provider site with ERN={0}", providerSiteErn);
-
-            var mongoEntities = Collection.Find(Query<MongoEmployer>.EQ(e => e.ProviderSiteErn, providerSiteErn));
-
-            var entities = _mapper.Map<IEnumerable<MongoEmployer>, IEnumerable<Employer>>(mongoEntities).ToList();
-
-            _logger.Debug("Found {1} employers for provider site with ERN={0}", providerSiteErn, entities.Count);
-
-            return entities;
         }
 
         public void Delete(Guid id)

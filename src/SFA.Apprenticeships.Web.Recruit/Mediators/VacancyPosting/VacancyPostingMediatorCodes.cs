@@ -2,6 +2,11 @@
 {
     public static class VacancyPostingMediatorCodes
     {
+        public static class GetProviderSiteEmployerLinks
+        {
+            public const string Ok = "VacancyPosting.GetProviderSiteEmployerLinks.Ok";
+        }
+
         public static class GetProviderEmployers
         {
             public const string Ok = "VacancyPosting.GetProviderEmployers.Ok";

@@ -5,6 +5,7 @@
     using Common.Configuration;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
+    using Domain.Entities.Providers;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
@@ -19,14 +20,19 @@
         protected static readonly string Ern = Guid.NewGuid().ToString();
         protected static readonly string Ukprn = Guid.NewGuid().ToString();
 
-        private readonly Employer _employer = new Employer
+        private static readonly Employer Employer = new Employer
         {
-            ProviderSiteErn = ProviderSiteUrn,
             Ern = Ern,
             Address = new Address
             {
                 GeoPoint = new GeoPoint()
             }
+        };
+
+        private static readonly ProviderSiteEmployerLink ProviderSiteEmployerLink = new ProviderSiteEmployerLink
+        {
+            ProviderSiteErn = ProviderSiteUrn,
+            Employer = Employer
         };
 
         private readonly WebConfiguration _webConfiguration = new WebConfiguration
@@ -101,9 +107,9 @@
                 .Setup(mock => mock.Get<WebConfiguration>())
                 .Returns(_webConfiguration);
 
-            MockEmployerService
-                .Setup(mock => mock.GetEmployer(ProviderSiteUrn, Ern))
-                .Returns(_employer);
+            MockProviderService
+                .Setup(mock => mock.GetProviderSiteEmployerLink(ProviderSiteUrn, Ern))
+                .Returns(ProviderSiteEmployerLink);
 
             MockReferenceDataService
                 .Setup(mock => mock.GetCategories())
@@ -120,11 +126,11 @@
             var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
 
             // Assert.
-            MockEmployerService.Verify(mock =>
-                mock.GetEmployer(ProviderSiteUrn, Ern), Times.Once);
+            MockProviderService.Verify(mock =>
+                mock.GetProviderSiteEmployerLink(ProviderSiteUrn, Ern), Times.Once);
 
             viewModel.Should().NotBeNull();
-            viewModel.Employer.ProviderSiteErn.Should().Be(ProviderSiteUrn);
+            viewModel.ProviderSiteEmployerLink.ProviderSiteErn.Should().Be(ProviderSiteUrn);
         }
 
         [Test]

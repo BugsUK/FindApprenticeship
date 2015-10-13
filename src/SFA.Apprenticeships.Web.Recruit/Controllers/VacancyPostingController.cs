@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -11,6 +10,7 @@
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Providers;
+    using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
@@ -29,12 +29,7 @@
         [HttpGet]
         public ActionResult SelectEmployer(string providerSiteErn)
         {
-            var viewModel = new EmployerFilterViewModel
-            {
-                ProviderSiteErn = providerSiteErn
-            };
-
-            var response = _vacancyPostingMediator.GetProviderEmployers(viewModel);
+            var response = _vacancyPostingMediator.GetProviderEmployers(providerSiteErn);
 
             switch (response.Code)
             {
@@ -90,7 +85,7 @@
         }
 
         [HttpPost]
-        public ActionResult ConfirmEmployer(EmployerViewModel viewModel)
+        public ActionResult ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel)
         {
             var response = _vacancyPostingMediator.ConfirmEmployer(viewModel);
 
@@ -100,7 +95,7 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Ern });
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

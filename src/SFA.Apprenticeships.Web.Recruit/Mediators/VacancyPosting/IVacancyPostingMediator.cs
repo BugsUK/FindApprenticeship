@@ -1,18 +1,21 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using Common.Mediators;
+    using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     public interface IVacancyPostingMediator
     {
+        MediatorResponse<EmployerFilterViewModel> GetProviderEmployers(string providerSiteErn);
+
         MediatorResponse<EmployerFilterViewModel> GetProviderEmployers(EmployerFilterViewModel employerFilterViewModel);
 
         MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel);
 
-        MediatorResponse<EmployerViewModel> GetEmployer(string providerSiteErn, string ern);
+        MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern);
 
-        MediatorResponse<EmployerViewModel> ConfirmEmployer(EmployerViewModel viewModel);
+        MediatorResponse<ProviderSiteEmployerLinkViewModel> ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel);
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyModel(string ukprn, string providerSiteErn, string ern);
 

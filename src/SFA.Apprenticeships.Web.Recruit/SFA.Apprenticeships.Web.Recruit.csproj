@@ -290,6 +290,7 @@
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\ProviderSiteEmployerLinkViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
@@ -301,6 +302,7 @@
     <Compile Include="Controllers\VacancyPostingController.cs" />
     <Compile Include="Converters\AddressViewModelConverter.cs" />
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
+    <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\VacancyViewModelConverter.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
@@ -321,7 +323,7 @@
     <Compile Include="Mediators\VacancyPosting\IVacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
-    <Compile Include="Validators\Vacancy\EmployerViewModelValidator.cs" />
+    <Compile Include="Validators\Provider\ProviderSiteEmployerLinkViewModelValidator.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />
     <Compile Include="Providers\IProviderProvider.cs" />
@@ -343,6 +345,7 @@
     <Compile Include="ViewModels\Frameworks\SectorSelectItemViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VerifyEmailViewModel.cs" />
+    <Compile Include="ViewModels\Provider\ProviderSiteEmployerLinkViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchMode.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchResponseViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModelMessages.cs" />

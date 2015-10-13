@@ -13,7 +13,7 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.HiddenFor(m => m.VacancyReferenceNumber);
+    @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
     <section>
         <div class="grid-wrapper">
@@ -92,31 +92,31 @@
             <div class="form-group">
                 <div data-id="employer-data-display">
                     <div class="text">
-                        <p>@Model.Employer.Description</p>
+                        <p>@Model.ProviderSiteEmployerLink.Description</p>
                     </div>
                     <div class="grid-wrapper">
                         <div class="grid grid-1-2">
                             <div class="inner-block-padr">
                                 <h3 class="bold-small">Employer</h3>
-                                <p class="small-btm-margin">@Model.Employer.Name</p>
-                                @if (Model.Employer.IsWebsiteUrlWellFormed)
+                                <p class="small-btm-margin">@Model.ProviderSiteEmployerLink.Employer.Name</p>
+                                @if (Model.ProviderSiteEmployerLink.IsWebsiteUrlWellFormed)
                                 {
                                     <p>
-                                        <a href="@Model.Employer.WebsiteUrl" target="_blank" rel="external">@Model.Employer.WebsiteUrl</a>
+                                        <a href="@Model.ProviderSiteEmployerLink.WebsiteUrl" target="_blank" rel="external">@Model.ProviderSiteEmployerLink.WebsiteUrl</a>
                                     </p>
                                 }
                                 <h3 class="bold-small">Address</h3>
-                                <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
-                                <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>
-                                <p class="small-btm-margin">@Model.Employer.Address.AddressLine3</p>
-                                <p class="small-btm-margin">@Model.Employer.Address.AddressLine4</p>
-                                <p>@Model.Employer.Address.Postcode</p>
+                                <p class="small-btm-margin">@Model.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
+                                <p class="small-btm-margin">@Model.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
+                                <p class="small-btm-margin">@Model.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
+                                <p class="small-btm-margin">@Model.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
+                                <p>@Model.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
                             </div>
                         </div>
                         <div class="grid grid-1-2 hide-print">
                             <div class="ad-details__map">
                                 <div class="map-overlay" onclick="style.pointerEvents='none'"></div>
-                                <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Employer.Address.Postcode,+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                                <iframe width="700" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=@Model.ProviderSiteEmployerLink.Employer.Address.Postcode,+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                                 <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                             </div>
                         </div>

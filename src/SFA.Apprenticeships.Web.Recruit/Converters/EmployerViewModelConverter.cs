@@ -6,6 +6,19 @@
 
     public static class EmployerViewModelConverter
     {
+        public static EmployerResultViewModel ConvertToResult(this EmployerViewModel employer)
+        {
+            var viewModel = new EmployerResultViewModel
+            {
+                Ern = employer.Ern,
+                //EmployerId = 
+                EmployerName = employer.Name,
+                Address = employer.Address
+            };
+
+            return viewModel;
+        }
+
         public static EmployerResultViewModel ConvertToResult(this Employer employer)
         {
             var viewModel = new EmployerResultViewModel
@@ -23,12 +36,8 @@
         {
             var viewModel = new EmployerViewModel
             {
-                ProviderSiteErn = employer.ProviderSiteErn,
                 Ern = employer.Ern,
                 Name = employer.Name,
-                Description = employer.Description,
-                WebsiteUrl = employer.WebsiteUrl,
-                IsWebsiteUrlWellFormed = employer.IsWebsiteUrlWellFormed,
                 Address = employer.Address.Convert()
             };
 

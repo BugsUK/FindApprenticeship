@@ -4,12 +4,14 @@
     using NUnit.Framework;
     using Recruit.Mediators.VacancyPosting;
     using Recruit.Providers;
+    using Recruit.Validators.Provider;
     using Recruit.Validators.Vacancy;
     using Recruit.Validators.VacancyPosting;
 
     public class TestsBase
     {
         protected Mock<IVacancyPostingProvider> VacancyPostingProvider;
+        protected Mock<IProviderProvider> ProviderProvider;
         protected Mock<IEmployerProvider> EmployerProvider;
 
         [SetUp]
@@ -22,10 +24,11 @@
         {
             return new VacancyPostingMediator(
                 VacancyPostingProvider.Object,
+                ProviderProvider.Object,
                 EmployerProvider.Object,
                 new NewVacancyViewModelServerValidator(),
                 new VacancyViewModelValidator(),
-                new EmployerViewModelValidator());
+                new ProviderSiteEmployerLinkViewModelValidator());
         }
     }
 }

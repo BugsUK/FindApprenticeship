@@ -10,12 +10,14 @@
 
         Provider GetProvider(string ukprn);
 
-        IEnumerable<ProviderSite> GetProviderSites(string ukprn);
-
         ProviderSite GetProviderSite(string ukprn, string ern);
 
-        Employer GetEmployer(string providerSiteErn, string ern);
+        IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
-        IEnumerable<Employer> GetEmployers(string providerSiteErn);
+        ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern);
+
+        IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn);
+
+        Employer GetEmployer(string ern);
     }
 }

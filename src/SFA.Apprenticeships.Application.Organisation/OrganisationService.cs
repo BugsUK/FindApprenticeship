@@ -44,15 +44,6 @@
             return _legacyProviderProvider.GetProvider(ukprn);
         }
 
-        public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
-        {
-            Condition.Requires(ukprn).IsNotNullOrEmpty();
-
-            _logService.Debug("Calling LegacyProviderProvider to get provider sites for provider with UKPRN='{0}'.", ukprn);
-
-            return _legacyProviderProvider.GetProviderSites(ukprn);
-        }
-
         public ProviderSite GetProviderSite(string ukprn, string ern)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
@@ -63,22 +54,41 @@
             return _legacyProviderProvider.GetProviderSite(ukprn, ern);
         }
 
-        public Employer GetEmployer(string providerSiteErn, string ern)
+        public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
-            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
+            Condition.Requires(ukprn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling LegacyEmployerProvider to get employer for provider with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
+            _logService.Debug("Calling LegacyProviderProvider to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
-            return _legacyEmployerProvider.GetEmployer(providerSiteErn, ern);
+            return _legacyProviderProvider.GetProviderSites(ukprn);
         }
 
-        public IEnumerable<Employer> GetEmployers(string providerSiteErn)
+        public ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern)
+        {
+            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
+            Condition.Requires(ern).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling LegacyProviderProvider to get provider site employer link for provider with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
+
+            return _legacyProviderProvider.GetProviderSiteEmployerLink(providerSiteErn, ern);
+        }
+
+        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn)
         {
             Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling LegacyEmployerProvider to get employers for provider with ERN='{0}'.", providerSiteErn);
+            _logService.Debug("Calling LegacyProviderProvider to get provider site employer links for provider with ERN='{0}'.", providerSiteErn);
 
-            return _legacyEmployerProvider.GetEmployers(providerSiteErn);
+            return _legacyProviderProvider.GetProviderSiteEmployerLinks(providerSiteErn);
+        }
+
+        public Employer GetEmployer(string ern)
+        {
+            Condition.Requires(ern).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling LegacyEmployerProvider to get employer with ERN='{0}'.", ern);
+
+            return _legacyEmployerProvider.GetEmployer(ern);
         }
     }
 }

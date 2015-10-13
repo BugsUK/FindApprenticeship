@@ -16,15 +16,19 @@
         private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
         private readonly IProviderSiteWriteRepository _providerSiteWriteRepository;
+        private readonly IProviderSiteEmployerLinkReadRepository _providerSiteEmployerLinkReadRepository;
+        private readonly IProviderSiteEmployerLinkWriteRepository _providerSiteEmployerLinkWriteRepository;
         private readonly ILogService _logService;
 
-        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, ILogService logService)
+        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IProviderSiteEmployerLinkReadRepository providerSiteEmployerLinkReadRepository, IProviderSiteEmployerLinkWriteRepository providerSiteEmployerLinkWriteRepository, ILogService logService)
         {
             _organisationService = organisationService;
             _providerReadRepository = providerReadRepository;
             _providerWriteRepository = providerWriteRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
             _providerSiteWriteRepository = providerSiteWriteRepository;
+            _providerSiteEmployerLinkReadRepository = providerSiteEmployerLinkReadRepository;
+            _providerSiteEmployerLinkWriteRepository = providerSiteEmployerLinkWriteRepository;
             _logService = logService;
         }
 
@@ -51,6 +55,27 @@
         public void SaveProvider(Provider provider)
         {
             _providerWriteRepository.Save(provider);
+        }
+
+        public ProviderSite GetProviderSite(string ukprn, string ern)
+        {
+            Condition.Requires(ukprn).IsNotNullOrEmpty();
+            Condition.Requires(ern).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+
+            var providerSite = _providerSiteReadRepository.Get(ern);
+
+            if (providerSite != null)
+            {
+                return providerSite;
+            }
+
+            _logService.Debug("Calling OrganisationService to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+
+            providerSite = _organisationService.GetProviderSite(ukprn, ern);
+
+            return providerSite;
         }
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
@@ -81,25 +106,51 @@
             }
         }
 
-        public ProviderSite GetProviderSite(string ukprn, string ern)
+        public ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern)
         {
-            Condition.Requires(ukprn).IsNotNullOrEmpty();
+            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
             Condition.Requires(ern).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
 
-            var providerSite = _providerSiteReadRepository.Get(ern);
+            var providerSiteEmployerLink = _providerSiteEmployerLinkReadRepository.Get(providerSiteErn, ern);
 
-            if (providerSite != null)
+            if (providerSiteEmployerLink != null)
             {
-                return providerSite;
+                return providerSiteEmployerLink;
             }
 
-            _logService.Debug("Calling OrganisationService to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
 
-            providerSite = _organisationService.GetProviderSite(ukprn, ern);
+            providerSiteEmployerLink = _organisationService.GetProviderSiteEmployerLink(providerSiteErn, ern);
 
-            return providerSite;
+            return providerSiteEmployerLink;
+        }
+
+        public ProviderSiteEmployerLink SaveProviderSiteEmployerLink(ProviderSiteEmployerLink providerSiteEmployerLink)
+        {
+            return _providerSiteEmployerLinkWriteRepository.Save(providerSiteEmployerLink);
+        }
+
+        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn)
+        {
+            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", providerSiteErn);
+
+            //TODO: Reinstate once we've worked out a migration strategy
+            /*IEnumerable<ProviderSiteEmployerLink> providerSiteEmployerLinks = _providerSiteEmployerLinkReadRepository.GetForProviderSite(providerSiteErn).ToList();
+
+            if (providerSiteEmployerLinks.Any())
+            {
+                return providerSiteEmployerLinks;
+            }*/
+
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", providerSiteErn);
+
+            var providerSiteEmployerLinks = _organisationService.GetProviderSiteEmployerLinks(providerSiteErn);
+
+            return providerSiteEmployerLinks;
         }
     }
 }

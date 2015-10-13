@@ -7,8 +7,12 @@
     {
         Provider GetProvider(string ukprn);
 
+        ProviderSite GetProviderSite(string ukprn, string ern);
+
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
-        ProviderSite GetProviderSite(string ukprn, string ern);
+        ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern);
+
+        IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn);
     }
 }
