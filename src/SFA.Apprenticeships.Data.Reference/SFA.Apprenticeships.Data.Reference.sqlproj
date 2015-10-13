@@ -129,6 +129,7 @@
     <Build Include="dbo\Tables\MIMEType.sql" />
     <Build Include="dbo\Tables\ProviderSiteRelationship.sql" />
     <Build Include="dbo\Tables\ProviderSiteRelationshipType.sql" />
+    <Build Include="dbo\Tables\SectorSuccessRates.table.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="local.sqlexpress.publish.xml" />
