@@ -27,7 +27,7 @@
             public const string LabelText = "Working week";
             public const string RequiredErrorText = "Please enter the Working week";
             public const string TooLongErrorText = "Working week mustn’t exceed 100 characters";
-            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
         }
 

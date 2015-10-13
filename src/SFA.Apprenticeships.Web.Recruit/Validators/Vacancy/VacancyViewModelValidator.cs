@@ -32,11 +32,11 @@
 
             RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText)
-                .Length(0, 100)
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText);
+                /*.Length(0, 100)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);*/
 
             RuleFor(x => x.WeeklyWage)
                 .NotEmpty()

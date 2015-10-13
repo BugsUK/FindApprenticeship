@@ -4,6 +4,7 @@
 
     public class Employer : BaseEntity
     {
+        //
         public string ProviderSiteErn { get; set; }
         public string Ern { get; set; }
         public string Name { get; set; }

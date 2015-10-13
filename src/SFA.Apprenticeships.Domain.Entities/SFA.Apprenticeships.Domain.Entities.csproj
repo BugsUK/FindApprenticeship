@@ -114,6 +114,7 @@
     <Compile Include="Organisations\Organisation.cs" />
     <Compile Include="Providers\Provider.cs" />
     <Compile Include="Providers\ProviderSite.cs" />
+    <Compile Include="Providers\ProviderSiteEmployerLink.cs" />
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="ReferenceNumber.cs" />
     <Compile Include="Users\AgencyUser.cs" />

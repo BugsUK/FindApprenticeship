@@ -33,8 +33,8 @@
         public List<SelectListItem> ApprenticeshipLevels { get; set; }
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
         public string FrameworkCodeName { get; set; }
-        [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string FrameworkName { get; set; }
+        [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string LongDescription { get; set; }
         [Display(Name = VacancyViewModelMessages.DesiredSkills.LabelText)]
         public string DesiredSkills { get; set; }
