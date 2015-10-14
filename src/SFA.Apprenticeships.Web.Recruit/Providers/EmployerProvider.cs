@@ -15,13 +15,6 @@
             _employerService = employerService;
         }
 
-        public EmployerFilterViewModel GetEmployerViewModels(EmployerFilterViewModel filterViewModel)
-        {
-            //TODO: Wire through
-
-            return filterViewModel;
-        }
-
         public EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel)
         {
             return new EmployerSearchViewModel { EmployerResults = new List<EmployerResultViewModel>() };

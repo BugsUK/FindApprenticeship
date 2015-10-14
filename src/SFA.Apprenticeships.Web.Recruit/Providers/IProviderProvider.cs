@@ -1,4 +1,5 @@
 ﻿using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
+using SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
@@ -13,5 +14,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
         ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(string providerSiteErn, string ern);
         ProviderSiteEmployerLinkViewModel ConfirmProviderSiteEmployerLink(ProviderSiteEmployerLinkViewModel viewModel);
         IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(string providerSiteErn);
+        IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel);
     }
 }

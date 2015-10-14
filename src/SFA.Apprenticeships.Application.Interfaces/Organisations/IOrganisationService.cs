@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.Organisations
+﻿using SFA.Apprenticeships.Application.Interfaces.Employers;
+
+namespace SFA.Apprenticeships.Application.Interfaces.Organisations
 {
     using System.Collections.Generic;
     using Domain.Entities.Organisations;
@@ -16,7 +18,7 @@
 
         ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern);
 
-        IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn);
+        IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request);
 
         Employer GetEmployer(string ern);
     }

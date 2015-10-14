@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using SFA.Apprenticeships.Application.Interfaces.Employers;
 using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
+using SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
@@ -67,7 +69,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         public IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(string providerSiteErn)
         {
-            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(providerSiteErn);
+            var parameters = new EmployerSearchRequest(providerSiteErn);
+            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters);
+            return providerSiteEmployerLinks.Select(psel => psel.Convert());
+        }
+
+        public IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel)
+        {
+            var parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn);
+            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters);
             return providerSiteEmployerLinks.Select(psel => psel.Convert());
         }
 

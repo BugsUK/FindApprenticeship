@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
+﻿using SFA.Apprenticeships.Application.Interfaces.Employers;
+
+namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 {
     using System;
     using System.Collections.Generic;
@@ -161,6 +163,12 @@
 
         public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn)
         {
+            var parameters = new EmployerSearchRequest(providerSiteErn);
+            return GetProviderSiteEmployerLinks(parameters);
+        }
+
+        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest)
+        {
             const string sql = @"SELECT ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, 
                                  vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.* 
                                  FROM dbo.ProviderSite AS ps 
@@ -174,13 +182,13 @@
 
             using (var connection = GetConnection())
             {
-                vacancyOwnerRelationships = 
+                vacancyOwnerRelationships =
                     connection.Query<Models.VacancyOwnerRelationship, Models.Employer, Models.VacancyOwnerRelationship>(
                         sql, (vor, employer) =>
                         {
                             vor.Employer = employer;
                             return vor;
-                        }, new { ProviderSiteErn = providerSiteErn },
+                        }, new { ProviderSiteErn = searchRequest.ProviderSiteErn },
                         splitOn: "NationWideAllowed,EmployerId").ToList();
             }
 

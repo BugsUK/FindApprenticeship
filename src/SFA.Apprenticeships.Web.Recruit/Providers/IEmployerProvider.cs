@@ -5,8 +5,6 @@
 
     public interface IEmployerProvider
     {
-        EmployerFilterViewModel GetEmployerViewModels(EmployerFilterViewModel filterViewModel);
-
         EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel);
 
         EmployerViewModel GetEmployerViewModel(string ern);

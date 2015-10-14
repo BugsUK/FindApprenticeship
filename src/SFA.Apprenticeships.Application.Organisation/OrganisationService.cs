@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Organisation
+﻿using SFA.Apprenticeships.Application.Interfaces.Employers;
+
+namespace SFA.Apprenticeships.Application.Organisation
 {
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
@@ -73,13 +75,13 @@
             return _legacyProviderProvider.GetProviderSiteEmployerLink(providerSiteErn, ern);
         }
 
-        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn)
+        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
         {
-            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
+            Condition.Requires(request).IsNotNull();
 
-            _logService.Debug("Calling LegacyProviderProvider to get provider site employer links for provider with ERN='{0}'.", providerSiteErn);
+            _logService.Debug("Calling LegacyProviderProvider to get provider site employer links for provider with ERN='{0}'.", request.ProviderSiteErn);
 
-            return _legacyProviderProvider.GetProviderSiteEmployerLinks(providerSiteErn);
+            return _legacyProviderProvider.GetProviderSiteEmployerLinks(request);
         }
 
         public Employer GetEmployer(string ern)

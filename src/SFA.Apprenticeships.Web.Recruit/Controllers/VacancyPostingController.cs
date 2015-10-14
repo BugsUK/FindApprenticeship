@@ -41,7 +41,7 @@
         }
 
         [HttpPost]
-        public ActionResult SelectEmployer(EmployerFilterViewModel viewModel)
+        public ActionResult SelectEmployer(EmployerSearchViewModel viewModel)
         {
             var response = _vacancyPostingMediator.GetProviderEmployers(viewModel);
 

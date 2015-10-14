@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Provider
+﻿using SFA.Apprenticeships.Application.Interfaces.Employers;
+
+namespace SFA.Apprenticeships.Application.Provider
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -132,11 +134,11 @@
             return _providerSiteEmployerLinkWriteRepository.Save(providerSiteEmployerLink);
         }
 
-        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn)
+        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
         {
-            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
+            Condition.Requires(request).IsNotNull();
 
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", providerSiteErn);
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteErn);
 
             //TODO: Reinstate once we've worked out a migration strategy
             /*IEnumerable<ProviderSiteEmployerLink> providerSiteEmployerLinks = _providerSiteEmployerLinkReadRepository.GetForProviderSite(providerSiteErn).ToList();
@@ -146,9 +148,9 @@
                 return providerSiteEmployerLinks;
             }*/
 
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", providerSiteErn);
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteErn);
 
-            var providerSiteEmployerLinks = _organisationService.GetProviderSiteEmployerLinks(providerSiteErn);
+            var providerSiteEmployerLinks = _organisationService.GetProviderSiteEmployerLinks(request);
 
             return providerSiteEmployerLinks;
         }
