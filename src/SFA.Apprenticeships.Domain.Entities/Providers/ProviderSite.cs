@@ -4,6 +4,7 @@
 
     public class ProviderSite : BaseEntity
     {
+        //TODO: Review the name of this property - It's specific to employers (Employer Reference Number) and should perhaps be EDSURN (Employer Data Service Unique Reference Number)
         public string Ern { get; set; }
 
         public string Ukprn { get; set; }
