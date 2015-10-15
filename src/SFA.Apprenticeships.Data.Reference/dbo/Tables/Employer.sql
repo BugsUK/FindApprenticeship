@@ -25,6 +25,8 @@
     [BeingSupportedBy]          NVARCHAR (50)    NULL,
     [LockedForSupportUntil]     DATETIME         NULL,
     [EmployerStatusTypeId]      INT              NULL,
+	[SearchablePostCode] as REPLACE(PostCode, ' ', ''),
+	[SearchableName] as [FullName] + ' ' + [TradingName],
     [DisableAllowed]            BIT              CONSTRAINT [DFT_Employer_DisableAllowed] DEFAULT ((0)) NOT NULL,
     [TrackingAllowed]           BIT              CONSTRAINT [DFT_Employer_TrackingAllowed] DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_Employer] PRIMARY KEY CLUSTERED ([EmployerId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],

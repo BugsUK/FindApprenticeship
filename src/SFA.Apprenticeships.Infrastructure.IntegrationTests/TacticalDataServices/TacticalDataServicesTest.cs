@@ -47,43 +47,51 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
             }
         }
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="providerSiteErn"></param>
         [TestCase("902763946"), Category("Integration")]
         public void ReturnsProviderSiteEmployerLinks(string providerSiteErn)
         {
             //Arrange
-            var parameters = new EmployerSearchRequest(providerSiteErn);
+            var query = new EmployerSearchRequest(providerSiteErn);
 
             //Act
-            var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(parameters);
+            var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);
 
             //Assert
-            links.Count().Should().Be(1);
+            links.Count().Should().Be(168);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="providerSiteErn"></param>
-        /// <param name="ern"></param>
-        /// <param name="employerName"></param>
-        /// <param name="tradingName"></param>
-        /// <param name="postCode"></param>
-        [TestCase("902763946", "", "", "", ""), Category("Integration")]
-        [TestCase("902763946", "", "", "", ""), Category("Integration")]
-        public void ReturnsProviderSiteEmployerLinks(string providerSiteErn, string ern, string employerName, string tradingName, string postCode)
+        [TestCase("902763946", "Hit Training", "LE3 1HR", 1), Category("Integration")]
+        [TestCase("902763946", "", "LE3 1HR", 1), Category("Integration")]
+        [TestCase("902763946", "Hit Training", "L E3 ", 1), Category("Integration")]
+        [TestCase("902763946", "Hit Training", "LE3 1HR", 1), Category("Integration")]
+        [TestCase("902763946", "Hit Training", "LE3 1HRz", 0), Category("Integration")]
+        [TestCase("902763946", "Hit Training", "", 1), Category("Integration")]
+        public void ReturnsProviderSiteEmployerLinksByNameAndPostcode(string providerSiteErn, string employerName, string postCode, int expectedResults)
         {
             //Arrange
-            var parameters = new EmployerSearchRequest(providerSiteErn, ern, employerName, tradingName, postCode);
+            var query = new EmployerSearchRequest(providerSiteErn, employerName, postCode);
 
             //Act
-            var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(parameters);
+            var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);
 
             //Assert
-            links.Count().Should().BeGreaterThan(1);
+            links.Count().Should().Be(expectedResults);
+        }
+
+        [TestCase("902763946", "902763946"), Category("Integration")]
+        [TestCase("902763946", "105108332"), Category("Integration")]
+        [TestCase("902763946", "162258372"), Category("Integration")]
+        public void SearchProviderSiteEmployerLinksByEmployerEdsUrn(string providerSiteErn, string employerEdsUrn)
+        {
+            //Arrange
+            var query= new EmployerSearchRequest(providerSiteErn, employerEdsUrn);
+
+            //Act
+            var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);
+
+            //Assert
+            //there should only ever be 1, as employer edsurn is unique
+            links.Count().Should().Be(1);
         }
 
     }

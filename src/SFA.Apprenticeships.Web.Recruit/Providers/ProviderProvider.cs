@@ -76,8 +76,20 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         public IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel)
         {
-            var parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn);
+            EmployerSearchRequest parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn);
+
+            switch (viewModel.FilterType)
+            {
+                case EmployerFilterType.Ern:
+                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn, viewModel.Ern);
+                    break;
+                case EmployerFilterType.NameAndLocation:
+                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn, viewModel.Name, viewModel.Location);
+                    break;
+            }
+
             var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters);
+
             return providerSiteEmployerLinks.Select(psel => psel.Convert());
         }
 
