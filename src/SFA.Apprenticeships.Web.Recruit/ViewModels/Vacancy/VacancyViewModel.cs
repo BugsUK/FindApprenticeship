@@ -15,7 +15,6 @@
     {
         public long VacancyReferenceNumber { get; set; }
         public string Ukprn { get; set; }
-
         [Display(Name = VacancyViewModelMessages.Title.LabelText)]
         public string Title { get; set; }
         [Display(Name = VacancyViewModelMessages.ShortDescription.LabelText)]

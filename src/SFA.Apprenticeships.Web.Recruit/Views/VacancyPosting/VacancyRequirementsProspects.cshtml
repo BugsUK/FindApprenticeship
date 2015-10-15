@@ -1,0 +1,39 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancyRequirementsProspectsViewModel
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
+    ViewBag.Title = "Recruit an Apprentice - Enter vacancy requirements and prospects";
+}
+
+<h1 class="heading-xlarge">
+    Enter vacancy details
+</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+    <section>
+        <h2 class="heading-large">
+            Requirements and prospects
+        </h2>
+        <div class="grid-wrapper">
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", autofocus = "autofocus" }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
+                    @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
+                </div>
+            </div>
+            <div class="grid grid-1-2">
+                @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
+                @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
+            </div>
+        </div>
+    </section>
+    <div class="grid grid-1-2">
+        <button type="submit" class="button">Save and continue</button>
+    </div>
+}

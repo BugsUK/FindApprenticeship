@@ -37,25 +37,30 @@
 
         @* ReSharper disable once Html.IdNotResolved *@
         <label for="apprenticeship-level-intermediate" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new { id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label" }) Intermediate
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
         </label>
 
         @* ReSharper disable once Html.IdNotResolved *@
         <label for="apprenticeship-level-advanced" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new { id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label" }) Advanced
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
         </label>
 
         @* ReSharper disable once Html.IdNotResolved *@
         <label for="apprenticeship-level-higher" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new { id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label" }) Higher
+            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
         </label>
     </div>
+
+    @Html.FormTextFor(m => m.Title, controlHtmlAttributes: new { type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
+
+    <!--TODO: Why is 4000 characters remaining appearing?-->
+    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12 }, labelHtmlAttributes: new { @class = "bold-small" })
 
     @Html.HiddenFor(model => model.Ukprn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.ProviderSiteErn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern);
 
-    <fieldset class="form-group">
+    <div class="form-group">
         <button type="submit" class="button">Save and continue</button>
-    </fieldset>
+    </div>
 }

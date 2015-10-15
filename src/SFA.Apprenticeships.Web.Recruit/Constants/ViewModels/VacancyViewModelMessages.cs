@@ -17,7 +17,7 @@
         {
             public const string LabelText = "Short description";
             public const string RequiredErrorText = "Please provide a Short description";
-            public const string TooLongErrorText = "Short description mustn’t exceed 4000 characters";
+            public const string TooLongErrorText = "Short description mustn’t exceed 512 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Short description " + Whitelists.FreetextWhitelist.ErrorText;
         }

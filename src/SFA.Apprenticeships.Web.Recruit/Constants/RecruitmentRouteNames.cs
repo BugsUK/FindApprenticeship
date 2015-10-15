@@ -36,7 +36,11 @@
 
         // Vacancies
         public const string CreateVacancy = "CreateVacancy";
-        public const string SubmitVacancy = "SubmitVacancy";
+        public const string VacancySummary = "VacancySummary";
         public const string VacancySubmitted = "VacancySubmitted";
+        public const string VacancyRequirementsProspects = "VacancyRequirementsProspects";
+        public const string VacancyQuestions = "VacancyQuestions";
+        public const string PreviewVacancy = "PreviewVacancy";
+        public const string SubmitVacancy = "SubmitVacancy";
     }
 }

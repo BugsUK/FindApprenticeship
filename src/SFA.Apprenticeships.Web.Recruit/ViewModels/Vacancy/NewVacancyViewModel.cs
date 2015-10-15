@@ -1,10 +1,15 @@
 namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Constants.ViewModels;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using FluentValidation.Attributes;
     using Frameworks;
     using Provider;
+    using Validators.Vacancy;
 
+    [Validator(typeof(NewVacancyViewModelClientValidator))]
     public class NewVacancyViewModel
     {
         public long? VacancyReferenceNumber { get; set; }
@@ -14,6 +19,12 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public string FrameworkCodeName { get; set; }
+
+        [Display(Name = VacancyViewModelMessages.Title.LabelText)]
+        public string Title { get; set; }
+
+        [Display(Name = VacancyViewModelMessages.ShortDescription.LabelText)]
+        public string ShortDescription { get; set; }
 
         public List<SectorSelectItemViewModel> SectorsAndFrameworks { get; set; }
 

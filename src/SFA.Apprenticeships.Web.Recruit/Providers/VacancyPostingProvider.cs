@@ -69,9 +69,11 @@
                     EntityId = Guid.NewGuid(),
                     VacancyReferenceNumber = vacancyReferenceNumber,
                     Ukprn = newVacancyViewModel.Ukprn,
+                    Title = newVacancyViewModel.Title,
+                    ShortDescription = newVacancyViewModel.ShortDescription,
                     FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                     ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
-                    ProviderSiteEmployerLink = providerSiteEmployerLink
+                    ProviderSiteEmployerLink = providerSiteEmployerLink,
                 });
 
                 _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);
@@ -87,10 +89,77 @@
             }
         }
 
+        public VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            return viewModel;
+        }
+
+        public VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.WorkingWeek = viewModel.WorkingWeek;
+            vacancy.WeeklyWage = viewModel.WeeklyWage;
+            vacancy.Duration = viewModel.Duration;
+            vacancy.ClosingDate = viewModel.ClosingDate;
+            vacancy.PossibleStartDate = viewModel.PossibleStartDate;
+            vacancy.LongDescription = viewModel.LongDescription;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            return viewModel;
+        }
+
+        public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
+            return viewModel;
+        }
+
+        public VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.DesiredSkills = viewModel.DesiredSkills;
+            vacancy.FutureProspects = viewModel.FutureProspects;
+            vacancy.PersonalQualities = viewModel.PersonalQualities;
+            vacancy.ThingsToConsider = viewModel.ThingsToConsider;
+            vacancy.DesiredQualifications = viewModel.DesiredQualifications;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
+            return viewModel;
+        }
+
+        public VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
+            return viewModel;
+        }
+
+        public VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.FirstQuestion = viewModel.FirstQuestion;
+            vacancy.SecondQuestion = viewModel.SecondQuestion;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
+            return viewModel;
+        }
+
         public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
-            var viewModel = vacancy.Convert();
+            var viewModel = vacancy.ConvertToVacancyViewModel();
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
@@ -121,7 +190,7 @@
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
-            viewModel = vacancy.Convert();
+            viewModel = vacancy.ConvertToVacancyViewModel();
             viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
             viewModel.FrameworkName = _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);

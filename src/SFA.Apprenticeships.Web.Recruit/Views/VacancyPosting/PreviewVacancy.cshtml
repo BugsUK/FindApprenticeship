@@ -1,0 +1,194 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancyViewModel
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
+    ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
+}
+
+<div>
+    <div class="grid-wrapper">
+        <div class="grid grid-2-3">
+            <div class="hgroup text">
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.Title (Preview)</h1>
+                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.ProviderSiteEmployerLink.Employer.Name</p>
+            </div>
+        </div>
+        <div class="grid grid-1-3">
+            <p class="page-link hide-nojs">
+                <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
+            </p>
+        </div>
+    </div>
+
+        <section class="grid-wrapper">
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="text" itemprop="description">
+                        <p id="vacancy-description">@Model.ShortDescription</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-1-3">
+                <p id="vacancy-closing-date" class="copy-16">Closing date: @Model.ClosingDate.Value.ToFriendlyClosingToday()</p>
+            </div>
+        </section>
+        <section class="section-border grid-wrapper" id="vacancy-info">
+            <h2 class="heading-large">Apprenticeship summary</h2>
+            <div class="grid grid-1-3">
+                <div class="inner-block-padr">
+                    <h3 class="bold-small">Weekly wage</h3>
+                    <p id="vacancy-wage">@Model.WeeklyWage</p>
+
+                    <h3 class="bold-small">Working week</h3>
+                    <p id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</p>
+                    <h3 class="bold-small">Apprenticeship duration</h3>
+                    <p id="vacancy-expected-duration">@(string.IsNullOrWhiteSpace(@Model.Duration) ? "Not specified" : @Model.Duration)</p>
+                    <h3 class="bold-small">Possible start date</h3>
+                    <p id="vacancy-start-date">@Html.DisplayFor(m => Model.PossibleStartDate)</p>
+                    <h3 class="bold-small">Apprenticeship level</h3>
+                    <p id="vacancy-type" itemprop="employmentType">@Model.ApprenticeshipLevel Level Apprenticeship</p>
+
+                    <h3 class="bold-small">Reference number</h3>
+                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
+                </div>
+            </div>
+            <div class="grid grid-2-3">
+                <div class="text" itemprop="responsibilities">
+                    <p id="vacancy-full-descrpition">@Html.Raw(Model.LongDescription)</p>
+                </div>
+            </div>
+
+        </section>
+        <section class="section-border grid-wrapper" id="course-info">
+            <h2 class="heading-large">Requirements and prospects</h2>
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        @if (!string.IsNullOrWhiteSpace(Model.DesiredSkills))
+                        {
+                            <h3 class="heading-small">Desired skills</h3>
+                            <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.DesiredSkills)</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.PersonalQualities))
+                        {
+                            <h3 class="heading-small">Personal qualities</h3>
+                            <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.PersonalQualities)</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.DesiredQualifications))
+                        {
+                            <h3 class="heading-small">Qualifications required</h3>
+                            <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.DesiredQualifications)</p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-1-2">
+                <div class="text">
+                    @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
+                    {
+                        <h3 class="heading-small">Future prospects</h3>
+                        <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.ThingsToConsider))
+                    {
+                        <h3 class="heading-small">Things to consider</h3>
+                        <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.ThingsToConsider)</p>
+                    }
+                </div>
+            </div>
+        </section>
+        <section class="section-border" id="employer-info">
+            <h2 class="heading-large">About the employer</h2>
+            <div class="grid-wrapper">
+                <div class="grid grid-2-3">
+                    <div class="inner-block-padr">
+                        <div class="text">
+                            <p id="vacancy-employer-description">@Html.Raw(Model.ProviderSiteEmployerLink.Description)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid-wrapper">
+                <div class="grid grid-1-2">
+                    <div class="inner-block-padr">
+                        <div class="text">
+                            <h3 class="bold-small">Employer</h3>
+                            <p id="vacancy-employer-name" class="@(Model.ProviderSiteEmployerLink.IsWebsiteUrlWellFormed ? "no-btm-margin" : "")">@Model.ProviderSiteEmployerLink.Employer.Name</p>
+                            @if (Model.ProviderSiteEmployerLink.IsWebsiteUrlWellFormed)
+                            {
+                                <p>
+                                    <a itemprop="url" href="@Model.ProviderSiteEmployerLink.WebsiteUrl"
+                                       id="vacancy-employer-website"
+                                       target="_blank"
+                                       title="@Model.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.ProviderSiteEmployerLink.WebsiteUrl</a>
+                                </p>
+                            }
+                            else
+                            {
+                                <p>@Model.ProviderSiteEmployerLink.WebsiteUrl</p>
+                            }
+                            <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
+                                <h3 class="bold-small">Address</h3>
+                                <div itemprop="address">
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="postalCode">@Model.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="grid grid-1-2 hide-print">
+                    <div id="vacancy-map" class="ad-details__map">
+                        <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
+                        <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section-border grid-wrapper" id="provider-info">
+            <h2 class="heading-large">Training provider</h2>
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
+                        {
+                            <p id="vacancy-training-to-be-provided">@Html.Raw(Model.ProviderSite.CandidateDescription)</p>
+                        }
+                        <h3 class="heading-small">Apprenticeship framework</h3>
+                        <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
+                        <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-1-3">
+                <div class="text">
+                    <h3 class="bold-small">Training provider</h3>
+                    <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
+                {
+                    <div class="text">
+                        <h3 class="bold-small">Contact</h3>
+                        <p id="vacancy-provider-contact">@Model.ProviderSite.ContactDetailsForCandidate</p>
+                    </div>
+                }
+            </div>
+
+        </section>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySubmitted, FormMethod.Get))
+{
+    @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+    <section>
+        <div class="form-group">
+            <button type="submit" class="button">Submit for approval</button>
+        </div>
+    </section>
+}
+</div>

@@ -38,10 +38,31 @@
             public const string Ok = "VacancyPosting.GetVacancyViewModel.Ok";
         }
 
+        public static class GetVacancySummaryViewModel
+        {
+            public const string Ok = "VacancyPosting.GetVacancySummaryViewModel.Ok";
+        }
+
+        public static class GetVacancyRequirementsProspectsViewModel
+        {
+            public const string Ok = "VacancyPosting.GetVacancyRequirementsProspectsViewModel.Ok";
+        }
+
+        public static class GetVacancyQuestionsViewModel
+        {
+            public const string Ok = "VacancyPosting.GetVacancyQuestionsViewModel.Ok";
+        }
+
         public static class CreateVacancy
         {
             public const string Ok = "VacancyPosting.CreateVacancy.Ok";
             public const string FailedValidation = "VacancyPosting.CreateVacancy.FailedValidation";
+        }
+
+        public static class UpdateVacancy
+        {
+            public const string Ok = "VacancyPosting.UpdateVacancy.Ok";
+            public const string FailedValidation = "VacancyPosting.UpdateVacancy.FailedValidation";
         }
 
         public static class SubmitVacancy

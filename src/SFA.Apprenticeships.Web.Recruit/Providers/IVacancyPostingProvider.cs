@@ -11,10 +11,21 @@
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
+        VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+
+        VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel);
+
+        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
+
+        VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
+
+        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+
+        VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel);
+
         VacancyViewModel GetVacancy(long vacancyReferenceNumber);
 
         VacancyViewModel SubmitVacancy(VacancyViewModel viewModel);
-
 
         List<SectorSelectItemViewModel> GetSectorsAndFrameworks();
 

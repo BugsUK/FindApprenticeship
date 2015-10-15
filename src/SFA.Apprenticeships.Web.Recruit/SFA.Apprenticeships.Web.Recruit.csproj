@@ -301,10 +301,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
     <Compile Include="Converters\AddressViewModelConverter.cs" />
+    <Compile Include="Converters\ApprenticeshipVacancyConverter.cs" />
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
-    <Compile Include="Converters\VacancyViewModelConverter.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />
@@ -339,7 +339,7 @@
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
-    <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidator.cs" />
+    <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="ViewModels\Frameworks\FrameworkSelectItemViewModel.cs" />
     <Compile Include="ViewModels\Frameworks\SectorSelectItemViewModel.cs" />
@@ -363,6 +363,12 @@
     <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
+    <Compile Include="Validators\Vacancy\VacancyQuestionsViewModelValidator.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
+    <Compile Include="Validators\Vacancy\VacancyRequirementsProspectsViewModelValidator.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
+    <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
@@ -458,6 +464,10 @@
     <Content Include="Views\VacancyPosting\SelectEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\AddEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\ConfirmEmployer.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancySummary.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancyRequirementsProspects.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancyQuestions.cshtml" />
+    <Content Include="Views\VacancyPosting\PreviewVacancy.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -489,6 +499,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Validators\VacancyPosting\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

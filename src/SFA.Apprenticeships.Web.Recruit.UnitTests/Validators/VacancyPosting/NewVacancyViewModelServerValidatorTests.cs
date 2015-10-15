@@ -3,7 +3,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Recruit.Validators.VacancyPosting;
+    using Recruit.Validators.Vacancy;
     using ViewModels.Vacancy;
 
     [TestFixture]
