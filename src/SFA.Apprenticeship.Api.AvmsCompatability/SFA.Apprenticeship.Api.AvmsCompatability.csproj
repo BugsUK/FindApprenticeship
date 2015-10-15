@@ -86,6 +86,18 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
@@ -127,16 +139,24 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="ReferenceData51.svc" />
+    <Content Include="ReferenceDataService.svc" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\ApplicationType.cs" />
     <Compile Include="Common\ExternalSystemType.cs" />
+    <Compile Include="Common\MessageCategory.cs" />
+    <Compile Include="Common\MessageEvent.cs" />
+    <Compile Include="Common\MessageType.cs" />
+    <Compile Include="Common\UserType.cs" />
+    <Compile Include="Common\VacancyApprenticeshipType.cs" />
     <Compile Include="Common\VacancyDetailsSearchLocationType.cs" />
     <Compile Include="Common\VacancyLocationType.cs" />
     <Compile Include="Common\VacancyStatus.cs" />
     <Compile Include="Common\VacancyType.cs" />
     <Compile Include="Common\VacancyUploadResult.cs" />
+    <Compile Include="Common\WageType.cs" />
     <Compile Include="DataContracts\Version50\AddressData.cs" />
     <Compile Include="DataContracts\Version50\ApplicationTrackingData.cs" />
     <Compile Include="DataContracts\Version50\ApplicationTrackingResultData.cs" />
@@ -157,7 +177,33 @@
     <Compile Include="DataContracts\Version50\VacancyUploadData.cs" />
     <Compile Include="DataContracts\Version50\VacancyUploadResultData.cs" />
     <Compile Include="DataContracts\Version50\WebInterfaceGenericDetailsData.cs" />
+    <Compile Include="DataContracts\Version51\AddressData.cs" />
+    <Compile Include="DataContracts\Version51\ApplicationData.cs" />
+    <Compile Include="DataContracts\Version51\ApplicationTrackingData.cs" />
+    <Compile Include="DataContracts\Version51\ApplicationTrackingResultData.cs" />
+    <Compile Include="DataContracts\Version51\ApprenticeshipData.cs" />
+    <Compile Include="DataContracts\Version51\ApprenticeshipFrameworkAndOccupationData.cs" />
+    <Compile Include="DataContracts\Version51\ApprenticeshipTypeData.cs" />
+    <Compile Include="DataContracts\Version51\CountyData.cs" />
+    <Compile Include="DataContracts\Version51\DivisionData.cs" />
+    <Compile Include="DataContracts\Version51\ElementErrorData.cs" />
+    <Compile Include="DataContracts\Version51\EmployerData.cs" />
+    <Compile Include="DataContracts\Version51\ErrorCodesData.cs" />
+    <Compile Include="DataContracts\Version51\LocalAuthorityData.cs" />
+    <Compile Include="DataContracts\Version51\MessageData.cs" />
+    <Compile Include="DataContracts\Version51\RegionData.cs" />
+    <Compile Include="DataContracts\Version51\SiteVacancyData.cs" />
+    <Compile Include="DataContracts\Version51\VacancyData.cs" />
+    <Compile Include="DataContracts\Version51\VacancyDetailResponseData.cs" />
+    <Compile Include="DataContracts\Version51\VacancyFullData.cs" />
+    <Compile Include="DataContracts\Version51\VacancySearchData.cs" />
+    <Compile Include="DataContracts\Version51\VacancySummaryData.cs" />
+    <Compile Include="DataContracts\Version51\VacancySummaryResponseData.cs" />
+    <Compile Include="DataContracts\Version51\VacancyUploadData.cs" />
+    <Compile Include="DataContracts\Version51\VacancyUploadResultData.cs" />
+    <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
     <Compile Include="FaultContracts\Version50\SystemFaultContract.cs" />
+    <Compile Include="FaultContracts\Version51\SystemFaultContract.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadRequest.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadResponse.cs" />
     <Compile Include="MessageContracts\Version50\GetApprenticeshipFrameworksRequest.cs" />
@@ -182,17 +228,62 @@
     <Compile Include="MessageContracts\Version50\VacancySummaryRequest.cs" />
     <Compile Include="MessageContracts\Version50\VacancySummaryResponse.cs" />
     <Compile Include="CommonNamespaces.cs" />
+    <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetApprenticeshipTypesInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetApprenticeshipTypesInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetCountiesInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetCountiesInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetCountiesRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetCountiesResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetDivisionsRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetDivisionsResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetErrorCodesInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetErrorCodesInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetErrorCodesRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetErrorCodesResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetLocalAuthoritiesInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetLocalAuthoritiesInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetLocalAuthoritiesRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetLocalAuthoritiesResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetRegionInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetRegionInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\GetRegionRequest.cs" />
+    <Compile Include="MessageContracts\Version51\GetRegionResponse.cs" />
+    <Compile Include="MessageContracts\Version51\NavmsInternalMessageHeader.cs" />
+    <Compile Include="MessageContracts\Version51\NavmsInternalResponseHeader.cs" />
+    <Compile Include="MessageContracts\Version51\NavmsMessageHeader.cs" />
+    <Compile Include="MessageContracts\Version51\NavmsResponseHeader.cs" />
+    <Compile Include="MessageContracts\Version51\SendMessageRequest.cs" />
+    <Compile Include="MessageContracts\Version51\SubmitApplicationTrackingInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\SubmitApplicationTrackingInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\SubmitApplicationTrackingRequest.cs" />
+    <Compile Include="MessageContracts\Version51\SubmitApplicationTrackingResponse.cs" />
+    <Compile Include="MessageContracts\Version51\VacancyDetailsInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\VacancyDetailsInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\VacancyDetailsRequest.cs" />
+    <Compile Include="MessageContracts\Version51\VacancyDetailsResponse.cs" />
+    <Compile Include="MessageContracts\Version51\VacancySummaryInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\VacancySummaryInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\VacancySummaryRequest.cs" />
+    <Compile Include="MessageContracts\Version51\VacancySummaryResponse.cs" />
+    <Compile Include="MessageContracts\Version51\VacancyUploadInternalRequest.cs" />
+    <Compile Include="MessageContracts\Version51\VacancyUploadInternalResponse.cs" />
+    <Compile Include="MessageContracts\Version51\VacancyUploadRequest.cs" />
+    <Compile Include="MessageContracts\Version51\VacancyUploadResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceContracts\Version50\IApplicationTracking.cs" />
     <Compile Include="ServiceContracts\Version50\IBulkVacancyUpload.cs" />
     <Compile Include="ServiceContracts\Version50\IReferenceData.cs" />
     <Compile Include="ServiceContracts\Version50\IVacancyDetails.cs" />
     <Compile Include="ServiceContracts\Version50\IVacancySummary.cs" />
+    <Compile Include="ServiceContracts\Version51\IReferenceData.cs" />
+    <Compile Include="ServiceImplementation\Version50\ReferenceDataService.cs" />
+    <Compile Include="ServiceImplementation\Version51\ReferenceDataService.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MessageContracts\Version51\" />
-    <Folder Include="ServiceContracts\Version51\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
