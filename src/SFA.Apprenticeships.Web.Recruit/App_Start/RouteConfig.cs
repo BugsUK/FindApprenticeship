@@ -164,6 +164,18 @@
                );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.SelectNewEmployer,
+                url: "vacancy/employer/selectnew",
+                defaults: new { controller = "VacancyPosting", action = "SelectNewEmployer" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.ComfirmNewEmployer,
+                url: "vacancy/employer/confirmnew",
+                defaults: new { controller = "VacancyPosting", action = "ComfirmNewEmployer" }
+                );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.SubmitVacancy,
                url: "vacancy/submit",
                defaults: new { controller = "VacancyPosting", action = "SubmitVacancy" }

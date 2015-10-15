@@ -288,5 +288,66 @@
 
             return View(viewModel);
         }
+
+        [HttpGet]
+        public ActionResult SelectNewEmployer(string providerSiteErn)
+        {
+            var response = _vacancyPostingMediator.SelectNewEmployer(providerSiteErn);
+            var viewModel = response.ViewModel;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SelectNewEmployerByReferenceNumber")]
+        public ActionResult SelectNewEmployerByReferenceNumber(EmployerSearchViewModel viewModel)
+        {
+            return View("SelectNewEmployer", viewModel);
+
+            /*
+            MediatorResponse < response = _vacancyPostingMediator.SelectNewEmployerByReferenceNumber(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case ProviderMediatorCodes.AddSite.ValidationError:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("AddSite", response.ViewModel);
+
+                case ProviderMediatorCodes.AddSite.SiteNotFoundByEmployerReferenceNumber:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View("AddSite", response.ViewModel);
+
+                case ProviderMediatorCodes.AddSite.SiteFoundByEmployerReferenceNumber:
+                    // TODO: AG: return RedirectToRoute(Xxx);
+                    break;
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+
+            return View("AddSite", response.ViewModel);
+            */
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SelectNewEmployerByNameAndLocation")]
+        public ActionResult SelectNewEmployerByNameAndLocation(EmployerSearchViewModel viewModel)
+        {
+            return View("SelectNewEmployer", viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmNewEmployer()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ConfirmNewEmployer(ConfirmNewEmployerViewModel viewModel)
+        {
+            return HttpNotFound();
+        }
     }
 }

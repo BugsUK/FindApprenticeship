@@ -217,5 +217,17 @@
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);
         }
+
+        public MediatorResponse<EmployerSearchViewModel> SelectNewEmployer(string providerSiteErn)
+        {
+            var viewModel = new EmployerSearchViewModel
+            {
+                ProviderSiteErn = providerSiteErn,
+                FilterType = EmployerFilterType.NameAndLocation,
+                EmployerResults = Enumerable.Empty<EmployerResultViewModel>()
+            };
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.Ok, viewModel);
+        }
     }
 }

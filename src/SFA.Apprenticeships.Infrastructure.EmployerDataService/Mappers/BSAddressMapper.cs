@@ -3,6 +3,7 @@
     using Domain.Entities.Locations;
     using EmployerDataService;
 
+    // http://xml.coverpages.org/BS7666SchemaDefinition-20020312-xsd.txt
     public class BsAddressMapper
     {
         public Address ToAddress(BSaddressStructure fromAddress)

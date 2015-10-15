@@ -75,5 +75,10 @@
         {
             public const string Ok = "VacancyPosting.GetSubmittedVacancyViewModel.Ok";
         }
+
+        public class SelectNewEmployer
+        {
+            public const string Ok = "VacancyPosting.SelectNewEmployer.Ok";
+        }
     }
 }

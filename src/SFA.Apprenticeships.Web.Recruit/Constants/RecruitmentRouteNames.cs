@@ -28,19 +28,24 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
-        
-        // Vacancy employer
+
+        // Vacancy posting
+        public const string CreateVacancy = "CreateVacancy";
+        public const string SubmitVacancy = "SubmitVacancy";
+        public const string VacancySubmitted = "VacancySubmitted";
+        public const string VacancyQuestions = "VacancyQuestions";
+        public const string VacancySummary = "VacancySummary";
+        public const string PreviewVacancy = "PreviewVacancy";
+
+        // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
         public const string AddEmployer = "AddEmployer";
         public const string ComfirmEmployer = "ConfirmEmployer";
 
-        // Vacancies
-        public const string CreateVacancy = "CreateVacancy";
-        public const string VacancySummary = "VacancySummary";
-        public const string VacancySubmitted = "VacancySubmitted";
+        // Vacancy posting - new employer
+        public const string SelectNewEmployer = "SelectNewEmployer";
+        public const string AddNewEmployer = "AddNewEmployer";
+        public const string ComfirmNewEmployer = "ConfirmNewEmployer";
         public const string VacancyRequirementsProspects = "VacancyRequirementsProspects";
-        public const string VacancyQuestions = "VacancyQuestions";
-        public const string PreviewVacancy = "PreviewVacancy";
-        public const string SubmitVacancy = "SubmitVacancy";
     }
 }

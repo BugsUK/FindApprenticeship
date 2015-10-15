@@ -64,6 +64,7 @@
                 </tbody>
             </table>
         </div>
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.AddEmployer)" style="display: none">Add new employer </a>
+
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new { providerSiteErn = Model.ProviderSiteErn })">Link to a new employer</a>
     </section>
 </div>

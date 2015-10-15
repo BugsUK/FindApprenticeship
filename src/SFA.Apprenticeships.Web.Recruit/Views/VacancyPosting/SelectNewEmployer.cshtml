@@ -1,0 +1,68 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@using SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting
+
+@model EmployerSearchViewModel
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Create New Vacancy - Link to a new employer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    const string selected = "selected";
+
+    var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
+    var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
+}
+
+<div class="grid-wrapper">
+    <div class="hgroup">
+        <h1 class="heading-xlarge">
+            Link to a new employer
+        </h1>
+    </div>
+
+    <div class="blocklabel-single-container">
+        <div class="form-group inline clearfix blocklabel-single hide-nojs">
+            @* ReSharper disable once Html.IdNotResolved *@
+            <label data-target="name-location-search-panel" for="name-location-search" class="block-label @nameAndLocationSearchSelected">
+                @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.NameAndLocation, new { id = "name-location-search", aria_controls = "name-location-search-panel" })
+                Name and location
+            </label>
+            @* ReSharper disable once Html.IdNotResolved *@
+            <label data-target="ern-search-panel" for="ern-search" class="block-label @ernSearchSelected">
+                @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.Ern, new { id = "ern-search", aria_controls = "ern-search-panel" })
+                ERN
+            </label>
+        </div>
+
+        @using (Html.BeginRouteForm(RecruitmentRouteNames.SelectNewEmployer, FormMethod.Post, new { @id = "#ern-search-form" }))
+        {
+
+            @Html.Partial("ValidationSummary", ViewData.ModelState)
+            @Html.AntiForgeryToken()
+
+            <div id="ern-search-panel" class="toggle-content blocklabel-content">
+                @Html.FormTextFor(model => model.Ern)
+
+                <button id="ern-search-button" type="submit" name="SelectNewEmployerByReferenceNumber" value="SelectNewEmployerByReferenceNumber" class="button">
+                    Find employer
+                </button>
+            </div>
+        }
+
+        @using (Html.BeginRouteForm(RecruitmentRouteNames.SelectNewEmployer, FormMethod.Post, new { @id = "#name-location-search-form" }))
+        {
+
+            @Html.Partial("ValidationSummary", ViewData.ModelState)
+            @Html.AntiForgeryToken()
+
+            <div id="name-location-search-panel" class="toggle-content blocklabel-content">
+                @Html.FormTextFor(model => model.Name)
+                @Html.FormTextFor(model => model.Location)
+
+                <button id="name-location-search-button" type="submit" name="SelectNewEmployerByNameAndLocation" value="SelectNewEmployerByNameAndLocation" class="button">
+                    Search
+                </button>
+            </div>
+        }
+    </div>
+</div>

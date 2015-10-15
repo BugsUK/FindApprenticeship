@@ -357,6 +357,7 @@
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\VacancyPosting\ConfirmNewEmployerViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\EmployerResultViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\EmployerSearchViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
@@ -464,10 +465,14 @@
     <Content Include="Views\VacancyPosting\SelectEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\AddEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\ConfirmEmployer.cshtml" />
-    <Content Include="Views\VacancyPosting\VacancySummary.cshtml" />
-    <Content Include="Views\VacancyPosting\VacancyRequirementsProspects.cshtml" />
+    <Content Include="Views\VacancyPosting\FindNewEmployer.cshtml" />
+    <Content Include="Views\VacancyPosting\AddNewEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\VacancyQuestions.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancySummary.cshtml" />
+    <Content Include="Views\VacancyPosting\ConfirmNewEmployer.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancyRequirementsProspects.cshtml" />
     <Content Include="Views\VacancyPosting\PreviewVacancy.cshtml" />
+    <Content Include="Views\VacancyPosting\SelectNewEmployer.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
