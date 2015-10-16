@@ -6,6 +6,7 @@
     using Recruit.Providers;
     using Recruit.Validators.Provider;
     using Recruit.Validators.Vacancy;
+    using Recruit.Validators.VacancyPosting;
 
     public class TestsBase
     {
@@ -30,7 +31,8 @@
                 new VacancyRequirementsProspectsViewModelServerValidator(), 
                 new VacancyQuestionsViewModelServerValidator(), 
                 new VacancyViewModelValidator(),
-                new ProviderSiteEmployerLinkViewModelValidator());
+                new ProviderSiteEmployerLinkViewModelValidator(),
+                new EmployerSearchViewModelServerValidator());
         }
     }
 }

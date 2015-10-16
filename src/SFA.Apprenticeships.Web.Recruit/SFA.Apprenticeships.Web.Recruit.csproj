@@ -338,6 +338,7 @@
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
+    <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
@@ -504,7 +505,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Validators\VacancyPosting\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

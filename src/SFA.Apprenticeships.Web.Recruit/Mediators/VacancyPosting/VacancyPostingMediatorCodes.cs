@@ -79,6 +79,7 @@
         public class SelectNewEmployer
         {
             public const string Ok = "VacancyPosting.SelectNewEmployer.Ok";
+            public const string FailedValidation = "VacancyPosting.SelectNewEmployer.FailedValidation";
         }
     }
 }

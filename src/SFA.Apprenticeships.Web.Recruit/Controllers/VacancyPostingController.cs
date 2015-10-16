@@ -290,52 +290,40 @@
         }
 
         [HttpGet]
-        public ActionResult SelectNewEmployer(string providerSiteErn)
+        public ActionResult SelectNewEmployer(EmployerSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.SelectNewEmployer(providerSiteErn);
-            var viewModel = response.ViewModel;
+            var response = _vacancyPostingMediator.SelectNewEmployer(viewModel);
 
-            return View(viewModel);
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.SelectNewEmployer.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyPostingMediatorCodes.SelectNewEmployer.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SelectNewEmployerByReferenceNumber")]
         public ActionResult SelectNewEmployerByReferenceNumber(EmployerSearchViewModel viewModel)
         {
-            return View("SelectNewEmployer", viewModel);
-
-            /*
-            MediatorResponse < response = _vacancyPostingMediator.SelectNewEmployerByReferenceNumber(viewModel);
-
-            ModelState.Clear();
-
-            switch (response.Code)
-            {
-                case ProviderMediatorCodes.AddSite.ValidationError:
-                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                    return View("AddSite", response.ViewModel);
-
-                case ProviderMediatorCodes.AddSite.SiteNotFoundByEmployerReferenceNumber:
-                    SetUserMessage(response.Message.Text, response.Message.Level);
-                    return View("AddSite", response.ViewModel);
-
-                case ProviderMediatorCodes.AddSite.SiteFoundByEmployerReferenceNumber:
-                    // TODO: AG: return RedirectToRoute(Xxx);
-                    break;
-
-                default:
-                    throw new InvalidMediatorCodeException(response.Code);
-            }
-
-            return View("AddSite", response.ViewModel);
-            */
+            viewModel.FilterType = EmployerFilterType.Ern;
+            return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer, viewModel);
         }
 
         [HttpPost]
         [MultipleFormActionsButton(SubmitButtonActionName = "SelectNewEmployerByNameAndLocation")]
         public ActionResult SelectNewEmployerByNameAndLocation(EmployerSearchViewModel viewModel)
         {
-            return View("SelectNewEmployer", viewModel);
+            viewModel.FilterType = EmployerFilterType.NameAndLocation;
+            return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer, viewModel);
         }
 
         [HttpGet]

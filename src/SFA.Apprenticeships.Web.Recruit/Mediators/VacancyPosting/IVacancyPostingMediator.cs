@@ -39,6 +39,6 @@
 
         MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber);
 
-        MediatorResponse<EmployerSearchViewModel> SelectNewEmployer(string providerSiteErn);
+        MediatorResponse<EmployerSearchViewModel> SelectNewEmployer(EmployerSearchViewModel viewModel);
     }
 }

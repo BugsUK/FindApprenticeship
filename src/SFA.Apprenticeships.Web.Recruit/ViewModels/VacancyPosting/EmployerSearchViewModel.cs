@@ -6,6 +6,7 @@
 
     public enum EmployerFilterType
     {
+        Undefined,
         Ern,
         NameAndLocation
     }
@@ -22,7 +23,7 @@
         [Display(Name = EmployerSearchViewModelMessages.Name.LabelText)]
         public string Name { get; set; }
 
-        [Display(Name = EmployerSearchViewModelMessages.Location.LabelText, Description = EmployerSearchViewModelMessages.Location.LabelText)]
+        [Display(Name = EmployerSearchViewModelMessages.Location.LabelText)]
         public string Location { get; set; }
 
         public IEnumerable<EmployerResultViewModel> EmployerResults { get; set; }

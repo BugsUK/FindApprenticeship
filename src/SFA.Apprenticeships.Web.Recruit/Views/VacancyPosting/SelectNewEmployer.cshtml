@@ -20,6 +20,8 @@
         </h1>
     </div>
 
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
     <div class="blocklabel-single-container">
         <div class="form-group inline clearfix blocklabel-single hide-nojs">
             @* ReSharper disable once Html.IdNotResolved *@
@@ -36,9 +38,9 @@
 
         @using (Html.BeginRouteForm(RecruitmentRouteNames.SelectNewEmployer, FormMethod.Post, new { @id = "#ern-search-form" }))
         {
-
-            @Html.Partial("ValidationSummary", ViewData.ModelState)
             @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.ProviderSiteErn);
 
             <div id="ern-search-panel" class="toggle-content blocklabel-content">
                 @Html.FormTextFor(model => model.Ern)
@@ -51,9 +53,9 @@
 
         @using (Html.BeginRouteForm(RecruitmentRouteNames.SelectNewEmployer, FormMethod.Post, new { @id = "#name-location-search-form" }))
         {
-
-            @Html.Partial("ValidationSummary", ViewData.ModelState)
             @Html.AntiForgeryToken()
+
+            @Html.HiddenFor(m => m.ProviderSiteErn);
 
             <div id="name-location-search-panel" class="toggle-content blocklabel-content">
                 @Html.FormTextFor(model => model.Name)
