@@ -39,16 +39,31 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
+        
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchExistingEmployerByReferenceNumber")]
+        public ActionResult SearchExistingEmployerByReferenceNumber(EmployerSearchViewModel viewModel)
+        {
+            viewModel.FilterType = EmployerFilterType.Ern;
+            return RedirectToRoute(RecruitmentRouteNames.SearchExistingEmployer, viewModel);
+        }
 
         [HttpPost]
-        public ActionResult SelectEmployer(EmployerSearchViewModel viewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchExistingEmployerByNameAndOrLocation")]
+        public ActionResult SearchExistingEmployerByNameAndOrLocation(EmployerSearchViewModel viewModel)
+        {
+            viewModel.FilterType = EmployerFilterType.NameAndLocation;
+            return RedirectToRoute(RecruitmentRouteNames.SearchExistingEmployer, viewModel);
+        }
+
+        public ActionResult SearchExistingEmployer(EmployerSearchViewModel viewModel)
         {
             var response = _vacancyPostingMediator.GetProviderEmployers(viewModel);
 
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
-                    return View(response.ViewModel);
+                    return View("SelectEmployer", response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
