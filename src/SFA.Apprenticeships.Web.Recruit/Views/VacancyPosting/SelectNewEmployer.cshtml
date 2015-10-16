@@ -114,6 +114,29 @@
         </section>
         <div class="page-navigation">
 
+            @{
+                var prevLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&EmployerResultsPage.CurrentPage=" + (Model.EmployerResultsPage.CurrentPage - 1);
+                var nextLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&EmployerResultsPage.CurrentPage=" + (Model.EmployerResultsPage.CurrentPage + 1);
+            }
+
+            <a href="@prevLink"
+               style="visibility: @(Model.EmployerResultsPage.CurrentPage == 1 ? "hidden" : "visible")"
+               class="page-navigation__btn previous">
+                <i class="arrow-button fa fa-angle-left"></i>
+                <span class="description">Previous <span class="hide-mob">page</span></span>
+                <span class="counter">@(Model.EmployerResultsPage.CurrentPage-1) of @Model.EmployerResultsPage.TotalNumberOfPages</span>
+            </a>
+            <a href="@nextLink"
+               style="visibility: @(Model.EmployerResultsPage.CurrentPage == Model.EmployerResultsPage.TotalNumberOfPages ? "hidden" : "visible")"
+               class="page-navigation__btn next">
+                <i class="arrow-button fa fa-angle-right"></i>
+                <span class="description">Next <span class="hide-mob">page</span></span>
+                <span class="counter">@(Model.EmployerResultsPage.CurrentPage+1) of @Model.EmployerResultsPage.TotalNumberOfPages</span>
+            </a>
+
+        </div>
+        <div class="page-navigation" style="display: none">
+
             @for (var i = 1; i < Model.EmployerResultsPage.TotalNumberOfPages; i++)
             {
                 var pageLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&EmployerResultsPage.CurrentPage=" + (i + 1);
