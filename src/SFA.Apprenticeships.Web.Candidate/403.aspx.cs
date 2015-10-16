@@ -21,7 +21,7 @@
                     x.AddRegistry<CommonRegistry>();
                 });
                 var configurationService = container.GetInstance<IConfigurationService>();
-                var message = configurationService.Get<WebConfiguration>().WebsiteOfflineMessage;
+                var message = configurationService.Get<CommonWebConfiguration>().WebsiteOfflineMessage;
 
                 OfflineMessageLabel.Text = message;
             }

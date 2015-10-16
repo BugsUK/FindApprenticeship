@@ -233,7 +233,7 @@
 
         private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
         {
-            var blacklistedCategoryCodeNames = configurationService.Get<WebConfiguration>().BlacklistedCategoryCodes;
+            var blacklistedCategoryCodeNames = configurationService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes;
             
             if (string.IsNullOrWhiteSpace(blacklistedCategoryCodeNames))
             {

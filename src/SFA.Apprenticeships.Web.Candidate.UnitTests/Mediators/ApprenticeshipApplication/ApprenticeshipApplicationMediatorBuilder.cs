@@ -36,8 +36,8 @@
 
         public IApprenticeshipApplicationMediator Build()
         {
-            _configurationService.Setup(x => x.Get<WebConfiguration>())
-                .Returns(new WebConfiguration {VacancyResultsPerPage = 5});
+            _configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {VacancyResultsPerPage = 5});
 
             return new ApprenticeshipApplicationMediator(
                 _configurationService.Object,

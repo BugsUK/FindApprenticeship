@@ -613,7 +613,7 @@
         {
             var candididate = _candidateService.GetCandidate(candidateId);
 
-            var webConfiguration = _configurationService.Get<WebConfiguration>();
+            var webConfiguration = _configurationService.Get<CommonWebConfiguration>();
             var unsuccessfulApplicationsToShowTraineeshipsPrompt = webConfiguration.UnsuccessfulApplicationsToShowTraineeshipsPrompt;
             var allowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts;
 

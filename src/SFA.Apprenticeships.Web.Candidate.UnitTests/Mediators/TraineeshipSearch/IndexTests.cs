@@ -90,8 +90,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
         {
             var configurationService = new Mock<IConfigurationService>();
 
-            configurationService.Setup(cm => cm.Get<WebConfiguration>())
-                .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
+            configurationService.Setup(cm => cm.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration() {VacancyResultsPerPage = 5});
 
             var searchProvider = new Mock<ISearchProvider>();
             var userDataProvider = mockUserDataProvider ?? new Mock<IUserDataProvider>();

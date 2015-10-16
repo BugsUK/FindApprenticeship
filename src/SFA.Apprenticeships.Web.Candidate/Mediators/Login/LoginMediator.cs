@@ -100,7 +100,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
                     var returnUrl = _userDataProvider.Pop(UserDataItemNames.SessionReturnUrl) ?? _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
                     result.ReturnUrl = returnUrl;
 
-                    if (result.AcceptedTermsAndConditionsVersion != _configurationService.Get<WebConfiguration>().TermsAndConditionsVersion)
+                    if (result.AcceptedTermsAndConditionsVersion != _configurationService.Get<CommonWebConfiguration>().TermsAndConditionsVersion)
                     {
                         return returnUrl.IsValidReturnUrl()
                             ? GetMediatorResponse(LoginMediatorCodes.Index.TermsAndConditionsNeedAccepted, result, parameters: returnUrl)

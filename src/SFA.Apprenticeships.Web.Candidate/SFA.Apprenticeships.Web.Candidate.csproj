@@ -855,6 +855,7 @@
     <Compile Include="Attributes\SiteRootRedirect.cs" />
     <Compile Include="Attributes\AuthorizeCandidateAttribute.cs" />
     <Compile Include="Attributes\UserJourneyContextAttribute.cs" />
+    <Compile Include="Configuration\CandidateWebConfiguration.cs" />
     <Compile Include="Constants\CandidateRouteNames.cs" />
     <Compile Include="Constants\Pages\ApplicationPageMessages.cs" />
     <Compile Include="Constants\Pages\AccountPageMessages.cs" />

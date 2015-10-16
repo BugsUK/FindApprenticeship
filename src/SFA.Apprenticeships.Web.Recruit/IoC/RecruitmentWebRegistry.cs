@@ -71,7 +71,7 @@
             });
 
             var configurationService = settingsContainer.GetInstance<IConfigurationService>();
-            var codeGenerator = configurationService.Get<WebConfiguration>().CodeGenerator;
+            var codeGenerator = configurationService.Get<CommonWebConfiguration>().CodeGenerator;
 
             For<ISendProviderUserCommunicationStrategy>().Use<QueueProviderUserCommunicationStrategy>();
             For<ISendEmailVerificationCodeStrategy>().Use<SendEmailVerificationCodeStrategy>()

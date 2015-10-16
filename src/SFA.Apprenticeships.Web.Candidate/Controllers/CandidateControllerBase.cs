@@ -65,7 +65,7 @@
 
         private void SetAbout()
         {
-            var webConfiguration = ConfigurationService.Get<WebConfiguration>();
+            var webConfiguration = ConfigurationService.Get<CommonWebConfiguration>();
             ViewBag.ShowAbout = webConfiguration.ShowAbout;
 
             if (!webConfiguration.ShowAbout) return;

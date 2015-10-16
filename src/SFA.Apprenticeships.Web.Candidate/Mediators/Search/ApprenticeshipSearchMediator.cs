@@ -58,7 +58,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             _searchRequestValidator = searchRequestValidator;
             _searchLocationValidator = searchLocationValidator;
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
-            _blacklistedCategoryCodes = configService.Get<WebConfiguration>().BlacklistedCategoryCodes.Split(',');
+            _blacklistedCategoryCodes = configService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes.Split(',');
         }
 
         public MediatorResponse<ApprenticeshipSearchViewModel> Index(Guid? candidateId, ApprenticeshipSearchMode searchMode, bool reset)

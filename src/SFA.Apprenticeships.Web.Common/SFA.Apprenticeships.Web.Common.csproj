@@ -208,7 +208,7 @@
     <Compile Include="Attributes\DefaultSessionTimeoutAttribute.cs" />
     <Compile Include="Attributes\AllowReturnUrlAttribute.cs" />
     <Compile Include="Binders\TrimModelBinder.cs" />
-    <Compile Include="Configuration\WebConfiguration.cs" />
+    <Compile Include="Configuration\CommonWebConfiguration.cs" />
     <Compile Include="Constants\RouteNames.cs" />
     <Compile Include="Constants\UserDataItemNames.cs" />
     <Compile Include="Constants\UserMessageConstants.cs" />

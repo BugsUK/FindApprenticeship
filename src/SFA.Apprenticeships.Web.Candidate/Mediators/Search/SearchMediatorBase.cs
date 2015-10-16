@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
         protected SearchMediatorBase(IConfigurationService configService, IUserDataProvider userDataProvider)
         {
-            _vacancyResultsPerPage = configService.Get<WebConfiguration>().VacancyResultsPerPage;
+            _vacancyResultsPerPage = configService.Get<CommonWebConfiguration>().VacancyResultsPerPage;
             UserDataProvider = userDataProvider;
         }
 

@@ -35,7 +35,7 @@
             Employer = Employer
         };
 
-        private readonly WebConfiguration _webConfiguration = new WebConfiguration
+        private readonly CommonWebConfiguration _webConfiguration = new CommonWebConfiguration
         {
             BlacklistedCategoryCodes = "00,99"
         };
@@ -104,7 +104,7 @@
         public void SetUp()
         {
             MockConfigurationService
-                .Setup(mock => mock.Get<WebConfiguration>())
+                .Setup(mock => mock.Get<CommonWebConfiguration>())
                 .Returns(_webConfiguration);
 
             MockProviderService

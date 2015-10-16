@@ -134,8 +134,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
         private ITraineeshipSearchMediator GetMediator(TraineeshipVacancyDetailViewModel vacancyDetailViewModel)
         {
             var configurationManager = new Mock<IConfigurationService>();
-            configurationManager.Setup(x => x.Get<WebConfiguration>())
-                .Returns(new WebConfiguration() {VacancyResultsPerPage = 5});
+            configurationManager.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration() {VacancyResultsPerPage = 5});
             var searchProvider = new Mock<ISearchProvider>();
             var traineeshipVacancyProvider = new Mock<ITraineeshipVacancyProvider>();
             var candidateServiceProvider = new Mock<ICandidateServiceProvider>();

@@ -200,7 +200,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
             try
             {
                 var candidate = _candidateServiceProvider.GetCandidate(candidateId);
-                var currentTsAndCsVersion = _configurationService.Get<WebConfiguration>().TermsAndConditionsVersion;
+                var currentTsAndCsVersion = _configurationService.Get<CommonWebConfiguration>().TermsAndConditionsVersion;
 
                 if (candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion == currentTsAndCsVersion)
                 {

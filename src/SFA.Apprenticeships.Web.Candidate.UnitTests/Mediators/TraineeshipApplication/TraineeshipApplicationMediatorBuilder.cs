@@ -37,8 +37,8 @@
         public ITraineeshipApplicationMediator Build()
         {
             _configurationService
-                .Setup(x => x.Get<WebConfiguration>())
-                .Returns(new WebConfiguration
+                .Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration
                 {
                     VacancyResultsPerPage = 5
                 });

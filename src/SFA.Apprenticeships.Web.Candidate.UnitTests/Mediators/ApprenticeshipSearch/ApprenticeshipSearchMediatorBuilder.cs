@@ -23,7 +23,7 @@
             _candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             _candidateServiceProvider = new Mock<ICandidateServiceProvider>();
             _configurationService = new Mock<IConfigurationService>();
-            _configurationService.Setup(cm => cm.Get<WebConfiguration>()).Returns(new WebConfiguration() { VacancyResultsPerPage = 5, BlacklistedCategoryCodes = "00,99" });
+            _configurationService.Setup(cm => cm.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration() { VacancyResultsPerPage = 5, BlacklistedCategoryCodes = "00,99" });
             _userDataProvider = new Mock<IUserDataProvider>();
             _searchProvider = new Mock<ISearchProvider>();
             _referenceDataService = new Mock<IReferenceDataService>();

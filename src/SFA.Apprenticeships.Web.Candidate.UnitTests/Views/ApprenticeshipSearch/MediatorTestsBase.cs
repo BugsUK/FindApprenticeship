@@ -28,8 +28,8 @@
             //Use the mediator so that we get an accurate view model for testing
             CandidateServiceProvider = new Mock<ICandidateServiceProvider>();
             ConfigurationService = new Mock<IConfigurationService>();
-            ConfigurationService.Setup(cm => cm.Get<WebConfiguration>())
-                .Returns(new WebConfiguration() { VacancyResultsPerPage = 5, BlacklistedCategoryCodes = "00,99" });
+            ConfigurationService.Setup(cm => cm.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration() { VacancyResultsPerPage = 5, BlacklistedCategoryCodes = "00,99" });
             UserDataProvider = new Mock<IUserDataProvider>();
             SearchProvider = new Mock<ISearchProvider>();
             ReferenceDataService = new Mock<IReferenceDataService>();

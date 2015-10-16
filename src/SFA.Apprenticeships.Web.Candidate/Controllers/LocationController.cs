@@ -21,7 +21,7 @@
         public LocationController(IConfigurationService configService, ISearchProvider searchProvider)
         {
             _searchProvider = searchProvider;
-            _locationResultLimit = configService.Get<WebConfiguration>().LocationResultLimit;
+            _locationResultLimit = configService.Get<CommonWebConfiguration>().LocationResultLimit;
         }
 
         [HttpGet]

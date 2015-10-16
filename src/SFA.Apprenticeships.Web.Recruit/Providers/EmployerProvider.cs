@@ -18,7 +18,9 @@
         public EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel)
         {
             var results = _employerService.GetEmployers(searchViewModel.Ern, searchViewModel.Name, searchViewModel.Location);
-            searchViewModel.EmployerResults = results.Select(e => e.ConvertToResult()).ToList();
+            var employerResultViewModels = results.Select(e => e.ConvertToResult()).ToList();
+            searchViewModel.EmployerResults = employerResultViewModels;
+            searchViewModel.ResultsCount = employerResultViewModels.Count;
             return searchViewModel;
         }
 

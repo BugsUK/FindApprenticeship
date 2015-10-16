@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Configuration
 {
-    public class WebConfiguration
+    public class CommonWebConfiguration
     {
         public int VacancyResultsPerPage { get; set; }
 

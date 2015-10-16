@@ -23,8 +23,8 @@
 
             ConfigurationService = new Mock<IConfigurationService>();
 
-            ConfigurationService.Setup(x => x.Get<WebConfiguration>())
-                .Returns(new WebConfiguration
+            ConfigurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration
                 {
                     VacancyResultsPerPage = 5
                 });

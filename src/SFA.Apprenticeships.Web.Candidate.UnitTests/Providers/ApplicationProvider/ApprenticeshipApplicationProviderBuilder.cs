@@ -23,7 +23,7 @@
         {
             _logService = new Mock<ILogService>();
             _configurationService = new Mock<IConfigurationService>();
-            _configurationService.Setup(x => x.Get<WebConfiguration>()).Returns(new WebConfiguration());
+            _configurationService.Setup(x => x.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
             _userDataProvider = new Mock<IUserDataProvider>();
             _referenceDataService = new Mock<IReferenceDataService>();
         }

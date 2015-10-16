@@ -66,7 +66,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                         SetUserMessage(response.Message.Text, response.Message.Level);
                         return View(model);
                     case RegisterMediatorCodes.Register.SuccessfullyRegistered:
-                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, ConfigurationService.Get<WebConfiguration>().TermsAndConditionsVersion);
+                        UserData.SetUserContext(model.EmailAddress, model.Firstname + " " + model.Lastname, ConfigurationService.Get<CommonWebConfiguration>().TermsAndConditionsVersion);
                         return RedirectToRoute(RouteNames.Activation);
                     default:
                         throw new InvalidMediatorCodeException(response.Code);

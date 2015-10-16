@@ -47,8 +47,8 @@
             if (_configurationService == null)
             {
                 _configurationService = new Mock<IConfigurationService>();
-                _configurationService.Setup(x => x.Get<WebConfiguration>())
-                    .Returns(new WebConfiguration {VacancyResultsPerPage = 5});
+                _configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                    .Returns(new CommonWebConfiguration {VacancyResultsPerPage = 5});
             }
 
             var mediator = new LoginMediator(_userDataProvider.Object, _candidateServiceProvider.Object, _configurationService.Object, new LoginViewModelServerValidator(), new AccountUnlockViewModelServerValidator(), new ResendAccountUnlockCodeViewModelServerValidator(), _authenticationTicketService.Object, new ForgottenPasswordViewModelServerValidator(), new PasswordResetViewModelServerValidator(), new ForgottenEmailViewModelServerValidator(), new Mock<ILogService>().Object);

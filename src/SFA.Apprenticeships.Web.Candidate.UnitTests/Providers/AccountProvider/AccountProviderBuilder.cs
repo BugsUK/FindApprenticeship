@@ -23,7 +23,7 @@
             _candidateService = new Mock<ICandidateService>();
             _logger = new Mock<ILogService>();
             _configurationService = new Mock<IConfigurationService>();
-            _configurationService.Setup(cm => cm.Get<WebConfiguration>()).Returns(new WebConfiguration { Features = new Features(), SubCategoriesFullNamesLimit = 5 });
+            _configurationService.Setup(cm => cm.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration { Features = new Features(), SubCategoriesFullNamesLimit = 5 });
             _userAccountService = new Mock<IUserAccountService>();
             _userAccountService.Setup(x => x.GetUser(It.IsAny<Guid>())).Returns(new User());
         }

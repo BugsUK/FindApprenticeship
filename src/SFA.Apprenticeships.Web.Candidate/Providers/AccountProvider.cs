@@ -55,7 +55,7 @@
                 settings.PendingUsername = user.PendingUsername;
 
                 settings.VerifiedMobile = candidate.CommunicationPreferences.VerifiedMobile;
-                settings.SmsEnabled = _configurationService.Get<WebConfiguration>().Features.SmsEnabled;
+                settings.SmsEnabled = _configurationService.Get<CommonWebConfiguration>().Features.SmsEnabled;
 
                 // Communication preferences.
                 var communicationPreferences = candidate.CommunicationPreferences;
@@ -89,7 +89,7 @@
                 settings.MonitoringInformation.RequiresSupportForInterview = !string.IsNullOrWhiteSpace(candidate.ApplicationTemplate.AboutYou.Support);
                 
                 // Saved searches.
-                var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit)).ToList();
+                var savedSeachViewModels = savedSearches == null ? new List<SavedSearchViewModel>() : savedSearches.Select(s => s.ToViewModel(_configurationService.Get<CommonWebConfiguration>().SubCategoriesFullNamesLimit)).ToList();
 
                 settings.SavedSearches = savedSeachViewModels;
 

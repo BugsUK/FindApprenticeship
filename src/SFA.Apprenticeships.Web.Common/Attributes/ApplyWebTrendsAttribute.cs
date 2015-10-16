@@ -16,7 +16,7 @@
                 return;
             }
 
-            var webSettings = ConfigurationService.Get<WebConfiguration>();
+            var webSettings = ConfigurationService.Get<CommonWebConfiguration>();
             viewResult.ViewBag.EnableWebTrends = webSettings.EnableWebTrends;
 
             if (viewResult.ViewBag.EnableWebTrends == true)

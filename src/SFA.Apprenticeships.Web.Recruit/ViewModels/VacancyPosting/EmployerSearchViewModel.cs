@@ -27,5 +27,11 @@
         public string Location { get; set; }
 
         public IEnumerable<EmployerResultViewModel> EmployerResults { get; set; }
+
+        public int ResultsCount { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public int TotalNumberOfPages { get; set; }
     }
 }

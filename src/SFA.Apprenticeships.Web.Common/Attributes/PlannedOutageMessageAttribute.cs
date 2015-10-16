@@ -15,7 +15,7 @@
         {
             base.OnActionExecuted(filterContext);
 
-            var plannedOutageMessage = ConfigurationService.Get<WebConfiguration>().PlannedOutageMessage;
+            var plannedOutageMessage = ConfigurationService.Get<CommonWebConfiguration>().PlannedOutageMessage;
             if (!string.IsNullOrEmpty(plannedOutageMessage) && !DismissPlannedOutageMessageCookieProvider.IsCookiePresent(filterContext.HttpContext))
             {
                 filterContext.Controller.ViewBag.PlannedOutageMessage = plannedOutageMessage;

@@ -42,7 +42,7 @@
                 }
 
                 var userJourney = (UserJourney)candidateController.ViewBag.UserJourney;
-                var webConfiguration = candidateController.ConfigurationService.Get<WebConfiguration>();
+                var webConfiguration = candidateController.ConfigurationService.Get<CommonWebConfiguration>();
                 switch (userJourney)
                 {
                     case UserJourney.Traineeship:

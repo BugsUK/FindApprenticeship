@@ -38,8 +38,8 @@
             _userDataProvider = new Mock<IUserDataProvider>();
             _referenceDataService = new Mock<IReferenceDataService>();
 
-            _configurationService.Setup(cm => cm.Get<WebConfiguration>())
-                .Returns(new WebConfiguration { UnsuccessfulApplicationsToShowTraineeshipsPrompt = UnsuccessfulApplications });
+            _configurationService.Setup(cm => cm.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { UnsuccessfulApplicationsToShowTraineeshipsPrompt = UnsuccessfulApplications });
 
             _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
                 null, _configurationService.Object, _logService.Object, _userDataProvider.Object, _referenceDataService.Object);

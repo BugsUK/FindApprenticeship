@@ -10,7 +10,7 @@
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var config = ConfigurationService.Get<WebConfiguration>();
+            var config = ConfigurationService.Get<CommonWebConfiguration>();
             if (!config.Features.SmsEnabled)
             {
                 filterContext.Result = new HttpNotFoundResult();

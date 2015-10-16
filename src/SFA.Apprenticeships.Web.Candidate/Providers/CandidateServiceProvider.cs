@@ -117,7 +117,7 @@
             try
             {
                 var candidate = _mapper.Map<RegisterViewModel, Candidate>(model);
-                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationService.Get<WebConfiguration>().TermsAndConditionsVersion;
+                candidate.RegistrationDetails.AcceptedTermsAndConditionsVersion = _configurationService.Get<CommonWebConfiguration>().TermsAndConditionsVersion;
 
                 _candidateService.Register(candidate, model.Password);
                 _authenticationTicketService.SetAuthenticationCookie(candidate.EntityId.ToString(), UserRoleNames.Unactivated);
@@ -610,7 +610,7 @@
             {
                 var deletedSavedSearch = _candidateService.DeleteSavedSearch(candidateId, savedSearchId);
 
-                return deletedSavedSearch.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit);
+                return deletedSavedSearch.ToViewModel(_configurationService.Get<CommonWebConfiguration>().SubCategoriesFullNamesLimit);
             }
             catch (Exception ex)
             {
@@ -624,7 +624,7 @@
             try
             {
                 return _candidateService.GetSavedSearches(candidateId)
-                    .Select(each => each.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit));
+                    .Select(each => each.ToViewModel(_configurationService.Get<CommonWebConfiguration>().SubCategoriesFullNamesLimit));
             }
             catch (Exception ex)
             {
@@ -639,7 +639,7 @@
             {
                 var savedSearch = _candidateService.GetSavedSearch(candidateId, savedSearchId);
 
-                return savedSearch == null ? null : savedSearch.ToViewModel(_configurationService.Get<WebConfiguration>().SubCategoriesFullNamesLimit);
+                return savedSearch == null ? null : savedSearch.ToViewModel(_configurationService.Get<CommonWebConfiguration>().SubCategoriesFullNamesLimit);
             }
             catch (Exception ex)
             {
