@@ -296,12 +296,18 @@
 
             ModelState.Clear();
 
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message.Text, response.Message.Level);
+            }
+
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.SelectNewEmployer.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
+                case VacancyPostingMediatorCodes.SelectNewEmployer.NoResults:
                 case VacancyPostingMediatorCodes.SelectNewEmployer.Ok:
                     return View(response.ViewModel);
 
@@ -327,15 +333,27 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmNewEmployer()
+        public ActionResult ConfirmNewEmployer(string providerSiteErn, string ern)
         {
-            return View();
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern);
+            return View(response.ViewModel);
         }
 
         [HttpPost]
-        public ActionResult ConfirmNewEmployer(ConfirmNewEmployerViewModel viewModel)
+        public ActionResult ConfirmNewEmployer(ProviderSiteEmployerLinkViewModel viewModel)
         {
-            return HttpNotFound();
+            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern });
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
     }
 }

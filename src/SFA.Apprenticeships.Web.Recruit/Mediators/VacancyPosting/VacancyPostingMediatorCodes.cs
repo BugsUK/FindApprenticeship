@@ -80,6 +80,7 @@
         {
             public const string Ok = "VacancyPosting.SelectNewEmployer.Ok";
             public const string FailedValidation = "VacancyPosting.SelectNewEmployer.FailedValidation";
+            public const string NoResults = "VacancyPosting.SelectNewEmployer.NoResults";
         }
     }
 }

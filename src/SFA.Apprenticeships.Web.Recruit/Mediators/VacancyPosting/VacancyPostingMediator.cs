@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using System.Linq;
+    using Common.Constants;
     using Common.Mediators;
+    using Constants.ViewModels;
     using Converters;
     using Providers;
     using Validators.Provider;
@@ -241,7 +243,12 @@
                     return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.FailedValidation, viewModel, validationResult);
                 }
 
-                //Do Search
+                viewModel = _employerProvider.GetEmployerViewModels(viewModel);
+
+                if (viewModel.EmployerResults == null || !viewModel.EmployerResults.Any())
+                {
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
+                }
             }
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.Ok, viewModel);

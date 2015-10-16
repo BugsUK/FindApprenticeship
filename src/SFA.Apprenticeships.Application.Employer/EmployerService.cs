@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Employer
 {
+    using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Organisations;
     using Domain.Interfaces.Repositories;
@@ -45,6 +46,11 @@
         public Employer SaveEmployer(Employer employer)
         {
             return _employerWriteRepository.Save(employer);
+        }
+
+        public IEnumerable<Employer> GetEmployers(string ern, string name, string location)
+        {
+            return _organisationService.GetEmployers(ern, name, location);
         }
     }
 }

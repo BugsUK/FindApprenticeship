@@ -126,6 +126,24 @@ namespace SFA.Apprenticeships.Application.Provider
 
             providerSiteEmployerLink = _organisationService.GetProviderSiteEmployerLink(providerSiteErn, ern);
 
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
+
+            if (providerSiteEmployerLink == null)
+            {
+                var employer = _organisationService.GetEmployer(ern);
+                if (employer == null)
+                {
+                    employer = _organisationService.GetEmployers(ern, null, null).SingleOrDefault();
+                }
+
+                //TODO: Where should employer description and web site come from
+                providerSiteEmployerLink = new ProviderSiteEmployerLink
+                {
+                    ProviderSiteErn = providerSiteErn,
+                    Employer = employer
+                };
+            }
+
             return providerSiteEmployerLink;
         }
 

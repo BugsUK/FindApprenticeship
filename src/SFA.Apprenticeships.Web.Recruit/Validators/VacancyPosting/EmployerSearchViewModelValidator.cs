@@ -16,10 +16,12 @@
             RuleFor(x => x.Ern)
                 .NotEmpty()
                 .When(x => x.FilterType == EmployerFilterType.Ern)
-                .WithMessage(EmployerSearchViewModelMessages.Ern.RequiredErrorText);
+                .WithMessage(EmployerSearchViewModelMessages.Ern.RequiredErrorText)
+                .Matches(EmployerSearchViewModelMessages.Ern.WhiteListRegularExpression)
+                .WithMessage(EmployerSearchViewModelMessages.Ern.WhiteListErrorText);
 
             RuleFor(x => x)
-                .Must(x => !string.IsNullOrWhiteSpace(x.Name) && !string.IsNullOrWhiteSpace(x.Location))
+                .Must(x => !string.IsNullOrWhiteSpace(x.Name) || !string.IsNullOrWhiteSpace(x.Location))
                 .When(x => x.FilterType == EmployerFilterType.NameAndLocation)
                 .WithMessage(EmployerSearchViewModelMessages.NameAndLocationSearchRequiredErrorText);
         }

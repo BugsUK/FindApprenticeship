@@ -3,12 +3,15 @@ using System.Text.RegularExpressions;
 
 namespace SFA.Apprenticeships.Application.Interfaces.Employers
 {
+    using System.Collections.Generic;
     using Domain.Entities.Organisations;
 
     public interface IEmployerService
     {
         Employer GetEmployer(string ern);
         Employer SaveEmployer(Employer employer);
+        //TODO: Use the object below once it has been agreed upon
+        IEnumerable<Employer> GetEmployers(string ern, string name, string location);
     }
     
     public class EmployerSearchRequest

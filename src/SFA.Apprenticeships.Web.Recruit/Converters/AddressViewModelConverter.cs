@@ -14,7 +14,7 @@
                 AddressLine3 = address.AddressLine3,
                 AddressLine4 = address.AddressLine4,
                 Postcode = address.Postcode,
-                GeoPoint = new GeoPointViewModel
+                GeoPoint = address.GeoPoint == null ? new GeoPointViewModel() : new GeoPointViewModel
                 {
                     Latitude = address.GeoPoint.Latitude,
                     Longitude = address.GeoPoint.Longitude

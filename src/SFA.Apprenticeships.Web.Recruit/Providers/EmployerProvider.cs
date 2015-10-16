@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
-    using System.Collections.Generic;
+    using System.Linq;
     using Application.Interfaces.Employers;
     using Converters;
     using ViewModels.Vacancy;
@@ -17,7 +17,9 @@
 
         public EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel)
         {
-            return new EmployerSearchViewModel { EmployerResults = new List<EmployerResultViewModel>() };
+            var results = _employerService.GetEmployers(searchViewModel.Ern, searchViewModel.Name, searchViewModel.Location);
+            searchViewModel.EmployerResults = results.Select(e => e.ConvertToResult()).ToList();
+            return searchViewModel;
         }
 
         public EmployerViewModel GetEmployerViewModel(string ern)

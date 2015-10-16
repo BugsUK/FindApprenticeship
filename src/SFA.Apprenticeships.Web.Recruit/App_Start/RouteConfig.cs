@@ -172,7 +172,7 @@
             routes.MapRoute(
                 name: RecruitmentRouteNames.ComfirmNewEmployer,
                 url: "vacancy/employer/confirmnew",
-                defaults: new { controller = "VacancyPosting", action = "ComfirmNewEmployer" }
+                defaults: new { controller = "VacancyPosting", action = "ConfirmNewEmployer" }
                 );
 
             routes.MapRoute(

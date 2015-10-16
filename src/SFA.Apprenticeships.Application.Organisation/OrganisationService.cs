@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.Application.Organisation
 {
     using System.Collections.Generic;
+    using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
@@ -35,6 +36,24 @@ namespace SFA.Apprenticeships.Application.Organisation
             _logService.Debug("Calling VerifiedOrganisationProvider to get organisation with reference='{0}'.", referenceNumber);
 
             return _verifiedOrganisationProvider.GetByReferenceNumber(referenceNumber);
+        }
+
+        public IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location)
+        {
+            if (!string.IsNullOrEmpty(ern))
+            {
+                var verifiedOrganisationSummary = _verifiedOrganisationProvider.GetByReferenceNumber(ern);
+                if (verifiedOrganisationSummary == null)
+                {
+                    return new List<VerifiedOrganisationSummary>();
+                }
+                return new List<VerifiedOrganisationSummary>
+                {
+                    verifiedOrganisationSummary
+                };
+            }
+
+            return _verifiedOrganisationProvider.Find(name, location);
         }
 
         public Provider GetProvider(string ukprn)
@@ -91,6 +110,22 @@ namespace SFA.Apprenticeships.Application.Organisation
             _logService.Debug("Calling LegacyEmployerProvider to get employer with ERN='{0}'.", ern);
 
             return _legacyEmployerProvider.GetEmployer(ern);
+        }
+
+        public IEnumerable<Employer> GetEmployers(string ern, string name, string location)
+        {
+            var summaries = GetVerifiedOrganisationSummaries(ern, name, location);
+            return summaries.Select(Convert).ToList();
+        }
+
+        private static Employer Convert(VerifiedOrganisationSummary summary)
+        {
+            return new Employer
+            {
+                Ern = summary.ReferenceNumber,
+                Name = summary.Name,
+                Address = summary.Address
+            };
         }
     }
 }
