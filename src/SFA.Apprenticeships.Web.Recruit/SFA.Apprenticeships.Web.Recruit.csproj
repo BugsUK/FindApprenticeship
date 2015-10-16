@@ -465,8 +465,6 @@
     <Content Include="Views\VacancyPosting\SelectEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\AddEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\ConfirmEmployer.cshtml" />
-    <Content Include="Views\VacancyPosting\FindNewEmployer.cshtml" />
-    <Content Include="Views\VacancyPosting\AddNewEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\VacancyQuestions.cshtml" />
     <Content Include="Views\VacancyPosting\VacancySummary.cshtml" />
     <Content Include="Views\VacancyPosting\ConfirmNewEmployer.cshtml" />
