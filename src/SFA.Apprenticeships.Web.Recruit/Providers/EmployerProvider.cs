@@ -2,25 +2,30 @@
 {
     using System.Linq;
     using Application.Interfaces.Employers;
+    using Common.Converters;
+    using Configuration;
     using Converters;
+    using Domain.Interfaces.Configuration;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     public class EmployerProvider : IEmployerProvider
     {
         private readonly IEmployerService _employerService;
+        private readonly IConfigurationService _configurationService;
 
-        public EmployerProvider(IEmployerService employerService)
+        public EmployerProvider(IEmployerService employerService, IConfigurationService configurationService)
         {
             _employerService = employerService;
+            _configurationService = configurationService;
         }
 
         public EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel)
         {
-            var results = _employerService.GetEmployers(searchViewModel.Ern, searchViewModel.Name, searchViewModel.Location);
-            var employerResultViewModels = results.Select(e => e.ConvertToResult()).ToList();
-            searchViewModel.EmployerResults = employerResultViewModels;
-            searchViewModel.ResultsCount = employerResultViewModels.Count;
+            var pageSize = int.Parse(_configurationService.Get<RecruitWebConfiguration>().PageSize);
+            var resultsPage = _employerService.GetEmployers(searchViewModel.Ern, searchViewModel.Name, searchViewModel.Location, searchViewModel.EmployerResultsPage.CurrentPage, pageSize);
+            var resultsViewModelPage = resultsPage.ToViewModel(resultsPage.Page.Select(e => e.ConvertToResult()).ToList());
+            searchViewModel.EmployerResultsPage = resultsViewModelPage;
             return searchViewModel;
         }
 

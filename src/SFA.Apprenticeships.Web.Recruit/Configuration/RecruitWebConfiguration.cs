@@ -2,6 +2,6 @@
 {
     public class RecruitWebConfiguration
     {
-        public string PageSize { get; set; } 
+        public string PageSize { get; set; }
     }
 }

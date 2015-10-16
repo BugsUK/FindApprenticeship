@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Application.Organisation
     using CuttingEdge.Conditions;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
+    using Interfaces.Generic;
     using Interfaces.Logging;
     using Interfaces.Organisations;
 
@@ -53,7 +54,39 @@ namespace SFA.Apprenticeships.Application.Organisation
                 };
             }
 
-            return _verifiedOrganisationProvider.Find(name, location);
+            int resultCount;
+            return _verifiedOrganisationProvider.Find(name, location, out resultCount);
+        }
+
+        public Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location, int currentPage, int pageSize)
+        {
+            var pageable = new Pageable<VerifiedOrganisationSummary>
+            {
+                CurrentPage = currentPage
+            };
+
+            if (!string.IsNullOrEmpty(ern))
+            {
+                var verifiedOrganisationSummary = _verifiedOrganisationProvider.GetByReferenceNumber(ern);
+                if (verifiedOrganisationSummary == null)
+                {
+                    pageable.Page = new List<VerifiedOrganisationSummary>();
+                    return pageable;
+                }
+                pageable.ResultsCount = 1;
+                pageable.Page = new List<VerifiedOrganisationSummary>
+                {
+                    verifiedOrganisationSummary
+                };
+                return pageable;
+            }
+
+            int resultCount;
+            var verifiedOrganisationSummaries = _verifiedOrganisationProvider.Find(name, location, out resultCount);
+            pageable.Page = verifiedOrganisationSummaries.Skip((currentPage - 1)*pageSize).Take(pageSize).ToList();
+            pageable.ResultsCount = resultCount;
+            pageable.TotalNumberOfPages = resultCount/pageSize;
+            return pageable;
         }
 
         public Provider GetProvider(string ukprn)
@@ -116,6 +149,19 @@ namespace SFA.Apprenticeships.Application.Organisation
         {
             var summaries = GetVerifiedOrganisationSummaries(ern, name, location);
             return summaries.Select(Convert).ToList();
+        }
+
+        public Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize)
+        {
+            var summariesPage = GetVerifiedOrganisationSummaries(ern, name, location, currentPage, pageSize);
+            var employersPage = new Pageable<Employer>
+            {
+                Page = summariesPage.Page.Select(Convert).ToList(),
+                ResultsCount = summariesPage.ResultsCount,
+                CurrentPage = summariesPage.CurrentPage,
+                TotalNumberOfPages = summariesPage.TotalNumberOfPages
+            };
+            return employersPage;
         }
 
         private static Employer Convert(VerifiedOrganisationSummary summary)

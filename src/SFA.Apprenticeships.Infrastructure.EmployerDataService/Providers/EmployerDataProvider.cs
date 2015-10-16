@@ -80,7 +80,7 @@
             }
         }
 
-        public IEnumerable<VerifiedOrganisationSummary> Find(string employerName, string postcodeOrTown)
+        public IEnumerable<VerifiedOrganisationSummary> Find(string employerName, string postcodeOrTown, out int resultCount)
         {
             var context = new
             {
@@ -108,14 +108,15 @@
                 if (employers == null || employers.Length == 0)
                 {
                     _logger.Debug($"EmployerDataService.ByFreeText did not find any employers with reference number='{employerName}', post code or town='{postcodeOrTown}'");
+                    resultCount = 0;
                     return null;
                 }
 
                 _logger.Debug($"EmployerDataService.ByFreeText {0} employer(s) with reference number='{employerName}', post code or town='{postcodeOrTown}'");
 
+                resultCount = employers.Length;
                 // TODO: AG: US814: include reference number aliases.
-                return employers.Select(employer =>
-                    _employerMapper.ToVerifiedOrganisationSummary(employer, Enumerable.Empty<string>()));
+                return employers.Select(employer => _employerMapper.ToVerifiedOrganisationSummary(employer, Enumerable.Empty<string>()));
             }
             catch (BoundaryException e)
             {

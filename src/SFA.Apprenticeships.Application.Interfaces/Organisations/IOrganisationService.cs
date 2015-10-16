@@ -5,12 +5,15 @@ namespace SFA.Apprenticeships.Application.Interfaces.Organisations
     using System.Collections.Generic;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
+    using Generic;
 
     public interface IOrganisationService
     {
         VerifiedOrganisationSummary GetVerifiedOrganisationSummary(string referenceNumber);
 
         IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location);
+
+        Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location, int currentPage, int pageSize);
 
         Provider GetProvider(string ukprn);
 
@@ -25,5 +28,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Organisations
         Employer GetEmployer(string ern);
 
         IEnumerable<Employer> GetEmployers(string ern, string name, string location);
+
+        Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize);
     }
 }

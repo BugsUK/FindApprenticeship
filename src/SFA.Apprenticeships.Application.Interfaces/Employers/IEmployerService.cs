@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
 {
     using System.Collections.Generic;
     using Domain.Entities.Organisations;
+    using Generic;
 
     public interface IEmployerService
     {
@@ -12,6 +13,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
         Employer SaveEmployer(Employer employer);
         //TODO: Use the object below once it has been agreed upon
         IEnumerable<Employer> GetEmployers(string ern, string name, string location);
+        Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize);
     }
     
     public class EmployerSearchRequest

@@ -89,6 +89,7 @@
     <Compile Include="Communications\IProviderCommunicationService.cs" />
     <Compile Include="Communications\SubscriptionTypes.cs" />
     <Compile Include="Employers\IEmployerService.cs" />
+    <Compile Include="Generic\Pageable.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Logging\ILogService.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />

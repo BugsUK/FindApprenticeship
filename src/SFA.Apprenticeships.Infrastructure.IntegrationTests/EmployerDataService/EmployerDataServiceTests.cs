@@ -66,7 +66,8 @@
         public void ShouldFindEmployersByNameAndPostcode(string employerName, string postcode)
         {
             // Act.
-            var organisations = _verifiedOrganisationProvider.Find(employerName, postcode);
+            int resultsCount;
+            var organisations = _verifiedOrganisationProvider.Find(employerName, postcode, out resultsCount);
 
             // Assert.
             organisations.Should().NotBeNull();

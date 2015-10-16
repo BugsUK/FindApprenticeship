@@ -176,6 +176,7 @@
     <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
+    <Compile Include="Converters\PageableConverters.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
     <Compile Include="IoC\ControllerConvention.cs" />
     <Compile Include="IoC\FilterConfig.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Validators\AddressViewModelValidator.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
+    <Compile Include="ViewModels\PageableViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

@@ -7,6 +7,6 @@
     {
         VerifiedOrganisationSummary GetByReferenceNumber(string referenceNumber);
 
-        IEnumerable<VerifiedOrganisationSummary> Find(string employerName, string postcodeOrTown);
+        IEnumerable<VerifiedOrganisationSummary> Find(string employerName, string postcodeOrTown, out int resultCount);
     }
 }

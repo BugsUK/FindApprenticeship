@@ -68,14 +68,14 @@
         }
     </div>
 
-    @if (Model.ResultsCount > 0)
+    @if (Model.EmployerResultsPage.ResultsCount > 0)
     {
         <section class="clearfix" id="providerSiteResults">
             @{
-                var resultsMessage = Model.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.ResultsCount) : "Found one employer";
+                var resultsMessage = Model.EmployerResultsPage.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.EmployerResultsPage.ResultsCount) : "Found one employer";
             }
             <h2 class="heading-small">@resultsMessage</h2>
-            <div class="grid grid-3-3 scrolling-panel max-height-15">
+            <div class="grid grid-3-3">
                 <table>
                     <colgroup>
                         <col class="t30">
@@ -91,7 +91,7 @@
                         <th>ERN</th>
                         <th></th>
                     </tr>
-                    @foreach (var employerResultsViewModel in @Model.EmployerResults)
+                    @foreach (var employerResultsViewModel in @Model.EmployerResultsPage.Page)
                     {
                         <tr>
                             <th>
@@ -111,25 +111,17 @@
                     </tbody>
                 </table>
             </div>
-
-            <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Link to a new employer</a>
         </section>
-
         <div class="page-navigation">
-            <a href="#"
-                style="visibility: @(Model.CurrentPage == 1 ? "hidden" : "visible")"
-                class="page-navigation__btn previous">
-                <i class="arrow-button fa fa-angle-left"></i>
-                <span class="description">Previous <span class="hide-mob">page</span></span>
-                <span class="counter">@(Model.CurrentPage + 1) of @Model.TotalNumberOfPages</span>
-            </a>
-            <a href="#"
-                style="visibility: @(Model.CurrentPage == Model.TotalNumberOfPages ? "hidden" : "visible")"
-                class="page-navigation__btn next">
-                <i class="arrow-button fa fa-angle-right"></i>
-                <span class="description">Next <span class="hide-mob">page</span></span>
-                <span class="counter">@(Model.CurrentPage + 1) of @Model.TotalNumberOfPages</span>
-            </a>
+
+            @for (var i = 1; i < Model.EmployerResultsPage.TotalNumberOfPages; i++)
+            {
+                var pageLink = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new EmployerSearchViewModel(Model).RouteValues) + "&EmployerResultsPage.CurrentPage=" + (i + 1);
+
+                <a href="@pageLink"style="font-weight: @(Model.EmployerResultsPage.CurrentPage == i ? "bold" : "normal")">@i</a>
+                <span>&nbsp;</span>
+            }
+
         </div>
     }
 </div>

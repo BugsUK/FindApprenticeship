@@ -5,6 +5,7 @@
     using Domain.Entities.Organisations;
     using Domain.Interfaces.Repositories;
     using Interfaces.Employers;
+    using Interfaces.Generic;
     using Interfaces.Logging;
     using Interfaces.Organisations;
 
@@ -51,6 +52,11 @@
         public IEnumerable<Employer> GetEmployers(string ern, string name, string location)
         {
             return _organisationService.GetEmployers(ern, name, location);
+        }
+
+        public Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize)
+        {
+            return _organisationService.GetEmployers(ern, name, location, currentPage, pageSize);
         }
     }
 }

@@ -3,6 +3,7 @@
     using System.Linq;
     using Common.Constants;
     using Common.Mediators;
+    using Common.ViewModels;
     using Constants.ViewModels;
     using Converters;
     using Providers;
@@ -231,11 +232,14 @@
                 {
                     ProviderSiteErn = viewModel.ProviderSiteErn,
                     FilterType = EmployerFilterType.NameAndLocation,
-                    EmployerResults = Enumerable.Empty<EmployerResultViewModel>()
+                    EmployerResults = Enumerable.Empty<EmployerResultViewModel>(),
+                    EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>()
                 };
             }
             else
             {
+                viewModel.EmployerResultsPage = viewModel.EmployerResultsPage ?? new PageableViewModel<EmployerResultViewModel>();
+
                 var validationResult = _employerSearchViewModelServerValidator.Validate(viewModel);
 
                 if (!validationResult.IsValid)
@@ -245,7 +249,7 @@
 
                 viewModel = _employerProvider.GetEmployerViewModels(viewModel);
 
-                if (viewModel.EmployerResults == null || !viewModel.EmployerResults.Any())
+                if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
                 {
                     return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
                 }
