@@ -16,7 +16,7 @@
     {
         public EmployerSearchViewModel()
         {
-            EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>() { CurrentPage = 1 };
+            EmployerResultsPage = new PageableViewModel<EmployerResultViewModel> { CurrentPage = 1 };
         }
 
         public EmployerSearchViewModel(EmployerSearchViewModel viewModel) : this()

@@ -73,11 +73,12 @@ namespace SFA.Apprenticeships.Application.Organisation
                     pageable.Page = new List<VerifiedOrganisationSummary>();
                     return pageable;
                 }
-                pageable.ResultsCount = 1;
                 pageable.Page = new List<VerifiedOrganisationSummary>
                 {
                     verifiedOrganisationSummary
                 };
+                pageable.ResultsCount = 1;
+                pageable.TotalNumberOfPages = 1;
                 return pageable;
             }
 
@@ -85,7 +86,7 @@ namespace SFA.Apprenticeships.Application.Organisation
             var verifiedOrganisationSummaries = _verifiedOrganisationProvider.Find(name, location, out resultCount);
             pageable.Page = verifiedOrganisationSummaries.Skip((currentPage - 1)*pageSize).Take(pageSize).ToList();
             pageable.ResultsCount = resultCount;
-            pageable.TotalNumberOfPages = resultCount/pageSize;
+            pageable.TotalNumberOfPages = (resultCount/pageSize) + 1;
             return pageable;
         }
 

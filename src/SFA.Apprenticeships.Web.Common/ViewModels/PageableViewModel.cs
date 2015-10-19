@@ -7,6 +7,7 @@
         public PageableViewModel()
         {
             CurrentPage = 1;
+            TotalNumberOfPages = 1;
         }
 
         public IEnumerable<T> Page { get; set; }
