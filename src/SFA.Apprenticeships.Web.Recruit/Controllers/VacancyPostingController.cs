@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿using System.Web.Services.Protocols;
+
+namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
     using Attributes;
@@ -40,37 +42,9 @@
             }
         }
         
-        //[HttpPost]
-        //[MultipleFormActionsButton(SubmitButtonActionName = "SearchExistingEmployerByReferenceNumber")]
-        //public ActionResult SearchExistingEmployerByReferenceNumber(EmployerSearchViewModel viewModel)
-        //{
-        //    viewModel.FilterType = EmployerFilterType.Ern;
-        //    return RedirectToRoute(RecruitmentRouteNames.SearchExistingEmployer, viewModel);
-        //}
-
-        //[HttpPost]
-        //[MultipleFormActionsButton(SubmitButtonActionName = "SearchExistingEmployerByNameAndOrLocation")]
-        //public ActionResult SearchExistingEmployerByNameAndOrLocation(EmployerSearchViewModel viewModel)
-        //{
-        //    viewModel.FilterType = EmployerFilterType.NameAndLocation;
-        //    return RedirectToRoute(RecruitmentRouteNames.SearchExistingEmployer, viewModel);
-        //}
-
+        [HttpPost]
         public ActionResult SearchExistingEmployer(EmployerSearchViewModel viewModel)
         {
-            if (!string.IsNullOrWhiteSpace(viewModel.Ern))
-            {
-                viewModel.FilterType = EmployerFilterType.Ern;
-            }
-            else if (!string.IsNullOrWhiteSpace(viewModel.Location) || !string.IsNullOrWhiteSpace(viewModel.Name))
-            {
-                viewModel.FilterType = EmployerFilterType.NameAndLocation;
-            }
-            else
-            {
-                viewModel.FilterType = EmployerFilterType.Undefined;
-            }
-
             var response = _vacancyPostingMediator.GetProviderEmployers(viewModel);
 
             switch (response.Code)

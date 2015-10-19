@@ -19,7 +19,7 @@
             EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>() { CurrentPage = 1 };
         }
 
-        public EmployerSearchViewModel(EmployerSearchViewModel viewModel)
+        public EmployerSearchViewModel(EmployerSearchViewModel viewModel) : this()
         {
             ProviderSiteErn = viewModel.ProviderSiteErn;
             FilterType = viewModel.FilterType;
@@ -28,10 +28,7 @@
             Location = viewModel.Location;
             if (viewModel.EmployerResultsPage != null)
             {
-                EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>
-                {
-                    CurrentPage = viewModel.EmployerResultsPage.CurrentPage
-                };
+                EmployerResultsPage.CurrentPage = viewModel.EmployerResultsPage.CurrentPage;
             }
         }
 
