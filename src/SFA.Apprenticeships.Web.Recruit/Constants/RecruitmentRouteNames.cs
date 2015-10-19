@@ -40,6 +40,7 @@
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
         public const string SearchExistingEmployer = "SearchExistingEmployer";
+        public const string PageExistingEmployer = "PageExistingEmployer";
         public const string SearchExistingEmployerByErn = "SearchExistingEmployerByErn";
         public const string SearchExistingEmployerByNameAndOrLocation = "SearchExistingEmployerByNameAndOrLocation";
         public const string AddEmployer = "AddEmployer";

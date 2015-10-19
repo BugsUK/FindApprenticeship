@@ -150,19 +150,7 @@
                 url: "vacancy/employer/searchexisting",
                 defaults: new { controller = "VacancyPosting", action = "SearchExistingEmployer" }
                 );
-
-            //routes.MapRoute(
-            //    name: RecruitmentRouteNames.SearchExistingEmployerByErn,
-            //    url: "vacancy/employer/searchexistingbyern",
-            //    defaults: new { controller = "VacancyPosting", action = "SearchExistingEmployerByErn" }
-            //    );
-
-            //routes.MapRoute(
-            //    name: RecruitmentRouteNames.SearchExistingEmployerByNameAndOrLocation,
-            //    url: "vacancy/employer/searchexistingbynameandorlocation",
-            //    defaults: new { controller = "VacancyPosting", action = "SearchExistingEmployerByNameAndOrLocation" }
-            //    );
-
+            
             routes.MapRoute(
                 name: RecruitmentRouteNames.AddEmployer,
                 url: "vacancy/employer/add",

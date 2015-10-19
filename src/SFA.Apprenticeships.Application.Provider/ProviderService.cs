@@ -1,4 +1,5 @@
 ﻿using SFA.Apprenticeships.Application.Interfaces.Employers;
+using SFA.Apprenticeships.Application.Interfaces.Generic;
 
 namespace SFA.Apprenticeships.Application.Provider
 {
@@ -152,7 +153,7 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerSiteEmployerLinkWriteRepository.Save(providerSiteEmployerLink);
         }
 
-        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
+        private IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();
 
@@ -171,6 +172,23 @@ namespace SFA.Apprenticeships.Application.Provider
             var providerSiteEmployerLinks = _organisationService.GetProviderSiteEmployerLinks(request);
 
             return providerSiteEmployerLinks;
+        }
+
+        public Pageable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request, int currentPage, int pageSize)
+        {
+            var results = GetProviderSiteEmployerLinks(request);
+
+            var pageable = new Pageable<ProviderSiteEmployerLink>
+            {
+                CurrentPage = currentPage
+            };
+
+            int resultCount = results.Count();
+            pageable.Page = results.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+            pageable.ResultsCount = resultCount;
+            pageable.TotalNumberOfPages = (resultCount / pageSize) + 1;
+
+            return pageable;
         }
     }
 }

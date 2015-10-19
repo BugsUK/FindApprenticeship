@@ -42,7 +42,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             }
         }
         
-        [HttpPost]
+        [HttpGet]
         public ActionResult SearchExistingEmployer(EmployerSearchViewModel viewModel)
         {
             var response = _vacancyPostingMediator.GetProviderEmployers(viewModel);

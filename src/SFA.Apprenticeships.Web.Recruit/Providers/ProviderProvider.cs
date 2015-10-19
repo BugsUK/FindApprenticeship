@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using SFA.Apprenticeships.Application.Interfaces.Employers;
+using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+using SFA.Apprenticeships.Web.Common.Converters;
+using SFA.Apprenticeships.Web.Recruit.Configuration;
 using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
 using SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting;
 
@@ -13,10 +16,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     public class ProviderProvider : IProviderProvider
     {
         private readonly IProviderService _providerService;
+        private readonly IConfigurationService _configurationService;
 
-        public ProviderProvider(IProviderService providerService)
+        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService)
         {
             _providerService = providerService;
+            _configurationService = configurationService;
         }
 
         public ProviderViewModel GetProviderViewModel(string ukprn)
@@ -69,9 +74,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         public IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(string providerSiteErn)
         {
+            var pageSize = int.Parse(_configurationService.Get<RecruitWebConfiguration>().PageSize);
             var parameters = new EmployerSearchRequest(providerSiteErn);
-            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters);
-            return providerSiteEmployerLinks.Select(psel => psel.Convert());
+            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, 0, pageSize);
+            var result = providerSiteEmployerLinks.Page.Select(psel => psel.Convert());
+            return result;
         }
 
         public IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel)
@@ -88,9 +95,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                     break;
             }
 
-            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters);
+            var pageSize = int.Parse(_configurationService.Get<RecruitWebConfiguration>().PageSize);
 
-            return providerSiteEmployerLinks.Select(psel => psel.Convert());
+            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
+
+            var resultsViewModelPage = providerSiteEmployerLinks.Page.Select(e => e.Convert()).ToList();
+            return resultsViewModelPage;
         }
 
         private static ProviderViewModel Convert(Provider provider, IEnumerable<ProviderSite> providerSites)

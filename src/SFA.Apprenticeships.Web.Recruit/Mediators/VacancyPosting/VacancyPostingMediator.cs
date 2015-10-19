@@ -63,6 +63,21 @@
 
         public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(EmployerSearchViewModel employerFilterViewModel)
         {
+            //TODO: pull this into the view and use hidden form inputs
+            //OR: just use a model that caters for it.
+            if (!string.IsNullOrWhiteSpace(employerFilterViewModel.Ern))
+            {
+                employerFilterViewModel.FilterType = EmployerFilterType.Ern;
+            }
+            else if (!string.IsNullOrWhiteSpace(employerFilterViewModel.Location) || !string.IsNullOrWhiteSpace(employerFilterViewModel.Name))
+            {
+                employerFilterViewModel.FilterType = EmployerFilterType.NameAndLocation;
+            }
+            else
+            {
+                employerFilterViewModel.FilterType = EmployerFilterType.Undefined;
+            }
+
             var viewModels = _providerProvider.GetProviderSiteEmployerLinkViewModels(employerFilterViewModel);
             employerFilterViewModel.EmployerResults = viewModels.Select(vm => vm.Employer.ConvertToResult());
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, employerFilterViewModel);
