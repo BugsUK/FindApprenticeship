@@ -318,22 +318,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             }
         }
 
-        [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "SelectNewEmployerByReferenceNumber")]
-        public ActionResult SelectNewEmployerByReferenceNumber(EmployerSearchViewModel viewModel)
-        {
-            viewModel.FilterType = EmployerFilterType.Ern;
-            return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer, viewModel);
-        }
-
-        [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "SelectNewEmployerByNameAndLocation")]
-        public ActionResult SelectNewEmployerByNameAndLocation(EmployerSearchViewModel viewModel)
-        {
-            viewModel.FilterType = EmployerFilterType.NameAndLocation;
-            return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer, viewModel);
-        }
-
         [HttpGet]
         public ActionResult ConfirmNewEmployer(string providerSiteErn, string ern)
         {
