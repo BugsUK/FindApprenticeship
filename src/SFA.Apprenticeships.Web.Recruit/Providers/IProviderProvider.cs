@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
         IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn);
         ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(string providerSiteErn, string ern);
         ProviderSiteEmployerLinkViewModel ConfirmProviderSiteEmployerLink(ProviderSiteEmployerLinkViewModel viewModel);
-        IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(string providerSiteErn);
-        IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel);
+        EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(string providerSiteErn);
+        EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel);
     }
 }

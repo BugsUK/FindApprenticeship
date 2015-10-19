@@ -72,16 +72,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             return providerSiteEmployerLink.Convert();
         }
 
-        public IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(string providerSiteErn)
+        public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(string providerSiteErn)
         {
             var pageSize = int.Parse(_configurationService.Get<RecruitWebConfiguration>().PageSize);
             var parameters = new EmployerSearchRequest(providerSiteErn);
-            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, 0, pageSize);
-            var result = providerSiteEmployerLinks.Page.Select(psel => psel.Convert());
-            return result;
+            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, 1, pageSize);
+            var result = providerSiteEmployerLinks.ToViewModel(providerSiteEmployerLinks.Page.Select(psel => psel.Convert().Employer.ConvertToResult()));
+
+            return new EmployerSearchViewModel
+            {
+                ProviderSiteErn = providerSiteErn,
+                EmployerResultsPage = result
+            };
         }
 
-        public IEnumerable<ProviderSiteEmployerLinkViewModel> GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel)
+        public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel)
         {
             EmployerSearchRequest parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn);
 
@@ -99,8 +104,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
             var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
 
-            var resultsViewModelPage = providerSiteEmployerLinks.Page.Select(e => e.Convert()).ToList();
-            return resultsViewModelPage;
+            var resultsViewModelPage = providerSiteEmployerLinks.ToViewModel(providerSiteEmployerLinks.Page.Select(e => e.Convert().Employer.ConvertToResult()));
+            viewModel.EmployerResultsPage = resultsViewModelPage;
+            return viewModel;
         }
 
         private static ProviderViewModel Convert(Provider provider, IEnumerable<ProviderSite> providerSites)

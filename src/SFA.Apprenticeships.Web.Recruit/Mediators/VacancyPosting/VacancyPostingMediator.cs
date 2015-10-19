@@ -52,13 +52,7 @@
 
         public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn)
         {
-            var viewModels = _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn);
-            var viewModel = new EmployerSearchViewModel
-            {
-                ProviderSiteErn = providerSiteErn,
-                EmployerResults = viewModels.Select(vm => vm.Employer.ConvertToResult())
-            };
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn));
         }
 
         public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(EmployerSearchViewModel employerFilterViewModel)
@@ -78,9 +72,8 @@
                 employerFilterViewModel.FilterType = EmployerFilterType.Undefined;
             }
 
-            var viewModels = _providerProvider.GetProviderSiteEmployerLinkViewModels(employerFilterViewModel);
-            employerFilterViewModel.EmployerResults = viewModels.Select(vm => vm.Employer.ConvertToResult());
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, employerFilterViewModel);
+            var result = _providerProvider.GetProviderSiteEmployerLinkViewModels(employerFilterViewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, result);
         }
 
         public MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel)
