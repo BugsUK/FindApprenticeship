@@ -16,7 +16,7 @@
     {
         public EmployerSearchViewModel()
         {
-            
+            EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>() { CurrentPage = 1 };
         }
 
         public EmployerSearchViewModel(EmployerSearchViewModel viewModel)
@@ -26,10 +26,13 @@
             Ern = viewModel.Ern;
             Name = viewModel.Name;
             Location = viewModel.Location;
-            EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>
+            if (viewModel.EmployerResultsPage != null)
             {
-                CurrentPage = viewModel.EmployerResultsPage.CurrentPage
-            };
+                EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>
+                {
+                    CurrentPage = viewModel.EmployerResultsPage.CurrentPage
+                };
+            }
         }
 
         public string ProviderSiteErn { get; set; }
