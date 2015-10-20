@@ -38,7 +38,6 @@
                     {
 
                         @Html.Partial("ValidationSummary", ViewData.ModelState)
-                        @Html.AntiForgeryToken()
 
                         <div id="ern-search-panel" class="toggle-content blocklabel-content">
                             @Html.HiddenFor(model => model.ProviderSiteErn)
@@ -54,7 +53,6 @@
                     {
 
                         @Html.Partial("ValidationSummary", ViewData.ModelState)
-                        @Html.AntiForgeryToken()
 
                         <div id="name-location-search-panel" class="toggle-content blocklabel-content">
                             @Html.HiddenFor(model => model.ProviderSiteErn)
