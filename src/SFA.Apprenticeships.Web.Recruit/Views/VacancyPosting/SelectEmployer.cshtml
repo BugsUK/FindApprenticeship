@@ -3,6 +3,7 @@
 @model EmployerSearchViewModel
 @{
     ViewBag.Title = "Recruit an Apprentice - Select an employer for your vacancy";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
     const string selected = "selected";
 
@@ -15,6 +16,9 @@
             Select an employer for your vacancy
         </h1>
     </div>
+
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
     <section class="clearfix" id="providerSiteResults">
         <h2 class="heading-small">Your linked employers</h2>
         <details>
@@ -67,43 +71,50 @@
                 </div>
             </div>
         </details>
+        
+        @if (Model.EmployerResultsPage.ResultsCount > 0)
+        {
+            var resultsMessage = Model.EmployerResultsPage.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.EmployerResultsPage.ResultsCount) : "Found one employer";
 
-        <div class="grid grid-3-3">
-            <table>
-                <colgroup>
-                    <col class="t30">
-                    <col class="t40">
-                    <col class="t15">
-                    <col class="t15">
-                    <col>
-                </colgroup>
-                <tbody>
-                <tr>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>ERN</th>
-                    <th></th>
-                </tr>
-                @foreach (var employerResultsViewModel in @Model.EmployerResultsPage.Page)
-                {
+        <h2 class="heading-small">@resultsMessage</h2>
+
+            <div class="grid grid-3-3">
+                <table>
+                    <colgroup>
+                        <col class="t30">
+                        <col class="t40">
+                        <col class="t15">
+                        <col class="t15">
+                        <col>
+                    </colgroup>
+                    <tbody>
                     <tr>
-                        <th>
-                            <h4 class="bold-small">@employerResultsViewModel.EmployerName</h4>
-                        </th>
-                        <td>
-                            @employerResultsViewModel.Address.AddressLine1
-                            <br/>@employerResultsViewModel.Address.AddressLine2
-                            <br/>@employerResultsViewModel.Address.Postcode
-                        </td>
-                        <td>@employerResultsViewModel.Ern</td>
-                        <td>
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern})">Select employer</a>
-                        </td>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>ERN</th>
+                        <th></th>
                     </tr>
-                }
-                </tbody>
-            </table>
-        </div>
+                    @foreach (var employerResultsViewModel in @Model.EmployerResultsPage.Page)
+                    {
+                        <tr>
+                            <th>
+                                <h4 class="bold-small">@employerResultsViewModel.EmployerName</h4>
+                            </th>
+                            <td>
+                                @employerResultsViewModel.Address.AddressLine1
+                                <br/>@employerResultsViewModel.Address.AddressLine2
+                                <br/>@employerResultsViewModel.Address.Postcode
+                            </td>
+                            <td>@employerResultsViewModel.Ern</td>
+                            <td>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern})">Select employer</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        }
 
         <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Link to a new employer</a>
     </section>

@@ -33,9 +33,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         {
             var response = _vacancyPostingMediator.GetProviderEmployers(providerSiteErn);
 
+            ModelState.Clear();
+
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message.Text, response.Message.Level);
+            }
+
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
+                case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
                     return View(response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -47,10 +55,19 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         {
             var response = _vacancyPostingMediator.GetProviderEmployers(viewModel);
 
+            ModelState.Clear();
+
+            if (response.Message != null)
+            {
+                SetUserMessage(response.Message.Text, response.Message.Level);
+            }
+
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
+                case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
                     return View("SelectEmployer", response.ViewModel);
+
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

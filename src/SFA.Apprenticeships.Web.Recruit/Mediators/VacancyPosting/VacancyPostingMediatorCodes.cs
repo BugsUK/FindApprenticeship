@@ -10,6 +10,7 @@
         public static class GetProviderEmployers
         {
             public const string Ok = "VacancyPosting.GetProviderEmployers.Ok";
+            public const string NoResults = "VacancyPosting.GetProviderSiteEmployers.NoResults";
         }
 
         public static class GetEmployers

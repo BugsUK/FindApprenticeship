@@ -52,7 +52,14 @@
 
         public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn)
         {
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn));
+            var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn);
+
+            if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
+            }
+            
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
         public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(EmployerSearchViewModel employerFilterViewModel)
@@ -72,8 +79,14 @@
                 employerFilterViewModel.FilterType = EmployerFilterType.Undefined;
             }
 
-            var result = _providerProvider.GetProviderSiteEmployerLinkViewModels(employerFilterViewModel);
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, result);
+            var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModels(employerFilterViewModel);
+
+            if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
+            }
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
         public MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel)
@@ -260,7 +273,7 @@
 
                 if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
                 {
-                    return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsErnRequiredText, UserMessageLevel.Info);
                 }
             }
 
