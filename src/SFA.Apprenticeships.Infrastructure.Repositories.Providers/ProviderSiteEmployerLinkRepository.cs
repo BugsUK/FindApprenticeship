@@ -40,7 +40,7 @@
         {
             _logger.Debug("Called Mongodb to get provider site employer link with providerSiteErn={0}, ern={1}", providerSiteErn, ern);
 
-            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.ProviderSiteErn == providerSiteErn && e.Ern == ern);
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.ProviderSiteErn == providerSiteErn && e.Employer.Ern == ern);
 
             return mongoEntity == null ? null : _mapper.Map<MongoProviderSiteEmployerLink, ProviderSiteEmployerLink>(mongoEntity);
         }
@@ -69,7 +69,7 @@
 
         public ProviderSiteEmployerLink Save(ProviderSiteEmployerLink entity)
         {
-            _logger.Debug("Called Mongodb to save provider site employer link with ERN={0}", entity.Ern);
+            _logger.Debug("Called Mongodb to save provider site employer link with ERN={0}", entity.Employer.Ern);
 
             UpdateEntityTimestamps(entity);
 
@@ -77,7 +77,7 @@
 
             Collection.Save(mongoEntity);
 
-            _logger.Debug("Saved provider site employer link to Mongodb with ERN={0}", entity.Ern);
+            _logger.Debug("Saved provider site employer link to Mongodb with ERN={0}", entity.Employer.Ern);
 
             return _mapper.Map<MongoProviderSiteEmployerLink, ProviderSiteEmployerLink>(mongoEntity);
         }

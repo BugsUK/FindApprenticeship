@@ -95,6 +95,7 @@
             if (!validationResult.IsValid)
             {
                 var existingViewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
+                existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
                 existingViewModel.Description = viewModel.Description;
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation, existingViewModel, validationResult);

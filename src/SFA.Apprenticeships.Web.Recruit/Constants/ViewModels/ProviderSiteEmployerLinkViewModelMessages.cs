@@ -11,5 +11,9 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Employer description for your vacancies " + Whitelists.FreetextWhitelist.ErrorText;
         }
+        public static class WebsiteUrl
+        {
+            public const string LabelText = "Website";
+        }
     }
 }

@@ -12,6 +12,7 @@
         public string ProviderSiteErn { get; set; }
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.Description.LabelText)]
         public string Description { get; set; }
+        [Display(Name = ProviderSiteEmployerLinkViewModelMessages.WebsiteUrl.LabelText)]
         public string WebsiteUrl { get; set; }
         public bool IsWebsiteUrlWellFormed { get; set; }
         public EmployerViewModel Employer { get; set; }

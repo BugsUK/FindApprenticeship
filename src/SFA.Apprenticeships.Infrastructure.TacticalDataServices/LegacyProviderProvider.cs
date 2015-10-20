@@ -246,16 +246,11 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 Address = address
             };
 
-            string websiteUrl;
-            var isWebsiteUrlWellFormed = TryParseWebsiteUrl(vacancyOwnerRelationship.EmployerWebsite, out websiteUrl);
-
             var providerSiteEmployerLink = new ProviderSiteEmployerLink
             {
                 ProviderSiteErn = vacancyOwnerRelationship.ProviderSiteEdsUrn.ToString(),
-                Ern = vacancyOwnerRelationship.Employer.EdsUrn.ToString(),
                 Description = CleanDescription(vacancyOwnerRelationship.EmployerDescription),
-                WebsiteUrl = websiteUrl,
-                IsWebsiteUrlWellFormed = isWebsiteUrlWellFormed,
+                WebsiteUrl = vacancyOwnerRelationship.EmployerWebsite,
                 Employer = employer
             };
 
@@ -279,38 +274,6 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             description = Regex.Replace(description, @"\s{2,}", " ");
 
             return description;
-        }
-
-        private static bool TryParseWebsiteUrl(string website, out string websiteUrl)
-        {
-            websiteUrl = website;
-            if (IsValidUrl(website))
-            {
-                websiteUrl = new UriBuilder(website).Uri.ToString();
-                return true;
-            }
-            return false;
-        }
-
-        public static bool IsValidUrl(string url)
-        {
-            if (string.IsNullOrWhiteSpace(url))
-            {
-                return false;
-            }
-
-            try
-            {
-                // Attempting to build the URL will throw an exception if it is invalid.
-                // ReSharper disable once UnusedVariable
-                var unused = new UriBuilder(url);
-
-                return true;
-            }
-            catch (UriFormatException)
-            {
-                return false;
-            }
         }
 
         private IDbConnection GetConnection()

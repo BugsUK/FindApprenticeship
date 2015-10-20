@@ -67,6 +67,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
         public ProviderSiteEmployerLinkViewModel ConfirmProviderSiteEmployerLink(ProviderSiteEmployerLinkViewModel viewModel)
         {
             var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
+            providerSiteEmployerLink.WebsiteUrl = viewModel.WebsiteUrl;
             providerSiteEmployerLink.Description = viewModel.Description;
             providerSiteEmployerLink = _providerService.SaveProviderSiteEmployerLink(providerSiteEmployerLink);
             return providerSiteEmployerLink.Convert();
