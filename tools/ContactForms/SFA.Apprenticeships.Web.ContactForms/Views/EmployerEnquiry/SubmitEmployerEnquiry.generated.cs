@@ -77,7 +77,7 @@ WriteLiteral(" class=\"text\"");
 
 WriteLiteral(@">
     <p>
-        If you are interested in finding out more about employing apprentices please complete the following form.
+        If you are interested in finding out more about employing apprentices or providing traineeships please complete the following form.
     </p>
     <p>
         Alternatively you can also call the National Apprenticeship Service on 08000 150 600.

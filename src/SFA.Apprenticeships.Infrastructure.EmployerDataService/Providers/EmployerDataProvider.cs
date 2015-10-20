@@ -109,7 +109,7 @@
                 {
                     _logger.Debug($"EmployerDataService.ByFreeText did not find any employers with reference number='{employerName}', post code or town='{postcodeOrTown}'");
                     resultCount = 0;
-                    return null;
+                    return new List<VerifiedOrganisationSummary>();
                 }
 
                 _logger.Debug($"EmployerDataService.ByFreeText {0} employer(s) with reference number='{employerName}', post code or town='{postcodeOrTown}'");
