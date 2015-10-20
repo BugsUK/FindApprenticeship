@@ -54,6 +54,13 @@
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn);
 
+            var validationResult = _employerSearchViewModelServerValidator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.FailedValidation, viewModel, validationResult);
+            }
+
             if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
@@ -64,6 +71,13 @@
 
         public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(EmployerSearchViewModel employerFilterViewModel)
         {
+            var validationResult = _employerSearchViewModelServerValidator.Validate(employerFilterViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.FailedValidation, employerFilterViewModel, validationResult);
+            }
+
             //TODO: pull this into the view and use hidden form inputs
             //OR: just use a model that caters for it.
             if (!string.IsNullOrWhiteSpace(employerFilterViewModel.Ern))

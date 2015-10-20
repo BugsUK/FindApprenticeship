@@ -38,32 +38,28 @@
                         </label>
                     </div>
 
-                    @using (Html.BeginRouteForm(RecruitmentRouteNames.SearchExistingEmployer, FormMethod.Get, new {@id = "#ern-search-form"}))
+                    @using (Html.BeginRouteForm(RecruitmentRouteNames.SearchExistingEmployer, FormMethod.Get, new { @id = "#ern-search-form" }))
                     {
-
-                        @Html.Partial("ValidationSummary", ViewData.ModelState)
+                        @Html.HiddenFor(model => model.ProviderSiteErn)
 
                         <div id="ern-search-panel" class="toggle-content blocklabel-content">
-                            @Html.HiddenFor(model => model.ProviderSiteErn)
                             @Html.FormTextFor(model => model.Ern)
 
-                            <button id="ern-search-button" type="submit" name="SearchExistingEmployerByReferenceNumber" value="SearchExistingEmployerByReferenceNumber" class="button">
+                            <button id="ern-search-button" type="submit" class="button">
                                 Find employer
                             </button>
                         </div>
                     }
 
-                    @using (Html.BeginRouteForm(RecruitmentRouteNames.SearchExistingEmployer, FormMethod.Get, new {@id = "#name-location-search-form"}))
+                    @using (Html.BeginRouteForm(RecruitmentRouteNames.SearchExistingEmployer, FormMethod.Get, new { @id = "#name-location-search-form" }))
                     {
-
-                        @Html.Partial("ValidationSummary", ViewData.ModelState)
+                        @Html.HiddenFor(model => model.ProviderSiteErn)
 
                         <div id="name-location-search-panel" class="toggle-content blocklabel-content">
-                            @Html.HiddenFor(model => model.ProviderSiteErn)
                             @Html.FormTextFor(model => model.Name)
                             @Html.FormTextFor(model => model.Location)
 
-                            <button id="name-location-search-button" type="submit" name="SearchExistingEmployerByNameAndOrLocation" value="SearchExistingEmployerByNameAndOrLocation" class="button">
+                            <button id="name-location-search-button" type="submit" class="button">
                                 Search
                             </button>
                         </div>

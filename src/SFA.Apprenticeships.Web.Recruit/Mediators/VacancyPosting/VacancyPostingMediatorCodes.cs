@@ -11,6 +11,7 @@
         {
             public const string Ok = "VacancyPosting.GetProviderEmployers.Ok";
             public const string NoResults = "VacancyPosting.GetProviderSiteEmployers.NoResults";
+            public const string FailedValidation = "VacancyPosting.GetProviderSiteEmployers.FailedValidation";
         }
 
         public static class GetEmployers

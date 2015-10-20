@@ -42,6 +42,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
             switch (response.Code)
             {
+                case VacancyPostingMediatorCodes.GetProviderEmployers.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
                 case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
                     return View(response.ViewModel);
@@ -64,6 +68,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
             switch (response.Code)
             {
+                case VacancyPostingMediatorCodes.GetProviderEmployers.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("SelectEmployer", response.ViewModel);
+
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
                 case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
                     return View("SelectEmployer", response.ViewModel);
