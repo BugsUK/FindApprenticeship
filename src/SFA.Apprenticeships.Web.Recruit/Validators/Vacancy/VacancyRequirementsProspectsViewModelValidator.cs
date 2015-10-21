@@ -39,8 +39,6 @@
                 .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListErrorText);
 
             RuleFor(x => x.ThingsToConsider)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.ThingsToConsider.RequiredErrorText)
                 .Length(0, 4000)
                 .WithMessage(VacancyViewModelMessages.ThingsToConsider.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.ThingsToConsider.WhiteListRegularExpression)

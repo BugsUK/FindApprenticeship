@@ -5,7 +5,7 @@
 }
 
 <h1 class="heading-xlarge">
-    Enter vacancy details
+    Questions for candidates
 </h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyQuestions, FormMethod.Post))
@@ -16,16 +16,9 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
     <section>
-        <h2 class="heading-large">
-            Questions for candidates
-        </h2>
-        <div class="grid-wrapper">
-            <div class="grid grid-1-2">
-                <div class="inner-block-padr">
-                    @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", autofocus = "autofocus" }, labelHtmlAttributes: new {@class = "bold-small"})
-                    @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text"}, labelHtmlAttributes: new {@class = "bold-small"})
-                </div>
-            </div>
+        <div class="form-group">
+            @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-2 form-textarea-medium", type = "text", autofocus = "autofocus" })
+            @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-2 form-textarea-medium", type = "text" })
         </div>
     </section>
     <div class="grid grid-1-2">

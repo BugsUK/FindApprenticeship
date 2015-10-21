@@ -16,21 +16,12 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
     <section>
-        <h2 class="heading-large">
-            Requirements and prospects
-        </h2>
-        <div class="grid-wrapper">
-            <div class="grid grid-1-2">
-                <div class="inner-block-padr">
-                    @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", autofocus = "autofocus" }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
-                </div>
-            </div>
-            <div class="grid grid-1-2">
-                @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
-                @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
-            </div>
+        <div class="form-group">
+            @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-2 form-textarea-medium", type = "text", autofocus = "autofocus" })
+            @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-2 form-textarea-medium", type = "text" })
+            @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-2 form-textarea-medium", type = "text" })
+            @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-2 form-textarea-medium", type = "text" })
+            @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-2 form-textarea-medium", type = "text" })
         </div>
     </section>
     <div class="grid grid-1-2">

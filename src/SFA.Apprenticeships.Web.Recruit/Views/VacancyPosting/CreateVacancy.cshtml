@@ -14,14 +14,13 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.FormTextFor(m => m.Title, controlHtmlAttributes: new { type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
+    @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-2 form-textarea-small" })
 
     <!--TODO: Why is 4000 characters remaining appearing?-->
-    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12 }, labelHtmlAttributes: new { @class = "bold-small" })
+    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-2 form-textarea-medium" })
 
     <div class="form-group">
-        <p class="form-label">Apprenticeship framework</p>
-
+        <label for="FrameworkCodeName" class="form-label">Apprenticeship framework</label>
         <select id="@Html.IdFor(model => model.FrameworkCodeName)" name="@Html.NameFor(m => m.FrameworkCodeName)" class="para-btm-margin chosen-select" style="min-width: 50%;">
             <option value="" selected>Choose from a list of frameworks</option>
 
@@ -37,23 +36,29 @@
         </select>
     </div>
 
-    <div class="form-group inline clearfix">
-        <p class="form-label" id="apprenticeship-level-label">Apprenticeship level</p>
+    <div class="form-group">
+        <label class="form-label">Apprenticeship level</label>
 
-        @* ReSharper disable once Html.IdNotResolved *@
-        <label for="apprenticeship-level-intermediate" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
-        </label>
+        <div class="form-group small-btm-margin clearfix">
+            @* ReSharper disable once Html.IdNotResolved *@
+            <label for="apprenticeship-level-intermediate" class="block-label">
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new { id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label" }) Intermediate
+            </label>
+        </div>
 
-        @* ReSharper disable once Html.IdNotResolved *@
-        <label for="apprenticeship-level-advanced" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
-        </label>
+        <div class="form-group small-btm-margin clearfix">
+            @* ReSharper disable once Html.IdNotResolved *@
+            <label for="apprenticeship-level-advanced" class="block-label">
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
+            </label>
+        </div>
 
-        @* ReSharper disable once Html.IdNotResolved *@
-        <label for="apprenticeship-level-higher" class="block-label">
-            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
-        </label>
+        <div class="form-group small-btm-margin clearfix">
+            @* ReSharper disable once Html.IdNotResolved *@
+            <label for="apprenticeship-level-higher" class="block-label">
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new { id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label" }) Higher
+            </label>
+        </div>
     </div>
 
     @Html.HiddenFor(model => model.Ukprn)

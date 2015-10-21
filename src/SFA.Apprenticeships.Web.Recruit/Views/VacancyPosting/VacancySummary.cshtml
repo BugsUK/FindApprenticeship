@@ -16,22 +16,13 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
     <section>
-        <h2 class="heading-large">
-            Apprenticeship summary
-        </h2>
-        <div class="grid-wrapper">
-            <div class="grid grid-1-3">
-                <div class="inner-block-padr">
-                    @Html.FormTextAreaFor(m => m.WorkingWeek, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, autofocus = "autofocus" }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.ClosingDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, labelHtmlAttributes: new { @class = "bold-small" })
-                    @Html.FormTextFor(m => m.PossibleStartDate, controlHtmlAttributes: new { @class = "width-all-2-3", type = "date" }, labelHtmlAttributes: new { @class = "bold-small" })
-                </div>
-            </div>
-            <div class="grid grid-2-3">
-                @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, rows = 22 }, labelHtmlAttributes: new { @class = "bold-small" })
-            </div>
+        <div class="form-group">
+            @Html.FormTextAreaFor(m => m.WorkingWeek, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12, autofocus = "autofocus" })
+            @Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 })
+            @Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 })
+            @Html.FormTextFor(m => m.ClosingDate, controlHtmlAttributes: new { @class = "width-all-1-3", type = "date" })
+            @Html.FormTextFor(m => m.PossibleStartDate, controlHtmlAttributes: new { @class = "width-all-1-3", type = "date" })
+            @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22 })
         </div>
     </section>
     <div class="grid grid-1-2">
