@@ -27,7 +27,7 @@
                 else
                 {
                     <p class="form-label">Change provider site</p>
-                    @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites)
+                    @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, new { @class = "chosen-select"})
                     <button id="change-training-site-button" type="submit" name="ProviderSiteAction" class="button" value="ChangeProviderSite">Change</button>
                 }
             </div>

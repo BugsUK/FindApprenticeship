@@ -23,7 +23,6 @@
             <div class="inner-block-padr">
                 <h3 class="bold-small">Employer</h3>
                 <p class="small-btm-margin">@Model.Employer.Name</p>
-                @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new { type = "text" }, labelHtmlAttributes: new { @class = "bold-small" })
                 <h3 class="bold-small">Address</h3>
                 <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
                 <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>
@@ -40,6 +39,7 @@
             </div>
         </div>
         <div class="grid grid-1-1">
+            @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" })
             @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
             <button class="button">Save description and link to employer</button>
             <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Choose another employer</a>
