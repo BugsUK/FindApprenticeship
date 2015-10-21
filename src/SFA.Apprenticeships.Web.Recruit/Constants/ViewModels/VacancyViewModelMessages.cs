@@ -97,7 +97,7 @@
 
         public static class ThingsToConsider
         {
-            public const string LabelText = "Things to consider";
+            public const string LabelText = "Things to consider (optional)";
             public const string TooLongErrorText = "Things to consider mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Things to consider " + Whitelists.FreetextWhitelist.ErrorText;
@@ -105,7 +105,7 @@
 
         public static class DesiredQualifications
         {
-            public const string LabelText = "Desired qualifications (optional)";
+            public const string LabelText = "Desired qualifications";
             public const string RequiredErrorText = "Please provide the Desired qualifications";
             public const string TooLongErrorText = "Desired qualifications mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
