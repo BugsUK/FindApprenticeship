@@ -20,6 +20,14 @@
                 .Matches(EmployerSearchViewModelMessages.Ern.WhiteListRegularExpression)
                 .WithMessage(EmployerSearchViewModelMessages.Ern.WhiteListErrorText);
 
+            RuleFor(x => x.Name)
+                .Matches(EmployerSearchViewModelMessages.Name.WhiteListRegularExpression)
+                .WithMessage(EmployerSearchViewModelMessages.Name.WhiteListErrorText);
+
+            RuleFor(x => x.Location)
+                .Matches(EmployerSearchViewModelMessages.Location.WhiteListRegularExpression)
+                .WithMessage(EmployerSearchViewModelMessages.Location.WhiteListErrorText);
+
             RuleFor(x => x)
                 .Must(x => !string.IsNullOrWhiteSpace(x.Name) || !string.IsNullOrWhiteSpace(x.Location))
                 .When(x => x.FilterType == EmployerFilterType.NameAndLocation)

@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Constants.ViewModels
 {
+    using Common.Constants;
+
     public class EmployerSearchViewModelMessages
     {
         public const string NameAndLocationSearchRequiredErrorText = "Please enter an employer name, a town or postcode or both to search";
@@ -18,12 +20,16 @@
         public static class Name
         {
             public const string LabelText = "Employer name";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Employer name " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class Location
         {
             public const string LabelText = "Employer location";
             public const string HintText = "Enter town or postcode";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Employer name " + Whitelists.FreetextWhitelist.ErrorText;
         }
     }
 }

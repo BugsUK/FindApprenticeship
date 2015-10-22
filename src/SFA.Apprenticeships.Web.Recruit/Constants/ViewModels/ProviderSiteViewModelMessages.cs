@@ -7,7 +7,7 @@
         public static class NameMessages
         {
             public const string LabelText = "Training site name";
-            public const string RequiredErrorText = "Please enter your Training site name";
+            public const string RequiredErrorText = "Please enter your training site name";
             public const string TooLongErrorText = "Training site name mustn’t exceed 100 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Training site name " + Whitelists.FreetextWhitelist.ErrorText;
