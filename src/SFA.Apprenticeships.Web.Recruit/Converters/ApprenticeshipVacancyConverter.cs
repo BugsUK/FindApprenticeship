@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
 {
+    using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using ViewModels.Vacancy;
 
@@ -13,8 +14,8 @@
                 WorkingWeek = apprenticeshipVacancy.WorkingWeek,
                 WeeklyWage = apprenticeshipVacancy.WeeklyWage,
                 Duration = apprenticeshipVacancy.Duration,
-                ClosingDate = apprenticeshipVacancy.ClosingDate,
-                PossibleStartDate = apprenticeshipVacancy.PossibleStartDate,
+                ClosingDate = new DateViewModel(apprenticeshipVacancy.ClosingDate),
+                PossibleStartDate = new DateViewModel(apprenticeshipVacancy.PossibleStartDate),
                 LongDescription = apprenticeshipVacancy.LongDescription
             };
 

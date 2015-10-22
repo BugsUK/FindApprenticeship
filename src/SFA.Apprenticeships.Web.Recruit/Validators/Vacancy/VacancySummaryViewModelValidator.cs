@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 {
     using System;
+    using Common.Validators;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Vacancy;
@@ -14,6 +15,7 @@
 
         private void AddCommonRules()
         {
+
             RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText);
@@ -30,17 +32,9 @@
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
 
-            RuleFor(x => x.ClosingDate)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
-                .GreaterThan(DateTime.Today)
-                .WithMessage(VacancyViewModelMessages.ClosingDate.TooSoonErrorText);
+            RuleFor(x => x.ClosingDate).SetValidator(new DateViewModelClientValidator());
 
-            RuleFor(x => x.PossibleStartDate)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.PossibleStartDate.RequiredErrorText)
-                .GreaterThan(DateTime.Today)
-                .WithMessage(VacancyViewModelMessages.PossibleStartDate.TooSoonErrorText);
+            RuleFor(x => x.PossibleStartDate).SetValidator(new DateViewModelClientValidator());
 
             RuleFor(x => x.LongDescription)
                 .NotEmpty()
@@ -54,6 +48,15 @@
 
     public class VacancySummaryViewModelServerValidator : VacancySummaryViewModelClientValidator
     {
-        
+        public VacancySummaryViewModelServerValidator()
+        {
+            AddServerCommonRules();
+        }
+
+        private void AddServerCommonRules()
+        {
+            RuleFor(x => x.ClosingDate).SetValidator(new DateViewModelServerValidator());
+            RuleFor(x => x.PossibleStartDate).SetValidator(new DateViewModelServerValidator());
+        }
     }
 }

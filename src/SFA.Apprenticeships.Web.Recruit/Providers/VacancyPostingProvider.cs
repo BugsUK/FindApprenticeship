@@ -106,8 +106,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.WeeklyWage = viewModel.WeeklyWage;
             vacancy.Duration = viewModel.Duration;
-            vacancy.ClosingDate = viewModel.ClosingDate;
-            vacancy.PossibleStartDate = viewModel.PossibleStartDate;
+            vacancy.ClosingDate = viewModel.ClosingDate.Date;
+            vacancy.PossibleStartDate = viewModel.PossibleStartDate.Date;
             vacancy.LongDescription = viewModel.LongDescription;
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);

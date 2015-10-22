@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Common.ViewModels;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators.Vacancy;
@@ -17,9 +18,9 @@
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
         public string Duration { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
-        public DateTime? ClosingDate { get; set; }
+        public DateViewModel ClosingDate { get; set; }
         [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]
-        public DateTime? PossibleStartDate { get; set; }
+        public DateViewModel PossibleStartDate { get; set; }
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string LongDescription { get; set; }
     }

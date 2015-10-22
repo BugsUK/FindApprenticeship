@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Constants.ViewModels
 {
-    using Common.Constants;
+    using Constants;
 
     public static class AddressViewModelMessages
     {

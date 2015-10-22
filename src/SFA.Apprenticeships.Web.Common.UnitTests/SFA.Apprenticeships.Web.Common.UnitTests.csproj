@@ -99,6 +99,7 @@
       <HintPath>..\packages\AutoFixture.3.31.3\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -138,12 +139,15 @@
     <Compile Include="Builders\ClaimsPrincipalBuilder.cs" />
     <Compile Include="Builders\HttpContextBuilder.cs" />
     <Compile Include="Builders\HttpResponseBuilder.cs" />
+    <Compile Include="Extensions\MetadataExtensionsTests.cs" />
     <Compile Include="Framework\DateDisplayExtensionsTests.cs" />
     <Compile Include="Mediators\MediatorResponseExtensions.cs" />
     <Compile Include="Providers\CookieAuthorizationDataProviderTests.cs" />
     <Compile Include="Providers\HelpCookieProviderBuilder.cs" />
     <Compile Include="Providers\HelpCookieProviderTests.cs" />
     <Compile Include="Providers\RobotCrawlerProviderTests.cs" />
+    <Compile Include="Validators\DateViewModelServerValidatorTests.cs" />
+    <Compile Include="ViewModels\DateViewModelTests.cs" />
     <Compile Include="YearRegexRangeGeneratorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

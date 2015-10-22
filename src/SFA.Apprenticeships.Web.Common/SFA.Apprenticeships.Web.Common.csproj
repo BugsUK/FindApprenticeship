@@ -176,8 +176,10 @@
     <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Converters\PageableConverters.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
+    <Compile Include="Extensions\MetadataExtensions.cs" />
     <Compile Include="IoC\ControllerConvention.cs" />
     <Compile Include="IoC\FilterConfig.cs" />
     <Compile Include="IoC\StructureMapDependencyScope.cs" />
@@ -250,6 +252,7 @@
     <Compile Include="Services\IAuthenticationTicketService.cs" />
     <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
     <Compile Include="Validators\AddressViewModelValidator.cs" />
+    <Compile Include="Validators\DateViewModelValidator.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />

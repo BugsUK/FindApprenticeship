@@ -41,20 +41,8 @@ namespace ASP
         }
         public override void Execute()
         {
-WriteLiteral("<fieldset");
-
-WriteLiteral(" class=\"form-group inline-fixed date-input\"");
-
-WriteLiteral(">\r\n    <legend");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Date of birth</legend>\r\n");
-
-WriteLiteral("    ");
-
             
-            #line 4 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 2 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
 Write(Html.FormTextFor(m => m.Day, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-xsmall", type = "tel", maxlength = "2", pattern = "[0-9]*" }));
 
             
@@ -62,10 +50,8 @@ Write(Html.FormTextFor(m => m.Day, containerHtmlAttributes: new { @class = "form
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 5 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 3 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
 Write(Html.FormTextFor(m => m.Month, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-xsmall", type = "tel", maxlength = "2", pattern = "[0-9]*" }));
 
             
@@ -73,17 +59,13 @@ Write(Html.FormTextFor(m => m.Month, containerHtmlAttributes: new { @class = "fo
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("    ");
-
             
-            #line 6 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
+            #line 4 "..\..\Views\Shared\EditorTemplates\DateViewModel.cshtml"
 Write(Html.FormTextFor(m => m.Year, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", maxlength = "4", pattern = "[0-9]*" }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n</fieldset>");
-
         }
     }
 }
