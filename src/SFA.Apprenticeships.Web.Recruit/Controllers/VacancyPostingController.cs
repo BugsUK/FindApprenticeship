@@ -1,6 +1,4 @@
-﻿using System.Web.Services.Protocols;
-
-namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
     using Attributes;

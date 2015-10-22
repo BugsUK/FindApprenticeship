@@ -250,6 +250,7 @@
     <Compile Include="Services\IAuthenticationTicketService.cs" />
     <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
     <Compile Include="Validators\AddressViewModelValidator.cs" />
+    <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\PageableViewModel.cs" />
