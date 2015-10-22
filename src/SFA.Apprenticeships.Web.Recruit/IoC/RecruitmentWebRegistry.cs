@@ -49,6 +49,7 @@
         {
             For<IProviderProvider>().Use<ProviderProvider>();
             For<IEmployerProvider>().Use<EmployerProvider>();
+            For<IVacancyProvider>().Use<VacancyProvider>();
             For<IProviderUserProvider>().Use<ProviderUserProvider>();
             For<IProviderMediator>().Use<ProviderMediator>();
         }

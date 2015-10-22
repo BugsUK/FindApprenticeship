@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 {
     using System;
     using Application.Interfaces.Logging;
@@ -45,6 +48,19 @@
             var mongoEntity = Collection.FindOne(Query<ApprenticeshipVacancy>.EQ(v => v.VacancyReferenceNumber, vacancyReferenceNumber));
 
             return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+        }
+
+        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn)
+        {
+            _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}", ukPrn);
+
+            var mongoEntities = Collection.Find(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn))
+                .Select(e => _mapper.Map<MongoApprenticeshipVacancy,ApprenticeshipVacancy>(e))
+                .ToList();
+
+            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn ={1}", mongoEntities.Count, ukPrn));
+
+            return mongoEntities;
         }
 
         public void Delete(Guid id)

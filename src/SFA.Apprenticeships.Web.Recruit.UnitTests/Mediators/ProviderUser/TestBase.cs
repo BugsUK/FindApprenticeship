@@ -11,6 +11,7 @@
     {
         protected Mock<IProviderUserProvider> MockProviderUserProvider;
         protected Mock<IProviderProvider> MockProviderProvider;
+        protected Mock<IVacancyProvider> MockVacancyProvider;
         protected Mock<IAuthorizationErrorProvider> MockAuthorizationErrorProvider;
 
         [SetUp]
@@ -18,6 +19,7 @@
         {
             MockProviderUserProvider = new Mock<IProviderUserProvider>();
             MockProviderProvider = new Mock<IProviderProvider>();
+            MockVacancyProvider = new Mock<IVacancyProvider>();
             MockAuthorizationErrorProvider = new Mock<IAuthorizationErrorProvider>();
         }
 
@@ -30,6 +32,7 @@
                 MockProviderUserProvider.Object,
                 MockProviderProvider.Object,
                 MockAuthorizationErrorProvider.Object,
+                MockVacancyProvider.Object,
                 providerUserViewModelValidator,
                 verifyEmailViewModelValidator);
         }
