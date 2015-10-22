@@ -34,7 +34,24 @@
         </div>
     </div>
     <div class="grid-wrapper">
-        <div class="grid grid-1-2">
+        <div class="grid grid-1-1">
+            <section class="font-xsmall">
+                <h2 class="heading-medium">Alerts</h2>
+                <ul class="list-text list-withicons">
+                    <li>
+                        <i class="fa fa-exclamation-circle the-icon"></i>You have 1 vacancy
+                        closing soon with 0 applications <a href="" class="link-unimp inl-block">Apprentice precision toolmaker</a>
+                    </li>
+                    <li>
+                        <i class="fa fa-flag the-icon"></i>You have 12 new applications
+                        for the vacancy <a href="live-apprenticeship-summary.html" class="link-unimp inl-block">Mechanical Engineer - Precision Toolmaker</a>
+                    </li>
+                </ul>
+            </section>
+        </div>
+    </div>
+    <div class="grid-wrapper">
+        <div class="grid grid-1-1">
             <div class="inner-block-padr">
                 <section>
                     <h2 class="heading-medium">New vacancy</h2>
@@ -79,16 +96,16 @@
                             <tbody>
                             @foreach(var vacancy in Model.Vacancies)
                             {
-                                <tr class="va-middle">
+                                <tr>
                                     <td>
                                         <div class="vac-title">
                                             <a href="live-apprenticeship-summary.html" class="disp-block link-unimp">@vacancy.Title<span class="inl-block">(? applications)</span></a>
                                         </div>
                                         <span>@vacancy.ProviderSiteEmployerLink.Employer.Name</span>
                                     </td>
-                                    <td class="ta-center">
+                                    <td>
                                         <span class="tag-draft">Draft</span>
-                                        @*Closing in 1 day*@
+                                        @*<p class="note-text">Closing in 1 day</p>*@
                                     </td>
                                 </tr>
                             }
@@ -109,44 +126,6 @@
                     </div>
                 </section>
             </div>
-        </div>
-        <div class="grid grid-1-2">
-            <section class="font-xsmall">
-                <h2 class="heading-medium">Alerts</h2>
-                <ul class="list-text list-withicons">
-                    <li>
-                        <i class="fa fa-exclamation-circle the-icon"></i>You have 1 vacancy
-                        closing soon with 0 applications <a href="" class="link-unimp inl-block">Apprentice precision toolmaker</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-flag the-icon"></i>You have 12 new applications
-                        for the vacancy <a href="live-apprenticeship-summary.html" class="link-unimp inl-block">Mechanical Engineer - Precision Toolmaker</a>
-                    </li>
-                </ul>
-            </section>
-            <section class="font-xsmall">
-                <h2 class="heading-medium">Useful information</h2>
-                <ul class="list-text">
-                    <li>
-                        <a href="/recruitment/info-expect-from-employer.html">Responsibilities of the employer</a>
-                    </li>
-                    <li>
-                        <a href="/recruitment/info-whos-involved.html">Who's involved in an apprenticeship?</a>
-                    </li>
-                    <li>
-                        <a href="/recruitment/info-expect-from-apprentice.html">What to expect from your apprentice</a>
-                    </li>
-                    <li>
-                        <a href="/recruitment/info-expect-from-provider.html">Responsibilities of the provider</a>
-                    </li>
-                    <li>
-                        <a href="/recruitment/info-payments-and-funding.html">Payments and funding</a>
-                    </li>
-                    <li>
-                        <a href="/recruitment/info-six-steps.html">How to employ an apprentice</a>
-                    </li>
-                </ul>
-            </section>
         </div>
     </div>
 }
