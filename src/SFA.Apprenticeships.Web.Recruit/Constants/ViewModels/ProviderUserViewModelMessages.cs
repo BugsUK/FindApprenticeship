@@ -11,7 +11,7 @@
         public static class FullnameMessages
         {
             public const string LabelText = "Full name";
-            public const string RequiredErrorText = "Please enter your Full name";
+            public const string RequiredErrorText = "Please enter your full name";
             public const string TooLongErrorText = "Full name mustn’t exceed 100 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Full name " + Whitelists.FreetextWhitelist.ErrorText;
