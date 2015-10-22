@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy;
-
+﻿
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 {
     using System;
@@ -18,6 +16,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Validators.ProviderUser;
     using ViewModels;
     using ViewModels.ProviderUser;
+    using ViewModels.Vacancy;
     using ClaimTypes = Common.Constants.ClaimTypes;
 
     public class ProviderUserMediator : MediatorBase, IProviderUserMediator

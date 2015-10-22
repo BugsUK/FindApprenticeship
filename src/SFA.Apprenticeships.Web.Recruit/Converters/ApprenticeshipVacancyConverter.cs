@@ -70,6 +70,7 @@
                 FirstQuestion = apprenticeshipVacancy.FirstQuestion,
                 SecondQuestion = apprenticeshipVacancy.SecondQuestion,
                 ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
+                Status = apprenticeshipVacancy.Status,
                 FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
                 ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert(),
             };

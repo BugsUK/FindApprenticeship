@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 
 namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
@@ -9,6 +10,8 @@ namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
         ApprenticeshipVacancy Get(long vacancyReferenceNumber);
 
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn);
+
+        List<ApprenticeshipVacancy> GetForProvider(string ukPrn, List<ProviderVacancyStatuses> desiredStatuses);
     }
 
     public interface IApprenticeshipVacancyWriteRepository : IWriteRepository<ApprenticeshipVacancy>

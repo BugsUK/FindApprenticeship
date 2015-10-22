@@ -7,6 +7,7 @@
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using Provider;
     using Validators.Vacancy;
 
@@ -51,5 +52,6 @@
         public string SecondQuestion { get; set; }
         public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
         public ProviderSiteViewModel ProviderSite { get; set; }
+        public ProviderVacancyStatuses Status { get; set; }
     }
 }

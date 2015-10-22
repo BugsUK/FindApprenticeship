@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+
+namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
     using System;
     using System.Collections.Generic;
@@ -74,6 +76,7 @@
                     FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                     ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
                     ProviderSiteEmployerLink = providerSiteEmployerLink,
+                    Status = ProviderVacancyStatuses.Draft
                 });
 
                 _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);

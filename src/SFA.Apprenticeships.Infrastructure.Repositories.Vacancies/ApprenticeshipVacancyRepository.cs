@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Driver;
+using MongoDB.Driver.Linq;
+using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 {
@@ -59,6 +62,26 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
                 .ToList();
 
             _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn ={1}", mongoEntities.Count, ukPrn));
+
+            return mongoEntities;
+        }
+
+        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, List<ProviderVacancyStatuses> desiredStatuses)
+        {
+            _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0} and in status {1}", ukPrn, string.Join(",", desiredStatuses));
+
+            var queryConditionList = new List<IMongoQuery>();
+
+            queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn));
+            queryConditionList.Add(Query<ApprenticeshipVacancy>.In(v => v.Status, desiredStatuses));
+
+            var query = new QueryBuilder<ApprenticeshipVacancy>();
+
+            var mongoEntities = Collection.Find(query.And(queryConditionList))
+                .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
+                .ToList();
+
+            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn = {1} and statuses in {2}", mongoEntities.Count, ukPrn, string.Join(",", desiredStatuses)));
 
             return mongoEntities;
         }
