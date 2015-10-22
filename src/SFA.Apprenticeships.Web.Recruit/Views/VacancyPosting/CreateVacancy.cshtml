@@ -14,10 +14,10 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-2 form-textarea-small" })
+    @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
 
     <!--TODO: Why is 4000 characters remaining appearing?-->
-    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-2 form-textarea-medium" })
+    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium" })
 
     <div class="form-group">
         <label for="FrameworkCodeName" class="form-label">Apprenticeship framework</label>
