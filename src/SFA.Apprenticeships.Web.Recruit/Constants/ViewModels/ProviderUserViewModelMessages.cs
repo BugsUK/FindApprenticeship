@@ -37,7 +37,7 @@
 
         public static class DefaultProviderSiteErn
         {
-            public const string RequiredErrorText = "Please select a default provider site";
+            public const string RequiredErrorText = "Please select your default provider site";
         }
     }
 }

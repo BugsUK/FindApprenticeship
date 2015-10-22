@@ -13,7 +13,7 @@
         }
         public static class WebsiteUrl
         {
-            public const string LabelText = "Website";
+            public const string LabelText = "Website (optional)";
         }
     }
 }

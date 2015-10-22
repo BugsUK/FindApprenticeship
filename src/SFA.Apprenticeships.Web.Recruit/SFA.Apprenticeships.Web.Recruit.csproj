@@ -374,6 +374,11 @@
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
+    <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
+      <DependentUpon>DateViewModel.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -476,6 +481,10 @@
     <Content Include="Views\VacancyPosting\VacancyRequirementsProspects.cshtml" />
     <Content Include="Views\VacancyPosting\PreviewVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\SelectNewEmployer.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

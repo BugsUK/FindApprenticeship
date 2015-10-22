@@ -4,7 +4,7 @@
     {
         public const string NameAndLocationSearchRequiredErrorText = "Please enter an employer name, a town or postcode or both to search";
         //TODO: Bluesheep link?
-        public const string NoResultsText = "We could not find any employers that match your search criteria.";
+        public const string NoResultsText = "We could not find any employers that match your search criteria";
         public const string NoResultsErnRequiredText = "We could not find any employers that match your search criteria. In order to process this vacancy posting you’ll need to have an Employer Reference Number (ERN) created for your chosen employer by the <a href=\"http://edrs.lsc.gov.uk/search/lsc/\">Blue Sheep/EDRS service</a>";
 
         public static class Ern

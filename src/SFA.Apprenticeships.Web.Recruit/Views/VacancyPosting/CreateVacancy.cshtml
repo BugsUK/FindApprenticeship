@@ -22,7 +22,7 @@
     <div class="form-group">
         <label for="FrameworkCodeName" class="form-label">Apprenticeship framework</label>
         <select id="@Html.IdFor(model => model.FrameworkCodeName)" name="@Html.NameFor(m => m.FrameworkCodeName)" class="para-btm-margin chosen-select" style="min-width: 50%;">
-            <option value="" selected>Choose from a list of frameworks</option>
+            <option value="" selected>Choose from the list of frameworks</option>
 
             @foreach (var sector in Model.SectorsAndFrameworks)
             {

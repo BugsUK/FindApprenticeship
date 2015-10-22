@@ -7,7 +7,7 @@
         public static class Title
         {
             public const string LabelText = "Title";
-            public const string RequiredErrorText = "Please enter a Title";
+            public const string RequiredErrorText = "Please enter a title";
             public const string TooLongErrorText = "Title mustn’t exceed 100 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Title " + Whitelists.FreetextWhitelist.ErrorText;
@@ -16,7 +16,7 @@
         public static class ShortDescription
         {
             public const string LabelText = "Summary";
-            public const string RequiredErrorText = "Please provide a Short description";
+            public const string RequiredErrorText = "Please enter a vacancy summary";
             public const string TooLongErrorText = "Short description mustn’t exceed 512 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Short description " + Whitelists.FreetextWhitelist.ErrorText;
@@ -25,7 +25,7 @@
         public static class WorkingWeek
         {
             public const string LabelText = "Working week";
-            public const string RequiredErrorText = "Please enter the Working week";
+            public const string RequiredErrorText = "Please enter the working week";
             public const string TooLongErrorText = "Working week mustn’t exceed 100 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
@@ -34,19 +34,19 @@
         public static class WeeklyWage
         {
             public const string LabelText = "Wage";
-            public const string RequiredErrorText = "Please enter an amount for Wage";
+            public const string RequiredErrorText = "Please enter an amount for wage";
         }
 
         public static class Duration
         {
             public const string LabelText = "Duration";
-            public const string RequiredErrorText = "Please enter the Duration";
+            public const string RequiredErrorText = "Please enter the duration";
         }
 
         public static class ClosingDate
         {
             public const string LabelText = "Closing date";
-            public const string RequiredErrorText = "Please specify the Closing date";
+            public const string RequiredErrorText = "Please specify the closing date";
             public const string TooSoonErrorText = "Closing date must be in the future";
             public const string BeforePublishDateErrorText = "Closing date must be after the Publish date";
         }
@@ -54,7 +54,7 @@
         public static class PossibleStartDate
         {
             public const string LabelText = "Possible start date";
-            public const string RequiredErrorText = "Please specify the Possible start date";
+            public const string RequiredErrorText = "Please specify the possible start date";
             public const string TooSoonErrorText = "Possible start date must be in the future";
             public const string BeforePublishDateErrorText = "Possible start date must be after the Publish date";
         }
@@ -62,7 +62,7 @@
         public static class LongDescription
         {
             public const string LabelText = "Vacancy description";
-            public const string RequiredErrorText = "Please provide a Long description";
+            public const string RequiredErrorText = "Please provide a vacancy description";
             public const string TooLongErrorText = "Long description mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Long description " + Whitelists.FreetextWhitelist.ErrorText;
@@ -71,7 +71,7 @@
         public static class DesiredSkills
         {
             public const string LabelText = "Desired skills";
-            public const string RequiredErrorText = "Please provide the Desired skills";
+            public const string RequiredErrorText = "Please provide the desired skills";
             public const string TooLongErrorText = "Desired skills mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Desired skills " + Whitelists.FreetextWhitelist.ErrorText;
@@ -80,7 +80,7 @@
         public static class FutureProspects
         {
             public const string LabelText = "Future prospects";
-            public const string RequiredErrorText = "Please provide the Future prospects";
+            public const string RequiredErrorText = "Please provide the future prospects";
             public const string TooLongErrorText = "Future prospects mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Future prospects " + Whitelists.FreetextWhitelist.ErrorText;
@@ -89,7 +89,7 @@
         public static class PersonalQualities
         {
             public const string LabelText = "Personal qualities";
-            public const string RequiredErrorText = "Please provide the Personal qualities required";
+            public const string RequiredErrorText = "Please provide the personal qualities required";
             public const string TooLongErrorText = "Personal qualities mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Personal qualities " + Whitelists.FreetextWhitelist.ErrorText;
@@ -106,7 +106,7 @@
         public static class DesiredQualifications
         {
             public const string LabelText = "Desired qualifications";
-            public const string RequiredErrorText = "Please provide the Desired qualifications";
+            public const string RequiredErrorText = "Please provide the desired qualifications";
             public const string TooLongErrorText = "Desired qualifications mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Desired qualifications " + Whitelists.FreetextWhitelist.ErrorText;
