@@ -148,6 +148,10 @@
     <Reference Include="NLog.Contrib">
       <HintPath>..\packages\NLog.Contrib.1.0.0.2\lib\net45\NLog.Contrib.dll</HintPath>
     </Reference>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.3.12\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
@@ -280,6 +284,7 @@
   <ItemGroup>
     <Compile Include="App_Start\AuthenticationConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
@@ -389,6 +394,31 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VacancyPosting\CreateVacancy.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateVacancy.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VacancyPosting\PreviewVacancy.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PreviewVacancy.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VacancyPosting\VacancyQuestions.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VacancyQuestions.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VacancyPosting\VacancyRequirementsProspects.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VacancyRequirementsProspects.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VacancyPosting\VacancySummary.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VacancySummary.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
@@ -466,25 +496,43 @@
     <Content Include="Content\_assets\js\webtrends\webtrends.stub.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\ProviderUser\AuthorizationError.cshtml" />
-    <Content Include="Views\VacancyPosting\CreateVacancy.cshtml" />
+    <Content Include="Views\VacancyPosting\CreateVacancy.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>CreateVacancy.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\VacancyPosting\SelectEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\AddEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\ConfirmEmployer.cshtml" />
-    <Content Include="Views\VacancyPosting\VacancyQuestions.cshtml" />
-    <Content Include="Views\VacancyPosting\VacancySummary.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancyQuestions.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancyQuestions.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\VacancyPosting\VacancySummary.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancySummary.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\VacancyPosting\ConfirmNewEmployer.cshtml" />
-    <Content Include="Views\VacancyPosting\VacancyRequirementsProspects.cshtml" />
-    <Content Include="Views\VacancyPosting\PreviewVacancy.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancyRequirementsProspects.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancyRequirementsProspects.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\VacancyPosting\PreviewVacancy.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>PreviewVacancy.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\VacancyPosting\SelectNewEmployer.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\razorgenerator.directives" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
