@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
+
+namespace SFA.Apprenticeships.Web.Recruit.Converters
 {
     using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
@@ -74,6 +76,22 @@
                 Status = apprenticeshipVacancy.Status,
                 FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
                 ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert(),
+            };
+
+            return vacancyViewModel;
+        }
+
+        public static NewVacancyViewModel ConvertToNewVacancyViewModel(this ApprenticeshipVacancy apprenticeshipVacancy)
+        {
+            var vacancyViewModel = new NewVacancyViewModel()
+            {
+                ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
+                FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
+                ShortDescription = apprenticeshipVacancy.ShortDescription,
+                Title = apprenticeshipVacancy.Title,
+                Ukprn = apprenticeshipVacancy.Ukprn,
+                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
+                ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert()
             };
 
             return vacancyViewModel;

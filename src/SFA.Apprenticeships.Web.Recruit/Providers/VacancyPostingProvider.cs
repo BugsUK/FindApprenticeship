@@ -1,4 +1,5 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+﻿using System.Diagnostics.Contracts;
+using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 
 namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
@@ -57,6 +58,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             };
         }
 
+        public NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var viewModel = vacancy.ConvertToNewVacancyViewModel();
+            var sectors = GetSectorsAndFrameworks();
+            viewModel.SectorsAndFrameworks = sectors;
+            return viewModel;
+        }
+
         public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
             _logService.Debug("Creating vacancy reference number");
@@ -113,6 +123,22 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            return viewModel;
+        }
+
+        public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+
+            vacancy.Ukprn = viewModel.Ukprn;
+            vacancy.Title = viewModel.Title;
+            vacancy.ShortDescription = viewModel.ShortDescription;
+            vacancy.FrameworkCodeName = viewModel.FrameworkCodeName;
+            vacancy.ApprenticeshipLevel = viewModel.ApprenticeshipLevel;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToNewVacancyViewModel();
             return viewModel;
         }
 

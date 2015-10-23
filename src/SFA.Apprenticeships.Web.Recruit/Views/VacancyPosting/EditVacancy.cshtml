@@ -1,0 +1,85 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.NewVacancyViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
+    ViewBag.Title = "Recruit an Apprentice - Select framework and level";
+}
+
+<h1 class="heading-xlarge">
+    Select framework and level
+</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.EditVacancy, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
+
+    <!--TODO: Why is 4000 characters remaining appearing?-->
+    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium" })
+
+    <div class="form-group">
+        <label for="FrameworkCodeName" class="form-label">Apprenticeship framework</label>
+        <select id="@Html.IdFor(model => model.FrameworkCodeName)" name="@Html.NameFor(m => m.FrameworkCodeName)" class="para-btm-margin chosen-select" style="min-width: 50%;">
+            @if (!string.IsNullOrWhiteSpace(Model.FrameworkCodeName))
+            {
+                var matchingFramework =
+                    Model
+                    .SectorsAndFrameworks
+                    .First(sector => sector.Frameworks.Exists(f => f.CodeName == Model.FrameworkCodeName))
+                    .Frameworks
+                    .First(framework => framework.CodeName == Model.FrameworkCodeName);
+                <option value="@matchingFramework.CodeName">@matchingFramework.FullName</option>
+            }
+            else
+            {
+                <option value="" selected>Choose from the list of frameworks</option>
+            }
+            @foreach (var sector in Model.SectorsAndFrameworks)
+            {
+                <optgroup label="@sector.FullName">
+                    @foreach (var framework in sector.Frameworks)
+                    {
+                        <option value="@framework.CodeName">@framework.FullName</option>
+                    }
+                </optgroup>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label class="form-label">Apprenticeship level</label>
+
+        <div class="form-group small-btm-margin clearfix">
+            @* ReSharper disable once Html.IdNotResolved *@
+            <label for="apprenticeship-level-intermediate" class="block-label">
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new { id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label" }) Intermediate
+            </label>
+        </div>
+
+        <div class="form-group small-btm-margin clearfix">
+            @* ReSharper disable once Html.IdNotResolved *@
+            <label for="apprenticeship-level-advanced" class="block-label">
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new { id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label" }) Advanced
+            </label>
+        </div>
+
+        <div class="form-group small-btm-margin clearfix">
+            @* ReSharper disable once Html.IdNotResolved *@
+            <label for="apprenticeship-level-higher" class="block-label">
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new { id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label" }) Higher
+            </label>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.VacancyReferenceNumber)
+    @Html.HiddenFor(model => model.Ukprn)
+    @Html.HiddenFor(model => model.ProviderSiteEmployerLink.ProviderSiteErn)
+    @Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern);
+
+    <div class="form-group">
+        <button type="submit" class="button" name="EditVacancy" value="EditVacancy">Save and continue</button>
+        <button id="editVacancyAndExit" type="submit" class="button-link" name="EditVacancy" value="EditVacancyAndExit">Save and exit</button>
+    </div>
+}

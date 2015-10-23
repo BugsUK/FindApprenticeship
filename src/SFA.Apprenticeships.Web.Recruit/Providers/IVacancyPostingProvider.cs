@@ -9,11 +9,15 @@
     {
         NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern);
 
+        NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
+
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
         VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
 
         VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel);
+
+        NewVacancyViewModel UpdateVacancy(NewVacancyViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
 

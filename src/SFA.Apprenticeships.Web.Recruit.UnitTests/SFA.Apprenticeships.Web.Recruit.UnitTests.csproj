@@ -163,6 +163,7 @@
     <Compile Include="Validators\Providers\ProviderSiteSearchViewModelValidatorTests.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
+    <Compile Include="Views\VacancyPosting\EditVacancyTests.cs" />
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
     <Compile Include="Views\VacancyPosting\RequirementsProspectsTests.cs" />
     <Compile Include="Views\VacancyPosting\PreviewVacancyTests.cs" />

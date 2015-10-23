@@ -95,7 +95,7 @@
                                 <tr>
                                     <td>
                                         <div class="vac-title">
-                                            <a href="live-apprenticeship-summary.html" class="disp-block link-unimp">@vacancy.Title<span class="inl-block">(? applications)</span></a>
+                                            <a href="@Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new { vacancyReferenceNumber = vacancy.VacancyReferenceNumber })" class="disp-block link-unimp">@vacancy.Title<span class="inl-block">(? applications)</span></a>
                                         </div>
                                         <span>@vacancy.ProviderSiteEmployerLink.Employer.Name</span>
                                     </td>

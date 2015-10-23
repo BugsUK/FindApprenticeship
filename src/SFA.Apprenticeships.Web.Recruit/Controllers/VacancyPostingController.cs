@@ -180,6 +180,59 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpGet]
+        public ActionResult EditVacancy(long vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber);
+            var viewModel = response.ViewModel;
+
+            return View(viewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "EditVacancy")]
+        [HttpPost]
+        public ActionResult EditVacancyAndExit(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+
+            return HandleEditVacancy(response, okAction);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "EditVacancy")]
+        [HttpPost]
+        public ActionResult EditVacancy(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.VacancySummary,
+                new
+                {
+                    vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                });
+
+            return HandleEditVacancy(response, okAction);
+        }
+
+        private ActionResult HandleEditVacancy(MediatorResponse<NewVacancyViewModel> response, Func<ActionResult> okAction)
+        {
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
+                    return okAction();
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
         public ActionResult VacancySummary(long vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber);

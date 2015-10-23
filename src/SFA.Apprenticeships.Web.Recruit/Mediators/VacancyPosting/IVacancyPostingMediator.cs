@@ -19,6 +19,8 @@
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern);
 
+        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber);
+
         MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
         MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber);
@@ -32,7 +34,9 @@
         MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
 
         MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel);
-        
+
+        MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel newVacancyViewModel);
+
         MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
 
         MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel);

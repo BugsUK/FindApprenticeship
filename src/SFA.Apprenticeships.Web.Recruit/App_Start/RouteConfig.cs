@@ -122,6 +122,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.EditVacancy,
+               url: "vacancy/edit",
+               defaults: new { controller = "VacancyPosting", action = "EditVacancy" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.VacancySummary,
                url: "vacancy/summary",
                defaults: new { controller = "VacancyPosting", action = "VacancySummary" }

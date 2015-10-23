@@ -31,6 +31,7 @@
 
         // Vacancy posting
         public const string CreateVacancy = "CreateVacancy";
+        public const string EditVacancy = "EditVacancy";
         public const string SubmitVacancy = "SubmitVacancy";
         public const string VacancySubmitted = "VacancySubmitted";
         public const string VacancyQuestions = "VacancyQuestions";
