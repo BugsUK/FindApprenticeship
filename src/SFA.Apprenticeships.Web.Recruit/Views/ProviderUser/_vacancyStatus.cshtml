@@ -1,0 +1,14 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@model ProviderVacancyStatuses
+
+@switch (Model)
+{
+    case ProviderVacancyStatuses.Draft:
+        <span class="tag-draft">@Model</span>
+        break;
+    case ProviderVacancyStatuses.ToReview:
+        <span class="tag-pending">@Model</span>
+        break;
+    default:
+        break;
+}

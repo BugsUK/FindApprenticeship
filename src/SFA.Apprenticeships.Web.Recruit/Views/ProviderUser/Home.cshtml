@@ -100,7 +100,7 @@
                                         <span>@vacancy.ProviderSiteEmployerLink.Employer.Name</span>
                                     </td>
                                     <td>
-                                        <span class="tag-draft">@vacancy.Status</span>
+                                        @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
                                         @*<p class="note-text">Closing in 1 day</p>*@
                                     </td>
                                 </tr>

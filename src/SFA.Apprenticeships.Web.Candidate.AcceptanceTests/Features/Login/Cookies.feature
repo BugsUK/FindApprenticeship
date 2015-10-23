@@ -1,4 +1,5 @@
-﻿Feature: Cookies
+﻿@USCookies
+Feature: Cookies
 	In order to avoid breaching any data protection or GDS cookie policies
 	As a user
 	I want my cookies to managed correctly as I log in and out of the site

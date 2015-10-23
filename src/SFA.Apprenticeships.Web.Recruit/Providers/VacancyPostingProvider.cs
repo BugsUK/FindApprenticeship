@@ -190,6 +190,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.FirstQuestion = viewModel.FirstQuestion;
             vacancy.SecondQuestion = viewModel.SecondQuestion;
+            vacancy.Status = ProviderVacancyStatuses.ToReview;
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 

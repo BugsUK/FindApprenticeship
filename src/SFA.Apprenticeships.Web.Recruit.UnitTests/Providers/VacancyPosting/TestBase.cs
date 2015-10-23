@@ -1,10 +1,10 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿using SFA.Apprenticeships.Web.Common.Configuration;
+
+namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
-    using Application.Interfaces.Employers;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
@@ -32,6 +32,9 @@
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
+
+            MockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration());
         }
 
         protected IVacancyPostingProvider GetProvider()
