@@ -532,11 +532,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
     </Content>
-<<<<<<< HEAD
-    <Content Include="Views\ProviderUser\_vacancyStatus.cshtml" />
-=======
     <Content Include="Views\razorgenerator.directives" />
->>>>>>> origin/master
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
