@@ -171,6 +171,9 @@
     <Compile Include="Services\Candidate\Strategies\QueuedLegacySaveCandidateStrategyTests.cs" />
     <Compile Include="Services\Candidate\Strategies\SaveCandidateStrategyTests.cs" />
     <Compile Include="Services\Location\LocationSearchServiceTests.cs" />
+    <Compile Include="Services\Provider\GetProviderSiteEmployerLinksTests.cs" />
+    <Compile Include="Services\Provider\ProviderServiceBuilder.cs" />
+    <Compile Include="Services\Provider\GetProviderTests.cs" />
     <Compile Include="SiteMap\SiteMapVacancyHelperTests.cs" />
     <Compile Include="Candidate\Strategies\RequestEmailReminderStrategy\RequestEmailReminderStrategyTests.cs" />
     <Compile Include="Applications\Housekeeping\RootApplicationHousekeeperTests.cs" />
@@ -217,6 +220,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
       <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
+      <Project>{920F5834-459D-4E20-9B17-AAD52D2CC8FE}</Project>
+      <Name>SFA.Apprenticeships.Application.Provider</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>

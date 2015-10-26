@@ -12,6 +12,8 @@ namespace SFA.Apprenticeships.Application.Provider
     using Interfaces.Organisations;
     using Interfaces.Providers;
 
+    //TODO: Much of this servcies's implementation is a crutch to coping with a current lack of a migration strategy. In the future all data will be in the repositories and so the
+    //organization service will only be used for searching for new employers
     public class ProviderService : IProviderService
     {
         private readonly IOrganisationService _organisationService;
@@ -157,19 +159,16 @@ namespace SFA.Apprenticeships.Application.Provider
         {
             Condition.Requires(request).IsNotNull();
 
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteErn);
-
-            //TODO: Reinstate once we've worked out a migration strategy
-            /*IEnumerable<ProviderSiteEmployerLink> providerSiteEmployerLinks = _providerSiteEmployerLinkReadRepository.GetForProviderSite(providerSiteErn).ToList();
-
-            if (providerSiteEmployerLinks.Any())
-            {
-                return providerSiteEmployerLinks;
-            }*/
-
             _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteErn);
 
             var providerSiteEmployerLinks = _organisationService.GetProviderSiteEmployerLinks(request);
+
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteErn);
+
+            var providerSiteEmployerLinksFromRepository = _providerSiteEmployerLinkReadRepository.GetForProviderSite(request.ProviderSiteErn);
+
+            //Combine with results from repository
+            providerSiteEmployerLinks = providerSiteEmployerLinksFromRepository.Union(providerSiteEmployerLinks, new ProviderSiteEmployerLinkEqualityComparer()).ToList();
 
             return providerSiteEmployerLinks;
         }
@@ -183,7 +182,7 @@ namespace SFA.Apprenticeships.Application.Provider
                 CurrentPage = currentPage
             };
 
-            int resultCount = results.Count();
+            var resultCount = results.Count();
             pageable.Page = results.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             pageable.ResultsCount = resultCount;
             pageable.TotalNumberOfPages = (resultCount / pageSize) + 1;
