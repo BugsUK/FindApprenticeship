@@ -48,6 +48,13 @@
             RuleFor(viewModel => (int)viewModel.ApprenticeshipLevel)
                 .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Higher)
                 .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText);
+
+            RuleFor(viewModel => viewModel.OfflineApplicationUrl)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.RequiredErrorText)
+                .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText)
+                .When(viewModel => viewModel.OfflineVacancy);
         }
     }
 }

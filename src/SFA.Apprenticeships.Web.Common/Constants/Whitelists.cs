@@ -83,5 +83,13 @@
             public const string RegularExpression = "^[A-Za-z0-9]+$";
             public const string ErrorText = "contains some invalid characters";
         }
+
+        public static class UrlWhitelist
+        {
+            // public const string RegularExpression = @"(^$|(^http(s)?://))[a-z0-9-]+(.[a-z0-9-]+)+(:[0-9]+)?(/([a-z0-9-])+)*(.([a-z0-9-]+)*)?$|i";
+            public const string RegularExpression =
+                @"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?";
+            public const string ErrorText = "TODO: invalid url";
+        }
     }
 }
