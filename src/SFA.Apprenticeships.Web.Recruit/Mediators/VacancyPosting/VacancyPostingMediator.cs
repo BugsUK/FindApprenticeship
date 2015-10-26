@@ -181,7 +181,10 @@
 
         private static bool SwitchingFromOnlineToOfflineVacancy(NewVacancyViewModel newVacancyViewModel, VacancyViewModel existingVacancy)
         {
-            return existingVacancy != null && existingVacancy.OfflineVacancy == false && newVacancyViewModel.OfflineVacancy;
+            return existingVacancy != null 
+                && existingVacancy.OfflineVacancy == false 
+                && newVacancyViewModel.OfflineVacancy
+                && ( !string.IsNullOrWhiteSpace(existingVacancy.FirstQuestion) || !string.IsNullOrWhiteSpace(existingVacancy.SecondQuestion));
         }
 
         public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber)
