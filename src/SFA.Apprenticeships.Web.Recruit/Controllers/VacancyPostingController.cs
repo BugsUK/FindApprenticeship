@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
+    using Common.Constants;
     using Common.Controllers;
     using Common.Extensions;
     using Common.Mediators;
@@ -172,6 +173,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     return View(response.ViewModel);
 
                 case VacancyPostingMediatorCodes.CreateVacancy.Ok:
+                    return okAction();
+
+                case VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
                     return okAction();
 
                 default:

@@ -157,9 +157,31 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
 
+            var storedVacancy = GetStoredVacancy(newVacancyViewModel);
+
             var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel);
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
+            return SwitchingFromOnlineToOfflineVacancy(newVacancyViewModel, storedVacancy)
+                ? GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning, createdVacancyViewModel,
+                    "TODO: questions will not appear on offline vacancies.", UserMessageLevel.Warning)
+                : GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
+        }
+
+        private VacancyViewModel GetStoredVacancy(NewVacancyViewModel newVacancyViewModel)
+        {
+            VacancyViewModel storedVacancy = null;
+
+            if (newVacancyViewModel.VacancyReferenceNumber.HasValue)
+            {
+                storedVacancy = _vacancyPostingProvider.GetVacancy(newVacancyViewModel.VacancyReferenceNumber.Value);
+            }
+
+            return storedVacancy;
+        }
+
+        private static bool SwitchingFromOnlineToOfflineVacancy(NewVacancyViewModel newVacancyViewModel, VacancyViewModel existingVacancy)
+        {
+            return existingVacancy != null && existingVacancy.OfflineVacancy == false && newVacancyViewModel.OfflineVacancy;
         }
 
         public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber)

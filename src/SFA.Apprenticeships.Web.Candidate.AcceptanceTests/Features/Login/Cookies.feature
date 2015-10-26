@@ -1,9 +1,9 @@
-﻿@USCookies
-Feature: Cookies
+﻿Feature: Cookies
 	In order to avoid breaching any data protection or GDS cookie policies
 	As a user
 	I want my cookies to managed correctly as I log in and out of the site
 
+@USCookies
 Scenario: As a registered user when I logout I want my cookies to be cleared
 	Given I registered an account and activated it
 	And I navigated to the LoginPage page

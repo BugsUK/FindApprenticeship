@@ -58,6 +58,7 @@
         public static class CreateVacancy
         {
             public const string Ok = "VacancyPosting.CreateVacancy.Ok";
+            public const string OkWithWarning = "VacancyPosting.CreateVacancy.OkWithWarning";
             public const string FailedValidation = "VacancyPosting.CreateVacancy.FailedValidation";
         }
 
