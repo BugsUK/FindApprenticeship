@@ -261,20 +261,6 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)
-        {
-            var validationResult = _newVacancyViewModelServerValidator.Validate(viewModel);
-
-            if (!validationResult.IsValid)
-            {
-                return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
-            }
-
-            var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
-
-            return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
-        }
-
         public MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);

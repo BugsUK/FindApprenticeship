@@ -67,8 +67,32 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             return viewModel;
         }
 
+        /// <summary>
+        /// This method will create a new Vacancy record if the model provided does not have a vacancy reference number.
+        /// Otherwise, it updates the existing one.
+        /// </summary>
+        /// <param name="newVacancyViewModel"></param>
+        /// <returns></returns>
         public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
+            //if it exists, update it.
+            if (newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0)
+            {
+                var vacancy = _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyReferenceNumber.Value);
+
+                vacancy.Ukprn = newVacancyViewModel.Ukprn;
+                vacancy.Title = newVacancyViewModel.Title;
+                vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
+                vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
+                vacancy.ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
+
+                vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+                newVacancyViewModel = vacancy.ConvertToNewVacancyViewModel();
+
+                return newVacancyViewModel;
+            }
+
             _logService.Debug("Creating vacancy reference number");
 
             try
@@ -126,22 +150,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
-            return viewModel;
-        }
-
-        public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel viewModel)
-        {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
-
-            vacancy.Ukprn = viewModel.Ukprn;
-            vacancy.Title = viewModel.Title;
-            vacancy.ShortDescription = viewModel.ShortDescription;
-            vacancy.FrameworkCodeName = viewModel.FrameworkCodeName;
-            vacancy.ApprenticeshipLevel = viewModel.ApprenticeshipLevel;
-
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
-
-            viewModel = vacancy.ConvertToNewVacancyViewModel();
             return viewModel;
         }
 

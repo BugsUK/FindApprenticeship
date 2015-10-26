@@ -17,8 +17,6 @@
 
         VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel);
 
-        NewVacancyViewModel UpdateVacancy(NewVacancyViewModel viewModel);
-
         VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
 
         VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);

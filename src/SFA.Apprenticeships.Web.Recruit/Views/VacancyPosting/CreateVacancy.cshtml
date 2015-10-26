@@ -22,8 +22,20 @@
     <div class="form-group">
         <label for="FrameworkCodeName" class="form-label">Apprenticeship framework</label>
         <select id="@Html.IdFor(model => model.FrameworkCodeName)" name="@Html.NameFor(m => m.FrameworkCodeName)" class="para-btm-margin chosen-select" style="min-width: 50%;">
-            <option value="" selected>Choose from the list of frameworks</option>
-
+            @if (!string.IsNullOrWhiteSpace(Model.FrameworkCodeName))
+            {
+                var matchingFramework =
+                    Model
+                    .SectorsAndFrameworks
+                    .First(sector => sector.Frameworks.Exists(f => f.CodeName == Model.FrameworkCodeName))
+                    .Frameworks
+                    .First(framework => framework.CodeName == Model.FrameworkCodeName);
+                <option value="@matchingFramework.CodeName">@matchingFramework.FullName</option>
+            }
+            else
+            {
+                <option value="" selected>Choose from the list of frameworks</option>
+            }
             @foreach (var sector in Model.SectorsAndFrameworks)
             {
                 <optgroup label="@sector.FullName">
@@ -92,6 +104,7 @@
         </div>
     </div>
 
+    @Html.HiddenFor(model => model.VacancyReferenceNumber)
     @Html.HiddenFor(model => model.Ukprn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.ProviderSiteErn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern);

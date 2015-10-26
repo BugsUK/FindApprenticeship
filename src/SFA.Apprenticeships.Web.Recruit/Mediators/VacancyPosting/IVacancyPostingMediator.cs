@@ -35,8 +35,6 @@
 
         MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
-        MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel newVacancyViewModel);
-
         MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
 
         MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel);

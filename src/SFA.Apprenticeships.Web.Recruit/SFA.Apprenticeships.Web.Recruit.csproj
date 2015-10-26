@@ -399,11 +399,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CreateVacancy.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VacancyPosting\EditVacancy.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>EditVacancy.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\VacancyPosting\PreviewVacancy.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -539,10 +534,6 @@
     </Content>
     <Content Include="Views\ProviderUser\_vacancyStatus.cshtml" />
     <Content Include="Views\razorgenerator.directives" />
-    <Content Include="Views\VacancyPosting\EditVacancy.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>EditVacancy.generated.cs</LastGenOutput>
-    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
