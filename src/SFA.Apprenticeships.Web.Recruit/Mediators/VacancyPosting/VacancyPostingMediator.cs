@@ -288,7 +288,7 @@
                 viewModel = new EmployerSearchViewModel
                 {
                     ProviderSiteErn = viewModel.ProviderSiteErn,
-                    FilterType = EmployerFilterType.NameAndLocation,
+                    FilterType = EmployerFilterType.Ern,
                     EmployerResults = Enumerable.Empty<EmployerResultViewModel>(),
                     EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>()
                 };
@@ -312,7 +312,7 @@
                 }
             }
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.Ok, viewModel, EmployerSearchViewModelMessages.ErnAdviceText, UserMessageLevel.Info);
         }
     }
 }
