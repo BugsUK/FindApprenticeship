@@ -5,7 +5,6 @@
     using Common.Mediators;
     using Common.ViewModels;
     using Constants.ViewModels;
-    using Converters;
     using Providers;
     using Validators.Provider;
     using Validators.Vacancy;
@@ -191,18 +190,29 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyRequirementsProspectsViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
+        public MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(
+            VacancyRequirementsProspectsViewModel viewModel, bool exit)
         {
             var validationResult = _vacancyRequirementsProspectsViewModelServerValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {
-                return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
+                return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel,
+                    validationResult);
             }
 
             var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+            if (exit)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.OkAndExit, updatedViewModel);
+            }
+            var completeViewModel = GetVacancyViewModel(viewModel.VacancyReferenceNumber);
+            return
+                GetMediatorResponse(
+                    completeViewModel.ViewModel.OfflineVacancy
+                        ? VacancyPostingMediatorCodes.UpdateVacancy.OfflineVacancyOk
+                        : VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk, updatedViewModel);
         }
 
         public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber)

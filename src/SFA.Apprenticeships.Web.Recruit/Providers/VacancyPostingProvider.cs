@@ -86,7 +86,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                     FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                     ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
                     ProviderSiteEmployerLink = providerSiteEmployerLink,
-                    Status = ProviderVacancyStatuses.Draft
+                    Status = ProviderVacancyStatuses.Draft,
+                    OfflineVacancy =  newVacancyViewModel.OfflineVacancy,
+                    OfflineApplicationUrl = newVacancyViewModel.OfflineApplicationUrl,
+                    OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions
                 });
 
                 _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);

@@ -18,6 +18,8 @@
         public void SetUp()
         {
             VacancyPostingProvider = new Mock<IVacancyPostingProvider>();
+            ProviderProvider = new Mock<IProviderProvider>();
+            EmployerProvider = new Mock<IEmployerProvider>();
         }
 
         protected IVacancyPostingMediator GetMediator()

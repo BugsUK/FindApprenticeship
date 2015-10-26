@@ -24,5 +24,8 @@
         public string FirstQuestion { get; set; }
         public string SecondQuestion { get; set; }
         public ProviderSiteEmployerLink ProviderSiteEmployerLink { get; set; }
+        public bool OfflineVacancy { get; set; }
+        public string OfflineApplicationUrl { get; set; }
+        public string OfflineApplicationInstructions { get; set; }
     }
 }

@@ -76,6 +76,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
                 Status = apprenticeshipVacancy.Status,
                 FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
                 ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert(),
+                OfflineVacancy = apprenticeshipVacancy.OfflineVacancy,
+                OfflineApplicationUrl = apprenticeshipVacancy.OfflineApplicationUrl,
+                OfflineApplicationInstructions = apprenticeshipVacancy.OfflineApplicationInstructions
             };
 
             return vacancyViewModel;

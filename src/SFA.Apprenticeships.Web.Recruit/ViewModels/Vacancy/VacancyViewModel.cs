@@ -53,5 +53,10 @@
         public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
         public ProviderSiteViewModel ProviderSite { get; set; }
         public ProviderVacancyStatuses Status { get; set; }
+        public bool OfflineVacancy { get; set; }
+        [Display(Name = VacancyViewModelMessages.OfflineApplicationUrl.LabelText)]
+        public string OfflineApplicationUrl { get; set; }
+        [Display(Name = VacancyViewModelMessages.OfflineApplicationInstructions.LabelText)]
+        public string OfflineApplicationInstructions { get; set; }
     }
 }

@@ -152,10 +152,12 @@
     <Compile Include="Mediators\ProviderUser\UpdateUserTests.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorTests.cs" />
     <Compile Include="Mediators\VacancyPosting\IndexTests.cs" />
+    <Compile Include="Mediators\VacancyPosting\RequirementsProspectsTests.cs" />
     <Compile Include="Mediators\VacancyPosting\TestsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ProviderUser\ProviderUserProviderBuilder.cs" />
     <Compile Include="Providers\ProviderUser\ProviderUserProviderTests.cs" />
+    <Compile Include="Providers\VacancyPosting\CreateVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\GetNewVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\SaveVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\SubmitVacancyTests.cs" />

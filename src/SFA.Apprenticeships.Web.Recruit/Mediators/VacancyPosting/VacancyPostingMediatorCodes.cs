@@ -64,6 +64,9 @@
         public static class UpdateVacancy
         {
             public const string Ok = "VacancyPosting.UpdateVacancy.Ok";
+            public const string OkAndExit = "VacancyPosting.UpdateVacancy.OkAndExit";
+            public const string OfflineVacancyOk = "VacancyPosting.UpdateVacancy.OfflineVacancyOk";
+            public const string OnlineVacancyOk = "VacancyPosting.UpdateVacancy.OnlineVacancyOk";
             public const string FailedValidation = "VacancyPosting.UpdateVacancy.FailedValidation";
         }
 

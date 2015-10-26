@@ -299,27 +299,22 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         public ActionResult VacancyRequirementsProspects(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, false);
 
-            return HandleVacancyRequirementsProspects(response,
-                () => RedirectToRoute(RecruitmentRouteNames.VacancyQuestions, new
-                {
-                    vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
-                }));
+            return HandleVacancyRequirementsProspects(response);
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyRequirementsProspects")]
         [HttpPost]
         public ActionResult VacancyRequirementsProspectsAndExit(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, true);
 
-            return HandleVacancyRequirementsProspects(response,
-                () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
+            return HandleVacancyRequirementsProspects(response);
         }
 
         private ActionResult HandleVacancyRequirementsProspects(
-            MediatorResponse<VacancyRequirementsProspectsViewModel> response, Func<ActionResult> okAction)
+            MediatorResponse<VacancyRequirementsProspectsViewModel> response)
         {
             ModelState.Clear();
 
@@ -329,8 +324,20 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
-                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
-                    return okAction();
+                case VacancyPostingMediatorCodes.UpdateVacancy.OkAndExit:
+                    return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
+
+                case VacancyPostingMediatorCodes.UpdateVacancy.OfflineVacancyOk:
+                    return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy, new
+                        {
+                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                        });
+
+                case VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyQuestions, new
+                        {
+                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                        });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
