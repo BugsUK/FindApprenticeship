@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
+    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Moq;
     using NUnit.Framework;
@@ -29,7 +30,8 @@
                 },
                 OfflineVacancy = offlineVacancy,
                 OfflineApplicationUrl = offlineApplicationUrl,
-                OfflineApplicationInstructions = offlineApplicationInstructions
+                OfflineApplicationInstructions = offlineApplicationInstructions,
+                ApprenticeshipLevel = ApprenticeshipLevel.Higher
             });
 
             MockVacancyPostingService.Verify(s => s.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.OfflineVacancy == offlineVacancy 
