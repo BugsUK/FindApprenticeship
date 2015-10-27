@@ -3,6 +3,11 @@
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Select framework and level";
+
+    const string selected = "selected";
+
+    var isApplicationThroughRAAYes = !Model.OfflineVacancy ? selected : null;
+    var isApplicationThroughRAANo = Model.OfflineVacancy ? selected : null;
 }
 
 <h1 class="heading-xlarge">
@@ -81,12 +86,12 @@
                     site?
                 </p>
                 @* ReSharper disable once Html.IdNotResolved *@
-                <label for="apprenticeship-online-vacancy" class="block-label" data-target="online-panel">
+                <label for="apprenticeship-online-vacancy" class="block-label" data-target="online-panel" @isApplicationThroughRAAYes>
                     @Html.RadioButtonFor(model => model.OfflineVacancy, false, new {id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label"}) Yes
                 </label>
 
                 @* ReSharper disable once Html.IdNotResolved *@
-                <label for="apprenticeship-offline-vacancy" class="block-label" data-target="offline-panel">
+                <label for="apprenticeship-offline-vacancy" class="block-label" data-target="offline-panel" @isApplicationThroughRAANo>
                     @Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls="offline-panel"}) No
                 </label>
             </div>

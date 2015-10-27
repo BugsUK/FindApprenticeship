@@ -85,6 +85,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                 vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
                 vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
                 vacancy.ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
+                vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
+                vacancy.OfflineApplicationUrl = newVacancyViewModel.OfflineApplicationUrl;
+                vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
 
                 vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 

@@ -94,7 +94,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
                 Title = apprenticeshipVacancy.Title,
                 Ukprn = apprenticeshipVacancy.Ukprn,
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
-                ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert()
+                ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert(),
+                OfflineVacancy = apprenticeshipVacancy.OfflineVacancy,
+                OfflineApplicationUrl = apprenticeshipVacancy.OfflineApplicationUrl,
+                OfflineApplicationInstructions = apprenticeshipVacancy.OfflineApplicationInstructions
             };
 
             return vacancyViewModel;
