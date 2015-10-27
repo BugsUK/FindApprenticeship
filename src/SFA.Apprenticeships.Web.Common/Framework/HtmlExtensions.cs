@@ -346,9 +346,7 @@
         {
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
-
-            var metadata = ModelMetadata.FromLambdaExpression(expression, helper.ViewData);
-
+            
             var tagHint = new TagBuilder("span");
             var tagCount = new TagBuilder("span");
             var tagText = new TagBuilder("span");
@@ -357,7 +355,7 @@
             tagCount.Attributes.Add("class", "maxchar-count");
             tagText.Attributes.Add("class", "maxchar-text");
 
-            tagCount.SetInnerText("4000");
+            tagCount.SetInnerText("");
             tagText.SetInnerText(" characters remaining");
             tagHint.InnerHtml = tagCount + "\r\n" + tagText;
 
