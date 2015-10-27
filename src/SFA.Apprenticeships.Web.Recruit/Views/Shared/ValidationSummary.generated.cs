@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace SFA.Apprenticeships.Web.Recruit.Views.Shared
 {
     using System;
     using System.Collections.Generic;
@@ -34,9 +34,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/ValidationSummary.cshtml")]
-    public partial class _Views_Shared_ValidationSummary_cshtml : System.Web.Mvc.WebViewPage<ModelStateDictionary>
+    public partial class ValidationSummary : System.Web.Mvc.WebViewPage<ModelStateDictionary>
     {
-        public _Views_Shared_ValidationSummary_cshtml()
+        public ValidationSummary()
         {
         }
         public override void Execute()

@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace SFA.Apprenticeships.Web.Recruit.Views.Shared.EditorTemplates
 {
     using System;
     using System.Collections.Generic;
@@ -34,9 +34,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/DateViewModel.cshtml")]
-    public partial class _Views_Shared_EditorTemplates_DateViewModel_cshtml_ : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Common.ViewModels.DateViewModel>
+    public partial class DateViewModel_ : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Common.ViewModels.DateViewModel>
     {
-        public _Views_Shared_EditorTemplates_DateViewModel_cshtml_()
+        public DateViewModel_()
         {
         }
         public override void Execute()

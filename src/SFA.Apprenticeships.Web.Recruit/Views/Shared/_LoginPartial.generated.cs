@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace SFA.Apprenticeships.Web.Recruit.Views.Shared
 {
     using System;
     using System.Collections.Generic;
@@ -46,9 +46,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/_LoginPartial.cshtml")]
-    public partial class _Views_Shared__LoginPartial_cshtml : System.Web.Mvc.WebViewPage<dynamic>
+    public partial class LoginPartial : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public _Views_Shared__LoginPartial_cshtml()
+        public LoginPartial()
         {
         }
         public override void Execute()

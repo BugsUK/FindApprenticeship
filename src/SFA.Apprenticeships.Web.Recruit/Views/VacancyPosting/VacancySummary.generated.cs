@@ -28,6 +28,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.UI;
     using System.Web.WebPages;
     using SFA.Apprenticeships.Web.Common.Constants;
+    
+    #line 4 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+    using SFA.Apprenticeships.Web.Common.Extensions;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Recruit;
@@ -38,9 +44,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     #line default
     #line hidden
     
+    #line 3 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+    using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyPosting/VacancySummary.cshtml")]
-    public partial class VacancySummary : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancySummaryViewModel>
+    public partial class VacancySummary : System.Web.Mvc.WebViewPage<VacancySummaryViewModel>
     {
         public VacancySummary()
         {
@@ -48,7 +60,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
         public override void Execute()
         {
             
-            #line 3 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 5 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy summary";
 
@@ -62,7 +74,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n    Enter vacancy details\r\n</h1>\r\n\r\n");
 
             
-            #line 11 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 13 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
  using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySummary, FormMethod.Post))
 {
     
@@ -70,28 +82,28 @@ WriteLiteral(">\r\n    Enter vacancy details\r\n</h1>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 15 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 15 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 16 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 16 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                                            
 
     
@@ -99,14 +111,14 @@ Write(Html.Partial("ValidationSummary", ViewData.ModelState));
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 18 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 18 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                                   
 
 
@@ -122,7 +134,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 20 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
        Write(Html.FormTextAreaFor(m => m.WorkingWeek, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12, autofocus = "autofocus" }));
 
             
@@ -133,7 +145,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 21 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 23 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
        Write(Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }));
 
             
@@ -144,40 +156,74 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 24 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
        Write(Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("\r\n            <fieldset");
 
-WriteLiteral("            ");
+WriteLiteral(" class=\"form-group inline-fixed date-input\"");
 
-            
-            #line 23 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.FormTextFor(m => m.ClosingDate, controlHtmlAttributes: new { @class = "width-all-1-3", type = "date" }));
+WriteLiteral(">\r\n                <legend");
 
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
+WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral("            ");
+WriteLiteral(">");
 
             
-            #line 24 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.FormTextFor(m => m.PossibleStartDate, controlHtmlAttributes: new { @class = "width-all-1-3", type = "date" }));
+            #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                                      Write(Model.GetMetadata(m => m.ClosingDate).DisplayName);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral("</legend>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 27 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+           Write(Html.EditorFor(r => r.ClosingDate));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </fieldset>\r\n            <fieldset");
+
+WriteLiteral(" class=\"form-group inline-fixed date-input\"");
+
+WriteLiteral(">\r\n                <legend");
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(">");
+
+            
+            #line 30 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                                      Write(Model.GetMetadata(m => m.PossibleStartDate).DisplayName);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</legend>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 31 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+           Write(Html.EditorFor(r => r.PossibleStartDate));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </fieldset>\r\n");
 
 WriteLiteral("            ");
 
             
-            #line 25 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 33 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
        Write(Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22 }));
 
             
@@ -214,7 +260,7 @@ WriteLiteral(" value=\"VacancySummaryAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 32 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 40 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 }
             
             #line default
