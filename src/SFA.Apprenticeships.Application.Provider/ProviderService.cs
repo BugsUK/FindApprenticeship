@@ -165,12 +165,47 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteErn);
 
-            var providerSiteEmployerLinksFromRepository = _providerSiteEmployerLinkReadRepository.GetForProviderSite(request.ProviderSiteErn);
+            var providerSiteEmployerLinksFromRepository = GetProviderSiteEmployerLinksFromRepository(request);
 
             //Combine with results from repository
             providerSiteEmployerLinks = providerSiteEmployerLinksFromRepository.Union(providerSiteEmployerLinks, new ProviderSiteEmployerLinkEqualityComparer()).ToList();
 
             return providerSiteEmployerLinks;
+        }
+
+        private IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinksFromRepository(EmployerSearchRequest request)
+        {
+            var providerSiteEmployerLinksFromRepository = _providerSiteEmployerLinkReadRepository.GetForProviderSite(request.ProviderSiteErn);
+            //TODO: This search and the search object should be pushed into the datalayer once it's SQL based
+            if (request.IsEmployerEdsUrnQuery)
+            {
+                providerSiteEmployerLinksFromRepository =
+                    providerSiteEmployerLinksFromRepository.Where(l => l.Employer.Ern == request.EmployerEdsUrn);
+            }
+            else if (request.IsNameAndPostCodeQuery)
+            {
+                providerSiteEmployerLinksFromRepository =
+                    providerSiteEmployerLinksFromRepository.Where(
+                        l =>
+                            l.Employer.Name.ToLower().Contains(request.Name.ToLower()) &&
+                            l.Employer.Address.Postcode.ToLower().Contains(request.Postcode.ToLower()));
+            }
+            else if (request.IsNameQuery)
+            {
+                providerSiteEmployerLinksFromRepository =
+                    providerSiteEmployerLinksFromRepository.Where(
+                        l =>
+                            l.Employer.Name.ToLower().Contains(request.Name.ToLower()));
+            }
+            else if (request.IsPostCodeQuery)
+            {
+                providerSiteEmployerLinksFromRepository =
+                    providerSiteEmployerLinksFromRepository.Where(
+                        l =>
+                            l.Employer.Address.Postcode.ToLower().Contains(request.Postcode.ToLower()));
+            }
+
+            return providerSiteEmployerLinksFromRepository;
         }
 
         public Pageable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request, int currentPage, int pageSize)

@@ -28,7 +28,7 @@
 
         public int GetHashCode(ProviderSiteEmployerLink obj)
         {
-            return obj.Employer.GetHashCode();
+            return obj.Employer == null ? 0 : obj.Employer.Ern.GetHashCode();
         }
     }
 }

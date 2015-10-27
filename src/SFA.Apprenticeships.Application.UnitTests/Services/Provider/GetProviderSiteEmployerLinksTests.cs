@@ -134,5 +134,77 @@
             linksPage.ResultsCount.Should().Be(expectedResults.Count);
             linksPage.TotalNumberOfPages.Should().Be(1);
         }
+
+        [Test]
+        public void ErnRepositorySearch()
+        {
+            var fromRepository = new List<ProviderSiteEmployerLink> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
+            _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteErn)).Returns(fromRepository);
+            var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteErn, Ern2);
+
+            var linksPage = service.GetProviderSiteEmployerLinks(employerSearchRequest, CurrentPage, PageSize);
+
+            var expectedResults = new List<ProviderSiteEmployerLink> { _providerSiteEmployerLink2 };
+            linksPage.Should().NotBeNull();
+            linksPage.Page.Count().Should().Be(expectedResults.Count);
+            linksPage.Page.ShouldBeEquivalentTo(expectedResults);
+            linksPage.ResultsCount.Should().Be(expectedResults.Count);
+            linksPage.TotalNumberOfPages.Should().Be(1);
+        }
+
+        [Test]
+        public void NameRepositorySearch()
+        {
+            var fromRepository = new List<ProviderSiteEmployerLink> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
+            _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteErn)).Returns(fromRepository);
+            var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteErn, _providerSiteEmployerLink3.Employer.Name.Substring(0, 10), null);
+
+            var linksPage = service.GetProviderSiteEmployerLinks(employerSearchRequest, CurrentPage, PageSize);
+
+            var expectedResults = new List<ProviderSiteEmployerLink> { _providerSiteEmployerLink3 };
+            linksPage.Should().NotBeNull();
+            linksPage.Page.Count().Should().Be(expectedResults.Count);
+            linksPage.Page.ShouldBeEquivalentTo(expectedResults);
+            linksPage.ResultsCount.Should().Be(expectedResults.Count);
+            linksPage.TotalNumberOfPages.Should().Be(1);
+        }
+
+        [Test]
+        public void NameAndPostCodeRepositorySearch()
+        {
+            var fromRepository = new List<ProviderSiteEmployerLink> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
+            _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteErn)).Returns(fromRepository);
+            var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteErn, _providerSiteEmployerLink1.Employer.Name.Substring(0, 10), _providerSiteEmployerLink1.Employer.Address.Postcode.Substring(0, 10));
+
+            var linksPage = service.GetProviderSiteEmployerLinks(employerSearchRequest, CurrentPage, PageSize);
+
+            var expectedResults = new List<ProviderSiteEmployerLink> { _providerSiteEmployerLink1 };
+            linksPage.Should().NotBeNull();
+            linksPage.Page.Count().Should().Be(expectedResults.Count);
+            linksPage.Page.ShouldBeEquivalentTo(expectedResults);
+            linksPage.ResultsCount.Should().Be(expectedResults.Count);
+            linksPage.TotalNumberOfPages.Should().Be(1);
+        }
+
+        [Test]
+        public void PostCodeRepositorySearch()
+        {
+            var fromRepository = new List<ProviderSiteEmployerLink> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
+            _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteErn)).Returns(fromRepository);
+            var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteErn, null, _providerSiteEmployerLink3.Employer.Address.Postcode.Substring(0, 10));
+
+            var linksPage = service.GetProviderSiteEmployerLinks(employerSearchRequest, CurrentPage, PageSize);
+
+            var expectedResults = new List<ProviderSiteEmployerLink> { _providerSiteEmployerLink3 };
+            linksPage.Should().NotBeNull();
+            linksPage.Page.Count().Should().Be(expectedResults.Count);
+            linksPage.Page.ShouldBeEquivalentTo(expectedResults);
+            linksPage.ResultsCount.Should().Be(expectedResults.Count);
+            linksPage.TotalNumberOfPages.Should().Be(1);
+        }
     }
 }
