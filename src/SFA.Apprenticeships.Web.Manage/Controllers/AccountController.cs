@@ -2,7 +2,6 @@
 
 namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System;
     using System.Web;
     using System.Web.Mvc;
     using Common.Constants;
@@ -11,9 +10,8 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
-    using ControllerBase = Common.Controllers.ControllerBase;
 
-    public class AccountController : ControllerBase
+    public class AccountController : ManagementControllerBase
     {
 
         public void SignIn(string returnUrl)

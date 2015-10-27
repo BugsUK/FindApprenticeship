@@ -360,7 +360,6 @@
     <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModelMessages.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\RecruitmentUserContext.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />

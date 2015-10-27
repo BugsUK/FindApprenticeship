@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System.Web.Mvc;
-    using ControllerBase = Common.Controllers.ControllerBase;
 
-    public class HomeController : ControllerBase
+    public class HomeController : ManagementControllerBase
     {
         public ActionResult Index()
         {

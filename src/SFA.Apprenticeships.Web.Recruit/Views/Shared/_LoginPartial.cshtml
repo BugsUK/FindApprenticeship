@@ -3,12 +3,8 @@
 
 @if (Request.IsAuthenticated)
 {
-    var controller = ViewContext.Controller as RecruitmentControllerBase;
-    var fullName = (controller != null && controller.UserContext != null) ? controller.UserContext.FullName : string.Empty;
-
     <div class="account-info" id="bannerSignedIn">
         <div class="small-btm-margin">
-            <span class="your-name" id="bannerUserName">@fullName</span>
             <a id="signout-link" href="@Url.RouteUrl(RecruitmentRouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
         @if (User.IsInRole(SFA.Apprenticeships.Web.Recruit.Constants.Roles.VerifiedEmail))

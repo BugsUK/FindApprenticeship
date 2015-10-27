@@ -5,22 +5,18 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
-    using Common.Constants;
-    using Common.Controllers;
     using Common.Extensions;
     using Common.Mediators;
     using Constants;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
-    using Providers;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
-    [AuthorizationData]
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
-    public class VacancyPostingController : ControllerBase<RecruitmentUserContext>
+    public class VacancyPostingController : RecruitmentControllerBase
     {
         private readonly IVacancyPostingMediator _vacancyPostingMediator;
 

@@ -1,16 +1,14 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
-    using Common.Attributes;
     using Common.Constants;
     using NLog.Contrib;
 
-    [AuthorizationData,
-    OutputCache(CacheProfile = CacheProfiles.None)]
-    public abstract class RecruitmentControllerBase : Common.Controllers.ControllerBase
+    [OutputCache(CacheProfile = CacheProfiles.None)]
+    public abstract class ManagementControllerBase : Common.Controllers.ControllerBase
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {

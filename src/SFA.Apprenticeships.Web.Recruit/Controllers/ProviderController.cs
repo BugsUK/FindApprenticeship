@@ -5,18 +5,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
-    using Common.Controllers;
     using Common.Extensions;
     using Common.Mediators;
     using FluentValidation.Mvc;
     using Mediators.Provider;
-    using Providers;
     using ViewModels.Provider;
 
-    [AuthorizationData]
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
-    public class ProviderController : ControllerBase<RecruitmentUserContext>
+    public class ProviderController : RecruitmentControllerBase
     {
         private readonly IProviderMediator _providerMediator;
 

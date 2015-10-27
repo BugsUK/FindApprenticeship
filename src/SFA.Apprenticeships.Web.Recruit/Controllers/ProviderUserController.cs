@@ -5,7 +5,6 @@
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
-    using Common.Controllers;
     using Common.Extensions;
     using Common.Framework;
     using Common.Mediators;
@@ -13,14 +12,12 @@
     using Constants;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
-    using Providers;
     using ViewModels;
     using ViewModels.ProviderUser;
     using ClaimTypes = System.Security.Claims.ClaimTypes;
 
-    [AuthorizationData]
     [OwinSessionTimeout]
-    public class ProviderUserController : ControllerBase<RecruitmentUserContext>
+    public class ProviderUserController : RecruitmentControllerBase
     {
         private readonly IProviderUserMediator _providerUserMediator;
         private readonly ICookieAuthorizationDataProvider _cookieAuthorizationDataProvider;

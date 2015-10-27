@@ -15,9 +15,8 @@
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
     using ViewModels;
-    using ControllerBase = Common.Controllers.ControllerBase;
 
-    public class AgencyUserController : ControllerBase
+    public class AgencyUserController : ManagementControllerBase
     {
         private readonly IAgencyUserMediator _agencyUserMediator;
 
