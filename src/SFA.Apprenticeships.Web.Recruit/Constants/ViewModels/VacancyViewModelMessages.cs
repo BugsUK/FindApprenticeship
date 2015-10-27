@@ -138,7 +138,7 @@
 
         public static class OfflineApplicationInstructions
         {
-            public const string LabelText = "Please explain to the candidate what will happen when they apply";
+            public const string LabelText = "Please explain to the candidate what will happen when they apply (optional)";
         }
     }
 }
