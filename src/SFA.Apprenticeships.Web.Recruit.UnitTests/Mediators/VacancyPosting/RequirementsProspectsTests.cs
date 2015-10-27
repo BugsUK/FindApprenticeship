@@ -26,7 +26,7 @@
         {
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel, true);
+            var result = mediator.UpdateVacancyAndExit(_viewModel);
 
             result.Should()
                 .Match(
@@ -45,7 +45,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel, false);
+            var result = mediator.UpdateVacancy(_viewModel);
 
             result.Should()
                 .Match(
@@ -64,7 +64,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.UpdateVacancy(_viewModel, false);
+            var result = mediator.UpdateVacancy(_viewModel);
 
             result.Should()
                 .Match(

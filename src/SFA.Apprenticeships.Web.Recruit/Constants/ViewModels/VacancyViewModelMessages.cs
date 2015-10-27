@@ -34,12 +34,16 @@
         public static class WeeklyWage
         {
             public const string LabelText = "Wage";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
             public const string RequiredErrorText = "Please enter an amount for wage";
         }
 
         public static class Duration
         {
             public const string LabelText = "Duration";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
             public const string RequiredErrorText = "Please enter the duration";
         }
 

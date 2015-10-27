@@ -137,7 +137,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         public ActionResult CreateVacancyAndExit(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel);
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
@@ -219,7 +219,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         public ActionResult VacancySummaryAndExit(VacancySummaryViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleVacancySummary(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
 
@@ -257,7 +257,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         public ActionResult VacancyRequirementsProspects(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, false);
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
 
             return HandleVacancyRequirementsProspects(response);
         }
@@ -266,7 +266,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         public ActionResult VacancyRequirementsProspectsAndExit(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, true);
+            var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleVacancyRequirementsProspects(response);
         }
@@ -329,7 +329,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         public ActionResult VacancyQuestionsAndExit(VacancyQuestionsViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleVacancyQuestions(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
         }

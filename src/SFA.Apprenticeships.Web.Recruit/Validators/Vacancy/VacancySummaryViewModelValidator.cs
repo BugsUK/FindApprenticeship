@@ -16,33 +16,23 @@
         private void AddCommonRules()
         {
 
-            RuleFor(x => x.WorkingWeek)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText);
-            /*.Length(0, 100)
-            .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
-            .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-            .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);*/
+            RuleFor(viewModel => viewModel.WorkingWeek)
+                .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
 
-            RuleFor(x => x.WeeklyWage)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText);
+            RuleFor(viewModel => viewModel.WeeklyWage)
+                .Matches(VacancyViewModelMessages.WeeklyWage.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.WeeklyWage.WhiteListErrorText);
 
-            RuleFor(x => x.Duration)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
+            RuleFor(viewModel => viewModel.Duration)
+                .Matches(VacancyViewModelMessages.Duration.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Duration.WhiteListErrorText);
 
-            RuleFor(x => x.ClosingDate).SetValidator(new DateViewModelClientValidator());
-
-            RuleFor(x => x.PossibleStartDate).SetValidator(new DateViewModelClientValidator());
-
-            RuleFor(x => x.LongDescription)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.LongDescription.RequiredErrorText)
+            RuleFor(viewModel => viewModel.LongDescription)
                 .Length(0, 4000)
                 .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText); 
         }
     }
 
@@ -57,6 +47,40 @@
         {
             RuleFor(x => x.ClosingDate).SetValidator(new DateViewModelServerValidator());
             RuleFor(x => x.PossibleStartDate).SetValidator(new DateViewModelServerValidator());
+
+            RuleFor(x => x.WorkingWeek)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText)
+                .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
+            /*.Length(0, 100)
+            .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
+            .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
+            .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);*/
+
+            RuleFor(x => x.WeeklyWage)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText)
+                .Matches(VacancyViewModelMessages.WeeklyWage.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.WeeklyWage.WhiteListErrorText);
+
+            RuleFor(x => x.Duration)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
+                .Matches(VacancyViewModelMessages.Duration.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Duration.WhiteListErrorText);
+
+            RuleFor(x => x.ClosingDate).SetValidator(new DateViewModelClientValidator());
+
+            RuleFor(x => x.PossibleStartDate).SetValidator(new DateViewModelClientValidator());
+
+            RuleFor(x => x.LongDescription)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.LongDescription.RequiredErrorText)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
         }
     }
 }

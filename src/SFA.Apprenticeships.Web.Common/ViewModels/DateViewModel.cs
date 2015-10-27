@@ -23,6 +23,14 @@
 
         public int? Year { get; set; }
 
+        public bool HasValue
+        {
+            get
+            {
+                return Day.HasValue && Month.HasValue && Year.HasValue;
+            }
+        }
+
         public DateTime Date
         {
             get

@@ -29,6 +29,24 @@
 
     public class VacancyQuestionsViewModelServerValidator : VacancyQuestionsViewModelClientValidator
     {
-        
+        public VacancyQuestionsViewModelServerValidator()
+        {
+            AddServerRules();
+        }
+
+        private void AddServerRules()
+        {
+            RuleFor(x => x.FirstQuestion)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText);
+
+            RuleFor(x => x.SecondQuestion)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
+        }
     }
 }

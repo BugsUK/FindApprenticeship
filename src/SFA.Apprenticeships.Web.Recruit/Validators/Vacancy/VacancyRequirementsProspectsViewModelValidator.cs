@@ -15,6 +15,47 @@
         private void AddCommonRules()
         {
             RuleFor(x => x.DesiredSkills)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.DesiredSkills.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.DesiredSkills.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListErrorText);
+
+            RuleFor(x => x.FutureProspects)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.FutureProspects.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.FutureProspects.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListErrorText);
+
+            RuleFor(x => x.PersonalQualities)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.PersonalQualities.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.PersonalQualities.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListErrorText);
+
+            RuleFor(x => x.ThingsToConsider)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.ThingsToConsider.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.ThingsToConsider.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.ThingsToConsider.WhiteListErrorText);
+
+            RuleFor(x => x.DesiredQualifications)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.DesiredQualifications.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.DesiredQualifications.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListErrorText);
+        }
+    }
+
+    public class VacancyRequirementsProspectsViewModelServerValidator : VacancyRequirementsProspectsViewModelClientValidator
+    {
+        public VacancyRequirementsProspectsViewModelServerValidator()
+        {
+            AddServerRules();
+        }
+
+        private void AddServerRules()
+        {
+            RuleFor(x => x.DesiredSkills)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.DesiredSkills.RequiredErrorText)
                 .Length(0, 4000)
@@ -50,12 +91,7 @@
                 .Length(0, 4000)
                 .WithMessage(VacancyViewModelMessages.DesiredQualifications.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.DesiredQualifications.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.DesiredQualifications.WhiteListErrorText); 
         }
-    }
-
-    public class VacancyRequirementsProspectsViewModelServerValidator : VacancyRequirementsProspectsViewModelClientValidator
-    {
-        
     }
 }
