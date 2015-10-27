@@ -22,7 +22,7 @@
 
         public EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel)
         {
-            var pageSize = int.Parse(_configurationService.Get<RecruitWebConfiguration>().PageSize);
+            var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
             var resultsPage = _employerService.GetEmployers(searchViewModel.Ern, searchViewModel.Name, searchViewModel.Location, searchViewModel.EmployerResultsPage.CurrentPage, pageSize);
             var resultsViewModelPage = resultsPage.ToViewModel(resultsPage.Page.Select(e => e.ConvertToResult()).ToList());
             searchViewModel.EmployerResultsPage = resultsViewModelPage;

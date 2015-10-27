@@ -31,6 +31,12 @@
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
+        public static class HoursPerWeek
+        {
+            public const string LabelText = "hours per week";
+            public const string RequiredErrorText = "Please enter the hours per week";
+        }
+
         public static class WeeklyWage
         {
             public const string LabelText = "Wage";

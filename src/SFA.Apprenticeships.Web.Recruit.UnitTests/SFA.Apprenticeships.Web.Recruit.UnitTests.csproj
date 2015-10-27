@@ -166,6 +166,9 @@
     <Compile Include="Validators\Providers\ProviderSiteEmployerLinkViewModelValidatorTests.cs" />
     <Compile Include="Validators\Providers\ProviderSiteSearchViewModelValidatorTests.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\MandatoryDateChecks.cs" />
+    <Compile Include="Validators\VacancyPosting\MandatoryHoursAndDurationConditionTests.cs" />
+    <Compile Include="Validators\VacancyPosting\MandatoryWageTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
     <Compile Include="Views\VacancyPosting\RequirementsProspectsTests.cs" />

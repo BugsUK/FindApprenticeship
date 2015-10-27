@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
 
+    //TODO: Combine and replace with SearchResults
     public class Pageable<T>
     {
         public Pageable()

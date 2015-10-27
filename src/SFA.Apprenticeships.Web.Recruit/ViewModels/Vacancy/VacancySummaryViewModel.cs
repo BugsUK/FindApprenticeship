@@ -13,6 +13,8 @@
         public long VacancyReferenceNumber { get; set; }
         [Display(Name = VacancyViewModelMessages.WorkingWeek.LabelText)]
         public string WorkingWeek { get; set; }
+        [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
+        public double? HoursPerWeek { get; set; }
         [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
         public string WeeklyWage { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]

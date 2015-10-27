@@ -8,6 +8,7 @@ using SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
+    using System;
     using System.Linq;
     using Application.Interfaces.Providers;
     using Converters;
@@ -75,7 +76,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(string providerSiteErn)
         {
-            var pageSize = int.Parse(_configurationService.Get<RecruitWebConfiguration>().PageSize);
+            var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
             var parameters = new EmployerSearchRequest(providerSiteErn);
             var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, 1, pageSize);
             var result = providerSiteEmployerLinks.ToViewModel(providerSiteEmployerLinks.Page.Select(psel => psel.Convert().Employer.ConvertToResult()));
@@ -89,7 +90,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel)
         {
-            EmployerSearchRequest parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn);
+            EmployerSearchRequest parameters;
 
             switch (viewModel.FilterType)
             {
@@ -99,9 +100,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                 case EmployerFilterType.NameAndLocation:
                     parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn, viewModel.Name, viewModel.Location);
                     break;
+                case EmployerFilterType.Undefined:
+                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(viewModel), viewModel.FilterType, "");
             }
 
-            var pageSize = int.Parse(_configurationService.Get<RecruitWebConfiguration>().PageSize);
+            var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
 
             var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
 
