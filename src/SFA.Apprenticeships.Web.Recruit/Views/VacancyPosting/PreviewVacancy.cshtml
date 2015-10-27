@@ -113,8 +113,8 @@
                     <div class="inner-block-padr">
                         <div class="text">
                             <h3 class="bold-small">Employer</h3>
-                            <p id="vacancy-employer-name" class="@(Model.ProviderSiteEmployerLink.IsWebsiteUrlWellFormed ? "no-btm-margin" : "")">@Model.ProviderSiteEmployerLink.Employer.Name</p>
-                            @if (Model.ProviderSiteEmployerLink.IsWebsiteUrlWellFormed)
+                            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : "")">@Model.ProviderSiteEmployerLink.Employer.Name</p>
+                            @if (string.IsNullOrEmpty(Model.ProviderSiteEmployerLink.WebsiteUrl))
                             {
                                 <p>
                                     <a itemprop="url" href="@Model.ProviderSiteEmployerLink.WebsiteUrl"
@@ -122,10 +122,6 @@
                                        target="_blank"
                                        title="@Model.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.ProviderSiteEmployerLink.WebsiteUrl</a>
                                 </p>
-                            }
-                            else
-                            {
-                                <p>@Model.ProviderSiteEmployerLink.WebsiteUrl</p>
                             }
                             <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                 <h3 class="bold-small">Address</h3>

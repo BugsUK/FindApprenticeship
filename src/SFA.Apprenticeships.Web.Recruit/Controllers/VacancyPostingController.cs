@@ -114,6 +114,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation:
+                    ModelState.Clear();
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:

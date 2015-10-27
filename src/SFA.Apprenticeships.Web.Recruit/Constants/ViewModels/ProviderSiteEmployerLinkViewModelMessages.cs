@@ -14,6 +14,7 @@
         public static class WebsiteUrl
         {
             public const string LabelText = "Website (optional)";
+            public const string ErrorUriText = "Please enter a valid Website url";
         }
     }
 }
