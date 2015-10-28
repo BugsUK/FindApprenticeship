@@ -19,9 +19,12 @@
 
     <section>
         <div class="form-group">
-            @Html.FormTextAreaFor(m => m.WorkingWeek, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12, autofocus = "autofocus" })
-            @Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 })
-            @Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 })
+            <div class="form-group">
+                @Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12, autofocus = "autofocus"})
+                @Html.FormTextFor(m => m.HoursPerWeek, containerHtmlAttributes: new {@baseClassName = "hours-per-week"}, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12})
+            </div>
+            @Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12})
+            @Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12})
             <fieldset class="form-group inline-fixed date-input">
                 <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
                 @Html.EditorFor(r => r.ClosingDate)
@@ -30,7 +33,7 @@
                 <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
                 @Html.EditorFor(r => r.PossibleStartDate)
             </fieldset>
-            @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22 })
+            @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22})
         </div>
     </section>
     <div class="grid grid-1-2">

@@ -129,24 +129,39 @@ WriteLiteral("    <section>\r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"form-group\"");
+
 WriteLiteral(">\r\n");
 
-WriteLiteral("            ");
-
-            
-            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.FormTextAreaFor(m => m.WorkingWeek, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12, autofocus = "autofocus" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
+WriteLiteral("                ");
 
             
             #line 23 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }));
+           Write(Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12, autofocus = "autofocus"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 24 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+           Write(Html.FormTextFor(m => m.HoursPerWeek, containerHtmlAttributes: new {@baseClassName = "hours-per-week"}, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </div>\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+       Write(Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12}));
 
             
             #line default
@@ -156,8 +171,8 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 24 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12 }));
+            #line 27 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+       Write(Html.FormTextFor(m => m.Duration, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12}));
 
             
             #line default
@@ -173,7 +188,7 @@ WriteLiteral(" class=\"form-label\"");
 WriteLiteral(">");
 
             
-            #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 29 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                       Write(Model.GetMetadata(m => m.ClosingDate).DisplayName);
 
             
@@ -184,7 +199,7 @@ WriteLiteral("</legend>\r\n");
 WriteLiteral("                ");
 
             
-            #line 27 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 30 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
            Write(Html.EditorFor(r => r.ClosingDate));
 
             
@@ -201,7 +216,7 @@ WriteLiteral(" class=\"form-label\"");
 WriteLiteral(">");
 
             
-            #line 30 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 33 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                       Write(Model.GetMetadata(m => m.PossibleStartDate).DisplayName);
 
             
@@ -212,7 +227,7 @@ WriteLiteral("</legend>\r\n");
 WriteLiteral("                ");
 
             
-            #line 31 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 34 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
            Write(Html.EditorFor(r => r.PossibleStartDate));
 
             
@@ -223,8 +238,8 @@ WriteLiteral("\r\n            </fieldset>\r\n");
 WriteLiteral("            ");
 
             
-            #line 33 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22 }));
+            #line 36 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+       Write(Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22}));
 
             
             #line default
@@ -260,7 +275,7 @@ WriteLiteral(" value=\"VacancySummaryAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 40 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 43 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 }
             
             #line default
