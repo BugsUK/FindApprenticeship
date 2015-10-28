@@ -12,7 +12,6 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using ViewModels.Frameworks;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using System.Collections.Generic;
