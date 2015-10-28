@@ -161,7 +161,7 @@ WriteLiteral("            ");
 
             
             #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-       Write(Html.FormTextFor(m => m.WeeklyWage, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12}));
+       Write(Html.FormTextFor(m => m.Wage, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12}));
 
             
             #line default

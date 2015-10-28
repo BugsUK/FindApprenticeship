@@ -19,13 +19,13 @@
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.WeeklyWage)
+            /*RuleFor(viewModel => viewModel.Wage)
                 .Matches(VacancyViewModelMessages.WeeklyWage.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.WeeklyWage.WhiteListErrorText);
 
             RuleFor(viewModel => viewModel.Duration)
                 .Matches(VacancyViewModelMessages.Duration.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Duration.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.Duration.WhiteListErrorText);*/
 
             RuleFor(viewModel => viewModel.LongDescription)
                 .Length(0, 4000)
@@ -57,7 +57,7 @@
             .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
             .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);*/
 
-            RuleFor(x => x.WeeklyWage)
+            /*RuleFor(x => x.Wage)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText)
                 .Matches(VacancyViewModelMessages.WeeklyWage.WhiteListRegularExpression)
@@ -67,7 +67,7 @@
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
                 .Matches(VacancyViewModelMessages.Duration.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Duration.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.Duration.WhiteListErrorText);*/
 
             RuleFor(x => x.ClosingDate).SetValidator(new DateViewModelClientValidator());
 

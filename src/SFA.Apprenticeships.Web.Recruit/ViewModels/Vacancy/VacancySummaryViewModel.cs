@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using Common.ViewModels;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
     using Validators.Vacancy;
 
@@ -14,11 +15,13 @@
         [Display(Name = VacancyViewModelMessages.WorkingWeek.LabelText)]
         public string WorkingWeek { get; set; }
         [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
-        public double? HoursPerWeek { get; set; }
+        public decimal? HoursPerWeek { get; set; }
+        public WageType WageType { get; set; }
         [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
-        public string WeeklyWage { get; set; }
+        public decimal? Wage { get; set; }
+        public DurationType DurationType { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
-        public string Duration { get; set; }
+        public int? Duration { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
         public DateViewModel ClosingDate { get; set; }
         [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]

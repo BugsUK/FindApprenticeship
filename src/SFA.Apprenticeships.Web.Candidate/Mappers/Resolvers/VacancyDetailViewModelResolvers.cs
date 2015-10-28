@@ -22,7 +22,7 @@
             {
                 string wage;
 
-                if (vacancyDetail.WageType == WageType.Text)
+                if (vacancyDetail.WageType == LegacyWageType.Text)
                 {
                     wage = vacancyDetail.WageDescription;
                     decimal wageDecimal;

@@ -22,12 +22,12 @@
 
         [TestCase(30, 12)]
         [TestCase(40, 12)]
-        public void RuleOneTest_HoursAndDurationInsideExpectedRange(double hoursPerWeek, double expectedDuration)
+        public void RuleOneTest_HoursAndDurationInsideExpectedRange(decimal hoursPerWeek, int expectedDuration)
         {
             var viewModel = new VacancySummaryViewModel
             {
                 HoursPerWeek = hoursPerWeek,
-                Duration = expectedDuration.ToString(CultureInfo.InvariantCulture)
+                Duration = expectedDuration
             };
 
             _validator.Validate(viewModel);
@@ -38,12 +38,12 @@
 
         [TestCase(30, 11)]
         [TestCase(40, 11)]
-        public void RuleTwoTest_HoursInsideExpectedRangeDurationOutsideExpectedRange(double hoursPerWeek, double expectedDuration)
+        public void RuleTwoTest_HoursInsideExpectedRangeDurationOutsideExpectedRange(decimal hoursPerWeek, int expectedDuration)
         {
             var viewModel = new VacancySummaryViewModel
             {
                 HoursPerWeek = hoursPerWeek,
-                Duration = expectedDuration.ToString(CultureInfo.InvariantCulture)
+                Duration = expectedDuration
             };
 
             _validator.Validate(viewModel);
@@ -58,12 +58,12 @@
         [TestCase(20, 18)]
         [TestCase(18, 20)]
         [TestCase(16, 22.5)]
-        public void RuleThreeTest_HoursLessThanThirtyDurationInsideExpectRange(double hoursPerWeek, double expectedDuration)
+        public void RuleThreeTest_HoursLessThanThirtyDurationInsideExpectRange(decimal hoursPerWeek, int expectedDuration)
         {
             var viewModel = new VacancySummaryViewModel
             {
                 HoursPerWeek = hoursPerWeek,
-                Duration = expectedDuration.ToString(CultureInfo.InvariantCulture)
+                Duration = expectedDuration
             };
 
             _validator.Validate(viewModel);
@@ -78,12 +78,12 @@
         [TestCase(20, 17.5)]
         [TestCase(18, 29.5)]
         [TestCase(16, 22)]
-        public void RuleFourTest_HoursLessThanThirtyDurationOutsideExpectedRange(double hoursPerWeek, double expectedDuration)
+        public void RuleFourTest_HoursLessThanThirtyDurationOutsideExpectedRange(decimal hoursPerWeek, int expectedDuration)
         {
             var viewModel = new VacancySummaryViewModel
             {
                 HoursPerWeek = hoursPerWeek,
-                Duration = expectedDuration.ToString(CultureInfo.InvariantCulture)
+                Duration = expectedDuration
             };
 
             _validator.Validate(viewModel);
@@ -99,12 +99,12 @@
         [TestCase(20, 11)]
         [TestCase(18, 11)]
         [TestCase(16, 11)]
-        public void RuleFiveTest_HoursLessThanThirtyDurationOutsideExpectedRange(double hoursPerWeek, double expectedDuration)
+        public void RuleFiveTest_HoursLessThanThirtyDurationOutsideExpectedRange(decimal hoursPerWeek, int expectedDuration)
         {
             var viewModel = new VacancySummaryViewModel
             {
                 HoursPerWeek = hoursPerWeek,
-                Duration = expectedDuration.ToString(CultureInfo.InvariantCulture)
+                Duration = expectedDuration
             };
 
             _validator.Validate(viewModel);
@@ -119,7 +119,7 @@
             var viewModel = new VacancySummaryViewModel
             {
                 HoursPerWeek = 15,
-                Duration = "12"
+                Duration = 12
             };
 
             _validator.Validate(viewModel);

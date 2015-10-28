@@ -201,7 +201,7 @@ WriteLiteral(">");
 
             
             #line 39 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                    Write(Model.WeeklyWage);
+                                    Write(Model.Wage);
 
             
             #line default
@@ -237,7 +237,7 @@ WriteLiteral(">");
 
             
             #line 44 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                  Write(string.IsNullOrWhiteSpace(@Model.Duration) ? "Not specified" : @Model.Duration);
+                                                 Write(Model.Duration);
 
             
             #line default
@@ -626,14 +626,14 @@ WriteLiteral(">Employer</h3>\r\n                            <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5912), Tuple.Create("\"", 6009)
+WriteAttribute("class", Tuple.Create(" class=\"", 5840), Tuple.Create("\"", 5937)
             
             #line 116 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 5920), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : ""
+, Tuple.Create(Tuple.Create("", 5848), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : ""
             
             #line default
             #line hidden
-, 5920), false)
+, 5848), false)
 );
 
 WriteLiteral(">");
@@ -665,29 +665,29 @@ WriteLiteral("                                <p>\r\n                           
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6282), Tuple.Create("\"", 6331)
+WriteAttribute("href", Tuple.Create(" href=\"", 6210), Tuple.Create("\"", 6259)
             
             #line 120 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 6289), Tuple.Create<System.Object, System.Int32>(Model.ProviderSiteEmployerLink.WebsiteUrl
+, Tuple.Create(Tuple.Create("", 6217), Tuple.Create<System.Object, System.Int32>(Model.ProviderSiteEmployerLink.WebsiteUrl
             
             #line default
             #line hidden
-, 6289), false)
+, 6217), false)
 );
 
 WriteLiteral("\r\n                                       id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                                       target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 6458), Tuple.Create("\"", 6559)
+WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 6386), Tuple.Create("\"", 6487)
             
             #line 123 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 6506), Tuple.Create<System.Object, System.Int32>(Model.ProviderSiteEmployerLink.Employer.Name
+, Tuple.Create(Tuple.Create("", 6434), Tuple.Create<System.Object, System.Int32>(Model.ProviderSiteEmployerLink.Employer.Name
             
             #line default
             #line hidden
-, 6506), false)
-, Tuple.Create(Tuple.Create(" ", 6551), Tuple.Create("Website", 6552), true)
+, 6434), false)
+, Tuple.Create(Tuple.Create(" ", 6479), Tuple.Create("Website", 6480), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -829,16 +829,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 8184), Tuple.Create("\"", 8366)
-, Tuple.Create(Tuple.Create("", 8190), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 8190), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 8112), Tuple.Create("\"", 8294)
+, Tuple.Create(Tuple.Create("", 8118), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 8118), true)
             
             #line 142 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                     , Tuple.Create(Tuple.Create("", 8235), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.ProviderSiteEmployerLink.Employer.Address.Postcode)
+                                                                     , Tuple.Create(Tuple.Create("", 8163), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.ProviderSiteEmployerLink.Employer.Address.Postcode)
             
             #line default
             #line hidden
-, 8235), false)
-, Tuple.Create(Tuple.Create("", 8302), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 8302), true)
+, 8163), false)
+, Tuple.Create(Tuple.Create("", 8230), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 8230), true)
 );
 
 WriteLiteral("></iframe>\r\n                        <p");
@@ -909,14 +909,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 9233), Tuple.Create("\"", 9268)
+WriteAttribute("href", Tuple.Create(" href=\"", 9161), Tuple.Create("\"", 9196)
             
             #line 160 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 9240), Tuple.Create<System.Object, System.Int32>(Model.OfflineApplicationUrl
+, Tuple.Create(Tuple.Create("", 9168), Tuple.Create<System.Object, System.Int32>(Model.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 9240), false)
+, 9168), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -1138,14 +1138,14 @@ WriteLiteral(">Submit for approval</button>\r\n            <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11396), Tuple.Create("\"", 11455)
+WriteAttribute("href", Tuple.Create(" href=\"", 11324), Tuple.Create("\"", 11383)
             
             #line 205 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 11403), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 11331), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 11403), false)
+, 11331), false)
 );
 
 WriteLiteral(">Return to dashboard</a>\r\n        </div>\r\n    </section>\r\n");

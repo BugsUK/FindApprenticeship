@@ -11,8 +11,11 @@
         public string Title { get; set; }
         public string ShortDescription { get; set; }
         public string WorkingWeek { get; set; }
-        public string WeeklyWage { get; set; }
-        public string Duration { get; set; }
+        public decimal? HoursPerWeek { get; set; }
+        public WageType WageType { get; set; }
+        public decimal? Wage { get; set; }
+        public DurationType DurationType { get; set; }
+        public int? Duration { get; set; }
         public DateTime? ClosingDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }
         public string LongDescription { get; set; }

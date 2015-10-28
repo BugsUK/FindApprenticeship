@@ -174,7 +174,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.WeeklyWage = viewModel.WeeklyWage;
+            vacancy.Wage = viewModel.Wage;
             vacancy.Duration = viewModel.Duration;
 
             if (viewModel.ClosingDate.HasValue)
@@ -252,10 +252,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
         {
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
 
+            //TODO: Automap
             vacancy.Title = viewModel.Title;
             vacancy.ShortDescription = viewModel.ShortDescription;
             vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.WeeklyWage = viewModel.WeeklyWage;
+            vacancy.HoursPerWeek = viewModel.HoursPerWeek;
+            vacancy.WageType = viewModel.WageType;
+            vacancy.Wage = viewModel.Wage;
+            vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration;
             vacancy.ClosingDate = viewModel.ClosingDate;
             vacancy.PossibleStartDate = viewModel.PossibleStartDate;

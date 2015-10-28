@@ -31,7 +31,7 @@
 
         public string WageDescription { get; set; }
 
-        public WageType WageType { get; set; }
+        public LegacyWageType WageType { get; set; }
 
         public string WorkingWeek { get; set; }
 

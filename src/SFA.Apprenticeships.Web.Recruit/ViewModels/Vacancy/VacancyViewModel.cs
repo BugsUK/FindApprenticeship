@@ -11,6 +11,7 @@
     using Provider;
     using Validators.Vacancy;
 
+    //TODO: Replace with an aggregate of the sub view model
     [Validator(typeof(VacancyViewModelValidator))]
     public class VacancyViewModel
     {
@@ -22,10 +23,14 @@
         public string ShortDescription { get; set; }
         [Display(Name = VacancyViewModelMessages.WorkingWeek.LabelText)]
         public string WorkingWeek { get; set; }
+        [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
+        public decimal? HoursPerWeek { get; set; }
+        public WageType WageType { get; set; }
         [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
-        public string WeeklyWage { get; set; }
+        public decimal? Wage { get; set; }
+        public DurationType DurationType { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
-        public string Duration { get; set; }
+        public int? Duration { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
         public DateTime? ClosingDate { get; set; }
         [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]

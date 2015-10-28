@@ -127,7 +127,9 @@
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchResponse.cs" />
     <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipVacancy.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\DurationType.cs" />
     <Compile Include="Vacancies\ProviderVacancies\ProviderVacancyStatuses.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\WageType.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\ProviderVacancies\Vacancy.cs" />
     <Compile Include="Vacancies\VacancyDetail.cs" />
@@ -157,7 +159,7 @@
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\VacancySummary.cs" />
     <Compile Include="Vacancies\VacancyType.cs" />
-    <Compile Include="Vacancies\WageType.cs" />
+    <Compile Include="Vacancies\LegacyWageType.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -38,9 +38,9 @@
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);*/
 
-            RuleFor(x => x.WeeklyWage)
+            /*RuleFor(x => x.WeeklyWage)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText);*/
 
             RuleFor(x => x.Duration)
                 .NotEmpty()

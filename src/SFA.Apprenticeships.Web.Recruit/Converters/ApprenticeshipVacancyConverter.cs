@@ -14,7 +14,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
             {
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                 WorkingWeek = apprenticeshipVacancy.WorkingWeek,
-                WeeklyWage = apprenticeshipVacancy.WeeklyWage,
+                Wage = apprenticeshipVacancy.Wage,
                 Duration = apprenticeshipVacancy.Duration,
                 ClosingDate = new DateViewModel(apprenticeshipVacancy.ClosingDate),
                 PossibleStartDate = new DateViewModel(apprenticeshipVacancy.PossibleStartDate),
@@ -53,6 +53,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
 
         public static VacancyViewModel ConvertToVacancyViewModel(this ApprenticeshipVacancy apprenticeshipVacancy)
         {
+            //TODO: Automap
             var vacancyViewModel = new VacancyViewModel
             {
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
@@ -60,7 +61,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
                 Title = apprenticeshipVacancy.Title,
                 ShortDescription = apprenticeshipVacancy.ShortDescription,
                 WorkingWeek = apprenticeshipVacancy.WorkingWeek,
-                WeeklyWage = apprenticeshipVacancy.WeeklyWage,
+                HoursPerWeek = apprenticeshipVacancy.HoursPerWeek,
+                WageType = apprenticeshipVacancy.WageType,
+                Wage = apprenticeshipVacancy.Wage,
+                DurationType = apprenticeshipVacancy.DurationType,
                 Duration = apprenticeshipVacancy.Duration,
                 ClosingDate = apprenticeshipVacancy.ClosingDate,
                 PossibleStartDate = apprenticeshipVacancy.PossibleStartDate,

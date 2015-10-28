@@ -4,17 +4,17 @@
     using AutoMapper;
     using Domain.Entities.Vacancies;
 
-    public class WageTypeResolver : ValueResolver<string, WageType>
+    public class WageTypeResolver : ValueResolver<string, LegacyWageType>
     {
-        protected override WageType ResolveCore(string source)
+        protected override LegacyWageType ResolveCore(string source)
         {
             switch (source)
             {
                 case "Weekly":
-                    return WageType.Weekly;
+                    return LegacyWageType.Weekly;
 
                 case "Text":
-                    return WageType.Text;
+                    return LegacyWageType.Text;
 
                 default:
                     throw new ArgumentOutOfRangeException("source",
