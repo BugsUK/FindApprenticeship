@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.Providers
 {
+    using System;
+    using FluentAssertions;
     using NUnit.Framework;
     using Recruit.Validators.Provider;
     using FluentValidation.TestHelper;
@@ -14,7 +16,8 @@
         [TestCase("http://www.google.com", true)]
         [TestCase("https://www.google.com", true)]
         [TestCase("www\\asdf\\com", false)]
-        [TestCase("canbeanythingwithcorrechars", true)]
+        [TestCase("cantbemissingdot", false)]
+        [TestCase("canbeanythingwithcorrect.chars", true)]
         [TestCase("cantbeincorrechars@%", false)]
         public void ShouldValidateWebSiteUrl(
             string websiteUrl,
@@ -26,14 +29,21 @@
                 WebsiteUrl = websiteUrl,
                 Description = "populated"
             };
+            string uriString = null;
 
             // Act.
             var validator = new ProviderSiteEmployerLinkViewModelValidator();
+            Action uriAction = () => { uriString = new UriBuilder(viewModel.WebsiteUrl).Uri.ToString(); };
 
             // Assert.
             if (expectValid)
             {
                 validator.ShouldNotHaveValidationErrorFor(m => m.WebsiteUrl, viewModel);
+                if (!string.IsNullOrEmpty(websiteUrl))
+                {
+                    uriAction.ShouldNotThrow();
+                    uriString.Should().NotBeNullOrEmpty();
+                }
             }
             else
             {

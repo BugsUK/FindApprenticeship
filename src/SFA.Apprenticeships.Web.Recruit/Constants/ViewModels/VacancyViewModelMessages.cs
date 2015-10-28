@@ -142,13 +142,17 @@
         {
             public const string LabelText = "What's the website address that candidate should apply through?";
             public const string RequiredErrorText = "TODO: pleae provide an application URL";
-            public const string WhiteListRegularExpression = Whitelists.UrlWhitelist.RegularExpression;
-            public const string WhiteListErrorText = Whitelists.UrlWhitelist.ErrorText;
+            public const string TooLongErrorText = "Website address mustn’t exceed 100 characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Website address " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string ErrorUriText = "Please enter a valid website url";
         }
 
         public static class OfflineApplicationInstructions
         {
             public const string LabelText = "Please explain to the candidate what will happen when they apply (optional)";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Candidate explanation " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class ApprenticeshipLevel

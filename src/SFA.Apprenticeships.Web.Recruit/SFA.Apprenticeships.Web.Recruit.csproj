@@ -331,6 +331,7 @@
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
     <Compile Include="Providers\IVacancyProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
+    <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\Provider\ProviderSiteEmployerLinkViewModelValidator.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />

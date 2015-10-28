@@ -9,7 +9,7 @@
     /// <summary>
     /// Testing business rules on page https://valtech-uk.atlassian.net/wiki/display/NAS/QA+a+vacancy#QAavacancy-Businessrulesforadvertisingvacancies
     /// </summary>
-    [TestFixture]
+    [TestFixture, Ignore]
     public class MandatoryHoursAndDurationConditionTests
     {
         private VacancySummaryViewModelServerValidator _validator;

@@ -39,52 +39,43 @@
                 .Matches(VacancyViewModelMessages.ShortDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.ShortDescription.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.OfflineApplicationUrl)
+            validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
+                .Length(0, 256)
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText);
+
+            validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
+                .Matches(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListErrorText);
+        }
+
+        internal static void AddClientRules(this AbstractValidator<NewVacancyViewModel> validator)
+        {
+            
+        }
+
+        internal static void AddServerRules(this AbstractValidator<NewVacancyViewModel> validator)
+        {
+            validator.RuleFor(m => m.Title)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.Title.RequiredErrorText);
+
+            validator.RuleFor(x => x.ShortDescription)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.ShortDescription.RequiredErrorText);
 
             validator.RuleFor(m => m.FrameworkCodeName)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.FrameworkCodeName.RequiredErrorText);
 
             validator.RuleFor(viewModel => (int)viewModel.ApprenticeshipLevel)
-            RuleFor(viewModel => viewModel.FrameworkCodeName)
-                .NotEmpty()
-                .WithMessage(NewVacancyViewModelMessages.FrameworkCodeName.RequiredErrorText);
-
-            RuleFor(x => x.ShortDescription)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.ShortDescription.RequiredErrorText)
-                .Length(0, 512)
-                .WithMessage(VacancyViewModelMessages.ShortDescription.TooLongErrorText)
-                .Matches(VacancyViewModelMessages.ShortDescription.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.ShortDescription.WhiteListErrorText); ;
-
-            RuleFor(m => m.Title)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.Title.RequiredErrorText)
-                .Length(0, 100)
-                .WithMessage(VacancyViewModelMessages.Title.TooLongErrorText)
-                .Matches(VacancyViewModelMessages.Title.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Title.WhiteListErrorText);
-
                 .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Higher)
                 .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText);
 
-        }
-
-        internal static void AddClientRules(this AbstractValidator<NewVacancyViewModel> validator)
-        {
             validator.RuleFor(m => m.OfflineApplicationUrl)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.RequiredErrorText);
-        }
-
-        internal static void AddServerRules(this AbstractValidator<NewVacancyViewModel> validator)
-        {
-            validator.RuleFor(m => m.OfflineApplicationUrl)
-                .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText)
+                .Must(Common.IsValidUrl)
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ErrorUriText)
                 .When(viewModel => viewModel.OfflineVacancy);
         }
     }

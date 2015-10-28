@@ -70,7 +70,7 @@
 
         [TestCase("http://www.google.com", true)]
         [TestCase("asdf", false)]
-        [TestCase("asdf.asdflkjasdfl", false)]
+        [TestCase("asdf.asdflkjasdfl", true)]
         [TestCase(null, false)]
         [TestCase("", false)]
         [TestCase("http://www.google.com/", true)]
@@ -81,10 +81,10 @@
         [TestCase("https://www.google.com/someFolder", true)]
         [TestCase("https://www.google.com/someFolder/index.html", true)]
         [TestCase("https://www.google.com/someFolder/index.html?id=445667", true)]
-        [TestCase("www.google.com", false)]
-        [TestCase("www.google.com/someFolder", false)]
-        [TestCase("www.google.com/someFolder/index.html", false)]
-        [TestCase("www.google.com/someFolder/index.html?id=445667", false)]
+        [TestCase("www.google.com", true)]
+        [TestCase("www.google.com/someFolder", true)]
+        [TestCase("www.google.com/someFolder/index.html", true)]
+        [TestCase("www.google.com/someFolder/index.html?id=445667", true)]
         [TestCase("asdf://asdf.com", false)]
         public void ShouldHaveAValidUrlIfTheVacancyIsOffline(string url, bool expectValid)
         {

@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 {
-    using System;
-    using Common.Validators;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Vacancy;
+    using Web.Common.Validators;
 
     public class VacancySummaryViewModelClientValidator : AbstractValidator<VacancySummaryViewModel>
     {

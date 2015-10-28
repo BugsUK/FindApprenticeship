@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Policy;
     using System.Web.Mvc;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
@@ -75,6 +76,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
         public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
             //if it exists, update it.
+            var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
             if (newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0)
             {
                 var vacancy = _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyReferenceNumber.Value);
@@ -85,7 +87,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                 vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
                 vacancy.ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
                 vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
-                vacancy.OfflineApplicationUrl = newVacancyViewModel.OfflineApplicationUrl;
+                vacancy.OfflineApplicationUrl = offlineApplicationUrl;
                 vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
 
                 vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
@@ -114,7 +116,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                     ProviderSiteEmployerLink = providerSiteEmployerLink,
                     Status = ProviderVacancyStatuses.Draft,
                     OfflineVacancy =  newVacancyViewModel.OfflineVacancy,
-                    OfflineApplicationUrl = newVacancyViewModel.OfflineApplicationUrl,
+                    OfflineApplicationUrl = offlineApplicationUrl,
                     OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions
                 });
 

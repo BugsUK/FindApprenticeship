@@ -115,7 +115,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
             var provider = GetProvider();
 
             const bool offlineVacancy = true;
-            const string offlineApplicationUrl = "A url";
+            const string offlineApplicationUrl = "a_url.com";
             const string offlineApplicationInstructions = "Some instructions";
 
             provider.CreateVacancy(new NewVacancyViewModel
@@ -131,7 +131,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
             });
 
             MockVacancyPostingService.Verify(s => s.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.OfflineVacancy == offlineVacancy 
-            && v.OfflineApplicationUrl == offlineApplicationUrl && v.OfflineApplicationInstructions == offlineApplicationInstructions)));
+            && v.OfflineApplicationUrl.StartsWith("http://") && v.OfflineApplicationInstructions == offlineApplicationInstructions)));
         }
     }
 }
