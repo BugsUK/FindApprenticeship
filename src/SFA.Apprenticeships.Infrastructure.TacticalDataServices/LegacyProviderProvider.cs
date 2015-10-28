@@ -4,7 +4,6 @@ using SFA.Apprenticeships.Application.Interfaces.Employers;
 
 namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 {
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
@@ -12,7 +11,6 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
     using System.Text.RegularExpressions;
     using Application.Organisation;
     using Configuration;
-    using CuttingEdge.Conditions;
     using Dapper;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
@@ -166,15 +164,15 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                     EmployerEdsUrn = searchRequest.EmployerEdsUrn
                 };
             }
-            else if (searchRequest.IsNameAndPostCodeQuery)
+            else if (searchRequest.IsNameAndLocationQuery)
             {
-                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%' AND e.SearchablePostCode LIKE @PostCodeSearchParameter + '%'");
+                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%' AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
 
                 parameterList = new
                 {
                     ProviderSiteErn = searchRequest.ProviderSiteErn,
                     NameSearchParameter = searchRequest.Name,
-                    PostCodeSearchParameter = searchRequest.Postcode
+                    LocationSearchParameter = searchRequest.Location
                 };
             }
             else if (searchRequest.IsNameQuery)
@@ -186,14 +184,14 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                     NameSearchParameter = searchRequest.Name
                 };
             }
-            else if (searchRequest.IsPostCodeQuery)
+            else if (searchRequest.IsLocationQuery)
             {
-                queryBuilder.Append(" AND e.SearchablePostCode LIKE @PostCodeSearchParameter + '%'");
+                queryBuilder.Append(" AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
 
                 parameterList = new
                 {
                     ProviderSiteErn = searchRequest.ProviderSiteErn,
-                    PostCodeSearchParameter = searchRequest.Postcode
+                    LocationSearchParameter = searchRequest.Location
                 };
             }
             else //it's a standard search by provider Site Urn

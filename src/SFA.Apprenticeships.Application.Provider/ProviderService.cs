@@ -182,13 +182,16 @@ namespace SFA.Apprenticeships.Application.Provider
                 providerSiteEmployerLinksFromRepository =
                     providerSiteEmployerLinksFromRepository.Where(l => l.Employer.Ern == request.EmployerEdsUrn);
             }
-            else if (request.IsNameAndPostCodeQuery)
+            else if (request.IsNameAndLocationQuery)
             {
                 providerSiteEmployerLinksFromRepository =
                     providerSiteEmployerLinksFromRepository.Where(
                         l =>
                             l.Employer.Name.ToLower().Contains(request.Name.ToLower()) &&
-                            l.Employer.Address.Postcode.ToLower().Contains(request.Postcode.ToLower()));
+                            ((l.Employer.Address.Postcode != null &&
+                              l.Employer.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
+                             (l.Employer.Address.AddressLine4 != null &&
+                              l.Employer.Address.AddressLine4.ToLower().Contains(request.Location.ToLower()))));
             }
             else if (request.IsNameQuery)
             {
@@ -197,12 +200,15 @@ namespace SFA.Apprenticeships.Application.Provider
                         l =>
                             l.Employer.Name.ToLower().Contains(request.Name.ToLower()));
             }
-            else if (request.IsPostCodeQuery)
+            else if (request.IsLocationQuery)
             {
                 providerSiteEmployerLinksFromRepository =
                     providerSiteEmployerLinksFromRepository.Where(
                         l =>
-                            l.Employer.Address.Postcode.ToLower().Contains(request.Postcode.ToLower()));
+                            ((l.Employer.Address.Postcode != null &&
+                              l.Employer.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
+                             (l.Employer.Address.AddressLine4 != null &&
+                              l.Employer.Address.AddressLine4.ToLower().Contains(request.Location.ToLower()))));
             }
 
             return providerSiteEmployerLinksFromRepository;
