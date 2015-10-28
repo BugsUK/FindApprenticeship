@@ -16,7 +16,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
-    using ViewModels.Frameworks;
     using ViewModels.Vacancy;
 
     public class VacancyPostingProvider : IVacancyPostingProvider
@@ -262,23 +261,33 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             return levels;
         }
 
-        public List<SectorSelectItemViewModel> GetSectorsAndFrameworks()
+        public List<SelectListItem> GetSectorsAndFrameworks()
         {
             var categories = _referenceDataService.GetCategories();
 
-            return categories
-                .Where(category => !_blacklistedCategoryCodes.Contains(category.CodeName))
-                .Where(category => category.SubCategories?.Count > 0)
-                .Select(category => new SectorSelectItemViewModel
+            var sectorsAndFrameworkItems = new List<SelectListItem>
+            {
+                new SelectListItem { Value = string.Empty, Text = "Choose from the list of frameworks"}
+            };
+
+            foreach (var sector in categories.Where(category => !_blacklistedCategoryCodes.Contains(category.CodeName)))
+            {
+                if (sector.SubCategories != null)
                 {
-                    CodeName = category.CodeName,
-                    FullName = category.FullName,
-                    Frameworks = category.SubCategories.Select(subCategory => new FrameworkSelectItemViewModel
+                    var sectorGroup = new SelectListGroup {Name = sector.FullName};
+                    foreach (var framework in sector.SubCategories)
                     {
-                        CodeName = subCategory.CodeName,
-                        FullName = subCategory.FullName
-                    }).ToList()
-                }).ToList();
+                        sectorsAndFrameworkItems.Add(new SelectListItem
+                        {
+                            Group = sectorGroup,
+                            Value = framework.CodeName,
+                            Text = framework.FullName
+                        });
+                    }
+                }
+            }
+
+            return sectorsAndFrameworkItems;
         }
 
         #region Helpers

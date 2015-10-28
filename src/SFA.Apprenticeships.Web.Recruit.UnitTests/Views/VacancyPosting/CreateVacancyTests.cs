@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using FluentAssertions;
 using NUnit.Framework;
 using RazorGenerator.Testing;
 using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Frameworks;
 using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
 using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy;
 using SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 {
+    using System.Web.Mvc;
+
     [TestFixture]
     public class CreateVacancyTests : ViewUnitTest
     {
@@ -24,7 +21,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 
             var viewModel = new NewVacancyViewModel
             {
-                SectorsAndFrameworks = new List<SectorSelectItemViewModel>(),
+                SectorsAndFrameworks = new List<SelectListItem>(),
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
                 {
                     Employer = new EmployerViewModel()

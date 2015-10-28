@@ -405,7 +405,7 @@
 
         #region Helpers
 
-        private static bool HasValidationError<TModel, TProperty>(HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
+        public static bool HasValidationError<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
         {
             var expressionText = ExpressionHelper.GetExpressionText(expression);
             var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;

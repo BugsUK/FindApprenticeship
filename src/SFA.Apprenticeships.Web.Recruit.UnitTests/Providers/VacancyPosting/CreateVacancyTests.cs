@@ -3,13 +3,11 @@ using FluentAssertions;
 using SFA.Apprenticeships.Domain.Entities.Locations;
 using SFA.Apprenticeships.Domain.Entities.Organisations;
 using SFA.Apprenticeships.Domain.Entities.Providers;
-using SFA.Apprenticeships.Web.Common.Configuration;
 using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
-using SFA.Apprenticeships.Web.Recruit.Constants.ViewModels;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Frameworks;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
+    using System.Web.Mvc;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Moq;
@@ -20,13 +18,13 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
     [TestFixture]
     public class CreateVacancyTests : TestBase
     {
-        private NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel()
+        private readonly NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel()
         {
             VacancyReferenceNumber = 1,
             ApprenticeshipLevel = ApprenticeshipLevel.Advanced
         };
 
-        private ApprenticeshipVacancy _existingApprenticeshipVacancy = new ApprenticeshipVacancy()
+        private readonly ApprenticeshipVacancy _existingApprenticeshipVacancy = new ApprenticeshipVacancy()
         {
             ProviderSiteEmployerLink = new ProviderSiteEmployerLink()
             {
@@ -37,9 +35,9 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
             }
         };
 
-        private NewVacancyViewModel _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
+        private readonly NewVacancyViewModel _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
         {
-            SectorsAndFrameworks = new List<SectorSelectItemViewModel>(),
+            SectorsAndFrameworks = new List<SelectListItem>(),
             ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
             {
                 Employer = new EmployerViewModel()

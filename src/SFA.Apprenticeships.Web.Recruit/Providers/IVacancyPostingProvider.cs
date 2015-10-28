@@ -2,7 +2,6 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using ViewModels.Frameworks;
     using ViewModels.Vacancy;
 
     public interface IVacancyPostingProvider
@@ -29,7 +28,7 @@
 
         VacancyViewModel SubmitVacancy(VacancyViewModel viewModel);
 
-        List<SectorSelectItemViewModel> GetSectorsAndFrameworks();
+        List<SelectListItem> GetSectorsAndFrameworks();
 
         List<SelectListItem> GetApprenticeshipLevels();
     }

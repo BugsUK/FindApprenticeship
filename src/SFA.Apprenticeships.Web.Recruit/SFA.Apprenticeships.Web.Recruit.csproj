@@ -350,8 +350,6 @@
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
-    <Compile Include="ViewModels\Frameworks\FrameworkSelectItemViewModel.cs" />
-    <Compile Include="ViewModels\Frameworks\SectorSelectItemViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VerifyEmailViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteEmployerLinkViewModel.cs" />

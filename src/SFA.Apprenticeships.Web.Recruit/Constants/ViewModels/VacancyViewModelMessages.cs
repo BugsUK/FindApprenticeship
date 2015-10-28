@@ -144,5 +144,15 @@
         {
             public const string LabelText = "Please explain to the candidate what will happen when they apply (optional)";
         }
+
+        public static class ApprenticeshipLevel
+        {
+            public const string RequiredErrorText = "Please select the apprenticeship level";
+        }
+
+        public static class FrameworkCodeName
+        {
+            public const string RequiredErrorText = "Please select the apprenticeship framework";
+        }
     }
 }

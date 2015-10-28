@@ -9,11 +9,11 @@
         var oldErrorFunction = settings.errorPlacement;
         var oldSuccessFunction = settings.success;
         settings.errorPlacement = function (error, element) {
-            $(element).parent().addClass("input-validation-error");
+            $(element).closest(".form-group").addClass("input-validation-error");
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
-            $(element).parent().removeClass("input-validation-error");
+            $(element).closest(".form-group").removeClass("input-validation-error");
             oldSuccessFunction(label, element);
 
         };

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Common.Configuration;
     using Domain.Entities.Locations;
@@ -153,6 +154,7 @@
         {
             // Arrange.
             var provider = GetProvider();
+            var blackListCodes = _webConfiguration.BlacklistedCategoryCodes.Split(',').Select(each => each.Trim()).ToArray();
 
             // Act.
             var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
@@ -161,24 +163,9 @@
             viewModel.Should().NotBeNull();
             viewModel.SectorsAndFrameworks.Should().NotBeNull();
 
-            Assert.That(!viewModel.SectorsAndFrameworks.
-                Any(sector => _webConfiguration.BlacklistedCategoryCodes.Contains(sector.CodeName)));
+            Assert.That(!viewModel.SectorsAndFrameworks.Any(sector => blackListCodes.Any(bc => sector.Value != string.Empty && bc.StartsWith(sector.Value))));
         }
 
-        [Test]
-        public void ShouldNotGetSectorsWithoutFrameworks()
-        {
-            // Arrange.
-            var provider = GetProvider();
-
-            // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
-
-            // Assert.
-            viewModel.Should().NotBeNull();
-            viewModel.SectorsAndFrameworks.Should().NotBeNull();
-            Assert.That(viewModel.SectorsAndFrameworks.All(sector => sector.Frameworks?.Count > 0));
-        }
 
         [Test]
         public void ShouldDefaultApprenticeshipLevel()
