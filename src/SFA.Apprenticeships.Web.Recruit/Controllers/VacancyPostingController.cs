@@ -93,9 +93,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployer(string providerSiteErn, string ern)
+        public ActionResult ConfirmEmployer(string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern);
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern, vacancyGuid);
 
             switch (response.Code)
             {
@@ -118,16 +118,16 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern });
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
 
         [HttpGet]
-        public ActionResult CreateVacancy(string providerSiteErn, string ern)
+        public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyViewModel(User.GetUkprn(), providerSiteErn, ern);
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(User.GetUkprn(), providerSiteErn, ern, vacancyGuid);
             var viewModel = response.ViewModel;
 
             return View(viewModel);
@@ -435,9 +435,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpGet]
-        public ActionResult ConfirmNewEmployer(string providerSiteErn, string ern)
+        public ActionResult ConfirmNewEmployer(string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern);
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern, vacancyGuid);
             return View(response.ViewModel);
         }
 
@@ -452,7 +452,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern });
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

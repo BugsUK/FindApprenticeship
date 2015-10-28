@@ -17,7 +17,7 @@
         [Test]
         public void ShouldSetStateToForReviewWhenSumbittingTheVacancy()
         {
-            var vacancyPostingProvider = GetProvider();
+            var vacancyPostingProvider = GetVacancyPostingProvider();
             var apprenticeshipVacancy = new ApprenticeshipVacancy
             {
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLink

@@ -20,6 +20,7 @@
         protected static readonly string ProviderSiteUrn = Guid.NewGuid().ToString();
         protected static readonly string Ern = Guid.NewGuid().ToString();
         protected static readonly string Ukprn = Guid.NewGuid().ToString();
+        protected static readonly Guid VacancyGuid = Guid.NewGuid();
 
         private static readonly Employer Employer = new Employer
         {
@@ -121,10 +122,10 @@
         public void ShouldDefaultToPreferredSite()
         {
             // Arrange.
-            var provider = GetProvider();
+            var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid);
 
             // Assert.
             MockProviderService.Verify(mock =>
@@ -138,10 +139,10 @@
         public void ShouldGetSectorsAndFrameworks()
         {
             // Arrange.
-            var provider = GetProvider();
+            var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -153,11 +154,11 @@
         public void ShouldNotGetBlacklistedSectorsAndFrameworks()
         {
             // Arrange.
-            var provider = GetProvider();
+            var provider = GetVacancyPostingProvider();
             var blackListCodes = _webConfiguration.BlacklistedCategoryCodes.Split(',').Select(each => each.Trim()).ToArray();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -171,10 +172,10 @@
         public void ShouldDefaultApprenticeshipLevel()
         {
             // Arrange.
-            var provider = GetProvider();
+            var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid);
 
             // Assert.
             viewModel.Should().NotBeNull();

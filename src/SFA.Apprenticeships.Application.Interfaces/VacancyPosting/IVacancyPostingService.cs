@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
+﻿using System;
+
+namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 {
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
 
@@ -9,5 +11,7 @@
         long GetNextVacancyReferenceNumber();
 
         ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber);
+
+        ApprenticeshipVacancy GetVacancy(Guid vacancyGuid);
     }
 }

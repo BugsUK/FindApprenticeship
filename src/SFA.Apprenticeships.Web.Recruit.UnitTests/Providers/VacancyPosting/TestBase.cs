@@ -37,7 +37,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
                 .Returns(new CommonWebConfiguration());
         }
 
-        protected IVacancyPostingProvider GetProvider()
+        protected IVacancyPostingProvider GetVacancyPostingProvider()
         {
             return new VacancyPostingProvider(
                 MockLogService.Object,

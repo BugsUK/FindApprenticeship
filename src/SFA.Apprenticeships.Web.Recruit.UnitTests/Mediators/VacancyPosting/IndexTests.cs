@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
+﻿using System;
+
+namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
     using FluentAssertions;
     using NUnit.Framework;
@@ -14,7 +16,7 @@
             var mediator = GetMediator();
 
             // Act.
-            var viewModel = mediator.GetNewVacancyViewModel("1123123", "123124124", "124124214");
+            var viewModel = mediator.GetNewVacancyViewModel("1123123", "123124124", "124124214", Guid.NewGuid());
 
             // Assert.
             // TODO: AG: US811: more assertions.

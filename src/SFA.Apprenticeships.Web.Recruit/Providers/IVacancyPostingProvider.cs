@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿using System;
+
+namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
@@ -6,7 +8,7 @@
 
     public interface IVacancyPostingProvider
     {
-        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern);
+        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
 
         NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
 

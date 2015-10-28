@@ -487,6 +487,20 @@ Write(Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern));
             
             #line 92 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                                                                          ;
+    
+            
+            #line default
+            #line hidden
+            
+            #line 116 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+Write(Html.HiddenFor(model => model.VacancyGuid));
+
+            
+            #line default
+            #line hidden
+            
+            #line 116 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                                               
 
 
             
@@ -521,7 +535,7 @@ WriteLiteral(" value=\"CreateVacancyAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 98 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 122 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
 }
 
             

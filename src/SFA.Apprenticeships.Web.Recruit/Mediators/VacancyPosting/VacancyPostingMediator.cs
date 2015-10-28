@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
+﻿using System;
+
+namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using System.Linq;
     using Common.Constants;
@@ -120,9 +122,10 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
-        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern)
+        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern, Guid vacancyGuid)
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteErn, ern);
+            viewModel.VacancyGuid = vacancyGuid;
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
@@ -143,9 +146,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, newViewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern)
+        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(ukprn, providerSiteErn, ern);
+            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyModel.Ok, viewModel);
         }

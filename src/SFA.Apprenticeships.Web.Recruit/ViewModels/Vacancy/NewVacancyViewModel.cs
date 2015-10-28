@@ -1,3 +1,5 @@
+using System;
+
 namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 {
     using System.Collections.Generic;
@@ -37,5 +39,7 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 
         [Display(Name = VacancyViewModelMessages.OfflineApplicationInstructions.LabelText)]
         public string OfflineApplicationInstructions { get; set; }
+
+        public Guid VacancyGuid { get; set; }
     }
 }

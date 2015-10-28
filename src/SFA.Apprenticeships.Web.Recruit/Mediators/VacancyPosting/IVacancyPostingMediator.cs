@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
+﻿using System;
+
+namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using Common.Mediators;
     using ViewModels.Provider;
@@ -13,11 +15,11 @@
 
         MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel);
 
-        MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern);
+        MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern, Guid vacancyGuid);
 
         MediatorResponse<ProviderSiteEmployerLinkViewModel> ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel);
 
-        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern);
+        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber);
 

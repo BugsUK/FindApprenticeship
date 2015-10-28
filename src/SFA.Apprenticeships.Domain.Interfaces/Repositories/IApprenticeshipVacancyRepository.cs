@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 
 namespace SFA.Apprenticeships.Domain.Interfaces.Repositories

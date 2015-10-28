@@ -44,11 +44,20 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             _blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(configurationService);
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern)
+        public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(providerSiteErn, ern);
+            var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
             var sectors = GetSectorsAndFrameworks();
 
+            if (existingVacancy != null)
+            {
+                var vacancyViewModel = existingVacancy.ConvertToNewVacancyViewModel();
+                vacancyViewModel.SectorsAndFrameworks = sectors;
+                return vacancyViewModel;
+            }
+
+            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(providerSiteErn, ern);
+            
             return new NewVacancyViewModel
             {
                 Ukprn = ukprn,
@@ -75,50 +84,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
         /// <returns></returns>
         public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
-            //if it exists, update it.
-            var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
-            if (newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0)
+            if (VacancyExists(newVacancyViewModel))
+            
             {
-                var vacancy = _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyReferenceNumber.Value);
-
-                vacancy.Ukprn = newVacancyViewModel.Ukprn;
-                vacancy.Title = newVacancyViewModel.Title;
-                vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
-                vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
-                vacancy.ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
-                vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
-                vacancy.OfflineApplicationUrl = offlineApplicationUrl;
-                vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
-
-                vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
-
-                newVacancyViewModel = vacancy.ConvertToNewVacancyViewModel();
-
-                return newVacancyViewModel;
+                return UpdateExistingVacancy(newVacancyViewModel);
             }
 
             _logService.Debug("Creating vacancy reference number");
 
             try
             {
-                var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-                var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
-
-                var vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(new ApprenticeshipVacancy
-                {
-                    EntityId = Guid.NewGuid(),
-                    VacancyReferenceNumber = vacancyReferenceNumber,
-                    Ukprn = newVacancyViewModel.Ukprn,
-                    Title = newVacancyViewModel.Title,
-                    ShortDescription = newVacancyViewModel.ShortDescription,
-                    FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
-                    ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
-                    ProviderSiteEmployerLink = providerSiteEmployerLink,
-                    Status = ProviderVacancyStatuses.Draft,
-                    OfflineVacancy =  newVacancyViewModel.OfflineVacancy,
-                    OfflineApplicationUrl = offlineApplicationUrl,
-                    OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions
-                });
+                var vacancy = CreateNewVacancy(newVacancyViewModel);
 
                 _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);
 
@@ -131,6 +107,59 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
                 _logService.Error("Failed to create vacancy", e);
                 throw;
             }
+        }
+
+        private ApprenticeshipVacancy CreateNewVacancy(NewVacancyViewModel newVacancyViewModel)
+        {
+            var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
+            var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
+            var providerSiteEmployerLink =
+                _providerService.GetProviderSiteEmployerLink(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
+                    newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
+
+            var vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(new ApprenticeshipVacancy
+            {
+                EntityId = newVacancyViewModel.VacancyGuid,
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                Ukprn = newVacancyViewModel.Ukprn,
+                Title = newVacancyViewModel.Title,
+                ShortDescription = newVacancyViewModel.ShortDescription,
+                FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
+                ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
+                ProviderSiteEmployerLink = providerSiteEmployerLink,
+                Status = ProviderVacancyStatuses.Draft,
+                OfflineVacancy = newVacancyViewModel.OfflineVacancy,
+                OfflineApplicationUrl = offlineApplicationUrl,
+                OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions
+            });
+            return vacancy;
+        }
+
+        private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
+        {
+            var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
+
+            var vacancy = _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyReferenceNumber.Value);
+
+            vacancy.Ukprn = newVacancyViewModel.Ukprn;
+            vacancy.Title = newVacancyViewModel.Title;
+            vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
+            vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
+            vacancy.ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
+            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
+            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            newVacancyViewModel = vacancy.ConvertToNewVacancyViewModel();
+
+            return newVacancyViewModel;
+        }
+
+        private static bool VacancyExists(NewVacancyViewModel newVacancyViewModel)
+        {
+            return newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
         }
 
         public VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)

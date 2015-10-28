@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using SFA.Apprenticeships.Application.Interfaces.Employers;
+using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
+using SFA.Apprenticeships.Application.VacancyPosting;
 using SFA.Apprenticeships.Domain.Interfaces.Configuration;
 using SFA.Apprenticeships.Web.Common.Converters;
 using SFA.Apprenticeships.Web.Recruit.Configuration;
@@ -16,13 +18,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
     public class ProviderProvider : IProviderProvider
     {
+        private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
         private readonly IConfigurationService _configurationService;
 
-        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService)
+        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService)
         {
             _providerService = providerService;
             _configurationService = configurationService;
+            _vacancyPostingService = vacancyPostingService;
         }
 
         public ProviderViewModel GetProviderViewModel(string ukprn)
@@ -71,7 +75,18 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             providerSiteEmployerLink.WebsiteUrl = viewModel.WebsiteUrl;
             providerSiteEmployerLink.Description = viewModel.Description;
             providerSiteEmployerLink = _providerService.SaveProviderSiteEmployerLink(providerSiteEmployerLink);
-            return providerSiteEmployerLink.Convert();
+
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid);
+            if (vacancy != null)
+            {
+                vacancy.ProviderSiteEmployerLink = providerSiteEmployerLink;
+                _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            }
+
+            var result = providerSiteEmployerLink.Convert();
+            result.VacancyGuid = viewModel.VacancyGuid;
+
+            return result;
         }
 
         public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(string providerSiteErn)

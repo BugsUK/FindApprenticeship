@@ -90,6 +90,7 @@
     @Html.HiddenFor(model => model.Ukprn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.ProviderSiteErn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern);
+    @Html.HiddenFor(model => model.VacancyGuid)
 
     <div class="form-group">
         <button type="submit" class="button" name="CreateVacancy" value="CreateVacancy">Save and continue</button>

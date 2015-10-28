@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Application.VacancyPosting
+﻿using System;
+
+namespace SFA.Apprenticeships.Application.VacancyPosting
 {
     using CuttingEdge.Conditions;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
@@ -38,6 +40,11 @@
         public ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber)
         {
             return _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
+        }
+
+        public ApprenticeshipVacancy GetVacancy(Guid vacancyGuid)
+        {
+            return _apprenticeshipVacancyReadRepository.Get(vacancyGuid);
         }
     }
 }

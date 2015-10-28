@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
+﻿using System;
+
+namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
@@ -15,5 +17,6 @@
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.WebsiteUrl.LabelText)]
         public string WebsiteUrl { get; set; }
         public EmployerViewModel Employer { get; set; }
+        public Guid VacancyGuid { get; set; }
     }
 }
