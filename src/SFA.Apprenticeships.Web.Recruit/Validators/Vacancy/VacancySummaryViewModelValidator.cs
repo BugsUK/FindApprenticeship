@@ -57,13 +57,10 @@
             .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
             .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);*/
 
-            /*RuleFor(x => x.Wage)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText)
-                .Matches(VacancyViewModelMessages.WeeklyWage.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WeeklyWage.WhiteListErrorText);
+            RuleFor(x => x.HoursPerWeek)
+                .InclusiveBetween(16, 40);
 
-            RuleFor(x => x.Duration)
+            /*RuleFor(x => x.Duration)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
                 .Matches(VacancyViewModelMessages.Duration.WhiteListRegularExpression)
