@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
+﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+
+namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
     using System.Globalization;
     using FluentValidation.TestHelper;
@@ -20,14 +22,21 @@
             _validator = new VacancySummaryViewModelServerValidator();
         }
 
-        [TestCase(30, 12)]
-        [TestCase(40, 12)]
-        public void RuleOneTest_HoursAndDurationInsideExpectedRange(decimal hoursPerWeek, int expectedDuration)
+        [TestCase(30, 1, DurationType.Years)]
+        [TestCase(30, 10, DurationType.Years)]
+        [TestCase(40, 1, DurationType.Years)]
+        [TestCase(40, 10, DurationType.Years)]
+        [TestCase(30, 12, DurationType.Months)]
+        [TestCase(30, 120, DurationType.Months)]
+        [TestCase(40, 12, DurationType.Months)]
+        [TestCase(40, 120, DurationType.Months)]
+        public void RuleOne_HoursPerWeek30to40_And_DurationGreaterOrEqualTo12months(decimal hoursPerWeek, int expectedDuration, DurationType durationType)
         {
             var viewModel = new VacancySummaryViewModel
             {
                 HoursPerWeek = hoursPerWeek,
-                Duration = expectedDuration
+                Duration = expectedDuration,
+                DurationType = durationType
             };
 
             _validator.Validate(viewModel);
@@ -35,10 +44,10 @@
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel);
         }
-
+        
         [TestCase(30, 11)]
         [TestCase(40, 11)]
-        public void RuleTwoTest_HoursInsideExpectedRangeDurationOutsideExpectedRange(decimal hoursPerWeek, int expectedDuration)
+        public void RuleTwo_Passes_HoursInsideExpectedRange_BUT_DurationOutsideExpectedRange(decimal hoursPerWeek, int expectedDuration)
         {
             var viewModel = new VacancySummaryViewModel
             {
