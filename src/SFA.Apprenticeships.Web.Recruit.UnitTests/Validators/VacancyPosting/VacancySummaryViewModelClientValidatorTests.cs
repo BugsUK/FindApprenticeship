@@ -17,6 +17,7 @@
             _validator = new VacancySummaryViewModelClientValidator();
         }
 
+        [Test]
         public void DefaultShouldNotHaveAnyValidationErrors()
         {
             var viewModel = new VacancySummaryViewModel();
