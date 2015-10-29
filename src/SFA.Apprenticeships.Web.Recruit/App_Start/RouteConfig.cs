@@ -27,7 +27,7 @@
 
             routes.MapRoute(
                 name: RecruitmentRouteNames.AuthorizationError,
-                url: "authorize",
+                url: "authorizationerror",
                 defaults: new { controller = "ProviderUser", action = "AuthorizationError" }
                 );
 

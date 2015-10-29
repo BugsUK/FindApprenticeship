@@ -69,7 +69,7 @@
 
             routes.MapRoute(
                 name: ManagementRouteNames.AuthorizationError,
-                url: "authorize",
+                url: "authorizationerror",
                 defaults: new { controller = "AgencyUser", action = "AuthorizationError" }
                 );
 
