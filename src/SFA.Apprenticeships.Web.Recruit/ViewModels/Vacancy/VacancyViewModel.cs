@@ -26,7 +26,7 @@
         [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; set; }
         public WageType WageType { get; set; }
-        [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
+        [Display(Name = VacancyViewModelMessages.Wage.LabelText)]
         public decimal? Wage { get; set; }
         public WageUnit WageUnit { get; set; }
         public DurationType DurationType { get; set; }

@@ -37,7 +37,13 @@
             public const string RequiredErrorText = "Please enter the hours per week";
         }
 
-        public static class WeeklyWage
+        public static class WageType
+        {
+            public const string LabelText = "Wage";
+            public const string RequiredErrorText = "Please select a wage";
+        }
+
+        public static class Wage
         {
             public const string LabelText = "Wage";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;

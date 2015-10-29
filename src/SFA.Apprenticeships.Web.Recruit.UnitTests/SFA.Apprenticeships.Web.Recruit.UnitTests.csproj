@@ -172,6 +172,8 @@
     <Compile Include="Validators\VacancyPosting\MandatoryHoursAndDurationConditionTests.cs" />
     <Compile Include="Validators\VacancyPosting\MandatoryWageTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelClientValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelServerValidatorTests.cs" />
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
     <Compile Include="Views\VacancyPosting\RequirementsProspectsTests.cs" />
     <Compile Include="Views\VacancyPosting\PreviewVacancyTests.cs" />

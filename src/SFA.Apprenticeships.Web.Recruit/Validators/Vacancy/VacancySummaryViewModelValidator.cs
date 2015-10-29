@@ -17,24 +17,15 @@
 
         private void AddCommonRules()
         {
-
             RuleFor(viewModel => viewModel.WorkingWeek)
+                .Length(0, 256)
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
 
-            /*RuleFor(viewModel => viewModel.Wage)
-                .Matches(VacancyViewModelMessages.WeeklyWage.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WeeklyWage.WhiteListErrorText);
-
-            RuleFor(viewModel => viewModel.Duration)
-                .Matches(VacancyViewModelMessages.Duration.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Duration.WhiteListErrorText);*/
-
             RuleFor(viewModel => viewModel.LongDescription)
-                .Length(0, 4000)
-                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText); 
+                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
         }
     }
 
@@ -50,31 +41,43 @@
 
         private void AddServerCommonRules()
         {
-            RuleFor(x => x.ClosingDate).SetValidator(new DateViewModelServerValidator());
-            RuleFor(x => x.PossibleStartDate).SetValidator(new DateViewModelServerValidator());
-
             RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText)
-                .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
-            /*.Length(0, 100)
-            .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
-            .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-            .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);*/
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText);
 
             RuleFor(x => x.HoursPerWeek)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText)
                 .InclusiveBetween(16, 40);
 
-            /*RuleFor(x => x.Duration)
+            RuleFor(viewModel => (int)viewModel.WageType)
+                .InclusiveBetween((int)WageType.ApprenticeshipMinimumWage, (int)WageType.Custom)
+                .WithMessage(VacancyViewModelMessages.WageType.RequiredErrorText);
+
+            RuleFor(x => x.Wage)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
-                .Matches(VacancyViewModelMessages.Duration.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Duration.WhiteListErrorText);*/
+                .WithMessage(VacancyViewModelMessages.Wage.RequiredErrorText)
+                .When(x => x.WageType == WageType.Custom);
 
-            RuleFor(x => x.ClosingDate).SetValidator(new DateViewModelClientValidator());
+            RuleFor(x => x.Wage)
+                .Must(HaveAValidHourRate)
+                .When(v => v.WageType == WageType.Custom)
+                .When(v => v.WageUnit != WageUnit.NotApplicable)
+                .WithMessage("TODO: wage should not be less than the Apprenticeship Minimum Wage.");
 
-            RuleFor(x => x.PossibleStartDate).SetValidator(new DateViewModelClientValidator());
+            RuleFor(x => x.Duration)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
+
+            RuleFor(x => x.ClosingDate)
+                .Must(Common.BeValidDate)
+                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
+                .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
+
+            RuleFor(x => x.PossibleStartDate)
+                .Must(Common.BeValidDate)
+                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
+                .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
 
             RuleFor(x => x.LongDescription)
                 .NotEmpty()
@@ -83,12 +86,6 @@
                 .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
-
-            RuleFor(x => x.Wage)
-                .Must(HaveAValidHourRate)
-                .When(v => v.WageType == WageType.Custom)
-                .When(v => v.WageUnit != WageUnit.NotApplicable)
-                .WithMessage("TODO: wage should not be less than the Apprenticeship Minimum Wage.");
         }
 
         private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)

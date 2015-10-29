@@ -252,6 +252,7 @@
     <Compile Include="Services\IAuthenticationTicketService.cs" />
     <Compile Include="Validations\EqualToValueFluentValidationPropertyValidator.cs" />
     <Compile Include="Validators\AddressViewModelValidator.cs" />
+    <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\DateViewModelValidator.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />

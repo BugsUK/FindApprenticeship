@@ -19,7 +19,7 @@
         public decimal? HoursPerWeek { get; set; }
         //TODO: Probably create dedicated WageViewModel
         public WageType WageType { get; set; }
-        [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
+        [Display(Name = VacancyViewModelMessages.Wage.LabelText)]
         public decimal? Wage { get; set; }
         public WageUnit WageUnit { get; set; }
         public List<SelectListItem> WageUnits { get; set; }
