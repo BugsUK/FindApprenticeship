@@ -43,8 +43,7 @@
         };
 
         // NOTE: cannot use Fixture here as Category data structure is recursive.
-        private readonly Category[] _categories = new[]
-        {
+        private readonly Category[] _categories = {
             new Category
             {
                 CodeName = "00",
