@@ -35,6 +35,7 @@
         {
             public const string LabelText = "hours per week";
             public const string RequiredErrorText = "Please enter the hours per week";
+            public const string HoursPerWeekShouldBeBetween16And40 = "TODO: hours per week must be greater >= 16 and <= 40";
         }
 
         public static class WageType
@@ -57,6 +58,7 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
             public const string RequiredErrorText = "Please enter the duration";
+            public const string DurationCantBeLessThan12Months = "TODO: duration can't be less than 12 months";
         }
 
         public static class ClosingDate

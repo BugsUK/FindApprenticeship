@@ -30,7 +30,6 @@
 
     public class VacancySummaryViewModelServerValidator : VacancySummaryViewModelClientValidator
     {
-        private const decimal NationalMinumumWage = 3.87m;
         private const decimal ApprenticeMinimumWage = 3.30m;
 
         public VacancySummaryViewModelServerValidator()
@@ -47,7 +46,8 @@
             RuleFor(x => x.HoursPerWeek)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText)
-                .InclusiveBetween(16, 40);
+                .Must(HaveAValidHoursPerWeek)
+                .WithMessage(VacancyViewModelMessages.HoursPerWeek.HoursPerWeekShouldBeBetween16And40);
 
             RuleFor(viewModel => (int)viewModel.WageType)
                 .InclusiveBetween((int)WageType.ApprenticeshipMinimumWage, (int)WageType.Custom)
@@ -66,7 +66,9 @@
 
             RuleFor(x => x.Duration)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
+                .Must(HaveAValidDuration)
+                .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months);
 
             RuleFor(x => x.ClosingDate)
                 .Must(Common.BeValidDate)
@@ -95,6 +97,22 @@
             var hourRate = GetHourRate(vacancy.Wage.Value, vacancy.WageUnit, vacancy.HoursPerWeek.Value);
 
             return !(hourRate < ApprenticeMinimumWage);
+        }
+
+        private static bool HaveAValidDuration(VacancySummaryViewModel vacancy, int? duration)
+        {
+            if (!vacancy.HoursPerWeek.HasValue || !vacancy.Duration.HasValue)
+                return true;
+
+            if (vacancy.HoursPerWeekBetween30And40() || vacancy.HoursPerWeekGreaterThanOrEqualTo16())
+                return vacancy.DurationGreaterThanOrEqualTo12Months();
+
+            return true;
+        }
+
+        private static bool HaveAValidHoursPerWeek(decimal? hours)
+        {
+            return hours.Value >= 16 && hours.Value <= 40;
         }
 
         private static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)
