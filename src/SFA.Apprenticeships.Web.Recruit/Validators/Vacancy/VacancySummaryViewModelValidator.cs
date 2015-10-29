@@ -1,6 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 {
+    using System;
+    using System.Security.Cryptography.X509Certificates;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
@@ -37,6 +40,9 @@
 
     public class VacancySummaryViewModelServerValidator : VacancySummaryViewModelClientValidator
     {
+        private const decimal NationalMinumumWage = 3.87m;
+        private const decimal ApprenticeMinimumWage = 3.30m;
+
         public VacancySummaryViewModelServerValidator()
         {
             AddServerCommonRules();
@@ -77,6 +83,39 @@
                 .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
+
+            RuleFor(x => x.Wage)
+                .Must(HaveAValidHourRate)
+                .When(v => v.WageType == WageType.Custom)
+                .When(v => v.WageUnit != WageUnit.NotApplicable)
+                .WithMessage("TODO: wage should not be less than the Apprenticeship Minimum Wage.");
+        }
+
+        private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)
+        {
+            if (!vacancy.Wage.HasValue || !vacancy.HoursPerWeek.HasValue)
+                return false;
+
+            var hourRate = GetHourRate(vacancy.Wage.Value, vacancy.WageUnit, vacancy.HoursPerWeek.Value);
+
+            return !(hourRate < ApprenticeMinimumWage);
+        }
+
+        private static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)
+        {
+            switch (wageUnit)
+            {
+                case WageUnit.Weekly:
+                    return wage/hoursPerWeek;
+                case WageUnit.Annually:
+                    return wage/52m/hoursPerWeek;
+                case WageUnit.Monthly:
+                    return wage/52m*12/hoursPerWeek;
+                case WageUnit.NotApplicable:
+                    return 0;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(wageUnit), wageUnit, null);
+            }
         }
     }
 }
