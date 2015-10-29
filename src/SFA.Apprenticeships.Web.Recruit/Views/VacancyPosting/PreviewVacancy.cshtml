@@ -35,13 +35,17 @@
             <h2 class="heading-large">Apprenticeship summary</h2>
             <div class="grid grid-1-3">
                 <div class="inner-block-padr">
-                    <h3 class="bold-small">Weekly wage</h3>
+
+                    <h3 class="bold-small">
+                        @Model.WageUnitDisplayText wage <i class="fa fa-check the-icon" style="color: green;"></i>
+                    </h3>
+                    
                     <p id="vacancy-wage">@Model.Wage</p>
 
-                    <h3 class="bold-small">Working week</h3>
-                    <p id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek</p>
-                    <h3 class="bold-small">Apprenticeship duration</h3>
-                    <p id="vacancy-expected-duration">@Model.Duration</p>
+                    <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
+                    <p id="vacancy-working-week" itemprop="workHours">@Model.WorkingWeek<br/>Total hours per week: @Model.HoursPerWeek</p>
+                    <h3 class="bold-small">Apprenticeship duration <i class="fa fa-check the-icon" style="color: green;"></i></h3>
+                    <p id="vacancy-expected-duration">@Model.Duration @Model.DurationTypeDisplayText</p>
                     <h3 class="bold-small">Possible start date</h3>
                     <p id="vacancy-start-date">@Html.DisplayFor(m => Model.PossibleStartDate)</p>
                     <h3 class="bold-small">Apprenticeship level</h3>

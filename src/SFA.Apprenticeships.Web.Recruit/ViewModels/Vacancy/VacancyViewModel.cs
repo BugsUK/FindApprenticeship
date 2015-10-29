@@ -64,5 +64,41 @@
         public string OfflineApplicationUrl { get; set; }
         [Display(Name = VacancyViewModelMessages.OfflineApplicationInstructions.LabelText)]
         public string OfflineApplicationInstructions { get; set; }
+
+        public string WageUnitDisplayText
+        {
+            get
+            {
+                switch (WageUnit)
+                {
+                    case WageUnit.Annually:
+                        return "Annual";
+                    case WageUnit.Monthly:
+                        return "Monthly";
+                    case WageUnit.Weekly:
+                        return "Weekly";
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
+        public string DurationTypeDisplayText
+        {
+            get
+            {
+                switch (DurationType)
+                {
+                    case DurationType.Weeks:
+                        return "weeks";
+                    case DurationType.Months:
+                        return "months";
+                    case DurationType.Years:
+                        return "years";
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
+            }
+        }
     }
 }
