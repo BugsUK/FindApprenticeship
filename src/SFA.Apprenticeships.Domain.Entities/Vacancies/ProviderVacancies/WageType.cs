@@ -4,8 +4,6 @@
     {
         ApprenticeshipMinimumWage = 1,
         NationalMinimumWage,
-        Weekly,
-        Monthly,
-        Annually
+        Custom
     }
 }

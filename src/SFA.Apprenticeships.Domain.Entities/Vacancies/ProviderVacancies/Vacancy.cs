@@ -14,6 +14,7 @@
         public decimal? HoursPerWeek { get; set; }
         public WageType WageType { get; set; }
         public decimal? Wage { get; set; }
+        public WageUnit WageUnit { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
         public DateTime? ClosingDate { get; set; }

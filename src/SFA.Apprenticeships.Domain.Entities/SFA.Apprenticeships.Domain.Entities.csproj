@@ -130,6 +130,7 @@
     <Compile Include="Vacancies\ProviderVacancies\DurationType.cs" />
     <Compile Include="Vacancies\ProviderVacancies\ProviderVacancyStatuses.cs" />
     <Compile Include="Vacancies\ProviderVacancies\WageType.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\WageUnit.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\ProviderVacancies\Vacancy.cs" />
     <Compile Include="Vacancies\VacancyDetail.cs" />

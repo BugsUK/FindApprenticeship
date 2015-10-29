@@ -206,7 +206,7 @@ WriteLiteral("                        ");
 
             
             #line 34 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                   Write(Html.RadioButtonFor(model => model.WageType, WageType.Weekly, new { id = "custom-wage", aria_controls = "wage-type-panel" }));
+                   Write(Html.RadioButtonFor(model => model.WageType, WageType.Custom, new { id = "custom-wage", aria_controls = "wage-type-panel" }));
 
             
             #line default

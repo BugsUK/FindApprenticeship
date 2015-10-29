@@ -16,9 +16,11 @@
         public string WorkingWeek { get; set; }
         [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; set; }
+        //TODO: Probably create dedicated WageViewModel
         public WageType WageType { get; set; }
         [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
         public decimal? Wage { get; set; }
+        public WageUnit WageUnit { get; set; }
         public DurationType DurationType { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
         public int? Duration { get; set; }

@@ -31,7 +31,7 @@
                 <div class="form-group" data-editable-x="">
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
-                        @Html.RadioButtonFor(model => model.WageType, WageType.Weekly, new { id = "custom-wage", aria_controls = "wage-type-panel" })
+                        @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new { id = "custom-wage", aria_controls = "wage-type-panel" })
                         Custom wage
                     </label>
                     @* ReSharper disable once Html.IdNotResolved *@
