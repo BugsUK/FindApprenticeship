@@ -54,9 +54,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
             }
         }
 
-        public static bool ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel)
+        public static bool ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel, int? duration)
         {
-            if (!viewModel.HoursPerWeek.HasValue || !viewModel.Duration.HasValue)
+            if (!viewModel.HoursPerWeek.HasValue || !duration.HasValue)
                 return false;
 
             var hoursAndMinDurationLookup = HoursAndMinDurationLookup;
@@ -67,7 +67,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
                         viewModel.HoursPerWeek.Value >= l.HoursInclusiveLowerBound &&
                         viewModel.HoursPerWeek.Value < l.HoursExclusiveUpperBound);
 
-            return condition.IsGreaterThanOrEqualToMinDuration(viewModel.Duration.Value, viewModel.DurationType);
+            return condition.IsGreaterThanOrEqualToMinDuration(duration.Value, viewModel.DurationType);
         }
     }
 
@@ -89,7 +89,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 
         private MinimumDurationForHoursPerWeek() {}
 
-        public bool IsGreaterThanOrEqualToMinDuration(int duration, DurationType durationType)
+        public bool IsGreaterThanOrEqualToMinDuration(decimal duration, DurationType durationType)
         {
             var durationInWeeks = 0m;
 
