@@ -257,6 +257,7 @@
     <Compile Include="Validators\Extensions\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Validators\ModelWarning.cs" />
     <Compile Include="Validators\Extensions\ValidationResultExtension.cs" />
+    <Compile Include="Validators\RuleSets.cs" />
     <Compile Include="Validators\ValidationType.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />

@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using Common.Validators;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Recruit.Validators.Vacancy;
@@ -9,12 +11,14 @@
     [TestFixture]
     public class OptionalHoursAndDurationConditionTests
     {
-        private VacancySummaryViewModelWarningsValidator _validator;
+        private const string RuleSet = RuleSets.Warnings;
+
+        private VacancySummaryViewModelServerValidator _validator;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new VacancySummaryViewModelWarningsValidator();
+            _validator = new VacancySummaryViewModelServerValidator();
         }
 
         [TestCase(28, 57, DurationType.Weeks)]
@@ -44,10 +48,10 @@
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
         }
 
         [TestCase(28, 56, DurationType.Weeks)]
@@ -77,10 +81,10 @@
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
-            _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
         }
     }
 }

@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using Common.Validators;
     using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Recruit.Validators.Vacancy;
@@ -10,6 +12,8 @@
     [TestFixture]
     public class VacancySummaryViewModelServerValidatorTests
     {
+        private const string RuleSet = RuleSets.Errors;
+
         private VacancySummaryViewModelServerValidator _validator;
 
         [SetUp]
@@ -29,15 +33,15 @@
                 WorkingWeek = workingWeek
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel, RuleSet);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel, RuleSet);
             }
         }
 
@@ -68,15 +72,15 @@
                 HoursPerWeek = hoursPerWeek
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             }
         }
 
@@ -91,15 +95,15 @@
                 WageType = wageType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageType, viewModel);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageType, viewModel, RuleSet);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.WageType, viewModel);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.WageType, viewModel, RuleSet);
             }
         }
 
@@ -135,15 +139,15 @@
                 WageUnit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, viewModel);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, viewModel);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
             }
         }
 
@@ -168,15 +172,15 @@
                 Duration = duration
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
             }
         }
 
@@ -188,9 +192,9 @@
                 ClosingDate = new DateViewModel()
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
         }
 
         [Test]
@@ -201,9 +205,9 @@
                 PossibleStartDate = new DateViewModel()
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
         }
 
         [TestCase(null, false)]
@@ -218,15 +222,15 @@
                 LongDescription = longDescription
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.LongDescription, viewModel);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.LongDescription, viewModel, RuleSet);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.LongDescription, viewModel);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.LongDescription, viewModel, RuleSet);
             }
         }
     }

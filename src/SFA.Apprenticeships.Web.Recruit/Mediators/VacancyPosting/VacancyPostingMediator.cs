@@ -25,7 +25,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
         private readonly NewVacancyViewModelClientValidator _newVacancyViewModelClientValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
         private readonly VacancySummaryViewModelClientValidator _vacancySummaryViewModelClientValidator;
-        private readonly VacancySummaryViewModelWarningsValidator _vacancySummaryViewModelWarningsValidator;
         private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator;
         private readonly VacancyRequirementsProspectsViewModelClientValidator _vacancyRequirementsProspectsViewModelClientValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
@@ -42,7 +41,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             NewVacancyViewModelClientValidator newVacancyViewModelClientValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
             VacancySummaryViewModelClientValidator vacancySummaryViewModelClientValidator,
-            VacancySummaryViewModelWarningsValidator vacancySummaryViewModelWarningsValidator,
             VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator,
             VacancyRequirementsProspectsViewModelClientValidator vacancyRequirementsProspectsViewModelClientValidator,
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
@@ -60,7 +58,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             _employerSearchViewModelServerValidator = employerSearchViewModelServerValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _vacancySummaryViewModelClientValidator = vacancySummaryViewModelClientValidator;
-            _vacancySummaryViewModelWarningsValidator = vacancySummaryViewModelWarningsValidator;
             _vacancyRequirementsProspectsViewModelServerValidator = vacancyRequirementsProspectsViewModelServerValidator;
             _vacancyRequirementsProspectsViewModelClientValidator = vacancyRequirementsProspectsViewModelClientValidator;
             _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
@@ -233,9 +230,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
         public MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel)
         {
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel);
-            var warningValidationResult = _vacancySummaryViewModelWarningsValidator.Validate(viewModel);
 
-            if (!validationResult.IsValid || !warningValidationResult.IsValid)
+            if (!validationResult.IsValid)
             {
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();

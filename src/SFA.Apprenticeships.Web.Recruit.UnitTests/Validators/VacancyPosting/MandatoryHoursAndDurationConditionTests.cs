@@ -2,7 +2,8 @@
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
-    using System.Globalization;
+    using Common.Validators;
+    using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Recruit.Validators.Vacancy;
@@ -14,6 +15,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
     [TestFixture]
     public class MandatoryHoursAndDurationConditionTests
     {
+        private const string RuleSet = RuleSets.Errors;
+
         private VacancySummaryViewModelServerValidator _validator;
 
         [SetUp]
@@ -43,10 +46,10 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
         }
 
         [TestCase(30, 0, DurationType.Years)]
@@ -64,10 +67,10 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
-            _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
         }
 
         [TestCase(29, 57, DurationType.Weeks)]
@@ -106,10 +109,10 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
         }
 
         [TestCase(29, 56, DurationType.Weeks)]
@@ -148,11 +151,11 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
             //Assert. This rule will be a warning rather than being mandatory and so is not implemented by the VacancySummaryViewModelServerValidator
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
         }
 
         [TestCase(29, 51, DurationType.Weeks)]
@@ -191,10 +194,10 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
-            _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
         }
 
         [TestCase(0)]
@@ -209,9 +212,9 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
                 HoursPerWeek = hoursPerWeek
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
-            _validator.ShouldHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
         }
     }
 }

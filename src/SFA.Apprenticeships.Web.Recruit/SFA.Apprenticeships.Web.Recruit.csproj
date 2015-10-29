@@ -349,7 +349,6 @@
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelBusinessRulesExtensions.cs" />
-    <Compile Include="Validators\Vacancy\VacancySummaryViewModelWarningsValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />

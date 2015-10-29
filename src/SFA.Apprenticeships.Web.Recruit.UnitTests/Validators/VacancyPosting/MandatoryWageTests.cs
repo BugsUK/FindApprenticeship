@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
-    using System.Globalization;
+    using Common.Validators;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Recruit.Validators.Vacancy;
@@ -13,6 +14,8 @@
     [TestFixture]
     public class MandatoryWageTests
     {
+        private const string RuleSet = RuleSets.Errors;
+
         private VacancySummaryViewModelServerValidator _validator;
 
         [SetUp]
@@ -42,15 +45,15 @@
                 HoursPerWeek = hoursPerWeek
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, RuleSet);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, viewModel);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, viewModel);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
             }
         }
     }

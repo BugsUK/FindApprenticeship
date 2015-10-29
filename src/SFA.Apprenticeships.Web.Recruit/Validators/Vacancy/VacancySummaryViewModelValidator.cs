@@ -11,7 +11,7 @@
     {
         public VacancySummaryViewModelClientValidator()
         {
-            AddCommonRules();
+            RuleSet(RuleSets.Errors, AddCommonRules);
         }
 
         private void AddCommonRules()
@@ -34,7 +34,8 @@
 
         public VacancySummaryViewModelServerValidator()
         {
-            AddServerCommonRules();
+            RuleSet(RuleSets.Errors, AddServerCommonRules);
+            RuleSet(RuleSets.Warnings, AddServerWarningRules);
         }
 
         private void AddServerCommonRules()
@@ -87,6 +88,13 @@
                 .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
+        }
+
+        private void AddServerWarningRules()
+        {
+            RuleFor(x => x.Duration)
+                .Must(VacancySummaryViewModelBusinessRulesExtensions.ExpectedDurationGreaterThanOrEqualToMinimumDuration)
+                .WithState(s => ValidationType.Warning);
         }
 
         private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)
