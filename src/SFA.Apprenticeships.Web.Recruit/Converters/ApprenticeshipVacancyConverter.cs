@@ -2,7 +2,12 @@
 
 namespace SFA.Apprenticeships.Web.Recruit.Converters
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
     using Common.ViewModels;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using ViewModels.Vacancy;
 
@@ -18,7 +23,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
                 WageType = apprenticeshipVacancy.WageType,
                 Wage = apprenticeshipVacancy.Wage,
                 WageUnit = apprenticeshipVacancy.WageUnit,
+                WageUnits = GetWageUnits(),
                 DurationType = apprenticeshipVacancy.DurationType,
+                DurationTypes = GetDurationTypes(),
                 Duration = apprenticeshipVacancy.Duration,
                 ClosingDate = new DateViewModel(apprenticeshipVacancy.ClosingDate),
                 PossibleStartDate = new DateViewModel(apprenticeshipVacancy.PossibleStartDate),
@@ -26,6 +33,29 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
             };
 
             return vacancyViewModel;
+        }
+
+        public static List<SelectListItem> GetWageUnits()
+        {
+            var wageUnits =
+                Enum.GetValues(typeof(WageUnit))
+                    .Cast<WageUnit>()
+                    .Where(al => al != WageUnit.NotApplicable)
+                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
+                    .ToList();
+
+            return wageUnits;
+        }
+
+        public static List<SelectListItem> GetDurationTypes()
+        {
+            var durationTypes =
+                Enum.GetValues(typeof(DurationType))
+                    .Cast<DurationType>()
+                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
+                    .ToList();
+
+            return durationTypes;
         }
 
         public static VacancyRequirementsProspectsViewModel ConvertToVacancyRequirementsProspectsViewModel(this ApprenticeshipVacancy apprenticeshipVacancy)

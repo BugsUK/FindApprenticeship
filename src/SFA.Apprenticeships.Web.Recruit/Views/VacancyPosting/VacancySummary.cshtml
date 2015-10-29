@@ -49,22 +49,14 @@
                     <fieldset class="form-group inline-fixed">
                         £
                         @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
-                        <select>
-                            <option selected="">per week</option>
-                            <option>per month</option>
-                            <option>annually</option>
-                        </select>
+                        @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
                     </fieldset>
                 </div>
             </div>
 
             <fieldset class="form-group inline-fixed">
                 @Html.FormTextFor(m => m.Duration, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
-                <select>
-                    <option selected="">weeks</option>
-                    <option>months</option>
-                    <option>years</option>
-                </select>
+                @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
             </fieldset>
 
             <fieldset class="form-group inline-fixed date-input">

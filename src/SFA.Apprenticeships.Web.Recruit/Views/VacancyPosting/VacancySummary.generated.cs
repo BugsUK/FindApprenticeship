@@ -273,19 +273,19 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        <select>\r\n                            <option");
+WriteLiteral("\r\n");
 
-WriteLiteral(" selected=\"\"");
+WriteLiteral("                        ");
 
-WriteLiteral(@">per week</option>
-                            <option>per month</option>
-                            <option>annually</option>
-                        </select>
-                    </fieldset>
-                </div>
-            </div>
+            
+            #line 52 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                   Write(Html.DropDownListFor(m => m.WageUnit, Model.WageUnits));
 
-            <fieldset");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    </fieldset>\r\n                </div>\r\n            </div>\r\n\r\n" +
+"            <fieldset");
 
 WriteLiteral(" class=\"form-group inline-fixed\"");
 
@@ -294,19 +294,24 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 62 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 58 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
            Write(Html.FormTextFor(m => m.Duration, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                <select>\r\n                    <option");
+WriteLiteral("\r\n");
 
-WriteLiteral(" selected=\"\"");
+WriteLiteral("                ");
 
-WriteLiteral(">weeks</option>\r\n                    <option>months</option>\r\n                   " +
-" <option>years</option>\r\n                </select>\r\n            </fieldset>\r\n\r\n " +
-"           <fieldset");
+            
+            #line 59 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+           Write(Html.DropDownListFor(m => m.DurationType, Model.DurationTypes));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </fieldset>\r\n\r\n            <fieldset");
 
 WriteLiteral(" class=\"form-group inline-fixed date-input\"");
 
@@ -317,7 +322,7 @@ WriteLiteral(" class=\"form-label\"");
 WriteLiteral(">");
 
             
-            #line 71 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 63 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                       Write(Model.GetMetadata(m => m.ClosingDate).DisplayName);
 
             
@@ -328,7 +333,7 @@ WriteLiteral("</legend>\r\n");
 WriteLiteral("                ");
 
             
-            #line 72 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 64 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
            Write(Html.EditorFor(r => r.ClosingDate));
 
             
@@ -345,7 +350,7 @@ WriteLiteral(" class=\"form-label\"");
 WriteLiteral(">");
 
             
-            #line 75 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 67 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                       Write(Model.GetMetadata(m => m.PossibleStartDate).DisplayName);
 
             
@@ -356,7 +361,7 @@ WriteLiteral("</legend>\r\n");
 WriteLiteral("                ");
 
             
-            #line 76 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 68 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
            Write(Html.EditorFor(r => r.PossibleStartDate));
 
             
@@ -367,7 +372,7 @@ WriteLiteral("\r\n            </fieldset>\r\n");
 WriteLiteral("            ");
 
             
-            #line 78 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 70 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
        Write(Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22}));
 
             
@@ -404,7 +409,7 @@ WriteLiteral(" value=\"VacancySummaryAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 85 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 77 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 }
             
             #line default

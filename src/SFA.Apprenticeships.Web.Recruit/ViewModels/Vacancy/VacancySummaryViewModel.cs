@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 {
-    using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     using Common.ViewModels;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
@@ -21,7 +22,9 @@
         [Display(Name = VacancyViewModelMessages.WeeklyWage.LabelText)]
         public decimal? Wage { get; set; }
         public WageUnit WageUnit { get; set; }
+        public List<SelectListItem> WageUnits { get; set; }
         public DurationType DurationType { get; set; }
+        public List<SelectListItem> DurationTypes { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
         public int? Duration { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]

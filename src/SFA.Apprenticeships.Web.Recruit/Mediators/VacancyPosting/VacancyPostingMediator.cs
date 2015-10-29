@@ -7,6 +7,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
     using Common.Mediators;
     using Common.ViewModels;
     using Constants.ViewModels;
+    using Converters;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using Providers;
     using Validators.Provider;
     using Validators.Vacancy;
@@ -232,6 +234,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
             if (!validationResult.IsValid)
             {
+                viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
+                viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
+
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
