@@ -254,6 +254,10 @@
     <Compile Include="Validators\AddressViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\DateViewModelValidator.cs" />
+    <Compile Include="Validators\Extensions\ModelStateDictionaryExtensions.cs" />
+    <Compile Include="Validators\ModelWarning.cs" />
+    <Compile Include="Validators\Extensions\ValidationResultExtension.cs" />
+    <Compile Include="Validators\ValidationType.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />

@@ -112,7 +112,7 @@
 
         private static bool HaveAValidHoursPerWeek(decimal? hours)
         {
-            return hours.Value >= 16 && hours.Value <= 40;
+            return hours.HasValue && hours.Value >= 16 && hours.Value <= 40;
         }
 
         private static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)

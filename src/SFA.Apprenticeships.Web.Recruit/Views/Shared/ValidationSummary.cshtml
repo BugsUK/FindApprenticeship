@@ -1,6 +1,35 @@
-﻿@model ModelStateDictionary
+﻿@using SFA.Apprenticeships.Web.Common.Validators
+@using SFA.Apprenticeships.Web.Common.Validators.Extensions
+@model ModelStateDictionary
 
-<div id="validation-summary" class='@(Html.ViewData.ModelState.IsValid ? "validation-summary-valid" : "validation-summary-errors") panel panel-danger' data-valmsg-summary="true">
+<div id="validation-summary-errors" class='@(Html.ViewData.ModelState.HasErrors() ? "validation-summary-errors" : "validation-summary-valid") panel panel-danger' data-valmsg-summary="true">
+    <div class="panel-body">
+        <ul>
+            @foreach (var modelKey in Model.Keys)
+            {
+                var modelState = Model[modelKey];
+
+                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+                foreach (var modelError in modelState.Errors)
+                {
+                    if (modelError.GetType() == typeof (ModelError))
+                    {
+                        if (elementId == string.Empty)
+                        {
+                            <li>@modelError.ErrorMessage</li>
+                        }
+                        else
+                        {
+                            <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                        }
+                    }
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<div id="validation-summary-warnings" class='@(Html.ViewData.ModelState.HasWarnings() ? "validation-summary-warnings" : "validation-summary-valid") panel panel-warning' data-valmsg-summary="true">
     <div class="panel-body">
         <ul>
             @foreach (var modelKey in Model.Keys)
@@ -9,13 +38,16 @@
                 var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
                 foreach (var modelError in modelState.Errors)
                 {
-                    if (elementId == string.Empty)
+                    if (modelError.GetType() == typeof (ModelWarning))
                     {
-                        <li>@modelError.ErrorMessage</li>
-                    }
-                    else
-                    {
-                        <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                        if (elementId == string.Empty)
+                        {
+                            <li>@modelError.ErrorMessage</li>
+                        }
+                        else
+                        {
+                            <li><a href="#@(@elementId.ToLower())">@modelError.ErrorMessage</a></li>
+                        }
                     }
                 }
             }

@@ -2,11 +2,14 @@
 
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Extensions;
     using Common.Mediators;
+    using Common.Validators;
+    using Common.Validators.Extensions;
     using Constants;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
@@ -233,7 +236,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case VacancyPostingMediatorCodes.UpdateVacancy.Ok:

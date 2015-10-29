@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 {
-    using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Vacancy;
+    using Web.Common.Validators;
 
     public class VacancySummaryViewModelWarningsValidator : AbstractValidator<VacancySummaryViewModel>
     {
@@ -10,8 +10,7 @@
         {
             RuleFor(x => x.Duration)
                 .Must(VacancySummaryViewModelBusinessRulesExtensions.ExpectedDurationGreaterThanOrEqualToMinimumDuration)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText);
+                .WithState(s => ValidationType.Warning);
         }
     }
 }

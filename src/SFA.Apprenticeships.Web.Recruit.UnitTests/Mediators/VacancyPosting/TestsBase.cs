@@ -32,6 +32,7 @@
                 new NewVacancyViewModelClientValidator(),
                 new VacancySummaryViewModelServerValidator(),
                 new VacancySummaryViewModelClientValidator(),
+                new VacancySummaryViewModelWarningsValidator(), 
                 new VacancyRequirementsProspectsViewModelServerValidator(),
                 new VacancyRequirementsProspectsViewModelClientValidator(),
                 new VacancyQuestionsViewModelServerValidator(),
