@@ -62,7 +62,7 @@
                 .Must(HaveAValidHourRate)
                 .When(v => v.WageType == WageType.Custom)
                 .When(v => v.WageUnit != WageUnit.NotApplicable)
-                .WithMessage("TODO: wage should not be less than the Apprenticeship Minimum Wage.");
+                .WithMessage(VacancyViewModelMessages.Wage.WageLessThanMinimum);
 
             RuleFor(x => x.Duration)
                 .NotEmpty()

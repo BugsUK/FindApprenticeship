@@ -110,6 +110,7 @@
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="Organisations\Employer.cs" />
     <Compile Include="Organisations\VerifiedOrganisationSummary.cs" />
     <Compile Include="Providers\Provider.cs" />

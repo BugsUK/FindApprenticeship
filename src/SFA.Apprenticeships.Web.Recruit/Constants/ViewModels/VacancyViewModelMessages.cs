@@ -50,6 +50,8 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
             public const string RequiredErrorText = "Please enter an amount for wage";
+            public const string WageLessThanMinimum =
+                "TODO: wage should not be less than the Apprenticeship Minimum Wage.";
         }
 
         public static class Duration

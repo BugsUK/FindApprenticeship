@@ -1,15 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Web;
-using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Extensions;
+    using ViewModels.Vacancy;
+
     public static class VacancySummaryViewModelBusinessRulesExtensions
     {
+        // TODO: we are using these constants in the decimal extension methods class. Maybe we should move it to a common place?
+        private const int AYearInWeeks = 52;
+        private const int AYearInMonths = 12;
+
         private static readonly List<MinimumDurationForHoursPerWeek> HoursAndMinDurationLookup = new List
             <MinimumDurationForHoursPerWeek>
         {
@@ -44,9 +46,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
             switch (viewModel.DurationType)
             {
                 case DurationType.Weeks:
-                    return viewModel.Duration >= 52;
+                    return viewModel.Duration >= AYearInWeeks;
                 case DurationType.Months:
-                    return viewModel.Duration >= 12;
+                    return viewModel.Duration >= AYearInMonths;
                 case DurationType.Years:
                     return viewModel.Duration >= 1;
                 default:
@@ -54,7 +56,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
             }
         }
 
-        public static bool ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel, int? duration)
+        public static bool ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel,
+            int? duration)
         {
             if (!viewModel.HoursPerWeek.HasValue || !duration.HasValue)
                 return false;
@@ -73,11 +76,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 
     public class MinimumDurationForHoursPerWeek
     {
-        public decimal? HoursInclusiveLowerBound { get; private set; }
-        public decimal? HoursExclusiveUpperBound { get; private set; }
-        public decimal MinimumDurationInMonths { get; private set; }
-        public string WarningMessage { get; private set; }
-
         internal MinimumDurationForHoursPerWeek(decimal hoursLowerBound, decimal? hoursUpperBound,
             decimal minimumDurationInMonths, string warningMessage)
         {
@@ -87,7 +85,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
             WarningMessage = warningMessage;
         }
 
-        private MinimumDurationForHoursPerWeek() {}
+        private MinimumDurationForHoursPerWeek()
+        {
+        }
+
+        public decimal? HoursInclusiveLowerBound { get; }
+        public decimal? HoursExclusiveUpperBound { get; }
+        public decimal MinimumDurationInMonths { get; }
+        public string WarningMessage { get; private set; }
 
         public bool IsGreaterThanOrEqualToMinDuration(decimal duration, DurationType durationType)
         {
@@ -99,16 +104,16 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
                     durationInWeeks = duration;
                     break;
                 case DurationType.Months:
-                    durationInWeeks = duration * 52/12; //TODO: extract conversion into extension method on decimal? and other types
+                    durationInWeeks = duration.MonthsToWeeks();
                     break;
                 case DurationType.Years:
-                    durationInWeeks = duration * 52;
+                    durationInWeeks = duration.YearsToWeeks();
                     break;
                 default:
                     return false;
             }
 
-            var minimumDurationInWeeks = MinimumDurationInMonths * 52/12;
+            var minimumDurationInWeeks = MinimumDurationInMonths.MonthsToWeeks();
 
             return durationInWeeks >= minimumDurationInWeeks;
         }
