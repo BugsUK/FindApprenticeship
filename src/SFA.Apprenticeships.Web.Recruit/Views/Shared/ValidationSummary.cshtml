@@ -29,7 +29,11 @@
     </div>
 </div>
 
-<div id="validation-summary-warnings" class='@(Html.ViewData.ModelState.HasWarnings() ? "validation-summary-warnings" : "validation-summary-valid") panel panel-warning' data-valmsg-summary="true">
+@{
+    var hasWarnings = Html.ViewData.ModelState.HasWarnings();
+}
+
+<div id="validation-summary-warnings" class='@(hasWarnings ? "validation-summary-warnings" : "validation-summary-valid") panel panel-warning' data-valmsg-summary="true">
     <div class="panel-body">
         <ul>
             @foreach (var modelKey in Model.Keys)
@@ -52,5 +56,6 @@
                 }
             }
         </ul>
+        @Html.Hidden("acceptWarnings", @hasWarnings)
     </div>
 </div>

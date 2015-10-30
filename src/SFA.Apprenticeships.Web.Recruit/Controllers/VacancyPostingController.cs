@@ -203,9 +203,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
-        public ActionResult VacancySummary(VacancySummaryViewModel viewModel)
+        public ActionResult VacancySummary(VacancySummaryViewModel viewModel, bool acceptWarnings)
         {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
 
             return HandleVacancySummary(response,
                 () => RedirectToRoute(RecruitmentRouteNames.VacancyRequirementsProspects,

@@ -229,11 +229,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel)
+        public MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel, bool acceptWarnings)
         {
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
-            if (!validationResult.IsValid)
+            if (!validationResult.IsValid && (!acceptWarnings || validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)))
             {
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
