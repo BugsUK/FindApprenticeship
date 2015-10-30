@@ -19,6 +19,7 @@
         [TestCase("cantbemissingdot", false)]
         [TestCase("canbeanythingwithcorrect.chars", true)]
         [TestCase("cantbeincorrechars@%", false)]
+        [TestCase("www.me-you.com", true)]
         public void ShouldValidateWebSiteUrl(
             string websiteUrl,
             bool expectValid)
