@@ -248,7 +248,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
         public MediatorResponse<VacancySummaryViewModel> UpdateVacancyAndExit(VacancySummaryViewModel viewModel)
         {
-            var validationResult = _vacancySummaryViewModelClientValidator.Validate(viewModel, ruleSet: RuleSets.Errors);
+            var validationResult = _vacancySummaryViewModelClientValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {

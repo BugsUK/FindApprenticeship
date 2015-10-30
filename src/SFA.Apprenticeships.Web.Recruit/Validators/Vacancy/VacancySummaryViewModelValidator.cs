@@ -11,6 +11,7 @@
     {
         public VacancySummaryViewModelClientValidator()
         {
+            AddCommonRules();
             RuleSet(RuleSets.Errors, AddCommonRules);
         }
 
@@ -34,6 +35,7 @@
 
         public VacancySummaryViewModelServerValidator()
         {
+            AddServerCommonRules();
             RuleSet(RuleSets.Errors, AddServerCommonRules);
             RuleSet(RuleSets.Warnings, AddServerWarningRules);
         }

@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
     using System;
+    using Common.Validators;
     using Common.ViewModels;
+    using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Recruit.Validators.Vacancy;
@@ -10,6 +12,8 @@
     [TestFixture]
     public class MandatoryDateChecks
     {
+        private const string RuleSet = RuleSets.Errors;
+
         private VacancySummaryViewModelServerValidator _validator;
 
         [SetUp]
@@ -30,10 +34,10 @@
                 PossibleStartDate = new DateViewModel(today.AddDays(15))
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
         }
 
         [Test]
@@ -48,11 +52,11 @@
                 PossibleStartDate = new DateViewModel(today.AddDays(12))
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             //Assert. This rule will be a warning rather than being mandatory and so is not implemented by the VacancySummaryViewModelServerValidator
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
-            _validator.ShouldNotHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
         }
     }
 }

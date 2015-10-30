@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
-    using Common.Validators;
     using FluentAssertions;
-    using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Recruit.Validators.Vacancy;
@@ -11,8 +9,6 @@
     [TestFixture]
     public class VacancySummaryViewModelClientValidatorTests
     {
-        private const string RuleSet = RuleSets.Errors;
-
         private VacancySummaryViewModelClientValidator _validator;
 
         [SetUp]
@@ -42,15 +38,15 @@
                 WorkingWeek = workingWeek
             };
 
-            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _validator.Validate(viewModel);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel, RuleSet);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel, RuleSet);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel);
             }
         }
 
@@ -63,15 +59,15 @@
                 WorkingWeek = workingWeek
             };
 
-            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _validator.Validate(viewModel);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel, RuleSet);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel, RuleSet);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.WorkingWeek, viewModel);
             }
         }
 
@@ -86,15 +82,15 @@
                 LongDescription = longDescription
             };
 
-            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _validator.Validate(viewModel);
 
             if (expectValid)
             {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.LongDescription, viewModel, RuleSet);
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.LongDescription, viewModel);
             }
             else
             {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.LongDescription, viewModel, RuleSet);
+                _validator.ShouldHaveValidationErrorFor(vm => vm.LongDescription, viewModel);
             }
         }
     }
