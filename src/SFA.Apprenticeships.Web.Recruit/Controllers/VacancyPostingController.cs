@@ -353,12 +353,28 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         }
 
         [HttpGet]
+        [OutputCache(Duration = 0)]
         public ActionResult PreviewVacancy(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancyViewModel(vacancyReferenceNumber);
-            var viewModel = response.ViewModel;
+            // var response = _vacancyPostingMediator.GetVacancyViewModel(vacancyReferenceNumber);
 
-            return View(viewModel);
+            var response = _vacancyPostingMediator.GetPreviewVacancyViewModel(vacancyReferenceNumber);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetVacancyViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyPostingMediatorCodes.GetVacancyViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+
         }
 
         [HttpGet]

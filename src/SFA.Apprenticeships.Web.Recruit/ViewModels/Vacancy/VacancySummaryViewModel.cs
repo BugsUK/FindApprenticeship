@@ -33,5 +33,41 @@
         public DateViewModel PossibleStartDate { get; set; }
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string LongDescription { get; set; }
+
+        public string WageUnitDisplayText
+        {
+            get
+            {
+                switch (WageUnit)
+                {
+                    case WageUnit.Annually:
+                        return "Annual";
+                    case WageUnit.Monthly:
+                        return "Monthly";
+                    case WageUnit.Weekly:
+                        return "Weekly";
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
+
+        public string DurationTypeDisplayText
+        {
+            get
+            {
+                switch (DurationType)
+                {
+                    case DurationType.Weeks:
+                        return "weeks";
+                    case DurationType.Months:
+                        return "months";
+                    case DurationType.Years:
+                        return "years";
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
     }
 }

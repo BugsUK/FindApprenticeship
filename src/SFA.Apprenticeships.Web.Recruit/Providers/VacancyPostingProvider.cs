@@ -257,26 +257,26 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
 
             //TODO: Automap
-            vacancy.Title = viewModel.Title;
-            vacancy.ShortDescription = viewModel.ShortDescription;
-            vacancy.WorkingWeek = viewModel.WorkingWeek;
-            vacancy.HoursPerWeek = viewModel.HoursPerWeek;
-            vacancy.WageType = viewModel.WageType;
-            vacancy.Wage = viewModel.Wage;
-            vacancy.WageUnit = viewModel.WageUnit;
-            vacancy.DurationType = viewModel.DurationType;
-            vacancy.Duration = viewModel.Duration;
-            vacancy.ClosingDate = viewModel.ClosingDate;
-            vacancy.PossibleStartDate = viewModel.PossibleStartDate;
-            vacancy.ApprenticeshipLevel = viewModel.ApprenticeshipLevel;
-            vacancy.LongDescription = viewModel.LongDescription;
-            vacancy.DesiredSkills = viewModel.DesiredSkills;
-            vacancy.FutureProspects = viewModel.FutureProspects;
-            vacancy.PersonalQualities = viewModel.PersonalQualities;
-            vacancy.ThingsToConsider = viewModel.ThingsToConsider;
-            vacancy.DesiredQualifications = viewModel.DesiredQualifications;
-            vacancy.FirstQuestion = viewModel.FirstQuestion;
-            vacancy.SecondQuestion = viewModel.SecondQuestion;
+            vacancy.Title = viewModel.NewVacancyViewModel.Title;
+            vacancy.ShortDescription = viewModel.NewVacancyViewModel.ShortDescription;
+            vacancy.WorkingWeek = viewModel.VacancySummaryViewModel.WorkingWeek;
+            vacancy.HoursPerWeek = viewModel.VacancySummaryViewModel.HoursPerWeek;
+            vacancy.WageType = viewModel.VacancySummaryViewModel.WageType;
+            vacancy.Wage = viewModel.VacancySummaryViewModel.Wage;
+            vacancy.WageUnit = viewModel.VacancySummaryViewModel.WageUnit;
+            vacancy.DurationType = viewModel.VacancySummaryViewModel.DurationType;
+            vacancy.Duration = viewModel.VacancySummaryViewModel.Duration;
+            vacancy.ClosingDate = viewModel.VacancySummaryViewModel.ClosingDate.Date;
+            vacancy.PossibleStartDate = viewModel.VacancySummaryViewModel.PossibleStartDate.Date;
+            vacancy.ApprenticeshipLevel = viewModel.NewVacancyViewModel.ApprenticeshipLevel;
+            vacancy.LongDescription = viewModel.VacancySummaryViewModel.LongDescription;
+            vacancy.DesiredSkills = viewModel.VacancyRequirementsProspectsViewModel.DesiredSkills;
+            vacancy.FutureProspects = viewModel.VacancyRequirementsProspectsViewModel.FutureProspects;
+            vacancy.PersonalQualities = viewModel.VacancyRequirementsProspectsViewModel.PersonalQualities;
+            vacancy.ThingsToConsider = viewModel.VacancyRequirementsProspectsViewModel.ThingsToConsider;
+            vacancy.DesiredQualifications = viewModel.VacancyRequirementsProspectsViewModel.DesiredQualifications;
+            vacancy.FirstQuestion = viewModel.VacancyQuestionsViewModel.FirstQuestion;
+            vacancy.SecondQuestion = viewModel.VacancyQuestionsViewModel.SecondQuestion;
             vacancy.Status = ProviderVacancyStatuses.ToReview;
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);

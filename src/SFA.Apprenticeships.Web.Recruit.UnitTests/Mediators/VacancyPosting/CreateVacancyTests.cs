@@ -152,18 +152,23 @@
         {
             return new VacancyViewModel
             {
-                OfflineVacancy = false,
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
-                {
-                    Employer = new EmployerViewModel()
-                }
+                NewVacancyViewModel = new NewVacancyViewModel { 
+                    OfflineVacancy = false,
+                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                    {
+                        Employer = new EmployerViewModel()
+                    }
+                },
+                VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
+                VacancySummaryViewModel = new VacancySummaryViewModel(),
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
         }
 
         private VacancyViewModel AVacancyWithQuestionOneFilled()
         {
             var vacancy = BasicVacancy();
-            vacancy.FirstQuestion = AString;
+            vacancy.VacancyQuestionsViewModel.FirstQuestion = AString;
 
             return vacancy;
         }
@@ -171,7 +176,7 @@
         private VacancyViewModel AVacancyWithQuestionTwoFilled()
         {
             var vacancy = BasicVacancy();
-            vacancy.SecondQuestion = AString;
+            vacancy.VacancyQuestionsViewModel.SecondQuestion = AString;
 
             return vacancy;
         }
@@ -184,7 +189,7 @@
         private VacancyViewModel AnOfflineVacancy()
         {
             var vacancy = BasicVacancy();
-            vacancy.OfflineVacancy = true;
+            vacancy.NewVacancyViewModel.OfflineVacancy = true;
 
             return vacancy;
         }

@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 {
-    using System;
-    using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Vacancy;
 
+    //TODO: remove it
     public class VacancyViewModelValidator : AbstractValidator<VacancyViewModel>
     {
         public VacancyViewModelValidator()
@@ -13,6 +12,13 @@
         }
 
         private void AddCommonRules()
+        {
+            RuleFor(x => x.VacancySummaryViewModel).SetValidator(new VacancySummaryViewModelServerValidator());
+            RuleFor(x => x.NewVacancyViewModel).SetValidator(new NewVacancyViewModelServerValidator());
+            RuleFor(x => x.VacancyQuestionsViewModel).SetValidator(new VacancyQuestionsViewModelServerValidator());
+            RuleFor(x => x.VacancyRequirementsProspectsViewModel).SetValidator(new VacancyRequirementsProspectsViewModelServerValidator());
+        }
+        /*private void AddCommonRules()
         {
             RuleFor(m => m.Title)
                 .NotEmpty()
@@ -33,14 +39,6 @@
             RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText);
-                /*.Length(0, 100)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
-                .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);*/
-
-            /*RuleFor(x => x.WeeklyWage)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.WeeklyWage.RequiredErrorText);*/
 
             RuleFor(x => x.Duration)
                 .NotEmpty()
@@ -115,6 +113,6 @@
                 .WithMessage(VacancyViewModelMessages.SecondQuestion.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
-        }
+        }*/
     }
 }

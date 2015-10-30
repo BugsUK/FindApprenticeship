@@ -40,7 +40,10 @@
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
                 .Returns(new VacancyViewModel
                 {
-                    OfflineVacancy = true
+                    NewVacancyViewModel = new NewVacancyViewModel
+                    { 
+                        OfflineVacancy = true
+                    }
                 });
 
             var mediator = GetMediator();
@@ -59,7 +62,10 @@
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
                 .Returns(new VacancyViewModel
                 {
-                    OfflineVacancy = false
+                    NewVacancyViewModel = new NewVacancyViewModel
+                    { 
+                        OfflineVacancy = false
+                    }
                 });
 
             var mediator = GetMediator();

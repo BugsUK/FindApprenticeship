@@ -95,12 +95,18 @@
                                 <tr>
                                     <td>
                                         <div class="vac-title">
+
                                             @{
-                                                var title = string.IsNullOrEmpty(vacancy.Title) ? "(No Title)" : vacancy.Title;
+                                                var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.Title;
                                             }
                                             <a href="@Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block link-unimp">@title@*<span class="inl-block">(? applications)</span>*@</a>
+
+
+
+
+
                                         </div>
-                                        <span>@vacancy.ProviderSiteEmployerLink.Employer.Name</span>
+                                        <span>@vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</span>
                                     </td>
                                     <td>
                                         @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }

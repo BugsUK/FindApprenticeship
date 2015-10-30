@@ -217,9 +217,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
         private static bool SwitchingFromOnlineToOfflineVacancy(NewVacancyViewModel newVacancyViewModel, VacancyViewModel existingVacancy)
         {
             return existingVacancy != null 
-                && existingVacancy.OfflineVacancy == false 
+                && existingVacancy.NewVacancyViewModel.OfflineVacancy == false 
                 && newVacancyViewModel.OfflineVacancy
-                && ( !string.IsNullOrWhiteSpace(existingVacancy.FirstQuestion) || !string.IsNullOrWhiteSpace(existingVacancy.SecondQuestion));
+                && ( !string.IsNullOrWhiteSpace(existingVacancy.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(existingVacancy.VacancyQuestionsViewModel.SecondQuestion));
         }
 
         public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber)
@@ -283,7 +283,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             var completeViewModel = GetVacancyViewModel(viewModel.VacancyReferenceNumber);
             return
                 GetMediatorResponse(
-                    completeViewModel.ViewModel.OfflineVacancy
+                    completeViewModel.ViewModel.NewVacancyViewModel.OfflineVacancy
                         ? VacancyPostingMediatorCodes.UpdateVacancy.OfflineVacancyOk
                         : VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk, updatedViewModel);
         }
@@ -346,6 +346,22 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }
 
+        public MediatorResponse<VacancyViewModel> GetPreviewVacancyViewModel(long vacancyReferenceNumber)
+        {
+            var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
+
+            var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet:RuleSets.ErrorsAndWarnings);
+
+            if (!validationResult.IsValid)
+            {
+                //TODO: us its own mediator code
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.FailedValidation,
+                    vacancyViewModel);
+            }
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
+        }
+
         public MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel)
         {
             var result = _vacancyViewModelValidator.Validate(viewModel);
@@ -356,7 +372,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
                 viewModel.ApprenticeshipLevels = existingViewModel.ApprenticeshipLevels;
                 viewModel.FrameworkName = existingViewModel.FrameworkName;
-                viewModel.ProviderSiteEmployerLink = existingViewModel.ProviderSiteEmployerLink;
+                viewModel.NewVacancyViewModel.ProviderSiteEmployerLink = existingViewModel.NewVacancyViewModel.ProviderSiteEmployerLink;
                 viewModel.ProviderSite = existingViewModel.ProviderSite;
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation, viewModel, result);
@@ -374,7 +390,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             var viewModel = new SubmittedVacancyViewModel
             {
                 VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber,
-                ProviderSiteErn = vacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn
+                ProviderSiteErn = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn
             };
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);

@@ -11,6 +11,8 @@ using SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 {
+    using Common.ViewModels;
+
     [TestFixture]
     public class PreviewVacancyTests : ViewUnitTest
     {
@@ -25,15 +27,21 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
                 {
                     Address = new AddressViewModel()
                 },
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    Employer = new EmployerViewModel()
-                    {
-                        Address = new AddressViewModel()
-                    }
+                    ClosingDate = new DateViewModel(new DateTime?()),
+                    PossibleStartDate = new DateViewModel(new DateTime?())
                 },
-                ClosingDate = new DateTime(),
-                PossibleStartDate = new DateTime()
+                NewVacancyViewModel = new NewVacancyViewModel
+                { 
+                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    {
+                        Employer = new EmployerViewModel()
+                        {
+                            Address = new AddressViewModel()
+                        }
+                    }
+                }
             };
            
             var view = details.RenderAsHtml(viewModel);

@@ -38,6 +38,7 @@
         public static class GetVacancyViewModel
         {
             public const string Ok = "VacancyPosting.GetVacancyViewModel.Ok";
+            public const string FailedValidation = "VacancyPosting.GetVacancyViewModel.FailedValidation";
         }
 
         public static class GetVacancySummaryViewModel
@@ -70,7 +71,7 @@
             public const string OnlineVacancyOk = "VacancyPosting.UpdateVacancy.OnlineVacancyOk";
             public const string FailedValidation = "VacancyPosting.UpdateVacancy.FailedValidation";
         }
-
+        
         public static class SubmitVacancy
         {
             public const string Ok = "VacancyPosting.SubmitVacancy.Ok";

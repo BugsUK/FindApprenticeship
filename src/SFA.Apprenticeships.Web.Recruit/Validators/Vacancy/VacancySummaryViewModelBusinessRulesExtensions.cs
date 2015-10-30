@@ -75,7 +75,7 @@
                 hoursAndMinDurationLookup.FirstOrDefault(
                     l =>
                         viewModel.HoursPerWeek.Value >= l.HoursInclusiveLowerBound &&
-                        viewModel.HoursPerWeek.Value < l.HoursExclusiveUpperBound);
+                        ( viewModel.HoursPerWeek.Value < l.HoursExclusiveUpperBound || l.HoursExclusiveUpperBound == null));
 
             if (condition == null)
             {
