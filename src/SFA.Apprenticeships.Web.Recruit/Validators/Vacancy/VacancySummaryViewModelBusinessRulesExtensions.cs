@@ -8,6 +8,7 @@
     using FluentValidation.Results;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
+    using Web.Common.ViewModels;
 
     public static class VacancySummaryViewModelBusinessRulesExtensions
     {
@@ -85,6 +86,26 @@
             if (!condition.IsGreaterThanOrEqualToMinDuration(duration.Value, viewModel.DurationType))
             {
                 var validationFailure = new ValidationFailure("Duration", condition.WarningMessage)
+                {
+                    CustomState = ValidationType.Warning
+                };
+                return validationFailure;
+            }
+
+            return null;
+        }
+
+        public static ValidationFailure PossibleStartDateShouldBeAfterClosingDate(this VacancySummaryViewModel viewModel, DateViewModel closingDate)
+        {
+            if (closingDate == null || !closingDate.HasValue || viewModel.PossibleStartDate == null ||
+                !viewModel.PossibleStartDate.HasValue)
+            {
+                return null;
+            }
+
+            if (viewModel.PossibleStartDate.Date < closingDate.Date)
+            {
+                var validationFailure = new ValidationFailure("PossibleStartDate", VacancyViewModelMessages.PossibleStartDate.BeforePublishDateErrorText)
                 {
                     CustomState = ValidationType.Warning
                 };

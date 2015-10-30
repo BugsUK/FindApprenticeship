@@ -95,6 +95,18 @@
         private void AddServerWarningRules()
         {
             Custom(x => x.ExpectedDurationGreaterThanOrEqualToMinimumDuration(x.Duration));
+
+            RuleFor(x => x.ClosingDate)
+                .Must(Common.BeTwoWeeksInTheFuture)
+                .WithMessage(VacancyViewModelMessages.ClosingDate.TooSoonErrorText)
+                .WithState(s => ValidationType.Warning);
+
+            RuleFor(x => x.PossibleStartDate)
+                .Must(Common.BeTwoWeeksInTheFuture)
+                .WithMessage(VacancyViewModelMessages.PossibleStartDate.TooSoonErrorText)
+                .WithState(s => ValidationType.Warning);
+
+            Custom(x => x.PossibleStartDateShouldBeAfterClosingDate(x.ClosingDate));
         }
 
         private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)

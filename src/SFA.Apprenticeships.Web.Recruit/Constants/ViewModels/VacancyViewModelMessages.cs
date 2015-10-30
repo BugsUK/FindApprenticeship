@@ -80,16 +80,15 @@
         {
             public const string LabelText = "Closing date";
             public const string RequiredErrorText = "Please specify the closing date";
-            public const string TooSoonErrorText = "Closing date must be in the future";
-            public const string BeforePublishDateErrorText = "Closing date must be after the Publish date";
+            public const string TooSoonErrorText = "Closing date must be at least two weeks from now";
         }
 
         public static class PossibleStartDate
         {
             public const string LabelText = "Possible start date";
             public const string RequiredErrorText = "Please specify the possible start date";
-            public const string TooSoonErrorText = "Possible start date must be in the future";
-            public const string BeforePublishDateErrorText = "Possible start date must be after the Publish date";
+            public const string TooSoonErrorText = "Possible start date must be at least two weeks from now";
+            public const string BeforePublishDateErrorText = "Possible start date must be after the closing date";
         }
 
         public static class LongDescription
