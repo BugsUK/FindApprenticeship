@@ -17,7 +17,7 @@
         {
             public const string LabelText = "Summary";
             public const string RequiredErrorText = "Please enter a vacancy summary";
-            public const string TooLongErrorText = "Short description mustn’t exceed 512 characters";
+            public const string TooLongErrorText = "Short description mustn’t exceed 350 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Short description " + Whitelists.FreetextWhitelist.ErrorText;
         }
@@ -26,7 +26,7 @@
         {
             public const string LabelText = "Working week";
             public const string RequiredErrorText = "Please enter the working week";
-            public const string TooLongErrorText = "Working week mustn’t exceed 100 characters";
+            public const string TooLongErrorText = "Working week mustn’t exceed 256 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
         }
