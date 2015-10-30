@@ -255,6 +255,8 @@
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\DateViewModelValidator.cs" />
     <Compile Include="Validators\Extensions\ModelStateDictionaryExtensions.cs" />
+    <Compile Include="Validators\Extensions\ValidationExtensions.cs" />
+    <Compile Include="Validators\HtmlHelper.cs" />
     <Compile Include="Validators\ModelWarning.cs" />
     <Compile Include="Validators\Extensions\ValidationResultExtension.cs" />
     <Compile Include="Validators\RuleSets.cs" />

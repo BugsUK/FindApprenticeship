@@ -2,11 +2,15 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Linq.Expressions;
     using System.Web.Mvc;
     using System.Web.Mvc.Html;
     using System.Web.Routing;
     using CuttingEdge.Conditions;
+    using Validators;
+    using Validators.Extensions;
+    using HtmlHelper = System.Web.Mvc.HtmlHelper;
 
     public static class HtmlExtensions
     {
@@ -108,13 +112,13 @@
             Condition.Requires(helper, "helper").IsNotNull();
             Condition.Requires(expression, "expression").IsNotNull();
 
-            var validationError = HasValidationError(helper, expression);
+            var validationType = GetValidationType(helper, expression);
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             var controlAttributes = MergeAttributes("form-control", controlHtmlAttributes);
             var labelAttributes = MergeAttributes("form-label", labelHtmlAttributes);
             var hintAttributes = MergeAttributes("form-hint", hintHtmlAttributes);
 
-            var validator = helper.ValidationMessageFor(expression, null);
+            var validator = helper.ValidationMessageWithSeverityFor(expression, null, validationType);
 
             var fieldContent = verified ? VerifiedControl(controlFunc, expression, controlAttributes) : controlFunc(expression, controlAttributes);
 
@@ -127,7 +131,7 @@
                 addMaxLengthCounter ? CharactersLeftFor(helper, expression) : null,
                 addMaxLengthCounter ? ScreenReaderSpan(helper, expression) : null,
                 containerAttributes,
-                validationError
+                validationType
                 );
         }
 
@@ -139,20 +143,43 @@
                                     MvcHtmlString maxLengthSpan,
                                     MvcHtmlString ariaLimitVisuallyHidden,
                                     RouteValueDictionary containerHtmlAttributes,
-                                    bool validationError = false
+                                    ValidationType validationType
                                     )
         {
             var container = new TagBuilder("div");
             container.MergeAttributes(containerHtmlAttributes);
 
-            if (validationError)
-            {
-                container.AddCssClass(HtmlHelper.ValidationInputCssClassName);
-            }
+            AddValidationCssClass(validationType, container);
 
             container.InnerHtml += string.Concat(anchorTag, labelContent, hintContent, fieldContent, maxLengthSpan, ariaLimitVisuallyHidden, validationMessage);
 
             return MvcHtmlString.Create(container.ToString());
+        }
+
+        private static void AddValidationCssClass(ValidationType validationType, TagBuilder container)
+        {
+            if (validationType == ValidationType.Error)
+            {
+                container.AddCssClass(GetValidationCssClass(validationType));
+            }
+            if (validationType == ValidationType.Warning)
+            {
+                container.AddCssClass(Validators.HtmlHelper.ValidationWarningInputCssClassName);
+            }
+        }
+
+        public static string GetValidationCssClass(ValidationType validationType)
+        {
+            if (validationType == ValidationType.Error)
+            {
+                return HtmlHelper.ValidationInputCssClassName;
+            }
+            if (validationType == ValidationType.Warning)
+            {
+                return Validators.HtmlHelper.ValidationWarningInputCssClassName;
+            }
+
+            return "";
         }
 
         #endregion
@@ -175,16 +202,13 @@
 
             var containerAttributes = MergeAttributes("form-group", containerHtmlAttributes);
             
-            var validationError = HasValidationError(helper, expression);
-            var validator = helper.ValidationMessageFor(expression, null);
+            var validationType = GetValidationType(helper, expression);
+            var validator = helper.ValidationMessageWithSeverityFor(expression, null, validationType);
             var anchorTag = AnchorFor(helper, expression);
 
             container.MergeAttributes(containerAttributes);
 
-            if (validationError)
-            {
-                container.AddCssClass(HtmlHelper.ValidationInputCssClassName);
-            }
+            AddValidationCssClass(validationType, container);
 
             var label = GetLabel(helper, expression, labelText, labelHtmlAttributes, controlHtmlAttributes);
 
@@ -405,12 +429,23 @@
 
         #region Helpers
 
-        public static bool HasValidationError<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
+        public static ValidationType GetValidationType<TModel, TProperty>(this HtmlHelper<TModel> helper, Expression<Func<TModel, TProperty>> expression)
         {
             var expressionText = ExpressionHelper.GetExpressionText(expression);
             var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
             var fullyQualifiedName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
-            return !helper.ViewData.ModelState.IsValidField(fullyQualifiedName);
+            if (!helper.ViewData.ModelState.IsValidField(fullyQualifiedName))
+            {
+                if (helper.ViewData.ModelState[fullyQualifiedName].Errors.Any(e => e.GetType() == typeof(ModelError)))
+                {
+                    return ValidationType.Error;
+                }
+                if (helper.ViewData.ModelState[fullyQualifiedName].Errors.Any(e => e.GetType() == typeof(ModelWarning)))
+                {
+                    return ValidationType.Warning;
+                }
+            }
+            return ValidationType.None;
         }
 
         private static RouteValueDictionary MergeAttributes(string baseClassName, object extendedAttributes)

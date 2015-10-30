@@ -140,11 +140,11 @@ Write(Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new {
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1044), Tuple.Create("\"", 1160)
+WriteAttribute("class", Tuple.Create(" class=\"", 1044), Tuple.Create("\"", 1152)
 , Tuple.Create(Tuple.Create("", 1052), Tuple.Create("form-group", 1052), true)
             
             #line 25 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1062), Tuple.Create<System.Object, System.Int32>(Html.HasValidationError(m => m.FrameworkCodeName) ? HtmlHelper.ValidationInputCssClassName: ""
+, Tuple.Create(Tuple.Create(" ", 1062), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName))
             
             #line default
             #line hidden
@@ -153,26 +153,26 @@ WriteAttribute("class", Tuple.Create(" class=\"", 1044), Tuple.Create("\"", 1160
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 1174), Tuple.Create("\"", 1220)
+WriteAttribute("name", Tuple.Create(" name=\"", 1166), Tuple.Create("\"", 1212)
             
             #line 26 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1181), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName)
+, Tuple.Create(Tuple.Create("", 1173), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName)
             
             #line default
             #line hidden
-, 1181), false)
+, 1173), false)
 );
 
 WriteLiteral("> </a>\r\n        <label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 1243), Tuple.Create("\"", 1288)
+WriteAttribute("for", Tuple.Create(" for=\"", 1235), Tuple.Create("\"", 1280)
             
             #line 27 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1249), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName)
+, Tuple.Create(Tuple.Create("", 1241), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName)
             
             #line default
             #line hidden
-, 1249), false)
+, 1241), false)
 );
 
 WriteLiteral(" class=\"form-label\"");
@@ -210,15 +210,15 @@ WriteLiteral("\r\n    </div>\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1589), Tuple.Create("\"", 1707)
-, Tuple.Create(Tuple.Create("", 1597), Tuple.Create("form-group", 1597), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1581), Tuple.Create("\"", 1691)
+, Tuple.Create(Tuple.Create("", 1589), Tuple.Create("form-group", 1589), true)
             
             #line 32 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1607), Tuple.Create<System.Object, System.Int32>(Html.HasValidationError(m => m.ApprenticeshipLevel) ? HtmlHelper.ValidationInputCssClassName: ""
+, Tuple.Create(Tuple.Create(" ", 1599), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel))
             
             #line default
             #line hidden
-, 1608), false)
+, 1600), false)
 );
 
 WriteLiteral(">\r\n        \r\n        <label");
@@ -492,14 +492,14 @@ Write(Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern));
             #line default
             #line hidden
             
-            #line 116 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 93 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
 Write(Html.HiddenFor(model => model.VacancyGuid));
 
             
             #line default
             #line hidden
             
-            #line 116 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 93 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                                                
 
 
@@ -535,7 +535,7 @@ WriteLiteral(" value=\"CreateVacancyAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 122 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 99 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
 }
 
             

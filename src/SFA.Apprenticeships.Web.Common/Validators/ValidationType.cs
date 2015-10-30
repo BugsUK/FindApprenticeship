@@ -2,7 +2,8 @@
 {
     public enum ValidationType
     {
-        Error = 1,
-        Warning
+        None = 1,
+        Warning,
+        Error
     }
 }
