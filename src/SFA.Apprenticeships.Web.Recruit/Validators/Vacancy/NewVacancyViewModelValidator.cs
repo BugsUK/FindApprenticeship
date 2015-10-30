@@ -34,7 +34,7 @@
                 .WithMessage(VacancyViewModelMessages.Title.WhiteListErrorText);
 
             validator.RuleFor(x => x.ShortDescription)
-                .Length(0, 512)
+                .Length(0, 350)
                 .WithMessage(VacancyViewModelMessages.ShortDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.ShortDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.ShortDescription.WhiteListErrorText);
