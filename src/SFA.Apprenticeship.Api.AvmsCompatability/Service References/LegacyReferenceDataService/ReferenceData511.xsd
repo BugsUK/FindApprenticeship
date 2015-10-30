@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://services.imservices.org.uk/AVMS/Interfaces/5.1" elementFormDefault="qualified" targetNamespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:element name="GetErrorCodesRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/" name="ExternalSystemId" type="q1:guid" />
+  <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" name="MessageId" type="q2:guid" />
+  <xs:element name="PublicKey" nillable="true" type="xs:string" />
+  <xs:element name="GetErrorCodesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ErrorCodes" nillable="true" type="tns:ArrayOfErrorCodesData" />
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q3:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfErrorCodesData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ErrorCodesData" nillable="true" type="tns:ErrorCodesData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfErrorCodesData" nillable="true" type="tns:ArrayOfErrorCodesData" />
+  <xs:complexType name="ErrorCodesData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="InterfaceErrorCode" type="xs:int" />
+      <xs:element minOccurs="0" name="InterfaceErrorDescription" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ErrorCodesData" nillable="true" type="tns:ErrorCodesData" />
+  <xs:complexType name="SystemFaultContract">
+    <xs:sequence />
+  </xs:complexType>
+  <xs:element name="SystemFaultContract" nillable="true" type="tns:SystemFaultContract" />
+  <xs:element name="GetApprenticeshipFrameworksRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetApprenticeshipFrameworksResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ApprenticeshipFrameworks" nillable="true" type="tns:ArrayOfApprenticeshipFrameworkAndOccupationData" />
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q4:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfApprenticeshipFrameworkAndOccupationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ApprenticeshipFrameworkAndOccupationData" nillable="true" type="tns:ApprenticeshipFrameworkAndOccupationData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfApprenticeshipFrameworkAndOccupationData" nillable="true" type="tns:ArrayOfApprenticeshipFrameworkAndOccupationData" />
+  <xs:complexType name="ApprenticeshipFrameworkAndOccupationData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ApprenticeshipFrameworkCodeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ApprenticeshipFrameworkFullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ApprenticeshipFrameworkShortName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ApprenticeshipOccupationCodeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ApprenticeshipOccupationFullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ApprenticeshipOccupationShortName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ApprenticeshipFrameworkAndOccupationData" nillable="true" type="tns:ApprenticeshipFrameworkAndOccupationData" />
+  <xs:element name="GetRegionRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetRegionResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q5:guid" />
+        <xs:element minOccurs="0" name="Regions" nillable="true" type="tns:ArrayOfRegionData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfRegionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="RegionData" nillable="true" type="tns:RegionData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfRegionData" nillable="true" type="tns:ArrayOfRegionData" />
+  <xs:complexType name="RegionData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RegionData" nillable="true" type="tns:RegionData" />
+  <xs:element name="GetCountiesRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetCountiesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Counties" nillable="true" type="tns:ArrayOfCountyData" />
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q6:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfCountyData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="CountyData" nillable="true" type="tns:CountyData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfCountyData" nillable="true" type="tns:ArrayOfCountyData" />
+  <xs:complexType name="CountyData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CodeName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="CountyData" nillable="true" type="tns:CountyData" />
+  <xs:element name="GetLocalAuthoritiesRequest">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLocalAuthoritiesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="LocalAuthorities" nillable="true" type="tns:ArrayOfLocalAuthorityData" />
+        <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="MessageId" type="q7:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="ArrayOfLocalAuthorityData">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="LocalAuthorityData" nillable="true" type="tns:LocalAuthorityData" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfLocalAuthorityData" nillable="true" type="tns:ArrayOfLocalAuthorityData" />
+  <xs:complexType name="LocalAuthorityData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="County" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ShortName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="LocalAuthorityData" nillable="true" type="tns:LocalAuthorityData" />
+</xs:schema>

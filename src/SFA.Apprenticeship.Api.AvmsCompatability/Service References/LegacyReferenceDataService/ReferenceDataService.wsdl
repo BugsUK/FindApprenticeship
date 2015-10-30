@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:i0="http://tempuri.org/" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ReferenceDataService" targetNamespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:import namespace="http://tempuri.org/" location="http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc?wsdl=wsdl0" />
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1/Imports">
+      <xsd:import schemaLocation="http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc?xsd=xsd0" namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1" />
+      <xsd:import schemaLocation="http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetErrorCodesRequest">
+    <wsdl:part name="parameters" element="tns:GetErrorCodesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetErrorCodesRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetErrorCodesResponse">
+    <wsdl:part name="parameters" element="tns:GetErrorCodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetErrorCodes_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:message name="GetApprenticeshipFrameworksRequest">
+    <wsdl:part name="parameters" element="tns:GetApprenticeshipFrameworksRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetApprenticeshipFrameworksRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetApprenticeshipFrameworksResponse">
+    <wsdl:part name="parameters" element="tns:GetApprenticeshipFrameworksResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetApprenticeshipFrameworks_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:message name="GetRegionRequest">
+    <wsdl:part name="parameters" element="tns:GetRegionRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetRegionRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetRegionResponse">
+    <wsdl:part name="parameters" element="tns:GetRegionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetRegion_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:message name="GetCountiesRequest">
+    <wsdl:part name="parameters" element="tns:GetCountiesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetCountiesRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetCountiesResponse">
+    <wsdl:part name="parameters" element="tns:GetCountiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetCounties_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:message name="GetLocalAuthoritiesRequest">
+    <wsdl:part name="parameters" element="tns:GetLocalAuthoritiesRequest" />
+  </wsdl:message>
+  <wsdl:message name="GetLocalAuthoritiesRequest_Headers">
+    <wsdl:part name="ExternalSystemId" element="tns:ExternalSystemId" />
+    <wsdl:part name="MessageId" element="tns:MessageId" />
+    <wsdl:part name="PublicKey" element="tns:PublicKey" />
+  </wsdl:message>
+  <wsdl:message name="GetLocalAuthoritiesResponse">
+    <wsdl:part name="parameters" element="tns:GetLocalAuthoritiesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IReferenceData_GetLocalAuthorities_SystemFaultContractFault_FaultMessage">
+    <wsdl:part name="detail" element="tns:SystemFaultContract" />
+  </wsdl:message>
+  <wsdl:portType name="IReferenceData">
+    <wsdl:operation name="GetErrorCodes">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCodes" name="GetErrorCodesRequest" message="tns:GetErrorCodesRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCodesResponse" name="GetErrorCodesResponse" message="tns:GetErrorCodesResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCodesSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetErrorCodes_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApprenticeshipFrameworks">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprenticeshipFrameworks" name="GetApprenticeshipFrameworksRequest" message="tns:GetApprenticeshipFrameworksRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprenticeshipFrameworksResponse" name="GetApprenticeshipFrameworksResponse" message="tns:GetApprenticeshipFrameworksResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprenticeshipFrameworksSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetApprenticeshipFrameworks_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRegion">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegion" name="GetRegionRequest" message="tns:GetRegionRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegionResponse" name="GetRegionResponse" message="tns:GetRegionResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegionSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetRegion_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCounties">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCounties" name="GetCountiesRequest" message="tns:GetCountiesRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCountiesResponse" name="GetCountiesResponse" message="tns:GetCountiesResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCountiesSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetCounties_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLocalAuthorities">
+      <wsdl:input wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuthorities" name="GetLocalAuthoritiesRequest" message="tns:GetLocalAuthoritiesRequest" />
+      <wsdl:output wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuthoritiesResponse" name="GetLocalAuthoritiesResponse" message="tns:GetLocalAuthoritiesResponse" />
+      <wsdl:fault wsaw:Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuthoritiesSystemFaultContractFault" name="SystemFaultContractFault" message="tns:IReferenceData_GetLocalAuthorities_SystemFaultContractFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:service name="ReferenceDataService">
+    <wsdl:port name="BasicHttpBinding_IReferenceData" binding="i0:BasicHttpBinding_IReferenceData">
+      <soap:address location="http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
