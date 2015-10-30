@@ -28,6 +28,7 @@
         public VacancyQuestionsViewModelServerValidator()
         {
             AddServerRules();
+            
         }
 
         private void AddServerRules()

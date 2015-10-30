@@ -366,7 +366,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             {
                 case VacancyPostingMediatorCodes.GetVacancyViewModel.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    return View(response.ViewModel);
+                    var view = View(response.ViewModel);
+                    return view;
 
                 case VacancyPostingMediatorCodes.GetVacancyViewModel.Ok:
                     return View(response.ViewModel);

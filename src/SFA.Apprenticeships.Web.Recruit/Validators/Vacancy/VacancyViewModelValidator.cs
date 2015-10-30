@@ -2,13 +2,15 @@
 {
     using FluentValidation;
     using ViewModels.Vacancy;
+    using Web.Common.Validators;
 
     //TODO: remove it
     public class VacancyViewModelValidator : AbstractValidator<VacancyViewModel>
     {
         public VacancyViewModelValidator()
         {
-            AddCommonRules();
+            //RuleSet(RuleSets.Errors, AddCommonRules);
+            RuleSet(RuleSets.Warnings, AddCommonRules);
         }
 
         private void AddCommonRules()

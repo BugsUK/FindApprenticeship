@@ -1,4 +1,5 @@
 ﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancyViewModel
+@using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
@@ -44,7 +45,19 @@
 
                     <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
                     <p id="vacancy-working-week" itemprop="workHours">@Model.VacancySummaryViewModel.WorkingWeek<br/>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek</p>
-                    <h3 class="bold-small">Apprenticeship duration <i class="fa fa-check the-icon" style="color: green;"></i></h3>
+                    <h3 class="bold-small">
+                        Apprenticeship duration
+                        @if (ViewData.ModelState.HasWarningsFor("Duration"))
+                        {
+                            var message = ViewData.ModelState.WarningMessageFor("Duration");
+                            <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-check the-icon" style="color: green;"></i>
+                        }
+                    </h3>
+                    
                     <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
                     <h3 class="bold-small">Possible start date</h3>
                     <p id="vacancy-start-date">@Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)</p>
@@ -117,7 +130,7 @@
                     <div class="inner-block-padr">
                         <div class="text">
                             <h3 class="bold-small">Employer</h3>
-                            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : "")">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+                            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
                             @if (string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
                             {
                                 <p>

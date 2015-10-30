@@ -1,14 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 {
-    using System;
-    using System.Collections.Generic;
     using Common.Constants;
     using Common.Providers;
     using Common.UnitTests.Builders;
     using Common.UnitTests.Mediators;
     using Constants.Messages;
-    using Domain.Entities.Applications;
-    using Domain.Entities.Candidates;
     using FluentAssertions;
     using Manage.Mediators.AgencyUser;
     using Moq;

@@ -97,14 +97,9 @@
                                         <div class="vac-title">
 
                                             @{
-                                                var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.Title;
+                                                var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
                                             }
                                             <a href="@Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block link-unimp">@title@*<span class="inl-block">(? applications)</span>*@</a>
-
-
-
-
-
                                         </div>
                                         <span>@vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</span>
                                     </td>

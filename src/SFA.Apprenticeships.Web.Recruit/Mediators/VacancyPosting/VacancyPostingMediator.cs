@@ -356,7 +356,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             {
                 //TODO: us its own mediator code
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.FailedValidation,
-                    vacancyViewModel);
+                    vacancyViewModel, validationResult);
             }
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
