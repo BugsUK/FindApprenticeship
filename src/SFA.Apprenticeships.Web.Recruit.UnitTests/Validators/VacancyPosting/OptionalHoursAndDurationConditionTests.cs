@@ -48,7 +48,7 @@
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
@@ -81,7 +81,7 @@
                 DurationType = durationType
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);

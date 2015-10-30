@@ -37,12 +37,12 @@
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="national-minimum-wage" class="block-label">
                         @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new { id = "national-minimum-wage", aria_controls = "wage-type-panel" })
-                        National minimum wage
+                        National Minimum Wage
                     </label>
                     @* ReSharper disable once Html.IdNotResolved *@
                     <label for="apprenticeship-minimum-wage" class="block-label">
                         @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new { id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel" })
-                        Apprenticeship minimum wage
+                        National Minimum Wage for apprentices
                     </label>
                 </div>
                 <div id="custom-wage-panel" class="toggle-content blocklabel-content">

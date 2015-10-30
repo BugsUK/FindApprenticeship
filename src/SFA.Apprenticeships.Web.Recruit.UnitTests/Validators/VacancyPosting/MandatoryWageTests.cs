@@ -45,7 +45,7 @@
                 HoursPerWeek = hoursPerWeek
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {

@@ -3,8 +3,10 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using System.Linq;
+    using FluentValidation;
     using Common.Constants;
     using Common.Mediators;
+    using Common.Validators;
     using Common.ViewModels;
     using Constants.ViewModels;
     using Converters;
@@ -229,7 +231,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
         public MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel)
         {
-            var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel);
+            var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             if (!validationResult.IsValid)
             {
@@ -246,7 +248,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
         public MediatorResponse<VacancySummaryViewModel> UpdateVacancyAndExit(VacancySummaryViewModel viewModel)
         {
-            var validationResult = _vacancySummaryViewModelClientValidator.Validate(viewModel);
+            var validationResult = _vacancySummaryViewModelClientValidator.Validate(viewModel, ruleSet: RuleSets.Errors);
 
             if (!validationResult.IsValid)
             {

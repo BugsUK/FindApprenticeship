@@ -35,7 +35,7 @@
         {
             public const string LabelText = "hours per week";
             public const string RequiredErrorText = "Please enter the hours per week";
-            public const string HoursPerWeekShouldBeBetween16And40 = "TODO: hours per week must be greater >= 16 and <= 40";
+            public const string HoursPerWeekShouldBeBetween16And40 = "The hours per week must be between 16 and 40";
         }
 
         public static class WageType
@@ -50,8 +50,7 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
             public const string RequiredErrorText = "Please enter an amount for wage";
-            public const string WageLessThanMinimum =
-                "TODO: wage should not be less than the Apprenticeship Minimum Wage.";
+            public const string WageLessThanMinimum = "The wage should not be less than the National Minimum Wage for apprentices";
         }
 
         public static class Duration
@@ -60,7 +59,7 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
             public const string RequiredErrorText = "Please enter the duration";
-            public const string DurationCantBeLessThan12Months = "TODO: duration can't be less than 12 months";
+            public const string DurationCantBeLessThan12Months = "The duration can't be less than 12 months (52 weeks)";
         }
 
         public static class ClosingDate

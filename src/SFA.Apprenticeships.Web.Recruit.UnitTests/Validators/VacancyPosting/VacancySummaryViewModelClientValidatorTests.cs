@@ -42,7 +42,7 @@
                 WorkingWeek = workingWeek
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -63,7 +63,7 @@
                 WorkingWeek = workingWeek
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -86,7 +86,7 @@
                 LongDescription = longDescription
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {

@@ -231,7 +231,7 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        National minimum wage\r\n                    </label>\r\n  " +
+WriteLiteral("\r\n                        National Minimum Wage\r\n                    </label>\r\n  " +
 "                  ");
 
 WriteLiteral("\r\n                    <label");
@@ -251,8 +251,8 @@ WriteLiteral("                        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        Apprenticeship minimum wage\r\n                    </labe" +
-"l>\r\n                </div>\r\n                <div");
+WriteLiteral("\r\n                        National Minimum Wage for apprentices\r\n                " +
+"    </label>\r\n                </div>\r\n                <div");
 
 WriteLiteral(" id=\"custom-wage-panel\"");
 

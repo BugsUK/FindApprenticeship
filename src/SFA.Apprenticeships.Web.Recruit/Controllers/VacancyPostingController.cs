@@ -2,13 +2,11 @@
 
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Extensions;
     using Common.Mediators;
-    using Common.Validators;
     using Common.Validators.Extensions;
     using Constants;
     using FluentValidation.Mvc;
@@ -215,7 +213,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     {
                         vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                     }));
-
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
@@ -225,7 +222,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleVacancySummary(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
-
         }
 
         private ActionResult HandleVacancySummary(MediatorResponse<VacancySummaryViewModel> response,

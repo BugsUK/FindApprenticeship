@@ -3,6 +3,7 @@
     using Common.Validators;
     using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using FluentAssertions;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
@@ -22,6 +23,16 @@
             _validator = new VacancySummaryViewModelServerValidator();
         }
 
+        [Test]
+        public void DefaultShouldHaveValidationErrors()
+        {
+            var viewModel = new VacancySummaryViewModel();
+
+            var result = _validator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            result.IsValid.Should().BeFalse();
+        }
+
         [TestCase(null, false)]
         [TestCase("", false)]
         [TestCase(" ", false)]
@@ -33,7 +44,7 @@
                 WorkingWeek = workingWeek
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -72,7 +83,7 @@
                 HoursPerWeek = hoursPerWeek
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -95,7 +106,7 @@
                 WageType = wageType
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -139,7 +150,7 @@
                 WageUnit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -172,7 +183,7 @@
                 Duration = duration
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -192,7 +203,7 @@
                 ClosingDate = new DateViewModel()
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
         }
@@ -205,7 +216,7 @@
                 PossibleStartDate = new DateViewModel()
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
         }
@@ -222,7 +233,7 @@
                 LongDescription = longDescription
             };
 
-            _validator.Validate(viewModel, RuleSet);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
