@@ -2,9 +2,12 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Extensions;
+    using FluentValidation.Results;
     using ViewModels.Vacancy;
+    using Web.Common.Validators;
 
     public static class VacancySummaryViewModelBusinessRulesExtensions
     {
@@ -16,19 +19,19 @@
             <MinimumDurationForHoursPerWeek>
         {
             new MinimumDurationForHoursPerWeek(16, 18, 22.5m,
-                "The minimum duration is 23 months based on the hours per week selected"),
+                VacancyViewModelMessages.Duration.DurationWarning16Hours),
             new MinimumDurationForHoursPerWeek(18, 20, 20,
-                "The minimum duration is 20 months based on the hours per week selected"),
+                VacancyViewModelMessages.Duration.DurationWarning18Hours),
             new MinimumDurationForHoursPerWeek(20, 22, 18,
-                "The minimum duration is 18 months based on the hours per week selected"),
+                VacancyViewModelMessages.Duration.DurationWarning20Hours),
             new MinimumDurationForHoursPerWeek(22, 25, 16.5m,
-                "The minimum duration is 17 months based on the hours per week selected"),
+                VacancyViewModelMessages.Duration.DurationWarning22Hours),
             new MinimumDurationForHoursPerWeek(25, 28, 14.5m,
-                "The minimum duration is 15 months based on the hours per week selected"),
+                VacancyViewModelMessages.Duration.DurationWarning25Hours),
             new MinimumDurationForHoursPerWeek(28, 30, 13,
-                "The minimum duration is 13 months based on the hours per week selected"),
+                VacancyViewModelMessages.Duration.DurationWarning28Hours),
             new MinimumDurationForHoursPerWeek(30, null, 12,
-                "The minimum duration is 12 months based on the hours per week selected")
+                VacancyViewModelMessages.Duration.DurationWarning30Hours)
         };
 
         public static bool HoursPerWeekBetween30And40(this VacancySummaryViewModel viewModel)
@@ -56,11 +59,14 @@
             }
         }
 
-        public static bool ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel,
+        public static ValidationFailure ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel,
             int? duration)
         {
             if (!viewModel.HoursPerWeek.HasValue || !duration.HasValue)
-                return false;
+            {
+                //Other errors will superceed this one so return valid
+                return null;
+            }
 
             var hoursAndMinDurationLookup = HoursAndMinDurationLookup;
 
@@ -73,10 +79,19 @@
             if (condition == null)
             {
                 //Other errors will superceed this one so return valid
-                return true;
+                return null;
             }
 
-            return condition.IsGreaterThanOrEqualToMinDuration(duration.Value, viewModel.DurationType);
+            if (!condition.IsGreaterThanOrEqualToMinDuration(duration.Value, viewModel.DurationType))
+            {
+                var validationFailure = new ValidationFailure("Duration", condition.WarningMessage)
+                {
+                    CustomState = ValidationType.Warning
+                };
+                return validationFailure;
+            }
+
+            return null;
         }
     }
 

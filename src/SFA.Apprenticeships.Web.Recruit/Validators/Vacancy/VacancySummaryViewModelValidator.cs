@@ -80,7 +80,7 @@
 
             RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeValidDate)
-                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
+                .WithMessage(VacancyViewModelMessages.PossibleStartDate.RequiredErrorText)
                 .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
 
             RuleFor(x => x.LongDescription)
@@ -94,9 +94,7 @@
 
         private void AddServerWarningRules()
         {
-            RuleFor(x => x.Duration)
-                .Must(VacancySummaryViewModelBusinessRulesExtensions.ExpectedDurationGreaterThanOrEqualToMinimumDuration)
-                .WithState(s => ValidationType.Warning);
+            Custom(x => x.ExpectedDurationGreaterThanOrEqualToMinimumDuration(x.Duration));
         }
 
         private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)

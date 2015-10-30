@@ -60,6 +60,20 @@
             public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
             public const string RequiredErrorText = "Please enter the duration";
             public const string DurationCantBeLessThan12Months = "The duration can't be less than 12 months (52 weeks)";
+            public const string DurationWarning16Hours =
+                "The minimum duration is 23 months based on the hours per week selected";
+            public const string DurationWarning18Hours =
+                "The minimum duration is 20 months based on the hours per week selected";
+            public const string DurationWarning20Hours =
+                "The minimum duration is 18 months based on the hours per week selected";
+            public const string DurationWarning22Hours =
+                "The minimum duration is 17 months based on the hours per week selected";
+            public const string DurationWarning25Hours =
+                "The minimum duration is 15 months based on the hours per week selected";
+            public const string DurationWarning28Hours =
+                "The minimum duration is 13 months based on the hours per week selected";
+            public const string DurationWarning30Hours =
+                "The minimum duration is 12 months based on the hours per week selected";
         }
 
         public static class ClosingDate
