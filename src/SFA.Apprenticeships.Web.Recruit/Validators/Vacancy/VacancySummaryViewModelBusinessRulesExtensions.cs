@@ -65,10 +65,16 @@
             var hoursAndMinDurationLookup = HoursAndMinDurationLookup;
 
             var condition =
-                hoursAndMinDurationLookup.First(
+                hoursAndMinDurationLookup.FirstOrDefault(
                     l =>
                         viewModel.HoursPerWeek.Value >= l.HoursInclusiveLowerBound &&
                         viewModel.HoursPerWeek.Value < l.HoursExclusiveUpperBound);
+
+            if (condition == null)
+            {
+                //Other errors will superceed this one so return valid
+                return true;
+            }
 
             return condition.IsGreaterThanOrEqualToMinDuration(duration.Value, viewModel.DurationType);
         }

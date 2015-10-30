@@ -86,5 +86,36 @@
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
         }
+
+        [TestCase(41, 56, DurationType.Weeks)]
+        [TestCase(15, 97, DurationType.Weeks)]
+        [TestCase(41, 12, DurationType.Months)]
+        [TestCase(15, 22, DurationType.Months)]
+        [TestCase(41, 1, DurationType.Years)]
+        [TestCase(15, 1, DurationType.Years)]
+        [TestCase(-1, 56, DurationType.Weeks)]
+        [TestCase(0, 97, DurationType.Weeks)]
+        [TestCase(1, 97, DurationType.Weeks)]
+        [TestCase(-1, 12, DurationType.Months)]
+        [TestCase(0, 22, DurationType.Months)]
+        [TestCase(1, 22, DurationType.Months)]
+        [TestCase(-1, 1, DurationType.Years)]
+        [TestCase(0, 1, DurationType.Years)]
+        [TestCase(1, 1, DurationType.Years)]
+        public void RuleFour_HoursPerWeekOutside16to30_And_DurationGreaterThanOrEqualTo12months_And_ExpectedDurationLessThanMinimumDuration(decimal hoursPerWeek, int expectedDuration, DurationType durationType)
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                HoursPerWeek = hoursPerWeek,
+                Duration = expectedDuration,
+                DurationType = durationType
+            };
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            //Other errors will superceed this warning so will be valid
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
+        }
     }
 }
