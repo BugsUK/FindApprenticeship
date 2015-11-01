@@ -29,8 +29,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(new DateTime?()),
-                    PossibleStartDate = new DateViewModel(new DateTime?())
+                    ClosingDate = new DateViewModel(DateTime.Now),
+                    PossibleStartDate = new DateViewModel(DateTime.Now)
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 { 
@@ -41,7 +41,9 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
                             Address = new AddressViewModel()
                         }
                     }
-                }
+                },
+                VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
            
             var view = details.RenderAsHtml(viewModel);

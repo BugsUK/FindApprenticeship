@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using Common.ViewModels;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
@@ -42,7 +43,17 @@
                 .Returns(new ProviderSite {Address = new Address()});
             MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
 
-            vacancyPostingProvider.SubmitVacancy(new VacancyViewModel());
+            vacancyPostingProvider.SubmitVacancy(new VacancyViewModel()
+            {
+                NewVacancyViewModel = new NewVacancyViewModel(),
+                VacancySummaryViewModel = new VacancySummaryViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.Now),
+                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                },
+                VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+            });
 
             MockVacancyPostingService.Verify(
                 ps =>

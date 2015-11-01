@@ -35,7 +35,7 @@
 
         public VacancySummaryViewModelServerValidator()
         {
-            //AddServerCommonRules();
+            AddServerCommonRules();
             RuleSet(RuleSets.Errors, AddServerCommonRules);
             RuleSet(RuleSets.Warnings, AddServerWarningRules);
         }
