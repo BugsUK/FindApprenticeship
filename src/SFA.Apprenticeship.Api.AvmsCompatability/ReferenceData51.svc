@@ -1,1 +1,0 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="SFA.Apprenticeship.Api.AvmsCompatability.ServiceImplementation.Version51.ReferenceDataService" %>
