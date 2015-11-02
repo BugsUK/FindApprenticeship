@@ -165,13 +165,14 @@
                         <div class="text">
                             <h3 class="bold-small">Employer</h3>
                             <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-                            @if (string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
+                            @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
                             {
                                 <p>
                                     <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
                                        id="vacancy-employer-website"
                                        target="_blank"
                                        title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
+                                    <i class="fa fa-check the-icon" style="color: green;"></i>
                                 </p>
                             }
                             <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
