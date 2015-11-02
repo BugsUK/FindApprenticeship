@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit
+﻿
+
+namespace SFA.Apprenticeships.Web.Recruit
 {
     using System;
     using System.Web;
@@ -13,6 +15,7 @@
     using FluentValidation.Validators;
     using Infrastructure.Logging;
     using StructureMap;
+    using Controllers;
 
     public class MvcApplication : System.Web.HttpApplication
     {
@@ -65,7 +68,7 @@
 
         protected void Application_Error(object sender, EventArgs e)
         {
-            //Server.HandleError<ErrorController>(((MvcApplication)sender).Context);
+            Server.HandleError<ErrorController>(((MvcApplication)sender).Context);
         }
 
         protected void Application_PreSendRequestHeaders(object sender, EventArgs e)

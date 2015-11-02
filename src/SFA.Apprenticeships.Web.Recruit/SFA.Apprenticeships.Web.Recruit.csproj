@@ -305,6 +305,7 @@
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
     <Compile Include="Converters\AddressViewModelConverter.cs" />
     <Compile Include="Converters\ApprenticeshipVacancyConverter.cs" />
@@ -420,6 +421,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="403.html" />
+    <Content Include="404.html" />
+    <Content Include="500.html" />
+    <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -533,6 +538,8 @@
     </Content>
     <Content Include="Views\ProviderUser\_vacancyStatus.cshtml" />
     <Content Include="Views\razorgenerator.directives" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\InternalServerError.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
