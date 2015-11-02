@@ -4,21 +4,21 @@
     using MessageContracts.Version51;
     using DataContracts.Version51;
 
-    public class LegacyReferenceDataServiceMapper : MapperEngine
+    public class AvReferenceDataServiceMapper : MapperEngine
     {
         public override void Initialise()
         {
             // GetApprenticeshipFrameworksRequest
             Mapper.CreateMap
-                <GetApprenticeshipFrameworksRequest, LegacyReferenceDataService.GetApprenticeshipFrameworksRequest>();
+                <GetApprenticeshipFrameworksRequest, AvRds.GetApprenticeshipFrameworksRequest>();
 
             // GetApprenticeshipFrameworksResponse
             Mapper.CreateMap
-                <LegacyReferenceDataService.GetApprenticeshipFrameworksResponse, GetApprenticeshipFrameworksResponse>();
+                <AvRds.GetApprenticeshipFrameworksResponse, GetApprenticeshipFrameworksResponse>();
 
             // ApprenticeshipFrameworkAndOccupationData
             Mapper.CreateMap
-                <LegacyReferenceDataService.ApprenticeshipFrameworkAndOccupationData, ApprenticeshipFrameworkAndOccupationData>();
+                <AvRds.ApprenticeshipFrameworkAndOccupationData, ApprenticeshipFrameworkAndOccupationData>();
         }
     }
 }

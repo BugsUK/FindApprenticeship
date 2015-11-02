@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="E11wll5GifKe9Wrn4TK00O0igsA=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="1S3FCqdZM46uJ9jb8asi3MGLGlA=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IReferenceData">
       <properties>
@@ -112,7 +112,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IReferenceData" contract="LegacyReferenceDataService.IReferenceData" bindingType="basicHttpBinding" address="http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc" bindingConfiguration="BasicHttpBinding_IReferenceData">
+    <endpoint name="BasicHttpBinding_IReferenceData" contract="AvRds.IReferenceData" bindingType="basicHttpBinding" address="http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc" bindingConfiguration="BasicHttpBinding_IReferenceData">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>http://apprenticeshipvacancymatchingservice.lsc.gov.uk/services/ReferenceData/ReferenceData51.svc</serializedValue>
@@ -127,7 +127,7 @@
           <serializedValue>BasicHttpBinding_IReferenceData</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>LegacyReferenceDataService.IReferenceData</serializedValue>
+          <serializedValue>AvRds.IReferenceData</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>

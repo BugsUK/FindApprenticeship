@@ -25,7 +25,7 @@
         public void SetUp()
         {
             _mockReferenceDataProvider = new Mock<IReferenceDataProvider>();
-            _mapper = new LegacyReferenceDataServiceMapper();
+            _mapper = new AvReferenceDataServiceMapper();
 
             _service = new ReferenceDataService(
                 _mapper,

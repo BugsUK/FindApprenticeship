@@ -13,7 +13,7 @@
             {
                 x.AddRegistry<LoggingRegistry>();
 
-                x.For<IMapper>().Singleton().Use<LegacyReferenceDataServiceMapper>();
+                x.For<IMapper>().Singleton().Use<AvReferenceDataServiceMapper>();
             });
 
             return container;

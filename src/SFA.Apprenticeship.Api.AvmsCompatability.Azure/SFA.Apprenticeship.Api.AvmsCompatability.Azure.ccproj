@@ -83,10 +83,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Profiles" />
     <Folder Include="SFA.Apprenticeship.Api.AvmsCompatabilityContent\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="SFA.Apprenticeship.Api.AvmsCompatabilityContent\diagnostics.wadcfgx" />
+  </ItemGroup>
+  <ItemGroup>
+    <PublishProfile Include="Profiles\sfa-service-sitProduction.azurePubxml" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

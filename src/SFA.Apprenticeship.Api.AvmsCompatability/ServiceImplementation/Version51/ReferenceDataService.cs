@@ -17,11 +17,11 @@
         private readonly IMapper _mapper;
         private readonly IReferenceDataProvider _referenceDataProvider;
 
-        private const string LegacyEndpointConfigurationName = "LegacyReferenceDataService";
+        private const string LegacyEndpointConfigurationName = "AvRds";
 
         public ReferenceDataService()
         {
-            _mapper = new LegacyReferenceDataServiceMapper();
+            _mapper = new AvReferenceDataServiceMapper();
         }
 
         public ReferenceDataService(
@@ -45,8 +45,8 @@
 
             // _referenceDataProvider.GetCategories();
 
-            LegacyReferenceDataService.IReferenceData legacyClient =
-                new LegacyReferenceDataService.ReferenceDataClient(LegacyEndpointConfigurationName);
+            AvRds.IReferenceData legacyClient =
+                new AvRds.ReferenceDataClient(LegacyEndpointConfigurationName);
 
             var legacyRequest = MapFromRequest(request);
             var legacyResponse = legacyClient.GetApprenticeshipFrameworks(legacyRequest);
@@ -72,14 +72,14 @@
 
         #region Helpers
 
-        private LegacyReferenceDataService.GetApprenticeshipFrameworksRequest MapFromRequest(GetApprenticeshipFrameworksRequest request)
+        private AvRds.GetApprenticeshipFrameworksRequest MapFromRequest(GetApprenticeshipFrameworksRequest request)
         {
-            return _mapper.Map<GetApprenticeshipFrameworksRequest, LegacyReferenceDataService.GetApprenticeshipFrameworksRequest>(request);
+            return _mapper.Map<GetApprenticeshipFrameworksRequest, AvRds.GetApprenticeshipFrameworksRequest>(request);
         }
 
-        private GetApprenticeshipFrameworksResponse MapFromLegacyResponse(LegacyReferenceDataService.GetApprenticeshipFrameworksResponse legacyResponse)
+        private GetApprenticeshipFrameworksResponse MapFromLegacyResponse(AvRds.GetApprenticeshipFrameworksResponse legacyResponse)
         {
-            return _mapper.Map<LegacyReferenceDataService.GetApprenticeshipFrameworksResponse, GetApprenticeshipFrameworksResponse>(legacyResponse);
+            return _mapper.Map<AvRds.GetApprenticeshipFrameworksResponse, GetApprenticeshipFrameworksResponse>(legacyResponse);
         }
 
         #endregion

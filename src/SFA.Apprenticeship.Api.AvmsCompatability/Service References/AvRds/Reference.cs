@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
+namespace SFA.Apprenticeship.Api.AvmsCompatability.AvRds {
     using System.Runtime.Serialization;
     using System;
     
@@ -428,69 +428,69 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", ConfigurationName="LegacyReferenceDataService.IReferenceData")]
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", ConfigurationName="AvRds.IReferenceData")]
     public interface IReferenceData {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCode" +
             "s", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCode" +
             "sResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCode" +
+        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCode" +
             "sSystemFaultContractFault", Name="SystemFaultContract")]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesResponse GetErrorCodes(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesRequest request);
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesResponse GetErrorCodes(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCode" +
             "s", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetErrorCode" +
             "sResponse")]
-        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesResponse> GetErrorCodesAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesRequest request);
+        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesResponse> GetErrorCodesAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprentic" +
             "eshipFrameworks", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprentic" +
             "eshipFrameworksResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprentic" +
+        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprentic" +
             "eshipFrameworksSystemFaultContractFault", Name="SystemFaultContract")]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksResponse GetApprenticeshipFrameworks(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksRequest request);
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksResponse GetApprenticeshipFrameworks(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprentic" +
             "eshipFrameworks", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetApprentic" +
             "eshipFrameworksResponse")]
-        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksResponse> GetApprenticeshipFrameworksAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksRequest request);
+        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksResponse> GetApprenticeshipFrameworksAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegion", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegionRes" +
             "ponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegionSys" +
+        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegionSys" +
             "temFaultContractFault", Name="SystemFaultContract")]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionResponse GetRegion(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionRequest request);
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionResponse GetRegion(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegion", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetRegionRes" +
             "ponse")]
-        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionResponse> GetRegionAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionRequest request);
+        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionResponse> GetRegionAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCounties", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCountiesR" +
             "esponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCountiesS" +
+        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCountiesS" +
             "ystemFaultContractFault", Name="SystemFaultContract")]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesResponse GetCounties(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesRequest request);
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesResponse GetCounties(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCounties", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetCountiesR" +
             "esponse")]
-        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesResponse> GetCountiesAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesRequest request);
+        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesResponse> GetCountiesAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesRequest request);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuth" +
             "orities", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuth" +
             "oritiesResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuth" +
+        [System.ServiceModel.FaultContractAttribute(typeof(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.SystemFaultContract), Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuth" +
             "oritiesSystemFaultContractFault", Name="SystemFaultContract")]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesResponse GetLocalAuthorities(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesRequest request);
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesResponse GetLocalAuthorities(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesRequest request);
         
         // CODEGEN: Generating message contract since the operation has multiple return values.
         [System.ServiceModel.OperationContractAttribute(Action="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuth" +
             "orities", ReplyAction="http://services.imservices.org.uk/AVMS/Interfaces/5.1/IReferenceData/GetLocalAuth" +
             "oritiesResponse")]
-        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesResponse> GetLocalAuthoritiesAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesRequest request);
+        System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesResponse> GetLocalAuthoritiesAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -523,7 +523,7 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
     public partial class GetErrorCodesResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=0)]
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.ErrorCodesData[] ErrorCodes;
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.ErrorCodesData[] ErrorCodes;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=1)]
         public System.Guid MessageId;
@@ -531,7 +531,7 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
         public GetErrorCodesResponse() {
         }
         
-        public GetErrorCodesResponse(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.ErrorCodesData[] ErrorCodes, System.Guid MessageId) {
+        public GetErrorCodesResponse(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.ErrorCodesData[] ErrorCodes, System.Guid MessageId) {
             this.ErrorCodes = ErrorCodes;
             this.MessageId = MessageId;
         }
@@ -567,7 +567,7 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
     public partial class GetApprenticeshipFrameworksResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=0)]
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.ApprenticeshipFrameworkAndOccupationData[] ApprenticeshipFrameworks;
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.ApprenticeshipFrameworkAndOccupationData[] ApprenticeshipFrameworks;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=1)]
         public System.Guid MessageId;
@@ -575,7 +575,7 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
         public GetApprenticeshipFrameworksResponse() {
         }
         
-        public GetApprenticeshipFrameworksResponse(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.ApprenticeshipFrameworkAndOccupationData[] ApprenticeshipFrameworks, System.Guid MessageId) {
+        public GetApprenticeshipFrameworksResponse(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.ApprenticeshipFrameworkAndOccupationData[] ApprenticeshipFrameworks, System.Guid MessageId) {
             this.ApprenticeshipFrameworks = ApprenticeshipFrameworks;
             this.MessageId = MessageId;
         }
@@ -614,12 +614,12 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
         public System.Guid MessageId;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=1)]
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.RegionData[] Regions;
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.RegionData[] Regions;
         
         public GetRegionResponse() {
         }
         
-        public GetRegionResponse(System.Guid MessageId, SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.RegionData[] Regions) {
+        public GetRegionResponse(System.Guid MessageId, SFA.Apprenticeship.Api.AvmsCompatability.AvRds.RegionData[] Regions) {
             this.MessageId = MessageId;
             this.Regions = Regions;
         }
@@ -655,7 +655,7 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
     public partial class GetCountiesResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=0)]
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.CountyData[] Counties;
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.CountyData[] Counties;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=1)]
         public System.Guid MessageId;
@@ -663,7 +663,7 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
         public GetCountiesResponse() {
         }
         
-        public GetCountiesResponse(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.CountyData[] Counties, System.Guid MessageId) {
+        public GetCountiesResponse(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.CountyData[] Counties, System.Guid MessageId) {
             this.Counties = Counties;
             this.MessageId = MessageId;
         }
@@ -699,7 +699,7 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
     public partial class GetLocalAuthoritiesResponse {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=0)]
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.LocalAuthorityData[] LocalAuthorities;
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.LocalAuthorityData[] LocalAuthorities;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="http://services.imservices.org.uk/AVMS/Interfaces/5.1", Order=1)]
         public System.Guid MessageId;
@@ -707,19 +707,19 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
         public GetLocalAuthoritiesResponse() {
         }
         
-        public GetLocalAuthoritiesResponse(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.LocalAuthorityData[] LocalAuthorities, System.Guid MessageId) {
+        public GetLocalAuthoritiesResponse(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.LocalAuthorityData[] LocalAuthorities, System.Guid MessageId) {
             this.LocalAuthorities = LocalAuthorities;
             this.MessageId = MessageId;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IReferenceDataChannel : SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData, System.ServiceModel.IClientChannel {
+    public interface IReferenceDataChannel : SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ReferenceDataClient : System.ServiceModel.ClientBase<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData>, SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData {
+    public partial class ReferenceDataClient : System.ServiceModel.ClientBase<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData>, SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData {
         
         public ReferenceDataClient() {
         }
@@ -741,97 +741,97 @@ namespace SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesResponse SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData.GetErrorCodes(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesRequest request) {
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesResponse SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData.GetErrorCodes(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesRequest request) {
             return base.Channel.GetErrorCodes(request);
         }
         
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.ErrorCodesData[] GetErrorCodes(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesRequest();
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.ErrorCodesData[] GetErrorCodes(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesRequest();
             inValue.ExternalSystemId = ExternalSystemId;
             inValue.MessageId = MessageId;
             inValue.PublicKey = PublicKey;
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData)(this)).GetErrorCodes(inValue);
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData)(this)).GetErrorCodes(inValue);
             MessageId = retVal.MessageId;
             return retVal.ErrorCodes;
         }
         
-        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesResponse> GetErrorCodesAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetErrorCodesRequest request) {
+        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesResponse> GetErrorCodesAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetErrorCodesRequest request) {
             return base.Channel.GetErrorCodesAsync(request);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksResponse SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData.GetApprenticeshipFrameworks(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksRequest request) {
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksResponse SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData.GetApprenticeshipFrameworks(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksRequest request) {
             return base.Channel.GetApprenticeshipFrameworks(request);
         }
         
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.ApprenticeshipFrameworkAndOccupationData[] GetApprenticeshipFrameworks(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksRequest();
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.ApprenticeshipFrameworkAndOccupationData[] GetApprenticeshipFrameworks(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksRequest();
             inValue.ExternalSystemId = ExternalSystemId;
             inValue.MessageId = MessageId;
             inValue.PublicKey = PublicKey;
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData)(this)).GetApprenticeshipFrameworks(inValue);
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData)(this)).GetApprenticeshipFrameworks(inValue);
             MessageId = retVal.MessageId;
             return retVal.ApprenticeshipFrameworks;
         }
         
-        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksResponse> GetApprenticeshipFrameworksAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetApprenticeshipFrameworksRequest request) {
+        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksResponse> GetApprenticeshipFrameworksAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetApprenticeshipFrameworksRequest request) {
             return base.Channel.GetApprenticeshipFrameworksAsync(request);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionResponse SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData.GetRegion(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionRequest request) {
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionResponse SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData.GetRegion(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionRequest request) {
             return base.Channel.GetRegion(request);
         }
         
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.RegionData[] GetRegion(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionRequest();
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.RegionData[] GetRegion(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionRequest();
             inValue.ExternalSystemId = ExternalSystemId;
             inValue.MessageId = MessageId;
             inValue.PublicKey = PublicKey;
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData)(this)).GetRegion(inValue);
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData)(this)).GetRegion(inValue);
             MessageId = retVal.MessageId;
             return retVal.Regions;
         }
         
-        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionResponse> GetRegionAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetRegionRequest request) {
+        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionResponse> GetRegionAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetRegionRequest request) {
             return base.Channel.GetRegionAsync(request);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesResponse SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData.GetCounties(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesRequest request) {
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesResponse SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData.GetCounties(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesRequest request) {
             return base.Channel.GetCounties(request);
         }
         
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.CountyData[] GetCounties(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesRequest();
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.CountyData[] GetCounties(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesRequest();
             inValue.ExternalSystemId = ExternalSystemId;
             inValue.MessageId = MessageId;
             inValue.PublicKey = PublicKey;
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData)(this)).GetCounties(inValue);
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData)(this)).GetCounties(inValue);
             MessageId = retVal.MessageId;
             return retVal.Counties;
         }
         
-        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesResponse> GetCountiesAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetCountiesRequest request) {
+        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesResponse> GetCountiesAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetCountiesRequest request) {
             return base.Channel.GetCountiesAsync(request);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesResponse SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData.GetLocalAuthorities(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesRequest request) {
+        SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesResponse SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData.GetLocalAuthorities(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesRequest request) {
             return base.Channel.GetLocalAuthorities(request);
         }
         
-        public SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.LocalAuthorityData[] GetLocalAuthorities(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesRequest();
+        public SFA.Apprenticeship.Api.AvmsCompatability.AvRds.LocalAuthorityData[] GetLocalAuthorities(System.Guid ExternalSystemId, ref System.Guid MessageId, string PublicKey) {
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesRequest inValue = new SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesRequest();
             inValue.ExternalSystemId = ExternalSystemId;
             inValue.MessageId = MessageId;
             inValue.PublicKey = PublicKey;
-            SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.IReferenceData)(this)).GetLocalAuthorities(inValue);
+            SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesResponse retVal = ((SFA.Apprenticeship.Api.AvmsCompatability.AvRds.IReferenceData)(this)).GetLocalAuthorities(inValue);
             MessageId = retVal.MessageId;
             return retVal.LocalAuthorities;
         }
         
-        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesResponse> GetLocalAuthoritiesAsync(SFA.Apprenticeship.Api.AvmsCompatability.LegacyReferenceDataService.GetLocalAuthoritiesRequest request) {
+        public System.Threading.Tasks.Task<SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesResponse> GetLocalAuthoritiesAsync(SFA.Apprenticeship.Api.AvmsCompatability.AvRds.GetLocalAuthoritiesRequest request) {
             return base.Channel.GetLocalAuthoritiesAsync(request);
         }
     }
