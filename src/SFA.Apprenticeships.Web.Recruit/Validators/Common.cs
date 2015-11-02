@@ -11,6 +11,7 @@
         {
             if (string.IsNullOrEmpty(uri)) { return false; }
             if (!uri.Contains(".")) { return false; }
+            if (uri.Split(' ').Length > 1) return false;
             if (ProtocolRegex.IsMatch(uri))
             {
                 var protocol = ProtocolRegex.Match(uri).Groups[1].Value;
