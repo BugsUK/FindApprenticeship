@@ -33,7 +33,7 @@ $candidateWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Candid
 $recruitWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Recruit.Azure"
 $manageWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Manage.Azure"
 $vacancyRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Service.Vacancy.Azure"
-$avmsCompatibilityServiceRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeship.Api.AvmsCompatability.Azure"
+$avmsCompatibilityServiceRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeship.Api.AvService.Azure"
 
 Write-Output "Updating $settingsConfigFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
 $configurationStorageConnectionStringAppSetting = ('<add key="ConfigurationStorageConnectionString" value="' + $configurationStorageConnectionString + '" />')
