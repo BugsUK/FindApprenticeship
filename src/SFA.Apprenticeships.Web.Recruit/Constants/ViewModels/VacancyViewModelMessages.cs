@@ -9,7 +9,7 @@
             public const string LabelText = "Title";
             public const string RequiredErrorText = "Please enter a title";
             public const string TooLongErrorText = "Title mustn’t exceed 100 characters";
-            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Title " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
