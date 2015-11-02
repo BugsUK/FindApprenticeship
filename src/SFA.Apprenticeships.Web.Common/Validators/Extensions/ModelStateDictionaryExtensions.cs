@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Validators.Extensions
 {
-    using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
 
@@ -14,7 +12,8 @@
 
         public static bool HasWarnings(this ModelStateDictionary modelStateDictionary)
         {
-            return modelStateDictionary.Values.Any(modelState => modelState.Errors.Any(e => e.GetType() == typeof(ModelWarning)));
+            var hasWarnings = modelStateDictionary.Values.Any(modelState => modelState.Errors.Any(e => e.GetType() == typeof(ModelWarning)));
+            return hasWarnings && !modelStateDictionary.HasErrors();
         }
 
         public static bool HasWarningsFor(this ModelStateDictionary modelStateDictionary, string fieldKey)
