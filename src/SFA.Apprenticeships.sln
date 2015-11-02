@@ -205,6 +205,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{3A6ABF9D-8BC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeship.Api.AvmsCompatability.UnitTests", "SFA.Apprenticeship.Api.AvmsCompatability.UnitTests\SFA.Apprenticeship.Api.AvmsCompatability.UnitTests.csproj", "{D24A99DF-8C48-475E-A26E-06D4250852FB}"
 EndProject
+Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeship.Api.AvmsCompatability.Azure", "SFA.Apprenticeship.Api.AvmsCompatability.Azure\SFA.Apprenticeship.Api.AvmsCompatability.Azure.ccproj", "{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1434,6 +1436,22 @@ Global
 		{D24A99DF-8C48-475E-A26E-06D4250852FB}.Release|Any CPU.Build.0 = Demo|Any CPU
 		{D24A99DF-8C48-475E-A26E-06D4250852FB}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{D24A99DF-8C48-475E-A26E-06D4250852FB}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Local|Any CPU.Build.0 = Local|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1529,6 +1547,7 @@ Global
 		{F5CE7351-7509-4E21-A74C-16C5EC81BAF8} = {2F464F67-1FBD-4862-A8B6-B0266487A9B9}
 		{3A6ABF9D-8BC5-4D50-A7C2-EC80919EBED7} = {EB6F2C1E-20C0-4C55-B5D9-70FBA59E5CF0}
 		{D24A99DF-8C48-475E-A26E-06D4250852FB} = {3A6ABF9D-8BC5-4D50-A7C2-EC80919EBED7}
+		{7B4F2238-4BDF-42A0-B333-A9FCEB2EF726} = {2F464F67-1FBD-4862-A8B6-B0266487A9B9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45

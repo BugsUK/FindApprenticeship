@@ -45,12 +45,12 @@
 
             // _referenceDataProvider.GetCategories();
 
-            LegacyReferenceDataService.IReferenceData client =
+            LegacyReferenceDataService.IReferenceData legacyClient =
                 new LegacyReferenceDataService.ReferenceDataClient(LegacyEndpointConfigurationName);
 
-            var legacyRequest = FromRequest(request);
-            var legacyResponse = client.GetApprenticeshipFrameworks(legacyRequest);
-            var response = FromLegacyResponse(legacyResponse);
+            var legacyRequest = MapFromRequest(request);
+            var legacyResponse = legacyClient.GetApprenticeshipFrameworks(legacyRequest);
+            var response = MapFromLegacyResponse(legacyResponse);
 
             return response;
         }
@@ -72,12 +72,12 @@
 
         #region Helpers
 
-        private LegacyReferenceDataService.GetApprenticeshipFrameworksRequest FromRequest(GetApprenticeshipFrameworksRequest request)
+        private LegacyReferenceDataService.GetApprenticeshipFrameworksRequest MapFromRequest(GetApprenticeshipFrameworksRequest request)
         {
             return _mapper.Map<GetApprenticeshipFrameworksRequest, LegacyReferenceDataService.GetApprenticeshipFrameworksRequest>(request);
         }
 
-        private GetApprenticeshipFrameworksResponse FromLegacyResponse(LegacyReferenceDataService.GetApprenticeshipFrameworksResponse legacyResponse)
+        private GetApprenticeshipFrameworksResponse MapFromLegacyResponse(LegacyReferenceDataService.GetApprenticeshipFrameworksResponse legacyResponse)
         {
             return _mapper.Map<LegacyReferenceDataService.GetApprenticeshipFrameworksResponse, GetApprenticeshipFrameworksResponse>(legacyResponse);
         }
