@@ -166,6 +166,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Configs\dataCacheClient.config" />
+    <Content Include="Configs\machineKey.config" />
+    <Content Include="Configs\settings.config" />
     <None Include="Service References\AvRds\ReferenceData51.wsdl" />
     <None Include="Service References\AvRds\ReferenceData51.xsd">
       <SubType>Designer</SubType>
@@ -413,6 +416,7 @@
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\AvRds\" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -445,6 +449,15 @@
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent>IF "%25COPY_CONFIG_FROM_SECURE_REPO%25" == "true" (
+SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\ 
+) else (
+SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\
+)
+robocopy /IS /E %25COPY_PATH%25 $(ProjectDir)
+if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

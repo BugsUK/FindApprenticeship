@@ -33,6 +33,7 @@ $candidateWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Candid
 $recruitWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Recruit.Azure"
 $manageWebRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Web.Manage.Azure"
 $vacancyRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeships.Service.Vacancy.Azure"
+$avmsCompatibilityServiceRoleCscfgFile = $cscfgPathFormat -f "SFA.Apprenticeship.Api.AvmsCompatability.Azure"
 
 Write-Output "Updating $settingsConfigFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
 $configurationStorageConnectionStringAppSetting = ('<add key="ConfigurationStorageConnectionString" value="' + $configurationStorageConnectionString + '" />')
@@ -75,3 +76,7 @@ Write-Output "$manageWebRoleCscfgFile updated"
 Write-Output "Updating $vacancyRoleCscfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
 (gc $vacancyRoleCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $vacancyRoleCscfgFile
 Write-Output "$vacancyRoleCscfgFile updated"
+
+Write-Output "Updating $avmsCompatibilityServiceRoleCscfgFile with ConfigurationStorageConnectionString: $configurationStorageConnectionString"
+(gc $avmsCompatibilityServiceRoleCscfgFile) -replace '<Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value=".*?" />', $configurationStorageConnectionStringSetting | sc $avmsCompatibilityServiceRoleCscfgFile
+Write-Output "$avmsCompatibilityServiceRoleCscfgFile updated"
