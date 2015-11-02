@@ -291,6 +291,7 @@
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ManagementControllerBase.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
@@ -319,6 +320,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="403.html" />
+    <Content Include="404.html" />
+    <Content Include="500.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.svg" />
@@ -390,9 +394,12 @@
     <Content Include="Content\_assets\js\webtrends\webtrends.stub.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="VacancyNotFound.html" />
     <Content Include="Web.config" />
     <Content Include="Views\AgencyUser\Dashboard.cshtml" />
     <Content Include="Views\AgencyUser\AuthorizationError.cshtml" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Views\Error\InternalServerError.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
