@@ -56,10 +56,15 @@
                         @Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon" style="color: green;"></i>
                     </h3>
                     
-                    <p id="vacancy-wage">@Model.VacancySummaryViewModel.Wage</p>
+                    <p id="vacancy-wage">£@Model.VacancySummaryViewModel.Wage</p>
 
                     <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
-                    <p id="vacancy-working-week" itemprop="workHours">@Model.VacancySummaryViewModel.WorkingWeek<br/>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek</p>
+                    <p id="vacancy-working-week" itemprop="workHours">@Model.VacancySummaryViewModel.WorkingWeek<br/>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
+                        @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
+                        {
+                            <br />@:(TODO: the hours are based on the candidate being over 18)
+                        }
+                    </p>
                     <h3 class="bold-small">
                         Apprenticeship duration
                         @if (ViewData.ModelState.HasWarningsFor("Duration"))

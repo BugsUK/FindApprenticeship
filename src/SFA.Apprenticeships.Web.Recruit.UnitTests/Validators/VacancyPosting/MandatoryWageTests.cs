@@ -24,17 +24,15 @@
             _validator = new VacancySummaryViewModelServerValidator();
         }
 
-        //[TestCase(null, WageUnit.Weekly, 15, false)]
-        //[TestCase(45, WageUnit.Weekly, null, false)]
-        [TestCase(45, WageUnit.Weekly, 15, false)] //3 punds per hour
-        [TestCase(195, WageUnit.Monthly, 15, false)] //3 punds per hour
-        [TestCase(2340, WageUnit.Annually, 15, false)] //3 punds per hour
-        [TestCase(49.35, WageUnit.Weekly, 15, false)] //3.29 punds per hour
-        [TestCase(213.85, WageUnit.Monthly, 15, false)] //3.29 punds per hour
-        [TestCase(2566.2, WageUnit.Annually, 15, false)] //3.29 punds per hour
-        [TestCase(49.5, WageUnit.Weekly, 15, true)] //3.30 punds per hour
-        [TestCase(214.5, WageUnit.Monthly, 15, true)] //3.30 punds per hour
-        [TestCase(2574, WageUnit.Annually, 15, true)] //3.30 punds per hour
+        [TestCase(45, WageUnit.Weekly, 15, false)] //3 pounds per hour
+        [TestCase(195, WageUnit.Monthly, 15, false)] //3 pounds per hour
+        [TestCase(2340, WageUnit.Annually, 15, false)] //3 pounds per hour
+        [TestCase(49.35, WageUnit.Weekly, 15, false)] //3.29 pounds per hour
+        [TestCase(213.85, WageUnit.Monthly, 15, false)] //3.29 pounds per hour
+        [TestCase(2566.2, WageUnit.Annually, 15, false)] //3.29 pounds per hour
+        [TestCase(49.5, WageUnit.Weekly, 15, true)] //3.30 pounds per hour
+        [TestCase(214.5, WageUnit.Monthly, 15, true)] //3.30 pounds per hour
+        [TestCase(2574, WageUnit.Annually, 15, true)] //3.30 pounds per hour
         public void ApprenticeMinimumWage_PerHour(decimal wage, WageUnit wageUnit, decimal hoursPerWeek, bool expectValid)
         {
             var viewModel = new VacancySummaryViewModel

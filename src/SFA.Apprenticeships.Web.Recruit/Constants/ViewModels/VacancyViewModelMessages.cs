@@ -35,7 +35,7 @@
         {
             public const string LabelText = "hours per week";
             public const string RequiredErrorText = "Please enter the hours per week";
-            public const string HoursPerWeekShouldBeBetween16And40 = "The hours per week must be between 16 and 40";
+            public const string HoursPerWeekShouldBeGreaterThan16 = "The hours per week must be greater than 16";
         }
 
         public static class WageType

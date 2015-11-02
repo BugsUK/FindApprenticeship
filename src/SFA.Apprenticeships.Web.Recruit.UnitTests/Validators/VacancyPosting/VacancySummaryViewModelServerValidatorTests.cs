@@ -65,7 +65,7 @@
         [TestCase("30", true)]
         [TestCase("37.5", true)]
         [TestCase("40", true)]
-        [TestCase("41", false)]
+        [TestCase("41", true)]
         [TestCase("-1", false)]
         [TestCase("0", false)]
         [TestCase("1", false)]

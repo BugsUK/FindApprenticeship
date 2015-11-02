@@ -48,9 +48,12 @@
 
             RuleFor(x => x.HoursPerWeek)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText)
+                .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText);
+
+            RuleFor(x => x.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)
-                .WithMessage(VacancyViewModelMessages.HoursPerWeek.HoursPerWeekShouldBeBetween16And40);
+                .WithMessage(VacancyViewModelMessages.HoursPerWeek.HoursPerWeekShouldBeGreaterThan16)
+                .When(x => x.HoursPerWeek.HasValue);
 
             RuleFor(viewModel => (int)viewModel.WageType)
                 .InclusiveBetween((int)WageType.ApprenticeshipMinimumWage, (int)WageType.Custom)
@@ -65,6 +68,7 @@
                 .Must(HaveAValidHourRate)
                 .When(v => v.WageType == WageType.Custom)
                 .When(v => v.WageUnit != WageUnit.NotApplicable)
+                .When(v => v.HoursPerWeek.HasValue)
                 .WithMessage(VacancyViewModelMessages.Wage.WageLessThanMinimum);
 
             RuleFor(x => x.Duration)
@@ -132,7 +136,7 @@
 
         private static bool HaveAValidHoursPerWeek(decimal? hours)
         {
-            return hours.HasValue && hours.Value >= 16 && hours.Value <= 40;
+            return hours.HasValue && hours.Value >= 16;
         }
 
         private static decimal GetHourRate(decimal wage, WageUnit wageUnit, decimal hoursPerWeek)

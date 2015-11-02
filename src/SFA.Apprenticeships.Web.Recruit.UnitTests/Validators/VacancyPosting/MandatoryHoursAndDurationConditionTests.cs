@@ -203,8 +203,6 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
         [TestCase(0)]
         [TestCase(1)]
         [TestCase(15)]
-        [TestCase(41)]
-        [TestCase(400)]
         public void RuleSix_HoursPerWeekLessThan16OrGreaterThan40(decimal hoursPerWeek)
         {
             var viewModel = new VacancySummaryViewModel
