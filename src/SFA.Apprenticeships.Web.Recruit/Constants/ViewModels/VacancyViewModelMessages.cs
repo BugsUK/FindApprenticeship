@@ -80,7 +80,7 @@
         {
             public const string LabelText = "Closing date";
             public const string RequiredErrorText = "Please specify the closing date";
-            public const string TooSoonErrorText = "Closing date must be at least two weeks from now";
+            public const string TooSoonErrorText = "Closing date should be at least two weeks from now";
         }
 
         public static class PossibleStartDate
