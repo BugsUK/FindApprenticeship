@@ -180,8 +180,6 @@ WriteAttribute("class", Tuple.Create(" class=\'", 1318), Tuple.Create("\'", 1421
 , Tuple.Create(Tuple.Create(" ", 1407), Tuple.Create("panel-warning", 1408), true)
 );
 
-WriteLiteral(" data-valmsg-summary=\"true\"");
-
 WriteLiteral(">\r\n    <div");
 
 WriteLiteral(" class=\"panel-body\"");
@@ -233,15 +231,15 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2266), Tuple.Create("\"", 2297)
-, Tuple.Create(Tuple.Create("", 2273), Tuple.Create("#", 2273), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2239), Tuple.Create("\"", 2270)
+, Tuple.Create(Tuple.Create("", 2246), Tuple.Create("#", 2246), true)
             
             #line 54 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 2274), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+, Tuple.Create(Tuple.Create("", 2247), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 2274), false)
+, 2247), false)
 );
 
 WriteLiteral(">");
