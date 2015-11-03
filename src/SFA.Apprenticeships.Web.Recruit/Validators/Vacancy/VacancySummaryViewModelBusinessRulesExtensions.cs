@@ -61,7 +61,7 @@
         }
 
         public static ValidationFailure ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel,
-            int? duration)
+            decimal? duration)
         {
             if (!viewModel.HoursPerWeek.HasValue || !duration.HasValue)
             {

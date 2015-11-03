@@ -123,10 +123,13 @@
             return !(hourRate < ApprenticeMinimumWage);
         }
 
-        private static bool HaveAValidDuration(VacancySummaryViewModel vacancy, int? duration)
+        private static bool HaveAValidDuration(VacancySummaryViewModel vacancy, decimal? duration)
         {
             if (!vacancy.HoursPerWeek.HasValue || !vacancy.Duration.HasValue)
                 return true;
+
+            if(duration.HasValue && duration.Value % 1 != 0)
+                return false;
 
             if (vacancy.HoursPerWeekBetween30And40() || vacancy.HoursPerWeekGreaterThanOrEqualTo16())
                 return vacancy.DurationGreaterThanOrEqualTo12Months();

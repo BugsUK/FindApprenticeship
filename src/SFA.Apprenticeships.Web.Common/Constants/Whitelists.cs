@@ -35,6 +35,12 @@
             public const string ErrorText = @"contains some invalid characters";
         }
 
+        public static class IntegerWhitelist
+        {
+            public const string RegularExpression = @"^[0-9]{1,4}";
+            public const string ErrorText = @"must be a whole number";
+        }
+
         public static class YearWhitelist
         {
             public const string RegularExpression = @"^[0-9]{4}$";

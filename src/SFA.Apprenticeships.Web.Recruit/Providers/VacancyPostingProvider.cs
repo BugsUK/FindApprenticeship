@@ -179,7 +179,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             vacancy.Wage = viewModel.Wage;
             vacancy.WageUnit = viewModel.WageUnit;
             vacancy.DurationType = viewModel.DurationType;
-            vacancy.Duration = viewModel.Duration;
+            vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
             if (viewModel.ClosingDate.HasValue)
             {
@@ -265,7 +265,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             vacancy.Wage = viewModel.VacancySummaryViewModel.Wage;
             vacancy.WageUnit = viewModel.VacancySummaryViewModel.WageUnit;
             vacancy.DurationType = viewModel.VacancySummaryViewModel.DurationType;
-            vacancy.Duration = viewModel.VacancySummaryViewModel.Duration;
+            vacancy.Duration = viewModel.VacancySummaryViewModel.Duration.HasValue ? (int?)Math.Round(viewModel.VacancySummaryViewModel.Duration.Value) : null;
             vacancy.ClosingDate = viewModel.VacancySummaryViewModel.ClosingDate.Date;
             vacancy.PossibleStartDate = viewModel.VacancySummaryViewModel.PossibleStartDate.Date;
             vacancy.ApprenticeshipLevel = viewModel.NewVacancyViewModel.ApprenticeshipLevel;

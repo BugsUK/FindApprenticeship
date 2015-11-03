@@ -56,10 +56,11 @@
         public static class Duration
         {
             public const string LabelText = "Duration";
-            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Working week " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListRegularExpression = Whitelists.IntegerWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Duration " + Whitelists.IntegerWhitelist.ErrorText;
             public const string RequiredErrorText = "Please enter the duration";
-            public const string DurationCantBeLessThan12Months = "The duration can't be less than 12 months (52 weeks)";
+            public const string RangeErrorText = "Duration must be a whole number";
+            public const string DurationCantBeLessThan12Months = "The duration must be a whole number and can't be less than 12 months (52 weeks)";
             public const string DurationWarning16Hours =
                 "The minimum duration is 23 months based on the hours per week selected";
             public const string DurationWarning18Hours =

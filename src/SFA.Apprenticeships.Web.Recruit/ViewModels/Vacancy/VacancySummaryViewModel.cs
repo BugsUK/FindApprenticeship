@@ -26,7 +26,7 @@
         public DurationType DurationType { get; set; }
         public List<SelectListItem> DurationTypes { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
-        public int? Duration { get; set; }
+        public decimal? Duration { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
         public DateViewModel ClosingDate { get; set; }
         [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]
