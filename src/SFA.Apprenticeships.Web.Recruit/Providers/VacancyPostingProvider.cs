@@ -248,7 +248,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
-            viewModel.FrameworkName = _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
+            viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             return viewModel;
         }
 
