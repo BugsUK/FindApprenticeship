@@ -246,7 +246,7 @@ WriteLiteral("                        ");
 
             
             #line 44 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                   Write(Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new { id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel" }));
+                   Write(Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimumWage, new { id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel" }));
 
             
             #line default
