@@ -12,6 +12,8 @@
     <AssemblyName>SFA.Apprenticeship.Api.AvService.Azure</AssemblyName>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
     <Name>SFA.Apprenticeship.Api.AvService.Azure</Name>
+    <ValidationIssuesAreErrors>False</ValidationIssuesAreErrors>
+    <UseWebProjectPorts>True</UseWebProjectPorts>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
