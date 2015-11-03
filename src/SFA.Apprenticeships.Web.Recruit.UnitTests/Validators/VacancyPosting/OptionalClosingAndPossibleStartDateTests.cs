@@ -88,5 +88,66 @@
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
         }
+
+        [Test]
+        public void ClosingDateNotAValidDateNoException()
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                ClosingDate = new DateViewModel
+                {
+                    Day = 31,
+                    Month = 11,
+                    Year = 2015
+                }
+            };
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
+        }
+
+        [Test]
+        public void PossibleStartNotAValidDateNoException()
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                PossibleStartDate = new DateViewModel
+                {
+                    Day = 31,
+                    Month = 11,
+                    Year = 2015
+                }
+            };
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
+        }
+
+        [Test]
+        public void ClosingDateAndPossibleStartNotAValidDateNoException()
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                ClosingDate = new DateViewModel
+                {
+                    Day = 31,
+                    Month = 11,
+                    Year = 2015
+                },
+                PossibleStartDate = new DateViewModel
+                {
+                    Day = 31,
+                    Month = 11,
+                    Year = 2015
+                }
+            };
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
+        }
     }
 }

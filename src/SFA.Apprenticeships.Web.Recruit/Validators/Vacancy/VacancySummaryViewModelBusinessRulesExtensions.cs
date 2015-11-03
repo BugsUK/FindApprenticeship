@@ -97,8 +97,7 @@
 
         public static ValidationFailure PossibleStartDateShouldBeAfterClosingDate(this VacancySummaryViewModel viewModel, DateViewModel closingDate)
         {
-            if (closingDate == null || !closingDate.HasValue || viewModel.PossibleStartDate == null ||
-                !viewModel.PossibleStartDate.HasValue)
+            if (closingDate == null || !closingDate.HasValue || viewModel.PossibleStartDate == null || !viewModel.PossibleStartDate.HasValue || !Common.BeValidDate(closingDate) || !Common.BeValidDate(viewModel.PossibleStartDate))
             {
                 return null;
             }

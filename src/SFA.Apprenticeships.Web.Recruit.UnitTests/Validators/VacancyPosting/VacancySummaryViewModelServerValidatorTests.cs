@@ -220,6 +220,42 @@
             _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
         }
 
+        [Test]
+        public void ClosingDateMustBeAValidDateRequired()
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                ClosingDate = new DateViewModel
+                {
+                    Day = 31,
+                    Month = 11,
+                    Year = 2015
+                }
+            };
+
+            _validator.Validate(viewModel);
+
+            _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
+        }
+
+        [Test]
+        public void PossibleStartMustBeAValidDateDateRequired()
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                PossibleStartDate = new DateViewModel
+                {
+                    Day = 31,
+                    Month = 11,
+                    Year = 2015
+                }
+            };
+
+            _validator.Validate(viewModel);
+
+            _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
+        }
+
         [TestCase(null, false)]
         [TestCase("", false)]
         [TestCase(" ", false)]
