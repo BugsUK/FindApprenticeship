@@ -61,11 +61,13 @@
             </fieldset>
 
             <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
+                <a name="closingdate"></a>
                 <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
                 @Html.EditorFor(m => m.ClosingDate)
                 @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
             </fieldset>
             <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
+                <a name="possiblestartdate"></a>
                 <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
                 @Html.EditorFor(m => m.PossibleStartDate)
                 @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
