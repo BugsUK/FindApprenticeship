@@ -12,7 +12,7 @@
 
         public static bool HasWarnings(this ModelStateDictionary modelStateDictionary)
         {
-            return modelStateDictionary.Values.Any(modelState => modelState.Errors.All(e => e.GetType() == typeof(ModelWarning)));
+            return modelStateDictionary.Values.Any(modelState => modelState.Errors.Count(e => e.GetType() == typeof(ModelWarning)) > 0 && modelState.Errors.All(e => e.GetType() == typeof(ModelWarning)));
         }
 
         public static bool HasWarningsFor(this ModelStateDictionary modelStateDictionary, string fieldKey)
