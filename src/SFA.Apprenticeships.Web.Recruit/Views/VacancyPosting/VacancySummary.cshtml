@@ -3,6 +3,7 @@
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Common.Extensions
+@using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Recruit.Constants.ViewModels
 @{
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy summary";
@@ -59,13 +60,15 @@
                 @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
             </fieldset>
 
-            <fieldset class="form-group inline-fixed date-input">
+            <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
                 <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
-                @Html.EditorFor(r => r.ClosingDate)
+                @Html.EditorFor(m => m.ClosingDate)
+                @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
             </fieldset>
-            <fieldset class="form-group inline-fixed date-input">
+            <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
                 <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
-                @Html.EditorFor(r => r.PossibleStartDate)
+                @Html.EditorFor(m => m.PossibleStartDate)
+                @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
             </fieldset>
             @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22})
         </div>

@@ -7,6 +7,11 @@
 
     public static class ValidationExtensions
     {
+        public static MvcHtmlString ValidationMessageWithSeverityFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, ValidationType validationType)
+        {
+            return ValidationMessageWithSeverityFor(htmlHelper, expression, null, validationType);
+        }
+
         public static MvcHtmlString ValidationMessageWithSeverityFor<TModel, TProperty>(this HtmlHelper<TModel> htmlHelper, Expression<Func<TModel, TProperty>> expression, string validationMessage, ValidationType validationType)
         {
             var validationMessageFor = htmlHelper.ValidationMessageFor(expression, validationMessage);

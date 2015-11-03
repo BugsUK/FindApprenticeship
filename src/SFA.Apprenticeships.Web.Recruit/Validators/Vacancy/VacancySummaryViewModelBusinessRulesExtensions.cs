@@ -103,7 +103,7 @@
                 return null;
             }
 
-            if (viewModel.PossibleStartDate.Date < closingDate.Date)
+            if (viewModel.PossibleStartDate.Date <= closingDate.Date)
             {
                 var validationFailure = new ValidationFailure("PossibleStartDate", VacancyViewModelMessages.PossibleStartDate.BeforePublishDateErrorText)
                 {

@@ -74,5 +74,19 @@
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
         }
+
+        [Test]
+        public void PossibleStartDateMustNotBeTheSameAsTheClosingDateWarning()
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                ClosingDate = new DateViewModel(DateTime.Today.AddDays(28)),
+                PossibleStartDate = new DateViewModel(DateTime.Today.AddDays(28))
+            };
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+
+            _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
+        }
     }
 }
