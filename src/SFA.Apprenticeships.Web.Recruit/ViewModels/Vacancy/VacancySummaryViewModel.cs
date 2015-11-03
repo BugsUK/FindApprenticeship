@@ -69,5 +69,23 @@
                 }
             }
         }
+
+        public string WageDisplayText
+        {
+            get
+            {
+                switch (WageType)
+                {
+                    case WageType.Custom:
+                        return string.Format("£{0}", Wage.HasValue ? Wage.Value.ToString() : "unknown");
+                    case WageType.ApprenticeshipMinimumWage:
+                        return "National Minimum Wage for apprentices";
+                    case WageType.NationalMinimumWage:
+                        return "National Minimum Wage";
+                    default:
+                        return string.Empty;
+                }
+            }
+        }
     }
 }
