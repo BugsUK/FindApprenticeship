@@ -39,7 +39,7 @@
             });
 
             result.Should()
-                .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Warning
+                .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
                                                                     && !string.IsNullOrWhiteSpace(p.Message.Text));
         }
 
@@ -66,7 +66,7 @@
             });
 
             result.Should()
-                .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Warning
+                .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
                                                                     && !string.IsNullOrWhiteSpace(p.Message.Text));
         }
 
