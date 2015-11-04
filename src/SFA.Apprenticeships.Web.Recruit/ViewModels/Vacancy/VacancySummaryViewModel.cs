@@ -83,18 +83,26 @@
                     case WageType.Custom:
                         return string.Format("£{0}", Wage.HasValue ? Wage.Value.ToString() : "unknown");
                     case WageType.ApprenticeshipMinimumWage:
-                        return GetWeeklyApprenticeshipMinimumWage();
+                        return HoursPerWeek.HasValue ? GetWeeklyApprenticeshipMinimumWage() : "unknown";
                     case WageType.NationalMinimumWage:
-                        return "National Minimum Wage";
+                        return HoursPerWeek.HasValue ? GetWeeklyNationalMinimumWage() : "unknown";
                     default:
                         return string.Empty;
                 }
             }
         }
 
+        private string GetWeeklyNationalMinimumWage()
+        {
+            var lowerRange = (Wages.Under18NationalMinimumWage*HoursPerWeek.Value).ToString(CultureInfo.InvariantCulture);
+            var higherRange = (Wages.Over21NationalMinimumWage*HoursPerWeek.Value).ToString(CultureInfo.InvariantCulture);
+
+            return string.Format("£{0} - £{1}", lowerRange, higherRange);
+        }
+
         private string GetWeeklyApprenticeshipMinimumWage()
         {
-            return (Wages.ApprenticeMinimumWage*HoursPerWeek.Value).ToString(CultureInfo.InvariantCulture);
+            return string.Format("£{0}", (Wages.ApprenticeMinimumWage*HoursPerWeek.Value).ToString(CultureInfo.InvariantCulture));
         }
     }
 }
