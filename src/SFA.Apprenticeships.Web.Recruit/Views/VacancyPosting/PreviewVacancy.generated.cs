@@ -1579,7 +1579,7 @@ WriteLiteral("            </div>\r\n\r\n        </section>\r\n\r\n");
 
             
             #line 293 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySubmitted, FormMethod.Get))
+ using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
 {
     
             

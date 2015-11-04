@@ -362,25 +362,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel)
+        public MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber)
         {
-            var result = _vacancyViewModelValidator.Validate(viewModel);
+            var vacancyViewModel =_vacancyPostingProvider.SubmitVacancy(vacancyReferenceNumber);
 
-            if (!result.IsValid)
-            {
-                var existingViewModel = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
-
-                viewModel.ApprenticeshipLevels = existingViewModel.ApprenticeshipLevels;
-                viewModel.FrameworkName = existingViewModel.FrameworkName;
-                viewModel.NewVacancyViewModel.ProviderSiteEmployerLink = existingViewModel.NewVacancyViewModel.ProviderSiteEmployerLink;
-                viewModel.ProviderSite = existingViewModel.ProviderSite;
-
-                return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation, viewModel, result);
-            }
-
-            viewModel = _vacancyPostingProvider.SubmitVacancy(viewModel);
-            
-            return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.Ok, vacancyViewModel);
         }
 
         public MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber)

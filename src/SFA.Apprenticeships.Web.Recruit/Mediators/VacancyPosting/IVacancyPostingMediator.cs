@@ -47,7 +47,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
         MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
 
-        MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel);
+        MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber);
 
         MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber);
 

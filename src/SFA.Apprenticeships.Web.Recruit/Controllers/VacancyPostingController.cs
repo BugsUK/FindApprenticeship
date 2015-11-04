@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -377,20 +376,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             }
 
         }
-
-        [HttpGet]
+        
+        [HttpPost]
         public ActionResult SubmitVacancy(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancyViewModel(vacancyReferenceNumber);
-            var viewModel = response.ViewModel;
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        public ActionResult SubmitVacancy(VacancyViewModel viewModel)
-        {
-            var response = _vacancyPostingMediator.SubmitVacancy(viewModel);
+            var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber);
             var vacancyViewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -402,9 +392,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
             switch (response.Code)
             {
-                case VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                    return View(vacancyViewModel);
+                //case VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation:
+                //    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                //    return View(vacancyViewModel);
 
                 case VacancyPostingMediatorCodes.SubmitVacancy.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });

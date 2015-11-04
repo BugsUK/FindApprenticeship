@@ -1,13 +1,10 @@
-﻿using System.Diagnostics.Contracts;
-using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
-
-namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Policy;
     using System.Web.Mvc;
+    using Application.Interfaces.DateTime;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
@@ -15,6 +12,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     using Common.Configuration;
     using Converters;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
     using ViewModels.Vacancy;
@@ -26,6 +24,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
         private readonly IProviderService _providerService;
+        private readonly IDateTimeService _dateTimeService;
 
         private readonly string[] _blacklistedCategoryCodes;
 
@@ -34,13 +33,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService,
             IReferenceDataService referenceDataService,
-            IProviderService providerService)
+            IProviderService providerService, IDateTimeService dateTimeService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
 
             _referenceDataService = referenceDataService;
             _providerService = providerService;
+            _dateTimeService = dateTimeService;
             _blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(configurationService);
         }
 
@@ -252,40 +252,18 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
             return viewModel;
         }
 
-        public VacancyViewModel SubmitVacancy(VacancyViewModel viewModel)
+        public VacancyViewModel SubmitVacancy(long vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
 
-            //TODO: Automap
-            vacancy.Title = viewModel.NewVacancyViewModel.Title;
-            vacancy.ShortDescription = viewModel.NewVacancyViewModel.ShortDescription;
-            vacancy.WorkingWeek = viewModel.VacancySummaryViewModel.WorkingWeek;
-            vacancy.HoursPerWeek = viewModel.VacancySummaryViewModel.HoursPerWeek;
-            vacancy.WageType = viewModel.VacancySummaryViewModel.WageType;
-            vacancy.Wage = viewModel.VacancySummaryViewModel.Wage;
-            vacancy.WageUnit = viewModel.VacancySummaryViewModel.WageUnit;
-            vacancy.DurationType = viewModel.VacancySummaryViewModel.DurationType;
-            vacancy.Duration = viewModel.VacancySummaryViewModel.Duration.HasValue ? (int?)Math.Round(viewModel.VacancySummaryViewModel.Duration.Value) : null;
-            vacancy.ClosingDate = viewModel.VacancySummaryViewModel.ClosingDate.Date;
-            vacancy.PossibleStartDate = viewModel.VacancySummaryViewModel.PossibleStartDate.Date;
-            vacancy.ApprenticeshipLevel = viewModel.NewVacancyViewModel.ApprenticeshipLevel;
-            vacancy.LongDescription = viewModel.VacancySummaryViewModel.LongDescription;
-            vacancy.DesiredSkills = viewModel.VacancyRequirementsProspectsViewModel.DesiredSkills;
-            vacancy.FutureProspects = viewModel.VacancyRequirementsProspectsViewModel.FutureProspects;
-            vacancy.PersonalQualities = viewModel.VacancyRequirementsProspectsViewModel.PersonalQualities;
-            vacancy.ThingsToConsider = viewModel.VacancyRequirementsProspectsViewModel.ThingsToConsider;
-            vacancy.DesiredQualifications = viewModel.VacancyRequirementsProspectsViewModel.DesiredQualifications;
-            vacancy.FirstQuestion = viewModel.VacancyQuestionsViewModel.FirstQuestion;
-            vacancy.SecondQuestion = viewModel.VacancyQuestionsViewModel.SecondQuestion;
-            vacancy.Status = ProviderVacancyStatuses.ToReview;
+            vacancy.Status = ProviderVacancyStatuses.PendingQA;
+            vacancy.DateSubmitted = _dateTimeService.UtcNow();
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
-            viewModel = vacancy.ConvertToVacancyViewModel();
-            viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
-            viewModel.FrameworkName = _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
-            var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
-            viewModel.ProviderSite = providerSite.Convert();
+            //TODO: should we return this VM or the one returned by GetVacancy?
+            var viewModel = vacancy.ConvertToVacancyViewModel();
+
             return viewModel;
         }
 

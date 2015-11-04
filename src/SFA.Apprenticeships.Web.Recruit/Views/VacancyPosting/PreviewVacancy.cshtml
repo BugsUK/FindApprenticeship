@@ -290,7 +290,7 @@
 
         </section>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySubmitted, FormMethod.Get))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
 

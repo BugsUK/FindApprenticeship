@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
     using System;
-    using Common.ViewModels;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
@@ -10,15 +9,16 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Moq;
     using NUnit.Framework;
-    using ViewModels.Vacancy;
 
     [TestFixture]
     public class SubmitVacancyTests : TestBase
     {
         [Test]
-        public void ShouldSetStateToForReviewWhenSumbittingTheVacancy()
+        public void ShouldSetStateToPendingQAWhenSumbittingTheVacancy()
         {
             var vacancyPostingProvider = GetVacancyPostingProvider();
+            const long referenceNumber = 1;
+
             var apprenticeshipVacancy = new ApprenticeshipVacancy
             {
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLink
@@ -43,22 +43,53 @@
                 .Returns(new ProviderSite {Address = new Address()});
             MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
 
-            vacancyPostingProvider.SubmitVacancy(new VacancyViewModel()
-            {
-                NewVacancyViewModel = new NewVacancyViewModel(),
-                VacancySummaryViewModel = new VacancySummaryViewModel
-                {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
-                },
-                VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
-            });
+            vacancyPostingProvider.SubmitVacancy(referenceNumber);
 
             MockVacancyPostingService.Verify(
                 ps =>
                     ps.SaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(v => v.Status == ProviderVacancyStatuses.ToReview)));
+                        It.Is<ApprenticeshipVacancy>(v => v.Status == ProviderVacancyStatuses.PendingQA)));
+        }
+
+        [Test]
+        public void ShouldSetDateSubmittedToUtcNowWhenSumbittingTheVacancy()
+        {
+            var vacancyPostingProvider = GetVacancyPostingProvider();
+            const long referenceNumber = 1;
+
+            var now = DateTime.Now;
+
+            var apprenticeshipVacancy = new ApprenticeshipVacancy
+            {
+                ProviderSiteEmployerLink = new ProviderSiteEmployerLink
+                {
+                    DateCreated = DateTime.Now,
+                    DateUpdated = DateTime.Now,
+                    Description = "Description",
+                    Employer = new Employer
+                    {
+                        Address = new Address()
+                    },
+                    EntityId = Guid.NewGuid(),
+                    ProviderSiteErn = string.Empty,
+                    WebsiteUrl = "http://www.google.com"
+                }
+            };
+
+            MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns(apprenticeshipVacancy);
+            MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new ProviderSite { Address = new Address() });
+            MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
+            MockTimeService.Setup(ts => ts.UtcNow()).Returns(now);
+
+            vacancyPostingProvider.SubmitVacancy(referenceNumber);
+
+            MockVacancyPostingService.Verify(
+                ps =>
+                    ps.SaveApprenticeshipVacancy(
+                        It.Is<ApprenticeshipVacancy>(v => v.DateSubmitted == now)));
         }
     }
 }

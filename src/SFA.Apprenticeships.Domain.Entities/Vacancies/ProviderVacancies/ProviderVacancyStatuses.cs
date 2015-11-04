@@ -4,6 +4,6 @@
     {
         Unknown = 0,
         Draft = 1,
-        ToReview = 2
+        PendingQA = 2
     }
 }

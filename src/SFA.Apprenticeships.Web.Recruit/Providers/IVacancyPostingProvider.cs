@@ -28,7 +28,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         VacancyViewModel GetVacancy(long vacancyReferenceNumber);
 
-        VacancyViewModel SubmitVacancy(VacancyViewModel viewModel);
+        VacancyViewModel SubmitVacancy(long vacancyReferenceNumber);
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
