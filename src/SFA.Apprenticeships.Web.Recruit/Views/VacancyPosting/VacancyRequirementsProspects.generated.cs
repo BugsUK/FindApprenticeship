@@ -59,7 +59,7 @@ WriteLiteral("\r\n\r\n<h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n    Enter vacancy details\r\n</h1>\r\n\r\n");
+WriteLiteral(">\r\n    Requirements and prospects\r\n</h1>\r\n\r\n");
 
             
             #line 11 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"

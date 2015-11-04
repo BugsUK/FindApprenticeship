@@ -155,7 +155,7 @@ WriteLiteral(" name=\"VacancyQuestions\"");
 
 WriteLiteral(" value=\"VacancyQuestions\"");
 
-WriteLiteral(">Save and continue</button>\r\n        <button");
+WriteLiteral(">Save and preview vacancy</button>\r\n        <button");
 
 WriteLiteral(" id=\"VacancyQuestionsAndExit\"");
 
