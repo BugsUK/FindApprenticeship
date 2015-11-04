@@ -28,30 +28,33 @@
             </fieldset>
 
             <div class="blocklabel-single-container">
-                <label class="form-label" for="weekly-wage">Wage</label>
-                <div class="form-group" data-editable-x="">
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
-                        @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new { id = "custom-wage", aria_controls = "wage-type-panel" })
-                        Custom wage
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="national-minimum-wage" class="block-label">
-                        @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new { id = "national-minimum-wage", aria_controls = "wage-type-panel" })
-                        National Minimum Wage
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-minimum-wage" class="block-label">
-                        @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimumWage, new { id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel" })
-                        National Minimum Wage for apprentices
-                    </label>
-                </div>
-                <div id="custom-wage-panel" class="toggle-content blocklabel-content">
-                    <fieldset class="form-group inline-fixed">
-                        £
-                        @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
-                        @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
-                    </fieldset>
+                <div class="form-group">
+                    <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
+                    <label class="form-label" for="weekly-wage">Wage</label>
+                    <div class="form-group" data-editable-x="">
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
+                            @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new { id = "custom-wage", aria_controls = "wage-type-panel" })
+                            Custom wage
+                        </label>
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="national-minimum-wage" class="block-label">
+                            @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new { id = "national-minimum-wage", aria_controls = "wage-type-panel" })
+                            National Minimum Wage
+                        </label>
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="apprenticeship-minimum-wage" class="block-label">
+                            @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimumWage, new { id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel" })
+                            National Minimum Wage for apprentices
+                        </label>
+                    </div>
+                    <div id="custom-wage-panel" class="toggle-content blocklabel-content">
+                        <fieldset class="form-group inline-fixed">
+                            £
+                            @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
+                            @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
+                        </fieldset>
+                    </div>
                 </div>
             </div>
 
@@ -61,13 +64,13 @@
             </fieldset>
 
             <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
-                <a name="closingdate"></a>
+                <a name="@Html.NameFor(m => m.ClosingDate).ToString().ToLower()"></a>
                 <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
                 @Html.EditorFor(m => m.ClosingDate)
                 @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
             </fieldset>
             <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
-                <a name="possiblestartdate"></a>
+                <a name="@Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()"></a>
                 <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
                 @Html.EditorFor(m => m.PossibleStartDate)
                 @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))

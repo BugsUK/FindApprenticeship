@@ -98,7 +98,7 @@
             public const string RequiredErrorText = "Please provide a vacancy description";
             public const string TooLongErrorText = "Long description mustn’t exceed 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Long description " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Vacancy description " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class DesiredSkills
