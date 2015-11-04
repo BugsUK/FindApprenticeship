@@ -10,7 +10,7 @@
         public static bool IsValidUrl(string uri)
         {
             if (string.IsNullOrEmpty(uri)) { return false; }
-            if (!uri.Contains(".")) { return false; }
+            if (!Regex.Replace(uri, "www\\.", "", RegexOptions.IgnoreCase).Contains(".")) { return false; }
             if (uri.Split(' ').Length > 1) return false;
             if (ProtocolRegex.IsMatch(uri))
             {

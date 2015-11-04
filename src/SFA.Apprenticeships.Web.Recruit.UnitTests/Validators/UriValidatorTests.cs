@@ -69,5 +69,16 @@
             //Assert
             isValid.Should().BeTrue("Uri should accept the lack of a protocol prefix.");
         }
+
+        [TestCase("www.goo")]
+        [TestCase("WWW.GOO")]
+        public void ShouldNotAcceptUrlWithoutDomain(string uriString)
+        {
+            //Act
+            bool isValid = Common.IsValidUrl(uriString);
+
+            //Assert
+            isValid.Should().BeFalse("Uri should not accept the lack of a domain.");
+        }
     }
 }
