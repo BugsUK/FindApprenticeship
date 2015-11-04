@@ -2,8 +2,10 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Globalization;
     using System.Web.Mvc;
     using Common.ViewModels;
+    using Constants;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
@@ -38,6 +40,8 @@
         {
             get
             {
+                if (WageType != WageType.Custom) return "Weekly";
+
                 switch (WageUnit)
                 {
                     case WageUnit.Annually:
@@ -79,13 +83,18 @@
                     case WageType.Custom:
                         return string.Format("£{0}", Wage.HasValue ? Wage.Value.ToString() : "unknown");
                     case WageType.ApprenticeshipMinimumWage:
-                        return "National Minimum Wage for apprentices";
+                        return GetWeeklyApprenticeshipMinimumWage();
                     case WageType.NationalMinimumWage:
                         return "National Minimum Wage";
                     default:
                         return string.Empty;
                 }
             }
+        }
+
+        private string GetWeeklyApprenticeshipMinimumWage()
+        {
+            return (Wages.ApprenticeMinimumWage*HoursPerWeek.Value).ToString(CultureInfo.InvariantCulture);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 {
     using System;
+    using Constants;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation;
@@ -31,8 +32,6 @@
 
     public class VacancySummaryViewModelServerValidator : VacancySummaryViewModelClientValidator
     {
-        private const decimal ApprenticeMinimumWage = 3.30m;
-
         public VacancySummaryViewModelServerValidator()
         {
             AddServerCommonRules();
@@ -120,7 +119,7 @@
 
             var hourRate = GetHourRate(vacancy.Wage.Value, vacancy.WageUnit, vacancy.HoursPerWeek.Value);
 
-            return !(hourRate < ApprenticeMinimumWage);
+            return !(hourRate < Wages.ApprenticeMinimumWage);
         }
 
         private static bool HaveAValidDuration(VacancySummaryViewModel vacancy, decimal? duration)
