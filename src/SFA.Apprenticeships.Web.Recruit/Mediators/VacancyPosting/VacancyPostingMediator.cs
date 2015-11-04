@@ -181,7 +181,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
             return SwitchingFromOnlineToOfflineVacancy(newVacancyViewModel, storedVacancy)
                 ? GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning, createdVacancyViewModel,
-                    "TODO: questions will not appear on offline vacancies.", UserMessageLevel.Warning)
+                    "TODO: questions will not appear on offline vacancies.", UserMessageLevel.Info)
                 : GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
         }
 
