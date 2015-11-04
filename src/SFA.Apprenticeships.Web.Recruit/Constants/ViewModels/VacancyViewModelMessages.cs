@@ -88,7 +88,7 @@
         {
             public const string LabelText = "Possible start date";
             public const string RequiredErrorText = "Please specify a valid possible start date";
-            public const string TooSoonErrorText = "Possible start date must be at least two weeks from now";
+            public const string TooSoonErrorText = "Possible start date should be at least two weeks from now";
             public const string BeforePublishDateErrorText = "Possible start date must be after the closing date";
         }
 
