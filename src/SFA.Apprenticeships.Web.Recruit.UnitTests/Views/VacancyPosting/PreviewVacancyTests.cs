@@ -51,9 +51,9 @@
             view.GetElementbyId("dashboardLink").Should().NotBeNull("Should exists a return to dashboard button");
         }
 
-        [TestCase(WageType.NationalMinimumWage, 30, "116.10 - 201.00")]
-        [TestCase(WageType.ApprenticeshipMinimumWage, 20, "66.00")]
-        [TestCase(WageType.ApprenticeshipMinimumWage, 16, "52.80")]
+        [TestCase(WageType.NationalMinimumWage, 30, "&#163;116.10 - &#163;201.00")]
+        [TestCase(WageType.ApprenticeshipMinimumWage, 20, "&#163;66.00")]
+        [TestCase(WageType.ApprenticeshipMinimumWage, 16, "&#163;52.80")]
         public void ShouldShowWageText(WageType wagetype, int hoursPerWeek, string expectedDisplayText)
         {
             var details = new PreviewVacancy();
