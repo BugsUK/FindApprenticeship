@@ -58,7 +58,7 @@ USING (VALUES
   (2, 2, N'Aerospace Manufacturing Fitter', 3),
   (3, 2, N'Aerospace Engineer', 6),
   (4, 2, N'Aerospace Software Development Engineer', 6),
-  (5, 2, N'Aerospace Manufacturing Electrical, Mechanicaland Systems Fitter', 3),
+  (5, 2, N'Aerospace Manufacturing Electrical, Mechanical and Systems Fitter', 3),
   (6, 3, N'Mechatronics Maintenance Technician', 3),
   (7, 3, N'Control/Technical Support Engineer', 6),
   (8, 3, N'Electrical/Electronic Technical Support Engineer', 6),
