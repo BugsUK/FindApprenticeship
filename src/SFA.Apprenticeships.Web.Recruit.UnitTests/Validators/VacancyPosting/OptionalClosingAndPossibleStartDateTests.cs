@@ -3,6 +3,7 @@
     using System;
     using Common.Validators;
     using Common.ViewModels;
+    using FluentAssertions;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
@@ -97,7 +98,7 @@
                 ClosingDate = new DateViewModel
                 {
                     Day = 31,
-                    Month = 11,
+                    Month = 2,
                     Year = 2015
                 }
             };
@@ -115,7 +116,7 @@
                 PossibleStartDate = new DateViewModel
                 {
                     Day = 31,
-                    Month = 11,
+                    Month = 2,
                     Year = 2015
                 }
             };
@@ -133,13 +134,13 @@
                 ClosingDate = new DateViewModel
                 {
                     Day = 31,
-                    Month = 11,
+                    Month = 2,
                     Year = 2015
                 },
                 PossibleStartDate = new DateViewModel
                 {
                     Day = 31,
-                    Month = 11,
+                    Month = 2,
                     Year = 2015
                 }
             };
@@ -148,6 +149,25 @@
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
+        }
+
+        [Test]
+        public void ClosingDateAndPossibleStartShouldNotHaveMultipleErrors()
+        {
+            var today = DateTime.Today;
+
+            var viewModel = new VacancySummaryViewModel
+            {
+                ClosingDate = new DateViewModel(today),
+                PossibleStartDate = new DateViewModel(today)
+            };
+
+            var result = _validator.Validate(viewModel, ruleSet: RuleSet);
+
+            _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
+            result.IsValid.Should().BeFalse();
+            result.Errors.Count.Should().Be(3);
         }
     }
 }
