@@ -98,6 +98,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
                     ShortDescription = apprenticeshipVacancy.ShortDescription,
                     ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
                     FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
+                    StandardId = apprenticeshipVacancy.StandardId,
                     ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert(),
                     OfflineVacancy = apprenticeshipVacancy.OfflineVacancy,
                     OfflineApplicationUrl = apprenticeshipVacancy.OfflineApplicationUrl,
@@ -177,6 +178,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
             {
                 ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
                 FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
+                StandardId = apprenticeshipVacancy.StandardId,
                 ShortDescription = apprenticeshipVacancy.ShortDescription,
                 Title = apprenticeshipVacancy.Title,
                 Ukprn = apprenticeshipVacancy.Ukprn,

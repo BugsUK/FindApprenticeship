@@ -165,6 +165,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
                 Title = "Title",
                 ShortDescription = "shorts",
                 FrameworkCodeName = "fwcn",
+                StandardId = 1234,
                 OfflineVacancy = true,
                 OfflineApplicationUrl = "http://www.google.com",
                 OfflineApplicationInstructions = "optional",
@@ -191,7 +192,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
                 .Match<NewVacancyViewModel>(
                     r =>
                         r.Title == av.Title && r.ShortDescription == av.ShortDescription &&
-                        r.FrameworkCodeName == av.FrameworkCodeName && r.OfflineVacancy == av.OfflineVacancy &&
+                        r.FrameworkCodeName == av.FrameworkCodeName && r.StandardId == av.StandardId && r.OfflineVacancy == av.OfflineVacancy &&
                         r.OfflineApplicationInstructions == av.OfflineApplicationInstructions &&
                         r.OfflineApplicationUrl == av.OfflineApplicationUrl && r.ApprenticeshipLevel == av.ApprenticeshipLevel);
         }

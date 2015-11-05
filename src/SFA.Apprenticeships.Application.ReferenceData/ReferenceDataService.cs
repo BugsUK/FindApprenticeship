@@ -37,5 +37,10 @@
         {
             return _referenceDataProvider.GetCategoryByCode(categoryCode);
         }
+
+        public IEnumerable<Sector> GetSectors()
+        {
+            return _referenceDataProvider.GetSectors();
+        }
     }
 }

@@ -32,6 +32,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
+        List<SelectListItem> GetStandards();
+
         List<SelectListItem> GetApprenticeshipLevels();
     }
 }

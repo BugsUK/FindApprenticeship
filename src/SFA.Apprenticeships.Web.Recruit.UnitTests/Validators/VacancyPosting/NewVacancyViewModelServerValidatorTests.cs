@@ -68,6 +68,36 @@
             }
         }
 
+        [TestCase(null, false)]
+        [TestCase("1234", true)]
+        public void ShouldRequireStandardId(string standardIdString, bool expectValid)
+        {
+            // Arrange.
+            int? standardId = null;
+            int parsedStandardId;
+            if (int.TryParse(standardIdString, out parsedStandardId))
+            {
+                standardId = parsedStandardId;
+            }
+            var viewModel = new NewVacancyViewModel
+            {
+                StandardId = standardId
+            };
+
+            // Act.
+            _validator.Validate(viewModel);
+
+            // Assert.
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(m => m.StandardId, viewModel);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(m => m.StandardId, viewModel);
+            }
+        }
+
         [TestCase("http://www.google.com", true)]
         [TestCase("asdf", false)]
         [TestCase("asdf.asdflkjasdfl", true)]

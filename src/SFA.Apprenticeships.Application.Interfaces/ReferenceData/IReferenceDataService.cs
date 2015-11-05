@@ -14,5 +14,7 @@
         Category GetSubCategoryByCode(string subCategoryCode);
 
         Category GetCategoryByCode(string categoryCode);
+
+        IEnumerable<Sector> GetSectors();
     }
 }

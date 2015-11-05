@@ -14,6 +14,7 @@
     {
         private const string AWebPage = "http://www.google.com";
         private const string AString = "A string";
+        private const int AnInt = 1234;
         private const long ALong = 1234;
 
         [Test]
@@ -32,6 +33,7 @@
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
                 FrameworkCodeName = AString,
+                StandardId = AnInt,
                 Title = AString,
                 ShortDescription = AString,
                 ApprenticeshipLevel = ApprenticeshipLevel.Higher,
@@ -59,6 +61,7 @@
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
                 FrameworkCodeName = AString,
+                StandardId = AnInt,
                 Title = AString,
                 ShortDescription = AString,
                 ApprenticeshipLevel = ApprenticeshipLevel.Higher,

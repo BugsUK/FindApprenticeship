@@ -170,6 +170,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             if (!validationResult.IsValid)
             {
                 newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+                newVacancyViewModel.Standards = _vacancyPostingProvider.GetStandards();
                 newVacancyViewModel.ProviderSiteEmployerLink = _providerProvider.GetProviderSiteEmployerLinkViewModel(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
@@ -192,6 +193,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             if (!validationResult.IsValid)
             {
                 newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+                newVacancyViewModel.Standards = _vacancyPostingProvider.GetStandards();
                 newVacancyViewModel.ProviderSiteEmployerLink = _providerProvider.GetProviderSiteEmployerLinkViewModel(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);

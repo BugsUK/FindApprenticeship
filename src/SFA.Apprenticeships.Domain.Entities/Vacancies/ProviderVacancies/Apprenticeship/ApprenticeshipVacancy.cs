@@ -8,6 +8,8 @@
 
         public string FrameworkCodeName { get; set; }
 
+        public int? StandardId { get; set; }
+
         public ProviderVacancyStatuses Status { get; set; }
     }
 }

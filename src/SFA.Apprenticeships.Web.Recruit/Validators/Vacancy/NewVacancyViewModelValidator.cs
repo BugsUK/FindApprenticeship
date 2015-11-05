@@ -69,6 +69,10 @@
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.FrameworkCodeName.RequiredErrorText);
 
+            validator.RuleFor(m => m.StandardId)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.StandardId.RequiredErrorText);
+
             validator.RuleFor(viewModel => (int)viewModel.ApprenticeshipLevel)
                 .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Higher)
                 .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText);

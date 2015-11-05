@@ -187,5 +187,10 @@
         {
             public const string RequiredErrorText = "Please select the apprenticeship framework";
         }
+
+        public static class StandardId
+        {
+            public const string RequiredErrorText = "Please select the apprenticeship standard";
+        }
     }
 }

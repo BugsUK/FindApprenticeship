@@ -48,11 +48,13 @@
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
             var sectors = GetSectorsAndFrameworks();
+            var standards = GetStandards();
 
             if (existingVacancy != null)
             {
                 var vacancyViewModel = existingVacancy.ConvertToNewVacancyViewModel();
                 vacancyViewModel.SectorsAndFrameworks = sectors;
+                vacancyViewModel.Standards = standards;
                 return vacancyViewModel;
             }
 
@@ -63,6 +65,7 @@
                 Ukprn = ukprn,
                 ApprenticeshipLevel = ApprenticeshipLevel.Unknown, //Force a selection
                 SectorsAndFrameworks = sectors,
+                Standards = standards,
                 ProviderSiteEmployerLink = providerSiteEmployerLink.Convert()
             };
         }
@@ -72,7 +75,9 @@
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToNewVacancyViewModel();
             var sectors = GetSectorsAndFrameworks();
+            var standards = GetStandards();
             viewModel.SectorsAndFrameworks = sectors;
+            viewModel.Standards = standards;
             return viewModel;
         }
 
@@ -125,6 +130,7 @@
                 Title = newVacancyViewModel.Title,
                 ShortDescription = newVacancyViewModel.ShortDescription,
                 FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
+                StandardId = newVacancyViewModel.StandardId,
                 ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
                 Status = ProviderVacancyStatuses.Draft,
@@ -145,6 +151,7 @@
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
             vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
+            vacancy.StandardId = newVacancyViewModel.StandardId;
             vacancy.ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
@@ -267,18 +274,6 @@
             return viewModel;
         }
 
-        public List<SelectListItem> GetApprenticeshipLevels()
-        {
-            var levels =
-                Enum.GetValues(typeof(ApprenticeshipLevel))
-                    .Cast<ApprenticeshipLevel>()
-                    .Where(al => al != ApprenticeshipLevel.Unknown)
-                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
-                    .ToList();
-
-            return levels;
-        }
-
         public List<SelectListItem> GetSectorsAndFrameworks()
         {
             var categories = _referenceDataService.GetCategories();
@@ -306,6 +301,47 @@
             }
 
             return sectorsAndFrameworkItems;
+        }
+
+        public List<SelectListItem> GetStandards()
+        {
+            var sectors = _referenceDataService.GetSectors();
+
+            var standardsItems = new List<SelectListItem>
+            {
+                new SelectListItem { Value = string.Empty, Text = "Choose from the list of standards"}
+            };
+
+            foreach (var sector in sectors)
+            {
+                if (sector.Standards != null && sector.Standards.Any())
+                {
+                    var sectorGroup = new SelectListGroup { Name = sector.Name };
+                    foreach (var standard in sector.Standards)
+                    {
+                        standardsItems.Add(new SelectListItem
+                        {
+                            Group = sectorGroup,
+                            Value = standard.Id.ToString(),
+                            Text = standard.Name
+                        });
+                    }
+                }
+            }
+
+            return standardsItems;
+        }
+
+        public List<SelectListItem> GetApprenticeshipLevels()
+        {
+            var levels =
+                Enum.GetValues(typeof(ApprenticeshipLevel))
+                    .Cast<ApprenticeshipLevel>()
+                    .Where(al => al != ApprenticeshipLevel.Unknown)
+                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
+                    .ToList();
+
+            return levels;
         }
 
         #region Helpers

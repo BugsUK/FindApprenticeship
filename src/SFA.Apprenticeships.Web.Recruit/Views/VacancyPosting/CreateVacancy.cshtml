@@ -35,25 +35,33 @@
         <div class="small-btm-margin clearfix">
             @* ReSharper disable once Html.IdNotResolved *@
             <label for="apprenticeship-level-intermediate" class="block-label">
-                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new { id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label" }) Intermediate
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
             </label>
         </div>
 
         <div class="small-btm-margin clearfix">
             @* ReSharper disable once Html.IdNotResolved *@
             <label for="apprenticeship-level-advanced" class="block-label">
-                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new { id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label" }) Advanced
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
             </label>
         </div>
 
         <div class="small-btm-margin clearfix">
             @* ReSharper disable once Html.IdNotResolved *@
             <label for="apprenticeship-level-higher" class="block-label">
-                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new { id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label" }) Higher
+                @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
             </label>
         </div>
         @Html.ValidationMessageFor(m => m.ApprenticeshipLevel)
     </div>
+
+    <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
+        <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
+        <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
+        @Html.DropDownListFor(m => m.StandardId, Model.Standards, new { @class = "para-btm-margin chosen-select", style = "min-width: 50%;" })
+        @Html.ValidationMessageFor(m => m.StandardId)
+    </div>
+
     <div class="form-group">
         <div class="blocklabel-single-container">
             <div class="form-group inline clearfix blocklabel-single hide-nojs">

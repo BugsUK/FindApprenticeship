@@ -30,6 +30,10 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 
         public List<SelectListItem> SectorsAndFrameworks { get; set; }
 
+        public int? StandardId { get; set; }
+
+        public List<SelectListItem> Standards { get; set; }
+
         public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
 
         public bool OfflineVacancy { get; set; }
