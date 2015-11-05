@@ -412,6 +412,7 @@
     <Content Include="Views\AgencyUser\AuthorizationError.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ProviderVacancyStatuses.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
