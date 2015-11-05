@@ -1,15 +1,15 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.ServiceContracts.Version50
 {
     using System.ServiceModel;
-    using AvService;
     using FaultContracts.Version50;
     using MessageContracts.Version50;
+    using Namespaces.Version50;
 
-    [ServiceContract(Namespace=CommonNamespaces.ExternalInterfaces)]
+    [ServiceContract(Namespace = Namespace.Uri)]
     public interface IApplicationTracking
     {
         [OperationContract]
         [FaultContract(typeof(SystemFaultContract))]
-        SubmitApplicationTrackingResponse Submit( SubmitApplicationTrackingRequest request );
+        SubmitApplicationTrackingResponse Submit(SubmitApplicationTrackingRequest request);
     }
 }

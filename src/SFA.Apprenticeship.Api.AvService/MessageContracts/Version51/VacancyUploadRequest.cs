@@ -3,11 +3,12 @@
     using System.Collections.Generic;
     using System.ServiceModel;
     using DataContracts.Version51;
+    using Namespaces.Version51;
 
     [MessageContract]
-    public class VacancyUploadRequest: NavmsMessageHeader
+    public class VacancyUploadRequest : NavmsMessageHeader
     {
-        [MessageBodyMember(Namespace=CommonNamespaces.ExternalInterfacesRel51, Order=1)]
-        public List<VacancyUploadData> Vacancies { get; set; } 
+        [MessageBodyMember(Namespace = Namespace.Uri, Order = 1)]
+        public List<VacancyUploadData> Vacancies { get; set; }
     }
 }

@@ -2,11 +2,12 @@
 {
     using System.ServiceModel;
     using DataContracts.Version51;
+    using Namespaces.Version51;
 
     [MessageContract]
-    public class VacancySummaryRequest: NavmsMessageHeader
+    public class VacancySummaryRequest : NavmsMessageHeader
     {
-        [MessageBodyMember(Namespace = CommonNamespaces.ExternalInterfacesRel51, Order = 1)]
-        public VacancySearchData VacancySearchCriteria { get; set; } 
+        [MessageBodyMember(Namespace = Namespace.Uri, Order = 1)]
+        public VacancySearchData VacancySearchCriteria { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.ServiceModel;
+    using Namespaces.Version51;
 
     /// <summary>
     /// Generic message header
@@ -9,7 +10,7 @@
     [MessageContract]
     public abstract class NavmsInternalResponseHeader
     {
-        [MessageBodyMember(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+        [MessageBodyMember(Namespace = Namespace.Uri)]
         public Guid MessageId { get; set; }
     }
 }

@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.DataContracts.Version50
 {
     using System.Runtime.Serialization;
+    using Namespaces.Version50;
 
-    [DataContract(Namespace = CommonNamespaces.ExternalInterfaces)]
+    [DataContract(Namespace = Namespace.Uri)]
     public class RegionData
     {
         [DataMember]

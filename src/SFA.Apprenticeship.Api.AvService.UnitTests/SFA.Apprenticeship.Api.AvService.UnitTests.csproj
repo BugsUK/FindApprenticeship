@@ -104,7 +104,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mappers\Version51\ApprenticeshipFrameworkMapperTests.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

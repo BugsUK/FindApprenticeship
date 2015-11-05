@@ -3,11 +3,12 @@
     using System.Collections.Generic;
     using System.ServiceModel;
     using DataContracts.Version51;
+    using Namespaces.Version51;
 
     [MessageContract]
     public class GetLocalAuthoritiesResponse : NavmsResponseHeader
     {
-        [MessageBodyMember(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+        [MessageBodyMember(Namespace = Namespace.Uri)]
         public List<LocalAuthorityData> LocalAuthorities { get; set; }
     }
 }

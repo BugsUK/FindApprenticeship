@@ -2,20 +2,21 @@
 {
     using System;
     using System.Runtime.Serialization;
+    using Namespaces.Version51;
 
-    [DataContract( Namespace = CommonNamespaces.ExternalInterfacesRel51 )]
+    [DataContract(Namespace = Namespace.Uri)]
     public class VacancyUploadData
-    {       
-        [DataMember( IsRequired = true, Order = 1)]
+    {
+        [DataMember(IsRequired = true, Order = 1)]
         public Guid VacancyId { get; set; }
 
-        [DataMember( IsRequired = true, Order = 2)]
+        [DataMember(IsRequired = true, Order = 2)]
         public string Title { get; set; }
 
-        [DataMember( IsRequired = true, Order = 3)]
+        [DataMember(IsRequired = true, Order = 3)]
         public string ShortDescription { get; set; }
 
-        [DataMember( IsRequired = true, Order = 4)]
+        [DataMember(IsRequired = true, Order = 4)]
         public string LongDescription { get; set; }
 
         [DataMember(IsRequired = true, Order = 5)]

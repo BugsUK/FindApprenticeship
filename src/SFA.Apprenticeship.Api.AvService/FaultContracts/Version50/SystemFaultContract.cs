@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.FaultContracts.Version50
 {
     using System.Runtime.Serialization;
-    using AvService;
+    using Namespaces.Version50;
 
-    [DataContract(Namespace=CommonNamespaces.ExternalInterfaces)]
+    [DataContract(Namespace=Namespace.Uri)]
     public class SystemFaultContract
     {
     }

@@ -2,6 +2,7 @@
 {
     using System;
     using System.ServiceModel;
+    using Namespaces.Version51;
 
     /// <summary>
     /// Generic message header
@@ -9,13 +10,13 @@
     [MessageContract]
     public abstract class NavmsMessageHeader
     {
-        [MessageHeader(Namespace = CommonNamespaces.ExternalInterfacesRel51, MustUnderstand = true)]
+        [MessageHeader(Namespace = Namespace.Uri, MustUnderstand = true)]
         public Guid MessageId { get; set; }
 
-        [MessageHeader(Namespace = CommonNamespaces.ExternalInterfacesRel51, MustUnderstand = true)]
+        [MessageHeader(Namespace = Namespace.Uri, MustUnderstand = true)]
         public Guid ExternalSystemId { get; set; }
 
-        [MessageHeader(Namespace = CommonNamespaces.ExternalInterfacesRel51, MustUnderstand = true)]
+        [MessageHeader(Namespace = Namespace.Uri, MustUnderstand = true)]
         public string PublicKey { get; set; }
     }
 }

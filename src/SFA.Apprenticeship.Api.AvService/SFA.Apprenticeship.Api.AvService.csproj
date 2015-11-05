@@ -25,6 +25,7 @@
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
     <TargetFrameworkProfile />
+    <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -176,44 +177,6 @@
     <Content Include="Configs\dataCacheClient.config" />
     <Content Include="Configs\machineKey.config" />
     <Content Include="Configs\settings.config" />
-    <None Include="Service References\AvRds\ReferenceData51.wsdl" />
-    <None Include="Service References\AvRds\ReferenceData51.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AvRds\ReferenceData511.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\AvRds\ReferenceDataService.wsdl" />
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.ApprenticeshipFrameworkAndOccupationData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.CountyData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.ErrorCodesData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.GetApprenticeshipFrameworksResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.GetCountiesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.GetErrorCodesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.GetLocalAuthoritiesResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.GetRegionResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.LocalAuthorityData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
-    <Content Include="Service References\AvRds\SFA.Apprenticeship.Api.AvService.AvRds.RegionData.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Content>
     <None Include="Web.Local.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -236,13 +199,7 @@
   <ItemGroup>
     <Content Include="ReferenceData51.svc" />
     <Content Include="ReferenceDataService.svc" />
-    <None Include="Service References\AvRds\ReferenceData51.disco" />
-    <None Include="Service References\AvRds\configuration91.svcinfo" />
-    <None Include="Service References\AvRds\configuration.svcinfo" />
-    <None Include="Service References\AvRds\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <Content Include="VacancyDetails51.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -309,8 +266,7 @@
     <Compile Include="FaultContracts\Version50\SystemFaultContract.cs" />
     <Compile Include="FaultContracts\Version51\SystemFaultContract.cs" />
     <Compile Include="IoC\IoC.cs" />
-    <Compile Include="Mappers\Version51\ApprenticeshipFrameworkMapper.cs" />
-    <Compile Include="Mappers\Version51\AvReferenceDataServiceMapper.cs" />
+    <Compile Include="IVacancyDetailsService.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadRequest.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadResponse.cs" />
     <Compile Include="MessageContracts\Version50\GetApprenticeshipFrameworksRequest.cs" />
@@ -334,7 +290,6 @@
     <Compile Include="MessageContracts\Version50\VacancyDetailsResponse.cs" />
     <Compile Include="MessageContracts\Version50\VacancySummaryRequest.cs" />
     <Compile Include="MessageContracts\Version50\VacancySummaryResponse.cs" />
-    <Compile Include="CommonNamespaces.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksRequest.cs" />
@@ -380,20 +335,19 @@
     <Compile Include="MessageContracts\Version51\VacancyUploadInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\VacancyUploadRequest.cs" />
     <Compile Include="MessageContracts\Version51\VacancyUploadResponse.cs" />
+    <Compile Include="Namespaces\Version50\Namespace.cs" />
+    <Compile Include="Namespaces\Version51\Namespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\AvRds\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <Compile Include="ServiceContracts\Version50\IApplicationTracking.cs" />
     <Compile Include="ServiceContracts\Version50\IBulkVacancyUpload.cs" />
     <Compile Include="ServiceContracts\Version50\IReferenceData.cs" />
     <Compile Include="ServiceContracts\Version50\IVacancyDetails.cs" />
     <Compile Include="ServiceContracts\Version50\IVacancySummary.cs" />
     <Compile Include="ServiceContracts\Version51\IReferenceData.cs" />
+    <Compile Include="ServiceContracts\Version51\IVacancyDetails.cs" />
     <Compile Include="ServiceImplementation\Version50\ReferenceDataService.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService.cs" />
+    <Compile Include="ServiceImplementation\Version51\VacancyDetailsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
@@ -418,12 +372,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Service References\" />
+    <Folder Include="Mappers\Version51\" />
   </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\AvRds\" />
-  </ItemGroup>
-  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

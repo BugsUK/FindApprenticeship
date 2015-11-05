@@ -3,28 +3,25 @@
     using System.ServiceModel;
     using FaultContracts.Version50;
     using MessageContracts.Version50;
+    using Namespaces.Version50;
 
-    [ServiceContract(Namespace=CommonNamespaces.ExternalInterfaces)]
+    [ServiceContract(Namespace = Namespace.Uri)]
     public interface IReferenceData
     {
         [OperationContract]
         [FaultContract(typeof(SystemFaultContract))]
-        GetErrorCodesResponse GetErrorCodes( GetErrorCodesRequest request );
+        GetErrorCodesResponse GetErrorCodes(GetErrorCodesRequest request);
 
         [OperationContract]
-        [FaultContract( typeof( SystemFaultContract ) )]
-        GetApprenticeshipFrameworksResponse GetApprenticeshipFrameworks( GetApprenticeshipFrameworksRequest request );
-
-        //[OperationContract]
-        //[FaultContract( typeof( SystemFaultContract ) )]
-        //GetApprenticeshipTypesResponse GetApprenticeshipTypes( GetApprenticeshipTypesRequest request );
+        [FaultContract(typeof(SystemFaultContract))]
+        GetApprenticeshipFrameworksResponse GetApprenticeshipFrameworks(GetApprenticeshipFrameworksRequest request);
 
         [OperationContract]
         [FaultContract(typeof(SystemFaultContract))]
         GetRegionResponse GetRegion(GetRegionRequest request);
 
         [OperationContract]
-        [FaultContract( typeof( SystemFaultContract ) )]
-        GetCountiesResponse GetCounties( GetCountiesRequest request );
+        [FaultContract(typeof(SystemFaultContract))]
+        GetCountiesResponse GetCounties(GetCountiesRequest request);
     }
 }

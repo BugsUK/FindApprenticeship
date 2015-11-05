@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.Common
 {
-    public enum VacancyStatus : int
+    public enum VacancyStatus
     {
 
         Unspecified = 0,

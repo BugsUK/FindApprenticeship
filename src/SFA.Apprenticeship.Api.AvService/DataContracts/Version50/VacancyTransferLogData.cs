@@ -3,8 +3,9 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using Common;
+    using Namespaces.Version50;
 
-    [DataContract(Namespace = CommonNamespaces.ExternalInterfaces, Name = "CreateMessageRequest")]
+    [DataContract(Namespace = Namespace.Uri, Name = "CreateMessageRequest")]
     public class VacancyTransferLogData
     {
         [DataMember]

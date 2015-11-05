@@ -2,11 +2,12 @@
 {
     using System.ServiceModel;
     using DataContracts.Version51;
+    using Namespaces.Version51;
 
     [MessageContract]
-    public class VacancySummaryResponse: NavmsResponseHeader
+    public class VacancySummaryResponse : NavmsResponseHeader
     {
-        [MessageBodyMember(Namespace = CommonNamespaces.ExternalInterfacesRel51, Order = 1)]
+        [MessageBodyMember(Namespace = Namespace.Uri, Order = 1)]
         public VacancySummaryResponseData ResponseData { get; set; }
     }
 }
