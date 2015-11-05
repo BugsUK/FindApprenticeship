@@ -1,1 +1,6 @@
-﻿<%@ ServiceHost Language="C#" Debug="true" Service="SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version50.ReferenceDataService" %>
+﻿<%@ ServiceHost
+    Language="C#"
+    Debug="true"
+    Factory="SFA.Apprenticeship.Api.AvService.IoC.StructureMapServiceHostFactory"
+    Service="SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version50.ReferenceDataService"
+%>

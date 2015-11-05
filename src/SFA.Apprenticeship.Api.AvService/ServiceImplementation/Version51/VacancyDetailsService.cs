@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ServiceModel;
+    using Apprenticeships.Application.Interfaces.Logging;
     using Common;
     using DataContracts.Version51;
     using MessageContracts.Version51;
@@ -14,6 +15,10 @@
     [ServiceBehavior(Namespace = Namespace.Uri)]
     public class VacancyDetailsService : IVacancyDetails
     {
+        public VacancyDetailsService(ILogService logService)
+        {
+        }
+
         public VacancyDetailsResponse Get(VacancyDetailsRequest request)
         {
             return new VacancyDetailsResponse

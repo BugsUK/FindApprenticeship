@@ -153,6 +153,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.Activation" />
     <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
@@ -265,7 +266,11 @@
     <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
     <Compile Include="FaultContracts\Version50\SystemFaultContract.cs" />
     <Compile Include="FaultContracts\Version51\SystemFaultContract.cs" />
+    <Compile Include="IoC\StructureMapInstanceProvider.cs" />
     <Compile Include="IoC\IoC.cs" />
+    <Compile Include="IoC\StructureMapServiceBehavior.cs" />
+    <Compile Include="IoC\StructureMapServiceHost.cs" />
+    <Compile Include="IoC\StructureMapServiceHostFactory.cs" />
     <Compile Include="IVacancyDetailsService.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadRequest.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadResponse.cs" />
@@ -350,6 +355,10 @@
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
