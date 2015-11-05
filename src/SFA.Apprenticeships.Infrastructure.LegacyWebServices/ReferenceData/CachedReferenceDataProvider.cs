@@ -54,6 +54,12 @@
             return _cacheService.Get(CacheKey, GetCategoryByCodeWrap, categoryCode);
         }
 
+        public IEnumerable<Sector> GetSectors()
+        {
+            _logger.Debug("Calling cached GetSectors");
+            return _cacheService.Get(CacheKey, _legcayService.GetSectors);
+        }
+
         /// <summary>
         /// Wrapper to prevent caching all category items (or having to get all categories from service for each item)
         /// </summary>

@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 {
-    using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
@@ -49,18 +47,6 @@
             return occupations.Select(o => o.ToCategory()).ToList();
         }
 
-        private Framework Map(Framework framework, Occupation occupation)
-        {
-            throw new NotImplementedException();
-        }
-
-        private IDbConnection GetConnection()
-        {
-            var conn = new SqlConnection(_connectionString);
-            conn.Open();
-            return conn;
-        }
-
         public Category GetSubCategoryByName(string subCategoryName)
         {
             return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.FullName == subCategoryName);
@@ -79,6 +65,38 @@
         public Category GetCategoryByCode(string categoryCode)
         {
             return GetCategories().FirstOrDefault(c => c.CodeName == categoryCode);
+        }
+
+        public IEnumerable<Sector> GetSectors()
+        {
+            const string sql = @"SELECT * FROM [dbo].[ApprenticeshipSector];
+                                 SELECT * FROM [dbo].[ApprenticeshipStandard];";
+
+            List<Sector> sectors;
+            List<Standard> standards;
+
+            using (var connection = GetConnection())
+            {
+                using (var multi = connection.QueryMultiple(sql))
+                {
+                    sectors = multi.Read<Sector>().ToList();
+                    standards = multi.Read<Standard>().ToList();
+                }
+            }
+
+            foreach (var sector in sectors)
+            {
+                sector.Standards = standards.Where(s => s.ApprenticeshipSectorId == sector.Id).ToList();
+            }
+
+            return sectors;
+        }
+
+        private IDbConnection GetConnection()
+        {
+            var conn = new SqlConnection(_connectionString);
+            conn.Open();
+            return conn;
         }
     }
 }
