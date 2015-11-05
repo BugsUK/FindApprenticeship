@@ -132,6 +132,7 @@
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\ProviderVacancies\DurationType.cs" />
     <Compile Include="Vacancies\ProviderVacancies\ProviderVacancyStatuses.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\TrainingType.cs" />
     <Compile Include="Vacancies\ProviderVacancies\WageType.cs" />
     <Compile Include="Vacancies\ProviderVacancies\WageUnit.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />

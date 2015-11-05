@@ -96,6 +96,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
                     Ukprn = apprenticeshipVacancy.Ukprn,
                     Title = apprenticeshipVacancy.Title,
                     ShortDescription = apprenticeshipVacancy.ShortDescription,
+                    TrainingType = apprenticeshipVacancy.TrainingType,
                     ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
                     FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
                     StandardId = apprenticeshipVacancy.StandardId,
@@ -174,8 +175,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
 
         public static NewVacancyViewModel ConvertToNewVacancyViewModel(this ApprenticeshipVacancy apprenticeshipVacancy)
         {
-            var vacancyViewModel = new NewVacancyViewModel()
+            var vacancyViewModel = new NewVacancyViewModel
             {
+                TrainingType = apprenticeshipVacancy.TrainingType,
                 ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
                 FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
                 StandardId = apprenticeshipVacancy.StandardId,

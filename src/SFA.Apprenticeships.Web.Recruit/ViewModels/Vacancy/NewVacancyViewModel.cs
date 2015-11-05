@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
     using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
     using Provider;
     using Validators.Vacancy;
@@ -27,6 +28,8 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 
         [Display(Name = VacancyViewModelMessages.ShortDescription.LabelText)]
         public string ShortDescription { get; set; }
+
+        public TrainingType TrainingType { get; set; }
 
         public List<SelectListItem> SectorsAndFrameworks { get; set; }
 

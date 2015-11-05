@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Recruit.Validators.Vacancy;
@@ -44,13 +45,18 @@
             }
         }
 
-        [TestCase(null, false)]
-        [TestCase("ABC", true)]
-        public void ShouldRequireFrameworkCodeName(string frameworkCodeName, bool expectValid)
+        [TestCase(null, TrainingType.Unknown, true)]
+        [TestCase("ABC", TrainingType.Unknown, true)]
+        [TestCase(null, TrainingType.Frameworks, false)]
+        [TestCase("ABC", TrainingType.Frameworks, true)]
+        [TestCase(null, TrainingType.Standards, false)]
+        [TestCase("ABC", TrainingType.Standards, true)]
+        public void ShouldRequireFrameworkCodeName(string frameworkCodeName, TrainingType trainingType, bool expectValid)
         {
             // Arrange.
             var viewModel = new NewVacancyViewModel
             {
+                TrainingType = trainingType,
                 FrameworkCodeName = frameworkCodeName
             };
 
@@ -68,9 +74,13 @@
             }
         }
 
-        [TestCase(null, false)]
-        [TestCase("1234", true)]
-        public void ShouldRequireStandardId(string standardIdString, bool expectValid)
+        [TestCase(null, TrainingType.Unknown, true)]
+        [TestCase("1234", TrainingType.Unknown, true)]
+        [TestCase(null, TrainingType.Frameworks, true)]
+        [TestCase("1234", TrainingType.Frameworks, true)]
+        [TestCase(null, TrainingType.Standards, false)]
+        [TestCase("1234", TrainingType.Standards, true)]
+        public void ShouldRequireStandardId(string standardIdString, TrainingType trainingType, bool expectValid)
         {
             // Arrange.
             int? standardId = null;
@@ -81,6 +91,7 @@
             }
             var viewModel = new NewVacancyViewModel
             {
+                TrainingType = trainingType,
                 StandardId = standardId
             };
 

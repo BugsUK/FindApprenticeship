@@ -2,6 +2,7 @@
 {
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation;
     using ViewModels.Vacancy;
 
@@ -67,11 +68,13 @@
 
             validator.RuleFor(m => m.FrameworkCodeName)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.FrameworkCodeName.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.FrameworkCodeName.RequiredErrorText)
+                .When(m => m.TrainingType != TrainingType.Unknown);
 
             validator.RuleFor(m => m.StandardId)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.StandardId.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.StandardId.RequiredErrorText)
+                .When(m => m.TrainingType == TrainingType.Standards);
 
             validator.RuleFor(viewModel => (int)viewModel.ApprenticeshipLevel)
                 .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Higher)

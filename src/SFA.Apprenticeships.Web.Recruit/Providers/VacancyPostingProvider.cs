@@ -64,6 +64,7 @@
             {
                 Ukprn = ukprn,
                 ApprenticeshipLevel = ApprenticeshipLevel.Unknown, //Force a selection
+                TrainingType = TrainingType.Frameworks,
                 SectorsAndFrameworks = sectors,
                 Standards = standards,
                 ProviderSiteEmployerLink = providerSiteEmployerLink.Convert()
@@ -129,6 +130,7 @@
                 Ukprn = newVacancyViewModel.Ukprn,
                 Title = newVacancyViewModel.Title,
                 ShortDescription = newVacancyViewModel.ShortDescription,
+                TrainingType = newVacancyViewModel.TrainingType,
                 FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                 StandardId = newVacancyViewModel.StandardId,
                 ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
@@ -150,6 +152,7 @@
             vacancy.Ukprn = newVacancyViewModel.Ukprn;
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
+            vacancy.TrainingType = newVacancyViewModel.TrainingType;
             vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
             vacancy.StandardId = newVacancyViewModel.StandardId;
             vacancy.ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
