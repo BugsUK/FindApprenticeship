@@ -66,6 +66,10 @@
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.ShortDescription.RequiredErrorText);
 
+            validator.RuleFor(viewModel => (int)viewModel.TrainingType)
+                .InclusiveBetween((int)TrainingType.Frameworks, (int)TrainingType.Standards)
+                .WithMessage(NewVacancyViewModelMessages.TrainingType.RequiredErrorText);
+
             validator.RuleFor(m => m.FrameworkCodeName)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.FrameworkCodeName.RequiredErrorText)
@@ -78,7 +82,8 @@
 
             validator.RuleFor(viewModel => (int)viewModel.ApprenticeshipLevel)
                 .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Higher)
-                .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText);
+                .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText)
+                .When(m => m.TrainingType != TrainingType.Unknown);
 
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)

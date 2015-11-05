@@ -64,7 +64,7 @@
             {
                 Ukprn = ukprn,
                 ApprenticeshipLevel = ApprenticeshipLevel.Unknown, //Force a selection
-                TrainingType = TrainingType.Frameworks,
+                TrainingType = TrainingType.Unknown, //Force a selection
                 SectorsAndFrameworks = sectors,
                 Standards = standards,
                 ProviderSiteEmployerLink = providerSiteEmployerLink.Convert()

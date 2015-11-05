@@ -3,6 +3,7 @@
     using Common.Constants;
     using Common.Mediators;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -32,6 +33,7 @@
                 OfflineVacancy = true,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
+                TrainingType = TrainingType.Frameworks,
                 FrameworkCodeName = AString,
                 StandardId = AnInt,
                 Title = AString,
@@ -60,6 +62,7 @@
                 OfflineVacancy = true,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
+                TrainingType = TrainingType.Frameworks,
                 FrameworkCodeName = AString,
                 StandardId = AnInt,
                 Title = AString,

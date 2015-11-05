@@ -18,16 +18,27 @@
             _validator = new NewVacancyViewModelServerValidator();
         }
 
-        [TestCase(ApprenticeshipLevel.Unknown, false)]
-        [TestCase(ApprenticeshipLevel.Intermediate, true)]
-        [TestCase(ApprenticeshipLevel.Higher, true)]
-        [TestCase(ApprenticeshipLevel.Advanced, true)]
-        [TestCase(4, false)]
-        public void ShouldRequireApprenticeshipLevel(ApprenticeshipLevel apprenticeshipLevel, bool expectValid)
+        [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Unknown, true)]
+        [TestCase(ApprenticeshipLevel.Intermediate, TrainingType.Unknown, true)]
+        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Unknown, true)]
+        [TestCase(ApprenticeshipLevel.Advanced, TrainingType.Unknown, true)]
+        [TestCase(4, TrainingType.Unknown, true)]
+        [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Frameworks, false)]
+        [TestCase(ApprenticeshipLevel.Intermediate, TrainingType.Frameworks, true)]
+        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Frameworks, true)]
+        [TestCase(ApprenticeshipLevel.Advanced, TrainingType.Frameworks, true)]
+        [TestCase(4, TrainingType.Frameworks, false)]
+        [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Standards, false)]
+        [TestCase(ApprenticeshipLevel.Intermediate, TrainingType.Standards, true)]
+        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Standards, true)]
+        [TestCase(ApprenticeshipLevel.Advanced, TrainingType.Standards, true)]
+        [TestCase(4, TrainingType.Standards, false)]
+        public void ShouldRequireApprenticeshipLevel(ApprenticeshipLevel apprenticeshipLevel, TrainingType trainingType, bool expectValid)
         {
             // Arrange.
             var viewModel = new NewVacancyViewModel
             {
+                TrainingType = trainingType,
                 ApprenticeshipLevel = apprenticeshipLevel
             };
 
@@ -42,6 +53,32 @@
             else
             {
                 _validator.ShouldHaveValidationErrorFor(m => m.ApprenticeshipLevel, viewModel);
+            }
+        }
+
+        [TestCase(TrainingType.Unknown, false)]
+        [TestCase(TrainingType.Frameworks, true)]
+        [TestCase(TrainingType.Standards, true)]
+        [TestCase(4, false)]
+        public void ShouldRequireTrainingType(TrainingType trainingType, bool expectValid)
+        {
+            // Arrange.
+            var viewModel = new NewVacancyViewModel
+            {
+                TrainingType = trainingType
+            };
+
+            // Act.
+            _validator.Validate(viewModel);
+
+            // Assert.
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(m => m.TrainingType, viewModel);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(m => m.TrainingType, viewModel);
             }
         }
 
