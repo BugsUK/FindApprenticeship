@@ -52,13 +52,15 @@
         }
 
         [TestCase(WageType.NationalMinimumWage, 30, "&#163;116.10 - &#163;201.00")]
+        [TestCase(WageType.NationalMinimumWage, 37.5, "&#163;145.13 - &#163;251.25")]
         [TestCase(WageType.ApprenticeshipMinimumWage, 20, "&#163;66.00")]
         [TestCase(WageType.ApprenticeshipMinimumWage, 16, "&#163;52.80")]
-        public void ShouldShowWageText(WageType wagetype, int hoursPerWeek, string expectedDisplayText)
+        [TestCase(WageType.ApprenticeshipMinimumWage, 37.5, "&#163;123.75")]
+        public void ShouldShowWageText(WageType wagetype, decimal hoursPerWeek, string expectedDisplayText)
         {
             var details = new PreviewVacancy();
 
-            var viewModel = new VacancyViewModel()
+            var viewModel = new VacancyViewModel
             {
                 ApprenticeshipLevels = new List<SelectListItem>(),
                 ProviderSite = new ProviderSiteViewModel()

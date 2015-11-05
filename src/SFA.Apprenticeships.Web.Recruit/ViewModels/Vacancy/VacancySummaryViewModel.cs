@@ -94,15 +94,15 @@
 
         private string GetWeeklyNationalMinimumWage()
         {
-            var lowerRange = (Wages.Under18NationalMinimumWage*HoursPerWeek.Value).ToString(CultureInfo.InvariantCulture);
-            var higherRange = (Wages.Over21NationalMinimumWage*HoursPerWeek.Value).ToString(CultureInfo.InvariantCulture);
+            var lowerRange = (Wages.Under18NationalMinimumWage*HoursPerWeek.Value).ToString("N2");
+            var higherRange = (Wages.Over21NationalMinimumWage*HoursPerWeek.Value).ToString("N2");
 
             return string.Format("£{0} - £{1}", lowerRange, higherRange);
         }
 
         private string GetWeeklyApprenticeshipMinimumWage()
         {
-            return string.Format("£{0}", (Wages.ApprenticeMinimumWage*HoursPerWeek.Value).ToString(CultureInfo.InvariantCulture));
+            return string.Format("£{0}", (Wages.ApprenticeMinimumWage*HoursPerWeek.Value).ToString("N2"));
         }
     }
 }
