@@ -152,7 +152,7 @@
         }
 
         [Test]
-        public void ClosingDateAndPossibleStartShouldNotHaveMultipleErrors()
+        public void ClosingDateAndPossibleStartDateLessThanTwoWeeks()
         {
             var today = DateTime.Today;
 
@@ -167,7 +167,7 @@
             _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
             _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
             result.IsValid.Should().BeFalse();
-            result.Errors.Count.Should().Be(3);
+            result.Errors.Count.Should().Be(2);
         }
     }
 }

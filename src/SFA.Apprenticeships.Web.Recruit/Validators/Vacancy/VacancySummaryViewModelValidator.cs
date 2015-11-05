@@ -107,7 +107,8 @@
             RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeTwoWeeksInTheFuture)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.TooSoonErrorText)
-                .WithState(s => ValidationType.Warning);
+                .WithState(s => ValidationType.Warning)
+                .When(x => x.ClosingDate == null || !x.ClosingDate.HasValue);
 
             Custom(x => x.PossibleStartDateShouldBeAfterClosingDate(x.ClosingDate));
         }
