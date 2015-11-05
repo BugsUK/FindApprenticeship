@@ -224,7 +224,7 @@
     characterCount(this);
   });
 
-  $('textarea').each(function() {
+  $('textarea:not(:empty)').each(function() {
     characterCount(this);
   });
 
@@ -245,11 +245,8 @@
         $charTextEl   = $this.closest('.form-group').find('.maxchar-text'),
         $thisAria     = $this.closest('.form-group').find('.aria-limit');
 
-    if ($maxLength) {
+    if($maxLength) {
         $charCountEl.text($characterCount);
-    } else {
-        $charTextEl.hide();
-        return;
     }
 
     if($lengthOfText > $maxLength) {
