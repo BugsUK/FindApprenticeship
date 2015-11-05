@@ -301,6 +301,7 @@
     <Compile Include="Controllers\AgencyUserController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ManagementControllerBase.cs" />
+    <Compile Include="Controllers\VacancyController.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
     <Compile Include="Mediators\AgencyUser\IAgencyUserMediator.cs" />
@@ -329,6 +330,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vacancy\Preview.generated.cs">
+      <DependentUpon>Preview.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +419,10 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ProviderVacancyStatuses.cshtml" />
+    <Content Include="Views\Vacancy\Preview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Preview.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

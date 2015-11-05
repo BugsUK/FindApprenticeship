@@ -79,6 +79,12 @@
                 defaults: new {controller = "AgencyUser", action = "Dashboard"}
                 );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.ReviewVacancy,
+                url: "vacancy/review",
+                defaults: new { controller = "Vacancy", action = "Review" }
+                );
+
             routes.LowercaseUrls = true;
 
         }
