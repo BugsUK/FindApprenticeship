@@ -17,15 +17,14 @@
         private readonly IAgencyUserProvider _agencyUserProvider;
         private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
         private readonly IUserDataProvider _userDataProvider;
+        private readonly IVacancyProvider _vacancyProvider;
 
-        public AgencyUserMediator(
-            IAgencyUserProvider agencyUserProvider,
-            IAuthorizationErrorProvider authorizationErrorProvider,
-            IUserDataProvider userDataProvider)
+        public AgencyUserMediator(IAgencyUserProvider agencyUserProvider, IAuthorizationErrorProvider authorizationErrorProvider, IUserDataProvider userDataProvider, IVacancyProvider vacancyProvider)
         {
             _agencyUserProvider = agencyUserProvider;
             _authorizationErrorProvider = authorizationErrorProvider;
             _userDataProvider = userDataProvider;
+            _vacancyProvider = vacancyProvider;
         }
 
         public MediatorResponse<AgencyUserViewModel> Authorize(ClaimsPrincipal principal)
@@ -71,7 +70,7 @@
             var username = principal.Identity.Name;
             var roleList = principal.GetRoleList();
             var viewModel = _agencyUserProvider.GetAgencyUser(username, roleList);
-
+            
             return GetMediatorResponse(AgencyUserMediatorCodes.GetAgencyUser.Ok, viewModel);
         }
 
@@ -82,6 +81,22 @@
             viewModel = _agencyUserProvider.SaveAgencyUser(username, roleList, viewModel);
 
             return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.Ok, viewModel);
+        }
+
+        public MediatorResponse<HomeViewModel> GetHomeViewModel(ClaimsPrincipal principal)
+        {
+            var username = principal.Identity.Name;
+            var roleList = principal.GetRoleList();
+            var userViewModel = _agencyUserProvider.GetAgencyUser(username, roleList);
+            var vacancies = _vacancyProvider.GetPendingQAVacancies();
+            
+            var homeViewModel = new HomeViewModel
+            {
+                AgencyUser = userViewModel,
+                Vacancies = vacancies
+            };
+
+            return GetMediatorResponse(AgencyUserMediatorCodes.GetHomeViewModel.OK, homeViewModel);
         }
     }
 }

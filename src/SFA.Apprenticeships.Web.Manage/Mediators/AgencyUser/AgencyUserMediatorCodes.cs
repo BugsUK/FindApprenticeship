@@ -20,5 +20,10 @@
         {
             public const string Ok = "AgencyUserMediatorCodes.SaveAgencyUser.Ok";
         }
+
+        public class GetHomeViewModel
+        {
+            public const string OK = "AgencyUserMediatorCodes.GetHomeViewModel.Ok";
+        }
     }
 }

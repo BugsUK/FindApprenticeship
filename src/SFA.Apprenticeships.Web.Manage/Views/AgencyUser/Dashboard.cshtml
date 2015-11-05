@@ -1,5 +1,5 @@
 ﻿@using SFA.Apprenticeships.Web.Manage.Constants
-@model SFA.Apprenticeships.Web.Manage.ViewModels.AgencyUserViewModel
+@model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
 @{
     ViewBag.Title = "Dashboard";
@@ -20,18 +20,80 @@
             <div class="page-link">
                 <div class="form-group">
                     <p class="form-label">Change role</p>
-                    @Html.DropDownListFor(m => m.RoleId, Model.Roles)
+                    @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles)
                 </div>
             </div>
             <div class="page-link">
                 <div class="form-group">
                     <p class="form-label">Change team</p>
-                    @Html.DropDownListFor(m => m.TeamId, Model.Teams)
+                    @Html.DropDownListFor(m => m.AgencyUser.TeamId, Model.AgencyUser.Teams)
                 </div>
             </div>
             <div>
                 <button class="button">Save</button>
             </div>
         }
+    </div>
+
+    <div class="grid-wrapper">
+        <div class="grid grid-1-1">
+            <div class="inner-block-padr">
+                <section>
+                    <h2 class="heading-medium">Your vacancies</h2>
+                    <div class="tabbed-element tab1 active width-all-1-1">
+                        <table class="no-btm-margin">
+                            <colgroup>
+                                <col class="t15">
+                                <col class="t15">
+                                <col class="t15">
+                                <col class="t15">
+                                <col class="t15">
+                                <col class="t15">
+                                <col class="t15">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Reference</th>
+                                    <th>Status</th>
+                                    <th>Provider</th>
+                                    <th>Date submitted</th>
+                                    <th>Closing date</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @foreach (var vacancy in Model.Vacancies)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="vac-title">@vacancy.Title</div>
+                                    </td>
+                                    <td>
+                                        <div>@vacancy.VacancyReferenceNumber</div>
+                                    </td>
+                                    <td>
+                                        <div>@vacancy.Status</div>
+                                    </td>
+                                    <td>
+                                        <div>@vacancy.ProviderName</div>
+                                    </td>
+                                    <td>
+                                        <div>@vacancy.DateSubmitted.ToFriendlyClosingToday()</div>
+                                    </td>
+                                    <td>
+                                        <div>@vacancy.ClosingDate.ToFriendlyClosingToday()</div>
+                                    </td>
+                                    <td>
+                                        <a href="http://google.com">QA vacancy</a>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
 </div>

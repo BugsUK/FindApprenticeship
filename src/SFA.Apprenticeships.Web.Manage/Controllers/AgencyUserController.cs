@@ -94,17 +94,17 @@
         public ActionResult Dashboard()
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
-            var response = _agencyUserMediator.GetAgencyUser(claimsPrincipal);
+            var response = _agencyUserMediator.GetHomeViewModel(claimsPrincipal);
 
             return View(response.ViewModel);
         }
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult Dashboard(AgencyUserViewModel viewModel)
+        public ActionResult Dashboard(HomeViewModel viewModel)
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
-            _agencyUserMediator.SaveAgencyUser(claimsPrincipal, viewModel);
+            _agencyUserMediator.SaveAgencyUser(claimsPrincipal, viewModel.AgencyUser);
 
             return RedirectToRoute(ManagementRouteNames.Dashboard);
         }

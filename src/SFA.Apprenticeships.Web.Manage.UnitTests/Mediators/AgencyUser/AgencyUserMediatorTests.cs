@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 {
+    using System.Collections.Generic;
     using Common.Constants;
     using Common.Providers;
     using Common.UnitTests.Builders;
@@ -7,8 +8,10 @@
     using Constants.Messages;
     using FluentAssertions;
     using Manage.Mediators.AgencyUser;
+    using Manage.Providers;
     using Moq;
     using NUnit.Framework;
+    using ViewModels;
 
     [TestFixture]
     public class AgencyUserMediatorTests
@@ -86,6 +89,50 @@
 
             var response = mediator.Authorize(principal);
             response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
+        }
+
+        [Test]
+        public void GetHomeViewModelShouldGetUserViewModel()
+        {
+            const string userName = "User001";
+            const string roleList = "Agency";
+            var principal = new ClaimsPrincipalBuilder().WithName(userName).WithRole(Constants.Roles.Raa).WithRoleList(roleList).Build();
+
+            var userProvider = new Mock<IAgencyUserProvider>();
+            userProvider.Setup(up => up.GetAgencyUser(userName, roleList)).Returns(new AgencyUserViewModel
+            {
+                RoleId = roleList
+            });
+
+            var mediator = new AgencyUserMediatorBuilder().With(userProvider).Build();
+
+            var response = mediator.GetHomeViewModel(principal);
+
+            response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
+            response.ViewModel.AgencyUser.RoleId.Should().Be(roleList);
+            userProvider.Verify(up => up.GetAgencyUser(userName, roleList), Times.Once);
+        }
+
+        [Test]
+        public void GetHomeViewModelShouldGetVacancies()
+        {
+            var vacancies = new List<VacancySummaryViewModel>
+            {
+                new VacancySummaryViewModel
+                {
+                    Title = "Vacancy 1"
+                }
+            };
+            var vacancyProvider = new Mock<IVacancyProvider>();
+            vacancyProvider.Setup(vp => vp.GetPendingQAVacancies()).Returns(vacancies);
+            var mediator = new AgencyUserMediatorBuilder().With(vacancyProvider).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
+
+            var response = mediator.GetHomeViewModel(principal);
+
+            response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
+            vacancyProvider.Verify(vp => vp.GetPendingQAVacancies(), Times.Once);
+            response.ViewModel.Vacancies.ShouldBeEquivalentTo(vacancies);
         }
     }
 }

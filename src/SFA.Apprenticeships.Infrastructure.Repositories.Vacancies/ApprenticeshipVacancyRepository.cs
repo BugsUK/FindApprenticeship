@@ -86,6 +86,19 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             return mongoEntities;
         }
 
+        public List<ApprenticeshipVacancy> GetWithStatus(List<ProviderVacancyStatuses> desiredStatuses)
+        {
+            _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
+
+            var mongoEntities = Collection.Find(Query<ApprenticeshipVacancy>.In(v => v.Status, desiredStatuses))
+                .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
+                .ToList();
+
+            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with statuses in {1}", mongoEntities.Count, string.Join(",", desiredStatuses)));
+
+            return mongoEntities;
+        }
+
         public void Delete(Guid id)
         {
             _logger.Debug("Calling repository to delete apprenticeship vacancy with Id={0}", id);

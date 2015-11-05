@@ -16,6 +16,7 @@
     using Infrastructure.TacticalDataServices;
     using Mediators.AgencyUser;
     using Providers;
+    using Providers.SFA.Apprenticeships.Web.Recruit.Providers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
 
@@ -43,6 +44,7 @@
             For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
+            For<IVacancyProvider>().Use<VacancyProvider>();
         }
 
         private void RegisterServices()

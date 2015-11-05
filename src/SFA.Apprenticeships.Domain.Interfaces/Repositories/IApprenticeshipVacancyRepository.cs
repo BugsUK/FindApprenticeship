@@ -13,6 +13,8 @@ namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn);
 
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn, List<ProviderVacancyStatuses> desiredStatuses);
+
+        List<ApprenticeshipVacancy> GetWithStatus(List<ProviderVacancyStatuses> desiredStatuses);
     }
 
     public interface IApprenticeshipVacancyWriteRepository : IWriteRepository<ApprenticeshipVacancy>

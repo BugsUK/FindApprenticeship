@@ -10,14 +10,16 @@
     {
         private Mock<IAgencyUserProvider> _agencyUserProvider = new Mock<IAgencyUserProvider>(); 
         private readonly Mock<IAuthorizationErrorProvider> _authorizationErrorProvider = new Mock<IAuthorizationErrorProvider>();
-        private Mock<IUserDataProvider> _userDataProvider = new Mock<IUserDataProvider>(); 
+        private Mock<IUserDataProvider> _userDataProvider = new Mock<IUserDataProvider>();
+        private Mock<IVacancyProvider> _vacancyProvider = new Mock<IVacancyProvider>();
 
         public IAgencyUserMediator Build()
         {
             return new AgencyUserMediator(
                 _agencyUserProvider.Object,
                 _authorizationErrorProvider.Object,
-                _userDataProvider.Object);
+                _userDataProvider.Object,
+                _vacancyProvider.Object);
         }
 
         public AgencyUserMediatorBuilder With(Mock<IAgencyUserProvider> agencyUserProvider)
@@ -29,6 +31,12 @@
         public AgencyUserMediatorBuilder With(Mock<IUserDataProvider> userDataProvider)
         {
             _userDataProvider = userDataProvider;
+            return this;
+        }
+
+        internal AgencyUserMediatorBuilder With(Mock<IVacancyProvider> vacancyProvider)
+        {
+            _vacancyProvider = vacancyProvider;
             return this;
         }
     }
