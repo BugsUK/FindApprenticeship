@@ -271,7 +271,6 @@
     <Compile Include="IoC\StructureMapServiceBehavior.cs" />
     <Compile Include="IoC\StructureMapServiceHost.cs" />
     <Compile Include="IoC\StructureMapServiceHostFactory.cs" />
-    <Compile Include="IVacancyDetailsService.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadRequest.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadResponse.cs" />
     <Compile Include="MessageContracts\Version50\GetApprenticeshipFrameworksRequest.cs" />
@@ -382,6 +381,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mappers\Version51\" />
+    <Folder Include="Providers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
