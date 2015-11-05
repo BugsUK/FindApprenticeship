@@ -342,6 +342,7 @@
     <Compile Include="Namespaces\Version50\Namespace.cs" />
     <Compile Include="Namespaces\Version51\Namespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\VacancyDetailsProvider.cs" />
     <Compile Include="ServiceContracts\Version50\IApplicationTracking.cs" />
     <Compile Include="ServiceContracts\Version50\IBulkVacancyUpload.cs" />
     <Compile Include="ServiceContracts\Version50\IReferenceData.cs" />
@@ -381,7 +382,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Mappers\Version51\" />
-    <Folder Include="Providers\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
