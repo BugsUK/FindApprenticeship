@@ -312,6 +312,8 @@
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="IoC\ManagementWebRegistry.cs" />
     <Compile Include="IoC\StructureMapScopeModule.cs" />
+    <Compile Include="Mediators\Vacancy\IVacancyMediator.cs" />
+    <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Providers\AgencyUserProvider.cs" />
     <Compile Include="Providers\IVacancyProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />

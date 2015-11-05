@@ -85,6 +85,12 @@
                 defaults: new { controller = "Vacancy", action = "Review" }
                 );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.AcceptVacancy,
+                url: "vacancy/accept",
+                defaults: new { controller = "Vacancy", action = "Accept" }
+                );
+
             routes.LowercaseUrls = true;
 
         }

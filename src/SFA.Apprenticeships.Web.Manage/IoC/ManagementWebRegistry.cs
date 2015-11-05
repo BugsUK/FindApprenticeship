@@ -15,6 +15,7 @@
     using Infrastructure.Logging.IoC;
     using Infrastructure.TacticalDataServices;
     using Mediators.AgencyUser;
+    using Mediators.Vacancy;
     using Providers;
     using Providers.SFA.Apprenticeships.Web.Recruit.Providers;
     using StructureMap;
@@ -73,6 +74,7 @@
         private void RegisterMediators()
         {
             For<IAgencyUserMediator>().Use<AgencyUserMediator>();
+            For<IVacancyMediator>().Use<VacancyMediator>();
         }
     }
 }

@@ -14,5 +14,6 @@
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
         public const string ReviewVacancy = "ReviewVacancy";
+        public const string AcceptVacancy = "AcceptVacancy";
     }
 }
