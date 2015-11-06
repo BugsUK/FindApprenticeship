@@ -91,6 +91,7 @@
         //TODO: Discuss and implement verifying roleList claim
         [AuthorizeUser(Roles = Roles.Raa)]
         [OwinSessionTimeout]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult Dashboard()
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
