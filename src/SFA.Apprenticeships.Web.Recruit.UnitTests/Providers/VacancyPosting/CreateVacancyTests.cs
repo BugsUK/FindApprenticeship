@@ -86,7 +86,7 @@
             MockVacancyPostingService.Setup(mock => mock.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
                 .Returns(_existingApprenticeshipVacancy);
             MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns(_existingApprenticeshipVacancy);
+                .Returns<ApprenticeshipVacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>
                 {
@@ -187,7 +187,14 @@
             provider.CreateVacancy(new NewVacancyViewModel
             {
                 VacancyGuid = vacancyGuid,
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel {Employer = new EmployerViewModel()}
+                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                {
+                    ProviderSiteErn = ProviderSiteErn,
+                    Employer = new EmployerViewModel
+                    {
+                        Ern = Ern
+                    }
+                }
             });
 
             MockVacancyPostingService.Verify(s => s.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.EntityId == vacancyGuid)));
@@ -292,8 +299,6 @@
             _validNewVacancyViewModelSansReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             _validNewVacancyViewModelSansReferenceNumber.TrainingType = TrainingType.Standards;
             _validNewVacancyViewModelSansReferenceNumber.StandardId = standardId;
-            MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns<ApprenticeshipVacancy>(v => v);
 
             var provider = GetVacancyPostingProvider();
 
@@ -302,6 +307,40 @@
 
             // Assert.
             viewModel.ApprenticeshipLevel.Should().Be(expectedApprenticeshipLevel);
+        }
+
+        [Test]
+        public void ShouldUpdateNullFrameworkCodeIfTrainingTypeStandard()
+        {
+            // Arrange.
+            _validNewVacancyViewModelWithReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
+            _validNewVacancyViewModelWithReferenceNumber.TrainingType = TrainingType.Standards;
+            _validNewVacancyViewModelWithReferenceNumber.StandardId = 1;
+            _validNewVacancyViewModelWithReferenceNumber.FrameworkCodeName = "ShouldBeNulled";
+            var provider = GetVacancyPostingProvider();
+
+            // Act.
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber);
+
+            // Assert.
+            viewModel.FrameworkCodeName.Should().BeNullOrEmpty();
+        }
+
+        [Test]
+        public void ShouldCreateNullFrameworkCodeIfTrainingTypeStandard()
+        {
+            // Arrange.
+            _validNewVacancyViewModelSansReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
+            _validNewVacancyViewModelSansReferenceNumber.TrainingType = TrainingType.Standards;
+            _validNewVacancyViewModelSansReferenceNumber.StandardId = 1;
+            _validNewVacancyViewModelSansReferenceNumber.FrameworkCodeName = "ShouldBeNulled";
+            var provider = GetVacancyPostingProvider();
+
+            // Act.
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+
+            // Assert.
+            viewModel.FrameworkCodeName.Should().BeNullOrEmpty();
         }
     }
 }

@@ -28,7 +28,7 @@
 
     <div class="form-group">
         <div class="blocklabel-single-container">
-            <div class="form-group inline clearfix blocklabel-single hide-nojs">
+            <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
                 <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
                 <label class="form-label">Training type</label>
                 @* ReSharper disable once Html.IdNotResolved *@
@@ -41,6 +41,7 @@
                     @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Standards, new {id = "training-type-standards", aria_controls = "training-type-standards-panel"})
                     Standards
                 </label>
+                @Html.ValidationMessageFor(m => m.TrainingType)
             </div>
 
             <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content">
@@ -108,7 +109,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Apprenticeship framework</label>
+                    <label class="form-label">Apprenticeship level</label>
                     <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
                 </div>
             </div>
