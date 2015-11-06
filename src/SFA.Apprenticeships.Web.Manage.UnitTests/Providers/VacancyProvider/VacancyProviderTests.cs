@@ -20,12 +20,17 @@
     [TestFixture]
     public class VacancyProviderTests
     {
+        const int QAVacancyTimeout = 10;
+
         [Test]
         public void GetVacanciesPendingQAShouldCallRepositoryWithPendingQAAsDesiredStatus()
         {
             var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
             var providerService = new Mock<IProviderService>();
-            var ukprn = "ukprn";
+            const string ukprn = "ukprn";
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
 
             apprenticeshipVacancyRepository.Setup(
                 avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> {ProviderVacancyStatuses.PendingQA}))
@@ -45,7 +50,11 @@
 
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
 
-            var vacancyProvider = new VacancyProviderBuilder().With(apprenticeshipVacancyRepository).With(providerService).Build();
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(apprenticeshipVacancyRepository)
+                    .With(providerService)
+                    .With(configurationService)
+                    .Build();
             vacancyProvider.GetPendingQAVacancies();
 
             apprenticeshipVacancyRepository.Verify(avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> {ProviderVacancyStatuses.PendingQA}));
@@ -87,9 +96,12 @@
         {
             var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
             var providerService = new Mock<IProviderService>();
-            var ukprn = "ukprn";
+            const string ukprn = "ukprn";
+            const int vacancyReferenceNumber = 1;
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
 
-            var vacancyReferenceNumber = 1;
             var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
             {
                 new ApprenticeshipVacancy
@@ -112,7 +124,11 @@
 
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
 
-            var vacancyProvider = new VacancyProviderBuilder().With(apprenticeshipVacancyRepository).With(providerService).Build();
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(apprenticeshipVacancyRepository)
+                    .With(providerService)
+                    .With(configurationService)
+                    .Build();
 
             var vacancies = vacancyProvider.GetPendingQAVacancies();
             vacancies.Should().HaveCount(1);
@@ -122,7 +138,6 @@
         [Test]
         public void GetPendingQAVacanciesShouldNotReturnVacanciesWithQADateBeforeTimeout()
         {
-            const int QAVacancyTimeout = 10;
             const int GreaterThanTimeout = 20;
             const int LesserThanTimeout = 2;
             const string ukprn = "ukprn";
