@@ -22,7 +22,6 @@
             var details = new PreviewVacancy();
 
             var viewModel = new VacancyViewModel() {
-                ApprenticeshipLevels = new List<SelectListItem>(),
                 ProviderSite = new ProviderSiteViewModel()
                 {
                     Address = new AddressViewModel()
@@ -62,7 +61,6 @@
 
             var viewModel = new VacancyViewModel
             {
-                ApprenticeshipLevels = new List<SelectListItem>(),
                 ProviderSite = new ProviderSiteViewModel()
                 {
                     Address = new AddressViewModel()
@@ -102,7 +100,6 @@
 
             var viewModel = new VacancyViewModel()
             {
-                ApprenticeshipLevels = new List<SelectListItem>(),
                 ProviderSite = new ProviderSiteViewModel()
                 {
                     Address = new AddressViewModel()

@@ -1,6 +1,6 @@
 ﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.NewVacancyViewModel
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Select framework and level";
@@ -30,7 +30,7 @@
         <div class="blocklabel-single-container">
             <div class="form-group inline clearfix blocklabel-single hide-nojs">
                 <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
-                <p>Training type</p>
+                <label class="form-label">Training type</label>
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label @frameworksSelected">
                     @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"})
@@ -74,6 +74,13 @@
                             @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
                         </label>
                     </div>
+
+                    <div class="small-btm-margin clearfix">
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="apprenticeship-level-degree" class="block-label">
+                            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}) Degree
+                        </label>
+                    </div>
                     @Html.ValidationMessageFor(m => m.ApprenticeshipLevel)
                 </div>
             </div>
@@ -82,8 +89,27 @@
                 <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
                     <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
-                    @Html.DropDownListFor(m => m.StandardId, Model.Standards, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%;"})
+                    <select name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%;">
+                        <option value="">Choose from the list of standards</option>
+                        @foreach (var standardGroup in Model.Standards.GroupBy(s => s.Sector))
+                        {
+                            <optgroup label="@standardGroup.Key">
+                                @foreach (var standard in standardGroup)
+                                {
+                                    <option value="@standard.Id" @(standard.Id == Model.StandardId ? "selected" : "") data-apprenticeship-level="@standard.ApprenticeshipLevel">
+                                        @standard.Name
+                                    </option>
+                                }
+                            </optgroup>
+                        }
+                    </select>
+
                     @Html.ValidationMessageFor(m => m.StandardId)
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Apprenticeship framework</label>
+                    <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
                 </div>
             </div>
         </div>
@@ -132,3 +158,17 @@
         <button id="createVacancyAndExit" type="submit" class="button-link" name="CreateVacancy" value="CreateVacancyAndExit">Save and exit</button>
     </div>
 }
+
+@section scripts
+{
+    <script>
+        $("#@Html.NameFor(m => m.StandardId)").change(function () {
+            var apprenticeshipLevel = $("#@Html.NameFor(m => m.StandardId) option:selected").attr("data-apprenticeship-level");
+            if (apprenticeshipLevel === "@ApprenticeshipLevel.FoundationDegree.ToString()" || apprenticeshipLevel === "@ApprenticeshipLevel.Masters.ToString()") {
+                apprenticeshipLevel = "@ApprenticeshipLevel.Degree.ToString()";
+            }
+            $("#apprenticeship-level-name").text(apprenticeshipLevel);
+        });
+    </script>
+}
+

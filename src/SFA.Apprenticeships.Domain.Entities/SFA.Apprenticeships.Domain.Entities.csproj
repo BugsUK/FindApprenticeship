@@ -128,6 +128,7 @@
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchMode.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchResponse.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipVacancy.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\ProviderVacancies\DurationType.cs" />

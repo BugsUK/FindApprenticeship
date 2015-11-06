@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Recruit.Validators.Vacancy;
@@ -19,20 +19,32 @@
         }
 
         [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Unknown, true)]
+        [TestCase(1, TrainingType.Unknown, true)]
         [TestCase(ApprenticeshipLevel.Intermediate, TrainingType.Unknown, true)]
-        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Unknown, true)]
         [TestCase(ApprenticeshipLevel.Advanced, TrainingType.Unknown, true)]
-        [TestCase(4, TrainingType.Unknown, true)]
+        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Unknown, true)]
+        [TestCase(ApprenticeshipLevel.FoundationDegree, TrainingType.Unknown, true)]
+        [TestCase(ApprenticeshipLevel.Degree, TrainingType.Unknown, true)]
+        [TestCase(ApprenticeshipLevel.Masters, TrainingType.Unknown, true)]
+        [TestCase(8, TrainingType.Unknown, true)]
         [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Frameworks, false)]
+        [TestCase(1, TrainingType.Frameworks, false)]
         [TestCase(ApprenticeshipLevel.Intermediate, TrainingType.Frameworks, true)]
-        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Frameworks, true)]
         [TestCase(ApprenticeshipLevel.Advanced, TrainingType.Frameworks, true)]
-        [TestCase(4, TrainingType.Frameworks, false)]
-        [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Standards, false)]
+        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Frameworks, true)]
+        [TestCase(ApprenticeshipLevel.FoundationDegree, TrainingType.Frameworks, false)]
+        [TestCase(ApprenticeshipLevel.Degree, TrainingType.Frameworks, true)]
+        [TestCase(ApprenticeshipLevel.Masters, TrainingType.Frameworks, false)]
+        [TestCase(8, TrainingType.Frameworks, false)]
+        [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Standards, true)]
+        [TestCase(1, TrainingType.Standards, true)]
         [TestCase(ApprenticeshipLevel.Intermediate, TrainingType.Standards, true)]
-        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Standards, true)]
         [TestCase(ApprenticeshipLevel.Advanced, TrainingType.Standards, true)]
-        [TestCase(4, TrainingType.Standards, false)]
+        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Standards, true)]
+        [TestCase(ApprenticeshipLevel.FoundationDegree, TrainingType.Standards, true)]
+        [TestCase(ApprenticeshipLevel.Degree, TrainingType.Standards, true)]
+        [TestCase(ApprenticeshipLevel.Masters, TrainingType.Standards, true)]
+        [TestCase(8, TrainingType.Standards, true)]
         public void ShouldRequireApprenticeshipLevel(ApprenticeshipLevel apprenticeshipLevel, TrainingType trainingType, bool expectValid)
         {
             // Arrange.
@@ -86,7 +98,7 @@
         [TestCase("ABC", TrainingType.Unknown, true)]
         [TestCase(null, TrainingType.Frameworks, false)]
         [TestCase("ABC", TrainingType.Frameworks, true)]
-        [TestCase(null, TrainingType.Standards, false)]
+        [TestCase(null, TrainingType.Standards, true)]
         [TestCase("ABC", TrainingType.Standards, true)]
         public void ShouldRequireFrameworkCodeName(string frameworkCodeName, TrainingType trainingType, bool expectValid)
         {

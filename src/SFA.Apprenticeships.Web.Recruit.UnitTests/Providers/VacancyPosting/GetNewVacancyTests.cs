@@ -1,14 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Common.Configuration;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

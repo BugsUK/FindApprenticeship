@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
 {
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation;
     using ViewModels.Vacancy;
 
@@ -73,7 +73,7 @@
             validator.RuleFor(m => m.FrameworkCodeName)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.FrameworkCodeName.RequiredErrorText)
-                .When(m => m.TrainingType != TrainingType.Unknown);
+                .When(m => m.TrainingType == TrainingType.Frameworks);
 
             validator.RuleFor(m => m.StandardId)
                 .NotEmpty()
@@ -81,9 +81,12 @@
                 .When(m => m.TrainingType == TrainingType.Standards);
 
             validator.RuleFor(viewModel => (int)viewModel.ApprenticeshipLevel)
-                .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Higher)
+                .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Degree)
                 .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText)
-                .When(m => m.TrainingType != TrainingType.Unknown);
+                .When(m => m.TrainingType == TrainingType.Frameworks)
+                .NotEqual((int)ApprenticeshipLevel.FoundationDegree)
+                .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText)
+                .When(m => m.TrainingType == TrainingType.Frameworks);
 
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)

@@ -2,8 +2,8 @@
 {
     using Common.Constants;
     using Common.Mediators;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

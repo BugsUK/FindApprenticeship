@@ -20,9 +20,10 @@
 
         public VacancyQuestionsViewModel VacancyQuestionsViewModel { get; set; }
 
-        public List<SelectListItem> ApprenticeshipLevels { get; set; }
         public string FrameworkName { get; set; }
+
         public ProviderSiteViewModel ProviderSite { get; set; }
+
         public ProviderVacancyStatuses Status { get; set; }
     }
 }

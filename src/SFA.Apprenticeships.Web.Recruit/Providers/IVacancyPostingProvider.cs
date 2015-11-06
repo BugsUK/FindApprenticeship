@@ -32,8 +32,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
-        List<SelectListItem> GetStandards();
+        List<StandardViewModel> GetStandards();
 
-        List<SelectListItem> GetApprenticeshipLevels();
+        StandardViewModel GetStandard(int? standardId);
     }
 }

@@ -321,6 +321,7 @@
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
+    <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />
@@ -380,6 +381,7 @@
     <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\StandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
     <Compile Include="Validators\Vacancy\VacancyQuestionsViewModelValidator.cs" />
@@ -549,6 +551,7 @@
     <Content Include="Views\razorgenerator.directives" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ApprenticeshipLevel.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

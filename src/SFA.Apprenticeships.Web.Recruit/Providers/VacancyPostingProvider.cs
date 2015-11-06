@@ -11,7 +11,6 @@
     using Application.Interfaces.VacancyPosting;
     using Common.Configuration;
     using Converters;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
@@ -91,7 +90,6 @@
         public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
             if (VacancyExists(newVacancyViewModel))
-            
             {
                 return UpdateExistingVacancy(newVacancyViewModel);
             }
@@ -104,9 +102,7 @@
 
                 _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);
 
-                newVacancyViewModel.VacancyReferenceNumber = vacancy.VacancyReferenceNumber;
-
-                return newVacancyViewModel;
+                return vacancy.ConvertToNewVacancyViewModel();
             }
             catch (Exception e)
             {
@@ -133,14 +129,26 @@
                 TrainingType = newVacancyViewModel.TrainingType,
                 FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
                 StandardId = newVacancyViewModel.StandardId,
-                ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel,
+                ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel),
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
                 Status = ProviderVacancyStatuses.Draft,
                 OfflineVacancy = newVacancyViewModel.OfflineVacancy,
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions
             });
+
             return vacancy;
+        }
+
+        private ApprenticeshipLevel GetApprenticeshipLevel(NewVacancyViewModel newVacancyViewModel)
+        {
+            var apprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
+            if (newVacancyViewModel.TrainingType == TrainingType.Standards)
+            {
+                var standard = GetStandard(newVacancyViewModel.StandardId);
+                apprenticeshipLevel = standard?.ApprenticeshipLevel ?? ApprenticeshipLevel.Unknown;
+            }
+            return apprenticeshipLevel;
         }
 
         private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
@@ -155,7 +163,7 @@
             vacancy.TrainingType = newVacancyViewModel.TrainingType;
             vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
             vacancy.StandardId = newVacancyViewModel.StandardId;
-            vacancy.ApprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
+            vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel);
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
@@ -257,7 +265,6 @@
             var viewModel = vacancy.ConvertToVacancyViewModel();
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
-            viewModel.ApprenticeshipLevels = GetApprenticeshipLevels();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             return viewModel;
         }
@@ -306,45 +313,23 @@
             return sectorsAndFrameworkItems;
         }
 
-        public List<SelectListItem> GetStandards()
+        public List<StandardViewModel> GetStandards()
         {
             var sectors = _referenceDataService.GetSectors();
 
-            var standardsItems = new List<SelectListItem>
-            {
-                new SelectListItem { Value = string.Empty, Text = "Choose from the list of standards"}
-            };
-
-            foreach (var sector in sectors)
-            {
-                if (sector.Standards != null && sector.Standards.Any())
-                {
-                    var sectorGroup = new SelectListGroup { Name = sector.Name };
-                    foreach (var standard in sector.Standards)
-                    {
-                        standardsItems.Add(new SelectListItem
-                        {
-                            Group = sectorGroup,
-                            Value = standard.Id.ToString(),
-                            Text = standard.Name
-                        });
-                    }
-                }
-            }
-
-            return standardsItems;
+            return (from sector in sectors
+                from standard in sector.Standards
+                select standard.Convert(sector)).ToList();
         }
 
-        public List<SelectListItem> GetApprenticeshipLevels()
+        public StandardViewModel GetStandard(int? standardId)
         {
-            var levels =
-                Enum.GetValues(typeof(ApprenticeshipLevel))
-                    .Cast<ApprenticeshipLevel>()
-                    .Where(al => al != ApprenticeshipLevel.Unknown)
-                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
-                    .ToList();
+            if (!standardId.HasValue) return null;
 
-            return levels;
+            var sectors = _referenceDataService.GetSectors().ToList();
+            var standard = sectors.SelectMany(s => s.Standards).First(s => s.Id == standardId.Value);
+            var sector = sectors.First(s => s.Id == standard.ApprenticeshipSectorId);
+            return standard.Convert(sector);
         }
 
         #region Helpers

@@ -6,8 +6,8 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation.Attributes;
     using Provider;
     using Validators.Vacancy;
@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
 
         public int? StandardId { get; set; }
 
-        public List<SelectListItem> Standards { get; set; }
+        public List<StandardViewModel> Standards { get; set; }
 
         public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
 

@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using Moq;
@@ -15,15 +14,18 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using System.Collections.Generic;
+    using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies.ProviderVacancies;
 
     [TestFixture]
     public class CreateVacancyTests : TestBase
     {
-        private readonly NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel()
-        {
-            VacancyReferenceNumber = 1,
-            ApprenticeshipLevel = ApprenticeshipLevel.Advanced
-        };
+        private const string Ern = "ern";
+        private const string Ukprn = "ukprn";
+        private const string ProviderSiteErn = "providerSiteErn";
+
+        private NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber;
+        private NewVacancyViewModel _validNewVacancyViewModelSansReferenceNumber;
 
         private readonly ApprenticeshipVacancy _existingApprenticeshipVacancy = new ApprenticeshipVacancy()
         {
@@ -36,17 +38,16 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
             }
         };
 
-        private readonly NewVacancyViewModel _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
+        private readonly ProviderSiteEmployerLink _providerSiteEmployerLink = new ProviderSiteEmployerLink
         {
-            SectorsAndFrameworks = new List<SelectListItem>(),
-            ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+            ProviderSiteErn = ProviderSiteErn,
+            Description = "description",
+            Employer = new Employer
             {
-                Employer = new EmployerViewModel()
-                {
-                    Address = new AddressViewModel()
-                }
+                Address = new Address()
             }
         };
+
 
         [SetUp]
         public void SetUp()
@@ -63,10 +64,50 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
             //    .Setup(mock => mock.GetCategories())
             //    .Returns(_categories);
 
+            _validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel()
+            {
+                VacancyReferenceNumber = 1,
+                ApprenticeshipLevel = ApprenticeshipLevel.Advanced
+            };
+
+            _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
+            {
+                SectorsAndFrameworks = new List<SelectListItem>(),
+                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                {
+                    ProviderSiteErn = ProviderSiteErn,
+                    Employer = new EmployerViewModel
+                    {
+                        Ern = Ern,
+                        Address = new AddressViewModel()
+                    }
+                }
+            };
+
             MockVacancyPostingService.Setup(mock => mock.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
                 .Returns(_existingApprenticeshipVacancy);
             MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns(_existingApprenticeshipVacancy);
+            MockReferenceDataService.Setup(mock => mock.GetSectors())
+                .Returns(new List<Sector>
+                {
+                    new Sector
+                    {
+                        Id = 1,
+                        Standards =
+                            new List<Standard>
+                            {
+                                new Standard {Id = 1, ApprenticeshipSectorId = 1, ApprenticeshipLevel = ApprenticeshipLevel.Intermediate},
+                                new Standard {Id = 2, ApprenticeshipSectorId = 1, ApprenticeshipLevel = ApprenticeshipLevel.Advanced},
+                                new Standard {Id = 3, ApprenticeshipSectorId = 1, ApprenticeshipLevel = ApprenticeshipLevel.Higher},
+                                new Standard {Id = 4, ApprenticeshipSectorId = 1, ApprenticeshipLevel = ApprenticeshipLevel.FoundationDegree},
+                                new Standard {Id = 5, ApprenticeshipSectorId = 1, ApprenticeshipLevel = ApprenticeshipLevel.Degree},
+                                new Standard {Id = 6, ApprenticeshipSectorId = 1, ApprenticeshipLevel = ApprenticeshipLevel.Masters}
+                            }
+                    }
+                });
+            MockProviderService.Setup(s => s.GetProviderSiteEmployerLink(ProviderSiteErn, Ern))
+                .Returns(_providerSiteEmployerLink);
         }
 
         [Test]
@@ -110,9 +151,6 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
         [Test]
         public void ShouldStoreOfflineApplicationFields()
         {
-            MockVacancyPostingService.Setup(s => s.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns(new ApprenticeshipVacancy());
-
             var provider = GetVacancyPostingProvider();
 
             const bool offlineVacancy = true;
@@ -123,7 +161,11 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
             {
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
                 {
-                  Employer  = new EmployerViewModel()
+                    ProviderSiteErn = ProviderSiteErn,
+                    Employer  = new EmployerViewModel
+                    {
+                        Ern = Ern
+                    }
                 },
                 OfflineVacancy = offlineVacancy,
                 OfflineApplicationUrl = offlineApplicationUrl,
@@ -157,9 +199,6 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
-            var ern = "ern";
-            var ukprn = "ukprn";
-            var providerSiteErn = "providerSiteErn";
             var av = new ApprenticeshipVacancy
             {
                 Title = "Title",
@@ -183,11 +222,11 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
             var provider = GetVacancyPostingProvider();
 
             // Act
-            var result = provider.GetNewVacancyViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
+            var result = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteErn, Ern, vacancyGuid);
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.GetProviderSiteEmployerLink(providerSiteErn, ern), Times.Never);
+            MockProviderService.Verify(s => s.GetProviderSiteEmployerLink(ProviderSiteErn, Ern), Times.Never);
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
@@ -202,37 +241,68 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
-            var ern = "ern";
-            var ukprn = "ukprn";
-            var providerSiteErn = "providerSiteErn";
             ApprenticeshipVacancy apprenticeshipVacancy = null;
-            var providerSiteEmployerLink = new ProviderSiteEmployerLink
-            {
-                ProviderSiteErn = providerSiteErn,
-                Description = "description",
-                Employer = new Employer
-                {
-                    Address = new Address()
-                }
-            };
-
+            
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
             var provider = GetVacancyPostingProvider();
-            MockProviderService.Setup(s => s.GetProviderSiteEmployerLink(providerSiteErn, ern))
-                .Returns(providerSiteEmployerLink);
 
             // Act
-            var result = provider.GetNewVacancyViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
+            var result = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteErn, Ern, vacancyGuid);
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.GetProviderSiteEmployerLink(providerSiteErn, ern), Times.Once);
+            MockProviderService.Verify(s => s.GetProviderSiteEmployerLink(ProviderSiteErn, Ern), Times.Once);
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
-                        r.Ukprn == ukprn && r.ApprenticeshipLevel == ApprenticeshipLevel.Unknown &&
-                        r.ProviderSiteEmployerLink.Description == providerSiteEmployerLink.Description &&
-                        r.ProviderSiteEmployerLink.ProviderSiteErn == providerSiteErn);
+                        r.Ukprn == Ukprn && r.ApprenticeshipLevel == ApprenticeshipLevel.Unknown &&
+                        r.ProviderSiteEmployerLink.Description == _providerSiteEmployerLink.Description &&
+                        r.ProviderSiteEmployerLink.ProviderSiteErn == ProviderSiteErn);
+        }
+
+        [TestCase(1, ApprenticeshipLevel.Intermediate)]
+        [TestCase(2, ApprenticeshipLevel.Advanced)]
+        [TestCase(3, ApprenticeshipLevel.Higher)]
+        [TestCase(4, ApprenticeshipLevel.FoundationDegree)]
+        [TestCase(5, ApprenticeshipLevel.Degree)]
+        [TestCase(6, ApprenticeshipLevel.Masters)]
+        public void ShouldUpdateApprenticeshipLevelIfTrainingTypeStandard(int standardId, ApprenticeshipLevel expectedApprenticeshipLevel)
+        {
+            // Arrange.
+            _validNewVacancyViewModelWithReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
+            _validNewVacancyViewModelWithReferenceNumber.TrainingType = TrainingType.Standards;
+            _validNewVacancyViewModelWithReferenceNumber.StandardId = standardId;
+            var provider = GetVacancyPostingProvider();
+
+            // Act.
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber);
+
+            // Assert.
+            viewModel.ApprenticeshipLevel.Should().Be(expectedApprenticeshipLevel);
+        }
+
+        [TestCase(1, ApprenticeshipLevel.Intermediate)]
+        [TestCase(2, ApprenticeshipLevel.Advanced)]
+        [TestCase(3, ApprenticeshipLevel.Higher)]
+        [TestCase(4, ApprenticeshipLevel.FoundationDegree)]
+        [TestCase(5, ApprenticeshipLevel.Degree)]
+        [TestCase(6, ApprenticeshipLevel.Masters)]
+        public void ShouldCreateApprenticeshipLevelIfTrainingTypeStandard(int standardId, ApprenticeshipLevel expectedApprenticeshipLevel)
+        {
+            // Arrange.
+            _validNewVacancyViewModelSansReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
+            _validNewVacancyViewModelSansReferenceNumber.TrainingType = TrainingType.Standards;
+            _validNewVacancyViewModelSansReferenceNumber.StandardId = standardId;
+            MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns<ApprenticeshipVacancy>(v => v);
+
+            var provider = GetVacancyPostingProvider();
+
+            // Act.
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+
+            // Assert.
+            viewModel.ApprenticeshipLevel.Should().Be(expectedApprenticeshipLevel);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.ReferenceData
 {
-    using Vacancies.Apprenticeships;
+    using Vacancies.ProviderVacancies.Apprenticeship;
 
     public class Standard
     {

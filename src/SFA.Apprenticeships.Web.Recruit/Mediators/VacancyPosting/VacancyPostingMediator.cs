@@ -10,6 +10,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
     using Common.ViewModels;
     using Constants.ViewModels;
     using Converters;
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Providers;
     using Validators.Provider;
     using Validators.Vacancy;
@@ -169,9 +171,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
             if (!validationResult.IsValid)
             {
-                newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
-                newVacancyViewModel.Standards = _vacancyPostingProvider.GetStandards();
-                newVacancyViewModel.ProviderSiteEmployerLink = _providerProvider.GetProviderSiteEmployerLinkViewModel(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
+                UpdateReferenceDataFor(newVacancyViewModel);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
@@ -192,9 +192,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
             if (!validationResult.IsValid)
             {
-                newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
-                newVacancyViewModel.Standards = _vacancyPostingProvider.GetStandards();
-                newVacancyViewModel.ProviderSiteEmployerLink = _providerProvider.GetProviderSiteEmployerLinkViewModel(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
+                UpdateReferenceDataFor(newVacancyViewModel);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
@@ -202,6 +200,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
+        }
+
+        private void UpdateReferenceDataFor(NewVacancyViewModel newVacancyViewModel)
+        {
+            newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            newVacancyViewModel.Standards = _vacancyPostingProvider.GetStandards();
+            if (newVacancyViewModel.TrainingType == TrainingType.Standards && newVacancyViewModel.StandardId.HasValue)
+            {
+                var standard = _vacancyPostingProvider.GetStandard(newVacancyViewModel.StandardId);
+                newVacancyViewModel.ApprenticeshipLevel = standard?.ApprenticeshipLevel ?? ApprenticeshipLevel.Unknown;
+            }
+            newVacancyViewModel.ProviderSiteEmployerLink =
+                _providerProvider.GetProviderSiteEmployerLinkViewModel(
+                    newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
+                    newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
         }
 
         private VacancyViewModel GetStoredVacancy(NewVacancyViewModel newVacancyViewModel)

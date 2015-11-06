@@ -22,7 +22,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var viewModel = new NewVacancyViewModel
             {
                 SectorsAndFrameworks = new List<SelectListItem>(),
-                Standards = new List<SelectListItem>(),
+                Standards = new List<StandardViewModel>(),
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
                 {
                     Employer = new EmployerViewModel()
