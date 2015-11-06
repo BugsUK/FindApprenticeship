@@ -302,20 +302,13 @@
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
     <Compile Include="Constants\Roles.cs" />
-    <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
-    <Compile Include="Converters\AddressViewModelConverter.cs" />
-    <Compile Include="Converters\ApprenticeshipVacancyConverter.cs" />
-    <Compile Include="Converters\EmployerViewModelConverter.cs" />
-    <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
-    <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
@@ -363,9 +356,6 @@
     <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerResultViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerSearchViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>

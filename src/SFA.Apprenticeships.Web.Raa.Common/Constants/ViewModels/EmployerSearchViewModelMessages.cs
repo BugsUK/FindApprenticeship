@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Constants.ViewModels
-{
-    using Common.Constants;
+﻿using SFA.Apprenticeships.Web.Common.Constants;
 
+namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
+{
     public class EmployerSearchViewModelMessages
     {
         public const string NameAndLocationSearchRequiredErrorText = "Please enter an employer name, a town or postcode or both to search";

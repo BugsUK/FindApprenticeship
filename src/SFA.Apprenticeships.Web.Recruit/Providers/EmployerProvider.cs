@@ -4,10 +4,10 @@
     using Application.Interfaces.Employers;
     using Common.Converters;
     using Configuration;
-    using Converters;
     using Domain.Interfaces.Configuration;
-    using ViewModels.VacancyPosting;
     using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.Converters;
+    using Raa.Common.ViewModels.VacancyPosting;
 
     public class EmployerProvider : IEmployerProvider
     {

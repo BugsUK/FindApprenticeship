@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
+
+namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
     using System;
     using System.Linq;
@@ -13,8 +15,9 @@
     using Raa.Common.ViewModels.Provider;
     using Configuration;
     using ViewModels.Provider;
-    using ViewModels.VacancyPosting;
-              
+    using Raa.Common.Converters;
+
+
     public class ProviderProvider : IProviderProvider
     {
         private readonly IVacancyPostingService _vacancyPostingService;

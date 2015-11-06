@@ -1,13 +1,15 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Raa.Common.ViewModels.Vacancy;
+    using ViewModels.Vacancy;
+    using Web.Common.ViewModels;
 
     public static class ApprenticeshipVacancyConverter
     {

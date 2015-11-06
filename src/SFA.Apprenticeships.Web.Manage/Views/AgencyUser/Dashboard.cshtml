@@ -85,7 +85,7 @@
                                         <div>@vacancy.ClosingDate.ToFriendlyClosingToday()</div>
                                     </td>
                                     <td>
-                                        <a href="http://google.com">QA vacancy</a>
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = vacancy.VacancyReferenceNumber })">QA vacancy</a>
                                     </td>
                                 </tr>
                             }

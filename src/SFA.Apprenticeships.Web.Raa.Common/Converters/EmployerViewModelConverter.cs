@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
     using Domain.Entities.Organisations;
     using Raa.Common.ViewModels.Vacancy;

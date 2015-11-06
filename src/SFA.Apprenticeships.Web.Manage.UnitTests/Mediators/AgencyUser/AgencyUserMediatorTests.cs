@@ -116,9 +116,9 @@
         [Test]
         public void GetHomeViewModelShouldGetVacancies()
         {
-            var vacancies = new List<VacancySummaryViewModel>
+            var vacancies = new List<DashboardVacancySummaryViewModel>
             {
-                new VacancySummaryViewModel
+                new DashboardVacancySummaryViewModel
                 {
                     Title = "Vacancy 1"
                 }

@@ -12,6 +12,8 @@
         using Domain.Interfaces.Configuration;
         using Domain.Interfaces.Repositories;
         using ViewModels;
+        using Raa.Common.Converters;
+        using Raa.Common.ViewModels.Vacancy;
 
         public class VacancyProvider : IVacancyProvider
         {
@@ -33,7 +35,7 @@
                 _configurationService = configurationService;
             }
 
-            public List<VacancySummaryViewModel> GetPendingQAVacancies()
+            public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
             {
                 var vacancies =
                     _apprenticeshipVacancyReadRepository.GetWithStatus(new List<ProviderVacancyStatuses>
@@ -41,7 +43,7 @@
                         ProviderVacancyStatuses.PendingQA
                     });
 
-                return vacancies.Where(VacancyReadyToQA).Select(ConvertToVacancySummaryViewModel).ToList();
+                return vacancies.Where(VacancyReadyToQA).Select(ConvertToDashboardVacancySummaryViewModel).ToList();
             }
 
             private bool VacancyReadyToQA(ApprenticeshipVacancy apprenticeshipVacancy)
@@ -78,11 +80,20 @@
                 _apprenticeshipVacancyWriteRepository.Save(vacancy);
             }
 
-            private VacancySummaryViewModel ConvertToVacancySummaryViewModel(ApprenticeshipVacancy apprenticeshipVacancy)
+            public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
+            {
+                var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
+                var viewModel = vacancy.ConvertToVacancyViewModel();
+                var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
+                viewModel.ProviderSite = providerSite.Convert();
+                return viewModel;
+            }
+
+            private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(ApprenticeshipVacancy apprenticeshipVacancy)
             {
                 var provider = _providerService.GetProvider(apprenticeshipVacancy.Ukprn);
 
-                return new VacancySummaryViewModel
+                return new DashboardVacancySummaryViewModel
                 {
                     ClosingDate = apprenticeshipVacancy.ClosingDate.Value,
                     DateSubmitted = apprenticeshipVacancy.DateSubmitted.Value,

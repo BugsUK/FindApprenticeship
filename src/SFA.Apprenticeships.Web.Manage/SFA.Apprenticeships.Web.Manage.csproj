@@ -323,7 +323,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\VacancySummaryViewModel.cs" />
+    <Compile Include="ViewModels\DashboardVacancySummaryViewModel.cs" />
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -334,8 +334,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Vacancy\Preview.generated.cs">
-      <DependentUpon>Preview.cshtml</DependentUpon>
+    <Compile Include="Views\Vacancy\Review.generated.cs">
+      <DependentUpon>Review.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -422,9 +422,9 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ProviderVacancyStatuses.cshtml" />
-    <Content Include="Views\Vacancy\Preview.cshtml">
+    <Content Include="Views\Vacancy\Review.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Preview.generated.cs</LastGenOutput>
+      <LastGenOutput>Review.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>

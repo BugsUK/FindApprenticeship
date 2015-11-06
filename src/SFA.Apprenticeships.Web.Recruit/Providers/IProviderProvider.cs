@@ -3,7 +3,8 @@
     using System.Collections.Generic;
     using Raa.Common.ViewModels.Provider;
     using ViewModels.Provider;
-    using ViewModels.VacancyPosting;
+    using Raa.Common.ViewModels.VacancyPosting;
+
 
     public interface IProviderProvider
     {

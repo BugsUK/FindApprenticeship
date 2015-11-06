@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting
+﻿using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Common.ViewModels;
-    using Constants.ViewModels;
+    using Web.Common.ViewModels;
 
     public enum EmployerFilterType
     {

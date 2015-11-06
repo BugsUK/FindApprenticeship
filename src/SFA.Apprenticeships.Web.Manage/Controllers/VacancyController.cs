@@ -19,9 +19,11 @@
         }
 
         // GET: Vacancy
-        public ActionResult Review(string vacancyReferenceNumber)
+        public ActionResult Review(long vacancyReferenceNumber)
         {
-            throw new NotImplementedException();
+            var vacancy = _vacancyMediator.GetVacancy(vacancyReferenceNumber);
+
+            return View(vacancy.ViewModel);
         }
 
         [HttpPost]

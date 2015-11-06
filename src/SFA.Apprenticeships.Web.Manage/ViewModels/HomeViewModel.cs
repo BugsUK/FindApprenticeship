@@ -6,6 +6,6 @@
     {
         public AgencyUserViewModel AgencyUser { get; set; }
 
-        public List<VacancySummaryViewModel> Vacancies { get; set; }
+        public List<DashboardVacancySummaryViewModel> Vacancies { get; set; }
     }
 }

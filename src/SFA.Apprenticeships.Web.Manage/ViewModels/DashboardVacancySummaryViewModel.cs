@@ -3,7 +3,7 @@
     using System;
     using Domain.Entities.Vacancies.ProviderVacancies;
 
-    public class VacancySummaryViewModel
+    public class DashboardVacancySummaryViewModel
     {
         public long VacancyReferenceNumber { get; set; }
 

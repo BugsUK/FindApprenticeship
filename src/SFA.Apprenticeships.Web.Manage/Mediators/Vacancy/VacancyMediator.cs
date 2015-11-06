@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
+
+namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
     using System.Linq;
     using Common.Mediators;
@@ -14,7 +16,7 @@
             _vacancyProvider = vacancyProvider;
         }
 
-        public MediatorResponse<VacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
+        public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
         {
             _vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
@@ -22,10 +24,22 @@
 
             if (vacancies == null || !vacancies.Any())
             {
-                return GetMediatorResponse<VacancySummaryViewModel>(VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies);
+                return GetMediatorResponse<DashboardVacancySummaryViewModel>(VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies);
             }
 
             return GetMediatorResponse(VacancyMediatorCodes.ApproveVacancy.Ok, vacancies.First());
+        }
+
+        public MediatorResponse<VacancyViewModel> GetVacancy(long vacancyReferenceNumber)
+        {
+            var vacancyViewModel = _vacancyProvider.GetVacancy(vacancyReferenceNumber);
+            
+            if (vacancyViewModel == null)
+            {
+                return GetMediatorResponse<VacancyViewModel>(VacancyMediatorCodes.GetVacancy.NotAvailable);
+            }
+
+            return GetMediatorResponse(VacancyMediatorCodes.GetVacancy.Ok, vacancyViewModel);
         }
     }
 }

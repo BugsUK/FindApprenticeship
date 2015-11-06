@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;

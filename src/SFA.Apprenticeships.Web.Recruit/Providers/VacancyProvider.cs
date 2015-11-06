@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿using SFA.Apprenticeships.Web.Raa.Common.Converters;
+
+namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
     using System.Collections.Generic;
     using System.Linq;

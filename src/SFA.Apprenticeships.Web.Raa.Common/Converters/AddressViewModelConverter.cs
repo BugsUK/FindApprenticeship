@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
-    using Common.ViewModels.Locations;
+    using Web.Common.ViewModels.Locations;
     using Domain.Entities.Locations;
 
     public static class AddressViewModelConverter

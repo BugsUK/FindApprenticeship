@@ -1,7 +1,7 @@
-namespace SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting
-{
-    using Common.ViewModels.Locations;
+using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
 
+namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
+{
     public class EmployerResultViewModel
     {
         public int EmployerId { get; set; }

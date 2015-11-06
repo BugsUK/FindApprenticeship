@@ -61,7 +61,7 @@
         {
             const long vacancyReferenceNumber = 1;
 
-            List<VacancySummaryViewModel> pendingQAVacancies = null;
+            List<DashboardVacancySummaryViewModel> pendingQAVacancies = null;
 
             var provider = new Mock<IVacancyProvider>();
 
@@ -73,9 +73,9 @@
             result.AssertCode(VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies);
         }
 
-        private IEnumerable<VacancySummaryViewModel> GetPendingVacancies(IEnumerable<long> vacancyReferenceNumbers )
+        private IEnumerable<DashboardVacancySummaryViewModel> GetPendingVacancies(IEnumerable<long> vacancyReferenceNumbers )
         {
-            return vacancyReferenceNumbers.Select(vacancyReferenceNumber => new VacancySummaryViewModel
+            return vacancyReferenceNumbers.Select(vacancyReferenceNumber => new DashboardVacancySummaryViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Status = ProviderVacancyStatuses.PendingQA

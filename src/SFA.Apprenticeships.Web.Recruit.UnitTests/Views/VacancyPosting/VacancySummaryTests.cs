@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
 using RazorGenerator.Testing;
+using SFA.Apprenticeships.Web.Raa.Common.Converters;
 using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 using SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting;
 

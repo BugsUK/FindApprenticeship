@@ -7,5 +7,11 @@
             public const string NoAvailableVacancies = "VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies";
             public const string Ok = "VacancyMediatorCodes.ApproveVacancy.Ok";
         }
+
+        public class GetVacancy
+        {
+            public const string NotAvailable = "VacancyMediatorCodes.GetVacancy.NotAvailable";
+            public const string Ok = "VacancyMediatorCodes.GetVacancy.Ok";
+        }
     }
 }

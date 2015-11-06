@@ -12,7 +12,7 @@
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
-    using ViewModels.VacancyPosting;
+    using Raa.Common.ViewModels.VacancyPosting;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]

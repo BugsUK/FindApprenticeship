@@ -2,11 +2,14 @@
 {
     using System.Collections.Generic;
     using ViewModels;
+    using Raa.Common.ViewModels.Vacancy;
 
     public interface IVacancyProvider
     {
-        List<VacancySummaryViewModel> GetPendingQAVacancies();
+        List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
         void ApproveVacancy(long vacancyReferenceNumber);
+
+        VacancyViewModel GetVacancy(long vacancyReferenceNumber);
     }
 }
