@@ -128,7 +128,7 @@
                 Title = newVacancyViewModel.Title,
                 ShortDescription = newVacancyViewModel.ShortDescription,
                 TrainingType = newVacancyViewModel.TrainingType,
-                FrameworkCodeName = newVacancyViewModel.FrameworkCodeName,
+                FrameworkCodeName = GetFrameworkCodeName(newVacancyViewModel),
                 StandardId = newVacancyViewModel.StandardId,
                 ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel),
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
@@ -139,6 +139,11 @@
             });
 
             return vacancy;
+        }
+
+        private string GetFrameworkCodeName(NewVacancyViewModel newVacancyViewModel)
+        {
+            return newVacancyViewModel.TrainingType == TrainingType.Standards ? null : newVacancyViewModel.FrameworkCodeName;
         }
 
         private ApprenticeshipLevel GetApprenticeshipLevel(NewVacancyViewModel newVacancyViewModel)
@@ -162,7 +167,7 @@
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
             vacancy.TrainingType = newVacancyViewModel.TrainingType;
-            vacancy.FrameworkCodeName = newVacancyViewModel.FrameworkCodeName;
+            vacancy.FrameworkCodeName = GetFrameworkCodeName(newVacancyViewModel);
             vacancy.StandardId = newVacancyViewModel.StandardId;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel);
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
@@ -267,6 +272,8 @@
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
+            var standard = GetStandard(vacancy.StandardId);
+            viewModel.StandardName = standard == null ? "" : standard.Name;
             return viewModel;
         }
 

@@ -268,8 +268,16 @@
                         {
                             <p id="vacancy-training-to-be-provided">@Html.Raw(Model.ProviderSite.CandidateDescription)</p>
                         }
-                        <h3 class="heading-small">Apprenticeship framework</h3>
-                        <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
+                        @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
+                        {
+                            <h3 class="heading-small">Apprenticeship framework</h3>
+                            <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
+                        }
+                        @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
+                        {
+                            <h3 class="heading-small">Apprenticeship standard</h3>
+                            <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
+                        }
                         <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
                     </div>
                 </div>

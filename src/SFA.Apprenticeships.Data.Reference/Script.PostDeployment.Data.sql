@@ -111,7 +111,7 @@ USING (VALUES
   (55, 22, N'Property Maintenance Operative', 2),
   (56, 23, N'Public Service Operational Delivery Officer', 3),
   (57, 24, N'Railway Engineering Design Technician', 3),
-  (58, 25, N'Refrigeration Air Conditioning & Heat Pump', 3),
+  (58, 25, N'Refrigeration Air Conditioning & Heat Pump Engineering Technician', 3),
   (59, 26, N'Chartered Surveyor', 6),
   (60, 26, N'Surveying Technician', 3)
 ) 

@@ -22,6 +22,7 @@
 
         public List<SelectListItem> ApprenticeshipLevels { get; set; }
         public string FrameworkName { get; set; }
+        public string StandardName { get; set; }
         public ProviderSiteViewModel ProviderSite { get; set; }
         public ProviderVacancyStatuses Status { get; set; }
     }
