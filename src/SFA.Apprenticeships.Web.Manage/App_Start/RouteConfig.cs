@@ -86,9 +86,9 @@
                 );
 
             routes.MapRoute(
-                name: ManagementRouteNames.AcceptVacancy,
-                url: "vacancy/accept",
-                defaults: new { controller = "Vacancy", action = "Accept" }
+                name: ManagementRouteNames.ApproveVacancy,
+                url: "vacancy/approve",
+                defaults: new { controller = "Vacancy", action = "Approve" }
                 );
 
             routes.LowercaseUrls = true;

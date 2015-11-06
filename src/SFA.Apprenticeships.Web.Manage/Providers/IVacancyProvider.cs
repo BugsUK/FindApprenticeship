@@ -6,5 +6,7 @@
     public interface IVacancyProvider
     {
         List<VacancySummaryViewModel> GetPendingQAVacancies();
+
+        void ApproveVacancy(long vacancyReferenceNumber);
     }
 }

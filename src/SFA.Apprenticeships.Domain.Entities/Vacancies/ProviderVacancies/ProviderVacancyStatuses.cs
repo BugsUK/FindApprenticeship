@@ -4,6 +4,7 @@
     {
         Unknown = 0,
         Draft = 1,
-        PendingQA = 2
+        PendingQA = 2,
+        Live = 3
     }
 }

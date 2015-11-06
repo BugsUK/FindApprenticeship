@@ -8,7 +8,6 @@
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
-    using Manage.Providers.SFA.Apprenticeships.Web.Recruit.Providers;
     using Moq;
     using NUnit.Framework;
 
@@ -40,11 +39,41 @@
 
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
 
-            var vacancyProvider = new VacancyProvider(apprenticeshipVacancyRepository.Object, providerService.Object);
+            var vacancyProvider = new VacancyProviderBuilder().With(apprenticeshipVacancyRepository).With(providerService).Build();
             vacancyProvider.GetPendingQAVacancies();
 
             apprenticeshipVacancyRepository.Verify(avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> {ProviderVacancyStatuses.PendingQA}));
             providerService.Verify(ps => ps.GetProvider(ukprn), Times.Once);
+        }
+
+        [Test]
+        public void AppoveVacancyShouldCallRepositorySaveWithStatusAsLive()
+        {
+            long vacancyReferenceNumber = 1;
+            var vacancy = new ApprenticeshipVacancy
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber
+            };
+
+            var apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            var apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+
+            apprenticeshipVacancyReadRepository.Setup(r => r.Get(vacancyReferenceNumber)).Returns(vacancy);
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(apprenticeshipVacancyWriteRepository)
+                    .With(apprenticeshipVacancyReadRepository)
+                    .Build();
+
+            vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+
+            apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyReferenceNumber));
+            apprenticeshipVacancyWriteRepository.Verify(
+                r =>
+                    r.Save(
+                        It.Is<ApprenticeshipVacancy>(
+                            av =>
+                                av.VacancyReferenceNumber == vacancyReferenceNumber &&
+                                av.Status == ProviderVacancyStatuses.Live)));
         }
     }
 }
