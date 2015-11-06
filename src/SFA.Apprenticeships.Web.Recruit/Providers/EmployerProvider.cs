@@ -6,8 +6,8 @@
     using Configuration;
     using Converters;
     using Domain.Interfaces.Configuration;
-    using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
+    using Raa.Common.ViewModels.Vacancy;
 
     public class EmployerProvider : IEmployerProvider
     {

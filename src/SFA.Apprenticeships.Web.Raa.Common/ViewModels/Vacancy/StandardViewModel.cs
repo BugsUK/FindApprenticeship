@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
 

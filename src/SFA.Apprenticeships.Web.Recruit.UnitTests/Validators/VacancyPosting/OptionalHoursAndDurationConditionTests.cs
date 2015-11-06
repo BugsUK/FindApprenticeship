@@ -2,14 +2,14 @@
 {
     using System.Linq;
     using Common.Validators;
-    using Constants.ViewModels;
+    using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Recruit.Validators.Vacancy;
-    using ViewModels.Vacancy;
+    using Raa.Common.Validators.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
     public class OptionalHoursAndDurationConditionTests

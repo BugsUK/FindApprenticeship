@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Constants.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 {
-    using Common.Constants;
+    using Web.Common.Constants;
 
     public class VacancyViewModelMessages
     {
@@ -186,11 +186,6 @@
         public static class FrameworkCodeName
         {
             public const string RequiredErrorText = "Please select the apprenticeship framework";
-        }
-
-        public static class StandardId
-        {
-            public const string RequiredErrorText = "Please select the apprenticeship standard";
         }
     }
 }

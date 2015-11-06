@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System.Collections.Generic;
     using System.Linq;

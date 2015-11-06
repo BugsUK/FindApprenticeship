@@ -1,7 +1,8 @@
-﻿@*@model SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancyViewModel
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
-@using SFA.Apprenticeships.Web.Recruit.Constants
+@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
 }
@@ -290,15 +291,15 @@
 
         </section>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
+@using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
     <section>
         <div class="form-group">
             <button type="submit" class="button">Submit for approval</button>
-            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to dashboard</a>
+            <a id="dashboardLink" href="@Url.RouteUrl(ManagementRouteNames.LandingPage)">Return to dashboard</a>
         </div>
     </section>
 }
-</div>*@
+</div>

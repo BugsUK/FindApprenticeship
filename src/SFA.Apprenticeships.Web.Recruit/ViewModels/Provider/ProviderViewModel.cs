@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
-
-namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
+﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators.Provider;
+    using System.Collections.Generic;
+    using Raa.Common.ViewModels.Provider;
 
     [Validator(typeof(ProviderViewModelValidator))]
     public class ProviderViewModel

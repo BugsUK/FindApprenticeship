@@ -1,21 +1,20 @@
-﻿using System.Collections.Generic;
-using SFA.Apprenticeships.Application.Interfaces.Employers;
-using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
-using SFA.Apprenticeships.Application.VacancyPosting;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-using SFA.Apprenticeships.Web.Common.Converters;
-using SFA.Apprenticeships.Web.Recruit.Configuration;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting;
-
-namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
     using System;
     using System.Linq;
     using Application.Interfaces.Providers;
     using Converters;
     using Domain.Entities.Providers;
-
+    using System.Collections.Generic;
+    using Application.Interfaces.Employers;
+    using Application.Interfaces.VacancyPosting;
+    using Domain.Interfaces.Configuration;
+    using Common.Converters;
+    using Raa.Common.ViewModels.Provider;
+    using Configuration;
+    using ViewModels.Provider;
+    using ViewModels.VacancyPosting;
+              
     public class ProviderProvider : IProviderProvider
     {
         private readonly IVacancyPostingService _vacancyPostingService;

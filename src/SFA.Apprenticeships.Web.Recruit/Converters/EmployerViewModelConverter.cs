@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
 {
     using Domain.Entities.Organisations;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     public static class EmployerViewModelConverter

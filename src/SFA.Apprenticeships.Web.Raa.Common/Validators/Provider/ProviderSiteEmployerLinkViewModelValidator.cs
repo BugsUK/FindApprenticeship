@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Provider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Provider
 {
     using System;
     using Constants.ViewModels;

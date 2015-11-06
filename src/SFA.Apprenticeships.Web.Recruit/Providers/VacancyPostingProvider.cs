@@ -14,7 +14,8 @@
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
+
 
     public class VacancyPostingProvider : IVacancyPostingProvider
     {

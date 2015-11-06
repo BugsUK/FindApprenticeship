@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
-    using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
+    using Raa.Common.ViewModels.Vacancy;
 
     public interface IEmployerProvider
     {

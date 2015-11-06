@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Recruit.Constants;
-
-namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
     using Attributes;
@@ -10,6 +8,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using FluentValidation.Mvc;
     using Mediators.Provider;
     using ViewModels.Provider;
+    using Raa.Common.ViewModels.Provider;
+    using Constants;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]

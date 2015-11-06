@@ -4,8 +4,8 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Recruit.Validators.Vacancy;
-    using ViewModels.Vacancy;
+    using Raa.Common.Validators.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
     public class NewVacancyViewModelServerValidatorTests

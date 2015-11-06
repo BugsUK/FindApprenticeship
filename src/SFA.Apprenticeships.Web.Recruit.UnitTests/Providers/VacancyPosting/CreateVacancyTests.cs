@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
+    using System;
     using System.Web.Mvc;
     using Common.ViewModels.Locations;
     using Domain.Entities.Locations;
@@ -11,8 +10,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using ViewModels.Provider;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
     using System.Collections.Generic;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.ProviderVacancies;

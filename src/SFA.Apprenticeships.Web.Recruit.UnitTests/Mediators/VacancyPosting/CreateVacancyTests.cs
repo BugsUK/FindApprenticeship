@@ -7,8 +7,8 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using ViewModels.Provider;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
     public class CreateVacancyTests : TestsBase

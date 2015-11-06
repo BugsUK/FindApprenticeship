@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 {
     using System.ComponentModel.DataAnnotations;
-    using Common.ViewModels.Locations;
+    using Web.Common.ViewModels.Locations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators.Provider;

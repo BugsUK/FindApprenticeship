@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Validators
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators
 {
     using System;
     using System.Text.RegularExpressions;

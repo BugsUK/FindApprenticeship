@@ -10,8 +10,8 @@
     using Constants;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
-    using ViewModels.Provider;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     [AuthorizeUser(Roles = Roles.Faa)]

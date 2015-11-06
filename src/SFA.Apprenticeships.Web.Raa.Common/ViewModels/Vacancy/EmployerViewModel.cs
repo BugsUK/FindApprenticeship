@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using Common.ViewModels.Locations;
+    using Web.Common.ViewModels.Locations;
 
     public class EmployerViewModel
     {

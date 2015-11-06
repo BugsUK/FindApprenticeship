@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System;
     using Constants;
@@ -107,8 +107,7 @@
             RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeTwoWeeksInTheFuture)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.TooSoonErrorText)
-                .WithState(s => ValidationType.Warning)
-                .When(x => x.ClosingDate == null || !x.ClosingDate.HasValue);
+                .WithState(s => ValidationType.Warning);
 
             Custom(x => x.PossibleStartDateShouldBeAfterClosingDate(x.ClosingDate));
         }

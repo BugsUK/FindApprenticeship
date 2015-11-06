@@ -3,9 +3,9 @@
     using System;
     using FluentAssertions;
     using NUnit.Framework;
-    using Recruit.Validators.Provider;
     using FluentValidation.TestHelper;
-    using ViewModels.Provider;
+    using Raa.Common.Validators.Provider;
+    using Raa.Common.ViewModels.Provider;
 
     [TestFixture]
     public class ProviderSiteEmployerLinkViewModelValidatorTests

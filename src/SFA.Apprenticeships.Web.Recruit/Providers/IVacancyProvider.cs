@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
+    using System.Collections.Generic;
+    using Raa.Common.ViewModels.Vacancy;
+
     public interface IVacancyProvider
     {
         List<VacancyViewModel> GetVacanciesForProvider(string ukprn);

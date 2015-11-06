@@ -1,9 +1,9 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Raa.Common.ViewModels.Vacancy;
     using ViewModels.Vacancy;
 
     public interface IVacancyPostingProvider

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
+namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;

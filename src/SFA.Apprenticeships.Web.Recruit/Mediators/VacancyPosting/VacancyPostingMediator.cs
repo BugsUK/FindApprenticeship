@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
+    using System;
+    using Raa.Common.Validators.Vacancy;
     using System.Linq;
     using FluentValidation;
     using Common.Constants;
@@ -13,12 +13,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Providers;
-    using Validators.Provider;
-    using Validators.Vacancy;
     using Validators.VacancyPosting;
-    using ViewModels.Provider;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
+    using Raa.Common.Validators.Provider;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {

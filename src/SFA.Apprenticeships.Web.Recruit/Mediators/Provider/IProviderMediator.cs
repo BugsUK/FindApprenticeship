@@ -1,8 +1,8 @@
-﻿using SFA.Apprenticeships.Web.Common.Mediators;
-
-namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
+﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
 {
     using ViewModels.Provider;
+    using Common.Mediators;
+    using Raa.Common.ViewModels.Provider;
 
     public interface IProviderMediator
     {

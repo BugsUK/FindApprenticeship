@@ -9,8 +9,8 @@
     using RazorGenerator.Testing;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Common.ViewModels.Locations;
-    using ViewModels.Provider;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
     using Recruit.Views.VacancyPosting;
 
     [TestFixture]

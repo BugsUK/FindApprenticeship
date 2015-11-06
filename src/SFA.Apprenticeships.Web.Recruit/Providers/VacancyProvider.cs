@@ -5,7 +5,7 @@
     using Converters;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Interfaces.Repositories;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
 
     public class VacancyProvider : IVacancyProvider
     {

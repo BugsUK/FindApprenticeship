@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
 {
     using Domain.Entities.Providers;
-    using ViewModels.Provider;
+    using Raa.Common.ViewModels.Provider;
 
     public static class ProviderSiteViewModelConverter
     {

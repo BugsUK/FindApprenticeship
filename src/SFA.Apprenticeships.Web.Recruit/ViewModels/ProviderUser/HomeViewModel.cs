@@ -1,9 +1,8 @@
-﻿using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser
+﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Raa.Common.ViewModels.Vacancy;
 
     public class HomeViewModel
     {

@@ -1,9 +1,9 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using Common.Mediators;
-    using ViewModels.Provider;
+    using System;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 

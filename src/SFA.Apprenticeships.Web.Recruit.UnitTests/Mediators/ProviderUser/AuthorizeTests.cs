@@ -10,6 +10,7 @@
     using Recruit.Mediators.ProviderUser;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
+    using Raa.Common.ViewModels.Provider;
 
     [TestFixture]
     public class AuthorizeTests : TestBase

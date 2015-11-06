@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Vacancies.Apprenticeships;
-
-namespace SFA.Apprenticeships.Web.Recruit.Converters
+﻿namespace SFA.Apprenticeships.Web.Recruit.Converters
 {
     using System;
     using System.Collections.Generic;
@@ -9,7 +7,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Converters
     using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
 
     public static class ApprenticeshipVacancyConverter
     {

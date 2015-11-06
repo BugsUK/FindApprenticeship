@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators
 {
-    using Recruit.Validators;
+    using Raa.Common.Validators;
     using NUnit.Framework;
     using FluentAssertions;
 
