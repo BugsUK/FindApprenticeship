@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
+    using Application.Interfaces.DateTime;
     using Application.Interfaces.Providers;
+    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Manage.Providers.SFA.Apprenticeships.Web.Recruit.Providers;
     using Moq;
@@ -9,11 +11,15 @@
     {
         private Mock<IApprenticeshipVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
         private Mock<IApprenticeshipVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
-        private Mock<IProviderService> _providerService = new Mock<IProviderService>(); 
+        private Mock<IProviderService> _providerService = new Mock<IProviderService>();
+        private Mock<IDateTimeService> _dateTimeService = new Mock<IDateTimeService>();
+        private Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
 
         public VacancyProvider Build()
         {
-            return new VacancyProvider(_apprenticeshipVacancyReadRepository.Object, _apprenticeshipVacancyWriteRepository.Object, _providerService.Object);
+            return new VacancyProvider(_apprenticeshipVacancyReadRepository.Object,
+                _apprenticeshipVacancyWriteRepository.Object, _providerService.Object, _dateTimeService.Object,
+                _configurationService.Object);
         }
 
         public VacancyProviderBuilder With(
@@ -34,6 +40,18 @@
             Mock<IProviderService> providerService)
         {
             _providerService = providerService;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<IDateTimeService> dateTimeService)
+        {
+            _dateTimeService = dateTimeService;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<IConfigurationService> configurationService)
+        {
+            _configurationService = configurationService;
             return this;
         }
     }

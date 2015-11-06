@@ -16,5 +16,9 @@
         public DateTime ClosingDate { get; set; }
 
         public DateTime DateSubmitted { get; set; }
+
+        public DateTime? DateStartedToQA { get; set; }
+        
+        public string QAUserName { get; set; }
     }
 }
