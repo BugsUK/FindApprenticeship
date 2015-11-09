@@ -34,6 +34,20 @@
             return GetMediatorResponse(VacancyMediatorCodes.ApproveVacancy.Ok, vacancies.First());
         }
 
+        public MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(long vacancyReferenceNumber)
+        {
+            _vacancyProvider.RejectVacancy(vacancyReferenceNumber);
+
+            var vacancies = _vacancyProvider.GetPendingQAVacancies();
+
+            if (vacancies == null || !vacancies.Any())
+            {
+                return GetMediatorResponse<DashboardVacancySummaryViewModel>(VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies);
+            }
+
+            return GetMediatorResponse(VacancyMediatorCodes.RejectVacancy.Ok, vacancies.First());
+        }
+
         public MediatorResponse<VacancyViewModel> GetVacancy(long vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyProvider.GetVacancy(vacancyReferenceNumber);

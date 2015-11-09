@@ -92,6 +92,36 @@
         }
 
         [Test]
+        public void RejectVacancyShouldCallRepositorySaveWithStatusAsDraft()
+        {
+            long vacancyReferenceNumber = 1;
+            var vacancy = new ApprenticeshipVacancy
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber
+            };
+
+            var apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            var apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+
+            apprenticeshipVacancyReadRepository.Setup(r => r.Get(vacancyReferenceNumber)).Returns(vacancy);
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(apprenticeshipVacancyWriteRepository)
+                    .With(apprenticeshipVacancyReadRepository)
+                    .Build();
+
+            vacancyProvider.RejectVacancy(vacancyReferenceNumber);
+
+            apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyReferenceNumber));
+            apprenticeshipVacancyWriteRepository.Verify(
+                r =>
+                    r.Save(
+                        It.Is<ApprenticeshipVacancy>(
+                            av =>
+                                av.VacancyReferenceNumber == vacancyReferenceNumber &&
+                                av.Status == ProviderVacancyStatuses.Draft)));
+        }
+
+        [Test]
         public void GetPendingQAVacanciesShouldReturnVacanciesWithoutQAUserName()
         {
             var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();

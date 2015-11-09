@@ -10,6 +10,8 @@
 
         void ApproveVacancy(long vacancyReferenceNumber);
 
+        void RejectVacancy(long vacancyReferenceNumber);
+
         VacancyViewModel GetVacancy(long vacancyReferenceNumber);
     }
 }

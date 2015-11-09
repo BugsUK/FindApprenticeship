@@ -306,8 +306,10 @@
 
         <section>
             <div class="form-group">
-                <button type="submit" class="button">Approve</button>
+                <button id="btnApprove" type="submit" class="button" name="VacancyQAAction" value="Approve">Approve</button>
+                <button id="btnReject" type="submit" class="button-link" name="VacancyQAAction" value="Reject">Reject</button>
                 <a id="dashboardLink" href="@Url.RouteUrl(ManagementRouteNames.LandingPage)">Return to dashboard</a>
+                
             </div>
         </section>
     }

@@ -8,6 +8,12 @@
             public const string Ok = "VacancyMediatorCodes.ApproveVacancy.Ok";
         }
 
+        public class RejectVacancy
+        {
+            public const string NoAvailableVacancies = "VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies";
+            public const string Ok = "VacancyMediatorCodes.RejectVacancy.Ok";
+        }
+
         public class GetVacancy
         {
             public const string NotAvailable = "VacancyMediatorCodes.GetVacancy.NotAvailable";

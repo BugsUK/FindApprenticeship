@@ -84,6 +84,14 @@
                 _apprenticeshipVacancyWriteRepository.Save(vacancy);
             }
 
+            public void RejectVacancy(long vacancyReferenceNumber)
+            {
+                var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
+                vacancy.Status = ProviderVacancyStatuses.Draft;
+
+                _apprenticeshipVacancyWriteRepository.Save(vacancy);
+            }
+
             public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
             {
                 var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);

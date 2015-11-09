@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
 {
     using System;
     using System.Collections.Generic;
@@ -58,9 +58,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Vacancy/Review.cshtml")]
-    public partial class _Views_Vacancy_Review_cshtml : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyViewModel>
+    public partial class Review : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyViewModel>
     {
-        public _Views_Vacancy_Review_cshtml()
+        public Review()
         {
         }
         public override void Execute()
@@ -1683,28 +1683,47 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <button");
 
+WriteLiteral(" id=\"btnApprove\"");
+
 WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Approve</button>\r\n                <a");
+WriteLiteral(" name=\"VacancyQAAction\"");
+
+WriteLiteral(" value=\"Approve\"");
+
+WriteLiteral(">Approve</button>\r\n                <button");
+
+WriteLiteral(" id=\"btnReject\"");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(" class=\"button-link\"");
+
+WriteLiteral(" name=\"VacancyQAAction\"");
+
+WriteLiteral(" value=\"Reject\"");
+
+WriteLiteral(">Reject</button>\r\n                <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 17178), Tuple.Create("\"", 17232)
+WriteAttribute("href", Tuple.Create(" href=\"", 17361), Tuple.Create("\"", 17415)
             
-            #line 310 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 17185), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.LandingPage)
+            #line 311 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 17368), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.LandingPage)
             
             #line default
             #line hidden
-, 17185), false)
+, 17368), false)
 );
 
-WriteLiteral(">Return to dashboard</a>\r\n            </div>\r\n        </section>\r\n");
+WriteLiteral(">Return to dashboard</a>\r\n                \r\n            </div>\r\n        </section" +
+">\r\n");
 
             
-            #line 313 "..\..\Views\Vacancy\Review.cshtml"
+            #line 315 "..\..\Views\Vacancy\Review.cshtml"
     }
 
             

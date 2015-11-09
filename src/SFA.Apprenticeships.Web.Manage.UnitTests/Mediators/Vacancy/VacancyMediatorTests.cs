@@ -33,6 +33,27 @@
         }
 
         [Test]
+        public void ShouldUpdateTheStatusOfTheVacancyToDraft()
+        {
+            //Arrange
+            const long vacancyReferenceNumber = 1;
+            var pendingQAVacancies = GetPendingVacancies(new[]
+            {
+                vacancyReferenceNumber
+            });
+            var provider = new Mock<IVacancyProvider>();
+            provider.Setup(p => p.GetPendingQAVacancies()).Returns(pendingQAVacancies.ToList());
+
+            var mediator = new VacancyMediatorBuilder().With(provider).Build();
+
+            //Act
+            mediator.RejectVacancy(vacancyReferenceNumber);
+
+            //Assert
+            provider.Verify(p => p.RejectVacancy(vacancyReferenceNumber), Times.Once);
+        }
+
+        [Test]
         public void ShouldReturnTheNextAvailableVacancyAfterApprovingOne()
         {
             const long vacancyReferenceNumber = 1;
