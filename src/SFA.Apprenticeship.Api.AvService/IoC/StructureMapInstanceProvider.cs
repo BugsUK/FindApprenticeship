@@ -7,21 +7,21 @@
 
     public class StructureMapInstanceProvider : IInstanceProvider
     {
-        private readonly Type _serviceType;
+        private readonly Type _type;
 
-        public StructureMapInstanceProvider(Type serviceType)
+        public StructureMapInstanceProvider(Type type)
         {
-            _serviceType = serviceType;
+            _type = type;
         }
 
         public object GetInstance(InstanceContext instanceContext)
         {
-            return IoC.Container.GetInstance(_serviceType);
+            return IoC.Container.GetInstance(_type);
         }
 
         public object GetInstance(InstanceContext instanceContext, Message message)
         {
-            return IoC.Container.GetInstance(_serviceType);
+            return IoC.Container.GetInstance(_type);
         }
 
         public void ReleaseInstance(InstanceContext instanceContext, object instance)
