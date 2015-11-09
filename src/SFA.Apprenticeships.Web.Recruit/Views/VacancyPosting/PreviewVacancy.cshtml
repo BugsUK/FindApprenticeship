@@ -114,7 +114,7 @@
                     }
                     
                     <h3 class="bold-small">Apprenticeship level</h3>
-                    <p id="vacancy-type" itemprop="employmentType">@Model.NewVacancyViewModel.ApprenticeshipLevel Level Apprenticeship</p>
+                    <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
 
                     <h3 class="bold-small">Reference number</h3>
                     <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
