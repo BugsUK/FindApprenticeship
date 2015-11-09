@@ -487,7 +487,6 @@
     </Content>
     <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\VacancyPosting\SelectEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\AddEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\ConfirmEmployer.cshtml" />

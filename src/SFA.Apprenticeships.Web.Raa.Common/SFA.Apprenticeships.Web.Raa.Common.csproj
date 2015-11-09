@@ -182,6 +182,11 @@
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\DateTime.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DateTime.cshtml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -190,6 +195,10 @@
     <None Include="packages.config" />
     <Content Include="Views\razorgenerator.directives" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DateTime.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
