@@ -180,6 +180,10 @@
       <Project>{456a5d7b-80bb-486a-b521-861691836145}</Project>
       <Name>SFA.Apprenticeships.Web.Manage</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
+      <Project>{700D41DD-527A-42BD-94D2-FD49A5F00A18}</Project>
+      <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />

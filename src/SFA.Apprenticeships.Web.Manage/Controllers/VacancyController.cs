@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
+﻿using SFA.Apprenticeships.Web.Common.Mediators;
+using SFA.Apprenticeships.Web.Common.Validators.Extensions;
+
+namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
     using System.Web.Mvc;
@@ -21,9 +24,23 @@
         // GET: Vacancy
         public ActionResult Review(long vacancyReferenceNumber)
         {
-            var vacancy = _vacancyMediator.GetVacancy(vacancyReferenceNumber);
+            var response = _vacancyMediator.GetVacancy(vacancyReferenceNumber);
 
-            return View(vacancy.ViewModel);
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.GetVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    var view = View(response.ViewModel);
+                    return view;
+
+                case VacancyMediatorCodes.GetVacancy.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]

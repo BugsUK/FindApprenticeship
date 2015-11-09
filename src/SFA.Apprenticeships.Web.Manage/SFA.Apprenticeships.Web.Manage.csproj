@@ -458,7 +458,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Constants\Pages\" />
-    <Folder Include="Validators\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -513,6 +512,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
       <Project>{920F5834-459D-4E20-9B17-AAD52D2CC8FE}</Project>
       <Name>SFA.Apprenticeships.Application.Provider</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
+      <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>

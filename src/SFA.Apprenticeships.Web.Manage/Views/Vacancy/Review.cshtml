@@ -1,10 +1,10 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
-@using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Constants
+@using SFA.Apprenticeships.Web.Manage.Constants
 @{
-    ViewBag.Title = "Manage a vacancy - Review vacancy";
+    ViewBag.Title = "QA a Vacancy - Review vacancy";
 }
 
 <div>
@@ -22,284 +22,293 @@
         </div>
     </div>
 
-        <section class="grid-wrapper">
-            <div class="grid grid-2-3">
-                <div class="inner-block-padr">
-                    <div class="text" itemprop="description">
-                        <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
-                    </div>
+    <section class="grid-wrapper">
+        <div class="grid grid-2-3">
+            <div class="inner-block-padr">
+                <div class="text" itemprop="description">
+                    <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
                 </div>
             </div>
-            <div class="grid grid-1-3">
-                @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
-                {
-                   var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
-                
-                    <p id="vacancy-closing-date" class="copy-16">
-                        Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday() 
-                        <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
-                    </p>
-                }
-                else
-                {
+        </div>
+        <div class="grid grid-1-3">
+            @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
+            {
+                var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
+
                 <p id="vacancy-closing-date" class="copy-16">
-                    Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday() 
+                    Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
+                    <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                </p>
+            }
+            else
+            {
+                <p id="vacancy-closing-date" class="copy-16">
+                    Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
                     <i class="fa fa-check the-icon" style="color: green;"></i>
                 </p>
+            }
+        </div>
+    </section>
+    <section class="section-border grid-wrapper" id="vacancy-info">
+        <h2 class="heading-large">Apprenticeship summary</h2>
+        <div class="grid grid-1-3">
+            <div class="inner-block-padr">
+
+                <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
+                <p id="vacancy-working-week" itemprop="workHours">
+                    @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
+                    @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
+                    {
+                        <br />@:(the hours are based on the candidate being over 18)
+                        }
+                </p>
+
+                <h3 class="bold-small">
+                    @Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon" style="color: green;"></i>
+                </h3>
+
+                <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
+
+                @if (Model.VacancySummaryViewModel.WageType != WageType.Custom)
+                {
+                    <details>
+                        <summary>TODO: Wage explanation</summary>
+                        <div class="detail-content">
+                            The current National Minimum Wage (NMW) rate for an apprentice is £@Wages.ApprenticeMinimumWage per hour.
+                            This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.
+                            Apprentices must be paid at least the NMW rate for their age if they're aged 19 or over and have completed their first year.
+                            The current NMW rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.
+                            Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
+                        </div>
+                    </details>
                 }
-            </div>
-        </section>
-        <section class="section-border grid-wrapper" id="vacancy-info">
-            <h2 class="heading-large">Apprenticeship summary</h2>
-            <div class="grid grid-1-3">
-                <div class="inner-block-padr">
 
-                    <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
-                    <p id="vacancy-working-week" itemprop="workHours">
-                        @Model.VacancySummaryViewModel.WorkingWeek<br/>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
-                        @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
-                        {
-                            <br/>@:(the hours are based on the candidate being over 18)
-                        }
-                    </p>
-                    
-                    <h3 class="bold-small">
-                        @Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon" style="color: green;"></i>
-                    </h3>
-
-                    <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-
-                    @if (Model.VacancySummaryViewModel.WageType != WageType.Custom)
+                <h3 class="bold-small">
+                    Expected duration
+                    @if (ViewData.ModelState.HasWarningsFor("Duration"))
                     {
-                        <details>
-                            <summary>TODO: Wage explanation</summary>
-                            <div class="detail-content">
-                                The current National Minimum Wage (NMW) rate for an apprentice is £@Wages.ApprenticeMinimumWage per hour.
-                                This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.
-                                Apprentices must be paid at least the NMW rate for their age if they're aged 19 or over and have completed their first year.
-                                The current NMW rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.
-                                Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).    
-                            </div>
-                        </details>
-                    }
-                    
-                    <h3 class="bold-small">
-                        Expected duration
-                        @if (ViewData.ModelState.HasWarningsFor("Duration"))
-                        {
-                            var message = ViewData.ModelState.WarningMessageFor("Duration");
-                            <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
-                        }
-                        else
-                        {
-                            <i class="fa fa-check the-icon" style="color: green;"></i>
-                        }
-                    </h3>
-                    
-                    <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
-                    <h3 class="bold-small">Possible start date</h3>
-                    @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
-                    {
-                        var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
-                        <p id="vacancy-start-date">@Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                            <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
-                        </p>
+                        var message = ViewData.ModelState.WarningMessageFor("Duration");
+                        <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
                     }
                     else
                     {
-                        <p id="vacancy-start-date">
-                            @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                            <i class="fa fa-check the-icon" style="color: green;"></i>
-                        </p>
+                        <i class="fa fa-check the-icon" style="color: green;"></i>
                     }
-                    
-                    <h3 class="bold-small">Apprenticeship level</h3>
-                    <p id="vacancy-type" itemprop="employmentType">@Model.NewVacancyViewModel.ApprenticeshipLevel Level Apprenticeship</p>
+                </h3>
 
-                    <h3 class="bold-small">Reference number</h3>
-                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
-                </div>
-            </div>
-            <div class="grid grid-2-3">
-                <div class="text" itemprop="responsibilities">
-                    <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
-                </div>
-            </div>
-
-        </section>
-<section class="section-border grid-wrapper" id="course-info">
-    <h2 class="heading-large">Requirements and prospects</h2>
-    <div class="grid grid-1-2">
-        <div class="inner-block-padr">
-            <div class="text">
-                @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
+                <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
+                <h3 class="bold-small">Possible start date</h3>
+                @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
                 {
-                    <h3 class="heading-small">Desired skills</h3>
-                    <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
+                    var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
+                    <p id="vacancy-start-date">
+                        @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
+                    <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                </p>
                 }
-                @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
+                else
                 {
-                    <h3 class="heading-small">Personal qualities</h3>
-                    <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
-                }
-                @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
-                {
-                    <h3 class="heading-small">Qualifications required</h3>
-                    <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
+                    <p id="vacancy-start-date">
+                        @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
+                        <i class="fa fa-check the-icon" style="color: green;"></i>
+                    </p>
                 }
 
+                <h3 class="bold-small">Apprenticeship level</h3>
+                <p id="vacancy-type" itemprop="employmentType">@Model.NewVacancyViewModel.ApprenticeshipLevel Level Apprenticeship</p>
+
+                <h3 class="bold-small">Reference number</h3>
+                <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
             </div>
         </div>
-    </div>
-    <div class="grid grid-1-2">
-        <div class="text">
-            @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
-            {
-                <h3 class="heading-small">Future prospects</h3>
-                <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
-            }
-            @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
-            {
-                <h3 class="heading-small">Things to consider</h3>
-                <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
-            }
+        <div class="grid grid-2-3">
+            <div class="text" itemprop="responsibilities">
+                <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
+            </div>
         </div>
-    </div>
-</section>
 
-
-@if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion)
-            || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
-    {
-    
+    </section>
     <section class="section-border grid-wrapper" id="course-info">
-        <h2 class="heading-large">Questions for candidates</h2>
+        <h2 class="heading-large">Requirements and prospects</h2>
         <div class="grid grid-1-2">
             <div class="inner-block-padr">
                 <div class="text">
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
                     {
-                        <h3 class="heading-small">First question</h3>
-                        <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
+                        <h3 class="heading-small">Desired skills</h3>
+                        <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
                     }
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
                     {
-                        <h3 class="heading-small">Second question</h3>
-                        <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
+                        <h3 class="heading-small">Personal qualities</h3>
+                        <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
                     }
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
+                    {
+                        <h3 class="heading-small">Qualifications required</h3>
+                        <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
+                    }
+
                 </div>
             </div>
         </div>
+        <div class="grid grid-1-2">
+            <div class="text">
+                @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
+            {
+                    <h3 class="heading-small">Future prospects</h3>
+                    <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
+            {
+                    <h3 class="heading-small">Things to consider</h3>
+                    <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
+                }
+            </div>
+        </div>
     </section>
-    }
-        <section class="section-border" id="employer-info">
-            <h2 class="heading-large">About the employer</h2>
-            <div class="grid-wrapper">
-                <div class="grid grid-2-3">
-                    <div class="inner-block-padr">
-                        <div class="text">
-                            <p id="vacancy-employer-description">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
-                        </div>
+
+
+    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion)
+                    || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+    {
+
+        <section class="section-border grid-wrapper" id="course-info">
+            <h2 class="heading-large">Questions for candidates</h2>
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
+                        {
+                            <h3 class="heading-small">First question</h3>
+                            <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+                        {
+                            <h3 class="heading-small">Second question</h3>
+                            <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
+                        }
                     </div>
                 </div>
             </div>
-            <div class="grid-wrapper">
-                <div class="grid grid-1-2">
-                    <div class="inner-block-padr">
-                        <div class="text">
-                            <h3 class="bold-small">Employer</h3>
-                            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-                            @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
-                            {
-                                <p>
-                                    <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
-                                       id="vacancy-employer-website"
-                                       target="_blank"
-                                       title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                                    <i class="fa fa-check the-icon" style="color: green;"></i>
-                                </p>
-                            }
-                            <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="bold-small">Address</h3>
-                                <div itemprop="address">
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
-                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
-                                </div>
+        </section>
+    }
+    <section class="section-border" id="employer-info">
+        <h2 class="heading-large">About the employer</h2>
+        <div class="grid-wrapper">
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        <p id="vacancy-employer-description">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid-wrapper">
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        <h3 class="bold-small">Employer</h3>
+                        <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+                        @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
+                        {
+                            <p>
+                                <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
+                                   id="vacancy-employer-website"
+                                   target="_blank"
+                                   title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
+                                <i class="fa fa-check the-icon" style="color: green;"></i>
+                            </p>
+                        }
+                        <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
+                            <h3 class="bold-small">Address</h3>
+                            <div itemprop="address">
+                                <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
+                                <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
+                                <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
+                                <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
+                                <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="grid grid-1-2 hide-print">
-                    <div id="vacancy-map" class="ad-details__map">
-                        <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
-                        <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                    </div>
+            </div>
+            <div class="grid grid-1-2 hide-print">
+                <div id="vacancy-map" class="ad-details__map">
+                    <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
+                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                    <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>
             </div>
-        </section>
-
-        @if (Model.NewVacancyViewModel.OfflineVacancy)
-        {
-            <section class="section-border" id="offline-vacancy" style="">
-                <h2 class="heading-large">Employer's application instructions</h2>
-                <div class="text">
-                    <p id="application-instructions">
-                        @Model.NewVacancyViewModel.OfflineApplicationInstructions
-                    </p>
-                </div>
-                <div class="form-group">
-                    <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
-                    <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
-                    <i class="fa fa-check the-icon" style="color: green;"></i>
-                </div>
-            </section>
-        }
-        
-        <section class="section-border grid-wrapper" id="provider-info">
-            <h2 class="heading-large">Training provider</h2>
-            <div class="grid grid-2-3">
-                <div class="inner-block-padr">
-                    <div class="text">
-                        @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
-                        {
-                            <p id="vacancy-training-to-be-provided">@Html.Raw(Model.ProviderSite.CandidateDescription)</p>
-                        }
-                        <h3 class="heading-small">Apprenticeship framework</h3>
-                        <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
-                        <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-1-3">
-                <div class="text">
-                    <h3 class="bold-small">Training provider</h3>
-                    <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
-                </div>
-
-                @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
-                {
-                    <div class="text">
-                        <h3 class="bold-small">Contact</h3>
-                        <p id="vacancy-provider-contact">@Model.ProviderSite.ContactDetailsForCandidate</p>
-                    </div>
-                }
-            </div>
-
-        </section>
-
-@using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
-{
-    @Html.HiddenFor(m => m.VacancyReferenceNumber)
-
-    <section>
-        <div class="form-group">
-            <button type="submit" class="button">Approve</button>
-            <a id="dashboardLink" href="@Url.RouteUrl(ManagementRouteNames.LandingPage)">Return to dashboard</a>
         </div>
     </section>
-}
+
+    @if (Model.NewVacancyViewModel.OfflineVacancy)
+    {
+        <section class="section-border" id="offline-vacancy" style="">
+            <h2 class="heading-large">Employer's application instructions</h2>
+            <div class="text">
+                <p id="application-instructions">
+                    @Model.NewVacancyViewModel.OfflineApplicationInstructions
+                </p>
+            </div>
+            <div class="form-group">
+                <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
+                <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
+                <i class="fa fa-check the-icon" style="color: green;"></i>
+            </div>
+        </section>
+    }
+
+    <section class="section-border grid-wrapper" id="provider-info">
+        <h2 class="heading-large">Training provider</h2>
+        <div class="grid grid-2-3">
+            <div class="inner-block-padr">
+                <div class="text">
+                    @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
+                    {
+                        <p id="vacancy-training-to-be-provided">@Html.Raw(Model.ProviderSite.CandidateDescription)</p>
+                    }
+                    @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
+                    {
+                        <h3 class="heading-small">Apprenticeship framework</h3>
+                            <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
+                    }
+                    @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
+                    {
+                        <h3 class="heading-small">Apprenticeship standard</h3>
+                            <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
+                    }
+                    <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-1-3">
+            <div class="text">
+                <h3 class="bold-small">Training provider</h3>
+                <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
+            </div>
+
+            @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
+            {
+                <div class="text">
+                    <h3 class="bold-small">Contact</h3>
+                    <p id="vacancy-provider-contact">@Model.ProviderSite.ContactDetailsForCandidate</p>
+                </div>
+            }
+        </div>
+
+    </section>
+
+    @using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
+    {
+        @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+        <section>
+            <div class="form-group">
+                <button type="submit" class="button">Approve</button>
+                <a id="dashboardLink" href="@Url.RouteUrl(ManagementRouteNames.LandingPage)">Return to dashboard</a>
+            </div>
+        </section>
+    }
 </div>

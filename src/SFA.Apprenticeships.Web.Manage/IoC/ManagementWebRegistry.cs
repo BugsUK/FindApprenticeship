@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.IoC
+﻿using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
+using SFA.Apprenticeships.Application.ReferenceData;
+
+namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
     using Application.Communication;
@@ -51,6 +54,7 @@
         private void RegisterServices()
         {
             For<IOrganisationService>().Use<OrganisationService>();
+            For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
         }
 

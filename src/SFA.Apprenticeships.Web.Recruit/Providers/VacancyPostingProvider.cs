@@ -12,7 +12,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.VacancyPosting;
     using Common.Configuration;
-    using Converters;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;

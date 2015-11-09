@@ -5,7 +5,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Providers
     using System;
     using System.Linq;
     using Application.Interfaces.Providers;
-    using Converters;
     using Domain.Entities.Providers;
     using System.Collections.Generic;
     using Application.Interfaces.Employers;

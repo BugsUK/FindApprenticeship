@@ -7,8 +7,6 @@ using SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 {
-    using Converters;
-
     [TestFixture]
     public class VacancySummaryTests : ViewUnitTest
     {

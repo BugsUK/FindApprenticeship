@@ -12,6 +12,7 @@
         {
             public const string NotAvailable = "VacancyMediatorCodes.GetVacancy.NotAvailable";
             public const string Ok = "VacancyMediatorCodes.GetVacancy.Ok";
+            public const string FailedValidation = "VacancyMediatorCodes.GetVacancy.FailedValidation";
         }
     }
 }

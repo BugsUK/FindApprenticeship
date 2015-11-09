@@ -1,8 +1,8 @@
 ﻿
-namespace SFA.Apprenticeships.Web.Recruit.Converters
+namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
     using Domain.Entities.ReferenceData;
-    using Raa.Common.ViewModels.Vacancy;
+    using ViewModels.Vacancy;
 
     public static class StandardViewModelConverter
     {
