@@ -54,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 case VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.ApproveVacancy.Ok:
-                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, response.ViewModel.VacancyReferenceNumber);
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber =  response.ViewModel.VacancyReferenceNumber});
                 default:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
             }
@@ -71,7 +71,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 case VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.RejectVacancy.Ok:
-                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, response.ViewModel.VacancyReferenceNumber);
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
                 default:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
             }
