@@ -52,6 +52,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
             var durationTypes =
                 Enum.GetValues(typeof(DurationType))
                     .Cast<DurationType>()
+                    .Where(al => al != DurationType.Unknown)
                     .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
                     .ToList();
 
