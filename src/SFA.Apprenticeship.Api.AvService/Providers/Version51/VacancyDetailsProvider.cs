@@ -23,59 +23,64 @@
 
         public VacancyDetailsResponse Get(VacancyDetailsRequest request)
         {
-            if (!request.VacancySearchCriteria.VacancyReferenceId.HasValue)
-            {
-                var query = ApprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(request.VacancySearchCriteria);
-                int totalResultsCount;
-
-                var vacancies = _apprenticeshipVacancyReadRepository.Find(query, out totalResultsCount);
-
-                var searchResults = vacancies
-                    .Select(ApprenticeshipVacancyMapper.MapToVacancyFullData)
-                    .ToList();
-
-                var response = new VacancyDetailsResponse
-                {
-                    MessageId = request.MessageId,
-                    SearchResults = new VacancyDetailResponseData
-                    {
-                        AVMSHeader = GetAvmsHeader(),
-                        SearchResults = searchResults,
-                        TotalPages = GetTotalPages(query, totalResultsCount)
-                    }
-                };
-
-                return response;
-            }
-
-            {
-                var vacancyReferenceId = request.VacancySearchCriteria.VacancyReferenceId.Value;
-                var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceId);
-                var searchResults = new List<VacancyFullData>();
-
-                if (vacancy != null)
-                {
-                    var searchResult = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
-
-                    searchResults.Add(searchResult);
-                }
-
-                var response = new VacancyDetailsResponse
-                {
-                    MessageId = request.MessageId,
-                    SearchResults = new VacancyDetailResponseData
-                    {
-                        AVMSHeader = GetAvmsHeader(),
-                        SearchResults = searchResults,
-                        TotalPages = 1
-                    }
-                };
-
-                return response;
-            }
+            return request.VacancySearchCriteria.VacancyReferenceId.HasValue
+                ? GetVacancyDetails(request)
+                : FindVacancyDetails(request);
         }
 
         #region Helpers
+
+        private VacancyDetailsResponse GetVacancyDetails(VacancyDetailsRequest request)
+        {
+            // ReSharper disable once PossibleInvalidOperationException
+            var vacancyReferenceId = request.VacancySearchCriteria.VacancyReferenceId.Value;
+            var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceId);
+            var searchResults = new List<VacancyFullData>();
+
+            if (vacancy != null)
+            {
+                var searchResult = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+
+                searchResults.Add(searchResult);
+            }
+
+            var response = new VacancyDetailsResponse
+            {
+                MessageId = request.MessageId,
+                SearchResults = new VacancyDetailResponseData
+                {
+                    AVMSHeader = GetAvmsHeader(),
+                    SearchResults = searchResults,
+                    TotalPages = 1
+                }
+            };
+            return response;
+        }
+
+        private VacancyDetailsResponse FindVacancyDetails(VacancyDetailsRequest request)
+        {
+            var query = ApprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(request.VacancySearchCriteria);
+            int totalResultsCount;
+
+            var vacancies = _apprenticeshipVacancyReadRepository.Find(query, out totalResultsCount);
+
+            var searchResults = vacancies
+                .Select(ApprenticeshipVacancyMapper.MapToVacancyFullData)
+                .ToList();
+
+            var response = new VacancyDetailsResponse
+            {
+                MessageId = request.MessageId,
+                SearchResults = new VacancyDetailResponseData
+                {
+                    AVMSHeader = GetAvmsHeader(),
+                    SearchResults = searchResults,
+                    TotalPages = GetTotalPages(query, totalResultsCount)
+                }
+            };
+
+            return response;
+        }
 
         private static WebInterfaceGenericDetailsData GetAvmsHeader()
         {
