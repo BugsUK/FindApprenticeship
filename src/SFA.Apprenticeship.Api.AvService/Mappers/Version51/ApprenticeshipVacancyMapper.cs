@@ -4,6 +4,8 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using DataContracts.Version51;
 
+    // See Capgemini.LSC.Navms.MS.DataAccess.VacancyController for more default mappings.
+
     public static class ApprenticeshipVacancyMapper
     {
         private const string Todo = "TODO";

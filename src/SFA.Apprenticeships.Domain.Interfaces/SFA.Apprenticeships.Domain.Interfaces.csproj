@@ -84,6 +84,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\IConfigurationService.cs" />
+    <Compile Include="Queries\ApprenticeshipVacancyQuery.cs" />
     <Compile Include="Messaging\IJobControlQueue.cs" />
     <Compile Include="Messaging\IServiceBus.cs" />
     <Compile Include="Messaging\IServiceBusSubscriber.cs" />

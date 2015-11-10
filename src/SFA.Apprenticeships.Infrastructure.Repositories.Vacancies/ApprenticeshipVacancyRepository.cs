@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
@@ -11,6 +10,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Domain.Interfaces.Queries;
     using Domain.Interfaces.Repositories;
     using Mongo.Common;
     using Mongo.Common.Configuration;
@@ -58,7 +58,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}", ukPrn);
 
             var mongoEntities = Collection.Find(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn))
-                .Select(e => _mapper.Map<MongoApprenticeshipVacancy,ApprenticeshipVacancy>(e))
+                .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
                 .ToList();
 
             _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn ={1}", mongoEntities.Count, ukPrn));
@@ -97,6 +97,44 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             _logger.Debug(string.Format("Found {0} apprenticeship vacancies with statuses in {1}", mongoEntities.Count, string.Join(",", desiredStatuses)));
 
             return mongoEntities;
+        }
+
+        public List<ApprenticeshipVacancy>Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
+        {
+            _logger.Debug("Calling repository to find apprenticeship vacancies");
+
+            var mongoQueryConditions = new List<IMongoQuery>()
+            {
+                Query<ApprenticeshipVacancy>.EQ(vacancy => vacancy.Status, ProviderVacancyStatuses.Live)
+            };
+
+            if (!string.IsNullOrWhiteSpace(query.FrameworkCodeName))
+            {
+                mongoQueryConditions.Add(Query<ApprenticeshipVacancy>
+                    .EQ(vacancy => vacancy.FrameworkCodeName, query.FrameworkCodeName));
+            }
+
+            if (query.LiveDate.HasValue)
+            {
+                // TODO: DateSubmitted should be DateLive (or DatePublished).
+                mongoQueryConditions.Add(Query<ApprenticeshipVacancy>
+                    .GTE(vacancy => vacancy.DateSubmitted, query.LiveDate));
+            }
+
+            var queryBuilder = new QueryBuilder<ApprenticeshipVacancy>();
+
+            var vacancies = Collection.Find(queryBuilder.And(mongoQueryConditions))
+                .SetSortOrder(SortBy.Ascending("VacancyReferenceNumber"))
+                .SetSkip(query.PageSize * (query.CurrentPage - 1))
+                .SetLimit(query.PageSize)
+                .Select(vacancy => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(vacancy))
+                .ToList();
+
+            totalResultsCount = Convert.ToInt32(Collection.Count(queryBuilder.And(mongoQueryConditions)));
+
+            _logger.Debug("Found {0} apprenticeship vacanc(ies)", vacancies.Count);
+
+            return vacancies;
         }
 
         public void Delete(Guid id)

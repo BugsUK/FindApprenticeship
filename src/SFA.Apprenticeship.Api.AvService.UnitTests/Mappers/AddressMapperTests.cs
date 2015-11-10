@@ -8,6 +8,8 @@
     // REF: AV: NavmsEDSFacade.cs
     // REF: AV: NavmsPIMSFacade.cs
 
+    // TODO: ShouldAlwaysMapAddressLine5ToNull()
+
     [TestFixture]
     public class AddressMapperTests
     {

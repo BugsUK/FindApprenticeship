@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyDetailsProvider
 {
     using System;
     using System.Linq;
@@ -12,7 +12,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class VacancyDetailsProviderTests
+    public class GetVacancyDetailsByReferenceNumberTests
     {
         private IVacancyDetailsProvider _provider;
         private Mock<IApprenticeshipVacancyReadRepository> _mockApprenticeshipVacancyReadRepository;
@@ -77,8 +77,8 @@
             var avmsHeader = response?.SearchResults?.AVMSHeader;
 
             avmsHeader.Should().NotBeNull();
-            avmsHeader?.ApprenticeshipVacanciesDescription.Should().Be("TODO");
-            avmsHeader?.ApprenticeshipVacanciesURL.Should().Be("TODO");
+            avmsHeader?.ApprenticeshipVacanciesDescription.Should().NotBeNullOrWhiteSpace();
+            avmsHeader?.ApprenticeshipVacanciesURL.Should().NotBeNullOrWhiteSpace();
         }
 
         [TestCase(ValidVacancyReferenceNumber)]

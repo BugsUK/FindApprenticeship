@@ -277,6 +277,7 @@
     <Compile Include="IoC\StructureMapServiceHostFactory.cs" />
     <Compile Include="Mappers\Version51\AddressMapper.cs" />
     <Compile Include="Mappers\Version51\ApprenticeshipVacancyMapper.cs" />
+    <Compile Include="Mappers\Version51\ApprenticeshipVacancyQueryMapper.cs" />
     <Compile Include="Mappers\Version51\VacancyDurationMapper.cs" />
     <Compile Include="Mappers\Version51\WageMapper.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadRequest.cs" />
