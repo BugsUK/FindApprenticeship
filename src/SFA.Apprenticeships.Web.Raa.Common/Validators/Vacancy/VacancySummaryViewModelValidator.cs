@@ -19,7 +19,7 @@
         private void AddCommonRules()
         {
             RuleFor(viewModel => viewModel.WorkingWeek)
-                .Length(0, 256)
+                .Length(0, 250)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
