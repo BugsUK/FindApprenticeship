@@ -23,8 +23,8 @@
 
         public IEnumerable<Category> GetCategories()
         {
-            var sql = @"SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationStatusTypeId = 1;
-                        SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkStatusTypeId = 1;";
+            var sql = @"SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationStatusTypeId = 1 ORDER BY FullName;
+                        SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkStatusTypeId = 1 ORDER BY FullName;";
 
             List<Framework> frameworks;
             List<Occupation> occupations;
@@ -69,8 +69,8 @@
 
         public IEnumerable<Sector> GetSectors()
         {
-            const string sql = @"SELECT * FROM [dbo].[ApprenticeshipSector];
-                                 SELECT * FROM [dbo].[ApprenticeshipStandard];";
+            const string sql = @"SELECT * FROM [dbo].[ApprenticeshipSector] ORDER BY Name;
+                                 SELECT * FROM [dbo].[ApprenticeshipStandard] ORDER BY Name;";
 
             List<Sector> sectors;
             List<Standard> standards;
