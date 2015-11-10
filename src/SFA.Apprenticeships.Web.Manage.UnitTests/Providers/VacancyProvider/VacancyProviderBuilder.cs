@@ -56,5 +56,11 @@
             _configurationService = configurationService;
             return this;
         }
+
+        public VacancyProviderBuilder With(Mock<IReferenceDataService> referenceDataService)
+        {
+            _referenceDataService = referenceDataService;
+            return this;
+        }
     }
 }

@@ -85,7 +85,10 @@
                                         <div>@vacancy.ClosingDate.ToFriendlyClosingToday()</div>
                                     </td>
                                     <td>
-                                        <a href="@Url.RouteUrl(ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = vacancy.VacancyReferenceNumber })">QA vacancy</a>
+                                        @if (vacancy.CanBeReservedForQaByCurrentUser)
+                                        {
+                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">QA vacancy</a>
+                                        }
                                     </td>
                                 </tr>
                             }

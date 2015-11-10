@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
         // GET: Vacancy
         public ActionResult Review(long vacancyReferenceNumber)
         {
-            var response = _vacancyMediator.GetVacancy(vacancyReferenceNumber);
+            var response = _vacancyMediator.ReserveVacancyForQA(vacancyReferenceNumber);
 
             ModelState.Clear();
 

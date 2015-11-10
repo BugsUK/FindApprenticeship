@@ -160,5 +160,38 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 
             return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }
+
+        public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber, string username)
+        {
+            _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
+
+            //TODO: Need to check that this number is available for QA via status and/or timeout
+            //TODO: Possibly further discussion about having code like this in the repo
+            var args = new FindAndModifyArgs
+            {
+                Query = Query<ApprenticeshipVacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber),
+                Update =
+                    Update.Set("Status", ProviderVacancyStatuses.ReservedForQA)
+                        .Set("QAUserName", username)
+                        .Set("DateStartedToQA", DateTime.UtcNow),
+                SortBy = SortBy.Null,
+                Upsert = true,
+                VersionReturned = FindAndModifyDocumentVersion.Modified
+            };
+
+            var result = Collection.FindAndModify(args);
+
+            if (result.Ok)
+            {
+                _logger.Info($"Called Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
+
+                var mongoEntity = result.GetModifiedDocumentAs<MongoApprenticeshipVacancy>();
+
+                return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+            }
+
+            _logger.Warn($"Call to Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA failed: {result.Code}, {result.ErrorMessage}");
+            return null;
+        }
     }
 }

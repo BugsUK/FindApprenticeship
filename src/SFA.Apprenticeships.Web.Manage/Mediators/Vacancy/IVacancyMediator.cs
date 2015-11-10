@@ -12,6 +12,6 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 
         MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(long vacancyReferenceNumber);
 
-        MediatorResponse<VacancyViewModel> GetVacancy(long vacancyReferenceNumber);
+        MediatorResponse<VacancyViewModel> ReserveVacancyForQA(long vacancyReferenceNumber);
     }
 }

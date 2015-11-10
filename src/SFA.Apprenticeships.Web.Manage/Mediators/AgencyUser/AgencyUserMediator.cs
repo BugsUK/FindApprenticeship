@@ -90,7 +90,7 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
             var username = principal.Identity.Name;
             var roleList = principal.GetRoleList();
             var userViewModel = _agencyUserProvider.GetAgencyUser(username, roleList);
-            var vacancies = _vacancyProvider.GetPendingQAVacancies();
+            var vacancies = _vacancyProvider.GetPendingQAVacanciesOverview();
             
             var homeViewModel = new HomeViewModel
             {

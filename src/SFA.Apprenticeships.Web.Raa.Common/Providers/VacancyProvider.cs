@@ -14,6 +14,8 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using System.Threading;
+
     public class VacancyProvider : IVacancyProvider
     {
         private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
@@ -45,25 +47,35 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return vacancies.Select(v => v.ConvertToVacancyViewModel()).ToList();
         }
 
-        public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
+        public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
         {
             var vacancies =
                 _apprenticeshipVacancyReadRepository.GetWithStatus(new List<ProviderVacancyStatuses>
                 {
-                        ProviderVacancyStatuses.PendingQA
+                        ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA
                 });
 
-            return vacancies.Where(VacancyReadyToQA).Select(ConvertToDashboardVacancySummaryViewModel).ToList();
+            return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
         }
 
-        private bool VacancyReadyToQA(ApprenticeshipVacancy apprenticeshipVacancy)
+        public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
-            var timeout = _configurationService.Get<ManageWebConfiguration>().QAVacancyTimeout; //In minutes
+            return GetPendingQAVacanciesOverview().Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
+        }
+
+        private bool CanBeReservedForQaByCurrentUser(ApprenticeshipVacancy apprenticeshipVacancy)
+        {
             if (NoUserHasStartedToQATheVacancy(apprenticeshipVacancy))
             {
                 return true;
             }
 
+            if (CurrentUserHasStartedToQATheVacancy(apprenticeshipVacancy))
+            {
+                return true;
+            }
+
+            var timeout = _configurationService.Get<ManageWebConfiguration>().QAVacancyTimeout; //In minutes
             if (AUserHasLeftTheVacancyUnattended(apprenticeshipVacancy, timeout))
             {
                 return true;
@@ -74,12 +86,17 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         private bool AUserHasLeftTheVacancyUnattended(ApprenticeshipVacancy apprenticeshipVacancy, int timeout)
         {
-            return (_dateTimeService.UtcNow() - apprenticeshipVacancy.DateStartedToQA).Value.TotalMinutes > timeout;
+            return apprenticeshipVacancy.Status == ProviderVacancyStatuses.ReservedForQA && (_dateTimeService.UtcNow() - apprenticeshipVacancy.DateStartedToQA).Value.TotalMinutes > timeout;
         }
 
         private static bool NoUserHasStartedToQATheVacancy(ApprenticeshipVacancy apprenticeshipVacancy)
         {
-            return string.IsNullOrWhiteSpace(apprenticeshipVacancy.QAUserName) || !apprenticeshipVacancy.DateStartedToQA.HasValue;
+            return apprenticeshipVacancy.Status == ProviderVacancyStatuses.PendingQA && (string.IsNullOrWhiteSpace(apprenticeshipVacancy.QAUserName) || !apprenticeshipVacancy.DateStartedToQA.HasValue);
+        }
+
+        private bool CurrentUserHasStartedToQATheVacancy(ApprenticeshipVacancy apprenticeshipVacancy)
+        {
+            return apprenticeshipVacancy.Status == ProviderVacancyStatuses.ReservedForQA && apprenticeshipVacancy.QAUserName == Thread.CurrentPrincipal.Identity.Name;
         }
 
         public void ApproveVacancy(long vacancyReferenceNumber)
@@ -98,9 +115,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _apprenticeshipVacancyWriteRepository.Save(vacancy);
         }
 
-        public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
+        public VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber)
         {
-            var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
+            var username = Thread.CurrentPrincipal.Identity.Name;
+            var vacancy = _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber, username);
+            //TODO: Cope with null, interprit as already reserved etc.
             var viewModel = vacancy.ConvertToVacancyViewModel();
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
@@ -133,7 +152,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 Title = apprenticeshipVacancy.Title,
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                 DateStartedToQA = apprenticeshipVacancy.DateStartedToQA,
-                QAUserName = apprenticeshipVacancy.QAUserName
+                QAUserName = apprenticeshipVacancy.QAUserName,
+                CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(apprenticeshipVacancy)
             };
         }
     }

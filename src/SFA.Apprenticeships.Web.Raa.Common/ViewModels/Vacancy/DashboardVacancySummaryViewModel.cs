@@ -20,5 +20,7 @@
         public DateTime? DateStartedToQA { get; set; }
         
         public string QAUserName { get; set; }
+
+        public bool CanBeReservedForQaByCurrentUser { get; set; }
     }
 }

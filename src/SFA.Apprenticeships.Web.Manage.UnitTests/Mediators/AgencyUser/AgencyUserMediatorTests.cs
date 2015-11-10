@@ -127,14 +127,14 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
                 }
             };
             var vacancyProvider = new Mock<IVacancyProvider>();
-            vacancyProvider.Setup(vp => vp.GetPendingQAVacancies()).Returns(vacancies);
+            vacancyProvider.Setup(vp => vp.GetPendingQAVacanciesOverview()).Returns(vacancies);
             var mediator = new AgencyUserMediatorBuilder().With(vacancyProvider).Build();
             var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
 
             var response = mediator.GetHomeViewModel(principal);
 
             response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
-            vacancyProvider.Verify(vp => vp.GetPendingQAVacancies(), Times.Once);
+            vacancyProvider.Verify(vp => vp.GetPendingQAVacanciesOverview(), Times.Once);
             response.ViewModel.Vacancies.ShouldBeEquivalentTo(vacancies);
         }
     }

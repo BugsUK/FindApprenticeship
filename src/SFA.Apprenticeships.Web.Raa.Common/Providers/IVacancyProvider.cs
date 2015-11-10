@@ -6,7 +6,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     public interface IVacancyProvider
     {
-        List<VacancyViewModel> GetVacanciesForProvider(string ukprn);
+		List<VacancyViewModel> GetVacanciesForProvider(string ukprn);
+	
+        List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview();
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
@@ -14,6 +16,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         void RejectVacancy(long vacancyReferenceNumber);
 
-        VacancyViewModel GetVacancy(long vacancyReferenceNumber);
+        VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber);
     }
 }

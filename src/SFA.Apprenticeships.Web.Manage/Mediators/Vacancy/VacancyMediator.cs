@@ -49,9 +49,9 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
             return GetMediatorResponse(VacancyMediatorCodes.RejectVacancy.Ok, vacancies.First());
         }
 
-        public MediatorResponse<VacancyViewModel> GetVacancy(long vacancyReferenceNumber)
+        public MediatorResponse<VacancyViewModel> ReserveVacancyForQA(long vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyProvider.GetVacancy(vacancyReferenceNumber);
+            var vacancyViewModel = _vacancyProvider.ReserveVacancyForQA(vacancyReferenceNumber);
 
             var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
