@@ -16,13 +16,13 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
             {
                 VacancyLocationType = Todo,
                 // TODO: map VacancyAddress
-                ApprenticeshipFramework = $"{Todo}: via {vacancy.FrameworkCodeName}",
+                ApprenticeshipFramework = $"{Todo}: via Framework Code {vacancy.FrameworkCodeName}",
                 // TODO: what if date null?
                 ClosingDate = vacancy.ClosingDate ?? DateTime.MinValue,
                 ShortDescription = vacancy.ShortDescription,
                 // TODO: what if ProviderSiteEmployerLink null?
                 EmployerName = vacancy.ProviderSiteEmployerLink?.Employer?.Name,
-                LearningProviderName = $"{Todo}: via {vacancy.Ukprn}",
+                LearningProviderName = $"{Todo}: via UKPRN {vacancy.Ukprn}",
                 // TODO: map number of positions when it is available ApprenticeshipVacancy.
                 NumberOfPositions = 1,
                 VacancyTitle = vacancy.Title,
@@ -40,7 +40,7 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
                 ExpectedDuration = VacancyDurationMapper.MapDurationToString(vacancy.Duration, vacancy.DurationType),
                 FutureProspects = vacancy.FutureProspects,
                 InterviewFromDate = DateTime.MinValue,
-                LearningProviderDesc = $"{Todo}: via {vacancy.Ukprn}",
+                LearningProviderDesc = $"{Todo}: via UKPRN {vacancy.Ukprn}",
                 LearningProviderSectorPassRate = null,
                 PersonalQualities = vacancy.PersonalQualities,
                 // TODO: what if date null?

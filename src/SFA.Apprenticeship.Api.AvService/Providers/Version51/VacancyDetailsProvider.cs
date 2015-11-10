@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     using Apprenticeships.Domain.Interfaces.Queries;
     using Apprenticeships.Domain.Interfaces.Repositories;
     using DataContracts.Version51;
@@ -37,7 +38,7 @@
             var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceId);
             var searchResults = new List<VacancyFullData>();
 
-            if (vacancy != null)
+            if (vacancy != null && vacancy.Status == ProviderVacancyStatuses.Live)
             {
                 var searchResult = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
@@ -54,6 +55,7 @@
                     TotalPages = 1
                 }
             };
+
             return response;
         }
 

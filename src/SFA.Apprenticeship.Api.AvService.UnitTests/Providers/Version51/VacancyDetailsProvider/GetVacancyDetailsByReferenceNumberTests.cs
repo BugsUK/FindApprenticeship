@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Apprenticeships.Domain.Interfaces.Repositories;
     using AvService.Providers.Version51;
@@ -17,21 +18,33 @@
         private IVacancyDetailsProvider _provider;
         private Mock<IApprenticeshipVacancyReadRepository> _mockApprenticeshipVacancyReadRepository;
 
-        private const int ValidVacancyReferenceNumber = 5;
+        private const int LiveVacancyReferenceNumber = 5;
+        private const int DraftVacancyReferenceNumber = 99;
 
         [SetUp]
         public void SetUp()
         {
             _mockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
 
-            var apprenticeshipVacancy = new ApprenticeshipVacancy
+            var liveApprenticeshipVacancy = new ApprenticeshipVacancy
             {
-                VacancyReferenceNumber = ValidVacancyReferenceNumber
+                VacancyReferenceNumber = LiveVacancyReferenceNumber,
+                Status = ProviderVacancyStatuses.Live
+            };
+
+            var draftApprenticeshipVacancy = new ApprenticeshipVacancy
+            {
+                VacancyReferenceNumber = LiveVacancyReferenceNumber,
+                Status = ProviderVacancyStatuses.Draft
             };
 
             _mockApprenticeshipVacancyReadRepository
-                .Setup(mock => mock.Get(ValidVacancyReferenceNumber))
-                .Returns(apprenticeshipVacancy);
+                .Setup(mock => mock.Get(LiveVacancyReferenceNumber))
+                .Returns(liveApprenticeshipVacancy);
+
+            _mockApprenticeshipVacancyReadRepository
+                .Setup(mock => mock.Get(DraftVacancyReferenceNumber))
+                .Returns(draftApprenticeshipVacancy);
 
             _provider = new VacancyDetailsProvider(
                 _mockApprenticeshipVacancyReadRepository.Object);
@@ -46,7 +59,7 @@
                 MessageId = Guid.NewGuid(),
                 VacancySearchCriteria = new VacancySearchData
                 {
-                    VacancyReferenceId = ValidVacancyReferenceNumber
+                    VacancyReferenceId = LiveVacancyReferenceNumber
                 }
             };
 
@@ -66,7 +79,7 @@
             {
                 VacancySearchCriteria = new VacancySearchData
                 {
-                    VacancyReferenceId = ValidVacancyReferenceNumber
+                    VacancyReferenceId = LiveVacancyReferenceNumber
                 }
             };
 
@@ -81,8 +94,8 @@
             avmsHeader?.ApprenticeshipVacanciesURL.Should().NotBeNullOrWhiteSpace();
         }
 
-        [TestCase(ValidVacancyReferenceNumber)]
-        [TestCase(ValidVacancyReferenceNumber + 1)]
+        [TestCase(LiveVacancyReferenceNumber)]
+        [TestCase(LiveVacancyReferenceNumber + 1)]
         public void ShouldAlwaysSetTotalPagesToOne(int vacancyReferenceNumber)
         {
             // Arrange.
@@ -104,7 +117,7 @@
         }
 
         [Test]
-        public void ShouldReturnSingleVacancyForValidVacancyReferenceNumber()
+        public void ShouldReturnSingleVacancyWhenVacancyIsLive()
         {
             // Arrange.
             var request = new VacancyDetailsRequest
@@ -112,7 +125,7 @@
                 MessageId = Guid.NewGuid(),
                 VacancySearchCriteria = new VacancySearchData
                 {
-                    VacancyReferenceId = ValidVacancyReferenceNumber
+                    VacancyReferenceId = LiveVacancyReferenceNumber
                 }
             };
 
@@ -132,7 +145,7 @@
         }
 
         [Test]
-        public void ShouldReturnNoVacanciesForInvalidVacancyReferenceNumber()
+        public void ShouldNotReturnVacancyWhenVacancyNotFound()
         {
             // Arrange.
             var request = new VacancyDetailsRequest
@@ -140,7 +153,30 @@
                 MessageId = Guid.NewGuid(),
                 VacancySearchCriteria = new VacancySearchData
                 {
-                    VacancyReferenceId = ValidVacancyReferenceNumber + 1
+                    VacancyReferenceId = LiveVacancyReferenceNumber + 1
+                }
+            };
+
+            // Act.
+            var response = _provider.Get(request);
+
+            // Assert.
+            var searchResults = response?.SearchResults?.SearchResults;
+
+            searchResults.Should().NotBeNull();
+            searchResults?.Count.Should().Be(0);
+        }
+
+        [Test]
+        public void ShouldNotReturnVacancyWhenVacancyIsNotLive()
+        {
+            // Arrange.
+            var request = new VacancyDetailsRequest
+            {
+                MessageId = Guid.NewGuid(),
+                VacancySearchCriteria = new VacancySearchData
+                {
+                    VacancyReferenceId = DraftVacancyReferenceNumber
                 }
             };
 
