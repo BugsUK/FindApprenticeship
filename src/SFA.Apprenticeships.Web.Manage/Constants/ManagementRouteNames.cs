@@ -13,7 +13,17 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
+
+        //QA
         public const string ReviewVacancy = "ReviewVacancy";
         public const string ApproveVacancy = "ApproveVacancy";
+        public const string EditBasicDetails = "EditBasicDetails";
+        public const string SaveBasicDetails = "SaveBasicDetails";
+        public const string EditSummary = "EditVacancySummary";
+        public const string SaveSummary = "SaveVacancySummary";
+        public const string EditRequirementsAndProspoects = "EditRequirementsAndProspoects";
+        public const string SaveRequirementsAndProspoects = "SaveRequirementsAndProspoects";
+        public const string EditQuestions = "EditQuestions";
+        public const string SaveQuestions = "SaveQuestions";
     }
 }

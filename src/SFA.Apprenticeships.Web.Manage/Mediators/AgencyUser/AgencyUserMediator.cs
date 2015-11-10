@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
+﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
+
+namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
 {
     using System.Security.Claims;
     using Common.Constants;

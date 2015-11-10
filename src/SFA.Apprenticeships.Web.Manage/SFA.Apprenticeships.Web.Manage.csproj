@@ -296,7 +296,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
-    <Compile Include="Configuration\ManageWebConfiguration.cs" />
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
@@ -321,14 +320,11 @@
     <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorCodes.cs" />
     <Compile Include="Providers\AgencyUserProvider.cs" />
-    <Compile Include="Providers\IVacancyProvider.cs" />
-    <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="ViewModels\AgencyUserViewModel.cs" />
     <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
-    <Compile Include="ViewModels\DashboardVacancySummaryViewModel.cs" />
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -339,10 +335,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Vacancy\EditBasicDetails.generated.cs">
+      <DependentUpon>EditBasicDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Vacancy\Review.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Review.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Vacancy\EditSummary.generated.cs">
+      <DependentUpon>EditSummary.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Vacancy\EditRequirementsAndProspects.generated.cs">
+      <DependentUpon>EditRequirementsAndProspects.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Vacancy\EditQuestions.generated.cs">
+      <DependentUpon>EditQuestions.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -432,6 +448,22 @@
       <LastGenOutput>Review.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\razorgenerator.directives" />
+    <Content Include="Views\Vacancy\EditBasicDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditBasicDetails.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vacancy\EditSummary.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditSummary.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vacancy\EditRequirementsAndProspects.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditRequirementsAndProspects.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vacancy\EditQuestions.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EditQuestions.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

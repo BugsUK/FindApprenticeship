@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
+﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
+
+namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
     using System.Collections.Generic;
     using System.Linq;

@@ -11,14 +11,13 @@
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Providers;
     using Validators.VacancyPosting;
-    using ViewModels.Vacancy;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.Converters;
     using Raa.Common.ViewModels.VacancyPosting;
+    using Raa.Common.Providers;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {

@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
+﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
+
+namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 {
     using System.Collections.Generic;
     using Common.Constants;

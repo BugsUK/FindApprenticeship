@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
 {
-    using ViewModels.Provider;
     using Common.Mediators;
     using Raa.Common.ViewModels.Provider;
 

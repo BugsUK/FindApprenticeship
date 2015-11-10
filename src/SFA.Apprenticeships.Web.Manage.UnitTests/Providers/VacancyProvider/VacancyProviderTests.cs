@@ -1,12 +1,12 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
+﻿using SFA.Apprenticeships.Web.Raa.Common.Configuration;
+
+namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.DateTime;
     using Application.Interfaces.Providers;
-    using Common.Configuration;
-    using Configuration;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
     using Domain.Entities.Vacancies.ProviderVacancies;

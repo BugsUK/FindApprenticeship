@@ -7,7 +7,6 @@
     using Common.Mediators;
     using FluentValidation.Mvc;
     using Mediators.Provider;
-    using ViewModels.Provider;
     using Raa.Common.ViewModels.Provider;
     using Constants;
 

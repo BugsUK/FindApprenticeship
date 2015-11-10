@@ -4,7 +4,6 @@
     using System;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
-    using ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
 
     public interface IVacancyPostingMediator

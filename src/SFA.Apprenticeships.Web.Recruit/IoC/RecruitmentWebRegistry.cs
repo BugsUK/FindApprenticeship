@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.IoC
+﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
+
+namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
     using System.Web;
     using Application.Communication;
@@ -22,7 +24,6 @@
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.VacancyPosting;
-    using Providers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
 

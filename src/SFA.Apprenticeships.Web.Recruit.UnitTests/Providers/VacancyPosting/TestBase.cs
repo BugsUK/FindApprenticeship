@@ -10,7 +10,7 @@
     using Domain.Interfaces.Mapping;
     using Moq;
     using NUnit.Framework;
-    using Recruit.Providers;
+    using Raa.Common.Providers;
 
     public abstract class TestBase
     {

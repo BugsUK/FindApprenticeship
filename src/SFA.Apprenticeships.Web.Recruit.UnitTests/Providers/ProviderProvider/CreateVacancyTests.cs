@@ -12,8 +12,6 @@ using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprentice
 using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
 using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
 using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderProvider
 {

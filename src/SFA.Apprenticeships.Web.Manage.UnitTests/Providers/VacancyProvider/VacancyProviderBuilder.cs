@@ -1,13 +1,12 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
-
-namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
+﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
     using Application.Interfaces.DateTime;
     using Application.Interfaces.Providers;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
-    using Manage.Providers.SFA.Apprenticeships.Web.Recruit.Providers;
     using Moq;
+    using Application.Interfaces.ReferenceData;
+
 
     public class VacancyProviderBuilder
     {
@@ -18,9 +17,9 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
         private Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
 
-        public VacancyProvider Build()
+        public Raa.Common.Providers.VacancyProvider Build()
         {
-            return new VacancyProvider(_apprenticeshipVacancyReadRepository.Object,
+            return new Raa.Common.Providers.VacancyProvider(_apprenticeshipVacancyReadRepository.Object,
                 _apprenticeshipVacancyWriteRepository.Object, _providerService.Object, _dateTimeService.Object,
                 _referenceDataService.Object, _configurationService.Object);
         }

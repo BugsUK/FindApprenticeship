@@ -1,10 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
+﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
+
+namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
     using System.Linq;
     using Common.Mediators;
-    using Providers;
     using FluentValidation;
-    using ViewModels;
     using Common.Validators;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;

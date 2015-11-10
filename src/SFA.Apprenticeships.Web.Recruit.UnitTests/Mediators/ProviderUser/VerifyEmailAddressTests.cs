@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
+
+namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
 {
     using FluentAssertions;
     using NUnit.Framework;
     using Recruit.Mediators.ProviderUser;
-    using ViewModels.ProviderUser;
 
     [TestFixture]
     public class VerifyEmailAddressTests : TestBase

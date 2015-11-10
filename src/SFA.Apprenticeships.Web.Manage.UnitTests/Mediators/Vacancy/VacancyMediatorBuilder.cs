@@ -1,4 +1,5 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy;
+﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
+using SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {

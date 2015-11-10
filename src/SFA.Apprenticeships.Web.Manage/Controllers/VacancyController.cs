@@ -1,5 +1,6 @@
 ﻿using SFA.Apprenticeships.Web.Common.Mediators;
 using SFA.Apprenticeships.Web.Common.Validators.Extensions;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
@@ -41,6 +42,50 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        public ActionResult EditBasicDetails(long vacancyReferenceNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public ActionResult SaveBasicDetails(NewVacancyViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult EditSummary(long vacancyReferenceNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public ActionResult SaveSummary(VacancySummaryViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult EditRequirementsAndProspoects(long vacancyReferenceNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public ActionResult SaveRequirementsAndProspoects(VacancyRequirementsProspectsViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ActionResult EditQuestions(long vacancyReferenceNumber)
+        {
+            throw new NotImplementedException();
+        }
+
+        [HttpPost]
+        public ActionResult SaveQuestions(VacancyQuestionsViewModel viewModel)
+        {
+            throw new NotImplementedException();
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyQAAction")]

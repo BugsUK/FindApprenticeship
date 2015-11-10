@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
+
+namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
 {
     using System.Collections.Generic;
     using Common.Constants;
@@ -8,8 +10,6 @@
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.ProviderUser;
-    using ViewModels.Provider;
-    using ViewModels.ProviderUser;
     using Raa.Common.ViewModels.Provider;
 
     [TestFixture]

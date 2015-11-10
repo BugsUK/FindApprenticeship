@@ -1,4 +1,5 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {

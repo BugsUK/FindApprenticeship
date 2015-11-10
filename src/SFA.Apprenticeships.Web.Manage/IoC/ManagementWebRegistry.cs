@@ -1,5 +1,6 @@
 ﻿using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
 using SFA.Apprenticeships.Application.ReferenceData;
+using SFA.Apprenticeships.Web.Raa.Common.Providers;
 
 namespace SFA.Apprenticeships.Web.Manage.IoC
 {
@@ -20,7 +21,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Mediators.AgencyUser;
     using Mediators.Vacancy;
     using Providers;
-    using Providers.SFA.Apprenticeships.Web.Recruit.Providers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
 

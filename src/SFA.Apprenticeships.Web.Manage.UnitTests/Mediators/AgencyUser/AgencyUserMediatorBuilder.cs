@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
+﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
+
+namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 {
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;

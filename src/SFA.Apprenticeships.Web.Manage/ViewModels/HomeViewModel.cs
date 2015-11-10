@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
+
+namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
     using System.Collections.Generic;
 

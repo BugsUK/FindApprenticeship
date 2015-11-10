@@ -1,5 +1,6 @@
 ﻿using Moq;
 using NUnit.Framework;
+using SFA.Apprenticeships.Web.Raa.Common.Providers;
 
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderProvider
@@ -7,7 +8,6 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderProvider
     using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
     using Domain.Interfaces.Configuration;
-    using Recruit.Providers;
 
     public class TestBase
     {
@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderProvider
 
         public IProviderProvider GetProvider()
         {
-            return new ProviderProvider(MockProviderService.Object, MockConfigurationService.Object,
+            return new Raa.Common.Providers.ProviderProvider(MockProviderService.Object, MockConfigurationService.Object,
                 MockVacancyPostingService.Object);
         }
     }

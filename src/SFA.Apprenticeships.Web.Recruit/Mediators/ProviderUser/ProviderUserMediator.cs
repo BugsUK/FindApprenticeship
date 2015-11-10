@@ -1,4 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
+﻿using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
+using SFA.Apprenticeships.Web.Raa.Common.Providers;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
+
+namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 {
     using System;
     using System.Collections.Generic;
@@ -10,11 +14,8 @@
     using Common.Models.Azure.AccessControlService;
     using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
-    using Constants.ViewModels;
-    using Providers;
     using Validators.ProviderUser;
     using ViewModels;
-    using ViewModels.ProviderUser;
     using Raa.Common.ViewModels.Vacancy;
     using ClaimTypes = Common.Constants.ClaimTypes;
 
