@@ -20,5 +20,10 @@
             public const string Ok = "VacancyMediatorCodes.GetVacancy.Ok";
             public const string FailedValidation = "VacancyMediatorCodes.GetVacancy.FailedValidation";
         }
+
+        public class GetVacancySummaryViewModel
+        {
+            public const string Ok = "VacancyMediatorCodes.GetVacancySummaryViewModel.Ok";
+        }
     }
 }

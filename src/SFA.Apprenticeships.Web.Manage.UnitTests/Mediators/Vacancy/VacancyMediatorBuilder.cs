@@ -10,11 +10,12 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
     public class VacancyMediatorBuilder
     {
         private Mock<IVacancyProvider> _vacancyProvider = new Mock<IVacancyProvider>();
+        private Mock<IVacancyPostingProvider> _vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
         private VacancyViewModelValidator _vacancyViewModelValidator = new VacancyViewModelValidator(); 
 
         public IVacancyMediator Build()
         {
-            return new VacancyMediator(_vacancyProvider.Object, _vacancyViewModelValidator);
+            return new VacancyMediator(_vacancyProvider.Object, _vacancyPostingProvider.Object, _vacancyViewModelValidator);
         }
 
         public VacancyMediatorBuilder With(Mock<IVacancyProvider> provider)

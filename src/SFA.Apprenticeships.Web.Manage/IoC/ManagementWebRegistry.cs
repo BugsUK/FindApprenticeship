@@ -10,9 +10,11 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Application.Interfaces.Communications;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Users;
+    using Application.Interfaces.VacancyPosting;
     using Application.Organisation;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
+    using Application.VacancyPosting;
     using Common.Configuration;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Common.IoC;
@@ -49,6 +51,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
             For<IVacancyProvider>().Use<VacancyProvider>();
+            For<IVacancyPostingProvider>().Use<VacancyPostingProvider>();
         }
 
         private void RegisterServices()
@@ -56,6 +59,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
             For<IOrganisationService>().Use<OrganisationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
+            For<IVacancyPostingService>().Use<VacancyPostingService>();
         }
 
         private void RegisterStrategies()

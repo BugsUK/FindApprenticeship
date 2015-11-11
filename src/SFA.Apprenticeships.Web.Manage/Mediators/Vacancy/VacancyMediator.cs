@@ -13,11 +13,14 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
     public class VacancyMediator : MediatorBase, IVacancyMediator
     {
         private readonly IVacancyProvider _vacancyProvider;
+        private readonly IVacancyPostingProvider _vacancyPostingProvider;
+
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
 
-        public VacancyMediator(IVacancyProvider vacancyProvider, VacancyViewModelValidator vacancyViewModelValidator)
+        public VacancyMediator(IVacancyProvider vacancyProvider, IVacancyPostingProvider vacancyPostingProvider, VacancyViewModelValidator vacancyViewModelValidator)
         {
             _vacancyProvider = vacancyProvider;
+            _vacancyPostingProvider = vacancyPostingProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
@@ -67,6 +70,13 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
             }
 
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancy.Ok, vacancyViewModel);
+        }
+
+        public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber)
+        {
+            var vacancyViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
+
+            return GetMediatorResponse(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok, vacancyViewModel);
         }
     }
 }

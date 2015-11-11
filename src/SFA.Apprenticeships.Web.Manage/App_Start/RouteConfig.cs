@@ -91,6 +91,18 @@
                 defaults: new { controller = "Vacancy", action = "Approve" }
                 );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.EditSummary,
+                url: "vacancy/editsummary",
+                defaults: new { controller = "Vacancy", action = "EditSummary" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.SaveSummary,
+                url: "vacancy/savesummary",
+                defaults: new { controller = "Vacancy", action = "SaveSummary" }
+                );
+
             routes.LowercaseUrls = true;
 
         }
