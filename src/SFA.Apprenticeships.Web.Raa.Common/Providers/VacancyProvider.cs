@@ -14,7 +14,9 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using System;
     using System.Threading;
+    using Application.Interfaces.VacancyPosting;
 
     public class VacancyProvider : IVacancyProvider
     {
@@ -24,12 +26,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IDateTimeService _dateTimeService;
         private readonly IReferenceDataService _referenceDataService;
         private readonly IConfigurationService _configurationService;
+        private readonly IVacancyPostingService _vacancyPostingService;
 
         public VacancyProvider(IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository,
                 IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository,
                 IProviderService providerService, IDateTimeService dateTimeService,
                 IReferenceDataService referenceDataService,
-                IConfigurationService configurationService)
+                IConfigurationService configurationService,
+                IVacancyPostingService vacancyPostingService)
         {
             _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
             _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
@@ -37,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _dateTimeService = dateTimeService;
             _referenceDataService = referenceDataService;
             _configurationService = configurationService;
+            _vacancyPostingService = vacancyPostingService;
         }
 
         public List<VacancyViewModel> GetVacanciesForProvider(string ukprn)
@@ -126,6 +131,36 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
+            return viewModel;
+        }
+
+        public VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            //TODO: add comment stuff
+            vacancy.WorkingWeek = viewModel.WorkingWeek;
+            vacancy.HoursPerWeek = viewModel.HoursPerWeek;
+            vacancy.WageType = viewModel.WageType;
+            vacancy.Wage = viewModel.Wage;
+            vacancy.WageUnit = viewModel.WageUnit;
+            vacancy.DurationType = viewModel.DurationType;
+            vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
+
+            if (viewModel.ClosingDate.HasValue)
+            {
+                vacancy.ClosingDate = viewModel.ClosingDate?.Date;
+            }
+            if (viewModel.PossibleStartDate.HasValue)
+            {
+                vacancy.PossibleStartDate = viewModel.PossibleStartDate?.Date;
+            }
+
+            vacancy.LongDescription = viewModel.LongDescription;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
         }
 

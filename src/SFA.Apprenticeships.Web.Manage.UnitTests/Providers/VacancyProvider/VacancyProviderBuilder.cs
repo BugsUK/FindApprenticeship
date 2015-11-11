@@ -6,6 +6,7 @@
     using Domain.Interfaces.Repositories;
     using Moq;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.VacancyPosting;
 
 
     public class VacancyProviderBuilder
@@ -16,12 +17,13 @@
         private Mock<IDateTimeService> _dateTimeService = new Mock<IDateTimeService>();
         private Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
+        private Mock<IVacancyPostingService> _vacancyPostingServcie = new Mock<IVacancyPostingService>();
 
         public Raa.Common.Providers.VacancyProvider Build()
         {
             return new Raa.Common.Providers.VacancyProvider(_apprenticeshipVacancyReadRepository.Object,
                 _apprenticeshipVacancyWriteRepository.Object, _providerService.Object, _dateTimeService.Object,
-                _referenceDataService.Object, _configurationService.Object);
+                _referenceDataService.Object, _configurationService.Object, _vacancyPostingServcie.Object);
         }
 
         public VacancyProviderBuilder With(

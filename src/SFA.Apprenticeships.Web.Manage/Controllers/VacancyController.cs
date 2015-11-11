@@ -68,12 +68,24 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
         {
             var response = _vacancyMediator.UpdateVacancy(viewModel, acceptWarnings);
 
-            return HandleVacancySummary(response,
-                () => RedirectToRoute(RecruitmentRouteNames.VacancyRequirementsProspects,
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
                     new
                     {
                         vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
-                    }));
+                    });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         public ActionResult EditRequirementsAndProspoects(long vacancyReferenceNumber)

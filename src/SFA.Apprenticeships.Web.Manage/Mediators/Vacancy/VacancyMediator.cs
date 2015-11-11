@@ -97,7 +97,7 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
+            var updatedViewModel = _vacancyProvider.UpdateVacancy(viewModel);
 
             return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
