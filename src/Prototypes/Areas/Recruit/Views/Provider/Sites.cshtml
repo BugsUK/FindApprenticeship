@@ -1,0 +1,64 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Recruit.ViewModels.Provider.ProviderViewModel
+@{
+    ViewBag.Title = "Recruit an Apprentice - Manage your Sites";
+}
+
+<div class="grid-wrapper" id="pageManageSites">
+    <div class="hgroup text para-btm-margin">
+        <h1 class="heading-xlarge">
+            Provider details
+        </h1>
+    </div>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageProviderSites, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="form-group">
+        <h2 class="heading-medium">Provider name</h2>
+        <span>@Model.ProviderName</span>
+        @Html.HiddenFor(m => m.ProviderName)
+    </div>
+
+    //@Html.FormTextFor(m => m.ProviderName, controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })
+
+    <div id="providerSitesList">
+        <h2 class="heading-medium">Manage your training sites</h2>
+        <section class="grid-wrapper">
+            <div class="grid grid-2-3 scrolling-panel max-height-15">
+                <table>
+                    <colgroup>
+                        <col class="t70">
+                        <col class="t15">
+                        <col class="t15">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    @foreach (var providerSiteViewModel in @Model.ProviderSiteViewModels)
+                    {
+                        <tr>
+                            <td>@providerSiteViewModel.DisplayName</td>
+                            <td>
+                                <!--<a href="@Url.RouteUrl(RecruitmentRouteNames.EditProviderSite, new {ern = providerSiteViewModel.Ern})">Edit</a>-->
+                            </td>
+                            <td></td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        <!--<div class="form-group">
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.AddProviderSite)" class=""><i class="fa fa-plus"></i>Add a new site</a>
+        </div>-->
+    </div>
+    <div class="toggle-content" id="newProviderContinue">
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.Settings)" class="button" id="newProviderContinueBtn">Continue</a>
+    </div>
+    <div class="" id="providerDetailsSave">
+        <button class="button">Continue</button>
+    </div>
+}
+</div>

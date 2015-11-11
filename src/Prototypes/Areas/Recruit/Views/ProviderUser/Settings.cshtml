@@ -1,0 +1,81 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser.SettingsViewModel
+
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
+    ViewBag.Title = "Recruit an Apprentice - Contact Details";
+}
+<div class="panel-success toggle-content" id="nextProviderBanner">
+    <div class="text">
+        <div class="copy-16">
+            <p>Please take a moment to fill in your contact details.</p>
+        </div>
+    </div>
+</div>
+<div class="panel-success toggle-content" id="userInfoSaved">
+    <div class="text">
+        <div class="copy-16">
+            <p><i class="fa fa-check"></i>Your contact details have been saved</p>
+        </div>
+    </div>
+</div>
+<div class="grid-wrapper" id="userInfoPage">
+    <div class="hgroup">
+        <h1 class="heading-xlarge">
+            Your contact details
+        </h1>
+    </div>
+    <div class="text">
+        <p>
+            This information will not appear on the vacancy advert and will only
+            be used by us if we need to contact you.
+        </p>
+    </div>
+
+    @using (Html.BeginRouteForm(RecruitmentRouteNames.Settings, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+        @Html.FormTextFor(
+            m => m.ProviderUserViewModel.Fullname,
+            controlHtmlAttributes: new {type = "text", autofocus = "autofocus", spellcheck = "false"})
+
+        @Html.FormTextFor(
+            m => m.ProviderUserViewModel.EmailAddress,
+            controlHtmlAttributes: new {type = "email", spellcheck = "false"})
+
+        @Html.FormTextFor(
+            m => m.ProviderUserViewModel.PhoneNumber,
+            controlHtmlAttributes: new {@class = "form-label", type = "tel", spellcheck = "false"})
+
+        <div class="form-group">
+            <p class="form-label">Your default provider site</p>
+            @if (Model.ProviderSites.Count == 1)
+            {
+                Model.ProviderUserViewModel.DefaultProviderSiteErn = Model.ProviderSites[0].Value;
+                @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn)
+                <p>@Model.ProviderSites[0].Text</p>
+            }
+            else
+            {
+                @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, "", new { @class = "chosen-select", style="min-width: 50%;", data_placeholder="Please select your default provider site" })
+            }
+        </div>
+
+        <div class="toggle-content" id="newProviderTerms" style="display: block;">
+            <p>
+                By continuing you accept the <a href="@Url.RouteUrl(RecruitmentRouteNames.TermsAndConditions)" target="_blank">terms and conditions</a> of
+                this site.
+            </p>
+            <button class="button">Accept and continue</button>
+        </div>
+    }
+</div>
+
+@section scripts {
+    <script>
+        $(function() {
+            $(".chosen-select").chosen();
+        });
+    </script>
+}

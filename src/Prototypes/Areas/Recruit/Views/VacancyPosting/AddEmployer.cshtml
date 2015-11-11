@@ -1,0 +1,97 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting.EmployerSearchViewModel
+@{
+    ViewBag.Title = "Recruit an Apprentice - Create New Vacancy - Add Employer";
+}
+<div class="grid-wrapper">
+    <div class="hgroup">
+        <h1 class="heading-xlarge">
+            Search for employer
+        </h1>
+    </div>
+    <div class="blocklabel-single-container">
+        
+        @using (Html.BeginRouteForm(RecruitmentRouteNames.AddEmployer, FormMethod.Get))
+        {
+            @Html.Partial("ValidationSummary", ViewData.ModelState)
+            <div class="form-group inline clearfix blocklabel-single hide-nojs">
+                <p>Search using</p>
+                <label data-target="namesearch-panel" for="namesearch" class="block-label">
+                    <input checked name="@Html.NameFor(m => m.FilterType)" value="NameAndLocation" type="radio" id="namesearch">Name and location
+                </label>
+                <label data-target="ernsearch-panel" for="ernsearch" class="block-label">
+                    <input aria-controls="ernsearch-panel" name="@Html.NameFor(m => m.FilterType)" value="Ern" type="radio" id="ernsearch">ERN
+                </label>
+            </div>
+            <div id="ernsearch-panel" class="toggle-content blocklabel-content">
+                @Html.FormTextFor(m => m.Ern)
+                <div class="form-group">
+                    <button class="button">Find employer</button>
+                </div>
+            </div>
+            <div id="namesearch-panel" class="blocklabel-content">
+                @Html.FormTextFor(m => m.Name)
+                @Html.FormTextFor(m => m.Location)
+                <div class="form-group">
+                    <button class="button" id="searchTrainingNameBtn">Search</button>
+                </div>
+            </div>
+        }
+
+        <section class="clearfix" id="providerSiteResults">
+            <h2 class="heading-small">Employers</h2>
+            <div class="grid grid-3-3 scrolling-panel max-height-15">
+                <table>
+                    <colgroup>
+                        <col class="t20">
+                        <col class="t40">
+                        <col class="t15">
+                        <col class="t25">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>ERN</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h4 class="bold-small">Costa</h4>
+                        </th>
+                        <td>
+                            12 Broomfield Road
+                            <br/>RG21 4FP Basingstoke
+                        </td>
+                        <td>5736479734</td>
+                        <td>
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {employerid = 1})">Select employer</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <h4 class="bold-small">Starbucks</h4>
+                        </th>
+                        <td>
+                            324 Green Lanes<br/>
+                            RG21 8KL Basingstoke
+                        </td>
+                        <td>637452391</td>
+                        <td><a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {employerid = 1})">Select employer</a></td>
+                    </tr>
+                    <tr>
+                        <th><h4 class="bold-small">Nero</h4></th>
+                        <td>
+                            1C Windsor Road<br/>
+                            RG21 9OD Basingstoke
+                        </td>
+                        <td>982436529</td>
+                        <td><a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {employerid = 1})">Select employer</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+</div>

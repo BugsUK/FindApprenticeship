@@ -1,0 +1,113 @@
+﻿@using SFA.Apprenticeships.Web.Common.Framework
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider
+
+@model SFA.Apprenticeships.Web.Recruit.ViewModels.Provider.ProviderSiteSearchViewModel
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Add Site";
+
+    const string selected = "selected";
+
+    var ernSearchSelected = Model?.SiteSearchMode == ProviderSiteSearchMode.EmployerReferenceNumber ? selected : null;
+    var nameSearchSelected = Model?.SiteSearchMode == ProviderSiteSearchMode.SiteNameAndLocation ? selected : null;
+}
+
+<div class="grid-wrapper">
+    <div class="hgroup">
+        <h1 class="heading-xlarge">
+            Add training site
+        </h1>
+    </div>
+
+    <h2 class="heading-medium">Find training site</h2>
+
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    <div class="blocklabel-single-container">
+        <div class="form-group inline clearfix blocklabel-single hide-nojs">
+            <label data-target="ernsearch-panel" for="ernsearch" class="block-label @ernSearchSelected">
+                @Html.RadioButtonFor(model => model.SiteSearchMode, ProviderSiteSearchMode.EmployerReferenceNumber, new { id = "ernsearch", aria_controls = "ernsearch-panel" })
+                Search using ERN
+            </label>
+            <label data-target="namesearch-panel" for="namesearch" class="block-label @nameSearchSelected">
+                @Html.RadioButtonFor(model => model.SiteSearchMode, ProviderSiteSearchMode.SiteNameAndLocation, new { id = "namesearch", aria_controls = "ernsearch-panel" })
+                Search using site name
+            </label>
+        </div>
+        @using (Html.BeginRouteForm(RecruitmentRouteNames.AddProviderSite, FormMethod.Post, new { @id = "#searchForm" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div id="ernsearch-panel" class="toggle-content blocklabel-content">
+                @Html.FormTextFor(model => model.EmployerReferenceNumber)
+
+                <button id="find-site-button" type="submit" name="AddSiteByEmployerReferenceNumber" value="AddSiteByEmployerReferenceNumber" class="button">
+                    Find site
+                </button>
+            </div>
+        }
+
+        <div id="namesearch-panel" class="toggle-content  blocklabel-content">
+            <div class="form-group">
+                <label for="nameSearch" class="form-label">Site name</label>
+                <input type="text" id="nameSearch" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="nameSearch" class="form-label">Location (optional)</label>
+                <span class="form-hint">Enter town or postcode</span>
+                <input type="text" id="nameSearch" class="form-control">
+            </div>
+            <div class="form-group">
+                <a href="edit-site.html" class="button" id="searchTrainingNameBtn">Search</a>
+            </div>
+            <section class="toggle-content clearfix" id="providerSiteResults">
+                <h2 class="heading-small">Training sites</h2>
+                <div class="grid grid-2-3 scrolling-panel max-height-15">
+                    <table>
+                        <colgroup>
+                            <col class="t40">
+                            <col class="t30">
+                            <col class="t15">
+                            <col class="t15">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <td>Basing View</td>
+                                <td>Basingstoke</td>
+                                <td>RG21 4FP</td>
+                                <td>
+                                    <a href="edit-site.html">Select site</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Basingers Ltd</td>
+                                <td>Basingstoke</td>
+                                <td>RG21 8KL</td>
+                                <td>
+                                    <a href="edit-site.html">Select site</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Basingstoke Care Ltd</td>
+                                <td>Basingstoke</td>
+                                <td>RG21 9OD</td>
+                                <td>
+                                    <a href="edit-site.html">Select site</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+    <h2 class="heading-medium">Enter manually</h2>
+    <div class="text">
+        <p>
+            If you don't know the ERN or name of your site, you can enter the site
+            details <a href="edit-site-empty.html">manually</a>.
+        </p>
+    </div>
+</div>

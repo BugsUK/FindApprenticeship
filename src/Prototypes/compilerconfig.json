@@ -1,0 +1,10 @@
+﻿[
+  {
+    "outputFile": "Content/_assets/css/main.css",
+    "inputFile": "Content/_assets/scss/main.scss"
+  },
+  {
+    "outputFile": "Content/_assets/css/main-ie8.css",
+    "inputFile": "Content/_assets/scss/main-ie8.scss"
+  }
+]
