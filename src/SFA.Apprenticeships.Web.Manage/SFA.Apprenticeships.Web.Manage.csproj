@@ -325,6 +325,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
+    <Compile Include="Views\Shared\EditorTemplates\Comment.generated.cs">
+      <DependentUpon>Comment.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -463,6 +468,10 @@
     <Content Include="Views\Vacancy\EditQuestions.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EditQuestions.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\Comment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Comment.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>

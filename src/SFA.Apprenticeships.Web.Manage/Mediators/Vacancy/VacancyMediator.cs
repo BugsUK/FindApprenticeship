@@ -1,7 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
-
-namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
     using System.Linq;
     using Common.Mediators;
@@ -10,6 +7,8 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
     using Raa.Common.Converters;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.Providers;
+    using Raa.Common.ViewModels;
 
     public class VacancyMediator : MediatorBase, IVacancyMediator
     {
@@ -18,15 +17,18 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
+        private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
 
         public VacancyMediator(IVacancyProvider vacancyProvider, IVacancyPostingProvider vacancyPostingProvider,
             VacancyViewModelValidator vacancyViewModelValidator,
-            VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator)
+            VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
+            NewVacancyViewModelServerValidator newVacancyViewModelServerValidator)
         {
             _vacancyProvider = vacancyProvider;
             _vacancyPostingProvider = vacancyPostingProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
+            _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
         }
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
@@ -100,6 +102,26 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
             var updatedViewModel = _vacancyProvider.UpdateVacancy(viewModel);
 
             return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+        }
+
+        public MediatorResponse<NewVacancyViewModel> GetBasicDetails(long vacancyReferenceNumber)
+        {
+            var newVacancyViewModel = _vacancyPostingProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
+
+            var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyMediatorCodes.GetBasicVacancyDetails.FailedValidation,
+                    newVacancyViewModel, validationResult);
+            }
+
+            if (newVacancyViewModel == null)
+            {
+                return GetMediatorResponse<NewVacancyViewModel>(VacancyMediatorCodes.GetBasicVacancyDetails.NotAvailable);
+            }
+
+            return GetMediatorResponse(VacancyMediatorCodes.GetBasicVacancyDetails.Ok, newVacancyViewModel);
         }
     }
 }

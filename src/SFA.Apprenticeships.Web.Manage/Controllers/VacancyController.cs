@@ -46,7 +46,8 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
 
         public ActionResult EditBasicDetails(long vacancyReferenceNumber)
         {
-            throw new NotImplementedException();
+            var model = _vacancyMediator.GetBasicDetails(vacancyReferenceNumber);
+            return View(model.ViewModel);
         }
 
         [HttpPost]

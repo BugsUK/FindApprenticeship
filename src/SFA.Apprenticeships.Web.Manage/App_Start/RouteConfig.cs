@@ -97,8 +97,19 @@
                 defaults: new { controller = "Vacancy", action = "Summary" }
                 );
 
-            routes.LowercaseUrls = true;
+            routes.MapRoute(
+                name: ManagementRouteNames.EditSummary,
+                url: "vacancy/editsummary",
+                defaults: new { controller = "Vacancy", action = "EditSummary" }
+                );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.EditBasicDetails,
+                url: "vacancy/editbasic",
+                defaults: new { controller = "Vacancy", action = "EditBasicDetails" }
+                );
+
+            routes.LowercaseUrls = true;
         }
     }
 }

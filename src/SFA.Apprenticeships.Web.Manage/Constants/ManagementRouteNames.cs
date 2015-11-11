@@ -20,6 +20,7 @@
         public const string EditBasicDetails = "EditBasicDetails";
         public const string SaveBasicDetails = "SaveBasicDetails";
         public const string Summary = "VacancySummary";
+        public const string EditSummary = "EditVacancySummary";
         public const string EditRequirementsAndProspoects = "EditRequirementsAndProspoects";
         public const string SaveRequirementsAndProspoects = "SaveRequirementsAndProspoects";
         public const string EditQuestions = "EditQuestions";

@@ -48,5 +48,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public int? StandardId { get; set; }
 
         public List<StandardViewModel> Standards { get; set; }
+
+        public string Comment { get; set; }
     }
 }

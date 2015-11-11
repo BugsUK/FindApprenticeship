@@ -25,11 +25,20 @@
         {
             public const string Ok = "VacancyMediatorCodes.GetVacancySummaryViewModel.Ok";
         }
-
+        
         public class UpdateVacancy
         {
             public const string FailedValidation = "VacancyMediatorCodes.UpdateVacancy.FailedValidation";
             public const string Ok = "VacancyMediatorCodes.UpdateVacancy.Ok";
         }
+        
+        public class GetBasicVacancyDetails
+        {
+            public const string NotAvailable = "VacancyMediatorCodes.GetBasicVacancyDetails.NotAvailable";
+            public const string Ok = "VacancyMediatorCodes.GetBasicVacancyDetails.Ok";
+            public const string FailedValidation = "VacancyMediatorCodes.GetBasicVacancyDetails.FailedValidation";
+        }
+
+
     }
 }
