@@ -4,7 +4,6 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
     using Common.Mediators;
-    using ViewModels;
 
     public interface IVacancyMediator
     {
@@ -23,8 +22,6 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
         MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
 
         MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel);
-
-        MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel);
 
         MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
     }
