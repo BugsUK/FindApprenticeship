@@ -19,28 +19,28 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string WorkingWeek { get; set; }
         [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
         public decimal? HoursPerWeek { get; set; }
-        public string WorkingWeekComments { get; set; }
+        public string WorkingWeekComment { get; set; }
         //TODO: Probably create dedicated WageViewModel
         public WageType WageType { get; set; }
         [Display(Name = VacancyViewModelMessages.Wage.LabelText)]
         public decimal? Wage { get; set; }
         public WageUnit WageUnit { get; set; }
         public List<SelectListItem> WageUnits { get; set; }
-        public string WageComments { get; set; }
+        public string WageComment { get; set; }
         public DurationType DurationType { get; set; }
         public List<SelectListItem> DurationTypes { get; set; }
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
         public decimal? Duration { get; set; }
+        public string DurationComment { get; set; }
         [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
-        public string DurationComments { get; set; }
         public DateViewModel ClosingDate { get; set; }
+        public string ClosingDateComment { get; set; }
         [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]
-        public string ClosingDateComments { get; set; }
         public DateViewModel PossibleStartDate { get; set; }
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
-        public string PossibleStartDateComments { get; set; }
         public string LongDescription { get; set; }
-        public string LongDescriptionComments { get; set; }
+        public string PossibleStartDateComment { get; set; }
+        public string LongDescriptionComment { get; set; }
 
         public string WageUnitDisplayText
         {

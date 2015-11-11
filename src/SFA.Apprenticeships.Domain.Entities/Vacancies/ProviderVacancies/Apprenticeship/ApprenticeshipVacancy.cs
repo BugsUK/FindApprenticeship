@@ -11,5 +11,11 @@
         public int? StandardId { get; set; }
 
         public ProviderVacancyStatuses Status { get; set; }
+        public string WageComment { get; set; }
+        public string ClosingDateComment { get; set; }
+        public string DurationComment { get; set; }
+        public string LongDescriptionComment { get; set; }
+        public string PossibleStartDateComment { get; set; }
+        public string WorkingWeekComment { get; set; }
     }
 }

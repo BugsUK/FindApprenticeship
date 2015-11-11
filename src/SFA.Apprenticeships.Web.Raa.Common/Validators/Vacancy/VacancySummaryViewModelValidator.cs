@@ -28,27 +28,27 @@
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.ClosingDateComments)
+            RuleFor(viewModel => viewModel.ClosingDateComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.DurationComments)
+            RuleFor(viewModel => viewModel.DurationComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.LongDescriptionComments)
+            RuleFor(viewModel => viewModel.LongDescriptionComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.PossibleStartDateComments)
+            RuleFor(viewModel => viewModel.PossibleStartDateComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.WageComments)
+            RuleFor(viewModel => viewModel.WageComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.WorkingWeekComments)
+            RuleFor(viewModel => viewModel.WorkingWeekComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
         }

@@ -29,7 +29,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                 Duration = apprenticeshipVacancy.Duration,
                 ClosingDate = new DateViewModel(apprenticeshipVacancy.ClosingDate),
                 PossibleStartDate = new DateViewModel(apprenticeshipVacancy.PossibleStartDate),
-                LongDescription = apprenticeshipVacancy.LongDescription
+                LongDescription = apprenticeshipVacancy.LongDescription,
+                WageComment = apprenticeshipVacancy.WageComment,
+                ClosingDateComment = apprenticeshipVacancy.ClosingDateComment,
+                DurationComment = apprenticeshipVacancy.DurationComment,
+                LongDescriptionComment = apprenticeshipVacancy.LongDescriptionComment,
+                PossibleStartDateComment = apprenticeshipVacancy.PossibleStartDateComment,
+                WorkingWeekComment = apprenticeshipVacancy.WorkingWeekComment
             };
 
             return vacancyViewModel;

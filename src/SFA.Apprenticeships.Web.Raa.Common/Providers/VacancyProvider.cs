@@ -137,8 +137,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
-
-            //TODO: add comment stuff
+            
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
             vacancy.WageType = viewModel.WageType;
@@ -157,6 +156,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
 
             vacancy.LongDescription = viewModel.LongDescription;
+
+            vacancy.WageComment = viewModel.WageComment;
+            vacancy.ClosingDateComment = viewModel.ClosingDateComment;
+            vacancy.DurationComment = viewModel.DurationComment;
+            vacancy.LongDescriptionComment = viewModel.LongDescriptionComment;
+            vacancy.PossibleStartDateComment = viewModel.PossibleStartDateComment;
+            vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 

@@ -41,11 +41,29 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Shared.EditorTemplates
         }
         public override void Execute()
         {
-WriteLiteral("<details>\r\n    <summary>Add comment on vacancy</summary>\r\n    <div");
+            
+            #line 3 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+  
+    var state = string.IsNullOrWhiteSpace(Model) ? string.Empty : "open";
 
-WriteLiteral(" class=\"detail-content\"");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n<style>\r\n    .qa-comment {\r\n        background: yellow;\r\n        padding: 20p" +
+"x;   \r\n    }\r\n</style>\r\n<details ");
 
-WriteLiteral(">\r\n        <div");
+            
+            #line 13 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+    Write(state);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(">\r\n    <summary>Comment</summary>\r\n    <div");
+
+WriteLiteral(" class=\"detail-content qa-comment\"");
+
+WriteLiteral(">\r\n        <div>QA Comment</div>\r\n        <div");
 
 WriteLiteral(" class=\"blocklabel-single-container\"");
 
@@ -54,8 +72,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 6 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
-       Write(Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control", placeholder = ViewData.ModelMetadata.Watermark ?? ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName }));
+            #line 18 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+       Write(Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new {@class = "form-control"}));
 
             
             #line default
