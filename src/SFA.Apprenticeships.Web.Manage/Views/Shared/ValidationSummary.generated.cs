@@ -263,18 +263,7 @@ WriteLiteral("</a></li>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("        </ul>\r\n");
-
-WriteLiteral("        ");
-
-            
-            #line 60 "..\..\Views\Shared\ValidationSummary.cshtml"
-   Write(Html.Hidden("acceptWarnings", @hasWarnings));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    </div>\r\n</div>");
+WriteLiteral("        </ul>\r\n    </div>\r\n</div>");
 
         }
     }
