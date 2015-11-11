@@ -4,8 +4,10 @@
     using System.Linq;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Apprenticeships.Domain.Interfaces.Configuration;
     using Apprenticeships.Domain.Interfaces.Repositories;
     using AvService.Providers.Version51;
+    using Configuration;
     using DataContracts.Version51;
     using FluentAssertions;
     using MessageContracts.Version51;
@@ -16,7 +18,12 @@
     public class GetVacancyDetailsByReferenceNumberTests
     {
         private IVacancyDetailsProvider _provider;
+
+        private Mock<IConfigurationService> _mockConfigurationService;
         private Mock<IApprenticeshipVacancyReadRepository> _mockApprenticeshipVacancyReadRepository;
+
+        private const string ValidEmployerInformationUrl = "http://example.com";
+        private const string ValidEmployerInformationText = "Some blurb.";
 
         private const int LiveVacancyReferenceNumber = 5;
         private const int DraftVacancyReferenceNumber = 99;
@@ -26,12 +33,18 @@
         {
             _mockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
 
+            // Live vacancy.
             var liveApprenticeshipVacancy = new ApprenticeshipVacancy
             {
                 VacancyReferenceNumber = LiveVacancyReferenceNumber,
                 Status = ProviderVacancyStatuses.Live
             };
 
+            _mockApprenticeshipVacancyReadRepository
+                .Setup(mock => mock.Get(LiveVacancyReferenceNumber))
+                .Returns(liveApprenticeshipVacancy);
+
+            // Draft vacancy.
             var draftApprenticeshipVacancy = new ApprenticeshipVacancy
             {
                 VacancyReferenceNumber = LiveVacancyReferenceNumber,
@@ -39,14 +52,23 @@
             };
 
             _mockApprenticeshipVacancyReadRepository
-                .Setup(mock => mock.Get(LiveVacancyReferenceNumber))
-                .Returns(liveApprenticeshipVacancy);
-
-            _mockApprenticeshipVacancyReadRepository
                 .Setup(mock => mock.Get(DraftVacancyReferenceNumber))
                 .Returns(draftApprenticeshipVacancy);
 
+            // Configuration.
+            _mockConfigurationService = new Mock<IConfigurationService>();
+
+            _mockConfigurationService.Setup(mock =>
+                mock.Get<ApiConfiguration>())
+                .Returns(new ApiConfiguration
+                {
+                    EmployerInformationUrl = ValidEmployerInformationUrl,
+                    EmployerInformationText = ValidEmployerInformationText
+                });
+
+            // Provider.
             _provider = new VacancyDetailsProvider(
+                _mockConfigurationService.Object,
                 _mockApprenticeshipVacancyReadRepository.Object);
         }
 
@@ -90,8 +112,8 @@
             var avmsHeader = response?.SearchResults?.AVMSHeader;
 
             avmsHeader.Should().NotBeNull();
-            avmsHeader?.ApprenticeshipVacanciesDescription.Should().NotBeNullOrWhiteSpace();
-            avmsHeader?.ApprenticeshipVacanciesURL.Should().NotBeNullOrWhiteSpace();
+            avmsHeader?.ApprenticeshipVacanciesURL.Should().Be(ValidEmployerInformationUrl);
+            avmsHeader?.ApprenticeshipVacanciesDescription.Should().Be(ValidEmployerInformationText);
         }
 
         [TestCase(LiveVacancyReferenceNumber)]

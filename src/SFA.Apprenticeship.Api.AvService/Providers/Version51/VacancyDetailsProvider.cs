@@ -3,8 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    using Apprenticeships.Domain.Interfaces.Configuration;
     using Apprenticeships.Domain.Interfaces.Queries;
     using Apprenticeships.Domain.Interfaces.Repositories;
+    using Configuration;
     using DataContracts.Version51;
     using Mappers.Version51;
     using MessageContracts.Version51;
@@ -15,10 +17,13 @@
     public class VacancyDetailsProvider : IVacancyDetailsProvider
     {
         private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
+        private readonly ApiConfiguration _apiConfiguration;
 
         public VacancyDetailsProvider(
+            IConfigurationService configurationService,
             IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository)
         {
+            _apiConfiguration = configurationService.Get<ApiConfiguration>();
             _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
         }
 
@@ -84,12 +89,12 @@
             return response;
         }
 
-        private static WebInterfaceGenericDetailsData GetAvmsHeader()
+        private WebInterfaceGenericDetailsData GetAvmsHeader()
         {
             return new WebInterfaceGenericDetailsData
             {
-                ApprenticeshipVacanciesDescription = "TODO: vacancies description",
-                ApprenticeshipVacanciesURL = "TODO: vacancies URL"
+                ApprenticeshipVacanciesDescription = _apiConfiguration.EmployerInformationText,
+                ApprenticeshipVacanciesURL = _apiConfiguration.EmployerInformationUrl
             };
         }
 
