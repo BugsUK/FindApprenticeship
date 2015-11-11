@@ -196,6 +196,7 @@
         //TODO: do we need to make it less generic?
         public static class Comment
         {
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Comment " + Whitelists.FreetextWhitelist.ErrorText;
         }
     }
