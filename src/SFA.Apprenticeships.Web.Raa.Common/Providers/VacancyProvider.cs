@@ -44,10 +44,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _vacancyPostingService = vacancyPostingService;
         }
 
-        public List<VacancyViewModel> GetVacanciesForProvider(string ukprn)
+        public List<VacancyViewModel> GetVacanciesForProvider(string ukprn, string providerSiteErn)
         {
-            var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn,
-                new List<ProviderVacancyStatuses> {ProviderVacancyStatuses.Draft});
+            var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn, providerSiteErn);
 
             return vacancies.Select(v => v.ConvertToVacancyViewModel()).ToList();
         }
@@ -115,7 +114,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public void RejectVacancy(long vacancyReferenceNumber)
         {
             var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
-            vacancy.Status = ProviderVacancyStatuses.Draft;
+            vacancy.Status = ProviderVacancyStatuses.RejectedByQA;
 
             _apprenticeshipVacancyWriteRepository.Save(vacancy);
         }

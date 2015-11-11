@@ -487,6 +487,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ApprenticeshipLevel.cshtml" />
+    <Content Include="Views\ProviderUser\_closingDate.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -217,12 +217,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         public MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn)
         {
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
+            var provider = _providerProvider.GetProviderViewModel(ukprn);
             var providerSites = GetProviderSites(ukprn);
-            var providerVacancies = GetProviderVacancies(ukprn);
+            var providerVacancies = GetProviderVacancies(ukprn, providerUserViewModel.DefaultProviderSiteErn);
 
             var viewModel = new HomeViewModel
             {
                 ProviderUserViewModel = providerUserViewModel,
+                ProviderViewModel = provider,
                 ProviderSites = providerSites,
                 Vacancies = providerVacancies
             };
@@ -257,9 +259,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             return sites;
         }
 
-        private List<VacancyViewModel> GetProviderVacancies(string ukprn)
+        private List<VacancyViewModel> GetProviderVacancies(string ukprn, string providerSiteErn)
         {
-            return _vacancyProvider.GetVacanciesForProvider(ukprn);
+            return _vacancyProvider.GetVacanciesForProvider(ukprn, providerSiteErn);
         }
     }
 }

@@ -4,10 +4,17 @@
 @switch (Model)
 {
     case ProviderVacancyStatuses.Draft:
-        <span class="tag-draft">@Model</span>
+        <span class="tag-draft" style="width: 110px">Draft</span>
         break;
     case ProviderVacancyStatuses.PendingQA:
-        <span class="tag-pending">@Model</span>
+    case ProviderVacancyStatuses.ReservedForQA:
+        <span class="tag-pending" style="width: 110px">Submitted</span>
+        break;
+    case ProviderVacancyStatuses.RejectedByQA:
+        <span class="tag-pending" style="width: 110px">Rejected</span>
+        break;
+    case ProviderVacancyStatuses.Live:
+        <span class="tag-live" style="width: 110px">Live</span>
         break;
     default:
         break;

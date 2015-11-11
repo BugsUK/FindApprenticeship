@@ -105,7 +105,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
         }
 
         [Test]
-        public void RejectVacancyShouldCallRepositorySaveWithStatusAsDraft()
+        public void RejectVacancyShouldCallRepositorySaveWithStatusAsRejectedByQA()
         {
             //Arrange
             long vacancyReferenceNumber = 1;
@@ -134,7 +134,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
                         It.Is<ApprenticeshipVacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
-                                av.Status == ProviderVacancyStatuses.Draft)));
+                                av.Status == ProviderVacancyStatuses.RejectedByQA)));
         }
 
         [Test]

@@ -100,6 +100,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
+                    VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                     Ukprn = apprenticeshipVacancy.Ukprn,
                     Title = apprenticeshipVacancy.Title,
                     ShortDescription = apprenticeshipVacancy.ShortDescription,
