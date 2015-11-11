@@ -58,12 +58,25 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
         }
 
         [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult Summary(long vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
-            var viewModel = response.ViewModel;
 
-            return View(viewModel);
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.GetVacancySummaryViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.GetVacancySummaryViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]

@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string LongDescription { get; set; }
         public string PossibleStartDateComment { get; set; }
         public string LongDescriptionComment { get; set; }
+        public bool AcceptWarnings { get; set; }
 
         public string WageUnitDisplayText
         {

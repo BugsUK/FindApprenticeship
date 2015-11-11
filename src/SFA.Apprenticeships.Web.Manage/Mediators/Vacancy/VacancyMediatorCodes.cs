@@ -23,6 +23,7 @@
 
         public class GetVacancySummaryViewModel
         {
+            public const string FailedValidation = "VacancyMediatorCodes.GetVacancySummaryViewModel.FailedValidation";
             public const string Ok = "VacancyMediatorCodes.GetVacancySummaryViewModel.Ok";
         }
         

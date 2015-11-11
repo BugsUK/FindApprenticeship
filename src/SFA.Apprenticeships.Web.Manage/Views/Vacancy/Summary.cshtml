@@ -18,71 +18,71 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    @Html.Hidden("acceptWarnings", false) //TODO: put in validation summary
 
     <section>
         <div class="form-group">
             <fieldset class="form-group inline-fixed">
                 @Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12, autofocus = "autofocus"})
                 @Html.FormTextFor(m => m.HoursPerWeek, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12})@VacancyViewModelMessages.HoursPerWeek.LabelText
-                @Html.EditorFor(m => m.WorkingWeekComment, "Comment")
             </fieldset>
+            <div class="form-group">@Html.EditorFor(m => m.WorkingWeekComment, "Comment")</div>
 
-            <div class="blocklabel-single-container">
-                <div class="form-group">
-                    <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
-                    <label class="form-label" for="weekly-wage">Wage</label>
-                    <div class="form-group" data-editable-x="">
-                        @* ReSharper disable once Html.IdNotResolved *@
-                        <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
-                            Custom wage
-                        </label>
-                        @* ReSharper disable once Html.IdNotResolved *@
-                        <label for="national-minimum-wage" class="block-label">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
-                            National Minimum Wage
-                        </label>
-                        @* ReSharper disable once Html.IdNotResolved *@
-                        <label for="apprenticeship-minimum-wage" class="block-label">
-                            @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimumWage, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
-                            Apprentice National Minimum Wage
-                        </label>
+                <div class="blocklabel-single-container">
+                    <div class="form-group">
+                        <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
+                        <label class="form-label" for="weekly-wage">Wage</label>
+                        <div class="form-group" data-editable-x="">
+                            @* ReSharper disable once Html.IdNotResolved *@
+                            <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
+                                @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new { id = "custom-wage", aria_controls = "wage-type-panel" })
+                                Custom wage
+                            </label>
+                            @* ReSharper disable once Html.IdNotResolved *@
+                            <label for="national-minimum-wage" class="block-label">
+                                @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new { id = "national-minimum-wage", aria_controls = "wage-type-panel" })
+                                National Minimum Wage
+                            </label>
+                            @* ReSharper disable once Html.IdNotResolved *@
+                            <label for="apprenticeship-minimum-wage" class="block-label">
+                                @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimumWage, new { id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel" })
+                                Apprentice National Minimum Wage
+                            </label>
+                        </div>
+                        <div id="custom-wage-panel" class="toggle-content blocklabel-content">
+                            <fieldset class="form-group inline-fixed">
+                                £
+                                @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { style = "Display: none" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
+                                @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
+                            </fieldset>
+                        </div>
                     </div>
-                    <div id="custom-wage-panel" class="toggle-content blocklabel-content">
-                        <fieldset class="form-group inline-fixed">
-                            £
-                            @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
-                            @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
-                        </fieldset>
-                    </div>
+                    <div class="form-group">@Html.EditorFor(m => m.WageComment, "Comment")</div>
                 </div>
-                @Html.EditorFor(m => m.WageComment, "Comment")
+
+                <fieldset class="form-group inline-fixed">
+                    @Html.FormTextFor(m => m.Duration, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
+                    @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
+                    @Html.EditorFor(m => m.DurationComment, "Comment")
+                </fieldset>
+
+                <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
+                    <a name="@Html.NameFor(m => m.ClosingDate).ToString().ToLower()"></a>
+                    <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
+                    @Html.EditorFor(m => m.ClosingDate)
+                    @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
+                </fieldset>
+                <div class="form-group">@Html.EditorFor(m => m.ClosingDateComment, "Comment")</div>
+
+                <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
+                    <a name="@Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()"></a>
+                    <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
+                    @Html.EditorFor(m => m.PossibleStartDate)
+                    @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
+                </fieldset>
+                <div class="form-group">@Html.EditorFor(m => m.PossibleStartDateComment, "Comment")</div>
+                @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22 })
+                @Html.EditorFor(m => m.LongDescriptionComment, "Comment")
             </div>
-
-            <fieldset class="form-group inline-fixed">
-                @Html.FormTextFor(m => m.Duration, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
-                @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
-                @Html.EditorFor(m => m.DurationComment, "Comment")
-            </fieldset>
-
-            <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
-                <a name="@Html.NameFor(m => m.ClosingDate).ToString().ToLower()"></a>
-                <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
-                @Html.EditorFor(m => m.ClosingDate)
-                @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
-                @Html.EditorFor(m => m.ClosingDateComment, "Comment")
-            </fieldset>
-            <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
-                <a name="@Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()"></a>
-                <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
-                @Html.EditorFor(m => m.PossibleStartDate)
-                @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
-                @Html.EditorFor(m => m.PossibleStartDateComment, "Comment")
-            </fieldset>
-            @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22})
-            @Html.EditorFor(m => m.LongDescriptionComment, "Comment")
-        </div>
     </section>
     <div class="grid grid-1-2">
         <button type="submit" class="button">Save</button>

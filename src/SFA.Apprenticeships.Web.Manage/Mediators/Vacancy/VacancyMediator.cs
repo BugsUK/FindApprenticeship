@@ -83,6 +83,16 @@
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
+            var validationResult = _vacancySummaryViewModelServerValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (!validationResult.IsValid ) //&& validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)
+            {
+                vacancyViewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
+                vacancyViewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
+
+                return GetMediatorResponse(VacancyMediatorCodes.GetVacancySummaryViewModel.FailedValidation, vacancyViewModel, validationResult);
+            }
+
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok, vacancyViewModel);
         }
 
@@ -91,10 +101,12 @@
             //TODO: basically the same code as in VacancyPostingMediator
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
-            if (!validationResult.IsValid && (!acceptWarnings || validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)))
+            if (!validationResult.IsValid && (!viewModel.AcceptWarnings || validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)))
             {
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
+
+                viewModel.AcceptWarnings = true;
 
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
