@@ -192,5 +192,11 @@
         {
             public const string RequiredErrorText = "Please select the apprenticeship standard";
         }
+
+        //TODO: do we need to make it less generic?
+        public static class Comment
+        {
+            public const string WhiteListErrorText = "Comment " + Whitelists.FreetextWhitelist.ErrorText;
+        }
     }
 }
