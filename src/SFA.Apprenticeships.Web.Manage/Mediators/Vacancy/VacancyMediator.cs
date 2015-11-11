@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
     using Common.Mediators;
     using FluentValidation;
     using Common.Validators;
+    using Raa.Common.Converters;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
 
@@ -16,12 +17,16 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
+        private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
 
-        public VacancyMediator(IVacancyProvider vacancyProvider, IVacancyPostingProvider vacancyPostingProvider, VacancyViewModelValidator vacancyViewModelValidator)
+        public VacancyMediator(IVacancyProvider vacancyProvider, IVacancyPostingProvider vacancyPostingProvider,
+            VacancyViewModelValidator vacancyViewModelValidator,
+            VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator)
         {
             _vacancyProvider = vacancyProvider;
             _vacancyPostingProvider = vacancyPostingProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
+            _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
         }
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
@@ -77,6 +82,24 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
             var vacancyViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok, vacancyViewModel);
+        }
+
+        public MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel, bool acceptWarnings)
+        {
+            //TODO: basically the same code as in VacancyPostingMediator
+            var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (!validationResult.IsValid && (!acceptWarnings || validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)))
+            {
+                viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
+                viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
+
+                return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
+            }
+
+            var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
+
+            return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
     }
 }

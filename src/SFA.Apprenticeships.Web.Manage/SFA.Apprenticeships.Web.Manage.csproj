@@ -345,8 +345,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Review.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Vacancy\EditSummary.generated.cs">
-      <DependentUpon>EditSummary.cshtml</DependentUpon>
+    <Compile Include="Views\Vacancy\Summary.generated.cs">
+      <DependentUpon>Summary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -452,9 +452,9 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EditBasicDetails.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Vacancy\EditSummary.cshtml">
+    <Content Include="Views\Vacancy\Summary.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>EditSummary.generated.cs</LastGenOutput>
+      <LastGenOutput>Summary.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Vacancy\EditRequirementsAndProspects.cshtml">
       <Generator>RazorGenerator</Generator>

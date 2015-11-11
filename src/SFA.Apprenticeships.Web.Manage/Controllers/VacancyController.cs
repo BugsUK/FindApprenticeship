@@ -55,7 +55,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             throw new NotImplementedException();
         }
 
-        public ActionResult EditSummary(long vacancyReferenceNumber)
+        public ActionResult Summary(long vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
             var viewModel = response.ViewModel;
@@ -64,9 +64,16 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveSummary(VacancySummaryViewModel viewModel)
+        public ActionResult Summary(VacancySummaryViewModel viewModel, bool acceptWarnings)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.UpdateVacancy(viewModel, acceptWarnings);
+
+            return HandleVacancySummary(response,
+                () => RedirectToRoute(RecruitmentRouteNames.VacancyRequirementsProspects,
+                    new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    }));
         }
 
         public ActionResult EditRequirementsAndProspoects(long vacancyReferenceNumber)

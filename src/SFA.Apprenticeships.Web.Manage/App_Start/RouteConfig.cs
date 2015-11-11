@@ -92,15 +92,9 @@
                 );
 
             routes.MapRoute(
-                name: ManagementRouteNames.EditSummary,
-                url: "vacancy/editsummary",
-                defaults: new { controller = "Vacancy", action = "EditSummary" }
-                );
-
-            routes.MapRoute(
-                name: ManagementRouteNames.SaveSummary,
-                url: "vacancy/savesummary",
-                defaults: new { controller = "Vacancy", action = "SaveSummary" }
+                name: ManagementRouteNames.Summary,
+                url: "vacancy/summary",
+                defaults: new { controller = "Vacancy", action = "Summary" }
                 );
 
             routes.LowercaseUrls = true;
