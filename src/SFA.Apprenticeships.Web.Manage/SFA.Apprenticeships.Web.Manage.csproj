@@ -345,8 +345,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Vacancy\EditBasicDetails.generated.cs">
-      <DependentUpon>EditBasicDetails.cshtml</DependentUpon>
+    <Compile Include="Views\Vacancy\BasicDetails.generated.cs">
+      <DependentUpon>BasicDetails.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -360,13 +360,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\Vacancy\EditRequirementsAndProspects.generated.cs">
-      <DependentUpon>EditRequirementsAndProspects.cshtml</DependentUpon>
+    <Compile Include="Views\Vacancy\RequirementsAndProspects.generated.cs">
+      <DependentUpon>RequirementsAndProspects.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Views\Vacancy\EditQuestions.generated.cs">
-      <DependentUpon>EditQuestions.cshtml</DependentUpon>
+    <Compile Include="Views\Vacancy\Questions.generated.cs">
+      <DependentUpon>Questions.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -458,21 +458,21 @@
       <LastGenOutput>Review.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\razorgenerator.directives" />
-    <Content Include="Views\Vacancy\EditBasicDetails.cshtml">
+    <Content Include="Views\Vacancy\BasicDetails.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>EditBasicDetails.generated.cs</LastGenOutput>
+      <LastGenOutput>BasicDetails.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Vacancy\Summary.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Summary.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Vacancy\EditRequirementsAndProspects.cshtml">
+    <Content Include="Views\Vacancy\RequirementsAndProspects.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>EditRequirementsAndProspects.generated.cs</LastGenOutput>
+      <LastGenOutput>RequirementsAndProspects.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Vacancy\EditQuestions.cshtml">
+    <Content Include="Views\Vacancy\Questions.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>EditQuestions.generated.cs</LastGenOutput>
+      <LastGenOutput>Questions.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml">
       <Generator>RazorGenerator</Generator>

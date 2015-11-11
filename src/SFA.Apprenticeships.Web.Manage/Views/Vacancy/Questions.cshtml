@@ -8,7 +8,7 @@
     Questions for candidates
 </h1>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.SaveQuestions, FormMethod.Post))
+@using (Html.BeginRouteForm(ManagementRouteNames.Questions, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

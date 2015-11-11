@@ -17,13 +17,9 @@
         //QA
         public const string ReviewVacancy = "ReviewVacancy";
         public const string ApproveVacancy = "ApproveVacancy";
-        public const string EditBasicDetails = "EditBasicDetails";
-        public const string SaveBasicDetails = "SaveBasicDetails";
+        public const string BasicDetails = "BasicDetails";
         public const string Summary = "VacancySummary";
-        public const string EditSummary = "EditVacancySummary";
-        public const string EditRequirementsAndProspoects = "EditRequirementsAndProspoects";
-        public const string SaveRequirementsAndProspoects = "SaveRequirementsAndProspoects";
-        public const string EditQuestions = "EditQuestions";
-        public const string SaveQuestions = "SaveQuestions";
+        public const string RequirementsAndProspoects = "RequirementsAndProspoects";
+        public const string Questions = "Questions";
     }
 }

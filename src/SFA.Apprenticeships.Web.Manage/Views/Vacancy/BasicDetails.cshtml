@@ -18,7 +18,7 @@
     Enter basic vacancy details
 </h1>
 
-@using (Html.BeginRouteForm(ManagementRouteNames.SaveBasicDetails, FormMethod.Post))
+@using (Html.BeginRouteForm(ManagementRouteNames.BasicDetails, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)

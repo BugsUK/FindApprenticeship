@@ -123,5 +123,25 @@
 
             return GetMediatorResponse(VacancyMediatorCodes.GetBasicVacancyDetails.Ok, newVacancyViewModel);
         }
+
+        public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

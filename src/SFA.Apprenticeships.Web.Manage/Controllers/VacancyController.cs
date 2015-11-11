@@ -44,14 +44,15 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             }
         }
 
-        public ActionResult EditBasicDetails(long vacancyReferenceNumber)
+        [HttpGet]
+        public ActionResult BasicDetails(long vacancyReferenceNumber)
         {
             var model = _vacancyMediator.GetBasicDetails(vacancyReferenceNumber);
             return View(model.ViewModel);
         }
 
         [HttpPost]
-        public ActionResult SaveBasicDetails(NewVacancyViewModel viewModel)
+        public ActionResult BasicDetails(NewVacancyViewModel viewModel)
         {
             throw new NotImplementedException();
         }
@@ -90,24 +91,24 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             }
         }
 
-        public ActionResult EditRequirementsAndProspoects(long vacancyReferenceNumber)
+        public ActionResult RequirementsAndProspoects(long vacancyReferenceNumber)
         {
             throw new NotImplementedException();
         }
 
         [HttpPost]
-        public ActionResult SaveRequirementsAndProspoects(VacancyRequirementsProspectsViewModel viewModel)
+        public ActionResult RequirementsAndProspoects(VacancyRequirementsProspectsViewModel viewModel)
         {
             throw new NotImplementedException();
         }
 
-        public ActionResult EditQuestions(long vacancyReferenceNumber)
+        public ActionResult Questions(long vacancyReferenceNumber)
         {
             throw new NotImplementedException();
         }
 
         [HttpPost]
-        public ActionResult SaveQuestions(VacancyQuestionsViewModel viewModel)
+        public ActionResult Questions(VacancyQuestionsViewModel viewModel)
         {
             throw new NotImplementedException();
         }

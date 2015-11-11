@@ -19,5 +19,13 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
         MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel, bool acceptWarnings);
 
         MediatorResponse<NewVacancyViewModel> GetBasicDetails(long vacancyReferenceNumber);
+
+        MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+
+        MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel);
+
+        MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel);
+
+        MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
     }
 }

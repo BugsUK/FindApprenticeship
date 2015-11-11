@@ -164,6 +164,21 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
+        public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         private StandardViewModel GetStandard(int? standardId)
         {
             if (!standardId.HasValue) return null;
