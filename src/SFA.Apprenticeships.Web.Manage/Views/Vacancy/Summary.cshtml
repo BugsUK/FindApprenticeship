@@ -18,6 +18,7 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
+    @Html.Hidden("acceptWarnings", false) //TODO: put in validation summary
 
     <section>
         <div class="form-group">

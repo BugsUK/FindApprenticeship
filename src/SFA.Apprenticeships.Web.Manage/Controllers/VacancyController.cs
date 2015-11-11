@@ -56,6 +56,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             throw new NotImplementedException();
         }
 
+        [HttpGet]
         public ActionResult Summary(long vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
