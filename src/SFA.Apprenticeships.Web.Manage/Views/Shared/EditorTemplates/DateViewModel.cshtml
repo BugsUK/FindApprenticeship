@@ -1,0 +1,4 @@
+﻿@model SFA.Apprenticeships.Web.Common.ViewModels.DateViewModel
+@Html.FormTextFor(m => m.Day, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-xsmall", type = "tel", maxlength = "2", pattern = "[0-9]*" })
+@Html.FormTextFor(m => m.Month, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-xsmall", type = "tel", maxlength = "2", pattern = "[0-9]*" })
+@Html.FormTextFor(m => m.Year, containerHtmlAttributes: new { @class = "form-group-compound" }, labelHtmlAttributes: new { @class = "form-hint" }, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", maxlength = "4", pattern = "[0-9]*" })

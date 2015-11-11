@@ -330,6 +330,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
+      <DependentUpon>DateViewModel.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\ValidationSummary.generated.cs">
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -472,6 +477,10 @@
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Comment.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
