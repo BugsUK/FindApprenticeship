@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using System.Linq;
     using Common.Validators;
     using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
@@ -13,6 +14,8 @@
     [TestFixture]
     public class VacancySummaryViewModelServerValidatorTests
     {
+        private const string RuleSet = RuleSets.ErrorsAndWarnings;
+
         private VacancySummaryViewModelServerValidator _validator;
 
         [SetUp]
@@ -26,7 +29,7 @@
         {
             var viewModel = new VacancySummaryViewModel();
 
-            var result = _validator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+            var result = _validator.Validate(viewModel, ruleSet: RuleSet);
 
             result.IsValid.Should().BeFalse();
             result.Errors.Count.Should().BeGreaterThan(5);
@@ -43,7 +46,7 @@
                 WorkingWeek = workingWeek
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -82,7 +85,7 @@
                 HoursPerWeek = hoursPerWeek
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -105,7 +108,7 @@
                 WageType = wageType
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -149,7 +152,7 @@
                 WageUnit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -182,7 +185,7 @@
                 Duration = duration
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
@@ -202,7 +205,7 @@
                 ClosingDate = new DateViewModel()
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
         }
@@ -215,7 +218,7 @@
                 PossibleStartDate = new DateViewModel()
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
         }
@@ -233,7 +236,7 @@
                 }
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
         }
@@ -251,9 +254,43 @@
                 }
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
+        }
+
+        [TestCase(16, false)]
+        [TestCase(2016, true)]
+        public void ClosingDateYearFormat(int year, bool expectValid)
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                ClosingDate = new DateViewModel
+                {
+                    /*Day = 1,
+                    Month = 2,*/
+                    Year = year
+                }
+            };
+
+            var result = _validator.Validate(viewModel, ruleSet: RuleSet);
+
+            if (expectValid)
+            {
+                //Doing it this way due to a probable bug in ShouldHaveValidationErrorFor
+                //http://stackoverflow.com/questions/27945523/using-fluentvalidator-to-validate-children-of-properties
+                result.Errors.Count(e => e.PropertyName == "ClosingDate.Year").Should().Be(0);
+                //_validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate.Year, viewModel);
+                //_validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
+            }
+            else
+            {
+                //Doing it this way due to a probable bug in ShouldHaveValidationErrorFor
+                //http://stackoverflow.com/questions/27945523/using-fluentvalidator-to-validate-children-of-properties
+                result.Errors.Count(e => e.PropertyName == "ClosingDate.Year").Should().Be(1);
+                //_validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate.Year, viewModel);
+                //_validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
+            }
         }
 
         [TestCase(null, false)]
@@ -268,7 +305,7 @@
                 LongDescription = longDescription
             };
 
-            _validator.Validate(viewModel);
+            _validator.Validate(viewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
