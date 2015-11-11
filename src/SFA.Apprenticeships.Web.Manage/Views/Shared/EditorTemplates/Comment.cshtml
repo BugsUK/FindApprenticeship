@@ -3,9 +3,7 @@
     <summary>Add comment on vacancy</summary>
     <div class="detail-content">
         <div class="blocklabel-single-container">
-            <div class="toggle-content blocklabel-content">
-                @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control", placeholder = ViewData.ModelMetadata.Watermark ?? ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName })
-            </div>
+            @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control", placeholder = ViewData.ModelMetadata.Watermark ?? ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName })
         </div>
     </div>
 </details>

@@ -49,22 +49,18 @@ WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"blocklabel-single-container\"");
 
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"toggle-content blocklabel-content\"");
-
 WriteLiteral(">\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("            ");
 
             
-            #line 7 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
-           Write(Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control", placeholder = ViewData.ModelMetadata.Watermark ?? ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName }));
+            #line 6 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+       Write(Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new { @class = "form-control", placeholder = ViewData.ModelMetadata.Watermark ?? ViewData.ModelMetadata.DisplayName ?? ViewData.ModelMetadata.PropertyName }));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n    </div>\r\n</details>");
+WriteLiteral("\r\n        </div>\r\n    </div>\r\n</details>");
 
         }
     }

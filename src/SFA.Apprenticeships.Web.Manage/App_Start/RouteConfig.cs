@@ -103,6 +103,12 @@
                 defaults: new { controller = "Vacancy", action = "EditBasicDetails" }
                 );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.SaveBasicDetails,
+                url: "vacancy/savebasic",
+                defaults: new { controller = "Vacancy", action = "SaveBasicDetails" }
+                );
+
             routes.LowercaseUrls = true;
         }
     }
