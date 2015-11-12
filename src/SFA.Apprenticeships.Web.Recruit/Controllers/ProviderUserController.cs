@@ -124,7 +124,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        [MultipleFormActionsButton(SubmitButtonActionName = "ProviderSiteAction")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ChangeProviderSiteAction")]
         public ActionResult ChangeProviderSite(HomeViewModel viewModel)
         {
             var response = _providerUserMediator.ChangeProviderSite(User.Identity.Name, User.GetUkprn(), viewModel);
@@ -137,13 +137,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
-
         }
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        [MultipleFormActionsButton(SubmitButtonActionName = "ProviderSiteAction")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ChangePageSizeAction")]
+        public ActionResult ChangePageSize(HomeViewModel viewModel)
+        {
+            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, viewModel.VacanciesSummary.VacanciesSummarySearch);
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Faa)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+        [MultipleFormActionsButton(SubmitButtonActionName = "NewVacancyAction")]
         public ActionResult NewVacancy(HomeViewModel viewModel)
         {
             var response = _providerUserMediator.ChangeProviderSite(User.Identity.Name, User.GetUkprn(), viewModel);

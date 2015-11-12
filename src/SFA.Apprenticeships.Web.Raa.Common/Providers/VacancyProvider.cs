@@ -92,6 +92,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                     vacancies = draft;
                     break;
             }
+
+            vacanciesSummarySearch.PageSizes = GetPageSizes(vacanciesSummarySearch.PageSize);
+
             var vacancyPage = new PageableViewModel<VacancyViewModel>
             {
                 Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => v.ConvertToVacancyViewModel()).ToList(),
@@ -113,6 +116,17 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             };
 
             return vacanciesSummary;
+        }
+
+        private List<SelectListItem> GetPageSizes(int pageSize)
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem {Value = "5", Text = "5 per page", Selected = pageSize == 5},
+                new SelectListItem {Value = "10", Text = "10 per page", Selected = pageSize == 10},
+                new SelectListItem {Value = "25", Text = "25 per page", Selected = pageSize == 25},
+                new SelectListItem {Value = "50", Text = "50 per page", Selected = pageSize == 50}
+            };
         }
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
