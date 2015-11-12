@@ -3,7 +3,7 @@
     using NUnit.Framework;
     using FluentValidation.TestHelper;
     using Recruit.Validators.ProviderUser;
-    using ViewModels.ProviderUser;
+    using Raa.Common.ViewModels.ProviderUser;
 
     [TestFixture]
     public class ProviderUserViewModelValidatorTests

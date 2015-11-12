@@ -2,8 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Namespaces.Version50;
 
-    [DataContract(Namespace = CommonNamespaces.ExternalInterfaces)]
+    [DataContract(Namespace = Namespace.Uri)]
     public class VacancySummaryResponseData
     {
         [DataMember(IsRequired = true, Order = 1)]

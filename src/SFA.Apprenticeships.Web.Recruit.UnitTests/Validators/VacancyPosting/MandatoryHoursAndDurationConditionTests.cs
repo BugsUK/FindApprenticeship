@@ -6,8 +6,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Recruit.Validators.Vacancy;
-    using ViewModels.Vacancy;
+    using Raa.Common.Validators.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
 
     /// <summary>
     /// Testing business rules on page https://valtech-uk.atlassian.net/wiki/display/NAS/QA+a+vacancy#QAavacancy-Businessrulesforadvertisingvacancies

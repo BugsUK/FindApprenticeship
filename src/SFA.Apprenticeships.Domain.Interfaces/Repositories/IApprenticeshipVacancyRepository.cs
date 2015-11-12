@@ -4,7 +4,8 @@ using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 
 namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
-    using Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Queries;
 
     public interface IApprenticeshipVacancyReadRepository : IReadRepository<ApprenticeshipVacancy>
     {
@@ -12,10 +13,17 @@ namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn);
 
+        List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn);
+
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn, List<ProviderVacancyStatuses> desiredStatuses);
+
+        List<ApprenticeshipVacancy> GetWithStatus(List<ProviderVacancyStatuses> desiredStatuses);
+
+        List<ApprenticeshipVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
     }
 
     public interface IApprenticeshipVacancyWriteRepository : IWriteRepository<ApprenticeshipVacancy>
     {
+        ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber, string username);
     }
 }

@@ -5,6 +5,6 @@
     [MessageContract]
     public class GetApprenticeshipTypesRequest : NavmsMessageHeader
     {
-        
+
     }
 }

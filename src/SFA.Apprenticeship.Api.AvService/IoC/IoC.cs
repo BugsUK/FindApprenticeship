@@ -1,22 +1,31 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.IoC
 {
-    using Apprenticeships.Domain.Interfaces.Mapping;
+    using Apprenticeships.Infrastructure.Common.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
-    using Mappers.Version51;
+    using Apprenticeships.Infrastructure.Repositories.Vacancies.IoC;
+    using Providers;
+    using Providers.Version51;
     using StructureMap;
 
+    // NOTE: WCF IoC strategy is based on this article: https://lostechies.com/jimmybogard/2008/07/30/integrating-structuremap-with-wcf/.
     public static class IoC
     {
-        public static IContainer Initialize()
+        static IoC()
         {
-            var container = new Container(x =>
+            Container = new Container(x =>
             {
+                // Core.
                 x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<CommonRegistry>();
 
-                x.For<IMapper>().Singleton().Use<AvReferenceDataServiceMapper>();
+                // Vacancies.
+                x.AddRegistry<VacancyRepositoryRegistry>();
+
+                // Providers.
+                x.For<IVacancyDetailsProvider>().Use<VacancyDetailsProvider>();
             });
-
-            return container;
         }
+
+        public static IContainer Container { get; private set; }
     }
 }

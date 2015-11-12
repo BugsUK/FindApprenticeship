@@ -3,6 +3,7 @@
     using System;
     using System.ServiceModel;
     using Common;
+    using Namespaces.Version51;
 
     /// <summary>
     /// Generic message header
@@ -10,20 +11,20 @@
     [MessageContract]
     public abstract class NavmsInternalMessageHeader
     {
-        [MessageBodyMember(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+        [MessageBodyMember(Namespace = Namespace.Uri)]
         public Guid ExternalSystemId { get; set; }
 
         /// <summary>
         /// Gets or sets the internal id (normaly UPRN). Can be null (at least for 3rd parties)
         /// </summary>
         /// <value>The internal system id.</value>
-        [MessageBodyMember(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+        [MessageBodyMember(Namespace = Namespace.Uri)]
         public int? InternalId { get; set; }
 
-        [MessageBodyMember(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+        [MessageBodyMember(Namespace = Namespace.Uri)]
         public Guid MessageId { get; set; }
 
-        [MessageBodyMember(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+        [MessageBodyMember(Namespace = Namespace.Uri)]
         public ExternalSystemType SystemType { get; set; }
     }
 }

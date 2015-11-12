@@ -1,22 +1,23 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
+    using System;
+    using Raa.Common.Validators.Vacancy;
     using System.Linq;
     using FluentValidation;
     using Common.Constants;
     using Common.Mediators;
     using Common.Validators;
     using Common.ViewModels;
-    using Constants.ViewModels;
-    using Converters;
-    using Providers;
-    using Validators.Provider;
-    using Validators.Vacancy;
+    using Raa.Common.Constants.ViewModels;
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Validators.VacancyPosting;
-    using ViewModels.Provider;
-    using ViewModels.Vacancy;
-    using ViewModels.VacancyPosting;
+    using Raa.Common.Validators.Provider;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.Converters;
+    using Raa.Common.ViewModels.VacancyPosting;
+    using Raa.Common.Providers;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
@@ -169,8 +170,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
             if (!validationResult.IsValid)
             {
-                newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
-                newVacancyViewModel.ProviderSiteEmployerLink = _providerProvider.GetProviderSiteEmployerLinkViewModel(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
+                UpdateReferenceDataFor(newVacancyViewModel);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
@@ -181,7 +181,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
             return SwitchingFromOnlineToOfflineVacancy(newVacancyViewModel, storedVacancy)
                 ? GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning, createdVacancyViewModel,
-                    "TODO: questions will not appear on offline vacancies.", UserMessageLevel.Warning)
+                    "TODO: questions will not appear on offline vacancies.", UserMessageLevel.Info)
                 : GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
         }
 
@@ -191,8 +191,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
             if (!validationResult.IsValid)
             {
-                newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
-                newVacancyViewModel.ProviderSiteEmployerLink = _providerProvider.GetProviderSiteEmployerLinkViewModel(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
+                UpdateReferenceDataFor(newVacancyViewModel);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
@@ -200,6 +199,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
+        }
+
+        private void UpdateReferenceDataFor(NewVacancyViewModel newVacancyViewModel)
+        {
+            newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            newVacancyViewModel.Standards = _vacancyPostingProvider.GetStandards();
+            if (newVacancyViewModel.TrainingType == TrainingType.Standards && newVacancyViewModel.StandardId.HasValue)
+            {
+                var standard = _vacancyPostingProvider.GetStandard(newVacancyViewModel.StandardId);
+                newVacancyViewModel.ApprenticeshipLevel = standard?.ApprenticeshipLevel ?? ApprenticeshipLevel.Unknown;
+            }
+            newVacancyViewModel.ProviderSiteEmployerLink =
+                _providerProvider.GetProviderSiteEmployerLinkViewModel(
+                    newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
+                    newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
         }
 
         private VacancyViewModel GetStoredVacancy(NewVacancyViewModel newVacancyViewModel)
@@ -362,25 +376,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel)
+        public MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber)
         {
-            var result = _vacancyViewModelValidator.Validate(viewModel);
+            var vacancyViewModel =_vacancyPostingProvider.SubmitVacancy(vacancyReferenceNumber);
 
-            if (!result.IsValid)
-            {
-                var existingViewModel = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
-
-                viewModel.ApprenticeshipLevels = existingViewModel.ApprenticeshipLevels;
-                viewModel.FrameworkName = existingViewModel.FrameworkName;
-                viewModel.NewVacancyViewModel.ProviderSiteEmployerLink = existingViewModel.NewVacancyViewModel.ProviderSiteEmployerLink;
-                viewModel.ProviderSite = existingViewModel.ProviderSite;
-
-                return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation, viewModel, result);
-            }
-
-            viewModel = _vacancyPostingProvider.SubmitVacancy(viewModel);
-            
-            return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.Ok, vacancyViewModel);
         }
 
         public MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber)

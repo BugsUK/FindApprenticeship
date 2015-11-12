@@ -4,7 +4,7 @@
     using FluentAssertions;
     using NUnit.Framework;
     using Recruit.Mediators.VacancyPosting;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
     public class RequirementsProspectsTests : TestsBase

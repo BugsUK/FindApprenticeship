@@ -79,8 +79,31 @@
                 defaults: new {controller = "AgencyUser", action = "Dashboard"}
                 );
 
-            routes.LowercaseUrls = true;
+            routes.MapRoute(
+                name: ManagementRouteNames.ReviewVacancy,
+                url: "vacancy/review",
+                defaults: new { controller = "Vacancy", action = "Review" }
+                );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.ApproveVacancy,
+                url: "vacancy/approve",
+                defaults: new { controller = "Vacancy", action = "Approve" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.Summary,
+                url: "vacancy/summary",
+                defaults: new { controller = "Vacancy", action = "Summary" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.BasicDetails,
+                url: "vacancy/basic",
+                defaults: new { controller = "Vacancy", action = "BasicDetails" }
+                );
+
+            routes.LowercaseUrls = true;
         }
     }
 }

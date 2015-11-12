@@ -1,10 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
+﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
+
+namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
 {
     using Common.Providers.Azure.AccessControlService;
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.ProviderUser;
-    using Recruit.Providers;
     using Recruit.Validators.ProviderUser;
 
     public class TestBase

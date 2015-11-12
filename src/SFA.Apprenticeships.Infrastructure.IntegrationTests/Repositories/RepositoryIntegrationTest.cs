@@ -6,6 +6,7 @@
     using Infrastructure.Repositories.Candidates.IoC;
     using Infrastructure.Repositories.Communication.IoC;
     using Infrastructure.Repositories.Users.IoC;
+    using Infrastructure.Repositories.Vacancies.IoC;
     using Logging.IoC;
     using Mongo.Common.Configuration;
     using NUnit.Framework;
@@ -28,6 +29,7 @@
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
             });
 
             var configurationManager = Container.GetInstance<IConfigurationService>();

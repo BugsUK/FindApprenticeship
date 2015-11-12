@@ -10,6 +10,7 @@
         public DateViewModelClientValidator()
         {
             this.AddCommonRules();
+            RuleSet(RuleSets.Errors, this.AddCommonRules);
         }
     }
 

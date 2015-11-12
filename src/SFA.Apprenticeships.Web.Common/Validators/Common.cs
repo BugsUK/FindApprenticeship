@@ -34,12 +34,10 @@
             //We don't have a value for date yet so assume it's in the future
             if(instance == null || !instance.HasValue) return true;
 
-            return instance.Date > DateTime.Today.AddDays(daysInFuture);
-        }
+            //It's not a valid date yet so again assume true
+            if(!BeValidDate(instance)) return true;
 
-        public static bool BeAfter(DateViewModel instance, DateViewModel comparison)
-        {
-            throw new NotImplementedException();
+            return instance.Date > DateTime.Today.AddDays(daysInFuture);
         }
     }
 }

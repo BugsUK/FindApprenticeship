@@ -1,11 +1,12 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.DataContracts.Version51
 {
     using System.Runtime.Serialization;
+    using Namespaces.Version51;
 
-    [DataContract(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+    [DataContract(Namespace = Namespace.Uri)]
     public class SiteVacancyData
     {
-        [DataMember(IsRequired = true, Order = 1)] 
+        [DataMember(IsRequired = true, Order = 1)]
         public AddressData AddressDetails;
 
         [DataMember(IsRequired = true, Order = 2)]

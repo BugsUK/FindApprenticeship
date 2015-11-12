@@ -5,7 +5,7 @@
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using ServiceContracts.Version50;
 
-    [ExceptionShielding( "Default Exception Policy" )]
+    [ExceptionShielding("Default Exception Policy")]
     public class ReferenceDataService : IReferenceData
     {
         public GetErrorCodesResponse GetErrorCodes(GetErrorCodesRequest request)

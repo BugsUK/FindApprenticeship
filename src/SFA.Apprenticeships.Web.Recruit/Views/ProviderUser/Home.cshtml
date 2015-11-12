@@ -1,4 +1,4 @@
-﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.ProviderUser.HomeViewModel
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser.HomeViewModel
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice";
@@ -9,10 +9,11 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    <div class="grid-wrapper para-btm-margin">
+    <div class="grid-wrapper">
         <div class="grid-1-2 grid">
             <h1 class="heading-xlarge">
                 Recruitment home
+                <span class="heading-secondary">@Model.ProviderViewModel.ProviderName</span>
             </h1>
         </div>
         <div class="grid grid-1-2">
@@ -27,37 +28,48 @@
                 else
                 {
                     <p class="form-label">Change provider site</p>
-                    @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, new { @class = "chosen-select"})
+                    @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, new {@class = "chosen-select"})
                     <button id="change-training-site-button" type="submit" name="ProviderSiteAction" class="button" value="ChangeProviderSite">Change</button>
                 }
             </div>
         </div>
     </div>
-    <div class="grid-wrapper">
-        <div class="grid grid-1-1">
-            <section class="font-xsmall">
-                <h2 class="heading-medium">Alerts</h2>
-                <ul class="list-text list-withicons">
-                    <li>
-                        <i class="fa fa-exclamation-circle the-icon"></i>You have 1 vacancy
-                        closing soon with 0 applications <a href="" class="link-unimp inl-block">Apprentice precision toolmaker</a>
-                    </li>
-                    <li>
-                        <i class="fa fa-flag the-icon"></i>You have 12 new applications
-                        for the vacancy <a href="live-apprenticeship-summary.html" class="link-unimp inl-block">Mechanical Engineer - Precision Toolmaker</a>
-                    </li>
-                </ul>
-            </section>
+
+    <section>
+        <button id="new-vacancy-button" type="submit" name="ProviderSiteAction" class="button" value="NewVacancy">Create new vacancy</button>
+    </section>
+
+    <section class="grid-wrapper">
+        <h2 class="heading-medium">Your vacancies <a href="#" class="font-small">Show all</a></h2>
+        <div class="grid" style="width: 16.6%">
+            <p style="text-align: center"><a href="#">Live</a></p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">25</p>
         </div>
-    </div>
+        <div class="grid" style="width: 16.6%">
+            <p style="text-align: center"><a href="#">Approved</a></p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">2</p>
+        </div>
+        <div class="grid" style="width: 16.6%">
+            <p style="text-align: center"><a href="#">Rejected</a></p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">5</p>
+        </div>
+        <div class="grid" style="width: 16.6%">
+            <p style="text-align: center"><a href="#">Closing Soon</a></p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">2</p>
+        </div>
+        <div class="grid" style="width: 16.6%">
+            <p style="text-align: center"><a href="#">Closed</a></p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">4</p>
+        </div>
+        <div class="grid" style="width: 16.6%">
+            <p style="text-align: center"><a href="#">Draft</a></p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">5</p>
+        </div>
+    </section>
+
     <div class="grid-wrapper">
         <div class="grid grid-1-1">
-            <div class="inner-block-padr">
                 <section>
-                   <button id="new-vacancy-button" type="submit" name="ProviderSiteAction" class="button" value="NewVacancy">Create new vacancy</button>
-                </section>
-                <section>
-                    <h2 class="heading-medium">Your vacancies</h2>
                     <div class="grid-wrapper font-xsmall med-btm-margin">
                         @*<div class="grid grid-2-3">
                             <div class="inner-block-padr">
@@ -86,26 +98,45 @@
                     <div class="tabbed-element tab1 active width-all-1-1">
                         <table class="no-btm-margin">
                             <colgroup>
-                                <col class="t70">
-                                <col class="t30">
+                                <col class="t25">
+                                <col class="t20">
+                                <col class="t20">
+                                <col class="t20">
+                                <col class="t15">
                             </colgroup>
+                            <thead>
+                            <tr>
+                                <th>Vacancy title</th>
+                                <th>Employer</th>
+                                <th>Vacancy ref</th>
+                                <th>Number of applications</th>
+                                <th>Vacancy status</th>
+                            </tr>
+                            </thead>
                             <tbody>
                             @foreach(var vacancy in Model.Vacancies)
                             {
                                 <tr>
                                     <td>
                                         <div class="vac-title">
-
                                             @{
                                                 var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
                                             }
                                             <a href="@Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block link-unimp">@title@*<span class="inl-block">(? applications)</span>*@</a>
                                         </div>
-                                        <span>@vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</span>
+                                    </td>
+                                    <td>
+                                        @vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+                                    </td>
+                                    <td>
+                                        @vacancy.VacancyReferenceNumber
+                                    </td>
+                                    <td>
+                                        X applications
                                     </td>
                                     <td>
                                         @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
-                                        @*<p class="note-text">Closing in 1 day</p>*@
+                                        @{ Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.ClosingDate); }
                                     </td>
                                 </tr>
                             }
@@ -125,7 +156,6 @@
                         </div>*@
                     </div>
                 </section>
-            </div>
         </div>
     </div>
 }

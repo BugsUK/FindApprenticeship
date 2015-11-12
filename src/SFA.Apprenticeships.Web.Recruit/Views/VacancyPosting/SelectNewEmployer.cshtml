@@ -1,5 +1,5 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Recruit.ViewModels.VacancyPosting
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 
 @model EmployerSearchViewModel
 
@@ -47,6 +47,7 @@
                 <button id="ern-search-button" type="submit" class="button">
                     Find employer
                 </button>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Return to linked employers</a>
             </div>
         }
 
@@ -62,6 +63,7 @@
                 <button id="name-location-search-button" type="submit" class="button">
                     Search
                 </button>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Return to linked employers</a>
             </div>
         }
     </div>

@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyPosting/VacancyRequirementsProspects.cshtml")]
-    public partial class VacancyRequirementsProspects : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancyRequirementsProspectsViewModel>
+    public partial class VacancyRequirementsProspects : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyRequirementsProspectsViewModel>
     {
         public VacancyRequirementsProspects()
         {
@@ -59,7 +59,7 @@ WriteLiteral("\r\n\r\n<h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n    Enter vacancy details\r\n</h1>\r\n\r\n");
+WriteLiteral(">\r\n    Requirements and prospects\r\n</h1>\r\n\r\n");
 
             
             #line 11 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"

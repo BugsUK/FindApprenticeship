@@ -2,19 +2,16 @@
 {
     using System;
     using System.Runtime.Serialization;
+    using Namespaces.Version50;
 
-    [DataContract(Namespace = CommonNamespaces.ExternalInterfaces)]
+    [DataContract(Namespace = Namespace.Uri)]
     public class VacancySummaryData
     {
-        
         [DataMember(IsRequired = true, Order = 1)]
         public string VacancyLocationType { get; set; }
 
         [DataMember(IsRequired = true, Order = 2)]
         public AddressData VacancyAddress { get; set; }
-
-        //[DataMember(IsRequired = true, Order = 3)]
-        //public int VacancyId { get; set; }
 
         [DataMember(IsRequired = true, Order = 4)]
         public string ApprenticeshipFramework { get; set; }

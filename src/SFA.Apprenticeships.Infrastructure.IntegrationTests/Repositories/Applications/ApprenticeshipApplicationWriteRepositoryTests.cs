@@ -5,7 +5,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Infrastructure.IntegrationTests.Repositories;
+    using Repositories;
     using Infrastructure.Repositories.Applications.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;

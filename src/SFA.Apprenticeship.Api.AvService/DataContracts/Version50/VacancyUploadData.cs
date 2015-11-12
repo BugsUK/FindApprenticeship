@@ -4,11 +4,12 @@
     using System.Collections.Generic;
     using System.Runtime.Serialization;
     using Common;
+    using Namespaces.Version50;
 
-    [DataContract( Namespace = CommonNamespaces.ExternalInterfaces )]
+    [DataContract(Namespace = Namespace.Uri)]
     public class VacancyUploadData
-    {       
-        [DataMember( IsRequired = true, Order = 1)]
+    {
+        [DataMember(IsRequired = true, Order = 1)]
         public Guid VacancyId { get; set; }
 
         [DataMember(IsRequired = true, Order = 2)]
@@ -17,13 +18,13 @@
         [DataMember(IsRequired = true, Order = 3)]
         public int EmployerEdsUrn { get; set; }
 
-        [DataMember( IsRequired = true, Order = 4)]
+        [DataMember(IsRequired = true, Order = 4)]
         public string Title { get; set; }
 
-        [DataMember( IsRequired = true, Order = 5)]
+        [DataMember(IsRequired = true, Order = 5)]
         public string ShortDescription { get; set; }
 
-        [DataMember( IsRequired = true, Order = 6)]
+        [DataMember(IsRequired = true, Order = 6)]
         public string LongDescription { get; set; }
 
         [DataMember(IsRequired = true, Order = 7)]
@@ -34,7 +35,7 @@
 
         [DataMember(IsRequired = false, Order = 9)]
         public string FutureProspects { get; set; }
-        
+
         [DataMember(IsRequired = false, Order = 10)]
         public string ContactName { get; set; }
 
@@ -123,7 +124,7 @@
         [DataMember(IsRequired = true, Order = 33)]
         public ApplicationType ApplicationType { get; set; }
 
-        [DataMember( IsRequired = false, Order = 34)]
+        [DataMember(IsRequired = false, Order = 34)]
         public string ApplicationInstructions { get; set; }
 
         [DataMember(IsRequired = false, Order = 35)]

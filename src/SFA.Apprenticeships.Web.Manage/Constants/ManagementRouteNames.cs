@@ -13,5 +13,13 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
+
+        //QA
+        public const string ReviewVacancy = "ReviewVacancy";
+        public const string ApproveVacancy = "ApproveVacancy";
+        public const string BasicDetails = "BasicDetails";
+        public const string Summary = "VacancySummary";
+        public const string RequirementsAndProspoects = "RequirementsAndProspoects";
+        public const string Questions = "Questions";
     }
 }

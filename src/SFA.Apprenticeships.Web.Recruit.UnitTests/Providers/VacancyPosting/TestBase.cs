@@ -1,26 +1,27 @@
-﻿using SFA.Apprenticeships.Web.Common.Configuration;
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
+    using Application.Interfaces.DateTime;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.VacancyPosting;
+    using Common.Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Moq;
     using NUnit.Framework;
-    using Recruit.Providers;
+    using Raa.Common.Providers;
 
     public abstract class TestBase
     {
-        protected Mock<ILogService> MockLogService;
         protected Mock<IConfigurationService> MockConfigurationService;
+        protected Mock<ILogService> MockLogService;
         protected Mock<IMapper> MockMapper;
-
-        protected Mock<IVacancyPostingService> MockVacancyPostingService;
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
+        protected Mock<IDateTimeService> MockTimeService;
+
+        protected Mock<IVacancyPostingService> MockVacancyPostingService;
 
         [SetUp]
         public void SetUpBase()
@@ -35,6 +36,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 
             MockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration());
+
+            MockTimeService = new Mock<IDateTimeService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -44,7 +47,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
                 MockReferenceDataService.Object,
-                MockProviderService.Object);
+                MockProviderService.Object,
+                MockTimeService.Object);
         }
     }
 }

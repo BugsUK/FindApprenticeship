@@ -57,16 +57,16 @@ WriteLiteral("<div");
 
 WriteLiteral(" id=\"validation-summary-errors\"");
 
-WriteAttribute("class", Tuple.Create(" class=\'", 177), Tuple.Create("\'", 302)
+WriteAttribute("class", Tuple.Create(" class=\'", 177), Tuple.Create("\'", 283)
             
             #line 5 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 185), Tuple.Create<System.Object, System.Int32>(Html.ViewData.ModelState.HasErrors() ? "validation-summary-errors" : "validation-summary-valid"
+, Tuple.Create(Tuple.Create("", 185), Tuple.Create<System.Object, System.Int32>(Model.HasErrors() ? "validation-summary-errors" : "validation-summary-valid"
             
             #line default
             #line hidden
 , 185), false)
-, Tuple.Create(Tuple.Create(" ", 283), Tuple.Create("panel", 284), true)
-, Tuple.Create(Tuple.Create(" ", 289), Tuple.Create("panel-danger", 290), true)
+, Tuple.Create(Tuple.Create(" ", 264), Tuple.Create("panel", 265), true)
+, Tuple.Create(Tuple.Create(" ", 270), Tuple.Create("panel-danger", 271), true)
 );
 
 WriteLiteral(" data-valmsg-summary=\"true\"");
@@ -122,15 +122,15 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1020), Tuple.Create("\"", 1051)
-, Tuple.Create(Tuple.Create("", 1027), Tuple.Create("#", 1027), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 1001), Tuple.Create("\"", 1032)
+, Tuple.Create(Tuple.Create("", 1008), Tuple.Create("#", 1008), true)
             
             #line 23 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 1028), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+, Tuple.Create(Tuple.Create("", 1009), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 1028), false)
+, 1009), false)
 );
 
 WriteLiteral(">");
@@ -159,7 +159,7 @@ WriteLiteral("        </ul>\r\n    </div>\r\n</div>\r\n\r\n");
             
             #line 32 "..\..\Views\Shared\ValidationSummary.cshtml"
   
-    var hasWarnings = Html.ViewData.ModelState.HasWarnings();
+    var hasWarnings = Model.HasWarnings();
 
             
             #line default
@@ -168,19 +168,17 @@ WriteLiteral("\r\n\r\n<div");
 
 WriteLiteral(" id=\"validation-summary-warnings\"");
 
-WriteAttribute("class", Tuple.Create(" class=\'", 1318), Tuple.Create("\'", 1421)
+WriteAttribute("class", Tuple.Create(" class=\'", 1280), Tuple.Create("\'", 1383)
             
             #line 36 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 1326), Tuple.Create<System.Object, System.Int32>(hasWarnings ? "validation-summary-warnings" : "validation-summary-valid"
+, Tuple.Create(Tuple.Create("", 1288), Tuple.Create<System.Object, System.Int32>(hasWarnings ? "validation-summary-warnings" : "validation-summary-valid"
             
             #line default
             #line hidden
-, 1326), false)
-, Tuple.Create(Tuple.Create(" ", 1401), Tuple.Create("panel", 1402), true)
-, Tuple.Create(Tuple.Create(" ", 1407), Tuple.Create("panel-warning", 1408), true)
+, 1288), false)
+, Tuple.Create(Tuple.Create(" ", 1363), Tuple.Create("panel", 1364), true)
+, Tuple.Create(Tuple.Create(" ", 1369), Tuple.Create("panel-warning", 1370), true)
 );
-
-WriteLiteral(" data-valmsg-summary=\"true\"");
 
 WriteLiteral(">\r\n    <div");
 
@@ -233,15 +231,15 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2266), Tuple.Create("\"", 2297)
-, Tuple.Create(Tuple.Create("", 2273), Tuple.Create("#", 2273), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2201), Tuple.Create("\"", 2232)
+, Tuple.Create(Tuple.Create("", 2208), Tuple.Create("#", 2208), true)
             
             #line 54 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 2274), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+, Tuple.Create(Tuple.Create("", 2209), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 2274), false)
+, 2209), false)
 );
 
 WriteLiteral(">");

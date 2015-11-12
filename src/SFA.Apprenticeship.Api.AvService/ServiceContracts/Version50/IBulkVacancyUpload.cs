@@ -3,12 +3,13 @@
     using System.ServiceModel;
     using FaultContracts.Version50;
     using MessageContracts.Version50;
+    using Namespaces.Version50;
 
-    [ServiceContract(Namespace=CommonNamespaces.ExternalInterfaces)]
+    [ServiceContract(Namespace = Namespace.Uri)]
     public interface IBulkVacancyUpload
     {
         [OperationContract]
         [FaultContract(typeof(SystemFaultContract))]
-        BulkVacancyUploadResponse UploadVacancies( BulkVacancyUploadRequest request );
+        BulkVacancyUploadResponse UploadVacancies(BulkVacancyUploadRequest request);
     }
 }

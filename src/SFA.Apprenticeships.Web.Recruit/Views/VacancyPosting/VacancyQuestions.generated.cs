@@ -40,7 +40,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyPosting/VacancyQuestions.cshtml")]
-    public partial class VacancyQuestions : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancyQuestionsViewModel>
+    public partial class VacancyQuestions : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyQuestionsViewModel>
     {
         public VacancyQuestions()
         {
@@ -155,7 +155,7 @@ WriteLiteral(" name=\"VacancyQuestions\"");
 
 WriteLiteral(" value=\"VacancyQuestions\"");
 
-WriteLiteral(">Save and continue</button>\r\n        <button");
+WriteLiteral(">Save and preview vacancy</button>\r\n        <button");
 
 WriteLiteral(" id=\"VacancyQuestionsAndExit\"");
 

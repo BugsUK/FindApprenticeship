@@ -2,8 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Runtime.Serialization;
+    using Namespaces;
+    using Namespaces.Version50;
 
-    [DataContract(Namespace = CommonNamespaces.ExternalInterfaces)]
+    [DataContract(Namespace = Namespace.Uri)]
     public class ApplicationTrackingData
     {
         [DataMember(IsRequired = true, Order = 1)]

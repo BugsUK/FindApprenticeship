@@ -27,18 +27,30 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    
+    #line 2 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+    using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
-    #line 2 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+    #line 3 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
     using SFA.Apprenticeships.Web.Common.Validators.Extensions;
+    
+    #line default
+    #line hidden
+    
+    #line 4 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+    using SFA.Apprenticeships.Web.Raa.Common.Constants;
     
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 3 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+    #line 5 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
@@ -46,7 +58,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyPosting/PreviewVacancy.cshtml")]
-    public partial class PreviewVacancy : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy.VacancyViewModel>
+    public partial class PreviewVacancy : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyViewModel>
     {
         public PreviewVacancy()
         {
@@ -54,7 +66,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
         public override void Execute()
         {
             
-            #line 4 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 6 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
 
@@ -84,7 +96,7 @@ WriteLiteral(" itemprop=\"title\"");
 WriteLiteral(">");
 
             
-            #line 12 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 14 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                           Write(Model.NewVacancyViewModel.Title);
 
             
@@ -101,7 +113,7 @@ WriteLiteral(" itemprop=\"hiringOrganization\"");
 WriteLiteral(">");
 
             
-            #line 13 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 15 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                                  Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name);
 
             
@@ -151,7 +163,7 @@ WriteLiteral(" id=\"vacancy-description\"");
 WriteLiteral(">");
 
             
-            #line 27 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 29 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                Write(Model.NewVacancyViewModel.ShortDescription);
 
             
@@ -165,13 +177,13 @@ WriteLiteral(" class=\"grid grid-1-3\"");
 WriteLiteral(">\r\n");
 
             
-            #line 32 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 34 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 32 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 34 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                  if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
                 {
                    var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
@@ -189,7 +201,7 @@ WriteLiteral(" class=\"copy-16\"");
 WriteLiteral(">\r\n                        Closing date: ");
 
             
-            #line 37 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 39 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                  Write(Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday());
 
             
@@ -201,20 +213,20 @@ WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
 WriteLiteral(" style=\"color: red;\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 1845), Tuple.Create("\"", 1861)
+WriteAttribute("title", Tuple.Create(" title=\"", 1973), Tuple.Create("\"", 1989)
             
-            #line 38 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-  , Tuple.Create(Tuple.Create("", 1853), Tuple.Create<System.Object, System.Int32>(message
+            #line 40 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+  , Tuple.Create(Tuple.Create("", 1981), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 1853), false)
+, 1981), false)
 );
 
 WriteLiteral("></i>\r\n                    </p>\r\n");
 
             
-            #line 40 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 42 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                 }
                 else
                 {
@@ -231,7 +243,7 @@ WriteLiteral(" class=\"copy-16\"");
 WriteLiteral(">\r\n                    Closing date: ");
 
             
-            #line 44 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 46 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                              Write(Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday());
 
             
@@ -246,7 +258,7 @@ WriteLiteral(" style=\"color: green;\"");
 WriteLiteral("></i>\r\n                </p>\r\n");
 
             
-            #line 47 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 49 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                 }
 
             
@@ -274,40 +286,6 @@ WriteLiteral(">\r\n\r\n                    <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
-
-            
-            #line 56 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                   Write(Model.VacancySummaryViewModel.WageUnitDisplayText);
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" wage <i");
-
-WriteLiteral(" class=\"fa fa-check the-icon\"");
-
-WriteLiteral(" style=\"color: green;\"");
-
-WriteLiteral("></i>\r\n                    </h3>\r\n                    \r\n                    <p");
-
-WriteLiteral(" id=\"vacancy-wage\"");
-
-WriteLiteral(">£");
-
-            
-            #line 59 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                     Write(Model.VacancySummaryViewModel.Wage);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n\r\n                    <h3");
-
-WriteLiteral(" class=\"bold-small\"");
-
 WriteLiteral(">Working week <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
@@ -320,11 +298,13 @@ WriteLiteral(" id=\"vacancy-working-week\"");
 
 WriteLiteral(" itemprop=\"workHours\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
 
             
-            #line 62 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                 Write(Model.VacancySummaryViewModel.WorkingWeek);
+            #line 59 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                   Write(Model.VacancySummaryViewModel.WorkingWeek);
 
             
             #line default
@@ -332,8 +312,8 @@ WriteLiteral(">");
 WriteLiteral("<br/>Total hours per week: ");
 
             
-            #line 62 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                                                                                      Write(Model.VacancySummaryViewModel.HoursPerWeek);
+            #line 59 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                                        Write(Model.VacancySummaryViewModel.HoursPerWeek);
 
             
             #line default
@@ -341,44 +321,143 @@ WriteLiteral("<br/>Total hours per week: ");
 WriteLiteral("\r\n");
 
             
-            #line 63 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 60 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 63 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 60 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                          if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
                         {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <br />");
+WriteLiteral("                            <br/>");
 
-WriteLiteral("(TODO: the hours are based on the candidate being over 18)\r\n");
+WriteLiteral("(the hours are based on the candidate being over 18)\r\n");
 
             
-            #line 66 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 63 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                         }
 
             
             #line default
             #line hidden
-WriteLiteral("                    </p>\r\n                    <h3");
+WriteLiteral("                    </p>\r\n                    \r\n                    <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
-WriteLiteral(">\r\n                        Apprenticeship duration\r\n");
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 67 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                   Write(Model.VacancySummaryViewModel.WageUnitDisplayText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" wage <i");
+
+WriteLiteral(" class=\"fa fa-check the-icon\"");
+
+WriteLiteral(" style=\"color: green;\"");
+
+WriteLiteral("></i>\r\n                    </h3>\r\n\r\n                    <p");
+
+WriteLiteral(" id=\"vacancy-wage\"");
+
+WriteLiteral(">");
 
             
             #line 70 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                    Write(Model.VacancySummaryViewModel.WageDisplayText);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n\r\n");
+
+            
+            #line 72 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 72 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                     if (Model.VacancySummaryViewModel.WageType != WageType.Custom)
+                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <details>\r\n                            <summary>TODO: Wag" +
+"e explanation</summary>\r\n                            <div");
+
+WriteLiteral(" class=\"detail-content\"");
+
+WriteLiteral(">\r\n                                The current National Minimum Wage (NMW) rate f" +
+"or an apprentice is £");
+
+            
+            #line 77 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                                              Write(Wages.ApprenticeMinimumWage);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@" per hour.
+                                This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.
+                                Apprentices must be paid at least the NMW rate for their age if they're aged 19 or over and have completed their first year.
+                                The current NMW rates are £");
+
+            
+            #line 80 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                      Write(Wages.Between18And20NationalMinimumWage);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" for 18 to 20 year-olds and £");
+
+            
+            #line 80 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                                                                           Write(Wages.Over21NationalMinimumWage);
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@" for anyone aged 21 and over.
+                                Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).    
+                            </div>
+                        </details>
+");
+
+            
+            #line 84 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                    \r\n                    <h3");
+
+WriteLiteral(" class=\"bold-small\"");
+
+WriteLiteral(">\r\n                        Expected duration\r\n");
+
+            
+            #line 88 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 88 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                          if (ViewData.ModelState.HasWarningsFor("Duration"))
                         {
                             var message = ViewData.ModelState.WarningMessageFor("Duration");
@@ -392,20 +471,20 @@ WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
 WriteLiteral(" style=\"color: red;\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 3769), Tuple.Create("\"", 3785)
+WriteAttribute("title", Tuple.Create(" title=\"", 5100), Tuple.Create("\"", 5116)
             
-            #line 73 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-      , Tuple.Create(Tuple.Create("", 3777), Tuple.Create<System.Object, System.Int32>(message
+            #line 91 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+      , Tuple.Create(Tuple.Create("", 5108), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 3777), false)
+, 5108), false)
 );
 
 WriteLiteral("></i>\r\n");
 
             
-            #line 74 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 92 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                         }
                         else
                         {
@@ -422,7 +501,7 @@ WriteLiteral(" style=\"color: green;\"");
 WriteLiteral("></i>\r\n");
 
             
-            #line 78 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 96 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                         }
 
             
@@ -435,7 +514,7 @@ WriteLiteral(" id=\"vacancy-expected-duration\"");
 WriteLiteral(">");
 
             
-            #line 81 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 99 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                  Write(Model.VacancySummaryViewModel.Duration);
 
             
@@ -444,7 +523,7 @@ WriteLiteral(">");
 WriteLiteral(" ");
 
             
-            #line 81 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 99 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                          Write(Model.VacancySummaryViewModel.DurationTypeDisplayText);
 
             
@@ -457,13 +536,13 @@ WriteLiteral(" class=\"bold-small\"");
 WriteLiteral(">Possible start date</h3>\r\n");
 
             
-            #line 83 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 101 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 83 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 101 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                      if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
                     {
                         var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
@@ -478,7 +557,7 @@ WriteLiteral(" id=\"vacancy-start-date\"");
 WriteLiteral(">");
 
             
-            #line 86 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 104 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                               Write(Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date));
 
             
@@ -490,20 +569,20 @@ WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
 WriteLiteral(" style=\"color: red;\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 4723), Tuple.Create("\"", 4739)
+WriteAttribute("title", Tuple.Create(" title=\"", 6054), Tuple.Create("\"", 6070)
             
-            #line 87 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-      , Tuple.Create(Tuple.Create("", 4731), Tuple.Create<System.Object, System.Int32>(message
+            #line 105 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+      , Tuple.Create(Tuple.Create("", 6062), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 4731), false)
+, 6062), false)
 );
 
 WriteLiteral("></i>\r\n                        </p>\r\n");
 
             
-            #line 89 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 107 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                     }
                     else
                     {
@@ -520,7 +599,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                            ");
 
             
-            #line 93 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 111 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                        Write(Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date));
 
             
@@ -535,7 +614,7 @@ WriteLiteral(" style=\"color: green;\"");
 WriteLiteral("></i>\r\n                        </p>\r\n");
 
             
-            #line 96 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 114 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                     }
 
             
@@ -554,8 +633,8 @@ WriteLiteral(" itemprop=\"employmentType\"");
 WriteLiteral(">");
 
             
-            #line 99 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                              Write(Model.NewVacancyViewModel.ApprenticeshipLevel);
+            #line 117 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                              Write(Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel));
 
             
             #line default
@@ -571,7 +650,7 @@ WriteLiteral(" id=\"vacancy-reference-id\"");
 WriteLiteral(">");
 
             
-            #line 102 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 120 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                             Write(Model.VacancyReferenceNumber);
 
             
@@ -594,58 +673,57 @@ WriteLiteral(" id=\"vacancy-full-descrpition\"");
 WriteLiteral(">");
 
             
-            #line 107 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 125 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                 Write(Html.Raw(Model.VacancySummaryViewModel.LongDescription));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                </div>\r\n            </div>\r\n\r\n        </section>\r\n        <" +
-"section");
+WriteLiteral("</p>\r\n                </div>\r\n            </div>\r\n\r\n        </section>\r\n<section");
 
 WriteLiteral(" class=\"section-border grid-wrapper\"");
 
 WriteLiteral(" id=\"course-info\"");
 
-WriteLiteral(">\r\n            <h2");
+WriteLiteral(">\r\n    <h2");
 
 WriteLiteral(" class=\"heading-large\"");
 
-WriteLiteral(">Requirements and prospects</h2>\r\n            <div");
+WriteLiteral(">Requirements and prospects</h2>\r\n    <div");
 
 WriteLiteral(" class=\"grid grid-1-2\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"inner-block-padr\"");
 
-WriteLiteral(">\r\n                    <div");
+WriteLiteral(">\r\n            <div");
 
 WriteLiteral(" class=\"text\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 117 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                        
+            #line 135 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                
             
             #line default
             #line hidden
             
-            #line 117 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                         if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
-                        {
+            #line 135 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                 if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
+                {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <h3");
+WriteLiteral("                    <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">Desired skills</h3>\r\n");
 
-WriteLiteral("                            <p");
+WriteLiteral("                    <p");
 
 WriteLiteral(" id=\"vacancy-skills-required\"");
 
@@ -654,8 +732,8 @@ WriteLiteral(" itemprop=\"skills\"");
 WriteLiteral(">");
 
             
-            #line 120 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                         Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills));
+            #line 138 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                 Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills));
 
             
             #line default
@@ -663,29 +741,29 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 121 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                        }
+            #line 139 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                }
 
             
             #line default
             #line hidden
-WriteLiteral("                        ");
+WriteLiteral("                ");
 
             
-            #line 122 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                         if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
-                        {
+            #line 140 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                 if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
+                {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <h3");
+WriteLiteral("                    <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">Personal qualities</h3>\r\n");
 
-WriteLiteral("                            <p");
+WriteLiteral("                    <p");
 
 WriteLiteral(" id=\"vacancy-qualities-required\"");
 
@@ -694,8 +772,8 @@ WriteLiteral(" itemprop=\"qualities\"");
 WriteLiteral(">");
 
             
-            #line 125 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                               Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities));
+            #line 143 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                       Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities));
 
             
             #line default
@@ -703,29 +781,29 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 126 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                        }
+            #line 144 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                }
 
             
             #line default
             #line hidden
-WriteLiteral("                        ");
+WriteLiteral("                ");
 
             
-            #line 127 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                         if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
-                        {
+            #line 145 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                 if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
+                {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <h3");
+WriteLiteral("                    <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">Qualifications required</h3>\r\n");
 
-WriteLiteral("                            <p");
+WriteLiteral("                    <p");
 
 WriteLiteral(" id=\"vacancy-qualifications-required\"");
 
@@ -734,8 +812,8 @@ WriteLiteral(" itemprop=\"qualifications\"");
 WriteLiteral(">");
 
             
-            #line 130 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                                         Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications));
+            #line 148 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                                 Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications));
 
             
             #line default
@@ -743,44 +821,43 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 131 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                        }
+            #line 149 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    </div>\r\n                </div>\r\n            </div>\r\n       " +
-"     <div");
+WriteLiteral("\r\n            </div>\r\n        </div>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"grid grid-1-2\"");
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"text\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 138 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                    
+            #line 156 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            
             
             #line default
             #line hidden
             
-            #line 138 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                     if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
-                    {
+            #line 156 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+             if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
+            {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <h3");
+WriteLiteral("                <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
 WriteLiteral(">Future prospects</h3>\r\n");
 
-WriteLiteral("                        <p");
+WriteLiteral("                <p");
 
 WriteLiteral(" id=\"vacancy-future-prospects\"");
 
@@ -789,8 +866,8 @@ WriteLiteral(" itemprop=\"incentives\"");
 WriteLiteral(">");
 
             
-            #line 141 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                          Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects));
+            #line 159 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                  Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects));
 
             
             #line default
@@ -798,17 +875,97 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 142 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                    }
+            #line 160 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            }
 
             
             #line default
             #line hidden
-WriteLiteral("                    ");
+WriteLiteral("            ");
 
             
-            #line 143 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                     if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
+            #line 161 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+             if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <h3");
+
+WriteLiteral(" class=\"heading-small\"");
+
+WriteLiteral(">Things to consider</h3>\r\n");
+
+WriteLiteral("                <p");
+
+WriteLiteral(" id=\"vacancy-reality-check\"");
+
+WriteLiteral(" itemprop=\"incentives\"");
+
+WriteLiteral(">");
+
+            
+            #line 164 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                               Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n");
+
+            
+            #line 165 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        </div>\r\n    </div>\r\n</section>\r\n\r\n\r\n");
+
+            
+            #line 171 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+ if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion)
+            || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+    {
+    
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <section");
+
+WriteLiteral(" class=\"section-border grid-wrapper\"");
+
+WriteLiteral(" id=\"course-info\"");
+
+WriteLiteral(">\r\n        <h2");
+
+WriteLiteral(" class=\"heading-large\"");
+
+WriteLiteral(">Questions for candidates</h2>\r\n        <div");
+
+WriteLiteral(" class=\"grid grid-1-2\"");
+
+WriteLiteral(">\r\n            <div");
+
+WriteLiteral(" class=\"inner-block-padr\"");
+
+WriteLiteral(">\r\n                <div");
+
+WriteLiteral(" class=\"text\"");
+
+WriteLiteral(">\r\n");
+
+            
+            #line 180 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 180 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                     if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
                     {
 
             
@@ -818,19 +975,13 @@ WriteLiteral("                        <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">Things to consider</h3>\r\n");
+WriteLiteral(">First question</h3>\r\n");
 
-WriteLiteral("                        <p");
-
-WriteLiteral(" id=\"vacancy-reality-check\"");
-
-WriteLiteral(" itemprop=\"incentives\"");
-
-WriteLiteral(">");
+WriteLiteral("                        <p>");
 
             
-            #line 146 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                       Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider));
+            #line 183 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                      Write(Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion));
 
             
             #line default
@@ -838,13 +989,56 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 147 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 184 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                     }
 
             
             #line default
             #line hidden
-WriteLiteral("                </div>\r\n            </div>\r\n        </section>\r\n        <section");
+WriteLiteral("                    ");
+
+            
+            #line 185 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                     if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+                    {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <h3");
+
+WriteLiteral(" class=\"heading-small\"");
+
+WriteLiteral(">Second question</h3>\r\n");
+
+WriteLiteral("                        <p>");
+
+            
+            #line 188 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                      Write(Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n");
+
+            
+            #line 189 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                </div>\r\n            </div>\r\n        </div>\r\n    </section>\r\n");
+
+            
+            #line 194 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+    }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        <section");
 
 WriteLiteral(" class=\"section-border\"");
 
@@ -877,7 +1071,7 @@ WriteLiteral(" id=\"vacancy-employer-description\"");
 WriteLiteral(">");
 
             
-            #line 157 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 201 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                             Write(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description));
 
             
@@ -908,20 +1102,20 @@ WriteLiteral(">Employer</h3>\r\n                            <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9238), Tuple.Create("\"", 9365)
+WriteAttribute("class", Tuple.Create(" class=\"", 11422), Tuple.Create("\"", 11549)
             
-            #line 167 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 9246), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
+            #line 211 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 11430), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
             
             #line default
             #line hidden
-, 9246), false)
+, 11430), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 167 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 211 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                                                                                                                      Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name);
 
             
@@ -930,13 +1124,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 168 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 212 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                             
             
             #line default
             #line hidden
             
-            #line 168 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 212 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                              if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
                             {
 
@@ -947,29 +1141,29 @@ WriteLiteral("                                <p>\r\n                           
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 9679), Tuple.Create("\"", 9748)
+WriteAttribute("href", Tuple.Create(" href=\"", 11863), Tuple.Create("\"", 11932)
             
-            #line 171 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 9686), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
+            #line 215 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 11870), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
             
             #line default
             #line hidden
-, 9686), false)
+, 11870), false)
 );
 
 WriteLiteral("\r\n                                       id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                                       target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 9875), Tuple.Create("\"", 9996)
+WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 12059), Tuple.Create("\"", 12180)
             
-            #line 174 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 9923), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+            #line 218 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 12107), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
             
             #line default
             #line hidden
-, 9923), false)
-, Tuple.Create(Tuple.Create(" ", 9988), Tuple.Create("Website", 9989), true)
+, 12107), false)
+, Tuple.Create(Tuple.Create(" ", 12172), Tuple.Create("Website", 12173), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -977,7 +1171,7 @@ WriteLiteral(" rel=\"external\"");
 WriteLiteral(">");
 
             
-            #line 174 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 218 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                                                                    Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl);
 
             
@@ -992,7 +1186,7 @@ WriteLiteral(" style=\"color: green;\"");
 WriteLiteral("></i>\r\n                                </p>\r\n");
 
             
-            #line 177 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 221 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                             }
 
             
@@ -1023,7 +1217,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 181 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 225 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                     Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1);
 
             
@@ -1038,7 +1232,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 182 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 226 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                     Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2);
 
             
@@ -1053,7 +1247,7 @@ WriteLiteral(" itemprop=\"addressLocality\"");
 WriteLiteral(">");
 
             
-            #line 183 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 227 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                       Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3);
 
             
@@ -1068,7 +1262,7 @@ WriteLiteral(" itemprop=\"addressRegion\"");
 WriteLiteral(">");
 
             
-            #line 184 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 228 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                     Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4);
 
             
@@ -1083,7 +1277,7 @@ WriteLiteral(" itemprop=\"postalCode\"");
 WriteLiteral(">");
 
             
-            #line 185 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 229 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                  Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode);
 
             
@@ -1117,16 +1311,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 11837), Tuple.Create("\"", 12039)
-, Tuple.Create(Tuple.Create("", 11843), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 11843), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 14021), Tuple.Create("\"", 14223)
+, Tuple.Create(Tuple.Create("", 14027), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 14027), true)
             
-            #line 194 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 11888), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
+            #line 238 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                    , Tuple.Create(Tuple.Create("", 14072), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
             
             #line default
             #line hidden
-, 11888), false)
-, Tuple.Create(Tuple.Create("", 11975), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 11975), true)
+, 14072), false)
+, Tuple.Create(Tuple.Create("", 14159), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 14159), true)
 );
 
 WriteLiteral("></iframe>\r\n                        <p");
@@ -1138,13 +1332,13 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "\r\n");
 
             
-            #line 201 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 245 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 201 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 245 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
          if (Model.NewVacancyViewModel.OfflineVacancy)
         {
 
@@ -1176,7 +1370,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 207 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 251 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                    Write(Model.NewVacancyViewModel.OfflineApplicationInstructions);
 
             
@@ -1197,14 +1391,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12946), Tuple.Create("\"", 13001)
+WriteAttribute("href", Tuple.Create(" href=\"", 15130), Tuple.Create("\"", 15185)
             
-            #line 212 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 12953), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+            #line 256 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 15137), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 12953), false)
+, 15137), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -1212,7 +1406,7 @@ WriteLiteral(" target=\"_blank\"");
 WriteLiteral(">");
 
             
-            #line 212 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 256 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                                                                                         Write(Model.NewVacancyViewModel.OfflineApplicationUrl);
 
             
@@ -1227,7 +1421,7 @@ WriteLiteral(" style=\"color: green;\"");
 WriteLiteral("></i>\r\n                </div>\r\n            </section>\r\n");
 
             
-            #line 216 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 260 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
         }
 
             
@@ -1258,13 +1452,13 @@ WriteLiteral(" class=\"text\"");
 WriteLiteral(">\r\n");
 
             
-            #line 223 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 267 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 223 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 267 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                          if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
                         {
 
@@ -1278,7 +1472,7 @@ WriteLiteral(" id=\"vacancy-training-to-be-provided\"");
 WriteLiteral(">");
 
             
-            #line 225 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 269 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                                Write(Html.Raw(Model.ProviderSite.CandidateDescription));
 
             
@@ -1287,30 +1481,89 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 226 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 270 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                         }
 
             
             #line default
             #line hidden
-WriteLiteral("                        <h3");
+WriteLiteral("                        ");
+
+            
+            #line 271 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                         if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
+                        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">Apprenticeship framework</h3>\r\n                        <p");
+WriteLiteral(">Apprenticeship framework</h3>\r\n");
+
+WriteLiteral("                            <p");
 
 WriteLiteral(" id=\"vacancy-framework\"");
 
 WriteLiteral(">");
 
             
-            #line 228 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                             Write(Html.Raw(Model.FrameworkName));
+            #line 274 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                 Write(Html.Raw(Model.FrameworkName));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                        <p");
+WriteLiteral("</p>\r\n");
+
+            
+            #line 275 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        ");
+
+            
+            #line 276 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                         if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
+                        {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            <h3");
+
+WriteLiteral(" class=\"heading-small\"");
+
+WriteLiteral(">Apprenticeship standard</h3>\r\n");
+
+WriteLiteral("                            <p");
+
+WriteLiteral(" id=\"vacancy-standard\"");
+
+WriteLiteral(">");
+
+            
+            #line 279 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                Write(Html.Raw(Model.StandardName));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n");
+
+            
+            #line 280 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        <p");
 
 WriteLiteral(" id=\"vacancy-provider-sector-pass-rate\"");
 
@@ -1335,7 +1588,7 @@ WriteLiteral(" id=\"vacancy-provider-name\"");
 WriteLiteral(">");
 
             
-            #line 236 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 288 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                              Write(Model.ProviderSite.Name);
 
             
@@ -1344,13 +1597,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                </div>\r\n\r\n");
 
             
-            #line 239 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 291 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 239 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 291 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
                 {
 
@@ -1372,7 +1625,7 @@ WriteLiteral(" id=\"vacancy-provider-contact\"");
 WriteLiteral(">");
 
             
-            #line 243 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 295 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                     Write(Model.ProviderSite.ContactDetailsForCandidate);
 
             
@@ -1381,7 +1634,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                    </div>\r\n");
 
             
-            #line 245 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 297 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                 }
 
             
@@ -1390,22 +1643,22 @@ WriteLiteral("</p>\r\n                    </div>\r\n");
 WriteLiteral("            </div>\r\n\r\n        </section>\r\n\r\n");
 
             
-            #line 250 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
- using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySubmitted, FormMethod.Get))
+            #line 302 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+ using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
 {
     
             
             #line default
             #line hidden
             
-            #line 252 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 304 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
 Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 252 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 304 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                   
 
 
@@ -1426,20 +1679,20 @@ WriteLiteral(">Submit for approval</button>\r\n            <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15149), Tuple.Create("\"", 15208)
+WriteAttribute("href", Tuple.Create(" href=\"", 17812), Tuple.Create("\"", 17871)
             
-            #line 257 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 15156), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+            #line 309 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 17819), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 15156), false)
+, 17819), false)
 );
 
 WriteLiteral(">Return to dashboard</a>\r\n        </div>\r\n    </section>\r\n");
 
             
-            #line 260 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 312 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
 }
 
             

@@ -1,4 +1,7 @@
-﻿
+﻿using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
+using SFA.Apprenticeships.Web.Raa.Common.Providers;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
+
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 {
     using System;
@@ -11,12 +14,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Common.Models.Azure.AccessControlService;
     using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
-    using Constants.ViewModels;
-    using Providers;
     using Validators.ProviderUser;
     using ViewModels;
-    using ViewModels.ProviderUser;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
     using ClaimTypes = Common.Constants.ClaimTypes;
 
     public class ProviderUserMediator : MediatorBase, IProviderUserMediator
@@ -217,12 +217,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         public MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn)
         {
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
+            var provider = _providerProvider.GetProviderViewModel(ukprn);
             var providerSites = GetProviderSites(ukprn);
-            var providerVacancies = GetProviderVacancies(ukprn);
+            var providerVacancies = GetProviderVacancies(ukprn, providerUserViewModel.DefaultProviderSiteErn);
 
             var viewModel = new HomeViewModel
             {
                 ProviderUserViewModel = providerUserViewModel,
+                ProviderViewModel = provider,
                 ProviderSites = providerSites,
                 Vacancies = providerVacancies
             };
@@ -257,9 +259,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             return sites;
         }
 
-        private List<VacancyViewModel> GetProviderVacancies(string ukprn)
+        private List<VacancyViewModel> GetProviderVacancies(string ukprn, string providerSiteErn)
         {
-            return _vacancyProvider.GetVacanciesForProvider(ukprn);
+            return _vacancyProvider.GetVacanciesForProvider(ukprn, providerSiteErn);
         }
     }
 }

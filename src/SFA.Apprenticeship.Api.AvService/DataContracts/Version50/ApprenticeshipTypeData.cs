@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.DataContracts.Version50
 {
     using System.Runtime.Serialization;
+    using Namespaces.Version50;
 
-    [DataContract(Namespace=CommonNamespaces.ExternalInterfaces)]
-    public class ApprenticeshipTypeData 
+    [DataContract(Namespace = Namespace.Uri)]
+    public class ApprenticeshipTypeData
     {
         [DataMember]
         public string CodeName { get; set; }

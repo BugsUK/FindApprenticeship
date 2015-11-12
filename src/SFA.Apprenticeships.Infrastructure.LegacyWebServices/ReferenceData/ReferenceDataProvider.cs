@@ -75,6 +75,11 @@
             return GetCategories().FirstOrDefault(c => c.CodeName == categoryCode);
         }
 
+        public IEnumerable<Sector> GetSectors()
+        {
+            throw new NotImplementedException("Sectors are not exposed via the reference data service");
+        }
+
         private IEnumerable<Category> GetCategories(GetApprenticeshipFrameworksResponse response)
         {
             if (response?.ApprenticeshipFrameworks == null || response.ApprenticeshipFrameworks.Length == 0)

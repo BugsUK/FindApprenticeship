@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Repositories.UserProfiles.IoC;
     using Infrastructure.Repositories.Vacancies.IoC;
     using Infrastructure.TacticalDataServices.IoC;
-    using Providers;
+    using Raa.Common.Providers;
     using StructureMap;
     using StructureMap.Web;
 

@@ -2,18 +2,20 @@
 {
     using Common.Constants;
     using Common.Mediators;
-    using Domain.Entities.Vacancies.Apprenticeships;
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using ViewModels.Provider;
-    using ViewModels.Vacancy;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
     public class CreateVacancyTests : TestsBase
     {
         private const string AWebPage = "http://www.google.com";
         private const string AString = "A string";
+        private const int AnInt = 1234;
         private const long ALong = 1234;
 
         [Test]
@@ -31,7 +33,9 @@
                 OfflineVacancy = true,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
+                TrainingType = TrainingType.Frameworks,
                 FrameworkCodeName = AString,
+                StandardId = AnInt,
                 Title = AString,
                 ShortDescription = AString,
                 ApprenticeshipLevel = ApprenticeshipLevel.Higher,
@@ -39,7 +43,7 @@
             });
 
             result.Should()
-                .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Warning
+                .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
                                                                     && !string.IsNullOrWhiteSpace(p.Message.Text));
         }
 
@@ -58,7 +62,9 @@
                 OfflineVacancy = true,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
+                TrainingType = TrainingType.Frameworks,
                 FrameworkCodeName = AString,
+                StandardId = AnInt,
                 Title = AString,
                 ShortDescription = AString,
                 ApprenticeshipLevel = ApprenticeshipLevel.Higher,
@@ -66,7 +72,7 @@
             });
 
             result.Should()
-                .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Warning
+                .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
                                                                     && !string.IsNullOrWhiteSpace(p.Message.Text));
         }
 

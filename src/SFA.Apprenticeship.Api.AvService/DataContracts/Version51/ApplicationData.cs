@@ -3,8 +3,9 @@
     using System;
     using System.Runtime.Serialization;
     using Common;
+    using Namespaces.Version51;
 
-    [DataContract(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+    [DataContract(Namespace = Namespace.Uri)]
     public class ApplicationData
     {
         [DataMember(IsRequired = true, Order = 1)]

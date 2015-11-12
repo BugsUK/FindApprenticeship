@@ -168,6 +168,13 @@
     <Compile Include="Validators\Providers\ProviderSiteEmployerLinkViewModelValidatorTests.cs" />
     <Compile Include="Validators\Providers\ProviderSiteSearchViewModelValidatorTests.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidatorTests.cs" />
+    <Compile Include="Views\Shared\ChildViewModel.cs" />
+    <Compile Include="Views\Shared\ChildViewModelValidator.cs" />
+    <Compile Include="Views\Shared\ParentViewModel.cs" />
+    <Compile Include="Views\Shared\ParentViewModelValidator.cs" />
+    <Compile Include="Views\Shared\ValidationSummaryViewModelValidator.cs" />
+    <Compile Include="Views\Shared\ValidationSummaryDocument.cs" />
+    <Compile Include="Views\Shared\ValidationSummaryTests.cs" />
     <Compile Include="Validators\UriValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\MandatoryDateChecks.cs" />
     <Compile Include="Validators\VacancyPosting\MandatoryHoursAndDurationConditionTests.cs" />
@@ -182,6 +189,7 @@
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\PreviewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelServerValidatorTests.cs" />
+    <Compile Include="Views\Shared\ValidationSummaryViewModel.cs" />
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
     <Compile Include="Views\VacancyPosting\RequirementsProspectsTests.cs" />
     <Compile Include="Views\VacancyPosting\PreviewVacancyTests.cs" />
@@ -219,6 +227,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
+      <Project>{700D41DD-527A-42BD-94D2-FD49A5F00A18}</Project>
+      <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Recruit\SFA.Apprenticeships.Web.Recruit.csproj">
       <Project>{AF7E6460-86F4-40D6-8C46-AB97C283479B}</Project>

@@ -169,6 +169,7 @@
     <Compile Include="IoC\CommonRegistry.cs" />
     <Compile Include="Mappers\MapperEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="DateTime\DateTimeService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

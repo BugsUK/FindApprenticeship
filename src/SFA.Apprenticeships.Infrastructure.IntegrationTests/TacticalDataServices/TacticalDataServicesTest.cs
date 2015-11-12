@@ -38,12 +38,24 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
         [Test, Category("Integration")]
         public void ReturnsCategoryDataFromFrameworksService()
         {
-            var categories = _referenceDataProvider.GetCategories();
-            categories.Count().Should().BeGreaterThan(0);
+            var categories = _referenceDataProvider.GetCategories().ToList();
+            categories.Count.Should().BeGreaterThan(0);
 
             foreach (Category category in categories)
             {
                 category.SubCategories.Count().Should().BeGreaterThan(0);
+            }
+        }
+
+        [Test, Category("Integration")]
+        public void ReturnsStandardsDataFromFrameworksService()
+        {
+            var sectors = _referenceDataProvider.GetSectors().ToList();
+            sectors.Count.Should().BeGreaterThan(0);
+
+            foreach (Sector sector in sectors)
+            {
+                sector.Standards.Count().Should().BeGreaterThan(0);
             }
         }
         

@@ -14,5 +14,7 @@
         MediatorResponse<AgencyUserViewModel> GetAgencyUser(ClaimsPrincipal principal);
 
         MediatorResponse<AgencyUserViewModel> SaveAgencyUser(ClaimsPrincipal principal, AgencyUserViewModel viewModel);
+
+        MediatorResponse<HomeViewModel> GetHomeViewModel(ClaimsPrincipal principal);
     }
 }

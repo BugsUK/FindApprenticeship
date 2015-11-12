@@ -4,8 +4,8 @@
     using FluentAssertions;
     using FluentValidation;
     using NUnit.Framework;
-    using Recruit.Validators.Vacancy;
-    using ViewModels.Vacancy;
+    using Raa.Common.Validators.Vacancy;
+    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
     public class PreviewVacancyViewModelServerValidatorTests

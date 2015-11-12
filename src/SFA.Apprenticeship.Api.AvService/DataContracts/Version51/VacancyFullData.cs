@@ -3,8 +3,9 @@
     using System;
     using System.Runtime.Serialization;
     using Common;
+    using Namespaces.Version51;
 
-    [DataContract(Namespace = CommonNamespaces.ExternalInterfacesRel51)]
+    [DataContract(Namespace = Namespace.Uri)]
     public class VacancyFullData : VacancySummaryData
     {
         [DataMember]
@@ -12,43 +13,43 @@
 
         [DataMember]
         public string SupplementaryQuestion1 { get; set; }
-        
+
         [DataMember]
         public string SupplementaryQuestion2 { get; set; }
-        
+
         [DataMember]
         public string ContactPerson { get; set; }
 
         [DataMember]
         public string EmployerDescription { get; set; }
-        
+
         [DataMember]
         public string ExpectedDuration { get; set; }
 
         [DataMember]
         public string FutureProspects { get; set; }
-        
+
         [DataMember]
         public DateTime InterviewFromDate { get; set; }
 
         [DataMember]
         public string LearningProviderDesc { get; set; }
-        
+
         [DataMember]
         public int? LearningProviderSectorPassRate { get; set; }
-        
+
         [DataMember]
         public string PersonalQualities { get; set; }
-        
+
         [DataMember]
         public DateTime PossibleStartDate { get; set; }
-        
+
         [DataMember]
         public string QualificationRequired { get; set; }
-        
+
         [DataMember]
         public string SkillsRequired { get; set; }
-        
+
         [DataMember]
         public string TrainingToBeProvided { get; set; }
 

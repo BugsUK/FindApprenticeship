@@ -4,6 +4,9 @@
     {
         Unknown = 0,
         Draft = 1,
-        ToReview = 2
+        PendingQA = 2,
+        Live = 3,
+        ReservedForQA = 4,
+        RejectedByQA = 5
     }
 }

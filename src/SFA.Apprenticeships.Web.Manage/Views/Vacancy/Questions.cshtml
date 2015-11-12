@@ -1,0 +1,28 @@
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyQuestionsViewModel
+@using SFA.Apprenticeships.Web.Manage.Constants
+@{
+    ViewBag.Title = "Recruit an Apprentice - Enter vacancy question";
+}
+
+<h1 class="heading-xlarge">
+    Questions for candidates
+</h1>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.Questions, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+    <section>
+        <div class="form-group">
+            @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text", autofocus = "autofocus" })
+            @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        </div>
+    </section>
+    <div class="grid grid-1-2">
+        <button type="submit" class="button" name="VacancyQuestions" value="VacancyQuestions">Save and preview vacancy</button>
+        <button id="VacancyQuestionsAndExit" type="submit" class="button-link" name="VacancyQuestions" value="VacancyQuestionsAndExit">Save and exit</button>
+    </div>
+}

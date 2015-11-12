@@ -90,6 +90,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
@@ -103,16 +111,16 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.IdentityModel.Protocol.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -170,8 +178,8 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
@@ -288,30 +296,14 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
-    <Compile Include="Configuration\RecruitWebConfiguration.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\Pages\ProviderUser\VerifyEmailPageMessages.cs" />
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
     <Compile Include="Constants\Roles.cs" />
-    <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\ProviderSiteEmployerLinkViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
-    <Compile Include="Converters\AddressViewModelConverter.cs" />
-    <Compile Include="Converters\ApprenticeshipVacancyConverter.cs" />
-    <Compile Include="Converters\EmployerViewModelConverter.cs" />
-    <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
-    <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />
@@ -330,55 +322,10 @@
     <Compile Include="Mediators\VacancyPosting\IVacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
-    <Compile Include="Providers\IVacancyProvider.cs" />
-    <Compile Include="Providers\VacancyProvider.cs" />
-    <Compile Include="Validators\Common.cs" />
-    <Compile Include="Validators\Provider\ProviderSiteEmployerLinkViewModelValidator.cs" />
-    <Compile Include="Providers\EmployerProvider.cs" />
-    <Compile Include="Providers\IEmployerProvider.cs" />
-    <Compile Include="Providers\IProviderProvider.cs" />
-    <Compile Include="Providers\IProviderUserProvider.cs" />
-    <Compile Include="Providers\IVacancyPostingProvider.cs" />
-    <Compile Include="Providers\ProviderProvider.cs" />
-    <Compile Include="Providers\ProviderUserProvider.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
-    <Compile Include="Providers\VacancyPostingProvider.cs" />
-    <Compile Include="Validators\ProviderUser\VerifyEmailViewModelValidator.cs" />
-    <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
-    <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
-    <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
-    <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
-    <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
-    <Compile Include="Validators\Vacancy\VacancySummaryViewModelBusinessRulesExtensions.cs" />
-    <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
-    <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
-    <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
-    <Compile Include="ViewModels\ProviderUser\VerifyEmailViewModel.cs" />
-    <Compile Include="ViewModels\Provider\ProviderSiteEmployerLinkViewModel.cs" />
-    <Compile Include="ViewModels\Provider\ProviderSiteSearchMode.cs" />
-    <Compile Include="ViewModels\Provider\ProviderSiteSearchResponseViewModel.cs" />
-    <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModelMessages.cs" />
-    <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\Provider\ProviderSiteViewModel.cs" />
-    <Compile Include="ViewModels\Provider\ProviderViewModel.cs" />
-    <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
-    <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerResultViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerSearchViewModel.cs" />
-    <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
-    <Compile Include="Validators\Vacancy\VacancyQuestionsViewModelValidator.cs" />
-    <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
-    <Compile Include="Validators\Vacancy\VacancyRequirementsProspectsViewModelValidator.cs" />
-    <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
-    <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
-    <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -510,7 +457,6 @@
     </Content>
     <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
     <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml" />
     <Content Include="Views\VacancyPosting\SelectEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\AddEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\ConfirmEmployer.cshtml" />
@@ -540,6 +486,8 @@
     <Content Include="Views\razorgenerator.directives" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\InternalServerError.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ApprenticeshipLevel.cshtml" />
+    <Content Include="Views\ProviderUser\_closingDate.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -571,7 +519,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Extensions\" />
+    <Folder Include="Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -704,6 +652,10 @@
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
+      <Project>{700d41dd-527a-42bd-94d2-fd49a5f00a18}</Project>
+      <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -751,6 +703,7 @@ SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\
 robocopy /IS /E %25COPY_PATH%25 $(ProjectDir)
 if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

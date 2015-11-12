@@ -1,0 +1,18 @@
+﻿@model SFA.Apprenticeships.Web.Common.ViewModels.DateViewModel
+
+@if (Model != null && Model.HasValue)
+{
+    var daysTillClose = (Model.Date - DateTime.UtcNow).Days;
+    if (daysTillClose == 0)
+    {
+        <span class="note-text">closing today</span>
+    }
+    if (daysTillClose == 1)
+    {
+        <span class="note-text">closing in 1 day</span>
+    }
+    if (daysTillClose > 1)
+    {
+        <span class="note-text">closing in @daysTillClose days</span>
+    }
+}

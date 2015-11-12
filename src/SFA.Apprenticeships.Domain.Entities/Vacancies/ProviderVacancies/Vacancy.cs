@@ -31,5 +31,8 @@
         public bool OfflineVacancy { get; set; }
         public string OfflineApplicationUrl { get; set; }
         public string OfflineApplicationInstructions { get; set; }
+        public DateTime? DateSubmitted { get; set; }
+        public DateTime? DateStartedToQA { get; set; }
+        public string QAUserName { get; set; }
     }
 }

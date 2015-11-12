@@ -1,4 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.IoC
+﻿using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
+using SFA.Apprenticeships.Application.ReferenceData;
+using SFA.Apprenticeships.Web.Raa.Common.Providers;
+
+namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
     using Application.Communication;
@@ -6,15 +10,18 @@
     using Application.Interfaces.Communications;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Users;
+    using Application.Interfaces.VacancyPosting;
     using Application.Organisation;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
+    using Application.VacancyPosting;
     using Common.Configuration;
     using Domain.Interfaces.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.TacticalDataServices;
     using Mediators.AgencyUser;
+    using Mediators.Vacancy;
     using Providers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
@@ -43,12 +50,16 @@
             For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
+            For<IVacancyProvider>().Use<VacancyProvider>();
+            For<IVacancyPostingProvider>().Use<VacancyPostingProvider>();
         }
 
         private void RegisterServices()
         {
             For<IOrganisationService>().Use<OrganisationService>();
+            For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
+            For<IVacancyPostingService>().Use<VacancyPostingService>();
         }
 
         private void RegisterStrategies()
@@ -71,6 +82,7 @@
         private void RegisterMediators()
         {
             For<IAgencyUserMediator>().Use<AgencyUserMediator>();
+            For<IVacancyMediator>().Use<VacancyMediator>();
         }
     }
 }

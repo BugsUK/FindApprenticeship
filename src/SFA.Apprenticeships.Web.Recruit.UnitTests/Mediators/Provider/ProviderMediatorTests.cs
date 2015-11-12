@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Provider
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
+
+namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Provider
 {
     using FluentAssertions;
     using NUnit.Framework;
     using Recruit.Mediators.Provider;
-    using ViewModels.Provider;
 
     [TestFixture]
     public class ProviderMediatorTests

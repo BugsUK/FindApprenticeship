@@ -1,0 +1,9 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@model ProviderVacancyStatuses
+    
+@switch (Model)
+{
+    case ProviderVacancyStatuses.PendingQA:
+        <div>Pending QA</div>
+        break;
+}

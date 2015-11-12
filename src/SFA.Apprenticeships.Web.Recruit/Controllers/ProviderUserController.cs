@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
+
+namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Security.Claims;
     using System.Web.Mvc;
@@ -13,7 +15,6 @@
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
     using ViewModels;
-    using ViewModels.ProviderUser;
     using ClaimTypes = System.Security.Claims.ClaimTypes;
 
     [OwinSessionTimeout]

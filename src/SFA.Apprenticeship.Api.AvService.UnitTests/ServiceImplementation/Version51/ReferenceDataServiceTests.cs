@@ -4,32 +4,25 @@
     using System.Linq;
     using Apprenticeships.Application.ReferenceData;
     using Apprenticeships.Domain.Entities.ReferenceData;
-    using Apprenticeships.Infrastructure.Common.Mappers;
-    using AvService.Mappers.Version51;
     using FluentAssertions;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
     using ReferenceDataService = AvService.ServiceImplementation.Version51.ReferenceDataService;
 
-    // TODO: US868: API: reinstate tests here.
+    // TODO: US868: API: reinstate / implement tests here.
 
     [TestFixture]
     public class ReferenceDataServiceTests
     {
         private ReferenceDataService _service;
-        private MapperEngine _mapper;
         private Mock<IReferenceDataProvider> _mockReferenceDataProvider;
 
         [SetUp]
         public void SetUp()
         {
             _mockReferenceDataProvider = new Mock<IReferenceDataProvider>();
-            _mapper = new AvReferenceDataServiceMapper();
-
-            _service = new ReferenceDataService(
-                _mapper,
-                _mockReferenceDataProvider.Object);
+            _service = new ReferenceDataService();
         }
 
         [Test]

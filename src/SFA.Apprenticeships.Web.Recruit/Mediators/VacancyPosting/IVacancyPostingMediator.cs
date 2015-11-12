@@ -1,11 +1,10 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using Common.Mediators;
-    using ViewModels.Provider;
-    using ViewModels.Vacancy;
-    using ViewModels.VacancyPosting;
+    using System;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyPosting;
 
     public interface IVacancyPostingMediator
     {
@@ -47,7 +46,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 
         MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
 
-        MediatorResponse<VacancyViewModel> SubmitVacancy(VacancyViewModel viewModel);
+        MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber);
 
         MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber);
 

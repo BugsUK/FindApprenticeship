@@ -13,7 +13,7 @@
             oldErrorFunction(error, element);
         };
         settings.success = function (label, element) {
-            $(element).closest(".form-group").removeClass("input-validation-error");
+            $(element).closest(".form-group").removeClass("input-validation-error").removeClass("input-validation-warning");
             oldSuccessFunction(label, element);
 
         };

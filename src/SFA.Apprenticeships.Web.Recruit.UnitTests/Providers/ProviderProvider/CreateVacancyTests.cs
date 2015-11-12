@@ -10,8 +10,8 @@ using SFA.Apprenticeships.Domain.Entities.Organisations;
 using SFA.Apprenticeships.Domain.Entities.Providers;
 using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
 using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Provider;
-using SFA.Apprenticeships.Web.Recruit.ViewModels.Vacancy;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderProvider
 {
