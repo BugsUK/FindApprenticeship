@@ -288,8 +288,8 @@
     <Compile Include="OtherProjects\Web.Common\ViewModels.Locations\AddressViewModel.cs" />
     <Compile Include="OtherProjects\Web.Common\ViewModels.Locations\GeoPointViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="OtherProjects\Web.Common\DateViewModel.cs" />
-    <Compile Include="OtherProjects\Web.Common\PageableViewModel.cs" />
+    <Compile Include="OtherProjects\Web.Common\ViewModels.DateViewModel.cs" />
+    <Compile Include="OtherProjects\Web.Common\ViewModels.PageableViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\Recruit\Views\web.config" />
