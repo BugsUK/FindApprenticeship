@@ -484,6 +484,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Comment.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

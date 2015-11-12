@@ -294,26 +294,10 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(" name=\"VacancyRequirementsProspects\"");
-
-WriteLiteral(" value=\"VacancyRequirementsProspects\"");
-
-WriteLiteral(">Save and continue</button>\r\n        <button");
-
-WriteLiteral(" id=\"VacancyRequirementsProspectsAndExit\"");
-
-WriteLiteral(" type=\"submit\"");
-
-WriteLiteral(" class=\"button-link\"");
-
-WriteLiteral(" name=\"VacancyRequirementsProspects\"");
-
-WriteLiteral(" value=\"VacancyRequirementsProspectsAndExit\"");
-
-WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
+WriteLiteral(">Save</button>\r\n    </div>\r\n");
 
             
-            #line 41 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
+            #line 40 "..\..\Views\Vacancy\RequirementsAndProspects.cshtml"
 }
 
             
