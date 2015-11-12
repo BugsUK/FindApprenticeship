@@ -95,12 +95,17 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             vacanciesSummarySearch.PageSizes = GetPageSizes(vacanciesSummarySearch.PageSize);
 
+            if (!string.IsNullOrEmpty(vacanciesSummarySearch.SearchString))
+            {
+                vacancies = vacancies.Where(v => v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
             var vacancyPage = new PageableViewModel<VacancyViewModel>
             {
                 Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => v.ConvertToVacancyViewModel()).ToList(),
                 ResultsCount = vacancies.Count,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = (vacancies.Count/vacanciesSummarySearch.PageSize) + 1
+                TotalNumberOfPages = (int)Math.Ceiling((double)vacancies.Count/vacanciesSummarySearch.PageSize)
             };
 
             var vacanciesSummary = new VacanciesSummaryViewModel

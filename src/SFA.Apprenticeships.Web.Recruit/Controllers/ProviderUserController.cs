@@ -142,8 +142,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        [MultipleFormActionsButton(SubmitButtonActionName = "ChangePageSizeAction")]
-        public ActionResult ChangePageSize(HomeViewModel viewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchVacanciesAction")]
+        public ActionResult SearchVacancies(HomeViewModel viewModel)
         {
             return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, viewModel.VacanciesSummary.VacanciesSummarySearch);
         }
