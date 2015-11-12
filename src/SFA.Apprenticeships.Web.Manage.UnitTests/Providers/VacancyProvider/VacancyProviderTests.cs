@@ -22,6 +22,7 @@
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Locations;
     using Common.Configuration;
+    using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Raa.Common.Configuration;
     using Raa.Common.ViewModels.Provider;
@@ -682,6 +683,96 @@
             //Assert
             apprenticeshipVacancyWriteRepository.Verify();
             vacancy.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
+        }
+
+        [Test]
+        public void ShouldSaveCommentsWhenUpdatingVacancySummaryViewModel()
+        {
+            const int vacancyReferenceNumber = 1;
+            const string closingDateComment = "Closing date comment";
+            const string workingWeekComment = "Working week comment";
+            const string wageComment = "Wage comment";
+            const string durationComment = "Duration comment";
+            const string longDescriptionComment = "Long description comment";
+            const string possibleStartDateComment = "Possible start date comment";
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var provider = new VacancyProviderBuilder().With(vacancyPostingService).Build();
+            var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
+            vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new ApprenticeshipVacancy());
+            vacancyPostingService.Setup(vp => vp.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns(new ApprenticeshipVacancy());
+            viewModel.ClosingDateComment = closingDateComment;
+            viewModel.DurationComment = durationComment;
+            viewModel.LongDescriptionComment = longDescriptionComment;
+            viewModel.PossibleStartDateComment = possibleStartDateComment;
+            viewModel.WageComment = wageComment;
+            viewModel.WorkingWeekComment = workingWeekComment;
+
+            provider.UpdateVacancy(viewModel);
+
+            vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
+            vacancyPostingService.Verify(
+                vp =>
+                    vp.SaveApprenticeshipVacancy(
+                        It.Is<ApprenticeshipVacancy>(
+                            v =>
+                                v.ClosingDateComment == closingDateComment &&
+                                v.DurationComment == durationComment &&
+                                v.LongDescriptionComment == longDescriptionComment &&
+                                v.PossibleStartDateComment == possibleStartDateComment &&
+                                v.WageComment == wageComment &&
+                                v.WorkingWeekComment == workingWeekComment)));
+        }
+
+        [Test]
+        public void ShouldSaveCommentsWhenUpdatingVacancyQuestionsViewModel()
+        {
+            const int vacancyReferenceNumber = 1;
+            const string firstQuestionComment = "First question comment";
+            const string secondQuestionComment = "Second question comment";
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var provider = new VacancyProviderBuilder().With(vacancyPostingService).Build();
+
+            vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new ApprenticeshipVacancy());
+            vacancyPostingService.Setup(vp => vp.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns(new ApprenticeshipVacancy());
+
+            var viewModel = new VacancyQuestionsViewModel
+            {
+                FirstQuestionComment = firstQuestionComment,
+                SecondQuestionComment = secondQuestionComment,
+                VacancyReferenceNumber = vacancyReferenceNumber
+            };
+
+            provider.UpdateVacancy(viewModel);
+
+            vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
+            vacancyPostingService.Verify(
+                vp =>
+                    vp.SaveApprenticeshipVacancy(
+                        It.Is<ApprenticeshipVacancy>(
+                            v =>
+                                v.FirstQuestionComment == firstQuestionComment &&
+                                v.SecondQuestionComment == secondQuestionComment)));
+
+        }
+
+        private static VacancySummaryViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
+        {
+            return new VacancySummaryViewModel
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
+                PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30)),
+                Duration = 3,
+                DurationType = DurationType.Years,
+                LongDescription = "A description",
+                WageType = WageType.ApprenticeshipMinimumWage,
+                HoursPerWeek = 30,
+                WorkingWeek = "A working week"
+            };
         }
     }
 }
