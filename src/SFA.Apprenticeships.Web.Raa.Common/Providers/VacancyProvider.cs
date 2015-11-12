@@ -16,9 +16,12 @@
     using Converters;
     using ViewModels;
     using ViewModels.Vacancy;
+	using ViewModels.ProviderUser;
+	using Web.Common.ViewModels;
 
     public class VacancyProvider : IVacancyProvider
     {
+        //TODO: Providers aren't really supposed to reference repositories directly, they are supposed to use services at least with the current architecture
         private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
         private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
         private readonly IProviderService _providerService;
@@ -48,6 +51,63 @@
             var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn, providerSiteErn);
 
             return vacancies.Select(v => v.ConvertToVacancyViewModel()).ToList();
+        }
+
+        public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch)
+        {
+            //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
+            var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn, providerSiteErn);
+
+            var live = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live).ToList();
+            //TODO: make approved timespan configurable
+            var approved = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.DateQAApproved.HasValue && v.DateQAApproved > _dateTimeService.UtcNow().AddHours(-24)).ToList();
+            var rejected = vacancies.Where(v => v.Status == ProviderVacancyStatuses.RejectedByQA).ToList();
+            //TODO: Agree on closing soon range and make configurable
+            var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate > _dateTimeService.UtcNow() && v.ClosingDate.Value.AddDays(-3) < _dateTimeService.UtcNow()).ToList();
+            var closed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate < _dateTimeService.UtcNow()).ToList();
+            //TODO: Does this include the one's in QA at the moment?
+            var draft = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
+
+            switch (vacanciesSummarySearch.FilterType)
+            {
+                case VacanciesSummaryFilterTypes.Live:
+                    vacancies = live;
+                    break;
+                case VacanciesSummaryFilterTypes.Approved:
+                    vacancies = approved;
+                    break;
+                case VacanciesSummaryFilterTypes.Rejected:
+                    vacancies = rejected;
+                    break;
+                case VacanciesSummaryFilterTypes.ClosingSoon:
+                    vacancies = closingSoon;
+                    break;
+                case VacanciesSummaryFilterTypes.Closed:
+                    vacancies = closed;
+                    break;
+                case VacanciesSummaryFilterTypes.Draft:
+                    vacancies = draft;
+                    break;
+            }
+            var vacancyPage = new PageableViewModel<VacancyViewModel>
+            {
+                Page = vacancies.Select(v => v.ConvertToVacancyViewModel()).ToList(),
+                ResultsCount = vacancies.Count
+            };
+
+            var vacanciesSummary = new VacanciesSummaryViewModel
+            {
+                VacanciesSummarySearch = vacanciesSummarySearch,
+                LiveCount = live.Count,
+                ApprovedCount = approved.Count,
+                RejectedCount = rejected.Count,
+                ClosingSoonCount = closingSoon.Count,
+                ClosedCount = closed.Count,
+                DraftCount = draft.Count,
+                Vacancies = vacancyPage
+            };
+
+            return vacanciesSummary;
         }
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
@@ -106,6 +166,7 @@
         {
             var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
             vacancy.Status = ProviderVacancyStatuses.Live;
+            vacancy.DateQAApproved = _dateTimeService.UtcNow();
 
             _apprenticeshipVacancyWriteRepository.Save(vacancy);
         }

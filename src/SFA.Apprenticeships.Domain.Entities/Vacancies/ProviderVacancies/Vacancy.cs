@@ -38,5 +38,6 @@
         public DateTime? DateSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }
         public string QAUserName { get; set; }
+        public DateTime? DateQAApproved { get; set; }
     }
 }

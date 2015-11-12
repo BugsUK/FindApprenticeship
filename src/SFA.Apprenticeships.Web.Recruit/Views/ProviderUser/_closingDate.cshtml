@@ -3,15 +3,23 @@
 @if (Model != null && Model.HasValue)
 {
     var daysTillClose = (Model.Date - DateTime.UtcNow).Days;
+    /*if (daysTillClose < 0)
+    {
+        <span class="note-text" style="color: red">closed</span>
+    }*/
     if (daysTillClose == 0)
     {
-        <span class="note-text">closing today</span>
+        <span class="note-text" style="color: red">closing today</span>
     }
     if (daysTillClose == 1)
     {
-        <span class="note-text">closing in 1 day</span>
+        <span class="note-text" style="color: red">closing in 1 day</span>
     }
-    if (daysTillClose > 1)
+    if (daysTillClose > 1 && daysTillClose < 4)
+    {
+        <span class="note-text" style="color: red">closing in @daysTillClose days</span>
+    }
+    if (daysTillClose > 4)
     {
         <span class="note-text">closing in @daysTillClose days</span>
     }

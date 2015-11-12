@@ -1,4 +1,5 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser.HomeViewModel
+﻿@model HomeViewModel
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice";
@@ -40,30 +41,92 @@
     </section>
 
     <section class="grid-wrapper">
-        <h2 class="heading-medium">Your vacancies <a href="#" class="font-small">Show all</a></h2>
+        @{
+            var filterType = Model.VacanciesSummary.VacanciesSummarySearch.FilterType;
+        }
+        <h2 class="heading-medium">Your vacancies
+            @if (filterType != VacanciesSummaryFilterTypes.All)
+            {
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new {FilterType = VacanciesSummaryFilterTypes.All})" class="font-small">Show all</a>
+            }
+        </h2>
         <div class="grid" style="width: 16.6%">
-            <p style="text-align: center"><a href="#">Live</a></p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">25</p>
+            <p style="text-align: center">
+                @if (filterType == VacanciesSummaryFilterTypes.Live)
+                {
+                    <span>Live</span>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new {FilterType = VacanciesSummaryFilterTypes.Live})">Live</a>
+                }
+            </p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.LiveCount</p>
         </div>
         <div class="grid" style="width: 16.6%">
-            <p style="text-align: center"><a href="#">Approved</a></p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">2</p>
+            <p style="text-align: center">
+                @if (filterType == VacanciesSummaryFilterTypes.Approved)
+                {
+                    <span>Approved</span>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new {FilterType = VacanciesSummaryFilterTypes.Approved})">Approved</a>
+                }
+            </p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ApprovedCount</p>
         </div>
         <div class="grid" style="width: 16.6%">
-            <p style="text-align: center"><a href="#">Rejected</a></p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">5</p>
+            <p style="text-align: center">
+                @if (filterType == VacanciesSummaryFilterTypes.Rejected)
+                {
+                    <span>Rejected</span>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new {FilterType = VacanciesSummaryFilterTypes.Rejected})">Rejected</a>
+                }
+            </p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.RejectedCount</p>
         </div>
         <div class="grid" style="width: 16.6%">
-            <p style="text-align: center"><a href="#">Closing Soon</a></p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">2</p>
+            <p style="text-align: center">
+                @if (filterType == VacanciesSummaryFilterTypes.ClosingSoon)
+                {
+                    <span>Closing Soon</span>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new {FilterType = VacanciesSummaryFilterTypes.ClosingSoon})">Closing Soon</a>
+                }
+            </p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ClosingSoonCount</p>
         </div>
         <div class="grid" style="width: 16.6%">
-            <p style="text-align: center"><a href="#">Closed</a></p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">4</p>
+            <p style="text-align: center">
+                @if (filterType == VacanciesSummaryFilterTypes.Closed)
+                {
+                    <span>Closed</span>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new {FilterType = VacanciesSummaryFilterTypes.Closed})">Closed</a>
+                }
+            </p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ClosedCount</p>
         </div>
         <div class="grid" style="width: 16.6%">
-            <p style="text-align: center"><a href="#">Draft</a></p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">5</p>
+            <p style="text-align: center">
+                @if (filterType == VacanciesSummaryFilterTypes.Draft)
+                {
+                    <span>Draft</span>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new {FilterType = VacanciesSummaryFilterTypes.Draft})">Draft</a>
+                }
+            </p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.DraftCount</p>
         </div>
     </section>
 
@@ -114,7 +177,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach(var vacancy in Model.Vacancies)
+                            @foreach(var vacancy in Model.VacanciesSummary.Vacancies.Page)
                             {
                                 <tr>
                                     <td>

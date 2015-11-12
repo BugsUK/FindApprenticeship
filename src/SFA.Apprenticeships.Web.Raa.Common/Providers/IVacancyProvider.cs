@@ -2,11 +2,14 @@
 {
     using System.Collections.Generic;
     using ViewModels;
+    using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
 
     public interface IVacancyProvider
     {
 		List<VacancyViewModel> GetVacanciesForProvider(string ukprn, string providerSiteErn);
+
+        VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 	
         List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview();
 

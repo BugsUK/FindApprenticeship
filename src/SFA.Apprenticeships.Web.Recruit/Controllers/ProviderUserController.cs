@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Common.Mediators;
     using Common.Providers;
     using Constants;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
     using ViewModels;
@@ -113,9 +114,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        public ActionResult Home()
+        public ActionResult Home(VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
-            var response = _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn());
+            var response = _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn(), vacanciesSummarySearch);
 
             return View(response.ViewModel);
         }
