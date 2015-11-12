@@ -22,6 +22,8 @@
         }
 
         // GET: Vacancy
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult Review(long vacancyReferenceNumber)
         {
             var response = _vacancyMediator.ReserveVacancyForQA(vacancyReferenceNumber);
@@ -44,6 +46,7 @@
         }
 
         [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult BasicDetails(long vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetBasicDetails(vacancyReferenceNumber);
@@ -136,6 +139,8 @@
             }
         }
 
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult RequirementsAndProspects(long vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
