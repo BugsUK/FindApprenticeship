@@ -1,4 +1,5 @@
 ﻿@model HomeViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
@@ -59,7 +60,7 @@
         <h2 class="heading-medium">Your vacancies
             @if (filterType != VacanciesSummaryFilterTypes.All)
             {
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All))" class="font-small">Show all</a>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a>
             }
         </h2>
         <div class="grid" style="width: 16.666666666%">
@@ -70,7 +71,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live))">Live</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live))" class="vacancy-filter">Live</a>
                 }
             </p>
             <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.LiveCount</p>
@@ -83,7 +84,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Approved))">Approved</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Approved))" class="vacancy-filter">Approved</a>
                 }
             </p>
             <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ApprovedCount</p>
@@ -92,11 +93,11 @@
             <p style="text-align: center">
                 @if (filterType == VacanciesSummaryFilterTypes.Rejected)
                 {
-                    <span>Rejected</span>
+                    <span>Referred</span>
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected))">Rejected</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected))" class="vacancy-filter">Referred</a>
                 }
             </p>
             <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.RejectedCount</p>
@@ -109,7 +110,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon))">Closing Soon</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon))" class="vacancy-filter">Closing Soon</a>
                 }
             </p>
             <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ClosingSoonCount</p>
@@ -122,7 +123,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))">Closed</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">Closed</a>
                 }
             </p>
             <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ClosedCount</p>
@@ -135,7 +136,7 @@
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))">Draft</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">Draft</a>
                 }
             </p>
             <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.DraftCount</p>
@@ -150,7 +151,7 @@
                     <summary>Search your employers</summary>
                     <div class="detail-content">
                         @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString)
-                        <button class="button" name="SearchVacanciesAction" value="SearchVacancies">Search vacancies</button>
+                        <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search vacancies</button>
                     </div>
                 </details>
                 <div class="tabbed-element tab1 active width-all-1-1">
@@ -190,7 +191,10 @@
                                     @vacancy.VacancyReferenceNumber
                                 </td>
                                 <td>
-                                    X applications
+                                    @if (vacancy.Status == ProviderVacancyStatuses.Live)
+                                    {
+                                        <span>X applications</span>
+                                    }
                                 </td>
                                 <td>
                                     @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
@@ -221,7 +225,7 @@
                 <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
             </a>
 
-            <div class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
+            <div id="page-size-container" class="grid grid-1-3 page-navigation__btn" style="width: 33.333333333%; text-align: center">
                 <label for="page-size" class="heading-small inline">Display results</label>
                 @Html.DropDownListFor(m => m.VacanciesSummary.VacanciesSummarySearch.PageSize, Model.VacanciesSummary.VacanciesSummarySearch.PageSizes, new { id = "page-size" })
                 <noscript>
@@ -242,7 +246,14 @@
     </div>
 }
 
+<div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+    Loading
+</div>
+
 @section scripts
 {
     @Scripts.Render("~/bundles/dashboard")
+    <script>
+            var searchUrl = '@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)';
+    </script>
 }
