@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿using System.Web.Mvc;
+using SFA.Apprenticeships.Web.Common.Configuration;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
     using System.Threading;
@@ -30,6 +33,8 @@
         private readonly IConfigurationService _configurationService;
         private readonly IVacancyPostingService _vacancyPostingService;
 
+        private readonly string[] _blacklistedCategoryCodes;
+
         public VacancyProvider(IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository,
                 IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository,
                 IProviderService providerService, IDateTimeService dateTimeService,
@@ -44,6 +49,7 @@
             _referenceDataService = referenceDataService;
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
+            _blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(configurationService);
         }
 
         public List<VacancyViewModel> GetVacanciesForProvider(string ukprn, string providerSiteErn)
@@ -235,8 +241,20 @@
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
-            
+
+            var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl) ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString() : viewModel.OfflineApplicationUrl;
+
             //update properties
+            vacancy.Ukprn = viewModel.Ukprn;
+            vacancy.Title = viewModel.Title;
+            vacancy.ShortDescription = viewModel.ShortDescription;
+            vacancy.TrainingType = viewModel.TrainingType;
+            vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
+            vacancy.StandardId = viewModel.StandardId;
+            vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
+            vacancy.OfflineVacancy = viewModel.OfflineVacancy;
+            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            vacancy.OfflineApplicationInstructions = viewModel.OfflineApplicationInstructions;
             vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;
             vacancy.FrameworkCodeNameComment = viewModel.FrameworkCodeNameComment;
             vacancy.OfflineApplicationInstructionsComment = viewModel.OfflineApplicationInstructionsComment;
@@ -247,6 +265,10 @@
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToNewVacancyViewModel();
+            var sectors = GetSectorsAndFrameworks();
+            var standards = GetStandards();
+            viewModel.SectorsAndFrameworks = sectors;
+            viewModel.Standards = standards;
             return viewModel;
         }
 
@@ -286,6 +308,75 @@
                 QAUserName = apprenticeshipVacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(apprenticeshipVacancy)
             };
+        }
+
+        private string GetFrameworkCodeName(NewVacancyViewModel newVacancyViewModel)
+        {
+            return newVacancyViewModel.TrainingType == TrainingType.Standards ? null : newVacancyViewModel.FrameworkCodeName;
+        }
+
+        private ApprenticeshipLevel GetApprenticeshipLevel(NewVacancyViewModel newVacancyViewModel)
+        {
+            var apprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
+            if (newVacancyViewModel.TrainingType == TrainingType.Standards)
+            {
+                var standard = GetStandard(newVacancyViewModel.StandardId);
+                apprenticeshipLevel = standard?.ApprenticeshipLevel ?? ApprenticeshipLevel.Unknown;
+            }
+            return apprenticeshipLevel;
+        }
+
+        private List<SelectListItem> GetSectorsAndFrameworks()
+        {
+            var categories = _referenceDataService.GetCategories();
+
+            var sectorsAndFrameworkItems = new List<SelectListItem>
+            {
+                new SelectListItem { Value = string.Empty, Text = "Choose from the list of frameworks"}
+            };
+
+            foreach (var sector in categories.Where(category => !_blacklistedCategoryCodes.Contains(category.CodeName)))
+            {
+                if (sector.SubCategories != null)
+                {
+                    var sectorGroup = new SelectListGroup { Name = sector.FullName };
+                    foreach (var framework in sector.SubCategories)
+                    {
+                        sectorsAndFrameworkItems.Add(new SelectListItem
+                        {
+                            Group = sectorGroup,
+                            Value = framework.CodeName,
+                            Text = framework.FullName
+                        });
+                    }
+                }
+            }
+
+            return sectorsAndFrameworkItems;
+        }
+
+        private List<StandardViewModel> GetStandards()
+        {
+            var sectors = _referenceDataService.GetSectors();
+
+            return (from sector in sectors
+                    from standard in sector.Standards
+                    select standard.Convert(sector)).ToList();
+        }
+
+        private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
+        {
+            var blacklistedCategoryCodeNames = configurationService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes;
+
+            if (string.IsNullOrWhiteSpace(blacklistedCategoryCodeNames))
+            {
+                return new string[] { };
+            }
+
+            return blacklistedCategoryCodeNames
+                .Split(',')
+                .Select(each => each.Trim())
+                .ToArray();
         }
     }
 }

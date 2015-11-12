@@ -1,5 +1,6 @@
 ﻿using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
 using SFA.Apprenticeships.Domain.Entities.Locations;
+using SFA.Apprenticeships.Web.Common.Configuration;
 using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
 using SFA.Apprenticeships.Web.Raa.Common.Configuration;
 using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
@@ -79,6 +80,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             vacancyPostingService.Setup(
                 vps => vps.GetVacancy(vacancyReferenceNumber)).Returns(appVacancy);
@@ -90,6 +96,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
             var vacancyProvider =
                 new VacancyProviderBuilder().With(vacancyPostingService)
                     .With(providerService)
+                    .With(configurationService)
                     .Build();
 
             //Act
@@ -127,10 +134,16 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             var vacancyProvider =
                 new VacancyProviderBuilder().With(vacancyPostingService)
                     .With(providerService)
+                    .With(configurationService)
                     .Build();
 
             //Act
@@ -150,6 +163,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             apprenticeshipVacancyRepository.Setup(
                 avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> { ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA }))
@@ -196,11 +211,15 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 
             var apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
             var apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             apprenticeshipVacancyReadRepository.Setup(r => r.Get(vacancyReferenceNumber)).Returns(vacancy);
             var vacancyProvider =
                 new VacancyProviderBuilder().With(apprenticeshipVacancyWriteRepository)
                     .With(apprenticeshipVacancyReadRepository)
+                    .With(configurationService)
                     .Build();
 
             //Act
@@ -229,11 +248,15 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 
             var apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
             var apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             apprenticeshipVacancyReadRepository.Setup(r => r.Get(vacancyReferenceNumber)).Returns(vacancy);
             var vacancyProvider =
                 new VacancyProviderBuilder().With(apprenticeshipVacancyWriteRepository)
                     .With(apprenticeshipVacancyReadRepository)
+                    .With(configurationService)
                     .Build();
 
             //Act
@@ -261,6 +284,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
             {
@@ -311,6 +336,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
             {
@@ -379,6 +406,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
             {
@@ -453,6 +482,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
             timeService.Setup(ts => ts.UtcNow()).Returns(DateTime.UtcNow);
             var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
             {
@@ -526,11 +557,17 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
             providerService.Setup(s => s.GetProviderSite(It.IsAny<string>(), It.IsAny<string>())).Returns(providerSite);
             var referenceDataService = new Mock<IReferenceDataService>();
             referenceDataService.Setup(s => s.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             var vacancyProvider =
                 new VacancyProviderBuilder().With(apprenticeshipVacancyWriteRepository)
                     .With(providerService)
                     .With(referenceDataService)
+                    .With(configurationService)
                     .Build();
 
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
