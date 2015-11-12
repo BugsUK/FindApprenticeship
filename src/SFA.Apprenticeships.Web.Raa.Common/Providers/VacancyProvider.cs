@@ -33,8 +33,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IConfigurationService _configurationService;
         private readonly IVacancyPostingService _vacancyPostingService;
 
-        private readonly string[] _blacklistedCategoryCodes;
-
         public VacancyProvider(IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository,
                 IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository,
                 IProviderService providerService, IDateTimeService dateTimeService,
@@ -49,7 +47,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _referenceDataService = referenceDataService;
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
-            _blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(configurationService);
         }
 
         public List<VacancyViewModel> GetVacanciesForProvider(string ukprn, string providerSiteErn)
@@ -330,13 +327,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private List<SelectListItem> GetSectorsAndFrameworks()
         {
             var categories = _referenceDataService.GetCategories();
+            var blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(_configurationService);
 
             var sectorsAndFrameworkItems = new List<SelectListItem>
             {
                 new SelectListItem { Value = string.Empty, Text = "Choose from the list of frameworks"}
             };
 
-            foreach (var sector in categories.Where(category => !_blacklistedCategoryCodes.Contains(category.CodeName)))
+            foreach (var sector in categories.Where(category => !blacklistedCategoryCodes.Contains(category.CodeName)))
             {
                 if (sector.SubCategories != null)
                 {
