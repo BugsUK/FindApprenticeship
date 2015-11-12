@@ -94,8 +94,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
             var vacancyPage = new PageableViewModel<VacancyViewModel>
             {
-                Page = vacancies.Select(v => v.ConvertToVacancyViewModel()).ToList(),
-                ResultsCount = vacancies.Count
+                Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => v.ConvertToVacancyViewModel()).ToList(),
+                ResultsCount = vacancies.Count,
+                CurrentPage = vacanciesSummarySearch.CurrentPage,
+                TotalNumberOfPages = (vacancies.Count/vacanciesSummarySearch.PageSize) + 1
             };
 
             var vacanciesSummary = new VacanciesSummaryViewModel
