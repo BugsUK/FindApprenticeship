@@ -657,7 +657,7 @@
                     .Create();
             var providerSite = new Fixture().Build<ProviderSite>().Create();
             var apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
-            apprenticeshipVacancyWriteRepository.Setup(r => r.ReserveVacancyForQA(vacancyReferenceNumber, username)).Returns(reservedVacancy);
+            apprenticeshipVacancyWriteRepository.Setup(r => r.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(reservedVacancy);
             var providerService = new Mock<IProviderService>();
             providerService.Setup(s => s.GetProviderSite(It.IsAny<string>(), It.IsAny<string>())).Returns(providerSite);
             var referenceDataService = new Mock<IReferenceDataService>();
