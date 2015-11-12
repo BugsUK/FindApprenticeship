@@ -128,6 +128,36 @@
             vacancyProvider.Verify(vp => vp.UpdateVacancy(viewModel), Times.Never);
         }
 
+        [Test]
+        public void GetVacancyQuestionsViewModelShouldGetViewmodelFromProvider()
+        {
+            const long vacancyReferenceNumber = 1;
+            var vacancyProvider = new Mock<IVacancyPostingProvider>();
+            var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
+            var viewModel = new VacancyQuestionsViewModel();
+            vacancyProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(viewModel);
+
+            var result = mediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+
+            result.AssertCode(VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok);
+            vacancyProvider.Verify(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber));
+        }
+
+        [Test]
+        public void UpdateVacancyShouldCallProvider()
+        {
+            const long vacancyReferenceNumber = 1;
+            var vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
+            var vacancyProvider = new Mock<IVacancyProvider>();
+            var mediator = new VacancyMediatorBuilder().With(vacancyProvider).With(vacancyPostingProvider).Build();
+            var viewModel = new VacancyQuestionsViewModel();
+            vacancyPostingProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(viewModel);
+
+            var result = mediator.UpdateVacancy(viewModel);
+            result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
+            vacancyProvider.Verify(vp => vp.UpdateVacancy(viewModel));
+        }
+
         private static VacancySummaryViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
         {
             return new VacancySummaryViewModel

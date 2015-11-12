@@ -146,7 +146,6 @@
     <Compile Include="Providers\HelpCookieProviderBuilder.cs" />
     <Compile Include="Providers\HelpCookieProviderTests.cs" />
     <Compile Include="Providers\RobotCrawlerProviderTests.cs" />
-    <Compile Include="Providers\VacancyProviderTests.cs" />
     <Compile Include="Validators\DateViewModelServerValidatorTests.cs" />
     <Compile Include="ViewModels\DateViewModelTests.cs" />
     <Compile Include="YearRegexRangeGeneratorTests.cs" />
