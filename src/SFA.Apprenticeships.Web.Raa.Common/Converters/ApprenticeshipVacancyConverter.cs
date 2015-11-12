@@ -187,16 +187,22 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
             {
                 TrainingType = apprenticeshipVacancy.TrainingType,
                 ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
+                ApprenticeshipLevelComment = apprenticeshipVacancy.ApprenticeshipLevelComment,
                 FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
+                FrameworkCodeNameComment = apprenticeshipVacancy.FrameworkCodeNameComment,
                 StandardId = apprenticeshipVacancy.StandardId,
                 ShortDescription = apprenticeshipVacancy.ShortDescription,
+                ShortDescriptionComment = apprenticeshipVacancy.ShortDescriptionComment,
                 Title = apprenticeshipVacancy.Title,
+                TitleComment = apprenticeshipVacancy.TitleComment,
                 Ukprn = apprenticeshipVacancy.Ukprn,
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                 ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert(),
                 OfflineVacancy = apprenticeshipVacancy.OfflineVacancy,
                 OfflineApplicationUrl = apprenticeshipVacancy.OfflineApplicationUrl,
-                OfflineApplicationInstructions = apprenticeshipVacancy.OfflineApplicationInstructions
+                OfflineApplicationUrlComment = apprenticeshipVacancy.OfflineApplicationUrlComment,
+                OfflineApplicationInstructions = apprenticeshipVacancy.OfflineApplicationInstructions,
+                OfflineApplicationInstructionsComment = apprenticeshipVacancy.OfflineApplicationInstructionsComment
             };
 
             return vacancyViewModel;

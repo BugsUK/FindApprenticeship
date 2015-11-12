@@ -1,8 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Common.Mediators;
-using SFA.Apprenticeships.Web.Common.Validators.Extensions;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Manage.Controllers
+﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
     using System.Web.Mvc;
@@ -10,6 +6,9 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
     using Common.Attributes;
     using Constants;
     using Mediators.Vacancy;
+    using Common.Mediators;
+    using Common.Validators.Extensions;
+    using Raa.Common.ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
@@ -54,7 +53,26 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
         [HttpPost]
         public ActionResult BasicDetails(NewVacancyViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(ManagementRouteNames.Summary,
+                    new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]

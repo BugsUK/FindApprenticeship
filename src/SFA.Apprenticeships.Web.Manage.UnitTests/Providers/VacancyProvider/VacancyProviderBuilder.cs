@@ -64,5 +64,11 @@
             _referenceDataService = referenceDataService;
             return this;
         }
+
+        public VacancyProviderBuilder With(Mock<IVacancyPostingService> vacancyPostingServiceService)
+        {
+            _vacancyPostingServcie = vacancyPostingServiceService;
+            return this;
+        }
     }
 }

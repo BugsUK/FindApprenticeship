@@ -1,22 +1,21 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using SFA.Apprenticeships.Application.Interfaces.DateTime;
-using SFA.Apprenticeships.Application.Interfaces.Providers;
-using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
-using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
-using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
-using SFA.Apprenticeships.Domain.Interfaces.Repositories;
-using SFA.Apprenticeships.Web.Raa.Common.Configuration;
-using SFA.Apprenticeships.Web.Raa.Common.Converters;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
     using System.Threading;
     using Application.Interfaces.VacancyPosting;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Application.Interfaces.DateTime;
+    using Application.Interfaces.Providers;
+    using Application.Interfaces.ReferenceData;
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Repositories;
+    using Configuration;
+    using Converters;
+    using ViewModels;
+    using ViewModels.Vacancy;
 
     public class VacancyProvider : IVacancyProvider
     {
@@ -171,7 +170,23 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel viewModel)
         {
-            throw new NotImplementedException();
+            if (!viewModel.VacancyReferenceNumber.HasValue)
+                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
+
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+            
+            //update properties
+            vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;
+            vacancy.FrameworkCodeNameComment = viewModel.FrameworkCodeNameComment;
+            vacancy.OfflineApplicationInstructionsComment = viewModel.OfflineApplicationInstructionsComment;
+            vacancy.OfflineApplicationUrlComment = viewModel.OfflineApplicationUrlComment;
+            vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
+            vacancy.TitleComment = viewModel.TitleComment;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToNewVacancyViewModel();
+            return viewModel;
         }
 
         public VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)

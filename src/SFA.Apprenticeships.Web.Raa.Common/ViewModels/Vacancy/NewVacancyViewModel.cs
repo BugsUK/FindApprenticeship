@@ -21,16 +21,28 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        public string ApprenticeshipLevelComment { get; set; }
+
         public string FrameworkCodeName { get; set; }
+
+        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        public string FrameworkCodeNameComment { get; set; }
 
         [Display(Name = VacancyViewModelMessages.Title.LabelText)]
         public string Title { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        public string TitleComment { get; set; }
+
         [Display(Name = VacancyViewModelMessages.ShortDescription.LabelText)]
         public string ShortDescription { get; set; }
 
-        public List<SelectListItem> SectorsAndFrameworks { get; set; }
+        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        public string ShortDescriptionComment { get; set; }
 
+        public List<SelectListItem> SectorsAndFrameworks { get; set; }
+        
         public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
 
         public bool OfflineVacancy { get; set; }
@@ -38,8 +50,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.OfflineApplicationUrl.LabelText)]
         public string OfflineApplicationUrl { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        public string OfflineApplicationUrlComment { get; set; }
+
         [Display(Name = VacancyViewModelMessages.OfflineApplicationInstructions.LabelText)]
         public string OfflineApplicationInstructions { get; set; }
+
+        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        public string OfflineApplicationInstructionsComment { get; set; }
 
         public Guid VacancyGuid { get; set; }
 
@@ -48,7 +66,5 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public int? StandardId { get; set; }
 
         public List<StandardViewModel> Standards { get; set; }
-
-        public string Comment { get; set; }
     }
 }

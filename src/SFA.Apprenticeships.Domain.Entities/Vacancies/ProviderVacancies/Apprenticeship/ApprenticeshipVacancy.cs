@@ -6,7 +6,11 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
+        public string ApprenticeshipLevelComment { get; set; }
+
         public string FrameworkCodeName { get; set; }
+
+        public string FrameworkCodeNameComment { get; set; }
 
         public int? StandardId { get; set; }
 

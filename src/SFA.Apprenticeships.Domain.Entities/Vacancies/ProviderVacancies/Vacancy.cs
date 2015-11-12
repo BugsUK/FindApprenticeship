@@ -9,7 +9,9 @@
         public long VacancyReferenceNumber { get; set; }
         public string Ukprn { get; set; }
         public string Title { get; set; }
+        public string TitleComment { get; set; }
         public string ShortDescription { get; set; }
+        public string ShortDescriptionComment { get; set; }
         public string WorkingWeek { get; set; }
         public decimal? HoursPerWeek { get; set; }
         public WageType WageType { get; set; }
@@ -30,7 +32,9 @@
         public ProviderSiteEmployerLink ProviderSiteEmployerLink { get; set; }
         public bool OfflineVacancy { get; set; }
         public string OfflineApplicationUrl { get; set; }
+        public string OfflineApplicationUrlComment { get; set; }
         public string OfflineApplicationInstructions { get; set; }
+        public string OfflineApplicationInstructionsComment { get; set; }
         public DateTime? DateSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }
         public string QAUserName { get; set; }

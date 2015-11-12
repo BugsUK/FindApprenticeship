@@ -148,7 +148,17 @@
 
         public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            //TODO: basically the same code as in VacancyPostingMediator
+            var validationResult = _newVacancyViewModelServerValidator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
+            }
+
+            var updatedViewModel = _vacancyProvider.UpdateVacancy(viewModel);
+
+            return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
         public MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)

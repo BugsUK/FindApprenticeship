@@ -1,4 +1,9 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Configuration;
+﻿using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
+using SFA.Apprenticeships.Domain.Entities.Locations;
+using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+using SFA.Apprenticeships.Web.Raa.Common.Configuration;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
+using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
@@ -26,6 +31,114 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
     public class VacancyProviderTests
     {
         const int QAVacancyTimeout = 10;
+
+        [Test]
+        public void UpdateVacancyWithComments()
+        {
+            //Arrange
+            const long vacancyReferenceNumber = 1;
+            const string ukprn = "ukprn";
+
+            var newVacancyVM = new NewVacancyViewModel()
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                TitleComment = "TitleComment",
+                ApprenticeshipLevelComment = "App level comment",
+                OfflineApplicationUrlComment = "qerty",
+                ShortDescriptionComment = "shorty",
+                FrameworkCodeNameComment = "frames",
+                OfflineApplicationInstructionsComment = "offlineeee",
+                Title = "tit",
+                ShortDescription = "sjort",
+                OfflineApplicationUrl = "www.google.co.uk",
+                OfflineApplicationInstructions = "isntruct me",
+                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                {
+                    Employer = new EmployerViewModel()
+                    {
+                        Address = new AddressViewModel()
+                    }
+                }
+            };
+
+            var appVacancy = new ApprenticeshipVacancy
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                ClosingDate = DateTime.Now,
+                DateSubmitted = DateTime.Now,
+                ProviderSiteEmployerLink = new ProviderSiteEmployerLink
+                {
+                    Employer = new Employer()
+                    {
+                        Address = new Address()
+                    }
+                },
+                Ukprn = ukprn,
+                Status = ProviderVacancyStatuses.PendingQA
+            };
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+
+            vacancyPostingService.Setup(
+                vps => vps.GetVacancy(vacancyReferenceNumber)).Returns(appVacancy);
+
+            vacancyPostingService.Setup(vps => vps.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>())).Returns(appVacancy);
+
+            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .Build();
+
+            //Act
+            var result = vacancyProvider.UpdateVacancy(newVacancyVM);
+
+            //Assert
+            vacancyPostingService.Verify(vps => vps.GetVacancy(vacancyReferenceNumber), Times.Once);
+            vacancyPostingService.Verify(vps => vps.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.VacancyReferenceNumber == vacancyReferenceNumber)));
+            result.VacancyReferenceNumber.Should().Be(newVacancyVM.VacancyReferenceNumber);
+            result.ApprenticeshipLevelComment.Should().Be(newVacancyVM.ApprenticeshipLevelComment);
+            result.FrameworkCodeNameComment.Should().Be(newVacancyVM.FrameworkCodeNameComment);
+            result.OfflineApplicationInstructionsComment.Should().Be(newVacancyVM.OfflineApplicationInstructionsComment);
+            result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
+            result.ShortDescriptionComment.Should().Be(newVacancyVM.ShortDescriptionComment);
+            result.TitleComment.Should().Be(newVacancyVM.TitleComment);
+        }
+
+        [Test]
+        public void UpdateVacancyShouldExpectVacancyReferenceNumber()
+        {
+            //Arrange
+            var newVacancyVM = new NewVacancyViewModel()
+            {
+                TitleComment = "TitleComment",
+                ApprenticeshipLevelComment = "App level comment",
+                OfflineApplicationUrlComment = "qerty",
+                ShortDescriptionComment = "shorty",
+                FrameworkCodeNameComment = "frames",
+                OfflineApplicationInstructionsComment = "offlineeee",
+                Title = "tit",
+                ShortDescription = "sjort",
+                OfflineApplicationUrl = "www.google.co.uk",
+                OfflineApplicationInstructions = "isntruct me"
+            };
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .Build();
+
+            //Act
+            Action action = () => vacancyProvider.UpdateVacancy(newVacancyVM);
+
+            //Assert
+            action.ShouldThrow<ArgumentNullException>();
+        }
 
         [Test]
         public void GetVacanciesPendingQAShouldCallRepositoryWithPendingQAAsDesiredStatus()

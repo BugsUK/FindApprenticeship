@@ -1,10 +1,8 @@
-﻿using System.Collections.Generic;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using FluentValidation.Results;
+    using System.Collections.Generic;
+    using ViewModels;
+    using ViewModels.Vacancy;
 
     public interface IVacancyProvider
     {
