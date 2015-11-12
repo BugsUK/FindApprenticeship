@@ -110,51 +110,70 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                     VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                     Ukprn = apprenticeshipVacancy.Ukprn,
                     Title = apprenticeshipVacancy.Title,
+                    TitleComment = apprenticeshipVacancy.TitleComment,
                     ShortDescription = apprenticeshipVacancy.ShortDescription,
+                    ShortDescriptionComment = apprenticeshipVacancy.ShortDescriptionComment,
                     TrainingType = apprenticeshipVacancy.TrainingType,
                     ApprenticeshipLevel = apprenticeshipVacancy.ApprenticeshipLevel,
+                    ApprenticeshipLevelComment = apprenticeshipVacancy.ApprenticeshipLevelComment,
                     FrameworkCodeName = apprenticeshipVacancy.FrameworkCodeName,
+                    FrameworkCodeNameComment = apprenticeshipVacancy.FrameworkCodeNameComment,
                     StandardId = apprenticeshipVacancy.StandardId,
                     ProviderSiteEmployerLink = apprenticeshipVacancy.ProviderSiteEmployerLink.Convert(),
                     OfflineVacancy = apprenticeshipVacancy.OfflineVacancy,
                     OfflineApplicationUrl = apprenticeshipVacancy.OfflineApplicationUrl,
-                    OfflineApplicationInstructions = apprenticeshipVacancy.OfflineApplicationInstructions
+                    OfflineApplicationUrlComment = apprenticeshipVacancy.OfflineApplicationUrlComment,
+                    OfflineApplicationInstructions = apprenticeshipVacancy.OfflineApplicationInstructions,
+                    OfflineApplicationInstructionsComment = apprenticeshipVacancy.OfflineApplicationInstructionsComment
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
                     WorkingWeek = apprenticeshipVacancy.WorkingWeek,
+                    WorkingWeekComment = apprenticeshipVacancy.WorkingWeekComment,
                     HoursPerWeek = apprenticeshipVacancy.HoursPerWeek,
                     WageType = apprenticeshipVacancy.WageType,
                     Wage = apprenticeshipVacancy.Wage,
+                    WageComment = apprenticeshipVacancy.WageComment,
                     WageUnit = apprenticeshipVacancy.WageUnit,
                     DurationType = apprenticeshipVacancy.DurationType,
                     Duration = apprenticeshipVacancy.Duration,
+                    DurationComment = apprenticeshipVacancy.DurationComment,
                     ClosingDate = new DateViewModel
                     {
                         Day = apprenticeshipVacancy.ClosingDate?.Day,
                         Month = apprenticeshipVacancy.ClosingDate?.Month,
                         Year = apprenticeshipVacancy.ClosingDate?.Year
                     },
+                    ClosingDateComment = apprenticeshipVacancy.ClosingDateComment,
                     PossibleStartDate = new DateViewModel
                     {
                         Day = apprenticeshipVacancy.PossibleStartDate?.Day,
                         Month = apprenticeshipVacancy.PossibleStartDate?.Month,
                         Year = apprenticeshipVacancy.PossibleStartDate?.Year
                     },
-                    LongDescription = apprenticeshipVacancy.LongDescription
+                    PossibleStartDateComment= apprenticeshipVacancy.PossibleStartDateComment,
+                    LongDescription = apprenticeshipVacancy.LongDescription,
+                    LongDescriptionComment = apprenticeshipVacancy.LongDescriptionComment
                 },
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel
                 {
                     DesiredSkills = apprenticeshipVacancy.DesiredSkills,
+                    DesiredSkillsComment = apprenticeshipVacancy.DesiredSkillsComment,
                     FutureProspects = apprenticeshipVacancy.FutureProspects,
+                    FutureProspectsComment = apprenticeshipVacancy.FutureProspectsComment,
                     PersonalQualities = apprenticeshipVacancy.PersonalQualities,
+                    PersonalQualitiesComment = apprenticeshipVacancy.PersonalQualitiesComment,
                     ThingsToConsider = apprenticeshipVacancy.ThingsToConsider,
-                    DesiredQualifications = apprenticeshipVacancy.DesiredQualifications
+                    ThingsToConsiderComment = apprenticeshipVacancy.ThingsToConsiderComment,
+                    DesiredQualifications = apprenticeshipVacancy.DesiredQualifications,
+                    DesiredQualificationsComment = apprenticeshipVacancy.DesiredQualificationsComment
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel
                 {
                     FirstQuestion = apprenticeshipVacancy.FirstQuestion,
-                    SecondQuestion = apprenticeshipVacancy.SecondQuestion
+                    FirstQuestionComment = apprenticeshipVacancy.FirstQuestionComment,
+                    SecondQuestion = apprenticeshipVacancy.SecondQuestion,
+                    SecondQuestionComment = apprenticeshipVacancy.SecondQuestionComment
                 },
                 // Ukprn = apprenticeshipVacancy.Ukprn,
                 // Title = apprenticeshipVacancy.Title,

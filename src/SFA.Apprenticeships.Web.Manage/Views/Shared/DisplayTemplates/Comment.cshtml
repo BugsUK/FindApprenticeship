@@ -1,2 +1,5 @@
 ﻿@model string
-@Html.Label(Model)
+@if (!string.IsNullOrEmpty(Model))
+{
+    @Html.Label(Model)
+}
