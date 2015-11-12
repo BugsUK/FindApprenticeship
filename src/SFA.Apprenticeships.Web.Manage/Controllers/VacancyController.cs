@@ -8,6 +8,7 @@
     using Mediators.Vacancy;
     using Common.Mediators;
     using Common.Validators.Extensions;
+    using FluentValidation.Mvc;
     using Raa.Common.ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Raa)]
@@ -133,15 +134,51 @@
             throw new NotImplementedException();
         }
 
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult Questions(long vacancyReferenceNumber)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.GetVacancyQuestionsViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]
         public ActionResult Questions(VacancyQuestionsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                        new
+                        {
+                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                        });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyQAAction")]

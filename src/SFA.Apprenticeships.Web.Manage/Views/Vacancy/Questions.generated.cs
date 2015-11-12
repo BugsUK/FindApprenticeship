@@ -134,7 +134,29 @@ WriteLiteral("            ");
 
             
             #line 21 "..\..\Views\Vacancy\Questions.cshtml"
+       Write(Html.EditorFor(m => m.FirstQuestionComment, "Comment"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 22 "..\..\Views\Vacancy\Questions.cshtml"
        Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 23 "..\..\Views\Vacancy\Questions.cshtml"
+       Write(Html.EditorFor(m => m.SecondQuestionComment, "Comment"));
 
             
             #line default
@@ -151,26 +173,10 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(" name=\"VacancyQuestions\"");
-
-WriteLiteral(" value=\"VacancyQuestions\"");
-
-WriteLiteral(">Save and preview vacancy</button>\r\n        <button");
-
-WriteLiteral(" id=\"VacancyQuestionsAndExit\"");
-
-WriteLiteral(" type=\"submit\"");
-
-WriteLiteral(" class=\"button-link\"");
-
-WriteLiteral(" name=\"VacancyQuestions\"");
-
-WriteLiteral(" value=\"VacancyQuestionsAndExit\"");
-
-WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
+WriteLiteral(">Save</button>\r\n    </div>\r\n");
 
             
-            #line 28 "..\..\Views\Vacancy\Questions.cshtml"
+            #line 29 "..\..\Views\Vacancy\Questions.cshtml"
 }
             
             #line default

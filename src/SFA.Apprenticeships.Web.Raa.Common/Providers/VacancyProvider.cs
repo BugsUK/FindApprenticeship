@@ -277,7 +277,17 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.FirstQuestion = viewModel.FirstQuestion;
+            vacancy.SecondQuestion = viewModel.SecondQuestion;
+            vacancy.FirstQuestionComment = viewModel.FirstQuestionComment;
+            vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
+            return viewModel;
         }
 
         private StandardViewModel GetStandard(int? standardId)

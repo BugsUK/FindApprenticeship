@@ -21,5 +21,7 @@
         public string LongDescriptionComment { get; set; }
         public string PossibleStartDateComment { get; set; }
         public string WorkingWeekComment { get; set; }
+        public string FirstQuestionComment { get; set; }
+        public string SecondQuestionComment { get; set; }
     }
 }

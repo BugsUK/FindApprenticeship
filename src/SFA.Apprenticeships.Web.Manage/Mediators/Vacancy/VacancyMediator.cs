@@ -18,17 +18,20 @@
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
+        private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
 
         public VacancyMediator(IVacancyProvider vacancyProvider, IVacancyPostingProvider vacancyPostingProvider,
             VacancyViewModelValidator vacancyViewModelValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
-            NewVacancyViewModelServerValidator newVacancyViewModelServerValidator)
+            NewVacancyViewModelServerValidator newVacancyViewModelServerValidator, 
+            VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator)
         {
             _vacancyProvider = vacancyProvider;
             _vacancyPostingProvider = vacancyPostingProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
+            _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
         }
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
@@ -138,12 +141,30 @@
 
         public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
         {
-            throw new System.NotImplementedException();
+            var vacancyViewModel = _vacancyPostingProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+
+            var validationResult = _vacancyQuestionsViewModelServerValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyMediatorCodes.GetVacancyQuestionsViewModel.FailedValidation, vacancyViewModel, validationResult);
+            }
+
+            return GetMediatorResponse(VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok, vacancyViewModel);
         }
 
         public MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            var validationResult = _vacancyQuestionsViewModelServerValidator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
+            }
+
+            var updatedViewModel = _vacancyProvider.UpdateVacancy(viewModel);
+
+            return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)

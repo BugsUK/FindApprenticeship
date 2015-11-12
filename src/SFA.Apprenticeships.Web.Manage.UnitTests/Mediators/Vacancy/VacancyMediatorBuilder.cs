@@ -17,11 +17,12 @@
             new VacancySummaryViewModelServerValidator();
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator = new VacancyViewModelValidator();
+        private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator = new VacancyQuestionsViewModelServerValidator();
 
         public IVacancyMediator Build()
         {
             return new VacancyMediator(_vacancyProvider.Object, _vacancyPostingProvider.Object,
-                _vacancyViewModelValidator, _vacancySummaryViewModelServerValidator, _newVacancyViewModelServerValidator);
+                _vacancyViewModelValidator, _vacancySummaryViewModelServerValidator, _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator);
         }
 
         public VacancyMediatorBuilder With(Mock<IVacancyProvider> provider)

@@ -86,7 +86,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
             {
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                 FirstQuestion = apprenticeshipVacancy.FirstQuestion,
-                SecondQuestion = apprenticeshipVacancy.SecondQuestion
+                SecondQuestion = apprenticeshipVacancy.SecondQuestion,
+                FirstQuestionComment = apprenticeshipVacancy.FirstQuestionComment,
+                SecondQuestionComment = apprenticeshipVacancy.SecondQuestionComment
             };
 
             return vacancyViewModel;

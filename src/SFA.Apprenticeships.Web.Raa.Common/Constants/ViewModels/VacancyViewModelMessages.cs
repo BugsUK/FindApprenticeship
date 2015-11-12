@@ -161,6 +161,18 @@
             public const string WhiteListErrorText = "Second question " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
+        public static class FirstQuestionComment
+        {
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "First question " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
+        public static class SecondQuestionComment
+        {
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Second question " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
         public static class OfflineApplicationUrl
         {
             public const string LabelText = "What's the website address that candidate should apply through?";
@@ -196,7 +208,7 @@
         //TODO: do we need to make it less generic?
         public static class Comment
         {
-            public const string LabelText = "Comment";
+            public const string LabelText = "QA Comment";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Comment " + Whitelists.FreetextWhitelist.ErrorText;
         }

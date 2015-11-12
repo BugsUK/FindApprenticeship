@@ -41,5 +41,10 @@
         }
 
 
+        public class GetVacancyQuestionsViewModel
+        {
+            public const string FailedValidation = "VacancyMediatorCodes.GetVacancyQuestionsViewModel.FailedValidation";
+            public const string Ok = "VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok";
+        }
     }
 }
