@@ -205,8 +205,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber)
         {
-            var username = Thread.CurrentPrincipal.Identity.Name;
-            var vacancy = _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber, username);
+            var vacancy = _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
             //TODO: Cope with null, interprit as already reserved etc.
             var viewModel = vacancy.ConvertToVacancyViewModel();
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
