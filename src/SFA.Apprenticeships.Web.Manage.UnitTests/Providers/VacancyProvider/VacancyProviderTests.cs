@@ -1,12 +1,4 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
-using SFA.Apprenticeships.Domain.Entities.Locations;
-using SFA.Apprenticeships.Web.Common.Configuration;
-using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
-using SFA.Apprenticeships.Web.Raa.Common.Configuration;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
+﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
     using System;
     using System.Collections.Generic;
@@ -27,6 +19,13 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using Application.Interfaces.VacancyPosting;
+    using Domain.Entities.Locations;
+    using Common.Configuration;
+    using Common.ViewModels.Locations;
+    using Raa.Common.Configuration;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
     public class VacancyProviderTests
