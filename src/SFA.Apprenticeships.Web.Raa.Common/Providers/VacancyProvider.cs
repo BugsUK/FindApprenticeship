@@ -201,6 +201,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel)
         {
+            // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
             
             vacancy.WorkingWeek = viewModel.WorkingWeek;

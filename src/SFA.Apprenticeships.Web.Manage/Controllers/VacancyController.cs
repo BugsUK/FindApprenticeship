@@ -98,9 +98,9 @@
         }
 
         [HttpPost]
-        public ActionResult Summary(VacancySummaryViewModel viewModel, bool acceptWarnings)
+        public ActionResult Summary(VacancySummaryViewModel viewModel)
         {
-            var response = _vacancyMediator.UpdateVacancy(viewModel, acceptWarnings);
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
 
             ModelState.Clear();
 

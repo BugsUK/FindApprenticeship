@@ -85,7 +85,7 @@
 
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
-            if (!validationResult.IsValid ) //&& validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)
+            if (!validationResult.IsValid )
             {
                 vacancyViewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 vacancyViewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
@@ -96,7 +96,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel, bool acceptWarnings)
+        public MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel)
         {
             //TODO: basically the same code as in VacancyPostingMediator
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
