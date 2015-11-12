@@ -23,9 +23,9 @@
 
         VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel);
 
-        NewVacancyViewModel UpdateVacancy(NewVacancyViewModel viewModel);
+        NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
-        VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
+        VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
 
         VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel);
     }

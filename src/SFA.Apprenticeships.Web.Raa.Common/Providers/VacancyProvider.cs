@@ -249,7 +249,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public NewVacancyViewModel UpdateVacancy(NewVacancyViewModel viewModel)
+        public NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
@@ -286,9 +286,25 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return viewModel;
         }
 
-        public VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
+        public VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.DesiredSkills = viewModel.DesiredSkills;
+            vacancy.DesiredSkillsComment = viewModel.DesiredSkillsComment;
+            vacancy.FutureProspects = viewModel.FutureProspects;
+            vacancy.FutureProspectsComment = viewModel.FutureProspectsComment;
+            vacancy.PersonalQualities = viewModel.PersonalQualities;
+            vacancy.PersonalQualitiesComment = viewModel.PersonalQualitiesComment;
+            vacancy.ThingsToConsider = viewModel.ThingsToConsider;
+            vacancy.ThingsToConsiderComment = viewModel.ThingsToConsiderComment;
+            vacancy.DesiredQualifications = viewModel.DesiredQualifications;
+            vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
+            return viewModel;
         }
 
         public VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel)

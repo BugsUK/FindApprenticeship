@@ -71,10 +71,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
             {
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                 DesiredSkills = apprenticeshipVacancy.DesiredSkills,
+                DesiredSkillsComment = apprenticeshipVacancy.DesiredSkillsComment,
                 FutureProspects = apprenticeshipVacancy.FutureProspects,
+                FutureProspectsComment = apprenticeshipVacancy.FutureProspectsComment,
                 PersonalQualities = apprenticeshipVacancy.PersonalQualities,
+                PersonalQualitiesComment = apprenticeshipVacancy.PersonalQualitiesComment,
                 ThingsToConsider = apprenticeshipVacancy.ThingsToConsider,
-                DesiredQualifications = apprenticeshipVacancy.DesiredQualifications
+                ThingsToConsiderComment = apprenticeshipVacancy.ThingsToConsiderComment,
+                DesiredQualifications = apprenticeshipVacancy.DesiredQualifications,
+                DesiredQualificationsComment = apprenticeshipVacancy.DesiredQualificationsComment
             };
 
             return vacancyViewModel;

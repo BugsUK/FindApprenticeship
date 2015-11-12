@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
         const int QAVacancyTimeout = 10;
 
         [Test]
-        public void UpdateVacancyWithComments()
+        public void UpdateVacancyBasicDetailsWithComments()
         {
             //Arrange
             const long vacancyReferenceNumber = 1;
@@ -51,8 +51,9 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
                 OfflineApplicationInstructionsComment = "offlineeee",
                 Title = "tit",
                 ShortDescription = "sjort",
-                OfflineApplicationUrl = "www.google.co.uk",
+                OfflineApplicationUrl = "http://www.google.co.uk/",
                 OfflineApplicationInstructions = "isntruct me",
+                StandardId = 1,
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
                 {
                     Employer = new EmployerViewModel()
@@ -85,6 +86,27 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+            var referenceDataService = new Mock<IReferenceDataService>();
+
+            var sectorList = new List<Sector>()
+            {
+                new Sector()
+                {
+                    Id = 1,
+                    Name = "name",
+                    Standards = new List<Standard>
+                    {
+                        new Standard()
+                        {
+                            ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
+                            ApprenticeshipSectorId = 1,
+                            Name = "Name"
+                        }
+                    }
+                }
+            };
+
+            referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
 
             vacancyPostingService.Setup(
                 vps => vps.GetVacancy(vacancyReferenceNumber)).Returns(appVacancy);
@@ -97,10 +119,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
                 new VacancyProviderBuilder().With(vacancyPostingService)
                     .With(providerService)
                     .With(configurationService)
+                    .With(referenceDataService)
                     .Build();
 
             //Act
-            var result = vacancyProvider.UpdateVacancy(newVacancyVM);
+            var result = vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
 
             //Assert
             vacancyPostingService.Verify(vps => vps.GetVacancy(vacancyReferenceNumber), Times.Once);
@@ -112,10 +135,16 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
             result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
             result.ShortDescriptionComment.Should().Be(newVacancyVM.ShortDescriptionComment);
             result.TitleComment.Should().Be(newVacancyVM.TitleComment);
+            result.ApprenticeshipLevel.Should().Be(newVacancyVM.ApprenticeshipLevel);
+            result.FrameworkCodeName.Should().Be(newVacancyVM.FrameworkCodeName);
+            result.OfflineApplicationInstructions.Should().Be(newVacancyVM.OfflineApplicationInstructions);
+            result.OfflineApplicationUrl.Should().Be(newVacancyVM.OfflineApplicationUrl);
+            result.ShortDescription.Should().Be(newVacancyVM.ShortDescription);
+            result.Title.Should().Be(newVacancyVM.Title);
         }
 
         [Test]
-        public void UpdateVacancyShouldExpectVacancyReferenceNumber()
+        public void UpdateVacancyBasicDetailsShouldExpectVacancyReferenceNumber()
         {
             //Arrange
             var newVacancyVM = new NewVacancyViewModel()
@@ -147,10 +176,86 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
                     .Build();
 
             //Act
-            Action action = () => vacancyProvider.UpdateVacancy(newVacancyVM);
+            Action action = () => vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
 
             //Assert
             action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void UpdateVacancyRequirementsAndProspectsWithComments()
+        {
+            //Arrange
+            const long vacancyReferenceNumber = 1;
+            const string ukprn = "ukprn";
+
+            var vacancyVm = new VacancyRequirementsProspectsViewModel()
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                DesiredQualifications = "desi",
+                DesiredQualificationsComment = "desiComment",
+                FutureProspects = "fp",
+                FutureProspectsComment = "fpc",
+                DesiredSkills = "ds",
+                DesiredSkillsComment = "ds com",
+                PersonalQualities = "p quals",
+                PersonalQualitiesComment = "p quals comm",
+                ThingsToConsider = "considerations",
+                ThingsToConsiderComment = "rttt"
+            };
+
+            var appVacancy = new ApprenticeshipVacancy
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                ClosingDate = DateTime.Now,
+                DateSubmitted = DateTime.Now,
+                ProviderSiteEmployerLink = new ProviderSiteEmployerLink
+                {
+                    Employer = new Employer()
+                    {
+                        Address = new Address()
+                    }
+                },
+                Ukprn = ukprn,
+                Status = ProviderVacancyStatuses.PendingQA
+            };
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+
+            vacancyPostingService.Setup(
+                vps => vps.GetVacancy(vacancyReferenceNumber)).Returns(appVacancy);
+
+            vacancyPostingService.Setup(vps => vps.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>())).Returns(appVacancy);
+
+            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .With(configurationService)
+                    .Build();
+
+            //Act
+            var result = vacancyProvider.UpdateVacancyWithComments(vacancyVm);
+
+            //Assert
+            vacancyPostingService.Verify(vps => vps.GetVacancy(vacancyReferenceNumber), Times.Once);
+            vacancyPostingService.Verify(vps => vps.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.VacancyReferenceNumber == vacancyReferenceNumber)));
+            result.VacancyReferenceNumber.Should().Be(vacancyVm.VacancyReferenceNumber);
+            result.DesiredQualifications.Should().Be(vacancyVm.DesiredQualifications);
+            result.DesiredQualificationsComment.Should().Be(vacancyVm.DesiredQualificationsComment);
+            result.DesiredSkills.Should().Be(vacancyVm.DesiredSkills);
+            result.DesiredSkillsComment.Should().Be(vacancyVm.DesiredSkillsComment);
+            result.FutureProspectsComment.Should().Be(vacancyVm.FutureProspectsComment);
+            result.FutureProspects.Should().Be(vacancyVm.FutureProspects);
+            result.PersonalQualitiesComment.Should().Be(vacancyVm.PersonalQualitiesComment);
+            result.PersonalQualities.Should().Be(vacancyVm.PersonalQualities);
+            result.ThingsToConsiderComment.Should().Be(vacancyVm.ThingsToConsiderComment);
+            result.ThingsToConsider.Should().Be(vacancyVm.ThingsToConsider);
         }
 
         [Test]

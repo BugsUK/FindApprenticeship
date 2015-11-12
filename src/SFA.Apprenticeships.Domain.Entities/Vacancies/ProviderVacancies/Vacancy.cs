@@ -23,10 +23,15 @@
         public DateTime? PossibleStartDate { get; set; }
         public string LongDescription { get; set; }
         public string DesiredSkills { get; set; }
+        public string DesiredSkillsComment { get; set; }
         public string FutureProspects { get; set; }
+        public string FutureProspectsComment { get; set; }
         public string PersonalQualities { get; set; }
+        public string PersonalQualitiesComment { get; set; }
         public string ThingsToConsider { get; set; }
+        public string ThingsToConsiderComment { get; set; }
         public string DesiredQualifications { get; set; }
+        public string DesiredQualificationsComment { get; set; }
         public string FirstQuestion { get; set; }
         public string SecondQuestion { get; set; }
         public ProviderSiteEmployerLink ProviderSiteEmployerLink { get; set; }
