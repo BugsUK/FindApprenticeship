@@ -376,6 +376,13 @@
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
+            var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
+            if (isVacancySearch)
+            {
+                //When searching the ﬁlters (lottery numbers) are ignored and the search applies to all vacancies
+                vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
+            }
+
             //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
             var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn, providerSiteErn);
 
@@ -384,7 +391,7 @@
             var approved = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.DateQAApproved.HasValue && v.DateQAApproved > _dateTimeService.UtcNow().AddHours(-24)).ToList();
             var rejected = vacancies.Where(v => v.Status == ProviderVacancyStatuses.RejectedByQA).ToList();
             //TODO: Agree on closing soon range and make configurable
-            var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate > _dateTimeService.UtcNow() && v.ClosingDate.Value.AddDays(-3) < _dateTimeService.UtcNow()).ToList();
+            var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate > _dateTimeService.UtcNow() && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
             var closed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate < _dateTimeService.UtcNow()).ToList();
             //TODO: Does this include the one's in QA at the moment?
             var draft = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
@@ -413,17 +420,17 @@
 
             vacanciesSummarySearch.PageSizes = GetPageSizes(vacanciesSummarySearch.PageSize);
 
-            if (!string.IsNullOrEmpty(vacanciesSummarySearch.SearchString))
+            if (isVacancySearch)
             {
                 vacancies = vacancies.Where(v => v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
             }
 
             var vacancyPage = new PageableViewModel<VacancyViewModel>
             {
-                Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1) * vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).OrderBy(v => v.DateCreated).Select(v => v.ConvertToVacancyViewModel()).ToList(),
+                Page = vacancies.OrderByDescending(v => v.DateCreated).Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => v.ConvertToVacancyViewModel()).ToList(),
                 ResultsCount = vacancies.Count,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = (int)Math.Ceiling((double)vacancies.Count / vacanciesSummarySearch.PageSize)
+                TotalNumberOfPages = vacancies.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancies.Count/vacanciesSummarySearch.PageSize)
             };
 
             var vacanciesSummary = new VacanciesSummaryViewModel
