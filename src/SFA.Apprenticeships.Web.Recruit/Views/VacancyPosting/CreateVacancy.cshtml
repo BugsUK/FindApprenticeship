@@ -48,7 +48,7 @@
                 <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
                     <a name="@Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
-                    @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%;"})
+                    @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;" })
                     @Html.ValidationMessageFor(m => m.FrameworkCodeName)
                 </div>
 
@@ -79,7 +79,7 @@
                 <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
                     <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
-                    <select name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%;">
+                    <select name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%; margin-bottom: 15px;">
                         <option value="">Choose from the list of standards</option>
                         @foreach (var standardGroup in Model.Standards.GroupBy(s => s.Sector))
                         {
@@ -97,7 +97,11 @@
                     @Html.ValidationMessageFor(m => m.StandardId)
                 </div>
 
-                <div class="form-group" id="apprenticeship-level-container">
+                @{
+                    var style = Model.StandardId.HasValue ? "" : "display: none";
+                }
+
+                <div class="form-group" id="apprenticeship-level-container" style="@style">
                     <label class="form-label">Apprenticeship level</label>
                     <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
                 </div>
@@ -158,6 +162,7 @@
                 apprenticeshipLevel = "@ApprenticeshipLevel.Degree.ToString()";
             }
             $("#apprenticeship-level-name").text(apprenticeshipLevel);
+            $("#apprenticeship-level-container").show();
         });
     </script>
 }

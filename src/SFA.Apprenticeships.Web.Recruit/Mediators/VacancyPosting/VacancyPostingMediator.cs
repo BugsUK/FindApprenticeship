@@ -403,7 +403,7 @@
                 viewModel = new EmployerSearchViewModel
                 {
                     ProviderSiteErn = viewModel.ProviderSiteErn,
-                    FilterType = EmployerFilterType.Ern,
+                    FilterType = EmployerFilterType.Undefined,
                     EmployerResults = Enumerable.Empty<EmployerResultViewModel>(),
                     EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>()
                 };

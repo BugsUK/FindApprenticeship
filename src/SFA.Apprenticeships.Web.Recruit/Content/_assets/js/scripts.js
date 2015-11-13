@@ -239,7 +239,7 @@
         $maxLength    = $this.attr('data-val-length-max'),
         $enteredText  = $this.val(),
         $lineBreaks   = ($enteredText.match(/\n/g) || []).length,
-        $lengthOfText = $enteredText.length + $lineBreaks,
+        $lengthOfText = $enteredText.trim().length + $lineBreaks,
         $characterCount = Math.abs($maxLength - $lengthOfText),
         $charCountEl  = $this.closest('.form-group').find('.maxchar-count'),
         $charTextEl   = $this.closest('.form-group').find('.maxchar-text'),
