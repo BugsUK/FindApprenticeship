@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Application.VacancyPosting
+﻿namespace SFA.Apprenticeships.Application.VacancyPosting
 {
+    //TODO: rename project to SFA.Management.Application.VacancyPosting?
+    using System;
     using CuttingEdge.Conditions;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;

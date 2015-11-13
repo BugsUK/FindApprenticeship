@@ -161,6 +161,7 @@
     <Compile Include="Builders\SendDailyDigestsStrategyBuilder.cs" />
     <Compile Include="Communications\ExpiringDraftCommunicationTests.cs" />
     <Compile Include="Applications\Housekeeping\SubmittedApplicationHousekeeperTests.cs" />
+    <Compile Include="Employer\EmployerServiceTests.cs" />
     <Compile Include="Processors\CandidateProcesorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProviderUserAccount\ResendEmailVerificationCodeStrategyTests.cs" />
@@ -191,6 +192,7 @@
     <Compile Include="Vacancies\SavedSearchProcessorTests\ProcessCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SavedSearchProcessorTests\QueueCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SiteMapVacancyProcessorTests.cs" />
+    <Compile Include="VacancyPosting\VacancyPostingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -213,6 +215,10 @@
       <Project>{D91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
       <Name>SFA.Apprenticeships.Application.Communications</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj">
+      <Project>{DD096F97-415D-4676-9F90-7AEE60213F49}</Project>
+      <Name>SFA.Apprenticeships.Application.Employer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
@@ -232,6 +238,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
+      <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
