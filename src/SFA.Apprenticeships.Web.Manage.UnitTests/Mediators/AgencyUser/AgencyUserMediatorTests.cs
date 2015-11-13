@@ -126,7 +126,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
                     Title = "Vacancy 1"
                 }
             };
-            var vacancyProvider = new Mock<IVacancyProvider>();
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
             vacancyProvider.Setup(vp => vp.GetPendingQAVacanciesOverview()).Returns(vacancies);
             var mediator = new AgencyUserMediatorBuilder().With(vacancyProvider).Build();
             var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();

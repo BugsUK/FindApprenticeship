@@ -67,7 +67,7 @@
         public void UpdateVacancyWillUpdateVacancyIfViewModelIsValid()
         {
             const int vacancyReferenceNumber = 1;
-            var vacancyProvider = new Mock<IVacancyProvider>();
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
@@ -75,13 +75,13 @@
             var result = mediator.UpdateVacancy(viewModel);
 
             result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
-            vacancyProvider.Verify(vp => vp.UpdateVacancy(viewModel));
+            vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel));
         }
 
         [Test]
         public void UpdateVacancyWillNotUpdateVacancyIfViewModelIsNotValid()
         {
-            var vacancyProvider = new Mock<IVacancyProvider>();
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = new VacancySummaryViewModel
@@ -93,13 +93,13 @@
             var result = mediator.UpdateVacancy(viewModel);
 
             result.AssertValidationResult(VacancyMediatorCodes.UpdateVacancy.FailedValidation);
-            vacancyProvider.Verify(vp => vp.UpdateVacancy(viewModel), Times.Never);
+            vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel), Times.Never);
         }
 
         [Test]
         public void UpdateVacancyWithAVacancyThatAcceptsWarningsWithWarningsShouldUpdateVacancy()
         {
-            var vacancyProvider = new Mock<IVacancyProvider>();
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = GetValidVacancySummaryViewModel(1);
@@ -109,13 +109,13 @@
             var result = mediator.UpdateVacancy(viewModel);
 
             result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
-            vacancyProvider.Verify(vp => vp.UpdateVacancy(viewModel));
+            vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel));
         }
 
         [Test]
         public void UpdateVacancyWithAVacancyThatDontAcceptsWarningsWithWarningsShouldNotUpdateVacancy()
         {
-            var vacancyProvider = new Mock<IVacancyProvider>();
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = GetValidVacancySummaryViewModel(1);
@@ -125,7 +125,7 @@
             var result = mediator.UpdateVacancy(viewModel);
 
             result.AssertValidationResult(VacancyMediatorCodes.UpdateVacancy.FailedValidation);
-            vacancyProvider.Verify(vp => vp.UpdateVacancy(viewModel), Times.Never);
+            vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel), Times.Never);
         }
 
         [Test]
@@ -148,14 +148,14 @@
         {
             const long vacancyReferenceNumber = 1;
             var vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
-            var vacancyProvider = new Mock<IVacancyProvider>();
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).With(vacancyPostingProvider).Build();
             var viewModel = new VacancyQuestionsViewModel();
             vacancyPostingProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(viewModel);
 
             var result = mediator.UpdateVacancy(viewModel);
             result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
-            vacancyProvider.Verify(vp => vp.UpdateVacancy(viewModel));
+            vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel));
         }
 
         private static VacancySummaryViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)

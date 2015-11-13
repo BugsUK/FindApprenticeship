@@ -12,7 +12,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
     {
         protected Mock<IProviderUserProvider> MockProviderUserProvider;
         protected Mock<IProviderProvider> MockProviderProvider;
-        protected Mock<IVacancyProvider> MockVacancyProvider;
+        protected Mock<IVacancyQAProvider> MockVacancyProvider;
         protected Mock<IAuthorizationErrorProvider> MockAuthorizationErrorProvider;
 
         [SetUp]
@@ -20,7 +20,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
         {
             MockProviderUserProvider = new Mock<IProviderUserProvider>();
             MockProviderProvider = new Mock<IProviderProvider>();
-            MockVacancyProvider = new Mock<IVacancyProvider>();
+            MockVacancyProvider = new Mock<IVacancyQAProvider>();
             MockAuthorizationErrorProvider = new Mock<IAuthorizationErrorProvider>();
         }
 

@@ -8,6 +8,7 @@
     using Common.Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Providers;
@@ -20,6 +21,8 @@
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
         protected Mock<IDateTimeService> MockTimeService;
+        protected Mock<IApprenticeshipVacancyReadRepository> MockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+        protected Mock<IApprenticeshipVacancyWriteRepository> MockApprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
 
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
 
@@ -29,8 +32,11 @@
             MockLogService = new Mock<ILogService>();
             MockConfigurationService = new Mock<IConfigurationService>();
             MockMapper = new Mock<IMapper>();
+            MockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            MockApprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
 
-            MockVacancyPostingService = new Mock<IVacancyPostingService>();
+
+        MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
 
@@ -42,13 +48,14 @@
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
         {
-            return new VacancyPostingProvider(
-                MockLogService.Object,
+            return new VacancyPostingProvider(MockLogService.Object,
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
                 MockReferenceDataService.Object,
                 MockProviderService.Object,
-                MockTimeService.Object);
+                MockTimeService.Object,
+                MockApprenticeshipVacancyReadRepository.Object,
+                MockApprenticeshipVacancyWriteRepository.Object);
         }
     }
 }

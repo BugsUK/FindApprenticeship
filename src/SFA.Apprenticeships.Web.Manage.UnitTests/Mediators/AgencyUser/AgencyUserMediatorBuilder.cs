@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
         private Mock<IAgencyUserProvider> _agencyUserProvider = new Mock<IAgencyUserProvider>(); 
         private readonly Mock<IAuthorizationErrorProvider> _authorizationErrorProvider = new Mock<IAuthorizationErrorProvider>();
         private Mock<IUserDataProvider> _userDataProvider = new Mock<IUserDataProvider>();
-        private Mock<IVacancyProvider> _vacancyProvider = new Mock<IVacancyProvider>();
+        private Mock<IVacancyQAProvider> _vacancyProvider = new Mock<IVacancyQAProvider>();
 
         public IAgencyUserMediator Build()
         {
@@ -36,7 +36,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
             return this;
         }
 
-        internal AgencyUserMediatorBuilder With(Mock<IVacancyProvider> vacancyProvider)
+        internal AgencyUserMediatorBuilder With(Mock<IVacancyQAProvider> vacancyProvider)
         {
             _vacancyProvider = vacancyProvider;
             return this;

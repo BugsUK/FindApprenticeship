@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         private readonly IProviderUserProvider _providerUserProvider;
         private readonly IProviderProvider _providerProvider;
         private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
-        private readonly IVacancyProvider _vacancyProvider;
+        private readonly IVacancyQAProvider _vacancyQaProvider;
 
         private readonly ProviderUserViewModelValidator _providerUserViewModelValidator;
         private readonly VerifyEmailViewModelValidator _verifyEmailViewModelValidator;
@@ -33,14 +33,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         public ProviderUserMediator(IProviderUserProvider providerUserProvider,
             IProviderProvider providerProvider,
             IAuthorizationErrorProvider authorizationErrorProvider,
-            IVacancyProvider vacancyProvider,
+            IVacancyQAProvider vacancyQaProvider,
             ProviderUserViewModelValidator providerUserViewModelValidator,
             VerifyEmailViewModelValidator verifyEmailViewModelValidator)
         {
             _providerUserProvider = providerUserProvider;
             _providerProvider = providerProvider;
             _authorizationErrorProvider = authorizationErrorProvider;
-            _vacancyProvider = vacancyProvider;
+            _vacancyQaProvider = vacancyQaProvider;
             _providerUserViewModelValidator = providerUserViewModelValidator;
             _verifyEmailViewModelValidator = verifyEmailViewModelValidator;
         }
@@ -218,7 +218,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
             var provider = _providerProvider.GetProviderViewModel(ukprn);
             var providerSites = GetProviderSites(ukprn);
-            var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(ukprn, providerUserViewModel.DefaultProviderSiteErn, vacanciesSummarySearch);
+            var vacanciesSummary = _vacancyQaProvider.GetVacanciesSummaryForProvider(ukprn, providerUserViewModel.DefaultProviderSiteErn, vacanciesSummarySearch);
 
             var viewModel = new HomeViewModel
             {

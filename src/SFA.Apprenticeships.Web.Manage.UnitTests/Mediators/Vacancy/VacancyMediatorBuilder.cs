@@ -11,7 +11,7 @@
             new NewVacancyViewModelServerValidator();
 
         private Mock<IVacancyPostingProvider> _vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
-        private Mock<IVacancyProvider> _vacancyProvider = new Mock<IVacancyProvider>();
+        private Mock<IVacancyQAProvider> _vacancyProvider = new Mock<IVacancyQAProvider>();
 
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator =
             new VacancySummaryViewModelServerValidator();
@@ -26,7 +26,7 @@
             _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator, _vacancyRequirementsProspectsViewModelServerValidator);
         }
 
-        public VacancyMediatorBuilder With(Mock<IVacancyProvider> provider)
+        public VacancyMediatorBuilder With(Mock<IVacancyQAProvider> provider)
         {
             _vacancyProvider = provider;
             return this;

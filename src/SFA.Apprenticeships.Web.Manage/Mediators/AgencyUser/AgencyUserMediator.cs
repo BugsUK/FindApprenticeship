@@ -19,14 +19,14 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
         private readonly IAgencyUserProvider _agencyUserProvider;
         private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
         private readonly IUserDataProvider _userDataProvider;
-        private readonly IVacancyProvider _vacancyProvider;
+        private readonly IVacancyQAProvider _vacancyQaProvider;
 
-        public AgencyUserMediator(IAgencyUserProvider agencyUserProvider, IAuthorizationErrorProvider authorizationErrorProvider, IUserDataProvider userDataProvider, IVacancyProvider vacancyProvider)
+        public AgencyUserMediator(IAgencyUserProvider agencyUserProvider, IAuthorizationErrorProvider authorizationErrorProvider, IUserDataProvider userDataProvider, IVacancyQAProvider vacancyQaProvider)
         {
             _agencyUserProvider = agencyUserProvider;
             _authorizationErrorProvider = authorizationErrorProvider;
             _userDataProvider = userDataProvider;
-            _vacancyProvider = vacancyProvider;
+            _vacancyQaProvider = vacancyQaProvider;
         }
 
         public MediatorResponse<AgencyUserViewModel> Authorize(ClaimsPrincipal principal)
@@ -90,7 +90,7 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
             var username = principal.Identity.Name;
             var roleList = principal.GetRoleList();
             var userViewModel = _agencyUserProvider.GetAgencyUser(username, roleList);
-            var vacancies = _vacancyProvider.GetPendingQAVacanciesOverview();
+            var vacancies = _vacancyQaProvider.GetPendingQAVacanciesOverview();
             
             var homeViewModel = new HomeViewModel
             {

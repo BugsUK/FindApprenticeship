@@ -697,7 +697,9 @@
             const string possibleStartDateComment = "Possible start date comment";
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var provider = new VacancyProviderBuilder().With(vacancyPostingService).Build();
+            var configService = new Mock<IConfigurationService>();
+            configService.Setup(m => m.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration() {BlacklistedCategoryCodes = string.Empty});
+            var provider = new VacancyProviderBuilder().With(vacancyPostingService).With(configService).Build();
             var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
             vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new ApprenticeshipVacancy());
             vacancyPostingService.Setup(vp => vp.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
@@ -709,7 +711,7 @@
             viewModel.WageComment = wageComment;
             viewModel.WorkingWeekComment = workingWeekComment;
 
-            provider.UpdateVacancy(viewModel);
+            provider.UpdateVacancyWithComments(viewModel);
 
             vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
             vacancyPostingService.Verify(
@@ -746,7 +748,7 @@
                 VacancyReferenceNumber = vacancyReferenceNumber
             };
 
-            provider.UpdateVacancy(viewModel);
+            provider.UpdateVacancyWithComments(viewModel);
 
             vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
             vacancyPostingService.Verify(

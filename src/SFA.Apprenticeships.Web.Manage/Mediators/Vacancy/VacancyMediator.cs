@@ -12,7 +12,7 @@
 
     public class VacancyMediator : MediatorBase, IVacancyMediator
     {
-        private readonly IVacancyProvider _vacancyProvider;
+        private readonly IVacancyQAProvider _vacancyQaProvider;
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
@@ -21,14 +21,14 @@
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator;
 
-        public VacancyMediator(IVacancyProvider vacancyProvider, IVacancyPostingProvider vacancyPostingProvider,
+        public VacancyMediator(IVacancyQAProvider vacancyQaProvider, IVacancyPostingProvider vacancyPostingProvider,
             VacancyViewModelValidator vacancyViewModelValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
             NewVacancyViewModelServerValidator newVacancyViewModelServerValidator, 
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator)
         {
-            _vacancyProvider = vacancyProvider;
+            _vacancyQaProvider = vacancyQaProvider;
             _vacancyPostingProvider = vacancyPostingProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
@@ -39,9 +39,9 @@
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
         {
-            _vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
+            _vacancyQaProvider.ApproveVacancy(vacancyReferenceNumber);
 
-            var vacancies = _vacancyProvider.GetPendingQAVacancies();
+            var vacancies = _vacancyQaProvider.GetPendingQAVacancies();
 
             if (vacancies == null || !vacancies.Any())
             {
@@ -53,9 +53,9 @@
 
         public MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(long vacancyReferenceNumber)
         {
-            _vacancyProvider.RejectVacancy(vacancyReferenceNumber);
+            _vacancyQaProvider.RejectVacancy(vacancyReferenceNumber);
 
-            var vacancies = _vacancyProvider.GetPendingQAVacancies();
+            var vacancies = _vacancyQaProvider.GetPendingQAVacancies();
 
             if (vacancies == null || !vacancies.Any())
             {
@@ -67,7 +67,7 @@
 
         public MediatorResponse<VacancyViewModel> ReserveVacancyForQA(long vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyProvider.ReserveVacancyForQA(vacancyReferenceNumber);
+            var vacancyViewModel = _vacancyQaProvider.ReserveVacancyForQA(vacancyReferenceNumber);
 
             var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
@@ -117,7 +117,7 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyProvider.UpdateVacancy(viewModel);
+            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
@@ -174,7 +174,7 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyProvider.UpdateVacancy(viewModel);
+            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
@@ -189,7 +189,7 @@
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 
-            var updatedViewModel = _vacancyProvider.UpdateVacancyWithComments(viewModel);
+            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
@@ -204,7 +204,7 @@
                     validationResult);
             }
 
-            var updatedViewModel = _vacancyProvider.UpdateVacancyWithComments(viewModel);
+            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
             return
                 GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);

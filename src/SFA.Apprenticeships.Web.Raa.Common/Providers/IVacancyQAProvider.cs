@@ -5,10 +5,8 @@
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
 
-    public interface IVacancyProvider
+    public interface IVacancyQAProvider
     {
-		List<VacancyViewModel> GetVacanciesForProvider(string ukprn, string providerSiteErn);
-
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 	
         List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview();
@@ -21,12 +19,20 @@
 
         VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber);
 
-        VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel);
+        NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
+
+        VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+
+        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
+
+        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+
+        VacancySummaryViewModel UpdateVacancyWithComments(VacancySummaryViewModel viewModel);
 
         NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
 
-        VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel);
+        VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
     }
 }

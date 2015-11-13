@@ -3,21 +3,27 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.DateTime;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.VacancyPosting;
+    using Configuration;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Converters;
+    using Domain.Interfaces.Repositories;
+    using ViewModels;
+    using ViewModels.ProviderUser;
+    using Web.Common.ViewModels;
 
 
-    public class VacancyPostingProvider : IVacancyPostingProvider
+    public class VacancyPostingProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
         private readonly ILogService _logService;
 
@@ -25,23 +31,29 @@
         private readonly IReferenceDataService _referenceDataService;
         private readonly IProviderService _providerService;
         private readonly IDateTimeService _dateTimeService;
-
-        private readonly string[] _blacklistedCategoryCodes;
+        //TODO: Providers aren't really supposed to reference repositories directly, they are supposed to use services at least with the current architecture
+        private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
+        private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
+        private readonly IConfigurationService _configurationService;
 
         public VacancyPostingProvider(
             ILogService logService,
             IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService,
             IReferenceDataService referenceDataService,
-            IProviderService providerService, IDateTimeService dateTimeService)
+            IProviderService providerService,
+            IDateTimeService dateTimeService, 
+            IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, 
+            IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
-
             _referenceDataService = referenceDataService;
             _providerService = providerService;
             _dateTimeService = dateTimeService;
-            _blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(configurationService);
+            _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
+            _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
+            _configurationService = configurationService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
@@ -301,7 +313,9 @@
                 new SelectListItem { Value = string.Empty, Text = "Choose from the list of frameworks"}
             };
 
-            foreach (var sector in categories.Where(category => !_blacklistedCategoryCodes.Contains(category.CodeName)))
+            var blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(_configurationService);
+
+            foreach (var sector in categories.Where(category => !blacklistedCategoryCodes.Contains(category.CodeName)))
             {
                 if (sector.SubCategories != null)
                 {
@@ -358,5 +372,294 @@
         }
 
         #endregion
+
+        public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn,
+            VacanciesSummarySearchViewModel vacanciesSummarySearch)
+        {
+            //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
+            var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn, providerSiteErn);
+
+            var live = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live).ToList();
+            //TODO: make approved timespan configurable
+            var approved = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.DateQAApproved.HasValue && v.DateQAApproved > _dateTimeService.UtcNow().AddHours(-24)).ToList();
+            var rejected = vacancies.Where(v => v.Status == ProviderVacancyStatuses.RejectedByQA).ToList();
+            //TODO: Agree on closing soon range and make configurable
+            var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate > _dateTimeService.UtcNow() && v.ClosingDate.Value.AddDays(-3) < _dateTimeService.UtcNow()).ToList();
+            var closed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate < _dateTimeService.UtcNow()).ToList();
+            //TODO: Does this include the one's in QA at the moment?
+            var draft = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
+
+            switch (vacanciesSummarySearch.FilterType)
+            {
+                case VacanciesSummaryFilterTypes.Live:
+                    vacancies = live;
+                    break;
+                case VacanciesSummaryFilterTypes.Approved:
+                    vacancies = approved;
+                    break;
+                case VacanciesSummaryFilterTypes.Rejected:
+                    vacancies = rejected;
+                    break;
+                case VacanciesSummaryFilterTypes.ClosingSoon:
+                    vacancies = closingSoon;
+                    break;
+                case VacanciesSummaryFilterTypes.Closed:
+                    vacancies = closed;
+                    break;
+                case VacanciesSummaryFilterTypes.Draft:
+                    vacancies = draft;
+                    break;
+            }
+
+            vacanciesSummarySearch.PageSizes = GetPageSizes(vacanciesSummarySearch.PageSize);
+
+            if (!string.IsNullOrEmpty(vacanciesSummarySearch.SearchString))
+            {
+                vacancies = vacancies.Where(v => v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            }
+
+            var vacancyPage = new PageableViewModel<VacancyViewModel>
+            {
+                Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1) * vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).OrderBy(v => v.DateCreated).Select(v => v.ConvertToVacancyViewModel()).ToList(),
+                ResultsCount = vacancies.Count,
+                CurrentPage = vacanciesSummarySearch.CurrentPage,
+                TotalNumberOfPages = (int)Math.Ceiling((double)vacancies.Count / vacanciesSummarySearch.PageSize)
+            };
+
+            var vacanciesSummary = new VacanciesSummaryViewModel
+            {
+                VacanciesSummarySearch = vacanciesSummarySearch,
+                LiveCount = live.Count,
+                ApprovedCount = approved.Count,
+                RejectedCount = rejected.Count,
+                ClosingSoonCount = closingSoon.Count,
+                ClosedCount = closed.Count,
+                DraftCount = draft.Count,
+                Vacancies = vacancyPage
+            };
+
+            return vacanciesSummary; 
+        }
+
+        private List<SelectListItem> GetPageSizes(int pageSize)
+        {
+            return new List<SelectListItem>
+            {
+                new SelectListItem {Value = "5", Text = "5 per page", Selected = pageSize == 5},
+                new SelectListItem {Value = "10", Text = "10 per page", Selected = pageSize == 10},
+                new SelectListItem {Value = "25", Text = "25 per page", Selected = pageSize == 25},
+                new SelectListItem {Value = "50", Text = "50 per page", Selected = pageSize == 50}
+            };
+        }
+
+        public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
+        {
+            var vacancies =
+                _apprenticeshipVacancyReadRepository.GetWithStatus(new List<ProviderVacancyStatuses>
+                {
+                        ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA
+                });
+
+            return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
+        }
+
+        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(ApprenticeshipVacancy apprenticeshipVacancy)
+        {
+            var provider = _providerService.GetProvider(apprenticeshipVacancy.Ukprn);
+
+            return new DashboardVacancySummaryViewModel
+            {
+                ClosingDate = apprenticeshipVacancy.ClosingDate.Value,
+                DateSubmitted = apprenticeshipVacancy.DateSubmitted.Value,
+                ProviderName = provider.Name,
+                Status = apprenticeshipVacancy.Status,
+                Title = apprenticeshipVacancy.Title,
+                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
+                DateStartedToQA = apprenticeshipVacancy.DateStartedToQA,
+                QAUserName = apprenticeshipVacancy.QAUserName,
+                CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(apprenticeshipVacancy)
+            };
+        }
+
+        private bool CanBeReservedForQaByCurrentUser(ApprenticeshipVacancy apprenticeshipVacancy)
+        {
+            if (NoUserHasStartedToQATheVacancy(apprenticeshipVacancy))
+            {
+                return true;
+            }
+
+            if (CurrentUserHasStartedToQATheVacancy(apprenticeshipVacancy))
+            {
+                return true;
+            }
+
+            var timeout = _configurationService.Get<ManageWebConfiguration>().QAVacancyTimeout; //In minutes
+            if (AUserHasLeftTheVacancyUnattended(apprenticeshipVacancy, timeout))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool NoUserHasStartedToQATheVacancy(ApprenticeshipVacancy apprenticeshipVacancy)
+        {
+            return apprenticeshipVacancy.Status == ProviderVacancyStatuses.PendingQA && (string.IsNullOrWhiteSpace(apprenticeshipVacancy.QAUserName) || !apprenticeshipVacancy.DateStartedToQA.HasValue);
+        }
+
+        private bool CurrentUserHasStartedToQATheVacancy(ApprenticeshipVacancy apprenticeshipVacancy)
+        {
+            return apprenticeshipVacancy.Status == ProviderVacancyStatuses.ReservedForQA && apprenticeshipVacancy.QAUserName == Thread.CurrentPrincipal.Identity.Name;
+        }
+
+        private bool AUserHasLeftTheVacancyUnattended(ApprenticeshipVacancy apprenticeshipVacancy, int timeout)
+        {
+            return apprenticeshipVacancy.Status == ProviderVacancyStatuses.ReservedForQA && (_dateTimeService.UtcNow() - apprenticeshipVacancy.DateStartedToQA).Value.TotalMinutes > timeout;
+        }
+
+        public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
+        {
+            return GetPendingQAVacanciesOverview().Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
+        }
+
+        public void ApproveVacancy(long vacancyReferenceNumber)
+        {
+            var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
+            vacancy.Status = ProviderVacancyStatuses.Live;
+            vacancy.DateQAApproved = _dateTimeService.UtcNow();
+
+            _apprenticeshipVacancyWriteRepository.Save(vacancy);
+        }
+
+        public void RejectVacancy(long vacancyReferenceNumber)
+        {
+            var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
+            vacancy.Status = ProviderVacancyStatuses.RejectedByQA;
+
+            _apprenticeshipVacancyWriteRepository.Save(vacancy);
+        }
+
+        public VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber)
+        {
+            var vacancy = _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+            //TODO: Cope with null, interprit as already reserved etc.
+            var viewModel = vacancy.ConvertToVacancyViewModel();
+            var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
+            viewModel.ProviderSite = providerSite.Convert();
+            viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
+            var standard = GetStandard(vacancy.StandardId);
+            viewModel.StandardName = standard == null ? "" : standard.Name;
+            return viewModel;
+        }
+
+        public VacancySummaryViewModel UpdateVacancyWithComments(VacancySummaryViewModel viewModel)
+        {
+            // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.WorkingWeek = viewModel.WorkingWeek;
+            vacancy.HoursPerWeek = viewModel.HoursPerWeek;
+            vacancy.WageType = viewModel.WageType;
+            vacancy.Wage = viewModel.Wage;
+            vacancy.WageUnit = viewModel.WageUnit;
+            vacancy.DurationType = viewModel.DurationType;
+            vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
+
+            if (viewModel.ClosingDate.HasValue)
+            {
+                vacancy.ClosingDate = viewModel.ClosingDate?.Date;
+            }
+            if (viewModel.PossibleStartDate.HasValue)
+            {
+                vacancy.PossibleStartDate = viewModel.PossibleStartDate?.Date;
+            }
+
+            vacancy.LongDescription = viewModel.LongDescription;
+
+            vacancy.WageComment = viewModel.WageComment;
+            vacancy.ClosingDateComment = viewModel.ClosingDateComment;
+            vacancy.DurationComment = viewModel.DurationComment;
+            vacancy.LongDescriptionComment = viewModel.LongDescriptionComment;
+            vacancy.PossibleStartDateComment = viewModel.PossibleStartDateComment;
+            vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancySummaryViewModel();
+            return viewModel;
+        }
+
+        public NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel)
+        {
+            if (!viewModel.VacancyReferenceNumber.HasValue)
+                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
+
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+
+            var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl) ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString() : viewModel.OfflineApplicationUrl;
+
+            //update properties
+            vacancy.Ukprn = viewModel.Ukprn;
+            vacancy.Title = viewModel.Title;
+            vacancy.ShortDescription = viewModel.ShortDescription;
+            vacancy.TrainingType = viewModel.TrainingType;
+            vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
+            vacancy.StandardId = viewModel.StandardId;
+            vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
+            vacancy.OfflineVacancy = viewModel.OfflineVacancy;
+            vacancy.OfflineApplicationUrl = offlineApplicationUrl;
+            vacancy.OfflineApplicationInstructions = viewModel.OfflineApplicationInstructions;
+            vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;
+            vacancy.FrameworkCodeNameComment = viewModel.FrameworkCodeNameComment;
+            vacancy.OfflineApplicationInstructionsComment = viewModel.OfflineApplicationInstructionsComment;
+            vacancy.OfflineApplicationUrlComment = viewModel.OfflineApplicationUrlComment;
+            vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
+            vacancy.TitleComment = viewModel.TitleComment;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToNewVacancyViewModel();
+            var sectors = GetSectorsAndFrameworks();
+            var standards = GetStandards();
+            viewModel.SectorsAndFrameworks = sectors;
+            viewModel.Standards = standards;
+            return viewModel;
+        }
+
+        public VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.DesiredSkills = viewModel.DesiredSkills;
+            vacancy.DesiredSkillsComment = viewModel.DesiredSkillsComment;
+            vacancy.FutureProspects = viewModel.FutureProspects;
+            vacancy.FutureProspectsComment = viewModel.FutureProspectsComment;
+            vacancy.PersonalQualities = viewModel.PersonalQualities;
+            vacancy.PersonalQualitiesComment = viewModel.PersonalQualitiesComment;
+            vacancy.ThingsToConsider = viewModel.ThingsToConsider;
+            vacancy.ThingsToConsiderComment = viewModel.ThingsToConsiderComment;
+            vacancy.DesiredQualifications = viewModel.DesiredQualifications;
+            vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
+            return viewModel;
+        }
+
+        public VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.FirstQuestion = viewModel.FirstQuestion;
+            vacancy.SecondQuestion = viewModel.SecondQuestion;
+            vacancy.FirstQuestionComment = viewModel.FirstQuestionComment;
+            vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
+            return viewModel;
+        }
     }
 }
