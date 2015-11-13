@@ -26,28 +26,13 @@
 
         public VacancyDetailsResponse Get(VacancyDetailsRequest request)
         {
-            var type = typeof(Exception);
-            var type2 = typeof (Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.Configuration.ExceptionHandlingSettings);
-
-            if (request.MessageId.ToString() == Guid.Empty.ToString())
+            // TODO: API: AG: remove test code.
+            if (request.MessageId == Guid.Empty)
             {
-                try
-                {
-                    throw new SecurityException("Something wonderful happened.");
-                }
-                catch (Exception e)
-                {
-                    var rethrow = ExceptionPolicy.HandleException(e, "Default Exception Policy");
-
-                    if (rethrow)
-                    {
-                        throw;
-                    }
-                }
+                throw new SecurityException();
             }
- 
+
             return _vacancyDetailsProvider.Get(request);
         }
     }
 }
- 
