@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prototypes", "Prototypes\Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Entities", "SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj", "{4C2BE232-4DBD-44D0-B427-0450E2D857A5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Common", "SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj", "{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,22 @@ Global
 		{4C2BE232-4DBD-44D0-B427-0450E2D857A5}.Release|Any CPU.Build.0 = Demo|Any CPU
 		{4C2BE232-4DBD-44D0-B427-0450E2D857A5}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{4C2BE232-4DBD-44D0-B427-0450E2D857A5}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Local|Any CPU.Build.0 = Local|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -384,8 +384,6 @@
     <Content Include="Content\_assets\css\font-awesome\fonts\FontAwesome.otf" />
     <Content Include="Content\_assets\css\fonts-ie8.css" />
     <Content Include="Content\_assets\css\fonts.css" />
-    <Content Include="Content\_assets\css\main-2.0.0.css" />
-    <Content Include="Content\_assets\css\main-ie8-2.0.0.css" />
     <Content Include="Content\_assets\css\main-ie8.css" />
     <Content Include="Content\_assets\css\main.css" />
     <Content Include="Content\_assets\img\apple-touch-icon-114x114.png" />
@@ -481,6 +479,12 @@
     <Content Include="Views\Shared\EditorTemplates\DateViewModel.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateViewModel.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Content\_assets\scss\main-ie8.scss" />
+    <Content Include="Content\_assets\scss\main.scss" />
+    <None Include="compilerconfig.json" />
+    <Content Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -682,6 +686,9 @@ SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$
 SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\
 )
 robocopy /IS /E %25COPY_PATH%25 $(ProjectDir)
+if %25errorlevel%25 gtr 3 exit %25errorlevel%25
+
+robocopy /S /E $(ProjectDir)..\SFA.Apprenticeships.Web.Common\Content $(ProjectDir)\Content\_assets /XD scss
 if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />

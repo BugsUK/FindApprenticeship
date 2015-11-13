@@ -14,20 +14,13 @@ namespace SFA.Apprenticeships.Web.Candidate
         {
             bundles.UseCdn = true;
 
-            bundles.Add(new ScriptBundle("~/bundles/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js").Include(
-                "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
+            Common.BundleConfig.RegisterBundles(bundles);
 
-            bundles.Add(new ScriptBundle("~/bundles/fastclick", "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js").Include(
-                "~/Content/_assets/js/vendor/fastclick-1.0.6.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/underscore", "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js").Include(
-                "~/Content/_assets/js/vendor/underscore-1.7.0.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/joyride").Include(
-                "~/Content/_assets/js/vendor/jquery.joyride.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/cookie", "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(
-                "~/Content/_assets/js/vendor/jquery.cookie.js"));
+            bundles.Remove(bundles.GetBundleFor("~/bundles/nas"));
+            bundles.Add(new ScriptBundle("~/bundles/nas").Include(
+                "~/Content/_assets/js/nas/validationscripts.js",
+                "~/Content/_assets/js/nas/headerContext.js",
+                "~/Content/_assets/js/nas/webTrendsInlineTrack.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nascript").Include(
                   "~/Content/_assets/js/scripts.js"));
@@ -39,11 +32,6 @@ namespace SFA.Apprenticeships.Web.Candidate
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Content/_assets/js/vendor/knockout-3.1.0.js",
                 "~/Content/_assets/js/vendor/knockout.validation.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/nas").Include(
-                "~/Content/_assets/js/nas/validationscripts.js",
-                "~/Content/_assets/js/nas/headerContext.js",
-                "~/Content/_assets/js/nas/webTrendsInlineTrack.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas/passwordstrength").Include(
                 "~/Content/_assets/js/vendor/zxcvbn-async.js"));

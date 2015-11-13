@@ -959,7 +959,7 @@ WriteLiteral(">\r\n                                <img");
 WriteAttribute("src", Tuple.Create(" src=\"", 8080), Tuple.Create("\"", 8147)
             
             #line 158 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 8086), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/logo-ticks-2x.png", "~/Content/_assets")
+, Tuple.Create(Tuple.Create("", 8086), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-2x.png")
             
             #line default
             #line hidden

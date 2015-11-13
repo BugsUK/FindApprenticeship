@@ -301,8 +301,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BingSiteAuth.xml" />
-    <Content Include="Content\_assets\css\main-2.0.0.css" />
-    <Content Include="Content\_assets\css\main-ie8-2.0.0.css" />
     <Content Include="Content\_assets\img\logo-apprenticeships.png" />
     <Content Include="google63f704cde409cb80.html" />
     <Content Include="403.aspx" />
@@ -331,6 +329,12 @@
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="Configs\machineKey.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\_assets\scss\main-ie8.scss" />
+    <Content Include="Content\_assets\scss\main.scss" />
+    <None Include="compilerconfig.json" />
+    <Content Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
     </Content>
     <None Include="Microsoft.WindowsAzure.Caching\ClientPerfCountersInstaller.exe">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -1685,13 +1689,16 @@
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>IF "%COPY_CONFIG_FROM_SECURE_REPO%" == "true" (
+    <PreBuildEvent>IF "%25COPY_CONFIG_FROM_SECURE_REPO%25" == "true" (
 SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\ 
 ) else (
 SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\
 )
-robocopy /IS /E %COPY_PATH% $(ProjectDir)
-if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
+robocopy /IS /E %25COPY_PATH%25 $(ProjectDir)
+if %25errorlevel%25 gtr 3 exit %25errorlevel%25
+
+robocopy /S /E $(ProjectDir)..\SFA.Apprenticeships.Web.Common\Content $(ProjectDir)\Content\_assets /XD scss
+if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PreBuildEvent>
   </PropertyGroup>
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -93,7 +93,7 @@ WriteLiteral(">\r\n    <!--[if gt IE 8]><!-->");
 
             
             #line 14 "..\..\Views\Shared\_ErrorLayout.cshtml"
-                     Write(Styles.Render(Url.CdnContent("css/main-2.0.0.css", "~/Content/_assets")));
+                     Write(Styles.Render("~/bundles/not-ie8"));
 
             
             #line default
@@ -102,41 +102,23 @@ WriteLiteral("<!--<![endif]-->\r\n    <!--[if lte IE 8]>");
 
             
             #line 15 "..\..\Views\Shared\_ErrorLayout.cshtml"
-                 Write(Styles.Render(Url.CdnContent("css/main-ie8-2.0.0.css", "~/Content/_assets")));
+                 Write(Styles.Render("~/bundles/ie8"));
 
             
             #line default
             #line hidden
-WriteLiteral("<![endif]-->\r\n    <!--[if lte IE 8]>");
-
-            
-            #line 16 "..\..\Views\Shared\_ErrorLayout.cshtml"
-                 Write(Styles.Render(Url.CdnContent("css/fonts-ie8.css", "~/Content/_assets")));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("<![endif]-->\r\n    <!--[if gte IE 9]><!-->");
-
-            
-            #line 17 "..\..\Views\Shared\_ErrorLayout.cshtml"
-                      Write(Styles.Render(Url.CdnContent("css/fonts.css", "~/Content/_assets")));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("<!--<![endif]-->\r\n    <link");
+WriteLiteral("<![endif]-->\r\n    <link");
 
 WriteLiteral(" rel=\"shortcut icon\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1025), Tuple.Create("\"", 1087)
+WriteAttribute("href", Tuple.Create(" href=\"", 718), Tuple.Create("\"", 753)
             
-            #line 18 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 1032), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/favicon.ico", "~/Content/_assets")
+            #line 16 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 725), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("favicon.ico")
             
             #line default
             #line hidden
-, 1032), false)
+, 725), false)
 );
 
 WriteLiteral(" type=\"image/x-icon\"");
@@ -146,8 +128,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("    ");
 
             
-            #line 19 "..\..\Views\Shared\_ErrorLayout.cshtml"
-Write(Styles.Render(Url.CdnContent("css/font-awesome/css/font-awesome.min.css", "~/Content/_assets")));
+            #line 17 "..\..\Views\Shared\_ErrorLayout.cshtml"
+Write(Styles.Render("~/bundles/font-awesome"));
 
             
             #line default
@@ -157,7 +139,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 20 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 18 "..\..\Views\Shared\_ErrorLayout.cshtml"
 Write(Html.Partial("_Scripts"));
 
             
@@ -197,14 +179,14 @@ WriteLiteral(" class=\"govuk-logo\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 1675), Tuple.Create("\"", 1750)
+WriteAttribute("src", Tuple.Create(" src=\"", 1285), Tuple.Create("\"", 1333)
             
-            #line 32 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 1681), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/gov.uk_logotype_crown.png", "~/Content/_assets")
+            #line 30 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 1291), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("gov.uk_logotype_crown.png")
             
             #line default
             #line hidden
-, 1681), false)
+, 1291), false)
 );
 
 WriteLiteral(" alt=\"Crown\"");
@@ -221,7 +203,7 @@ WriteLiteral(" class=\"global-header__title beta\"");
 WriteLiteral(">");
 
             
-            #line 37 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 35 "..\..\Views\Shared\_ErrorLayout.cshtml"
                                                  Write(ViewBag.UserJourneyMainCaption);
 
             
@@ -248,7 +230,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">");
 
             
-            #line 46 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 44 "..\..\Views\Shared\_ErrorLayout.cshtml"
                                   Write(ViewBag.Title);
 
             
@@ -263,7 +245,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                ");
 
             
-            #line 48 "..\..\Views\Shared\_ErrorLayout.cshtml"
+            #line 46 "..\..\Views\Shared\_ErrorLayout.cshtml"
            Write(RenderBody());
 
             
@@ -349,14 +331,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                    <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 3487), Tuple.Create("\"", 3555)
+WriteAttribute("src", Tuple.Create(" src=\"", 3070), Tuple.Create("\"", 3111)
             
-            #line 64 "..\..\Views\Shared\_ErrorLayout.cshtml"
-, Tuple.Create(Tuple.Create("", 3493), Tuple.Create<System.Object, System.Int32>(Url.CdnContent("img/govuk-crest-2x.png", "~/Content/_assets")
+            #line 62 "..\..\Views\Shared\_ErrorLayout.cshtml"
+, Tuple.Create(Tuple.Create("", 3076), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("govuk-crest-2x.png")
             
             #line default
             #line hidden
-, 3493), false)
+, 3076), false)
 );
 
 WriteLiteral(" width=\"125\"");

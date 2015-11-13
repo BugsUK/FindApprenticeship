@@ -7,15 +7,26 @@
 
     public static class UrlHelperExtensions
     {
-        public static string CdnContent(this UrlHelper urlHelper, string contentName, string localContentPath)
-        {
-            const string separator = "/";
+        private const string separator = "/";
 
-            return IsLocalEnvironment ?
-                urlHelper.Content(string.Join(separator, localContentPath, contentName)) :
-                string.Join(separator, CdnUrl, EnvironmentName, contentName).ToLower();
+        [Obsolete("Use bundling for scripts and css. Use CdnImage for images.")]
+
+        public static string CdnContent(this UrlHelper urlHelper, string relativeContentName, string localContentPath)
+        {
+            return NonObsoleteCdnContent(urlHelper, relativeContentName, localContentPath);
         }
 
+        public static string CdnImage(this UrlHelper urlHelper, string contentNameRelativeToImg)
+        {
+            return NonObsoleteCdnContent(urlHelper, "img" + separator + contentNameRelativeToImg, "~/Content/_assets");
+        }
+
+        private static string NonObsoleteCdnContent(UrlHelper urlHelper, string contentNameWithRelativePath, string localContentPath)
+        {
+            return IsLocalEnvironment ?
+                urlHelper.Content(string.Join(separator, localContentPath, contentNameWithRelativePath)) :
+                string.Join(separator, CdnUrl, EnvironmentName, contentNameWithRelativePath).ToLower();
+        }
         #region Helpers
 
         private static string EnvironmentName
