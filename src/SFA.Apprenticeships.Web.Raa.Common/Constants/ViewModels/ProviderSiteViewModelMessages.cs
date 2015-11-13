@@ -8,7 +8,7 @@
         {
             public const string LabelText = "Training site name";
             public const string RequiredErrorText = "Please enter your training site name";
-            public const string TooLongErrorText = "Training site name mustn’t exceed 100 characters";
+            public const string TooLongErrorText = "Training site name must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Training site name " + Whitelists.FreetextWhitelist.ErrorText;
         }
@@ -17,7 +17,7 @@
         {
             public const string LabelText = "Key contact email address";
             public const string RequiredErrorText = "Please enter the key contact email address";
-            public const string TooLongErrorText = "Key contact email address mustn’t exceed 100 characters";
+            public const string TooLongErrorText = "Key contact email address must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Key contact email address " + Whitelists.EmailAddressWhitelist.ErrorText;
         }

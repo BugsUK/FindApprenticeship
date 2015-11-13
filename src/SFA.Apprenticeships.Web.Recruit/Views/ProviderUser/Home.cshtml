@@ -34,7 +34,7 @@
                     <p class="form-label">Change provider site</p>
                     @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, new {id = "provider-site", @class = "chosen-select grid grid-1-1"})
                     <noscript>
-                        <button class="button" name="ChangeProviderSiteAction" value="ChangeProviderSite">Change</button>
+                        <button class="button" name="ChangeProviderSiteAction" value="ChangeProviderSite">Change provider site</button>
                     </noscript>
                 }
             </div>
@@ -148,7 +148,7 @@
             <section>
                 @{ var open = string.IsNullOrEmpty(Model.VacanciesSummary.VacanciesSummarySearch.SearchString) ? "" : "open"; }
                 <details @open>
-                    <summary>Search your employers</summary>
+                    <summary>Search your vacancies</summary>
                     <div class="detail-content">
                         @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString)
                         <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search vacancies</button>

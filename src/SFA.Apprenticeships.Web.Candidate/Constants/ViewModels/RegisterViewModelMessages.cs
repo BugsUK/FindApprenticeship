@@ -8,7 +8,7 @@
         {
             public const string LabelText = "First name";
             public const string RequiredErrorText = "Please enter first name";
-            public const string TooLongErrorText = "First name mustn’t exceed {0} characters";
+            public const string TooLongErrorText = "First name must not be more than {0} characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
             public const string WhiteListErrorText = "First name " + Whitelists.FreetextWhitelist.ErrorText;
         }
@@ -17,7 +17,7 @@
         {
             public const string LabelText = "Last name";
             public const string RequiredErrorText = "Please enter last name";
-            public const string TooLongErrorText = "Last name mustn’t exceed {0} characters";
+            public const string TooLongErrorText = "Last name must not be more than {0} characters";
             public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Last name " + Whitelists.FreetextWhitelist.ErrorText;
         }
@@ -27,7 +27,7 @@
             public const string LabelText = "Enter email address";
             public const string HintText = "You'll need this to sign in to your account. The email address you choose will be seen by employers.";
             public const string RequiredErrorText = "Please enter email address";
-            public const string TooLongErrorText = "Email address mustn’t exceed 100 characters";
+            public const string TooLongErrorText = "Email address must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Email address " + Whitelists.EmailAddressWhitelist.ErrorText;
             public static string UsernameNotAvailableErrorText = "Your email address has already been activated. Please try signing in again. If you’ve forgotten your password you can reset it.";
