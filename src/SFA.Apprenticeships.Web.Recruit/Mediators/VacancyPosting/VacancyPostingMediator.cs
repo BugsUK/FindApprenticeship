@@ -368,12 +368,11 @@
 
             if (!validationResult.IsValid)
             {
-                //TODO: us its own mediator code
-                return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.FailedValidation,
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.FailedValidation,
                     vacancyViewModel, validationResult);
             }
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel);
         }
 
         public MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber)
@@ -403,7 +402,7 @@
                 viewModel = new EmployerSearchViewModel
                 {
                     ProviderSiteErn = viewModel.ProviderSiteErn,
-                    FilterType = EmployerFilterType.Ern,
+                    FilterType = EmployerFilterType.Undefined,
                     EmployerResults = Enumerable.Empty<EmployerResultViewModel>(),
                     EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>()
                 };

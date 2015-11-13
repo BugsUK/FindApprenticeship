@@ -102,7 +102,6 @@
 
         public MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel)
         {
-            //TODO: basically the same code as in VacancyPostingMediator
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             if (!validationResult.IsValid && (!viewModel.AcceptWarnings || validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)))
@@ -179,7 +178,6 @@
 
         public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)
         {
-            //TODO: basically the same code as in VacancyPostingMediator
             var validationResult = _newVacancyViewModelServerValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)

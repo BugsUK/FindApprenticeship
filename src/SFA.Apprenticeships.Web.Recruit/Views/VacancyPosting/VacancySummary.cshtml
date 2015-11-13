@@ -26,14 +26,14 @@
             </fieldset>
 
             <fieldset class="form-group inline-fixed">
-                @Html.FormTextFor(m => m.HoursPerWeek, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", size = 12 })
+                @Html.FormTextFor(m => m.HoursPerWeek, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", size = 12 }, containerHtmlAttributes: new {style = "margin-bottom: 15px"})
             </fieldset>
 
             <div class="blocklabel-single-container">
                 <div class="form-group">
                     <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
                     <label class="form-label" for="weekly-wage">Wage</label>
-                    <div class="form-group" data-editable-x="">
+                    <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType)))" data-editable-x="">
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
                             @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
@@ -49,6 +49,7 @@
                             @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimumWage, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
                             National Minimum Wage for apprentices
                         </label>
+                        @Html.ValidationMessageFor(m => m.WageType)
                     </div>
                     <div id="custom-wage-panel" class="toggle-content blocklabel-content">
                         <fieldset class="form-group inline-fixed">
@@ -60,9 +61,14 @@
                 </div>
             </div>
 
-            <fieldset class="form-group inline-fixed">
-                @Html.FormTextFor(m => m.Duration, containerHtmlAttributes: new {@class = "form-group-compound"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
-                @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
+            <fieldset class="form-group">
+                <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration)))">
+                    <a name="@Html.NameFor(m => m.Duration).ToString().ToLower()"></a>
+                    @Html.LabelFor(m => m.Duration, new {@class = "form-label" })
+                    @Html.TextBoxFor(m => m.Duration, new { @class = "form-control-large form-control", type = "tel", size = 12 })
+                    @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
+                    @Html.ValidationMessageFor(m => m.Duration)
+                </div>
             </fieldset>
 
             <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
