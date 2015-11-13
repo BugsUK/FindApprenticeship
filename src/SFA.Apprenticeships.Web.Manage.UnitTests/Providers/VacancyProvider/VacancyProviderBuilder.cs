@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
     using Application.Interfaces.DateTime;
+    using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Moq;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.VacancyPosting;
+    using Raa.Common.Providers;
 
 
     public class VacancyProviderBuilder
@@ -18,12 +20,13 @@
         private Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
         private Mock<IVacancyPostingService> _vacancyPostingServcie = new Mock<IVacancyPostingService>();
+        private Mock<ILogService> _logService = new Mock<ILogService>();
 
-        public Raa.Common.Providers.VacancyProvider Build()
+        public IVacancyQAProvider Build()
         {
-            return new Raa.Common.Providers.VacancyProvider(_apprenticeshipVacancyReadRepository.Object,
-                _apprenticeshipVacancyWriteRepository.Object, _providerService.Object, _dateTimeService.Object,
-                _referenceDataService.Object, _configurationService.Object, _vacancyPostingServcie.Object);
+            return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
+                _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, _apprenticeshipVacancyReadRepository.Object,
+                _apprenticeshipVacancyWriteRepository.Object);
         }
 
         public VacancyProviderBuilder With(
@@ -62,6 +65,12 @@
         public VacancyProviderBuilder With(Mock<IReferenceDataService> referenceDataService)
         {
             _referenceDataService = referenceDataService;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<IVacancyPostingService> vacancyPostingServiceService)
+        {
+            _vacancyPostingServcie = vacancyPostingServiceService;
             return this;
         }
     }

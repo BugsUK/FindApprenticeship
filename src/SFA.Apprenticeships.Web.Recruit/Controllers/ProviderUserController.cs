@@ -113,9 +113,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        public ActionResult Home()
+        public ActionResult Home(VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
-            var response = _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn());
+            var response = _providerUserMediator.GetHomeViewModel(User.Identity.Name, User.GetUkprn(), vacanciesSummarySearch);
 
             return View(response.ViewModel);
         }
@@ -123,7 +123,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        [MultipleFormActionsButton(SubmitButtonActionName = "ProviderSiteAction")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "ChangeProviderSiteAction")]
         public ActionResult ChangeProviderSite(HomeViewModel viewModel)
         {
             var response = _providerUserMediator.ChangeProviderSite(User.Identity.Name, User.GetUkprn(), viewModel);
@@ -136,13 +136,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
-
         }
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Faa)]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        [MultipleFormActionsButton(SubmitButtonActionName = "ProviderSiteAction")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchVacanciesAction")]
+        public ActionResult SearchVacancies(HomeViewModel viewModel)
+        {
+            return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome, viewModel.VacanciesSummary.VacanciesSummarySearch);
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Faa)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+        [MultipleFormActionsButton(SubmitButtonActionName = "NewVacancyAction")]
         public ActionResult NewVacancy(HomeViewModel viewModel)
         {
             var response = _providerUserMediator.ChangeProviderSite(User.Identity.Name, User.GetUkprn(), viewModel);

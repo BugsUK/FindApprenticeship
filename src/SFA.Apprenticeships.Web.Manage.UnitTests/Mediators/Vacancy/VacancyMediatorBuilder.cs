@@ -1,26 +1,31 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-using SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
+﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
     using Manage.Mediators.Vacancy;
-    using Manage.Providers;
     using Moq;
+    using Raa.Common.Providers;
+    using Raa.Common.Validators.Vacancy;
 
     public class VacancyMediatorBuilder
     {
-        private Mock<IVacancyProvider> _vacancyProvider = new Mock<IVacancyProvider>();
-        private Mock<IVacancyPostingProvider> _vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
-        private VacancyViewModelValidator _vacancyViewModelValidator = new VacancyViewModelValidator();
-        private VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator = new VacancySummaryViewModelServerValidator();
-        private NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator = new NewVacancyViewModelServerValidator();
+        private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator =
+            new NewVacancyViewModelServerValidator();
+
+        private Mock<IVacancyQAProvider> _vacancyProvider = new Mock<IVacancyQAProvider>();
+
+        private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator =
+            new VacancySummaryViewModelServerValidator();
+        private VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator = new VacancyRequirementsProspectsViewModelServerValidator();
+
+        private readonly VacancyViewModelValidator _vacancyViewModelValidator = new VacancyViewModelValidator();
+        private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator = new VacancyQuestionsViewModelServerValidator();
 
         public IVacancyMediator Build()
         {
-            return new VacancyMediator(_vacancyProvider.Object, _vacancyPostingProvider.Object, _vacancyViewModelValidator, _vacancySummaryViewModelServerValidator, _newVacancyViewModelServerValidator);
+            return new VacancyMediator(_vacancyProvider.Object, _vacancyViewModelValidator, _vacancySummaryViewModelServerValidator, 
+            _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator, _vacancyRequirementsProspectsViewModelServerValidator);
         }
 
-        public VacancyMediatorBuilder With(Mock<IVacancyProvider> provider)
+        public VacancyMediatorBuilder With(Mock<IVacancyQAProvider> provider)
         {
             _vacancyProvider = provider;
             return this;

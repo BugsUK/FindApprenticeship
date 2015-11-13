@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
 
         MediatorResponse<VerifyEmailViewModel> ResendVerificationCode(string username);
 
-        MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn);
+        MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
         MediatorResponse<HomeViewModel> ChangeProviderSite(string username, string ukprn, HomeViewModel viewModel);
     }

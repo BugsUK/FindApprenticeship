@@ -34,11 +34,19 @@
                 .Matches(VacancyViewModelMessages.Title.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Title.WhiteListErrorText);
 
+            validator.RuleFor(m => m.TitleComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
             validator.RuleFor(x => x.ShortDescription)
                 .Length(0, 350)
                 .WithMessage(VacancyViewModelMessages.ShortDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.ShortDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.ShortDescription.WhiteListErrorText);
+
+            validator.RuleFor(m => m.ShortDescriptionComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Length(0, 256)
@@ -46,9 +54,25 @@
                 .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText);
 
+            validator.RuleFor(m => m.OfflineApplicationUrlComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
             validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
                 .Matches(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListErrorText);
+
+            validator.RuleFor(m => m.OfflineApplicationInstructionsComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
+            validator.RuleFor(m => m.ApprenticeshipLevelComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
+            validator.RuleFor(m => m.FrameworkCodeNameComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
         }
 
         internal static void AddClientRules(this AbstractValidator<NewVacancyViewModel> validator)

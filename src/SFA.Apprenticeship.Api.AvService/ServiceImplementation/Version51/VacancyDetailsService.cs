@@ -1,8 +1,11 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51
 {
+    using System;
+    using System.Security;
     using System.ServiceModel;
     using Apprenticeships.Application.Interfaces.Logging;
     using MessageContracts.Version51;
+    using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using Namespaces.Version51;
     using Providers.Version51;
@@ -23,6 +26,12 @@
 
         public VacancyDetailsResponse Get(VacancyDetailsRequest request)
         {
+            // TODO: API: AG: remove test code.
+            if (request.MessageId == Guid.Empty)
+            {
+                throw new SecurityException();
+            }
+
             return _vacancyDetailsProvider.Get(request);
         }
     }

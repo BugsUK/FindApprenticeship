@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories.Vacancies
 {
     using System;
+    using System.Security.Principal;
+    using System.Threading;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
@@ -71,11 +73,12 @@
                     .Create();
 
             const string qaUserName = "qa@test.com";
+            Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(qaUserName), null);
 
             //Act
             writer.Save(vacancy);
             var savedVacancy = reader.Get(IntegrationTestVacancyReferenceNumber);
-            var reservedVacancy = writer.ReserveVacancyForQA(IntegrationTestVacancyReferenceNumber, qaUserName);
+            var reservedVacancy = writer.ReserveVacancyForQA(IntegrationTestVacancyReferenceNumber);
 
             //Assert
             savedVacancy.Should().NotBeNull();

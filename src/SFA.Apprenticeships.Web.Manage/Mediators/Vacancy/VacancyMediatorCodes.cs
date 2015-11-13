@@ -35,11 +35,20 @@
         
         public class GetBasicVacancyDetails
         {
-            public const string NotAvailable = "VacancyMediatorCodes.GetBasicVacancyDetails.NotAvailable";
             public const string Ok = "VacancyMediatorCodes.GetBasicVacancyDetails.Ok";
             public const string FailedValidation = "VacancyMediatorCodes.GetBasicVacancyDetails.FailedValidation";
         }
 
+        public class GetVacancyRequirementsProspectsViewModel
+        {
+            public const string FailedValidation = "VacancyMediatorCodes.GetVacancyRequirementsProspectsViewModel.FailedValidation";
+            public const string Ok = "VacancyMediatorCodes.GetVacancyRequirementsProspectsViewModel.Ok";
+        }
 
+        public class GetVacancyQuestionsViewModel
+        {
+            public const string FailedValidation = "VacancyMediatorCodes.GetVacancyQuestionsViewModel.FailedValidation";
+            public const string Ok = "VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok";
+        }
     }
 }

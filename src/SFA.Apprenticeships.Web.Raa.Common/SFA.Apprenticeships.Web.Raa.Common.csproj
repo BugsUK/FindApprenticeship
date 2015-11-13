@@ -172,10 +172,9 @@
     <Compile Include="Providers\IProviderProvider.cs" />
     <Compile Include="Providers\IProviderUserProvider.cs" />
     <Compile Include="Providers\IVacancyPostingProvider.cs" />
-    <Compile Include="Providers\IVacancyProvider.cs" />
+    <Compile Include="Providers\IVacancyQAProvider.cs" />
     <Compile Include="Providers\ProviderProvider.cs" />
     <Compile Include="Providers\ProviderUserProvider.cs" />
-    <Compile Include="Providers\VacancyPostingProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
@@ -194,6 +193,9 @@
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
+    <Compile Include="ViewModels\ProviderUser\VacanciesSummaryFilterTypes.cs" />
+    <Compile Include="ViewModels\ProviderUser\VacanciesSummarySearchViewModel.cs" />
+    <Compile Include="ViewModels\ProviderUser\VacanciesSummaryViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VerifyEmailViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteEmployerLinkViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchMode.cs" />

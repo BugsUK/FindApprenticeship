@@ -30,16 +30,16 @@
         <div class="blocklabel-single-container">
             <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
                 <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
-                <label class="form-label">Training type</label>
+                <label class="form-label">Apprenticeship type</label>
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label @frameworksSelected">
                     @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"})
-                    Frameworks
+                    Framework
                 </label>
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label data-target="training-type-standards-panel" for="training-type-standards" class="block-label @standardsSelected">
                     @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Standards, new {id = "training-type-standards", aria_controls = "training-type-standards-panel"})
-                    Standards
+                    Standard
                 </label>
                 @Html.ValidationMessageFor(m => m.TrainingType)
             </div>
@@ -97,7 +97,7 @@
                     @Html.ValidationMessageFor(m => m.StandardId)
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" id="apprenticeship-level-container">
                     <label class="form-label">Apprenticeship level</label>
                     <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
                 </div>
@@ -126,7 +126,7 @@
             <div id="offline-panel" class="toggle-content panel-indent blocklabel-content">
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@
-                    @Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
+                    @Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
                 </div>
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@

@@ -50,7 +50,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
         {
             For<IProviderProvider>().Use<ProviderProvider>();
             For<IEmployerProvider>().Use<EmployerProvider>();
-            For<IVacancyProvider>().Use<VacancyProvider>();
+            For<IVacancyPostingProvider>().Use<VacancyProvider>();
             For<IProviderUserProvider>().Use<ProviderUserProvider>();
             For<IProviderMediator>().Use<ProviderMediator>();
         }

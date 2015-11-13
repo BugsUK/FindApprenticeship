@@ -6,7 +6,11 @@
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
+        public string ApprenticeshipLevelComment { get; set; }
+
         public string FrameworkCodeName { get; set; }
+
+        public string FrameworkCodeNameComment { get; set; }
 
         public int? StandardId { get; set; }
 
@@ -17,5 +21,7 @@
         public string LongDescriptionComment { get; set; }
         public string PossibleStartDateComment { get; set; }
         public string WorkingWeekComment { get; set; }
+        public string FirstQuestionComment { get; set; }
+        public string SecondQuestionComment { get; set; }
     }
 }

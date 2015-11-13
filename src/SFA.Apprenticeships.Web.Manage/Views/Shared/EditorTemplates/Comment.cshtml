@@ -13,9 +13,8 @@
 <details @state>
     <summary>Comment</summary>
     <div class="detail-content qa-comment">
-        <div>QA Comment</div>
         <div class="blocklabel-single-container">
-            @Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new {@class = "form-control"})
+            @Html.FormTextAreaFor(m => m, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
         </div>
     </div>
 </details>

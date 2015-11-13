@@ -6,6 +6,7 @@ using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 {
     using System;
+    using System.Threading;
     using Application.Interfaces.Logging;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
@@ -179,9 +180,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }
 
-        public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber, string username)
+        public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
         {
             _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
+
+            var username = Thread.CurrentPrincipal.Identity.Name;
 
             //TODO: Need to check that this number is available for QA via status and/or timeout
             //TODO: Possibly further discussion about having code like this in the repo

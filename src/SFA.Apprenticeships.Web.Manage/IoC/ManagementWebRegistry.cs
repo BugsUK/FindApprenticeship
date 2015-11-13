@@ -50,8 +50,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
             For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
-            For<IVacancyProvider>().Use<VacancyProvider>();
-            For<IVacancyPostingProvider>().Use<VacancyPostingProvider>();
+            For<IVacancyQAProvider>().Use<VacancyProvider>();
         }
 
         private void RegisterServices()

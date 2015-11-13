@@ -2,6 +2,7 @@
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 @using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Manage.Views.Shared.EditorTemplates
 @{
     ViewBag.Title = "Recruit an Apprentice - Select framework and level";
 
@@ -23,16 +24,19 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.EditorFor(m => m.Comment, "Comment")
-
     @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
+    @Html.EditorFor(m => m.TitleComment, "Comment")
+    @Html.ValidationMessageFor(m => m.TitleComment)
+
     @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium" })
+    @Html.EditorFor(m => m.ShortDescriptionComment, "Comment")
+    @Html.ValidationMessageFor(m => m.ShortDescriptionComment)
 
     <div class="form-group">
         <div class="blocklabel-single-container">
             <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
                 <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
-                <label class="form-label">Training type</label>
+                <label class="form-label">Apprenticeship type</label>
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label @frameworksSelected">
                     @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"})
@@ -52,6 +56,8 @@
                     <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
                     @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%;"})
                     @Html.ValidationMessageFor(m => m.FrameworkCodeName)
+                    @Html.EditorFor(m => m.FrameworkCodeNameComment, "Comment")
+                    @Html.ValidationMessageFor(m => m.FrameworkCodeNameComment)
                 </div>
 
                 <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel)))">
@@ -62,6 +68,8 @@
                         <label for="apprenticeship-level-intermediate" class="block-label">
                             @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
                         </label>
+                        @Html.EditorFor(m => m.ApprenticeshipLevelComment, "Comment")
+                        @Html.ValidationMessageFor(m => m.ApprenticeshipLevelComment)
                     </div>
 
                     <div class="small-btm-margin clearfix">
@@ -139,11 +147,15 @@
             <div id="offline-panel" class="toggle-content panel-indent blocklabel-content">
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@
-                    @Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new { @class = "width-all-1-2", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
+                    @Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
+                    @Html.EditorFor(m => m.OfflineApplicationUrlComment, "Comment")
+                    @Html.ValidationMessageFor(m => m.OfflineApplicationUrlComment)
                 </div>
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@
                     @Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium", id = "apprenticheship-offline-application-instructions" })
+                    @Html.EditorFor(m => m.OfflineApplicationInstructionsComment, "Comment")
+                    @Html.ValidationMessageFor(m => m.OfflineApplicationInstructionsComment)
                     <br />
                 </div>
             </div>
@@ -157,8 +169,7 @@
     @Html.HiddenFor(model => model.VacancyGuid)
 
     <div class="form-group">
-        <button type="submit" class="button" name="CreateVacancy" value="CreateVacancy">Save and continue</button>
-        <button id="createVacancyAndExit" type="submit" class="button-link" name="CreateVacancy" value="CreateVacancyAndExit">Save and exit</button>
+        <button type="submit" class="button">Save</button>
     </div>
 }
 

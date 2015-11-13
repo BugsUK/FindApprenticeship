@@ -16,7 +16,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Constants.Messages;
     using Validators.ProviderUser;
     using ViewModels;
-    using Raa.Common.ViewModels.Vacancy;
     using ClaimTypes = Common.Constants.ClaimTypes;
 
     public class ProviderUserMediator : MediatorBase, IProviderUserMediator
@@ -26,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         private readonly IProviderUserProvider _providerUserProvider;
         private readonly IProviderProvider _providerProvider;
         private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
-        private readonly IVacancyProvider _vacancyProvider;
+        private readonly IVacancyPostingProvider _vacancyProvider;
 
         private readonly ProviderUserViewModelValidator _providerUserViewModelValidator;
         private readonly VerifyEmailViewModelValidator _verifyEmailViewModelValidator;
@@ -34,7 +33,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         public ProviderUserMediator(IProviderUserProvider providerUserProvider,
             IProviderProvider providerProvider,
             IAuthorizationErrorProvider authorizationErrorProvider,
-            IVacancyProvider vacancyProvider,
+            IVacancyPostingProvider vacancyProvider,
             ProviderUserViewModelValidator providerUserViewModelValidator,
             VerifyEmailViewModelValidator verifyEmailViewModelValidator)
         {
@@ -214,19 +213,19 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             return GetMediatorResponse(ProviderUserMediatorCodes.ResendVerificationCode.Ok, viewModel, message, UserMessageLevel.Success);
         }
 
-        public MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn)
+        public MediatorResponse<HomeViewModel> GetHomeViewModel(string username, string ukprn, VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
             var provider = _providerProvider.GetProviderViewModel(ukprn);
             var providerSites = GetProviderSites(ukprn);
-            var providerVacancies = GetProviderVacancies(ukprn, providerUserViewModel.DefaultProviderSiteErn);
+            var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(ukprn, providerUserViewModel.DefaultProviderSiteErn, vacanciesSummarySearch);
 
             var viewModel = new HomeViewModel
             {
                 ProviderUserViewModel = providerUserViewModel,
                 ProviderViewModel = provider,
                 ProviderSites = providerSites,
-                Vacancies = providerVacancies
+                VacanciesSummary = vacanciesSummary
             };
 
             return GetMediatorResponse(ProviderUserMediatorCodes.GetHomeViewModel.Ok, viewModel);
@@ -257,11 +256,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             var sites = providerSites.Select(ps => new SelectListItem { Value = ps.Ern, Text = ps.DisplayName }).ToList();
 
             return sites;
-        }
-
-        private List<VacancyViewModel> GetProviderVacancies(string ukprn, string providerSiteErn)
-        {
-            return _vacancyProvider.GetVacanciesForProvider(ukprn, providerSiteErn);
         }
     }
 }

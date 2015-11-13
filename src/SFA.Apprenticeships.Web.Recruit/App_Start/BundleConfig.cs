@@ -9,6 +9,9 @@ namespace SFA.Apprenticeships.Web.Recruit
         {
             Common.BundleConfig.RegisterBundles(bundles);
 
+            bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
+                "~/Content/_assets/js/nas/dashboard.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
                 "~/Content/_assets/js/vendor/jquery.validate.js",
                 "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.custom.js",

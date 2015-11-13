@@ -1,15 +1,14 @@
-﻿using SFA.Apprenticeships.Web.Common.Mediators;
-using SFA.Apprenticeships.Web.Common.Validators.Extensions;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Manage.Controllers
+﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Constants;
     using Mediators.Vacancy;
+    using Common.Mediators;
+    using Common.Validators.Extensions;
+    using FluentValidation.Mvc;
+    using Raa.Common.ViewModels.Vacancy;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
@@ -23,6 +22,8 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
         }
 
         // GET: Vacancy
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult Review(long vacancyReferenceNumber)
         {
             var response = _vacancyMediator.ReserveVacancyForQA(vacancyReferenceNumber);
@@ -45,16 +46,50 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
         }
 
         [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult BasicDetails(long vacancyReferenceNumber)
         {
-            var model = _vacancyMediator.GetBasicDetails(vacancyReferenceNumber);
-            return View(model.ViewModel);
+            var response = _vacancyMediator.GetBasicDetails(vacancyReferenceNumber);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.GetBasicVacancyDetails.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.GetBasicVacancyDetails.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]
         public ActionResult BasicDetails(NewVacancyViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                    new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]
@@ -80,9 +115,9 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
         }
 
         [HttpPost]
-        public ActionResult Summary(VacancySummaryViewModel viewModel, bool acceptWarnings)
+        public ActionResult Summary(VacancySummaryViewModel viewModel)
         {
-            var response = _vacancyMediator.UpdateVacancy(viewModel, acceptWarnings);
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
 
             ModelState.Clear();
 
@@ -104,26 +139,97 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             }
         }
 
-        public ActionResult RequirementsAndProspoects(long vacancyReferenceNumber)
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
+        public ActionResult RequirementsAndProspects(long vacancyReferenceNumber)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.GetVacancyRequirementsProspectsViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.GetVacancyRequirementsProspectsViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]
-        public ActionResult RequirementsAndProspoects(VacancyRequirementsProspectsViewModel viewModel)
+        public ActionResult RequirementsAndProspects(VacancyRequirementsProspectsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult Questions(long vacancyReferenceNumber)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.GetVacancyQuestionsViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]
         public ActionResult Questions(VacancyQuestionsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                        new
+                        {
+                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                        });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyQAAction")]

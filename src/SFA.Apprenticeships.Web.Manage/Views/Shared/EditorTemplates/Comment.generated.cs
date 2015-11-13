@@ -63,7 +63,7 @@ WriteLiteral(">\r\n    <summary>Comment</summary>\r\n    <div");
 
 WriteLiteral(" class=\"detail-content qa-comment\"");
 
-WriteLiteral(">\r\n        <div>QA Comment</div>\r\n        <div");
+WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"blocklabel-single-container\"");
 
@@ -72,8 +72,8 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 18 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
-       Write(Html.TextBox("", ViewData.TemplateInfo.FormattedModelValue, new {@class = "form-control"}));
+            #line 17 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+       Write(Html.FormTextAreaFor(m => m, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
             #line default

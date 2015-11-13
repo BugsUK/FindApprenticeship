@@ -9,7 +9,7 @@
 
         public static class TrainingType
         {
-            public const string RequiredErrorText = "Please select a training type";
+            public const string RequiredErrorText = "Please select an apprenticeship type";
         }
 
         public class FrameworkCodeName

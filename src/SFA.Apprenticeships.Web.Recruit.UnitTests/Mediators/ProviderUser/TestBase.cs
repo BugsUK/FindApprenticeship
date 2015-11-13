@@ -1,26 +1,25 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
+﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
 {
     using Common.Providers.Azure.AccessControlService;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.Providers;
     using Recruit.Mediators.ProviderUser;
     using Recruit.Validators.ProviderUser;
 
     public class TestBase
     {
-        protected Mock<IProviderUserProvider> MockProviderUserProvider;
-        protected Mock<IProviderProvider> MockProviderProvider;
-        protected Mock<IVacancyProvider> MockVacancyProvider;
         protected Mock<IAuthorizationErrorProvider> MockAuthorizationErrorProvider;
+        protected Mock<IProviderProvider> MockProviderProvider;
+        protected Mock<IProviderUserProvider> MockProviderUserProvider;
+        protected Mock<IVacancyPostingProvider> MockVacancyProvider;
 
         [SetUp]
         public void SetUp()
         {
             MockProviderUserProvider = new Mock<IProviderUserProvider>();
             MockProviderProvider = new Mock<IProviderProvider>();
-            MockVacancyProvider = new Mock<IVacancyProvider>();
+            MockVacancyProvider = new Mock<IVacancyPostingProvider>();
             MockAuthorizationErrorProvider = new Mock<IAuthorizationErrorProvider>();
         }
 

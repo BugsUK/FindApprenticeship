@@ -103,6 +103,18 @@
                 defaults: new { controller = "Vacancy", action = "BasicDetails" }
                 );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.RequirementsAndProspoects,
+                url: "vacancy/requirementsprospects",
+                defaults: new { controller = "Vacancy", action = "RequirementsAndProspects" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.Questions,
+                url: "vacancy/questions",
+                defaults: new { controller = "Vacancy", action = "Questions" }
+                );
+
             routes.LowercaseUrls = true;
         }
     }

@@ -24,6 +24,6 @@ namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 
     public interface IApprenticeshipVacancyWriteRepository : IWriteRepository<ApprenticeshipVacancy>
     {
-        ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber, string username);
+        ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
     }
 }

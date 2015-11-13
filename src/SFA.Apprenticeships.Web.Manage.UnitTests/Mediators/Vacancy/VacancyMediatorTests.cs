@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
             {
                 vacancyReferenceNumber
             });
-            var provider = new Mock<IVacancyProvider>();
+            var provider = new Mock<IVacancyQAProvider>();
             provider.Setup(p => p.GetPendingQAVacancies()).Returns(pendingQAVacancies.ToList());
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
@@ -44,7 +44,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
             {
                 vacancyReferenceNumber
             });
-            var provider = new Mock<IVacancyProvider>();
+            var provider = new Mock<IVacancyQAProvider>();
             provider.Setup(p => p.GetPendingQAVacancies()).Returns(pendingQAVacancies.ToList());
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
@@ -69,7 +69,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
                 anotherVacancyReferenceNumber
             });
 
-            var provider = new Mock<IVacancyProvider>();
+            var provider = new Mock<IVacancyQAProvider>();
 
             provider.Setup(p => p.GetPendingQAVacancies()).Returns(pendingQAVacancies.ToList());
 
@@ -87,7 +87,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 
             List<DashboardVacancySummaryViewModel> pendingQAVacancies = null;
 
-            var provider = new Mock<IVacancyProvider>();
+            var provider = new Mock<IVacancyQAProvider>();
 
             provider.Setup(p => p.GetPendingQAVacancies()).Returns(pendingQAVacancies);
 

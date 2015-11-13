@@ -434,7 +434,7 @@
             var expressionText = ExpressionHelper.GetExpressionText(expression);
             var htmlFieldPrefix = helper.ViewData.TemplateInfo.HtmlFieldPrefix;
             var fullyQualifiedName = string.IsNullOrEmpty(htmlFieldPrefix) ? expressionText : string.Join(".", htmlFieldPrefix, expressionText);
-            if (!helper.ViewData.ModelState.IsValidField(fullyQualifiedName))
+            if (!helper.ViewData.ModelState.IsValidField(fullyQualifiedName) && helper.ViewData.ModelState.ContainsKey(fullyQualifiedName))
             {
                 if (helper.ViewData.ModelState[fullyQualifiedName].Errors.Any(e => e.GetType() == typeof(ModelError)))
                 {
