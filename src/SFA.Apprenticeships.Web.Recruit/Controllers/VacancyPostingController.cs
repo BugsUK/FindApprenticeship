@@ -355,20 +355,18 @@
         [OutputCache(Duration = 0)]
         public ActionResult PreviewVacancy(long vacancyReferenceNumber)
         {
-            // var response = _vacancyPostingMediator.GetVacancyViewModel(vacancyReferenceNumber);
-
             var response = _vacancyPostingMediator.GetPreviewVacancyViewModel(vacancyReferenceNumber);
 
             ModelState.Clear();
 
             switch (response.Code)
             {
-                case VacancyPostingMediatorCodes.GetVacancyViewModel.FailedValidation:
+                case VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     var view = View(response.ViewModel);
                     return view;
 
-                case VacancyPostingMediatorCodes.GetVacancyViewModel.Ok:
+                case VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok:
                     return View(response.ViewModel);
 
                 default:

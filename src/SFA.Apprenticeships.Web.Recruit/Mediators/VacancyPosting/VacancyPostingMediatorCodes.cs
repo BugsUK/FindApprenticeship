@@ -41,6 +41,12 @@
             public const string FailedValidation = "VacancyPosting.GetVacancyViewModel.FailedValidation";
         }
 
+        public static class GetPreviewVacancyViewModel
+        {
+            public const string Ok = "VacancyPosting.GetPreviewVacancyViewModel.Ok";
+            public const string FailedValidation = "VacancyPosting.GetPreviewVacancyViewModel.FailedValidation";
+        }
+
         public static class GetVacancySummaryViewModel
         {
             public const string Ok = "VacancyPosting.GetVacancySummaryViewModel.Ok";
