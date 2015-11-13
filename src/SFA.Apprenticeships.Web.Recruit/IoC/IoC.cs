@@ -73,7 +73,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
                 x.For<ICookieAuthorizationDataProvider>().Use<CookieAuthorizationDataProvider>();
                 x.For<IAuthorizationErrorProvider>().Use<AuthorizationErrorProvider>();
-                x.For<IVacancyPostingProvider>().Use<VacancyPostingProvider>();
+                x.For<IVacancyPostingProvider>().Use<VacancyProvider>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());

@@ -17,25 +17,25 @@
         public void GetVacancySummaryViewModelShouldgetViewModelFromProvider()
         {
             const int vacancyReferenceNumber = 1;
-            var vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
-            vacancyPostingProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new VacancySummaryViewModel
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
+            vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new VacancySummaryViewModel
             {
                 ClosingDate = new DateViewModel(DateTime.UtcNow),
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow)
             });
 
-            var mediator = new VacancyMediatorBuilder().With(vacancyPostingProvider).Build();
+            var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
 
             mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
-            vacancyPostingProvider.Verify(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber));
+            vacancyProvider.Verify(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber));
         }
 
         [Test]
         public void GetVacancySummaryViewModelShoudReturnValidationFailedIfValidationFailed()
         {
             const int vacancyReferenceNumber = 1;
-            var vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
+            var vacancyPostingProvider = new Mock<IVacancyQAProvider>();
             vacancyPostingProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new VacancySummaryViewModel
             {
                 ClosingDate = new DateViewModel(DateTime.UtcNow),
@@ -53,10 +53,10 @@
         public void GetVacancySummaryViewModelShoudReturnOkIfValidationPassed()
         {
             const int vacancyReferenceNumber = 1;
-            var vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
-            vacancyPostingProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(GetValidVacancySummaryViewModel(vacancyReferenceNumber));
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
+            vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(GetValidVacancySummaryViewModel(vacancyReferenceNumber));
 
-            var mediator = new VacancyMediatorBuilder().With(vacancyPostingProvider).Build();
+            var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
 
             var response = mediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
@@ -132,7 +132,7 @@
         public void GetVacancyQuestionsViewModelShouldGetViewmodelFromProvider()
         {
             const long vacancyReferenceNumber = 1;
-            var vacancyProvider = new Mock<IVacancyPostingProvider>();
+            var vacancyProvider = new Mock<IVacancyQAProvider>();
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = new VacancyQuestionsViewModel();
             vacancyProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(viewModel);
@@ -147,11 +147,10 @@
         public void UpdateVacancyShouldCallProvider()
         {
             const long vacancyReferenceNumber = 1;
-            var vacancyPostingProvider = new Mock<IVacancyPostingProvider>();
             var vacancyProvider = new Mock<IVacancyQAProvider>();
-            var mediator = new VacancyMediatorBuilder().With(vacancyProvider).With(vacancyPostingProvider).Build();
+            var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = new VacancyQuestionsViewModel();
-            vacancyPostingProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(viewModel);
+            vacancyProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(viewModel);
 
             var result = mediator.UpdateVacancy(viewModel);
             result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);

@@ -24,7 +24,7 @@
 
         public IVacancyQAProvider Build()
         {
-            return new VacancyPostingProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
+            return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
                 _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, _apprenticeshipVacancyReadRepository.Object,
                 _apprenticeshipVacancyWriteRepository.Object);
         }

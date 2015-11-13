@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
 
     public interface IVacancyPostingProvider
@@ -34,5 +35,7 @@
         List<StandardViewModel> GetStandards();
 
         StandardViewModel GetStandard(int? standardId);
+
+        VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
     }
 }

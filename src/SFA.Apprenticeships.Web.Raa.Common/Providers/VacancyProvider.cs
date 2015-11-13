@@ -23,7 +23,7 @@
     using Web.Common.ViewModels;
 
 
-    public class VacancyPostingProvider : IVacancyPostingProvider, IVacancyQAProvider
+    public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
         private readonly ILogService _logService;
 
@@ -36,7 +36,7 @@
         private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
         private readonly IConfigurationService _configurationService;
 
-        public VacancyPostingProvider(
+        public VacancyProvider(
             ILogService logService,
             IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService,

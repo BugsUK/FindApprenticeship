@@ -13,7 +13,6 @@
     public class VacancyMediator : MediatorBase, IVacancyMediator
     {
         private readonly IVacancyQAProvider _vacancyQaProvider;
-        private readonly IVacancyPostingProvider _vacancyPostingProvider;
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
@@ -21,7 +20,7 @@
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator;
 
-        public VacancyMediator(IVacancyQAProvider vacancyQaProvider, IVacancyPostingProvider vacancyPostingProvider,
+        public VacancyMediator(IVacancyQAProvider vacancyQaProvider,
             VacancyViewModelValidator vacancyViewModelValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
             NewVacancyViewModelServerValidator newVacancyViewModelServerValidator, 
@@ -29,7 +28,6 @@
             VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator)
         {
             _vacancyQaProvider = vacancyQaProvider;
-            _vacancyPostingProvider = vacancyPostingProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
@@ -87,7 +85,7 @@
 
         public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            var vacancyViewModel = _vacancyQaProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
@@ -124,7 +122,7 @@
 
         public MediatorResponse<NewVacancyViewModel> GetBasicDetails(long vacancyReferenceNumber)
         {
-            var newVacancyViewModel = _vacancyPostingProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
+            var newVacancyViewModel = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
             var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
@@ -139,7 +137,7 @@
 
         public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyPostingProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+            var vacancyViewModel = _vacancyQaProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
 
             var validationResult = _vacancyQuestionsViewModelServerValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
@@ -153,7 +151,7 @@
 
         public MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber)
         {
-            var vacancyViewModel = _vacancyPostingProvider.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
+            var vacancyViewModel = _vacancyQaProvider.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
 
             var validationResult = _vacancyRequirementsProspectsViewModelServerValidator.Validate(vacancyViewModel);
 

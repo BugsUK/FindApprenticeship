@@ -48,7 +48,7 @@
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
         {
-            return new VacancyPostingProvider(MockLogService.Object,
+            return new VacancyProvider(MockLogService.Object,
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
                 MockReferenceDataService.Object,

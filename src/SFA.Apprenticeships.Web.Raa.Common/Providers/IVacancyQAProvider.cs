@@ -7,8 +7,6 @@
 
     public interface IVacancyQAProvider
     {
-        VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
-	
         List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview();
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
