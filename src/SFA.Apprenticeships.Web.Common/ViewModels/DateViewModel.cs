@@ -35,12 +35,9 @@
         {
             get
             {
-                // ReSharper disable once NotResolvedInText
-                if (!Day.HasValue) throw new ArgumentOutOfRangeException("Day");
-                // ReSharper disable once NotResolvedInText
-                if (!Month.HasValue) throw new ArgumentOutOfRangeException("Month");
-                // ReSharper disable once NotResolvedInText
-                if (!Year.HasValue) throw new ArgumentOutOfRangeException("Year");
+                if (!Day.HasValue) throw new InvalidOperationException("Day not set");
+                if (!Month.HasValue) throw new InvalidOperationException("Month not set");
+                if (!Year.HasValue) throw new InvalidOperationException("Year not set");
 
                 return new DateTime(Year.Value, Month.Value, Day.Value);
             }
