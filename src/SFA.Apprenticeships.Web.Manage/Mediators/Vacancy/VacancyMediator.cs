@@ -123,7 +123,7 @@
         {
             var newVacancyViewModel = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
-            var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+            var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel);
 
             if (!validationResult.IsValid)
             {

@@ -77,7 +77,7 @@
             switch (response.Code)
             {
                 case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
-                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
 
                 case VacancyMediatorCodes.UpdateVacancy.Ok:
