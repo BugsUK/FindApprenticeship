@@ -78,22 +78,31 @@
                 </h3>
 
                 <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-
-                @if (Model.VacancySummaryViewModel.WageType != WageType.Custom)
+                
+                @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
                 {
                     <details>
-                        <summary>TODO: Wage explanation</summary>
+                        <summary>National Minimum Wage<br />for apprentices explained</summary>
                         <div class="detail-content">
-                            The current National Minimum Wage (NMW) rate for an apprentice is £@Wages.ApprenticeMinimumWage per hour.
-                            This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.
-                            Apprentices must be paid at least the NMW rate for their age if they're aged 19 or over and have completed their first year.
-                            The current NMW rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.
-                            Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
+                            The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
+                            This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
+                            Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
                         </div>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                        @Html.DisplayFor(m => m.VacancySummaryViewModel.WageComment, "Comment")
                     </details>
                 }
+
+                @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
+                {
+                    <details>
+                        <summary>National Minimum Wage</summary>
+                        <div class="detail-content">
+                            The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
+                            Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
+                        </div>
+                    </details>
+                }
+                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+                @Html.DisplayFor(m => m.VacancySummaryViewModel.WageComment, "Comment")
 
                 <h3 class="bold-small">
                     Expected duration
