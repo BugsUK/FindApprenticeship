@@ -81,6 +81,14 @@
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
@@ -166,6 +174,8 @@
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
+    <Compile Include="Mappers\RaaCommonWebMappers.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />
@@ -176,6 +186,7 @@
     <Compile Include="Providers\ProviderProvider.cs" />
     <Compile Include="Providers\ProviderUserProvider.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
+    <Compile Include="TypeConverters\IntToNullableDouble.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\VerifyEmailViewModelValidator.cs" />
@@ -247,6 +258,10 @@
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>
@@ -261,6 +276,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
   </Target>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
