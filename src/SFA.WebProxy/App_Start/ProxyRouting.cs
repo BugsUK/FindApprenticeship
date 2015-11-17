@@ -10,7 +10,7 @@
     {
         public Routing GetRouting(Uri requestUri, HttpMethod method, string ipAddress, Task<string> task)
         {
-            return new Routing()
+            return new Routing
             {
                 PrimaryUri = new Uri("http://news.bbc.co.uk"),
                 SecondaryUris = Enumerable.Empty<Uri>(),
@@ -24,7 +24,7 @@
     {
         public Routing GetRouting(Uri requestUri, HttpMethod method, string ipAddress, Task<string> task)
         {
-            var routing = new Routing()
+            var routing = new Routing
             {
                 SecondaryUris = Enumerable.Empty<Uri>(),
                 RequestCopyStreams = Enumerable.Empty<Stream>(),

@@ -11,14 +11,14 @@
 
     public class ProxyHandler : DelegatingHandler
     {
-        private IProxyRouting _proxyRouting;
+        private readonly IProxyRouting _proxyRouting;
 
         public ProxyHandler(IProxyRouting proxyRouting)
         {
             _proxyRouting = proxyRouting;
         }
 
-        protected override async System.Threading.Tasks.Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             // Note: Redirects are handled on the proxy side and therefore the client doesn't see them. This can result in resources not being found.
             // Note: No guarantee headers will end up being sent in the same order as originally
@@ -129,13 +129,13 @@
         // Copied from System.Net.Http
         internal class DelegatingStream : Stream
         {
-            private Stream innerStream;
+            private readonly Stream _innerStream;
 
             public override bool CanRead
             {
                 get
                 {
-                    return this.innerStream.CanRead;
+                    return _innerStream.CanRead;
                 }
             }
 
@@ -143,7 +143,7 @@
             {
                 get
                 {
-                    return this.innerStream.CanSeek;
+                    return _innerStream.CanSeek;
                 }
             }
 
@@ -151,7 +151,7 @@
             {
                 get
                 {
-                    return this.innerStream.CanWrite;
+                    return _innerStream.CanWrite;
                 }
             }
 
@@ -159,7 +159,7 @@
             {
                 get
                 {
-                    return this.innerStream.Length;
+                    return _innerStream.Length;
                 }
             }
 
@@ -167,11 +167,11 @@
             {
                 get
                 {
-                    return this.innerStream.Position;
+                    return _innerStream.Position;
                 }
                 set
                 {
-                    this.innerStream.Position = value;
+                    _innerStream.Position = value;
                 }
             }
 
@@ -179,11 +179,11 @@
             {
                 get
                 {
-                    return this.innerStream.ReadTimeout;
+                    return _innerStream.ReadTimeout;
                 }
                 set
                 {
-                    this.innerStream.ReadTimeout = value;
+                    _innerStream.ReadTimeout = value;
                 }
             }
 
@@ -191,7 +191,7 @@
             {
                 get
                 {
-                    return this.innerStream.CanTimeout;
+                    return _innerStream.CanTimeout;
                 }
             }
 
@@ -199,94 +199,94 @@
             {
                 get
                 {
-                    return this.innerStream.WriteTimeout;
+                    return _innerStream.WriteTimeout;
                 }
                 set
                 {
-                    this.innerStream.WriteTimeout = value;
+                    _innerStream.WriteTimeout = value;
                 }
             }
 
             public DelegatingStream(Stream innerStream)
             {
-                this.innerStream = innerStream;
+                _innerStream = innerStream;
             }
 
             protected override void Dispose(bool disposing)
             {
                 if (disposing)
-                    this.innerStream.Dispose();
+                    _innerStream.Dispose();
                 base.Dispose(disposing);
             }
 
             public override long Seek(long offset, SeekOrigin origin)
             {
-                return this.innerStream.Seek(offset, origin);
+                return _innerStream.Seek(offset, origin);
             }
 
             public override int Read(byte[] buffer, int offset, int count)
             {
-                return this.innerStream.Read(buffer, offset, count);
+                return _innerStream.Read(buffer, offset, count);
             }
 
             public override IAsyncResult BeginRead(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
             {
-                return this.innerStream.BeginRead(buffer, offset, count, callback, state);
+                return _innerStream.BeginRead(buffer, offset, count, callback, state);
             }
 
             public override int EndRead(IAsyncResult asyncResult)
             {
-                return this.innerStream.EndRead(asyncResult);
+                return _innerStream.EndRead(asyncResult);
             }
 
             public override int ReadByte()
             {
-                return this.innerStream.ReadByte();
+                return _innerStream.ReadByte();
             }
 
             public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                return this.innerStream.ReadAsync(buffer, offset, count, cancellationToken);
+                return _innerStream.ReadAsync(buffer, offset, count, cancellationToken);
             }
 
             public override void Flush()
             {
-                this.innerStream.Flush();
+                _innerStream.Flush();
             }
 
             public override Task FlushAsync(CancellationToken cancellationToken)
             {
-                return this.innerStream.FlushAsync(cancellationToken);
+                return _innerStream.FlushAsync(cancellationToken);
             }
 
             public override void SetLength(long value)
             {
-                this.innerStream.SetLength(value);
+                _innerStream.SetLength(value);
             }
 
             public override void Write(byte[] buffer, int offset, int count)
             {
-                this.innerStream.Write(buffer, offset, count);
+                _innerStream.Write(buffer, offset, count);
             }
 
             public override IAsyncResult BeginWrite(byte[] buffer, int offset, int count, AsyncCallback callback, object state)
             {
-                return this.innerStream.BeginWrite(buffer, offset, count, callback, state);
+                return _innerStream.BeginWrite(buffer, offset, count, callback, state);
             }
 
             public override void EndWrite(IAsyncResult asyncResult)
             {
-                this.innerStream.EndWrite(asyncResult);
+                _innerStream.EndWrite(asyncResult);
             }
 
             public override void WriteByte(byte value)
             {
-                this.innerStream.WriteByte(value);
+                _innerStream.WriteByte(value);
             }
 
             public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
             {
-                return this.innerStream.WriteAsync(buffer, offset, count, cancellationToken);
+                return _innerStream.WriteAsync(buffer, offset, count, cancellationToken);
             }
         }
 
