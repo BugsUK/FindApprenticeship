@@ -22,6 +22,10 @@
             {
                 return false;
             }
+            catch (InvalidOperationException)
+            {
+                return false;
+            }
         }
 
         public static bool BeTwoWeeksInTheFuture(DateViewModel instance)
