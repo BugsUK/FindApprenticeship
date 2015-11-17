@@ -6,7 +6,7 @@
     using System.Net.Http;
     using System.Threading.Tasks;
 
-    public class DefaultRouting : IProxyRouting
+    public class BbcRouting : IProxyRouting
     {
         public Routing GetRouting(Uri requestUri, HttpMethod method, string ipAddress, Task<string> task)
         {
@@ -20,7 +20,7 @@
         }
     }
 
-    public class DefaultRouting2 : IProxyRouting
+    public class LogicRouting : IProxyRouting
     {
         public Routing GetRouting(Uri requestUri, HttpMethod method, string ipAddress, Task<string> task)
         {
@@ -41,6 +41,23 @@
             }
 
             return routing;
+        }
+    }
+
+    public class NasAvWebServicesRouting : IProxyRouting
+    {
+        private const string RootUrl = "https://apprenticeshipvacancymatchingservice.lsc.gov.uk";
+
+        public Routing GetRouting(Uri requestUri, HttpMethod method, string ipAddress, Task<string> getContentAsString)
+        {
+            //TODO: Possibly allow for redirects to redirect / to /navms/Forms/Candidate/VisitorLanding.aspx
+            return new Routing
+            {
+                PrimaryUri = new Uri(RootUrl + requestUri.PathAndQuery),
+                SecondaryUris = Enumerable.Empty<Uri>(), //TODO: use new API url
+                RequestCopyStreams = Enumerable.Empty<Stream>(),
+                ResponseCopyStreams = Enumerable.Empty<Stream>()
+            };
         }
     }
 }
