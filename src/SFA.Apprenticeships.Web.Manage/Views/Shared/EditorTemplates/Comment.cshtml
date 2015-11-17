@@ -4,12 +4,6 @@
     var state = string.IsNullOrWhiteSpace(Model) ? string.Empty : "open";
 }
 
-<style>
-    .qa-comment {
-        background: yellow;
-        padding: 20px;   
-    }
-</style>
 <details @state>
     <summary>Comment</summary>
     <div class="detail-content qa-comment">

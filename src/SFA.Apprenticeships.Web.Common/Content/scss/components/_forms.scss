@@ -527,7 +527,8 @@ input::-webkit-inner-spin-button {
 }
 
 
-.field-comment {
+.field-comment,
+.qa-comment  {
   padding: 1em;
   background: $yellow-25;
 }

@@ -63,6 +63,8 @@
                 <fieldset class="form-group inline-fixed">
                     @Html.FormTextFor(m => m.Duration, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { @class = "form-control-large", type = "tel", size = 12 })
                     @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
+                </fieldset>
+                <fieldset class="form-group">
                     @Html.EditorFor(m => m.DurationComment, "Comment")
                 </fieldset>
 

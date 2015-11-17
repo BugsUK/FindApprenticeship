@@ -117,8 +117,10 @@
                         <i class="fa fa-check the-icon" style="color: green;"></i>
                     }
                 </h3>
+                <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText
+                    <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+                </p>
 
-                <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
                 <h3 class="bold-small">Possible start date</h3>
                 @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
                 {

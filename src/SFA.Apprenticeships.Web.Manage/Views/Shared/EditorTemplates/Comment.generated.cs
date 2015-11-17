@@ -49,11 +49,10 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Shared.EditorTemplates
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<style>\r\n    .qa-comment {\r\n        background: yellow;\r\n        padding: 20p" +
-"x;   \r\n    }\r\n</style>\r\n<details ");
+WriteLiteral("\r\n\r\n<details ");
 
             
-            #line 13 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+            #line 7 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
     Write(state);
 
             
@@ -72,7 +71,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 17 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+            #line 11 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
        Write(Html.FormTextAreaFor(m => m, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
