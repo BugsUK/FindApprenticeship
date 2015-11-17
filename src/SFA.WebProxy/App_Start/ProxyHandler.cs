@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Web;
-using System.Threading;
-using System.Net;
-using System.IO;
-using System.Threading.Tasks;
-using System.Net.Http.Headers;
-using System.Reflection;
-
-namespace SFA.WebProxy
+﻿namespace SFA.WebProxy
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class ProxyHandler : DelegatingHandler
     {
         private IProxyRouting _proxyRouting;

@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Web;
-
-namespace SFA.WebProxy
+﻿namespace SFA.WebProxy
 {
+    using System;
+    using System.IO;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
+
     public class DefaultRouting : IProxyRouting
     {
         public Routing GetRouting(Uri requestUri, HttpMethod method, string ipAddress, Task<string> task)
