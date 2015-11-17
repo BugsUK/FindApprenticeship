@@ -30,9 +30,13 @@
 
             var responses = new List<Task<HttpResponseMessage>>();
 
-            using (var client = new HttpClient())
+            var handler = new HttpClientHandler
             {
+                AllowAutoRedirect = false
+            };
 
+            using (var client = new HttpClient(handler))
+            {
                 // Copy request headers (.NET treats request content headers separately)
                 client.DefaultRequestHeaders.Clear();
                 foreach (var header in request.Headers)
