@@ -30,6 +30,7 @@
 
             var responses = new List<Task<HttpResponseMessage>>();
 
+            //We don't want to handle redirects ourselves. The responses should be sent back unchanged and handled by the client so their URLs are correct.
             var handler = new HttpClientHandler
             {
                 AllowAutoRedirect = false
