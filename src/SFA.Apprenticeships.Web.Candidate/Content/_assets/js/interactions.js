@@ -180,6 +180,9 @@ $(function() {
 
     if($maxLength) {
         $charCountEl.text($characterCount);
+    } else {
+        $charTextEl.hide();
+        return;
     }
 
     if($lengthOfText > $maxLength) {

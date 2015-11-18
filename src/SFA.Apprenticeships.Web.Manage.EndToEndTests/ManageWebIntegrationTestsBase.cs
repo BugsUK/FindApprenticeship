@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.IntegrationTests
+﻿namespace SFA.Apprenticeships.Web.Manage.EndToEndTests
 {
     using System.Security.Principal;
     using System.Threading;

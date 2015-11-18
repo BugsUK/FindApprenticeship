@@ -7,8 +7,8 @@
     <ProjectGuid>{D30D15E0-A837-4D69-B2F7-BE2E1FE33D76}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Web.Manage.IntegrationTests</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Web.Manage.IntegrationTests</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Web.Manage.EndToEndTests</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Web.Manage.EndToEndTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
