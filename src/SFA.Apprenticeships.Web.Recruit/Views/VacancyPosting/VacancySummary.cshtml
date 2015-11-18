@@ -67,7 +67,7 @@
                     @Html.LabelFor(m => m.Duration, new {@class = "form-label" })
                     @Html.TextBoxFor(m => m.Duration, new { @class = "form-control-large form-control", type = "tel", size = 12 })
                     @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
-                    @Html.ValidationMessageFor(m => m.Duration)
+                    @Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration))
                 </div>
             </fieldset>
 
