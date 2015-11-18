@@ -4382,8 +4382,6 @@ aside h2:first-child {
 .vac-title {
   margin: 0;
   font-weight: bold; }
-  .vac-title a {
-    text-decoration: none; }
 
 html:not(.no-js) [data-editable] {
   position: relative;
