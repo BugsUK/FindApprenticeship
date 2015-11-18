@@ -157,7 +157,7 @@ $(function() {
     characterCount(this);
   });
 
-  $('textarea:not(:empty)').each(function() {
+  $('textarea').each(function() {
     characterCount(this);
   });
 
