@@ -73,6 +73,7 @@
                 Subject = subject,
                 To = new[]
                 {
+                    //TODO: Support multiple to addresses
                     new MailAddress(request.ToEmail)
                 },
                 Text = emptyText,
