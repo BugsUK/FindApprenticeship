@@ -158,9 +158,10 @@
                     <table class="no-btm-margin">
                         <colgroup>
                             <col class="t25">
-                            <col class="t20">
-                            <col class="t20">
-                            <col class="t20">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
                             <col class="t15">
                         </colgroup>
                         <thead>
@@ -170,6 +171,7 @@
                             <th>Vacancy ref</th>
                             <th>Number of applications</th>
                             <th>Vacancy status</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -199,6 +201,9 @@
                                 <td>
                                     @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
                                     @{ Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.ClosingDate); }
+                                </td>
+                                <td>
+                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="ta-center disp-block">Clone</a>
                                 </td>
                             </tr>
                         }
