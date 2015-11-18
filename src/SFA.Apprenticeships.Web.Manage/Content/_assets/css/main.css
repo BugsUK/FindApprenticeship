@@ -2420,6 +2420,12 @@ input::-webkit-inner-spin-button {
 .form-control.input-validation-error {
   background: #fef7f7; }
 
+.field-validation-warning {
+  clear: left;
+  color: #f47738;
+  display: block;
+  margin-top: 8px; }
+
 .validation-message {
   display: block;
   font-family: "nta", Arial, sans-serif;
