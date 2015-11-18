@@ -5,7 +5,6 @@
     using System.ServiceModel;
     using Apprenticeships.Application.Interfaces.Logging;
     using MessageContracts.Version51;
-    using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using Namespaces.Version51;
     using Providers.Version51;

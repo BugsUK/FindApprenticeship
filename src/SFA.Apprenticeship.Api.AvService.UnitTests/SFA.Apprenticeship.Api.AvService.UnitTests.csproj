@@ -108,6 +108,7 @@
     <Compile Include="Mappers\ApprenticeshipVacancyQueryMapperTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyMapperTests.cs" />
     <Compile Include="Mappers\VacancyDurationMapperTests.cs" />
+    <Compile Include="Mappers\VacancyUploadRequestMapperTests.cs" />
     <Compile Include="Mappers\WageMapperTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByQueryTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByReferenceNumberTests.cs" />

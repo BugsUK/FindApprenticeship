@@ -2,5 +2,5 @@
     Language="C#"
     Debug="true"
     Factory="SFA.Apprenticeship.Api.AvService.IoC.StructureMapServiceHostFactory"
-    Service="SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version50.ReferenceDataService"
+    Service="SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51.VacancyManagementService"
 %>

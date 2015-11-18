@@ -225,7 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ReferenceData51.svc" />
-    <Content Include="ReferenceDataService.svc" />
+    <Content Include="VacancyManagement51.svc" />
     <Content Include="VacancyDetails51.svc" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -305,6 +305,7 @@
     <Compile Include="Mappers\Version51\ApprenticeshipVacancyMapper.cs" />
     <Compile Include="Mappers\Version51\ApprenticeshipVacancyQueryMapper.cs" />
     <Compile Include="Mappers\Version51\VacancyDurationMapper.cs" />
+    <Compile Include="Mappers\Version51\VacancyUploadRequestMapper.cs" />
     <Compile Include="Mappers\Version51\WageMapper.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadRequest.cs" />
     <Compile Include="MessageContracts\Version50\BulkVacancyUploadResponse.cs" />
@@ -386,9 +387,11 @@
     <Compile Include="ServiceContracts\Version50\IVacancySummary.cs" />
     <Compile Include="ServiceContracts\Version51\IReferenceData.cs" />
     <Compile Include="ServiceContracts\Version51\IVacancyDetails.cs" />
+    <Compile Include="ServiceContracts\Version51\IVacancyManagement.cs" />
     <Compile Include="ServiceImplementation\Version50\ReferenceDataService.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsService.cs" />
+    <Compile Include="ServiceImplementation\Version51\VacancyManagementService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

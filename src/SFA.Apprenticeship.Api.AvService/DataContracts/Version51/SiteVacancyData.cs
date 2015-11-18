@@ -14,6 +14,5 @@
 
         [DataMember(IsRequired = false, Order = 3)]
         public string EmployerWebsite { get; set; }
-
     }
 }
