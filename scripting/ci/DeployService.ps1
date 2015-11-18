@@ -66,7 +66,6 @@ Function Publish-CloudServicePackage ($CspkgFileName, $CscfgFileName)  {
     Write-Output "Publishing Cloud Service $FriendlyCloudServiceName"
 
     Ensure-CloudServiceExists
-    Ensure-CloudServiceCertificateExists
 
     $Deployment = Get-AzureDeployment -ServiceName $FriendlyCloudServiceName -Slot $SlotName -ErrorAction SilentlyContinue 
     $Upgrading = ($? -and $Deployment -ne $null)
@@ -103,35 +102,6 @@ Function Ensure-CloudServiceExists {
 
     } else {
         Write-Output "Cloud Service '$FriendlyCloudServiceName' already exists - nothing to do"
-    }
-}
-
-Function Ensure-CloudServiceCertificateExists {
-    
-    Ensure-CertificateExists $nasPfxFile $nasPfxPassword
-    
-    if ($webPfxPassword){
-        Ensure-CertificateExists $webPfxFile $webPfxPassword
-    }
-}
-
-Function Ensure-CertificateExists ($pfxPath, $pfxPassword) {
-    
-    Write-Output "Getting Thumbprint for Pfx: $pfxPath with Password: $pfxPassword"
-    $secpasswd = ConvertTo-SecureString $pfxPassword -AsPlainText -Force
-    $pfx = Get-PfxData -FilePath $pfxPath -Password $secpasswd
-    $thumbprint = $pfx.EndEntityCertificates[0].Thumbprint
-    Write-Output "Thumbprint: $thumbprint retrieved from Pfx: $pfxPath using Password: $pfxPassword"
-
-    $Certificate = Get-AzureCertificate $FriendlyCloudServiceName -Thumbprint $thumbprint -ThumbprintAlgorithm sha1 -ErrorAction SilentlyContinue
-
-    if ($? -eq $false -or $Certificate -eq $null) {
-        Write-Output "Adding Cloud Service certificate '$pfxPath'"
-        Add-AzureCertificate -ServiceName $FriendlyCloudServiceName -CertToDeploy $pfxPath -Password $pfxPassword
-        Write-Output "Added Cloud Service certificate '$pfxPath'"
-
-    } else {
-        Write-Output "Cloud Service certificate already exists - nothing to do"
     }
 }
 
