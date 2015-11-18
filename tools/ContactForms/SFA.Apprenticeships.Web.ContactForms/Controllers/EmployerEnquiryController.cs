@@ -26,7 +26,19 @@
             return await Task.Run<ActionResult>(() =>
             {
                 var result = _employerEnquiryMediator.SubmitEnquiry();
+                result.ViewModel.FormRoute = EmployerRouteNames.SubmitEmployerEnquiry;
                 return View(result.ViewModel);
+            });
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> SubmitEmployerEnquiryUnbranded()
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var result = _employerEnquiryMediator.SubmitEnquiry();
+                result.ViewModel.FormRoute = EmployerRouteNames.SubmitEmployerEnquiryUnbranded;
+                return View("SubmitEmployerEnquiry", "_LayoutNoHeaderFooter", result.ViewModel);
             });
         }
         
@@ -54,7 +66,31 @@
                 }
             });
         }
+        
+        [HttpPost]
+        [HoneypotCaptcha("UserName")]
+        public async Task<ActionResult> SubmitEmployerEnquiryUnbranded(EmployerEnquiryViewModel model)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _employerEnquiryMediator.SubmitEnquiry(model);
+                ModelState.Clear();
 
+                switch (response.Code)
+                {
+                    case EmployerEnquiryMediatorCodes.SubmitEnquiry.ValidationError:
+                        response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                        return View("SubmitEmployerEnquiry", "_LayoutNoHeaderFooter", model);
+                    case EmployerEnquiryMediatorCodes.SubmitEnquiry.Error:
+                        SetPageMessage(response.Message.Text, response.Message.Level);
+                        return View("SubmitEmployerEnquiry", "_LayoutNoHeaderFooter", model);
+                    case EmployerEnquiryMediatorCodes.SubmitEnquiry.Success:
+                        return RedirectToRoute(EmployerRouteNames.SubmitEmployerEnquiryUnbrandedThankYou);
+                    default:
+                        throw new InvalidMediatorCodeException(response.Code);
+                }
+            });
+        }
 
         [HttpGet]
         public async Task<ActionResult> GlaSubmitEmployerEnquiry()
@@ -96,6 +132,13 @@
             SetPageMessage(EmployerEnquiryPageMessages.QueryHasBeenSubmittedSuccessfully);
             ViewBag.Title = "Employer enquiry-Thank You";
             return await Task.Run<ActionResult>(() => View());
+        }
+
+        public async Task<ActionResult> ThankYouUnbranded()
+        {
+            SetPageMessage(EmployerEnquiryPageMessages.QueryHasBeenSubmittedSuccessfully);
+            ViewBag.Title = "Employer enquiry-Thank You";
+            return await Task.Run<ActionResult>(() => View("ThankYou", "_LayoutNoHeaderFooter"));
         }
 
         public async Task<ActionResult> GlaThankYou()

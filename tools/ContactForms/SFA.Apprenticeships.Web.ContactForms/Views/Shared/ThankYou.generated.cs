@@ -42,7 +42,7 @@ namespace ASP
             #line 1 "..\..\Views\Shared\ThankYou.cshtml"
   
     ViewBag.Title = ViewBag.Title;
-    Layout = "~/Views/Shared/_LayoutNoHeaderFooter.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default

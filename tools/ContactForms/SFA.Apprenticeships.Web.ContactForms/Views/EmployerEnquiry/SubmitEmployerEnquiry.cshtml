@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "Employer enquiry form";
-    Layout = "~/Views/Shared/_LayoutNoHeaderFooter.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="grid-wrapper">
@@ -28,7 +28,7 @@
 
 
 
-@using (Html.BeginForm("SubmitEmployerEnquiry", "EmployerEnquiry", FormMethod.Post))
+@using (Html.BeginRouteForm(Model.FormRoute, FormMethod.Post))
 {
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 

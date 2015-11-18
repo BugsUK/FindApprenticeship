@@ -54,7 +54,7 @@ namespace ASP
             #line 5 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
   
     ViewBag.Title = "Employer enquiry form";
-    Layout = "~/Views/Shared/_LayoutNoHeaderFooter.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
             
             #line default
@@ -106,7 +106,7 @@ WriteLiteral(">Wales</a>.\r\n    </p>\r\n    <br />\r\n</div>\r\n\r\n\r\n\r\n");
 
             
             #line 31 "..\..\Views\EmployerEnquiry\SubmitEmployerEnquiry.cshtml"
- using (Html.BeginForm("SubmitEmployerEnquiry", "EmployerEnquiry", FormMethod.Post))
+ using (Html.BeginRouteForm(Model.FormRoute, FormMethod.Post))
 {
     
             

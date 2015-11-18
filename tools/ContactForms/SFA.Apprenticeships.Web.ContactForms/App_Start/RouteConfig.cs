@@ -20,6 +20,12 @@
                 );
 
             routes.MapRoute(
+                name: EmployerRouteNames.SubmitEmployerEnquiryUnbranded,
+                url: "employer-enquiry-unbranded",
+                defaults: new { controller = "EmployerEnquiry", action = "SubmitEmployerEnquiryUnbranded" }
+                );
+
+            routes.MapRoute(
                name: EmployerRouteNames.GlaSubmitEmployerEnquiry,
                url: "gla-employer-enquiry",
                defaults: new { controller = "EmployerEnquiry", action = "GlaSubmitEmployerEnquiry" }
@@ -35,6 +41,12 @@
                 name: EmployerRouteNames.SubmitEmployerEnquiryThankYou,
                 url: "employer-enquiry-end",
                 defaults: new { controller = "EmployerEnquiry", action = "ThankYou" }
+                );
+
+            routes.MapRoute(
+                name: EmployerRouteNames.SubmitEmployerEnquiryUnbrandedThankYou,
+                url: "employer-enquiry-unbranded-end",
+                defaults: new { controller = "EmployerEnquiry", action = "ThankYouUnbranded" }
                 );
 
             routes.MapRoute(

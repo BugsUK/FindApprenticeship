@@ -45,5 +45,7 @@
         [Display(Name = EmployerEnquiryViewModelMessages.EnquiryRelatesToMessages.LabelText)]
         public string EnquiryRelatesTo { get; set; }
         public SelectList EnquiryRelatesToList { get; set; }
+
+        public string FormRoute { get; set; }
     }
 }
