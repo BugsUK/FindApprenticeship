@@ -58,7 +58,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public DateViewModel PossibleStartDate { get; set; }
 
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
-
         public string LongDescription { get; set; }
 
         [Display(Name = VacancyViewModelMessages.Comment.LabelText)]

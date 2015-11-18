@@ -411,6 +411,12 @@
     <Content Include="Content\img\select2-spinner.gif" />
     <Content Include="Content\img\select2.png" />
     <Content Include="Content\img\select2x2.png" />
+    <Content Include="Content\js\inplaceediting.js" />
+    <Content Include="Content\js\interactions.js" />
+    <Content Include="Content\js\jquery.pwstrength.js" />
+    <Content Include="Content\js\maps.js" />
+    <Content Include="Content\js\old-browsers.js" />
+    <Content Include="Content\js\sticky.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

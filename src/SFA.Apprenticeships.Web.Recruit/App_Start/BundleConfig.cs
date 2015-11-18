@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Web.Recruit
                 "~/Content/_assets/js/vendor/jquery.validate.js",
                 "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.custom.js",
                 "~/Content/_assets/js/vendor/select2.js"));
-        }
+         }
     }
 }
         

@@ -1,31 +1,40 @@
-﻿using System;
-using System.Web.Optimization;
-
-namespace SFA.Apprenticeships.Web.Common
+﻿namespace SFA.Apprenticeships.Web.Common
 {
+    using System.Web.Optimization;
+
     public class BundleConfig
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery", "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js").Include(
-                "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
+            bundles.Add(new ScriptBundle("~/bundles/jquery",
+                "//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.1/jquery.min.js").Include(
+                    "~/Content/_assets/js/vendor/jquery-1.11.1.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/fastclick", "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js").Include(
-                "~/Content/_assets/js/vendor/fastclick-1.0.6.js"));
+            bundles.Add(new ScriptBundle("~/bundles/fastclick",
+                "//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js").Include(
+                    "~/Content/_assets/js/vendor/fastclick-1.0.6.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/underscore", "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js").Include(
-                "~/Content/_assets/js/vendor/underscore-1.7.0.js"));
+            bundles.Add(new ScriptBundle("~/bundles/underscore",
+                "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js").Include(
+                    "~/Content/_assets/js/vendor/underscore-1.7.0.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/joyride").Include(
                 "~/Content/_assets/js/vendor/jquery.joyride.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/cookie", "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(
-                "~/Content/_assets/js/vendor/jquery.cookie.js"));
+            bundles.Add(new ScriptBundle("~/bundles/cookie",
+                "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(
+                    "~/Content/_assets/js/vendor/jquery.cookie.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(
                 "~/Content/_assets/js/nas/validationscripts.js",
-                "~/Content/_assets/js/scripts.js"));
-
+                "~/Content/_assets/js/inplaceediting.js",
+                "~/Content/_assets/js/interactions.js",
+                "~/Content/_assets/js/jobtitles.js",
+                "~/Content/_assets/js/jquery.pwstrength.js",
+                "~/Content/_assets/js/maps.js",
+                "~/Content/_assets/js/old-browsers.js",
+                "~/Content/_assets/js/sticky.js"));
+            
             bundles.Add(new StyleBundle("~/bundles/not-ie8")
                 .Include("~/Content/_assets/css/main.css")
                 .Include("~/Content/_assets/css/fonts.css"));

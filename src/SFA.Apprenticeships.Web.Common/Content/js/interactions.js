@@ -1,28 +1,31 @@
 $(function() {
-    var isMobile = {
-        Android: function () {
-            return navigator.userAgent.match(/Android/i);
-        },
-        BlackBerry: function () {
-            return navigator.userAgent.match(/BlackBerry/i);
-        },
-        iOS: function () {
-            return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-        },
-        Opera: function () {
-            return navigator.userAgent.match(/Opera Mini/i);
-        },
-        Windows: function () {
-            return navigator.userAgent.match(/IEMobile/i);
-        },
-        any: function () {
-            return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
-        }
-    };
 
-    if (isMobile.any()) {
-        FastClick.attach(document.body);
+  var isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
     }
+  };
+
+  if (isMobile.any()) {
+    FastClick.attach(document.body);
+
+    $('input[autofocus]').removeAttr('autofocus');
+  }
 
   function isAndroid() {
     var nua = navigator.userAgent,
@@ -40,7 +43,7 @@ $(function() {
     return false;
   });
 
-  $(document).on('click', '.mob-collpanel-trigger', function () {
+  $('.mob-collpanel-trigger').on('click', function() {
     $(this).next('.mob-collpanel').toggleClass('panel-open');
     $(this).toggleClass('triggered');
     return false;
@@ -54,10 +57,21 @@ $(function() {
 
   $('.button-toggler').on('click', function() {
     var $this = $(this),
-        $target = $this.attr('data-target');
+        $target = $this.attr('data-target-on');
 
     $('#' + $target).toggleClass('toggle-content');
 
+    return false;
+  });
+
+  $('.select-toggler').on('change', function() {
+    var $this = $(this),
+        $target = $("option:selected", this).attr('data-target');
+        $targetOn = $("option:selected", this).attr('data-target-on');
+        $targetOff = $("option:selected", this).attr('data-target-off');
+    $('#' + $target).toggleClass('toggle-content');
+    $('#' + $targetOn).removeClass('toggle-content');
+    $('#' + $targetOff).addClass('toggle-content');
     return false;
   });
 
@@ -100,11 +114,13 @@ $(function() {
       $this.closest('.form-group').next('.toggle-content').hide().attr('aria-hidden', true);
       $this.closest('.form-group').find('[aria-expanded]').attr('aria-expanded', false);
     } else {
-        $('#' + $target).show();
+      $('#' + $target).show();
 
-        if ($this.closest('.form-group').hasClass('blocklabel-single')) {
-            $this.closest('.blocklabel-single-container').find('.blocklabel-content').not('#' + $target).hide();
-        }
+      if($this.closest('.form-group').hasClass('blocklabel-single')) {
+
+        console.log('merp');
+        $this.closest('.blocklabel-single-container').find('.blocklabel-content').not('#' + $target).hide();
+      }
     }
 
   });
@@ -145,22 +161,25 @@ $(function() {
     characterCount(this);
   });
 
+  setTimeout(function() {
+    $('textarea[data-value]').each(function() {
+      characterCount(this);
+    });
+  }, 1000);
+
   function characterCount(that) {
     var $this         = $(that),
         $maxLength    = $this.attr('data-val-length-max'),
         $enteredText  = $this.val(),
         $lineBreaks   = ($enteredText.match(/\n/g) || []).length,
-        $lengthOfText = $enteredText.trim().length + $lineBreaks,
+        $lengthOfText = $enteredText.length + $lineBreaks,
         $characterCount = Math.abs($maxLength - $lengthOfText),
         $charCountEl  = $this.closest('.form-group').find('.maxchar-count'),
         $charTextEl   = $this.closest('.form-group').find('.maxchar-text'),
         $thisAria     = $this.closest('.form-group').find('.aria-limit');
 
-    if ($maxLength) {
+    if($maxLength) {
         $charCountEl.text($characterCount);
-    } else {
-        $charTextEl.hide();
-        return;
     }
 
     if($lengthOfText > $maxLength) {
@@ -267,21 +286,47 @@ $(function() {
     }
   });
 
-    //----------Radio expanding lists IE8
+  //----------Radio expanding lists IE8
 
-     if($('html').hasClass('lt-ie9')) {
-         $('.list-checkradio input[type=radio]:checked').siblings('details').addClass('ie8-details');
+  if($('html').hasClass('lt-ie9')) {
+     $('.list-checkradio input[type=radio]:checked').siblings('details').addClass('ie8-details');
 
-         $('.list-checkradio > li').on('click', function () {
-             var $this = $(this),
-                 $thisDetails = $this.find('details');
+     $('.list-checkradio > li').on('click', function () {
+       var $this = $(this),
+           $thisDetails = $this.find('details');
 
-             $('.list-checkradio input[type=radio]').not(':checked').siblings('details').removeClass('ie8-details');
+       $('.list-checkradio input[type=radio]').not(':checked').siblings('details').removeClass('ie8-details');
 
-             $thisDetails.addClass('ie8-details');
+       $thisDetails.addClass('ie8-details');
 
-         });
-     }
+     });
+   }
+
+  //----------Tabbed content
+
+  $('.tabbed-tab').attr('href', "#");
+
+  $('.tabbed-tab').on('click', function() {
+      var $this = $(this),
+          $tabId = $this.attr('tab');
+
+      $this.addClass('active');
+
+      $('.tabbed-tab').not($('[tab="' + $tabId + '"]')).removeClass('active');
+
+      if ($($tabId).length) {
+          $($tabId).show();
+
+          $('.tabbed-content').not($tabId).hide();
+      } else {
+          var $tabClass = '.' + $tabId.substr(1);
+
+          $('.tabbed-element' + $tabClass).show();
+          $('.tabbed-element').not($tabClass).hide();
+      }
+
+      return false;
+  });
 
   //------- Select to inject content to text input
 
@@ -294,15 +339,15 @@ $(function() {
 
       $theInput.val($thisOptionText);
 
-      $('.selfServe').each(function () {
-          if ($(this).prop('id') == $selectedVal) {
-              $(this).show();
-              $('.selfServe').not($(this)).hide();
-          }
+      $('.selfServe').each(function() {
+        if($(this).prop('id') == $selectedVal) {
+          $(this).show();
+          $('.selfServe').not($(this)).hide();
+        }
       });
 
-      if ($('#' + $selectedVal).length == 0) {
-          $('.selfServe').hide();
+      if($('#' + $selectedVal).length == 0) {
+        $('.selfServe').hide();
       }
 
       if ($selectedVal == "noSelect") {
@@ -312,175 +357,18 @@ $(function() {
       $theInput.focusout();
   });
 
-    //------- Inline details toggle
+  //------- Add chosen plugin behaviour to non-touch browsers
+  $('.chosen-select').select2();
 
-  $(document).on('click', '.summary-style', function (e) {
-      e.preventDefault();
-      $this = $(this);
-      $this.toggleClass('open');
-      $this.next('.detail-content').toggle();
+  //------- Inline details toggle
+
+  $('.summary-style').on('click', function() {
+    $this = $(this);
+
+    $this.toggleClass('open');
+
+    $this.next('.detail-content').toggle();
   });
-
-    //------- Print button
-
-  $('.print-trigger').on('click', function (e) {
-      window.print();
-
-      e.preventDefault();
-  });
-
-});;/*
- *  jQuery Password Strength - v0.0.1
- *
- *  Made by Henry Charge
- *  Under MIT License
- */
-// the semi-colon before function invocation is a safety net against concatenated
-// scripts and/or other plugins which may not be closed properly.
-;(function ( $, window, document, undefined ) {
-
-		// undefined is used here as the undefined global variable in ECMAScript 3 is
-		// mutable (ie. it can be changed by someone else). undefined isn't really being
-		// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
-		// can no longer be modified.
-
-		// window and document are passed through as local variable rather than global
-		// as this (slightly) quickens the resolution process and can be more efficiently
-		// minified (especially when both are regularly referenced in your plugin).
-
-		// Create the defaults once
-		var pluginName = "pwStrengthManager",
-				defaults = {
-  				password: "",
-          blackList : [],
-          minChars : "",
-          maxChars : "",
-          advancedStrength : false
-		    };
-
-		// The actual plugin constructor
-		function Plugin ( element, options ) {
-				this.element = element;
-				// jQuery has an extend method which merges the contents of two or
-				// more objects, storing the result in the first object. The first object
-				// is generally empty as we don't want to alter the default options for
-				// future instances of the plugin
-				this.settings = $.extend( {}, defaults, options );
-				this._defaults = defaults;
-				this._name = pluginName;
-				this.init();
-        this.info = "";
-        this.className = "";
-		}
-
-		Plugin.prototype = {
-				init: function() {
-          if (zxcvbn) {
-            var zxLoaded = true;
-          }
-
-          var errors = this.customValidators();
-
-          if ("" == this.settings.password && zxLoaded) {
-            this.info = "Cannot be empty";
-            this.className = "strength-weak";
-          } else if (errors == 0 && zxLoaded) {
-            var strength = zxcvbn(this.settings.password, this.settings.blackList),
-                upperCase = new RegExp('[A-Z]'),
-                lowerCase = new RegExp('[a-z]'),
-                numbers = new RegExp('[0-9]');
-
-            if (strength.score >= 3 && this.settings.password.match(upperCase) && this.settings.password.match(lowerCase) && this.settings.password.match(numbers)) {
-              this.info = "Very strong";
-              this.className = "strength-strong";
-            } else if (this.settings.password.match(upperCase) && this.settings.password.match(lowerCase) && this.settings.password.match(numbers)) {
-              this.info = "Strong";
-              this.className = "strength-strong";
-            } else {
-              this.info = "Too weak";
-              this.className = "strength-weak";
-            }
-
-          }
-
-          $(this.element).html(this.info).removeClass().addClass(this.className);
-        },
-				minChars: function() {
-          if (this.settings.password.length < this.settings.minChars) {
-            this.info = "At least " + this.settings.minChars + " characters";
-            return false;
-          } else {
-            return true;
-          }
-        },
-        customValidators: function() {
-          var err = 0;
-
-          if (this.settings.minChars != "") {
-            if (!this.minChars()) {
-              err++;
-            }
-          }
-
-          return err;
-        }
-		};
-
-		// A really lightweight plugin wrapper around the constructor,
-		// preventing against multiple instantiations
-		$.fn[pluginName] = function (options) {
-      this.each(function() {
-        $.data(this, "plugin_" + pluginName, new Plugin(this, options));
-      });
-      return this;
-    };
-
-})( jQuery, window, document );
-;$(function() {
-
-  //-- Faking details behaviour
-
-  $('.no-details').on('click keypress', 'summary', function(e) {
-    var $this = $(this);
-    if (e.which === 13 || e.type === 'click') {
-      $this.parent().toggleClass('open');
-    }
-  });
-
-});;$(function () {
-  if($('.fixedsticky').length > 0) {
-
-    var sortControl = $('.float-right-wrap');
-    var secondToLast = $('.search-results__item:nth-last-child(2)');
-    var origPosition = '23px';
-    var posNumber = 23;
-
-    stickySidebar();
-
-    $(window).scroll(stickySidebar);
-
-    $(window).resize(stickySidebar);
-
-    function stickySidebar() {
-      var sortOffset = sortControl.offset(),
-          secondOffset = secondToLast.offset(),
-          sortTopPos = sortOffset.top - $(window).scrollTop(),
-          secLastTopPos = secondOffset.top - $(window).scrollTop();
-
-      if(sortTopPos < posNumber) {
-        $('.fixedsticky').addClass('sticky');
-      } else {
-        $('.fixedsticky').removeClass('sticky');
-      }
-
-      if(secLastTopPos < 0) {
-        $('.fixedsticky').css('top', secLastTopPos + posNumber + 'px');
-      } else {
-        $('.fixedsticky').css('top', origPosition);
-      }
-    }
-  }
 
 
 });
-

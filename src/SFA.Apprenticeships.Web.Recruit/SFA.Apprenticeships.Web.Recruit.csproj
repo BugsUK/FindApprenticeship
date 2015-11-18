@@ -373,7 +373,13 @@
     <Content Include="500.html" />
     <Content Include="Content\_assets\css\main-ie8.css" />
     <Content Include="Content\_assets\css\main.css" />
+    <Content Include="Content\_assets\js\inplaceediting.js" />
+    <Content Include="Content\_assets\js\interactions.js" />
+    <Content Include="Content\_assets\js\jquery.pwstrength.js" />
+    <Content Include="Content\_assets\js\maps.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
+    <Content Include="Content\_assets\js\old-browsers.js" />
+    <Content Include="Content\_assets\js\sticky.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -416,12 +422,7 @@
     <Content Include="Content\_assets\img\screenshot-employer-approval.png" />
     <Content Include="Content\_assets\img\screenshot-employer-notification.png" />
     <Content Include="Content\_assets\img\screenshot-idams.png" />
-    <Content Include="Content\_assets\js\frameworks.js" />
-    <Content Include="Content\_assets\js\jobtitles.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
-    <Content Include="Content\_assets\js\prototype-recruit.js" />
-    <Content Include="Content\_assets\js\prototype.js" />
-    <Content Include="Content\_assets\js\scripts.js" />
     <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
     <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
