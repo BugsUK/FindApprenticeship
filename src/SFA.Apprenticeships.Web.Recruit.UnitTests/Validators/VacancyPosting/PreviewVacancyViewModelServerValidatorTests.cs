@@ -10,12 +10,12 @@
     [TestFixture]
     public class PreviewVacancyViewModelServerValidatorTests
     {
-        private VacancyViewModelValidator _validator;
+        private VacancyResubmissionValidator _validator;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new VacancyViewModelValidator();
+            _validator = new VacancyResubmissionValidator();
         }
 
         [Test]
@@ -26,13 +26,14 @@
                 NewVacancyViewModel = new NewVacancyViewModel(),
                 VacancySummaryViewModel = new VacancySummaryViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                ResubmitOptin = false
             };
 
             var result = _validator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             result.IsValid.Should().BeFalse();
-            result.Errors.Count.Should().BeGreaterThan(5);
+            result.Errors.Count.Should().Be(1);
         }
     }
 }

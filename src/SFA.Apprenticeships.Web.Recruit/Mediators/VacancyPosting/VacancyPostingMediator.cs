@@ -32,7 +32,7 @@
         private readonly VacancyRequirementsProspectsViewModelClientValidator _vacancyRequirementsProspectsViewModelClientValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelClientValidator _vacancyQuestionsViewModelClientValidator;
-        private readonly VacancyViewModelValidator _vacancyViewModelValidator;
+        private readonly VacancyResubmissionValidator _vacancyResubmissionValidator;
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
 
@@ -48,7 +48,7 @@
             VacancyRequirementsProspectsViewModelClientValidator vacancyRequirementsProspectsViewModelClientValidator,
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyQuestionsViewModelClientValidator vacancyQuestionsViewModelClientValidator,
-            VacancyViewModelValidator vacancyViewModelValidator,
+            VacancyResubmissionValidator vacancyResubmissionValidator,
             ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
@@ -56,7 +56,7 @@
             _employerProvider = employerProvider;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _newVacancyViewModelClientValidator = newVacancyViewModelClientValidator;
-            _vacancyViewModelValidator = vacancyViewModelValidator;
+            _vacancyResubmissionValidator = vacancyResubmissionValidator;
             _providerSiteEmployerLinkViewModelValidator = providerSiteEmployerLinkViewModelValidator;
             _employerSearchViewModelServerValidator = employerSearchViewModelServerValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
@@ -370,7 +370,7 @@
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
-            var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet:RuleSets.ErrorsAndWarnings);
+            var validationResult = _vacancyResubmissionValidator.Validate(vacancyViewModel, ruleSet:RuleSets.ErrorsAndWarnings);
 
             if (!validationResult.IsValid)
             {
@@ -383,8 +383,21 @@
 
         
 
-        public MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber)
+        public MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber, bool resubmitOptin)
         {
+            if (!resubmitOptin)
+            {
+                var viewModelToValidate = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
+
+                var validationResult = _vacancyResubmissionValidator.Validate(viewModelToValidate);
+
+                if (!validationResult.IsValid)
+                {
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation,
+                        viewModelToValidate, validationResult);
+                }
+            }
+
             var vacancyViewModel =_vacancyPostingProvider.SubmitVacancy(vacancyReferenceNumber);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.Ok, vacancyViewModel);

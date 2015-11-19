@@ -211,5 +211,11 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Comment " + Whitelists.FreetextWhitelist.ErrorText;
         }
+
+        public static class ResubmitOptin
+        {
+            public const string LabelText = "I'm happy to resubmit this vacancy for approval";
+            public const string RequiredErrorText = "Please tick the checkbox indicating that you are happy to resubmit this vacancy";
+        }
     }
 }

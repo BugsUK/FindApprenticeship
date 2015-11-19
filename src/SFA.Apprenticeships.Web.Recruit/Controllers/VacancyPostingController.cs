@@ -376,9 +376,9 @@
         }
         
         [HttpPost]
-        public ActionResult SubmitVacancy(long vacancyReferenceNumber)
+        public ActionResult SubmitVacancy(long vacancyReferenceNumber, bool resubmitoptin)
         {
-            var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber);
+            var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoptin);
             var vacancyViewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -390,9 +390,9 @@
 
             switch (response.Code)
             {
-                //case VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation:
-                //    response.ValidationResult.AddToModelState(ModelState, string.Empty);
-                //    return View(vacancyViewModel);
+                case VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View("PreviewVacancy", vacancyViewModel);
 
                 case VacancyPostingMediatorCodes.SubmitVacancy.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });

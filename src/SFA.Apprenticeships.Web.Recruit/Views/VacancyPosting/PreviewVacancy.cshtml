@@ -7,6 +7,8 @@
     ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
 }
 
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 <div>
     <div class="grid-wrapper">
         <div class="grid grid-2-3">
@@ -318,6 +320,17 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+    {
+        Model.ResubmitOptin = false;
+        @Html.FormCheckBoxFor(model => model.ResubmitOptin, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
+    }
+    else
+    {
+        Model.ResubmitOptin = true;
+        @Html.HiddenFor(model => model.ResubmitOptin)
+    }
 
     <section>
         <div class="form-group">

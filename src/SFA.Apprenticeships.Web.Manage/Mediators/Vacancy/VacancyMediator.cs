@@ -14,21 +14,21 @@
     {
         private readonly IVacancyQAProvider _vacancyQaProvider;
 
-        private readonly VacancyViewModelValidator _vacancyViewModelValidator;
+        private readonly VacancyResubmissionValidator _vacancyResubmissionValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator;
 
         public VacancyMediator(IVacancyQAProvider vacancyQaProvider,
-            VacancyViewModelValidator vacancyViewModelValidator,
+            VacancyResubmissionValidator vacancyResubmissionValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
             NewVacancyViewModelServerValidator newVacancyViewModelServerValidator, 
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator)
         {
             _vacancyQaProvider = vacancyQaProvider;
-            _vacancyViewModelValidator = vacancyViewModelValidator;
+            _vacancyResubmissionValidator = vacancyResubmissionValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
@@ -67,7 +67,7 @@
         {
             var vacancyViewModel = _vacancyQaProvider.ReserveVacancyForQA(vacancyReferenceNumber);
 
-            var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+            var validationResult = _vacancyResubmissionValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             if (!validationResult.IsValid)
             {
