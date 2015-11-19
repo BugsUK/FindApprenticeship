@@ -4381,16 +4381,35 @@ aside h2:first-child {
 .training-history-item.edit-mode .toggle-content ~ span {
   display: none; }
 
-html:not(.touch) .editable-item {
+.editable-item {
   position: relative;
-  margin: -5px;
+  margin: -5px -5px 10px -5px;
   padding: 5px; }
-  html:not(.touch) .editable-item .edit-comment-link {
-    visibility: hidden; }
-  html:not(.touch) .editable-item:hover {
-    background: rgba(0, 0, 0, 0.025); }
-    html:not(.touch) .editable-item:hover .edit-comment-link {
-      visibility: visible; }
+  .editable-item .edit-comment-link {
+    font-family: "nta", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 300;
+    text-transform: none;
+    padding-top: 8px;
+    padding-bottom: 7px;
+    display: block;
+    margin: .5rem 0; }
+    @media (max-width: 640px) {
+      .editable-item .edit-comment-link {
+        font-size: 14px; } }
+    @media (min-width: 641px) {
+      .editable-item .edit-comment-link {
+        padding-top: 5px;
+        padding-bottom: 5px; } }
+
+html:not(.touch) .editable-item .edit-comment-link {
+  visibility: hidden; }
+
+html:not(.touch) .editable-item:hover {
+  background: rgba(0, 0, 0, 0.025); }
+  html:not(.touch) .editable-item:hover .edit-comment-link {
+    visibility: visible; }
 
 .applicant-location,
 .applicant-distance {

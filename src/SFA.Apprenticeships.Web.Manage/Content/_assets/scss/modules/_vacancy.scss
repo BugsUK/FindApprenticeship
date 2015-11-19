@@ -1,12 +1,26 @@
-﻿html:not(.touch) .editable-item {
+﻿.editable-item {
     position: relative;
-    margin: -5px;
+    margin: -5px -5px 10px -5px;
     padding: 5px;
+    .text,
+    details,
+    p {
+        margin-bottom: 0;
+    }
+    .edit-comment-link {
+        @include copy-16;
+        display: block;
+        margin: .5rem 0;
+    }
+}
+
+html:not(.touch) .editable-item {
     .edit-comment-link {
         visibility: hidden;
     }
     &:hover {
         background: rgba( 0, 0, 0, .025 );
+        outline: 1px dotted #d4d4d4;
         .edit-comment-link {
             visibility: visible;
         }

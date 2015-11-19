@@ -9,211 +9,249 @@
 
 <div>
     <div class="grid-wrapper">
-        <div class="grid grid-2-3">
-            <div class="hgroup text">
-                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title (Preview)</h1>
-                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-                <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-            </div>
-        </div>
-        <div class="grid grid-1-3">
+        <div class="grid grid-1-1">
             <p class="page-link hide-nojs">
                 <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
             </p>
         </div>
     </div>
-
-    <section class="grid-wrapper">
-        <div class="grid grid-2-3">
-            <div class="inner-block-padr">
-                <div class="text" itemprop="description">
-                    <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
-                    <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+    <section>
+        <div class="hgroup text editable-item">
+            <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title (Preview)</h1>
+            <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+            <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+        </div>
+        <div class="grid-wrapper">
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="text editable-item" itemprop="description">
+                        <div id="vacancy-description">
+                            @Model.NewVacancyViewModel.ShortDescription
+                        </div>
+                        <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="grid grid-1-3">
-            @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
+            <div class="grid grid-1-3">
+                @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
             {
                 var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
-
-                <p id="vacancy-closing-date" class="copy-16">
-                    Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                </p>
-            }
-            else
-            {
-                <p id="vacancy-closing-date" class="copy-16">
-                    Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-                    <i class="fa fa-check the-icon" style="color: green;"></i>
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                </p>
-            }
-        </div>
-    </section>
-    <section class="section-border grid-wrapper" id="vacancy-info">
-        <h2 class="heading-large">Apprenticeship summary</h2>
-        <div class="grid grid-1-3">
-            <div class="inner-block-padr">
-
-                <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
-                <p id="vacancy-working-week" itemprop="workHours">
-                    @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
-                    @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
-                    {
-                        <br />@:(the hours are based on the candidate being over 18)
-                        }
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                </p>
-
-                <h3 class="bold-small">
-                    @Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon" style="color: green;"></i>
-                </h3>
-
-                <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-                
-                @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
-                {
-                    <details>
-                        <summary>National Minimum Wage<br />for apprentices explained</summary>
-                        <div class="detail-content">
-                            The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
-                            This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
-                            Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
-                        </div>
-                    </details>
-                }
-
-                @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
-                {
-                    <details>
-                        <summary>National Minimum Wage</summary>
-                        <div class="detail-content">
-                            The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
-                            Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
-                        </div>
-                    </details>
-                }
-                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-
-                <h3 class="bold-small">
-                    Expected duration
-                    @if (ViewData.ModelState.HasWarningsFor("Duration"))
-                    {
-                        var message = ViewData.ModelState.WarningMessageFor("Duration");
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
-                    }
-                    else
-                    {
-                        <i class="fa fa-check the-icon" style="color: green;"></i>
-                    }
-                </h3>
-                <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                </p>
-
-                <h3 class="bold-small">Possible start date</h3>
-                @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
-                {
-                    var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
-                    <p id="vacancy-start-date">
-                        @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                </p>
+                    <div class="editable-item">
+                        <p id="vacancy-closing-date">
+                            Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
+                            <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
+                        </p>
+                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
                 }
                 else
                 {
-                    <p id="vacancy-start-date">
-                        @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                        <i class="fa fa-check the-icon" style="color: green;"></i>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                    </p>
+                    <div class="editable-item">
+                        <p id="vacancy-closing-date">
+                            Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
+                            <i class="fa fa-check the-icon" style="color: green;"></i>
+                        </p>
+                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
                 }
-
-                <h3 class="bold-small">Apprenticeship level</h3>
-                <p id="vacancy-type" itemprop="employmentType">@Model.NewVacancyViewModel.ApprenticeshipLevel Level Apprenticeship</p>
-                <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                <h3 class="bold-small">Reference number</h3>
-                <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
             </div>
         </div>
-        <div class="grid grid-2-3">
-            <div class="text" itemprop="responsibilities">
-                <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
-                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-            </div>
-        </div>
-
     </section>
-    <section class="section-border grid-wrapper" id="course-info">
-        <h2 class="heading-large">Requirements and prospects</h2>
-        <div class="grid grid-1-2">
-            <div class="inner-block-padr">
-                <div class="text">
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
-                    {
-                        <h3 class="heading-small">Desired skills</h3>
-                        <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
-                    {
-                        <h3 class="heading-small">Personal qualities</h3>
-                        <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
-                    {
-                        <h3 class="heading-small">Qualifications required</h3>
-                        <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
-                    }
+    <section class="section-border" id="vacancy-info">
+        <h2 class="heading-large">Apprenticeship summary</h2>
+        <div class="grid-wrapper">
+            <div class="grid grid-1-3">
+                <div class="inner-block-padr">
 
+                    <div class="editable-item">
+                        <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
+                        <p id="vacancy-working-week" itemprop="workHours">
+                            @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
+                            @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
+                            {
+                                <br />@:(the hours are based on the candidate being over 18)
+                            }
+                        </p>
+                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
+                    <div class="editable-item">
+                        <h3 class="bold-small">
+                            @Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon" style="color: green;"></i>
+                        </h3>
+                        <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
+                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
+                        @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
+                        {
+                            <details>
+                                <summary>National Minimum Wage<br />for apprentices explained</summary>
+                                <div class="detail-content">
+                                    The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
+                                    This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
+                                    Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
+                                </div>
+                            </details>
+                        }
+
+                        @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
+                        {
+                            <details>
+                                <summary>National Minimum Wage</summary>
+                                <div class="detail-content">
+                                    The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
+                                    Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
+                                </div>
+                            </details>
+                        }
+
+                    <div class="editable-item">
+                        <h3 class="bold-small">
+                            Expected duration
+                            @if (ViewData.ModelState.HasWarningsFor("Duration"))
+                            {
+                                var message = ViewData.ModelState.WarningMessageFor("Duration");
+                                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
+                            }
+                            else
+                            {
+                                <i class="fa fa-check the-icon" style="color: green;"></i>
+                            }
+                        </h3>
+                        <p id="vacancy-expected-duration">
+                            @Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText
+                        </p>
+                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
+                    <div class="editable-item">
+                        <h3 class="bold-small">Possible start date</h3>
+                        @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
+                        {
+                            var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
+                            <p id="vacancy-start-date">
+                                @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
+                                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
+                            </p>
+                            <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        }
+                        else
+                        {
+                            <p id="vacancy-start-date">
+                                @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
+                                <i class="fa fa-check the-icon" style="color: green;"></i>
+                            </p>
+                        }
+                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
+                    <div class="editable-item">
+                        <h3 class="bold-small">Apprenticeship level</h3>
+                        <p id="vacancy-type" itemprop="employmentType">@Model.NewVacancyViewModel.ApprenticeshipLevel Level Apprenticeship</p>
+                        <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
+                    <h3 class="bold-small">Reference number</h3>
+                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
+                </div>
+            </div>
+            <div class="grid grid-2-3">
+                <div class="editable-item">
+                    <div class="text" itemprop="responsibilities">
+                        <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
+                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="grid grid-1-2">
-            <div class="text">
+    </section>
+    <section class="section-border" id="course-info">
+        <h2 class="heading-large">Requirements and prospects</h2>
+        <div class="grid-wrapper">
+            <div class="grid grid-1-2">
+                <div class="inner-block-padr">
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
+                    {
+                        <div class="editable-item">
+                            <div class="text">
+                                <h3 class="heading-small">Desired skills</h3>
+                                <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
+                                <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
+                    {
+                        <div class="editable-item">
+                            <div class="text">
+                                <h3 class="heading-small">Personal qualities</h3>
+                                <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
+                                <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                            </div>
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
+                    {
+                        <div class="editable-item">
+                            <div class="text">
+                                <h3 class="heading-small">Qualifications required</h3>
+                                <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
+                                <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="grid grid-1-2">
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
                 {
-                    <h3 class="heading-small">Future prospects</h3>
-                    <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
-                    <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+                    <div class="editable-item">
+                        <div class="text">
+                            <h3 class="heading-small">Future prospects</h3>
+                            <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
+                            <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        </div>
+                    </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
                 {
-                    <h3 class="heading-small">Things to consider</h3>
-                    <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
-                    <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+                    <div class="editable-item">
+                        <div class="text">
+                            <h3 class="heading-small">Things to consider</h3>
+                            <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
+                            <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        </div>
+                    </div>
                 }
             </div>
         </div>
-    </section>
+     </section>
 
 
     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion)
                     || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
     {
 
-        <section class="section-border grid-wrapper" id="course-info">
+        <section class="section-border" id="course-info">
             <h2 class="heading-large">Questions for candidates</h2>
-            <div class="grid grid-1-2">
-                <div class="inner-block-padr">
-                    <div class="text">
+            <div class="grid-wrapper">
+                <div class="grid grid-1-2">
+                    <div class="inner-block-padr">
                         @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
                         {
-                            <h3 class="heading-small">First question</h3>
-                            <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
-                            <a href="@Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+                            <div class="editable-item">
+                                <div class="text">
+                                    <h3 class="heading-small">First question</h3>
+                                    <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                                </div>
+                            </div>
                         }
                         @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
                         {
-                            <h3 class="heading-small">Second question</h3>
-                            <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
-                            <a href="@Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+                            <div class="editable-item">
+                                <div class="text">
+                                    <h3 class="heading-small">Second question</h3>
+                                    <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
+                                    <a href="@Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                                </div>
+                            </div>
                         }
                     </div>
                 </div>
@@ -278,55 +316,56 @@
                 <p id="application-instructions">
                     @Model.NewVacancyViewModel.OfflineApplicationInstructions
                 </p>
-                <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+                <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
             </div>
             <div class="form-group">
                 <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
                 <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
                 <i class="fa fa-check the-icon" style="color: green;"></i>
-                <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})">Edit/Comment</a>
+                <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
             </div>
         </section>
     }
 
-    <section class="section-border grid-wrapper" id="provider-info">
+    <section class="section-border" id="provider-info">
         <h2 class="heading-large">Training provider</h2>
-        <div class="grid grid-2-3">
-            <div class="inner-block-padr">
-                <div class="text">
-                    @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
-                    {
-                        <p id="vacancy-training-to-be-provided">@Html.Raw(Model.ProviderSite.CandidateDescription)</p>
-                    }
-                    @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
-                    {
-                        <h3 class="heading-small">Apprenticeship framework</h3>
+        <div class="grid-wrapper">
+            <div class="grid grid-2-3">
+                <div class="inner-block-padr">
+                    <div class="text">
+                        @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
+                        {
+                            <p id="vacancy-training-to-be-provided">@Html.Raw(Model.ProviderSite.CandidateDescription)</p>
+                        }
+                        @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
+                        {
+                            <h3 class="heading-small">Apprenticeship framework</h3>
                             <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
-                    }
-                    @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
-                    {
-                        <h3 class="heading-small">Apprenticeship standard</h3>
+                        }
+                        @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
+                        {
+                            <h3 class="heading-small">Apprenticeship standard</h3>
                             <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
-                    }
-                    <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
+                        }
+                        <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="grid grid-1-3">
-            <div class="text">
-                <h3 class="bold-small">Training provider</h3>
-                <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
-            </div>
-
-            @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
-            {
+            <div class="grid grid-1-3">
                 <div class="text">
-                    <h3 class="bold-small">Contact</h3>
-                    <p id="vacancy-provider-contact">@Model.ProviderSite.ContactDetailsForCandidate</p>
+                    <h3 class="bold-small">Training provider</h3>
+                    <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
                 </div>
-            }
-        </div>
 
+                @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
+            {
+                    <div class="text">
+                        <h3 class="bold-small">Contact</h3>
+                        <p id="vacancy-provider-contact">@Model.ProviderSite.ContactDetailsForCandidate</p>
+                    </div>
+                }
+            </div>
+        </div>
     </section>
 
     @using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
