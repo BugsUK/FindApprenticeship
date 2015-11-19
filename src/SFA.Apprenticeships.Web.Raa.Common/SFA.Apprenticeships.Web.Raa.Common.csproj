@@ -232,6 +232,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DateTime.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\Comment.generated.cs">
+      <DependentUpon>Comment.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -243,6 +248,11 @@
     <Content Include="Views\Shared\DisplayTemplates\DateTime.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateTime.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Comment.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Comment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Comment.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
