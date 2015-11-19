@@ -182,8 +182,13 @@
                                     <div class="vac-title">
                                         @{
                                             var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
+                                            var editRoute = RecruitmentRouteNames.EditVacancy;
+                                            if (vacancy.Status == ProviderVacancyStatuses.RejectedByQA)
+                                            {
+                                                editRoute = RecruitmentRouteNames.PreviewVacancy;
+                                            }
                                         }
-                                        <a href="@Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">@title@*<span class="inl-block">(? applications)</span>*@</a>
+                                        <a href="@Url.RouteUrl(editRoute, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">@title</a>
                                     </div>
                                 </td>
                                 <td>
