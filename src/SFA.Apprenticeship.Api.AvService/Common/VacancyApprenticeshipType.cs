@@ -2,7 +2,10 @@
 {
     public enum VacancyApprenticeshipType
     {
-        Online = 1,
-        Offline = 2
+        Unspecified = 0,
+        IntermediateLevelApprenticeship = 1,
+        AdvancedLevelApprenticeship = 2,
+        HigherApprenticeship = 3,
+        Traineeship = 4
     }
 }

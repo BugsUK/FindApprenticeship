@@ -7,7 +7,7 @@
     {
         [Test]
         [Ignore]
-        public void ShouldBeAwesome()
+        public void ShouldXxx()
         {
             // Arrange.
 
