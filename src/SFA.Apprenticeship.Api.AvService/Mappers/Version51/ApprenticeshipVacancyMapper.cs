@@ -12,10 +12,12 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
 
         public static VacancyFullData MapToVacancyFullData(ApprenticeshipVacancy vacancy)
         {
+            // TODO: API: review optional object properties here. Throw if null or allow null?
             return new VacancyFullData
             {
                 VacancyLocationType = Todo,
                 // TODO: map VacancyAddress
+                VacancyAddress =  AddressMapper.MapToAddressData(vacancy.ProviderSiteEmployerLink?.Employer?.Address),
                 ApprenticeshipFramework = $"{Todo}: via Framework Code {vacancy.FrameworkCodeName}",
                 // TODO: what if date null?
                 ClosingDate = vacancy.ClosingDate ?? DateTime.MinValue,

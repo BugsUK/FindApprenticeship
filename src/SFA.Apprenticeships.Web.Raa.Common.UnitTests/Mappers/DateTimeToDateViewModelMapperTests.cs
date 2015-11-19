@@ -40,12 +40,7 @@
         [Test]
         public void ShouldNotThrowExceptionIfSourceDateIsNull()
         {
-            //Arrange
-            DateTime? source = null;
-            DateViewModel destination = null;
-
-            //Act
-            Assert.DoesNotThrow(() => mapper.Map<DateTime?, DateViewModel>(source));
+            Assert.DoesNotThrow(() => mapper.Map<DateTime?, DateViewModel>(default(DateTime?)));
         }
     }
 }

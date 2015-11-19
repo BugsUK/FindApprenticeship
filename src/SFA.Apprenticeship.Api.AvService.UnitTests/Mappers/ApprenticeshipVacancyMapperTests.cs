@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers
 {
     using System;
+    using Apprenticeships.Domain.Entities.Locations;
     using Apprenticeships.Domain.Entities.Organisations;
     using Apprenticeships.Domain.Entities.Providers;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
@@ -113,6 +114,39 @@
             // Assert.
             mappedVacancy.Should().NotBeNull();
             mappedVacancy.EmployerName.Should().Be(employerName);
+        }
+
+        [Test]
+        public void ShouldMapEmployerAddress()
+        {
+            // Arrange.
+            var address = new Address
+            {
+                AddressLine1 = "14 Acacia Avenue",
+                Postcode = "AC14 4AA"
+            };
+
+            var vacancy = new ApprenticeshipVacancy
+            {
+                ProviderSiteEmployerLink = new ProviderSiteEmployerLink
+                {
+                    Employer = new Employer
+                    {
+                        Address = address
+                    }
+                }
+            };
+
+            // Act.
+            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+
+            // Assert.
+            mappedVacancy.Should().NotBeNull();
+            mappedVacancy.VacancyAddress.Should().NotBeNull();
+
+            // NOTE: basic address checks here only, address mapper unit tested elsewhere.
+            mappedVacancy.VacancyAddress.AddressLine1.Should().Be(address.AddressLine1);
+            mappedVacancy.VacancyAddress.PostCode.Should().Be(address.Postcode);
         }
 
         [Test]

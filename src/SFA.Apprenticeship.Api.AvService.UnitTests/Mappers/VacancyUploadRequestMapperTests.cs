@@ -6,6 +6,7 @@
     public class VacancyUploadRequestMapperTests
     {
         [Test]
+        [Ignore]
         public void ShouldBeAwesome()
         {
             // Arrange.
@@ -13,7 +14,6 @@
             // Act.
 
             // Assert.
-            Assert.Fail();
         }
     }
 }

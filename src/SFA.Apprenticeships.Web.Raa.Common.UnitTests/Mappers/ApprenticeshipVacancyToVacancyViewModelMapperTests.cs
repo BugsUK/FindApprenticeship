@@ -11,12 +11,12 @@
     [TestFixture]
     public class ApprenticeshipVacancyToVacancyViewModelMapperTests
     {
-        private IMapper mapper;
+        private IMapper _mapper;
 
         [TestFixtureSetUp]
         public void Setup()
         {
-            mapper = new RaaCommonWebMappers();
+            _mapper = new RaaCommonWebMappers();
         }
 
         [Test]
@@ -24,23 +24,22 @@
         {
             //Arrange
             var source = new Fixture().Build<ApprenticeshipVacancy>().Create();
-            VacancyViewModel result = null;
 
             //Act
-            var vacancyVM = mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
 
             //Assert
-            vacancyVM.VacancyReferenceNumber.Should().Be(source.VacancyReferenceNumber);
-            vacancyVM.Status.Should().Be(source.Status);
-            vacancyVM.Should().NotBeNull();
-            vacancyVM.NewVacancyViewModel.Should().NotBeNull();
-            vacancyVM.NewVacancyViewModel.ProviderSiteEmployerLink.Should().NotBeNull();
-            vacancyVM.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Should().NotBeNull();
-            vacancyVM.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Should().NotBeNull();
-            vacancyVM.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Should().NotBeNull();
-            vacancyVM.VacancySummaryViewModel.Should().NotBeNull();
-            vacancyVM.VacancyQuestionsViewModel.Should().NotBeNull();
-            vacancyVM.VacancyRequirementsProspectsViewModel.Should().NotBeNull();
+            viewModel.VacancyReferenceNumber.Should().Be(source.VacancyReferenceNumber);
+            viewModel.Status.Should().Be(source.Status);
+            viewModel.Should().NotBeNull();
+            viewModel.NewVacancyViewModel.Should().NotBeNull();
+            viewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Should().NotBeNull();
+            viewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Should().NotBeNull();
+            viewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Should().NotBeNull();
+            viewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Should().NotBeNull();
+            viewModel.VacancySummaryViewModel.Should().NotBeNull();
+            viewModel.VacancyQuestionsViewModel.Should().NotBeNull();
+            viewModel.VacancyRequirementsProspectsViewModel.Should().NotBeNull();
         }
     }
 }

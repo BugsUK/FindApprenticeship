@@ -8,11 +8,21 @@
     // REF: AV: NavmsEDSFacade.cs
     // REF: AV: NavmsPIMSFacade.cs
 
-    // TODO: ShouldAlwaysMapAddressLine5ToNull()
+    // TODO: API: ShouldAlwaysMapAddressLine5ToNull()
 
     [TestFixture]
     public class AddressMapperTests
     {
+        [Test]
+        public void ShouldReturnNullAddressIfOriginalAddressIsNull()
+        {
+            // Act.
+            var mappedAddress = AddressMapper.MapToAddressData(null);
+
+            // Assert.
+            mappedAddress.Should().BeNull();
+        }
+
         [TestCase("A", "A")]
         [TestCase("", "")]
         [TestCase(null, "")]
@@ -30,6 +40,25 @@
             // Assert.
             mappedAddress.Should().NotBeNull();
             mappedAddress.AddressLine1.Should().Be(expectedAddressLine1);
+        }
+
+        [TestCase("A", "A")]
+        [TestCase("", "")]
+        [TestCase(null, "")]
+        public void ShouldMapPostcode(string originalPostcode, string expectedPostcode)
+        {
+            // Arrange.
+            var address = new Address
+            {
+                Postcode = originalPostcode
+            };
+
+            // Act.
+            var mappedAddress = AddressMapper.MapToAddressData(address);
+
+            // Assert.
+            mappedAddress.Should().NotBeNull();
+            mappedAddress.PostCode.Should().Be(expectedPostcode);
         }
     }
 }
