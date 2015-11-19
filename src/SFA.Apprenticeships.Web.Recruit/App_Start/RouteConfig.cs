@@ -199,6 +199,12 @@
                defaults: new { controller = "VacancyPosting", action = "VacancySubmitted" }
                );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.CloneVacancy,
+               url: "vacancy/clone",
+               defaults: new { controller = "VacancyPosting", action = "CloneVacancy" }
+               );
+
             routes.LowercaseUrls = true;
 
         }

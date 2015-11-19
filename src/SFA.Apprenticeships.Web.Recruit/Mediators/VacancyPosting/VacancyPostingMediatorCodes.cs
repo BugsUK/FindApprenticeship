@@ -95,5 +95,10 @@
             public const string FailedValidation = "VacancyPosting.SelectNewEmployer.FailedValidation";
             public const string NoResults = "VacancyPosting.SelectNewEmployer.NoResults";
         }
+
+        public class CLoneVacancy
+        {
+            public const string Ok = "VacancyPosting.CloneVacancy.Ok";
+        }
     }
 }

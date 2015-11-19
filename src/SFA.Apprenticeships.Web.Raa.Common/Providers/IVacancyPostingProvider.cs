@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
 
@@ -37,5 +38,7 @@
         StandardViewModel GetStandard(int? standardId);
 
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
+
+        ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber);
     }
 }

@@ -461,5 +461,18 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
+
+        public ActionResult CloneVacancy(int vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.CloneVacancy(vacancyReferenceNumber);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.CLoneVacancy.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
     }
 }

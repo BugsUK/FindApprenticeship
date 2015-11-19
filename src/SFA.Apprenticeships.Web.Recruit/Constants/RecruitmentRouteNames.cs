@@ -37,7 +37,8 @@
         public const string VacancyQuestions = "VacancyQuestions";
         public const string VacancySummary = "VacancySummary";
         public const string PreviewVacancy = "PreviewVacancy";
-
+        public const string CloneVacancy = "CloneVacancy";
+        
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
         public const string SearchExistingEmployer = "SearchExistingEmployer";

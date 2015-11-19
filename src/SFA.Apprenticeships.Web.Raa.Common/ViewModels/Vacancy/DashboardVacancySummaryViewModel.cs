@@ -13,9 +13,9 @@
 
         public string ProviderName { get; set; }
 
-        public DateTime ClosingDate { get; set; }
+        public DateTime? ClosingDate { get; set; }
 
-        public DateTime DateSubmitted { get; set; }
+        public DateTime? DateSubmitted { get; set; }
 
         public DateTime? DateStartedToQA { get; set; }
         

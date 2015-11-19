@@ -19,6 +19,7 @@
     using Converters;
     using Domain.Interfaces.Repositories;
     using ViewModels;
+    using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using Web.Common.ViewModels;
 
@@ -448,6 +449,42 @@
             return vacanciesSummary; 
         }
 
+        public ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+
+            //TODO: control vacancy doesn't exist
+
+            vacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
+            vacancy.Title = string.Format("(Copy of){0}", vacancy.Title);
+            vacancy.Status = ProviderVacancyStatuses.Draft;
+            vacancy.DateCreated = _dateTimeService.UtcNow();
+            vacancy.DateUpdated = null;
+            vacancy.DateSubmitted = null;
+            vacancy.DateStartedToQA = null;
+            vacancy.DateQAApproved = null;
+            vacancy.ClosingDate = null;
+            vacancy.PossibleStartDate = null;
+            vacancy.WorkingWeekComment = null;
+            vacancy.ApprenticeshipLevelComment = null;
+            vacancy.ClosingDateComment = null;
+            vacancy.DesiredQualificationsComment = null;
+            vacancy.DesiredSkillsComment = null;
+            vacancy.DurationComment = null;
+            vacancy.FirstQuestionComment = null;
+            vacancy.FrameworkCodeNameComment = null;
+            vacancy.FutureProspectsComment = null;
+            vacancy.LongDescriptionComment = null;
+            vacancy.EntityId = Guid.NewGuid();
+
+            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            var result = vacancy.ProviderSiteEmployerLink.Convert();
+            result.VacancyGuid = vacancy.EntityId;
+
+            return result;
+        }
+
         private List<SelectListItem> GetPageSizes(int pageSize)
         {
             return new List<SelectListItem>
@@ -476,8 +513,8 @@
 
             return new DashboardVacancySummaryViewModel
             {
-                ClosingDate = apprenticeshipVacancy.ClosingDate.Value,
-                DateSubmitted = apprenticeshipVacancy.DateSubmitted.Value,
+                ClosingDate = apprenticeshipVacancy.ClosingDate,
+                DateSubmitted = apprenticeshipVacancy.DateSubmitted,
                 ProviderName = provider.Name,
                 Status = apprenticeshipVacancy.Status,
                 Title = apprenticeshipVacancy.Title,

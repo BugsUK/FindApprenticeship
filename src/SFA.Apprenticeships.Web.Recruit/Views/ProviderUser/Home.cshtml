@@ -208,7 +208,7 @@
                                     @{ Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.ClosingDate); }
                                 </td>
                                 <td>
-                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="ta-center disp-block">Clone</a>
+                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="ta-center disp-block">Clone</a>
                                 </td>
                             </tr>
                         }

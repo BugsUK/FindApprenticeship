@@ -14,6 +14,7 @@
     {
         protected MongoConfiguration MongoConfiguration;
         protected IContainer Container;
+        protected IContainer Container2;
         protected MongoCollection<MongoApprenticeshipVacancy> Collection;
         protected string QaUserName = "qaUserName";
 

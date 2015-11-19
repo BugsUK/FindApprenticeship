@@ -79,10 +79,16 @@
                                         <div>@vacancy.ProviderName</div>
                                     </td>
                                     <td>
-                                        <div>@vacancy.DateSubmitted.ToFriendlyClosingToday()</div>
+                                        <div>@if (vacancy.DateSubmitted.HasValue)
+                                             {
+                                                 vacancy.DateSubmitted.Value.ToFriendlyClosingToday();
+                                             }</div>
                                     </td>
                                     <td>
-                                        <div>@vacancy.ClosingDate.ToFriendlyClosingToday()</div>
+                                        <div>@if (vacancy.ClosingDate.HasValue)
+                                             {
+                                                 vacancy.ClosingDate.Value.ToFriendlyClosingToday();
+                                             }</div>
                                     </td>
                                     <td>
                                         @if (vacancy.CanBeReservedForQaByCurrentUser)

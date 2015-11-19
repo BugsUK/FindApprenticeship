@@ -44,10 +44,10 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
 
-                // cache service - to allow web site to run without azure cache
+                //// cache service - to allow web site to run without azure cache
                 x.AddCachingRegistry(cacheConfig);
 
-                // service layer
+                //// service layer
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
