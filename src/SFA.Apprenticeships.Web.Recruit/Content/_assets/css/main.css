@@ -4159,6 +4159,8 @@ details summary:focus {
     padding: 0 5px; }
   .account-info .last-link {
     padding-right: 0; }
+  .account-info .deleteMe {
+    padding-right: 0; }
 
 .ogl-logo {
   background: url(../img/open-government-licence.png) no-repeat;
