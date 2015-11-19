@@ -131,18 +131,7 @@ WriteAttribute("href", Tuple.Create(" href=\"", 811), Tuple.Create("\"", 927)
 , 818), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 17 "..\..\Views\Vacancy\Review.cshtml"
-           Write(Html.DisplayFor(m=> m.NewVacancyViewModel.TitleComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n        <div");
+WriteLiteral(">Edit/Comment</a>\r\n            </div>\r\n        </div>\r\n        <div");
 
 WriteLiteral(" class=\"grid grid-1-3\"");
 
@@ -186,7 +175,7 @@ WriteLiteral(" id=\"vacancy-description\"");
 WriteLiteral(">");
 
             
-            #line 31 "..\..\Views\Vacancy\Review.cshtml"
+            #line 30 "..\..\Views\Vacancy\Review.cshtml"
                                            Write(Model.NewVacancyViewModel.ShortDescription);
 
             
@@ -194,41 +183,31 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1590), Tuple.Create("\"", 1706)
+WriteAttribute("href", Tuple.Create(" href=\"", 1505), Tuple.Create("\"", 1621)
             
-            #line 32 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 1597), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 31 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 1512), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 1597), false)
+, 1512), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 33 "..\..\Views\Vacancy\Review.cshtml"
-               Write(Html.DisplayFor(m => m.NewVacancyViewModel.ShortDescriptionComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n        <div");
+WriteLiteral(">Edit/Comment</a>\r\n                </div>\r\n            </div>\r\n        </div>\r\n  " +
+"      <div");
 
 WriteLiteral(" class=\"grid grid-1-3\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 38 "..\..\Views\Vacancy\Review.cshtml"
+            #line 36 "..\..\Views\Vacancy\Review.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 38 "..\..\Views\Vacancy\Review.cshtml"
+            #line 36 "..\..\Views\Vacancy\Review.cshtml"
              if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
             {
                 var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
@@ -246,7 +225,7 @@ WriteLiteral(" class=\"copy-16\"");
 WriteLiteral(">\r\n                    Closing date: ");
 
             
-            #line 43 "..\..\Views\Vacancy\Review.cshtml"
+            #line 41 "..\..\Views\Vacancy\Review.cshtml"
                              Write(Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday());
 
             
@@ -254,14 +233,14 @@ WriteLiteral(">\r\n                    Closing date: ");
             #line hidden
 WriteLiteral("\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2336), Tuple.Create("\"", 2448)
+WriteAttribute("href", Tuple.Create(" href=\"", 2150), Tuple.Create("\"", 2262)
             
-            #line 44 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 2343), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 42 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 2157), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 2343), false)
+, 2157), false)
 );
 
 WriteLiteral("><i");
@@ -270,43 +249,32 @@ WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
 WriteLiteral(" style=\"color: red;\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 2500), Tuple.Create("\"", 2516)
+WriteAttribute("title", Tuple.Create(" title=\"", 2314), Tuple.Create("\"", 2330)
             
-            #line 44 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                                  , Tuple.Create(Tuple.Create("", 2508), Tuple.Create<System.Object, System.Int32>(message
+            #line 42 "..\..\Views\Vacancy\Review.cshtml"
+                                                                                                                  , Tuple.Create(Tuple.Create("", 2322), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 2508), false)
+, 2322), false)
 );
 
 WriteLiteral("></i></a>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2550), Tuple.Create("\"", 2661)
+WriteAttribute("href", Tuple.Create(" href=\"", 2364), Tuple.Create("\"", 2475)
             
-            #line 45 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 2557), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 43 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 2371), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 2557), false)
+, 2371), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral(">Edit/Comment</a>\r\n                </p>\r\n");
 
             
-            #line 46 "..\..\Views\Vacancy\Review.cshtml"
-               Write(Html.DisplayFor(m => m.VacancySummaryViewModel.ClosingDateComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </p>\r\n");
-
-            
-            #line 48 "..\..\Views\Vacancy\Review.cshtml"
+            #line 45 "..\..\Views\Vacancy\Review.cshtml"
             }
             else
             {
@@ -323,7 +291,7 @@ WriteLiteral(" class=\"copy-16\"");
 WriteLiteral(">\r\n                    Closing date: ");
 
             
-            #line 52 "..\..\Views\Vacancy\Review.cshtml"
+            #line 49 "..\..\Views\Vacancy\Review.cshtml"
                              Write(Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday());
 
             
@@ -337,31 +305,20 @@ WriteLiteral(" style=\"color: green;\"");
 
 WriteLiteral("></i>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3124), Tuple.Create("\"", 3235)
+WriteAttribute("href", Tuple.Create(" href=\"", 2838), Tuple.Create("\"", 2949)
             
-            #line 54 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 3131), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 51 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 2845), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 3131), false)
+, 2845), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral(">Edit/Comment</a>\r\n                </p>\r\n");
 
             
-            #line 55 "..\..\Views\Vacancy\Review.cshtml"
-               Write(Html.DisplayFor(m => m.VacancySummaryViewModel.ClosingDateComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </p>\r\n");
-
-            
-            #line 57 "..\..\Views\Vacancy\Review.cshtml"
+            #line 53 "..\..\Views\Vacancy\Review.cshtml"
             }
 
             
@@ -406,7 +363,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 67 "..\..\Views\Vacancy\Review.cshtml"
+            #line 63 "..\..\Views\Vacancy\Review.cshtml"
                Write(Model.VacancySummaryViewModel.WorkingWeek);
 
             
@@ -415,7 +372,7 @@ WriteLiteral("                    ");
 WriteLiteral("<br />Total hours per week: ");
 
             
-            #line 67 "..\..\Views\Vacancy\Review.cshtml"
+            #line 63 "..\..\Views\Vacancy\Review.cshtml"
                                                                                      Write(Model.VacancySummaryViewModel.HoursPerWeek);
 
             
@@ -424,13 +381,13 @@ WriteLiteral("<br />Total hours per week: ");
 WriteLiteral("\r\n");
 
             
-            #line 68 "..\..\Views\Vacancy\Review.cshtml"
+            #line 64 "..\..\Views\Vacancy\Review.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 68 "..\..\Views\Vacancy\Review.cshtml"
+            #line 64 "..\..\Views\Vacancy\Review.cshtml"
                      if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
                     {
 
@@ -442,7 +399,7 @@ WriteLiteral("                        <br />");
 WriteLiteral("(the hours are based on the candidate being over 18)\r\n");
 
             
-            #line 71 "..\..\Views\Vacancy\Review.cshtml"
+            #line 67 "..\..\Views\Vacancy\Review.cshtml"
                         }
 
             
@@ -450,28 +407,17 @@ WriteLiteral("(the hours are based on the candidate being over 18)\r\n");
             #line hidden
 WriteLiteral("                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4192), Tuple.Create("\"", 4303)
+WriteAttribute("href", Tuple.Create(" href=\"", 3806), Tuple.Create("\"", 3917)
             
-            #line 72 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 4199), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 68 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 3813), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 4199), false)
+, 3813), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 73 "..\..\Views\Vacancy\Review.cshtml"
-               Write(Html.DisplayFor(m => m.VacancySummaryViewModel.WorkingWeekComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </p>\r\n\r\n                <h3");
+WriteLiteral(">Edit/Comment</a>\r\n                </p>\r\n\r\n                <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
@@ -480,7 +426,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 77 "..\..\Views\Vacancy\Review.cshtml"
+            #line 72 "..\..\Views\Vacancy\Review.cshtml"
                Write(Model.VacancySummaryViewModel.WageUnitDisplayText);
 
             
@@ -499,7 +445,7 @@ WriteLiteral(" id=\"vacancy-wage\"");
 WriteLiteral(">");
 
             
-            #line 80 "..\..\Views\Vacancy\Review.cshtml"
+            #line 75 "..\..\Views\Vacancy\Review.cshtml"
                                 Write(Model.VacancySummaryViewModel.WageDisplayText);
 
             
@@ -508,13 +454,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                \r\n");
 
             
-            #line 82 "..\..\Views\Vacancy\Review.cshtml"
+            #line 77 "..\..\Views\Vacancy\Review.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 82 "..\..\Views\Vacancy\Review.cshtml"
+            #line 77 "..\..\Views\Vacancy\Review.cshtml"
                  if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
                 {
 
@@ -530,7 +476,7 @@ WriteLiteral(">\r\n                            The current National Minimum Wage
 "tices is £");
 
             
-            #line 87 "..\..\Views\Vacancy\Review.cshtml"
+            #line 82 "..\..\Views\Vacancy\Review.cshtml"
                                                                                    Write(Wages.ApprenticeMinimumWage);
 
             
@@ -544,7 +490,7 @@ WriteLiteral(@" per hour.<br />
 ");
 
             
-            #line 92 "..\..\Views\Vacancy\Review.cshtml"
+            #line 87 "..\..\Views\Vacancy\Review.cshtml"
                 }
 
             
@@ -553,13 +499,13 @@ WriteLiteral(@" per hour.<br />
 WriteLiteral("\r\n");
 
             
-            #line 94 "..\..\Views\Vacancy\Review.cshtml"
+            #line 89 "..\..\Views\Vacancy\Review.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 94 "..\..\Views\Vacancy\Review.cshtml"
+            #line 89 "..\..\Views\Vacancy\Review.cshtml"
                  if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
                 {
 
@@ -574,7 +520,7 @@ WriteLiteral(" class=\"detail-content\"");
 WriteLiteral(">\r\n                            The current National Minimum Wage rates are £");
 
             
-            #line 99 "..\..\Views\Vacancy\Review.cshtml"
+            #line 94 "..\..\Views\Vacancy\Review.cshtml"
                                                                     Write(Wages.Between18And20NationalMinimumWage);
 
             
@@ -583,7 +529,7 @@ WriteLiteral(">\r\n                            The current National Minimum Wage
 WriteLiteral(" for 18 to 20 year-olds and £");
 
             
-            #line 99 "..\..\Views\Vacancy\Review.cshtml"
+            #line 94 "..\..\Views\Vacancy\Review.cshtml"
                                                                                                                                          Write(Wages.Over21NationalMinimumWage);
 
             
@@ -596,7 +542,7 @@ WriteLiteral(@" for anyone aged 21 and over.<br />
 ");
 
             
-            #line 103 "..\..\Views\Vacancy\Review.cshtml"
+            #line 98 "..\..\Views\Vacancy\Review.cshtml"
                 }
 
             
@@ -604,41 +550,30 @@ WriteLiteral(@" for anyone aged 21 and over.<br />
             #line hidden
 WriteLiteral("                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6296), Tuple.Create("\"", 6407)
+WriteAttribute("href", Tuple.Create(" href=\"", 5810), Tuple.Create("\"", 5921)
             
-            #line 104 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 6303), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 99 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 5817), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 6303), false)
+, 5817), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 105 "..\..\Views\Vacancy\Review.cshtml"
-           Write(Html.DisplayFor(m => m.VacancySummaryViewModel.WageComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n                <h3");
+WriteLiteral(">Edit/Comment</a>\r\n\r\n                <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
 WriteLiteral(">\r\n                    Expected duration\r\n");
 
             
-            #line 109 "..\..\Views\Vacancy\Review.cshtml"
+            #line 103 "..\..\Views\Vacancy\Review.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 109 "..\..\Views\Vacancy\Review.cshtml"
+            #line 103 "..\..\Views\Vacancy\Review.cshtml"
                      if (ViewData.ModelState.HasWarningsFor("Duration"))
                     {
                         var message = ViewData.ModelState.WarningMessageFor("Duration");
@@ -648,14 +583,14 @@ WriteLiteral(">\r\n                    Expected duration\r\n");
             #line hidden
 WriteLiteral("                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6811), Tuple.Create("\"", 6922)
+WriteAttribute("href", Tuple.Create(" href=\"", 6236), Tuple.Create("\"", 6347)
             
-            #line 112 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 6818), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 106 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 6243), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 6818), false)
+, 6243), false)
 );
 
 WriteLiteral("><i");
@@ -664,34 +599,20 @@ WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
 WriteLiteral(" style=\"color: red;\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 6974), Tuple.Create("\"", 6990)
+WriteAttribute("title", Tuple.Create(" title=\"", 6399), Tuple.Create("\"", 6415)
             
-            #line 112 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                                     , Tuple.Create(Tuple.Create("", 6982), Tuple.Create<System.Object, System.Int32>(message
+            #line 106 "..\..\Views\Vacancy\Review.cshtml"
+                                                                                                                     , Tuple.Create(Tuple.Create("", 6407), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 6982), false)
+, 6407), false)
 );
 
 WriteLiteral("></i></a>\r\n");
 
             
-            #line 113 "..\..\Views\Vacancy\Review.cshtml"
-                        
-            
-            #line default
-            #line hidden
-            
-            #line 113 "..\..\Views\Vacancy\Review.cshtml"
-                   Write(Html.DisplayFor(m => m.VacancySummaryViewModel.DurationComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 113 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                   
+            #line 107 "..\..\Views\Vacancy\Review.cshtml"
                     }
                     else
                     {
@@ -708,7 +629,7 @@ WriteLiteral(" style=\"color: green;\"");
 WriteLiteral("></i>\r\n");
 
             
-            #line 118 "..\..\Views\Vacancy\Review.cshtml"
+            #line 111 "..\..\Views\Vacancy\Review.cshtml"
                     }
 
             
@@ -721,7 +642,7 @@ WriteLiteral(" id=\"vacancy-expected-duration\"");
 WriteLiteral(">");
 
             
-            #line 120 "..\..\Views\Vacancy\Review.cshtml"
+            #line 113 "..\..\Views\Vacancy\Review.cshtml"
                                              Write(Model.VacancySummaryViewModel.Duration);
 
             
@@ -730,7 +651,7 @@ WriteLiteral(">");
 WriteLiteral(" ");
 
             
-            #line 120 "..\..\Views\Vacancy\Review.cshtml"
+            #line 113 "..\..\Views\Vacancy\Review.cshtml"
                                                                                      Write(Model.VacancySummaryViewModel.DurationTypeDisplayText);
 
             
@@ -738,14 +659,14 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral("\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 7473), Tuple.Create("\"", 7584)
+WriteAttribute("href", Tuple.Create(" href=\"", 6797), Tuple.Create("\"", 6908)
             
-            #line 121 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 7480), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 114 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 6804), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 7480), false)
+, 6804), false)
 );
 
 WriteLiteral(">Edit/Comment</a>\r\n                </p>\r\n\r\n                <h3");
@@ -755,13 +676,13 @@ WriteLiteral(" class=\"bold-small\"");
 WriteLiteral(">Possible start date</h3>\r\n");
 
             
-            #line 125 "..\..\Views\Vacancy\Review.cshtml"
+            #line 118 "..\..\Views\Vacancy\Review.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 125 "..\..\Views\Vacancy\Review.cshtml"
+            #line 118 "..\..\Views\Vacancy\Review.cshtml"
                  if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
                 {
                     var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
@@ -778,7 +699,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 129 "..\..\Views\Vacancy\Review.cshtml"
+            #line 122 "..\..\Views\Vacancy\Review.cshtml"
                    Write(Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date));
 
             
@@ -786,14 +707,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8110), Tuple.Create("\"", 8222)
+WriteAttribute("href", Tuple.Create(" href=\"", 7434), Tuple.Create("\"", 7546)
             
-            #line 130 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 8117), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 123 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 7441), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 8117), false)
+, 7441), false)
 );
 
 WriteLiteral("><i");
@@ -802,43 +723,32 @@ WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
 WriteLiteral(" style=\"color: red;\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 8274), Tuple.Create("\"", 8290)
+WriteAttribute("title", Tuple.Create(" title=\"", 7598), Tuple.Create("\"", 7614)
             
-            #line 130 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                                      , Tuple.Create(Tuple.Create("", 8282), Tuple.Create<System.Object, System.Int32>(message
+            #line 123 "..\..\Views\Vacancy\Review.cshtml"
+                                                                                                                      , Tuple.Create(Tuple.Create("", 7606), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 8282), false)
+, 7606), false)
 );
 
 WriteLiteral("></i></a>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8328), Tuple.Create("\"", 8439)
+WriteAttribute("href", Tuple.Create(" href=\"", 7652), Tuple.Create("\"", 7763)
             
-            #line 131 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 8335), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 124 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 7659), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 8335), false)
+, 7659), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral(">Edit/Comment</a>\r\n                </p>\r\n");
 
             
-            #line 132 "..\..\Views\Vacancy\Review.cshtml"
-                   Write(Html.DisplayFor(m => m.VacancySummaryViewModel.WorkingWeekComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                </p>\r\n");
-
-            
-            #line 134 "..\..\Views\Vacancy\Review.cshtml"
+            #line 126 "..\..\Views\Vacancy\Review.cshtml"
                 }
                 else
                 {
@@ -855,7 +765,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                        ");
 
             
-            #line 138 "..\..\Views\Vacancy\Review.cshtml"
+            #line 130 "..\..\Views\Vacancy\Review.cshtml"
                    Write(Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date));
 
             
@@ -869,31 +779,20 @@ WriteLiteral(" style=\"color: green;\"");
 
 WriteLiteral("></i>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8905), Tuple.Create("\"", 9016)
+WriteAttribute("href", Tuple.Create(" href=\"", 8125), Tuple.Create("\"", 8236)
             
-            #line 140 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 8912), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 132 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 8132), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 8912), false)
+, 8132), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral(">Edit/Comment</a>\r\n                    </p>\r\n");
 
             
-            #line 141 "..\..\Views\Vacancy\Review.cshtml"
-                   Write(Html.DisplayFor(m => m.VacancySummaryViewModel.PossibleStartDateComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    </p>\r\n");
-
-            
-            #line 143 "..\..\Views\Vacancy\Review.cshtml"
+            #line 134 "..\..\Views\Vacancy\Review.cshtml"
                 }
 
             
@@ -912,7 +811,7 @@ WriteLiteral(" itemprop=\"employmentType\"");
 WriteLiteral(">");
 
             
-            #line 146 "..\..\Views\Vacancy\Review.cshtml"
+            #line 137 "..\..\Views\Vacancy\Review.cshtml"
                                                           Write(Model.NewVacancyViewModel.ApprenticeshipLevel);
 
             
@@ -920,28 +819,17 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral(" Level Apprenticeship</p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 9413), Tuple.Create("\"", 9529)
+WriteAttribute("href", Tuple.Create(" href=\"", 8523), Tuple.Create("\"", 8639)
             
-            #line 147 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 9420), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 138 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 8530), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 9420), false)
+, 8530), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 148 "..\..\Views\Vacancy\Review.cshtml"
-           Write(Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevelComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n                <h3");
+WriteLiteral(">Edit/Comment</a>\r\n                <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
@@ -952,7 +840,7 @@ WriteLiteral(" id=\"vacancy-reference-id\"");
 WriteLiteral(">");
 
             
-            #line 151 "..\..\Views\Vacancy\Review.cshtml"
+            #line 140 "..\..\Views\Vacancy\Review.cshtml"
                                         Write(Model.VacancyReferenceNumber);
 
             
@@ -975,7 +863,7 @@ WriteLiteral(" id=\"vacancy-full-descrpition\"");
 WriteLiteral(">");
 
             
-            #line 156 "..\..\Views\Vacancy\Review.cshtml"
+            #line 145 "..\..\Views\Vacancy\Review.cshtml"
                                             Write(Html.Raw(Model.VacancySummaryViewModel.LongDescription));
 
             
@@ -983,28 +871,18 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 10055), Tuple.Create("\"", 10166)
+WriteAttribute("href", Tuple.Create(" href=\"", 9063), Tuple.Create("\"", 9174)
             
-            #line 157 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 10062), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 146 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 9070), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 10062), false)
+, 9070), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 158 "..\..\Views\Vacancy\Review.cshtml"
-           Write(Html.DisplayFor(m => m.VacancySummaryViewModel.LongDescriptionComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n\r\n    </section>\r\n    <section");
+WriteLiteral(">Edit/Comment</a>\r\n            </div>\r\n        </div>\r\n\r\n    </section>\r\n    <sec" +
+"tion");
 
 WriteLiteral(" class=\"section-border grid-wrapper\"");
 
@@ -1029,13 +907,13 @@ WriteLiteral(" class=\"text\"");
 WriteLiteral(">\r\n");
 
             
-            #line 168 "..\..\Views\Vacancy\Review.cshtml"
+            #line 156 "..\..\Views\Vacancy\Review.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 168 "..\..\Views\Vacancy\Review.cshtml"
+            #line 156 "..\..\Views\Vacancy\Review.cshtml"
                      if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
                     {
 
@@ -1057,7 +935,7 @@ WriteLiteral(" itemprop=\"skills\"");
 WriteLiteral(">");
 
             
-            #line 171 "..\..\Views\Vacancy\Review.cshtml"
+            #line 159 "..\..\Views\Vacancy\Review.cshtml"
                                                                      Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills));
 
             
@@ -1067,34 +945,20 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 10973), Tuple.Create("\"", 11102)
+WriteAttribute("href", Tuple.Create(" href=\"", 9881), Tuple.Create("\"", 10010)
             
-            #line 172 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 10980), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 160 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 9888), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 10980), false)
+, 9888), false)
 );
 
 WriteLiteral(">Edit/Comment</a>\r\n");
 
             
-            #line 173 "..\..\Views\Vacancy\Review.cshtml"
-                        
-            
-            #line default
-            #line hidden
-            
-            #line 173 "..\..\Views\Vacancy\Review.cshtml"
-                   Write(Html.DisplayFor(m => m.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 173 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                                      
+            #line 161 "..\..\Views\Vacancy\Review.cshtml"
                     }
 
             
@@ -1103,7 +967,7 @@ WriteLiteral(">Edit/Comment</a>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 175 "..\..\Views\Vacancy\Review.cshtml"
+            #line 162 "..\..\Views\Vacancy\Review.cshtml"
                      if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
                     {
 
@@ -1125,7 +989,7 @@ WriteLiteral(" itemprop=\"qualities\"");
 WriteLiteral(">");
 
             
-            #line 178 "..\..\Views\Vacancy\Review.cshtml"
+            #line 165 "..\..\Views\Vacancy\Review.cshtml"
                                                                            Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities));
 
             
@@ -1135,34 +999,20 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11664), Tuple.Create("\"", 11793)
+WriteAttribute("href", Tuple.Create(" href=\"", 10452), Tuple.Create("\"", 10581)
             
-            #line 179 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 11671), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 166 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 10459), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 11671), false)
+, 10459), false)
 );
 
 WriteLiteral(">Edit/Comment</a>\r\n");
 
             
-            #line 180 "..\..\Views\Vacancy\Review.cshtml"
-                        
-            
-            #line default
-            #line hidden
-            
-            #line 180 "..\..\Views\Vacancy\Review.cshtml"
-                   Write(Html.DisplayFor(m => m.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 180 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                                          
+            #line 167 "..\..\Views\Vacancy\Review.cshtml"
                     }
 
             
@@ -1171,7 +1021,7 @@ WriteLiteral(">Edit/Comment</a>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 182 "..\..\Views\Vacancy\Review.cshtml"
+            #line 168 "..\..\Views\Vacancy\Review.cshtml"
                      if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
                     {
 
@@ -1193,7 +1043,7 @@ WriteLiteral(" itemprop=\"qualifications\"");
 WriteLiteral(">");
 
             
-            #line 185 "..\..\Views\Vacancy\Review.cshtml"
+            #line 171 "..\..\Views\Vacancy\Review.cshtml"
                                                                                      Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications));
 
             
@@ -1203,34 +1053,20 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12382), Tuple.Create("\"", 12511)
+WriteAttribute("href", Tuple.Create(" href=\"", 11046), Tuple.Create("\"", 11175)
             
-            #line 186 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 12389), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 172 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 11053), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 12389), false)
+, 11053), false)
 );
 
 WriteLiteral(">Edit/Comment</a>\r\n");
 
             
-            #line 187 "..\..\Views\Vacancy\Review.cshtml"
-                        
-            
-            #line default
-            #line hidden
-            
-            #line 187 "..\..\Views\Vacancy\Review.cshtml"
-                   Write(Html.DisplayFor(m => m.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 187 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                                              
+            #line 173 "..\..\Views\Vacancy\Review.cshtml"
                     }
 
             
@@ -1247,13 +1083,13 @@ WriteLiteral(" class=\"text\"");
 WriteLiteral(">\r\n");
 
             
-            #line 195 "..\..\Views\Vacancy\Review.cshtml"
+            #line 180 "..\..\Views\Vacancy\Review.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 195 "..\..\Views\Vacancy\Review.cshtml"
+            #line 180 "..\..\Views\Vacancy\Review.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
                 {
 
@@ -1275,7 +1111,7 @@ WriteLiteral(" itemprop=\"incentives\"");
 WriteLiteral(">");
 
             
-            #line 198 "..\..\Views\Vacancy\Review.cshtml"
+            #line 183 "..\..\Views\Vacancy\Review.cshtml"
                                                                       Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects));
 
             
@@ -1285,34 +1121,20 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13185), Tuple.Create("\"", 13314)
+WriteAttribute("href", Tuple.Create(" href=\"", 11721), Tuple.Create("\"", 11850)
             
-            #line 199 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 13192), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 184 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 11728), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 13192), false)
+, 11728), false)
 );
 
 WriteLiteral(">Edit/Comment</a>\r\n");
 
             
-            #line 200 "..\..\Views\Vacancy\Review.cshtml"
-                    
-            
-            #line default
-            #line hidden
-            
-            #line 200 "..\..\Views\Vacancy\Review.cshtml"
-               Write(Html.DisplayFor(m => m.VacancyRequirementsProspectsViewModel.FutureProspectsComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 200 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                                    
+            #line 185 "..\..\Views\Vacancy\Review.cshtml"
                 }
 
             
@@ -1321,7 +1143,7 @@ WriteLiteral(">Edit/Comment</a>\r\n");
 WriteLiteral("                ");
 
             
-            #line 202 "..\..\Views\Vacancy\Review.cshtml"
+            #line 186 "..\..\Views\Vacancy\Review.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
                 {
 
@@ -1343,7 +1165,7 @@ WriteLiteral(" itemprop=\"incentives\"");
 WriteLiteral(">");
 
             
-            #line 205 "..\..\Views\Vacancy\Review.cshtml"
+            #line 189 "..\..\Views\Vacancy\Review.cshtml"
                                                                    Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider));
 
             
@@ -1353,34 +1175,20 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13844), Tuple.Create("\"", 13973)
+WriteAttribute("href", Tuple.Create(" href=\"", 12262), Tuple.Create("\"", 12391)
             
-            #line 206 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 13851), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 190 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 12269), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 13851), false)
+, 12269), false)
 );
 
 WriteLiteral(">Edit/Comment</a>\r\n");
 
             
-            #line 207 "..\..\Views\Vacancy\Review.cshtml"
-                    
-            
-            #line default
-            #line hidden
-            
-            #line 207 "..\..\Views\Vacancy\Review.cshtml"
-               Write(Html.DisplayFor(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 207 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                                     
+            #line 191 "..\..\Views\Vacancy\Review.cshtml"
                 }
 
             
@@ -1389,13 +1197,13 @@ WriteLiteral(">Edit/Comment</a>\r\n");
 WriteLiteral("            </div>\r\n        </div>\r\n    </section>\r\n\r\n\r\n");
 
             
-            #line 214 "..\..\Views\Vacancy\Review.cshtml"
+            #line 197 "..\..\Views\Vacancy\Review.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 214 "..\..\Views\Vacancy\Review.cshtml"
+            #line 197 "..\..\Views\Vacancy\Review.cshtml"
      if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion)
                     || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
     {
@@ -1429,13 +1237,13 @@ WriteLiteral(" class=\"text\"");
 WriteLiteral(">\r\n");
 
             
-            #line 223 "..\..\Views\Vacancy\Review.cshtml"
+            #line 206 "..\..\Views\Vacancy\Review.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 223 "..\..\Views\Vacancy\Review.cshtml"
+            #line 206 "..\..\Views\Vacancy\Review.cshtml"
                          if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
                         {
 
@@ -1451,7 +1259,7 @@ WriteLiteral(">First question</h3>\r\n");
 WriteLiteral("                            <p>");
 
             
-            #line 226 "..\..\Views\Vacancy\Review.cshtml"
+            #line 209 "..\..\Views\Vacancy\Review.cshtml"
                           Write(Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion));
 
             
@@ -1461,34 +1269,20 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 14980), Tuple.Create("\"", 15093)
+WriteAttribute("href", Tuple.Create(" href=\"", 13279), Tuple.Create("\"", 13392)
             
-            #line 227 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 14987), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 210 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 13286), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 14987), false)
+, 13286), false)
 );
 
 WriteLiteral(">Edit/Comment</a>\r\n");
 
             
-            #line 228 "..\..\Views\Vacancy\Review.cshtml"
-                            
-            
-            #line default
-            #line hidden
-            
-            #line 228 "..\..\Views\Vacancy\Review.cshtml"
-                       Write(Html.DisplayFor(m => m.VacancyQuestionsViewModel.FirstQuestionComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 228 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                              
+            #line 211 "..\..\Views\Vacancy\Review.cshtml"
                         }
 
             
@@ -1497,7 +1291,7 @@ WriteLiteral(">Edit/Comment</a>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 230 "..\..\Views\Vacancy\Review.cshtml"
+            #line 212 "..\..\Views\Vacancy\Review.cshtml"
                          if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
                         {
 
@@ -1513,7 +1307,7 @@ WriteLiteral(">Second question</h3>\r\n");
 WriteLiteral("                            <p>");
 
             
-            #line 233 "..\..\Views\Vacancy\Review.cshtml"
+            #line 215 "..\..\Views\Vacancy\Review.cshtml"
                           Write(Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion));
 
             
@@ -1523,34 +1317,20 @@ WriteLiteral("</p>\r\n");
 
 WriteLiteral("                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15585), Tuple.Create("\"", 15698)
+WriteAttribute("href", Tuple.Create(" href=\"", 13772), Tuple.Create("\"", 13885)
             
-            #line 234 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 15592), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 216 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 13779), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 15592), false)
+, 13779), false)
 );
 
 WriteLiteral(">Edit/Comment</a>\r\n");
 
             
-            #line 235 "..\..\Views\Vacancy\Review.cshtml"
-                            
-            
-            #line default
-            #line hidden
-            
-            #line 235 "..\..\Views\Vacancy\Review.cshtml"
-                       Write(Html.DisplayFor(m => m.VacancyQuestionsViewModel.SecondQuestionComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-            
-            #line 235 "..\..\Views\Vacancy\Review.cshtml"
-                                                                                                               
+            #line 217 "..\..\Views\Vacancy\Review.cshtml"
                         }
 
             
@@ -1560,7 +1340,7 @@ WriteLiteral("                    </div>\r\n                </div>\r\n          
 "/section>\r\n");
 
             
-            #line 241 "..\..\Views\Vacancy\Review.cshtml"
+            #line 222 "..\..\Views\Vacancy\Review.cshtml"
     }
 
             
@@ -1599,7 +1379,7 @@ WriteLiteral(" id=\"vacancy-employer-description\"");
 WriteLiteral(">");
 
             
-            #line 248 "..\..\Views\Vacancy\Review.cshtml"
+            #line 229 "..\..\Views\Vacancy\Review.cshtml"
                                                         Write(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description));
 
             
@@ -1630,20 +1410,20 @@ WriteLiteral(">Employer</h3>\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 16746), Tuple.Create("\"", 16873)
+WriteAttribute("class", Tuple.Create(" class=\"", 14820), Tuple.Create("\"", 14947)
             
-            #line 258 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 16754), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
+            #line 239 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 14828), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
             
             #line default
             #line hidden
-, 16754), false)
+, 14828), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 258 "..\..\Views\Vacancy\Review.cshtml"
+            #line 239 "..\..\Views\Vacancy\Review.cshtml"
                                                                                                                                                                                  Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name);
 
             
@@ -1652,13 +1432,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 259 "..\..\Views\Vacancy\Review.cshtml"
+            #line 240 "..\..\Views\Vacancy\Review.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 259 "..\..\Views\Vacancy\Review.cshtml"
+            #line 240 "..\..\Views\Vacancy\Review.cshtml"
                          if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
                         {
 
@@ -1669,29 +1449,29 @@ WriteLiteral("                            <p>\r\n                               
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 17171), Tuple.Create("\"", 17240)
+WriteAttribute("href", Tuple.Create(" href=\"", 15245), Tuple.Create("\"", 15314)
             
-            #line 262 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 17178), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
+            #line 243 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 15252), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
             
             #line default
             #line hidden
-, 17178), false)
+, 15252), false)
 );
 
 WriteLiteral("\r\n                                   id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                                   target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                                   title=\"", 17359), Tuple.Create("\"", 17476)
+WriteAttribute("title", Tuple.Create("\r\n                                   title=\"", 15433), Tuple.Create("\"", 15550)
             
-            #line 265 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 17403), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+            #line 246 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 15477), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
             
             #line default
             #line hidden
-, 17403), false)
-, Tuple.Create(Tuple.Create(" ", 17468), Tuple.Create("Website", 17469), true)
+, 15477), false)
+, Tuple.Create(Tuple.Create(" ", 15542), Tuple.Create("Website", 15543), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -1699,7 +1479,7 @@ WriteLiteral(" rel=\"external\"");
 WriteLiteral(">");
 
             
-            #line 265 "..\..\Views\Vacancy\Review.cshtml"
+            #line 246 "..\..\Views\Vacancy\Review.cshtml"
                                                                                                                                Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl);
 
             
@@ -1714,7 +1494,7 @@ WriteLiteral(" style=\"color: green;\"");
 WriteLiteral("></i>\r\n                            </p>\r\n");
 
             
-            #line 268 "..\..\Views\Vacancy\Review.cshtml"
+            #line 249 "..\..\Views\Vacancy\Review.cshtml"
                         }
 
             
@@ -1745,7 +1525,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 272 "..\..\Views\Vacancy\Review.cshtml"
+            #line 253 "..\..\Views\Vacancy\Review.cshtml"
                                                                                 Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1);
 
             
@@ -1760,7 +1540,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 273 "..\..\Views\Vacancy\Review.cshtml"
+            #line 254 "..\..\Views\Vacancy\Review.cshtml"
                                                                                 Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2);
 
             
@@ -1775,7 +1555,7 @@ WriteLiteral(" itemprop=\"addressLocality\"");
 WriteLiteral(">");
 
             
-            #line 274 "..\..\Views\Vacancy\Review.cshtml"
+            #line 255 "..\..\Views\Vacancy\Review.cshtml"
                                                                                   Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3);
 
             
@@ -1790,7 +1570,7 @@ WriteLiteral(" itemprop=\"addressRegion\"");
 WriteLiteral(">");
 
             
-            #line 275 "..\..\Views\Vacancy\Review.cshtml"
+            #line 256 "..\..\Views\Vacancy\Review.cshtml"
                                                                                 Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4);
 
             
@@ -1805,7 +1585,7 @@ WriteLiteral(" itemprop=\"postalCode\"");
 WriteLiteral(">");
 
             
-            #line 276 "..\..\Views\Vacancy\Review.cshtml"
+            #line 257 "..\..\Views\Vacancy\Review.cshtml"
                                                                              Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode);
 
             
@@ -1839,16 +1619,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 19237), Tuple.Create("\"", 19439)
-, Tuple.Create(Tuple.Create("", 19243), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 19243), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 17311), Tuple.Create("\"", 17513)
+, Tuple.Create(Tuple.Create("", 17317), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 17317), true)
             
-            #line 285 "..\..\Views\Vacancy\Review.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 19288), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
+            #line 266 "..\..\Views\Vacancy\Review.cshtml"
+                                                                , Tuple.Create(Tuple.Create("", 17362), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
             
             #line default
             #line hidden
-, 19288), false)
-, Tuple.Create(Tuple.Create("", 19375), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 19375), true)
+, 17362), false)
+, Tuple.Create(Tuple.Create("", 17449), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 17449), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -1859,13 +1639,13 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "    </div>\r\n            </div>\r\n        </div>\r\n    </section>\r\n\r\n");
 
             
-            #line 292 "..\..\Views\Vacancy\Review.cshtml"
+            #line 273 "..\..\Views\Vacancy\Review.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 292 "..\..\Views\Vacancy\Review.cshtml"
+            #line 273 "..\..\Views\Vacancy\Review.cshtml"
      if (Model.NewVacancyViewModel.OfflineVacancy)
     {
 
@@ -1897,7 +1677,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 298 "..\..\Views\Vacancy\Review.cshtml"
+            #line 279 "..\..\Views\Vacancy\Review.cshtml"
                Write(Model.NewVacancyViewModel.OfflineApplicationInstructions);
 
             
@@ -1905,28 +1685,17 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n                </p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 20054), Tuple.Create("\"", 20170)
+WriteAttribute("href", Tuple.Create(" href=\"", 18128), Tuple.Create("\"", 18244)
             
-            #line 300 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 20061), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 281 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 18135), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 20061), false)
+, 18135), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 301 "..\..\Views\Vacancy\Review.cshtml"
-           Write(Html.DisplayFor(m => m.NewVacancyViewModel.OfflineApplicationInstructionsComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            </div>\r\n            <div");
+WriteLiteral(">Edit/Comment</a>\r\n            </div>\r\n            <div");
 
 WriteLiteral(" class=\"form-group\"");
 
@@ -1941,14 +1710,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 20543), Tuple.Create("\"", 20598)
+WriteAttribute("href", Tuple.Create(" href=\"", 18506), Tuple.Create("\"", 18561)
             
-            #line 305 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 20550), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+            #line 285 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 18513), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 20550), false)
+, 18513), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -1956,7 +1725,7 @@ WriteLiteral(" target=\"_blank\"");
 WriteLiteral(">");
 
             
-            #line 305 "..\..\Views\Vacancy\Review.cshtml"
+            #line 285 "..\..\Views\Vacancy\Review.cshtml"
                                                                                                                                     Write(Model.NewVacancyViewModel.OfflineApplicationUrl);
 
             
@@ -1970,31 +1739,20 @@ WriteLiteral(" style=\"color: green;\"");
 
 WriteLiteral("></i>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 20764), Tuple.Create("\"", 20880)
+WriteAttribute("href", Tuple.Create(" href=\"", 18727), Tuple.Create("\"", 18843)
             
-            #line 307 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 20771), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
+            #line 287 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 18734), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})
             
             #line default
             #line hidden
-, 20771), false)
+, 18734), false)
 );
 
-WriteLiteral(">Edit/Comment</a>\r\n");
-
-WriteLiteral("                ");
+WriteLiteral(">Edit/Comment</a>\r\n            </div>\r\n        </section>\r\n");
 
             
-            #line 308 "..\..\Views\Vacancy\Review.cshtml"
-           Write(Html.DisplayFor(m => m.NewVacancyViewModel.OfflineApplicationUrl, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            </div>\r\n        </section>\r\n");
-
-            
-            #line 311 "..\..\Views\Vacancy\Review.cshtml"
+            #line 290 "..\..\Views\Vacancy\Review.cshtml"
     }
 
             
@@ -2025,13 +1783,13 @@ WriteLiteral(" class=\"text\"");
 WriteLiteral(">\r\n");
 
             
-            #line 318 "..\..\Views\Vacancy\Review.cshtml"
+            #line 297 "..\..\Views\Vacancy\Review.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 318 "..\..\Views\Vacancy\Review.cshtml"
+            #line 297 "..\..\Views\Vacancy\Review.cshtml"
                      if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
                     {
 
@@ -2045,7 +1803,7 @@ WriteLiteral(" id=\"vacancy-training-to-be-provided\"");
 WriteLiteral(">");
 
             
-            #line 320 "..\..\Views\Vacancy\Review.cshtml"
+            #line 299 "..\..\Views\Vacancy\Review.cshtml"
                                                            Write(Html.Raw(Model.ProviderSite.CandidateDescription));
 
             
@@ -2054,7 +1812,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 321 "..\..\Views\Vacancy\Review.cshtml"
+            #line 300 "..\..\Views\Vacancy\Review.cshtml"
                     }
 
             
@@ -2063,7 +1821,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 322 "..\..\Views\Vacancy\Review.cshtml"
+            #line 301 "..\..\Views\Vacancy\Review.cshtml"
                      if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
                     {
 
@@ -2083,7 +1841,7 @@ WriteLiteral(" id=\"vacancy-framework\"");
 WriteLiteral(">");
 
             
-            #line 325 "..\..\Views\Vacancy\Review.cshtml"
+            #line 304 "..\..\Views\Vacancy\Review.cshtml"
                                                  Write(Html.Raw(Model.FrameworkName));
 
             
@@ -2092,7 +1850,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 326 "..\..\Views\Vacancy\Review.cshtml"
+            #line 305 "..\..\Views\Vacancy\Review.cshtml"
                     }
 
             
@@ -2101,7 +1859,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 327 "..\..\Views\Vacancy\Review.cshtml"
+            #line 306 "..\..\Views\Vacancy\Review.cshtml"
                      if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
                     {
 
@@ -2121,7 +1879,7 @@ WriteLiteral(" id=\"vacancy-standard\"");
 WriteLiteral(">");
 
             
-            #line 330 "..\..\Views\Vacancy\Review.cshtml"
+            #line 309 "..\..\Views\Vacancy\Review.cshtml"
                                                 Write(Html.Raw(Model.StandardName));
 
             
@@ -2130,7 +1888,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 331 "..\..\Views\Vacancy\Review.cshtml"
+            #line 310 "..\..\Views\Vacancy\Review.cshtml"
                     }
 
             
@@ -2161,7 +1919,7 @@ WriteLiteral(" id=\"vacancy-provider-name\"");
 WriteLiteral(">");
 
             
-            #line 339 "..\..\Views\Vacancy\Review.cshtml"
+            #line 318 "..\..\Views\Vacancy\Review.cshtml"
                                          Write(Model.ProviderSite.Name);
 
             
@@ -2170,13 +1928,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n            </div>\r\n\r\n");
 
             
-            #line 342 "..\..\Views\Vacancy\Review.cshtml"
+            #line 321 "..\..\Views\Vacancy\Review.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 342 "..\..\Views\Vacancy\Review.cshtml"
+            #line 321 "..\..\Views\Vacancy\Review.cshtml"
              if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
             {
 
@@ -2198,7 +1956,7 @@ WriteLiteral(" id=\"vacancy-provider-contact\"");
 WriteLiteral(">");
 
             
-            #line 346 "..\..\Views\Vacancy\Review.cshtml"
+            #line 325 "..\..\Views\Vacancy\Review.cshtml"
                                                 Write(Model.ProviderSite.ContactDetailsForCandidate);
 
             
@@ -2207,7 +1965,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                </div>\r\n");
 
             
-            #line 348 "..\..\Views\Vacancy\Review.cshtml"
+            #line 327 "..\..\Views\Vacancy\Review.cshtml"
             }
 
             
@@ -2216,13 +1974,13 @@ WriteLiteral("</p>\r\n                </div>\r\n");
 WriteLiteral("        </div>\r\n\r\n    </section>\r\n\r\n");
 
             
-            #line 353 "..\..\Views\Vacancy\Review.cshtml"
+            #line 332 "..\..\Views\Vacancy\Review.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 353 "..\..\Views\Vacancy\Review.cshtml"
+            #line 332 "..\..\Views\Vacancy\Review.cshtml"
      using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
     {
         
@@ -2230,14 +1988,14 @@ WriteLiteral("        </div>\r\n\r\n    </section>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 355 "..\..\Views\Vacancy\Review.cshtml"
+            #line 334 "..\..\Views\Vacancy\Review.cshtml"
    Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 355 "..\..\Views\Vacancy\Review.cshtml"
+            #line 334 "..\..\Views\Vacancy\Review.cshtml"
                                                       
 
 
@@ -2276,21 +2034,21 @@ WriteLiteral(">Reject</button>\r\n                <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 23509), Tuple.Create("\"", 23563)
+WriteAttribute("href", Tuple.Create(" href=\"", 21377), Tuple.Create("\"", 21431)
             
-            #line 361 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 23516), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.LandingPage)
+            #line 340 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 21384), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.LandingPage)
             
             #line default
             #line hidden
-, 23516), false)
+, 21384), false)
 );
 
 WriteLiteral(">Return to dashboard</a>\r\n                \r\n            </div>\r\n        </section" +
 ">\r\n");
 
             
-            #line 365 "..\..\Views\Vacancy\Review.cshtml"
+            #line 344 "..\..\Views\Vacancy\Review.cshtml"
     }
 
             
