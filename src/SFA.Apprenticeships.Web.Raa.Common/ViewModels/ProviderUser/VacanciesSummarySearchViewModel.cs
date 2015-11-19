@@ -7,7 +7,7 @@
     {
         public VacanciesSummarySearchViewModel()
         {
-            PageSize = 5;
+            PageSize = 25;
             CurrentPage = 1;
         }
 
