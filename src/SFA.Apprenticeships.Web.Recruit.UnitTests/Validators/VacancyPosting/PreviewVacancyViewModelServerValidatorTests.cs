@@ -18,7 +18,6 @@
             _validator = new VacancyResubmissionValidator();
         }
 
-        [Ignore]
         [Test]
         public void ShouldLetChildViewModelsValidate()
         {
@@ -31,7 +30,7 @@
                 ResubmitOptin = false
             };
 
-            var result = _validator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+            var result = _validator.Validate(viewModel);
 
             result.IsValid.Should().BeFalse();
             result.Errors.Count.Should().Be(1);
