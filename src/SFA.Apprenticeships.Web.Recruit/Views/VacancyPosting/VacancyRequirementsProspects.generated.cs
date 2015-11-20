@@ -30,6 +30,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
+    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
     #line 2 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
@@ -134,7 +136,7 @@ WriteLiteral("            ");
 
             
             #line 21 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-       Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+       Write(Html.DisplayFor(m => m.DesiredSkillsComment, "Comment"));
 
             
             #line default
@@ -145,7 +147,7 @@ WriteLiteral("            ");
 
             
             #line 22 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-       Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+       Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
             #line default
@@ -156,7 +158,7 @@ WriteLiteral("            ");
 
             
             #line 23 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-       Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+       Write(Html.DisplayFor(m => m.PersonalQualitiesComment, "Comment"));
 
             
             #line default
@@ -167,7 +169,62 @@ WriteLiteral("            ");
 
             
             #line 24 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+       Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 25 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+       Write(Html.DisplayFor(m => m.DesiredQualificationsComment, "Comment"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 26 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+       Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 27 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+       Write(Html.DisplayFor(m => m.FutureProspectsComment, "Comment"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 28 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 29 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+       Write(Html.DisplayFor(m => m.ThingsToConsiderComment, "Comment"));
 
             
             #line default
@@ -203,7 +260,7 @@ WriteLiteral(" value=\"VacancyRequirementsProspectsAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 31 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 36 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
 }
 
             

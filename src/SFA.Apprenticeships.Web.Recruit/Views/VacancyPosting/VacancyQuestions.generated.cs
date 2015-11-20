@@ -30,6 +30,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
+    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
     #line 2 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
@@ -134,7 +136,29 @@ WriteLiteral("            ");
 
             
             #line 21 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+       Write(Html.DisplayFor(m => m.FirstQuestionComment, "Comment"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 22 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
        Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 23 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+       Write(Html.DisplayFor(m => m.SecondQuestionComment, "Comment"));
 
             
             #line default
@@ -170,7 +194,7 @@ WriteLiteral(" value=\"VacancyQuestionsAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 28 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 30 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
 }
             
             #line default

@@ -28,7 +28,7 @@
             <fieldset class="form-group inline-fixed">
                 @Html.FormTextFor(m => m.HoursPerWeek, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", size = 12 }, containerHtmlAttributes: new {style = "margin-bottom: 15px"})
             </fieldset>
-
+            <div class="form-group">@Html.DisplayFor(m => m.WorkingWeekComment, "Comment")</div>
             <div class="blocklabel-single-container">
                 <div class="form-group">
                     <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
@@ -59,16 +59,20 @@
                         </fieldset>
                     </div>
                 </div>
+                <div class="form-group">@Html.DisplayFor(m => m.WageComment, "Comment")</div>
             </div>
 
             <fieldset class="form-group">
                 <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration)))">
                     <a name="@Html.NameFor(m => m.Duration).ToString().ToLower()"></a>
-                    @Html.LabelFor(m => m.Duration, new {@class = "form-label" })
-                    @Html.TextBoxFor(m => m.Duration, new { @class = "form-control-large form-control", type = "tel", size = 12 })
+                    @Html.LabelFor(m => m.Duration, new {@class = "form-label"})
+                    @Html.TextBoxFor(m => m.Duration, new {@class = "form-control-large form-control", type = "tel", size = 12})
                     @Html.DropDownListFor(m => m.DurationType, Model.DurationTypes)
                     @Html.ValidationMessageWithSeverityFor(m => m.Duration, Html.GetValidationType(m => m.Duration))
                 </div>
+            </fieldset>
+            <fieldset class="form-group">
+                @Html.DisplayFor(m => m.DurationComment, "Comment")
             </fieldset>
 
             <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
@@ -77,13 +81,16 @@
                 @Html.EditorFor(m => m.ClosingDate)
                 @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
             </fieldset>
+            <div class="form-group">@Html.DisplayFor(m => m.ClosingDateComment, "Comment")</div>
             <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
                 <a name="@Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()"></a>
                 <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
                 @Html.EditorFor(m => m.PossibleStartDate)
                 @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
             </fieldset>
+            <div class="form-group">@Html.DisplayFor(m => m.PossibleStartDateComment, "Comment")</div>
             @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22})
+            @Html.DisplayFor(m => m.LongDescriptionComment, "Comment")
         </div>
     </section>
     <div class="grid grid-1-2">

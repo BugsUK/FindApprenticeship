@@ -177,6 +177,7 @@
             if (!validationResult.IsValid)
             {
                 UpdateReferenceDataFor(newVacancyViewModel);
+                UpdateCommentsFor(newVacancyViewModel);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
@@ -198,6 +199,7 @@
             if (!validationResult.IsValid)
             {
                 UpdateReferenceDataFor(newVacancyViewModel);
+                UpdateCommentsFor(newVacancyViewModel);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
@@ -220,6 +222,20 @@
                 _providerProvider.GetProviderSiteEmployerLinkViewModel(
                     newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
                     newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
+        }
+
+        private void UpdateCommentsFor(NewVacancyViewModel newVacancyViewModel)
+        {
+            var storedVacancy = GetStoredVacancy(newVacancyViewModel);
+            newVacancyViewModel.ApprenticeshipLevelComment =
+                storedVacancy.NewVacancyViewModel.ApprenticeshipLevelComment;
+            newVacancyViewModel.FrameworkCodeNameComment = storedVacancy.NewVacancyViewModel.FrameworkCodeNameComment;
+            newVacancyViewModel.OfflineApplicationInstructionsComment =
+                storedVacancy.NewVacancyViewModel.OfflineApplicationInstructionsComment;
+            newVacancyViewModel.OfflineApplicationUrlComment =
+                storedVacancy.NewVacancyViewModel.OfflineApplicationInstructionsComment;
+            newVacancyViewModel.ShortDescriptionComment = storedVacancy.NewVacancyViewModel.ShortDescriptionComment;
+            newVacancyViewModel.TitleComment = storedVacancy.NewVacancyViewModel.TitleComment;
         }
 
         private VacancyViewModel GetStoredVacancy(NewVacancyViewModel newVacancyViewModel)

@@ -227,6 +227,11 @@
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Comment.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Comment.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\DateTime.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -249,7 +254,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateTime.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\DisplayTemplates\Comment.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Comment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Comment.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Comment.generated.cs</LastGenOutput>

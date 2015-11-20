@@ -1,4 +1,5 @@
-﻿@model DateTime
+﻿@using System
+@model System.DateTime
 @{
     var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
     var dataTimeByZoneId = TimeZoneInfo.ConvertTime(Model.ToUniversalTime(), timeZoneInfo);

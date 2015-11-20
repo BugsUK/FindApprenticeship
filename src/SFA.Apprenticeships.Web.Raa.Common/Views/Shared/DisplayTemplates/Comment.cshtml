@@ -1,5 +1,13 @@
 ﻿@model string
+
 @if (!string.IsNullOrEmpty(Model))
 {
-    @Html.Label(Model)
+    <details open>
+        <summary>Comment</summary>
+        <div class="detail-content qa-comment">
+            <div class="blocklabel-single-container">
+                @Model
+            </div>
+        </div>
+    </details>
 }
