@@ -5,7 +5,9 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
     using System.Linq;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Common;
     using DataContracts.Version51;
+    using Mappers.Version51;
     using MessageContracts.Version51;
 
     // REF: NAVMS: Navms.Ms.ExternalInterfaces.ServiceImplementation.Rel51.VacancyManagementInternalService
@@ -13,10 +15,14 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 
     public class VacancyUploadProvider : IVacancyUploadProvider
     {
+        private readonly IVacancyUploadRequestMapper _vacancyUploadRequestMapper;
         private readonly IVacancyPostingService _vacancyPostingService;
 
-        public VacancyUploadProvider(IVacancyPostingService vacancyPostingService)
+        public VacancyUploadProvider(
+            IVacancyUploadRequestMapper vacancyUploadRequestMapper,
+            IVacancyPostingService vacancyPostingService)
         {
+            _vacancyUploadRequestMapper = vacancyUploadRequestMapper;
             _vacancyPostingService = vacancyPostingService;
         }
 
@@ -31,8 +37,9 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 
             if (request.Vacancies?.Count > 0)
             {
-                vacancies.AddRange(request.Vacancies
-                    .Select(vacancyUploadData => UploadVacancy()));
+                vacancies
+                    .AddRange(request.Vacancies
+                        .Select(UploadVacancy));
             }
 
             return new VacancyUploadResponse
@@ -44,12 +51,16 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 
         #region Helpers
 
-        private VacancyUploadResultData UploadVacancy()
+        private VacancyUploadResultData UploadVacancy(VacancyUploadData vacancyUploadData)
         {
-            _vacancyPostingService.SaveApprenticeshipVacancy(new ApprenticeshipVacancy());
+            var mappedVacancy = _vacancyUploadRequestMapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var savedVacancy = _vacancyPostingService.SaveApprenticeshipVacancy(mappedVacancy);
 
             var vacancyUploadResultData = new VacancyUploadResultData
             {
+                VacancyId = vacancyUploadData.VacancyId,
+                ReferenceNumber = Convert.ToInt32(savedVacancy.VacancyReferenceNumber),
+                Status = VacancyUploadResult.Success,
                 ErrorCodes = new List<ElementErrorData>()
             };
 

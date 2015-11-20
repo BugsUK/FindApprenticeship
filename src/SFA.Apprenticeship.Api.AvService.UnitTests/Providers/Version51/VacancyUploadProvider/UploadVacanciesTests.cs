@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using AvService.Mappers.Version51;
     using AvService.Providers.Version51;
     using DataContracts.Version51;
     using FluentAssertions;
@@ -16,19 +16,26 @@
     public class UploadVacanciesTests
     {
         private Mock<IVacancyPostingService> _mockVacancyPostingService;
+        private Mock<IVacancyUploadRequestMapper> _mockVacancyUploadRequestMapper;
 
         private VacancyUploadProvider _provider;
 
         [SetUp]
         public void SetUp()
         {
+            // Mappers.
+            _mockVacancyUploadRequestMapper = new Mock<IVacancyUploadRequestMapper>();
+
+            // Vacancy Posting Service.
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
 
             _mockVacancyPostingService.Setup(mock =>
-                mock.GetNextVacancyReferenceNumber())
-                .Returns(42);
+                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns(new ApprenticeshipVacancy());
 
+            // Provider.
             _provider = new VacancyUploadProvider(
+                _mockVacancyUploadRequestMapper.Object,
                 _mockVacancyPostingService.Object);
         }
 
@@ -103,42 +110,5 @@
             _mockVacancyPostingService.Verify(mock =>
                 mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Never);
         }
-
-        [Test]
-        public void ShouldReturnSingleValidVacancyInResponse()
-        {
-            // Arrange.
-            var request = new VacancyUploadRequest
-            {
-                Vacancies = new List<VacancyUploadData>
-                {
-                    new VacancyUploadData()
-                }
-            };
-
-            // Act.
-            var response = _provider.UploadVacancies(request);
-
-            // Assert.
-            response.Should().NotBeNull();
-            response.Vacancies.Count.Should().Be(1);
-
-            var vacancy = response.Vacancies.Single();
-
-            vacancy.ShouldBeValid();
-        }
     }
-
-    #region Extensions
-
-    public static class VacancyUploadResultDataExtensions
-    {
-        public static void ShouldBeValid(this VacancyUploadResultData vacancy)
-        {
-            vacancy.ErrorCodes.Should().NotBeNull();
-            vacancy.ErrorCodes.Count.Should().Be(0);
-        }
-    }
-
-    #endregion
 }
