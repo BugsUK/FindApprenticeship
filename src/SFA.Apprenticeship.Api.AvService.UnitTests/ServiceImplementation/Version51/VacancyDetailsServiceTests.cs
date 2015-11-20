@@ -2,6 +2,7 @@
 {
     using System;
     using System.Security;
+    using Apprenticeships.Application.Interfaces.Logging;
     using AvService.Providers.Version51;
     using AvService.ServiceImplementation.Version51;
     using FluentAssertions;
@@ -11,45 +12,49 @@
     using ServiceContracts.Version51;
 
     [TestFixture]
-    public class VacancyManagementServiceTests
+    public class VacancyDetailsServiceTests
     {
-        private Mock<IVacancyUploadProvider> _mockVacancyUploadProvider;
-        private IVacancyManagement _vacancyManagementService;
+        private IVacancyDetails _vacancyDetailsService;
+        private Mock<ILogService> _mockLogService;
+        private Mock<IVacancyDetailsProvider> _mockVacancyDetailsProvider;
 
         [SetUp]
         public void SetUp()
         {
-            _mockVacancyUploadProvider = new Mock<IVacancyUploadProvider>();
-            _vacancyManagementService = new VacancyManagementService(_mockVacancyUploadProvider.Object);
+            _mockLogService = new Mock<ILogService>();
+            _mockVacancyDetailsProvider = new Mock<IVacancyDetailsProvider>();
+
+            _vacancyDetailsService = new VacancyDetailsService(
+                _mockLogService.Object, _mockVacancyDetailsProvider.Object);
         }
 
         [Test]
-        public void ShouldUploadVacancy()
+        public void ShouldGetVacancyDetails()
         {
             // Arrange.
-            var request = new VacancyUploadRequest
+            var request = new VacancyDetailsRequest
             {
                 MessageId = Guid.NewGuid()
             };
 
-            var expectedResponse = new VacancyUploadResponse();
+            var expectedResponse = new VacancyDetailsResponse();
 
-            _mockVacancyUploadProvider.Setup(mock =>
-                mock.UploadVacancies(request))
+            _mockVacancyDetailsProvider.Setup(mock =>
+                mock.Get(request))
                 .Returns(expectedResponse);
 
             // Act.
-            var actualResponse = _vacancyManagementService.UploadVacancies(request);
+            var actualResponse = _vacancyDetailsService.Get(request);
 
             // Assert.
             actualResponse.Should().Be(expectedResponse);
         }
 
         [Test]
-        public void ShouldThrowIfVacancyUploadRequestIsNull()
+        public void ShouldThrowIfVacancyDetailsRequestIsNull()
         {
             // Act.
-            Action action = () => _vacancyManagementService.UploadVacancies(default(VacancyUploadRequest));
+            Action action = () => _vacancyDetailsService.Get(default(VacancyDetailsRequest));
 
             // Assert.
             action.ShouldThrow<ArgumentNullException>();
@@ -60,13 +65,13 @@
         public void ShouldThrowIfMessageIdIsEmptyGuid()
         {
             // Arrange.
-            var request = new VacancyUploadRequest
+            var request = new VacancyDetailsRequest
             {
                 MessageId = Guid.Empty
             };
 
             // Act.
-            Action action = () => _vacancyManagementService.UploadVacancies(request);
+            Action action = () => _vacancyDetailsService.Get(request);
 
             // Assert.
             action.ShouldThrow<SecurityException>();

@@ -389,7 +389,7 @@
     <Compile Include="ServiceContracts\Version51\IVacancyDetails.cs" />
     <Compile Include="ServiceContracts\Version51\IVacancyManagement.cs" />
     <Compile Include="ServiceImplementation\Version50\ReferenceDataService.cs" />
-    <Compile Include="ServiceImplementation\Version51\IVacancyUploadProvider.cs" />
+    <Compile Include="Providers\Version51\IVacancyUploadProvider.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyManagementService.cs" />

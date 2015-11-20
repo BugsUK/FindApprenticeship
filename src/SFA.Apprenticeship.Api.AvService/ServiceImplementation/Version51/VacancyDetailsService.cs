@@ -25,6 +25,11 @@
 
         public VacancyDetailsResponse Get(VacancyDetailsRequest request)
         {
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
             // TODO: API: AG: remove test code.
             if (request.MessageId == Guid.Empty)
             {

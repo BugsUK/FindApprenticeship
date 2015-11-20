@@ -2,19 +2,21 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Security;
     using System.ServiceModel;
     using Common;
     using DataContracts.Version51;
     using MessageContracts.Version51;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using Namespaces.Version51;
+    using Providers.Version51;
     using ServiceContracts.Version51;
 
     [ExceptionShielding("Default Exception Policy")]
     [ServiceBehavior(Namespace = Namespace.Uri)]
     public class VacancyManagementService : IVacancyManagement
     {
-        private IVacancyUploadProvider _vacancyUploadProvider;
+        private readonly IVacancyUploadProvider _vacancyUploadProvider;
 
         public VacancyManagementService(IVacancyUploadProvider vacancyUploadProvider)
         {
@@ -28,9 +30,16 @@
                 throw new ArgumentNullException(nameof(request));
             }
 
+            // TODO: API: AG: remove test code.
+            if (request.MessageId == Guid.Empty)
+            {
+                throw new SecurityException();
+            }
+
             return _vacancyUploadProvider.UploadVacancies(request);
         }
 
+        // ReSharper disable once UnusedMember.Local
         private static VacancyUploadResponse GetDummyVacancyUploadResponse()
         {
             return new VacancyUploadResponse

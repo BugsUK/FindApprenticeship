@@ -4385,6 +4385,10 @@ aside h2:first-child {
   position: relative;
   margin: -5px -5px 10px -5px;
   padding: 5px; }
+  .editable-item .text,
+  .editable-item details,
+  .editable-item p {
+    margin-bottom: 0; }
   .editable-item .edit-comment-link {
     font-family: "nta", Arial, sans-serif;
     font-size: 16px;
@@ -4407,7 +4411,8 @@ html:not(.touch) .editable-item .edit-comment-link {
   visibility: hidden; }
 
 html:not(.touch) .editable-item:hover {
-  background: rgba(0, 0, 0, 0.025); }
+  background: rgba(0, 0, 0, 0.025);
+  outline: 1px dotted #d4d4d4; }
   html:not(.touch) .editable-item:hover .edit-comment-link {
     visibility: visible; }
 

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 {
     using MessageContracts.Version51;
 

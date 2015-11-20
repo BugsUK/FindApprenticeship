@@ -114,6 +114,7 @@
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByReferenceNumberTests.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ServiceImplementation\Version51\VacancyDetailsServiceTests.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyManagementServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -124,6 +125,10 @@
     <ProjectReference Include="..\SFA.Apprenticeship.Api.AvService\SFA.Apprenticeship.Api.AvService.csproj">
       <Project>{F5CE7351-7509-4E21-A74C-16C5EC81BAF8}</Project>
       <Name>SFA.Apprenticeship.Api.AvService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
+      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
