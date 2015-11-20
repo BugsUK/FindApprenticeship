@@ -18,6 +18,7 @@
             _validator = new VacancyResubmissionValidator();
         }
 
+        [Ignore]
         [Test]
         public void ShouldLetChildViewModelsValidate()
         {

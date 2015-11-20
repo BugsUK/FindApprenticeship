@@ -151,6 +151,7 @@
     <Compile Include="Mediators\ProviderUser\VerifyEmailAddressTests.cs" />
     <Compile Include="Mediators\ProviderUser\UpdateUserTests.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorTests.cs" />
+    <Compile Include="Mediators\VacancyPosting\SubmitVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\CloneVacancyTests.cs" />
     <Compile Include="Mediators\VacancyPosting\CreateVacancyTests.cs" />
     <Compile Include="Mediators\VacancyPosting\IndexTests.cs" />
