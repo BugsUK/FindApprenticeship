@@ -579,6 +579,7 @@
         {
             var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
             vacancy.Status = ProviderVacancyStatuses.RejectedByQA;
+            vacancy.QAUserName = null;
 
             _apprenticeshipVacancyWriteRepository.Save(vacancy);
         }

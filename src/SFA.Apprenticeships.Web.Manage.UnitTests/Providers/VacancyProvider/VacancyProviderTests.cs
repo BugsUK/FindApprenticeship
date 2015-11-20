@@ -375,7 +375,8 @@
                         It.Is<ApprenticeshipVacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
-                                av.Status == ProviderVacancyStatuses.RejectedByQA)));
+                                av.Status == ProviderVacancyStatuses.RejectedByQA &&
+                                av.QAUserName == null)));
         }
 
         [Test]
