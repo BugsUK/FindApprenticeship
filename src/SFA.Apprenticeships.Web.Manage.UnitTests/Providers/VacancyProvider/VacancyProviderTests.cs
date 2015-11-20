@@ -24,6 +24,7 @@
     using Common.Configuration;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
+    using Domain.Interfaces.Mapping;
     using Raa.Common.Configuration;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
@@ -656,6 +657,9 @@
                     .With(av => av.Status, ProviderVacancyStatuses.ReservedForQA)
                     .With(av => av.StandardId, null)
                     .Create();
+            var vacancyWithReservedStatus = new Fixture().Build<VacancyViewModel>()
+                .With(vvm=> vvm.Status, ProviderVacancyStatuses.ReservedForQA)
+                .Create();
             var providerSite = new Fixture().Build<ProviderSite>().Create();
             var apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
             apprenticeshipVacancyWriteRepository.Setup(r => r.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(reservedVacancy);
@@ -668,12 +672,16 @@
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(m => m.Map<ApprenticeshipVacancy, VacancyViewModel>(reservedVacancy))
+                .Returns(vacancyWithReservedStatus);
 
             var vacancyProvider =
                 new VacancyProviderBuilder().With(apprenticeshipVacancyWriteRepository)
                     .With(providerService)
                     .With(referenceDataService)
                     .With(configurationService)
+                    .With(mapper)
                     .Build();
 
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);

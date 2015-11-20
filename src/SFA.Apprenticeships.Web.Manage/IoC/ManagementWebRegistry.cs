@@ -1,8 +1,4 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
-using SFA.Apprenticeships.Application.ReferenceData;
-using SFA.Apprenticeships.Web.Raa.Common.Providers;
-
-namespace SFA.Apprenticeships.Web.Manage.IoC
+﻿namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
     using Application.Communication;
@@ -17,20 +13,26 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Application.VacancyPosting;
     using Common.Configuration;
     using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Mapping;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.TacticalDataServices;
     using Mediators.AgencyUser;
     using Mediators.Vacancy;
     using Providers;
+    using Raa.Common.Mappers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
+    using Application.Interfaces.ReferenceData;
+    using Application.ReferenceData;
+    using Raa.Common.Providers;
 
     public class ManagementWebRegistry : Registry
     {
         public ManagementWebRegistry()
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
+            For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
 
             RegisterCodeGenerators();
             RegisterServices();

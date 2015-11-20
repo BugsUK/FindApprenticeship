@@ -55,7 +55,8 @@
                 MockProviderService.Object,
                 MockTimeService.Object,
                 MockApprenticeshipVacancyReadRepository.Object,
-                MockApprenticeshipVacancyWriteRepository.Object);
+                MockApprenticeshipVacancyWriteRepository.Object,
+                MockMapper.Object);
         }
     }
 }

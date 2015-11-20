@@ -17,6 +17,7 @@
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Converters;
+    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using ViewModels;
     using ViewModels.Provider;
@@ -36,16 +37,9 @@
         private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
         private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
         private readonly IConfigurationService _configurationService;
+        private readonly IMapper _mapper;
 
-        public VacancyProvider(
-            ILogService logService,
-            IConfigurationService configurationService,
-            IVacancyPostingService vacancyPostingService,
-            IReferenceDataService referenceDataService,
-            IProviderService providerService,
-            IDateTimeService dateTimeService, 
-            IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, 
-            IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -55,6 +49,7 @@
             _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
             _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
             _configurationService = configurationService;
+            _mapper = mapper;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
@@ -281,7 +276,7 @@
         public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
-            var viewModel = vacancy.ConvertToVacancyViewModel();
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(vacancy);
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
@@ -300,7 +295,7 @@
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
             //TODO: should we return this VM or the one returned by GetVacancy?
-            var viewModel = vacancy.ConvertToVacancyViewModel();
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(vacancy);
 
             return viewModel;
         }
@@ -428,7 +423,7 @@
 
             var vacancyPage = new PageableViewModel<VacancyViewModel>
             {
-                Page = vacancies.OrderByDescending(v => v.DateCreated).Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => v.ConvertToVacancyViewModel()).ToList(),
+                Page = vacancies.OrderByDescending(v => v.DateCreated).Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(v)).ToList(),
                 ResultsCount = vacancies.Count,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
                 TotalNumberOfPages = vacancies.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancies.Count/vacanciesSummarySearch.PageSize)
@@ -588,7 +583,7 @@
         {
             var vacancy = _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
             //TODO: Cope with null, interprit as already reserved etc.
-            var viewModel = vacancy.ConvertToVacancyViewModel();
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(vacancy);
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;

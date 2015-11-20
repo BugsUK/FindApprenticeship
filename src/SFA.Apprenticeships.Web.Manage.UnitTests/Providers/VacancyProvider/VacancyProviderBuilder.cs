@@ -8,6 +8,7 @@
     using Moq;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.VacancyPosting;
+    using Domain.Interfaces.Mapping;
     using Raa.Common.Providers;
 
 
@@ -21,12 +22,13 @@
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
         private Mock<IVacancyPostingService> _vacancyPostingServcie = new Mock<IVacancyPostingService>();
         private Mock<ILogService> _logService = new Mock<ILogService>();
+        private Mock<IMapper> _mapper = new Mock<IMapper>();
 
         public IVacancyQAProvider Build()
         {
             return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
                 _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, _apprenticeshipVacancyReadRepository.Object,
-                _apprenticeshipVacancyWriteRepository.Object);
+                _apprenticeshipVacancyWriteRepository.Object, _mapper.Object);
         }
 
         public VacancyProviderBuilder With(
@@ -71,6 +73,12 @@
         public VacancyProviderBuilder With(Mock<IVacancyPostingService> vacancyPostingServiceService)
         {
             _vacancyPostingServcie = vacancyPostingServiceService;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<IMapper> mapper)
+        {
+            _mapper = mapper;
             return this;
         }
     }

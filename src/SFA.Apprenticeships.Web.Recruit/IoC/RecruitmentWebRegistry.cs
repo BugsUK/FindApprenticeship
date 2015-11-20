@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-
-namespace SFA.Apprenticeships.Web.Recruit.IoC
+﻿namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
     using System.Web;
     using Application.Communication;
@@ -19,19 +17,23 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Common.Configuration;
     using Domain.Interfaces.Configuration;
+    using Domain.Interfaces.Mapping;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.VacancyPosting;
+    using Raa.Common.Mappers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
+    using Raa.Common.Providers;
 
     public class RecruitmentWebRegistry : Registry
     {
         public RecruitmentWebRegistry()
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
+            For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
