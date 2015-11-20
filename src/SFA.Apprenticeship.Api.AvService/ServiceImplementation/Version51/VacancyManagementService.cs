@@ -14,9 +14,21 @@
     [ServiceBehavior(Namespace = Namespace.Uri)]
     public class VacancyManagementService : IVacancyManagement
     {
+        private IVacancyUploadProvider _vacancyUploadProvider;
+
+        public VacancyManagementService(IVacancyUploadProvider vacancyUploadProvider)
+        {
+            _vacancyUploadProvider = vacancyUploadProvider;
+        }
+
         public VacancyUploadResponse UploadVacancies(VacancyUploadRequest request)
         {
-            return GetDummyVacancyUploadResponse();
+            if (request == null)
+            {
+                throw new ArgumentNullException(nameof(request));
+            }
+
+            return _vacancyUploadProvider.UploadVacancies(request);
         }
 
         private static VacancyUploadResponse GetDummyVacancyUploadResponse()
