@@ -113,7 +113,9 @@
     <Compile Include="Mappers\WageMapperTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByQueryTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByReferenceNumberTests.cs" />
+    <Compile Include="Providers\Version51\VacancyUploadProvider\ArgumentTests.cs" />
     <Compile Include="Providers\Version51\VacancyUploadProvider\UploadVacanciesTests.cs" />
+    <Compile Include="Providers\Version51\VacancyUploadProvider\ValidVacancyUploadDataTests.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsServiceTests.cs" />
