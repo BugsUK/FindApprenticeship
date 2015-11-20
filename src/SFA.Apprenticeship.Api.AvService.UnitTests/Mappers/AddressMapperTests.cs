@@ -13,11 +13,19 @@
     [TestFixture]
     public class AddressMapperTests
     {
+        private IAddressMapper _addressMapper;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _addressMapper = new AddressMapper();
+        }
+
         [Test]
         public void ShouldReturnNullAddressIfOriginalAddressIsNull()
         {
             // Act.
-            var mappedAddress = AddressMapper.MapToAddressData(null);
+            var mappedAddress = _addressMapper.MapToAddressData(null);
 
             // Assert.
             mappedAddress.Should().BeNull();
@@ -35,7 +43,7 @@
             };
 
             // Act.
-            var mappedAddress = AddressMapper.MapToAddressData(address);
+            var mappedAddress = _addressMapper.MapToAddressData(address);
 
             // Assert.
             mappedAddress.Should().NotBeNull();
@@ -54,7 +62,7 @@
             };
 
             // Act.
-            var mappedAddress = AddressMapper.MapToAddressData(address);
+            var mappedAddress = _addressMapper.MapToAddressData(address);
 
             // Assert.
             mappedAddress.Should().NotBeNull();

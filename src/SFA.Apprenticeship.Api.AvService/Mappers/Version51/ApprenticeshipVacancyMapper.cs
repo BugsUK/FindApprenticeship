@@ -6,18 +6,29 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
 
     // See Capgemini.LSC.Navms.MS.DataAccess.VacancyController for more default mappings.
 
-    public static class ApprenticeshipVacancyMapper
+    public class ApprenticeshipVacancyMapper : IApprenticeshipVacancyMapper
     {
         private const string Todo = "TODO";
 
-        public static VacancyFullData MapToVacancyFullData(ApprenticeshipVacancy vacancy)
+        private readonly IAddressMapper _addressMapper;
+        private readonly IVacancyDurationMapper _vacancyDurationMapper;
+
+        public ApprenticeshipVacancyMapper(
+            IAddressMapper addressMapper,
+            IVacancyDurationMapper vacancyDurationMapper)
+        {
+            _addressMapper = addressMapper;
+            _vacancyDurationMapper = vacancyDurationMapper;
+        }
+
+        public VacancyFullData MapToVacancyFullData(ApprenticeshipVacancy vacancy)
         {
             // TODO: API: review optional object properties here. Throw if null or allow null?
             return new VacancyFullData
             {
                 VacancyLocationType = Todo,
                 // TODO: map VacancyAddress
-                VacancyAddress =  AddressMapper.MapToAddressData(vacancy.ProviderSiteEmployerLink?.Employer?.Address),
+                VacancyAddress =  _addressMapper.MapToAddressData(vacancy.ProviderSiteEmployerLink?.Employer?.Address),
                 ApprenticeshipFramework = $"{Todo}: via Framework Code {vacancy.FrameworkCodeName}",
                 // TODO: what if date null?
                 ClosingDate = vacancy.ClosingDate ?? DateTime.MinValue,
@@ -39,7 +50,7 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 ContactPerson = Todo,
                 EmployerDescription = vacancy.ProviderSiteEmployerLink?.Description,
-                ExpectedDuration = VacancyDurationMapper.MapDurationToString(vacancy.Duration, vacancy.DurationType),
+                ExpectedDuration = _vacancyDurationMapper.MapDurationToString(vacancy.Duration, vacancy.DurationType),
                 FutureProspects = vacancy.FutureProspects,
                 InterviewFromDate = DateTime.MinValue,
                 LearningProviderDesc = $"{Todo}: via UKPRN {vacancy.Ukprn}",

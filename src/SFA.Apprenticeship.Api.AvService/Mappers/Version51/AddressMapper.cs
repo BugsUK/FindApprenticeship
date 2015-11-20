@@ -3,9 +3,9 @@
     using Apprenticeships.Domain.Entities.Locations;
     using DataContracts.Version51;
 
-    public static class AddressMapper
+    public class AddressMapper : IAddressMapper
     {
-        public static AddressData MapToAddressData(Address address)
+        public AddressData MapToAddressData(Address address)
         {
             if (address == null)
             {

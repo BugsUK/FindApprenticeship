@@ -4,11 +4,11 @@
     using Apprenticeships.Domain.Interfaces.Queries;
     using DataContracts.Version51;
 
-    public class ApprenticeshipVacancyQueryMapper
+    public class ApprenticeshipVacancyQueryMapper : IApprenticeshipVacancyQueryMapper
     {
         public const int DefaultPageSize = 10;
 
-        public static ApprenticeshipVacancyQuery MapToApprenticeshipVacancyQuery(VacancySearchData criteria)
+        public ApprenticeshipVacancyQuery MapToApprenticeshipVacancyQuery(VacancySearchData criteria)
         {
             // TODO: API: support more query parameters.
             return new ApprenticeshipVacancyQuery

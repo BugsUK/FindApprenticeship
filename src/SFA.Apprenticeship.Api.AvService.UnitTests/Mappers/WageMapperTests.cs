@@ -8,6 +8,14 @@
     [TestFixture]
     public class WageMapperTests
     {
+        private IWageMapper _wageMapper;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _wageMapper = new WageMapper();
+        }
+
         [TestCase(WageType.Custom, WageUnit.Weekly, "0", "£0.00")]
         [TestCase(WageType.Custom, WageUnit.Weekly, "123.45", "£123.45")]
         [TestCase(WageType.Custom, WageUnit.Weekly, "123.454", "£123.45")]
@@ -20,7 +28,7 @@
             decimal.TryParse(wageAsDecimalString, out wage);
 
             // Act.
-            var mappedWageText = WageMapper.MapToText(wageType, wageUnit, wage);
+            var mappedWageText = _wageMapper.MapToText(wageType, wageUnit, wage);
 
             // Assert.
             mappedWageText.Should().Be(expectedWageText);

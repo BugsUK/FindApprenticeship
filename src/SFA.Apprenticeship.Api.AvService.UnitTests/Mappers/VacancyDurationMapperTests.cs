@@ -8,6 +8,13 @@
     [TestFixture]
     public class VacancyDurationMapperTests
     {
+        private IVacancyDurationMapper _vacancyDurationMapper;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _vacancyDurationMapper = new VacancyDurationMapper();
+        }
 
         [TestCase(1, DurationType.Weeks, "1 week")]
         [TestCase(64, DurationType.Weeks, "64 weeks")]
@@ -18,7 +25,7 @@
         public void ShouldMapDurationToString(int duration, DurationType durationType, string expectedDurationString)
         {
             // Act.
-            var durationString = VacancyDurationMapper.MapDurationToString(duration, durationType);
+            var durationString = _vacancyDurationMapper.MapDurationToString(duration, durationType);
 
             // Assert.
             durationString.Should().Be(expectedDurationString);
@@ -28,7 +35,7 @@
         public void ShouldMapToEmptyStringIfDurationIsNull()
         {
             // Act.
-            var durationString = VacancyDurationMapper.MapDurationToString(null, DurationType.Weeks);
+            var durationString = _vacancyDurationMapper.MapDurationToString(null, DurationType.Weeks);
 
             // Assert.
             durationString.Should().Be(string.Empty);
@@ -38,7 +45,7 @@
         public void ShouldMapToEmptyStringIfDurationTypeIsUnknown()
         {
             // Act.
-            var durationString = VacancyDurationMapper.MapDurationToString(1, DurationType.Unknown);
+            var durationString = _vacancyDurationMapper.MapDurationToString(1, DurationType.Unknown);
 
             // Assert.
             durationString.Should().Be(string.Empty);

@@ -6,6 +6,7 @@
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Apprenticeships.Domain.Interfaces.Configuration;
     using Apprenticeships.Domain.Interfaces.Repositories;
+    using AvService.Mappers.Version51;
     using AvService.Providers.Version51;
     using Configuration;
     using DataContracts.Version51;
@@ -66,10 +67,18 @@
                     EmployerInformationText = ValidEmployerInformationText
                 });
 
+            // Mappers.
+            var addressMapper = new AddressMapper();
+            var vacancyDurationMapper = new VacancyDurationMapper();
+            var apprenticeshipVacancyMapper = new ApprenticeshipVacancyMapper(addressMapper, vacancyDurationMapper);
+            var apprenticeshipVacancyQueryMapper = new ApprenticeshipVacancyQueryMapper();
+
             // Provider.
             _provider = new VacancyDetailsProvider(
                 _mockConfigurationService.Object,
-                _mockApprenticeshipVacancyReadRepository.Object);
+                _mockApprenticeshipVacancyReadRepository.Object,
+                apprenticeshipVacancyMapper,
+                apprenticeshipVacancyQueryMapper);
         }
 
         [Test]

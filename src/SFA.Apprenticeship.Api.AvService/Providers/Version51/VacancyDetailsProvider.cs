@@ -16,15 +16,22 @@
 
     public class VacancyDetailsProvider : IVacancyDetailsProvider
     {
-        private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
         private readonly ApiConfiguration _apiConfiguration;
+
+        private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
+        private readonly IApprenticeshipVacancyMapper _apprenticeshipVacancyMapper;
+        private readonly IApprenticeshipVacancyQueryMapper _apprenticeshipVacancyQueryMapper;
 
         public VacancyDetailsProvider(
             IConfigurationService configurationService,
-            IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository)
+            IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository,
+            IApprenticeshipVacancyMapper apprenticeshipVacancyMapper,
+            IApprenticeshipVacancyQueryMapper apprenticeshipVacancyQueryMapper)
         {
             _apiConfiguration = configurationService.Get<ApiConfiguration>();
             _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
+            _apprenticeshipVacancyMapper = apprenticeshipVacancyMapper;
+            _apprenticeshipVacancyQueryMapper = apprenticeshipVacancyQueryMapper;
         }
 
         public VacancyDetailsResponse Get(VacancyDetailsRequest request)
@@ -45,7 +52,7 @@
 
             if (vacancy != null && vacancy.Status == ProviderVacancyStatuses.Live)
             {
-                var searchResult = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+                var searchResult = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
                 searchResults.Add(searchResult);
             }
@@ -66,13 +73,13 @@
 
         private VacancyDetailsResponse FindVacancyDetails(VacancyDetailsRequest request)
         {
-            var query = ApprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(request.VacancySearchCriteria);
+            var query = _apprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(request.VacancySearchCriteria);
             int totalResultsCount;
 
             var vacancies = _apprenticeshipVacancyReadRepository.Find(query, out totalResultsCount);
 
             var searchResults = vacancies
-                .Select(ApprenticeshipVacancyMapper.MapToVacancyFullData)
+                .Select(_apprenticeshipVacancyMapper.MapToVacancyFullData)
                 .ToList();
 
             var response = new VacancyDetailsResponse

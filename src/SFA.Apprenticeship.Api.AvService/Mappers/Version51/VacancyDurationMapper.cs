@@ -2,9 +2,9 @@
 {
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 
-    public static class VacancyDurationMapper
+    public class VacancyDurationMapper : IVacancyDurationMapper
     {
-        public static string MapDurationToString(int? duration, DurationType durationType)
+        public string MapDurationToString(int? duration, DurationType durationType)
         {
             if (!duration.HasValue)
             {

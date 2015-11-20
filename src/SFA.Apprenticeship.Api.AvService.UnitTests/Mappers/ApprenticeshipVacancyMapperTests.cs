@@ -15,6 +15,17 @@
     {
         private const string Todo = "TODO";
 
+        private IApprenticeshipVacancyMapper _apprenticeshipVacancyMapper;
+
+        [SetUp]
+        public void SetUp()
+        {
+            var addressMapper = new AddressMapper();
+            var vacancyDurationMapper = new VacancyDurationMapper();
+
+            _apprenticeshipVacancyMapper = new ApprenticeshipVacancyMapper(addressMapper, vacancyDurationMapper);
+        }
+
         [Test]
         public void ShouldMapVacancyLocationType()
         {
@@ -22,7 +33,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -39,7 +50,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -58,7 +69,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -84,7 +95,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -109,7 +120,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -138,7 +149,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -156,7 +167,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -173,7 +184,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -190,7 +201,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -207,7 +218,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -221,7 +232,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -235,7 +246,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -252,7 +263,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -270,7 +281,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -285,7 +296,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -305,7 +316,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -323,7 +334,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -340,7 +351,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -354,7 +365,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -371,7 +382,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -389,7 +400,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -404,7 +415,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -421,7 +432,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -438,7 +449,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -456,7 +467,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -470,7 +481,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -487,7 +498,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -501,7 +512,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -521,7 +532,7 @@
             };
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -535,7 +546,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -549,7 +560,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -563,7 +574,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -577,7 +588,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -591,7 +602,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();
@@ -605,7 +616,7 @@
             var vacancy = new ApprenticeshipVacancy();
 
             // Act.
-            var mappedVacancy = ApprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
+            var mappedVacancy = _apprenticeshipVacancyMapper.MapToVacancyFullData(vacancy);
 
             // Assert.
             mappedVacancy.Should().NotBeNull();

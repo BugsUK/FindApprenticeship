@@ -8,6 +8,14 @@
     [TestFixture]
     public class ApprenticeshipVacancyQueryMapperTests
     {
+        private ApprenticeshipVacancyQueryMapper _apprenticeshipVacancyQueryMapper;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _apprenticeshipVacancyQueryMapper = new ApprenticeshipVacancyQueryMapper();
+        }
+
         [TestCase(null)]
         [TestCase("")]
         [TestCase("ABC1")]
@@ -20,7 +28,7 @@
             };
 
             // Act.
-            var mappedQuery = ApprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(criteria);
+            var mappedQuery = _apprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(criteria);
 
             // Assert.
             mappedQuery.FrameworkCodeName.Should().Be(frameworkCode);
@@ -37,7 +45,7 @@
             };
 
             // Act.
-            var mappedQuery = ApprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(criteria);
+            var mappedQuery = _apprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(criteria);
 
             // Assert.
             mappedQuery.CurrentPage.Should().Be(expectedCurrentPage);
@@ -50,7 +58,7 @@
             var criteria = new VacancySearchData();
 
             // Act.
-            var mappedQuery = ApprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(criteria);
+            var mappedQuery = _apprenticeshipVacancyQueryMapper.MapToApprenticeshipVacancyQuery(criteria);
 
             // Assert.
             mappedQuery.PageSize.Should().Be(ApprenticeshipVacancyQueryMapper.DefaultPageSize);

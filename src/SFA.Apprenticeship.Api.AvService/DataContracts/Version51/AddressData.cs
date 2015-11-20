@@ -3,8 +3,12 @@
     using System.Runtime.Serialization;
     using Namespaces.Version51;
 
+    public interface IAddressData
+    {
+    }
+
     [DataContract(Namespace = Namespace.Uri)]
-    public class AddressData
+    public class AddressData : IAddressData
     {
         [DataMember(IsRequired = true, Order = 1)]
         public string AddressLine1;

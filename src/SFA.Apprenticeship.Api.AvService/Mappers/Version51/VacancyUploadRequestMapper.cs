@@ -9,9 +9,9 @@
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using MessageContracts.Version51;
 
-    public static class VacancyUploadRequestMapper
+    public class VacancyUploadRequestMapper : IVacancyUploadRequestMapper
     {
-        public static ApprenticeshipVacancy ToApprenticeshipVacancy(VacancyUploadRequest request)
+        public ApprenticeshipVacancy ToApprenticeshipVacancy(VacancyUploadRequest request)
         {
             var messageId = request.MessageId;
             var externalSystemId = request.ExternalSystemId;

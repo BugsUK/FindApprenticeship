@@ -3,7 +3,7 @@
     using Apprenticeships.Infrastructure.Common.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Repositories.Vacancies.IoC;
-    using Providers;
+    using Mappers.Version51;
     using Providers.Version51;
     using StructureMap;
 
@@ -23,6 +23,15 @@
 
                 // Providers.
                 x.For<IVacancyDetailsProvider>().Use<VacancyDetailsProvider>();
+                x.For<IVacancyUploadProvider>().Use<VacancyUploadProvider>();
+
+                // Mappers.
+                x.For<IAddressMapper>().Use<AddressMapper>();
+                x.For<IApprenticeshipVacancyMapper>().Use<ApprenticeshipVacancyMapper>();
+                x.For<IApprenticeshipVacancyQueryMapper>().Use<ApprenticeshipVacancyQueryMapper>();
+                x.For<IVacancyDurationMapper>().Use<VacancyDurationMapper>();
+                x.For<IVacancyUploadRequestMapper>().Use<VacancyUploadRequestMapper>();
+                x.For<IWageMapper>().Use<WageMapper>();
             });
         }
 
