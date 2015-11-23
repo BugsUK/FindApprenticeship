@@ -60,7 +60,7 @@
 
             if (existingVacancy != null)
             {
-                var vacancyViewModel = existingVacancy.ConvertToNewVacancyViewModel();
+                var vacancyViewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(existingVacancy);
                 vacancyViewModel.SectorsAndFrameworks = sectors;
                 vacancyViewModel.Standards = standards;
                 return vacancyViewModel;
@@ -82,7 +82,7 @@
         public NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
-            var viewModel = vacancy.ConvertToNewVacancyViewModel();
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
             var sectors = GetSectorsAndFrameworks();
             var standards = GetStandards();
             viewModel.SectorsAndFrameworks = sectors;
@@ -111,7 +111,7 @@
 
                 _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);
 
-                return vacancy.ConvertToNewVacancyViewModel();
+                return _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
             }
             catch (Exception e)
             {
@@ -184,7 +184,7 @@
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
-            newVacancyViewModel = vacancy.ConvertToNewVacancyViewModel();
+            newVacancyViewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
 
             return newVacancyViewModel;
         }
@@ -658,7 +658,7 @@
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
-            viewModel = vacancy.ConvertToNewVacancyViewModel();
+            viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
             var sectors = GetSectorsAndFrameworks();
             var standards = GetStandards();
             viewModel.SectorsAndFrameworks = sectors;

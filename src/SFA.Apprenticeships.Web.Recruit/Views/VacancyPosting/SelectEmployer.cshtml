@@ -38,7 +38,7 @@
                         </label>
                     </div>
 
-                    @using (Html.BeginRouteForm(RecruitmentRouteNames.SearchExistingEmployer, FormMethod.Get, new { @id = "#ern-search-form" }))
+                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "ern-search-form" }))
                     {
                         @Html.HiddenFor(model => model.ProviderSiteErn)
 
@@ -51,7 +51,7 @@
                         </div>
                     }
 
-                    @using (Html.BeginRouteForm(RecruitmentRouteNames.SearchExistingEmployer, FormMethod.Get, new { @id = "#name-location-search-form" }))
+                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "name-location-search-form" }))
                     {
                         @Html.HiddenFor(model => model.ProviderSiteErn)
 
