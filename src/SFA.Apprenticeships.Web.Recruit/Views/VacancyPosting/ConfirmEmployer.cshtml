@@ -1,5 +1,7 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
+
 @using SFA.Apprenticeships.Web.Recruit.Constants
+
 @{
     ViewBag.Title = "Recruit an Apprentice - Check employer description";
 }
@@ -39,8 +41,26 @@
                 <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
             </div>
         </div>
+
         <div class="grid grid-1-1">
-            <h4 class="bold-small">Is this address the main apprenticeship location?</h4>
+            <div class="blocklabel-single-container">
+                <div class="form-group inline clearfix blocklabel-single hide-nojs">
+                    <a name="@Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()"></a>
+                    <h4 class="bold-small">Is this address the main apprenticeship location?</h4>
+
+                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                        @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
+                        No, I need to add a different location
+                    </label>
+                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                        @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new {id = "location-type-main-location", aria_controls = "location-type-main-location-panel"})
+                        Yes, this will be the main location
+                    </label>
+                </div>
+                <div id="location-type-main-location-panel" class="toggle-content blocklabel-content">
+                    @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "tel", @class = "form-control-small", size = 12 }, labelHtmlAttributes: new {@class = "bold-small"})
+                </div>
+            </div>
         </div>
         <div class="grid grid-1-1">
             @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})

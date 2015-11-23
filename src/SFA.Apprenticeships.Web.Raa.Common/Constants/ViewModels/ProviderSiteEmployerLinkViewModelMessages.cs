@@ -16,5 +16,12 @@
             public const string LabelText = "Website (optional)";
             public const string ErrorUriText = "Please enter a valid website url";
         }
+
+        public class NumberOfPositions
+        {
+            public const string LabelText = "Number of positions";
+            public const string RequiredErrorText = "Please enter the number of positions of the vacancy";
+            public const string LengthErrorText = "Number of positions must be between 1 and 999";
+        }
     }
 }

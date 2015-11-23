@@ -72,6 +72,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
             providerSiteEmployerLink.WebsiteUrl = viewModel.WebsiteUrl;
             providerSiteEmployerLink.Description = viewModel.Description;
+            providerSiteEmployerLink.IsEmployerLocationMainApprenticeshipLocation =
+                viewModel.IsEmployerLocationMainApprenticeshipLocation;
+            providerSiteEmployerLink.NumberOfPosition = viewModel.NumberOfPositions;
             providerSiteEmployerLink = _providerService.SaveProviderSiteEmployerLink(providerSiteEmployerLink);
 
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid);

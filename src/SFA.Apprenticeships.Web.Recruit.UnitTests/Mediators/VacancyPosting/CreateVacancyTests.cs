@@ -2,6 +2,7 @@
 {
     using Common.Constants;
     using Common.Mediators;
+    using Common.ViewModels.Locations;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
@@ -152,6 +153,39 @@
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
+        }
+
+        [Test]
+        public void ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError()
+        {
+            var isEmployerLocationMainApprenticeshipLocation = true;
+            var numberOfPositions = 5;
+            var viewModel = new ProviderSiteEmployerLinkViewModel
+            {
+                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                NumberOfPositions = numberOfPositions,
+                ProviderSiteErn = "provider site ern",
+                Employer = new EmployerViewModel
+                {
+                    Ern = "ern"
+                }
+            };
+
+            ProviderProvider.Setup(p => p.GetProviderSiteEmployerLinkViewModel(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(new ProviderSiteEmployerLinkViewModel
+                {
+                    Employer = new EmployerViewModel
+                    {
+                        Address = new AddressViewModel()
+                    }
+                });
+
+            var mediator = GetMediator();
+
+            var result = mediator.ConfirmEmployer(viewModel);
+            result.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Should()
+                .Be(isEmployerLocationMainApprenticeshipLocation);
+            result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
         }
 
         private VacancyViewModel BasicVacancy()

@@ -39,6 +39,15 @@
             MongoConfiguration = configurationManager.Get<MongoConfiguration>();
 
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(QaUserName), null);
+
+            var mongoConnectionString = MongoConfiguration.VacancyDb;
+            var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
+
+            var database = new MongoClient(mongoConnectionString)
+                .GetServer()
+                .GetDatabase(mongoDbName);
+
+            Collection = database.GetCollection<MongoApprenticeshipVacancy>("apprenticeshipVacancies");
         }
 
         [TearDown]

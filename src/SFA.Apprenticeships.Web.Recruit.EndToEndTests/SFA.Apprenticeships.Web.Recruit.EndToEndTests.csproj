@@ -157,6 +157,10 @@
       <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
+      <Project>{700D41DD-527A-42BD-94D2-FD49A5F00A18}</Project>
+      <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Recruit\SFA.Apprenticeships.Web.Recruit.csproj">
       <Project>{AF7E6460-86F4-40D6-8C46-AB97C283479B}</Project>
       <Name>SFA.Apprenticeships.Web.Recruit</Name>

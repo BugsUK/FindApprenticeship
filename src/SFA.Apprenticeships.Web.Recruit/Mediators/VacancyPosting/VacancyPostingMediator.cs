@@ -130,6 +130,8 @@
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteErn, ern);
             viewModel.VacancyGuid = vacancyGuid;
+            viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
+            viewModel.NumberOfPositions = 0;
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
@@ -142,6 +144,9 @@
                 var existingViewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
                 existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
                 existingViewModel.Description = viewModel.Description;
+                existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
+                    viewModel.IsEmployerLocationMainApprenticeshipLocation;
+                existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation, existingViewModel, validationResult);
             }

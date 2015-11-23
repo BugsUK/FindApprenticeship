@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
     using System.Web.Mvc;
+    using Common.ViewModels.Locations;
     using Controllers;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
@@ -13,6 +14,8 @@
     using Infrastructure.Repositories.Vacancies.Entities;
     using MongoDB.Driver;
     using NUnit.Framework;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
     public class VacancyPostingControllerEndToEndTests : RecruitWebEndToEndTestsBase
@@ -139,6 +142,69 @@
             clonedVacancy.ClosingDate.Should().NotHaveValue();
             clonedVacancy.PossibleStartDate.Should().NotHaveValue();
             CheckAllCommentsAreNull(clonedVacancy);
+        }
+
+        [Test]
+        public void GetConfirmEmployerShouldReturnAPoviderSiteEmployerViewModelWithMainLocationAsTrue()
+        {
+            var providerSiteErn = "101282923";
+            var ern = "100608868";
+            var vacancyGuid = Guid.NewGuid();
+
+            var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
+
+            var result = vacancyPostingController.ConfirmEmployer(providerSiteErn, ern, vacancyGuid);
+            result.Should().BeOfType<ViewResult>();
+            var view = result as ViewResult;
+            view.Model.Should().BeOfType<ProviderSiteEmployerLinkViewModel>();
+            var viewModel = view.Model as ProviderSiteEmployerLinkViewModel;
+            viewModel.IsEmployerLocationMainApprenticeshipLocation.Should().BeTrue();
+            viewModel.NumberOfPositions.Should().Be(0);
+        }
+
+        [Test]
+        public void ConfirmEmployerShouldSaveLocationTypeAndNumberOfPositionsInDB()
+        {
+            const string providerSiteErn = "101282923";
+            const string ern = "100608868";
+            const int numberOfPositions = 5;
+            var vacancyGuid = Guid.NewGuid();
+            var viewModel = new ProviderSiteEmployerLinkViewModel
+            {
+                Description = "desciption",
+                Employer = new EmployerViewModel
+                {
+                    Address = new AddressViewModel
+                    {
+                        AddressLine1 = "Address line 1",
+                        AddressLine2 = "Address line 2",
+                        AddressLine3 = "Address line 3",
+                        AddressLine4 = "Address line 4",
+                        GeoPoint = new GeoPointViewModel(),
+                        Postcode = "postcode",
+                        Uprn = "uprn"
+                    },
+                    Name = "some employer",Ern = ern
+                },
+                IsEmployerLocationMainApprenticeshipLocation = true,
+                NumberOfPositions = numberOfPositions,
+                ProviderSiteErn = providerSiteErn,
+                VacancyGuid = vacancyGuid
+            };
+
+            var savedVacancy = new MongoApprenticeshipVacancy
+            {
+                Id = vacancyGuid
+            };
+            Collection.Save(savedVacancy);
+
+            var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
+
+            vacancyPostingController.ConfirmEmployer(viewModel);
+
+            var vacancy = Collection.FindOneById(vacancyGuid);
+            vacancy.ProviderSiteEmployerLink.IsEmployerLocationMainApprenticeshipLocation.Should().BeTrue();
+            vacancy.ProviderSiteEmployerLink.NumberOfPosition.Should().Be(numberOfPositions);
         }
     }
 }
