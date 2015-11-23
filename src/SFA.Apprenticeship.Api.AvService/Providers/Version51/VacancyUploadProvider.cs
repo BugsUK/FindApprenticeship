@@ -4,7 +4,6 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
     using System.Collections.Generic;
     using System.Linq;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
-    using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Common;
     using DataContracts.Version51;
     using Mappers.Version51;

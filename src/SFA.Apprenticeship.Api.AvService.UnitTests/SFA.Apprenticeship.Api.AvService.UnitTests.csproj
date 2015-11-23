@@ -115,6 +115,7 @@
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByReferenceNumberTests.cs" />
     <Compile Include="Providers\Version51\VacancyUploadProvider\ArgumentTests.cs" />
     <Compile Include="Providers\Version51\VacancyUploadProvider\Builders\VacancyUploadDataBuilder.cs" />
+    <Compile Include="Providers\Version51\VacancyUploadProvider\InvalidVacancyUploadDataTests.cs" />
     <Compile Include="Providers\Version51\VacancyUploadProvider\UploadVacanciesTests.cs" />
     <Compile Include="Providers\Version51\VacancyUploadProvider\Extensions\VacancyUploadResultDataExtensions.cs" />
     <Compile Include="Providers\Version51\VacancyUploadProvider\ValidVacancyUploadDataTests.cs" />
