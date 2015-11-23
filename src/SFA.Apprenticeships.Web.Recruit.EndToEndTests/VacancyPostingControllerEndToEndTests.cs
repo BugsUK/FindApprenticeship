@@ -169,29 +169,9 @@
             const string providerSiteErn = "101282923";
             const string ern = "100608868";
             const int numberOfPositions = 5;
+            const bool isEmployerLocationMainApprenticeshipLocation = true;
             var vacancyGuid = Guid.NewGuid();
-            var viewModel = new ProviderSiteEmployerLinkViewModel
-            {
-                Description = "desciption",
-                Employer = new EmployerViewModel
-                {
-                    Address = new AddressViewModel
-                    {
-                        AddressLine1 = "Address line 1",
-                        AddressLine2 = "Address line 2",
-                        AddressLine3 = "Address line 3",
-                        AddressLine4 = "Address line 4",
-                        GeoPoint = new GeoPointViewModel(),
-                        Postcode = "postcode",
-                        Uprn = "uprn"
-                    },
-                    Name = "some employer",Ern = ern
-                },
-                IsEmployerLocationMainApprenticeshipLocation = true,
-                NumberOfPositions = numberOfPositions,
-                ProviderSiteErn = providerSiteErn,
-                VacancyGuid = vacancyGuid
-            };
+            var viewModel = GetProviderSiteEmployerLinkViewModel(ern, isEmployerLocationMainApprenticeshipLocation, numberOfPositions, providerSiteErn, vacancyGuid);
 
             var savedVacancy = new MongoApprenticeshipVacancy
             {
@@ -206,6 +186,58 @@
             var vacancy = Collection.FindOneById(vacancyGuid);
             vacancy.ProviderSiteEmployerLink.IsEmployerLocationMainApprenticeshipLocation.Should().BeTrue();
             vacancy.ProviderSiteEmployerLink.NumberOfPosition.Should().Be(numberOfPositions);
+        }
+
+        [Test]
+        public void ConfirmEmployerWithLocationTypeAsDifferentFromEmployerLocationShouldRedirectToLocationView()
+        {
+            const string providerSiteErn = "101282923";
+            const string ern = "100608868";
+            const bool isEmployerLocationMainApprenticeshipLocation = false;
+            var vacancyGuid = Guid.NewGuid();
+            var viewModel = GetProviderSiteEmployerLinkViewModel(ern, isEmployerLocationMainApprenticeshipLocation, null, providerSiteErn, vacancyGuid);
+
+            var savedVacancy = new MongoApprenticeshipVacancy
+            {
+                Id = vacancyGuid
+            };
+            Collection.Save(savedVacancy);
+
+            var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
+
+            var result = vacancyPostingController.ConfirmEmployer(viewModel);
+            result.Should().BeOfType<RedirectToRouteResult>();
+            var redirection = result as RedirectToRouteResult;
+            redirection.RouteName.Should().Be("AddLocations");
+        }
+
+        private static ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(string ern,
+            bool isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, string providerSiteErn,
+            Guid vacancyGuid)
+        {
+            return new ProviderSiteEmployerLinkViewModel
+            {
+                Description = "desciption",
+                Employer = new EmployerViewModel
+                {
+                    Address = new AddressViewModel
+                    {
+                        AddressLine1 = "Address line 1",
+                        AddressLine2 = "Address line 2",
+                        AddressLine3 = "Address line 3",
+                        AddressLine4 = "Address line 4",
+                        GeoPoint = new GeoPointViewModel(),
+                        Postcode = "postcode",
+                        Uprn = "uprn"
+                    },
+                    Name = "some employer",
+                    Ern = ern
+                },
+                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                NumberOfPositions = numberOfPositions,
+                ProviderSiteErn = providerSiteErn,
+                VacancyGuid = vacancyGuid
+            };
         }
     }
 }
