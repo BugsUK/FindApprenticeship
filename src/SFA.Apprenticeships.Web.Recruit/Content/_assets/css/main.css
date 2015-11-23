@@ -4387,82 +4387,43 @@ aside h2:first-child {
   .vac-title a {
     text-decoration: none; }
 
-html:not(.no-js) [data-editable] {
-  position: relative;
-  height: auto;
-  min-height: auto;
-  max-height: auto; }
-  html:not(.no-js) [data-editable] input,
-  html:not(.no-js) [data-editable] textarea {
-    border-color: white; }
-  html:not(.no-js) [data-editable] textarea {
-    resize: none;
-    overflow-y: hidden;
-    /* fixes scrollbar flash - kudos to @brettjonesdev */
-    padding-top: .1em; }
-  html:not(.no-js) [data-editable].empty {
-    color: transparent; }
-    html:not(.no-js) [data-editable].empty input,
-    html:not(.no-js) [data-editable].empty textarea {
-      color: #fff; }
-    html:not(.no-js) [data-editable].empty label {
-      opacity: 0; }
-    html:not(.no-js) [data-editable].empty .form-hint.hide-nojs {
-      visibility: hidden; }
-  html:not(.no-js) [data-editable] .editor,
-  html:not(.no-js) [data-editable] .adder {
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    color: #005ea5;
-    box-sizing: border-box;
-    padding: 0;
-    text-align: center;
-    display: none;
-    background: rgba(0, 0, 0, 0.01);
-    border: 2px dashed #dee0e2;
-    vertical-align: middle;
-    cursor: pointer;
-    white-space: nowrap; }
-    html:not(.no-js) [data-editable] .editor:hover, html:not(.no-js) [data-editable] .editor:active,
-    html:not(.no-js) [data-editable] .adder:hover,
-    html:not(.no-js) [data-editable] .adder:active {
-      color: #2e8aca; }
-      html:not(.no-js) [data-editable] .editor:hover span, html:not(.no-js) [data-editable] .editor:active span,
-      html:not(.no-js) [data-editable] .adder:hover span,
-      html:not(.no-js) [data-editable] .adder:active span {
-        text-decoration: underline; }
-  html:not(.no-js) [data-editable] .tools {
-    position: absolute;
-    top: 100%;
-    right: 0;
-    display: none;
-    padding: 0; }
-    html:not(.no-js) [data-editable] .tools a {
-      font-size: 16px; }
-  html:not(.no-js) [data-editable].edited .tools {
-    display: block; }
-  html:not(.no-js) [data-editable] .editor {
-    vertical-align: top;
-    text-align: right;
-    height: 100%; }
-    html:not(.no-js) [data-editable] .editor span {
-      background: #fcfcfc;
-      display: inline-block;
-      padding: .25em 1em; }
-  html:not(.no-js) [data-editable].full:hover .editor {
-    display: block; }
-  html:not(.no-js) [data-editable] .adder strong {
-    font-size: 1.25em;
-    vertical-align: middle;
-    display: inline-block; }
-    html:not(.no-js) [data-editable] .adder strong:after {
-      content: "+"; }
-  html:not(.no-js) [data-editable].empty .adder {
-    display: block; }
-
 #employer-data-display {
   display: none; }
+
+.editable-item {
+  position: relative;
+  margin: -5px -5px 10px -5px;
+  padding: 5px; }
+  .editable-item .text,
+  .editable-item details,
+  .editable-item p {
+    margin-bottom: 0; }
+  .editable-item .edit-comment-link {
+    font-family: "nta", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.25;
+    font-weight: 300;
+    text-transform: none;
+    padding-top: 8px;
+    padding-bottom: 7px;
+    display: block;
+    margin: .5rem 0; }
+    @media (max-width: 640px) {
+      .editable-item .edit-comment-link {
+        font-size: 14px; } }
+    @media (min-width: 641px) {
+      .editable-item .edit-comment-link {
+        padding-top: 5px;
+        padding-bottom: 5px; } }
+
+html:not(.touch) .editable-item .edit-comment-link {
+  visibility: hidden; }
+
+html:not(.touch) .editable-item:hover {
+  background: rgba(0, 0, 0, 0.025);
+  outline: 1px dotted #d4d4d4; }
+  html:not(.touch) .editable-item:hover .edit-comment-link {
+    visibility: visible; }
 
 .applicant-location,
 .applicant-distance {

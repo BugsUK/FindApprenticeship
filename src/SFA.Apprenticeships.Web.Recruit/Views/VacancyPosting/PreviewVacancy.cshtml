@@ -11,43 +11,53 @@
 
 <div>
     <div class="grid-wrapper">
+        <div class="grid grid-1-1">
+            <p class="page-link hide-nojs">
+                <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
+            </p>
+        </div>
+    </div>
+    <div class="grid-wrapper">
         <div class="grid grid-2-3">
-            <div class="hgroup text">
+            <div class="hgroup text editable-item">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title (Preview)</h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+                <a href="#" class="edit-comment-link">Edit</a>
             </div>
-        </div>
-        <div class="grid grid-1-3">
-            <p class="page-link hide-nojs">
-                <!--<a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>-->
-            </p>
         </div>
     </div>
 
         <section class="grid-wrapper">
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
-                    <div class="text" itemprop="description">
-                        <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
+                    <div class="editable-item">
+                        <div class="text" itemprop="description">
+                            <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="grid grid-1-3">
                 @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
                 {
-                   var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
-                
-                    <p id="vacancy-closing-date" class="copy-16">
-                        Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday() 
-                        <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
-                    </p>
+                    var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
+                    <div class="editable-item">
+                        <p id="vacancy-closing-date">
+                            Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
+                            <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                        </p>
+                        <a href="#" class="edit-comment-link">Edit</a>
+                    </div>
                 }
                 else
                 {
-                <p id="vacancy-closing-date" class="copy-16">
-                    Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday() 
-                    <i class="fa fa-check the-icon" style="color: green;"></i>
-                </p>
+                    <div class="editable-item">
+                        <p id="vacancy-closing-date">
+                            Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
+                            <i class="fa fa-check the-icon" style="color: green;"></i>
+                        </p>
+                        <a href="#" class="edit-comment-link">Edit</a>
+                    </div>
                 }
             </div>
         </section>
@@ -55,28 +65,31 @@
             <h2 class="heading-large">Apprenticeship summary</h2>
             <div class="grid grid-1-3">
                 <div class="inner-block-padr">
-
-                    <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
-                    <p id="vacancy-working-week" itemprop="workHours">
-                        @Model.VacancySummaryViewModel.WorkingWeek<br/>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
-                        @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
-                        {
-                            <br/>@:(the hours are based on the candidate being over 18)
+                    <div class="editable-item">
+                        <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
+                        <p id="vacancy-working-week" itemprop="workHours">
+                            @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
+                            @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
+                            {
+                                <br />@:(the hours are based on the candidate being over 18)
                         }
-                    </p>
+                        </p>
+                    </div>
 
-                    <h3 class="bold-small">
-                        @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
-                        {
+                    <div class="editable-item">
+                        <h3 class="bold-small">
+                            @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
+                            {
                             <span>@Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon" style="color: green;"></i></span>
-                        }
-                        else
-                        {
+                            }
+                            else
+                            {
                             <span>Wage <i class="fa fa-check the-icon" style="color: green;"></i></span>
-                        }
-                    </h3>
+                            }
+                        </h3>
 
-                    <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
+                        <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
+                    </div>
 
                     @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
                     {
@@ -100,46 +113,54 @@
                             </div>
                         </details>
                     }
-                    
-                    <h3 class="bold-small">
-                        Expected duration
-                        @if (ViewData.ModelState.HasWarningsFor("Duration"))
-                        {
+                    <div class="editable-item">
+                        <h3 class="bold-small">
+                            Expected duration
+                            @if (ViewData.ModelState.HasWarningsFor("Duration"))
+                            {
                             var message = ViewData.ModelState.WarningMessageFor("Duration");
                             <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                            }
+                            else
+                            {
+                            <i class="fa fa-check the-icon" style="color: green;"></i>
+                            }
+                        </h3>
+                        <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
+                    </div>
+
+                    <div class="editable-item">
+                        <h3 class="bold-small">Possible start date</h3>
+                        @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
+                        {
+                        var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
+                        <p id="vacancy-start-date">
+                            @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
+                            <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                        </p>
                         }
                         else
                         {
-                            <i class="fa fa-check the-icon" style="color: green;"></i>
-                        }
-                    </h3>
-                    
-                    <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
-                    <h3 class="bold-small">Possible start date</h3>
-                    @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
-                    {
-                        var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
-                        <p id="vacancy-start-date">@Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                            <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
-                        </p>
-                    }
-                    else
-                    {
                         <p id="vacancy-start-date">
                             @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
                             <i class="fa fa-check the-icon" style="color: green;"></i>
                         </p>
-                    }
+                        }
+                    </div>
                     
-                    <h3 class="bold-small">Apprenticeship level</h3>
-                    <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
+                    <div class="editable-item">
+                        <h3 class="bold-small">Apprenticeship level</h3>
+                        <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
+                    </div>
 
-                    <h3 class="bold-small">Reference number</h3>
-                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
+                    <div class="editable-item">
+                        <h3 class="bold-small">Reference number</h3>
+                        <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
+                    </div>
                 </div>
             </div>
             <div class="grid grid-2-3">
-                <div class="text" itemprop="responsibilities">
+                <div class="text editable-item" itemprop="responsibilities">
                     <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
                 </div>
             </div>
@@ -152,18 +173,24 @@
             <div class="text">
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
                 {
-                    <h3 class="heading-small">Desired skills</h3>
-                    <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
+                    <div class="editable-item">
+                        <h3 class="heading-small">Desired skills</h3>
+                        <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
+                    </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
                 {
-                    <h3 class="heading-small">Personal qualities</h3>
-                    <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
+                    <div class="editable-item">
+                        <h3 class="heading-small">Personal qualities</h3>
+                        <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
+                    </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
                 {
-                    <h3 class="heading-small">Qualifications required</h3>
-                    <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
+                    <div class="editable-item">
+                        <h3 class="heading-small">Qualifications required</h3>
+                        <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
+                    </div>
                 }
 
             </div>
@@ -173,13 +200,17 @@
         <div class="text">
             @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
             {
-                <h3 class="heading-small">Future prospects</h3>
-                <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
+                <div class="editable-item">
+                    <h3 class="heading-small">Future prospects</h3>
+                    <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
+                </div>
             }
             @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
             {
-                <h3 class="heading-small">Things to consider</h3>
-                <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
+                <div class="editable-item">
+                    <h3 class="heading-small">Things to consider</h3>
+                    <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
+                </div>
             }
         </div>
     </div>
@@ -197,13 +228,17 @@
                 <div class="text">
                     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
                     {
-                        <h3 class="heading-small">First question</h3>
-                        <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
+                        <div class="editable-item">
+                            <h3 class="heading-small">First question</h3>
+                            <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
+                        </div>
                     }
                     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
                     {
-                        <h3 class="heading-small">Second question</h3>
-                        <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
+                        <div class="editable-item">
+                            <h3 class="heading-small">Second question</h3>
+                            <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
+                        </div>
                     }
                 </div>
             </div>
