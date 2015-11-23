@@ -176,6 +176,7 @@
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
     <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />

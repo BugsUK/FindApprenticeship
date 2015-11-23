@@ -41,5 +41,50 @@
             viewModel.VacancyQuestionsViewModel.Should().NotBeNull();
             viewModel.VacancyRequirementsProspectsViewModel.Should().NotBeNull();
         }
+
+        [Test]
+        public void NoDurationSpecified()
+        {
+            //Arrange
+            var source = new Fixture().Build<ApprenticeshipVacancy>().With(av => av.Duration, null).Create();
+
+            //Act
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+
+            //Assert
+            viewModel.VacancySummaryViewModel.Duration.Should().Be(null);
+        }
+
+        [Test]
+        public void NoPossibleStartDateSpecified()
+        {
+            //Arrange
+            var source = new Fixture().Build<ApprenticeshipVacancy>().With(av => av.PossibleStartDate, null).Create();
+
+            //Act
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+
+            //Assert
+            viewModel.VacancySummaryViewModel.PossibleStartDate.Should().NotBe(null);
+            viewModel.VacancySummaryViewModel.PossibleStartDate.Day.Should().Be(null);
+            viewModel.VacancySummaryViewModel.PossibleStartDate.Month.Should().Be(null);
+            viewModel.VacancySummaryViewModel.PossibleStartDate.Year.Should().Be(null);
+        }
+
+        [Test]
+        public void NoClosingDateSpecified()
+        {
+            //Arrange
+            var source = new Fixture().Build<ApprenticeshipVacancy>().With(av => av.ClosingDate, null).Create();
+
+            //Act
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+
+            //Assert
+            viewModel.VacancySummaryViewModel.ClosingDate.Should().NotBe(null);
+            viewModel.VacancySummaryViewModel.ClosingDate.Day.Should().Be(null);
+            viewModel.VacancySummaryViewModel.ClosingDate.Month.Should().Be(null);
+            viewModel.VacancySummaryViewModel.ClosingDate.Year.Should().Be(null);
+        }
     }
 }

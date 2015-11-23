@@ -5,7 +5,7 @@
 
     public static class IntToNullableDouble
     {
-        public static double? ToNullableDouble(this int i)
+        public static double? ToNullableDouble(this int? i)
         {
             double? result = null;
 
