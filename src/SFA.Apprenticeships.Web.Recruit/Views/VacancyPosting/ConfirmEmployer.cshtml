@@ -40,10 +40,13 @@
             </div>
         </div>
         <div class="grid grid-1-1">
-            @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" })
-            @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
+            <h4 class="bold-small">Is this address the main apprenticeship location?</h4>
+        </div>
+        <div class="grid grid-1-1">
+            @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})
+            @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
             <button class="button">Save description and continue</button>
             <a href="@Request.UrlReferrer.PathAndQuery">Choose a different employer</a>
         </div>
-    }
+   }
 </div>

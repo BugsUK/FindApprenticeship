@@ -27,7 +27,6 @@
     using Raa.Common.Providers;
     using StructureMap;
     using StructureMap.Configuration.DSL;
-    using Raa.Common.Providers;
 
     public class RecruitmentWebRegistry : Registry
     {
