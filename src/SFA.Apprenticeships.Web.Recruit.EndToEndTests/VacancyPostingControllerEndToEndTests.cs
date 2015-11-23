@@ -9,47 +9,14 @@
     using Domain.Entities.Providers;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using FluentAssertions;
     using Infrastructure.Repositories.Vacancies.Entities;
     using MongoDB.Driver;
     using NUnit.Framework;
-    using FluentAssertions;
 
     [TestFixture]
     public class VacancyPostingControllerEndToEndTests : RecruitWebEndToEndTestsBase
     {
-        [Test, Ignore]
-        public void CloneAVacancyShouldCreateANewOneWithSomeFieldsReset()
-        {
-            const int vacancyReferenceNumber = 1;
-            const string title = "Vacancy title";
-
-            var vacancy = GetCorrectVacancy(vacancyReferenceNumber, title);
-
-            InitializeDatabaseWithVacancy(vacancy);
-
-            var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
-            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
-            result.Should().BeOfType<RedirectToRouteResult>();
-            var redirection = result as RedirectToRouteResult;
-            redirection.RouteName.Should().Be("ConfirmEmployer");
-
-            var newVacancyGuid = (Guid) redirection.RouteValues.Values.Last();
-
-            newVacancyGuid.Should().NotBe(vacancy.Id);
-            var clonedVacancy = Collection.FindOneById(newVacancyGuid);
-            clonedVacancy.Title.Should().StartWith("(Copy of)");
-            clonedVacancy.DateCreated.Should().BeCloseTo(DateTime.UtcNow, 1000); // inject fake date time service?
-            clonedVacancy.DateUpdated.Should().NotHaveValue();
-            clonedVacancy.VacancyReferenceNumber.Should().NotBe(vacancyReferenceNumber);
-            clonedVacancy.DateSubmitted.Should().NotHaveValue();
-            clonedVacancy.DateStartedToQA.Should().NotHaveValue();
-            clonedVacancy.DateQAApproved.Should().NotHaveValue();
-            clonedVacancy.Status.Should().Be(ProviderVacancyStatuses.PendingQA);
-            clonedVacancy.ClosingDate.Should().NotHaveValue();
-            clonedVacancy.PossibleStartDate.Should().NotHaveValue();
-            CheckAllCommentsAreNull(clonedVacancy);
-        }
-
         private static void CheckAllCommentsAreNull(MongoApprenticeshipVacancy clonedVacancy)
         {
             clonedVacancy.WorkingWeekComment.Should().BeNull();
@@ -134,6 +101,44 @@
             Collection = database.GetCollection<MongoApprenticeshipVacancy>("apprenticeshipVacancies");
 
             Collection.Save(vacancy);
+        }
+
+        [Test]
+        public void CloneAVacancyShouldCreateANewOneWithSomeFieldsReset()
+        {
+            // Arrange
+            const int vacancyReferenceNumber = 1;
+            const string title = "Vacancy title";
+
+            var vacancy = GetCorrectVacancy(vacancyReferenceNumber, title);
+
+            InitializeDatabaseWithVacancy(vacancy);
+
+            var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
+
+            // Act
+            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
+
+
+            // Assert
+            result.Should().BeOfType<RedirectToRouteResult>();
+            var redirection = result as RedirectToRouteResult;
+            redirection.RouteName.Should().Be("ConfirmEmployer");
+
+            var newVacancyGuid = (Guid) redirection.RouteValues.Values.Last();
+
+            newVacancyGuid.Should().NotBe(vacancy.Id);
+            var clonedVacancy = Collection.FindOneById(newVacancyGuid);
+            clonedVacancy.Title.Should().StartWith("(Copy of)");
+            clonedVacancy.DateCreated.Should().BeCloseTo(DateTime.UtcNow, 1000); // inject fake date time service?
+            clonedVacancy.VacancyReferenceNumber.Should().NotBe(vacancyReferenceNumber);
+            clonedVacancy.DateSubmitted.Should().NotHaveValue();
+            clonedVacancy.DateStartedToQA.Should().NotHaveValue();
+            clonedVacancy.DateQAApproved.Should().NotHaveValue();
+            clonedVacancy.Status.Should().Be(ProviderVacancyStatuses.Draft);
+            clonedVacancy.ClosingDate.Should().NotHaveValue();
+            clonedVacancy.PossibleStartDate.Should().NotHaveValue();
+            CheckAllCommentsAreNull(clonedVacancy);
         }
     }
 }

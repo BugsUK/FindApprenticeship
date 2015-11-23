@@ -12,7 +12,7 @@
 
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
-    public class VacancyController : Controller
+    public class VacancyController : ManagementControllerBase
     {
         private readonly IVacancyMediator _vacancyMediator;
 

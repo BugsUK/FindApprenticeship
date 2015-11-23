@@ -1,5 +1,8 @@
 namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
+    using System;
+    using System.Linq.Expressions;
+    using System.Web;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
@@ -23,9 +26,9 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Repositories.UserProfiles.IoC;
     using Infrastructure.Repositories.Vacancies.IoC;
     using Infrastructure.TacticalDataServices.IoC;
-    using Raa.Common.Providers;
     using StructureMap;
     using StructureMap.Web;
+    using StructureMap.Web.Pipeline;
 
     public static class IoC
     {
@@ -73,7 +76,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();
                 x.For<ICookieAuthorizationDataProvider>().Use<CookieAuthorizationDataProvider>();
                 x.For<IAuthorizationErrorProvider>().Use<AuthorizationErrorProvider>();
-                x.For<IVacancyPostingProvider>().Use<VacancyProvider>();
 
                 x.Policies.SetAllProperties(y => y.OfType<IConfigurationService>());
                 x.Policies.SetAllProperties(y => y.OfType<ICookieDetectionProvider>());
