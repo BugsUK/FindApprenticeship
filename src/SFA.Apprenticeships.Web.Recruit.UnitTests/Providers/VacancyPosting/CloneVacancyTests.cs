@@ -35,7 +35,7 @@
 
         private bool CheckClonedVacancy(ApprenticeshipVacancy clonedVacancy, long newVacancyReferenceNumber, DateTime dateTimeNow)
         {
-            clonedVacancy.Title.Should().StartWith("(Copy of)");
+            clonedVacancy.Title.Should().StartWith("(Copy of) ");
             clonedVacancy.DateCreated.Should().Be(dateTimeNow);
             clonedVacancy.DateUpdated.Should().NotHaveValue();
             clonedVacancy.VacancyReferenceNumber.Should().Be(newVacancyReferenceNumber);

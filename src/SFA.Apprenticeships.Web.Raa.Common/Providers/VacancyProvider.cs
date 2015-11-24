@@ -451,7 +451,7 @@
             //TODO: control vacancy doesn't exist
 
             vacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-            vacancy.Title = string.Format("(Copy of){0}", vacancy.Title);
+            vacancy.Title = $"(Copy of) {vacancy.Title}";
             vacancy.Status = ProviderVacancyStatuses.Draft;
             vacancy.DateCreated = _dateTimeService.UtcNow();
             vacancy.DateUpdated = null;

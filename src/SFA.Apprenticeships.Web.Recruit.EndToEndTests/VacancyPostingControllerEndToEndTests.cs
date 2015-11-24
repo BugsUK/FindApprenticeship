@@ -132,7 +132,7 @@
 
             newVacancyGuid.Should().NotBe(vacancy.Id);
             var clonedVacancy = Collection.FindOneById(newVacancyGuid);
-            clonedVacancy.Title.Should().StartWith("(Copy of)");
+            clonedVacancy.Title.Should().StartWith("(Copy of) ");
             clonedVacancy.DateCreated.Should().BeCloseTo(DateTime.UtcNow, 1000); // inject fake date time service?
             clonedVacancy.VacancyReferenceNumber.Should().NotBe(vacancyReferenceNumber);
             clonedVacancy.DateSubmitted.Should().NotHaveValue();
