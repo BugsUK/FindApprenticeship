@@ -7,7 +7,6 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Infrastructure.Common.Mappers;
     using Resolvers;
-    using TypeConverters;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
@@ -28,7 +27,7 @@
             Mapper.CreateMap<ApprenticeshipVacancy, NewVacancyViewModel>();
 
             Mapper.CreateMap<ApprenticeshipVacancy, VacancySummaryViewModel>()
-                .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.Duration.ToNullableDouble()));
+                .ForMember(dest => dest.Duration, opt => opt.ResolveUsing<NullableIntToNullableDecimalResolver>().FromMember(src => src.Duration));
 
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>();
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyQuestionsViewModel>();
