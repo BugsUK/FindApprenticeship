@@ -383,8 +383,7 @@
             var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn, providerSiteErn);
 
             var live = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live).ToList();
-            //TODO: make approved timespan configurable
-            var approved = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.DateQAApproved.HasValue && v.DateQAApproved > _dateTimeService.UtcNow().AddHours(-24)).ToList();
+            var submitted = vacancies.Where(v => v.Status == ProviderVacancyStatuses.PendingQA || v.Status == ProviderVacancyStatuses.ReservedForQA).ToList();
             var rejected = vacancies.Where(v => v.Status == ProviderVacancyStatuses.RejectedByQA).ToList();
             //TODO: Agree on closing soon range and make configurable
             var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate > _dateTimeService.UtcNow() && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
@@ -397,8 +396,8 @@
                 case VacanciesSummaryFilterTypes.Live:
                     vacancies = live;
                     break;
-                case VacanciesSummaryFilterTypes.Approved:
-                    vacancies = approved;
+                case VacanciesSummaryFilterTypes.Submitted:
+                    vacancies = submitted;
                     break;
                 case VacanciesSummaryFilterTypes.Rejected:
                     vacancies = rejected;
@@ -433,7 +432,7 @@
             {
                 VacanciesSummarySearch = vacanciesSummarySearch,
                 LiveCount = live.Count,
-                ApprovedCount = approved.Count,
+                SubmittedCount = submitted.Count,
                 RejectedCount = rejected.Count,
                 ClosingSoonCount = closingSoon.Count,
                 ClosedCount = closed.Count,

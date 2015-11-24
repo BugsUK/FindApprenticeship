@@ -7,7 +7,7 @@
     {
         public VacanciesSummarySearchViewModel VacanciesSummarySearch { get; set; }
         public int LiveCount { get; set; }
-        public int ApprovedCount { get; set; }
+        public int SubmittedCount { get; set; }
         public int RejectedCount { get; set; }
         public int ClosingSoonCount { get; set; }
         public int ClosedCount { get; set; }

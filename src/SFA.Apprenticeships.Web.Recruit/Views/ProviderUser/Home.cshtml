@@ -60,7 +60,7 @@
         <h2 class="heading-medium">Your vacancies
             @if (filterType != VacanciesSummaryFilterTypes.All)
             {
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a>
+                <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
             }
         </h2>
         <div class="grid" style="width: 16.666666666%">
@@ -78,16 +78,16 @@
         </div>
         <div class="grid" style="width: 16.666666666%">
             <p style="text-align: center">
-                @if (filterType == VacanciesSummaryFilterTypes.Approved)
+                @if (filterType == VacanciesSummaryFilterTypes.Submitted)
                 {
-                    <span>Approved</span>
+                    <span>Submitted</span>
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Approved))" class="vacancy-filter">Approved</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">Submitted</a>
                 }
             </p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ApprovedCount</p>
+            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.SubmittedCount</p>
         </div>
         <div class="grid" style="width: 16.666666666%">
             <p style="text-align: center">

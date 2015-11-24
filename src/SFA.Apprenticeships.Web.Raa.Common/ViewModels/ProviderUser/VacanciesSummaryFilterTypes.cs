@@ -4,7 +4,7 @@
     {
         All = 0,
         Live = 1,
-        Approved,
+        Submitted,
         Rejected,
         ClosingSoon,
         Closed,
