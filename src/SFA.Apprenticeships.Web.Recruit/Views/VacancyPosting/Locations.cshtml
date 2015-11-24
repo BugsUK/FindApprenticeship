@@ -12,73 +12,96 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.AddLocations, FormMethod.Post))
 {
-    @Html.TextBoxFor(m => m.PostcodeSearch)
-    <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
+    @Html.HiddenFor(m => m.Ern);
+    @Html.HiddenFor(m => m.ProviderSiteErn);
+    @Html.HiddenFor(m => m.VacancyGuid);
+    <div form-group>
+        @Html.FormTextFor(model => model.PostcodeSearch, controlHtmlAttributes: new {type = "text", @class = "form-control-medium", size = "40"}, labelHtmlAttributes: new {@class = "bold-small"})
+        <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
+    </div>
 
     if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Any())
     {
-        <div class="tabbed-element tab1 active width-all-1-1">
-            <table class="no-btm-margin">
-                <colgroup>
-                    <col class="t50">
-                    <col class="t20">
-                </colgroup>
-                <tbody>
-                @foreach (var address in Model.Addresses)
-                {
-                    <tr>
-                        <td>
-                            @string.Format("{0}, {1}, {2}", address.Address.Postcode, address.Address.AddressLine1, address.Address.AddressLine4)
-                        </td>
-                        <td>
-                            @*<a href="@Url.RouteUrl(RecruitmentRouteNames.AddLocations, new {addressId = addressId})" name="AddLocations" value="UseLocation" class="ta-center disp-block">Use location</a>*@
-                            @{
-                                var buttonName = "UseLocation-" + @address.Index;
-                            }
-                            <button id="useLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Use location</button>
-                        </td>
-                    </tr>
-                                }
-                </tbody>
-            </table>
-        </div>
-    }
-
-    if (Model.Addresses != null && Model.Addresses.Any())
-    {
-        <div class="tabbed-element tab1 active width-all-1-1">
-            <table class="no-btm-margin">
-                <colgroup>
-                    <col class="t50">
-                    <col class="t30">
-                    <col class="t20">
-                </colgroup>
-                <thead>
-                    <tr>
-                        <th>Address</th>
-                        <th>Number of positions</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var address in Model.Addresses)
+        <div class="form-group">
+            <div class="tabbed-element tab1 active width-all-1-1">
+                <table class="no-btm-margin">
+                    <colgroup>
+                        <col class="t50">
+                        <col class="t20">
+                    </colgroup>
+                    <tbody>
+                    @for (var i = 0; i < Model.SearchResultAddresses.Count; i++)
                     {
+                        var address = Model.SearchResultAddresses[i];
                         <tr>
                             <td>
                                 @string.Format("{0}, {1}, {2}", address.Address.Postcode, address.Address.AddressLine1, address.Address.AddressLine4)
                             </td>
                             <td>
-                                A textbox
-                            </td>
-                            <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = Model.VacancyGuid})" class="ta-center disp-block">Remove</a>
+                                @{
+                                    var buttonName = "UseLocation-" + @i;
+                                }
+                                <button id="useLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Use location</button>
                             </td>
                         </tr>
                     }
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
-    }
+            }
 
-    @*<button id="useLocation" type="submit" class="button-link" name="AddLocations" value="UseLocation">Save and exit</button>*@
-}
+            if (Model.Addresses != null && Model.Addresses.Any())
+            {
+            <div class="form-group">
+                <div class="tabbed-element tab1 active width-all-1-1">
+                    <table class="no-btm-margin">
+                        <colgroup>
+                            <col class="t50">
+                            <col class="t30">
+                            <col class="t20">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Address</th>
+                                <th>Number of positions</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (var i = 0; i < Model.Addresses.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @string.Format("{0}, {1}, {2}", Model.Addresses.ToList()[i].Address.Postcode, Model.Addresses.ToList()[i].Address.AddressLine1, Model.Addresses.ToList()[i].Address.AddressLine4)
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Postcode, new { @id = "addresses_" + i + "address__Postcode", Name = "Addresses[" + i + "].Address.Postcode" })
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine1, new { @id = "addresses_" + i + "address__AddressLine1", Name = "Addresses[" + i + "].Address.AddressLine1" })
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new { @id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2" })
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine3, new { @id = "addresses_" + i + "address__AddressLine3", Name = "Addresses[" + i + "].Address.AddressLine3" })
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine4, new { @id = "addresses_" + i + "address__AddressLine4", Name = "Addresses[" + i + "].Address.AddressLine4" })
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new { @id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions" })
+                                    </td>
+                                    <td>
+                                        @{
+                                            var buttonName = "RemoveLocation-" + i;
+                                        }
+                                        <button id="removeLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Remove</button>
+                                    </td>
+                                </tr>
+                                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+                                            }
+
+                                            if (Model.Addresses != null && Model.Addresses.Any())
+                                            {
+                                                <div class="form-group">
+                                                    @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
+                                                </div>
+            <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
+            }
+            }

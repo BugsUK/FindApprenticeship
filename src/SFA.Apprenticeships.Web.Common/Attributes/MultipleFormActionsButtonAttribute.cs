@@ -58,13 +58,15 @@
 
         public string SubmitButtonActionName { get; set; }
 
+        public TypeCode ParameterType { get; set; }
+
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var value = filterContext.HttpContext.Request.Params[SubmitButtonActionName];
             var parameterValue = value.Split('-').Last();
 
-            var realParameterValue = Convert.ChangeType(parameterValue, TypeCode.Int32);
-            filterContext.ActionParameters[ParameterName] = parameterValue;
+            var realParameterValue = Convert.ChangeType(parameterValue, ParameterType);
+            filterContext.ActionParameters[ParameterName] = realParameterValue;
             //base.OnActionExecuting(filterContext);
         }
     }

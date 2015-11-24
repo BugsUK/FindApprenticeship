@@ -298,7 +298,7 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
             #line hidden
 WriteLiteral("        <div");
 
-WriteLiteral(" class=\"grid grid-1-1 visuallyhidden\"");
+WriteLiteral(" class=\"grid grid-1-1\"");
 
 WriteLiteral(">\r\n            <div");
 
@@ -310,14 +310,14 @@ WriteLiteral(" class=\"form-group inline clearfix blocklabel-single hide-nojs\""
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 2235), Tuple.Create("\"", 2329)
+WriteAttribute("name", Tuple.Create(" name=\"", 2220), Tuple.Create("\"", 2314)
             
             #line 48 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 2242), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 2227), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()
             
             #line default
             #line hidden
-, 2242), false)
+, 2227), false)
 );
 
 WriteLiteral("></a>\r\n                    <h4");
@@ -331,16 +331,16 @@ WriteLiteral(" data-target=\"location-type-different-location-panel\"");
 
 WriteLiteral(" for=\"location-type-different-location\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2556), Tuple.Create("\"", 2628)
-, Tuple.Create(Tuple.Create("", 2564), Tuple.Create("block-label", 2564), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2541), Tuple.Create("\"", 2613)
+, Tuple.Create(Tuple.Create("", 2549), Tuple.Create("block-label", 2549), true)
             
             #line 51 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                         , Tuple.Create(Tuple.Create(" ", 2575), Tuple.Create<System.Object, System.Int32>(Model.IsEmployerLocationMainApprenticeshipLocation
+                                                         , Tuple.Create(Tuple.Create(" ", 2560), Tuple.Create<System.Object, System.Int32>(Model.IsEmployerLocationMainApprenticeshipLocation
             
             #line default
             #line hidden
-, 2576), false)
-, Tuple.Create(Tuple.Create(" ", 2627), Tuple.Create("", 2627), true)
+, 2561), false)
+, Tuple.Create(Tuple.Create(" ", 2612), Tuple.Create("", 2612), true)
 );
 
 WriteLiteral(">\r\n");
@@ -361,16 +361,16 @@ WriteLiteral(" data-target=\"location-type-main-location-panel\"");
 
 WriteLiteral(" for=\"location-type-main-location\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3045), Tuple.Create("\"", 3117)
-, Tuple.Create(Tuple.Create("", 3053), Tuple.Create("block-label", 3053), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3030), Tuple.Create("\"", 3102)
+, Tuple.Create(Tuple.Create("", 3038), Tuple.Create("block-label", 3038), true)
             
             #line 55 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                               , Tuple.Create(Tuple.Create(" ", 3064), Tuple.Create<System.Object, System.Int32>(Model.IsEmployerLocationMainApprenticeshipLocation
+                                               , Tuple.Create(Tuple.Create(" ", 3049), Tuple.Create<System.Object, System.Int32>(Model.IsEmployerLocationMainApprenticeshipLocation
             
             #line default
             #line hidden
-, 3065), false)
-, Tuple.Create(Tuple.Create(" ", 3116), Tuple.Create("", 3116), true)
+, 3050), false)
+, Tuple.Create(Tuple.Create(" ", 3101), Tuple.Create("", 3101), true)
 );
 
 WriteLiteral(">\r\n");
@@ -436,14 +436,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Save description and continue</button>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4328), Tuple.Create("\"", 4368)
+WriteAttribute("href", Tuple.Create(" href=\"", 4313), Tuple.Create("\"", 4353)
             
             #line 69 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 4335), Tuple.Create<System.Object, System.Int32>(Request.UrlReferrer.PathAndQuery
+, Tuple.Create(Tuple.Create("", 4320), Tuple.Create<System.Object, System.Int32>(Request.UrlReferrer.PathAndQuery
             
             #line default
             #line hidden
-, 4335), false)
+, 4320), false)
 );
 
 WriteLiteral(">Choose a different employer</a>\r\n        </div>\r\n");

@@ -10,8 +10,6 @@
             NumberOfPositions = 1;
         }
 
-        public int Index { get; set; }
-
         public AddressViewModel Address { get; set; } 
 
         public int NumberOfPositions { get; set; }

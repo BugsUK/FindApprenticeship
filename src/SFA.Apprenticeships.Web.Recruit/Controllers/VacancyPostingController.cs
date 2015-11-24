@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -487,91 +488,90 @@
             {
                 ProviderSiteErn = providerSiteErn,
                 Ern = ern,
-                VacancyGuid = vacancyGuid
+                VacancyGuid = vacancyGuid,
+                AdditionalLocationInformation = string.Empty
             };
 
             return View(viewModel);
+        }
+
+        private List<VacancyLocationAddressViewModel> GetSearchResults()
+        {
+            var address1 = new VacancyLocationAddressViewModel
+            {
+                Address =
+                {
+                    Postcode = "HA0 1TW",
+                    AddressLine1 = "Abbeydale Road",
+                    AddressLine4 = "Wembley"
+                }
+            };
+
+            var address2 = new VacancyLocationAddressViewModel
+            {
+                Address =
+                {
+                    Postcode = "NW10 0UW",
+                    AddressLine1 = "161 Pitfield Way",
+                    AddressLine4 = "London"
+                }
+            };
+
+            return new List<VacancyLocationAddressViewModel> {address1, address2};
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "AddLocations")]
         [HttpPost]
         public ActionResult Locations(LocationSearchViewModel viewModel)
         {
-            var address1 = new VacancyLocationAddressViewModel
+            // Save the thing
+            var response = new MediatorResponse<LocationSearchViewModel>
             {
-                Index = 0,
-                Address =
-                {
-                    Postcode = "HA0 1TW",
-                    AddressLine1 = "Abbeydale Road",
-                    AddressLine4 = "Wembley"
-                }
+                ViewModel = viewModel
             };
 
-            var address2 = new VacancyLocationAddressViewModel
-            {
-                Index = 1,
-                Address =
-                {
-                    Postcode = "NW10 0UW",
-                    AddressLine1 = "161 Pitfield Way",
-                    AddressLine4 = "London"
-                }
-            };
+            return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
+        }
 
-            viewModel.Addresses = new List<VacancyLocationAddressViewModel>
-            {
-                address1,
-                address2
-            };
+        [MultipleFormActionsButton(SubmitButtonActionName = "AddLocations")]
+        [HttpPost]
+        public ActionResult SearchLocations(LocationSearchViewModel viewModel)
+        {
+            viewModel.SearchResultAddresses = GetSearchResults();
 
-            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>
-            {
-                address1,
-                address2
-            };
-
-            return View(viewModel);
+            return View("Locations", viewModel);
         }
 
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
-        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterName = "locationIndex")]
+        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterName = "locationIndex", ParameterType = TypeCode.Int32)]
         [HttpPost]
         public ActionResult UseLocation(LocationSearchViewModel viewModel, int locationIndex)
         {
-            var address1 = new VacancyLocationAddressViewModel
-            {
-                Index = 0,
-                Address =
-                {
-                    Postcode = "HA0 1TW",
-                    AddressLine1 = "Abbeydale Road",
-                    AddressLine4 = "Wembley"
-                }
-            };
+            viewModel.SearchResultAddresses = GetSearchResults();
 
-            var address2 = new VacancyLocationAddressViewModel
+            if (viewModel.Addresses == null)
             {
-                Index = 1,
-                Address =
-                {
-                    Postcode = "NW10 0UW",
-                    AddressLine1 = "161 Pitfield Way",
-                    AddressLine4 = "London"
-                }
-            };
+                viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
+            }
 
-            viewModel.Addresses = new List<VacancyLocationAddressViewModel>
-            {
-                address1,
-                address2
-            };
+            viewModel.Addresses.Add(viewModel.SearchResultAddresses[locationIndex]);
 
-            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>
+            return View("Locations", viewModel);
+        }
+
+        [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
+        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterName = "locationIndex", ParameterType = TypeCode.Int32)]
+        [HttpPost]
+        public ActionResult RemoveLocation(LocationSearchViewModel viewModel, int locationIndex)
+        {
+            viewModel.SearchResultAddresses = GetSearchResults();
+
+            if (viewModel.Addresses == null)
             {
-                address1,
-                address2
-            };
+                viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
+            }
+
+            viewModel.Addresses.RemoveAt(locationIndex);
 
             return View("Locations", viewModel);
         }
