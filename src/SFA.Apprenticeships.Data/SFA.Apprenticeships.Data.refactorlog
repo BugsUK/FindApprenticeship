@@ -273,4 +273,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="FullName" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="7cd1481b-8a44-4e8f-8461-2c350cf55b78" ChangeDateTime="11/24/2015 16:42:28">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[IsEmployerDirectApplication]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="IsDirectApplication" />
+  </Operation>
 </Operations>

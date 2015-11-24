@@ -20,7 +20,7 @@
     [EmployerDescription] NVARCHAR(MAX) NULL, 
     [DirectApplicationUrl] NVARCHAR(MAX) NULL, 
     [DirectApplicationUrlQAComment] NVARCHAR(MAX) NULL, 
-    [IsEmployerDirectApplication] BIT NULL, 
+    [IsDirectApplication] BIT NULL, 
     [DirectApplicationInstructions] NVARCHAR(MAX) NULL, 
     [VacancyLocationTypeCode] CHAR NULL, 
     [ManagerOrganisationSiteId] INT NULL, 
