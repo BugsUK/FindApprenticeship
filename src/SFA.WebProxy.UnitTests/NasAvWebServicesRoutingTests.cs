@@ -17,6 +17,8 @@
         public void OneTimeSetUp()
         {
             var config = new Mock<IConfiguration>();
+            config.Setup(c => c.NasAvWebServiceRootUri).Returns("https://apprenticeshipvacancymatchingservice.lsc.gov.uk");
+            config.Setup(c => c.NasAvWebServiceSandboxRootUri).Returns("https://apprenticeshipvacancymatchingservice.lsc.gov.uk");
             config.Setup(c => c.CompatabilityWebServiceRootUrl).Returns("http://sfa-service-sit.cloudapp.net");
 
             _proxyRouting = new NasAvWebServicesRouting(config.Object);
