@@ -81,6 +81,7 @@
         {
             public const string LabelText = "Closing date";
             public const string RequiredErrorText = "Please specify a valid closing date";
+            public const string AfterTodayErrorText = "Please specify a date at least one day in the future";
             public const string TooSoonErrorText = "The closing date should be at least two weeks from now";
         }
 
@@ -89,6 +90,7 @@
             public const string LabelText = "Possible start date";
             public const string RequiredErrorText = "Please specify a valid possible start date";
             public const string TooSoonErrorText = "The possible start date should be at least two weeks from now";
+            public const string AfterTodayErrorText = "Please specify a date at least one day in the future";
             public const string BeforePublishDateErrorText = "The possible start date should be after the closing date";
         }
 

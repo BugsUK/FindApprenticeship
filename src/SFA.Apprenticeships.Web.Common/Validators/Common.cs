@@ -33,7 +33,12 @@
             return BeInTheFuture(instance, 14);
         }
 
-        public static bool BeInTheFuture(DateViewModel instance, int daysInFuture)
+        public static bool BeOneDayInTheFuture(DateViewModel instance)
+        {
+            return BeInTheFuture(instance, 1);
+        }
+
+        private static bool BeInTheFuture(DateViewModel instance, int daysInFuture)
         {
             //We don't have a value for date yet so assume it's in the future
             if(instance == null || !instance.HasValue) return true;

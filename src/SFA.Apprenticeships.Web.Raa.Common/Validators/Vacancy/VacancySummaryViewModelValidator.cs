@@ -103,11 +103,15 @@
             RuleFor(x => x.ClosingDate)
                 .Must(Common.BeValidDate)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
+                .Must(Common.BeOneDayInTheFuture)
+                .WithMessage(VacancyViewModelMessages.ClosingDate.AfterTodayErrorText)
                 .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
 
             RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeValidDate)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.RequiredErrorText)
+                .Must(Common.BeOneDayInTheFuture)
+                .WithMessage(VacancyViewModelMessages.PossibleStartDate.AfterTodayErrorText)
                 .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
 
             RuleFor(x => x.LongDescription)
