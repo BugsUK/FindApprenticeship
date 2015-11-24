@@ -482,6 +482,7 @@
     </Content>
     <Content Include="Content\_assets\scss\_components.scss" />
     <Content Include="Content\_assets\scss\_modules.scss" />
+    <Content Include="Content\_assets\scss\modules\_vacancy.scss" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
