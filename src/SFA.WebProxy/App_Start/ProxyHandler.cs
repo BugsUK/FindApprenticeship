@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Threading;
     using System.Threading.Tasks;
     using Configuration;
@@ -40,10 +41,9 @@
 
             if (request.Method == HttpMethod.Get)
             {
-                for (var i = 0; i < routing.Routes.Count; i++)
+                foreach (var route in routing.Routes)
                 {
-                    var route = routing.Routes[i];
-                    if (i == routing.PrimaryUriIndex)
+                    if (route.IsPrimary)
                     {
                         responses.Insert(0, GetAsyncRequest(request, route));
                     }
@@ -63,10 +63,9 @@
                     requestHttpContent.Headers.Add(header.Key, header.Value);
                 }
 
-                for (var i = 0; i < routing.Routes.Count; i++)
+                foreach (var route in routing.Routes)
                 {
-                    var route = routing.Routes[i];
-                    if (i == routing.PrimaryUriIndex)
+                    if (route.IsPrimary)
                     {
                         responses.Insert(0, PostAsyncRequest(request, requestHttpContent, route));
                     }
@@ -88,16 +87,17 @@
         private Task<HttpResponseMessage> GetAsyncRequest(HttpRequestMessage request, Route route)
         {
             var client = RoutingHttpClientFactory.Create(request, route.Uri);
-            return client.GetAsync(route.Uri).ContinueWith(ContinuationFunction(client, route));
+            return client.GetAsync(route.Uri).ContinueWith(ContinuationFunction(client, null, route));
         }
 
         private Task<HttpResponseMessage> PostAsyncRequest(HttpRequestMessage request, HttpContent requestHttpContent, Route route)
         {
             var client = RoutingHttpClientFactory.Create(request, route.Uri);
-            return client.PostAsync(route.Uri, requestHttpContent).ContinueWith(ContinuationFunction(client, route));
+            var contentHeaders = request.Content?.Headers;
+            return client.PostAsync(route.Uri, requestHttpContent).ContinueWith(ContinuationFunction(client, contentHeaders, route));
         }
 
-        private Func<Task<HttpResponseMessage>, HttpResponseMessage> ContinuationFunction(HttpClient client, Route route)
+        private Func<Task<HttpResponseMessage>, HttpResponseMessage> ContinuationFunction(HttpClient client, HttpContentHeaders contentHeaders, Route route)
         {
             return task =>
             {
@@ -105,13 +105,24 @@
 
                 if (task.IsCanceled)
                 {
-                    
+                    _proxyLogging.LogResponseCancelled(route, client.DefaultRequestHeaders, contentHeaders, task.Exception);
+                    if (route.IsPrimary)
+                    {
+                        //Will display underlying exception
+                        return task.Result;
+                    }
+                    return null;
                 }
 
                 if (task.IsFaulted)
                 {
-                    //TODO: Log Error
-                    throw new Exception("Request to " + route.Uri + " with headers " + string.Join(", ", client.DefaultRequestHeaders.Select(h => h.Key + ":" + string.Join("|", h.Value))), task.Exception);
+                    _proxyLogging.LogResponseFaulted(route, client.DefaultRequestHeaders, contentHeaders, task.Exception);
+                    if (route.IsPrimary)
+                    {
+                        //Will display underlying exception
+                        return task.Result;
+                    }
+                    return null;
                 }
 
                 if (task.IsCompleted)

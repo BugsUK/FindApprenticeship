@@ -3,6 +3,7 @@
     using System;
     using System.IO;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using Configuration;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Blob;
@@ -50,6 +51,38 @@
                     using (var logStream = GetCloudBlockBlob(routeIdentifier, "response_").OpenWrite())
                     {
                         httpContent.CopyTo(logStream);
+                    }
+                }
+                catch (Exception)
+                {
+                    //Swallow exeption to ensure logging errors don't cause the request to fail
+                }
+            }
+        }
+
+        public void LogResponseCancelled(Route route, HttpRequestHeaders httpRequestHeaders, HttpContentHeaders contentHeaders, AggregateException aggregateException)
+        {
+            LogResponseError("Request to " + route.Uri + " was cancelled", httpRequestHeaders, contentHeaders, aggregateException, route.Identifier);
+        }
+
+        public void LogResponseFaulted(Route route, HttpRequestHeaders httpRequestHeaders, HttpContentHeaders contentHeaders, AggregateException aggregateException)
+        {
+            LogResponseError("Request to " + route.Uri + " faulted", httpRequestHeaders, contentHeaders, aggregateException, route.Identifier);
+        }
+
+        public void LogResponseError(string message, HttpRequestHeaders httpRequestHeaders, HttpContentHeaders contentHeaders, AggregateException aggregateException, RouteIdentifier routeIdentifier)
+        {
+            if (_configuration.IsLoggingEnabled)
+            {
+                try
+                {
+                    using (var logStream = new StreamWriter(GetCloudBlockBlob(routeIdentifier, "request").OpenWrite()))
+                    {
+                        logStream.WriteLine(message);
+                        var headers = httpRequestHeaders.GetHeadersLoggingString(contentHeaders);
+                        logStream.WriteLine(headers);
+                        var exceptionString = aggregateException.GetLoggingString();
+                        logStream.WriteLine(exceptionString);
                     }
                 }
                 catch (Exception)

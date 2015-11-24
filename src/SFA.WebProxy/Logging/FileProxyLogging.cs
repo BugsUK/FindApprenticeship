@@ -1,7 +1,9 @@
 ﻿namespace SFA.WebProxy.Logging
 {
+    using System;
     using System.IO;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using Configuration;
     using Models;
 
@@ -36,6 +38,31 @@
                 using (var logStream = File.OpenWrite(GetFilePath(routeIdentifier, "response_")))
                 {
                     httpContent.CopyTo(logStream);
+                }
+            }
+        }
+
+        public void LogResponseCancelled(Route route, HttpRequestHeaders httpRequestHeaders, HttpContentHeaders contentHeaders, AggregateException aggregateException)
+        {
+            LogResponseError("Request to " + route.Uri + " was cancelled", httpRequestHeaders, contentHeaders, aggregateException, route.Identifier);
+        }
+
+        public void LogResponseFaulted(Route route, HttpRequestHeaders httpRequestHeaders, HttpContentHeaders contentHeaders, AggregateException aggregateException)
+        {
+            LogResponseError("Request to " + route.Uri + " faulted", httpRequestHeaders, contentHeaders, aggregateException, route.Identifier);
+        }
+
+        public void LogResponseError(string message, HttpRequestHeaders httpRequestHeaders, HttpContentHeaders contentHeaders, AggregateException aggregateException, RouteIdentifier routeIdentifier)
+        {
+            if (_configuration.IsLoggingEnabled)
+            {
+                using (var logStream = File.CreateText(GetFilePath(routeIdentifier, "request")))
+                {
+                    logStream.WriteLine(message);
+                    var headers = httpRequestHeaders.GetHeadersLoggingString(contentHeaders);
+                    logStream.WriteLine(headers);
+                    var exceptionString = aggregateException.GetLoggingString();
+                    logStream.WriteLine(exceptionString);
                 }
             }
         }
