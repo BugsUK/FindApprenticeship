@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="9bfb82b0-76a2-44c5-ab0f-2d26c78f0a4b" ChangeDateTime="11/23/2015 13:35:12">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyOrganisation].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyOrganisation]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OrganisationId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="78a815df-5e9c-4c3e-8ab2-0c6f05eb6dea" ChangeDateTime="11/23/2015 13:38:53">
+    <Property Name="ElementName" Value="[Vacancy].[Address].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Address]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PostalAddressId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3161bd71-0555-435b-81cb-e5c859688f80" ChangeDateTime="11/23/2015 13:43:19">
+    <Property Name="ElementName" Value="[Vacancy].[Address].[AddressLine4]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Address]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AddressLine5" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c81282ca-a3fc-4f20-b9ba-650d4e2aeae7" ChangeDateTime="11/23/2015 14:01:21">
+    <Property Name="ElementName" Value="[Address].[PostalAddressSource].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Address].[PostalAddressSource]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PostalAddressSourceId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="224ff746-de03-4b95-b572-49205e79c725" ChangeDateTime="11/23/2015 14:10:04">
+    <Property Name="ElementName" Value="[Organisation].[Organisation].[OrganisationName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Organisation].[Organisation]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4505ade8-4837-4196-abcb-b141e0bbc6d5" ChangeDateTime="11/23/2015 14:34:54">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VacancyId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f9d3c430-bc13-4def-aa07-3e14eafba9a7" ChangeDateTime="11/23/2015 14:41:11">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyOrganisationRoleType].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyOrganisationRoleType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VacancyStatusId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="8e4b5c25-70b2-417b-8732-a6b2b8b89e9d" ChangeDateTime="11/23/2015 14:53:40">
+    <Property Name="ElementName" Value="[Address].[PostalAddress].[GeocodeEasting]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Address].[PostalAddress]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Easting" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="06aacc83-ae3f-4091-af14-918c8d5a9197" ChangeDateTime="11/23/2015 14:53:44">
+    <Property Name="ElementName" Value="[Address].[PostalAddress].[GeocodeNorthing]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Address].[PostalAddress]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Northing" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="226c4681-f5fb-4b65-aba7-c1a970f1e6a9" ChangeDateTime="11/23/2015 14:59:33">
+    <Property Name="ElementName" Value="[Address].[PostalAddressSource].[PostalAddressSourceId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Address].[PostalAddressSource]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PostalAddressSourceTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="bb9a7730-a103-4a95-b53a-3c2a97db46df" ChangeDateTime="11/23/2015 14:59:48">
+    <Property Name="ElementName" Value="[Address].[PostalAddress].[PostalAddressSourceId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Address].[PostalAddress]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PostalAddressSourceTypeId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="700e7d59-4bd7-4471-941e-1b4e0b1b2da8" ChangeDateTime="11/23/2015 16:17:11">
+    <Property Name="ElementName" Value="[Reference].[County].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Reference].[County]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CountyId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e9a127bf-5fc2-4bba-a98a-4a78fc476773" ChangeDateTime="11/24/2015 09:54:20">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[WageTypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WageCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="73068dbb-3315-437d-a90a-3d316c86d1f9" ChangeDateTime="11/24/2015 09:56:12">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[WageCode]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WageTypeCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c8a7b320-f77f-4542-8856-bf17653ff123" ChangeDateTime="11/24/2015 09:57:09">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[LegacyWorkingWeekText]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AV_WorkingWeekText" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9ddfdd24-e32e-4b78-a7e2-bb4583bc824a" ChangeDateTime="11/24/2015 09:57:13">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[WageText]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AV_WageText" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="134d4b22-27ac-4d8e-a132-c3546be1c1c4" ChangeDateTime="11/24/2015 10:02:57">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[Duration]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DurationValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="607d4de2-1964-4e93-be9d-28f29a9bc679" ChangeDateTime="11/24/2015 10:03:02">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[WageAmount]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WageValue" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f7fa6c50-f3c4-47dd-9829-387563732805" ChangeDateTime="11/24/2015 10:04:23">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[VacancyStatusTypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VacancyStatusCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ae23297b-33ca-4b71-9848-9a9e104f1a3d" ChangeDateTime="11/24/2015 10:06:04">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[ExpectedStartDate]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[StartDate]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="36b7f90f-5b7e-4974-b66f-caa027bce49a" ChangeDateTime="11/24/2015 10:14:53">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[EmployerVacancyWebsite]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EmployerApplicationUrl" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="cc40977c-063b-47f5-91d9-833c393900d7" ChangeDateTime="11/24/2015 10:15:39">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[EmployerApplicationUrl]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EmployerDirectApplicationUrl" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="116eeafa-7936-4ce5-b87a-0182f54d6883" ChangeDateTime="11/24/2015 10:33:50">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[Managing]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ManagingOrganisationSiteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3cd13a53-9a69-4c3d-ac2c-d00671af569f" ChangeDateTime="11/24/2015 10:38:15">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[Original]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OriginalContractOrganisationSiteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3bf44765-1c74-472a-8ec9-17432ed18d17" ChangeDateTime="11/24/2015 10:38:24">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[ManagingOrganisationSiteId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ManagerOrganisationSiteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fb673226-64d5-4b38-83b3-f7a751654f4b" ChangeDateTime="11/24/2015 10:38:28">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[DeliveringOrganisationSiteId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DeliveryOrganisationSiteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4af27a63-78f9-4a95-ba92-b2511dd4be3d" ChangeDateTime="11/24/2015 10:38:36">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[ContractedOrganisationSiteId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ContractOrganisationSiteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ed8420f2-2acc-4186-99a2-3fbdffb3bdd0" ChangeDateTime="11/24/2015 10:38:49">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[ContractOrganisationSiteId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ContractOwnerOrganisationSiteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dd0e943b-2711-4829-a1d3-e7edf7e9c662" ChangeDateTime="11/24/2015 10:38:56">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[OriginalContractOrganisationSiteId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="OriginalContractOwnerOrganisationSiteId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="d43a9401-7342-4a97-9016-ab5b696f6ddc" ChangeDateTime="11/24/2015 12:41:35">
+    <Property Name="ElementName" Value="[Vacancy].[WageType].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WageType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WageTypeCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dcdedba4-03e1-42df-bd99-c1089b419f87" ChangeDateTime="11/24/2015 12:46:11">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyStatusType].[VacancyStatusTypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyStatusType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VacancyStatusCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fafc1ea9-d648-4614-9a60-5615d39f65bd" ChangeDateTime="11/24/2015 12:46:26">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyStatusType].[ShortName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyStatusType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Name" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="79f02c46-b592-40c7-ac64-af4d3b5d0304" ChangeDateTime="11/24/2015 12:53:37">
+    <Property Name="ElementName" Value="[Vacancy].[DurationType].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[DurationType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="DurationTypeCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c0355879-a640-4ad1-911b-534b99357efb" ChangeDateTime="11/24/2015 14:33:46">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[EmployerOrganisationId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[EmployerOrganisationSiteId]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="57349d63-1ec7-4f41-b115-bee1ae712fbd" ChangeDateTime="11/24/2015 16:22:08">
+    <Property Name="ElementName" Value="[Vacancy].[DurationType].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[DurationType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FullName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fc51c7d9-d05e-450c-8b60-e25770718b0e" ChangeDateTime="11/24/2015 16:22:27">
+    <Property Name="ElementName" Value="[Reference].[County].[CodeName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Reference].[County]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CountyCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ca74ec86-9eb3-486f-868d-56627c7db829" ChangeDateTime="11/24/2015 16:25:32">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyOrganisationRoleType].[VacancyOrganisationRoleTypeId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyOrganisationRoleType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VacancyOrganisationRoleTypeCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6ba2e5fa-2804-43e3-b3b6-fdfd5416d0f1" ChangeDateTime="11/24/2015 16:26:31">
+    <Property Name="ElementName" Value="[Vacancy].[WageType].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WageType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FullName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e314d0df-74ba-40a1-8c5d-c1da96c5b2ac" ChangeDateTime="11/24/2015 16:26:36">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyStatus].[Name]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyStatus]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="FullName" />
+  </Operation>
+</Operations>

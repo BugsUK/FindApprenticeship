@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>SFA.Apprenticeships.Data</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{331ae27b-be3d-4833-94c7-7aa8e6fa97e6}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>SFA.Apprenticeships.Data</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Data</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <IncludeSchemaNameInFileName>True</IncludeSchemaNameInFileName>
+    <DefaultSchema>Vacancy</DefaultSchema>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Schemas" />
+    <Folder Include="Schemas\Address" />
+    <Folder Include="Schemas\Vacancy" />
+    <Folder Include="Schemas\Organisation" />
+    <Folder Include="Schemas\Address\Tables" />
+    <Folder Include="Schemas\Organisation\Tables" />
+    <Folder Include="Schemas\Vacancy\Tables" />
+    <Folder Include="Schemas\Vacancy\Sequences" />
+    <Folder Include="Schemas\Address\Schema" />
+    <Folder Include="Schemas\Organisation\Schema" />
+    <Folder Include="Schemas\Vacancy\Schema" />
+    <Folder Include="Schemas\Reference" />
+    <Folder Include="Schemas\Reference\Schema" />
+    <Folder Include="Schemas\Reference\Tables" />
+    <Folder Include="Publish" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />
+    <Build Include="Schemas\Address\Tables\Address.PostalAddressSourceType.sql" />
+    <Build Include="Schemas\Organisation\Tables\Organisation.OrganisationSite.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.Vacancy.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyOrganisationRole.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyOrganisationRoleType.sql" />
+    <Build Include="Schemas\Vacancy\Sequences\Vacancy.VacancyReferenceNumberSequence.sql" />
+    <Build Include="Schemas\Address\Schema\Address.sql" />
+    <Build Include="Schemas\Organisation\Schema\Organisation.sql" />
+    <Build Include="Schemas\Vacancy\Schema\Vacancy.sql" />
+    <Build Include="Schemas\Reference\Schema\Reference.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyStatus.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.County.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.WageType.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.DurationType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Publish\azuresql.pre.publish.xml" />
+    <None Include="Publish\sqlexpress.local.publish.xml" />
+  </ItemGroup>
+</Project>
