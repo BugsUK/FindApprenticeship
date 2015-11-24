@@ -219,6 +219,8 @@
     <Compile Include="ViewModels\VacancyPosting\EmployerFilterViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\EmployerResultViewModel.cs" />
     <Compile Include="ViewModels\VacancyPosting\EmployerSearchViewModel.cs" />
+    <Compile Include="ViewModels\VacancyPosting\LocationSearchViewModel.cs" />
+    <Compile Include="ViewModels\VacancyPosting\VacancyLocationAddressViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />

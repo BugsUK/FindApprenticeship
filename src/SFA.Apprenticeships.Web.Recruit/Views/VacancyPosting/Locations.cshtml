@@ -1,5 +1,84 @@
-﻿@{
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting.LocationSearchViewModel
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
     ViewBag.Title = "Recruit an Apprentice - Add locations";
 }
 
-<h2>Add locations</h2>
+<h1 class="heading-xlarge">
+    Enter basic vacancy details
+</h1>
+
+<h2 class="heading-large">What is the main location of the vacancy?</h2>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AddLocations, FormMethod.Post))
+{
+    @Html.TextBoxFor(m => m.PostcodeSearch)
+    <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
+
+    if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Any())
+    {
+        <div class="tabbed-element tab1 active width-all-1-1">
+            <table class="no-btm-margin">
+                <colgroup>
+                    <col class="t50">
+                    <col class="t20">
+                </colgroup>
+                <tbody>
+                @foreach (var address in Model.Addresses)
+                {
+                    <tr>
+                        <td>
+                            @string.Format("{0}, {1}, {2}", address.Address.Postcode, address.Address.AddressLine1, address.Address.AddressLine4)
+                        </td>
+                        <td>
+                            @*<a href="@Url.RouteUrl(RecruitmentRouteNames.AddLocations, new {addressId = addressId})" name="AddLocations" value="UseLocation" class="ta-center disp-block">Use location</a>*@
+                            @{
+                                var buttonName = "UseLocation-" + @address.Index;
+                            }
+                            <button id="useLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Use location</button>
+                        </td>
+                    </tr>
+                                }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    if (Model.Addresses != null && Model.Addresses.Any())
+    {
+        <div class="tabbed-element tab1 active width-all-1-1">
+            <table class="no-btm-margin">
+                <colgroup>
+                    <col class="t50">
+                    <col class="t30">
+                    <col class="t20">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>Address</th>
+                        <th>Number of positions</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var address in Model.Addresses)
+                    {
+                        <tr>
+                            <td>
+                                @string.Format("{0}, {1}, {2}", address.Address.Postcode, address.Address.AddressLine1, address.Address.AddressLine4)
+                            </td>
+                            <td>
+                                A textbox
+                            </td>
+                            <td>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = Model.VacancyGuid})" class="ta-center disp-block">Remove</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    @*<button id="useLocation" type="submit" class="button-link" name="AddLocations" value="UseLocation">Save and exit</button>*@
+}

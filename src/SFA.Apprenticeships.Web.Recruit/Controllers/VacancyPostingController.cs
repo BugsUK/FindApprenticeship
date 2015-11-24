@@ -1,13 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Extensions;
     using Common.Mediators;
     using Common.Validators.Extensions;
+    using Common.ViewModels.Locations;
     using Constants;
+    using Domain.Entities.Locations;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Provider;
@@ -482,7 +485,97 @@
         [HttpGet]
         public ActionResult Locations(string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            return View();
+            var viewModel = new LocationSearchViewModel
+            {
+                ProviderSiteErn = providerSiteErn,
+                Ern = ern,
+                VacancyGuid = vacancyGuid
+            };
+
+            return View(viewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "AddLocations")]
+        [HttpPost]
+        public ActionResult Locations(LocationSearchViewModel viewModel)
+        {
+            var address1 = new VacancyLocationAddressViewModel
+            {
+                Index = 0,
+                Address =
+                {
+                    Postcode = "HA0 1TW",
+                    AddressLine1 = "Abbeydale Road",
+                    AddressLine4 = "Wembley"
+                }
+            };
+
+            var address2 = new VacancyLocationAddressViewModel
+            {
+                Index = 1,
+                Address =
+                {
+                    Postcode = "NW10 0UW",
+                    AddressLine1 = "161 Pitfield Way",
+                    AddressLine4 = "London"
+                }
+            };
+
+            viewModel.Addresses = new List<VacancyLocationAddressViewModel>
+            {
+                address1,
+                address2
+            };
+
+            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>
+            {
+                address1,
+                address2
+            };
+
+            return View(viewModel);
+        }
+
+        [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
+        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterName = "locationIndex")]
+        [HttpPost]
+        public ActionResult UseLocation(LocationSearchViewModel viewModel, int locationIndex)
+        {
+            var address1 = new VacancyLocationAddressViewModel
+            {
+                Index = 0,
+                Address =
+                {
+                    Postcode = "HA0 1TW",
+                    AddressLine1 = "Abbeydale Road",
+                    AddressLine4 = "Wembley"
+                }
+            };
+
+            var address2 = new VacancyLocationAddressViewModel
+            {
+                Index = 1,
+                Address =
+                {
+                    Postcode = "NW10 0UW",
+                    AddressLine1 = "161 Pitfield Way",
+                    AddressLine4 = "London"
+                }
+            };
+
+            viewModel.Addresses = new List<VacancyLocationAddressViewModel>
+            {
+                address1,
+                address2
+            };
+
+            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>
+            {
+                address1,
+                address2
+            };
+
+            return View("Locations", viewModel);
         }
     }
 }

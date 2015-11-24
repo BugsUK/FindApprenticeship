@@ -18,7 +18,6 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture, Category("Integration")]
-    [TestFixture]
     public class VacancyPostingControllerEndToEndTests : RecruitWebEndToEndTestsBase
     {
         private static void CheckAllCommentsAreNull(MongoApprenticeshipVacancy clonedVacancy)
