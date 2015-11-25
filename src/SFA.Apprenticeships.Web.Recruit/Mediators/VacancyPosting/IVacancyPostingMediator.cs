@@ -51,7 +51,13 @@
         MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber);
 
         MediatorResponse<EmployerSearchViewModel> SelectNewEmployer(EmployerSearchViewModel viewModel);
+
         MediatorResponse<VacancyViewModel> GetPreviewVacancyViewModel(long vacancyReferenceNumber);
+
         MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(int vacancyReferenceNumber);
+
+        MediatorResponse<LocationSearchViewModel> CreateVacancy(LocationSearchViewModel newVacancyViewModel);
+
+        MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid);
     }
 }

@@ -17,12 +17,15 @@
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Converters;
+    using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
+    using ViewModels.VacancyPosting;
     using Web.Common.ViewModels;
+    using Web.Common.ViewModels.Locations;
 
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
@@ -90,6 +93,60 @@
             return viewModel;
         }
 
+        public LocationSearchViewModel CreateVacancy(LocationSearchViewModel viewModel)
+        {
+            var vacancy = CreateNewVacancy(viewModel);
+
+            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            return viewModel;
+        }
+
+        public LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+
+            if (vacancy != null)
+            {
+                var viewModel = new LocationSearchViewModel
+                {
+                    ProviderSiteErn = providerSiteErn,
+                    Ern = ern,
+                    VacancyGuid = vacancyGuid,
+                    Ukprn = ukprn,
+                    AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
+                    Addresses = new List<VacancyLocationAddressViewModel>()
+                };
+
+                vacancy.LocationAddresses.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
+                {
+                    Address = new AddressViewModel
+                    {
+                        AddressLine1 = v.AddressLine1,
+                        AddressLine2 = v.AddressLine2,
+                        AddressLine3 = v.AddressLine3,
+                        AddressLine4 = v.AddressLine4,
+                        Postcode = v.Postcode,
+                        Uprn = v.Uprn
+                    },
+                    NumberOfPositions = v.NumberOfPositions
+                }));
+
+                return viewModel;
+            }
+            else
+            {
+                return new LocationSearchViewModel
+                {
+                    ProviderSiteErn = providerSiteErn,
+                    Ern = ern,
+                    VacancyGuid = vacancyGuid,
+                    Ukprn = ukprn,
+                    Addresses = new List<VacancyLocationAddressViewModel>()
+                };
+            }
+        }
+
         /// <summary>
         /// This method will create a new Vacancy record if the model provided does not have a vacancy reference number.
         /// Otherwise, it updates the existing one.
@@ -145,6 +202,37 @@
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions
             });
+
+            return vacancy;
+        }
+
+        private ApprenticeshipVacancy CreateNewVacancy(LocationSearchViewModel newVacancyViewModel)
+        {
+            var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
+            var providerSiteEmployerLink =
+                _providerService.GetProviderSiteEmployerLink(newVacancyViewModel.ProviderSiteErn, newVacancyViewModel.Ern);
+
+            var vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(new ApprenticeshipVacancy
+            {
+                EntityId = newVacancyViewModel.VacancyGuid,
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                Ukprn = newVacancyViewModel.Ukprn,
+                ProviderSiteEmployerLink = providerSiteEmployerLink,
+                Status = ProviderVacancyStatuses.Draft,
+                AdditionalLocationInformation = newVacancyViewModel.AdditionalLocationInformation,
+                LocationAddresses = new List<VacancyLocationAddress>()
+            });
+
+            newVacancyViewModel.Addresses.ForEach(a => vacancy.LocationAddresses.Add(new VacancyLocationAddress
+            {
+                AddressLine1 = a.Address.AddressLine1,
+                AddressLine2 = a.Address.AddressLine2,
+                AddressLine3 = a.Address.AddressLine3,
+                AddressLine4 = a.Address.AddressLine4,
+                Postcode = a.Address.Postcode,
+                NumberOfPositions = a.NumberOfPositions,
+                VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber()
+            }));
 
             return vacancy;
         }
@@ -273,6 +361,8 @@
             return viewModel;
         }
 
+        
+
         public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
@@ -290,10 +380,10 @@
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
 
             vacancy.Status = ProviderVacancyStatuses.PendingQA;
-            vacancy.DateSubmitted = _dateTimeService.UtcNow();
+                vacancy.DateSubmitted = _dateTimeService.UtcNow();
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
-
+            
             //TODO: should we return this VM or the one returned by GetVacancy?
             var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(vacancy);
 
@@ -478,6 +568,8 @@
 
             return result;
         }
+
+        
 
         private List<SelectListItem> GetPageSizes(int pageSize)
         {

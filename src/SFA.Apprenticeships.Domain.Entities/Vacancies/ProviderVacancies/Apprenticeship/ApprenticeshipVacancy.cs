@@ -1,5 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 {
+    using System;
+    using System.Collections.Generic;
+    using Locations;
+
     public class ApprenticeshipVacancy : Vacancy
     {
         public TrainingType TrainingType { get; set; }
@@ -23,5 +27,10 @@
         public string WorkingWeekComment { get; set; }
         public string FirstQuestionComment { get; set; }
         public string SecondQuestionComment { get; set; }
+
+        public string AdditionalLocationInformation { get; set; }
+
+        public List<VacancyLocationAddress> LocationAddresses { get; set; }
+        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
     }
 }

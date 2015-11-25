@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.VacancyPosting
 {
     using System;
+    using System.Collections.Generic;
     using Raa.Common.Validators.Vacancy;
     using System.Linq;
     using FluentValidation;
@@ -161,8 +162,10 @@
         public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(int vacancyReferenceNumber)
         {
             var viewModel = _vacancyPostingProvider.CloneVacancy(vacancyReferenceNumber);
-            return GetMediatorResponse(VacancyPostingMediatorCodes.CLoneVacancy.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.CloneVacancy.Ok, viewModel);
         }
+
+        
 
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
         {
@@ -292,6 +295,22 @@
             var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+        }
+
+        public MediatorResponse<LocationSearchViewModel> CreateVacancy(LocationSearchViewModel viewModel)
+        {
+            // TODO: validate
+            var locationSearchViewModel = _vacancyPostingProvider.CreateVacancy(viewModel);
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);
+        }
+
+        public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid)
+        {
+            var locationSearchViewModel = _vacancyPostingProvider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetLocationAddressesViewModel.Ok, locationSearchViewModel);
+
         }
 
         public MediatorResponse<VacancySummaryViewModel> UpdateVacancyAndExit(VacancySummaryViewModel viewModel)

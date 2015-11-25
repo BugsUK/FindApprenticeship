@@ -419,9 +419,13 @@
     <Content Include="Content\js\inplaceediting.js" />
     <Content Include="Content\js\interactions.js" />
     <Content Include="Content\js\jquery.pwstrength.js" />
+    <Content Include="Content\js\locationAutocomplete.js" />
+    <Content Include="Content\js\lookupService.js" />
     <Content Include="Content\js\maps.js" />
     <Content Include="Content\js\old-browsers.js" />
+    <Content Include="Content\js\refineSearch.js" />
     <Content Include="Content\js\sticky.js" />
+    <Content Include="Content\js\vendor\jquery-ui-1.10.4.custom.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

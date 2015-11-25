@@ -474,7 +474,7 @@
 
             switch (response.Code)
             {
-                case VacancyPostingMediatorCodes.CLoneVacancy.Ok:
+                case VacancyPostingMediatorCodes.CloneVacancy.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -484,15 +484,15 @@
         [HttpGet]
         public ActionResult Locations(string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            var viewModel = new LocationSearchViewModel
-            {
-                ProviderSiteErn = providerSiteErn,
-                Ern = ern,
-                VacancyGuid = vacancyGuid,
-                AdditionalLocationInformation = string.Empty
-            };
+            var response = _vacancyPostingMediator.GetLocationAddressesViewModel(providerSiteErn, ern, User.GetUkprn(), vacancyGuid);
 
-            return View(viewModel);
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetLocationAddressesViewModel.Ok:
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         private List<VacancyLocationAddressViewModel> GetSearchResults()
@@ -503,8 +503,9 @@
                 {
                     Postcode = "HA0 1TW",
                     AddressLine1 = "Abbeydale Road",
-                    AddressLine4 = "Wembley"
-                }
+                    AddressLine4 = "Wembley",
+                },
+                NumberOfPositions = 5
             };
 
             var address2 = new VacancyLocationAddressViewModel
@@ -514,7 +515,8 @@
                     Postcode = "NW10 0UW",
                     AddressLine1 = "161 Pitfield Way",
                     AddressLine4 = "London"
-                }
+                },
+                NumberOfPositions = 7
             };
 
             return new List<VacancyLocationAddressViewModel> {address1, address2};
@@ -524,11 +526,7 @@
         [HttpPost]
         public ActionResult Locations(LocationSearchViewModel viewModel)
         {
-            // Save the thing
-            var response = new MediatorResponse<LocationSearchViewModel>
-            {
-                ViewModel = viewModel
-            };
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
 
             return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
         }

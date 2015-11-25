@@ -96,9 +96,14 @@
             public const string NoResults = "VacancyPosting.SelectNewEmployer.NoResults";
         }
 
-        public class CLoneVacancy
+        public class CloneVacancy
         {
             public const string Ok = "VacancyPosting.CloneVacancy.Ok";
+        }
+
+        public class GetLocationAddressesViewModel
+        {
+            public const string Ok = "VacancyPosting.GetLocationAddressesViewModel.Ok";
         }
     }
 }

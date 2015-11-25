@@ -22,5 +22,7 @@
 
         [Display(Name= LocationSearchViewModelMessages.AdditionalLocationInformation.LabelText)]
         public string AdditionalLocationInformation { get; set; }
+
+        public string Ukprn { get; set; }
     }
 }

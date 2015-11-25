@@ -385,8 +385,13 @@
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
+    <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />

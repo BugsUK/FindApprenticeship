@@ -25,6 +25,7 @@
                 "//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js").Include(
                     "~/Content/_assets/js/vendor/jquery.cookie.js"));
 
+            // TODO: split in different bundles?
             bundles.Add(new ScriptBundle("~/bundles/nas").Include(
                 "~/Content/_assets/js/nas/validationscripts.js",
                 "~/Content/_assets/js/inplaceediting.js",
@@ -33,7 +34,11 @@
                 "~/Content/_assets/js/jquery.pwstrength.js",
                 "~/Content/_assets/js/maps.js",
                 "~/Content/_assets/js/old-browsers.js",
-                "~/Content/_assets/js/sticky.js"));
+                "~/Content/_assets/js/sticky.js",
+                "~/Content/_assets/js/vendor/jquery-ui-1.10.4.custom.min.js",
+                "~/Content/_assets/js/nas/lookupService.js",
+                "~/Content/_assets/js/nas/locationAutocomplete.js",
+                "~/Content/_assets/js/nas/refineSearch.js"));
             
             bundles.Add(new StyleBundle("~/bundles/not-ie8")
                 .Include("~/Content/_assets/css/main.css")
