@@ -303,7 +303,6 @@
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
-    <Compile Include="Controllers\PrototypeController.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
@@ -539,7 +538,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Configuration\" />
-    <Folder Include="Views\Prototype\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
