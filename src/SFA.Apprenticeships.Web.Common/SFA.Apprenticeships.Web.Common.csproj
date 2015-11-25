@@ -284,6 +284,10 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Content\css\font-awesome\fonts\fontawesome-webfont.woff" />
     <None Include="Content\css\font-awesome\fonts\fontawesome-webfont.woff2" />
     <None Include="Content\css\font-awesome\fonts\FontAwesome.otf" />
@@ -291,6 +295,7 @@
     <None Include="Content\fonts\NTA-Light-20130221.woff" />
     <None Include="Content\fonts\NTATabularNumbers-Bold.woff" />
     <None Include="Content\fonts\NTATabularNumbers-Light.woff" />
+    <None Include="Content\scss\base\mixins\_fontawesome.scss" />
     <None Include="Content\scss\base\mixins\_buttons.scss" />
     <None Include="Content\scss\base\mixins\_conditionals.scss" />
     <None Include="Content\scss\base\mixins\_css3.scss" />
