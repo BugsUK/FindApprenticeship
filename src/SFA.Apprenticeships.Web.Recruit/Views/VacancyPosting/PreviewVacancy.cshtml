@@ -5,6 +5,10 @@
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
+    var basicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
+    var summaryLink = Url.RouteUrl(RecruitmentRouteNames.VacancySummary, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
+    var questionsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyQuestions, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
+    var requirementsProspentsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyRequirementsProspects, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -28,7 +32,7 @@
                     }
                 </h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-                <a href="#" class="edit-comment-link">Edit</a>
+                <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
             </div>
         </div>
     </div>
@@ -44,7 +48,7 @@
                             }
                             <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
                         </div>
-                        <a href="#" class="edit-comment-link">Edit</a>
+                        <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
                     </div>
                 </div>
             </div>
@@ -64,7 +68,7 @@
                                 <i class="fa fa-edit the-icon" style="color: blue;" title="@message"></i>
                             }
                         </p>
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancySummary, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })" class="edit-comment-link">Edit</a>
+                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
                     </div>
                 }
                 else
@@ -81,7 +85,7 @@
                                 <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                         </p>
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancySummary, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })" class="edit-comment-link">Edit</a>
+                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
                     </div>
                 }
             </div>
@@ -108,7 +112,7 @@
                                 <br />@:(the hours are based on the candidate being over 18)
                             }
                         </p>
-                        <a href="#" class="edit-comment-link">Edit</a>
+                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
                     </div>
 
                     <div class="editable-item">
@@ -141,7 +145,7 @@
                             }
                         </h3>
                         <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-                        <a href="#" class="edit-comment-link">Edit</a>
+                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
                     </div>
 
                     @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
@@ -184,7 +188,7 @@
                             }
                         </h3>
                         <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
-                        <a href="#" class="edit-comment-link">Edit</a>
+                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
                     </div>
 
                     <div class="editable-item">
@@ -209,7 +213,7 @@
                             <i class="fa fa-check the-icon" style="color: green;"></i>
                         </p>
                         }
-                        <a href="#" class="edit-comment-link">Edit</a>
+                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
                     </div>
                     
                     <div class="editable-item">
@@ -233,7 +237,7 @@
                         <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                     }
                     <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
-                    <a href="#" class="edit-comment-link">Edit</a>
+                    <a href="@summaryLink" class="edit-comment-link">Edit</a>
                 </div>
             </div>
 
@@ -253,7 +257,7 @@
                             }
                         </h3>
                         <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
-                        <a href="#" class="edit-comment-link">Edit</a>
+                        <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
                     </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
@@ -266,7 +270,7 @@
                             }
                         </h3>
                         <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
-                        <a href="#" class="edit-comment-link">Edit</a>
+                        <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
                     </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
@@ -279,7 +283,7 @@
                             }
                         </h3>
                         <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
-                        <a href="#" class="edit-comment-link">Edit</a>
+                        <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
                     </div>
                 }
 
@@ -298,7 +302,7 @@
                         }
                     </h3>
                     <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
-                    <a href="#" class="edit-comment-link">Edit</a>
+                    <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
                 </div>
             }
             @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
@@ -311,7 +315,7 @@
                         }
                     </h3>
                     <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
-                    <a href="#" class="edit-comment-link">Edit</a>
+                    <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
                 </div>
             }
         </div>
@@ -333,7 +337,7 @@
                         <div class="editable-item">
                             <h3 class="heading-small">First question</h3>
                             <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
-                            <a href="#" class="edit-comment-link">Edit</a>
+                            <a href="@questionsLink" class="edit-comment-link">Edit</a>
                         </div>
                     }
                     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
@@ -341,7 +345,7 @@
                         <div class="editable-item">
                             <h3 class="heading-small">Second question</h3>
                             <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
-                            <a href="#" class="edit-comment-link">Edit</a>
+                            <a href="@questionsLink" class="edit-comment-link">Edit</a>
                         </div>
                     }
                 </div>

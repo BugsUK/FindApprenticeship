@@ -8,9 +8,7 @@
     using Common.Extensions;
     using Common.Mediators;
     using Common.Validators.Extensions;
-    using Common.ViewModels.Locations;
     using Constants;
-    using Domain.Entities.Locations;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Provider;
