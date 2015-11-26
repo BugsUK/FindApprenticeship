@@ -173,9 +173,9 @@
                     <div class="editable-item">
                         <h3 class="bold-small">
                             Expected duration
-                            @if (ViewData.ModelState.HasWarningsFor("Duration"))
+                            @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.Duration"))
                             {
-                                var message = ViewData.ModelState.WarningMessageFor("Duration");
+                                var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.Duration");
                                 <i class="fa fa-flag the-icon" title="@message"></i>
                             }
                             else

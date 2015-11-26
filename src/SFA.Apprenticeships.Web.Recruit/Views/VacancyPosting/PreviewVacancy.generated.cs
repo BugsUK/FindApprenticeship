@@ -157,7 +157,7 @@ WriteLiteral(" (Preview)\r\n");
             #line hidden
 WriteLiteral("                        <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -193,14 +193,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2052), Tuple.Create("\"", 2076)
+WriteAttribute("href", Tuple.Create(" href=\"", 2055), Tuple.Create("\"", 2079)
             
             #line 35 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 2059), Tuple.Create<System.Object, System.Int32>(basicDetailsLink
+, Tuple.Create(Tuple.Create("", 2062), Tuple.Create<System.Object, System.Int32>(basicDetailsLink
             
             #line default
             #line hidden
-, 2059), false)
+, 2062), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -245,7 +245,7 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -277,14 +277,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                        </div>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2909), Tuple.Create("\"", 2933)
+WriteAttribute("href", Tuple.Create(" href=\"", 2915), Tuple.Create("\"", 2939)
             
             #line 51 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 2916), Tuple.Create<System.Object, System.Int32>(basicDetailsLink
+, Tuple.Create(Tuple.Create("", 2922), Tuple.Create<System.Object, System.Int32>(basicDetailsLink
             
             #line default
             #line hidden
-, 2916), false)
+, 2922), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -348,16 +348,14 @@ WriteLiteral("                                <i");
 
 WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
-WriteLiteral(" style=\"color: red;\"");
-
-WriteAttribute("title", Tuple.Create(" title=\"", 3754), Tuple.Create("\"", 3770)
+WriteAttribute("title", Tuple.Create(" title=\"", 3740), Tuple.Create("\"", 3756)
             
             #line 65 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-          , Tuple.Create(Tuple.Create("", 3762), Tuple.Create<System.Object, System.Int32>(message
+, Tuple.Create(Tuple.Create("", 3748), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 3762), false)
+, 3748), false)
 );
 
 WriteLiteral("></i>\r\n");
@@ -372,18 +370,18 @@ WriteLiteral("></i>\r\n");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon\"");
+WriteLiteral(" class=\"fa fa-comment the-icon\"");
 
 WriteLiteral(" style=\"color: blue;\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 3927), Tuple.Create("\"", 3943)
+WriteAttribute("title", Tuple.Create(" title=\"", 3916), Tuple.Create("\"", 3932)
             
             #line 68 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-           , Tuple.Create(Tuple.Create("", 3935), Tuple.Create<System.Object, System.Int32>(message
+              , Tuple.Create(Tuple.Create("", 3924), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 3935), false)
+, 3924), false)
 );
 
 WriteLiteral("></i>\r\n");
@@ -397,14 +395,14 @@ WriteLiteral("></i>\r\n");
             #line hidden
 WriteLiteral("                        </p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4038), Tuple.Create("\"", 4057)
+WriteAttribute("href", Tuple.Create(" href=\"", 4027), Tuple.Create("\"", 4046)
             
             #line 71 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 4045), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 4034), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 4045), false)
+, 4034), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -457,8 +455,6 @@ WriteLiteral("                                <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
 
-WriteLiteral(" style=\"color: green;\"");
-
 WriteLiteral("></i>\r\n");
 
             
@@ -472,7 +468,7 @@ WriteLiteral("></i>\r\n");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -491,14 +487,14 @@ WriteLiteral(">there are comments</span></i>\r\n");
             #line hidden
 WriteLiteral("                        </p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4982), Tuple.Create("\"", 5001)
+WriteAttribute("href", Tuple.Create(" href=\"", 4952), Tuple.Create("\"", 4971)
             
             #line 88 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 4989), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 4959), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 4989), false)
+, 4959), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -558,8 +554,6 @@ WriteLiteral("                                <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
 
-WriteLiteral(" style=\"color: green;\"");
-
 WriteLiteral("></i>\r\n");
 
             
@@ -573,7 +567,7 @@ WriteLiteral("></i>\r\n");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -645,14 +639,14 @@ WriteLiteral("(the hours are based on the candidate being over 18)\r\n");
             #line hidden
 WriteLiteral("                        </p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 6533), Tuple.Create("\"", 6552)
+WriteAttribute("href", Tuple.Create(" href=\"", 6484), Tuple.Create("\"", 6503)
             
             #line 115 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 6540), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 6491), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 6540), false)
+, 6491), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -710,8 +704,6 @@ WriteLiteral("                                    <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
 
-WriteLiteral(" style=\"color: green;\"");
-
 WriteLiteral("></i>\r\n");
 
             
@@ -725,7 +717,7 @@ WriteLiteral("></i>\r\n");
             #line hidden
 WriteLiteral("                                    <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -773,8 +765,6 @@ WriteLiteral("                                    <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
 
-WriteLiteral(" style=\"color: green;\"");
-
 WriteLiteral("></i>\r\n");
 
             
@@ -788,7 +778,7 @@ WriteLiteral("></i>\r\n");
             #line hidden
 WriteLiteral("                                    <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -829,14 +819,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8425), Tuple.Create("\"", 8444)
+WriteAttribute("href", Tuple.Create(" href=\"", 8338), Tuple.Create("\"", 8357)
             
             #line 148 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 8432), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 8345), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 8432), false)
+, 8345), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -957,27 +947,25 @@ WriteLiteral(">\r\n                            Expected duration\r\n");
             #line hidden
             
             #line 176 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                             if (ViewData.ModelState.HasWarningsFor("Duration"))
+                             if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.Duration"))
                             {
-                            var message = ViewData.ModelState.WarningMessageFor("Duration");
+                                var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.Duration");
 
             
             #line default
             #line hidden
-WriteLiteral("                            <i");
+WriteLiteral("                                <i");
 
 WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
-WriteLiteral(" style=\"color: red;\"");
-
-WriteAttribute("title", Tuple.Create(" title=\"", 10547), Tuple.Create("\"", 10563)
+WriteAttribute("title", Tuple.Create(" title=\"", 10496), Tuple.Create("\"", 10512)
             
             #line 179 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-     , Tuple.Create(Tuple.Create("", 10555), Tuple.Create<System.Object, System.Int32>(message
+, Tuple.Create(Tuple.Create("", 10504), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 10555), false)
+, 10504), false)
 );
 
 WriteLiteral("></i>\r\n");
@@ -991,11 +979,9 @@ WriteLiteral("></i>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                            <i");
+WriteLiteral("                                <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
-
-WriteLiteral(" style=\"color: green;\"");
 
 WriteLiteral("></i>\r\n");
 
@@ -1018,7 +1004,7 @@ WriteLiteral("                            ");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -1059,14 +1045,14 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral("</p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11334), Tuple.Create("\"", 11353)
+WriteAttribute("href", Tuple.Create(" href=\"", 11268), Tuple.Create("\"", 11287)
             
             #line 191 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 11341), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 11275), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 11341), false)
+, 11275), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1097,7 +1083,7 @@ WriteLiteral(">Possible start date\r\n");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -1150,16 +1136,14 @@ WriteLiteral("\r\n                            <i");
 
 WriteLiteral(" class=\"fa fa-flag the-icon\"");
 
-WriteLiteral(" style=\"color: red;\"");
-
-WriteAttribute("title", Tuple.Create(" title=\"", 12408), Tuple.Create("\"", 12424)
+WriteAttribute("title", Tuple.Create(" title=\"", 12325), Tuple.Create("\"", 12341)
             
             #line 206 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-     , Tuple.Create(Tuple.Create("", 12416), Tuple.Create<System.Object, System.Int32>(message
+, Tuple.Create(Tuple.Create("", 12333), Tuple.Create<System.Object, System.Int32>(message
             
             #line default
             #line hidden
-, 12416), false)
+, 12333), false)
 );
 
 WriteLiteral("></i>\r\n                        </p>\r\n");
@@ -1192,8 +1176,6 @@ WriteLiteral("\r\n                            <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
 
-WriteLiteral(" style=\"color: green;\"");
-
 WriteLiteral("></i>\r\n                        </p>\r\n");
 
             
@@ -1205,14 +1187,14 @@ WriteLiteral("></i>\r\n                        </p>\r\n");
             #line hidden
 WriteLiteral("                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12875), Tuple.Create("\"", 12894)
+WriteAttribute("href", Tuple.Create(" href=\"", 12770), Tuple.Create("\"", 12789)
             
             #line 216 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 12882), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 12777), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 12882), false)
+, 12777), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1303,7 +1285,7 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                        <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -1335,14 +1317,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 14310), Tuple.Create("\"", 14329)
+WriteAttribute("href", Tuple.Create(" href=\"", 14208), Tuple.Create("\"", 14227)
             
             #line 240 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 14317), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 14215), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 14317), false)
+, 14215), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1412,7 +1394,7 @@ WriteLiteral(">Desired skills\r\n");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -1446,14 +1428,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15465), Tuple.Create("\"", 15498)
+WriteAttribute("href", Tuple.Create(" href=\"", 15366), Tuple.Create("\"", 15399)
             
             #line 260 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 15472), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 15373), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 15472), false)
+, 15373), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1503,7 +1485,7 @@ WriteLiteral(">Personal qualities\r\n");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -1537,14 +1519,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 16405), Tuple.Create("\"", 16438)
+WriteAttribute("href", Tuple.Create(" href=\"", 16309), Tuple.Create("\"", 16342)
             
             #line 273 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 16412), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 16316), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 16412), false)
+, 16316), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1594,7 +1576,7 @@ WriteLiteral(">Qualifications required\r\n");
             #line hidden
 WriteLiteral("                                <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -1628,14 +1610,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 17372), Tuple.Create("\"", 17405)
+WriteAttribute("href", Tuple.Create(" href=\"", 17279), Tuple.Create("\"", 17312)
             
             #line 286 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 17379), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 17286), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 17379), false)
+, 17286), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1699,7 +1681,7 @@ WriteLiteral(">Future prospects\r\n");
             #line hidden
 WriteLiteral("                            <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -1733,14 +1715,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 18370), Tuple.Create("\"", 18403)
+WriteAttribute("href", Tuple.Create(" href=\"", 18280), Tuple.Create("\"", 18313)
             
             #line 305 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 18377), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 18287), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 18377), false)
+, 18287), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1790,7 +1772,7 @@ WriteLiteral(">Things to consider\r\n");
             #line hidden
 WriteLiteral("                            <i");
 
-WriteLiteral(" class=\"fa fa-edit the-icon raa-icon-comment\"");
+WriteLiteral(" class=\"fa fa-comment the-icon raa-icon-comment\"");
 
 WriteLiteral(" title=\"there are comments\"");
 
@@ -1824,14 +1806,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 19251), Tuple.Create("\"", 19284)
+WriteAttribute("href", Tuple.Create(" href=\"", 19164), Tuple.Create("\"", 19197)
             
             #line 318 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 19258), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 19171), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 19258), false)
+, 19171), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1914,14 +1896,14 @@ WriteLiteral(">First question</h3>\r\n                            <p>");
             #line hidden
 WriteLiteral("</p>\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 20215), Tuple.Create("\"", 20236)
+WriteAttribute("href", Tuple.Create(" href=\"", 20128), Tuple.Create("\"", 20149)
             
             #line 340 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 20222), Tuple.Create<System.Object, System.Int32>(questionsLink
+, Tuple.Create(Tuple.Create("", 20135), Tuple.Create<System.Object, System.Int32>(questionsLink
             
             #line default
             #line hidden
-, 20222), false)
+, 20135), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1964,14 +1946,14 @@ WriteLiteral(">Second question</h3>\r\n                            <p>");
             #line hidden
 WriteLiteral("</p>\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 20707), Tuple.Create("\"", 20728)
+WriteAttribute("href", Tuple.Create(" href=\"", 20620), Tuple.Create("\"", 20641)
             
             #line 348 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 20714), Tuple.Create<System.Object, System.Int32>(questionsLink
+, Tuple.Create(Tuple.Create("", 20627), Tuple.Create<System.Object, System.Int32>(questionsLink
             
             #line default
             #line hidden
-, 20714), false)
+, 20627), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -2058,14 +2040,14 @@ WriteLiteral(">Employer</h3>\r\n                            <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 21761), Tuple.Create("\"", 21888)
+WriteAttribute("class", Tuple.Create(" class=\"", 21674), Tuple.Create("\"", 21801)
             
             #line 372 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 21769), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
+, Tuple.Create(Tuple.Create("", 21682), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
             
             #line default
             #line hidden
-, 21769), false)
+, 21682), false)
 );
 
 WriteLiteral(">");
@@ -2097,29 +2079,29 @@ WriteLiteral("                                <p>\r\n                           
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 22202), Tuple.Create("\"", 22271)
+WriteAttribute("href", Tuple.Create(" href=\"", 22115), Tuple.Create("\"", 22184)
             
             #line 376 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 22209), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
+, Tuple.Create(Tuple.Create("", 22122), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
             
             #line default
             #line hidden
-, 22209), false)
+, 22122), false)
 );
 
 WriteLiteral("\r\n                                       id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                                       target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 22398), Tuple.Create("\"", 22519)
+WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 22311), Tuple.Create("\"", 22432)
             
             #line 379 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 22446), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+, Tuple.Create(Tuple.Create("", 22359), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
             
             #line default
             #line hidden
-, 22446), false)
-, Tuple.Create(Tuple.Create(" ", 22511), Tuple.Create("Website", 22512), true)
+, 22359), false)
+, Tuple.Create(Tuple.Create(" ", 22424), Tuple.Create("Website", 22425), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -2136,8 +2118,6 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n                                    <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
-
-WriteLiteral(" style=\"color: green;\"");
 
 WriteLiteral("></i>\r\n                                </p>\r\n");
 
@@ -2267,16 +2247,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 24360), Tuple.Create("\"", 24562)
-, Tuple.Create(Tuple.Create("", 24366), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 24366), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 24251), Tuple.Create("\"", 24453)
+, Tuple.Create(Tuple.Create("", 24257), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 24257), true)
             
             #line 399 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 24411), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
+                                                                    , Tuple.Create(Tuple.Create("", 24302), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
             
             #line default
             #line hidden
-, 24411), false)
-, Tuple.Create(Tuple.Create("", 24498), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 24498), true)
+, 24302), false)
+, Tuple.Create(Tuple.Create("", 24389), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 24389), true)
 );
 
 WriteLiteral("></iframe>\r\n                        <p");
@@ -2347,14 +2327,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 25469), Tuple.Create("\"", 25524)
+WriteAttribute("href", Tuple.Create(" href=\"", 25360), Tuple.Create("\"", 25415)
             
             #line 417 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 25476), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+, Tuple.Create(Tuple.Create("", 25367), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 25476), false)
+, 25367), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -2371,8 +2351,6 @@ WriteLiteral(">");
 WriteLiteral("</a>\r\n                    <i");
 
 WriteLiteral(" class=\"fa fa-check the-icon\"");
-
-WriteLiteral(" style=\"color: green;\"");
 
 WriteLiteral("></i>\r\n                </div>\r\n            </section>\r\n");
 
@@ -2672,14 +2650,14 @@ WriteLiteral(">Submit for approval</button>\r\n            <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 28514), Tuple.Create("\"", 28573)
+WriteAttribute("href", Tuple.Create(" href=\"", 28383), Tuple.Create("\"", 28442)
             
             #line 481 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 28521), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 28390), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 28521), false)
+, 28390), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n        </div>\r\n    </section>\r\n");

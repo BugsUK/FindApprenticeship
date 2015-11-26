@@ -19,17 +19,13 @@
 
     public class VacancySummaryViewModelServerValidator : AbstractValidator<VacancySummaryViewModel>
     {
-        public VacancySummaryViewModelServerValidator() : this(null)
-        {
-            
-        }
-        public VacancySummaryViewModelServerValidator(string parentPropertyName)
+        public VacancySummaryViewModelServerValidator()
         {
             this.AddCommonRules();
             this.AddServerCommonRules();
             RuleSet(RuleSets.Errors, this.AddCommonRules);
             RuleSet(RuleSets.Errors, this.AddServerCommonRules);
-            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(parentPropertyName));
+            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(null));
         }
     }
 
@@ -46,10 +42,6 @@
 
     public class VacancySummaryViewModelServerWarningValidator : AbstractValidator<VacancySummaryViewModel>
     {
-        public VacancySummaryViewModelServerWarningValidator() : this(null)
-        {
-            
-        }
         public VacancySummaryViewModelServerWarningValidator(string parentPropertyName)
         {
             RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(parentPropertyName));

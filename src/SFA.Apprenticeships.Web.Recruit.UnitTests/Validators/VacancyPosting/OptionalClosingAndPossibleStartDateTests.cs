@@ -202,11 +202,14 @@
             var result = _validator.Validate(viewModel, ruleSet: RuleSet);
             _aggregateValidator.Validate(vacancyViewModel);
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
             _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSet);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             result.IsValid.Should().BeFalse();
             result.Errors.Count.Should().Be(2);
         }

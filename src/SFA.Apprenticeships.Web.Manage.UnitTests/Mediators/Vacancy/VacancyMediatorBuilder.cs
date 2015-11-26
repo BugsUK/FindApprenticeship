@@ -16,12 +16,12 @@
             new VacancySummaryViewModelServerValidator();
         private VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator = new VacancyRequirementsProspectsViewModelServerValidator();
 
-        private readonly VacancyResubmissionValidator _vacancyResubmissionValidator = new VacancyResubmissionValidator();
+        private readonly VacancyViewModelValidator _vacancyViewModelValidator = new VacancyViewModelValidator();
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator = new VacancyQuestionsViewModelServerValidator();
 
         public IVacancyMediator Build()
         {
-            return new VacancyMediator(_vacancyProvider.Object, _vacancyResubmissionValidator, _vacancySummaryViewModelServerValidator, 
+            return new VacancyMediator(_vacancyProvider.Object, _vacancyViewModelValidator, _vacancySummaryViewModelServerValidator, 
             _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator, _vacancyRequirementsProspectsViewModelServerValidator);
         }
 

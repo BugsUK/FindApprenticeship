@@ -32,6 +32,7 @@
         private readonly VacancyRequirementsProspectsViewModelClientValidator _vacancyRequirementsProspectsViewModelClientValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelClientValidator _vacancyQuestionsViewModelClientValidator;
+        private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancyResubmissionValidator _vacancyResubmissionValidator;
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
@@ -48,6 +49,7 @@
             VacancyRequirementsProspectsViewModelClientValidator vacancyRequirementsProspectsViewModelClientValidator,
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyQuestionsViewModelClientValidator vacancyQuestionsViewModelClientValidator,
+            VacancyViewModelValidator vacancyViewModelValidator,
             VacancyResubmissionValidator vacancyResubmissionValidator,
             ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator)
         {
@@ -65,6 +67,7 @@
             _vacancyRequirementsProspectsViewModelClientValidator = vacancyRequirementsProspectsViewModelClientValidator;
             _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
             _vacancyQuestionsViewModelClientValidator = vacancyQuestionsViewModelClientValidator;
+            _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
         public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn)
@@ -398,7 +401,7 @@
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
-            var validationResult = _vacancyResubmissionValidator.Validate(vacancyViewModel, ruleSet:RuleSets.ErrorsAndWarnings);
+            var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             if (!validationResult.IsValid)
             {

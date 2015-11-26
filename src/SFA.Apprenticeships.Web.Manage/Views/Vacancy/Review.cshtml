@@ -7,6 +7,8 @@
     ViewBag.Title = "QA a Vacancy - Review vacancy";
 }
 
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 
 <div>
     <div class="grid-wrapper">
@@ -40,7 +42,7 @@
                     <div class="editable-item">
                         <p id="vacancy-closing-date">
                             Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-                            <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
+                            <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" title="@message"></i></a>
                         </p>
                         <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
                     </div>
@@ -108,10 +110,10 @@
                     <div class="editable-item">
                         <h3 class="bold-small">
                             Expected duration
-                            @if (ViewData.ModelState.HasWarningsFor("Duration"))
+                            @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.Duration"))
                             {
-                                var message = ViewData.ModelState.WarningMessageFor("Duration");
-                                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
+                                var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.Duration");
+                                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" title="@message"></i></a>
                             }
                             else
                             {
@@ -130,7 +132,7 @@
                             var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
                             <p id="vacancy-start-date">
                                 @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" style="color: red;" title="@message"></i></a>
+                                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" title="@message"></i></a>
                             </p>
                             <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
                         }

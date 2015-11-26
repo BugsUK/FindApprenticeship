@@ -48,6 +48,8 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Shared
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Manage;
+    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
+    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/ValidationSummary.cshtml")]
