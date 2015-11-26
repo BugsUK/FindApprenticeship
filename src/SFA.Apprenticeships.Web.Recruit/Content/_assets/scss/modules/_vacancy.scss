@@ -73,12 +73,15 @@ html:not(.touch) .editable-item {
         display: block;
         float: left;
         @media screen and ( max-width: 640px ) {
+            padding: 0 10px;
             width: ( 100% / 1 );
         }
         @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
+            padding: 0 10px 0 0;
             width: ( 100% / 3 );
         }
         @media screen and ( min-width: 769px ) {
+            padding: 0 10px 0 0;
             width: ( 100% / 6 );
         }
         a {
@@ -110,7 +113,7 @@ html:not(.touch) .editable-item {
                     margin-right: 10px;
                 }
                 h2 {
-                    @include bold-19;
+                    @include bold-16;
                     margin-bottom: 0;
                     @media screen and ( max-width: 640px ) {
                         @include bold-16;
