@@ -56,3 +56,70 @@ html:not(.touch) .editable-item {
     color: $turquoise;
     cursor: help;
 }
+
+
+
+
+// Dashboard 
+
+.vacancies-summary {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    li {
+        margin: 0;
+        padding: 0 10px;
+        display: block;
+        float: left;
+        @media screen and ( max-width: 640px ) {
+            width: ( 100% / 1 );
+        }
+        @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
+            width: ( 100% / 3 );
+        }
+        @media screen and ( min-width: 769px ) {
+            width: ( 100% / 6 );
+        }
+        a {
+            text-decoration: none;
+        }
+        figure.data {
+            .count {
+                @include bold-80( $tabular-numbers: true );
+                margin-bottom: 0;
+                @media screen and ( max-width: 640px ) {
+                    padding: .25em 0;
+                    @include bold-80( $tabular-numbers: true );
+                }
+                @media screen and ( max-width: 768px ) {
+                    @include bold-48( $tabular-numbers: true );
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+                @media screen and ( min-width: 769px ) {
+                    text-align: center;                        
+                }
+            }
+            figcaption {
+                display: block;
+                @media screen and ( max-width: 768px ) {
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+                h2 {
+                    @include bold-19;
+                    margin-bottom: 0;
+                    @media screen and ( max-width: 640px ) {
+                        @include bold-16;
+                    }
+                    @media screen and ( min-width: 769px ) {
+                        text-align: center;                        
+                    }
+                }
+            }
+        }
+    }
+}

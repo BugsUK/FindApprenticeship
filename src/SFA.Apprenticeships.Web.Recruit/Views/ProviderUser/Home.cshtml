@@ -63,84 +63,92 @@
                 <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
             }
         </h2>
-        <div class="grid" style="width: 16.666666666%">
-            <p style="text-align: center">
+        <ul class="vacancies-summary">
+            <li><figure class="data">
                 @if (filterType == VacanciesSummaryFilterTypes.Live)
                 {
-                    <span>Live</span>
+                    <p class="count">@Model.VacanciesSummary.LiveCount</p>
+                    <figcaption><h2>Live</h2></figcaption>
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live))" class="vacancy-filter">Live</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live))" class="vacancy-filter">
+                        <p class="count">@Model.VacanciesSummary.LiveCount</p>
+                        <figcaption><h2>Live</h2></figcaption>
+                    </a>
                 }
-            </p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.LiveCount</p>
-        </div>
-        <div class="grid" style="width: 16.666666666%">
-            <p style="text-align: center">
+            </figure></li>
+            <li><figure class="data">
                 @if (filterType == VacanciesSummaryFilterTypes.Submitted)
                 {
-                    <span>Submitted</span>
+                    <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
+                    <figcaption><h2>Submitted</h2></figcaption>
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">Submitted</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">
+                        <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
+                        <figcaption><h2>Submitted</h2></figcaption>
+                    </a>
                 }
-            </p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.SubmittedCount</p>
-        </div>
-        <div class="grid" style="width: 16.666666666%">
-            <p style="text-align: center">
+            </figure></li>
+            <li><figure class="data">
                 @if (filterType == VacanciesSummaryFilterTypes.Rejected)
                 {
-                    <span>Referred</span>
+                    <p class="count">@Model.VacanciesSummary.RejectedCount</p>
+                    <figcaption><h2>Rejected</h2></figcaption>
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected))" class="vacancy-filter">Referred</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected))" class="vacancy-filter">
+                        <p class="count">@Model.VacanciesSummary.RejectedCount</p>
+                        <figcaption><h2>Rejected</h2></figcaption>
+                    </a>
                 }
-            </p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.RejectedCount</p>
-        </div>
-        <div class="grid" style="width: 16.666666666%">
-            <p style="text-align: center">
+            </figure></li>
+            <li><figure class="data">
                 @if (filterType == VacanciesSummaryFilterTypes.ClosingSoon)
                 {
-                    <span>Closing Soon</span>
+                    <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
+                    <figcaption><h2>Closing soom</h2></figcaption>
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon))" class="vacancy-filter">Closing Soon</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon))" class="vacancy-filter">
+                        <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
+                        <figcaption><h2>Closing soon</h2></figcaption>
+                    </a>
                 }
-            </p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ClosingSoonCount</p>
-        </div>
-        <div class="grid" style="width: 16.666666666%">
-            <p style="text-align: center">
+            </figure></li>
+            <li><figure class="data">
                 @if (filterType == VacanciesSummaryFilterTypes.Closed)
                 {
-                    <span>Closed</span>
+                    <p class="count">@Model.VacanciesSummary.ClosedCount</p>
+                    <figcaption><h2>Closed</h2></figcaption>
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">Closed</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">
+                        <p class="count">@Model.VacanciesSummary.ClosedCount</p>
+                        <figcaption><h2>Closed</h2></figcaption>
+                    </a>
                 }
-            </p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.ClosedCount</p>
-        </div>
-        <div class="grid" style="width: 16.666666666%">
-            <p style="text-align: center">
+            </figure></li>
+            <li><figure class="data">
                 @if (filterType == VacanciesSummaryFilterTypes.Draft)
                 {
-                    <span>Draft</span>
+                    <p class="count">@Model.VacanciesSummary.DraftCount</p>
+                    <figcaption><h2>Draft</h2></figcaption>
                 }
                 else
                 {
-                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">Draft</a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">
+                        <p class="count">@Model.VacanciesSummary.DraftCount</p>
+                        <figcaption><h2>Draft</h2></figcaption>
+                    </a>
                 }
-            </p>
-            <p style="text-align: center; font-size: 96px; font-weight: 700;">@Model.VacanciesSummary.DraftCount</p>
-        </div>
+            </figure></li>
+        </ul>
     </section>
 
     <div class="grid-wrapper">
