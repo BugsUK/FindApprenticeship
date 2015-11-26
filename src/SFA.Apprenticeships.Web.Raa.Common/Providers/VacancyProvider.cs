@@ -230,8 +230,7 @@
                 AddressLine3 = a.Address.AddressLine3,
                 AddressLine4 = a.Address.AddressLine4,
                 Postcode = a.Address.Postcode,
-                NumberOfPositions = a.NumberOfPositions.Value,
-                VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber()
+                NumberOfPositions = a.NumberOfPositions.Value
             }));
 
             return vacancy;

@@ -128,8 +128,7 @@
                         AddressLine2 = "address line 2 1",
                         AddressLine3 = "address line 3 1",
                         AddressLine4 = "address line 4 1",
-                        Postcode = "Postcode 1",
-                        VacancyReferenceNumber = 2
+                        Postcode = "Postcode 1"
                     },
                     new VacancyLocationAddress
                     {
@@ -137,8 +136,7 @@
                         AddressLine2 = "address line 2 2",
                         AddressLine3 = "address line 3 2",
                         AddressLine4 = "address line 4 2",
-                        Postcode = "Postcode 2",
-                        VacancyReferenceNumber = 3
+                        Postcode = "Postcode 2"
                     }
                 }
             };
@@ -165,8 +163,7 @@
                                                             v.LocationAddresses.First().AddressLine2 == "address line 2 1" &&
                                                             v.LocationAddresses.First().AddressLine3 == "address line 3 1" &&
                                                             v.LocationAddresses.First().AddressLine4 == "address line 4 1" &&
-                                                            v.LocationAddresses.First().Postcode == "Postcode 1" &&
-                                                            v.LocationAddresses.First().VacancyReferenceNumber == 2)));
+                                                            v.LocationAddresses.First().Postcode == "Postcode 1")));
 
             MockVacancyPostingService.Verify(
                 ps =>
@@ -175,8 +172,7 @@
                                                            v.LocationAddresses.First().AddressLine2 == "address line 2 2" &&
                                                            v.LocationAddresses.First().AddressLine3 == "address line 3 2" &&
                                                            v.LocationAddresses.First().AddressLine4 == "address line 4 2" &&
-                                                           v.LocationAddresses.First().Postcode == "Postcode 2" &&
-                                                           v.LocationAddresses.First().VacancyReferenceNumber == 3)));
+                                                           v.LocationAddresses.First().Postcode == "Postcode 2")));
 
         }
     }
