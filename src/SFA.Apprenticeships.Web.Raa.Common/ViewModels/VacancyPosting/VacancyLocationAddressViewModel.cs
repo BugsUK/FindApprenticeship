@@ -7,11 +7,10 @@
         public VacancyLocationAddressViewModel()
         {
             Address = new AddressViewModel();
-            NumberOfPositions = 1;
         }
 
         public AddressViewModel Address { get; set; } 
 
-        public int NumberOfPositions { get; set; }
+        public int? NumberOfPositions { get; set; }
     }
 }

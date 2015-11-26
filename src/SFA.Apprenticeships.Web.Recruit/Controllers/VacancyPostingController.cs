@@ -120,7 +120,7 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation)
+                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
                     }

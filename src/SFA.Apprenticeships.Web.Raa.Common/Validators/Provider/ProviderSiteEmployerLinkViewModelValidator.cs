@@ -25,12 +25,16 @@
                 .WithMessage(ProviderSiteEmployerLinkViewModelMessages.WebsiteUrl.ErrorUriText)
                 .When(x => !string.IsNullOrEmpty(x.WebsiteUrl));
 
+            RuleFor(x => x.IsEmployerLocationMainApprenticeshipLocation)
+                .NotNull()
+                .WithMessage(ProviderSiteEmployerLinkViewModelMessages.IsEmployerLocationMainApprenticeshipLocation.RequiredErrorText);
+
             RuleFor(x => x.NumberOfPositions)
                 .NotEmpty()
                 .WithMessage(ProviderSiteEmployerLinkViewModelMessages.NumberOfPositions.RequiredErrorText)
                 .InclusiveBetween(1, 999)
                 .WithMessage(ProviderSiteEmployerLinkViewModelMessages.NumberOfPositions.LengthErrorText)
-                .When(x => x.IsEmployerLocationMainApprenticeshipLocation);
+                .When(x => x.IsEmployerLocationMainApprenticeshipLocation.HasValue && x.IsEmployerLocationMainApprenticeshipLocation == true);
         }
     }
 }

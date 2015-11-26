@@ -5,7 +5,7 @@
 }
 
 <h1 class="heading-xlarge">
-    Enter basic vacancy details
+    Vacancy location
 </h1>
 
 <h2 class="heading-large">What is the main location of the vacancy?</h2>
@@ -121,53 +121,51 @@
         }
     </div>
 
-    <div>
-        <fieldset class="fieldset-with-border" id="locationAddressesTable" data-bind="style: {'display': locationAddressesStatus() }">
-            <div>
-                <table class="grid-3-4">
-                    <colgroup>
-                        <col class="t40">
-                        <col class="t25">
-                        <col class="t20">
-                        <col>
-                    </colgroup>
+    <div id="locationAddressesTable">
+        <div data-bind="style: {'display': locationAddressesStatus() }">
+            <table class="grid-3-4">
+                <colgroup>
+                    <col class="t40">
+                    <col class="t25">
+                    <col class="t20">
+                    <col>
+                </colgroup>
 
-                    <thead>
-                    <tr>
-                        <th>
-                            <span class="heading-span">Location</span>
-                        </th>
-                        <th>
-                            <span class="heading-span">Number of positions</span>
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody id="location-addresses" data-bind="foreach: locationAddresses">
-                    <tr>
-                        <td>
-                            <span type="text" data-bind="text: itemFriendlyAddress()" maxlength="50" />
-                        </td>
-                        <td>
-                            <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit qual-year" type="text" data-bind="value: itemNumberOfPositions, attr:{'name':'Addresses[' + $index() +'].NumberOfPositions', 'id':'addresses_'+ $index() + '__numberofpositions' }">
-                            <input type="hidden" data-bind="value: itemAddressLine1, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine1', 'id':'addresses_'+ $index() + 'address__AddressLine1' }">
-                            <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
-                            <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
-                            <input type="hidden" data-bind="value: itemAddressLine4, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine4', 'id':'addresses_'+ $index() + 'address__AddressLine4' }">
-                            <input type="hidden" data-bind="value: itemPostcode, attr:{'name':'Addresses[' + $index() +'].Address.Postcode', 'id':'addresses_'+ $index() + 'address__Postcode' }">
-                            <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
-                        </td>
-                        <td class="ta-center">
-                            <a href="#"  data-bind="click: $root.removeLocationAddress">Remove</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
+                <thead>
+                <tr>
+                    <th>
+                        <span class="heading-span">Location</span>
+                    </th>
+                    <th>
+                        <span class="heading-span">Number of positions</span>
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                <tr>
+                    <td>
+                        <span type="text" data-bind="text: itemFriendlyAddress()" maxlength="50" />
+                    </td>
+                    <td>
+                        <input maxlength="4" pattern="[0-9]*" class="form-control qual-input-edit qual-year" type="text" data-bind="value: itemNumberOfPositions, attr:{'name':'Addresses[' + $index() +'].NumberOfPositions', 'id':'addresses_'+ $index() + '__numberofpositions' }">
+                        <input type="hidden" data-bind="value: itemAddressLine1, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine1', 'id':'addresses_'+ $index() + 'address__AddressLine1' }">
+                        <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
+                        <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
+                        <input type="hidden" data-bind="value: itemAddressLine4, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine4', 'id':'addresses_'+ $index() + 'address__AddressLine4' }">
+                        <input type="hidden" data-bind="value: itemPostcode, attr:{'name':'Addresses[' + $index() +'].Address.Postcode', 'id':'addresses_'+ $index() + 'address__Postcode' }">
+                        <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
+                    </td>
+                    <td class="ta-center">
+                        <a href="#"  data-bind="click: $root.removeLocationAddress">Remove</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <div class="form-group">
+        <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
             @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
         </div>
         <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>

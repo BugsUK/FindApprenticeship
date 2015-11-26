@@ -86,6 +86,9 @@
 
         self.removeLocationAddress = function (locationAddress) {
             self.locationAddresses.remove(locationAddress);
+            if (self.locationAddresses().length === 0) {
+                self.showLocationAddresses(false);
+            }
         };
         
         self.getLocationAddresses = function (data) {

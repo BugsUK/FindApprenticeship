@@ -23,5 +23,10 @@
             public const string RequiredErrorText = "Please enter the number of positions of the vacancy";
             public const string LengthErrorText = "Number of positions must be between 1 and 999";
         }
+
+        public class IsEmployerLocationMainApprenticeshipLocation
+        {
+            public const string RequiredErrorText = "Please select an option";
+        }
     }
 }

@@ -131,7 +131,7 @@
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteErn, ern);
             viewModel.VacancyGuid = vacancyGuid;
-            viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
+            viewModel.IsEmployerLocationMainApprenticeshipLocation = null;
             viewModel.NumberOfPositions = 1; // TODO: change to null
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
