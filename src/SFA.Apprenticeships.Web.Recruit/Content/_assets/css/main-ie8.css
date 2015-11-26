@@ -6141,6 +6141,12 @@ html:not(.touch) .editable-item:hover {
   html:not(.touch) .editable-item:hover .edit-comment-link {
     visibility: visible; }
 
+.fa-flag {
+  color: #2b8cc4; }
+
+.fa-check {
+  color: #28a197; }
+
 .raa-icon-comment {
   font-size: 19px !important;
   color: #28a197;

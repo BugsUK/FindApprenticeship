@@ -42,6 +42,14 @@ html:not(.touch) .editable-item {
     }
 }
 
+.fa-flag {
+    color: $light-blue;
+}
+
+.fa-check {
+    color: $turquoise;
+}
+
 .raa-icon-comment {
     @extend copy-19;
     font-size: 19px !important;    

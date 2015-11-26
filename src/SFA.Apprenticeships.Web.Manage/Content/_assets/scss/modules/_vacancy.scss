@@ -27,12 +27,17 @@ html:not(.touch) .editable-item {
     }
 }
 
+.fa-flag {
+    color: $mauve;
+}
+
+.fa-check {
+    color: $green;
+}
+
 .raa-icon-comment {
-    display: inline-block;
-    content: "x"; 
-    width: 20px;
-    height: 20px;
-    background: red;
-//    @include icon( $icon-edit );
-    color: $orange-50;
+    @extend copy-19;
+    font-size: 19px !important;    
+    color: $turquoise;
+    cursor: help;
 }

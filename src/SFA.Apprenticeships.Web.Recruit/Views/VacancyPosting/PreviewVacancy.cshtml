@@ -28,7 +28,7 @@
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title (Preview)
                     @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.TitleComment))
                     {
-                        <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                        <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                     }
                 </h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
@@ -44,7 +44,7 @@
                         <div class="text" itemprop="description">
                             @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ShortDescriptionComment))
                             {
-                                <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                             <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
                         </div>
@@ -62,10 +62,10 @@
 
                             @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.ClosingDateComment))
                             {
-                                <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                                <i class="fa fa-flag the-icon" title="@message"></i>
                             }
                             else{
-                                <i class="fa fa-edit the-icon" style="color: blue;" title="@message"></i>
+                                <i class="fa fa-comment the-icon" style="color: blue;" title="@message"></i>
                             }
                         </p>
                         <a href="@summaryLink" class="edit-comment-link">Edit</a>
@@ -78,11 +78,11 @@
                             Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
                             @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.ClosingDateComment))
                             {
-                                <i class="fa fa-check the-icon" style="color: green;"></i>
+                                <i class="fa fa-check the-icon"></i>
                             }
                             else
                             {
-                                <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                         </p>
                         <a href="@summaryLink" class="edit-comment-link">Edit</a>
@@ -98,11 +98,11 @@
                         <h3 class="bold-small">Working week
                             @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.WorkingWeekComment))
                             {
-                                <i class="fa fa-check the-icon" style="color: green;"></i>
+                                <i class="fa fa-check the-icon"></i>
                             }
                             else
                             {
-                                <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                         </h3>
                         <p id="vacancy-working-week" itemprop="workHours">
@@ -122,11 +122,11 @@
                             <span>@Model.VacancySummaryViewModel.WageUnitDisplayText wage
                                 @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.WageComment))
                                 {
-                                    <i class="fa fa-check the-icon" style="color: green;"></i>
+                                    <i class="fa fa-check the-icon"></i>
                                 }
                                 else
                                 {
-                                    <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                    <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                                 }
                             </span>
                             }
@@ -135,11 +135,11 @@
                             <span>Wage 
                                 @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.WageComment))
                                 {
-                                    <i class="fa fa-check the-icon" style="color: green;"></i>
+                                    <i class="fa fa-check the-icon"></i>
                                 }
                                 else
                                 {
-                                    <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                    <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                                 }
                             </span>
                             }
@@ -175,16 +175,16 @@
                             Expected duration
                             @if (ViewData.ModelState.HasWarningsFor("Duration"))
                             {
-                            var message = ViewData.ModelState.WarningMessageFor("Duration");
-                            <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                                var message = ViewData.ModelState.WarningMessageFor("Duration");
+                                <i class="fa fa-flag the-icon" title="@message"></i>
                             }
                             else
                             {
-                            <i class="fa fa-check the-icon" style="color: green;"></i>
+                                <i class="fa fa-check the-icon"></i>
                             }
                             @if (!string.IsNullOrEmpty(Model.VacancySummaryViewModel.DurationComment))
                             {
-                                <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                         </h3>
                         <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
@@ -195,7 +195,7 @@
                         <h3 class="bold-small">Possible start date
                             @if (!string.IsNullOrEmpty(Model.VacancySummaryViewModel.PossibleStartDateComment))
                             {
-                                <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                         </h3>
                         @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
@@ -203,14 +203,14 @@
                         var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
                         <p id="vacancy-start-date">
                             @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                            <i class="fa fa-flag the-icon" style="color: red;" title="@message"></i>
+                            <i class="fa fa-flag the-icon" title="@message"></i>
                         </p>
                         }
                         else
                         {
                         <p id="vacancy-start-date">
                             @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                            <i class="fa fa-check the-icon" style="color: green;"></i>
+                            <i class="fa fa-check the-icon"></i>
                         </p>
                         }
                         <a href="@summaryLink" class="edit-comment-link">Edit</a>
@@ -234,7 +234,7 @@
                 <div class="text editable-item" itemprop="responsibilities">
                     @if (!string.IsNullOrEmpty(Model.VacancySummaryViewModel.LongDescriptionComment))
                     {
-                        <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                        <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                     }
                     <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
                     <a href="@summaryLink" class="edit-comment-link">Edit</a>
@@ -253,7 +253,7 @@
                         <h3 class="heading-small">Desired skills
                             @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
                             {
-                                <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                         </h3>
                         <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
@@ -266,7 +266,7 @@
                         <h3 class="heading-small">Personal qualities
                             @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
                             {
-                                <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                         </h3>
                         <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
@@ -279,7 +279,7 @@
                         <h3 class="heading-small">Qualifications required
                             @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
                             {
-                                <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                             }
                         </h3>
                         <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
@@ -298,7 +298,7 @@
                     <h3 class="heading-small">Future prospects
                         @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
                         {
-                            <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                            <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                         }
                     </h3>
                     <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
@@ -311,7 +311,7 @@
                     <h3 class="heading-small">Things to consider
                         @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
                         {
-                            <i class="fa fa-edit the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
+                            <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
                         }
                     </h3>
                     <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
@@ -377,7 +377,7 @@
                                        id="vacancy-employer-website"
                                        target="_blank"
                                        title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                                    <i class="fa fa-check the-icon" style="color: green;"></i>
+                                    <i class="fa fa-check the-icon"></i>
                                 </p>
                             }
                             <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -415,7 +415,7 @@
                 <div class="form-group">
                     <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
                     <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
-                    <i class="fa fa-check the-icon" style="color: green;"></i>
+                    <i class="fa fa-check the-icon"></i>
                 </div>
             </section>
         }
