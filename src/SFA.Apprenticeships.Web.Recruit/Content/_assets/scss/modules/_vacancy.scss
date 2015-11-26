@@ -90,7 +90,7 @@ html:not(.touch) .editable-item {
                 margin-bottom: 0;
                 @media screen and ( max-width: 640px ) {
                     padding: .25em 0;
-                    @include bold-80( $tabular-numbers: true );
+                    @include bold-48( $tabular-numbers: true );
                 }
                 @media screen and ( max-width: 768px ) {
                     @include bold-48( $tabular-numbers: true );
@@ -117,6 +117,41 @@ html:not(.touch) .editable-item {
                     }
                     @media screen and ( min-width: 769px ) {
                         text-align: center;                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+table#vacancies-table {
+    @media screen and ( max-width: 768px ) {
+        border-top: 1px solid $grey-2;
+        display: block;
+        thead {
+            display: none;
+        } 
+        tr {
+            display: block;
+            border-bottom: 1px solid $grey-2;
+            padding: 1em 0;
+            td {
+                display: block;
+                text-align: left;
+                border: none;
+                padding: 0.25em 0;
+                &.vac-toolbox {
+                    padding: 1em 0;
+                }
+                .vac-title {
+                    @include bold-19;
+                }
+                &.vac-employer,
+                &.vac-ref-number,
+                &.vac-no-of-applications {
+                    &:before {
+                        content: attr(data-label) ": ";
+                        @include bold-16;
                     }
                 }
             }

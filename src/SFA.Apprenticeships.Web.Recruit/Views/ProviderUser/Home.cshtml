@@ -163,7 +163,7 @@
                     </div>
                 </details>
                 <div class="tabbed-element tab1 active width-all-1-1">
-                    <table class="no-btm-margin">
+                    <table class="no-btm-margin" id="vacancies-table">
                         <colgroup>
                             <col class="t25">
                             <col class="t15">
@@ -186,7 +186,7 @@
                         @foreach (var vacancy in Model.VacanciesSummary.Vacancies.Page)
                         {
                             <tr>
-                                <td>
+                                <td data-label="Vacancy title">
                                     <div class="vac-title">
                                         @{
                                             var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
@@ -199,24 +199,28 @@
                                         <a href="@Url.RouteUrl(editRoute, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">@title</a>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="vac-employer" data-label="Employer">
                                     @vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
                                 </td>
-                                <td>
+                                <td class="vac-ref-number" data-label="Vacancy ref">
                                     @vacancy.VacancyReferenceNumber
                                 </td>
-                                <td>
+                                <td class="vac-no-of-applications" data-label="Number of applications">
                                     @if (vacancy.Status == ProviderVacancyStatuses.Live)
                                     {
                                         <span>X applications</span>
                                     }
+                                    else
+                                    {
+                                        <span>-</span>
+                                    }
                                 </td>
-                                <td>
+                                <td class="vac-status">
                                     @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
                                     @{ Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.ClosingDate); }
                                 </td>
-                                <td>
-                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="ta-center disp-block">Clone</a>
+                                <td class="vac-toolbox">
+                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Clone</a>
                                 </td>
                             </tr>
                         }
