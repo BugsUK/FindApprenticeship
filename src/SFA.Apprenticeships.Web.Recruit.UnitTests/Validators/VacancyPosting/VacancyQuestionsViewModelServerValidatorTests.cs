@@ -1,5 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using Builders;
+    using Common.Validators;
+    using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Raa.Common.Validators.Vacancy;
@@ -9,11 +12,13 @@
     public class VacancyQuestionsViewModelServerValidatorTests
     {
         private VacancyQuestionsViewModelServerValidator _validator;
+        private VacancyViewModelValidator _aggregateValidator;
 
         [SetUp]
         public void SetUp()
         {
             _validator = new VacancyQuestionsViewModelServerValidator();
+            _aggregateValidator = new VacancyViewModelValidator();
         }
 
         [TestCase(null, true)]
@@ -27,16 +32,29 @@
             {
                 FirstQuestion = firstQuestion
             };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
             _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             if (expectValid)
             {
                 _validator.ShouldNotHaveValidationErrorFor(vm => vm.FirstQuestion, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.FirstQuestion, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.FirstQuestion, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.FirstQuestion, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.FirstQuestion, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(vm => vm.FirstQuestion, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.FirstQuestion, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.FirstQuestion, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.FirstQuestion, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.FirstQuestion, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
 
@@ -51,16 +69,29 @@
             {
                 SecondQuestion = secondQuestion
             };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
             _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             if (expectValid)
             {
                 _validator.ShouldNotHaveValidationErrorFor(vm => vm.SecondQuestion, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.SecondQuestion, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.SecondQuestion, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.SecondQuestion, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.SecondQuestion, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(vm => vm.SecondQuestion, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.SecondQuestion, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.SecondQuestion, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.SecondQuestion, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyQuestionsViewModel, vm => vm.VacancyQuestionsViewModel.SecondQuestion, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
     }

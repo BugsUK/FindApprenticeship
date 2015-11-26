@@ -3,36 +3,44 @@
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Vacancy;
+    using Web.Common.Validators;
 
     public class VacancyQuestionsViewModelClientValidator : AbstractValidator<VacancyQuestionsViewModel>
     {
         public VacancyQuestionsViewModelClientValidator()
         {
-            AddCommonRules();
-        }
-
-        private void AddCommonRules()
-        {
-            //TODO: why we are adding only these rules to client side validation. What happens if user has Javascript deactivated?
-            RuleFor(x => x.FirstQuestion)
-                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText);
-
-            RuleFor(x => x.SecondQuestion)
-                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
-
-            RuleFor(x => x.FirstQuestionComment)
-                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText);
-
-            RuleFor(x => x.SecondQuestionComment)
-                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
+            this.AddCommonRules();
         }
     }
 
-    public class VacancyQuestionsViewModelServerValidator : VacancyQuestionsViewModelClientValidator
+    public class VacancyQuestionsViewModelServerValidator : AbstractValidator<VacancyQuestionsViewModel>
     {
+        public VacancyQuestionsViewModelServerValidator()
+        {
+            this.AddCommonRules();
+            RuleSet(RuleSets.Errors, this.AddCommonRules);
+        }
+    }
+
+    internal static class VacancyQuestionsViewModelValidatorRules
+    {
+        internal static void AddCommonRules(this AbstractValidator<VacancyQuestionsViewModel> validator)
+        {
+            validator.RuleFor(x => x.FirstQuestion)
+                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText);
+
+            validator.RuleFor(x => x.SecondQuestion)
+                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
+
+            validator.RuleFor(x => x.FirstQuestionComment)
+                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText);
+
+            validator.RuleFor(x => x.SecondQuestionComment)
+                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
+        }
     }
 }
