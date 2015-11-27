@@ -1,14 +1,16 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyViewModel
+﻿@model VacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
-@using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
+@using SFA.Apprenticeships.Web.Recruit.Extensions
+@using SFA.Apprenticeships.Web.Recruit.ViewModels
 @{
     ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
     var basicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
     var summaryLink = Url.RouteUrl(RecruitmentRouteNames.VacancySummary, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
-    var questionsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyQuestions, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
     var requirementsProspentsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyRequirementsProspects, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
+    var questionsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyQuestions, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -22,10 +24,7 @@
         <div class="grid grid-2-3">
             <div class="hgroup text editable-item">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title
-                    @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.TitleComment))
-                    {
-                        <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                    }
+                    @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.NewVacancyViewModel.TitleComment, basicDetailsLink))
                 </h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
                 <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
@@ -33,211 +32,129 @@
         </div>
     </div>
 
-        <section class="grid-wrapper">
-            <div class="grid grid-2-3">
-                <div class="inner-block-padr">
-                    <div class="editable-item">
-                        <div class="text" itemprop="description">
-                            @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ShortDescriptionComment))
-                            {
-                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                            }
-                            <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
-                        </div>
-                        <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
+    <section class="grid-wrapper">
+        <div class="grid grid-2-3">
+            <div class="inner-block-padr">
+                <div class="editable-item">
+                    <div class="text" itemprop="description">
+                        @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.NewVacancyViewModel.ShortDescriptionComment, basicDetailsLink))
+                        <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
                     </div>
+                    <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
                 </div>
             </div>
-            <div class="grid grid-1-3">
-                @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
-                {
-                    var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
-                    <div class="editable-item">
-                        <p id="vacancy-closing-date">
-                            Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-
-                            @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.ClosingDateComment))
-                            {
-                                <i class="fa fa-flag the-icon" title="@message"></i>
-                            }
-                            else{
-                                <i class="fa fa-comment the-icon" style="color: blue;" title="@message"></i>
-                            }
-                        </p>
-                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
-                    </div>
-                }
-                else
-                {
-                    <div class="editable-item">
-                        <p id="vacancy-closing-date">
-                            Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-                            @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.ClosingDateComment))
-                            {
-                                <i class="fa fa-check the-icon"></i>
-                            }
-                            else
-                            {
-                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                            }
-                        </p>
-                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
-                    </div>
-                }
+        </div>
+        <div class="grid grid-1-3">
+            <div class="editable-item">
+                <p id="vacancy-closing-date">
+                    Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.ClosingDate, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
+                </p>
+                <a href="@summaryLink" class="edit-comment-link">Edit</a>
             </div>
-        </section>
-        <section class="section-border grid-wrapper" id="vacancy-info">
-            <h2 class="heading-large">Apprenticeship summary</h2>
-            <div class="grid grid-1-3">
-                <div class="inner-block-padr">
-                    <div class="editable-item">
-                        <h3 class="bold-small">Working week
-                            @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.WorkingWeekComment))
-                            {
-                                <i class="fa fa-check the-icon"></i>
-                            }
-                            else
-                            {
-                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                            }
-                        </h3>
-                        <p id="vacancy-working-week" itemprop="workHours">
-                            @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
-                            @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
-                            {
-                                <br />@:(the hours are based on the candidate being over 18)
-                            }
-                        </p>
-                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
-                    </div>
-
-                    <div class="editable-item">
-                        <h3 class="bold-small">
-                            @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
-                            {
-                            <span>@Model.VacancySummaryViewModel.WageUnitDisplayText wage
-                                @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.WageComment))
-                                {
-                                    <i class="fa fa-check the-icon"></i>
-                                }
-                                else
-                                {
-                                    <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                                }
-                            </span>
-                            }
-                            else
-                            {
-                            <span>Wage 
-                                @if (string.IsNullOrEmpty(Model.VacancySummaryViewModel.WageComment))
-                                {
-                                    <i class="fa fa-check the-icon"></i>
-                                }
-                                else
-                                {
-                                    <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                                }
-                            </span>
-                            }
-                        </h3>
-                        <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
-                    </div>
-
-                    @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
-                    {
-                        <details>
-                            <summary>National Minimum Wage<br/>for apprentices explained</summary>
-                            <div class="detail-content">
-                                The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
-                                This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
-                                Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
-                            </div>
-                        </details>
-                    }
-
-                    @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
-                    {
-                        <details>
-                            <summary>National Minimum Wage</summary>
-                            <div class="detail-content">
-                                The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
-                                Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
-                            </div>
-                        </details>
-                    }
-                    <div class="editable-item">
-                        <h3 class="bold-small">
-                            Expected duration
-                            @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.Duration"))
-                            {
-                                var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.Duration");
-                                <i class="fa fa-flag the-icon" title="@message"></i>
-                            }
-                            else
-                            {
-                                <i class="fa fa-check the-icon"></i>
-                            }
-                            @if (!string.IsNullOrEmpty(Model.VacancySummaryViewModel.DurationComment))
-                            {
-                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                            }
-                        </h3>
-                        <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
-                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
-                    </div>
-
-                    <div class="editable-item">
-                        <h3 class="bold-small">Possible start date
-                            @if (!string.IsNullOrEmpty(Model.VacancySummaryViewModel.PossibleStartDateComment))
-                            {
-                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                            }
-                        </h3>
-                        @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
+        </div>
+    </section>
+    <section class="section-border grid-wrapper" id="vacancy-info">
+        <h2 class="heading-large">Apprenticeship summary</h2>
+        <div class="grid grid-1-3">
+            <div class="inner-block-padr">
+                <div class="editable-item">
+                    <h3 class="bold-small">Working week
+                        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
+                    </h3>
+                    <p id="vacancy-working-week" itemprop="workHours">
+                        @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
+                        @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
                         {
-                        var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
-                        <p id="vacancy-start-date">
-                            @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                            <i class="fa fa-flag the-icon" title="@message"></i>
-                        </p>
+                            <br />@:(the hours are based on the candidate being over 18)
+                        }
+                    </p>
+                    <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                </div>
+
+                <div class="editable-item">
+                    <h3 class="bold-small">
+                        @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
+                        {
+                            <span>@Model.VacancySummaryViewModel.WageUnitDisplayText wage
+                                @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancySummaryViewModel.WageComment, summaryLink))
+                            </span>
                         }
                         else
                         {
-                        <p id="vacancy-start-date">
-                            @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                            <i class="fa fa-check the-icon"></i>
-                        </p>
+                            <span>Wage 
+                                @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancySummaryViewModel.WageComment, summaryLink))
+                            </span>
                         }
-                        <a href="@summaryLink" class="edit-comment-link">Edit</a>
-                    </div>
-                    
-                    <div class="editable-item">
-                        <h3 class="bold-small">Apprenticeship level
-                        </h3>
-                        <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
-                        <a href="#" class="edit-comment-link">Edit</a>
-                    </div>
-
-                    <div>
-                        <h3 class="bold-small">Reference number</h3>
-                        <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-2-3">
-                <div class="text editable-item" itemprop="responsibilities">
-                    @if (!string.IsNullOrEmpty(Model.VacancySummaryViewModel.LongDescriptionComment))
-                    {
-                        <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                    }
-                    <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
+                    </h3>
+                    <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
                     <a href="@summaryLink" class="edit-comment-link">Edit</a>
                 </div>
-            </div>
 
-        </section>
-<section class="section-border grid-wrapper" id="course-info">
+                @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
+                {
+                    <details>
+                        <summary>National Minimum Wage<br/>for apprentices explained</summary>
+                        <div class="detail-content">
+                            The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
+                            This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
+                            Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
+                        </div>
+                    </details>
+                }
+
+                @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
+                {
+                    <details>
+                        <summary>National Minimum Wage</summary>
+                        <div class="detail-content">
+                            The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
+                            Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
+                        </div>
+                    </details>
+                }
+                <div class="editable-item">
+                    <h3 class="bold-small">
+                        Expected duration
+                        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.DurationComment))
+                    </h3>
+                    <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
+                    <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                </div>
+
+                <div class="editable-item">
+                    <h3 class="bold-small">Possible start date
+                        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.PossibleStartDate, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment))
+                    </h3>
+                    <p id="vacancy-start-date">
+                        @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
+                    </p>
+                    <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                </div>
+                    
+                <div class="editable-item">
+                    <h3 class="bold-small">Apprenticeship level
+                    </h3>
+                    <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
+                    <a href="#" class="edit-comment-link">Edit</a>
+                </div>
+
+                <div>
+                    <h3 class="bold-small">Reference number</h3>
+                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-2-3">
+            <div class="text editable-item" itemprop="responsibilities">
+                @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancySummaryViewModel.LongDescriptionComment, summaryLink))
+                <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
+                <a href="@summaryLink" class="edit-comment-link">Edit</a>
+            </div>
+        </div>
+
+    </section>
+    <section class="section-border grid-wrapper" id="course-info">
     <h2 class="heading-large">Requirements and prospects</h2>
     <div class="grid grid-1-2">
         <div class="inner-block-padr">
@@ -246,10 +163,7 @@
                 {
                     <div class="editable-item">
                         <h3 class="heading-small">Desired skills
-                            @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
-                            {
-                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                            }
+                            @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, requirementsProspentsLink))
                         </h3>
                         <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
                         <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
@@ -259,10 +173,7 @@
                 {
                     <div class="editable-item">
                         <h3 class="heading-small">Personal qualities
-                            @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
-                            {
-                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                            }
+                            @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, requirementsProspentsLink))
                         </h3>
                         <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
                         <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
@@ -272,10 +183,7 @@
                 {
                     <div class="editable-item">
                         <h3 class="heading-small">Qualifications required
-                            @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
-                            {
-                                <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                            }
+                            @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, requirementsProspentsLink))
                         </h3>
                         <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
                         <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
@@ -291,10 +199,7 @@
             {
                 <div class="editable-item">
                     <h3 class="heading-small">Future prospects
-                        @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
-                        {
-                            <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                        }
+                        @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, requirementsProspentsLink))
                     </h3>
                     <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
                     <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
@@ -304,10 +209,7 @@
             {
                 <div class="editable-item">
                     <h3 class="heading-small">Things to consider
-                        @if (!string.IsNullOrEmpty(Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
-                        {
-                            <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
-                        }
+                        @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, requirementsProspentsLink))
                     </h3>
                     <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
                     <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
@@ -330,7 +232,10 @@
                     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
                     {
                         <div class="editable-item">
-                            <h3 class="heading-small">First question</h3>
+                            <h3 class="heading-small">
+                                First question
+                                @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyQuestionsViewModel.FirstQuestionComment, questionsLink))
+                            </h3>
                             <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
                             <a href="@questionsLink" class="edit-comment-link">Edit</a>
                         </div>
@@ -338,7 +243,10 @@
                     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
                     {
                         <div class="editable-item">
-                            <h3 class="heading-small">Second question</h3>
+                            <h3 class="heading-small">
+                                Second question
+                                @Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyQuestionsViewModel.SecondQuestionComment, questionsLink))
+                            </h3>
                             <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
                             <a href="@questionsLink" class="edit-comment-link">Edit</a>
                         </div>

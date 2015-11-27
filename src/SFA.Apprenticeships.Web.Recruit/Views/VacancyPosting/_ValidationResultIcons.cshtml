@@ -1,0 +1,13 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.ViewModels
+@model ValidationResultViewModel
+    
+@if (Model.HasWarning)
+{
+    <a href="@Model.ViewValidationResultUrl"><i class="fa fa-flag the-icon" title="@Model.Warning"></i></a>
+}
+else
+{
+    <i class="fa fa-check the-icon"></i>
+}
+
+@Html.Partial(CommentViewModel.PartialView, Model.CommentViewModel)

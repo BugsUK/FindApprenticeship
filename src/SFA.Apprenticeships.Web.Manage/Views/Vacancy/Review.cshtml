@@ -33,8 +33,8 @@
             </div>
             <div class="grid grid-1-3">
                 @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
-            {
-                var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
+                {
+                    var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
                     <div class="editable-item">
                         <p id="vacancy-closing-date">
                             Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
@@ -138,8 +138,8 @@
                                 @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
                                 <i class="fa fa-check the-icon" style="color: green;"></i>
                             </p>
+                            <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
                         }
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
                     </div>
                     <div class="editable-item">
                         <h3 class="bold-small">Apprenticeship level</h3>

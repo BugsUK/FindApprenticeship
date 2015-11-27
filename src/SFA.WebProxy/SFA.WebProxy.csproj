@@ -110,8 +110,8 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\ProxyRouting.cs" />
-    <Compile Include="App_Start\IProxyRouting.cs" />
+    <Compile Include="Routing\ProxyRouting.cs" />
+    <Compile Include="Routing\IProxyRouting.cs" />
     <Compile Include="Configuration\ConfigurationManagerConfiguration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Diagnostics\Debug.cs" />
@@ -130,6 +130,7 @@
     <Compile Include="Models\RouteIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\ProxyHandler.cs" />
+    <Compile Include="Routing\IRoutingConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

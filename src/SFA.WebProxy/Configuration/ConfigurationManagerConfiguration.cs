@@ -9,7 +9,6 @@
         public bool IsLoggingEnabled => Convert.ToBoolean(ConfigurationManager.AppSettings["IsLoggingEnabled"]);
         public string CompatabilityWebServiceRootUrl => ConfigurationManager.AppSettings["CompatabilityWebServiceRootUrl"];
         public string NasAvWebServiceRootUri => ConfigurationManager.AppSettings["NasAvWebServiceRootUri"];
-        public string NasAvWebServiceSandboxRootUri => ConfigurationManager.AppSettings["NasAvWebServiceSandboxRootUri"];
         public string FileProxyLoggingRootPath => ConfigurationManager.AppSettings["FileProxyLoggingRootPath"];
         public string AzureStorageConnectionString => ConfigurationManager.AppSettings["AzureStorageConnectionString"];
     }

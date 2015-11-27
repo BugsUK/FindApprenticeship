@@ -4,6 +4,7 @@
     using System.Web.Http;
     using Configuration;
     using Logging;
+    using Routing;
 
     public static class WebApiConfig
     {
