@@ -4,7 +4,7 @@
     var state = string.IsNullOrWhiteSpace(Model) ? string.Empty : "open";
 }
 
-<details @state>
+<details class="@state" @state>
     <summary>Comment</summary>
     <div class="detail-content qa-comment">
         <div class="blocklabel-single-container">

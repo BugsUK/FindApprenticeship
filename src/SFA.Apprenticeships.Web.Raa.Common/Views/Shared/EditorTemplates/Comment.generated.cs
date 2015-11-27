@@ -49,11 +49,23 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<details ");
+WriteLiteral("\r\n\r\n<details");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 109), Tuple.Create("\"", 123)
+            
+            #line 7 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+, Tuple.Create(Tuple.Create("", 117), Tuple.Create<System.Object, System.Int32>(state
+            
+            #line default
+            #line hidden
+, 117), false)
+);
+
+WriteLiteral(" ");
 
             
             #line 7 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
-    Write(state);
+                   Write(state);
 
             
             #line default

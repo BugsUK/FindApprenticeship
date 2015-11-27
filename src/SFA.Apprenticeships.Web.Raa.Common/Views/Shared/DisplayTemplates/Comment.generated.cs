@@ -49,7 +49,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
             
             #line default
             #line hidden
-WriteLiteral("    <details open>\r\n        <summary>Comment</summary>\r\n        <div");
+WriteLiteral("    <details");
+
+WriteLiteral(" class=\"open\"");
+
+WriteLiteral(" open>\r\n        <summary>Comment</summary>\r\n        <div");
 
 WriteLiteral(" class=\"detail-content qa-comment\"");
 
