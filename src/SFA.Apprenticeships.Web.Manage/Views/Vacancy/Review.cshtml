@@ -11,16 +11,12 @@
 
 
 <div>
-    <div class="grid-wrapper">
-        <div class="grid grid-1-1">
-            <p class="page-link hide-nojs">
-                <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
-            </p>
-        </div>
-    </div>
+    <h1 class="heading-xlarge">
+        Vacancy preview
+    </h1>
     <section>
         <div class="hgroup text editable-item">
-            <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title (Preview)</h1>
+            <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title</h1>
             <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
             <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
         </div>

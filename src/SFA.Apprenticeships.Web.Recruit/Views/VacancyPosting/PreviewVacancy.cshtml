@@ -15,17 +15,13 @@
 
 
 <div>
-    <div class="grid-wrapper">
-        <div class="grid grid-1-1">
-            <p class="page-link hide-nojs">
-                <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
-            </p>
-        </div>
-    </div>
+    <h1 class="heading-xlarge">
+        Vacancy preview
+    </h1>
     <div class="grid-wrapper">
         <div class="grid grid-2-3">
             <div class="hgroup text editable-item">
-                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title (Preview)
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title
                     @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.TitleComment))
                     {
                         <i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i>
