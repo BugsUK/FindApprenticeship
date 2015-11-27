@@ -16,13 +16,16 @@
 
 html:not(.touch) .editable-item {
     .edit-comment-link {
-        visibility: hidden;
-    }
+        color: white;
+        &:focus {
+            color: #005ea5;
+        }
+    }       
     &:hover {
         background: rgba( 0, 0, 0, .025 );
         outline: 1px dotted #d4d4d4;
         .edit-comment-link {
-            visibility: visible;
+            color: #005ea5;
         }
     }
 }

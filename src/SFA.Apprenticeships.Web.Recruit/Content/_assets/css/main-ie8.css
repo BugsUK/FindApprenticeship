@@ -6137,13 +6137,15 @@ aside h2:first-child {
         padding-bottom: 5px; } }
 
 html:not(.touch) .editable-item .edit-comment-link {
-  visibility: hidden; }
+  color: white; }
+  html:not(.touch) .editable-item .edit-comment-link:focus {
+    color: #005ea5; }
 
 html:not(.touch) .editable-item:hover {
   background: rgba(0, 0, 0, 0.025);
   outline: 1px dotted #d4d4d4; }
   html:not(.touch) .editable-item:hover .edit-comment-link {
-    visibility: visible; }
+    color: #005ea5; }
 
 .fa-flag {
   color: #2b8cc4; }
