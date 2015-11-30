@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     public class CommentViewModel
     {

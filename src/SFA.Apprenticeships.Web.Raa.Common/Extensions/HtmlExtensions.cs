@@ -1,10 +1,10 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Extensions
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Extensions
 {
     using System;
     using System.Linq.Expressions;
     using System.Web.Mvc;
-    using Common.Validators.Extensions;
-    using ViewModels;
+    using Raa.Common.ViewModels.Vacancy;
+    using Web.Common.Validators.Extensions;
 
     public static class HtmlExtensions
     {

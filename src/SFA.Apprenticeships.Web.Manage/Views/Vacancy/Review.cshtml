@@ -3,8 +3,14 @@
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.Constants
 @using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @{
     ViewBag.Title = "QA a Vacancy - Review vacancy";
+    var basicDetailsLink = Url.RouteUrl(ManagementRouteNames.BasicDetails, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
+    var summaryLink = Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
+    var requirementsProspectsLink = Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
+    var questionsLink = Url.RouteUrl(ManagementRouteNames.Questions, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -18,7 +24,7 @@
         <div class="hgroup text editable-item">
             <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title</h1>
             <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-            <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.Title, basicDetailsLink, Model.NewVacancyViewModel.TitleComment))
         </div>
         <div class="grid-wrapper">
             <div class="grid grid-2-3">
@@ -27,35 +33,21 @@
                         <div id="vacancy-description">
                             @Model.NewVacancyViewModel.ShortDescription
                         </div>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ShortDescription, basicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))
                     </div>
                 </div>
             </div>
             <div class="grid grid-1-3">
-                @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.ClosingDate"))
-                {
-                    var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.ClosingDate");
-                    <div class="editable-item">
-                        <p id="vacancy-closing-date">
-                            Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-                            <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" title="@message"></i></a>
-                        </p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
-                    </div>
-                }
-                else
-                {
-                    <div class="editable-item">
-                        <h3 class="bold-small">
-                            Closing date
-                            <i class="fa fa-check the-icon""></i>
-                        </h3>
-                        <p id="vacancy-closing-date">
-                            @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-                        </p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
-                    </div>
-                }
+                <div class="editable-item">
+                    <h3 class="bold-small">
+                        Closing date
+                        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.ClosingDate, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
+                    </h3>
+                    <p id="vacancy-closing-date">
+                        @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
+                    </p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.ClosingDate, summaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
+                </div>
             </div>
         </div>
     </section>
@@ -64,9 +56,10 @@
         <div class="grid-wrapper">
             <div class="grid grid-1-3">
                 <div class="inner-block-padr">
-
                     <div class="editable-item">
-                        <h3 class="bold-small">Working week <i class="fa fa-check the-icon""></i></h3>
+                        <h3 class="bold-small">Working week
+                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
+                        </h3>
                         <p id="vacancy-working-week" itemprop="workHours">
                             @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
                             @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
@@ -74,14 +67,25 @@
                                 <br />@:(the hours are based on the candidate being over 18)
                             }
                         </p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.WorkingWeek, summaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
                     </div>
                     <div class="editable-item">
                         <h3 class="bold-small">
-                            @Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon""></i>
+                            @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
+                            {
+                                <span>@Model.VacancySummaryViewModel.WageUnitDisplayText wage
+                                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Wage, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WageComment))
+                                </span>
+                            }
+                            else
+                            {
+                                <span>Wage 
+                                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Wage, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WageComment))
+                                </span>
+                            }
                         </h3>
                         <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.WageType, summaryLink, Model.VacancySummaryViewModel.WageComment))
                     </div>
                         @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
                         {
@@ -109,45 +113,26 @@
                     <div class="editable-item">
                         <h3 class="bold-small">
                             Expected duration
-                            @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.Duration"))
-                            {
-                                var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.Duration");
-                                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" title="@message"></i></a>
-                            }
-                            else
-                            {
-                                <i class="fa fa-check the-icon""></i>
-                            }
+                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.DurationComment))
                         </h3>
                         <p id="vacancy-expected-duration">
                             @Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText
                         </p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.Duration, summaryLink, Model.VacancySummaryViewModel.DurationComment))
                     </div>
                     <div class="editable-item">
-                        <h3 class="bold-small">Possible start date</h3>
-                        @if (ViewData.ModelState.HasWarningsFor("VacancySummaryViewModel.PossibleStartDate"))
-                        {
-                            var message = ViewData.ModelState.WarningMessageFor("VacancySummaryViewModel.PossibleStartDate");
-                            <p id="vacancy-start-date">
-                                @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                                <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferencenumber = Model.VacancyReferenceNumber})"><i class="fa fa-flag the-icon" title="@message"></i></a>
-                            </p>
-                            <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
-                        }
-                        else
-                        {
-                            <p id="vacancy-start-date">
-                                @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                                <i class="fa fa-check the-icon""></i>
-                            </p>
-                            <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
-                        }
+                        <h3 class="bold-small">Possible start date
+                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.PossibleStartDate, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment))
+                        </h3>
+                        <p id="vacancy-start-date">
+                            @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
+                        </p>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.PossibleStartDate, summaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment))
                     </div>
                     <div class="editable-item">
                         <h3 class="bold-small">Apprenticeship level</h3>
                         <p id="vacancy-type" itemprop="employmentType">@Model.NewVacancyViewModel.ApprenticeshipLevel Level Apprenticeship</p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ApprenticeshipLevel, basicDetailsLink, Model.NewVacancyViewModel.ApprenticeshipLevelComment))
                     </div>
                     <h3 class="bold-small">Reference number</h3>
                     <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
@@ -157,7 +142,7 @@
                 <div class="editable-item">
                     <div class="text" itemprop="responsibilities">
                         <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.LongDescription, summaryLink, Model.VacancySummaryViewModel.LongDescriptionComment))
                     </div>
                 </div>
             </div>
@@ -174,7 +159,7 @@
                             <div class="text">
                                 <h3 class="heading-small">Desired skills</h3>
                                 <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
-                                <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
                             </div>
                         </div>
                     }
@@ -184,7 +169,7 @@
                             <div class="text">
                                 <h3 class="heading-small">Personal qualities</h3>
                                 <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
-                                <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
                             </div>
                         </div>
                     }
@@ -194,7 +179,7 @@
                             <div class="text">
                                 <h3 class="heading-small">Qualifications required</h3>
                                 <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
-                                <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
                             </div>
                         </div>
                     }
@@ -207,7 +192,7 @@
                         <div class="text">
                             <h3 class="heading-small">Future prospects</h3>
                             <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
-                            <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
                         </div>
                     </div>
                 }
@@ -217,7 +202,7 @@
                         <div class="text">
                             <h3 class="heading-small">Things to consider</h3>
                             <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
-                            <a href="@Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
                         </div>
                     </div>
                 }
@@ -226,10 +211,8 @@
      </section>
 
 
-    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion)
-                    || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
     {
-
         <section class="section-border" id="course-info">
             <h2 class="heading-large">Questions for candidates</h2>
             <div class="grid-wrapper">
@@ -241,7 +224,7 @@
                                 <div class="text">
                                     <h3 class="heading-small">First question</h3>
                                     <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
-                                    <a href="@Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyQuestionsViewModel.FirstQuestion, questionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment))
                                 </div>
                             </div>
                         }
@@ -251,7 +234,7 @@
                                 <div class="text">
                                     <h3 class="heading-small">Second question</h3>
                                     <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
-                                    <a href="@Url.RouteUrl(ManagementRouteNames.Questions, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
+                                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyQuestionsViewModel.SecondQuestion, questionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
                                 </div>
                             </div>
                         }
@@ -284,7 +267,7 @@
                                    id="vacancy-employer-website"
                                    target="_blank"
                                    title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                                <i class="fa fa-check the-icon""></i>
+                                <i class="fa fa-check the-icon"></i>
                             </p>
                         }
                         <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -323,7 +306,7 @@
             <div class="form-group">
                 <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
                 <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
-                <i class="fa fa-check the-icon""></i>
+                <i class="fa fa-check the-icon"></i>
                 <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
             </div>
         </section>
