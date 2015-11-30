@@ -9,7 +9,7 @@
     ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
     var basicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
     var summaryLink = Url.RouteUrl(RecruitmentRouteNames.VacancySummary, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
-    var requirementsProspentsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyRequirementsProspects, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
+    var requirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyRequirementsProspects, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
     var questionsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyQuestions, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
 }
 
@@ -27,7 +27,7 @@
                     @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, basicDetailsLink))
                 </h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-                <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.Title, basicDetailsLink, Model.NewVacancyViewModel.TitleComment))
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
                         @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, basicDetailsLink))
                         <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
                     </div>
-                    <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ShortDescription, basicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                     Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
                     @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.ClosingDate, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
                 </p>
-                <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.ClosingDate, summaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
             </div>
         </div>
     </section>
@@ -69,7 +69,7 @@
                             <br />@:(the hours are based on the candidate being over 18)
                         }
                     </p>
-                    <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.WorkingWeek, summaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
                 </div>
 
                 <div class="editable-item">
@@ -88,12 +88,12 @@
                         }
                     </h3>
                     <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-                    <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.WageType, summaryLink, Model.VacancySummaryViewModel.WageComment))
                 </div>
 
                 @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
                 {
-                    <details>
+                    <details><a href="@summaryLink" class="edit-comment-link">Edit</a>
                         <summary>National Minimum Wage<br/>for apprentices explained</summary>
                         <div class="detail-content">
                             The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
@@ -119,7 +119,7 @@
                         @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.DurationComment))
                     </h3>
                     <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
-                    <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.Duration, summaryLink, Model.VacancySummaryViewModel.DurationComment))
                 </div>
 
                 <div class="editable-item">
@@ -129,7 +129,7 @@
                     <p id="vacancy-start-date">
                         @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
                     </p>
-                    <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.PossibleStartDate, summaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment))
                 </div>
                     
                 <div class="editable-item">
@@ -137,7 +137,7 @@
                         @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.NewVacancyViewModel.ApprenticeshipLevelComment, summaryLink))
                     </h3>
                     <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
-                    <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ApprenticeshipLevel, basicDetailsLink, Model.NewVacancyViewModel.ApprenticeshipLevelComment))
                 </div>
 
                 <div>
@@ -150,7 +150,7 @@
             <div class="text editable-item" itemprop="responsibilities">
                 @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, summaryLink))
                 <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
-                <a href="@summaryLink" class="edit-comment-link">Edit</a>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.LongDescription, summaryLink, Model.VacancySummaryViewModel.LongDescriptionComment))
             </div>
         </div>
 
@@ -164,30 +164,30 @@
                 {
                     <div class="editable-item">
                         <h3 class="heading-small">Desired skills
-                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, requirementsProspentsLink))
+                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, requirementsProspectsLink))
                         </h3>
                         <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
-                        <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
                     </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
                 {
                     <div class="editable-item">
                         <h3 class="heading-small">Personal qualities
-                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, requirementsProspentsLink))
+                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, requirementsProspectsLink))
                         </h3>
                         <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
-                        <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
                     </div>
                 }
                 @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
                 {
                     <div class="editable-item">
                         <h3 class="heading-small">Qualifications required
-                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, requirementsProspentsLink))
+                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, requirementsProspectsLink))
                         </h3>
                         <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
-                        <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
                     </div>
                 }
 
@@ -200,20 +200,20 @@
             {
                 <div class="editable-item">
                     <h3 class="heading-small">Future prospects
-                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, requirementsProspentsLink))
+                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, requirementsProspectsLink))
                     </h3>
                     <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
-                    <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
                 </div>
             }
             @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
             {
                 <div class="editable-item">
                     <h3 class="heading-small">Things to consider
-                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, requirementsProspentsLink))
+                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, requirementsProspectsLink))
                     </h3>
                     <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
-                    <a href="@requirementsProspentsLink" class="edit-comment-link">Edit</a>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
                 </div>
             }
         </div>
@@ -238,7 +238,7 @@
                                 @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, questionsLink))
                             </h3>
                             <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
-                            <a href="@questionsLink" class="edit-comment-link">Edit</a>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyQuestionsViewModel.FirstQuestion, questionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment))
                         </div>
                     }
                     @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
@@ -249,7 +249,7 @@
                                 @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, questionsLink))
                             </h3>
                             <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
-                            <a href="@questionsLink" class="edit-comment-link">Edit</a>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyQuestionsViewModel.SecondQuestion, questionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
                         </div>
                     }
                 </div>
