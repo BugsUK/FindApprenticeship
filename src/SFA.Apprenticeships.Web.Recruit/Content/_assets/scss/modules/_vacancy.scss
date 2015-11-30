@@ -92,7 +92,7 @@ html:not(.touch) .editable-item {
         }
         figure.data {
             .count {
-                @include bold-80( $tabular-numbers: true );
+                @include bold-48( $tabular-numbers: true );
                 margin-bottom: 0;
                 @media screen and ( max-width: 640px ) {
                     padding: .25em 0;
@@ -156,7 +156,7 @@ table#vacancies-table {
                 &.vac-ref-number,
                 &.vac-no-of-applications {
                     &:before {
-                        content: attr(data-label) ": ";
+                        content: attr(data-label) ":\00a0";
                         @include bold-16;
                     }
                 }
