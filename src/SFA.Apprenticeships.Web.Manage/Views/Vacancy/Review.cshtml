@@ -74,13 +74,13 @@
                             @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
                             {
                                 <span>@Model.VacancySummaryViewModel.WageUnitDisplayText wage
-                                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Wage, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WageComment))
+                                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WageComment))
                                 </span>
                             }
                             else
                             {
                                 <span>Wage 
-                                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Wage, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WageComment))
+                                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WageComment))
                                 </span>
                             }
                         </h3>
