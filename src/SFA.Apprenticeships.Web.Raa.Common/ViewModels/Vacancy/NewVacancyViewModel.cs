@@ -65,6 +65,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public int? StandardId { get; set; }
 
+        public ProviderVacancyStatuses Status { get; set; }
+        
         public List<StandardViewModel> Standards { get; set; }
     }
 }

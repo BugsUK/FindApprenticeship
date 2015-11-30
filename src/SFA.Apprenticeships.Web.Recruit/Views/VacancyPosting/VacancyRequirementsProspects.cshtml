@@ -1,7 +1,10 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyRequirementsProspectsViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy requirements and prospects";
+
+    var saveButtonText = Model.Status == ProviderVacancyStatuses.RejectedByQA ? "Save and return to Preview" : "Save and continue";
 }
 
 <h1 class="heading-xlarge">
@@ -30,7 +33,7 @@
         </div>
     </section>
     <div class="grid grid-1-2">
-        <button type="submit" class="button" name="VacancyRequirementsProspects" value="VacancyRequirementsProspects">Save and continue</button>
+        <button id="VacancyRequirementsProspectsButton" type="submit" class="button" name="VacancyRequirementsProspects" value="VacancyRequirementsProspects">@saveButtonText</button>
         <button id="VacancyRequirementsProspectsAndExit" type="submit" class="button-link" name="VacancyRequirementsProspects" value="VacancyRequirementsProspectsAndExit">Save and exit</button>
     </div>
 }

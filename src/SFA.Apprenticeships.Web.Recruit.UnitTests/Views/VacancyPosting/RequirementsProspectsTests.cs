@@ -6,6 +6,9 @@ using SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 {
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Ploeh.AutoFixture;
+
     [TestFixture]
     public class RequirementsProspectsTests : ViewUnitTest
     {
@@ -19,6 +22,36 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var view = details.RenderAsHtml(viewModel);
 
             view.GetElementbyId("VacancyRequirementsProspectsAndExit").Should().NotBeNull("Should exists a save and exit button");
+        }
+
+        [Test]
+        public void ShouldShowSaveAndContinueToPreviewButtonWhenEditingRejectedVacancy()
+        {
+            var details = new VacancyRequirementsProspects();
+
+            var viewModel = new Fixture().Build<VacancyRequirementsProspectsViewModel>()
+                .With(v => v.Status, ProviderVacancyStatuses.RejectedByQA)
+                .Create();
+
+            var view = details.RenderAsHtml(viewModel);
+
+            view.GetElementbyId("VacancyRequirementsProspectsButton").Should().NotBeNull("Should exists a save button");
+            view.GetElementbyId("VacancyRequirementsProspectsButton").InnerHtml.Should().Be("Save and return to Preview");
+        }
+
+        [Test]
+        public void ShouldShowSaveButtonWhenEditingDraftVacancy()
+        {
+            var details = new VacancyRequirementsProspects();
+
+            var viewModel = new Fixture().Build<VacancyRequirementsProspectsViewModel>()
+                .With(v => v.Status, ProviderVacancyStatuses.Draft)
+                .Create();
+
+            var view = details.RenderAsHtml(viewModel);
+
+            view.GetElementbyId("VacancyRequirementsProspectsButton").Should().NotBeNull("Should exists a save button");
+            view.GetElementbyId("VacancyRequirementsProspectsButton").InnerHtml.Should().Be("Save and continue");
         }
     }
 }

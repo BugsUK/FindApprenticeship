@@ -9,6 +9,7 @@
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Provider;
@@ -140,6 +141,21 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
         [HttpPost]
+        public ActionResult CreateVacancyAndPreview(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
+                new
+                {
+                    vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                });
+
+            return HandleCreateVacancy(response, okAction);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [HttpPost]
         public ActionResult CreateVacancyAndExit(NewVacancyViewModel viewModel)
         {
             var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel);
@@ -228,6 +244,20 @@
             return HandleVacancySummary(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
+        [HttpPost]
+        public ActionResult VacancySummaryAndPreview(VacancySummaryViewModel viewModel, bool acceptWarnings)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
+            
+            return HandleVacancySummary(response,
+                () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
+                    new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    }));
+        }
+
         private ActionResult HandleVacancySummary(MediatorResponse<VacancySummaryViewModel> response,
             Func<ActionResult> okAction)
         {
@@ -293,12 +323,16 @@
                         {
                             vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                         });
-
                 case VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk:
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyQuestions, new
-                        {
-                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
-                        });
+                    var routeName = RecruitmentRouteNames.VacancyQuestions;
+                    if (response.ViewModel.Status == ProviderVacancyStatuses.RejectedByQA)
+                    {
+                        routeName = RecruitmentRouteNames.PreviewVacancy;
+                    }
+                    return RedirectToRoute(routeName, new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

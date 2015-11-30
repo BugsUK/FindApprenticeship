@@ -68,6 +68,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public bool AcceptWarnings { get; set; }
 
+        public ProviderVacancyStatuses Status { get; set; }
+
         public string WageUnitDisplayText
         {
             get
