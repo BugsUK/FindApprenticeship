@@ -107,6 +107,8 @@
                     </select>
 
                     @Html.ValidationMessageFor(m => m.StandardId)
+                    @Html.EditorFor(m => m.StandardIdComment, "Comment")
+                    @Html.ValidationMessageFor(m => m.StandardIdComment)
                 </div>
 
                 <div class="form-group">

@@ -118,6 +118,20 @@ Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
             
             #line 19 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
                                                   
+    
+            
+            #line default
+            #line hidden
+            
+            #line 20 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+Write(Html.HiddenFor(model => model.Status));
+
+            
+            #line default
+            #line hidden
+            
+            #line 20 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+                                          
 
 
             
@@ -132,7 +146,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 23 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 24 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
@@ -143,7 +157,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 24 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 25 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.DisplayFor(m => m.DesiredSkillsComment, "Comment"));
 
             
@@ -154,7 +168,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 25 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 26 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
@@ -165,7 +179,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 26 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 27 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.DisplayFor(m => m.PersonalQualitiesComment, "Comment"));
 
             
@@ -176,7 +190,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 27 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 28 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
@@ -187,7 +201,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 28 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 29 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.DisplayFor(m => m.DesiredQualificationsComment, "Comment"));
 
             
@@ -198,7 +212,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 29 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 30 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
@@ -209,7 +223,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 30 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 31 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.DisplayFor(m => m.FutureProspectsComment, "Comment"));
 
             
@@ -220,7 +234,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 31 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 32 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
@@ -231,7 +245,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 32 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 33 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
        Write(Html.DisplayFor(m => m.ThingsToConsiderComment, "Comment"));
 
             
@@ -258,7 +272,7 @@ WriteLiteral(" value=\"VacancyRequirementsProspects\"");
 WriteLiteral(">");
 
             
-            #line 36 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 37 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
                                                                                                                                                          Write(saveButtonText);
 
             
@@ -279,7 +293,7 @@ WriteLiteral(" value=\"VacancyRequirementsProspectsAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 39 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
+            #line 40 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
 }
 
             

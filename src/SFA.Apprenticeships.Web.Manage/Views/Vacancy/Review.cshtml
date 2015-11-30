@@ -332,6 +332,7 @@
                             <h3 class="heading-small">Apprenticeship standard</h3>
                             <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
                         }
+                        <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
                         <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
                     </div>
                 </div>

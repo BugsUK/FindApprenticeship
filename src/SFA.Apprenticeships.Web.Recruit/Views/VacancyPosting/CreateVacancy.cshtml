@@ -110,6 +110,7 @@
                     </select>
 
                     @Html.ValidationMessageFor(m => m.StandardId)
+                    @Html.DisplayFor(m => m.StandardIdComment, "Comment")
                 </div>
 
                 @{
@@ -163,6 +164,7 @@
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.ProviderSiteErn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern);
     @Html.HiddenFor(model => model.VacancyGuid)
+    @Html.HiddenFor(model => model.Status)
 
     <div class="form-group">
         <button id="createVacancyButton" type="submit" class="button" name="CreateVacancy" value="@saveButtonValue">@saveButtonText</button>

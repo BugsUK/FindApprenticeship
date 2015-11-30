@@ -27,7 +27,8 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    
+    @Html.HiddenFor(model => model.Status)
+
     <section>
         <div class="form-group">
             <fieldset class="form-group inline-fixed">

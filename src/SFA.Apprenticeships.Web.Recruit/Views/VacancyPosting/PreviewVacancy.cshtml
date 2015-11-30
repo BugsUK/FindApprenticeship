@@ -338,13 +338,21 @@
                         }
                         @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
                         {
-                            <h3 class="heading-small">Apprenticeship framework</h3>
+                            <h3 class="heading-small">
+                                Apprenticeship framework
+                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.FrameworkCodeName, Model.NewVacancyViewModel.FrameworkCodeNameComment, basicDetailsLink))
+                            </h3>
                             <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.FrameworkCodeName, basicDetailsLink, Model.NewVacancyViewModel.FrameworkCodeNameComment))
                         }
                         @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
                         {
-                            <h3 class="heading-small">Apprenticeship standard</h3>
+                            <h3 class="heading-small">
+                                Apprenticeship standard
+                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.StandardId, Model.NewVacancyViewModel.StandardIdComment, basicDetailsLink))
+                            </h3>
                             <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.StandardId, basicDetailsLink, Model.NewVacancyViewModel.StandardIdComment))
                         }
                         <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
                     </div>

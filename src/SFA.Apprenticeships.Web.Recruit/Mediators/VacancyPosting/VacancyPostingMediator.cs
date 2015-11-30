@@ -246,8 +246,10 @@
                     storedVacancy.NewVacancyViewModel.FrameworkCodeNameComment;
                 newVacancyViewModel.OfflineApplicationInstructionsComment =
                     storedVacancy.NewVacancyViewModel.OfflineApplicationInstructionsComment;
+                newVacancyViewModel.StandardIdComment =
+                    storedVacancy.NewVacancyViewModel.StandardIdComment;
                 newVacancyViewModel.OfflineApplicationUrlComment =
-                    storedVacancy.NewVacancyViewModel.OfflineApplicationInstructionsComment;
+                    storedVacancy.NewVacancyViewModel.OfflineApplicationUrlComment;
                 newVacancyViewModel.ShortDescriptionComment = storedVacancy.NewVacancyViewModel.ShortDescriptionComment;
                 newVacancyViewModel.TitleComment = storedVacancy.NewVacancyViewModel.TitleComment;
             }

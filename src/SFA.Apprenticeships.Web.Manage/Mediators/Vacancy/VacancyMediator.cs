@@ -182,6 +182,11 @@
 
             if (!validationResult.IsValid)
             {
+                var sectors = _vacancyQaProvider.GetSectorsAndFrameworks();
+                var standards = _vacancyQaProvider.GetStandards();
+                viewModel.SectorsAndFrameworks = sectors;
+                viewModel.Standards = standards;
+
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 

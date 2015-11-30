@@ -644,6 +644,7 @@
             vacancy.TrainingType = viewModel.TrainingType;
             vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
             vacancy.StandardId = viewModel.StandardId;
+            vacancy.StandardIdComment = viewModel.StandardIdComment;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
             vacancy.OfflineVacancy = viewModel.OfflineVacancy;
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
