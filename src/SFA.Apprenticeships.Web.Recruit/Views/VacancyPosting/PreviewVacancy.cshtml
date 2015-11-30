@@ -392,7 +392,14 @@
 
     <section>
         <div class="form-group">
-            <button type="submit" class="button">Submit for approval</button>
+            @if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+            {
+                <button type="submit" class="button">Resubmit vacancy</button>
+            }
+            else
+            {
+                <button type="submit" class="button">Submit for approval</button>
+            }
             <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
         </div>
     </section>

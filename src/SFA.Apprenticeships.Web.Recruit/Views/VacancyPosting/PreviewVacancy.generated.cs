@@ -2034,30 +2034,72 @@ WriteLiteral("    <section>\r\n        <div");
 
 WriteLiteral(" class=\"form-group\"");
 
-WriteLiteral(">\r\n            <button");
+WriteLiteral(">\r\n");
+
+            
+            #line 395 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 395 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+             if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <button");
 
 WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Submit for approval</button>\r\n            <a");
+WriteLiteral(">Resubmit vacancy</button>\r\n");
 
-WriteLiteral(" id=\"dashboardLink\"");
-
-WriteAttribute("href", Tuple.Create(" href=\"", 27303), Tuple.Create("\"", 27362)
             
-            #line 396 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 27310), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+            #line 398 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            }
+            else
+            {
+
             
             #line default
             #line hidden
-, 27310), false)
+WriteLiteral("                <button");
+
+WriteLiteral(" type=\"submit\"");
+
+WriteLiteral(" class=\"button\"");
+
+WriteLiteral(">Submit for approval</button>\r\n");
+
+            
+            #line 402 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            <a");
+
+WriteLiteral(" id=\"dashboardLink\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 27537), Tuple.Create("\"", 27596)
+            
+            #line 403 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 27544), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+            
+            #line default
+            #line hidden
+, 27544), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n        </div>\r\n    </section>\r\n");
 
             
-            #line 399 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 406 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
 }
 
             
