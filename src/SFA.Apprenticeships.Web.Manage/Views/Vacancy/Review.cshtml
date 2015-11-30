@@ -46,9 +46,12 @@
                 else
                 {
                     <div class="editable-item">
+                        <h3 class="bold-small">
+                            Closing date
+                            <i class="fa fa-check the-icon""></i>
+                        </h3>
                         <p id="vacancy-closing-date">
-                            Closing date: @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-                            <i class="fa fa-check the-icon" style="color: green;"></i>
+                            @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
                         </p>
                         <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
                     </div>
@@ -63,7 +66,7 @@
                 <div class="inner-block-padr">
 
                     <div class="editable-item">
-                        <h3 class="bold-small">Working week <i class="fa fa-check the-icon" style="color: green;"></i></h3>
+                        <h3 class="bold-small">Working week <i class="fa fa-check the-icon""></i></h3>
                         <p id="vacancy-working-week" itemprop="workHours">
                             @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
                             @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
@@ -75,7 +78,7 @@
                     </div>
                     <div class="editable-item">
                         <h3 class="bold-small">
-                            @Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon" style="color: green;"></i>
+                            @Model.VacancySummaryViewModel.WageUnitDisplayText wage <i class="fa fa-check the-icon""></i>
                         </h3>
                         <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
                         <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
@@ -113,7 +116,7 @@
                             }
                             else
                             {
-                                <i class="fa fa-check the-icon" style="color: green;"></i>
+                                <i class="fa fa-check the-icon""></i>
                             }
                         </h3>
                         <p id="vacancy-expected-duration">
@@ -136,7 +139,7 @@
                         {
                             <p id="vacancy-start-date">
                                 @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                                <i class="fa fa-check the-icon" style="color: green;"></i>
+                                <i class="fa fa-check the-icon""></i>
                             </p>
                             <a href="@Url.RouteUrl(ManagementRouteNames.Summary, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
                         }
@@ -281,7 +284,7 @@
                                    id="vacancy-employer-website"
                                    target="_blank"
                                    title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                                <i class="fa fa-check the-icon" style="color: green;"></i>
+                                <i class="fa fa-check the-icon""></i>
                             </p>
                         }
                         <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
@@ -320,7 +323,7 @@
             <div class="form-group">
                 <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
                 <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
-                <i class="fa fa-check the-icon" style="color: green;"></i>
+                <i class="fa fa-check the-icon""></i>
                 <a href="@Url.RouteUrl(ManagementRouteNames.BasicDetails, new {vacancyReferencenumber = Model.VacancyReferenceNumber})" class="edit-comment-link">Edit/Comment</a>
             </div>
         </section>
