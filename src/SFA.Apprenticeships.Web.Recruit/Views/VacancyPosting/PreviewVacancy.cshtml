@@ -134,9 +134,10 @@
                     
                 <div class="editable-item">
                     <h3 class="bold-small">Apprenticeship level
+                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.NewVacancyViewModel.ApprenticeshipLevelComment, summaryLink))
                     </h3>
                     <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
-                    <a href="#" class="edit-comment-link">Edit</a>
+                    <a href="@basicDetailsLink" class="edit-comment-link">Edit</a>
                 </div>
 
                 <div>
