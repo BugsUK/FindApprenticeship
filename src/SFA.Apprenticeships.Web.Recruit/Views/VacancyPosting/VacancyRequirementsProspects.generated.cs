@@ -125,7 +125,7 @@ WriteLiteral("            ");
 
             
             #line 20 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-       Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text", autofocus = "autofocus" }));
+       Write(Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
             #line default

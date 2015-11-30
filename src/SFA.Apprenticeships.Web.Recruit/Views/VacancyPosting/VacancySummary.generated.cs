@@ -153,7 +153,7 @@ WriteLiteral("                ");
 
             
             #line 25 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-           Write(Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, autofocus = "autofocus"}));
+           Write(Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12}));
 
             
             #line default
@@ -196,14 +196,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 1630), Tuple.Create("\"", 1688)
+WriteAttribute("name", Tuple.Create(" name=\"", 1605), Tuple.Create("\"", 1663)
             
             #line 34 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create("", 1637), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.WageType).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 1612), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.WageType).ToString().ToLower()
             
             #line default
             #line hidden
-, 1637), false)
+, 1612), false)
 );
 
 WriteLiteral("></a>\r\n                    <label");
@@ -214,15 +214,15 @@ WriteLiteral(" for=\"weekly-wage\"");
 
 WriteLiteral(">Wage</label>\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1798), Tuple.Create("\"", 1897)
-, Tuple.Create(Tuple.Create("", 1806), Tuple.Create("form-group", 1806), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1773), Tuple.Create("\"", 1872)
+, Tuple.Create(Tuple.Create("", 1781), Tuple.Create("form-group", 1781), true)
             
             #line 36 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1816), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType))
+, Tuple.Create(Tuple.Create(" ", 1791), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType))
             
             #line default
             #line hidden
-, 1817), false)
+, 1792), false)
 );
 
 WriteLiteral(" data-editable-x=\"\"");
@@ -352,27 +352,27 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4090), Tuple.Create("\"", 4189)
-, Tuple.Create(Tuple.Create("", 4098), Tuple.Create("form-group", 4098), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4065), Tuple.Create("\"", 4164)
+, Tuple.Create(Tuple.Create("", 4073), Tuple.Create("form-group", 4073), true)
             
             #line 66 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4108), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration))
+, Tuple.Create(Tuple.Create(" ", 4083), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration))
             
             #line default
             #line hidden
-, 4109), false)
+, 4084), false)
 );
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 4215), Tuple.Create("\"", 4273)
+WriteAttribute("name", Tuple.Create(" name=\"", 4190), Tuple.Create("\"", 4248)
             
             #line 67 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create("", 4222), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Duration).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 4197), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Duration).ToString().ToLower()
             
             #line default
             #line hidden
-, 4222), false)
+, 4197), false)
 );
 
 WriteLiteral("></a>\r\n");
@@ -436,29 +436,29 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </fieldset>\r\n\r\n            <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4905), Tuple.Create("\"", 5031)
-, Tuple.Create(Tuple.Create("", 4913), Tuple.Create("form-group", 4913), true)
-, Tuple.Create(Tuple.Create(" ", 4923), Tuple.Create("inline-fixed", 4924), true)
-, Tuple.Create(Tuple.Create(" ", 4936), Tuple.Create("date-input", 4937), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4880), Tuple.Create("\"", 5006)
+, Tuple.Create(Tuple.Create("", 4888), Tuple.Create("form-group", 4888), true)
+, Tuple.Create(Tuple.Create(" ", 4898), Tuple.Create("inline-fixed", 4899), true)
+, Tuple.Create(Tuple.Create(" ", 4911), Tuple.Create("date-input", 4912), true)
             
             #line 78 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4947), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate))
+, Tuple.Create(Tuple.Create(" ", 4922), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate))
             
             #line default
             #line hidden
-, 4948), false)
+, 4923), false)
 );
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 5053), Tuple.Create("\"", 5114)
+WriteAttribute("name", Tuple.Create(" name=\"", 5028), Tuple.Create("\"", 5089)
             
             #line 79 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create("", 5060), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.ClosingDate).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 5035), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.ClosingDate).ToString().ToLower()
             
             #line default
             #line hidden
-, 5060), false)
+, 5035), false)
 );
 
 WriteLiteral("></a>\r\n                <legend");
@@ -511,29 +511,29 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n            <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5543), Tuple.Create("\"", 5675)
-, Tuple.Create(Tuple.Create("", 5551), Tuple.Create("form-group", 5551), true)
-, Tuple.Create(Tuple.Create(" ", 5561), Tuple.Create("inline-fixed", 5562), true)
-, Tuple.Create(Tuple.Create(" ", 5574), Tuple.Create("date-input", 5575), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 5518), Tuple.Create("\"", 5650)
+, Tuple.Create(Tuple.Create("", 5526), Tuple.Create("form-group", 5526), true)
+, Tuple.Create(Tuple.Create(" ", 5536), Tuple.Create("inline-fixed", 5537), true)
+, Tuple.Create(Tuple.Create(" ", 5549), Tuple.Create("date-input", 5550), true)
             
             #line 85 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 5585), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate))
+, Tuple.Create(Tuple.Create(" ", 5560), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate))
             
             #line default
             #line hidden
-, 5586), false)
+, 5561), false)
 );
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 5697), Tuple.Create("\"", 5764)
+WriteAttribute("name", Tuple.Create(" name=\"", 5672), Tuple.Create("\"", 5739)
             
             #line 86 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create("", 5704), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 5679), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()
             
             #line default
             #line hidden
-, 5704), false)
+, 5679), false)
 );
 
 WriteLiteral("></a>\r\n                <legend");

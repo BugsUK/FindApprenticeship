@@ -139,7 +139,7 @@ WriteLiteral("                    ");
 
             
             #line 27 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-               Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.NewVacancyViewModel.TitleComment, basicDetailsLink)));
+               Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, basicDetailsLink)));
 
             
             #line default
@@ -163,14 +163,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1754), Tuple.Create("\"", 1778)
+WriteAttribute("href", Tuple.Create(" href=\"", 1792), Tuple.Create("\"", 1816)
             
             #line 30 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1761), Tuple.Create<System.Object, System.Int32>(basicDetailsLink
+, Tuple.Create(Tuple.Create("", 1799), Tuple.Create<System.Object, System.Int32>(basicDetailsLink
             
             #line default
             #line hidden
-, 1761), false)
+, 1799), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -203,7 +203,7 @@ WriteLiteral("                        ");
 
             
             #line 40 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                   Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.NewVacancyViewModel.ShortDescriptionComment, basicDetailsLink)));
+                   Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, basicDetailsLink)));
 
             
             #line default
@@ -223,14 +223,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                    </div>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2402), Tuple.Create("\"", 2426)
+WriteAttribute("href", Tuple.Create(" href=\"", 2489), Tuple.Create("\"", 2513)
             
             #line 43 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 2409), Tuple.Create<System.Object, System.Int32>(basicDetailsLink
+, Tuple.Create(Tuple.Create("", 2496), Tuple.Create<System.Object, System.Int32>(basicDetailsLink
             
             #line default
             #line hidden
-, 2409), false)
+, 2496), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -270,14 +270,14 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n                </p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3037), Tuple.Create("\"", 3056)
+WriteAttribute("href", Tuple.Create(" href=\"", 3124), Tuple.Create("\"", 3143)
             
             #line 53 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 3044), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 3131), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 3044), false)
+, 3131), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -356,7 +356,7 @@ WriteLiteral("\r\n");
             
             #line 67 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                          if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
-                        {
+                    {
 
             
             #line default
@@ -374,14 +374,14 @@ WriteLiteral("(the hours are based on the candidate being over 18)\r\n");
             #line hidden
 WriteLiteral("                    </p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4214), Tuple.Create("\"", 4233)
+WriteAttribute("href", Tuple.Create(" href=\"", 4297), Tuple.Create("\"", 4316)
             
             #line 72 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 4221), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 4304), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 4221), false)
+, 4304), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -425,7 +425,7 @@ WriteLiteral("                                ");
 
             
             #line 80 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                           Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancySummaryViewModel.WageComment, summaryLink)));
+                           Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancySummaryViewModel.WageType, Model.VacancySummaryViewModel.WageComment, summaryLink)));
 
             
             #line default
@@ -447,7 +447,7 @@ WriteLiteral("                                ");
 
             
             #line 86 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                           Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancySummaryViewModel.WageComment, summaryLink)));
+                           Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancySummaryViewModel.WageType, Model.VacancySummaryViewModel.WageComment, summaryLink)));
 
             
             #line default
@@ -476,14 +476,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 5272), Tuple.Create("\"", 5291)
+WriteAttribute("href", Tuple.Create(" href=\"", 5445), Tuple.Create("\"", 5464)
             
             #line 91 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 5279), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 5452), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 5279), false)
+, 5452), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -628,14 +628,14 @@ WriteLiteral(" ");
             #line hidden
 WriteLiteral("</p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 7450), Tuple.Create("\"", 7469)
+WriteAttribute("href", Tuple.Create(" href=\"", 7623), Tuple.Create("\"", 7642)
             
             #line 122 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 7457), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 7630), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 7457), false)
+, 7630), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -676,14 +676,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("\r\n                    </p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 8123), Tuple.Create("\"", 8142)
+WriteAttribute("href", Tuple.Create(" href=\"", 8296), Tuple.Create("\"", 8315)
             
             #line 132 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 8130), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 8303), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 8130), false)
+, 8303), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -751,7 +751,7 @@ WriteLiteral("                ");
 
             
             #line 150 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-           Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancySummaryViewModel.LongDescriptionComment, summaryLink)));
+           Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, summaryLink)));
 
             
             #line default
@@ -771,14 +771,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 9238), Tuple.Create("\"", 9257)
+WriteAttribute("href", Tuple.Create(" href=\"", 9463), Tuple.Create("\"", 9482)
             
             #line 152 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 9245), Tuple.Create<System.Object, System.Int32>(summaryLink
+, Tuple.Create(Tuple.Create("", 9470), Tuple.Create<System.Object, System.Int32>(summaryLink
             
             #line default
             #line hidden
-, 9245), false)
+, 9470), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -835,7 +835,7 @@ WriteLiteral("                            ");
 
             
             #line 166 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                       Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, requirementsProspentsLink)));
+                       Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, requirementsProspentsLink)));
 
             
             #line default
@@ -857,14 +857,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 10221), Tuple.Create("\"", 10254)
+WriteAttribute("href", Tuple.Create(" href=\"", 10510), Tuple.Create("\"", 10543)
             
             #line 169 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 10228), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 10517), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 10228), false)
+, 10517), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -902,7 +902,7 @@ WriteLiteral("                            ");
 
             
             #line 176 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                       Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, requirementsProspentsLink)));
+                       Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, requirementsProspentsLink)));
 
             
             #line default
@@ -924,14 +924,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 10997), Tuple.Create("\"", 11030)
+WriteAttribute("href", Tuple.Create(" href=\"", 11354), Tuple.Create("\"", 11387)
             
             #line 179 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 11004), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 11361), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 11004), false)
+, 11361), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -969,7 +969,7 @@ WriteLiteral("                            ");
 
             
             #line 186 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                       Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, requirementsProspentsLink)));
+                       Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, requirementsProspentsLink)));
 
             
             #line default
@@ -991,14 +991,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11800), Tuple.Create("\"", 11833)
+WriteAttribute("href", Tuple.Create(" href=\"", 12229), Tuple.Create("\"", 12262)
             
             #line 189 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 11807), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 12236), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 11807), false)
+, 12236), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1050,7 +1050,7 @@ WriteLiteral("                        ");
 
             
             #line 202 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                   Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, requirementsProspentsLink)));
+                   Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, requirementsProspentsLink)));
 
             
             #line default
@@ -1072,14 +1072,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 12646), Tuple.Create("\"", 12679)
+WriteAttribute("href", Tuple.Create(" href=\"", 13141), Tuple.Create("\"", 13174)
             
             #line 205 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 12653), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 13148), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 12653), false)
+, 13148), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1117,7 +1117,7 @@ WriteLiteral("                        ");
 
             
             #line 212 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                   Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, requirementsProspentsLink)));
+                   Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, requirementsProspentsLink)));
 
             
             #line default
@@ -1139,14 +1139,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n                    <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 13375), Tuple.Create("\"", 13408)
+WriteAttribute("href", Tuple.Create(" href=\"", 13937), Tuple.Create("\"", 13970)
             
             #line 215 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 13382), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
+, Tuple.Create(Tuple.Create("", 13944), Tuple.Create<System.Object, System.Int32>(requirementsProspentsLink
             
             #line default
             #line hidden
-, 13382), false)
+, 13944), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1224,7 +1224,7 @@ WriteLiteral("                                ");
 
             
             #line 237 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                           Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyQuestionsViewModel.FirstQuestionComment, questionsLink)));
+                           Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, questionsLink)));
 
             
             #line default
@@ -1240,14 +1240,14 @@ WriteLiteral("\r\n                            </h3>\r\n                         
             #line hidden
 WriteLiteral("</p>\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 14571), Tuple.Create("\"", 14592)
+WriteAttribute("href", Tuple.Create(" href=\"", 15185), Tuple.Create("\"", 15206)
             
             #line 240 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 14578), Tuple.Create<System.Object, System.Int32>(questionsLink
+, Tuple.Create(Tuple.Create("", 15192), Tuple.Create<System.Object, System.Int32>(questionsLink
             
             #line default
             #line hidden
-, 14578), false)
+, 15192), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1285,7 +1285,7 @@ WriteLiteral("                                ");
 
             
             #line 248 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                           Write(Html.Partial(CommentViewModel.PartialView, new CommentViewModel(Model.VacancyQuestionsViewModel.SecondQuestionComment, questionsLink)));
+                           Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, questionsLink)));
 
             
             #line default
@@ -1301,14 +1301,14 @@ WriteLiteral("\r\n                            </h3>\r\n                         
             #line hidden
 WriteLiteral("</p>\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 15296), Tuple.Create("\"", 15317)
+WriteAttribute("href", Tuple.Create(" href=\"", 15963), Tuple.Create("\"", 15984)
             
             #line 251 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 15303), Tuple.Create<System.Object, System.Int32>(questionsLink
+, Tuple.Create(Tuple.Create("", 15970), Tuple.Create<System.Object, System.Int32>(questionsLink
             
             #line default
             #line hidden
-, 15303), false)
+, 15970), false)
 );
 
 WriteLiteral(" class=\"edit-comment-link\"");
@@ -1395,14 +1395,14 @@ WriteLiteral(">Employer</h3>\r\n                            <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 16350), Tuple.Create("\"", 16477)
+WriteAttribute("class", Tuple.Create(" class=\"", 17017), Tuple.Create("\"", 17144)
             
             #line 275 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 16358), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
+, Tuple.Create(Tuple.Create("", 17025), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
             
             #line default
             #line hidden
-, 16358), false)
+, 17025), false)
 );
 
 WriteLiteral(">");
@@ -1434,29 +1434,29 @@ WriteLiteral("                                <p>\r\n                           
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 16791), Tuple.Create("\"", 16860)
+WriteAttribute("href", Tuple.Create(" href=\"", 17458), Tuple.Create("\"", 17527)
             
             #line 279 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 16798), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
+, Tuple.Create(Tuple.Create("", 17465), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
             
             #line default
             #line hidden
-, 16798), false)
+, 17465), false)
 );
 
 WriteLiteral("\r\n                                       id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                                       target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 16987), Tuple.Create("\"", 17108)
+WriteAttribute("title", Tuple.Create("\r\n                                       title=\"", 17654), Tuple.Create("\"", 17775)
             
             #line 282 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 17035), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+, Tuple.Create(Tuple.Create("", 17702), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
             
             #line default
             #line hidden
-, 17035), false)
-, Tuple.Create(Tuple.Create(" ", 17100), Tuple.Create("Website", 17101), true)
+, 17702), false)
+, Tuple.Create(Tuple.Create(" ", 17767), Tuple.Create("Website", 17768), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -1602,16 +1602,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 18927), Tuple.Create("\"", 19129)
-, Tuple.Create(Tuple.Create("", 18933), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 18933), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 19594), Tuple.Create("\"", 19796)
+, Tuple.Create(Tuple.Create("", 19600), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 19600), true)
             
             #line 302 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                    , Tuple.Create(Tuple.Create("", 18978), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
+                                                                    , Tuple.Create(Tuple.Create("", 19645), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
             
             #line default
             #line hidden
-, 18978), false)
-, Tuple.Create(Tuple.Create("", 19065), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 19065), true)
+, 19645), false)
+, Tuple.Create(Tuple.Create("", 19732), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 19732), true)
 );
 
 WriteLiteral("></iframe>\r\n                        <p");
@@ -1682,14 +1682,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 20036), Tuple.Create("\"", 20091)
+WriteAttribute("href", Tuple.Create(" href=\"", 20703), Tuple.Create("\"", 20758)
             
             #line 320 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 20043), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+, Tuple.Create(Tuple.Create("", 20710), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 20043), false)
+, 20710), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -2005,14 +2005,14 @@ WriteLiteral(">Submit for approval</button>\r\n            <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 23059), Tuple.Create("\"", 23118)
+WriteAttribute("href", Tuple.Create(" href=\"", 23726), Tuple.Create("\"", 23785)
             
             #line 384 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 23066), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 23733), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 23066), false)
+, 23733), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n        </div>\r\n    </section>\r\n");

@@ -17,7 +17,7 @@
 
     <section>
         <div class="form-group">
-            @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text", autofocus = "autofocus" })
+            @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
             @Html.DisplayFor(m => m.DesiredSkillsComment, "Comment")
             @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
             @Html.DisplayFor(m => m.PersonalQualitiesComment, "Comment")
