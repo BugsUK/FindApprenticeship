@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
     using Validators.Vacancy;
 
@@ -29,5 +30,7 @@
         public string DesiredQualifications { get; set; }
         [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
         public string DesiredQualificationsComment { get; set; }
+        public ProviderVacancyStatuses Status { get; set; }
+
     }
 }

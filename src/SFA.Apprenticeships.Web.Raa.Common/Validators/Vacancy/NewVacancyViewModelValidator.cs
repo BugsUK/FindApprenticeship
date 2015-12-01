@@ -70,6 +70,10 @@
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
+            validator.RuleFor(m => m.StandardIdComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
             validator.RuleFor(m => m.ApprenticeshipLevelComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);

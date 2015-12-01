@@ -11,6 +11,7 @@
     using Factory;
     using Logging;
     using Models;
+    using Routing;
 
     public class ProxyHandler : DelegatingHandler
     {

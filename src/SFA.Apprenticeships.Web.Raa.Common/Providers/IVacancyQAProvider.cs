@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System.Collections.Generic;
+    using System.Web.Mvc;
     using ViewModels;
-    using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
 
     public interface IVacancyQAProvider
@@ -32,5 +32,9 @@
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
 
         VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
+
+        List<SelectListItem> GetSectorsAndFrameworks();
+
+        List<StandardViewModel> GetStandards();
     }
 }

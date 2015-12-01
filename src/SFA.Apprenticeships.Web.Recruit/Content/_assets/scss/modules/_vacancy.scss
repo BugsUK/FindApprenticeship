@@ -30,6 +30,7 @@
 }
 
 html:not(.touch) .editable-item {
+    border: 1px dotted #fff;
     .edit-comment-link {
         color: white;
         &:focus {
@@ -38,7 +39,7 @@ html:not(.touch) .editable-item {
     }       
     &:hover {
         background: rgba( 0, 0, 0, .025 );
-        outline: 1px dotted #d4d4d4;
+        border: 1px dotted #d4d4d4;
         .edit-comment-link {
             color: #005ea5;
         }
@@ -92,7 +93,7 @@ html:not(.touch) .editable-item {
         }
         figure.data {
             .count {
-                @include bold-80( $tabular-numbers: true );
+                @include bold-48( $tabular-numbers: true );
                 margin-bottom: 0;
                 @media screen and ( max-width: 640px ) {
                     padding: .25em 0;
@@ -156,7 +157,7 @@ table#vacancies-table {
                 &.vac-ref-number,
                 &.vac-no-of-applications {
                     &:before {
-                        content: attr(data-label) ": ";
+                        content: attr(data-label) ":\00a0";
                         @include bold-16;
                     }
                 }

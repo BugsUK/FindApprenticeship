@@ -11,6 +11,7 @@
     using Common.ViewModels.Locations;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.Views.Shared.DisplayTemplates;
     using Recruit.Views.VacancyPosting;
 
     [TestFixture]
@@ -57,7 +58,7 @@
         [TestCase(WageType.ApprenticeshipMinimumWage, 37.5, "&#163;123.75")]
         public void ShouldShowWageText(WageType wagetype, decimal hoursPerWeek, string expectedDisplayText)
         {
-            var details = new PreviewVacancy();
+            var details = new VacancyPreview_();
 
             var viewModel = new VacancyViewModel
             {
@@ -96,7 +97,7 @@
         [TestCase(100, WageUnit.Annually, @"&#163;100")]
         public void ShouldShowCustomWageAmount(decimal wage, WageUnit wageUnit, string expectedDisplayText)
         {
-            var details = new PreviewVacancy();
+            var details = new VacancyPreview_();
 
             var viewModel = new VacancyViewModel()
             {
