@@ -66,6 +66,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
         public string LongDescriptionComment { get; set; }
 
+        public int WarningsHash { get; set; }
+
         public bool AcceptWarnings { get; set; }
 
         public ProviderVacancyStatuses Status { get; set; }

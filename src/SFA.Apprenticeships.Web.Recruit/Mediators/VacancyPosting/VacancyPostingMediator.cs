@@ -7,6 +7,7 @@
     using Common.Constants;
     using Common.Mediators;
     using Common.Validators;
+    using Common.Validators.Extensions;
     using Common.ViewModels;
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
@@ -295,6 +296,7 @@
 
                 if (!validationResult.IsValid)
                 {
+                    vacancyViewModel.WarningsHash = validationResult.GetWarningsHash();
                     return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation, vacancyViewModel, validationResult);
                 }
             }
@@ -306,10 +308,13 @@
         {
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
-            if (!validationResult.IsValid && (!acceptWarnings || validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)))
+            var warningsAccepted = validationResult.HasWarningsOnly() && validationResult.IsWarningsHashMatch(viewModel.WarningsHash) && acceptWarnings;
+
+            if (!validationResult.IsValid && !warningsAccepted)
             {
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
+                viewModel.WarningsHash = validationResult.GetWarningsHash();
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }

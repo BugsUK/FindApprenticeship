@@ -27,7 +27,8 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    @Html.HiddenFor(model => model.Status)
+    @Html.HiddenFor(m => m.Status)
+    @Html.HiddenFor(m => m.WarningsHash)
 
     <section>
         <div class="form-group">
