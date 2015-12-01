@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 {
+    using System;
+
     public class ApprenticeshipVacancy : Vacancy
     {
         public TrainingType TrainingType { get; set; }
