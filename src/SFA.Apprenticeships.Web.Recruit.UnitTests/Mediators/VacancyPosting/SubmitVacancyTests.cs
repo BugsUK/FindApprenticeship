@@ -33,7 +33,7 @@
         public void ShouldReturnValidationErrorIfNotOptedIn()
         {
             var vvm = new Fixture().Build<VacancyViewModel>().Create();
-            vvm.ResubmitOptin = false;
+            vvm.ResubmitOption = false;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
             var mediator = GetMediator();

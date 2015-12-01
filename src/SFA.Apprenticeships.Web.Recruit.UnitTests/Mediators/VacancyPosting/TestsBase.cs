@@ -7,6 +7,7 @@
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.VacancyPosting;
 
     public class TestsBase
     {
@@ -38,7 +39,8 @@
                 new VacancyQuestionsViewModelClientValidator(),
                 new VacancyResubmissionValidator(),
                 new ProviderSiteEmployerLinkViewModelValidator(),
-                new EmployerSearchViewModelServerValidator());
+                new EmployerSearchViewModelServerValidator(),
+                new LocationSearchViewModelValidator());
         }
     }
 }

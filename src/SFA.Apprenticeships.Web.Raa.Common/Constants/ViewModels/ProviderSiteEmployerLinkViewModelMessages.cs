@@ -26,7 +26,7 @@
 
         public class IsEmployerLocationMainApprenticeshipLocation
         {
-            public const string RequiredErrorText = "Please select an option";
+            public const string RequiredErrorText = "Select whether the employer’s address is the main apprenticeship location or not";
         }
     }
 }

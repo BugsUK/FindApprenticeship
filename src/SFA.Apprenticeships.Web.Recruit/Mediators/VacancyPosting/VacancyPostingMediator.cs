@@ -19,6 +19,7 @@
     using Raa.Common.Converters;
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.VacancyPosting;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
@@ -36,6 +37,7 @@
         private readonly VacancyResubmissionValidator _vacancyResubmissionValidator;
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
+        private readonly LocationSearchViewModelValidator _locationSearchViewModelValidator;
 
         public VacancyPostingMediator(
             IVacancyPostingProvider vacancyPostingProvider,
@@ -50,7 +52,9 @@
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyQuestionsViewModelClientValidator vacancyQuestionsViewModelClientValidator,
             VacancyResubmissionValidator vacancyResubmissionValidator,
-            ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator)
+            ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, 
+            EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator, 
+            LocationSearchViewModelValidator locationSearchViewModelValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerProvider = providerProvider;
@@ -60,6 +64,7 @@
             _vacancyResubmissionValidator = vacancyResubmissionValidator;
             _providerSiteEmployerLinkViewModelValidator = providerSiteEmployerLinkViewModelValidator;
             _employerSearchViewModelServerValidator = employerSearchViewModelServerValidator;
+            _locationSearchViewModelValidator = locationSearchViewModelValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _vacancySummaryViewModelClientValidator = vacancySummaryViewModelClientValidator;
             _vacancyRequirementsProspectsViewModelServerValidator = vacancyRequirementsProspectsViewModelServerValidator;
@@ -132,7 +137,7 @@
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteErn, ern);
             viewModel.VacancyGuid = vacancyGuid;
             viewModel.IsEmployerLocationMainApprenticeshipLocation = null;
-            viewModel.NumberOfPositions = 1; // TODO: change to null
+            viewModel.NumberOfPositions = null;
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
@@ -299,7 +304,14 @@
 
         public MediatorResponse<LocationSearchViewModel> CreateVacancy(LocationSearchViewModel viewModel)
         {
-            // TODO: validate
+            var validationResult = _locationSearchViewModelValidator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, viewModel,
+                    validationResult);
+            }
+
             var locationSearchViewModel = _vacancyPostingProvider.CreateVacancy(viewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);

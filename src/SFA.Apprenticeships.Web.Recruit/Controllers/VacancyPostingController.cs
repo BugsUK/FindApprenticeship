@@ -528,7 +528,17 @@
         {
             var response = _vacancyPostingMediator.CreateVacancy(viewModel);
 
-            return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.CreateVacancy.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "AddLocations")]

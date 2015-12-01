@@ -124,19 +124,25 @@
                 LocationAddresses = new List<VacancyLocationAddress> { 
                     new VacancyLocationAddress
                     {
-                        AddressLine1 = "address line 1 1",
-                        AddressLine2 = "address line 2 1",
-                        AddressLine3 = "address line 3 1",
-                        AddressLine4 = "address line 4 1",
-                        Postcode = "Postcode 1"
+                        Address = new Address
+                        {
+                            AddressLine1 = "address line 1 1",
+                            AddressLine2 = "address line 2 1",
+                            AddressLine3 = "address line 3 1",
+                            AddressLine4 = "address line 4 1",
+                            Postcode = "Postcode 1"
+                        }
                     },
                     new VacancyLocationAddress
                     {
-                        AddressLine1 = "address line 1 2",
-                        AddressLine2 = "address line 2 2",
-                        AddressLine3 = "address line 3 2",
-                        AddressLine4 = "address line 4 2",
-                        Postcode = "Postcode 2"
+                        Address = new Address
+                        {
+                            AddressLine1 = "address line 1 2",
+                            AddressLine2 = "address line 2 2",
+                            AddressLine3 = "address line 3 2",
+                            AddressLine4 = "address line 4 2",
+                            Postcode = "Postcode 2"
+                        }
                     }
                 }
             };
@@ -159,20 +165,20 @@
             MockVacancyPostingService.Verify(
                 ps =>
                     ps.SaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>( v => v.LocationAddresses.First().AddressLine1 == "address line 1 1" &&
-                                                            v.LocationAddresses.First().AddressLine2 == "address line 2 1" &&
-                                                            v.LocationAddresses.First().AddressLine3 == "address line 3 1" &&
-                                                            v.LocationAddresses.First().AddressLine4 == "address line 4 1" &&
-                                                            v.LocationAddresses.First().Postcode == "Postcode 1")));
+                        It.Is<ApprenticeshipVacancy>( v => v.LocationAddresses.First().Address.AddressLine1 == "address line 1 1" &&
+                                                            v.LocationAddresses.First().Address.AddressLine2 == "address line 2 1" &&
+                                                            v.LocationAddresses.First().Address.AddressLine3 == "address line 3 1" &&
+                                                            v.LocationAddresses.First().Address.AddressLine4 == "address line 4 1" &&
+                                                            v.LocationAddresses.First().Address.Postcode == "Postcode 1")));
 
             MockVacancyPostingService.Verify(
                 ps =>
                     ps.SaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(v => v.LocationAddresses.First().AddressLine1 == "address line 1 2" &&
-                                                           v.LocationAddresses.First().AddressLine2 == "address line 2 2" &&
-                                                           v.LocationAddresses.First().AddressLine3 == "address line 3 2" &&
-                                                           v.LocationAddresses.First().AddressLine4 == "address line 4 2" &&
-                                                           v.LocationAddresses.First().Postcode == "Postcode 2")));
+                        It.Is<ApprenticeshipVacancy>(v => v.LocationAddresses.First().Address.AddressLine1 == "address line 1 2" &&
+                                                           v.LocationAddresses.First().Address.AddressLine2 == "address line 2 2" &&
+                                                           v.LocationAddresses.First().Address.AddressLine3 == "address line 3 2" &&
+                                                           v.LocationAddresses.First().Address.AddressLine4 == "address line 4 2" &&
+                                                           v.LocationAddresses.First().Address.Postcode == "Postcode 2")));
 
         }
     }

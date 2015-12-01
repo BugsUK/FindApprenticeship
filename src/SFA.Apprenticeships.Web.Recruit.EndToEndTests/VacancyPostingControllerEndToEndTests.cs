@@ -100,8 +100,8 @@
             vacancyPostingController.ConfirmEmployer(viewModel);
 
             var vacancy = Collection.FindOneById(vacancyGuid);
-            vacancy.ProviderSiteEmployerLink.IsEmployerLocationMainApprenticeshipLocation.Should().BeTrue();
-            vacancy.ProviderSiteEmployerLink.NumberOfPosition.Should().Be(numberOfPositions);
+            vacancy.IsEmployerLocationMainApprenticeshipLocation.Should().BeTrue();
+            vacancy.NumberOfPositions.Should().Be(numberOfPositions);
         }
 
         [Test]
@@ -169,11 +169,11 @@
 
             var vacancy = Collection.FindOneById(vacancyGuid);
             vacancy.LocationAddresses.Should().HaveCount(1);
-            vacancy.LocationAddresses[0].AddressLine1.Should().Be(address1.Address.AddressLine1);
-            vacancy.LocationAddresses[0].AddressLine2.Should().Be(address1.Address.AddressLine2);
-            vacancy.LocationAddresses[0].AddressLine3.Should().Be(address1.Address.AddressLine3);
-            vacancy.LocationAddresses[0].AddressLine4.Should().Be(address1.Address.AddressLine4);
-            vacancy.LocationAddresses[0].Postcode.Should().Be(address1.Address.Postcode);
+            vacancy.LocationAddresses[0].Address.AddressLine1.Should().Be(address1.Address.AddressLine1);
+            vacancy.LocationAddresses[0].Address.AddressLine2.Should().Be(address1.Address.AddressLine2);
+            vacancy.LocationAddresses[0].Address.AddressLine3.Should().Be(address1.Address.AddressLine3);
+            vacancy.LocationAddresses[0].Address.AddressLine4.Should().Be(address1.Address.AddressLine4);
+            vacancy.LocationAddresses[0].Address.Postcode.Should().Be(address1.Address.Postcode);
             vacancy.LocationAddresses[0].NumberOfPositions.Should().Be(numberOfPositions);
             vacancy.AdditionalLocationInformation.Should().Be(additionalLocationInformation);
         }

@@ -27,7 +27,7 @@
                 VacancySummaryViewModel = new VacancySummaryViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                ResubmitOptin = false
+                ResubmitOption = false
             };
 
             var result = _validator.Validate(viewModel);

@@ -380,25 +380,64 @@
                                     <i class="fa fa-check the-icon" style="color: green;"></i>
                                 </p>
                             }
-                            <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="bold-small">Address</h3>
-                                <div itemprop="address">
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
-                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
+                            @if (Model.IsEmployerLocationMainApprenticeshipLocation == true)
+                            {
+                                <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
+                                    <h3 class="bold-small">Address</h3>
+                                    <div itemprop="address">
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
+                                        <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
+                                    </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+                                <p></p>
+                                <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
+                                    <h3 class="bold-small">Addresses</h3>
+                                    <div id="locationAddressesTable">
+                                        <table>
+                                            <colgroup>
+                                                <col class="t60">
+                                                <col class="t45">
+                                            </colgroup>
+
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <span class="heading-span">Location</span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="heading-span">Number of positions</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                                            @foreach (var locationAddress in Model.LocationAddresses)
+                                            {
+                                                @Html.DisplayFor(m => locationAddress)
+                                            }
+                                            
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>
                 <div class="grid grid-1-2 hide-print">
-                    <div id="vacancy-map" class="ad-details__map">
-                        <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
-                        <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                    </div>
+                    @if (Model.IsEmployerLocationMainApprenticeshipLocation == true)
+                    {
+                        <div id="vacancy-map" class="ad-details__map">
+                            <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
+                            <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                        </div>
+                    }
                 </div>
             </div>
         </section>
@@ -466,13 +505,13 @@
 
     if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
     {
-        Model.ResubmitOptin = false;
-        @Html.FormCheckBoxFor(model => model.ResubmitOptin, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
+        Model.ResubmitOption = false;
+        @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
     }
     else
     {
-        Model.ResubmitOptin = true;
-        @Html.HiddenFor(model => model.ResubmitOptin)
+        Model.ResubmitOption = true;
+        @Html.HiddenFor(model => model.ResubmitOption)
     }
 
     <section>

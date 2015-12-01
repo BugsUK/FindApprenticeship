@@ -14,7 +14,7 @@
 
         private void AddCommonRules()
         {
-            RuleFor(x => x.ResubmitOptin)
+            RuleFor(x => x.ResubmitOption)
                 .Must(x => x)
                 .WithMessage(VacancyViewModelMessages.ResubmitOptin.RequiredErrorText);
         }

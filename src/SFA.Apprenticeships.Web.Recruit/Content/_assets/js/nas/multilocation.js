@@ -1,26 +1,20 @@
 ﻿(function () {
+    // Validation messages
+    var validationMessageNumberOfPositionsRequired = "You must enter at least 1 position";
+
+    ko.validation.registerExtenders();
 
     var locationAddressItemModel = function (itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4, itemPostcode, itemNumberOfPositions, itemUprn) {
 
         var self = this;
 
-        /* 
-        self.itemEmployer = ko.observable(itemEmployer).extend({
-            required: { message: validationMessageEmployerRequired }
-        }).extend({
-            maxLength: {
-                message: validationMessageEmployerExceedsFiftyCharacters,
-                params: 50
-            }
-        }).extend({
-            pattern: {
-                message: validationMessageEmployerContainsInvalidCharacters,
-                params: self.itemRegexPattern
-            }
-        });*/
-
         self.itemFriendlyAddress = ko.computed(function () {
-            return $.grep([itemPostcode, itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4], Boolean).join(", ");
+            var address = itemAddressLine1;
+            if (itemAddressLine2) {
+                address += "<br />" + itemAddressLine2;
+            }
+            address += "<br />" + itemAddressLine4 + " " + itemPostcode;
+            return address;
         }, self);
 
         self.itemAddressLine1 = ko.observable(itemAddressLine1);
@@ -31,6 +25,9 @@
         self.itemPostcode = ko.observable(itemPostcode);
         self.itemUprn = ko.observable(itemUprn);
         self.itemNumberOfPositions = ko.observable(itemNumberOfPositions);
+        //    .extend({
+        //        required: { message: validationMessageNumberOfPositionsRequired }
+        //});
 
         self.itemErrors = ko.validation.group(self);
     };
@@ -38,22 +35,6 @@
     var locationAddressesViewModel = function () {
         var self = this;
         
-        /* TODO: do we need this?
-        self.jobTitle = ko.observable().extend({
-            required: { message: validationMessageJobTitleRequired }
-        }).extend({
-            maxLength: {
-                message: validationMessageJobTitleExceedsFiftyCharacters,
-                params: 50
-            }
-        }).extend({
-            pattern: {
-                message: validationMessageJobTitleContainsInvalidCharacters,
-                params: self.regexPattern
-            }
-        });
-        */
-
         self.locationAddresses = ko.observableArray();
 
         self.showLocationAddresses = ko.observable(false);
@@ -98,6 +79,14 @@
             });
         };
 
+        self.saveAndContinue = function () {
+            self.itemErrors = ko.validation.group(self);
+            if (self.errors().length === 0) {
+            } else {
+                self.errors.showAllMessages();
+            }
+        }
+
     };
 
     $(function () {
@@ -128,6 +117,9 @@
             insertMessages: true,
             parseInputAttributes: true,
             errorClass: 'input-validation-error',
+            grouping: {
+                deep: true
+            },
             errorElementClass: 'input-validation-error'
         });
 

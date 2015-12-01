@@ -122,12 +122,12 @@
                 {
                     Address = new AddressViewModel
                     {
-                        AddressLine1 = v.AddressLine1,
-                        AddressLine2 = v.AddressLine2,
-                        AddressLine3 = v.AddressLine3,
-                        AddressLine4 = v.AddressLine4,
-                        Postcode = v.Postcode,
-                        Uprn = v.Uprn
+                        AddressLine1 = v.Address.AddressLine1,
+                        AddressLine2 = v.Address.AddressLine2,
+                        AddressLine3 = v.Address.AddressLine3,
+                        AddressLine4 = v.Address.AddressLine4,
+                        Postcode = v.Address.Postcode,
+                        Uprn = v.Address.Uprn
                     },
                     NumberOfPositions = v.NumberOfPositions
                 }));
@@ -225,11 +225,14 @@
 
             newVacancyViewModel.Addresses.ForEach(a => vacancy.LocationAddresses.Add(new VacancyLocationAddress
             {
-                AddressLine1 = a.Address.AddressLine1,
-                AddressLine2 = a.Address.AddressLine2,
-                AddressLine3 = a.Address.AddressLine3,
-                AddressLine4 = a.Address.AddressLine4,
-                Postcode = a.Address.Postcode,
+                Address = new Address { 
+                    AddressLine1 = a.Address.AddressLine1,
+                    AddressLine2 = a.Address.AddressLine2,
+                    AddressLine3 = a.Address.AddressLine3,
+                    AddressLine4 = a.Address.AddressLine4,
+                    Postcode = a.Address.Postcode,
+                    Uprn = a.Address.Uprn
+                },
                 NumberOfPositions = a.NumberOfPositions.Value
             }));
 

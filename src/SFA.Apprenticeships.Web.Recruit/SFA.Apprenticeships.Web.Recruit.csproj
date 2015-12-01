@@ -511,6 +511,7 @@
     <Content Include="Content\_assets\scss\_modules.scss" />
     <Content Include="Views\VacancyPosting\Locations.cshtml" />
     <Content Include="Content\_assets\scss\modules\_vacancy.scss" />
+    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
