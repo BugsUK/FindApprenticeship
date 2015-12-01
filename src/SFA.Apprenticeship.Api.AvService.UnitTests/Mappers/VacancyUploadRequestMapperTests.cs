@@ -172,7 +172,7 @@
             // Assert.
             mappedVacancy.DurationType.Should().Be(ProviderVacancies.DurationType.Text);
             mappedVacancy.Duration.Should().Be(default(int?));
-            mappedVacancy.DurationText.Should().Be(expectedDuration);
+            mappedVacancy.DurationComment.Should().Be(expectedDuration);
         }
 
         [Test]
@@ -381,20 +381,6 @@
         }
 
         [Test]
-        public void ShouldNotSetDateSubmitted()
-        {
-            // Arrange.
-            var vacancyUploadData = _vacancyUploadDataBuilder
-                .Build();
-
-            // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
-
-            // Assert.
-            mappedVacancy.DateSubmitted.Should().Be(default(DateTime?));
-        }
-
-        [Test]
         public void ShouldMapApprenticeshipFramework()
         {
             // Arrange.
@@ -467,7 +453,6 @@
             // TODO: US872: AG: map traineeship vacancy.
         }
 
-        /*
         [Test]
         public void ShouldSetVacancyStatusToDraft()
         {
@@ -495,6 +480,19 @@
             // Assert.
             mappedVacancy.DateCreated.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }
-        */
+
+        [Test]
+        public void ShouldSetTrainingType()
+        {
+            // Arrange.
+            var vacancyUploadData = _vacancyUploadDataBuilder
+                .Build();
+
+            // Act.
+            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+
+            // Assert.
+            mappedVacancy.TrainingType.Should().Be(ProviderVacancies.TrainingType.Frameworks);
+        }
     }
 }

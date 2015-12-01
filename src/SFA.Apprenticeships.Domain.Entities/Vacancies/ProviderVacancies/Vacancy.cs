@@ -18,7 +18,6 @@
         public WageUnit WageUnit { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
-        public string DurationText { get; set; }
         public DateTime? ClosingDate { get; set; }
         public DateTime? InterviewStartDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }
