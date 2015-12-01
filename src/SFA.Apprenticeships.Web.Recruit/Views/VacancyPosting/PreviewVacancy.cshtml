@@ -1,407 +1,47 @@
 ﻿@model VacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
-@using SFA.Apprenticeships.Web.Raa.Common.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Recruit.ViewModels
 @{
     ViewBag.Title = "Recruit an Apprentice - Preview vacancy";
-    var basicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
-    var summaryLink = Url.RouteUrl(RecruitmentRouteNames.VacancySummary, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
-    var requirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyRequirementsProspects, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
-    var questionsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyQuestions, new { vacancyReferenceNumber = Model.VacancyReferenceNumber });
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
-
 
 <div>
     <h1 class="heading-xlarge">
         Vacancy preview
     </h1>
-    <div class="grid-wrapper">
-        <div class="grid grid-2-3">
-            <div class="hgroup text editable-item">
-                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">@Model.NewVacancyViewModel.Title
-                    @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, basicDetailsLink))
-                </h1>
-                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.Title, basicDetailsLink, Model.NewVacancyViewModel.TitleComment))
-            </div>
-        </div>
-    </div>
 
-    <section class="grid-wrapper">
-        <div class="grid grid-2-3">
-            <div class="inner-block-padr">
-                <div class="editable-item">
-                    <div class="text" itemprop="description">
-                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, basicDetailsLink))
-                        <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
-                    </div>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ShortDescription, basicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))
-                </div>
-            </div>
-        </div>
-        <div class="grid grid-1-3">
-            <div class="editable-item">
-                <h3 class="bold-small">
-                    Closing date
-                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.ClosingDate, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
-                </h3>
-                <p id="vacancy-closing-date">
-                    @Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()
-                </p>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.ClosingDate, summaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
-            </div>
-        </div>
-    </section>
-    <section class="section-border grid-wrapper" id="vacancy-info">
-        <h2 class="heading-large">Apprenticeship summary</h2>
-        <div class="grid grid-1-3">
-            <div class="inner-block-padr">
-                <div class="editable-item">
-                    <h3 class="bold-small">Working week
-                        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
-                    </h3>
-                    <p id="vacancy-working-week" itemprop="workHours">
-                        @Model.VacancySummaryViewModel.WorkingWeek<br />Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek
-                        @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
-                        {
-                            <br />@:(the hours are based on the candidate being over 18)
-                        }
-                    </p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.WorkingWeek, summaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
-                </div>
+    @Html.DisplayFor(m => m, VacancyViewModel.PartialView)
 
-                <div class="editable-item">
-                    <h3 class="bold-small">
-                        @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
-                        {
-                            <span>@Model.VacancySummaryViewModel.WageUnitDisplayText wage
-                                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WageComment))
-                            </span>
-                        }
-                        else
-                        {
-                            <span>Wage 
-                                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.WageComment))
-                            </span>
-                        }
-                    </h3>
-                    <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.WageType, summaryLink, Model.VacancySummaryViewModel.WageComment))
-                </div>
-
-                @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
-                {
-                    <details><a href="@summaryLink" class="edit-comment-link">Edit</a>
-                        <summary>National Minimum Wage<br/>for apprentices explained</summary>
-                        <div class="detail-content">
-                            The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
-                            This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
-                            Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
-                        </div>
-                    </details>
-                }
-
-                @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
-                {
-                    <details>
-                        <summary>National Minimum Wage</summary>
-                        <div class="detail-content">
-                            The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
-                            Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
-                        </div>
-                    </details>
-                }
-                <div class="editable-item">
-                    <h3 class="bold-small">
-                        Expected duration
-                        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.DurationComment))
-                    </h3>
-                    <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.Duration, summaryLink, Model.VacancySummaryViewModel.DurationComment))
-                </div>
-
-                <div class="editable-item">
-                    <h3 class="bold-small">Possible start date
-                        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.PossibleStartDate, ViewData.ModelState, summaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment))
-                    </h3>
-                    <p id="vacancy-start-date">
-                        @Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date)
-                    </p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.PossibleStartDate, summaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment))
-                </div>
-                    
-                <div class="editable-item">
-                    <h3 class="bold-small">Apprenticeship level
-                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.NewVacancyViewModel.ApprenticeshipLevelComment, basicDetailsLink))
-                    </h3>
-                    <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ApprenticeshipLevel, basicDetailsLink, Model.NewVacancyViewModel.ApprenticeshipLevelComment))
-                </div>
-
-                <div>
-                    <h3 class="bold-small">Reference number</h3>
-                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
-                </div>
-            </div>
-        </div>
-        <div class="grid grid-2-3">
-            <div class="text editable-item" itemprop="responsibilities">
-                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, summaryLink))
-                <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.LongDescription, summaryLink, Model.VacancySummaryViewModel.LongDescriptionComment))
-            </div>
-        </div>
-
-    </section>
-    <section class="section-border grid-wrapper" id="course-info">
-    <h2 class="heading-large">Requirements and prospects</h2>
-    <div class="grid grid-1-2">
-        <div class="inner-block-padr">
-            <div class="text">
-                @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
-                {
-                    <div class="editable-item">
-                        <h3 class="heading-small">Desired skills
-                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, requirementsProspectsLink))
-                        </h3>
-                        <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
-                    </div>
-                }
-                @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
-                {
-                    <div class="editable-item">
-                        <h3 class="heading-small">Personal qualities
-                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, requirementsProspectsLink))
-                        </h3>
-                        <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
-                    </div>
-                }
-                @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
-                {
-                    <div class="editable-item">
-                        <h3 class="heading-small">Qualifications required
-                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, requirementsProspectsLink))
-                        </h3>
-                        <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
-                    </div>
-                }
-
-            </div>
-        </div>
-    </div>
-    <div class="grid grid-1-2">
-        <div class="text">
-            @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
-            {
-                <div class="editable-item">
-                    <h3 class="heading-small">Future prospects
-                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, requirementsProspectsLink))
-                    </h3>
-                    <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
-                </div>
-            }
-            @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
-            {
-                <div class="editable-item">
-                    <h3 class="heading-small">Things to consider
-                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, requirementsProspectsLink))
-                    </h3>
-                    <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, requirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
-                </div>
-            }
-        </div>
-    </div>
-</section>
-
-
-@if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion)
-            || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+    @using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
     {
-    
-    <section class="section-border grid-wrapper" id="course-info">
-        <h2 class="heading-large">Questions for candidates</h2>
-        <div class="grid grid-1-2">
-            <div class="inner-block-padr">
-                <div class="text">
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
-                    {
-                        <div class="editable-item">
-                            <h3 class="heading-small">
-                                First question
-                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, questionsLink))
-                            </h3>
-                            <p>@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyQuestionsViewModel.FirstQuestion, questionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment))
-                        </div>
-                    }
-                    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
-                    {
-                        <div class="editable-item">
-                            <h3 class="heading-small">
-                                Second question
-                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, questionsLink))
-                            </h3>
-                            <p>@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyQuestionsViewModel.SecondQuestion, questionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
-    </section>
-    }
-        <section class="section-border" id="employer-info">
-            <h2 class="heading-large">About the employer</h2>
-            <div class="grid-wrapper">
-                <div class="grid grid-2-3">
-                    <div class="inner-block-padr">
-                        <div class="text">
-                            <p id="vacancy-employer-description">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="grid-wrapper">
-                <div class="grid grid-1-2">
-                    <div class="inner-block-padr">
-                        <div class="text">
-                            <h3 class="bold-small">Employer</h3>
-                            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-                            @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
-                            {
-                                <p>
-                                    <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
-                                       id="vacancy-employer-website"
-                                       target="_blank"
-                                       title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                                    <i class="fa fa-check the-icon"></i>
-                                </p>
-                            }
-                            <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="bold-small">Address</h3>
-                                <div itemprop="address">
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
-                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="grid grid-1-2 hide-print">
-                    <div id="vacancy-map" class="ad-details__map">
-                        <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
-                        <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                        <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+        @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
-        @if (Model.NewVacancyViewModel.OfflineVacancy)
+        if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
         {
-            <section class="section-border" id="offline-vacancy" style="">
-                <h2 class="heading-large">Employer's application instructions</h2>
-                <div class="text">
-                    <p id="application-instructions">
-                        @Model.NewVacancyViewModel.OfflineApplicationInstructions
-                    </p>
-                </div>
-                <div class="form-group">
-                    <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
-                    <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
-                    <i class="fa fa-check the-icon"></i>
-                </div>
-            </section>
+            Model.ResubmitOptin = false;
+            @Html.FormCheckBoxFor(model => model.ResubmitOptin, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
         }
-        
-        <section class="section-border grid-wrapper" id="provider-info">
-            <h2 class="heading-large">Training provider</h2>
-            <div class="grid grid-2-3">
-                <div class="inner-block-padr">
-                    <div class="text">
-                        @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
-                        {
-                            <p id="vacancy-training-to-be-provided">@Html.Raw(Model.ProviderSite.CandidateDescription)</p>
-                        }
-                        @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
-                        {
-                            <h3 class="heading-small">
-                                Apprenticeship framework
-                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.FrameworkCodeName, Model.NewVacancyViewModel.FrameworkCodeNameComment, basicDetailsLink))
-                            </h3>
-                            <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.FrameworkCodeName, basicDetailsLink, Model.NewVacancyViewModel.FrameworkCodeNameComment))
-                        }
-                        @if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
-                        {
-                            <h3 class="heading-small">
-                                Apprenticeship standard
-                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.StandardId, Model.NewVacancyViewModel.StandardIdComment, basicDetailsLink))
-                            </h3>
-                            <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.StandardId, basicDetailsLink, Model.NewVacancyViewModel.StandardIdComment))
-                        }
-                        <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="grid grid-1-3">
-                <div class="text">
-                    <h3 class="bold-small">Training provider</h3>
-                    <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
-                </div>
+        else
+        {
+            Model.ResubmitOptin = true;
+            @Html.HiddenFor(model => model.ResubmitOptin)
+        }
 
-                @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
+        <section>
+            <div class="form-group">
+                @if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
                 {
-                    <div class="text">
-                        <h3 class="bold-small">Contact</h3>
-                        <p id="vacancy-provider-contact">@Model.ProviderSite.ContactDetailsForCandidate</p>
-                    </div>
+                    <button type="submit" class="button">Resubmit vacancy</button>
                 }
+                else
+                {
+                    <button type="submit" class="button">Submit for approval</button>
+                }
+                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
             </div>
-
         </section>
-
-@using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
-{
-    @Html.HiddenFor(m => m.VacancyReferenceNumber)
-
-    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
-    {
-        Model.ResubmitOptin = false;
-        @Html.FormCheckBoxFor(model => model.ResubmitOptin, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
     }
-    else
-    {
-        Model.ResubmitOptin = true;
-        @Html.HiddenFor(model => model.ResubmitOptin)
-    }
-
-    <section>
-        <div class="form-group">
-            @if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
-            {
-                <button type="submit" class="button">Resubmit vacancy</button>
-            }
-            else
-            {
-                <button type="submit" class="button">Submit for approval</button>
-            }
-            <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
-        </div>
-    </section>
-}
 </div>

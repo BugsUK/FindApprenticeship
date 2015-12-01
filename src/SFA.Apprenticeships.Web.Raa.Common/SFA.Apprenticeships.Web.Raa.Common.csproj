@@ -250,6 +250,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\VacancyPreview.generated.cs">
+      <DependentUpon>VacancyPreview.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -269,6 +274,10 @@
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Comment.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\VacancyPreview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancyPreview.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

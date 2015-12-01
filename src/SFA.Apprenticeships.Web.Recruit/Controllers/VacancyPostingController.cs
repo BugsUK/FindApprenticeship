@@ -396,17 +396,24 @@
         {
             var response = _vacancyPostingMediator.GetPreviewVacancyViewModel(vacancyReferenceNumber);
 
+            var vacancyViewModel = response.ViewModel;
+
+            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.VacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+
             ModelState.Clear();
 
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    var view = View(response.ViewModel);
+                    var view = View(vacancyViewModel);
                     return view;
 
                 case VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok:
-                    return View(response.ViewModel);
+                    return View(vacancyViewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

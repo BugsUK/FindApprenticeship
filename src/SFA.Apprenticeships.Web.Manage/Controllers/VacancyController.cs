@@ -27,6 +27,12 @@
         public ActionResult Review(long vacancyReferenceNumber)
         {
             var response = _vacancyMediator.ReserveVacancyForQA(vacancyReferenceNumber);
+            var vacancyViewModel = response.ViewModel;
+            
+            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(ManagementRouteNames.BasicDetails, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.SummaryLink = Url.RouteUrl(ManagementRouteNames.Summary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.QuestionsLink = Url.RouteUrl(ManagementRouteNames.Questions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
 
             ModelState.Clear();
 
@@ -34,11 +40,11 @@
             {
                 case VacancyMediatorCodes.GetVacancy.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    var view = View(response.ViewModel);
+                    var view = View(vacancyViewModel);
                     return view;
 
                 case VacancyMediatorCodes.GetVacancy.Ok:
-                    return View(response.ViewModel);
+                    return View(vacancyViewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
