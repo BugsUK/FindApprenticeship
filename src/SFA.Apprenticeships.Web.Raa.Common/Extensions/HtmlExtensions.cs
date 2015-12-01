@@ -3,7 +3,7 @@
     using System;
     using System.Linq.Expressions;
     using System.Web.Mvc;
-    using Raa.Common.ViewModels.Vacancy;
+    using ViewModels.Vacancy;
     using Web.Common.Validators.Extensions;
 
     public static class HtmlExtensions
@@ -12,13 +12,14 @@
         {
             var propertyName = ExpressionHelper.GetExpressionText(propertyExpression);
 
+            var anchorName = propertyName.Replace(".", "_").ToLower();
             var hasError = modelState.HasErrorsFor(propertyName);
             var error = modelState.ErrorMessageFor(propertyName);
             var hasWarning = modelState.HasWarningsFor(propertyName);
             var warning = modelState.WarningMessageFor(propertyName);
             viewWarningUrl = $"{viewWarningUrl}#{propertyName.Substring(propertyName.LastIndexOf(".", StringComparison.Ordinal) + 1).ToLower()}";
 
-            var validationResultViewModel = new ValidationResultViewModel(hasError, error, hasWarning, warning, viewWarningUrl, comment);
+            var validationResultViewModel = new ValidationResultViewModel(anchorName, hasError, error, hasWarning, warning, viewWarningUrl, comment);
 
             return validationResultViewModel;
         }

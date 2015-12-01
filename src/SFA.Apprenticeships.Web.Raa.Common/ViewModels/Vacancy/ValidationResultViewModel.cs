@@ -4,15 +4,18 @@
     {
         public const string PartialView = "_ValidationResultIcons";
 
-        public ValidationResultViewModel(bool hasError, string error, bool hasWarning, string warning, string viewValidationResultUrl, string comment)
+        public ValidationResultViewModel(string anchorName, bool hasError, string error, bool hasWarning, string warning, string viewValidationResultUrl, string comment)
         {
             HasError = hasError;
             Error = error;
             HasWarning = hasWarning;
             Warning = warning;
             ViewValidationResultUrl = viewValidationResultUrl;
+            AnchorName = anchorName;
             CommentViewModel = new CommentViewModel(comment, viewValidationResultUrl);
         }
+
+        public string AnchorName { get; private set; }
 
         public bool HasError { get; private set; }
 
