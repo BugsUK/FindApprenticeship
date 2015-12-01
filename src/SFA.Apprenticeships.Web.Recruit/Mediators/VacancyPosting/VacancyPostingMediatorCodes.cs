@@ -30,9 +30,10 @@
             public const string FailedValidation = "VacancyPosting.ConfirmEmployer.FailedValidation";
         }
 
-        public static class GetNewVacancyModel
+        public static class GetNewVacancyViewModel
         {
-            public const string Ok = "VacancyPosting.GetNewVacancyModel.Ok";
+            public const string Ok = "VacancyPosting.GetNewVacancyViewModel.Ok";
+            public const string FailedValidation = "VacancyPosting.GetNewVacancyViewModel.FailedValidation";
         }
 
         public static class GetVacancyViewModel
@@ -50,16 +51,19 @@
         public static class GetVacancySummaryViewModel
         {
             public const string Ok = "VacancyPosting.GetVacancySummaryViewModel.Ok";
+            public const string FailedValidation = "VacancyPosting.GetVacancySummaryViewModel.FailedValidation";
         }
 
         public static class GetVacancyRequirementsProspectsViewModel
         {
             public const string Ok = "VacancyPosting.GetVacancyRequirementsProspectsViewModel.Ok";
+            public const string FailedValidation = "VacancyPosting.GetVacancyRequirementsProspectsViewModel.FailedValidation";
         }
 
         public static class GetVacancyQuestionsViewModel
         {
             public const string Ok = "VacancyPosting.GetVacancyQuestionsViewModel.Ok";
+            public const string FailedValidation = "VacancyPosting.GetVacancyQuestionsViewModel.FailedValidation";
         }
 
         public static class CreateVacancy

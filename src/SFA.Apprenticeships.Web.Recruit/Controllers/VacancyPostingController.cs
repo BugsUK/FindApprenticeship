@@ -16,6 +16,7 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
 
+    //TODO: Split this class by code region
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
     public class VacancyPostingController : RecruitmentControllerBase
@@ -26,6 +27,8 @@
         {
             _vacancyPostingMediator = vacancyPostingMediator;
         }
+
+        #region Employer Selection
 
         [HttpGet]
         public ActionResult SelectEmployer(string providerSiteErn)
@@ -130,6 +133,10 @@
             }
         }
 
+        #endregion
+
+        #region Basic Details
+
         [HttpGet]
         public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid)
         {
@@ -137,6 +144,28 @@
             var viewModel = response.ViewModel;
 
             return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult ReviewCreateVacancy(long vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber, true);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetNewVacancyViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("CreateVacancy", viewModel);
+
+                case VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok:
+                    return View("CreateVacancy", viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
@@ -202,24 +231,47 @@
             }
         }
 
-        [HttpGet]
-        public ActionResult EditVacancy(long vacancyReferenceNumber)
-        {
-            var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber);
-            var viewModel = response.ViewModel;
+        #endregion
 
-            return View("CreateVacancy", viewModel);
-        }
+        #region Vacancy Details
 
         [HttpGet]
         public ActionResult VacancySummary(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false);
             var viewModel = response.ViewModel;
 
-            return View(viewModel);
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetVacancySummaryViewModel.Ok:
+                    return View(viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
+        [HttpGet]
+        public ActionResult ReviewVacancySummary(long vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacancySummary", viewModel);
+
+                case VacancyPostingMediatorCodes.GetVacancySummaryViewModel.Ok:
+                    return View("VacancySummary", viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
@@ -277,13 +329,46 @@
             }
         }
 
+        #endregion
+
+        #region Requirements and Prospects
+
         [HttpGet]
         public ActionResult VacancyRequirementsProspects(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
+            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, false);
             var viewModel = response.ViewModel;
 
-            return View(viewModel);
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetVacancyRequirementsProspectsViewModel.Ok:
+                    return View(viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ReviewVacancyRequirementsProspects(long vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, true);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetVacancyRequirementsProspectsViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacancyRequirementsProspects", viewModel);
+
+                case VacancyPostingMediatorCodes.GetVacancyRequirementsProspectsViewModel.Ok:
+                    return View("VacancyRequirementsProspects", viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyRequirementsProspects")]
@@ -339,13 +424,44 @@
             }
         }
 
+        #endregion
+
+        #region Vacancy Questions
+
         [HttpGet]
         public ActionResult VacancyQuestions(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+            var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, false);
             var viewModel = response.ViewModel;
 
-            return View(viewModel);
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetVacancyQuestionsViewModel.Ok:
+                    return View(viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+        public ActionResult ReviewVacancyQuestions(long vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, true);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetVacancyQuestionsViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacancyQuestions", viewModel);
+
+                case VacancyPostingMediatorCodes.GetVacancyQuestionsViewModel.Ok:
+                    return View("VacancyQuestions", viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
 
@@ -390,6 +506,10 @@
             }
         }
 
+        #endregion
+
+        #region Preview
+
         [HttpGet]
         [OutputCache(Duration = 0)]
         public ActionResult PreviewVacancy(long vacancyReferenceNumber)
@@ -398,10 +518,10 @@
 
             var vacancyViewModel = response.ViewModel;
 
-            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.EditVacancy, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
-            vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.VacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
-            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
-            vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.VacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewCreateVacancy, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
 
             ModelState.Clear();
 
@@ -456,6 +576,8 @@
 
             return View(viewModel);
         }
+
+        #endregion
 
         [HttpGet]
         public ActionResult SelectNewEmployer(EmployerSearchViewModel viewModel)
