@@ -99,6 +99,7 @@
         public class CLoneVacancy
         {
             public const string Ok = "VacancyPosting.CloneVacancy.Ok";
+            public const string VacancyInIncorrectState = "VacancyPosting.CloneVacancy.VacancyInIncorrectState";
         }
     }
 }
