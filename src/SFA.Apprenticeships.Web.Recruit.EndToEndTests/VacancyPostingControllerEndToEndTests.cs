@@ -34,7 +34,7 @@
             clonedVacancy.LongDescriptionComment.Should().BeNull();
         }
 
-        private static MongoApprenticeshipVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title)
+        private static MongoApprenticeshipVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title, ProviderVacancyStatuses status = ProviderVacancyStatuses.PendingQA)
         {
             return new MongoApprenticeshipVacancy
             {
@@ -83,7 +83,7 @@
                     }
                 },
                 ShortDescription = "short description",
-                Status = ProviderVacancyStatuses.PendingQA,
+                Status = status,
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
@@ -94,15 +94,6 @@
 
         private void InitializeDatabaseWithVacancy(MongoApprenticeshipVacancy vacancy)
         {
-            var mongoConnectionString = MongoConfiguration.VacancyDb;
-            var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
-
-            var database = new MongoClient(mongoConnectionString)
-                .GetServer()
-                .GetDatabase(mongoDbName);
-
-            Collection = database.GetCollection<MongoApprenticeshipVacancy>("apprenticeshipVacancies");
-
             Collection.Save(vacancy);
         }
 
@@ -142,6 +133,31 @@
             clonedVacancy.ClosingDate.Should().NotHaveValue();
             clonedVacancy.PossibleStartDate.Should().NotHaveValue();
             CheckAllCommentsAreNull(clonedVacancy);
+        }
+
+        [Test]
+        public void CloneAVacancyInDeferredStateShouldNotCreateNewVacancyAndReturnToDashboard()
+        {
+            // Arrange
+            const int vacancyReferenceNumber = 1;
+            const string title = "Vacancy title";
+
+            var vacancy = GetCorrectVacancy(vacancyReferenceNumber, title, ProviderVacancyStatuses.RejectedByQA);
+
+            InitializeDatabaseWithVacancy(vacancy);
+
+            var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
+
+            // Act
+            var result = vacancyPostingController.CloneVacancy(vacancyReferenceNumber);
+
+
+            // Assert
+            result.Should().BeOfType<RedirectToRouteResult>();
+            var redirection = result as RedirectToRouteResult;
+            redirection.RouteName.Should().Be("RecruitmentHome");
+
+            Collection.Count().Should().Be(1);
         }
 
         [Test]

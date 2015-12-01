@@ -161,8 +161,14 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, newViewModel);
         }
 
-        public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(int vacancyReferenceNumber)
+        public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(long vacancyReferenceNumber)
         {
+            var existingVacancy = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
+            if (existingVacancy.Status == ProviderVacancyStatuses.RejectedByQA)
+            {
+                return GetMediatorResponse<ProviderSiteEmployerLinkViewModel>(VacancyPostingMediatorCodes.CLoneVacancy.VacancyInIncorrectState);
+            }
+
             var viewModel = _vacancyPostingProvider.CloneVacancy(vacancyReferenceNumber);
             return GetMediatorResponse(VacancyPostingMediatorCodes.CLoneVacancy.Ok, viewModel);
         }

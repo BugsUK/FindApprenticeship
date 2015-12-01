@@ -1,6 +1,14 @@
 ﻿@model HomeViewModel
+
+@functions {
+    private static bool VacancyIsClonable(VacancyViewModel vacancy)
+    {
+        return vacancy.Status != ProviderVacancyStatuses.RejectedByQA;
+    }
+}
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice";
@@ -220,7 +228,10 @@
                                     @{ Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.ClosingDate); }
                                 </td>
                                 <td class="vac-toolbox">
-                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Clone</a>
+                                    @if (VacancyIsClonable(vacancy))
+                                    {
+                                    	<a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Clone</a>
+                                    }
                                 </td>
                             </tr>
                         }
