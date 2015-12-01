@@ -393,6 +393,19 @@
                                     </div>
                                 </div>
                             }
+                            else if (Model.LocationAddresses != null && Model.LocationAddresses.Count == 1)
+                            {
+                                <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
+                                    <h3 class="bold-small">Address</h3>
+                                    <div itemprop="address">
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.LocationAddresses.First().Address.AddressLine1</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.LocationAddresses.First().Address.AddressLine2</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.LocationAddresses.First().Address.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.LocationAddresses.First().Address.AddressLine4</p>
+                                        <p class="small-btm-margin" itemprop="postalCode">@Model.LocationAddresses.First().Address.Postcode</p>
+                                    </div>
+                                </div>
+                            }
                             else
                             {
                                 <p></p>
@@ -417,8 +430,8 @@
                                             </thead>
                                             <tbody id="location-addresses" data-bind="foreach: locationAddresses">
                                             @foreach (var locationAddress in Model.LocationAddresses)
-                                            {
-                                                @Html.DisplayFor(m => locationAddress)
+                                {
+                                    @Html.DisplayFor(m => locationAddress)
                                             }
                                             
                                             </tbody>
@@ -430,11 +443,19 @@
                     </div>
                 </div>
                 <div class="grid grid-1-2 hide-print">
-                    @if (Model.IsEmployerLocationMainApprenticeshipLocation == true)
+                    @if (Model.IsEmployerLocationMainApprenticeshipLocation == true )
                     {
                         <div id="vacancy-map" class="ad-details__map">
                             <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
                             <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                            <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
+                        </div>
+                    }
+                    else if (Model.LocationAddresses != null && Model.LocationAddresses.Count == 1)
+                    {
+                        <div id="vacancy-map" class="ad-details__map">
+                            <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
+                            <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.LocationAddresses.First().Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                         </div>
                     }
