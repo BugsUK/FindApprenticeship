@@ -47,7 +47,7 @@
 
                 DurationType = DurationType.Text,
                 Duration = default(int?),
-                DurationText = vacancyUploadData.Apprenticeship.ExpectedDuration,
+                DurationComment = vacancyUploadData.Apprenticeship.ExpectedDuration,
 
                 ClosingDate = vacancyUploadData.Application.ClosingDate,
                 InterviewStartDate = vacancyUploadData.Application.InterviewStartDate,
@@ -66,17 +66,12 @@
                 OfflineApplicationUrl = vacancyUploadData.Vacancy.LocationDetails.First().EmployerWebsite,
                 OfflineApplicationInstructions = vacancyUploadData.Application.Instructions,
 
-                /*
-                // TODO: Xxx = vacancy.Vacancy.OtherImportantInformation
-                TrainingType = TrainingType.Unknown, // TODO
-                */
-
                 ApprenticeshipLevel = MapVacancyApprenticeshipType(vacancyUploadData.Apprenticeship.Type),
-                FrameworkCodeName = vacancyUploadData.Apprenticeship.Framework, // TODO
+                FrameworkCodeName = vacancyUploadData.Apprenticeship.Framework,
+                TrainingType = TrainingType.Frameworks,
                 StandardId = default(int?),
                 Status = ProviderVacancyStatuses.Draft,
-                DateCreated = DateTime.UtcNow,
-                DateSubmitted = default(DateTime?)
+                DateCreated = DateTime.UtcNow
             };
         }
 
