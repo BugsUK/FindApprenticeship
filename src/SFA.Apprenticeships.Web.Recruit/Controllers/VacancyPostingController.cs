@@ -27,9 +27,9 @@
         }
 
         [HttpGet]
-        public ActionResult SelectEmployer(string providerSiteErn)
+        public ActionResult SelectEmployer(string providerSiteErn, Guid? vacancyGuid)
         {
-            var response = _vacancyPostingMediator.GetProviderEmployers(providerSiteErn);
+            var response = _vacancyPostingMediator.GetProviderEmployers(providerSiteErn, vacancyGuid);
 
             ModelState.Clear();
 

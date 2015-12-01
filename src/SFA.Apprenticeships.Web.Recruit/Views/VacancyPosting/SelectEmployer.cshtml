@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     const string selected = "selected";
-    var vacancyGuidValue = Guid.NewGuid();
+    var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
     var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
 }

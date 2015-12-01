@@ -70,7 +70,7 @@
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
-        public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn)
+        public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn, Guid? vacancyGuid)
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn);
 
@@ -81,6 +81,7 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.FailedValidation, viewModel, validationResult);
             }
 
+            viewModel.VacancyGuid = vacancyGuid;
             if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);

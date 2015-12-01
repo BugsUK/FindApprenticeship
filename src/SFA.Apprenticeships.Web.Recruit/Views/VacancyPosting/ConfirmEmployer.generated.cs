@@ -434,19 +434,18 @@ WriteLiteral("\r\n            <button");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Save description and continue</button>\r\n            <a");
+WriteLiteral(">Save description and continue</button>\r\n");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4328), Tuple.Create("\"", 4368)
+WriteLiteral("            ");
+
             
             #line 69 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 4335), Tuple.Create<System.Object, System.Int32>(Request.UrlReferrer.PathAndQuery
+       Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid}, null));
+
             
             #line default
             #line hidden
-, 4335), false)
-);
-
-WriteLiteral(">Choose a different employer</a>\r\n        </div>\r\n");
+WriteLiteral("\r\n        </div>\r\n");
 
             
             #line 71 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
