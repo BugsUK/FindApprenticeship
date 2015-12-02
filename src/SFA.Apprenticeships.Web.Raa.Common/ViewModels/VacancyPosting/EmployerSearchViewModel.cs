@@ -2,6 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Web.Common.ViewModels;
@@ -59,5 +60,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
             Name,
             Location
         };
+
+        public Guid? VacancyGuid { get; set; }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Web.Mvc;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
@@ -13,6 +12,8 @@
     [Validator(typeof(VacancyResubmissionValidator))]
     public class VacancyViewModel
     {
+        public const string PartialView = "VacancyPreview";
+
         public long VacancyReferenceNumber { get; set; }
 
         public NewVacancyViewModel NewVacancyViewModel { get; set; }
@@ -35,5 +36,13 @@
 
         [Display(Name = VacancyViewModelMessages.ResubmitOptin.LabelText)]
         public bool ResubmitOptin { get; set; }
+
+        public string BasicDetailsLink { get; set; }
+
+        public string SummaryLink { get; set; }
+
+        public string RequirementsProspectsLink { get; set; }
+
+        public string QuestionsLink { get; set; }
     }
 }

@@ -6136,16 +6136,17 @@ aside h2:first-child {
         padding-top: 5px;
         padding-bottom: 5px; } }
 
-html:not(.touch) .editable-item .edit-comment-link {
-  color: white; }
-  html:not(.touch) .editable-item .edit-comment-link:focus {
-    color: #005ea5; }
-
-html:not(.touch) .editable-item:hover {
-  background: rgba(0, 0, 0, 0.025);
-  outline: 1px dotted #d4d4d4; }
-  html:not(.touch) .editable-item:hover .edit-comment-link {
-    color: #005ea5; }
+html:not(.touch) .editable-item {
+  border: 1px dotted #fff; }
+  html:not(.touch) .editable-item .edit-comment-link {
+    color: white; }
+    html:not(.touch) .editable-item .edit-comment-link:focus {
+      color: #005ea5; }
+  html:not(.touch) .editable-item:hover {
+    background: rgba(0, 0, 0, 0.025);
+    border: 1px dotted #d4d4d4; }
+    html:not(.touch) .editable-item:hover .edit-comment-link {
+      color: #005ea5; }
 
 .fa-flag {
   color: #2b8cc4; }
@@ -6184,16 +6185,16 @@ html:not(.touch) .editable-item:hover {
       text-decoration: none; }
     .vacancies-summary li figure.data .count {
       font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
-      font-size: 80px;
-      line-height: 1;
+      font-size: 48px;
+      line-height: 1.04167;
       font-weight: 400;
       text-transform: none;
       font-weight: 700;
       margin-bottom: 0; }
       @media (max-width: 640px) {
         .vacancies-summary li figure.data .count {
-          font-size: 53px;
-          line-height: 1.03774; } }
+          font-size: 32px;
+          line-height: 1.09375; } }
       @media screen and (max-width: 640px) {
         .vacancies-summary li figure.data .count {
           padding: .25em 0;
@@ -6289,7 +6290,7 @@ html:not(.touch) .editable-item:hover {
 
 @media screen and (max-width: 768px) {
         table#vacancies-table tr td.vac-employer:before, table#vacancies-table tr td.vac-ref-number:before, table#vacancies-table tr td.vac-no-of-applications:before {
-          content: attr(data-label) ": ";
+          content: attr(data-label) ": ";
           font-family: "nta", Arial, sans-serif;
           font-size: 16px;
           line-height: 1.25;

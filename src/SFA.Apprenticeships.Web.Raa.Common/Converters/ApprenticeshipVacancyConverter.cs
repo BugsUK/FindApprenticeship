@@ -27,6 +27,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                 DurationType = apprenticeshipVacancy.DurationType,
                 DurationTypes = GetDurationTypes(),
                 Duration = apprenticeshipVacancy.Duration,
+                Status = apprenticeshipVacancy.Status,
                 ClosingDate = new DateViewModel(apprenticeshipVacancy.ClosingDate),
                 PossibleStartDate = new DateViewModel(apprenticeshipVacancy.PossibleStartDate),
                 LongDescription = apprenticeshipVacancy.LongDescription,
@@ -79,7 +80,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                 ThingsToConsider = apprenticeshipVacancy.ThingsToConsider,
                 ThingsToConsiderComment = apprenticeshipVacancy.ThingsToConsiderComment,
                 DesiredQualifications = apprenticeshipVacancy.DesiredQualifications,
-                DesiredQualificationsComment = apprenticeshipVacancy.DesiredQualificationsComment
+                DesiredQualificationsComment = apprenticeshipVacancy.DesiredQualificationsComment,
+                Status = apprenticeshipVacancy.Status
             };
 
             return vacancyViewModel;

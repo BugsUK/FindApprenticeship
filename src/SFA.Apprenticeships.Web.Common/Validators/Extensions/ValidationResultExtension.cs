@@ -2,6 +2,7 @@
 {
     using System;
     using System.Globalization;
+    using System.Linq;
     using System.Web.Mvc;
     using FluentValidation.Results;
 
@@ -26,6 +27,29 @@
                     }
                 }
             }
+        }
+
+        public static bool HasWarningsOnly(this ValidationResult result)
+        {
+            return result.Errors.All(e => (ValidationType?)e.CustomState == ValidationType.Warning);
+        }
+
+        public static int GetWarningsHash(this ValidationResult result)
+        {
+            var warningsHash = 0;
+
+            if (!result.IsValid)
+            {
+                var warnings = result.Errors.Where(e => (ValidationType?)e.CustomState == ValidationType.Warning);
+                warningsHash = string.Join("", warnings.Select(w => string.Concat(w.PropertyName, w.ErrorMessage))).GetHashCode();
+            }
+
+            return warningsHash;
+        }
+
+        public static bool IsWarningsHashMatch(this ValidationResult result, int warningsHash)
+        {
+            return warningsHash == result.GetWarningsHash();
         }
 
         private static ModelState GetModelStateForKey(ModelStateDictionary modelState, string key)

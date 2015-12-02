@@ -31,12 +31,16 @@
 
         // Vacancy posting
         public const string CreateVacancy = "CreateVacancy";
-        public const string EditVacancy = "EditVacancy";
+        public const string ReviewCreateVacancy = "ReviewCreateVacancy";
+        public const string VacancySummary = "VacancySummary";
+        public const string ReviewVacancySummary = "ReviewVacancySummary";
+        public const string VacancyRequirementsProspects = "VacancyRequirementsProspects";
+        public const string ReviewVacancyRequirementsProspects = "ReviewVacancyRequirementsProspects";
+        public const string VacancyQuestions = "VacancyQuestions";
+        public const string ReviewVacancyQuestions = "ReviewVacancyQuestions";
+        public const string PreviewVacancy = "PreviewVacancy";
         public const string SubmitVacancy = "SubmitVacancy";
         public const string VacancySubmitted = "VacancySubmitted";
-        public const string VacancyQuestions = "VacancyQuestions";
-        public const string VacancySummary = "VacancySummary";
-        public const string PreviewVacancy = "PreviewVacancy";
         public const string CloneVacancy = "CloneVacancy";
         
         // Vacancy posting - existing employer
@@ -52,7 +56,6 @@
         public const string SelectNewEmployer = "SelectNewEmployer";
         public const string AddNewEmployer = "AddNewEmployer";
         public const string ComfirmNewEmployer = "ConfirmNewEmployer";
-        public const string VacancyRequirementsProspects = "VacancyRequirementsProspects";
         public const string AddLocations = "AddLocations";
     }
 }

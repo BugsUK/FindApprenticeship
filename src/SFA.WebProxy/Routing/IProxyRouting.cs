@@ -1,4 +1,4 @@
-﻿namespace SFA.WebProxy
+﻿namespace SFA.WebProxy.Routing
 {
     using System;
     using System.Net.Http;

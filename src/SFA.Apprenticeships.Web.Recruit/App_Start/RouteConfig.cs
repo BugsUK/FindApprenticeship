@@ -122,9 +122,9 @@
                );
 
             routes.MapRoute(
-               name: RecruitmentRouteNames.EditVacancy,
-               url: "vacancy/edit",
-               defaults: new { controller = "VacancyPosting", action = "EditVacancy" }
+               name: RecruitmentRouteNames.ReviewCreateVacancy,
+               url: "vacancy/create/review",
+               defaults: new { controller = "VacancyPosting", action = "ReviewCreateVacancy" }
                );
 
             routes.MapRoute(
@@ -134,15 +134,33 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.ReviewVacancySummary,
+               url: "vacancy/summary/review",
+               defaults: new { controller = "VacancyPosting", action = "ReviewVacancySummary" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.VacancyRequirementsProspects,
                url: "vacancy/requirementsprospects",
                defaults: new { controller = "VacancyPosting", action = "VacancyRequirementsProspects" }
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.ReviewVacancyRequirementsProspects,
+               url: "vacancy/requirementsprospects/review",
+               defaults: new { controller = "VacancyPosting", action = "ReviewVacancyRequirementsProspects" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.VacancyQuestions,
-               url: "vacancy/question",
+               url: "vacancy/questions",
                defaults: new { controller = "VacancyPosting", action = "VacancyQuestions" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReviewVacancyQuestions,
+               url: "vacancy/questions/review",
+               defaults: new { controller = "VacancyPosting", action = "ReviewVacancyQuestions" }
                );
 
             routes.MapRoute(

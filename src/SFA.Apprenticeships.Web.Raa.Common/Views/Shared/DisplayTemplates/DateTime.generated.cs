@@ -11,12 +11,7 @@
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
 {
-    
-    #line 1 "..\..\Views\Shared\DisplayTemplates\DateTime.cshtml"
     using System;
-    
-    #line default
-    #line hidden
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -39,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/DateTime.cshtml")]
-    public partial class DateTime_ : System.Web.Mvc.WebViewPage<System.DateTime>
+    public partial class DateTime_ : System.Web.Mvc.WebViewPage<DateTime>
     {
         public DateTime_()
         {
@@ -47,7 +42,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
         public override void Execute()
         {
             
-            #line 3 "..\..\Views\Shared\DisplayTemplates\DateTime.cshtml"
+            #line 2 "..\..\Views\Shared\DisplayTemplates\DateTime.cshtml"
   
     var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
     var dataTimeByZoneId = TimeZoneInfo.ConvertTime(Model.ToUniversalTime(), timeZoneInfo);
@@ -58,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
 WriteLiteral("\r\n");
 
             
-            #line 7 "..\..\Views\Shared\DisplayTemplates\DateTime.cshtml"
+            #line 6 "..\..\Views\Shared\DisplayTemplates\DateTime.cshtml"
 Write(dataTimeByZoneId.ToString("dd MMM yyyy"));
 
             
