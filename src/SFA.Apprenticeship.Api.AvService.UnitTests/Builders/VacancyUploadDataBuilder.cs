@@ -5,6 +5,8 @@
     using Common;
     using DataContracts.Version51;
 
+    // TODO: AG: US872: review all unmapped fields in this class and comment.
+
     public class VacancyUploadDataBuilder
     {
         private Guid _vacancyId = Guid.Empty;
@@ -46,6 +48,7 @@
                 {
                     EdsUrn = 0,
                     Description = null,
+                    // TODO: US872: AG: AnonymousName not mapped?
                     AnonymousName = null,
                     ContactName = null,
                     Website = null,
@@ -60,6 +63,7 @@
                     QualificationRequired = _qualificationRequired,
                     PersonalQualities = _personalQualities,
                     FutureProspects = _futureProspects,
+                    // TODO: US872: AG: OtherImportantInformation not mapped?
                     OtherImportantInformation = null,
                     // TODO: US872: AG: handle multi-location vacancies.
                     LocationType = VacancyLocationType.Standard,
@@ -104,6 +108,7 @@
                 {
                     Framework = _frameworkCode,
                     Type = _vacancyApprenticeshipType,
+                    // TODO: US872: AG: TrainingToBeProvided not mapped?
                     TrainingToBeProvided = null,
                     ExpectedDuration = _expectedDuration
                 },

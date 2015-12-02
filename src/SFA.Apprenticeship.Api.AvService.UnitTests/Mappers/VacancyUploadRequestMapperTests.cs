@@ -170,7 +170,7 @@
             var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
 
             // Assert.
-            mappedVacancy.DurationType.Should().Be(ProviderVacancies.DurationType.Text);
+            mappedVacancy.DurationType.Should().Be(ProviderVacancies.DurationType.Unknown);
             mappedVacancy.Duration.Should().Be(default(int?));
             mappedVacancy.DurationComment.Should().Be(expectedDuration);
         }
