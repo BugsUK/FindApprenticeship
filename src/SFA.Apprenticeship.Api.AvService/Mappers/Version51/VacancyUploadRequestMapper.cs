@@ -45,7 +45,7 @@
                 WageUnit = WageUnit.Weekly,
                 Wage = vacancyUploadData.Vacancy.Wage,
 
-                DurationType = DurationType.Text,
+                DurationType = DurationType.Unknown,
                 Duration = default(int?),
                 DurationComment = vacancyUploadData.Apprenticeship.ExpectedDuration,
 

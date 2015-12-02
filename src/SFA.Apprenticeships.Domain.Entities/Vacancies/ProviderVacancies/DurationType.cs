@@ -7,7 +7,6 @@
         Unknown = -1,
         Weeks = 0,
         Months = 1,
-        Years = 2,
-        Text = 3
+        Years = 2
     }
 }
