@@ -17,8 +17,11 @@
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="editable-item">
-                <div class="text" itemprop="description">
+                <h3 class="bold-small">
+                    Summary
                     @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, Model.BasicDetailsLink))
+                </h3>
+                <div class="text" itemprop="description">
                     <p id="vacancy-description">@Model.NewVacancyViewModel.ShortDescription</p>
                 </div>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ShortDescription, Model.BasicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))
@@ -53,7 +56,7 @@
                     @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
                     {
                         <br />@:(the hours are based on the candidate being over 18)
-                        }
+                    }
                 </p>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.WorkingWeek, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
             </div>
@@ -64,8 +67,8 @@
                     {
                         <span>
                             @Model.VacancySummaryViewModel.WageUnitDisplayText wage
-                        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
-                    </span>
+                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
+                        </span>
                     }
                     else
                     {
@@ -138,7 +141,10 @@
     </div>
     <div class="grid grid-2-3">
         <div class="text editable-item" itemprop="responsibilities">
-            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, Model.SummaryLink))
+            <h3 class="bold-small">
+                Vacancy description
+                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, Model.SummaryLink))
+            </h3>
             <p id="vacancy-full-descrpition">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.LongDescription, Model.SummaryLink, Model.VacancySummaryViewModel.LongDescriptionComment))
         </div>
@@ -153,7 +159,9 @@
                 {
                     <div class="editable-item">
                         <div class="text">
-                            <h3 class="heading-small">Desired skills</h3>
+                            <h3 class="heading-small">Desired skills
+                                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
+                            </h3>
                             <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
                             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
                         </div>
@@ -163,7 +171,9 @@
                 {
                     <div class="editable-item">
                         <div class="text">
-                            <h3 class="heading-small">Personal qualities</h3>
+                            <h3 class="heading-small">Personal qualities
+                                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
+                            </h3>
                             <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
                             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
                         </div>
@@ -173,7 +183,9 @@
                 {
                     <div class="editable-item">
                         <div class="text">
-                            <h3 class="heading-small">Qualifications required</h3>
+                            <h3 class="heading-small">Qualifications required
+                                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
+                            </h3>
                             <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
                             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
                         </div>
@@ -186,7 +198,9 @@
             {
                 <div class="editable-item">
                     <div class="text">
-                        <h3 class="heading-small">Future prospects</h3>
+                        <h3 class="heading-small">Future prospects
+                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
+                        </h3>
                         <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
                     </div>
@@ -196,7 +210,9 @@
             {
                 <div class="editable-item">
                     <div class="text">
-                        <h3 class="heading-small">Things to consider</h3>
+                        <h3 class="heading-small">Things to consider
+                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
+                        </h3>
                         <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
                     </div>

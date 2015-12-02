@@ -76,13 +76,13 @@
                 @if (filterType == VacanciesSummaryFilterTypes.Live)
                 {
                     <p class="count">@Model.VacanciesSummary.LiveCount</p>
-                    <figcaption><h2>Live<br />vacancies</h2></figcaption>
+                    <figcaption><h2>Live</h2></figcaption>
                 }
                 else
                 {
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live))" class="vacancy-filter">
                         <p class="count">@Model.VacanciesSummary.LiveCount</p>
-                        <figcaption><h2>Live<br />vacancies</h2></figcaption>
+                        <figcaption><h2>Live</h2></figcaption>
                     </a>
                 }
             </figure></li>
@@ -90,13 +90,13 @@
                 @if (filterType == VacanciesSummaryFilterTypes.Submitted)
                 {
                     <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
-                    <figcaption><h2>Submitted<br />vacancies</h2></figcaption>
+                    <figcaption><h2>Submitted</h2></figcaption>
                 }
                 else
                 {
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">
                         <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
-                        <figcaption><h2>Submitted<br />vacancies</h2></figcaption>
+                        <figcaption><h2>Submitted</h2></figcaption>
                     </a>
                 }
             </figure></li>
@@ -104,13 +104,13 @@
                 @if (filterType == VacanciesSummaryFilterTypes.Rejected)
                 {
                     <p class="count">@Model.VacanciesSummary.RejectedCount</p>
-                    <figcaption><h2>Rejected<br />vacancies</h2></figcaption>
+                    <figcaption><h2>Referred</h2></figcaption>
                 }
                 else
                 {
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected))" class="vacancy-filter">
                         <p class="count">@Model.VacanciesSummary.RejectedCount</p>
-                        <figcaption><h2>Rejected<br />vacancies</h2></figcaption>
+                        <figcaption><h2>Referred</h2></figcaption>
                     </a>
                 }
             </figure></li>
@@ -118,13 +118,13 @@
                 @if (filterType == VacanciesSummaryFilterTypes.ClosingSoon)
                 {
                     <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
-                    <figcaption><h2>Closing soom<br />vacancies</h2></figcaption>
+                    <figcaption><h2>Closing soom</h2></figcaption>
                 }
                 else
                 {
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon))" class="vacancy-filter">
                         <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
-                        <figcaption><h2>Closing soon<br />vacancies</h2></figcaption>
+                        <figcaption><h2>Closing soon</h2></figcaption>
                     </a>
                 }
             </figure></li>
@@ -132,13 +132,13 @@
                 @if (filterType == VacanciesSummaryFilterTypes.Closed)
                 {
                     <p class="count">@Model.VacanciesSummary.ClosedCount</p>
-                    <figcaption><h2>Closed<br />vacancies</h2></figcaption>
+                    <figcaption><h2>Closed</h2></figcaption>
                 }
                 else
                 {
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">
                         <p class="count">@Model.VacanciesSummary.ClosedCount</p>
-                        <figcaption><h2>Closed<br />vacancies</h2></figcaption>
+                        <figcaption><h2>Closed</h2></figcaption>
                     </a>
                 }
             </figure></li>
@@ -146,13 +146,13 @@
                 @if (filterType == VacanciesSummaryFilterTypes.Draft)
                 {
                     <p class="count">@Model.VacanciesSummary.DraftCount</p>
-                    <figcaption><h2>Draft<br />vacancies</h2></figcaption>
+                    <figcaption><h2>Draft</h2></figcaption>
                 }
                 else
                 {
                     <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">
                         <p class="count">@Model.VacanciesSummary.DraftCount</p>
-                        <figcaption><h2>Draft<br />vacancies</h2></figcaption>
+                        <figcaption><h2>Draft</h2></figcaption>
                     </a>
                 }
             </figure></li>

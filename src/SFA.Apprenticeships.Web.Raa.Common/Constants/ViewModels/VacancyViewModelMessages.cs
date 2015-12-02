@@ -80,17 +80,17 @@
         public static class ClosingDate
         {
             public const string LabelText = "Closing date";
-            public const string RequiredErrorText = "Please specify a valid closing date";
-            public const string AfterTodayErrorText = "Please specify a date at least one day in the future";
-            public const string TooSoonErrorText = "The closing date should be at least two weeks from now";
+            public const string RequiredErrorText = "Use the dd/mm/yyyy format for the closing date";
+            public const string AfterTodayErrorText = "The closing date can't be today. We advise using a date more than two weeks from now";
+            public const string TooSoonErrorText = "The closing date should be at least two weeks in the future";
         }
 
         public static class PossibleStartDate
         {
             public const string LabelText = "Possible start date";
-            public const string RequiredErrorText = "Please specify a valid possible start date";
-            public const string TooSoonErrorText = "The possible start date should be at least two weeks from now";
-            public const string AfterTodayErrorText = "Please specify a date at least one day in the future";
+            public const string RequiredErrorText = "Use the dd/mm/yyyy format for the start date";
+            public const string TooSoonErrorText = "The possible start can't be today. We advise using a date more than two weeks from now";
+            public const string AfterTodayErrorText = "The possible start date should be at least one day in the future";
             public const string BeforePublishDateErrorText = "The possible start date should be after the closing date";
         }
 
