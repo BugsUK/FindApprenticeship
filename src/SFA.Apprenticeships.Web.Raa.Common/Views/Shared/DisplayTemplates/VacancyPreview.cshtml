@@ -309,9 +309,10 @@
 @if (Model.NewVacancyViewModel.OfflineVacancy)
 {
     <section class="section-border" id="offline-vacancy" style="">
-        <h2 class="heading-large">Employer's application instructions</h2>
         <div class="editable-item">
-            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment, Model.BasicDetailsLink))
+            <h2 class="heading-large">Employer's application instructions
+                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment, Model.BasicDetailsLink))
+            </h2>
             <p id="application-instructions">
                 @Model.NewVacancyViewModel.OfflineApplicationInstructions
             </p>
