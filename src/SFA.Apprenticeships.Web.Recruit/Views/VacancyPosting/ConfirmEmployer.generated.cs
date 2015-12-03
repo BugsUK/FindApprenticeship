@@ -397,7 +397,7 @@ WriteLiteral("                    ");
 
             
             #line 61 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-               Write(Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "tel", @class = "form-control-small", size = 12 }, labelHtmlAttributes: new {@class = "bold-small"}));
+               Write(Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12 }, labelHtmlAttributes: new {@class = "bold-small"}));
 
             
             #line default
@@ -436,14 +436,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Save description and continue</button>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4313), Tuple.Create("\"", 4353)
+WriteAttribute("href", Tuple.Create(" href=\"", 4332), Tuple.Create("\"", 4372)
             
             #line 69 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 4320), Tuple.Create<System.Object, System.Int32>(Request.UrlReferrer.PathAndQuery
+, Tuple.Create(Tuple.Create("", 4339), Tuple.Create<System.Object, System.Int32>(Request.UrlReferrer.PathAndQuery
             
             #line default
             #line hidden
-, 4320), false)
+, 4339), false)
 );
 
 WriteLiteral(">Choose a different employer</a>\r\n        </div>\r\n");

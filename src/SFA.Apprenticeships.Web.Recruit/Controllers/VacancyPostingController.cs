@@ -528,6 +528,8 @@
         {
             var response = _vacancyPostingMediator.CreateVacancy(viewModel);
 
+            ModelState.Clear();
+
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.CreateVacancy.Ok:

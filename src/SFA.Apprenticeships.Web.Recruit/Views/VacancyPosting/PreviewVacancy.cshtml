@@ -1,4 +1,14 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyViewModel
+
+@functions{
+
+    private static bool IsSingleLocation(SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyViewModel viewModel)
+    {
+        return viewModel.IsEmployerLocationMainApprenticeshipLocation == true || ( viewModel.LocationAddresses != null && viewModel.LocationAddresses.Count == 1 );
+    }
+
+}
+
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.Constants
@@ -228,6 +238,16 @@
                         <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
                         <a href="#" class="edit-comment-link">Edit</a>
                     </div>
+
+                    @if (IsSingleLocation(Model))
+                    {
+                        var positions = Model.IsEmployerLocationMainApprenticeshipLocation ? Model.NumberOfPositions : Model.LocationAddresses.First().NumberOfPositions;
+
+                        <div class="editable-item">
+                            <h3 class="bold-small">Positions</h3>
+                            <p id="vacancy-reference-id">@positions available</p>
+                        </div>
+                    }
                 </div>
             </div>
             <div class="grid grid-2-3">
@@ -393,7 +413,7 @@
                                     </div>
                                 </div>
                             }
-                            else if (Model.LocationAddresses != null && Model.LocationAddresses.Count == 1)
+                            else if (Model.LocationAddresses != null && Model.LocationAddresses.Count() == 1 )
                             {
                                 <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                     <h3 class="bold-small">Address</h3>

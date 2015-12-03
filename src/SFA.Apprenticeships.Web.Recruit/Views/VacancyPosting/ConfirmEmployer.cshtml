@@ -58,7 +58,7 @@
                     </label>
                 </div>
                 <div id="location-type-main-location-panel" class="toggle-content blocklabel-content">
-                    @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "tel", @class = "form-control-small", size = 12 }, labelHtmlAttributes: new {@class = "bold-small"})
+                    @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12 }, labelHtmlAttributes: new {@class = "bold-small"})
                 </div>
             </div>
         </div>

@@ -42,7 +42,7 @@ $(document).ready(function () {
                 dataType: "jsonp",
                 data: {
                     key: key,
-                    searchFor: "Residential",
+                    searchFor: "Everything",
                     country: 'GB',
                     searchTerm: request.term,
                     lastId: searchContext

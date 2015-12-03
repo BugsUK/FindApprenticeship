@@ -2,6 +2,10 @@
     // Validation messages
     var validationMessageNumberOfPositionsRequired = "You must enter at least 1 position";
 
+    function stringStartsWith(string, prefix) {
+        return string.slice(0, prefix.length) === prefix;
+    }
+
     ko.validation.registerExtenders();
 
     var locationAddressItemModel = function (itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4, itemPostcode, itemNumberOfPositions, itemUprn) {
@@ -29,7 +33,7 @@
         //        required: { message: validationMessageNumberOfPositionsRequired }
         //});
 
-        self.itemErrors = ko.validation.group(self);
+        //self.itemErrors = ko.validation.group(self);
     };
 
     var locationAddressesViewModel = function () {
@@ -62,7 +66,7 @@
                 self.showLocationAddresses(true);
             }
             
-            self.errors.showAllMessages(false);
+            //self.errors.showAllMessages(false);
         };
 
         self.removeLocationAddress = function (locationAddress) {
@@ -74,19 +78,28 @@
         
         self.getLocationAddresses = function (data) {
             $(data).each(function (index, item) {
-                var locationAddressItem = new locationAddressItemModel(item.Address.AddressLine1, item.Address.AddressLine2, item.Address.AddressLine3, item.Address.AddressLine4, item.Address.Postcode, item.NumberOfPositions);
+                var locationAddressItem = new locationAddressItemModel(item.Address.AddressLine1, item.Address.AddressLine2, item.Address.AddressLine3, item.Address.AddressLine4, item.Address.Postcode, item.NumberOfPositions, item.Address.Uprn);
                 self.addLocationAddress(locationAddressItem);
             });
         };
 
-        self.saveAndContinue = function () {
-            self.itemErrors = ko.validation.group(self);
-            if (self.errors().length === 0) {
-            } else {
-                self.errors.showAllMessages();
-            }
-        }
+        self.addErrors = function (data, modelState) {
+            $(data).each(function (dataIndex, dataItem) {
+                var itemModelState = $(modelState).filter(function (filterIndex) { return stringStartsWith(modelState[filterIndex].Key, "Addresses[" + dataIndex + "]") });
+                
+                $(itemModelState).each(function (index, item) {
+                    var field = item.Key.split(".")[1];
+                    if (field === "NumberOfPositions") {
+                        $(item.Value).each(function (valueIndex, valueItem) {
+                            var name = item.Key.replace("[", "\\[").replace("]", "\\]").replace(".", "\\.") + "_Error";
+                            $("#" + name).text(valueItem);
+                            $("#" + name).removeClass("field-validation-valid").addClass("field-validation-error").show();
+                        });
+                    }
+                });
 
+            });
+        };
     };
 
     $(function () {
@@ -130,6 +143,11 @@
         }
 
         ko.applyBindings(locationsViewModel, document.getElementById('locationAddressesTable'));
+
+        if (window.getLocationAddressesData) {
+            var modelState = window.getModelState();
+            locationsViewModel.addErrors(window.getLocationAddressesData(), modelState);
+        }
 
         //expose ViewModel globally (needed for lookup service)
         window.locationAddressesViewModel = locationsViewModel;

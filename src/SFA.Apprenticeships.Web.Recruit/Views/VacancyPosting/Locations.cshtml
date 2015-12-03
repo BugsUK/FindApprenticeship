@@ -10,192 +10,212 @@
 
 <h2 class="heading-large">What is the main location of the vacancy?</h2>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.AddLocations, FormMethod.Post))
+@using (Html.BeginRouteForm(RecruitmentRouteNames.AddLocations, FormMethod.Post, new { @id = "add-locations-form" }))
 {
     @Html.HiddenFor(m => m.Ukprn);
     @Html.HiddenFor(m => m.Ern);
     @Html.HiddenFor(m => m.ProviderSiteErn);
     @Html.HiddenFor(m => m.VacancyGuid);
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
     @*<div form-group>
         @Html.FormTextFor(model => model.PostcodeSearch, controlHtmlAttributes: new {type = "text", @class = "form-control-medium", size = "40"}, labelHtmlAttributes: new {@class = "bold-small"})
         <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
     </div>*@
 
-    <div id="address-lookup">
-        <div class="form-group form-group-compound" id="addressInputWrapper">
-            <label for="postcode-search" class="form-label bold-small">Enter the employer's postcode or address</label>
-            <input id="postcode-search" type="text" class="form-control form-control-1-3" spellcheck="false" autocorrect="off"/>
-            <span class="visuallyhidden" id="ariaAddressEntered" aria-live="polite"></span>
+    <noscript>
+        <div>
+            @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Any())
+            {
+                <div class="form-group">
+                    <div class="tabbed-element tab1 active width-all-1-1">
+                        <table class="no-btm-margin">
+                            <colgroup>
+                                <col class="t50">
+                                <col class="t20">
+                            </colgroup>
+                            <tbody>
+                            @for (var i = 0; i < Model.SearchResultAddresses.Count; i++)
+                            {
+                                var address = Model.SearchResultAddresses[i];
+                                <tr>
+                                    <td>
+                                        @string.Format("{0}, {1}, {2}", address.Address.Postcode, address.Address.AddressLine1, address.Address.AddressLine4)
+                                    </td>
+                                    <td>
+                                        @{
+                                            var buttonName = "UseLocation-" + @i;
+                                        }
+                                        <button id="useLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Use location</button>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Addresses != null && Model.Addresses.Any())
+            {
+                <div class="form-group">
+                    <div class="tabbed-element tab1 active width-all-1-1">
+                        <table class="no-btm-margin">
+                            <colgroup>
+                                <col class="t50">
+                                <col class="t30">
+                                <col class="t20">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>Address</th>
+                                <th>Number of positions</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @for (var i = 0; i < Model.Addresses.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        @Model.Addresses.ToList()[i].Address.AddressLine1
+                                        @if (!string.IsNullOrWhiteSpace(@Model.Addresses.ToList()[i].Address.AddressLine2))
+                                        {
+                                            <br/>@Model.Addresses.ToList()[i].Address.AddressLine2
+                                        }
+                                        <br/>@Model.Addresses.ToList()[i].Address.AddressLine4 @Model.Addresses.ToList()[i].Address.Postcode
+
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Postcode, new {@id = "addresses_" + i + "address__Postcode", Name = "Addresses[" + i + "].Address.Postcode"})
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine1, new {@id = "addresses_" + i + "address__AddressLine1", Name = "Addresses[" + i + "].Address.AddressLine1"})
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new {@id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2"})
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine3, new {@id = "addresses_" + i + "address__AddressLine3", Name = "Addresses[" + i + "].Address.AddressLine3"})
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine4, new {@id = "addresses_" + i + "address__AddressLine4", Name = "Addresses[" + i + "].Address.AddressLine4"})
+                                    </td>
+                                    <td>
+                                        @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"})
+                                    </td>
+                                    <td>
+                                        @{
+                                            var buttonName = "RemoveLocation-" + i;
+                                        }
+                                        <button id="removeLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Remove</button>
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
+
+            @if (Model.Addresses != null && Model.Addresses.Any())
+            {
+                <div class="form-group">
+                    @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
+                </div>
+                <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
+            }
         </div>
-        <div id="address-manual" class="form-group form-group-compound">
-            @*<a href="#" class="copy-19" id="enterAddressManually">Or enter address manually</a>*@
-            <span class="toggle-content hide-nojs loading-text" id="addressLoading">Loading address...</span>
-            <span style="color: red" id="postcodeServiceUnavailable" class="copy-19 toggle-content hide-nojs text">Service si currently unavailable, please enter the full postcode</span>
-        </div>
-    </div>
-    
-    <div class="hide-js">
-        @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Any())
-        {
-        <div class="form-group">
-            <div class="tabbed-element tab1 active width-all-1-1">
-                <table class="no-btm-margin">
-                    <colgroup>
-                        <col class="t50">
-                        <col class="t20">
-                    </colgroup>
-                    <tbody>
-                    @for (var i = 0; i < Model.SearchResultAddresses.Count; i++)
-                    {
-                        var address = Model.SearchResultAddresses[i];
-                        <tr>
-                            <td>
-                                @string.Format("{0}, {1}, {2}", address.Address.Postcode, address.Address.AddressLine1, address.Address.AddressLine4)
-                            </td>
-                            <td>
-                                @{
-                                    var buttonName = "UseLocation-" + @i;
-                                }
-                                <button id="useLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Use location</button>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+    </noscript>
+
+    <div class="hide-nojs">
+        <div id="address-lookup">
+            <div class="form-group form-group-compound" id="addressInputWrapper">
+                <label for="postcode-search" class="form-label bold-small">Enter the employer's postcode or address</label>
+                <input id="postcode-search" type="text" class="form-control form-control-1-3" spellcheck="false" autocorrect="off" />
+                <span class="visuallyhidden" id="ariaAddressEntered" aria-live="polite"></span>
+            </div>
+            <div id="address-manual" class="form-group form-group-compound">
+                @*<a href="#" class="copy-19" id="enterAddressManually">Or enter address manually</a>*@<a href="#" class="copy-19" id="enterAddressManually"></a><a href="#" class="copy-19" id="enterAddressManually"></a>
+                <span class="toggle-content hide-nojs loading-text" id="addressLoading">Loading address...</span>
+                <span style="color: red" id="postcodeServiceUnavailable" class="copy-19 toggle-content hide-nojs text">Service si currently unavailable, please enter the full postcode</span>
             </div>
         </div>
-        }
-
-        @if (Model.Addresses != null && Model.Addresses.Any())
-        {
-        <div class="form-group">
-            <div class="tabbed-element tab1 active width-all-1-1">
-                <table class="no-btm-margin">
+        <div id="locationAddressesTable">
+            <div data-bind="style: {'display': locationAddressesStatus() }">
+                <table class="grid-3-4">
                     <colgroup>
-                        <col class="t50">
-                        <col class="t30">
+                        <col class="t40">
+                        <col class="t25">
                         <col class="t20">
+                        <col>
                     </colgroup>
+
                     <thead>
-                    <tr>
-                        <th>Address</th>
-                        <th>Number of positions</th>
-                        <th></th>
-                    </tr>
+                        <tr>
+                            <th>
+                                <span class="heading-span">Location</span>
+                            </th>
+                            <th>
+                                <span class="heading-span">Number of positions</span>
+                            </th>
+                            <th>
+                            </th>
+                        </tr>
                     </thead>
-                    <tbody>
-                    @for (var i = 0; i < Model.Addresses.Count; i++)
-                    {
+                    <tbody id="location-addresses" data-bind="foreach: locationAddresses">
                         <tr>
                             <td>
-                                @Model.Addresses.ToList()[i].Address.AddressLine1
-                                @if (!string.IsNullOrWhiteSpace(@Model.Addresses.ToList()[i].Address.AddressLine2))
-                                {
-                                    <br />@Model.Addresses.ToList()[i].Address.AddressLine2
-                                }
-                                <br />@Model.Addresses.ToList()[i].Address.AddressLine4 @Model.Addresses.ToList()[i].Address.Postcode
-
-                                @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Postcode, new {@id = "addresses_" + i + "address__Postcode", Name = "Addresses[" + i + "].Address.Postcode"})
-                                @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine1, new {@id = "addresses_" + i + "address__AddressLine1", Name = "Addresses[" + i + "].Address.AddressLine1"})
-                                @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new {@id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2"})
-                                @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine3, new {@id = "addresses_" + i + "address__AddressLine3", Name = "Addresses[" + i + "].Address.AddressLine3"})
-                                @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine4, new {@id = "addresses_" + i + "address__AddressLine4", Name = "Addresses[" + i + "].Address.AddressLine4"})
+                                <span type="text" data-bind="html: itemFriendlyAddress()" maxlength="50" />
                             </td>
                             <td>
-                                @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"})
+                                <input class="form-control qual-input-edit qual-year" maxlength="5" type="text" data-bind="value: itemNumberOfPositions, attr:{'name':'Addresses[' + $index() +'].NumberOfPositions', 'id':'addresses_'+ $index() + '__numberofpositions'}">
+                                <span class="field-validation-valid" aria-live="polite" data-valmsg-replace="true" data-bind="attr:{'id': 'Addresses[' + $index() +'].NumberOfPositions_Error', 'data-valmsg-for': 'Addresses[' + $index() +'].NumberOfPositions'}"></span>
+                                <input type="hidden" data-bind="value: itemAddressLine1, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine1', 'id':'addresses_'+ $index() + 'address__AddressLine1' }">
+                                <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
+                                <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
+                                <input type="hidden" data-bind="value: itemAddressLine4, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine4', 'id':'addresses_'+ $index() + 'address__AddressLine4' }">
+                                <input type="hidden" data-bind="value: itemPostcode, attr:{'name':'Addresses[' + $index() +'].Address.Postcode', 'id':'addresses_'+ $index() + 'address__Postcode' }">
+                                <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
                             </td>
-                            <td>
-                                @{
-                                    var buttonName = "RemoveLocation-" + i;
-                                }
-                                <button id="removeLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Remove</button>
+                            <td class="ta-center">
+                                <a href="#" data-bind="click: $root.removeLocationAddress">Remove</a>
                             </td>
                         </tr>
-                    }
                     </tbody>
                 </table>
             </div>
-        </div>
-        }
 
-        @if (Model.Addresses != null && Model.Addresses.Any())
-        {
-        <div class="form-group">
-            @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
+            <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
+                @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
+            </div>
+            <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
         </div>
-        <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
-        }
-    </div>
-
-    <div id="locationAddressesTable">
-        <div data-bind="style: {'display': locationAddressesStatus() }">
-            <table class="grid-3-4">
-                <colgroup>
-                    <col class="t40">
-                    <col class="t25">
-                    <col class="t20">
-                    <col>
-                </colgroup>
-
-                <thead>
-                <tr>
-                    <th>
-                        <span class="heading-span">Location</span>
-                    </th>
-                    <th>
-                        <span class="heading-span">Number of positions</span>
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-                </thead>
-                <tbody id="location-addresses" data-bind="foreach: locationAddresses">
-                <tr>
-                    <td>
-                        <span type="text" data-bind="html: itemFriendlyAddress()" maxlength="50" />
-                    </td>
-                    <td>
-                        <input maxlength="5" pattern="[0-9]*" class="form-control qual-input-edit qual-year" type="text" data-bind="value: itemNumberOfPositions, attr:{'name':'Addresses[' + $index() +'].NumberOfPositions', 'id':'addresses_'+ $index() + '__numberofpositions'}">
-                        <span class="field-validation-valid" aria-live="polite" data-valmsg-replace="true" data-bind="attr:{'data-valmsg-for': 'Addresses[' + $index() +'].NumberOfPositions'}"></span>
-                        <input type="hidden" data-bind="value: itemAddressLine1, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine1', 'id':'addresses_'+ $index() + 'address__AddressLine1' }">
-                        <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
-                        <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
-                        <input type="hidden" data-bind="value: itemAddressLine4, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine4', 'id':'addresses_'+ $index() + 'address__AddressLine4' }">
-                        <input type="hidden" data-bind="value: itemPostcode, attr:{'name':'Addresses[' + $index() +'].Address.Postcode', 'id':'addresses_'+ $index() + 'address__Postcode' }">
-                        <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
-                    </td>
-                    <td class="ta-center">
-                        <a href="#"  data-bind="click: $root.removeLocationAddress">Remove</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
-            @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
-        </div>
-        <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
     </div>
 }
 
 
 
-@section scripts {
-    @Scripts.Render("~/bundles/knockout")
+            @section scripts {
+                @Scripts.Render("~/bundles/knockout")
 
-    <script type="text/javascript">
-        var addressesData = null;
+                <script type="text/javascript">
+                ko.observable.fn.appendError = function (error) {
+                    var thisError = this.error();
+                    if (thisError) {
+                        this.setError(thisError += '. ' + error);
+                    }
+                    else {
+                        this.setError(error);
+                    };
+                };
 
-        addressesData = @Html.Raw(Json.Encode(Model.Addresses));
+                var addressesData = null;
 
-        if (!addressesData) addressesData = [];
+                addressesData = @Html.Raw(Json.Encode(Model.Addresses));
 
-        function getLocationAddressesData() {
-            return addressesData;
-        }
+                if (!addressesData) addressesData = [];
 
-    </script>
+                function getLocationAddressesData() {
+                    return addressesData;
+                }
 
-    @Scripts.Render("~/bundles/location")
-}
+                var modelState = null;
+                modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
+
+                function getModelState() {
+                    return modelState;
+                }
+                </script>
+
+                @Scripts.Render("~/bundles/location")
+            }

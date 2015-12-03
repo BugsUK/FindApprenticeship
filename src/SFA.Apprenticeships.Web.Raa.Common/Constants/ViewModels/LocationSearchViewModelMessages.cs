@@ -15,5 +15,11 @@
         {
             public const string LabelText = "Enter the employer's postcode";
         }
+
+        public class Addresses
+        {
+            public const string NoAddressesErrorText =
+                "You must enter the employer’s postcode or address before continuing";
+        }
     }
 }

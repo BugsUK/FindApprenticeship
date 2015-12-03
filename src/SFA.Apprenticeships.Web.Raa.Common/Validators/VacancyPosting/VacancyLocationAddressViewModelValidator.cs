@@ -10,7 +10,9 @@
         {
             RuleFor(x => x.NumberOfPositions)
                 .NotEmpty()
-                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.RequiredErrorText);
+                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.RequiredErrorText)
+                .GreaterThanOrEqualTo(1)
+                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.AtLeastOnePositionErrorText);
         }
     }
 }
