@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using IoC;
@@ -26,6 +27,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
+    using Repositories.Vacancies.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -104,9 +106,10 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddCachingRegistry(cacheConfig);
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
-                x.AddRegistry<ProcessesRegistry>();
+                x.AddRegistry(new ProcessesRegistry(configurationService.Get<ProcessConfiguration>()));
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<PostcodeRegistry>();

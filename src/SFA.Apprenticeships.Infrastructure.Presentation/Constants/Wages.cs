@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Constants
+﻿namespace SFA.Apprenticeships.Infrastructure.Presentation.Constants
 {
     public static class Wages
     {

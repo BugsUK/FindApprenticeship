@@ -15,9 +15,9 @@ namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn);
 
-        List<ApprenticeshipVacancy> GetForProvider(string ukPrn, List<ProviderVacancyStatuses> desiredStatuses);
+        List<ApprenticeshipVacancy> GetForProvider(string ukPrn, params ProviderVacancyStatuses[] desiredStatuses);
 
-        List<ApprenticeshipVacancy> GetWithStatus(List<ProviderVacancyStatuses> desiredStatuses);
+        List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses);
 
         List<ApprenticeshipVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
     }

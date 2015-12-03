@@ -22,10 +22,12 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
+    using Processes.Configuration;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
+    using Repositories.Vacancies.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -149,7 +151,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
-                x.AddRegistry<JobsRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
+                x.AddRegistry(new JobsRegistry(configurationService.Get<ProcessConfiguration>()));
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<PostcodeRegistry>();

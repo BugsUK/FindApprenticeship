@@ -1,5 +1,6 @@
 ﻿@model VacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Infrastructure.Presentation.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -63,7 +64,7 @@
                     @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
                     {
                         <span>
-                            @Model.VacancySummaryViewModel.WageUnitDisplayText wage
+                            @Model.VacancySummaryViewModel.WageUnitDisplayText
                         @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
                     </span>
                     }
@@ -106,7 +107,7 @@
                     Expected duration
                     @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment))
                 </h3>
-                <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.Duration @Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
+                <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.Duration, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment))
             </div>
 

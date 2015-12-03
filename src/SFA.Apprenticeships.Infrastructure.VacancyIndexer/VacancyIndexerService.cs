@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.Vacancies.Entities;
@@ -22,9 +21,6 @@
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
         private const int PageSize = 5;
-        private const double LondonLatitude = 51.51713;
-        private const double LondonLongitude = -0.10619;
-        private const int SearchRadius = 30;
 
         public VacancyIndexerService(
             ILogService logger,
@@ -179,15 +175,6 @@
                 s.Index(newIndexName);
                 s.Type(documentTypeName);
                 s.Take(PageSize);
-
-                s.TrackScores();
-
-                s.Filter(f => f
-                    .GeoDistance(vs => vs
-                        .Location, descriptor => descriptor
-                            .Location(LondonLatitude, LondonLongitude)
-                            .Distance(SearchRadius, GeoUnit.Miles)));
-
                 return s;
             });
 
@@ -216,7 +203,7 @@
 
         private static string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime)
         {
-            return string.Format("{0}.{1}", indexAlias, dateTime.ToUniversalTime().ToString("yyyy-MM-dd-HH"));
+            return $"{indexAlias}.{dateTime.ToUniversalTime().ToString("yyyy-MM-dd-HH-mm")}";
         }
     }
 }

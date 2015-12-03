@@ -493,10 +493,7 @@
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
         {
             var vacancies =
-                _apprenticeshipVacancyReadRepository.GetWithStatus(new List<ProviderVacancyStatuses>
-                {
-                        ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA
-                });
+                _apprenticeshipVacancyReadRepository.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
 
             return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
         }

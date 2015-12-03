@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.IoC
 {
+    using System;
     using Application.Applications;
     using Application.Applications.Entities;
     using Application.Applications.Housekeeping;
@@ -25,11 +26,14 @@
     using Communication.Configuration;
     using Communications;
     using Communications.Commands;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using LegacyWebServices.Vacancy;
     using Logging.IoC;
+    using Raa;
     using Repositories.Audit;
     using SiteMap;
     using StructureMap;
@@ -38,7 +42,7 @@
 
     public class ProcessesRegistry : Registry
     {
-        public ProcessesRegistry()
+        public ProcessesRegistry(ProcessConfiguration processConfiguration)
         {
             // communications
             var container = new Container(x =>
@@ -71,6 +75,18 @@
 
             For<ApprenticeshipSummaryUpdateProcessor>().Use<ApprenticeshipSummaryUpdateProcessor>();
             For<TraineeshipsSummaryUpdateProcessor>().Use<TraineeshipsSummaryUpdateProcessor>();
+            
+            switch (processConfiguration.VacancyIndexDataProvider)
+            {
+                case "LegacyVacancyIndexDataProvider":
+                    For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.LegacyVacancySummaryMapper");
+                    break;
+                case "VacancyIndexDataProvider":
+                    For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
+                    break;
+                default:
+                    throw new Exception(processConfiguration.VacancyIndexDataProvider + " was not recognized as a valid IVacancyIndexDataProvider. Please check ProcessConfiguration");
+            }
 
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";//todo: remove
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");

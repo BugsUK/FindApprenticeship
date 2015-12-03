@@ -34,11 +34,6 @@
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
 
-            For<IVacancyIndexDataProvider>()
-                .Use<LegacyVacancyIndexDataProvider>()
-                .Ctor<IMapper>()
-                .Named("LegacyWebServices.LegacyVacancySummaryMapper");
-
             #region Vacancy Data Service And Providers
 
             For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()

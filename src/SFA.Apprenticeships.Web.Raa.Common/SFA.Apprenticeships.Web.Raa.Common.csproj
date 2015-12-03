@@ -167,7 +167,6 @@
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
-    <Compile Include="Constants\Wages.cs" />
     <Compile Include="Converters\AddressViewModelConverter.cs" />
     <Compile Include="Converters\ApprenticeshipVacancyConverter.cs" />
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
@@ -296,6 +295,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
+      <Project>{83500887-E1B7-46BD-945B-4CC3D0069B6E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

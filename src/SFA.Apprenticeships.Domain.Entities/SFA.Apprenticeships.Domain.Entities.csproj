@@ -131,9 +131,12 @@
     <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipVacancy.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\Duration.cs" />
     <Compile Include="Vacancies\ProviderVacancies\DurationType.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipExtensions.cs" />
     <Compile Include="Vacancies\ProviderVacancies\ProviderVacancyStatuses.cs" />
     <Compile Include="Vacancies\ProviderVacancies\TrainingType.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\Wage.cs" />
     <Compile Include="Vacancies\ProviderVacancies\WageType.cs" />
     <Compile Include="Vacancies\ProviderVacancies\WageUnit.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />
