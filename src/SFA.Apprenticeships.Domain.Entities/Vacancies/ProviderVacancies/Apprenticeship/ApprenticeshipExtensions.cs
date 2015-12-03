@@ -1,10 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using Apprenticeships;
-    using ReferenceData;
 
     public static class ApprenticeshipExtensions
     {
@@ -27,6 +23,32 @@
                     return Apprenticeships.ApprenticeshipLevel.Higher;
                 default:
                     throw new ArgumentException("Apprenticeship Level: " + apprenticeshipLevel + " was not recognized");
+            }
+        }
+
+        public static LegacyWageType GetLegacyWageType(this WageType wageType)
+        {
+            return LegacyWageType.Text;
+        }
+
+        public static VacancyStatuses GetVacancyStatuses(this ProviderVacancyStatuses providerVacancyStatuses)
+        {
+            switch (providerVacancyStatuses)
+            {
+                case ProviderVacancyStatuses.Unknown:
+                    return VacancyStatuses.Unknown;
+                case ProviderVacancyStatuses.Draft:
+                    return VacancyStatuses.Unavailable;
+                case ProviderVacancyStatuses.PendingQA:
+                    return VacancyStatuses.Unavailable;
+                case ProviderVacancyStatuses.Live:
+                    return VacancyStatuses.Live;
+                case ProviderVacancyStatuses.ReservedForQA:
+                    return VacancyStatuses.Unavailable;
+                case ProviderVacancyStatuses.RejectedByQA:
+                    return VacancyStatuses.Unavailable;
+                default:
+                    throw new ArgumentException("Provider Vacancy Status: " + providerVacancyStatuses + " was not recognized");
             }
         }
     }

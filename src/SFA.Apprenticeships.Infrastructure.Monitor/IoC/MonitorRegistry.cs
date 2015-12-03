@@ -1,9 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
-    using Application.Vacancies;
     using Consumers;
-    using Domain.Interfaces.Mapping;
-    using LegacyWebServices.Vacancy;
     using Mongo.Common;
     using Provider;
     using Repositories;
@@ -16,9 +13,6 @@
         {
             For<MonitorControlQueueConsumer>().Use<MonitorControlQueueConsumer>();
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>();
-
-            //TODO: remove once link with AV is broken
-            For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.LegacyVacancySummaryMapper");
 
             For<IMonitorTasksRunner>().Use<MonitorTasksRunner>()
                 .EnumerableOf<IMonitorTask>()

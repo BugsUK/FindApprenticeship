@@ -3,12 +3,13 @@
     using System;
     using Application.Candidate;
     using Application.Interfaces.Applications;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Infrastructure.IntegrationTests.LegacyWebServices.Helpers;
+    using Helpers;
     using Infrastructure.LegacyWebServices.IoC;
     using Logging.IoC;
     using Moq;
@@ -31,7 +32,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = "Legacy" }));
                 x.For<ICandidateReadRepository>().Use(_candidateRepositoryMock.Object);
             });
 

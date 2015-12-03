@@ -24,9 +24,9 @@
 
     public class LegacyWebServicesRegistry : Registry
     {
-        public LegacyWebServicesRegistry() : this(new CacheConfiguration()) { }
+        public LegacyWebServicesRegistry(ServicesConfiguration servicesConfiguration) : this(new CacheConfiguration(), servicesConfiguration) { }
 
-        public LegacyWebServicesRegistry(CacheConfiguration cacheConfiguration)
+        public LegacyWebServicesRegistry(CacheConfiguration cacheConfiguration, ServicesConfiguration servicesConfiguration)
         {
             For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
             For<IMapper>().Use<LegacyApprenticeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper";
@@ -34,40 +34,45 @@
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
 
-            #region Vacancy Data Service And Providers
-
-            For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                .Use<LegacyVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                .Ctor<IMapper>()
-                .Named("LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper")
-                .Name = "LegacyApprenticeshipVacancyDataProvider";
-
-            For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
-                .Use<LegacyVacancyDataProvider<TraineeshipVacancyDetail>>()
-                .Ctor<IMapper>()
-                .Named("LegacyWebServices.LegacyTraineeshipVacancyDetailMapper")
-                .Name = "LegacyTraineeshipVacancyDataProvider";
-
-            if (cacheConfiguration.UseCache)
+            if (servicesConfiguration.ServiceImplementation == "Legacy")
             {
+                For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.LegacyVacancySummaryMapper");
+
                 For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                    .Use<CachedLegacyVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                    .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                    .IsTheDefault()
-                    .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                    .Named("LegacyApprenticeshipVacancyDataProvider")
-                    .Ctor<ICacheService>()
-                    .Named(cacheConfiguration.DefaultCache);
+                    .Use<LegacyVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper")
+                    .Name = "LegacyApprenticeshipVacancyDataProvider";
 
                 For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
-                    .Use<CachedLegacyVacancyDataProvider<TraineeshipVacancyDetail>>()
-                    .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
-                    .IsTheDefault()
-                    .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
-                    .Named("LegacyTraineeshipVacancyDataProvider")
-                    .Ctor<ICacheService>()
-                    .Named(cacheConfiguration.DefaultCache);
+                    .Use<LegacyVacancyDataProvider<TraineeshipVacancyDetail>>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.LegacyTraineeshipVacancyDetailMapper")
+                    .Name = "LegacyTraineeshipVacancyDataProvider";
+
+                if (cacheConfiguration.UseCache)
+                {
+                    For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Use<CachedLegacyVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .IsTheDefault()
+                        .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Named("LegacyApprenticeshipVacancyDataProvider")
+                        .Ctor<ICacheService>()
+                        .Named(cacheConfiguration.DefaultCache);
+
+                    For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Use<CachedLegacyVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .IsTheDefault()
+                        .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Named("LegacyTraineeshipVacancyDataProvider")
+                        .Ctor<ICacheService>()
+                        .Named(cacheConfiguration.DefaultCache);
+                }
             }
+
+            #region Vacancy Data Service And Providers
 
             #endregion
 

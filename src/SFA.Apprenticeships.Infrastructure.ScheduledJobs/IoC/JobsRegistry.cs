@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.IoC
 {
-    using System;
     using Application.Applications;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
@@ -16,17 +15,14 @@
     using Consumers;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
-    using LegacyWebServices.Vacancy;
-    using Processes.Configuration;
     using Processes.Vacancies;
-    using Raa;
     using Repositories.Audit;
     using StructureMap.Configuration.DSL;
     using VacancyEtlMapper = Mappers.VacancyEtlMapper;
 
     public class JobsRegistry : Registry
     {
-        public JobsRegistry(ProcessConfiguration processConfiguration)
+        public JobsRegistry()
         {
             //Application Etl
             For<ApplicationEtlControlQueueConsumer>().Use<ApplicationEtlControlQueueConsumer>();
@@ -42,18 +38,6 @@
 
             For<IApprenticeshipSummaryUpdateProcessor>().Use<ApprenticeshipSummaryUpdateProcessor>();
             For<ITraineeshipsSummaryUpdateProcessor>().Use<TraineeshipsSummaryUpdateProcessor>();
-
-            switch (processConfiguration.VacancyIndexDataProvider)
-            {
-                case "LegacyVacancyIndexDataProvider":
-                    For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.LegacyVacancySummaryMapper");
-                    break;
-                case "VacancyIndexDataProvider":
-                    For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
-                    break;
-                default:
-                    throw new Exception(processConfiguration.VacancyIndexDataProvider + " was not recognized as a valid IVacancyIndexDataProvider. Please check ProcessConfiguration");
-            }
 
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");

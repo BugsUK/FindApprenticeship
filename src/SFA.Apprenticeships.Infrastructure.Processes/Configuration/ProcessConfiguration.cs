@@ -13,7 +13,5 @@
         public bool EnableVacancySiteMap { get; set; }
 
         public bool StrictEtlValidation { get; set; }
-
-        public string VacancyIndexDataProvider { get; set; }
     }
 }
