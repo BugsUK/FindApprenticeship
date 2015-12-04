@@ -18,8 +18,7 @@
             var detail = new ApprenticeshipVacancyDetail
             {
                 Id = (int)vacancy.VacancyReferenceNumber,
-                //TODO: Use common Vacancy Reference presenter
-                VacancyReference = vacancy.VacancyReferenceNumber.ToString(),
+                VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,
                 FullDescription = vacancy.LongDescription,
