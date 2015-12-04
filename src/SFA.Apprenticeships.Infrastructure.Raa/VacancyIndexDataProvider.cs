@@ -1,21 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
-    using Domain.Entities.Locations;
-    using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
     using Mappers;
-    using Presentation;
 
     /// <summary>
     /// TODO: This class will eventually use an RAA service for the data rather than referencing repositories directly.

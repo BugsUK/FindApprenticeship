@@ -16,11 +16,20 @@
         public static ApprenticeshipSummary GetApprenticeshipSummary(ApprenticeshipVacancy vacancy, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
+            
+            //TODO: Store geopoints for employers
+            var location = vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint;
+            if (location.Latitude == 0 || location.Longitude == 0)
+            {
+                //Coventry
+                location.Latitude = 52.4009991288043;
+                location.Longitude = -1.50812239495425;
+            }
+
             var summary = new ApprenticeshipSummary
             {
                 Id = (int)vacancy.VacancyReferenceNumber,
-                //TODO: Use common Vacancy Reference presenter
-                VacancyReference = vacancy.VacancyReferenceNumber.ToString(),
+                VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
                 StartDate = vacancy.PossibleStartDate ?? DateTime.MinValue,
@@ -33,9 +42,7 @@
                 //ProviderName = vacancy.ProviderSiteEmployerLink.,
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
-                //TODO: Store geopoints for employers
-                //Location = vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint,
-                Location = new GeoPoint { Latitude = 52.4009991288043, Longitude = -1.50812239495425 }, //Coventry
+                Location = location,
                 //TODO: How do we determine this in RAA?
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),

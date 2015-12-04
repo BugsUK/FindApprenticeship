@@ -44,5 +44,6 @@
         public string RequirementsProspectsLink { get; set; }
 
         public string QuestionsLink { get; set; }
+        public int ApplicationCount { get; set; }
     }
 }

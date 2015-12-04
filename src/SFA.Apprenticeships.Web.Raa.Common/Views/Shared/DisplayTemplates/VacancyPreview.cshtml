@@ -1,5 +1,6 @@
 ﻿@model VacancyViewModel
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Infrastructure.Presentation.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
@@ -133,7 +134,7 @@
 
             <div>
                 <h3 class="bold-small">Reference number</h3>
-                <p id="vacancy-reference-id">@Model.VacancyReferenceNumber</p>
+                <p id="vacancy-reference-id">@Model.VacancyReferenceNumber.GetVacancyReference()</p>
             </div>
         </div>
     </div>
