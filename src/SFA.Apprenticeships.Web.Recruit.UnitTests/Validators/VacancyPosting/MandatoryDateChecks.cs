@@ -76,5 +76,55 @@
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel);
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
         }
+
+        [Test]
+        public void DateCannotBeToday()
+        {
+            var today = DateTime.UtcNow;
+            today = new DateTime(today.Year, today.Month, today.Day);
+
+            var viewModel = new VacancySummaryViewModel
+            {
+                ClosingDate = new DateViewModel(today),
+                PossibleStartDate = new DateViewModel(today)
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+
+            _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
+        }
+
+        [Test]
+        public void DateCanBeTomorrow()
+        {
+            var today = DateTime.UtcNow;
+            today = new DateTime(today.Year, today.Month, today.Day);
+
+            var viewModel = new VacancySummaryViewModel
+            {
+                ClosingDate = new DateViewModel(today.AddDays(1)),
+                PossibleStartDate = new DateViewModel(today.AddDays(1))
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
+        }
     }
 }

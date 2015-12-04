@@ -6159,6 +6159,12 @@ html:not(.touch) .editable-item {
   color: #28a197;
   cursor: help; }
 
+h2 a i.raa-icon-comment {
+  vertical-align: middle; }
+
+.preserve-formatting {
+  white-space: pre-line; }
+
 .vacancies-summary {
   list-style: none;
   margin: 0;
