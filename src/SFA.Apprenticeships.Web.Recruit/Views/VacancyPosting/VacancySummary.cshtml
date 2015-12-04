@@ -6,6 +6,15 @@
 @using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @{
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy summary";
+
+    var saveButtonText = "Save and continue";
+    var saveButtonValue = "VacancySummary";
+
+    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+    {
+        saveButtonText = "Save and return to Preview";
+        saveButtonValue = "VacancySummaryAndPreview";
+    }
 }
 
 <h1 class="heading-xlarge">
@@ -18,11 +27,13 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    
+    @Html.HiddenFor(m => m.Status)
+    @Html.HiddenFor(m => m.WarningsHash)
+
     <section>
         <div class="form-group">
             <fieldset class="form-group inline-fixed">
-                @Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, autofocus = "autofocus"})
+                @Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12})
             </fieldset>
 
             <fieldset class="form-group inline-fixed">
@@ -94,7 +105,7 @@
         </div>
     </section>
     <div class="grid grid-1-2">
-        <button type="submit" class="button" name="VacancySummary" value="VacancySummary">Save and continue</button>
+        <button id="vacancySummaryButton" type="submit" class="button" name="VacancySummary" value="@saveButtonValue">@saveButtonText</button>
         <button id="vacancySummaryAndExit" type="submit" class="button-link" name="VacancySummary" value="VacancySummaryAndExit">Save and exit</button>
     </div>
 }

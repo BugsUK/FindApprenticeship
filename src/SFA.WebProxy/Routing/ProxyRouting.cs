@@ -1,4 +1,4 @@
-﻿namespace SFA.WebProxy
+﻿namespace SFA.WebProxy.Routing
 {
     using System;
     using System.Collections.Generic;
@@ -44,13 +44,11 @@
     public class NasAvWebServicesRouting : IProxyRouting
     {
         private readonly Uri _nasAvWebServiceRootUri;
-        private readonly Uri _nasAvWebServiceSandboxRootUri;
         private readonly Uri _compatabilityWebServiceRootUri;
 
         public NasAvWebServicesRouting(IConfiguration configuration)
         {
             _nasAvWebServiceRootUri = new Uri(configuration.NasAvWebServiceRootUri);
-            _nasAvWebServiceSandboxRootUri = new Uri(configuration.NasAvWebServiceSandboxRootUri);
             _compatabilityWebServiceRootUri = new Uri(configuration.CompatabilityWebServiceRootUrl);
         }
 

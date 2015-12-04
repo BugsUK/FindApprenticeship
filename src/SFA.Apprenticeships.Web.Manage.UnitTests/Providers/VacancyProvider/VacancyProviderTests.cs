@@ -103,6 +103,7 @@
             result.OfflineApplicationInstructionsComment.Should().Be(newVacancyVM.OfflineApplicationInstructionsComment);
             result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
             result.ShortDescriptionComment.Should().Be(newVacancyVM.ShortDescriptionComment);
+            result.StandardIdComment.Should().Be(newVacancyVM.StandardIdComment);
             result.TitleComment.Should().Be(newVacancyVM.TitleComment);
             result.ApprenticeshipLevel.Should().Be(newVacancyVM.ApprenticeshipLevel);
             result.FrameworkCodeName.Should().Be(newVacancyVM.FrameworkCodeName);

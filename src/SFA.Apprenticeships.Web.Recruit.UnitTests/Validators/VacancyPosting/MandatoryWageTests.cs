@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using Builders;
     using Common.Validators;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation;
@@ -17,11 +18,13 @@
         private const string RuleSet = RuleSets.Errors;
 
         private VacancySummaryViewModelServerValidator _validator;
+        private VacancyViewModelValidator _aggregateValidator;
 
         [SetUp]
         public void SetUp()
         {
             _validator = new VacancySummaryViewModelServerValidator();
+            _aggregateValidator = new VacancyViewModelValidator();
         }
 
         [TestCase(45, WageUnit.Weekly, 15, false)] //3 pounds per hour
@@ -42,16 +45,23 @@
                 WageUnit = wageUnit,
                 HoursPerWeek = hoursPerWeek
             };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
             _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             if (expectValid)
             {
                 _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSet);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSet);
             }
         }
     }

@@ -12,133 +12,155 @@
     {
         public VacancySummaryViewModelClientValidator()
         {
-            AddCommonRules();
-            RuleSet(RuleSets.Errors, AddCommonRules);
+            this.AddCommonRules();
+            RuleSet(RuleSets.Errors, this.AddCommonRules);
         }
+    }
 
-        private void AddCommonRules()
+    public class VacancySummaryViewModelServerValidator : AbstractValidator<VacancySummaryViewModel>
+    {
+        public VacancySummaryViewModelServerValidator()
         {
-            RuleFor(viewModel => viewModel.WorkingWeek)
+            this.AddCommonRules();
+            this.AddServerCommonRules();
+            RuleSet(RuleSets.Errors, this.AddCommonRules);
+            RuleSet(RuleSets.Errors, this.AddServerCommonRules);
+            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(null));
+        }
+    }
+
+    public class VacancySummaryViewModelServerErrorValidator : AbstractValidator<VacancySummaryViewModel>
+    {
+        public VacancySummaryViewModelServerErrorValidator()
+        {
+            this.AddCommonRules();
+            this.AddServerCommonRules();
+            RuleSet(RuleSets.Errors, this.AddCommonRules);
+            RuleSet(RuleSets.Errors, this.AddServerCommonRules);
+        }
+    }
+
+    public class VacancySummaryViewModelServerWarningValidator : AbstractValidator<VacancySummaryViewModel>
+    {
+        public VacancySummaryViewModelServerWarningValidator(string parentPropertyName)
+        {
+            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(parentPropertyName));
+        }
+    }
+
+    internal static class VacancySummaryViewModelValidatorRules
+    {
+        internal static void AddCommonRules(this AbstractValidator<VacancySummaryViewModel> validator)
+        {
+            validator.RuleFor(viewModel => viewModel.WorkingWeek)
                 .Length(0, 250)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.LongDescription)
+            validator.RuleFor(viewModel => viewModel.LongDescription)
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.ClosingDateComment)
+            validator.RuleFor(viewModel => viewModel.ClosingDateComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.DurationComment)
+            validator.RuleFor(viewModel => viewModel.DurationComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.LongDescriptionComment)
+            validator.RuleFor(viewModel => viewModel.LongDescriptionComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.PossibleStartDateComment)
+            validator.RuleFor(viewModel => viewModel.PossibleStartDateComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.WageComment)
+            validator.RuleFor(viewModel => viewModel.WageComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            RuleFor(viewModel => viewModel.WorkingWeekComment)
+            validator.RuleFor(viewModel => viewModel.WorkingWeekComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
         }
-    }
 
-    public class VacancySummaryViewModelServerValidator : VacancySummaryViewModelClientValidator
-    {
-        public VacancySummaryViewModelServerValidator()
+        internal static void AddServerCommonRules(this AbstractValidator<VacancySummaryViewModel> validator)
         {
-            AddServerCommonRules();
-            RuleSet(RuleSets.Errors, AddServerCommonRules);
-            RuleSet(RuleSets.Warnings, AddServerWarningRules);
-        }
-
-        private void AddServerCommonRules()
-        {
-            RuleFor(x => x.WorkingWeek)
+            validator.RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.RequiredErrorText);
 
-            RuleFor(x => x.HoursPerWeek)
+            validator.RuleFor(x => x.HoursPerWeek)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.RequiredErrorText);
 
-            RuleFor(x => x.HoursPerWeek)
+            validator.RuleFor(x => x.HoursPerWeek)
                 .Must(HaveAValidHoursPerWeek)
                 .WithMessage(VacancyViewModelMessages.HoursPerWeek.HoursPerWeekShouldBeGreaterThan16)
                 .When(x => x.HoursPerWeek.HasValue);
 
-            RuleFor(viewModel => (int)viewModel.WageType)
+            validator.RuleFor(viewModel => (int)viewModel.WageType)
                 .InclusiveBetween((int)WageType.ApprenticeshipMinimumWage, (int)WageType.Custom)
                 .WithMessage(VacancyViewModelMessages.WageType.RequiredErrorText);
 
-            RuleFor(x => x.Wage)
+            validator.RuleFor(x => x.Wage)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Wage.RequiredErrorText)
                 .When(x => x.WageType == WageType.Custom);
 
-            RuleFor(x => x.Wage)
+            validator.RuleFor(x => x.Wage)
                 .Must(HaveAValidHourRate)
                 .When(v => v.WageType == WageType.Custom)
                 .When(v => v.WageUnit != WageUnit.NotApplicable)
                 .When(v => v.HoursPerWeek.HasValue)
                 .WithMessage(VacancyViewModelMessages.Wage.WageLessThanMinimum);
 
-            RuleFor(x => x.Duration)
+            validator.RuleFor(x => x.Duration)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
                 .Must(HaveAValidDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months);
 
-            RuleFor(x => x.ClosingDate)
+            validator.RuleFor(x => x.ClosingDate)
                 .Must(Common.BeValidDate)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
                 .Must(Common.BeOneDayInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.AfterTodayErrorText)
                 .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
 
-            RuleFor(x => x.PossibleStartDate)
+            validator.RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeValidDate)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.RequiredErrorText)
                 .Must(Common.BeOneDayInTheFuture)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.AfterTodayErrorText)
                 .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
 
-            RuleFor(x => x.LongDescription)
+            validator.RuleFor(x => x.LongDescription)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.LongDescription.RequiredErrorText)
                 .Length(0, 4000)
-                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
-                .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText);
         }
 
-        private void AddServerWarningRules()
+        internal static void AddServerWarningRules(this AbstractValidator<VacancySummaryViewModel> validator, string parentPropertyName)
         {
-            Custom(x => x.ExpectedDurationGreaterThanOrEqualToMinimumDuration(x.Duration));
+            validator.Custom(x => x.ExpectedDurationGreaterThanOrEqualToMinimumDuration(x.Duration, parentPropertyName));
 
-            RuleFor(x => x.ClosingDate)
+            validator.RuleFor(x => x.ClosingDate)
                 .Must(Common.BeTwoWeeksInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.TooSoonErrorText)
                 .WithState(s => ValidationType.Warning);
 
-            RuleFor(x => x.PossibleStartDate)
+            validator.RuleFor(x => x.PossibleStartDate)
                 .Must(Common.BeTwoWeeksInTheFuture)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.TooSoonErrorText)
                 .WithState(s => ValidationType.Warning)
                 .When(x => x.ClosingDate == null || !x.ClosingDate.HasValue);
 
-            Custom(x => x.PossibleStartDateShouldBeAfterClosingDate(x.ClosingDate));
+            validator.Custom(x => x.PossibleStartDateShouldBeAfterClosingDate(x.ClosingDate, parentPropertyName));
         }
 
         private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)
@@ -156,7 +178,7 @@
             if (!vacancy.HoursPerWeek.HasValue || !vacancy.Duration.HasValue)
                 return true;
 
-            if(duration.HasValue && duration.Value % 1 != 0)
+            if (duration.HasValue && duration.Value % 1 != 0)
                 return false;
 
             if (vacancy.HoursPerWeekBetween30And40() || vacancy.HoursPerWeekGreaterThanOrEqualTo16())
@@ -175,11 +197,11 @@
             switch (wageUnit)
             {
                 case WageUnit.Weekly:
-                    return wage/hoursPerWeek;
+                    return wage / hoursPerWeek;
                 case WageUnit.Annually:
-                    return wage/52m/hoursPerWeek;
+                    return wage / 52m / hoursPerWeek;
                 case WageUnit.Monthly:
-                    return wage/52m*12/hoursPerWeek;
+                    return wage / 52m * 12 / hoursPerWeek;
                 case WageUnit.NotApplicable:
                     return 0;
                 default:

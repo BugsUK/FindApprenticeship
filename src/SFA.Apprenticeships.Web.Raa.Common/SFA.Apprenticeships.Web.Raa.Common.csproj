@@ -174,6 +174,7 @@
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
     <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
@@ -202,6 +203,9 @@
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelBusinessRulesExtensions.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyResubmissionValidator.cs" />
+    <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
+    <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditLinkViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
@@ -230,6 +234,7 @@
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\ValidationResultViewModel.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Comment.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -242,6 +247,11 @@
     </Compile>
     <Compile Include="Views\Shared\EditorTemplates\Comment.generated.cs">
       <DependentUpon>Comment.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\VacancyPreview.generated.cs">
+      <DependentUpon>VacancyPreview.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -264,6 +274,10 @@
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Comment.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\VacancyPreview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancyPreview.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

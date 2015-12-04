@@ -7,6 +7,7 @@
     using Common.Constants;
     using Common.Mediators;
     using Common.Validators;
+    using Common.Validators.Extensions;
     using Common.ViewModels;
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
@@ -32,6 +33,7 @@
         private readonly VacancyRequirementsProspectsViewModelClientValidator _vacancyRequirementsProspectsViewModelClientValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelClientValidator _vacancyQuestionsViewModelClientValidator;
+        private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancyResubmissionValidator _vacancyResubmissionValidator;
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
@@ -48,6 +50,7 @@
             VacancyRequirementsProspectsViewModelClientValidator vacancyRequirementsProspectsViewModelClientValidator,
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyQuestionsViewModelClientValidator vacancyQuestionsViewModelClientValidator,
+            VacancyViewModelValidator vacancyViewModelValidator,
             VacancyResubmissionValidator vacancyResubmissionValidator,
             ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator)
         {
@@ -65,9 +68,10 @@
             _vacancyRequirementsProspectsViewModelClientValidator = vacancyRequirementsProspectsViewModelClientValidator;
             _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
             _vacancyQuestionsViewModelClientValidator = vacancyQuestionsViewModelClientValidator;
+            _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
-        public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn)
+        public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn, Guid? vacancyGuid)
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn);
 
@@ -78,6 +82,7 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.FailedValidation, viewModel, validationResult);
             }
 
+            viewModel.VacancyGuid = vacancyGuid;
             if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
@@ -158,24 +163,40 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, newViewModel);
         }
 
-        public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(int vacancyReferenceNumber)
+        public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(long vacancyReferenceNumber)
         {
+            var existingVacancy = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
+            if (existingVacancy.Status == ProviderVacancyStatuses.RejectedByQA)
+            {
+                return GetMediatorResponse<ProviderSiteEmployerLinkViewModel>(VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState);
+            }
+
             var viewModel = _vacancyPostingProvider.CloneVacancy(vacancyReferenceNumber);
-            return GetMediatorResponse(VacancyPostingMediatorCodes.CLoneVacancy.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.CloneVacancy.Ok, viewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
         {
             var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyModel.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber, bool validate)
         {
             var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyModel.Ok, viewModel);
+            if (validate)
+            {
+                var validationResult = _newVacancyViewModelServerValidator.Validate(viewModel);
+
+                if (!validationResult.IsValid)
+                {
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.FailedValidation, viewModel, validationResult);
+                }
+            }
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel)
@@ -243,8 +264,10 @@
                     storedVacancy.NewVacancyViewModel.FrameworkCodeNameComment;
                 newVacancyViewModel.OfflineApplicationInstructionsComment =
                     storedVacancy.NewVacancyViewModel.OfflineApplicationInstructionsComment;
+                newVacancyViewModel.StandardIdComment =
+                    storedVacancy.NewVacancyViewModel.StandardIdComment;
                 newVacancyViewModel.OfflineApplicationUrlComment =
-                    storedVacancy.NewVacancyViewModel.OfflineApplicationInstructionsComment;
+                    storedVacancy.NewVacancyViewModel.OfflineApplicationUrlComment;
                 newVacancyViewModel.ShortDescriptionComment = storedVacancy.NewVacancyViewModel.ShortDescriptionComment;
                 newVacancyViewModel.TitleComment = storedVacancy.NewVacancyViewModel.TitleComment;
             }
@@ -270,9 +293,20 @@
                 && ( !string.IsNullOrWhiteSpace(existingVacancy.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(existingVacancy.VacancyQuestionsViewModel.SecondQuestion));
         }
 
-        public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber, bool validate)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
+
+            if (validate)
+            {
+                var validationResult = _vacancySummaryViewModelServerValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+                if (!validationResult.IsValid)
+                {
+                    vacancyViewModel.WarningsHash = validationResult.GetWarningsHash();
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.FailedValidation, vacancyViewModel, validationResult);
+                }
+            }
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancySummaryViewModel.Ok, vacancyViewModel);
         }
@@ -281,10 +315,13 @@
         {
             var validationResult = _vacancySummaryViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
-            if (!validationResult.IsValid && (!acceptWarnings || validationResult.Errors.Any(e => (ValidationType?)e.CustomState != ValidationType.Warning)))
+            var warningsAccepted = validationResult.HasWarningsOnly() && validationResult.IsWarningsHashMatch(viewModel.WarningsHash) && acceptWarnings;
+
+            if (!validationResult.IsValid && !warningsAccepted)
             {
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
                 viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
+                viewModel.WarningsHash = validationResult.GetWarningsHash();
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
@@ -308,9 +345,19 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        public MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber, bool validate)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
+
+            if (validate)
+            {
+                var validationResult = _vacancyRequirementsProspectsViewModelServerValidator.Validate(vacancyViewModel);
+
+                if (!validationResult.IsValid)
+                {
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyRequirementsProspectsViewModel.FailedValidation, vacancyViewModel, validationResult);
+                }
+            }
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyRequirementsProspectsViewModel.Ok, vacancyViewModel);
         }
@@ -352,9 +399,19 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.OkAndExit, updatedViewModel);
         }
 
-        public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber, bool validate)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
+
+            if (validate)
+            {
+                var validationResult = _vacancyQuestionsViewModelServerValidator.Validate(vacancyViewModel);
+
+                if (!validationResult.IsValid)
+                {
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyQuestionsViewModel.FailedValidation, vacancyViewModel, validationResult);
+                }
+            }
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetVacancyQuestionsViewModel.Ok, vacancyViewModel);
         }
@@ -398,7 +455,7 @@
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
-            var validationResult = _vacancyResubmissionValidator.Validate(vacancyViewModel, ruleSet:RuleSets.ErrorsAndWarnings);
+            var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             if (!validationResult.IsValid)
             {
@@ -408,8 +465,6 @@
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel);
         }
-
-        
 
         public MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber, bool resubmitOptin)
         {
@@ -453,7 +508,8 @@
                     ProviderSiteErn = viewModel.ProviderSiteErn,
                     FilterType = EmployerFilterType.Undefined,
                     EmployerResults = Enumerable.Empty<EmployerResultViewModel>(),
-                    EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>()
+                    EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>(),
+                    VacancyGuid = viewModel.VacancyGuid
                 };
             }
             else

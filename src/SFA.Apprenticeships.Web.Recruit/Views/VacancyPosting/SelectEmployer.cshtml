@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     const string selected = "selected";
-    var vacancyGuidValue = Guid.NewGuid();
+    var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
     var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
 }
@@ -41,6 +41,7 @@
                     @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "ern-search-form" }))
                     {
                         @Html.HiddenFor(model => model.ProviderSiteErn)
+                        @Html.HiddenFor(model => model.VacancyGuid)
 
                         <div id="ern-search-panel" class="toggle-content blocklabel-content">
                             @Html.FormTextFor(model => model.Ern)
@@ -54,6 +55,7 @@
                     @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "name-location-search-form" }))
                     {
                         @Html.HiddenFor(model => model.ProviderSiteErn)
+                        @Html.HiddenFor(model => model.VacancyGuid)
 
                         <div id="name-location-search-panel" class="toggle-content blocklabel-content">
                             @Html.FormTextFor(model => model.Name)
@@ -115,7 +117,7 @@
             </div>
         }
 
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Link to a new employer</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid})">Link to a new employer</a>
     </section>
 
     <div class="page-navigation">
