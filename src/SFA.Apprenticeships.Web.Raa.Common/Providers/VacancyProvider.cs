@@ -459,16 +459,28 @@
             vacancy.DateQAApproved = null;
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
-            vacancy.WorkingWeekComment = null;
-            vacancy.ApprenticeshipLevelComment = null;
-            vacancy.ClosingDateComment = null;
-            vacancy.DesiredQualificationsComment = null;
+            //Comments
+            vacancy.TitleComment = null;
+            vacancy.ShortDescriptionComment = null;
             vacancy.DesiredSkillsComment = null;
-            vacancy.DurationComment = null;
-            vacancy.FirstQuestionComment = null;
-            vacancy.FrameworkCodeNameComment = null;
             vacancy.FutureProspectsComment = null;
+            vacancy.PersonalQualitiesComment = null;
+            vacancy.ThingsToConsiderComment = null;
+            vacancy.DesiredQualificationsComment = null;
+            vacancy.OfflineApplicationUrlComment = null;
+            vacancy.OfflineApplicationInstructionsComment = null;
+            vacancy.ApprenticeshipLevelComment = null;
+            vacancy.FrameworkCodeNameComment = null;
+            vacancy.StandardIdComment = null;
+            vacancy.WageComment = null;
+            vacancy.ClosingDateComment = null;
+            vacancy.DurationComment = null;
             vacancy.LongDescriptionComment = null;
+            vacancy.PossibleStartDateComment = null;
+            vacancy.WorkingWeekComment = null;
+            vacancy.FirstQuestionComment = null;
+            vacancy.SecondQuestionComment = null;
+
             vacancy.EntityId = Guid.NewGuid();
 
             _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
