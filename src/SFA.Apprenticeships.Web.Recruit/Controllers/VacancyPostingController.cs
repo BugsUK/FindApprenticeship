@@ -636,9 +636,9 @@
 
             switch (response.Code)
             {
-                case VacancyPostingMediatorCodes.CLoneVacancy.Ok:
+                case VacancyPostingMediatorCodes.CloneVacancy.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
-                case VacancyPostingMediatorCodes.CLoneVacancy.VacancyInIncorrectState:
+                case VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

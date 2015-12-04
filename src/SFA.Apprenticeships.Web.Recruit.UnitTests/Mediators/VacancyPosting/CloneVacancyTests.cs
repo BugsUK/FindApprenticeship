@@ -19,7 +19,7 @@
 
             var result = mediator.CloneVacancy(vacancyReferenceNumber);
 
-            result.Code.Should().Be(VacancyPostingMediatorCodes.CLoneVacancy.VacancyInIncorrectState);
+            result.Code.Should().Be(VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState);
         }
     }
 }

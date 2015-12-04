@@ -100,7 +100,7 @@
             public const string NoResults = "VacancyPosting.SelectNewEmployer.NoResults";
         }
 
-        public class CLoneVacancy
+        public class CloneVacancy
         {
             public const string Ok = "VacancyPosting.CloneVacancy.Ok";
             public const string VacancyInIncorrectState = "VacancyPosting.CloneVacancy.VacancyInIncorrectState";
