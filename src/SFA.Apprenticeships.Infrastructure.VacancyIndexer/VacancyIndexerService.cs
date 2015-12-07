@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.Interfaces.Logging;
     using Application.Vacancies.Entities;
+    using Common.Configuration;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
@@ -165,23 +166,35 @@
         {
             _logger.Debug("Checking if the index is correctly created.");
 
-            var indexAlias = GetIndexAlias();
-            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
-            var client = _elasticsearchClientFactory.GetElasticClient();
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (TDestinationSummary));
-
-            var search = client.Search<TDestinationSummary>(s =>
+            var serviceImplementation = _configurationService.Get<ServicesConfiguration>().ServiceImplementation;
+            if (serviceImplementation == "Legacy")
             {
-                s.Index(newIndexName);
-                s.Type(documentTypeName);
-                s.Take(PageSize);
-                return s;
-            });
+                var indexAlias = GetIndexAlias();
+                var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
+                var client = _elasticsearchClientFactory.GetElasticClient();
+                var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (TDestinationSummary));
 
-            var result = search.Documents.Any();
-            LogResult(result, newIndexName);
+                var search = client.Search<TDestinationSummary>(s =>
+                {
+                    s.Index(newIndexName);
+                    s.Type(documentTypeName);
+                    s.Take(PageSize);
+                    return s;
+                });
 
-            return result;
+                var result = search.Documents.Any();
+                LogResult(result, newIndexName);
+
+                return result;
+            }
+
+            if (serviceImplementation == "Raa")
+            {
+                //RAA index creation talks directly to the repositories rather than a service boundary
+                return true;
+            }
+
+            throw new Exception("Service implementation " + serviceImplementation + " was not recognised. Please check ServicesConfiguration section");
         }
 
         private void LogResult(bool result, string newIndexName)
