@@ -43,13 +43,11 @@
 
     public class NasAvWebServicesRouting : IProxyRouting
     {
-        private readonly Uri _nasAvWebServiceRootUri;
-        private readonly Uri _compatabilityWebServiceRootUri;
+        private readonly IConfiguration _configuration;
 
         public NasAvWebServicesRouting(IConfiguration configuration)
         {
-            _nasAvWebServiceRootUri = new Uri(configuration.NasAvWebServiceRootUri);
-            _compatabilityWebServiceRootUri = new Uri(configuration.CompatabilityWebServiceRootUrl);
+            _configuration = configuration;
         }
 
         public Routing GetRouting(Uri requestUri, HttpMethod method, string ipAddress, string requestContent, RouteIdentifier routeIdentifier)
@@ -59,20 +57,30 @@
             {
                 Routes = new List<Route>
                 {
-                    new Route(new Uri(_nasAvWebServiceRootUri, requestUri.PathAndQuery), new RouteIdentifier(routeIdentifier, "nasavwebservice"), true),
+                    new Route(new Uri(_configuration.NasAvWebServiceRootUri, requestUri.PathAndQuery), new RouteIdentifier(routeIdentifier, "nasavwebservice"), true),
                     new Route(GetCompatabilityWebServiceUrl(requestUri), new RouteIdentifier(routeIdentifier, "compatabilitywebservice"), false)
                 },
             };
         }
 
-        private Uri GetCompatabilityWebServiceUrl(Uri requestUri)
+        public Uri GetCompatabilityWebServiceUrl(Uri requestUri)
         {
             var pathAndQuery = requestUri.PathAndQuery;
             if (pathAndQuery.EndsWith(".svc"))
             {
                 pathAndQuery = pathAndQuery.Substring(pathAndQuery.LastIndexOf("/", StringComparison.Ordinal));
             }
-            return new Uri(_compatabilityWebServiceRootUri, pathAndQuery);
+            return new Uri(_configuration.CompatabilityWebServiceRootUri, pathAndQuery);
+        }
+
+        public bool IsAutomaticRouteToCompatabilityWebServiceUri(Uri requestUri)
+        {
+            return _configuration.AutomaticRouteToCompatabilityWebServiceRegex.IsMatch(requestUri.AbsoluteUri) && !IsConfigurableRouteToCompatabilityWebServiceUri(requestUri);
+        }
+
+        public bool IsConfigurableRouteToCompatabilityWebServiceUri(Uri requestUri)
+        {
+            return _configuration.ConfigurableRouteToCompatabilityWebServiceRegex.IsMatch(requestUri.AbsoluteUri);
         }
     }
 }
