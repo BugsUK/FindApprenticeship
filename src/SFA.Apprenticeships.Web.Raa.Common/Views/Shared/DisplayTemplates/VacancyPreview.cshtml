@@ -84,7 +84,7 @@
             @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
             {
                 <details>
-                    <summary>National Minimum Wage<br />for apprentices explained</summary>
+                    <summary>Wages explained</summary>
                     <div class="detail-content">
                         The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
                         This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
@@ -96,7 +96,7 @@
             @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
             {
                 <details>
-                    <summary>National Minimum Wage</summary>
+                    <summary>Wages explained</summary>
                     <div class="detail-content">
                         The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
                         Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
@@ -159,7 +159,7 @@
                     <div class="editable-item">
                         <div class="text">
                             <h3 class="heading-small">Desired skills
-                                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
+                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, Model.RequirementsProspectsLink))
                             </h3>
                             <p id="vacancy-skills-required" itemprop="skills" class="preserve-formatting">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills)</p>
                             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment))
@@ -171,7 +171,7 @@
                     <div class="editable-item">
                         <div class="text">
                             <h3 class="heading-small">Personal qualities
-                                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
+                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, Model.RequirementsProspectsLink))
                             </h3>
                             <p id="vacancy-qualities-required" itemprop="qualities" class="preserve-formatting">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities)</p>
                             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment))
@@ -183,7 +183,7 @@
                     <div class="editable-item">
                         <div class="text">
                             <h3 class="heading-small">Qualifications required
-                                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
+                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, Model.RequirementsProspectsLink))
                             </h3>
                             <p id="vacancy-qualifications-required" itemprop="qualifications" class="preserve-formatting">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications)</p>
                             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment))
@@ -198,7 +198,7 @@
                 <div class="editable-item">
                     <div class="text">
                         <h3 class="heading-small">Future prospects
-                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
+                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))
                         </h3>
                         <p id="vacancy-future-prospects" itemprop="incentives" class="preserve-formatting">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
@@ -210,7 +210,7 @@
                 <div class="editable-item">
                     <div class="text">
                         <h3 class="heading-small">Things to consider
-                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, ViewData.ModelState, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
+                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, Model.RequirementsProspectsLink))
                         </h3>
                         <p id="vacancy-reality-check" itemprop="incentives" class="preserve-formatting">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider)</p>
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment))
@@ -279,7 +279,7 @@
                                id="vacancy-employer-website"
                                target="_blank"
                                title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModelFor(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, ViewData.ModelState, string.Empty, string.Empty))
+                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, string.Empty, string.Empty))
                         </p>
                     }
                     <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">

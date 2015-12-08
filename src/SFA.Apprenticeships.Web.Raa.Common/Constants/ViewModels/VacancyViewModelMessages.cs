@@ -217,7 +217,7 @@
         public static class ResubmitOptin
         {
             public const string LabelText = "I've reviewed this vacancy and would like to resubmit it for approval";
-            public const string RequiredErrorText = "Tick the checkbox to confirm you have reviewed this vacancy and would like to resubmit it for approval";
+            public const string RequiredErrorText = "Confirm you have reviewed this vacancy and would like to resubmit it for approval";
         }
     }
 }

@@ -201,7 +201,6 @@
     <Compile Include="Validators\Vacancy\VacancyRequirementsProspectsViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelBusinessRulesExtensions.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
-    <Compile Include="Validators\Vacancy\VacancyResubmissionValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditLinkViewModel.cs" />
