@@ -116,6 +116,9 @@
     <Folder Include="Schemas\Reference\Schema" />
     <Folder Include="Schemas\Reference\Tables" />
     <Folder Include="Publish" />
+    <Folder Include="Schemas\Reference\Scripts" />
+    <Folder Include="Schemas\Address\Scripts" />
+    <Folder Include="Schemas\Vacancy\Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />
@@ -143,6 +146,14 @@
     <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyPartyType.sql" />
     <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyPartyRelationship.sql" />
     <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyPartyRelationshipType.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.Sector.Upsert.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.Standard.Upsert.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.FrameworkStatus.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.TrainingType.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyPartyRelationshipType.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyPartyType.Upsert.sql" />
+    <Build Include="Schemas\Vacancy\Scripts\Vacancy.VacancyStatus.Upsert.sql" />
+    <Build Include="Schemas\Vacancy\Scripts\Vacancy.VacancyType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />
@@ -150,5 +161,9 @@
   <ItemGroup>
     <None Include="Publish\azuresql.pre.publish.xml" />
     <None Include="Publish\sqlexpress.local.publish.xml" />
+    <None Include="Schemas\Reference\Scripts\Reference.Level.Upsert.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.OccupationStatus.Upsert.sql" />
+    <None Include="Schemas\Address\Scripts\Address.ValidationSource.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.DurationType.Upsert.sql" />
   </ItemGroup>
 </Project>
