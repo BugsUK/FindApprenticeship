@@ -14,14 +14,7 @@
 
         public Uri CompatabilityWebServiceRootUri => new Uri(ConfigurationManager.AppSettings["CompatabilityWebServiceRootUri"]);
 
-        public Regex AutomaticRouteToCompatabilityWebServiceRegex
-        {
-            get
-            {
-                var appSetting = ConfigurationManager.AppSettings["AutomaticRouteToCompatabilityWebServiceRegex"];
-                return string.IsNullOrEmpty(appSetting) ? null : new Regex(appSetting, RegexOptions.IgnoreCase);
-            }
-        }
+        public Regex AutomaticRouteToCompatabilityWebServiceRegex => new Regex(ConfigurationManager.AppSettings["AutomaticRouteToCompatabilityWebServiceRegex"], RegexOptions.IgnoreCase);
 
         public string FileProxyLoggingRootPath => ConfigurationManager.AppSettings["FileProxyLoggingRootPath"];
 

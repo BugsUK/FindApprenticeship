@@ -72,7 +72,7 @@
 
         public bool IsAutomaticRouteToCompatabilityWebServiceUri(Uri requestUri)
         {
-            if (_configuration.AutomaticRouteToCompatabilityWebServiceRegex == null)
+            if (string.IsNullOrEmpty(_configuration.AutomaticRouteToCompatabilityWebServiceRegex?.ToString()))
             {
                 return false;
             }
@@ -92,7 +92,7 @@
                     if (Guid.TryParse(externalSystemIdMatch.Groups[1].Value, out externalSystemId))
                     {
                         var webProxyUser = _webProxyUserRepository.Get(externalSystemId);
-                        if (!string.IsNullOrEmpty(webProxyUser?.RouteToCompatabilityWebServiceRegex))
+                        if (webProxyUser != WebProxyConsumer.WebProxyConsumerNotFound && !string.IsNullOrEmpty(webProxyUser?.RouteToCompatabilityWebServiceRegex))
                         {
                             compatabilityWebServiceIsPrimary =
                                 new Regex(webProxyUser.RouteToCompatabilityWebServiceRegex, RegexOptions.IgnoreCase)

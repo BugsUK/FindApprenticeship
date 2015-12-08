@@ -28,7 +28,7 @@
                 webProxyUser = connection.Query<WebProxyConsumer>(sql, new { ExternalSystemId = externalSystemId }).SingleOrDefault();
             }
 
-            return webProxyUser;
+            return webProxyUser ?? WebProxyConsumer.WebProxyConsumerNotFound;
         }
 
         private IDbConnection GetConnection()

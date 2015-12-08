@@ -157,7 +157,7 @@
         public void RouteToCompatabilityWebServiceUri_WebProxyUser(string uriString, bool compatabilityWebServiceShouldBePrimary)
         {
             //Arrange
-            _configuration.Setup(c => c.AutomaticRouteToCompatabilityWebServiceRegex).Returns((Regex)null);
+            _configuration.Setup(c => c.AutomaticRouteToCompatabilityWebServiceRegex).Returns(new Regex(""));
             _proxyRouting = new NasAvWebServicesRouting(_configuration.Object, _webProxyUserRepository.Object);
             var uri = new Uri(uriString);
 

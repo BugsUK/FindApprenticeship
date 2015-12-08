@@ -1,11 +1,13 @@
 ﻿namespace SFA.WebProxy
 {
+    using System.Configuration;
     using System.Net.Http;
     using System.Web.Http;
     using Configuration;
     using Logging;
     using Repositories;
     using Routing;
+    using Service;
 
     public static class WebApiConfig
     {
@@ -16,9 +18,10 @@
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            var configuration = new ConfigurationManagerConfiguration();
+            var cacheService = new MemoryCacheService(int.Parse(ConfigurationManager.AppSettings["CacheDurationInSeconds"]));
+            var configuration = new CachedConfiguration(new ConfigurationManagerConfiguration(), cacheService);
 
-            var webProxyUserRepository = new SqlServerWebProxyUserRepository(configuration);
+            var webProxyUserRepository = new CachedWebProxyUserRepository(new SqlServerWebProxyUserRepository(configuration), cacheService);
 
             //var proxyLogging = new FileProxyLogging(configuration);
             var proxyLogging = new AzureBlobStorageLogging(configuration);
