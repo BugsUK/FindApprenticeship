@@ -119,6 +119,10 @@
     <Folder Include="Schemas\Reference\Scripts" />
     <Folder Include="Schemas\Address\Scripts" />
     <Folder Include="Schemas\Vacancy\Scripts" />
+    <Folder Include="Schemas\WebProxy" />
+    <Folder Include="Schemas\WebProxy\Schema" />
+    <Folder Include="Schemas\WebProxy\Scripts" />
+    <Folder Include="Schemas\WebProxy\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />
@@ -154,6 +158,8 @@
     <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyPartyType.Upsert.sql" />
     <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyStatus.Upsert.sql" />
     <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyType.Upsert.sql" />
+    <Build Include="Schemas\WebProxy\Schema\WebProxy.sql" />
+    <Build Include="Schemas\WebProxy\Tables\WebProxy.WebProxyConsumer.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />
