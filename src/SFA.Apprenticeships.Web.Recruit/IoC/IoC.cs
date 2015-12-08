@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
     using Infrastructure.Logging.IoC;
+    using Infrastructure.Postcode.IoC;
     using Infrastructure.Repositories.Employers.IoC;
     using Infrastructure.Repositories.Providers.IoC;
     using Infrastructure.Repositories.UserProfiles.IoC;
@@ -58,6 +59,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<TacticalDataServicesRegistry>();
+                x.AddRegistry<PostcodeRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();

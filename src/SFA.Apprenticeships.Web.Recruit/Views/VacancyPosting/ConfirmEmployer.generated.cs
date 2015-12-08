@@ -300,109 +300,35 @@ WriteLiteral("        <div");
 
 WriteLiteral(" class=\"grid grid-1-1\"");
 
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"blocklabel-single-container\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"form-group inline clearfix blocklabel-single hide-nojs\"");
-
-WriteLiteral(">\r\n                    <a");
-
-WriteAttribute("name", Tuple.Create(" name=\"", 2220), Tuple.Create("\"", 2314)
-            
-            #line 48 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 2227), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()
-            
-            #line default
-            #line hidden
-, 2227), false)
-);
-
-WriteLiteral("></a>\r\n                    <h4");
-
-WriteLiteral(" class=\"bold-small\"");
-
-WriteLiteral(">Is this address the main apprenticeship location?</h4>\r\n\r\n                    <l" +
-"abel");
-
-WriteLiteral(" data-target=\"location-type-different-location-panel\"");
-
-WriteLiteral(" for=\"location-type-different-location\"");
-
-WriteAttribute("class", Tuple.Create(" class=\"", 2541), Tuple.Create("\"", 2613)
-, Tuple.Create(Tuple.Create("", 2549), Tuple.Create("block-label", 2549), true)
-            
-            #line 51 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                         , Tuple.Create(Tuple.Create(" ", 2560), Tuple.Create<System.Object, System.Int32>(Model.IsEmployerLocationMainApprenticeshipLocation
-            
-            #line default
-            #line hidden
-, 2561), false)
-, Tuple.Create(Tuple.Create(" ", 2612), Tuple.Create("", 2612), true)
-);
-
 WriteLiteral(">\r\n");
 
-WriteLiteral("                        ");
-
             
-            #line 52 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                   Write(Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"}));
-
+            #line 46 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        No, I need to add a different location\r\n               " +
-"     </label>\r\n                    <label");
-
-WriteLiteral(" data-target=\"location-type-main-location-panel\"");
-
-WriteLiteral(" for=\"location-type-main-location\"");
-
-WriteAttribute("class", Tuple.Create(" class=\"", 3030), Tuple.Create("\"", 3102)
-, Tuple.Create(Tuple.Create("", 3038), Tuple.Create("block-label", 3038), true)
             
-            #line 55 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                               , Tuple.Create(Tuple.Create(" ", 3049), Tuple.Create<System.Object, System.Int32>(Model.IsEmployerLocationMainApprenticeshipLocation
+            #line 46 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+              Html.RenderPartial("_apprenticeshipLocationSelectorJS", Model);
             
             #line default
             #line hidden
-, 3050), false)
-, Tuple.Create(Tuple.Create(" ", 3101), Tuple.Create("", 3101), true)
-);
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                        ");
+WriteLiteral("\r\n");
 
             
-            #line 56 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                   Write(Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new {id = "location-type-main-location", aria_controls = "location-type-main-location-panel"}));
-
+            #line 47 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            
             
             #line default
             #line hidden
-WriteLiteral("\r\n                        Yes, this will be the main location\r\n                  " +
-"  </label>\r\n                </div>\r\n                <div");
-
-WriteLiteral(" id=\"location-type-main-location-panel\"");
-
-WriteLiteral(" class=\"toggle-content blocklabel-content\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("                    ");
-
             
-            #line 61 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-               Write(Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12 }, labelHtmlAttributes: new {@class = "bold-small"}));
-
+            #line 47 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+              Html.RenderPartial("_apprenticeshipLocationSelectorNonJS", Model);
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n        </div>\r\n");
+WriteLiteral("\r\n        </div>\r\n");
 
 WriteLiteral("        <div");
 
@@ -413,7 +339,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 66 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 50 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
        Write(Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"}));
 
             
@@ -424,7 +350,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 67 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 51 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
        Write(Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
 
             
@@ -434,28 +360,45 @@ WriteLiteral("\r\n            <button");
 
 WriteLiteral(" class=\"button\"");
 
+WriteLiteral(" name=\"ConfirmEmployer\"");
+
+WriteLiteral(" value=\"ConfirmEmployer\"");
+
 WriteLiteral(">Save description and continue</button>\r\n            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4332), Tuple.Create("\"", 4372)
+WriteAttribute("href", Tuple.Create(" href=\"", 2802), Tuple.Create("\"", 2842)
             
-            #line 69 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 4339), Tuple.Create<System.Object, System.Int32>(Request.UrlReferrer.PathAndQuery
+            #line 53 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+, Tuple.Create(Tuple.Create("", 2809), Tuple.Create<System.Object, System.Int32>(Request.UrlReferrer.PathAndQuery
             
             #line default
             #line hidden
-, 4339), false)
+, 2809), false)
 );
 
 WriteLiteral(">Choose a different employer</a>\r\n        </div>\r\n");
 
             
-            #line 71 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 55 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
    }
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n");
+WriteLiteral("</div>\r\n\r\n");
+
+DefineSection("scripts", () => {
+
+WriteLiteral("\r\n    <script");
+
+WriteLiteral(" type=\"text/javascript\"");
+
+WriteLiteral(">\r\n        $(\"#NumberOfPositionsJS\").attr(\"id\", \"NumberOfPositions\").attr(\"Name\"," +
+" \"NumberOfPositions\");\r\n    </script>\r\n\r\n    ");
+
+WriteLiteral("\r\n");
+
+});
 
         }
     }

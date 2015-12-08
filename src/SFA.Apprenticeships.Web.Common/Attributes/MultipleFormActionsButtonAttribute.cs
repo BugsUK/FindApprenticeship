@@ -27,9 +27,7 @@
     public class MultipleFormActionsButtonWithParameterAttribute : ActionNameSelectorAttribute
     {
         public string SubmitButtonActionName { get; set; }
-
         
-
         public override bool IsValidName(ControllerContext controllerContext, string actionName, MethodInfo methodInfo)
         {
             var value = controllerContext.Controller.ValueProvider.GetValue(SubmitButtonActionName);
@@ -67,7 +65,6 @@
 
             var realParameterValue = Convert.ChangeType(parameterValue, ParameterType);
             filterContext.ActionParameters[ParameterName] = realParameterValue;
-            //base.OnActionExecuting(filterContext);
         }
     }
 }

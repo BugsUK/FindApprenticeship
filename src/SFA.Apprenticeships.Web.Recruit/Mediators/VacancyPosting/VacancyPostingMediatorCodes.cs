@@ -105,5 +105,15 @@
         {
             public const string Ok = "VacancyPosting.GetLocationAddressesViewModel.Ok";
         }
+
+        public class SetDifferentLocation
+        {
+            public const string Ok = "VacancyPosting.SetDifferentLocation.Ok";
+        }
+
+        public class SearchLocations
+        {
+            public const string Ok = "VacancyPosting.SearchLocations.Ok";
+        }
     }
 }

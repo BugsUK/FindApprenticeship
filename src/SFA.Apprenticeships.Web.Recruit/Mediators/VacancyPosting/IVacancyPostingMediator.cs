@@ -59,5 +59,12 @@
         MediatorResponse<LocationSearchViewModel> CreateVacancy(LocationSearchViewModel newVacancyViewModel);
 
         MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid);
+
+        MediatorResponse<ProviderSiteEmployerLinkViewModel> SetDifferentLocation(ProviderSiteEmployerLinkViewModel viewModel);
+
+        MediatorResponse<ProviderSiteEmployerLinkViewModel> SetEmployersLocationAsMainLocation(
+            ProviderSiteEmployerLinkViewModel viewModel);
+
+        MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel);
     }
 }

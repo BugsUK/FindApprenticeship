@@ -17,13 +17,14 @@
     @Html.HiddenFor(m => m.ProviderSiteErn);
     @Html.HiddenFor(m => m.VacancyGuid);
     @Html.Partial("ValidationSummary", ViewData.ModelState)
-    @*<div form-group>
-        @Html.FormTextFor(model => model.PostcodeSearch, controlHtmlAttributes: new {type = "text", @class = "form-control-medium", size = "40"}, labelHtmlAttributes: new {@class = "bold-small"})
-        <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
-    </div>*@
-
+    
     <noscript>
         <div>
+            <div form-group>
+                @Html.FormTextFor(model => model.PostcodeSearch, controlHtmlAttributes: new {type = "text", @class = "form-control-medium", size = "40"}, labelHtmlAttributes: new {@class = "bold-small"})
+                <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
+            </div>
+
             @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Any())
             {
                 <div class="form-group">

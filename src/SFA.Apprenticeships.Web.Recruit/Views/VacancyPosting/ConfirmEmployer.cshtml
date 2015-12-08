@@ -43,30 +43,22 @@
         </div>
 
         <div class="grid grid-1-1">
-            <div class="blocklabel-single-container">
-                <div class="form-group inline clearfix blocklabel-single hide-nojs">
-                    <a name="@Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()"></a>
-                    <h4 class="bold-small">Is this address the main apprenticeship location?</h4>
-
-                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
-                        @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
-                        No, I need to add a different location
-                    </label>
-                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
-                        @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new {id = "location-type-main-location", aria_controls = "location-type-main-location-panel"})
-                        Yes, this will be the main location
-                    </label>
-                </div>
-                <div id="location-type-main-location-panel" class="toggle-content blocklabel-content">
-                    @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12 }, labelHtmlAttributes: new {@class = "bold-small"})
-                </div>
-            </div>
+            @{Html.RenderPartial("_apprenticeshipLocationSelectorJS", Model);}
+            @{Html.RenderPartial("_apprenticeshipLocationSelectorNonJS", Model);}
         </div>
         <div class="grid grid-1-1">
             @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})
             @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-            <button class="button">Save description and continue</button>
+            <button class="button" name="ConfirmEmployer" value="ConfirmEmployer">Save description and continue</button>
             <a href="@Request.UrlReferrer.PathAndQuery">Choose a different employer</a>
         </div>
    }
 </div>
+
+@section scripts {
+    <script type="text/javascript">
+        $("#NumberOfPositionsJS").attr("id", "NumberOfPositions").attr("Name", "NumberOfPositions");
+    </script>
+
+    @*Difficult to put in the partial view. See http://stackoverflow.com/questions/5981490/how-to-render-javascript-into-masterlayout-section-from-partial-view*@
+}

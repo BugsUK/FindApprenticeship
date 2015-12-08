@@ -108,6 +108,7 @@
             }
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
         [HttpPost]
         public ActionResult ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel)
         {
@@ -130,13 +131,36 @@
             }
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
+        [HttpPost]
+        public ActionResult SetDifferentLocation(ProviderSiteEmployerLinkViewModel viewModel)
+        {
+            // TODO: validate?
+            var response = _vacancyPostingMediator.SetDifferentLocation(viewModel);
+
+            ModelState.Clear();
+
+            return View("ConfirmEmployer", response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
+        [HttpPost]
+        public ActionResult SetEmployersLocationAsMainLocation(ProviderSiteEmployerLinkViewModel viewModel)
+        {
+            // TODO: validate?
+            var response = _vacancyPostingMediator.SetEmployersLocationAsMainLocation(viewModel);
+
+            ModelState.Clear();
+
+            return View("ConfirmEmployer", response.ViewModel);
+        }
+
         [HttpGet]
         public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid)
         {
             var response = _vacancyPostingMediator.GetNewVacancyViewModel(User.GetUkprn(), providerSiteErn, ern, vacancyGuid);
-            var viewModel = response.ViewModel;
-
-            return View(viewModel);
+            
+            return View(response.ViewModel);
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
@@ -497,6 +521,7 @@
 
         private List<VacancyLocationAddressViewModel> GetSearchResults()
         {
+            // Get addresses using the mediator
             var address1 = new VacancyLocationAddressViewModel
             {
                 Address =
@@ -547,9 +572,9 @@
         [HttpPost]
         public ActionResult SearchLocations(LocationSearchViewModel viewModel)
         {
-            viewModel.SearchResultAddresses = GetSearchResults();
+            var response = _vacancyPostingMediator.SearchLocations(viewModel);
 
-            return View("Locations", viewModel);
+            return View("Locations", response.ViewModel);
         }
 
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
@@ -565,6 +590,9 @@
             }
 
             viewModel.Addresses.Add(viewModel.SearchResultAddresses[locationIndex]);
+
+            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>();
+            viewModel.PostcodeSearch = string.Empty;
 
             return View("Locations", viewModel);
         }

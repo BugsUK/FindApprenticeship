@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Domain.Entities.Locations;
 
-    public interface IPostcodeLookupProvider
+    public interface IAddressLookupProvider
     {
-        Location GetLocation(string postcode);
+        IEnumerable<Address> GetPossibleAddresses(string postcode);
     }
 }
