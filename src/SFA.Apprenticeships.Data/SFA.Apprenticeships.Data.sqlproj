@@ -170,5 +170,6 @@
     <None Include="Schemas\Reference\Scripts\Reference.OccupationStatus.Upsert.sql" />
     <None Include="Schemas\Address\Scripts\Address.ValidationSource.Upsert.sql" />
     <None Include="Schemas\Vacancy\Scripts\Vacancy.DurationType.Upsert.sql" />
+    <PostDeploy Include="Script.PostDeployment.Data.sql" />
   </ItemGroup>
 </Project>
