@@ -152,8 +152,8 @@
     <None Include="Schemas\Vacancy\Scripts\Vacancy.TrainingType.Upsert.sql" />
     <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyPartyRelationshipType.Upsert.sql" />
     <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyPartyType.Upsert.sql" />
-    <Build Include="Schemas\Vacancy\Scripts\Vacancy.VacancyStatus.Upsert.sql" />
-    <Build Include="Schemas\Vacancy\Scripts\Vacancy.VacancyType.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyStatus.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />

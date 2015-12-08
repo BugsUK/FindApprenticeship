@@ -215,10 +215,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Man
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Web.Recruit.EndToEndTests", "SFA.Apprenticeships.Web.Recruit.EndToEndTests\SFA.Apprenticeships.Web.Recruit.EndToEndTests.csproj", "{5CC6A121-E5EF-452B-A326-145822014CC6}"
 EndProject
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Raa", "SFA.Apprenticeships.Infrastructure.Raa\SFA.Apprenticeships.Infrastructure.Raa.csproj", "{1F4776F3-884B-4B00-BA97-22BFA06C034E}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Presentation", "SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj", "{83500887-E1B7-46BD-945B-4CC3D0069B6E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Application", "SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj", "{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SFA.Apprenticeships.Data", "SFA.Apprenticeships.Data\SFA.Apprenticeships.Data.sqlproj", "{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1529,17 +1532,38 @@ Global
 		{5CC6A121-E5EF-452B-A326-145822014CC6}.Release|Any CPU.Build.0 = Demo|Any CPU
 		{5CC6A121-E5EF-452B-A326-145822014CC6}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{5CC6A121-E5EF-452B-A326-145822014CC6}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Debug|Any CPU.Build.0 = Demo|Any CPU
 		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Local|Any CPU.ActiveCfg = Local|Any CPU
 		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Local|Any CPU.Build.0 = Local|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
 		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Release|Any CPU.ActiveCfg = Demo|Any CPU
 		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E}.Sit|Any CPU.Build.0 = Sit|Any CPU
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Demo|Any CPU.Build.0 = Demo|Any CPU
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Dev|Any CPU.Build.0 = Dev|Any CPU
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Local|Any CPU.ActiveCfg = Local|Any CPU
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Local|Any CPU.Build.0 = Local|Any CPU
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Sit|Any CPU.Build.0 = Sit|Any CPU
 		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
 		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}.Debug|Any CPU.Build.0 = Demo|Any CPU
 		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
@@ -1555,6 +1579,31 @@ Global
 		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}.Release|Any CPU.ActiveCfg = Demo|Any CPU
 		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}.Release|Any CPU.Build.0 = Demo|Any CPU
 		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Debug|Any CPU.Deploy.0 = Demo|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Demo|Any CPU.Deploy.0 = Demo|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Dev|Any CPU.Deploy.0 = Dev|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Local|Any CPU.Build.0 = Local|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Local|Any CPU.Deploy.0 = Local|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Pre|Any CPU.Deploy.0 = Pre|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Prod|Any CPU.Deploy.0 = Prod|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Release|Any CPU.ActiveCfg = Prod|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Release|Any CPU.Build.0 = Prod|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Release|Any CPU.Deploy.0 = Prod|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6}.Sit|Any CPU.Deploy.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1655,11 +1704,13 @@ Global
 		{C156404C-5CD4-47F8-BBAF-BD4C36906103} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
 		{D30D15E0-A837-4D69-B2F7-BE2E1FE33D76} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
 		{5CC6A121-E5EF-452B-A326-145822014CC6} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
+		{1F4776F3-884B-4B00-BA97-22BFA06C034E} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{83500887-E1B7-46BD-945B-4CC3D0069B6E} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
+		{331AE27B-BE3D-4833-94C7-7AA8E6FA97E6} = {405A13A6-70AA-49DF-AED0-46ADEA4F2B5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
