@@ -7,11 +7,11 @@
     {
         bool AreNonPrimaryRequestsEnabled { get; }
         bool IsLoggingEnabled { get; }
-        Uri CompatabilityWebServiceRootUri { get; }
         Uri NasAvWebServiceRootUri { get; }
+        Uri CompatabilityWebServiceRootUri { get; }
+        Regex AutomaticRouteToCompatabilityWebServiceRegex { get; }
         string FileProxyLoggingRootPath { get; }
         string AzureStorageConnectionString { get; }
-        Regex AutomaticRouteToCompatabilityWebServiceRegex { get; }
-        Regex ConfigurableRouteToCompatabilityWebServiceRegex { get; }
+        string SqlServerConnectionString { get; }
     }
 }

@@ -4,6 +4,7 @@
     using System.Web.Http;
     using Configuration;
     using Logging;
+    using Repositories;
     using Routing;
 
     public static class WebApiConfig
@@ -17,13 +18,15 @@
 
             var configuration = new ConfigurationManagerConfiguration();
 
+            var webProxyUserRepository = new SqlServerWebProxyUserRepository(configuration);
+
             //var proxyLogging = new FileProxyLogging(configuration);
             var proxyLogging = new AzureBlobStorageLogging(configuration);
 
             config.Routes.MapHttpRoute(name: "Proxy", routeTemplate: "{*path}", handler:
             HttpClientFactory.CreatePipeline(
                 innerHandler: new HttpClientHandler(), // will never get here if proxy is doing its job
-                handlers: new DelegatingHandler[] { new ProxyHandler(new NasAvWebServicesRouting(configuration), proxyLogging, configuration) }),
+                handlers: new DelegatingHandler[] { new ProxyHandler(new NasAvWebServicesRouting(configuration, webProxyUserRepository), proxyLogging, configuration) }),
                 defaults: new { path = RouteParameter.Optional },
                 constraints: null
             );
