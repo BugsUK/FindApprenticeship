@@ -5,7 +5,17 @@
 }
 
 <div class="success-banner">
-    <h1 class="heading-large no-btm-margin"><i class="fa fa-check"></i>Vacancy submitted for approval</h1>
+    <h1 class="heading-large no-btm-margin">
+        <i class="fa fa-check"></i>
+        @if (Model.Resubmitted)
+        {
+            <span>Vacancy resubmitted for approval</span>
+        }
+        else
+        {
+            <span>Vacancy submitted for approval</span>
+        }
+    </h1>
     <p>Reference number: @Model.VacancyReferenceNumber</p>
 </div>
 <section>

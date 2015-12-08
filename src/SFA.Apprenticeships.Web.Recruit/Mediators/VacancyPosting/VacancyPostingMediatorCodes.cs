@@ -84,7 +84,8 @@
         
         public static class SubmitVacancy
         {
-            public const string Ok = "VacancyPosting.SubmitVacancy.Ok";
+            public const string SubmitOk = "VacancyPosting.SubmitVacancy.SubmitOk";
+            public const string ResubmitOk = "VacancyPosting.SubmitVacancy.ResubmitOk";
             public const string FailedValidation = "VacancyPosting.SubmitVacancy.FailedValidation";
         }
 

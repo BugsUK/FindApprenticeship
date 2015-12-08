@@ -194,7 +194,6 @@
     <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelClientValidatorTests.cs" />
-    <Compile Include="Validators\VacancyPosting\PreviewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelServerValidatorTests.cs" />
     <Compile Include="Views\Shared\ValidationSummaryViewModel.cs" />
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
