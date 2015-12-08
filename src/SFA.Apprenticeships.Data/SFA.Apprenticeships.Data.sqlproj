@@ -159,7 +159,6 @@
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Publish\azuresql.pre.publish.xml" />
     <None Include="Publish\sqlexpress.local.publish.xml" />
     <None Include="Schemas\Reference\Scripts\Reference.Level.Upsert.sql" />
     <None Include="Schemas\Reference\Scripts\Reference.OccupationStatus.Upsert.sql" />
