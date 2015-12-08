@@ -18,7 +18,7 @@
             //Manually mapping rather than using automapper as the two enties are significantly different
             
             //TODO: Store geopoints for employers
-            var location = vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint;
+            var location = vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint ?? new GeoPoint();
             if (location.Latitude == 0 || location.Longitude == 0)
             {
                 //Coventry
