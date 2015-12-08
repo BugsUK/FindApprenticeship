@@ -85,7 +85,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             return mongoEntities;
         }
 
-        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, List<ProviderVacancyStatuses> desiredStatuses)
+        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, params ProviderVacancyStatuses[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0} and in status {1}", ukPrn, string.Join(",", desiredStatuses));
 
@@ -105,7 +105,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             return mongoEntities;
         }
 
-        public List<ApprenticeshipVacancy> GetWithStatus(List<ProviderVacancyStatuses> desiredStatuses)
+        public List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
 

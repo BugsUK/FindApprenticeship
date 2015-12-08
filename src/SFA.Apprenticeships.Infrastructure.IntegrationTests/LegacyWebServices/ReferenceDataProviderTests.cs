@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Application.ReferenceData;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.ReferenceData;
     using FluentAssertions;
@@ -24,7 +25,7 @@
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = "Legacy" }));
             });
             
             _referenceDataProvider = container.GetInstance<IReferenceDataProvider>();

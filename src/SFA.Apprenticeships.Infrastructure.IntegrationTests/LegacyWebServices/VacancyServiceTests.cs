@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.LegacyWebServices
 {
     using Application.Vacancies;
+    using Common.Configuration;
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.Caching.Memory.IoC;
@@ -20,7 +21,7 @@
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = "Legacy" }));
             });
 
             var service = container.GetInstance<IVacancyIndexDataProvider>();

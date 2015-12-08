@@ -585,6 +585,10 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">
       <Project>{C91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
       <Name>SFA.Apprenticeships.Application.Communication</Name>
@@ -648,6 +652,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
+      <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Employers\SFA.Apprenticeships.Infrastructure.Repositories.Employers.csproj">
       <Project>{D87BF950-D9A8-4590-B868-DBB852E265D2}</Project>

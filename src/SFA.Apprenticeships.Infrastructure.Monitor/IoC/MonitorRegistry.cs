@@ -27,6 +27,7 @@
                     x.Type<CheckPostcodeService>();
                     x.Type<CheckUserDirectory>();
                     x.Type<CheckAzureServiceBus>();
+                    //TODO: remove once link with AV is broken
                     x.Type<CheckNasGateway>();
                     x.Type<CheckMongoReplicaSets>();
                     x.Type<CheckElasticsearchCluster>();

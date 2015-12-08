@@ -3,13 +3,10 @@
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Constants.ViewModels;
-    using FluentValidation.Attributes;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Provider;
-    using Validators.Vacancy;
     using System.ComponentModel.DataAnnotations;
 
-    [Validator(typeof(VacancyResubmissionValidator))]
     public class VacancyViewModel
     {
         public const string PartialView = "VacancyPreview";
@@ -44,5 +41,6 @@
         public string RequirementsProspectsLink { get; set; }
 
         public string QuestionsLink { get; set; }
+        public int ApplicationCount { get; set; }
     }
 }

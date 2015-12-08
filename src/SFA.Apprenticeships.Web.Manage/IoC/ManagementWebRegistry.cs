@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
+    using Application.Application;
     using Application.Communication;
     using Application.Communication.Strategies;
+    using Application.Interfaces.Applications;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Users;
@@ -61,6 +63,7 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
+            For<IApplicationService>().Use<ApplicationService>();
         }
 
         private void RegisterStrategies()

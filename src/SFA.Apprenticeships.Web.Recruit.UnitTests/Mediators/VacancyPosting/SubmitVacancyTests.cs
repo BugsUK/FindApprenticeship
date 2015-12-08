@@ -1,16 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
-    using Common.Constants;
-    using Common.Mediators;
+    using Builders;
     using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
-    using Moq;
     using NUnit.Framework;
-    using Ploeh.AutoFixture;
-    using Raa.Common.Constants.ViewModels;
-    using Raa.Common.ViewModels.Provider;
-    using Raa.Common.ViewModels.Vacancy;
     using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
@@ -19,20 +12,34 @@
         [Test]
         public void ShouldSubmitVacancy()
         {
-            var vvm = new Fixture().Build<VacancyViewModel>().Create();
+            var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft);
+
+            VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
+            var mediator = GetMediator();
+
+            var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, false);
+
+            result.Code.Should().Be(VacancyPostingMediatorCodes.SubmitVacancy.SubmitOk);
+        }
+
+        [Test]
+        public void ShouldResubmitVacancy()
+        {
+            var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.RejectedByQA);
+            vvm.ResubmitOptin = true;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
             var mediator = GetMediator();
 
             var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, true);
 
-            result.Code.Should().Be(VacancyPostingMediatorCodes.SubmitVacancy.Ok);
+            result.Code.Should().Be(VacancyPostingMediatorCodes.SubmitVacancy.ResubmitOk);
         }
 
         [Test]
         public void ShouldReturnValidationErrorIfNotOptedIn()
         {
-            var vvm = new Fixture().Build<VacancyViewModel>().Create();
+            var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.RejectedByQA);
             vvm.ResubmitOptin = false;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);

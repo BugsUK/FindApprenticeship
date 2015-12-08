@@ -84,7 +84,8 @@
         
         public static class SubmitVacancy
         {
-            public const string Ok = "VacancyPosting.SubmitVacancy.Ok";
+            public const string SubmitOk = "VacancyPosting.SubmitVacancy.SubmitOk";
+            public const string ResubmitOk = "VacancyPosting.SubmitVacancy.ResubmitOk";
             public const string FailedValidation = "VacancyPosting.SubmitVacancy.FailedValidation";
         }
 
@@ -100,7 +101,7 @@
             public const string NoResults = "VacancyPosting.SelectNewEmployer.NoResults";
         }
 
-        public class CLoneVacancy
+        public class CloneVacancy
         {
             public const string Ok = "VacancyPosting.CloneVacancy.Ok";
             public const string VacancyInIncorrectState = "VacancyPosting.CloneVacancy.VacancyInIncorrectState";

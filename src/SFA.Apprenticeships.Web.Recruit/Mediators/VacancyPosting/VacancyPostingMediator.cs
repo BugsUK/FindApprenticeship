@@ -34,7 +34,6 @@
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelClientValidator _vacancyQuestionsViewModelClientValidator;
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
-        private readonly VacancyResubmissionValidator _vacancyResubmissionValidator;
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
 
@@ -51,7 +50,6 @@
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyQuestionsViewModelClientValidator vacancyQuestionsViewModelClientValidator,
             VacancyViewModelValidator vacancyViewModelValidator,
-            VacancyResubmissionValidator vacancyResubmissionValidator,
             ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
@@ -59,7 +57,6 @@
             _employerProvider = employerProvider;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _newVacancyViewModelClientValidator = newVacancyViewModelClientValidator;
-            _vacancyResubmissionValidator = vacancyResubmissionValidator;
             _providerSiteEmployerLinkViewModelValidator = providerSiteEmployerLinkViewModelValidator;
             _employerSearchViewModelServerValidator = employerSearchViewModelServerValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
@@ -168,11 +165,11 @@
             var existingVacancy = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
             if (existingVacancy.Status == ProviderVacancyStatuses.RejectedByQA)
             {
-                return GetMediatorResponse<ProviderSiteEmployerLinkViewModel>(VacancyPostingMediatorCodes.CLoneVacancy.VacancyInIncorrectState);
+                return GetMediatorResponse<ProviderSiteEmployerLinkViewModel>(VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState);
             }
 
             var viewModel = _vacancyPostingProvider.CloneVacancy(vacancyReferenceNumber);
-            return GetMediatorResponse(VacancyPostingMediatorCodes.CLoneVacancy.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.CloneVacancy.Ok, viewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
@@ -468,32 +465,38 @@
 
         public MediatorResponse<VacancyViewModel> SubmitVacancy(long vacancyReferenceNumber, bool resubmitOptin)
         {
-            if (!resubmitOptin)
+            var viewModelToValidate = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
+            viewModelToValidate.ResubmitOptin = resubmitOptin;
+
+            var resubmission = viewModelToValidate.Status == ProviderVacancyStatuses.RejectedByQA;
+
+            var validationResult = _vacancyViewModelValidator.Validate(viewModelToValidate, ruleSet: RuleSets.ErrorsAndResubmission);
+
+            if (!validationResult.IsValid)
             {
-                var viewModelToValidate = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
-
-                var validationResult = _vacancyResubmissionValidator.Validate(viewModelToValidate);
-
-                if (!validationResult.IsValid)
-                {
-                    return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation,
-                        viewModelToValidate, validationResult);
-                }
+                return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.FailedValidation,
+                    viewModelToValidate, validationResult);
             }
 
-            var vacancyViewModel =_vacancyPostingProvider.SubmitVacancy(vacancyReferenceNumber);
+            var vacancyViewModel = _vacancyPostingProvider.SubmitVacancy(vacancyReferenceNumber);
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.Ok, vacancyViewModel);
+            if (resubmission)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.ResubmitOk, vacancyViewModel);
+            }
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.SubmitVacancy.SubmitOk, vacancyViewModel);
         }
 
-        public MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber, bool resubmitted)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
             var viewModel = new SubmittedVacancyViewModel
             {
                 VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber,
-                ProviderSiteErn = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn
+                ProviderSiteErn = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
+                Resubmitted = resubmitted
             };
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);
@@ -508,7 +511,8 @@
                     ProviderSiteErn = viewModel.ProviderSiteErn,
                     FilterType = EmployerFilterType.Undefined,
                     EmployerResults = Enumerable.Empty<EmployerResultViewModel>(),
-                    EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>()
+                    EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>(),
+                    VacancyGuid = viewModel.VacancyGuid
                 };
             }
             else

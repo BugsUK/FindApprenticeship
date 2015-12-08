@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using System.Web.Mvc;
+    using Application.Interfaces.Applications;
     using Application.Interfaces.DateTime;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
@@ -33,13 +34,14 @@
         private readonly IReferenceDataService _referenceDataService;
         private readonly IProviderService _providerService;
         private readonly IDateTimeService _dateTimeService;
+        private readonly IApplicationService _applicationService;
         //TODO: Providers aren't really supposed to reference repositories directly, they are supposed to use services at least with the current architecture
         private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
         private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper, IApplicationService applicationService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -50,6 +52,7 @@
             _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
             _configurationService = configurationService;
             _mapper = mapper;
+            _applicationService = applicationService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
@@ -428,6 +431,12 @@
                 TotalNumberOfPages = vacancies.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancies.Count/vacanciesSummarySearch.PageSize)
             };
 
+            //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
+            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status == ProviderVacancyStatuses.Live))
+            {
+                vacancyViewModel.ApplicationCount = _applicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
+            }
+
             var vacanciesSummary = new VacanciesSummaryViewModel
             {
                 VacanciesSummarySearch = vacanciesSummarySearch,
@@ -459,16 +468,28 @@
             vacancy.DateQAApproved = null;
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
-            vacancy.WorkingWeekComment = null;
-            vacancy.ApprenticeshipLevelComment = null;
-            vacancy.ClosingDateComment = null;
-            vacancy.DesiredQualificationsComment = null;
+            //Comments
+            vacancy.TitleComment = null;
+            vacancy.ShortDescriptionComment = null;
             vacancy.DesiredSkillsComment = null;
-            vacancy.DurationComment = null;
-            vacancy.FirstQuestionComment = null;
-            vacancy.FrameworkCodeNameComment = null;
             vacancy.FutureProspectsComment = null;
+            vacancy.PersonalQualitiesComment = null;
+            vacancy.ThingsToConsiderComment = null;
+            vacancy.DesiredQualificationsComment = null;
+            vacancy.OfflineApplicationUrlComment = null;
+            vacancy.OfflineApplicationInstructionsComment = null;
+            vacancy.ApprenticeshipLevelComment = null;
+            vacancy.FrameworkCodeNameComment = null;
+            vacancy.StandardIdComment = null;
+            vacancy.WageComment = null;
+            vacancy.ClosingDateComment = null;
+            vacancy.DurationComment = null;
             vacancy.LongDescriptionComment = null;
+            vacancy.PossibleStartDateComment = null;
+            vacancy.WorkingWeekComment = null;
+            vacancy.FirstQuestionComment = null;
+            vacancy.SecondQuestionComment = null;
+
             vacancy.EntityId = Guid.NewGuid();
 
             _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
@@ -493,10 +514,7 @@
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
         {
             var vacancies =
-                _apprenticeshipVacancyReadRepository.GetWithStatus(new List<ProviderVacancyStatuses>
-                {
-                        ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA
-                });
+                _apprenticeshipVacancyReadRepository.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
 
             return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
         }

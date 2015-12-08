@@ -560,8 +560,11 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View("PreviewVacancy", vacancyViewModel);
 
-                case VacancyPostingMediatorCodes.SubmitVacancy.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+                case VacancyPostingMediatorCodes.SubmitVacancy.SubmitOk:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, resubmitted = false });
+
+                case VacancyPostingMediatorCodes.SubmitVacancy.ResubmitOk:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancySubmitted, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, resubmitted = true });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -569,9 +572,9 @@
         }
 
         [HttpGet]
-        public ActionResult VacancySubmitted(long vacancyReferenceNumber)
+        public ActionResult VacancySubmitted(long vacancyReferenceNumber, bool resubmitted)
         {
-            var response = _vacancyPostingMediator.GetSubmittedVacancyViewModel(vacancyReferenceNumber);
+            var response = _vacancyPostingMediator.GetSubmittedVacancyViewModel(vacancyReferenceNumber, resubmitted);
             var viewModel = response.ViewModel;
 
             return View(viewModel);
@@ -636,9 +639,9 @@
 
             switch (response.Code)
             {
-                case VacancyPostingMediatorCodes.CLoneVacancy.Ok:
+                case VacancyPostingMediatorCodes.CloneVacancy.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
-                case VacancyPostingMediatorCodes.CLoneVacancy.VacancyInIncorrectState:
+                case VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

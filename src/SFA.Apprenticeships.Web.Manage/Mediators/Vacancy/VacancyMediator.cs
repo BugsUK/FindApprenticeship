@@ -37,6 +37,7 @@
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
         {
+            //TODO: There should be validation here
             _vacancyQaProvider.ApproveVacancy(vacancyReferenceNumber);
 
             var vacancies = _vacancyQaProvider.GetPendingQAVacancies();
@@ -51,6 +52,7 @@
 
         public MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(long vacancyReferenceNumber)
         {
+            //TODO: There should be validation here
             _vacancyQaProvider.RejectVacancy(vacancyReferenceNumber);
 
             var vacancies = _vacancyQaProvider.GetPendingQAVacancies();

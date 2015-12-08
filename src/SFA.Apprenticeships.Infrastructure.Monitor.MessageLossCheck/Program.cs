@@ -35,13 +35,12 @@
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, new ServicesConfiguration {ServiceImplementation = "Legacy"}));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<MessageLogCheckRepository>();
                 x.AddRegistry<VacancySearchRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
             });
 
             var messageLossCheckTaskRunner = container.GetInstance<IMessageLossCheckTaskRunner>();

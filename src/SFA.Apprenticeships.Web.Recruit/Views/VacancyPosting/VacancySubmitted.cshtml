@@ -1,12 +1,23 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.SubmittedVacancyViewModel
+@using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Confirmation of submission";
 }
 
 <div class="success-banner">
-    <h1 class="heading-large no-btm-margin"><i class="fa fa-check"></i>Vacancy submitted for approval</h1>
-    <p>Reference number: @Model.VacancyReferenceNumber</p>
+    <h1 class="heading-large no-btm-margin">
+        <i class="fa fa-check"></i>
+        @if (Model.Resubmitted)
+        {
+            <span>Vacancy resubmitted for approval</span>
+        }
+        else
+        {
+            <span>Vacancy submitted for approval</span>
+        }
+    </h1>
+    <p>Reference number: @Model.VacancyReferenceNumber.GetVacancyReference()</p>
 </div>
 <section>
     <hgroup class="hgroup-medium text">
