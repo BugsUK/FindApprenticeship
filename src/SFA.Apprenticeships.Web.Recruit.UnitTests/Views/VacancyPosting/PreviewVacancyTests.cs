@@ -11,6 +11,7 @@
     using Common.ViewModels.Locations;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
+    using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Views.Shared.DisplayTemplates;
     using Recruit.Views.VacancyPosting;
 
@@ -84,7 +85,8 @@
                     }
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                LocationAddresses = new List<VacancyLocationAddressViewModel>()
             };
 
             var view = details.RenderAsHtml(viewModel);
@@ -124,7 +126,8 @@
                     }
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                LocationAddresses = new List<VacancyLocationAddressViewModel>()
             };
 
             var view = details.RenderAsHtml(viewModel);
