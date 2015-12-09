@@ -152,6 +152,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Address\AddressLookupProviderTests.cs" />
     <Compile Include="AzureServiceBus\Configuration\AzureServiceBusConfigurationTests.cs" />
     <Compile Include="Caching\MemoryCachingTests.cs" />
     <Compile Include="Communication\SendGridEmailDispatcherTests.cs" />

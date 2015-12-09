@@ -93,19 +93,30 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AddressLookupProvider.cs" />
+    <Compile Include="Configuration\AddressConfiguration.cs" />
     <Compile Include="Configuration\PostcodeConfiguration.cs" />
+    <Compile Include="Entities\AddressInfo.cs" />
+    <Compile Include="Entities\AddressInfoResult.cs" />
+    <Compile Include="Entities\PostcodeSearchInfoResult.cs" />
+    <Compile Include="Entities\PostcodeSearchInfo.cs" />
     <Compile Include="Entities\PostcodeInfo.cs" />
     <Compile Include="Entities\PostcodeInfoResult.cs" />
+    <Compile Include="FindPostcodeService.cs" />
+    <Compile Include="IFindPostcodeService.cs" />
     <Compile Include="IoC\PostcodeRegistry.cs" />
+    <Compile Include="IRetrieveAddressService.cs" />
     <Compile Include="PostcodeLookupProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\IRestService.cs" />
     <Compile Include="Rest\RestService.cs" />
+    <Compile Include="RetrieveAddressService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

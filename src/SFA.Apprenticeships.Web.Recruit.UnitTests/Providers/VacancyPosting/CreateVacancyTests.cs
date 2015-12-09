@@ -247,7 +247,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act
-            var result = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteErn, Ern, vacancyGuid);
+            var result = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteErn, Ern, vacancyGuid, null);
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
@@ -272,7 +272,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act
-            var result = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteErn, Ern, vacancyGuid);
+            var result = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteErn, Ern, vacancyGuid, null);
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);

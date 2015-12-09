@@ -26,7 +26,7 @@
         public void ShouldResubmitVacancy()
         {
             var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.RejectedByQA);
-            vvm.ResubmitOptin = true;
+            vvm.ResubmitOption = true;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
             var mediator = GetMediator();
@@ -40,7 +40,7 @@
         public void ShouldReturnValidationErrorIfNotOptedIn()
         {
             var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.RejectedByQA);
-            vvm.ResubmitOptin = false;
+            vvm.ResubmitOption = false;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
             var mediator = GetMediator();

@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
     using FluentAssertions;
     using RazorGenerator.Testing;
     using Manage.Views.Vacancy;
+    using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Views.Shared.DisplayTemplates;
 
     [TestFixture]
@@ -157,7 +158,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                     }
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                LocationAddresses = new List<VacancyLocationAddressViewModel>()
             };
 
             var view = details.RenderAsHtml(viewModel);
@@ -197,7 +199,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                     }
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                LocationAddresses = new List<VacancyLocationAddressViewModel>()
             };
 
             var view = details.RenderAsHtml(viewModel);

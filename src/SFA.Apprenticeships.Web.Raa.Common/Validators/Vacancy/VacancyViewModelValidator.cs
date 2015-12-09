@@ -31,7 +31,7 @@
 
         private void AddCommonResubmissionRules()
         {
-            RuleFor(x => x.ResubmitOptin)
+            RuleFor(x => x.ResubmitOption)
                 .Equal(true)
                 .WithMessage(VacancyViewModelMessages.ResubmitOptin.RequiredErrorText)
                 .When(x => x.Status == ProviderVacancyStatuses.RejectedByQA);
