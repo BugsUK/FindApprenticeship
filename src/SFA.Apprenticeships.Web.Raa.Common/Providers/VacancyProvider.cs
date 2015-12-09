@@ -383,8 +383,13 @@
         public VacancyViewModel GetVacancy(Guid vacancyGuid)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
-            var viewModel = GetVacancyViewModelFrom(vacancy);
-            return viewModel;
+            if (vacancy != null)
+            {
+                var viewModel = GetVacancyViewModelFrom(vacancy);
+                return viewModel;
+            }
+
+            return null;
         }
 
         private VacancyViewModel GetVacancyViewModelFrom(ApprenticeshipVacancy vacancy)
