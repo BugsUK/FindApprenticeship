@@ -1,10 +1,14 @@
-﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model ValidationResultViewModel
 
-<a name="@Model.AnchorName"></a>
-@if (Model.HasWarning)
+@if (Model.Status != ProviderVacancyStatuses.Live)
 {
-    <a href="@Model.ViewValidationResultUrl"><i class="fa fa-flag the-icon" title="@Model.Warning"></i></a>
+    <a name="@Model.AnchorName"></a>
+    if (Model.HasWarning)
+    {
+        <a href="@Model.ViewValidationResultUrl"><i class="fa fa-flag the-icon" title="@Model.Warning"></i></a>
+    }
 }
 
 @Html.Partial(CommentViewModel.PartialView, Model.CommentViewModel)

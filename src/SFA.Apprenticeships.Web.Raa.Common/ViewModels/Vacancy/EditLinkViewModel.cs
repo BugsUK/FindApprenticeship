@@ -1,14 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
+    using Domain.Entities.Vacancies.ProviderVacancies;
+
     public class EditLinkViewModel
     {
         public const string PartialView = "_EditLink";
 
-        public EditLinkViewModel(string editUrl, string comment)
+        public EditLinkViewModel(ProviderVacancyStatuses status, string editUrl, string comment)
         {
+            Status = status;
             EditUrl = editUrl;
-            CommentViewModel = new CommentViewModel(comment, editUrl);
+            CommentViewModel = new CommentViewModel(status, comment, editUrl);
         }
+
+        public ProviderVacancyStatuses Status { get; private set; }
 
         public string EditUrl { get; private set; }
 
