@@ -29,7 +29,8 @@
             var summary = new ApprenticeshipSummary
             {
                 Id = (int)vacancy.VacancyReferenceNumber,
-                VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
+                //Goes into elastic unformatted for searching
+                VacancyReference = vacancy.VacancyReferenceNumber.ToString(),
                 Title = vacancy.Title,
                 PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
                 StartDate = vacancy.PossibleStartDate ?? DateTime.MinValue,
