@@ -5,10 +5,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
-    using Constants;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
+    using Infrastructure.Presentation;
     using Validators.Vacancy;
 
     [Validator(typeof(VacancySummaryViewModelClientValidator))]
@@ -66,75 +66,16 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
         public string LongDescriptionComment { get; set; }
 
+        public int WarningsHash { get; set; }
+
         public bool AcceptWarnings { get; set; }
 
-        public string WageUnitDisplayText
-        {
-            get
-            {
-                if (WageType != WageType.Custom) return "Weekly";
+        public ProviderVacancyStatuses Status { get; set; }
 
-                switch (WageUnit)
-                {
-                    case WageUnit.Annually:
-                        return "Annual";
-                    case WageUnit.Monthly:
-                        return "Monthly";
-                    case WageUnit.Weekly:
-                        return "Weekly";
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        public string WageUnitDisplayText => new Wage(WageType, Wage, WageUnit).GetHeaderDisplayText();
 
-        public string DurationTypeDisplayText
-        {
-            get
-            {
-                switch (DurationType)
-                {
-                    case DurationType.Weeks:
-                        return "weeks";
-                    case DurationType.Months:
-                        return "months";
-                    case DurationType.Years:
-                        return "years";
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        public string DurationTypeDisplayText => new Duration(DurationType, (int?)Duration).GetDisplayText();
 
-        public string WageDisplayText
-        {
-            get
-            {
-                switch (WageType)
-                {
-                    case WageType.Custom:
-                        return string.Format("£{0}", Wage.HasValue ? Wage.Value.ToString() : "unknown");
-                    case WageType.ApprenticeshipMinimumWage:
-                        return HoursPerWeek.HasValue ? GetWeeklyApprenticeshipMinimumWage() : "unknown";
-                    case WageType.NationalMinimumWage:
-                        return HoursPerWeek.HasValue ? GetWeeklyNationalMinimumWage() : "unknown";
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
-
-        private string GetWeeklyNationalMinimumWage()
-        {
-            var lowerRange = (Wages.Under18NationalMinimumWage*HoursPerWeek.Value).ToString("N2");
-            var higherRange = (Wages.Over21NationalMinimumWage*HoursPerWeek.Value).ToString("N2");
-
-            return string.Format("£{0} - £{1}", lowerRange, higherRange);
-        }
-
-        private string GetWeeklyApprenticeshipMinimumWage()
-        {
-            return string.Format("£{0}", (Wages.ApprenticeMinimumWage*HoursPerWeek.Value).ToString("N2"));
-        }
+        public string WageDisplayText => new Wage(WageType, Wage, WageUnit).GetDisplayText(HoursPerWeek);
     }
 }

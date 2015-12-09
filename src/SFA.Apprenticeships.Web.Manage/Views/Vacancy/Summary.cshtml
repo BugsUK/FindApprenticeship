@@ -23,7 +23,7 @@
     <section>
         <div class="form-group">
             <fieldset class="form-group inline-fixed">
-                @Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12, autofocus = "autofocus"})
+                @Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-2", type = "text", size = 12})
                 @Html.FormTextFor(m => m.HoursPerWeek, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12})@VacancyViewModelMessages.HoursPerWeek.LabelText
             </fieldset>
             <div class="form-group">@Html.EditorFor(m => m.WorkingWeekComment, "Comment")</div>

@@ -169,13 +169,13 @@
     <Compile Include="Constants\ViewModels\VacancyLocationAddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
-    <Compile Include="Constants\Wages.cs" />
     <Compile Include="Converters\AddressViewModelConverter.cs" />
     <Compile Include="Converters\ApprenticeshipVacancyConverter.cs" />
     <Compile Include="Converters\EmployerViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverter.cs" />
     <Compile Include="Converters\ProviderSiteViewModelConverter.cs" />
     <Compile Include="Converters\StandardViewModelConverter.cs" />
+    <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
     <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
@@ -205,7 +205,9 @@
     <Compile Include="Validators\Vacancy\VacancyRequirementsProspectsViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelBusinessRulesExtensions.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
-    <Compile Include="Validators\Vacancy\VacancyResubmissionValidator.cs" />
+    <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
+    <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\EditLinkViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\ProviderUserViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\SettingsViewModel.cs" />
@@ -234,6 +236,7 @@
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\ValidationResultViewModel.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Comment.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -246,6 +249,11 @@
     </Compile>
     <Compile Include="Views\Shared\EditorTemplates\Comment.generated.cs">
       <DependentUpon>Comment.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\VacancyPreview.generated.cs">
+      <DependentUpon>VacancyPreview.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -269,6 +277,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Comment.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\VacancyPreview.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancyPreview.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
@@ -286,6 +298,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
+      <Project>{83500887-E1B7-46BD-945B-4CC3D0069B6E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>

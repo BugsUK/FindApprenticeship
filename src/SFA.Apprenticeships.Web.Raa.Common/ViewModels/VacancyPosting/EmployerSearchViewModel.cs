@@ -2,6 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Web.Common.ViewModels;
@@ -31,6 +32,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
             {
                 EmployerResultsPage.CurrentPage = viewModel.EmployerResultsPage.CurrentPage;
             }
+            VacancyGuid = viewModel.VacancyGuid;
         }
 
         public string ProviderSiteErn { get; set; }
@@ -57,7 +59,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
             FilterType,
             Ern,
             Name,
-            Location
+            Location,
+            VacancyGuid
         };
+
+        public Guid? VacancyGuid { get; set; }
     }
 }

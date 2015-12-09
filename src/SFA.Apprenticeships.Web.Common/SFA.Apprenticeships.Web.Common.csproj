@@ -284,10 +284,6 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-    <None Include="compilerconfig.json" />
-    <None Include="compilerconfig.json.defaults">
-      <DependentUpon>compilerconfig.json</DependentUpon>
-    </None>
     <None Include="Content\css\font-awesome\fonts\fontawesome-webfont.woff" />
     <None Include="Content\css\font-awesome\fonts\fontawesome-webfont.woff2" />
     <None Include="Content\css\font-awesome\fonts\FontAwesome.otf" />

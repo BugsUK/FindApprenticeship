@@ -58,7 +58,9 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderProvider
                     Ern = ern,
                     Address = new AddressViewModel()
                 },
-                VacancyGuid = vacancyGuid
+                VacancyGuid = vacancyGuid,
+                IsEmployerLocationMainApprenticeshipLocation = true,
+                NumberOfPositions = 4
             });
 
             // Assert

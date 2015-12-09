@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
+    using Application.Interfaces.Applications;
     using Application.Interfaces.DateTime;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
@@ -21,6 +22,7 @@
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
         protected Mock<IDateTimeService> MockTimeService;
+        protected Mock<IApplicationService> ApplicationService;
         protected Mock<IApprenticeshipVacancyReadRepository> MockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
         protected Mock<IApprenticeshipVacancyWriteRepository> MockApprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
 
@@ -44,6 +46,7 @@
                 .Returns(new CommonWebConfiguration());
 
             MockTimeService = new Mock<IDateTimeService>();
+            ApplicationService = new Mock<IApplicationService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -56,7 +59,8 @@
                 MockTimeService.Object,
                 MockApprenticeshipVacancyReadRepository.Object,
                 MockApprenticeshipVacancyWriteRepository.Object,
-                MockMapper.Object);
+                MockMapper.Object,
+                ApplicationService.Object);
         }
     }
 }

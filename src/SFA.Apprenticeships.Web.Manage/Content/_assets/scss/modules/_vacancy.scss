@@ -15,24 +15,45 @@
 }
 
 html:not(.touch) .editable-item {
+    border: 1px dotted #fff;
     .edit-comment-link {
-        visibility: hidden;
-    }
+        color: white;
+        &:focus {
+            color: #005ea5;
+        }
+    }       
     &:hover {
         background: rgba( 0, 0, 0, .025 );
-        outline: 1px dotted #d4d4d4;
+        border: 1px dotted #d4d4d4;
         .edit-comment-link {
-            visibility: visible;
+            color: #005ea5;
         }
     }
 }
 
+.fa-flag {
+    color: $light-blue;
+}
+
+.fa-check {
+    color: $turquoise;
+}
+
 .raa-icon-comment {
-    display: inline-block;
-    content: "x"; 
-    width: 20px;
-    height: 20px;
-    background: red;
-//    @include icon( $icon-edit );
-    color: $orange-50;
+    @extend copy-19;
+    font-size: 19px !important;    
+    color: $turquoise;
+    cursor: help;
+}
+
+h2{
+    a{
+        i.raa-icon-comment{
+            vertical-align: middle;
+        }
+    }
+}
+
+.preserve-formatting{
+    white-space: pre-line;
 }

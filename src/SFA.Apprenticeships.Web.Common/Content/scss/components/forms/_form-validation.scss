@@ -56,7 +56,8 @@
 }
 
 .validation-warning,
-.input-validation-warning {
+.input-validation-warning,
+.input-validation-warnings {
   border-left: 3px solid $warning-colour;
   box-sizing: content-box;
   margin-left: -13px;
@@ -98,6 +99,7 @@
     padding-left: $gutter-half;
   }
 }
+
 
 .field-validation-valid {
   clear: left;

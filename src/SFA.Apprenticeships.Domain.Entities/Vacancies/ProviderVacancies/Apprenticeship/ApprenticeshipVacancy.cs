@@ -18,6 +18,8 @@
 
         public int? StandardId { get; set; }
 
+        public string StandardIdComment { get; set; }
+
         public ProviderVacancyStatuses Status { get; set; }
         public string WageComment { get; set; }
         public string ClosingDateComment { get; set; }

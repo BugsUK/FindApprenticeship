@@ -30,16 +30,28 @@
 }
 
 html:not(.touch) .editable-item {
+    border: 1px dotted #fff;
     .edit-comment-link {
-        visibility: hidden;
-    }
+        color: white;
+        &:focus {
+            color: #005ea5;
+        }
+    }       
     &:hover {
         background: rgba( 0, 0, 0, .025 );
-        outline: 1px dotted #d4d4d4;
+        border: 1px dotted #d4d4d4;
         .edit-comment-link {
-            visibility: visible;
+            color: #005ea5;
         }
     }
+}
+
+.fa-flag {
+    color: $light-blue;
+}
+
+.fa-check {
+    color: $turquoise;
 }
 
 .raa-icon-comment {
@@ -47,4 +59,119 @@ html:not(.touch) .editable-item {
     font-size: 19px !important;    
     color: $turquoise;
     cursor: help;
+}
+
+h2{
+    a{
+        i.raa-icon-comment{
+            vertical-align: middle;
+        }
+    }
+}
+
+.preserve-formatting{
+    white-space: pre-line;
+}
+
+
+// Dashboard 
+
+.vacancies-summary {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    li {
+        margin: 0;
+        padding: 0 10px;
+        display: block;
+        float: left;
+        @media screen and ( max-width: 640px ) {
+            padding: 0 10px;
+            width: ( 100% / 1 );
+        }
+        @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 3 );
+        }
+        @media screen and ( min-width: 769px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 6 );
+        }
+        a {
+            text-decoration: none;
+        }
+        figure.data {
+            .count {
+                @include bold-48( $tabular-numbers: true );
+                margin-bottom: 0;
+                @media screen and ( max-width: 640px ) {
+                    padding: .25em 0;
+                    @include bold-48( $tabular-numbers: true );
+                }
+                @media screen and ( max-width: 768px ) {
+                    @include bold-48( $tabular-numbers: true );
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+                @media screen and ( min-width: 769px ) {
+                    text-align: center;                        
+                }
+            }
+            figcaption {
+                display: block;
+                @media screen and ( max-width: 768px ) {
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-right: 10px;
+                }
+                h2 {
+                    @include bold-16;
+                    margin-bottom: 0;
+                    @media screen and ( max-width: 640px ) {
+                        @include bold-16;
+                    }
+                    @media screen and ( min-width: 769px ) {
+                        text-align: center;                        
+                    }
+                }
+            }
+        }
+    }
+}
+
+table#vacancies-table {
+    @media screen and ( max-width: 768px ) {
+        border-top: 1px solid $grey-2;
+        display: block;
+        thead {
+            display: none;
+        } 
+        tr {
+            display: block;
+            border-bottom: 1px solid $grey-2;
+            padding: 1em 0;
+            td {
+                display: block;
+                text-align: left;
+                border: none;
+                padding: 0.25em 0;
+                &.vac-toolbox {
+                    padding: 1em 0;
+                }
+                .vac-title {
+                    @include bold-19;
+                }
+                &.vac-employer,
+                &.vac-ref-number,
+                &.vac-no-of-applications {
+                    &:before {
+                        content: attr(data-label) ":\00a0";
+                        @include bold-16;
+                    }
+                }
+            }
+        }
+    }
 }

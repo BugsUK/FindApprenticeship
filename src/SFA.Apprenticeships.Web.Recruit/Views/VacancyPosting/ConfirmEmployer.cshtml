@@ -50,7 +50,7 @@
             @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})
             @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
             <button class="button" name="ConfirmEmployer" value="ConfirmEmployer">Save description and continue</button>
-            <a href="@Request.UrlReferrer.PathAndQuery">Choose a different employer</a>
+            @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid}, null)
         </div>
    }
 </div>

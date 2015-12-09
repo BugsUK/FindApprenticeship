@@ -28,13 +28,13 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   font-weight: normal; }
 
 .loading-text {
-  color: #f47738; }
+  color: #2b8cc4; }
 
 .bg-error {
   background: #df3034; }
 
 .bg-warning {
-  background: #f47738; }
+  background: #2b8cc4; }
 
 .bg-success {
   background: #28a197; }
@@ -3265,7 +3265,7 @@ strong {
   color: #df3034; }
 
 .closing-soon {
-  color: #f47738; }
+  color: #2b8cc4; }
 
 /* Make skiplinks visible when they are tabbed to */
 .skiplink {
@@ -4081,24 +4081,28 @@ input::-webkit-inner-spin-button {
       padding-left: 15px; } }
 
 .validation-warning,
-.input-validation-warning {
-  border-left: 3px solid #f47738;
+.input-validation-warning,
+.input-validation-warnings {
+  border-left: 3px solid #2b8cc4;
   box-sizing: content-box;
   margin-left: -13px;
   padding: 0 0 0 10px; }
   .validation-warning .form-control,
-  .input-validation-warning .form-control {
+  .input-validation-warning .form-control,
+  .input-validation-warnings .form-control {
     box-sizing: border-box;
     border: 1px solid #bfc1c3;
     color: #0b0c0c;
     margin-left: 0;
     padding: 4px; }
   .validation-warning.block-label,
-  .input-validation-warning.block-label {
+  .input-validation-warning.block-label,
+  .input-validation-warnings.block-label {
     margin-left: 0; }
   @media (min-width: 641px) {
     .validation-warning,
-    .input-validation-warning {
+    .input-validation-warning,
+    .input-validation-warnings {
       margin-left: -18px;
       padding-left: 15px; } }
 
@@ -4138,7 +4142,7 @@ input::-webkit-inner-spin-button {
 
 .field-validation-warning {
   clear: left;
-  color: #f47738;
+  color: #2b8cc4;
   display: block;
   margin-top: 8px; }
 
@@ -4164,10 +4168,10 @@ input::-webkit-inner-spin-button {
   padding-left: 0; }
 
 .form-control.input-validation-warning {
-  background: #fde4d4; }
+  background: #d5e8f3; }
 
 .form-group.input-validation-warning > .form-control {
-  background: #fde4d4; }
+  background: #d5e8f3; }
 
 .form-group.input-validation-warning .form-group.input-validation-warning {
   border-left: 0;
@@ -5062,10 +5066,10 @@ video {
       display: none !important; } }
 
 .panel-warning {
-  background: #fde4d4;
-  border-color: #f47738; }
+  background: #d5e8f3;
+  border-color: #2b8cc4; }
   .panel-warning .heading-small {
-    color: #f47738; }
+    color: #2b8cc4; }
   @media (min-width: 641px) {
     .panel-warning {
       margin-left: -18px;
@@ -5390,8 +5394,8 @@ details summary:focus {
   color: #21847c; }
 
 .tag-pending, .tag-inprogress {
-  border-color: #ec580d;
-  color: #ca4b0b; }
+  border-color: #226e9a;
+  color: #1b597d; }
 
 .tag-draft, .tag-newapplication {
   border-color: #6f777b;
@@ -6123,22 +6127,34 @@ aside h2:first-child {
         padding-top: 5px;
         padding-bottom: 5px; } }
 
-html:not(.touch) .editable-item .edit-comment-link {
-  visibility: hidden; }
+html:not(.touch) .editable-item {
+  border: 1px dotted #fff; }
+  html:not(.touch) .editable-item .edit-comment-link {
+    color: white; }
+    html:not(.touch) .editable-item .edit-comment-link:focus {
+      color: #005ea5; }
+  html:not(.touch) .editable-item:hover {
+    background: rgba(0, 0, 0, 0.025);
+    border: 1px dotted #d4d4d4; }
+    html:not(.touch) .editable-item:hover .edit-comment-link {
+      color: #005ea5; }
 
-html:not(.touch) .editable-item:hover {
-  background: rgba(0, 0, 0, 0.025);
-  outline: 1px dotted #d4d4d4; }
-  html:not(.touch) .editable-item:hover .edit-comment-link {
-    visibility: visible; }
+.fa-flag {
+  color: #2b8cc4; }
+
+.fa-check {
+  color: #28a197; }
 
 .raa-icon-comment {
-  display: inline-block;
-  content: "x";
-  width: 20px;
-  height: 20px;
-  background: red;
-  color: #fabb96; }
+  font-size: 19px !important;
+  color: #28a197;
+  cursor: help; }
+
+h2 a i.raa-icon-comment {
+  vertical-align: middle; }
+
+.preserve-formatting {
+  white-space: pre-line; }
 
 .applicant-location,
 .applicant-distance {

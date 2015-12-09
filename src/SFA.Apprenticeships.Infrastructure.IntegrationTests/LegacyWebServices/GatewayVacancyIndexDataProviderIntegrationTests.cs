@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.LegacyWebServices
 {
     using Application.Vacancies;
+    using Common.Configuration;
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.LegacyWebServices.IoC;
@@ -19,7 +20,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = "Legacy" }));
 
                 // Inject provider under test.
                 x.For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>();

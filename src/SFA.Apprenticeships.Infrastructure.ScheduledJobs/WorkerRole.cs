@@ -22,10 +22,13 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
+    using Processes.Configuration;
+    using Raa.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
+    using Repositories.Vacancies.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -133,6 +136,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
 
             _container = new Container(x =>
             {
@@ -142,13 +146,15 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<JobsRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

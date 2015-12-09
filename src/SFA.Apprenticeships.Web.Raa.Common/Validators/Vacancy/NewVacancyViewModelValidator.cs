@@ -5,6 +5,8 @@
     using FluentValidation;
     using Constants.ViewModels;
     using ViewModels.Vacancy;
+    using Web.Common.Validators;
+    using Common = Validators.Common;
 
     public class NewVacancyViewModelClientValidator : AbstractValidator<NewVacancyViewModel>
     {
@@ -21,6 +23,8 @@
         {
             this.AddCommonRules();
             this.AddServerRules();
+            RuleSet(RuleSets.Errors, this.AddCommonRules);
+            RuleSet(RuleSets.Errors, this.AddServerRules);
         }
     }
 
@@ -63,6 +67,10 @@
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListErrorText);
 
             validator.RuleFor(m => m.OfflineApplicationInstructionsComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
+            validator.RuleFor(m => m.StandardIdComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 

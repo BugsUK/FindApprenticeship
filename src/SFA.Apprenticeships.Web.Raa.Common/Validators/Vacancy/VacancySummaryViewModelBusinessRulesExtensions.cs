@@ -60,8 +60,7 @@
             }
         }
 
-        public static ValidationFailure ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel,
-            decimal? duration)
+        public static ValidationFailure ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel, decimal? duration, string parentPropertyName)
         {
             if (!viewModel.HoursPerWeek.HasValue || !duration.HasValue)
             {
@@ -85,7 +84,12 @@
 
             if (!condition.IsGreaterThanOrEqualToMinDuration(duration.Value, viewModel.DurationType))
             {
-                var validationFailure = new ValidationFailure("Duration", condition.WarningMessage)
+                var propertyName = "Duration";
+                if (!string.IsNullOrEmpty(parentPropertyName))
+                {
+                    propertyName = parentPropertyName + "." + propertyName;
+                }
+                var validationFailure = new ValidationFailure(propertyName, condition.WarningMessage)
                 {
                     CustomState = ValidationType.Warning
                 };
@@ -95,7 +99,7 @@
             return null;
         }
 
-        public static ValidationFailure PossibleStartDateShouldBeAfterClosingDate(this VacancySummaryViewModel viewModel, DateViewModel closingDate)
+        public static ValidationFailure PossibleStartDateShouldBeAfterClosingDate(this VacancySummaryViewModel viewModel, DateViewModel closingDate, string parentPropertyName)
         {
             if (closingDate == null || !closingDate.HasValue || viewModel.PossibleStartDate == null || !viewModel.PossibleStartDate.HasValue || !Common.BeValidDate(closingDate) || !Common.BeValidDate(viewModel.PossibleStartDate))
             {
@@ -104,7 +108,12 @@
 
             if (viewModel.PossibleStartDate.Date <= closingDate.Date)
             {
-                var validationFailure = new ValidationFailure("PossibleStartDate", VacancyViewModelMessages.PossibleStartDate.BeforePublishDateErrorText)
+                var propertyName = "PossibleStartDate";
+                if (!string.IsNullOrEmpty(parentPropertyName))
+                {
+                    propertyName = parentPropertyName + "." + propertyName;
+                }
+                var validationFailure = new ValidationFailure(propertyName, VacancyViewModelMessages.PossibleStartDate.BeforePublishDateErrorText)
                 {
                     CustomState = ValidationType.Warning
                 };

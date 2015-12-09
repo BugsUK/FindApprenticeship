@@ -146,11 +146,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\VacancyViewModelBuilder.cs" />
     <Compile Include="Mediators\ProviderUser\AuthorizeTests.cs" />
     <Compile Include="Mediators\ProviderUser\TestBase.cs" />
     <Compile Include="Mediators\ProviderUser\VerifyEmailAddressTests.cs" />
     <Compile Include="Mediators\ProviderUser\UpdateUserTests.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorTests.cs" />
+    <Compile Include="Mediators\VacancyPosting\PreviewVacancyTests.cs" />
+    <Compile Include="Mediators\VacancyPosting\CloneVacancyTests.cs" />
     <Compile Include="Mediators\VacancyPosting\SubmitVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\CloneVacancyTests.cs" />
     <Compile Include="Mediators\VacancyPosting\CreateVacancyTests.cs" />
@@ -170,6 +173,8 @@
     <Compile Include="Validators\Providers\ProviderSiteEmployerLinkViewModelValidatorTests.cs" />
     <Compile Include="Validators\Providers\ProviderSiteSearchViewModelValidatorTests.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\ValidatorExtensions.cs" />
+    <Compile Include="Validators\VacancyPosting\VacancyViewModelValidatorTests.cs" />
     <Compile Include="Views\Shared\ChildViewModel.cs" />
     <Compile Include="Views\Shared\ChildViewModelValidator.cs" />
     <Compile Include="Views\Shared\ParentViewModel.cs" />
@@ -189,7 +194,6 @@
     <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelClientValidatorTests.cs" />
-    <Compile Include="Validators\VacancyPosting\PreviewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelServerValidatorTests.cs" />
     <Compile Include="Views\Shared\ValidationSummaryViewModel.cs" />
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
@@ -209,6 +213,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
       <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
@@ -245,9 +253,7 @@
       <Name>SFA.Apprenticeships.Web.Recruit</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Builders\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>

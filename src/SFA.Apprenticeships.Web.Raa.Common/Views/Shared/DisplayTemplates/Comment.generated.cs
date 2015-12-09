@@ -49,29 +49,31 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
             
             #line default
             #line hidden
-WriteLiteral("    <details open>\r\n        <summary>Comment</summary>\r\n        <div");
+WriteLiteral("    <details");
+
+WriteLiteral(" class=\"open\"");
+
+WriteLiteral(" open>\r\n        <summary>Comment</summary>\r\n        <div");
 
 WriteLiteral(" class=\"detail-content qa-comment\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteLiteral(" class=\"blocklabel-single-container\"");
+WriteLiteral(" class=\"blocklabel-single-container preserve-formatting\"");
 
-WriteLiteral(">\r\n");
-
-WriteLiteral("                ");
+WriteLiteral(">");
 
             
-            #line 9 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
-           Write(Model);
+            #line 8 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
+                                                                    Write(Model);
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n        </div>\r\n    </details>\r\n");
+WriteLiteral("</div>\r\n        </div>\r\n    </details>\r\n");
 
             
-            #line 13 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
+            #line 11 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
 }
             
             #line default

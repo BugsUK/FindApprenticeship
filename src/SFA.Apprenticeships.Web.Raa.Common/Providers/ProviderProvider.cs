@@ -78,15 +78,18 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             if (vacancy != null)
             {
                 vacancy.ProviderSiteEmployerLink = providerSiteEmployerLink;
-                vacancy.IsEmployerLocationMainApprenticeshipLocation =
-                    viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
-                vacancy.NumberOfPositions = viewModel.NumberOfPositions.Value;
+                if (viewModel.IsEmployerLocationMainApprenticeshipLocation != null)
+                    vacancy.IsEmployerLocationMainApprenticeshipLocation =
+                        viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
+                if (viewModel.NumberOfPositions != null) vacancy.NumberOfPositions = viewModel.NumberOfPositions.Value;
 
                 _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
             }
 
             var result = providerSiteEmployerLink.Convert();
             result.VacancyGuid = viewModel.VacancyGuid;
+            result.IsEmployerLocationMainApprenticeshipLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation;
+            result.NumberOfPositions = viewModel.NumberOfPositions;
 
             return result;
         }

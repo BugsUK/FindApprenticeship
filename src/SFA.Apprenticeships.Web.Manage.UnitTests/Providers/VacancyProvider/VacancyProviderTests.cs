@@ -103,6 +103,7 @@
             result.OfflineApplicationInstructionsComment.Should().Be(newVacancyVM.OfflineApplicationInstructionsComment);
             result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
             result.ShortDescriptionComment.Should().Be(newVacancyVM.ShortDescriptionComment);
+            result.StandardIdComment.Should().Be(newVacancyVM.StandardIdComment);
             result.TitleComment.Should().Be(newVacancyVM.TitleComment);
             result.ApprenticeshipLevel.Should().Be(newVacancyVM.ApprenticeshipLevel);
             result.FrameworkCodeName.Should().Be(newVacancyVM.FrameworkCodeName);
@@ -203,7 +204,7 @@
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             apprenticeshipVacancyRepository.Setup(
-                avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> { ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA }))
+                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(new List<ApprenticeshipVacancy>
                 {
                     new ApprenticeshipVacancy
@@ -231,7 +232,7 @@
             vacancyProvider.GetPendingQAVacancies();
 
             //Assert
-            apprenticeshipVacancyRepository.Verify(avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> { ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA }));
+            apprenticeshipVacancyRepository.Verify(avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA));
             providerService.Verify(ps => ps.GetProvider(ukprn), Times.Once);
         }
 
@@ -341,7 +342,7 @@
             };
 
             apprenticeshipVacancyRepository.Setup(
-                avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> { ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA }))
+                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
@@ -409,7 +410,7 @@
             };
 
             apprenticeshipVacancyRepository.Setup(
-                avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> { ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA }))
+                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
@@ -479,7 +480,7 @@
             };
 
             apprenticeshipVacancyRepository.Setup(
-                avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> { ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA }))
+                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
@@ -555,7 +556,7 @@
             };
 
             apprenticeshipVacancyRepository.Setup(
-                avr => avr.GetWithStatus(new List<ProviderVacancyStatuses> { ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA }))
+                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());

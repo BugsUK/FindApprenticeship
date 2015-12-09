@@ -14,21 +14,21 @@
     {
         private readonly IVacancyQAProvider _vacancyQaProvider;
 
-        private readonly VacancyResubmissionValidator _vacancyResubmissionValidator;
+        private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator;
 
         public VacancyMediator(IVacancyQAProvider vacancyQaProvider,
-            VacancyResubmissionValidator vacancyResubmissionValidator,
+            VacancyViewModelValidator vacancyViewModelValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
             NewVacancyViewModelServerValidator newVacancyViewModelServerValidator, 
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator)
         {
             _vacancyQaProvider = vacancyQaProvider;
-            _vacancyResubmissionValidator = vacancyResubmissionValidator;
+            _vacancyViewModelValidator = vacancyViewModelValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
@@ -37,6 +37,7 @@
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
         {
+            //TODO: There should be validation here
             _vacancyQaProvider.ApproveVacancy(vacancyReferenceNumber);
 
             var vacancies = _vacancyQaProvider.GetPendingQAVacancies();
@@ -51,6 +52,7 @@
 
         public MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(long vacancyReferenceNumber)
         {
+            //TODO: There should be validation here
             _vacancyQaProvider.RejectVacancy(vacancyReferenceNumber);
 
             var vacancies = _vacancyQaProvider.GetPendingQAVacancies();
@@ -67,7 +69,7 @@
         {
             var vacancyViewModel = _vacancyQaProvider.ReserveVacancyForQA(vacancyReferenceNumber);
 
-            var validationResult = _vacancyResubmissionValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+            var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 
             if (!validationResult.IsValid)
             {
@@ -182,6 +184,11 @@
 
             if (!validationResult.IsValid)
             {
+                var sectors = _vacancyQaProvider.GetSectorsAndFrameworks();
+                var standards = _vacancyQaProvider.GetStandards();
+                viewModel.SectorsAndFrameworks = sectors;
+                viewModel.Standards = standards;
+
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 

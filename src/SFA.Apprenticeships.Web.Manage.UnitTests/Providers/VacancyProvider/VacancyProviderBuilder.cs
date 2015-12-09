@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
+    using Application.Interfaces.Applications;
     using Application.Interfaces.DateTime;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
@@ -21,6 +22,7 @@
         private Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
         private Mock<IVacancyPostingService> _vacancyPostingServcie = new Mock<IVacancyPostingService>();
+        private Mock<IApplicationService> _applicationService = new Mock<IApplicationService>();
         private Mock<ILogService> _logService = new Mock<ILogService>();
         private Mock<IMapper> _mapper = new Mock<IMapper>();
 
@@ -28,7 +30,7 @@
         {
             return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
                 _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, _apprenticeshipVacancyReadRepository.Object,
-                _apprenticeshipVacancyWriteRepository.Object, _mapper.Object);
+                _apprenticeshipVacancyWriteRepository.Object, _mapper.Object, _applicationService.Object);
         }
 
         public VacancyProviderBuilder With(

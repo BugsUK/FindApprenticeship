@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.EndToEndTests
 {
-    using System;
     using System.Collections;
     using System.Collections.Specialized;
-    using System.Linq.Expressions;
     using System.Security.Principal;
     using System.Threading;
     using System.Web;
@@ -48,13 +46,18 @@
                 .GetDatabase(mongoDbName);
 
             Collection = database.GetCollection<MongoApprenticeshipVacancy>("apprenticeshipVacancies");
+            ClearCollection();
         }
 
         [TearDown]
         public void TearDown()
         {
-            if (Collection != null)
-                Collection.RemoveAll();
+            ClearCollection();
+        }
+
+        private void ClearCollection()
+        {
+            Collection?.RemoveAll();
         }
 
         private void ConfigureIoCContainer()

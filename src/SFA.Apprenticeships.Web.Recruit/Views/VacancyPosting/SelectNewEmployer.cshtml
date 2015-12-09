@@ -8,7 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     const string selected = "selected";
-    var vacancyGuidValue = Guid.NewGuid();
+    var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
     var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
 }
@@ -39,6 +39,7 @@
         @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "ern-search-form" }))
         {
             @Html.HiddenFor(m => m.ProviderSiteErn)
+            @Html.HiddenFor(m => m.VacancyGuid)
             @Html.Hidden("FilterType", EmployerFilterType.Ern)
 
             <div id="ern-search-panel" class="toggle-content blocklabel-content">
@@ -54,6 +55,7 @@
         @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "name-location-search-form" }))
         {
             @Html.HiddenFor(m => m.ProviderSiteErn)
+            @Html.HiddenFor(m => m.VacancyGuid)
             @Html.Hidden("FilterType", EmployerFilterType.NameAndLocation)
 
             <div id="name-location-search-panel" class="toggle-content blocklabel-content">
@@ -63,7 +65,7 @@
                 <button id="name-location-search-button" type="submit" class="button">
                     Search
                 </button>
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Return to your linked employers</a>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = vacancyGuidValue})">Return to your linked employers</a>
             </div>
         }
     </div>

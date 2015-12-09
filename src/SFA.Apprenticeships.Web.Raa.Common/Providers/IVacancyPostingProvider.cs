@@ -12,7 +12,7 @@
     {
         NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
@@ -45,5 +45,7 @@
         LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel);
 
         LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+
+        VacancyViewModel GetVacancy(Guid vacancyReferenceNumber);
     }
 }

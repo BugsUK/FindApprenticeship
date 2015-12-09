@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
     using System.Linq;
+    using Builders;
     using Common.Validators;
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
@@ -17,11 +18,13 @@
         private const string RuleSet = RuleSets.Warnings;
 
         private VacancySummaryViewModelServerValidator _validator;
+        private VacancyViewModelValidator _aggregateValidator;
 
         [SetUp]
         public void SetUp()
         {
             _validator = new VacancySummaryViewModelServerValidator();
+            _aggregateValidator = new VacancyViewModelValidator();
         }
 
         [TestCase(28, 57, DurationType.Weeks)]
@@ -50,11 +53,16 @@
                 Duration = expectedDuration,
                 DurationType = durationType
             };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
             _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
         }
 
         [TestCase(28, 56, DurationType.Weeks, VacancyViewModelMessages.Duration.DurationWarning28Hours)]
@@ -83,14 +91,22 @@
                 Duration = expectedDuration,
                 DurationType = durationType
             };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
             var response = _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            var aggregateResponse = _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
             var error = response.Errors.SingleOrDefault(e => e.PropertyName == "Duration");
             error.Should().NotBeNull();
             error?.ErrorMessage.Should().Be(expectedMessage);
+            var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "VacancySummaryViewModel.Duration");
+            aggregateError.Should().NotBeNull();
+            aggregateError?.ErrorMessage.Should().Be(expectedMessage);
         }
 
         [TestCase(41, 56, DurationType.Weeks)]
@@ -116,12 +132,17 @@
                 Duration = expectedDuration,
                 DurationType = durationType
             };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
             _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
             //Other errors will superceed this warning so will be valid
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
         }
     }
 }

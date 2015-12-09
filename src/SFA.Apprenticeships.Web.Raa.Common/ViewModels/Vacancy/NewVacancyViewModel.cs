@@ -66,8 +66,17 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public int? StandardId { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        public string StandardIdComment { get; set; }
+
+        public ProviderVacancyStatuses Status { get; set; }
+        
         public List<StandardViewModel> Standards { get; set; }
 
         public List<VacancyLocationAddressViewModel> Locations { get; set; }
+
+        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
+
+        public int? NumberOfPositions { get; set; }
     }
 }

@@ -48,6 +48,14 @@
 
         private void PopulateCategoriesCodes(ApprenticeshipSummaryUpdate vacancySummaryToIndex)
         {
+            if (!string.IsNullOrEmpty(vacancySummaryToIndex.Category)
+                && !string.IsNullOrEmpty(vacancySummaryToIndex.CategoryCode)
+                && !string.IsNullOrEmpty(vacancySummaryToIndex.SubCategory)
+                && !string.IsNullOrEmpty(vacancySummaryToIndex.SubCategoryCode))
+            {
+                return;
+            }
+
             var categories = _referenceDataService.GetCategories();
 
             if (categories == null)

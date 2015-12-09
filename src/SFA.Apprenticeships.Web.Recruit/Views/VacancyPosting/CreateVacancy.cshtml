@@ -13,6 +13,16 @@
 
     var frameworksSelected = Model.TrainingType == TrainingType.Frameworks ? selected : null;
     var standardsSelected = Model.TrainingType == TrainingType.Standards ? selected : null;
+
+    var saveButtonText = "Save and continue";
+    var saveButtonValue = "CreateVacancy";
+
+    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+    {
+        saveButtonText = "Save and return to Preview";
+        saveButtonValue = "CreateVacancyAndPreview";
+    }
+
 }
 
 <h1 class="heading-xlarge">
@@ -22,6 +32,8 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
+    @Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation);
+    @Html.HiddenFor(m => m.NumberOfPositions)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
@@ -100,6 +112,7 @@
                     </select>
 
                     @Html.ValidationMessageFor(m => m.StandardId)
+                    @Html.DisplayFor(m => m.StandardIdComment, "Comment")
                 </div>
 
                 @{
@@ -153,9 +166,10 @@
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.ProviderSiteErn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern);
     @Html.HiddenFor(model => model.VacancyGuid)
+    @Html.HiddenFor(model => model.Status)
 
     <div class="form-group">
-        <button type="submit" class="button" name="CreateVacancy" value="CreateVacancy">Save and continue</button>
+        <button id="createVacancyButton" type="submit" class="button" name="CreateVacancy" value="@saveButtonValue">@saveButtonText</button>
         <button id="createVacancyAndExit" type="submit" class="button-link" name="CreateVacancy" value="CreateVacancyAndExit">Save and exit</button>
     </div>
 }
