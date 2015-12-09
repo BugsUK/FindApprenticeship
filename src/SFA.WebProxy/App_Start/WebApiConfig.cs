@@ -25,6 +25,7 @@
 
             //var proxyLogging = new FileProxyLogging(configuration);
             var proxyLogging = new AzureBlobStorageLogging(configuration);
+            //var proxyLogging = new NullProxyLogging();
 
             config.Routes.MapHttpRoute(name: "Proxy", routeTemplate: "{*path}", handler:
             HttpClientFactory.CreatePipeline(
