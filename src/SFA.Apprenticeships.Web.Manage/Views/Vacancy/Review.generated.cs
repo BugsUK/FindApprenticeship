@@ -146,18 +146,18 @@ WriteLiteral(" name=\"VacancyQAAction\"");
 
 WriteLiteral(" value=\"Reject\"");
 
-WriteLiteral(">Reject</button>\r\n                <a");
+WriteLiteral(">Refer</button>\r\n                <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 899), Tuple.Create("\"", 951)
+WriteAttribute("href", Tuple.Create(" href=\"", 898), Tuple.Create("\"", 950)
             
             #line 25 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 906), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Dashboard)
+, Tuple.Create(Tuple.Create("", 905), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Dashboard)
             
             #line default
             #line hidden
-, 906), false)
+, 905), false)
 );
 
 WriteLiteral(">Return to dashboard</a>\r\n            </div>\r\n        </section>\r\n");
