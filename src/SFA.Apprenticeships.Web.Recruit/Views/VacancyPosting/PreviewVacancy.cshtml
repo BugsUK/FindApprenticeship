@@ -21,13 +21,13 @@
 
         if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
         {
-            Model.ResubmitOptin = false;
-            @Html.FormCheckBoxFor(model => model.ResubmitOptin, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
+            Model.ResubmitOption = false;
+            @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
         }
         else
         {
-            Model.ResubmitOptin = true;
-            @Html.HiddenFor(model => model.ResubmitOptin)
+            Model.ResubmitOption = true;
+            @Html.HiddenFor(model => model.ResubmitOption)
         }
 
         <section>

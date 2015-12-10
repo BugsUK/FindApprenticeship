@@ -106,5 +106,20 @@
             public const string Ok = "VacancyPosting.CloneVacancy.Ok";
             public const string VacancyInIncorrectState = "VacancyPosting.CloneVacancy.VacancyInIncorrectState";
         }
+
+        public class GetLocationAddressesViewModel
+        {
+            public const string Ok = "VacancyPosting.GetLocationAddressesViewModel.Ok";
+        }
+
+        public class SetDifferentLocation
+        {
+            public const string Ok = "VacancyPosting.SetDifferentLocation.Ok";
+        }
+
+        public class SearchLocations
+        {
+            public const string Ok = "VacancyPosting.SearchLocations.Ok";
+        }
     }
 }

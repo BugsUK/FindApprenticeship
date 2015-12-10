@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -111,6 +112,7 @@
             }
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
         [HttpPost]
         public ActionResult ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel)
         {
@@ -123,27 +125,49 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation)
+                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
-                        return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
+                        return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions });
                     }
                     return RedirectToRoute(RecruitmentRouteNames.AddLocations, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-
+		
         #endregion
-
+		
         #region Basic Details
 
-        [HttpGet]
-        public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid)
+        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
+        [HttpPost]
+        public ActionResult SetDifferentLocation(ProviderSiteEmployerLinkViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyViewModel(User.GetUkprn(), providerSiteErn, ern, vacancyGuid);
-            var viewModel = response.ViewModel;
+            // TODO: validate?
+            var response = _vacancyPostingMediator.SetDifferentLocation(viewModel);
+            ModelState.Clear();
 
-            return View(viewModel);
+            return View("ConfirmEmployer", response.ViewModel);
+        }
+		
+        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
+        [HttpPost]
+        public ActionResult SetEmployersLocationAsMainLocation(ProviderSiteEmployerLinkViewModel viewModel)
+        {
+            // TODO: validate?
+            var response = _vacancyPostingMediator.SetEmployersLocationAsMainLocation(viewModel);
+
+            ModelState.Clear();
+
+            return View("ConfirmEmployer", response.ViewModel);
+        }
+
+        [HttpGet]
+        public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
+        {
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(User.GetUkprn(), providerSiteErn, ern, vacancyGuid, numberOfPositions);
+            
+            return View(response.ViewModel);
         }
 
         [HttpGet]
@@ -542,9 +566,9 @@
         }
         
         [HttpPost]
-        public ActionResult SubmitVacancy(long vacancyReferenceNumber, bool resubmitoptin)
+        public ActionResult SubmitVacancy(long vacancyReferenceNumber, bool resubmitoption)
         {
-            var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoptin);
+            var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoption);
             var vacancyViewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -651,95 +675,108 @@
         [HttpGet]
         public ActionResult Locations(string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            var viewModel = new LocationSearchViewModel
+            var response = _vacancyPostingMediator.GetLocationAddressesViewModel(providerSiteErn, ern, User.GetUkprn(), vacancyGuid);
+
+            switch (response.Code)
             {
-                ProviderSiteErn = providerSiteErn,
-                Ern = ern,
-                VacancyGuid = vacancyGuid
+                case VacancyPostingMediatorCodes.GetLocationAddressesViewModel.Ok:
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        private List<VacancyLocationAddressViewModel> GetSearchResults()
+        {
+            // Get addresses using the mediator
+            var address1 = new VacancyLocationAddressViewModel
+            {
+                Address =
+                {
+                    Postcode = "HA0 1TW",
+                    AddressLine1 = "Abbeydale Road",
+                    AddressLine4 = "Wembley",
+                },
+                NumberOfPositions = 5
             };
 
-            return View(viewModel);
+            var address2 = new VacancyLocationAddressViewModel
+            {
+                Address =
+                {
+                    Postcode = "NW10 0UW",
+                    AddressLine1 = "161 Pitfield Way",
+                    AddressLine4 = "London"
+                },
+                NumberOfPositions = 7
+            };
+
+            return new List<VacancyLocationAddressViewModel> {address1, address2};
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "AddLocations")]
         [HttpPost]
         public ActionResult Locations(LocationSearchViewModel viewModel)
         {
-            var address1 = new VacancyLocationAddressViewModel
-            {
-                Index = 0,
-                Address =
-                {
-                    Postcode = "HA0 1TW",
-                    AddressLine1 = "Abbeydale Road",
-                    AddressLine4 = "Wembley"
-                }
-            };
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
 
-            var address2 = new VacancyLocationAddressViewModel
-            {
-                Index = 1,
-                Address =
-                {
-                    Postcode = "NW10 0UW",
-                    AddressLine1 = "161 Pitfield Way",
-                    AddressLine4 = "London"
-                }
-            };
+            ModelState.Clear();
 
-            viewModel.Addresses = new List<VacancyLocationAddressViewModel>
+            switch (response.Code)
             {
-                address1,
-                address2
-            };
+                case VacancyPostingMediatorCodes.CreateVacancy.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
 
-            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>
-            {
-                address1,
-                address2
-            };
+        }
 
-            return View(viewModel);
+        [MultipleFormActionsButton(SubmitButtonActionName = "AddLocations")]
+        [HttpPost]
+        public ActionResult SearchLocations(LocationSearchViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.SearchLocations(viewModel);
+
+            return View("Locations", response.ViewModel);
         }
 
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
-        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterName = "locationIndex")]
+        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterName = "locationIndex", ParameterType = TypeCode.Int32)]
         [HttpPost]
         public ActionResult UseLocation(LocationSearchViewModel viewModel, int locationIndex)
         {
-            var address1 = new VacancyLocationAddressViewModel
-            {
-                Index = 0,
-                Address =
-                {
-                    Postcode = "HA0 1TW",
-                    AddressLine1 = "Abbeydale Road",
-                    AddressLine4 = "Wembley"
-                }
-            };
+            viewModel.SearchResultAddresses = GetSearchResults();
 
-            var address2 = new VacancyLocationAddressViewModel
+            if (viewModel.Addresses == null)
             {
-                Index = 1,
-                Address =
-                {
-                    Postcode = "NW10 0UW",
-                    AddressLine1 = "161 Pitfield Way",
-                    AddressLine4 = "London"
-                }
-            };
+                viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
+            }
 
-            viewModel.Addresses = new List<VacancyLocationAddressViewModel>
-            {
-                address1,
-                address2
-            };
+            viewModel.Addresses.Add(viewModel.SearchResultAddresses[locationIndex]);
 
-            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>
+            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>();
+            viewModel.PostcodeSearch = string.Empty;
+
+            return View("Locations", viewModel);
+        }
+
+        [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
+        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterName = "locationIndex", ParameterType = TypeCode.Int32)]
+        [HttpPost]
+        public ActionResult RemoveLocation(LocationSearchViewModel viewModel, int locationIndex)
+        {
+            viewModel.SearchResultAddresses = GetSearchResults();
+
+            if (viewModel.Addresses == null)
             {
-                address1,
-                address2
-            };
+                viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
+            }
+
+            viewModel.Addresses.RemoveAt(locationIndex);
 
             return View("Locations", viewModel);
         }

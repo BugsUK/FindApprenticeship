@@ -10,8 +10,6 @@
         public string Description { get; set; }
         public string WebsiteUrl { get; set; }
         public Employer Employer { get; set; }
-        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
-        public int? NumberOfPosition { get; set; }
     }
 
     //TODO: Discuss where these should go

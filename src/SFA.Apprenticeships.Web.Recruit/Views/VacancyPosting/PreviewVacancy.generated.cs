@@ -122,14 +122,14 @@ WriteLiteral("\r\n\r\n");
 
         if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
         {
-            Model.ResubmitOptin = false;
+            Model.ResubmitOption = false;
             
             
             #line default
             #line hidden
             
             #line 25 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-       Write(Html.FormCheckBoxFor(model => model.ResubmitOptin, labelHtmlAttributes: new { @class = "block-label para-btm-margin" }));
+       Write(Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" }));
 
             
             #line default
@@ -140,14 +140,14 @@ WriteLiteral("\r\n\r\n");
         }
         else
         {
-            Model.ResubmitOptin = true;
+            Model.ResubmitOption = true;
             
             
             #line default
             #line hidden
             
             #line 30 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-       Write(Html.HiddenFor(model => model.ResubmitOptin));
+       Write(Html.HiddenFor(model => model.ResubmitOption));
 
             
             #line default
