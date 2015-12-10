@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Vacancy].[Vacancy]
 (
-	[VacancyId] INT NOT NULL PRIMARY KEY, 
+	[VacancyId] INT NOT NULL PRIMARY KEY IDENTITY, 
     [VacancyReferenceNumber] INT NOT NULL, 
     [VacancyTypeCode] CHAR(1) NOT NULL, 
     [VacancyStatusCode] CHAR(3) NOT NULL, 

@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Vacancy].[VacancyLocation]
 (
-	[VacancyLocationId] INT NOT NULL, 
+	[VacancyLocationId] INT NOT NULL IDENTITY, 
 	[VacancyId] INT NOT NULL, 
     [AddressId] INT NOT NULL, 
     [NumberOfPositions] INT NOT NULL, 
