@@ -366,19 +366,39 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 
 WriteLiteral(">Save description and continue</button>\r\n");
 
-WriteLiteral("            ");
-
             
             #line 53 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-       Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid}, null));
+            
+            
+            #line default
+            #line hidden
+            
+            #line 53 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+             if (!Model.IsAClonedVacancy)
+            {
+                
+            
+            #line default
+            #line hidden
+            
+            #line 55 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+           Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid }, null));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n");
-
             
             #line 55 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+                                                                                                                                                                                                    
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        </div>\r\n");
+
+            
+            #line 58 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
    }
 
             

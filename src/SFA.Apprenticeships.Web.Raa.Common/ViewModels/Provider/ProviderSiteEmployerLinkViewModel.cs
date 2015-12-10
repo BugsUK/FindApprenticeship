@@ -28,5 +28,7 @@
         public int? NumberOfPositions { get; set; }
 
         public bool ShowNumberOfPositions { get; set; }
+
+        public bool IsAClonedVacancy { get; set; }
     }
 }

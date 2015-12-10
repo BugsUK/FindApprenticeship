@@ -138,7 +138,7 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
-        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern, Guid vacancyGuid)
+        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern, Guid vacancyGuid, bool? isClone)
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteErn, ern);
             viewModel.VacancyGuid = vacancyGuid;
@@ -151,7 +151,9 @@
                     existingVacancy.IsEmployerLocationMainApprenticeshipLocation;
                 viewModel.NumberOfPositions = existingVacancy.NumberOfPositions;
             }
-            
+
+            if (isClone != null) viewModel.IsAClonedVacancy = isClone.Value;
+
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 

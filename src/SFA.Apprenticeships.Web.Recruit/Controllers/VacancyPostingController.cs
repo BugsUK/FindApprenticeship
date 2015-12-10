@@ -99,9 +99,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployer(string providerSiteErn, string ern, Guid vacancyGuid)
+        public ActionResult ConfirmEmployer(string providerSiteErn, string ern, Guid vacancyGuid, bool? isClone)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern, vacancyGuid);
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern, vacancyGuid, isClone);
 
             switch (response.Code)
             {
@@ -636,7 +636,7 @@
         [HttpGet]
         public ActionResult ConfirmNewEmployer(string providerSiteErn, string ern, Guid vacancyGuid)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern, vacancyGuid);
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern, vacancyGuid, false);
             return View(response.ViewModel);
         }
 
@@ -664,7 +664,7 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.CloneVacancy.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
+                    return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Employer.Ern, vacancyGuid = response.ViewModel.VacancyGuid, isClone = true });
                 case VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:

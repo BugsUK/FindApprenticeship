@@ -70,7 +70,7 @@
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            var result = vacancyPostingController.ConfirmEmployer(providerSiteErn, ern, vacancyGuid);
+            var result = vacancyPostingController.ConfirmEmployer(providerSiteErn, ern, vacancyGuid, false);
             result.Should().BeOfType<ViewResult>();
             var view = result as ViewResult;
             view.Model.Should().BeOfType<ProviderSiteEmployerLinkViewModel>();
