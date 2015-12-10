@@ -566,9 +566,9 @@
         }
         
         [HttpPost]
-        public ActionResult SubmitVacancy(long vacancyReferenceNumber, bool resubmitoptin)
+        public ActionResult SubmitVacancy(long vacancyReferenceNumber, bool resubmitoption)
         {
-            var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoptin);
+            var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoption);
             var vacancyViewModel = response.ViewModel;
 
             ModelState.Clear();
