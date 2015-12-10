@@ -1,11 +1,31 @@
-﻿MERGE Vacancy.VacancyType AS dest
-USING (SELECT 'A', 'Apprenticeship') AS src (VacancyTypeCode, FullName)
-ON (dest.VacancyTypeCode = src.VacancyTypeCode)
+﻿MERGE WebProxy.WebProxyConsumer AS dest
+USING (
+	SELECT '14950389-76FB-4429-956E-188A35220019', '', '', '') AS src (
+		ExternalSystemId,
+		ShortDescription,
+		FullDescription,
+		RouteToCompatabilityWebServiceRegex
+	)
+ON (dest.ExternalSystemId = src.ExternalSystemId)
 WHEN MATCHED THEN
-	UPDATE SET FullName = src.FullName
+	UPDATE SET
+		ExternalSystemId = src.ExternalSystemId,
+		ShortDescription = src.ShortDescription,
+		FullDescription = src.FullDescription,
+		RouteToCompatabilityWebServiceRegex = src.RouteToCompatabilityWebServiceRegex
 WHEN NOT MATCHED THEN
-	INSERT (VacancyTypeCode, FullName)
-	VALUES (src.VacancyTypeCode, src.FullName)
+	INSERT (
+		ExternalSystemId,
+		ShortDescription,
+		FullDescription,
+		RouteToCompatabilityWebServiceRegex
+	)
+	VALUES (
+		src.ExternalSystemId,
+		src.ShortDescription,
+		src.FullDescription,
+		src.RouteToCompatabilityWebServiceRegex
+	)
 ;
 
-SELECT * FROM Vacancy.VacancyType
+SELECT * FROM WebProxy.WebProxyConsumer
