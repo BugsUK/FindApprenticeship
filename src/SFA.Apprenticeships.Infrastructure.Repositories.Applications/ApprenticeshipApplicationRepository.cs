@@ -136,7 +136,22 @@
 
             var mongoEntities = Collection.Find(Query.EQ("Vacancy._id", vacancyId)).ToArray();
 
-            _logger.Debug("Found {0} ApprenticeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Count(), vacancyId);
+            _logger.Debug("Found {0} ApprenticeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Length, vacancyId);
+
+            var applicationSummaries =
+                _mapper.Map<IEnumerable<MongoApprenticeshipApplicationDetail>, IEnumerable<ApprenticeshipApplicationSummary>>(
+                    mongoEntities);
+
+            return applicationSummaries;
+        }
+
+        public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
+        {
+            _logger.Debug("Calling repository to get submitted ApprenticeshipApplicationSummaries with VacancyId:{0}", vacancyId);
+
+            var mongoEntities = Collection.AsQueryable().Where(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId).ToArray();
+
+            _logger.Debug("Found {0} ApprenticeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Length, vacancyId);
 
             var applicationSummaries =
                 _mapper.Map<IEnumerable<MongoApprenticeshipApplicationDetail>, IEnumerable<ApprenticeshipApplicationSummary>>(
@@ -177,7 +192,7 @@
         {
             _logger.Debug("Calling repository to get apprenticeship applications count for vacancy with reference: {0}", vacancyReference);
 
-            var count = Collection.AsQueryable().Count(a => a.Vacancy.VacancyReference == vacancyReference);
+            var count = Collection.AsQueryable().Count(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.VacancyReference == vacancyReference);
 
             _logger.Debug("Called repository to get apprenticeship applications count for vacancy with reference: {0}. Count: {1}", vacancyReference, count);
 
@@ -188,7 +203,7 @@
         {
             _logger.Debug("Calling repository to get apprenticeship applications count for vacancy with id: {0}", vacancyId);
 
-            var count = Collection.AsQueryable().Count(a => a.Vacancy.Id == vacancyId);
+            var count = Collection.AsQueryable().Count(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
 
             _logger.Debug("Called repository to get apprenticeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
 

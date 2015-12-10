@@ -121,6 +121,7 @@
     <Compile Include="ReferenceData\Standard.cs" />
     <Compile Include="ReferenceNumber.cs" />
     <Compile Include="Users\AgencyUser.cs" />
+    <Compile Include="Users\Name.cs" />
     <Compile Include="Users\ProviderUserStatuses.cs" />
     <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\Role.cs" />

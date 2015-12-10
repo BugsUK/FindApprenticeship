@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Application
 {
-    using System;
+    using System.Collections.Generic;
+    using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Interfaces.Applications;
 
@@ -11,6 +12,11 @@
         public ApplicationService(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+        }
+
+        public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
+        {
+            return _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyId);
         }
 
         public int GetApplicationCount(string vacancyReference)

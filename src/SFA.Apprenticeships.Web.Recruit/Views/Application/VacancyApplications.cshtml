@@ -41,4 +41,67 @@
             </div>
         </div>
     </section>
+
+    <section class="no-btm-margin" id="applicationsSection">
+        <div class="hgroup-large">
+            <h2 class="heading-large">Applications</h2>
+        </div>
+        <table class="vert-top" id="applicationTable">
+            <colgroup>
+                <col class="t40">
+                <col class="t20">
+                <col class="t20">
+                <col class="t20">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th>
+                        <a href="" class="font-black">Applicant name</a>
+                    </th>
+                    <th>
+                        <a href="" class="font-black">Location</a>
+                    </th>
+                    <th>
+                        <a href="" class="font-black">Submitted</a>
+                    </th>
+                    <th>
+                        <a href="" class="font-black">Status</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var applicationSummary in Model.ApplicationSummaries.Page)
+            {
+                <tr class="applicant">
+                    <td>
+                        <h4 class="applicant-name">
+                            <input class="applicantCheckbox" type="checkbox">
+                            <a href="candidate-application.html" title="View @applicationSummary.ApplicantName application">@applicationSummary.ApplicantName</a>
+                        </h4>
+                    </td>
+                    <td>
+                        <span class="applicant-location">@applicationSummary.ApplicantLocation</span>
+                        <span class="applicant-distance">@applicationSummary.Distance.ToDistanceInMilesDisplayText()</span>
+                    </td>
+                    <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
+                    <td>
+                        @Html.Partial("_applicationStatus", applicationSummary.Status)
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        <!--   <div class="page-navigation font-xsmall small-btm-margin">
+          <a href="#" class="page-navigation__btn previous disabled">
+            <i class="arrow-button fa fa-angle-left"></i>
+            <span class="description">Previous</span>
+            <span class="counter">1 of 3</span>
+          </a>
+          <a href="#" class="page-navigation__btn next">
+            <i class="arrow-button fa fa-angle-right"></i>
+            <span class="description">Next</span>
+            <span class="counter">2 of 3</span>
+          </a>
+        </div> -->
+    </section>
 </div>

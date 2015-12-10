@@ -617,6 +617,10 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
+      <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>

@@ -470,10 +470,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>AboutYouViewModel.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\DisplayTemplates\Date.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Date.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\ApprenticeshipApplication\Preview.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Preview.generated.cs</LastGenOutput>
@@ -1375,11 +1371,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ResetPassword.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\DisplayTemplates\Date.generated.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Date.cshtml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\DateTimeSaved.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1619,6 +1610,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
+      <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Raa\SFA.Apprenticeships.Infrastructure.Raa.csproj">
       <Project>{1F4776F3-884B-4B00-BA97-22BFA06C034E}</Project>
