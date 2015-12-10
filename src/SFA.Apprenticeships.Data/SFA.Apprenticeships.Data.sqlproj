@@ -2,7 +2,7 @@
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <Name>SFA.Apprenticeships.Data</Name>
     <SchemaVersion>2.0</SchemaVersion>
@@ -26,8 +26,32 @@
     <IncludeSchemaNameInFileName>True</IncludeSchemaNameInFileName>
     <DefaultSchema>Vacancy</DefaultSchema>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
+    <OutputPath>bin\Local\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dev|AnyCPU' ">
+    <OutputPath>bin\Dev\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Demo|AnyCPU' ">
+    <OutputPath>bin\Demo\</OutputPath>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
     <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     <DebugType>pdbonly</DebugType>
@@ -37,14 +61,35 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\</OutputPath>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Sit|AnyCPU' ">
+    <OutputPath>bin\Sit\</OutputPath>
     <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <DefineDebug>true</DefineDebug>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Pre|AnyCPU' ">
+    <OutputPath>bin\Pre\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Prod|AnyCPU' ">
+    <OutputPath>bin\Prod\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -62,41 +107,73 @@
     <Folder Include="Schemas" />
     <Folder Include="Schemas\Address" />
     <Folder Include="Schemas\Vacancy" />
-    <Folder Include="Schemas\Organisation" />
     <Folder Include="Schemas\Address\Tables" />
-    <Folder Include="Schemas\Organisation\Tables" />
     <Folder Include="Schemas\Vacancy\Tables" />
     <Folder Include="Schemas\Vacancy\Sequences" />
     <Folder Include="Schemas\Address\Schema" />
-    <Folder Include="Schemas\Organisation\Schema" />
     <Folder Include="Schemas\Vacancy\Schema" />
     <Folder Include="Schemas\Reference" />
     <Folder Include="Schemas\Reference\Schema" />
     <Folder Include="Schemas\Reference\Tables" />
     <Folder Include="Publish" />
+    <Folder Include="Schemas\Reference\Scripts" />
+    <Folder Include="Schemas\Address\Scripts" />
+    <Folder Include="Schemas\Vacancy\Scripts" />
+    <Folder Include="Schemas\WebProxy" />
+    <Folder Include="Schemas\WebProxy\Schema" />
+    <Folder Include="Schemas\WebProxy\Scripts" />
+    <Folder Include="Schemas\WebProxy\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />
-    <Build Include="Schemas\Address\Tables\Address.PostalAddressSourceType.sql" />
-    <Build Include="Schemas\Organisation\Tables\Organisation.OrganisationSite.sql" />
+    <Build Include="Schemas\Address\Tables\Address.ValidationSource.sql" />
     <Build Include="Schemas\Vacancy\Tables\Vacancy.Vacancy.sql" />
-    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyOrganisationRole.sql" />
-    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyOrganisationRoleType.sql" />
     <Build Include="Schemas\Vacancy\Sequences\Vacancy.VacancyReferenceNumberSequence.sql" />
     <Build Include="Schemas\Address\Schema\Address.sql" />
-    <Build Include="Schemas\Organisation\Schema\Organisation.sql" />
     <Build Include="Schemas\Vacancy\Schema\Vacancy.sql" />
     <Build Include="Schemas\Reference\Schema\Reference.sql" />
     <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyStatus.sql" />
     <Build Include="Schemas\Reference\Tables\Reference.County.sql" />
     <Build Include="Schemas\Vacancy\Tables\Vacancy.WageType.sql" />
     <Build Include="Schemas\Vacancy\Tables\Vacancy.DurationType.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyType.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.FrameworkStatus.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.OccupationStatus.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.Framework.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.Occupation.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.Level.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.Standard.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.Sector.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.TrainingType.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyLocation.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyParty.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyPartyType.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyPartyRelationship.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyPartyRelationshipType.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.Sector.Upsert.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.Standard.Upsert.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.FrameworkStatus.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.TrainingType.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyPartyRelationshipType.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyPartyType.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyStatus.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyType.Upsert.sql" />
+    <Build Include="Schemas\WebProxy\Schema\WebProxy.sql" />
+    <Build Include="Schemas\WebProxy\Tables\WebProxy.WebProxyConsumer.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyLocationType.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyLocationType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Publish\azuresql.pre.publish.xml" />
     <None Include="Publish\sqlexpress.local.publish.xml" />
+    <None Include="Schemas\Reference\Scripts\Reference.Level.Upsert.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.OccupationStatus.Upsert.sql" />
+    <None Include="Schemas\Address\Scripts\Address.ValidationSource.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.DurationType.Upsert.sql" />
+    <PostDeploy Include="PostDeployment.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.WageType.Upsert.sql" />
+    <None Include="Schemas\WebProxy\Scripts\WebProxy.WebProxyConsumer.Upsert.sql" />
   </ItemGroup>
 </Project>

@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
@@ -33,7 +35,8 @@
                     EntityId = Guid.NewGuid(),
                     ProviderSiteErn = string.Empty,
                     WebsiteUrl = "http://www.google.com"
-                }
+                },
+                IsEmployerLocationMainApprenticeshipLocation = true
             };
 
             MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);
@@ -73,7 +76,8 @@
                     EntityId = Guid.NewGuid(),
                     ProviderSiteErn = string.Empty,
                     WebsiteUrl = "http://www.google.com"
-                }
+                },
+                IsEmployerLocationMainApprenticeshipLocation = true
             };
 
             MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);

@@ -43,5 +43,16 @@ html:not(.touch) .editable-item {
     @extend copy-19;
     font-size: 19px !important;    
     color: $turquoise;
-    cursor: help;
+}
+
+h2{
+    a{
+        i.raa-icon-comment{
+            vertical-align: middle;
+        }
+    }
+}
+
+.preserve-formatting{
+    white-space: pre-line;
 }

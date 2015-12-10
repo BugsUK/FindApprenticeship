@@ -123,7 +123,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid, null);
 
             // Assert.
             MockProviderService.Verify(mock =>
@@ -140,7 +140,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid, null);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -156,7 +156,7 @@
             var blackListCodes = _webConfiguration.BlacklistedCategoryCodes.Split(',').Select(each => each.Trim()).ToArray();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid, null);
 
             // Assert.
             viewModel.Should().NotBeNull();
@@ -173,7 +173,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid);
+            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid, null);
 
             // Assert.
             viewModel.Should().NotBeNull();

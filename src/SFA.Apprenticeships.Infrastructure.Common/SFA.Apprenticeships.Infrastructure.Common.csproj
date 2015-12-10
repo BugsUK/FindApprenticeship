@@ -164,6 +164,7 @@
     <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\CachedConfigurationService.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
+    <Compile Include="Configuration\ServicesConfiguration.cs" />
     <Compile Include="Configuration\IConfigurationManager.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />

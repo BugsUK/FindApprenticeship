@@ -56,22 +56,16 @@
             }
             else if (request.Method == HttpMethod.Post)
             {
-                // Copy request content headers (.NET treats these separately from non-content headers)
-                var requestHttpContent = new StringContent(requestContent);
-                requestHttpContent.Headers.Clear();
-                foreach (var header in request.Content.Headers)
-                {
-                    requestHttpContent.Headers.Add(header.Key, header.Value);
-                }
-
                 foreach (var route in routing.Routes)
                 {
                     if (route.IsPrimary)
                     {
+                        var requestHttpContent = GetRequestHttpContent(request, requestContent);
                         responses.Insert(0, PostAsyncRequest(request, requestHttpContent, route));
                     }
                     else if (_configuration.AreNonPrimaryRequestsEnabled)
                     {
+                        var requestHttpContent = GetRequestHttpContent(request, requestContent);
                         responses.Add(PostAsyncRequest(request, requestHttpContent, route));
                     }
                 }
@@ -83,6 +77,18 @@
 
             //Primary task is always inserted as first object
             return await responses.First();
+        }
+
+        private static StringContent GetRequestHttpContent(HttpRequestMessage request, string requestContent)
+        {
+            var requestHttpContent = new StringContent(requestContent);
+            requestHttpContent.Headers.Clear();
+            // Copy request content headers (.NET treats these separately from non-content headers)
+            foreach (var header in request.Content.Headers)
+            {
+                requestHttpContent.Headers.Add(header.Key, header.Value);
+            }
+            return requestHttpContent;
         }
 
         private Task<HttpResponseMessage> GetAsyncRequest(HttpRequestMessage request, Route route)

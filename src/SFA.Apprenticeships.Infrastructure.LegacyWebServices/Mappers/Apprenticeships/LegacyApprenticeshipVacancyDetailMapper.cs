@@ -2,6 +2,7 @@
 {
     using Common.Mappers;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Presentation;
 
     public class LegacyApprenticeshipVacancyDetailMapper : MapperEngine
     {
@@ -13,7 +14,7 @@
                     opt => opt.MapFrom(src => src.VacancyId))
 
                 .ForMember(dest => dest.VacancyReference,
-                    opt => opt.MapFrom(src => "VAC" + src.VacancyReference.ToString("D9")))
+                    opt => opt.MapFrom(src => src.VacancyReference.GetVacancyReference()))
 
                 .ForMember(dest => dest.VacancyStatus,
                    opt => opt.ResolveUsing<VacancyStatusResolver>().FromMember(src => src.Status))

@@ -13,12 +13,14 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
     using Infrastructure.LocationLookup.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
+    using Infrastructure.Raa.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Audit.IoC;
     using Infrastructure.Repositories.Authentication.IoC;
     using Infrastructure.Repositories.Candidates.IoC;
     using Infrastructure.Repositories.Communication.IoC;
     using Infrastructure.Repositories.Users.IoC;
+    using Infrastructure.Repositories.Vacancies.IoC;
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
     using StructureMap;
@@ -34,6 +36,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
 
             return new Container(x =>
             {
@@ -46,7 +49,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
@@ -57,6 +61,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

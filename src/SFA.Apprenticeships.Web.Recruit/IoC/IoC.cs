@@ -3,6 +3,8 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using System;
     using System.Linq.Expressions;
     using System.Web;
+    using Application.Application;
+    using Application.Interfaces.Applications;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
@@ -21,6 +23,8 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
     using Infrastructure.Logging.IoC;
+    using Infrastructure.Postcode.IoC;
+    using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Employers.IoC;
     using Infrastructure.Repositories.Providers.IoC;
     using Infrastructure.Repositories.UserProfiles.IoC;
@@ -54,15 +58,18 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
+                x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<TacticalDataServicesRegistry>();
+                x.AddRegistry<PostcodeRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
+                x.For<IApplicationService>().Use<ApplicationService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

@@ -2,6 +2,7 @@
 {
     using System;
 
+    //TODO: Move into presentation project
     public static class DateDisplayExtensions
     {
         public static string ToFriendlyClosingWeek(this DateTime closingDate)
@@ -25,6 +26,11 @@
             }
         }
 
+        public static string ToFriendlyDaysAgo(this DateTime? date)
+        {
+            return date.HasValue ? date.Value.ToFriendlyDaysAgo() : string.Empty;
+        }
+
         public static string ToFriendlyDaysAgo(this DateTime date)
         {
             var utcDateTime = DateTime.SpecifyKind(date.Date, DateTimeKind.Utc);
@@ -44,6 +50,11 @@
                 default:
                     return daysAgo + " days ago";
             }
+        }
+
+        public static string ToFriendlyClosingToday(this DateTime? date)
+        {
+            return date.HasValue ? date.Value.ToFriendlyClosingToday() : string.Empty;
         }
 
         public static string ToFriendlyClosingToday(this DateTime closingDate)

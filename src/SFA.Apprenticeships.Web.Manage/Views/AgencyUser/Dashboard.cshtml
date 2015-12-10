@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Manage.Constants
+﻿@using SFA.Apprenticeships.Infrastructure.Presentation
+@using SFA.Apprenticeships.Web.Manage.Constants
 @model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
 @{
@@ -67,28 +68,22 @@
                             {
                                 <tr>
                                     <td>
-                                        <div class="vac-title">@vacancy.Title</div>
+                                        <span class="vac-title">@vacancy.Title</span>
                                     </td>
                                     <td>
-                                        <div>@vacancy.VacancyReferenceNumber</div>
+                                        <span>@vacancy.VacancyReferenceNumber.GetVacancyReference()</span>
                                     </td>
                                     <td>
                                         @Html.DisplayFor(model => vacancy.Status)
                                     </td>
                                     <td>
-                                        <div>@vacancy.ProviderName</div>
+                                        <span>@vacancy.ProviderName</span>
                                     </td>
                                     <td>
-                                        <div>@if (vacancy.DateSubmitted.HasValue)
-                                             {
-                                                 vacancy.DateSubmitted.Value.ToFriendlyClosingToday();
-                                             }</div>
+                                        <span>@vacancy.DateSubmitted.ToFriendlyClosingToday()</span>
                                     </td>
                                     <td>
-                                        <div>@if (vacancy.ClosingDate.HasValue)
-                                             {
-                                                 vacancy.ClosingDate.Value.ToFriendlyClosingToday();
-                                             }</div>
+                                        <span>@vacancy.ClosingDate.ToFriendlyClosingToday()</span>
                                     </td>
                                     <td>
                                         @if (vacancy.CanBeReservedForQaByCurrentUser)

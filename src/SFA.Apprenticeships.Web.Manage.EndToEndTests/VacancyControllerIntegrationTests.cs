@@ -450,7 +450,7 @@
         }
 
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Need to mock Url object")]
         public void ReviewAVacancyInQAChangesStatusInDatabaseToReservedForQA()
         {
             const int vacancyReferenceNumber = 1;

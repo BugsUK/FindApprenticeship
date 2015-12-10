@@ -19,6 +19,10 @@
         IEnumerable<Guid> GetDraftApplicationsForExpiredVacancies(DateTime vacancyExpiryDate);
 
         IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
+
+        int GetApplicationCount(string vacancyReference);
+
+        int GetApplicationCount(int vacancyId);
     }
 
     public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {

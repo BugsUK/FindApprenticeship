@@ -12,12 +12,16 @@
     public class AzureBlobStorageLogging : IProxyLogging
     {
         private readonly IConfiguration _configuration;
-        private readonly CloudStorageAccount _storageAccount;
+        private readonly CloudBlobContainer _container;
 
         public AzureBlobStorageLogging(IConfiguration configuration)
         {
             _configuration = configuration;
-            _storageAccount = CloudStorageAccount.Parse(_configuration.AzureStorageConnectionString);
+
+            var storageAccount = CloudStorageAccount.Parse(_configuration.AzureStorageConnectionString);
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            _container = blobClient.GetContainerReference("webproxy");
+            _container.CreateIfNotExists();
         }
 
         public void LogRequest(HttpRequestMessage request, string requestContent, RouteIdentifier routeIdentifier)
@@ -94,18 +98,13 @@
 
         private CloudBlockBlob GetCloudBlockBlob(RouteIdentifier routeIdentifier, string additionalIdentifier)
         {
-            var blobClient = _storageAccount.CreateCloudBlobClient();
-
-            var container = blobClient.GetContainerReference("webproxy");
-            container.CreateIfNotExists();
-
             var dateTime = routeIdentifier.DateTime;
             var datePath = dateTime.ToString("yyyy-MM-dd");
             var timePath = dateTime.ToString("hh-mm-ss");
 
             var blobPath = $"{datePath}\\{additionalIdentifier}{routeIdentifier.Name}\\{timePath}_{routeIdentifier.Id}.log";
 
-            var blockBlob = container.GetBlockBlobReference(blobPath);
+            var blockBlob = _container.GetBlockBlobReference(blobPath);
 
             blockBlob.Properties.ContentType = "application/json";
 

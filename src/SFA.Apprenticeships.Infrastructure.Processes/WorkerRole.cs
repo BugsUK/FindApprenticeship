@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
+    using Configuration;
     using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using IoC;
@@ -20,12 +21,14 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
+    using Raa.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Audit.IoC;
     using Repositories.Authentication.IoC;
     using Repositories.Candidates.IoC;
     using Repositories.Communication.IoC;
     using Repositories.Users.IoC;
+    using Repositories.Vacancies.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -90,6 +93,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
 
             _container = new Container(x =>
             {
@@ -104,8 +108,10 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

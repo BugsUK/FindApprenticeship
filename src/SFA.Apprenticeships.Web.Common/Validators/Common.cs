@@ -46,7 +46,7 @@
             //It's not a valid date yet so again assume true
             if(!BeValidDate(instance)) return true;
 
-            return instance.Date > DateTime.Today.AddDays(daysInFuture);
+            return instance.Date >= DateTime.Today.AddDays(daysInFuture);
         }
     }
 }

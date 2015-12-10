@@ -6147,8 +6147,13 @@ html:not(.touch) .editable-item {
 
 .raa-icon-comment {
   font-size: 19px !important;
-  color: #28a197;
-  cursor: help; }
+  color: #28a197; }
+
+h2 a i.raa-icon-comment {
+  vertical-align: middle; }
+
+.preserve-formatting {
+  white-space: pre-line; }
 
 .applicant-location,
 .applicant-distance {

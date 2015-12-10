@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Candidate;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
@@ -23,7 +24,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = "Legacy" }));
             });
 
             _legacyCandidateProvider = container.GetInstance<ILegacyCandidateProvider>();
