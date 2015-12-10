@@ -394,8 +394,13 @@
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
+    <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -520,6 +525,9 @@
     <Content Include="Views\VacancyPosting\_EditLink.cshtml" />
     <Content Include="Views\Application\VacancyApplications.cshtml" />
     <Content Include="Views\Application\_applicationStatus.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
+    <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorJS.cshtml" />
+    <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorNonJS.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -612,6 +620,10 @@
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
       <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
       <Name>SFA.Apprenticeships.Application.Organisation</Name>
@@ -675,6 +687,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
       <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Employers\SFA.Apprenticeships.Infrastructure.Repositories.Employers.csproj">
       <Project>{D87BF950-D9A8-4590-B868-DBB852E265D2}</Project>

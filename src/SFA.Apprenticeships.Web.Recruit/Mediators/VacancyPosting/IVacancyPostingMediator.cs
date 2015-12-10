@@ -18,7 +18,7 @@
 
         MediatorResponse<ProviderSiteEmployerLinkViewModel> ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel);
 
-        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions);
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber, bool validate);
 
@@ -51,7 +51,20 @@
         MediatorResponse<SubmittedVacancyViewModel> GetSubmittedVacancyViewModel(long vacancyReferenceNumber, bool resubmitted);
 
         MediatorResponse<EmployerSearchViewModel> SelectNewEmployer(EmployerSearchViewModel viewModel);
+
         MediatorResponse<VacancyViewModel> GetPreviewVacancyViewModel(long vacancyReferenceNumber);
+
         MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(long vacancyReferenceNumber);
+
+        MediatorResponse<LocationSearchViewModel> CreateVacancy(LocationSearchViewModel newVacancyViewModel);
+
+        MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid);
+
+        MediatorResponse<ProviderSiteEmployerLinkViewModel> SetDifferentLocation(ProviderSiteEmployerLinkViewModel viewModel);
+
+        MediatorResponse<ProviderSiteEmployerLinkViewModel> SetEmployersLocationAsMainLocation(
+            ProviderSiteEmployerLinkViewModel viewModel);
+
+        MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel);
     }
 }

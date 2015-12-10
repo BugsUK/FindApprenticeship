@@ -6,6 +6,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Provider;
     using System.ComponentModel.DataAnnotations;
+    using VacancyPosting;
 
     public class VacancyViewModel
     {
@@ -32,7 +33,7 @@
         public ProviderVacancyStatuses Status { get; set; }
 
         [Display(Name = VacancyViewModelMessages.ResubmitOptin.LabelText)]
-        public bool ResubmitOptin { get; set; }
+        public bool ResubmitOption { get; set; }
 
         public string BasicDetailsLink { get; set; }
 
@@ -42,5 +43,11 @@
 
         public string QuestionsLink { get; set; }
         public int ApplicationCount { get; set; }
+
+        public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
+
+        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
+
+        public int NumberOfPositions { get; set; }
     }
 }

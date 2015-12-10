@@ -141,7 +141,11 @@
                         .validate(this.options);
                 },
                 validate: function () {  // a validation function that is called by unobtrusive Ajax
-                    $form.validate();
+                    $form.validate(
+                        {
+                            ignore: ".ignore-jquery-validation"
+                        }
+                    );
                     return $form.valid();
                 }
             };

@@ -23,7 +23,11 @@ Post-Deployment Script Template
 -- Vacancy
 :r ".\Schemas\Vacancy\Scripts\Vacancy.DurationType.Upsert.sql"
 :r ".\Schemas\Vacancy\Scripts\Vacancy.TrainingType.Upsert.sql"
+:r ".\Schemas\Vacancy\Scripts\Vacancy.VacancyLocationType.Upsert.sql"
 :r ".\Schemas\Vacancy\Scripts\Vacancy.VacancyPartyRelationshipType.Upsert.sql"
 :r ".\Schemas\Vacancy\Scripts\Vacancy.VacancyPartyType.Upsert.sql"
 :r ".\Schemas\Vacancy\Scripts\Vacancy.VacancyStatus.Upsert.sql"
 :r ".\Schemas\Vacancy\Scripts\Vacancy.VacancyType.Upsert.sql"
+
+-- Web Proxy
+:r ".\Schemas\WebProxy\Scripts\WebProxy.WebProxyConsumer.Upsert.sql"

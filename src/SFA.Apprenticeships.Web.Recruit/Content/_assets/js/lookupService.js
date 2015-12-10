@@ -42,7 +42,7 @@ $(document).ready(function () {
                 dataType: "jsonp",
                 data: {
                     key: key,
-                    searchFor: "Residential",
+                    searchFor: "Everything",
                     country: 'GB',
                     searchTerm: request.term,
                     lastId: searchContext
@@ -153,17 +153,7 @@ $(document).ready(function () {
     }
 
     function populateAddress(address) {
-        $('#Address_AddressLine1').val(address.Line1);
-        $('#Address_AddressLine2').val(address.Line2);
-        $('#Address_AddressLine3').val(address.Line3);
-        $('#Address_AddressLine4').val(address.City);
-        $('#Address_Postcode').val(address.PostalCode);
-        $("#Address_Uprn").val(address.DomesticId);
-
-        $('#ariaAddressEntered').text('Your address has been entered into the fields below.');
-
-        populateLatLng(address);
-        Webtrends.multiTrack({ element: this, argsa: ["DCS.dcsuri", uri + "/findaddress", "WT.dl", "99", "WT.ti", "Settings – Find Address"] });
+        window.locationAddressesViewModel.addLocationAddressByField(address.Line1, address.Line2, address.Line3, address.City, address.PostalCode, null, address.DomesticId);
     }
 
     function populateLatLng(address) {

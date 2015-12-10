@@ -6,12 +6,13 @@
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
+    using ViewModels.VacancyPosting;
 
     public interface IVacancyPostingProvider
     {
         NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
@@ -40,5 +41,11 @@
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
         ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber);
+
+        LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel);
+
+        LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+
+        VacancyViewModel GetVacancy(Guid vacancyReferenceNumber);
     }
 }

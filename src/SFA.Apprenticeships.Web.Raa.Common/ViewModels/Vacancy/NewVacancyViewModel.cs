@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Provider;
+    using VacancyPosting;
     using Validators.Vacancy;
 
     [Validator(typeof(NewVacancyViewModelClientValidator))]
@@ -71,5 +72,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public ProviderVacancyStatuses Status { get; set; }
         
         public List<StandardViewModel> Standards { get; set; }
+
+        public List<VacancyLocationAddressViewModel> Locations { get; set; }
+
+        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
+
+        public int? NumberOfPositions { get; set; }
     }
 }

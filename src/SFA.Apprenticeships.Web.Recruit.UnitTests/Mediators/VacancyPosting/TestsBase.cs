@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using Application.Location;
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.VacancyPosting;
@@ -7,6 +8,7 @@
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.VacancyPosting;
 
     public class TestsBase
     {
@@ -38,7 +40,9 @@
                 new VacancyQuestionsViewModelClientValidator(),
                 new VacancyViewModelValidator(), 
                 new ProviderSiteEmployerLinkViewModelValidator(),
-                new EmployerSearchViewModelServerValidator());
+                new EmployerSearchViewModelServerValidator(),
+                new LocationSearchViewModelValidator(),
+                new Mock<IAddressLookupProvider>().Object);
         }
     }
 }

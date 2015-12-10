@@ -160,11 +160,13 @@
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\LocationSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteEmployerLinkViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\VacancyLocationAddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VerifyEmailViewModelMessages.cs" />
     <Compile Include="Converters\AddressViewModelConverter.cs" />
@@ -196,6 +198,8 @@
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
+    <Compile Include="Validators\VacancyPosting\LocationSearchViewModelValidator.cs" />
+    <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyQuestionsViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyRequirementsProspectsViewModelValidator.cs" />

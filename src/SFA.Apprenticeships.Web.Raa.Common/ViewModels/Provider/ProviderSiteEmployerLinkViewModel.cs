@@ -22,9 +22,11 @@
 
         public Guid VacancyGuid { get; set; }
 
-        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
+
+        public bool ShowNumberOfPositions { get; set; }
     }
 }

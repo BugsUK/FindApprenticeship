@@ -9,6 +9,7 @@
     using Resolvers;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
+    using ViewModels.VacancyPosting;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
 
@@ -20,6 +21,7 @@
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<Employer, EmployerViewModel>();
             Mapper.CreateMap<ProviderSiteEmployerLink, ProviderSiteEmployerLinkViewModel>();
+            Mapper.CreateMap<VacancyLocationAddress, VacancyLocationAddressViewModel>();
 
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
             Mapper.CreateMap<DateTime, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
