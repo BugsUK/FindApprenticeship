@@ -229,6 +229,12 @@
                defaults: new { controller = "VacancyPosting", action = "Locations" }
                );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.VacancyApplication,
+               url: "vacancy/applications",
+               defaults: new { controller = "Application", action = "VacancyApplications" }
+               );
+
             routes.LowercaseUrls = true;
 
         }

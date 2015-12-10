@@ -57,5 +57,8 @@
         public const string AddNewEmployer = "AddNewEmployer";
         public const string ComfirmNewEmployer = "ConfirmNewEmployer";
         public const string AddLocations = "AddLocations";
+
+        // Applications
+        public const string VacancyApplication = "VacancyApplication";
     }
 }

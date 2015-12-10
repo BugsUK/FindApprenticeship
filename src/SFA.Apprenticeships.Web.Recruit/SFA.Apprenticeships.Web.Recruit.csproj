@@ -305,6 +305,10 @@
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
+    <Compile Include="Mappers\RecruitMappers.cs" />
+    <Compile Include="Mediators\Application\ApplicationMediator.cs" />
+    <Compile Include="Mediators\Application\ApplicationMediatorCodes.cs" />
+    <Compile Include="Mediators\Application\IApplicationMediator.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />
@@ -324,6 +328,10 @@
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
+    <Compile Include="Providers\ApplicationProvider.cs" />
+    <Compile Include="Providers\IApplicationProvider.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -510,6 +518,7 @@
     <Content Include="Views\VacancyPosting\_CommentIcon.cshtml" />
     <Content Include="Views\VacancyPosting\_ValidationResultIcons.cshtml" />
     <Content Include="Views\VacancyPosting\_EditLink.cshtml" />
+    <Content Include="Views\Application\VacancyApplications.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -542,7 +551,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Configuration\" />
-    <Folder Include="Views\Applications\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
