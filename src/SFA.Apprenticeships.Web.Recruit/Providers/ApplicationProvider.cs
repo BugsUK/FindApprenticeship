@@ -45,6 +45,10 @@
             var applications = _applicationService.GetSubmittedApplicationSummaries((int) vacancyReferenceNumber);
             var applicationSummaryViewModels = applications.Select(a => _mapper.Map<ApprenticeshipApplicationSummary, ApplicationSummaryViewModel>(a)).ToList();
 
+            //TODO: return as part of data query - probably needs migration
+            viewModel.RejectedApplicationsCount = applicationSummaryViewModels.Count(vm => vm.Status == ApplicationStatuses.Unsuccessful);
+            viewModel.UnresolvedApplicationsCount = applicationSummaryViewModels.Count(vm => vm.Status <= ApplicationStatuses.InProgress);
+
             //TODO: This distance calculation should be done in a new elastic index of applications which will also form the basis of a filter and sorting mechanism
             foreach (var applicationSummaryViewModel in applicationSummaryViewModels)
             {
