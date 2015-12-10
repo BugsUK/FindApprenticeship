@@ -7,7 +7,7 @@
         public EditLinkViewModel(string editUrl, string comment)
         {
             EditUrl = editUrl;
-            CommentViewModel = new CommentViewModel(comment, editUrl);
+            CommentViewModel = new CommentViewModel(comment, editUrl, string.Empty);
         }
 
         public string EditUrl { get; private set; }

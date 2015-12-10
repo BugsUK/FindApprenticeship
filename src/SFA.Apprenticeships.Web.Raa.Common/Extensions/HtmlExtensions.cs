@@ -3,6 +3,7 @@
     using System;
     using System.Linq.Expressions;
     using System.Web.Mvc;
+    using System.Web.Mvc.Html;
     using ViewModels.Vacancy;
     using Web.Common.Validators.Extensions;
 
@@ -30,7 +31,17 @@
 
             viewCommentUrl = $"{viewCommentUrl}#{propertyName.Substring(propertyName.LastIndexOf(".", StringComparison.Ordinal) + 1).ToLower()}";
 
-            var commentViewModel = new CommentViewModel(comment, viewCommentUrl);
+            var commentViewModel = new CommentViewModel(comment, viewCommentUrl, string.Empty);
+
+            return commentViewModel;
+        }
+
+        public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> propertyCommentExpression)
+        {
+            var commentLabelText = html.DisplayNameFor(propertyCommentExpression).ToString();
+            var commentText = html.ValueFor(propertyCommentExpression).ToString();
+
+            var commentViewModel = new CommentViewModel(commentText, string.Empty, commentLabelText);
 
             return commentViewModel;
         }

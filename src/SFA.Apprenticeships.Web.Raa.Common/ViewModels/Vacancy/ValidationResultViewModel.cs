@@ -12,7 +12,7 @@
             Warning = warning;
             ViewValidationResultUrl = viewValidationResultUrl;
             AnchorName = anchorName;
-            CommentViewModel = new CommentViewModel(comment, viewValidationResultUrl);
+            CommentViewModel = new CommentViewModel(comment, viewValidationResultUrl, string.Empty);
         }
 
         public string AnchorName { get; private set; }

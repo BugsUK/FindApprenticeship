@@ -341,6 +341,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VacancyPosting\_comment.generated.cs">
+      <DependentUpon>_comment.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\VacancyPosting\ConfirmEmployer.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -517,6 +522,10 @@
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
     <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorJS.cshtml" />
     <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorNonJS.cshtml" />
+    <Content Include="Views\VacancyPosting\_comment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_comment.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -13,9 +13,9 @@
         public string FirstQuestion { get; set; }
         [Display(Name = VacancyViewModelMessages.SecondQuestion.LabelText)]
         public string SecondQuestion { get; set; }
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.FirstQuestionComment.LabelText)]
         public string FirstQuestionComment { get; set; }
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.SecondQuestionComment.LabelText)]
         public string SecondQuestionComment { get; set; }
     }
 }

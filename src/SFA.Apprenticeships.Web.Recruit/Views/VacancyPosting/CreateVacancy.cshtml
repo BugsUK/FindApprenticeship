@@ -2,7 +2,7 @@
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @{
     ViewBag.Title = "Recruit an Apprentice - Select framework and level";
 
@@ -37,13 +37,13 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
-    @Html.DisplayFor(m => m.TitleComment, "Comment")
+    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.TitleComment))
     @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium" })
-    @Html.DisplayFor(m => m.ShortDescriptionComment, "Comment")
+    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.ShortDescriptionComment))
 
     <div class="form-group">
         <div class="blocklabel-single-container">
-            <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
+            <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
                 <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
                 <label class="form-label">Apprenticeship type</label>
                 @* ReSharper disable once Html.IdNotResolved *@
@@ -60,15 +60,15 @@
             </div>
 
             <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content">
-                <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
+                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
                     <a name="@Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
                     @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;" })
-                    @Html.DisplayFor(m => m.FrameworkCodeNameComment, "Comment")
+                    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.FrameworkCodeNameComment))
                     @Html.ValidationMessageFor(m => m.FrameworkCodeName)
                 </div>
 
-                <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel)))">
+                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel)))">
                     <a name="@Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()"></a>
                     <label class="form-label">Apprenticeship level</label>
                     @* ReSharper disable once Html.IdNotResolved *@
@@ -88,12 +88,12 @@
                         @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}) Degree
                     </label>
                     @Html.ValidationMessageFor(m => m.ApprenticeshipLevel)
-                    @Html.DisplayFor(m => m.ApprenticeshipLevelComment, "Comment")
+                    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.ApprenticeshipLevelComment))
                 </div>
             </div>
 
             <div id="training-type-standards-panel" class="toggle-content blocklabel-content">
-                <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
+                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
                     <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
                     <select name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%; margin-bottom: 15px;">
@@ -112,7 +112,7 @@
                     </select>
 
                     @Html.ValidationMessageFor(m => m.StandardId)
-                    @Html.DisplayFor(m => m.StandardIdComment, "Comment")
+                    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.StandardIdComment))
                 </div>
 
                 @{
@@ -149,12 +149,12 @@
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@
                     @Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
-                    @Html.DisplayFor(m => m.OfflineApplicationUrlComment, "Comment")
+                    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.OfflineApplicationUrlComment))
                 </div>
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@
                     @Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium", id = "apprenticheship-offline-application-instructions" })
-                    @Html.DisplayFor(m => m.OfflineApplicationInstructionsComment, "Comment")
+                    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.OfflineApplicationInstructionsComment))
                     <br />
                 </div>
             </div>
