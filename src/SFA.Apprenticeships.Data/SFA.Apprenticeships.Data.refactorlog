@@ -14,4 +14,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="[OriginalContractOwnerVacancyPartyId]" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9fb46b4c-5956-4fc7-a932-9904ac3d299a" ChangeDateTime="12/10/2015 10:14:24">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyLocationType].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyLocationType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VacancyLocationTypeCode" />
+  </Operation>
 </Operations>

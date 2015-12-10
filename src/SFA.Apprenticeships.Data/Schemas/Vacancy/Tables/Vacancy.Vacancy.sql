@@ -4,6 +4,7 @@
     [VacancyReferenceNumber] INT NOT NULL, 
     [VacancyTypeCode] CHAR(1) NOT NULL, 
     [VacancyStatusCode] CHAR(3) NOT NULL, 
+    [VacancyLocationTypeCode] CHAR(1) NOT NULL, 
 	[ParentVacancyId] INT NULL, 
 	[EmployerVacancyPartyId]  INT NOT NULL, 
 	[OwnerVacancyPartyId]  INT NOT NULL, 
@@ -46,7 +47,6 @@
     [DirectApplicationUrlComment] NVARCHAR(MAX) NULL, 
     [DirectApplicationInstructions] NVARCHAR(MAX) NULL, 
     [DirectApplicationInstructionsComment] NVARCHAR(MAX) NULL, 
-    [VacancyLocationTypeCode] CHAR NULL, 
     [DesiredSkills] NVARCHAR(MAX) NULL, 
     [DesiredSkillsComment] NVARCHAR(MAX) NULL, 
     [FutureProspects] NVARCHAR(MAX) NULL, 
@@ -63,8 +63,9 @@
     [SecondQuestionComment] NVARCHAR(MAX) NULL, 
     [QAUserName] NVARCHAR(MAX) NULL, 
     [DateQAApproved] DATETIME2 NULL, 
-    CONSTRAINT [FK_Vacancy_VacancyType] FOREIGN KEY ([VacancyTypeCode]) REFERENCES [Vacancy].[VacancyType]([VacancyTypeCode]), 
-    CONSTRAINT [FK_Vacancy_VacancyStatus] FOREIGN KEY ([VacancyStatusCode]) REFERENCES [Vacancy].[VacancyStatus]([VacancyStatusCode]), 
+    CONSTRAINT [FK_Vacancy_VacancyTypeCode] FOREIGN KEY ([VacancyTypeCode]) REFERENCES [Vacancy].[VacancyType]([VacancyTypeCode]), 
+    CONSTRAINT [FK_Vacancy_VacancyStatusCode] FOREIGN KEY ([VacancyStatusCode]) REFERENCES [Vacancy].[VacancyStatus]([VacancyStatusCode]), 
+    CONSTRAINT [FK_Vacancy_VacancyLocationTypeCode] FOREIGN KEY ([VacancyLocationTypeCode]) REFERENCES [Vacancy].[VacancyLocationType]([VacancyLocationTypeCode]), 
 	CONSTRAINT [FK_Vacancy_ParentVacancyId]  FOREIGN KEY ([ParentVacancyId]) REFERENCES [Vacancy].[Vacancy]([VacancyId]), 
 	CONSTRAINT [FK_Vacancy_EmployerPartyId]  FOREIGN KEY ([EmployerVacancyPartyId]) REFERENCES [Vacancy].[VacancyParty]([VacancyPartyId]), 
 	CONSTRAINT [FK_Vacancy_OwnerVacancyPartyId]  FOREIGN KEY ([OwnerVacancyPartyId]) REFERENCES [Vacancy].[VacancyParty]([VacancyPartyId]), 
@@ -76,10 +77,10 @@
 	CONSTRAINT [FK_Vacancy_FrameworkId] FOREIGN KEY ([FrameworkId]) REFERENCES [Reference].[Framework]([FrameworkId]), 
     CONSTRAINT [FK_Vacancy_StandardId] FOREIGN KEY ([StandardId]) REFERENCES [Reference].[Standard]([StandardId]), 
     CONSTRAINT [FK_Vacancy_LevelCode] FOREIGN KEY ([LevelCode]) REFERENCES [Reference].[Level]([LevelCode]), 
-    CONSTRAINT [FK_Vacancy_WageType] FOREIGN KEY ([WageTypeCode]) REFERENCES [Vacancy].[WageType]([WageTypeCode]), 
-    CONSTRAINT [FK_Vacancy_DurationType] FOREIGN KEY ([DurationTypeCode]) REFERENCES [Vacancy].[DurationType]([DurationTypeCode]), 
-	CONSTRAINT CHK_TrainingTypeCode CHECK (TrainingTypeCode IN ('F', 'S')),
-	CONSTRAINT CHK_FrameworkId_StandardId CHECK ((TrainingTypeCode = 'F' AND FrameworkId IS NOT NULL AND StandardId IS NULL) OR (TrainingTypeCode = 'S' AND FrameworkId IS NULL AND StandardId IS NOT NULL))
+    CONSTRAINT [FK_Vacancy_WageTypeCode] FOREIGN KEY ([WageTypeCode]) REFERENCES [Vacancy].[WageType]([WageTypeCode]), 
+    CONSTRAINT [FK_Vacancy_DurationTypeCode] FOREIGN KEY ([DurationTypeCode]) REFERENCES [Vacancy].[DurationType]([DurationTypeCode]), 
+	CONSTRAINT CK_TrainingTypeCode CHECK (TrainingTypeCode IN ('F', 'S')),
+	CONSTRAINT CK_FrameworkId_StandardId CHECK ((TrainingTypeCode = 'F' AND FrameworkId IS NOT NULL AND StandardId IS NULL) OR (TrainingTypeCode = 'S' AND FrameworkId IS NULL AND StandardId IS NOT NULL))
 )
 
 GO
