@@ -486,6 +486,7 @@
     <Content Include="Views\Vacancy\_CommentIcon.cshtml" />
     <Content Include="Views\Vacancy\_EditLink.cshtml" />
     <Content Include="Views\Vacancy\_ValidationResultIcons.cshtml" />
+    <Content Include="Views\Vacancy\_ApplicationsLink.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

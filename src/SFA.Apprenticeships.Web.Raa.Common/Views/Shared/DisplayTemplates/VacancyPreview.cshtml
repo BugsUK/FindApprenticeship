@@ -38,6 +38,7 @@
                 </h3>
                 <div class="text" itemprop="description">
                     <p id="vacancy-description" class="preserve-formatting">@Model.NewVacancyViewModel.ShortDescription</p>
+                    @Html.Partial(ApplicationsLinkViewModel.PartialView, new ApplicationsLinkViewModel(Model.VacancyReferenceNumber, Model.ApplicationCount))
                 </div>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.BasicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))
             </div>

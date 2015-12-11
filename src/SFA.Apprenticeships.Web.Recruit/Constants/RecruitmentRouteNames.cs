@@ -59,6 +59,6 @@
         public const string AddLocations = "AddLocations";
 
         // Applications
-        public const string VacancyApplication = "VacancyApplication";
+        public const string VacancyApplications = "VacancyApplications";
     }
 }

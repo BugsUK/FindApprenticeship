@@ -206,7 +206,7 @@
                                             }
                                             if (vacancy.Status == ProviderVacancyStatuses.Live && vacancy.ApplicationCount > 0)
                                             {
-                                                routeName = RecruitmentRouteNames.VacancyApplication;
+                                                routeName = RecruitmentRouteNames.VacancyApplications;
                                             }
                                         }
                                         <a href="@Url.RouteUrl(routeName, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">@title</a>

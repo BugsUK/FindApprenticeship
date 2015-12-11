@@ -70,13 +70,13 @@
                 <p>You've rejected @Model.RejectedApplicationsCount applications.</p>
             }
 
-            @if (Model.RejectedApplicationsCount == 1)
+            @if (Model.UnresolvedApplicationsCount == 1)
             {
-                <p>There are still 1 application to send an outcome to.</p>
+                <p>There is still 1 application to send an outcome to.</p>
             }
-            else if (Model.RejectedApplicationsCount > 1)
+            else if (Model.UnresolvedApplicationsCount > 1)
             {
-                <p>There are still @Model.RejectedApplicationsCount applications to send an outcome to.</p>
+                <p>There are still @Model.UnresolvedApplicationsCount applications to send an outcome to.</p>
             }
         </div>
     </section>
