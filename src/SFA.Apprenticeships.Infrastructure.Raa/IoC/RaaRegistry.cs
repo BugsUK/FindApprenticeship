@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.IoC
 {
+    using Application.Applications;
     using Application.Vacancies;
     using Application.Vacancy;
     using Common.Configuration;
@@ -20,6 +21,9 @@
 
                 For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
                     .Use<TraineeshipVacancyDataProvider>();
+
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<NullApplicationStatusesProvider>();
             }
         }
     }
